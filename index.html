@@ -9,7 +9,7 @@
 </head>
 <body>
 	<div class="container-fluid">
-		<div class="page-header sticky-top">
+		<div class="page-header">
 			<h1 class="col-12 page-title">Swim Log</h1>
 			<!-- Swimmer Bio -->
 
@@ -17,8 +17,11 @@
 				<div id="bioWrapper" class="col-12 bio-wrapper"></div>
 			</div>
 
+
+		</div>
+
 			<!-- Nav tabs -->
-			<ul class="nav nav-tabs" role="tablist">
+			<ul class="nav nav-tabs sticky-top" role="tablist">
 			  <li class="nav-item">
 			    <a class="nav-link active" href="#swim-log" role="tab" data-toggle="tab">Recent Swims</a>
 			  </li>
@@ -27,7 +30,6 @@
 			  </li>
 			</ul>
 
-		</div>
 		<!-- Tab panes -->
 		<div class="tab-content">
 		<!-- Swim Log Panel -->
@@ -43,9 +45,11 @@
 		  </div>
 		</div>
 	</div>
+
 	<script id="bioTemplate" type="text/x-handlebars-template">
 		<div class="row">
 			<div class="col-12">
+				<img class="bio__image" src="{{imageUrl}}" />
 				<h3 class="bio__name">{{name}}</h3>
 				<h4 class="bio__club">{{club}}</h4>
 				<div class="bio__total-swims">
@@ -62,24 +66,6 @@
 				</div>
 			</div>
 		</div>
-		<!--
-		<div class="row">
-			<div class="col-12" style="margin-top: 1rem;">
-				<div class="bio__total-swims">
-					<label class="bio__item--label">Total Swims</label>
-					<h5 class="bio__item--title">
-						{{totalSwimCount}}
-					</h5>
-				</div>
-				<div class="bio__total-distance">
-					<label class="bio__item--label">Total Distance</label>
-					<h5 class="bio__item--title">
-						{{totalDistanceYards}} yards
-					</h5>
-				</div>
-			</div>
-		</div>
-		-->
 	</script>
 	<script id="swimTemplate" type="text/x-handlebars-template">
 		{{#each swims}}
