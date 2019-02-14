@@ -8,7 +8,6 @@ html {
 */
 .page-header {
 	background-color: #fff;
-	padding-bottom: 1.25rem;
 }
 .page-title {
 	margin: 2rem auto 1.5rem;
@@ -26,13 +25,27 @@ html {
 .bio-wrapper {
 	margin-bottom: 2.5rem;
 }
+.bio__image {
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    overflow: hidden;
+    vertical-align: top;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
 .bio__name {
 	display: inline-block;
+	margin-top: .25rem;
 	margin-right: 1rem;
 }
 .bio__club {
-	display: inline-block;
-	margin-bottom: 1.5rem;
+	font-size: 1.4rem;
+	font-weight: 400;
+	float: left;
+    margin-top: -3.8rem;
+    margin-left: 7rem;
+    margin-bottom: 1.5rem;
 }
 .bio__total-swims,
 .bio__total-distance {
@@ -47,6 +60,9 @@ html {
 	padding-right: .25rem;
 	text-align: right;
 	height: 1.5rem;
+}
+.bio__total-swims {
+	margin-top: 1rem;
 }
 .bio__item--title {
 	display: inline-block;
@@ -184,8 +200,14 @@ html {
 
 /* Bootstrap Nav Styles */
 .nav-tabs {
-	margin-bottom: 1.5rem;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
     border-bottom: 1px solid #dee2e6;
+    border: 0 none;
+}
+.nav-tabs .nav-link {
+	border-radius: 5px;
+
 }
 .nav-tabs .nav-link:hover, 
 .nav-tabs .nav-link:focus {
@@ -193,11 +215,19 @@ html {
 }
 .nav-tabs .nav-link.active:hover,
 .nav-tabs .nav-link.active:focus {
-	border-color: #dee2e6 #dee2e6 #fff;
+	/*border-color: #dee2e6 #dee2e6 #dee2e6 #dee2e6;*/
+	border-color: #e5f5ff #e5f5ff #e5f5ff #e5f5ff;
 }
 .nav-link {
 	padding: 1.25rem 1.5rem;
 	font-size: 1.5rem;
+}
+.nav-tabs .nav-link.active, 
+.nav-tabs .nav-item.show .nav-link {
+    color: #495057;
+    background-color: #e5f5ff;
+    /*border-color: #dee2e6 #dee2e6 #dee2e6 #dee2e6;*/
+    border-color: #e5f5ff #e5f5ff #e5f5ff #e5f5ff;
 }
 .tab-pane {
 	/*padding-top: 1.5rem;*/
@@ -209,12 +239,20 @@ html {
 
 /* Media Queries */
 @media only screen and (min-width: 480px) {
+	.page-header {
+		padding-bottom: 0.5rem;
+	}
 	.bio-wrapper {
 		margin-bottom: 0.5rem;
 	}
 	.bio__item--title {
 		font-size: 1.8rem;
 		height: 1.5rem;
+	}
+	.bio__image {
+	    vertical-align: middle;
+	    margin-right: 1rem;
+	    margin-bottom: 0.5rem;
 	}
 	.bio__name {
 		font-size: 2rem;
@@ -227,8 +265,14 @@ html {
 		padding-left: 1rem;
 	}
 	.bio__club {
-		margin-right: 1rem;
-	}
+		font-size: 1.5rem;
+		font-weight: 500;
+	    display: inline-block;
+	    float: none;
+	    margin-left: auto;
+	    margin-right: 1rem;
+	    margin-bottom: 0;
+    }
 	.bio__club:after {
 		content: "|";
 		color: #ccc;
@@ -251,8 +295,9 @@ html {
 		padding-left: 1rem;
 	}
 	.nav-tabs {
-		margin-top: 2.5rem;
 	    border-bottom: 1px solid #dee2e6;
+		padding-top: 1.5rem;
+	    padding-bottom: 1.5rem;
 	}
 	.nav-link {
 		padding: 1.5rem 2.75rem;
