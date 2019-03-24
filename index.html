@@ -46,6 +46,7 @@
 		</div>
 	</div>
 
+	{{!-- Handlebars Templates : BEGIN --}}
 	<script id="bioTemplate" type="text/x-handlebars-template">
 		<div class="row">
 			<div class="col-12">
@@ -61,7 +62,7 @@
 				<div class="bio__total-distance">
 					<label class="bio__item--label">Total Distance</label>
 					<h5 class="bio__item--title">
-						{{totalDistance}}
+						{{totalDistanceYards}}
 					</h5>
 				</div>
 			</div>
@@ -91,7 +92,7 @@
 							<div class="col-sm-4" class="feed__item--data-source">
 								<div id="swimDataSource" class="feed__item--tracker">
 									{{#if swimDataSource}}
-										<img id="trackerImage" class="feed__item--tracker-image" src="https://static.garmincdn.com/en/products/010-01769-01/v/cf-lg-f1ecd357-fab5-4120-87f1-52b7a5d7d1fc.jpg" width="28px" >
+										<img id="trackerImage" class="feed__item--tracker-image" src="{{swimDataSource}}" width="28px" >
 										<p class="feed__item--tracker-name">{{swimDataSource}}</p>
 									{{/if}}
 								</div>
@@ -102,11 +103,11 @@
 						<div class="row">
 							<div class="col-4 col-sm-3 text-center">
 								<label class="feed__item--label">Distance</label>
-								<p class="feed__item--distance">{{swimDistanceYards}}y</p>
+								<p class="feed__item--distance">{{swimDistanceYards}}</p>
 							</div>
 							<div class="col-4 col-sm-3 text-center">
 								<label class="feed__item--label">Pace/100y</label>
-								<p class="feed__item--pace">{{swimPace100y}}</p>
+								<p class="feed__item--pace">{{swimPace100}}</p>
 							</div>
 							<div class="col-4 col-sm-3 text-center">
 								<label class="feed__item--label">Time</label>
@@ -127,7 +128,7 @@
 						<h5 class="record__item--name">{{recordName}}</h5>
 					</div>
 					<div class="col-sm-6">
-						{{#if recordDistanceYards }}
+						{{#if recordDistance }}
 							<label class="feed__item--label">Distance</label>
 							<h3 class="record__item--distance">{{recordDistanceYards}}y</h3>
 						{{/if}}
@@ -142,6 +143,9 @@
 			</div>
 		{{/each}}
 	</script>
+	{{!-- Handlebars Templates : END --}}
+
+
 	<script type="text/javascript" src="js/handlebars-v4.1.0.js"></script>
 	<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
