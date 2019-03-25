@@ -2,17 +2,26 @@ var getSwimFeed = $.ajax({
   url: "https://j-place.github.io/swimFeed.json",
   type: "GET",
   success: function(response) {
-    console.log("Success");
     var data = JSON.parse(getSwimFeed.responseText);
-    console.log(data);
     createSwimsHtml(data);
     createBioHtml(data);
+  },
+  error: function(xhr) {
+    console.log("FAIL");
+  }
+});
+
+var getPersonalRecords = $.ajax({
+  url: "https://j-place.github.io/personalRecords.json",
+  type: "GET",
+  success: function(response) {
+    var data = JSON.parse(getPersonalRecords.responseText);
     createRecordsHtml(data);
   },
   error: function(xhr) {
     console.log("FAIL");
   }
-})
+});
 
 function createBioHtml(bioData) {
   var rawTemplate = document.getElementById("bioTemplate").innerHTML;
