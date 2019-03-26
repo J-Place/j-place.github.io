@@ -5,6 +5,7 @@ var getSwimFeed = $.ajax({
     var data = JSON.parse(getSwimFeed.responseText);
     createSwimsHtml(data);
     createBioHtml(data);
+    checkForPR(data);
   },
   error: function(xhr) {
     console.log("FAIL");
@@ -23,6 +24,8 @@ var getPersonalRecords = $.ajax({
   }
 });
 
+
+
 function createBioHtml(bioData) {
   var rawTemplate = document.getElementById("bioTemplate").innerHTML;
   var compiledTemplate = Handlebars.compile(rawTemplate);
@@ -39,6 +42,11 @@ function createSwimsHtml(swimData) {
   swimsWrapper.innerHTML = ourGeneratedHTML;
 }
 
+function checkForPR(isPr) {
+  console.log(isPr);
+  console.log(isPr.swims[0].swimPr);
+}
+
 function createRecordsHtml(recordsData) {
   var rawTemplate = document.getElementById("recordsTemplate").innerHTML;
   var compiledTemplate = Handlebars.compile(rawTemplate);
@@ -46,3 +54,5 @@ function createRecordsHtml(recordsData) {
   var recordsWrapper = document.getElementById("recordsWrapper");
   recordsWrapper.innerHTML = ourGeneratedHTML;
 }
+
+// checkForPR();
