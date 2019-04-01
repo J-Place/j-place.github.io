@@ -1,13 +1,18 @@
 html {
-	font-size: 10px;
+	/* font-size: 10px; */
 }
 /*
 &apid;
 &#8779;
 &#x0224B;
 */
-.page-header {
-	background-color: #fff;
+
+.feed-wrapper {
+    width: 100%;
+}
+.swim-log .page-header {
+    background-color: #fff;
+    height: 96px;
 }
 .page-title {
 	margin: 2rem auto 1.5rem;
@@ -20,6 +25,7 @@ html {
     font-size: 2.7rem;
 }
 .swimmer-bio {
+    width: 100%;
 	margin: 1rem auto;
 }
 .bio-wrapper {
@@ -244,7 +250,7 @@ html {
 
 /* Media Queries */
 @media only screen and (min-width: 480px) {
-	.page-header {
+	.swim-log .page-header {
 		padding-bottom: 0.5rem;
 	}
 	.bio-wrapper {
@@ -254,37 +260,38 @@ html {
 		font-size: 1.8rem;
 		height: 1.5rem;
 	}
-	.bio__image {
+	#bioWrapper .bio__image {
 	    vertical-align: middle;
 	    margin-right: 1rem;
 	    margin-bottom: 0.5rem;
 	}
-	.bio__name {
+	#bioWrapper .bio__name {
 		font-size: 2rem;
 	}
-	.bio__name:after {
+	#bioWrapper .bio__name:after {
 		content: "|";
 		color: #ccc;
 		font-size: 15px;
 		font-weight: 300;
 		padding-left: 1rem;
 	}
-	.bio__club {
+	#bioWrapper .bio__club {
 		font-size: 1.5rem;
-		font-weight: 500;
+        font-weight: 500;
+        font-style: normal;
 	    display: inline-block;
 	    float: none;
 	    margin-left: auto;
 	    margin-right: 1rem;
 	    margin-bottom: 0;
     }
-	.bio__club:after {
+	/* .bio__club:after {
 		content: "|";
 		color: #ccc;
 		font-size: 15px;
 		font-weight: 300;
 		padding-left: 1.25rem;
-	}
+	} */
 	.bio__total-swims label {
 		width: auto;
 	}
@@ -303,7 +310,7 @@ html {
 	    border-bottom: 1px solid #dee2e6;
 	    padding-top: 1.5rem;
 	    padding-bottom: 0;
-	    padding-left: 85px;
+	    padding-left: 10px;
 	    margin-top: -15px;
     }
     .nav-tabs.sticky-top {
