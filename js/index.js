@@ -22,7 +22,7 @@ var getPersonalRecords = $.ajax({
   }
 });
 
-function getRecordsData() {
+var getRecordsData = function() {
   alert("Call Function");
 }
 
