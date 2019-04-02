@@ -22,6 +22,10 @@ var getPersonalRecords = $.ajax({
   }
 });
 
+function getRecordsData() {
+  alert("Call Function");
+}
+
 function createSwimsHtml(swimData) {
   var rawTemplate = document.getElementById("swimTemplate").innerHTML;
   var compiledTemplate = Handlebars.compile(rawTemplate);
@@ -37,5 +41,3 @@ function createRecordsHtml(recordsData) {
   var recordsWrapper = document.getElementById("recordsWrapper");
   recordsWrapper.innerHTML = ourGeneratedHTML;
 }
-
-// checkForPR();
