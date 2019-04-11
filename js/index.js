@@ -4,8 +4,7 @@ var getSwimFeed = $.ajax({
   success: function(response) {
     var data = JSON.parse(getSwimFeed.responseText);
     // createSwimsHtml(data);
-    loadSwimFeed(data)
-    // loadSwimFeed(data);
+    loadSwimFeedClick(data);
   },
   error: function(xhr) {
     console.log("FAIL");
