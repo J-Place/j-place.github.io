@@ -51,6 +51,8 @@ function createRecordsHtml(recordsData) {
   recordsWrapper.innerHTML = ourGeneratedHTML;
 }
 
+getFeedBtn = document.getElementById("getFeed");
+getFeedBtn.click(loadSwimFeed);
 
 var swimFeedList = document.getElementById("swimsWrapper");
 // var swimFeedListItems = swimFeedList.childNodes;
