@@ -1,30 +1,16 @@
-// var getSwimFeed = $.ajax({
-//   url: "https://j-place.github.io/swimFeed.json",
-//   type: "GET",
-//   success: function(response) {
-//     var data = JSON.parse(getSwimFeed.responseText);
-    // createSwimsHtml(data);
-    // loadSwimFeed(data);
-//   },
-//   error: function(xhr) {
-//     console.log("FAIL");
-//   }
-// });
-
-
-var loadSwimFeedClick = $.ajax({
+var getSwimFeed = $.ajax({
   url: "https://j-place.github.io/swimFeed.json",
   type: "GET",
   success: function(response) {
-    var data = JSON.parse(loadSwimFeedClick.responseText);
+    var data = JSON.parse(getSwimFeed.responseText);
     createSwimsHtml(data);
+    test(data)
+    // loadSwimFeed(data);
   },
   error: function(xhr) {
     console.log("FAIL");
-    }
+  }
 });
-
-
 
 var getPersonalRecords = $.ajax({
   url: "https://j-place.github.io/personalRecords.json",
@@ -38,22 +24,22 @@ var getPersonalRecords = $.ajax({
   }
 });
 
-function createSwimsHtml(swimData) {
-  var rawTemplate = document.getElementById("swimTemplate").innerHTML;
-  var compiledTemplate = Handlebars.compile(rawTemplate);
-  var ourGeneratedHTML = compiledTemplate(swimData)
-  var swimsWrapper = document.getElementById("swimsWrapper");
-  swimsWrapper.innerHTML = ourGeneratedHTML;
-}
-
-
-// var loadSwimFeed = function(swimData) {
+// function createSwimsHtml(swimData) {
 //   var rawTemplate = document.getElementById("swimTemplate").innerHTML;
 //   var compiledTemplate = Handlebars.compile(rawTemplate);
 //   var ourGeneratedHTML = compiledTemplate(swimData)
 //   var swimsWrapper = document.getElementById("swimsWrapper");
 //   swimsWrapper.innerHTML = ourGeneratedHTML;
 // }
+
+
+var loadSwimFeed = function(swimData) {
+  var rawTemplate = document.getElementById("swimTemplate").innerHTML;
+  var compiledTemplate = Handlebars.compile(rawTemplate);
+  var ourGeneratedHTML = compiledTemplate(swimData)
+  var swimsWrapper = document.getElementById("swimsWrapper");
+  swimsWrapper.innerHTML = ourGeneratedHTML;
+}
 
 function createRecordsHtml(recordsData) {
   var rawTemplate = document.getElementById("recordsTemplate").innerHTML;
@@ -67,3 +53,7 @@ function createRecordsHtml(recordsData) {
 // getFeedBtn.click(loadSwimFeed);
 
 
+var loadSwimFeedClick = function(test) {
+  alert("Test");
+  loadSwimFeed(data);
+}
