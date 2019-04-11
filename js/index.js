@@ -58,6 +58,6 @@ var swimFeedListArray = [].slice.call(swimFeedListItems);
 // var swimFeedListCount = swimFeedListItem.length;
 
 
-console.log(swimFeedListItems);
-console.log(swimFeedListArray)
+console.log(swimFeedListItems.HTMLCollection.length);
+// console.log(swimFeedListArray);
 
