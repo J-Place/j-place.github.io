@@ -23,10 +23,6 @@ var getPersonalRecords = $.ajax({
   }
 });
 
-var getRecordsData = function() {
-  alert("Call Function");
-}
-
 // function createSwimsHtml(swimData) {
 //   var rawTemplate = document.getElementById("swimTemplate").innerHTML;
 //   var compiledTemplate = Handlebars.compile(rawTemplate);
@@ -36,13 +32,13 @@ var getRecordsData = function() {
 // }
 
 
-var loadSwimFeed = function(swimData) {
-  var rawTemplate = document.getElementById("swimTemplate").innerHTML;
-  var compiledTemplate = Handlebars.compile(rawTemplate);
-  var ourGeneratedHTML = compiledTemplate(swimData)
-  var swimsWrapper = document.getElementById("swimsWrapper");
-  swimsWrapper.innerHTML = ourGeneratedHTML;
-}
+// var loadSwimFeed = function(swimData) {
+//   var rawTemplate = document.getElementById("swimTemplate").innerHTML;
+//   var compiledTemplate = Handlebars.compile(rawTemplate);
+//   var ourGeneratedHTML = compiledTemplate(swimData)
+//   var swimsWrapper = document.getElementById("swimsWrapper");
+//   swimsWrapper.innerHTML = ourGeneratedHTML;
+// }
 
 function createRecordsHtml(recordsData) {
   var rawTemplate = document.getElementById("recordsTemplate").innerHTML;
