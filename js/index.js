@@ -56,6 +56,6 @@ var getFeedBtn = document.getElementById("getFeed");
 getFeedBtn.click(loadSwimFeed);
 
 
-function loadSwimFeedClick() {
+var loadSwimFeedClick = function() {
   alert("Test");
 }
