@@ -44,10 +44,15 @@ function createRecordsHtml(recordsData) {
 
 
 var swimFeedList = document.getElementById("swimsWrapper");
-var swimFeedListItem = document.getElementsByClassName("feed__item")
-var swimFeedListCount = swimFeedListItem.length;
-console.log(swimFeedList);
-console.log(swimFeedList.length);
-console.log(swimFeedListItem);
-console.log(swimFeedListItem.length);
-console.log(swimFeedListCount);
+var swimFeedListItems = [];
+
+for (var i = 0; i < ul.childNodes.length; i++ ) {
+  if (swimFeedList.childNodes[i].nodeName == "feed__item") {
+    swimFeedListItems.push(ul.childNodes[i]);
+  }
+}
+
+// var swimFeedListItem = document.getElementsByClassName("feed__item")
+// var swimFeedListCount = swimFeedListItem.length;
+
+console.log(swimFeedListItems);
