@@ -48,8 +48,8 @@ function createRecordsHtml(recordsData) {
   recordsWrapper.innerHTML = ourGeneratedHTML;
 }
 
-var getFeedBtn = document.getElementById("getFeed");
-getFeedBtn.click(loadSwimFeed);
+// var getFeedBtn = document.getElementById("getFeed");
+// getFeedBtn.click(loadSwimFeed);
 
 
 var loadSwimFeedClick = function() {
