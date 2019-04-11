@@ -1,14 +1,31 @@
-var getSwimFeed = $.ajax({
-  url: "https://j-place.github.io/swimFeed.json",
-  type: "GET",
-  success: function(response) {
-    var data = JSON.parse(getSwimFeed.responseText);
-    createSwimsHtml(data);
-  },
-  error: function(xhr) {
-    console.log("FAIL");
-  }
+
+$("#getFeed").click(function(e) {
+  alert("Test 2");
+  e.preventDefault();
+  $.ajax({
+      type: "GET",
+      url: "https://j-place.github.io/swimFeed.json",
+      success: function(response) {
+        var data = JSON.parse(getSwimFeed.responseText);
+        createSwimsHtml(data);
+      },
+      error: function(xhr) {
+        console.log("FAIL");
+      }
+      });
 });
+
+// var getSwimFeed = $.ajax({
+//   url: "https://j-place.github.io/swimFeed.json",
+//   type: "GET",
+//   success: function(response) {
+//     var data = JSON.parse(getSwimFeed.responseText);
+//     createSwimsHtml(data);
+//   },
+//   error: function(xhr) {
+//     console.log("FAIL");
+//   }
+// });
 
 var getPersonalRecords = $.ajax({
   url: "https://j-place.github.io/personalRecords.json",
