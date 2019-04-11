@@ -3,8 +3,7 @@ var getSwimFeed = $.ajax({
   type: "GET",
   success: function(response) {
     var data = JSON.parse(getSwimFeed.responseText);
-    // createSwimsHtml(data);
-    loadSwimFeedClick(data);
+    createSwimsHtml(data);
   },
   error: function(xhr) {
     console.log("FAIL");
@@ -23,21 +22,17 @@ var getPersonalRecords = $.ajax({
   }
 });
 
-// function createSwimsHtml(swimData) {
-//   var rawTemplate = document.getElementById("swimTemplate").innerHTML;
-//   var compiledTemplate = Handlebars.compile(rawTemplate);
-//   var ourGeneratedHTML = compiledTemplate(swimData)
-//   var swimsWrapper = document.getElementById("swimsWrapper");
-//   swimsWrapper.innerHTML = ourGeneratedHTML;
-// }
+var getRecordsData = function() {
+  alert("Call Function");
+}
 
-// function loadSwimFeed(swimData) {
-//   var rawTemplate = document.getElementById("swimTemplate").innerHTML;
-//   var compiledTemplate = Handlebars.compile(rawTemplate);
-//   var ourGeneratedHTML = compiledTemplate(swimData)
-//   var swimsWrapper = document.getElementById("swimsWrapper");
-//   swimsWrapper.innerHTML = ourGeneratedHTML;
-// }
+function createSwimsHtml(swimData) {
+  var rawTemplate = document.getElementById("swimTemplate").innerHTML;
+  var compiledTemplate = Handlebars.compile(rawTemplate);
+  var ourGeneratedHTML = compiledTemplate(swimData)
+  var swimsWrapper = document.getElementById("swimsWrapper");
+  swimsWrapper.innerHTML = ourGeneratedHTML;
+}
 
 function createRecordsHtml(recordsData) {
   var rawTemplate = document.getElementById("recordsTemplate").innerHTML;
@@ -45,16 +40,4 @@ function createRecordsHtml(recordsData) {
   var ourGeneratedHTML = compiledTemplate(recordsData)
   var recordsWrapper = document.getElementById("recordsWrapper");
   recordsWrapper.innerHTML = ourGeneratedHTML;
-}
-
-// var getFeedBtn = document.getElementById("getFeed");
-// getFeedBtn.click(loadSwimFeed);
-
-var loadSwimFeedClick = function() {
-  alert("Test");
-  var rawTemplate = document.getElementById("swimTemplate").innerHTML;
-  var compiledTemplate = Handlebars.compile(rawTemplate);
-  var ourGeneratedHTML = compiledTemplate(swimData)
-  var swimsWrapper = document.getElementById("swimsWrapper");
-  swimsWrapper.innerHTML = ourGeneratedHTML;
 }
