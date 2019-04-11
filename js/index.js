@@ -41,3 +41,8 @@ function createRecordsHtml(recordsData) {
   var recordsWrapper = document.getElementById("recordsWrapper");
   recordsWrapper.innerHTML = ourGeneratedHTML;
 }
+
+
+var swimFeedList = document.getElementById("swimTemplate");
+var swimFeedListCount = swimFeedList.length;
+console.log(swimFeedListCount);
