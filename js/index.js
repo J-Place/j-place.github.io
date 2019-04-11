@@ -1,15 +1,31 @@
-var getSwimFeed = $.ajax({
+// var getSwimFeed = $.ajax({
+//   url: "https://j-place.github.io/swimFeed.json",
+//   type: "GET",
+//   success: function(response) {
+//     var data = JSON.parse(getSwimFeed.responseText);
+    // createSwimsHtml(data);
+    // loadSwimFeed(data);
+//   },
+//   error: function(xhr) {
+//     console.log("FAIL");
+//   }
+// });
+
+
+var loadSwimFeedClick = $.ajax({
   url: "https://j-place.github.io/swimFeed.json",
   type: "GET",
   success: function(response) {
     var data = JSON.parse(getSwimFeed.responseText);
-    // createSwimsHtml(data);
+    createSwimsHtml(data);
     // loadSwimFeed(data);
   },
   error: function(xhr) {
     console.log("FAIL");
-  }
+    }
 });
+
+
 
 var getPersonalRecords = $.ajax({
   url: "https://j-place.github.io/personalRecords.json",
@@ -23,13 +39,13 @@ var getPersonalRecords = $.ajax({
   }
 });
 
-// function createSwimsHtml(swimData) {
-//   var rawTemplate = document.getElementById("swimTemplate").innerHTML;
-//   var compiledTemplate = Handlebars.compile(rawTemplate);
-//   var ourGeneratedHTML = compiledTemplate(swimData)
-//   var swimsWrapper = document.getElementById("swimsWrapper");
-//   swimsWrapper.innerHTML = ourGeneratedHTML;
-// }
+function createSwimsHtml(swimData) {
+  var rawTemplate = document.getElementById("swimTemplate").innerHTML;
+  var compiledTemplate = Handlebars.compile(rawTemplate);
+  var ourGeneratedHTML = compiledTemplate(swimData)
+  var swimsWrapper = document.getElementById("swimsWrapper");
+  swimsWrapper.innerHTML = ourGeneratedHTML;
+}
 
 
 // var loadSwimFeed = function(swimData) {
@@ -52,6 +68,3 @@ function createRecordsHtml(recordsData) {
 // getFeedBtn.click(loadSwimFeed);
 
 
-var loadSwimFeedClick = function() {
-  alert("Test");
-}
