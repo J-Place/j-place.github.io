@@ -57,7 +57,7 @@ var swimFeedListItems = document.querySelectorAll("feed__item");
 // var swimFeedListItem = document.getElementsByClassName("feed__item")
 // var swimFeedListCount = swimFeedListItem.length;
 
-
+console.log(swimFeedListItems);
 console.log(swimFeedListItems.length);
 // console.log(swimFeedListArray);
 
