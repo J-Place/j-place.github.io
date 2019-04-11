@@ -3,7 +3,7 @@ var getSwimFeed = $.ajax({
   type: "GET",
   success: function(response) {
     var data = JSON.parse(getSwimFeed.responseText);
-    createSwimsHtml(data);
+    // createSwimsHtml(data);
     test(data)
     // loadSwimFeed(data);
   },
@@ -53,7 +53,7 @@ function createRecordsHtml(recordsData) {
 // getFeedBtn.click(loadSwimFeed);
 
 
-var loadSwimFeedClick = function(test) {
+var loadSwimFeedClick = function() {
   alert("Test");
-  loadSwimFeed(data);
+  loadSwimFeed(test);
 }
