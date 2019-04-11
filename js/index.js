@@ -32,7 +32,6 @@ var getPersonalRecords = $.ajax({
 //   swimsWrapper.innerHTML = ourGeneratedHTML;
 // }
 
-
 var loadSwimFeed = function(swimData) {
   var rawTemplate = document.getElementById("swimTemplate").innerHTML;
   var compiledTemplate = Handlebars.compile(rawTemplate);
@@ -51,7 +50,6 @@ function createRecordsHtml(recordsData) {
 
 // var getFeedBtn = document.getElementById("getFeed");
 // getFeedBtn.click(loadSwimFeed);
-
 
 var loadSwimFeedClick = function() {
   alert("Test");
