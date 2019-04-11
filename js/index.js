@@ -43,6 +43,7 @@ function createRecordsHtml(recordsData) {
 }
 
 
-var swimFeedList = document.getElementById("swimTemplate");
-var swimFeedListCount = swimFeedList.length;
+var swimFeedList = document.getElementById("swimsWrapper");
+var swimFeedListItem = document.getElementsByClassName("feed__item")
+var swimFeedListCount = swimFeedListItem.length;
 console.log(swimFeedListCount);
