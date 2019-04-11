@@ -3,7 +3,8 @@ var getSwimFeed = $.ajax({
   type: "GET",
   success: function(response) {
     var data = JSON.parse(getSwimFeed.responseText);
-    createSwimsHtml(data);
+    // createSwimsHtml(data);
+    loadSwimFeed(data);
   },
   error: function(xhr) {
     console.log("FAIL");
@@ -51,24 +52,10 @@ function createRecordsHtml(recordsData) {
   recordsWrapper.innerHTML = ourGeneratedHTML;
 }
 
-getFeedBtn = document.getElementById("getFeed");
+var getFeedBtn = document.getElementById("getFeed");
 getFeedBtn.click(loadSwimFeed);
 
-var swimFeedList = document.getElementById("swimsWrapper");
-// var swimFeedListItems = swimFeedList.childNodes;
-var swimFeedListItems = swimFeedList.querySelectorAll("feed__item");
-// var swimFeedListArray = [].slice.call(swimFeedListItems);
 
-// for (var i = 0; i < swimFeedList.childNodes.length; i++ ) {
-//   if (swimFeedList.childNodes[i].nodeName == "feed__item") {
-//     swimFeedListItems.push(swimFeedList.childNodes[i]);
-//   }
-// }
-
-// var swimFeedListItem = document.getElementsByClassName("feed__item")
-// var swimFeedListCount = swimFeedListItem.length;
-
-console.log(swimFeedListItems);
-console.log(swimFeedListItems.length);
-// console.log(swimFeedListArray);
-
+function loadSwimFeedClick() {
+  alert("Test");
+}
