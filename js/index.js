@@ -44,7 +44,8 @@ function createRecordsHtml(recordsData) {
 
 
 var swimFeedList = document.getElementById("swimsWrapper");
-var swimFeedListItems = swimFeedList.childNodes;
+// var swimFeedListItems = swimFeedList.childNodes;
+var swimFeedListItems = document.getElementsByClassName("feed__item");
 
 // for (var i = 0; i < swimFeedList.childNodes.length; i++ ) {
 //   if (swimFeedList.childNodes[i].nodeName == "feed__item") {
