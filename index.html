@@ -27,15 +27,23 @@
 			</div>		
 		</div>
 
-			<!-- Nav tabs -->
-			<ul class="nav nav-tabs" role="tablist">
-			  <li class="nav-item">
-			    <a class="nav-link active" href="#swim-log" role="tab" data-toggle="tab">Recent Swims</a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" href="#personal-records" role="tab" data-toggle="tab">Personal Records</a>
-			  </li>
-			</ul>
+		<div class="feed__footer">
+			<div class="row">
+				<div class="col-sm-12 text-center">
+						<button class="btn btn-primary btn-large" id="getFeed" onclick="loadSwimFeedClick();" >Show More Swims</button>
+				</div>
+			</div>
+		</div>			
+
+		<!-- Nav tabs -->
+		<ul class="nav nav-tabs" role="tablist">
+			<li class="nav-item">
+			<a class="nav-link active" href="#swim-log" role="tab" data-toggle="tab">Recent Swims</a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link" href="#personal-records" role="tab" data-toggle="tab">Personal Records</a>
+			</li>
+		</ul>
 
 		<!-- Tab panes -->
 		<div class="tab-content">
@@ -43,13 +51,6 @@
 		  <div role="tabpanel" class="tab-pane fade in active show" id="swim-log">
 				<!-- Handlebars injects html here -->
 				<div id="swimsWrapper" class="swims-wrapper"></div>
-				<div class="feed__footer">
-					<div class="row">
-						<div class="col-sm-12 text-center">
-								<button class="btn btn-primary btn-large" id="getFeed" onclick="loadSwimFeedClick();" >Show More Swims</button>
-						</div>
-					</div>
-				</div>			
 		  </div>
 		  <!-- Personal Records Panel -->
 		  <div role="tabpanel" class="tab-pane fade in" id="personal-records">
