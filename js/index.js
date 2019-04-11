@@ -46,6 +46,8 @@ function createRecordsHtml(recordsData) {
 var swimFeedList = document.getElementById("swimsWrapper");
 var swimFeedListItem = document.getElementsByClassName("feed__item")
 var swimFeedListCount = swimFeedListItem.length;
+console.log(swimFeedList);
+console.log(swimFeedList.length);
 console.log(swimFeedListItem);
 console.log(swimFeedListItem.length);
 console.log(swimFeedListCount);
