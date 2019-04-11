@@ -26,7 +26,16 @@ var getRecordsData = function() {
   alert("Call Function");
 }
 
-function createSwimsHtml(swimData) {
+// function createSwimsHtml(swimData) {
+//   var rawTemplate = document.getElementById("swimTemplate").innerHTML;
+//   var compiledTemplate = Handlebars.compile(rawTemplate);
+//   var ourGeneratedHTML = compiledTemplate(swimData)
+//   var swimsWrapper = document.getElementById("swimsWrapper");
+//   swimsWrapper.innerHTML = ourGeneratedHTML;
+// }
+
+
+var loadSwimFeed = function(swimData) {
   var rawTemplate = document.getElementById("swimTemplate").innerHTML;
   var compiledTemplate = Handlebars.compile(rawTemplate);
   var ourGeneratedHTML = compiledTemplate(swimData)
