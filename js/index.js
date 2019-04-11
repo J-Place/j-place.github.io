@@ -16,9 +16,8 @@ var loadSwimFeedClick = $.ajax({
   url: "https://j-place.github.io/swimFeed.json",
   type: "GET",
   success: function(response) {
-    var data = JSON.parse(getSwimFeed.responseText);
+    var data = JSON.parse(loadSwimFeedClick.responseText);
     createSwimsHtml(data);
-    // loadSwimFeed(data);
   },
   error: function(xhr) {
     console.log("FAIL");
