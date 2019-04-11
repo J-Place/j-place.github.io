@@ -6,7 +6,7 @@ $("#getFeed").click(function(e) {
       type: "GET",
       url: "https://j-place.github.io/swimFeed.json",
       success: function(response) {
-        var data = JSON.parse(responseText);
+        var data = JSON.parse(response.responseText);
         createSwimsHtml(data);
       },
       error: function(xhr) {
