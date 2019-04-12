@@ -25,12 +25,11 @@ $("#getFeed").click(function(e) {
         // var data = JSON.parse(response);
         var data = response;
         createSwimsHtml(data);
-        $('#getFeed').on('hidden.bs.collapse', function () {
-          // do something…
+        $("#getFeed").collapse('toggle').on('hidden.bs.collapse', function () {
           $(".feed-body").collapse('toggle');
-        })
-        // $("#getFeed").collapse('toggle');
-        $("#disconnectFeed").collapse('toggle');
+          $("#disconnectFeed").collapse('toggle');
+        });
+        // $("#disconnectFeed").collapse('toggle');
         // $(".feed-body").collapse('toggle');
       },
       error: function() {
