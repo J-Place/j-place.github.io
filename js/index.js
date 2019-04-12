@@ -26,7 +26,7 @@ $("#getFeed").click(function(e) {
         var data = response;
         createSwimsHtml(data);
         $("#getStarted").collapse('toggle');
-        $(".page-body").collapse('toggle');
+        $(".feed-body").collapse('toggle');
       },
       error: function() {
         console.log("FAIL");
