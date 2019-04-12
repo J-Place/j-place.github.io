@@ -25,7 +25,8 @@ $("#getFeed").click(function(e) {
         // var data = JSON.parse(response);
         var data = response;
         createSwimsHtml(data);
-        $("#getStarted").collapse('toggle');
+        $("#getFeed").collapse('toggle');
+        $("#disconnectFeed").collapse('toggle');
         $(".feed-body").collapse('toggle');
       },
       error: function() {
