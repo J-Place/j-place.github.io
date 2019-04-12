@@ -81,3 +81,11 @@ function createRecordsHtml(recordsData) {
   var recordsWrapper = document.getElementById("recordsWrapper");
   recordsWrapper.innerHTML = ourGeneratedHTML;
 }
+
+
+function disconnectFeed() {
+  $("#disconnectFeed").click(function(e) {
+    e.preventDefault();
+    $('#modalDisconnect').modal();
+  });
+}
