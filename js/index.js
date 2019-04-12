@@ -84,6 +84,6 @@ function createRecordsHtml(recordsData) {
 
 
 $("#disconnectFeed").click(function() {
-  alert("Test");
+  // alert("Test");
   $('#modalDisconnect').modal('show');
 });
