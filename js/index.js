@@ -86,6 +86,6 @@ function createRecordsHtml(recordsData) {
 function disconnectFeed() {
   $("#disconnectFeed").click(function(e) {
     e.preventDefault();
-    $('#modalDisconnect').modal();
+    $('#modalDisconnect').modal('show');
   });
 }
