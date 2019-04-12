@@ -83,9 +83,8 @@ function createRecordsHtml(recordsData) {
 }
 
 
-function disconnectFeed() {
-  $("#disconnectFeed").click(function(e) {
-    e.preventDefault();
-    $('#modalDisconnect').modal('show');
-  });
-}
+$("#disconnectFeed").click(function(e) {
+  alert("Test");
+  e.preventDefault();
+  $('#modalDisconnect').modal('show');
+});
