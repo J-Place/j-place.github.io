@@ -17,46 +17,50 @@
 </head>
 <body>
 	<div class="container-fluid swim-feed">
+
 		<div class="page-header">
-			<div class="swim-intro">
+			<div class="row">
                 <div class="col-12 intro-wrapper">
                     <h6>Powered by</h6>
                     <img src="https://theme.zdassets.com/theme_assets/10973/6c2ebb46c65bea38ae9061a56ab03f9ea884e611.png" width="230" height="auto" alt="Swim.com">
                     <p>Swim.com and USMS have partnered up to bring you My Swim Feed. Once you synch you Swim.com and My USMS accounts, swimming workouts done on Swim.com will appear on this page as well as FLOG entries done before the synch. We are proud to partner with the most advanced swim app on the market, Swim.com. You can upload your swims to their website or app, which can be downloaded to your iOS or Android device. Either way, with this partnership, you'll gain valuable insights on intervals, stroke rate and more. Visit swim.com <a target=”_blank” href="https://www.swim.com">here</a>.</p>
                 </div>
-			</div>		
-		</div>
-
-		<div class="feed__footer">
+			</div>
 			<div class="row">
-				<div class="col-sm-12 text-center">
-						<button class="btn btn-primary btn-large" id="getFeed" >Show More Swims</button>
+				<div class="col-12" id="getStarted">
+						<button class="btn btn-primary btn-large" id="getFeed" >Get Started</button>
 				</div>
 			</div>
-		</div>			
-
-		<!-- Nav tabs -->
-		<ul class="nav nav-tabs" role="tablist">
-			<li class="nav-item">
-			<a class="nav-link active" href="#swim-log" role="tab" data-toggle="tab">Recent Swims</a>
-			</li>
-			<li class="nav-item">
-			<a class="nav-link" href="#personal-records" role="tab" data-toggle="tab">Personal Records</a>
-			</li>
-		</ul>
-
-		<!-- Tab panes -->
-		<div class="tab-content">
-		<!-- Swim Log Panel -->
-		  <div role="tabpanel" class="tab-pane fade in active show" id="swim-log">
-				<!-- Handlebars injects html here -->
-				<div id="swimsWrapper" class="swims-wrapper"></div>
-		  </div>
-		  <!-- Personal Records Panel -->
-		  <div role="tabpanel" class="tab-pane fade in" id="personal-records">
-		  	<div id="recordsWrapper" class="records-wrapper"></div>
-		  </div>
 		</div>
+
+		<div class="page-body">
+
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs" role="tablist">
+				<li class="nav-item">
+					<a class="nav-link active" href="#swim-log" role="tab" data-toggle="tab">Recent Swims</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#personal-records" role="tab" data-toggle="tab">Personal Records</a>
+				</li>
+			</ul>
+
+			<!-- Tab panes -->
+			<div class="tab-content">
+				<!-- Swim Log Panel -->
+				<div role="tabpanel" class="tab-pane fade in active show" id="swim-log">
+						<!-- Handlebars injects html here -->
+						<div id="swimsWrapper" class="swims-wrapper"></div>
+				</div>
+				<!-- Personal Records Panel -->
+				<div role="tabpanel" class="tab-pane fade in" id="personal-records">
+					<!-- Handlebars injects html here -->
+					<div id="recordsWrapper" class="records-wrapper"></div>
+				</div>
+			</div>
+
+		</div>
+
 	</div>
 
 	<!-- Handlebars Templates : BEGIN -->

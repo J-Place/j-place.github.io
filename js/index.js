@@ -1,25 +1,19 @@
-
-// $("#getFeed").click(function(e) {
-//   alert("Test 2");
-//   e.preventDefault();
-//   $.ajax({
-//       type: "POST",
-//       url: "/pages/test/",
-//       data: { 
-//           id: $(this).val(), // < note use of 'this' here
-//           access_token: $("#access_token").val() 
-//       },
-//       success: function(result) {
-//           alert('ok');
-//       },
-//       error: function(result) {
-//           alert('error');
-//       }
-//   });
-// });
-
-
-
+$("#getFeed").click(function(e) {
+  e.preventDefault();
+  $.ajax({
+      type: "GET",
+      dataType: "json",
+      url: "https://j-place.github.io/swimFeed.json",
+      success: function(response) {
+        // var data = JSON.parse(response);
+        var data = response;
+        createSwimsHtml(data);
+      },
+      error: function() {
+        console.log("FAIL");
+      }
+      });
+});
 
 $("#getFeed").click(function(e) {
   e.preventDefault();
@@ -31,6 +25,8 @@ $("#getFeed").click(function(e) {
         // var data = JSON.parse(response);
         var data = response;
         createSwimsHtml(data);
+        $("#getStarted").collapse();
+        $(".page-body").collapse('show');
       },
       error: function() {
         console.log("FAIL");
