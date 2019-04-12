@@ -18,17 +18,21 @@
 //   });
 // });
 
+
+
+
 $("#getFeed").click(function(e) {
-  alert("Test 2");
   e.preventDefault();
   $.ajax({
       type: "GET",
+      dataType: "json",
       url: "https://j-place.github.io/swimFeed.json",
       success: function(response) {
-        var data = JSON.parse(response);
+        // var data = JSON.parse(response);
+        var data = response;
         createSwimsHtml(data);
       },
-      error: function(xhr) {
+      error: function() {
         console.log("FAIL");
       }
       });
