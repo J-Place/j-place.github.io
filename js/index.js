@@ -10,7 +10,7 @@ $("#authorizeFeed").click(function() {
 });
 
 $("#authorizeAgree").click(function() {
-  var isValid = true;
+  isValid = true;
   console.log(isValid);
   $("#modalAuthorize").modal('hide');
   getFeed();
