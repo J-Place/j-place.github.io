@@ -28,11 +28,11 @@ function startFeed() {
   if ( isValid === true ) {
     $.ajax({
       type: "GET",
-      dataType: "html",
+      dataType: "json",
       url: "https://j-place.github.io/swimFeed.json",
       success: function(response) {
-        var data = JSON.parse(response);
-        createSwimsHtml(data);
+        // var data = JSON.parse(response);
+        createSwimsHtml(response);
       },
       error: function() {
         console.log("FAIL");
