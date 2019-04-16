@@ -1,21 +1,29 @@
-// $(document).ready(function() {
-//   var api_url = 'https://j-place.github.io/swimFeed.json'
-//   var key = 'test' // not real
-// });
-
+// Assuming first time user that is not authorized
 var isValid = false;
 
+// Check if user is authorized
+function checkUserValidation() {
+  if ( isValid === true ) {
+    startFeed();
+  }
+  else if ( isValid === false ) {
+    alert('please click the "Get Started" button.');
+  }
+}
+
+// User clicks 'Get Started' button ...
 $("#authorizeFeed").click(function() {
   $('#modalAuthorize').modal('show');
 });
 
+// And clicks "I Agree" in modal window
 $("#authorizeAgree").click(function() {
   isValid = true;
-  console.log(isValid);
   $("#modalAuthorize").modal('hide');
   startFeed();
 });
 
+// Agree button starts the feed
 function startFeed() {
   if ( isValid === true ) {
     $.ajax({
@@ -32,6 +40,7 @@ function startFeed() {
     });
   }
 }
+
 
 // $("#getFeed").click(function(e) {
 //   e.preventDefault();
