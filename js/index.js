@@ -1,18 +1,41 @@
+
+var isValid = false;
+
+if ( isValid === true ) {
+  var getSwimFeed = $.ajax({
+    type: "GET",
+    dataType: "json",
+    url: "https://j-place.github.io/swimFeed.json",
+    success: function(response) {
+      var data = JSON.parse(getSwimFeed.responseText);
+      createSwimsHtml(data);
+    },
+    error: function(xhr) {
+      console.log("FAIL");
+    }
+  });
+} else {
+  // console.log(isValid);
+  return false;
+}
+
 $("#getFeed").click(function(e) {
   e.preventDefault();
-  $.ajax({
-      type: "GET",
-      dataType: "json",
-      url: "https://j-place.github.io/swimFeed.json",
-      success: function(response) {
-        // var data = JSON.parse(response);
-        var data = response;
-        createSwimsHtml(data);
-      },
-      error: function() {
-        console.log("FAIL");
-      }
-      });
+  console.log(isValid);
+  // $.ajax({
+  //     type: "GET",
+  //     dataType: "json",
+  //     url: "https://j-place.github.io/swimFeed.json",
+  //     success: function(response) {
+  //       // var data = JSON.parse(response);
+  //       var data = response;
+  //       createSwimsHtml(data);
+  //     },
+  //     error: function() {
+  //       console.log("FAIL");
+  //     }
+  //     });
+  return isValid = true;
 });
 
 $("#getFeed").click(function(e) {
@@ -82,8 +105,6 @@ function createRecordsHtml(recordsData) {
   recordsWrapper.innerHTML = ourGeneratedHTML;
 }
 
-
 $("#disconnectFeed").click(function() {
-  // alert("Test");
   $('#modalDisconnect').modal('show');
 });
