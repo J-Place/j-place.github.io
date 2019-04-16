@@ -31,7 +31,7 @@ function startFeed() {
       dataType: "json",
       url: "https://j-place.github.io/swimFeed.json",
       success: function(response) {
-        var data = JSON.parse(response.responseText);
+        var data = JSON.parse(response);
         createSwimsHtml(data);
       },
       error: function() {
