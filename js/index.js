@@ -13,14 +13,11 @@ $("#authorizeAgree").click(function() {
   isValid = true;
   console.log(isValid);
   $("#modalAuthorize").modal('hide');
-  getFeed();
+  startFeed();
 });
 
-function getFeed(e) {
-  // console.log(isValid);
-  e.preventDefault();
+function startFeed() {
   if ( isValid === true ) {
-    // console.log("Is it valid inside this if statement? " + isValid);
     $.ajax({
       type: "GET",
       dataType: "json",
@@ -35,11 +32,6 @@ function getFeed(e) {
     });
   }
 }
-
-// $("#getFeed").click(function(e) {
-//   e.preventDefault();
-//   isValid = true;
-// });
 
 // $("#getFeed").click(function(e) {
 //   e.preventDefault();
@@ -60,18 +52,6 @@ function getFeed(e) {
 //         console.log("FAIL");
 //       }
 //       });
-// });
-
-// var getSwimFeed = $.ajax({
-//   url: "https://j-place.github.io/swimFeed.json",
-//   type: "GET",
-//   success: function(response) {
-//     var data = JSON.parse(getSwimFeed.responseText);
-//     createSwimsHtml(data);
-//   },
-//   error: function(xhr) {
-//     console.log("FAIL");
-//   }
 // });
 
 var getPersonalRecords = $.ajax({
