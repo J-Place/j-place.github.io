@@ -17,10 +17,10 @@ $("#authorizeAgree").click(function() {
 });
 
 function getFeed() {
-  console.log(isValid);
+  // console.log(isValid);
   if ( isValid === true ) {
-    console.log("Is it valid inside this if statement? " + isValid);
-    var getSwimFeed = $.ajax({
+    // console.log("Is it valid inside this if statement? " + isValid);
+    $.ajax({
       type: "GET",
       dataType: "json",
       url: "https://j-place.github.io/swimFeed.json",
