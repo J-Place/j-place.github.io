@@ -26,58 +26,49 @@ $("#authorizeAgree").click(function() {
 // Agree button starts the feed
 function startFeed() {
   if ( isValid === true ) {
+    // Hide start button and show tabs
+    $("#getStarted").collapse('toggle').on('hidden.bs.collapse', function () {
+      $(".feed-body").collapse('toggle');
+      $("#disconnectFeed").collapse('toggle');
+    });
+    // Get Swims
     $.ajax({
       type: "GET",
       dataType: "json",
       url: "https://j-place.github.io/swimFeed.json",
       success: function(response) {
-        // var data = JSON.parse(response);
         createSwimsHtml(response);
-        $("#getStarted").collapse('toggle').on('hidden.bs.collapse', function () {
-          $(".feed-body").collapse('toggle');
-          $("#disconnectFeed").collapse('toggle');
-        });
       },
       error: function() {
+        console.log("FAIL");
+      }
+    });
+    // Get Personal Records
+    $.ajax({
+      type: "GET",
+      dataType: "json",
+      url: "https://j-place.github.io/personalRecords.json",
+      success: function(recordsResponse) {
+        createRecordsHtml(recordsResponse);
+      },
+      error: function(xhr) {
         console.log("FAIL");
       }
     });
   }
 }
 
-
-// $("#getFeed").click(function(e) {
-//   e.preventDefault();
-//   $.ajax({
-//       type: "GET",
-//       dataType: "json",
-//       url: "https://j-place.github.io/swimFeed.json",
-//       success: function(response) {
-//         // var data = JSON.parse(response);
-//         // var data = response;
-//         createSwimsHtml(response);
-//         $("#getFeed").collapse('toggle').on('hidden.bs.collapse', function () {
-//           $(".feed-body").collapse('toggle');
-//           $("#disconnectFeed").collapse('toggle');
-//         });
-//       },
-//       error: function() {
-//         console.log("FAIL");
-//       }
-//       });
+// var getPersonalRecords = $.ajax({
+//   url: "https://j-place.github.io/personalRecords.json",
+//   type: "GET",
+//   success: function(response) {
+//     var data = JSON.parse(getPersonalRecords.responseText);
+//     createRecordsHtml(data);
+//   },
+//   error: function(xhr) {
+//     console.log("FAIL");
+//   }
 // });
-
-var getPersonalRecords = $.ajax({
-  url: "https://j-place.github.io/personalRecords.json",
-  type: "GET",
-  success: function(response) {
-    var data = JSON.parse(getPersonalRecords.responseText);
-    createRecordsHtml(data);
-  },
-  error: function(xhr) {
-    console.log("FAIL");
-  }
-});
 
 function createSwimsHtml(swimData) {
   var rawTemplate = document.getElementById("swimTemplate").innerHTML;
