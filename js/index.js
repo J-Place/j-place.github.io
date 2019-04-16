@@ -5,10 +5,15 @@
 
 var isValid = false;
 
+$("#authorizeFeed").click(function() {
+  $('#modalAuthorize').modal('show');
+});
+
 $("#authorizeAgree").click(function() {
   console.log("Agree");
   var isValid = true;
   console.log(isValid);
+  ("#authorizeModal").modal('hide');
 });
 
 
@@ -78,10 +83,6 @@ var getPersonalRecords = $.ajax({
   }
 });
 
-var getRecordsData = function() {
-  alert("Call Function");
-}
-
 function createSwimsHtml(swimData) {
   var rawTemplate = document.getElementById("swimTemplate").innerHTML;
   var compiledTemplate = Handlebars.compile(rawTemplate);
@@ -97,10 +98,6 @@ function createRecordsHtml(recordsData) {
   var recordsWrapper = document.getElementById("recordsWrapper");
   recordsWrapper.innerHTML = ourGeneratedHTML;
 }
-
-$("#authorizeFeed").click(function() {
-  $('#modalAuthorize').modal('show');
-});
 
 $("#disconnectFeed").click(function() {
   $('#modalDisconnect').modal('show');
