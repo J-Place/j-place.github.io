@@ -10,32 +10,16 @@ if ( isValid === true ) {
       var data = JSON.parse(getSwimFeed.responseText);
       createSwimsHtml(data);
     },
-    error: function(xhr) {
+    error: function(response) {
       // console.log("FAIL");
     }
   });
 } else {
-  return;
-  // isValid = true;
-  // console.log(isValid);
+
 }
 
 $("#getFeed").click(function(e) {
   e.preventDefault();
-  console.log(isValid);
-  // $.ajax({
-  //     type: "GET",
-  //     dataType: "json",
-  //     url: "https://j-place.github.io/swimFeed.json",
-  //     success: function(response) {
-  //       // var data = JSON.parse(response);
-  //       var data = response;
-  //       createSwimsHtml(data);
-  //     },
-  //     error: function() {
-  //       console.log("FAIL");
-  //     }
-  //     });
   isValid = true;
 });
 
