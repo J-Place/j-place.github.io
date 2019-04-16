@@ -2,7 +2,8 @@
 var isValid = true;
 
 // Check if user is authorized
-function checkUserValidation() {
+var checkUserValidation = function() {
+  console.log("Test");
   if ( isValid === true ) {
     console.log("Should be valid adn load feed.");
     startFeed();
@@ -11,7 +12,7 @@ function checkUserValidation() {
     alert('please click the "Get Started" button.');
   }
 }
-
+ 1
 // User clicks 'Get Started' button ...
 $("#getStarted").click(function() {
   $('#modalAuthorize').modal('show');
