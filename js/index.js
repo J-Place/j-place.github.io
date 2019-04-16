@@ -1,6 +1,8 @@
 // Assuming first time user that is not authorized
 var isValid = true;
 
+
+
 // Check if user is authorized
 var checkUserValidation = function() {
   console.log("Test");
@@ -12,7 +14,13 @@ var checkUserValidation = function() {
     alert('please click the "Get Started" button.');
   }
 }
- 1
+
+
+checkUserValidation();
+
+
+
+
 // User clicks 'Get Started' button ...
 $("#getStarted").click(function() {
   $('#modalAuthorize').modal('show');
