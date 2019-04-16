@@ -18,31 +18,31 @@ if ( isValid === true ) {
 
 }
 
-$("#getFeed").click(function(e) {
-  e.preventDefault();
-  isValid = true;
-});
+// $("#getFeed").click(function(e) {
+//   e.preventDefault();
+//   isValid = true;
+// });
 
-$("#getFeed").click(function(e) {
-  e.preventDefault();
-  $.ajax({
-      type: "GET",
-      dataType: "json",
-      url: "https://j-place.github.io/swimFeed.json",
-      success: function(response) {
-        // var data = JSON.parse(response);
-        // var data = response;
-        createSwimsHtml(response);
-        $("#getFeed").collapse('toggle').on('hidden.bs.collapse', function () {
-          $(".feed-body").collapse('toggle');
-          $("#disconnectFeed").collapse('toggle');
-        });
-      },
-      error: function() {
-        console.log("FAIL");
-      }
-      });
-});
+// $("#getFeed").click(function(e) {
+//   e.preventDefault();
+//   $.ajax({
+//       type: "GET",
+//       dataType: "json",
+//       url: "https://j-place.github.io/swimFeed.json",
+//       success: function(response) {
+//         // var data = JSON.parse(response);
+//         // var data = response;
+//         createSwimsHtml(response);
+//         $("#getFeed").collapse('toggle').on('hidden.bs.collapse', function () {
+//           $(".feed-body").collapse('toggle');
+//           $("#disconnectFeed").collapse('toggle');
+//         });
+//       },
+//       error: function() {
+//         console.log("FAIL");
+//       }
+//       });
+// });
 
 // var getSwimFeed = $.ajax({
 //   url: "https://j-place.github.io/swimFeed.json",
@@ -87,6 +87,10 @@ function createRecordsHtml(recordsData) {
   var recordsWrapper = document.getElementById("recordsWrapper");
   recordsWrapper.innerHTML = ourGeneratedHTML;
 }
+
+$("#authorizeFeed").click(function() {
+  $('#modalAuthorize').modal('show');
+});
 
 $("#disconnectFeed").click(function() {
   $('#modalDisconnect').modal('show');
