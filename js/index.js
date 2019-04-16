@@ -31,14 +31,12 @@ $("#getFeed").click(function(e) {
       url: "https://j-place.github.io/swimFeed.json",
       success: function(response) {
         // var data = JSON.parse(response);
-        var data = response;
-        createSwimsHtml(data);
+        // var data = response;
+        createSwimsHtml(response);
         $("#getFeed").collapse('toggle').on('hidden.bs.collapse', function () {
           $(".feed-body").collapse('toggle');
           $("#disconnectFeed").collapse('toggle');
         });
-        // $("#disconnectFeed").collapse('toggle');
-        // $(".feed-body").collapse('toggle');
       },
       error: function() {
         console.log("FAIL");
