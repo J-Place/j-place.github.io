@@ -28,7 +28,7 @@ function startFeed() {
   if ( isValid === true ) {
     $.ajax({
       type: "GET",
-      dataType: "json",
+      dataType: "html",
       url: "https://j-place.github.io/swimFeed.json",
       success: function(response) {
         var data = JSON.parse(response);
