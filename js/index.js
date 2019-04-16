@@ -18,6 +18,7 @@ $("#authorizeAgree").click(function() {
 });
 
 function getFeed() {
+  console.log(getFeed);
   if ( isValid === true ) {
     var getSwimFeed = $.ajax({
       type: "GET",
