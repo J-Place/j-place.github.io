@@ -4,6 +4,7 @@ var isValid = true;
 // Check if user is authorized
 function checkUserValidation() {
   if ( isValid === true ) {
+    console.log("Should be valid adn load feed.");
     startFeed();
   }
   else if ( isValid === false ) {
