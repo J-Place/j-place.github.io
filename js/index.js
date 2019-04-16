@@ -12,11 +12,13 @@ if ( isValid === true ) {
       createSwimsHtml(data);
     },
     error: function(xhr) {
-      console.log("FAIL");
+      // console.log("FAIL");
     }
   });
 } else {
-  console.log(isValid);
+  // return
+  isValid = true;
+  // console.log(isValid);
 }
 
 $("#getFeed").click(function(e) {
@@ -35,7 +37,7 @@ $("#getFeed").click(function(e) {
   //       console.log("FAIL");
   //     }
   //     });
-  return isValid = true;
+  isValid = true;
 });
 
 $("#getFeed").click(function(e) {
