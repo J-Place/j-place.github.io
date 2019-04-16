@@ -13,7 +13,7 @@ $("#authorizeAgree").click(function() {
   console.log("Agree");
   var isValid = true;
   console.log(isValid);
-  ("#modalAuthorize").modal('hide');
+  $("#modalAuthorize").modal('hide');
 });
 
 
