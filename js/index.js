@@ -1,6 +1,7 @@
 
 var isValid = false;
 
+alert(isValid);
 if ( isValid === true ) {
   var getSwimFeed = $.ajax({
     type: "GET",
