@@ -23,39 +23,37 @@ $("#authorizeAgree").click(function() {
   startFeed();
 });
 
-// Agree button starts the feed
+// Load both feeds - may need to create separate records feed
 function startFeed() {
-  if ( isValid === true ) {
-    // Hide start button and show tabs
-    $("#getStarted").collapse('toggle').on('hidden.bs.collapse', function () {
-      $(".feed-body").collapse('toggle');
-      $("#disconnectFeed").collapse('toggle');
-    });
-    // Get Swims
-    $.ajax({
-      type: "GET",
-      dataType: "json",
-      url: "https://j-place.github.io/swimFeed.json",
-      success: function(response) {
-        createSwimsHtml(response);
-      },
-      error: function() {
-        console.log("FAIL");
-      }
-    });
-    // Get Records
-    $.ajax({
-      type: "GET",
-      dataType: "json",
-      url: "https://j-place.github.io/personalRecords.json",
-      success: function(recordsResponse) {
-        createRecordsHtml(recordsResponse);
-      },
-      error: function(xhr) {
-        console.log("FAIL");
-      }
-    });
-  }
+  // Hide start button and show tabs
+  $("#getStarted").collapse('toggle').on('hidden.bs.collapse', function () {
+    $(".feed-body").collapse('toggle');
+    $("#disconnectFeed").collapse('toggle');
+  });
+  // Get Swims
+  $.ajax({
+    type: "GET",
+    dataType: "json",
+    url: "https://j-place.github.io/swimFeed.json",
+    success: function(response) {
+      createSwimsHtml(response);
+    },
+    error: function() {
+      console.log("FAIL");
+    }
+  });
+  // Get Records
+  $.ajax({
+    type: "GET",
+    dataType: "json",
+    url: "https://j-place.github.io/personalRecords.json",
+    success: function(recordsResponse) {
+      createRecordsHtml(recordsResponse);
+    },
+    error: function(xhr) {
+      console.log("FAIL");
+    }
+  });
 }
 
 // Populate Swims Handlebars Template
