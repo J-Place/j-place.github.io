@@ -56,6 +56,12 @@ function startFeed() {
   });
 }
 
+// To Do: Set up pagination
+function loadMoreSwims() {}
+
+// To Do: Update records per flag in swims data
+function updateRecords() {}
+
 // Populate Swims Handlebars Template
 function createSwimsHtml(swimData) {
   var rawTemplate = document.getElementById("swimTemplate").innerHTML;
