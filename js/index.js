@@ -16,8 +16,7 @@ if ( isValid === true ) {
     }
   });
 } else {
-  // console.log(isValid);
-  return;
+  console.log(isValid);
 }
 
 $("#getFeed").click(function(e) {
