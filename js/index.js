@@ -10,7 +10,6 @@ $("#authorizeFeed").click(function() {
 });
 
 $("#authorizeAgree").click(function() {
-  console.log("Agree");
   var isValid = true;
   console.log(isValid);
   $("#modalAuthorize").modal('hide');
@@ -18,7 +17,7 @@ $("#authorizeAgree").click(function() {
 });
 
 function getFeed() {
-  console.log(getFeed);
+  console.log(isValid);
   if ( isValid === true ) {
     var getSwimFeed = $.ajax({
       type: "GET",
