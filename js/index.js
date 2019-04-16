@@ -19,6 +19,7 @@ $("#authorizeAgree").click(function() {
 function getFeed() {
   console.log(isValid);
   if ( isValid === true ) {
+    console.log("Is it valid inside this if statement? " + isValid);
     var getSwimFeed = $.ajax({
       type: "GET",
       dataType: "json",
