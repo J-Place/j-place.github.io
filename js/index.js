@@ -1,6 +1,11 @@
 
 var isValid = false;
 
+$("#authorizeAgree").click(function() {
+  var isValid = true;
+});
+
+
 if ( isValid === true ) {
   var getSwimFeed = $.ajax({
     type: "GET",
@@ -10,13 +15,12 @@ if ( isValid === true ) {
       var data = JSON.parse(getSwimFeed.responseText);
       createSwimsHtml(data);
     },
-    error: function(response) {
-      // console.log("FAIL");
+    error: function() {
+      console.log("FAIL");
     }
   });
-} else {
-
 }
+
 
 // $("#getFeed").click(function(e) {
 //   e.preventDefault();
