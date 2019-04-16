@@ -1,5 +1,5 @@
 // Assuming first time user that is not authorized
-var isValid = false;
+var isValid = true;
 
 // Check if user is authorized
 function checkUserValidation() {
@@ -43,7 +43,7 @@ function startFeed() {
         console.log("FAIL");
       }
     });
-    // Get Personal Records
+    // Get Records
     $.ajax({
       type: "GET",
       dataType: "json",
@@ -58,18 +58,7 @@ function startFeed() {
   }
 }
 
-// var getPersonalRecords = $.ajax({
-//   url: "https://j-place.github.io/personalRecords.json",
-//   type: "GET",
-//   success: function(response) {
-//     var data = JSON.parse(getPersonalRecords.responseText);
-//     createRecordsHtml(data);
-//   },
-//   error: function(xhr) {
-//     console.log("FAIL");
-//   }
-// });
-
+// Populate Swims Handlebars Template
 function createSwimsHtml(swimData) {
   var rawTemplate = document.getElementById("swimTemplate").innerHTML;
   var compiledTemplate = Handlebars.compile(rawTemplate);
@@ -78,6 +67,7 @@ function createSwimsHtml(swimData) {
   swimsWrapper.innerHTML = ourGeneratedHTML;
 }
 
+// Populate Records Handlebars Template
 function createRecordsHtml(recordsData) {
   var rawTemplate = document.getElementById("recordsTemplate").innerHTML;
   var compiledTemplate = Handlebars.compile(rawTemplate);
@@ -86,6 +76,7 @@ function createRecordsHtml(recordsData) {
   recordsWrapper.innerHTML = ourGeneratedHTML;
 }
 
+// To Do: Revoke Authorization
 $("#disconnectFeed").click(function() {
   $('#modalDisconnect').modal('show');
 });
