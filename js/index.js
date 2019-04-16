@@ -16,8 +16,9 @@ $("#authorizeAgree").click(function() {
   getFeed();
 });
 
-function getFeed() {
+function getFeed(e) {
   // console.log(isValid);
+  e.preventDefault();
   if ( isValid === true ) {
     // console.log("Is it valid inside this if statement? " + isValid);
     $.ajax({
