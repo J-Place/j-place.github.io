@@ -1,8 +1,14 @@
+// $(document).ready(function() {
+//   var api_url = 'https://j-place.github.io/swimFeed.json'
+//   var key = 'test' // not real
+// });
 
 var isValid = false;
 
 $("#authorizeAgree").click(function() {
+  console.log("Agree");
   var isValid = true;
+  console.log(isValid);
 });
 
 
