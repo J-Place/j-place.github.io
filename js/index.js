@@ -33,6 +33,10 @@ function startFeed() {
       success: function(response) {
         // var data = JSON.parse(response);
         createSwimsHtml(response);
+        $("#getFeed").collapse('toggle').on('hidden.bs.collapse', function () {
+          $(".feed-body").collapse('toggle');
+          $("#disconnectFeed").collapse('toggle');
+        });
       },
       error: function() {
         console.log("FAIL");
