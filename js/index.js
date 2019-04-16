@@ -1,25 +1,16 @@
 // Assuming first time user that is not authorized
-var isValid = true;
-
-
+var isValid = false;
 
 // Check if user is authorized
 var checkUserValidation = function() {
-  console.log("Test");
   if ( isValid === true ) {
-    console.log("Should be valid adn load feed.");
     startFeed();
   }
   else if ( isValid === false ) {
     alert('please click the "Get Started" button.');
   }
 }
-
-
 checkUserValidation();
-
-
-
 
 // User clicks 'Get Started' button ...
 $("#getStarted").click(function() {
