@@ -7,7 +7,7 @@ var checkUserValidation = function() {
     startFeed();
   }
   else if ( isValid === false ) {
-    alert('please click the "Get Started" button.');
+    return;
   }
 }
 checkUserValidation();
