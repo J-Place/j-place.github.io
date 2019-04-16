@@ -14,24 +14,25 @@ $("#authorizeAgree").click(function() {
   var isValid = true;
   console.log(isValid);
   $("#modalAuthorize").modal('hide');
+  getFeed();
 });
 
-
-if ( isValid === true ) {
-  var getSwimFeed = $.ajax({
-    type: "GET",
-    dataType: "json",
-    url: "https://j-place.github.io/swimFeed.json",
-    success: function(response) {
-      var data = JSON.parse(getSwimFeed.responseText);
-      createSwimsHtml(data);
-    },
-    error: function() {
-      console.log("FAIL");
-    }
-  });
+function getFeed() {
+  if ( isValid === true ) {
+    var getSwimFeed = $.ajax({
+      type: "GET",
+      dataType: "json",
+      url: "https://j-place.github.io/swimFeed.json",
+      success: function(response) {
+        var data = JSON.parse(getSwimFeed.responseText);
+        createSwimsHtml(data);
+      },
+      error: function() {
+        console.log("FAIL");
+      }
+    });
+  }
 }
-
 
 // $("#getFeed").click(function(e) {
 //   e.preventDefault();
