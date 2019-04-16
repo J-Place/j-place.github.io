@@ -12,7 +12,7 @@ function checkUserValidation() {
 }
 
 // User clicks 'Get Started' button ...
-$("#authorizeFeed").click(function() {
+$("#getStarted").click(function() {
   $('#modalAuthorize').modal('show');
 });
 
