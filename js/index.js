@@ -2,7 +2,6 @@
 var isValid = false;
 
 // Check if user is authorized
-checkUserValidation();
 var checkUserValidation = function() {
   // If authorized, start feed
   if ( isValid === true ) {
@@ -12,6 +11,7 @@ var checkUserValidation = function() {
     return;
   }
 }
+checkUserValidation();
 
 // User clicks 'Get Started' button ...
 $("#getStarted").click(function() {
