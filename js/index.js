@@ -105,6 +105,16 @@ function createRecordsHtml(recordsData) {
   recordsWrapper.innerHTML = ourGeneratedHTML;
 }
 
+
+function showLoadingOverlay() {
+  document.body.className = "loading";
+}
+
+function hideLoadingOverlay() {
+  document.body.className = "";
+}
+
+
 // To Do: Revoke Authorization
 $("#disconnectFeed").click(function() {
   $('#modalDisconnect').modal('show');

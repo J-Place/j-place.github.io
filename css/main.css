@@ -1,18 +1,24 @@
 html {
 	font-size: 10px;
 }
-
 body {
 	font-size: 14px;
 }
-
 .feed-wrapper,
 .records-wrapper {
     width: 100%;
 }
 
-/* Bootstrap Overrides */
+/* Loading Spinner */
 
+.spinner {
+	display: none;
+}
+.loading.spinner {
+	display: block;
+}
+
+/* Bootstrap Overrides */
 .btn {
 	padding: 1rem 1.5rem;
     font-size: 1.3rem;
@@ -27,7 +33,6 @@ body {
 .fade {
 	opacity: 0;
 }
-
 .fade.show {
 	opacity: 1;
 }
@@ -48,27 +53,21 @@ body {
 .modal-backdrop.show {
     opacity: .5;
 }
-
 /* End Bootstrap Overrides */
-
 
 .feed-branding h6 {
 	font-size: 11px;
 	margin: 1rem 0 -3px 13px;
 }
-
 .feed-branding {
 	margin: 0 auto 1rem;
 }
-
 .feed-branding img {
 	display: block;
 }
-
 .feed-description {
     margin: 1rem 0 2.5rem;
 }
-
 #disconnectFeed {
 	position: absolute;
 	right: 25px;
@@ -76,19 +75,15 @@ body {
 	font-size: 13px;
 	color: #CCC;
 }
-
 #disconnectFeed:hover {
 	color: #CCC;
 }
-
-#getFeed {
+#getStarted {
 	margin: 0 0 4rem;
 }
-
 .intro-controls {
 	margin: 2rem auto;
 }
-
 .page-title {
 	margin: 2rem auto 1.5rem;
 	padding: 1rem 0;
@@ -99,63 +94,6 @@ body {
 	padding-left: 1.5rem;
     font-size: 2.7rem;
 }
-
-/* 
-.swimmer-bio {
-    width: 100%;
-	margin: 1rem auto;
-}
-.bio-wrapper {
-	margin-bottom: 2.5rem;
-}
-.bio__image {
-    width: 60px;
-    height: 60px;
-    border-radius: 30px;
-    overflow: hidden;
-    vertical-align: top;
-    margin-right: 0.5rem;
-    margin-bottom: 0.5rem;
-}
-.bio__name {
-	display: inline-block;
-	margin-top: .25rem;
-	margin-right: 1rem;
-}
-.bio__club {
-	font-size: 1.4rem;
-	font-weight: 400;
-	float: left;
-    margin-top: -3.8rem;
-    margin-left: 7rem;
-    margin-bottom: 1.5rem;
-}
-.bio__total-swims,
-.bio__total-distance {
-	display: inline-block;
-	width: 100%;
-}
-.bio__total-swims label,
-.bio__total-distance label {
-	font-size: 1.2rem;
-	display: inline-block;
-	width: 9rem;
-	padding-right: .25rem;
-	text-align: right;
-	height: 1.5rem;
-}
-.bio__total-swims {
-	margin-top: 1rem;
-}
-.bio__item--title {
-	display: inline-block;
-	font-weight: bold;
-	font-size: 1.6rem;
-	color: #56a9e0;
-	height: 1.7rem;
-} 
-*/
-
 .nav {
 	background-color: #fff;
 }
@@ -195,10 +133,6 @@ body {
 	text-align: left;
 	display: inline-block;
 }
-/* .feed__item--tracker-image,
-.feed__item--tracker-name {
-	display: inline-block;
-} */
 .badge__pr {
 	position: relative;
 	margin: -10px auto 0;
@@ -216,9 +150,6 @@ body {
 	display: inline-block;
 	font-size: 10px;
 	font-weight: bold;
-	/*color: #F5A623;*/
-	/*color: #47b90d;*/
-	/*color: #ff8600;*/
 	color: darkgrey;
 	color: #888;
     line-height: 30px;
@@ -306,6 +237,8 @@ body {
     background-color: #fff;
     border-color: #dee2e6 #dee2e6 #fff #dee2e6;
 }
+/* End Bootstrap Nav Styles */
+
 .tab-panel--title {
 	margin: 0 1.5rem;
 	padding: 3rem 0 2.5rem;
@@ -316,61 +249,6 @@ body {
 	.swim-feed .page-header {
 		padding-bottom: 0.5rem;
 	}
-	/*
-	.bio-wrapper {
-		margin-bottom: 0.5rem;
-	}
-	.bio__item--title {
-		font-size: 1.8rem;
-		height: 1.5rem;
-	}
-	#bioWrapper .bio__image {
-	    vertical-align: middle;
-	    margin-right: 1rem;
-	    margin-bottom: 0.5rem;
-	}
-	#bioWrapper .bio__name {
-		font-size: 2rem;
-	}
-	#bioWrapper .bio__name:after {
-		content: "|";
-		color: #ccc;
-		font-size: 15px;
-		font-weight: 300;
-		padding-left: 1rem;
-	}
-	#bioWrapper .bio__club {
-		font-size: 1.5rem;
-        font-weight: 500;
-        font-style: normal;
-	    display: inline-block;
-	    float: none;
-	    margin-left: auto;
-	    margin-right: 1rem;
-	    margin-bottom: 0;
-    }
-	.bio__club:after {
-		content: "|";
-		color: #ccc;
-		font-size: 15px;
-		font-weight: 300;
-		padding-left: 1.25rem;
-	}
-	.bio__total-swims label {
-		width: auto;
-	}
-	.bio__total-swims,
-	.bio__total-distance {
-		width: auto;
-	}
-	.bio__total-swims:after {
-		content: "|";
-		color: #ccc;
-		font-size: 15px;
-		font-weight: 300;
-		padding-left: 1rem;
-	}
-*/
 	.nav-tabs {
 	    border-bottom: 1px solid #dee2e6;
 	    padding-top: 1.5rem;
