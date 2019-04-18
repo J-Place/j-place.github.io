@@ -2,7 +2,7 @@
 var isAuthorizedUser = false;
 
 // Check if user is authorized
-var checkUserValidation = function() {
+var checkUserAuthorization = function() {
   if ( isAuthorizedUser === true ) {
     // Hide get started button and show tabs
     $("#getStarted").collapse('toggle').on('hidden.bs.collapse', function () {
@@ -16,8 +16,9 @@ var checkUserValidation = function() {
     return;
   }
 }
-checkUserValidation();
+checkUserAuthorization();
 
+console.log(isAuthorizedUser);
 
 // This is to mock the authorization process //////////////////////////////
 $("#getStarted").click(function() {
@@ -25,9 +26,13 @@ $("#getStarted").click(function() {
 });
 $("#authorizeAgree").click(function() {
   isAuthorizedUser = true;
+  console.log(isAuthorizedUser);
   $("#modalAuthorize").modal('hide');
-  loadLatestSwims();
-  loadSwimRecords();
+  console.log(isAuthorizedUser);
+  // loadLatestSwims();
+  // loadSwimRecords();
+  checkUserAuthorization();
+  console.log(isAuthorizedUser);
 });
 // End mock authorization //////////////////////////////
 
