@@ -1,11 +1,16 @@
-// Assuming first time user that is not authorized
+// Assume first time user is not authorized
 var isValid = false;
 
 // Check if user is authorized
 var checkUserValidation = function() {
-  // If authorized, start feed
   if ( isValid === true ) {
-    startFeed();
+    // Hide get started button and show tabs
+    $("#getStarted").collapse('toggle').on('hidden.bs.collapse', function () {
+      $(".feed-body").collapse('toggle');
+      $("#disconnectFeed").collapse('toggle');
+    });
+    loadLatestSwims(); // Loads the first X number of swims
+    loadSwimRecords();
   }
   else if ( isValid === false ) {
     return;
@@ -13,26 +18,20 @@ var checkUserValidation = function() {
 }
 checkUserValidation();
 
-// User clicks 'Get Started' button ...
+// This is to mock the authorization process //////////////////////////////
 $("#getStarted").click(function() {
   $('#modalAuthorize').modal('show');
 });
-
-// And clicks "I Agree" in modal window
 $("#authorizeAgree").click(function() {
   isValid = true;
   $("#modalAuthorize").modal('hide');
-  startFeed();
+  loadLatestSwims();
+  loadSwimRecords();
 });
+// End authorization mock //////////////////////////////
 
-// Load both feeds - may need to create separate records feed
-function startFeed() {
-  // Hide start button and show tabs
-  $("#getStarted").collapse('toggle').on('hidden.bs.collapse', function () {
-    $(".feed-body").collapse('toggle');
-    $("#disconnectFeed").collapse('toggle');
-  });
-  // Get Swims
+// Get latest swim data
+function loadLatestSwims() {
   $.ajax({
     type: "GET",
     dataType: "json",
@@ -44,7 +43,10 @@ function startFeed() {
       console.log("FAIL");
     }
   });
-  // Get Records
+}
+
+// Get personal records data
+function loadSwimRecords() {
   $.ajax({
     type: "GET",
     dataType: "json",
@@ -61,10 +63,7 @@ function startFeed() {
 // To Do: Set up pagination
 function loadMoreSwims() {}
 
-// To Do: Update records per flag in swims data
-function updateRecords() {}
-
-// Populate Swims Handlebars Template
+// Populate Swim Feed Template
 function createSwimsHtml(swimData) {
   var rawTemplate = document.getElementById("swimTemplate").innerHTML;
   var compiledTemplate = Handlebars.compile(rawTemplate);
@@ -73,7 +72,7 @@ function createSwimsHtml(swimData) {
   swimsWrapper.innerHTML = ourGeneratedHTML;
 }
 
-// Populate Records Handlebars Template
+// Populate Personal Records Template
 function createRecordsHtml(recordsData) {
   var rawTemplate = document.getElementById("recordsTemplate").innerHTML;
   var compiledTemplate = Handlebars.compile(rawTemplate);
