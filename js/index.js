@@ -13,7 +13,7 @@ var checkUserAuthorization = function() {
     loadSwimRecords();
   }
   else if ( isAuthorizedUser === false ) {
-    return;
+    $("#getStarted").collapse('toggle');
   }
 }
 checkUserAuthorization();
