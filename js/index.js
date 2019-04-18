@@ -18,7 +18,6 @@ var checkUserAuthorization = function() {
 }
 checkUserAuthorization();
 
-console.log(isAuthorizedUser);
 
 // This is to mock the authorization process //////////////////////////////
 $("#getStarted").click(function() {
@@ -26,13 +25,9 @@ $("#getStarted").click(function() {
 });
 $("#authorizeAgree").click(function() {
   isAuthorizedUser = true;
-  console.log(isAuthorizedUser);
   $("#modalAuthorize").modal('hide');
-  console.log(isAuthorizedUser);
-  // loadLatestSwims();
-  // loadSwimRecords();
   checkUserAuthorization();
-  console.log(isAuthorizedUser);
+
 });
 // End mock authorization //////////////////////////////
 
@@ -68,7 +63,7 @@ function loadSwimRecords() {
   });
 }
 
-// To Do: Set up pagination
+// To Do: Append more swims to latest swims
 function loadMoreSwims() {}
 
 // Populate Swim Feed Template
