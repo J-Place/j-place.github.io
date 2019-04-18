@@ -54,10 +54,10 @@ function loadLatestSwims() {
   xhr.open('GET', 'https://j-place.github.io/swimFeed.json', true);
   xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
   // xhr.withCredentials = true;
-  xhr.onload = function (response) {
+  xhr.onload = function () {
     if (xhr.status === 200) {
       createSwimsHtml(response);
-      // const response = JSON.parse(xhr.response);
+      const response = JSON.parse(xhr.response);
       // coachesFromApi.push(
         // `${response.firstName} ${response.lastName} ${response.city} ${response.state}`);
       // return (coachesFromApi);
