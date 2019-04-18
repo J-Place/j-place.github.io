@@ -109,6 +109,8 @@ function createRecordsHtml(recordsData) {
 
 
 function showLoadingOverlay() {
+  console.log("Loading");
+  $("body").addClass("test");
   document.body.className = "loading";
 }
 
