@@ -1,9 +1,9 @@
 // Assume first time user is not authorized
-var isValid = false;
+var isAuthorizedUser = false;
 
 // Check if user is authorized
 var checkUserValidation = function() {
-  if ( isValid === true ) {
+  if ( isAuthorizedUser === true ) {
     // Hide get started button and show tabs
     $("#getStarted").collapse('toggle').on('hidden.bs.collapse', function () {
       $(".feed-body").collapse('toggle');
@@ -12,7 +12,7 @@ var checkUserValidation = function() {
     loadLatestSwims(); // Loads the first X number of swims
     loadSwimRecords();
   }
-  else if ( isValid === false ) {
+  else if ( isAuthorizedUser === false ) {
     return;
   }
 }
@@ -23,7 +23,7 @@ $("#getStarted").click(function() {
   $('#modalAuthorize').modal('show');
 });
 $("#authorizeAgree").click(function() {
-  isValid = true;
+  isAuthorizedUser = true;
   $("#modalAuthorize").modal('hide');
   loadLatestSwims();
   loadSwimRecords();
