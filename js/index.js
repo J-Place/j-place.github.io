@@ -18,6 +18,7 @@ var checkUserValidation = function() {
 }
 checkUserValidation();
 
+
 // This is to mock the authorization process //////////////////////////////
 $("#getStarted").click(function() {
   $('#modalAuthorize').modal('show');
@@ -28,7 +29,8 @@ $("#authorizeAgree").click(function() {
   loadLatestSwims();
   loadSwimRecords();
 });
-// End authorization mock //////////////////////////////
+// End mock authorization //////////////////////////////
+
 
 // Get latest swim data
 function loadLatestSwims() {
@@ -37,6 +39,7 @@ function loadLatestSwims() {
     dataType: "json",
     url: "https://j-place.github.io/swimFeed.json",
     success: function(response) {
+      console.log(response);
       createSwimsHtml(response);
     },
     error: function() {
