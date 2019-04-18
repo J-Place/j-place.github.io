@@ -1,5 +1,5 @@
 // Assume first time user is not authorized
-var isAuthorizedUser = true;
+var isAuthorizedUser = false;
 
 // Check if user is authorized
 var checkUserValidation = function() {
