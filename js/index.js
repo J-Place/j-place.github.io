@@ -33,19 +33,40 @@ $("#authorizeAgree").click(function() {
 
 
 // Get latest swim data
+// function loadLatestSwims() {
+//   $.ajax({
+//     type: "GET",
+//     dataType: "json",
+//     url: "https://j-place.github.io/swimFeed.json",
+//     success: function(response) {
+//       console.log(response);
+//       createSwimsHtml(response);
+//     },
+//     error: function() {
+//       console.log("FAIL");
+//     }
+//   });
+// }
+
 function loadLatestSwims() {
-  $.ajax({
-    type: "GET",
-    dataType: "json",
-    url: "https://j-place.github.io/swimFeed.json",
-    success: function(response) {
-      console.log(response);
+  const xhr = new XMLHttpRequest();
+
+  xhr.open('GET', 'https://j-place.github.io/swimFeed.json', true);
+  xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
+  // xhr.withCredentials = true;
+  xhr.onload = function () {
+    if (xhr.status === 200) {
       createSwimsHtml(response);
-    },
-    error: function() {
-      console.log("FAIL");
+      // const response = JSON.parse(xhr.response);
+      // coachesFromApi.push(
+        // `${response.firstName} ${response.lastName} ${response.city} ${response.state}`);
+      // return (coachesFromApi);
+      return;
     }
-  });
+    alert("Error retrieving swim information");
+    return null;
+  };
+  xhr.send();
 }
 
 // Get personal records data
