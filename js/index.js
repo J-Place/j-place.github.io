@@ -54,7 +54,7 @@ function loadLatestSwims() {
   xhr.open('GET', 'https://j-place.github.io/swimFeed.json', true);
   xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
   // xhr.withCredentials = true;
-  xhr.onload = function () {
+  xhr.onload = function (response) {
     if (xhr.status === 200) {
       createSwimsHtml(response);
       // const response = JSON.parse(xhr.response);
