@@ -49,13 +49,15 @@ $("#authorizeAgree").click(function() {
 // }
 
 function loadLatestSwims() {
+  showLoadingOverlay();
   const xhr = new XMLHttpRequest();
 
   xhr.open('GET', 'https://j-place.github.io/swimFeed.json', true);
   xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
   // xhr.withCredentials = true;
   xhr.onload = function () {
-    if (xhr.status === 200) {      
+    if (xhr.status === 200) {
+      hideLoadingOverlay();
       const response = JSON.parse(xhr.response);
       // coachesFromApi.push(
         // `${response.firstName} ${response.lastName} ${response.city} ${response.state}`);
