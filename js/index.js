@@ -4,6 +4,7 @@ var isAuthorizedUser = false;
 // Check if user is authorized
 var checkUserAuthorization = function() {
   if ( isAuthorizedUser === true ) {
+    console.log(isAuthorizedUser);
     // If authorized, hide Get Started button and show tabs
     $("#getStarted").collapse('toggle').on('hidden.bs.collapse', function () {
       $(".feed-body").collapse('toggle');
@@ -13,6 +14,7 @@ var checkUserAuthorization = function() {
     loadLatestSwims();
   }
   else if ( isAuthorizedUser === false ) {
+    console.log(isAuthorizedUser);
     // If not authorized, show Get Started button
     $(".feed-body").collapse('toggle').on('hidden.bs.collapse', function () {
       $("#disconnectFeed").collapse('toggle');
