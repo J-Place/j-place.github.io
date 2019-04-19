@@ -146,7 +146,7 @@ function hideLoadingOverlay() {
 
 function disconnetFeed() {
   var isAuthorizedUser = false;
-  checkUserAuthorization();
+  checkUserAuthorization(isAuthorizedUser);
 }
 
 // To Do: Set up revoke authorization
