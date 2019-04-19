@@ -145,8 +145,8 @@ function hideLoadingOverlay() {
 }
 
 function disconnetFeed() {
-  var isAuthorizedUser = false;
-  checkUserAuthorization(isAuthorizedUser);
+  isAuthorizedUser = false;
+  checkUserAuthorization();
 }
 
 // To Do: Set up revoke authorization
@@ -154,6 +154,6 @@ $("#disconnectFeed").click(function() {
   $('#modalDisconnect').modal('show');
 });
 
-$("#btnDisconnectFeed").click(function() {
+$("#disconnectAgree").click(function() {
   disconnetFeed();
 });
