@@ -9,7 +9,7 @@ var checkUserAuthorization = function() {
       $(".feed-body").collapse('toggle');
       $("#disconnectFeed").collapse('toggle');
     });
-    loadLatestSwims(); // Loads the first X number of swims
+    // loadLatestSwims(); // Loads the first X number of swims
   }
   else if ( isAuthorizedUser === false ) {
     $("#getStarted").collapse('toggle');
