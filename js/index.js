@@ -12,13 +12,16 @@ var checkUserAuthorization = function() {
     });
      // Then load the latest X number of swims
     loadLatestSwims();
+    return;
   }
   else if ( isAuthorizedUser === false ) {
     // console.log(isAuthorizedUser);
     // If not authorized, show Get Started button
-    $("#getStarted").collapse('toggle');
-    $(".feed-body").collapse('toggle');
-    $("#disconnectFeed").collapse('toggle');
+    $("#getStarted").collapse('toggle').on('hidden.bs.collapse', function () {
+      $(".feed-body").collapse('toggle');
+      $("#disconnectFeed").collapse('toggle');
+    });
+    // return;
   }
 }
 checkUserAuthorization();
