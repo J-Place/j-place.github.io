@@ -63,7 +63,7 @@ function loadLatestSwims() {
   xhr.open('GET', 'https://j-place.github.io/swimFeed.json', true);
   xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
   // xhr.withCredentials = true;
-  xhr.isAuthorizedUser = true;
+  // xhr.isAuthorizedUser = true;
   xhr.onload = function () {
     if (xhr.status === 200) {
       hideLoadingOverlay();
