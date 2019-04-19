@@ -1,11 +1,9 @@
 // Assume first time user is not authorized
 var isAuthorizedUser = false;
-console.log(isAuthorizedUser);
 
 // Check if user is authorized
 var checkUserAuthorization = function() {
   if ( isAuthorizedUser === true ) {
-    console.log("Should be true");
     // If authorized, hide Get Started button and show tabs
     $("#getStarted").collapse('hide').on('hidden.bs.collapse', function () {
       $(".feed-body").collapse('show');
@@ -13,21 +11,12 @@ var checkUserAuthorization = function() {
     });
      // Then load the latest X number of swims
     loadLatestSwims();
-    // return;
   }
   else if ( isAuthorizedUser === false ) {
-    console.log("Should be false");
     // If not authorized, show Get Started button
-
-    // $(".feed-body").collapse('hide');
-    // $("#disconnectFeed").collapse('hide');
-    // $("#getStarted").collapse('show');
-
-    $(".feed-body").collapse('hide').on('hidden.bs.collapse', function () {
-      $("#getStarted").collapse('show');
-      $("#disconnectFeed").collapse('hide');
-    });
-    // return;
+    $(".feed-body").collapse('hide');
+    $("#disconnectFeed").collapse('hide');
+    $("#getStarted").collapse('show');
   }
 }
 checkUserAuthorization();
@@ -71,7 +60,6 @@ function loadLatestSwims() {
   xhr.open('GET', 'https://j-place.github.io/swimFeed.json', true);
   xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
   // xhr.withCredentials = true;
-  // xhr.isAuthorizedUser = true;
   xhr.onload = function () {
     if (xhr.status === 200) {
       hideLoadingOverlay();
@@ -135,7 +123,6 @@ function createRecordsHtml(recordsData) {
 }
 
 function showLoadingOverlay() {
-  // console.log("Loading");
   $("body").addClass("test");
   document.body.className = "loading";
 }
