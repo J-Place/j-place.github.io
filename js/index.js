@@ -13,7 +13,7 @@ var checkUserAuthorization = function() {
     });
      // Then load the latest X number of swims
     loadLatestSwims();
-    return;
+    // return;
   }
   else if ( isAuthorizedUser === false ) {
     console.log("Should be false");
