@@ -9,7 +9,7 @@ var checkUserAuthorization = function() {
     // If authorized, hide Get Started button and show tabs
     $("#getStarted").collapse('hide').on('hidden.bs.collapse', function () {
       $(".feed-body").collapse('show');
-      $("#disconnectFeed").collapse('hide');
+      $("#disconnectFeed").collapse('show');
     });
      // Then load the latest X number of swims
     loadLatestSwims();
@@ -18,14 +18,16 @@ var checkUserAuthorization = function() {
   else if ( isAuthorizedUser === false ) {
     console.log("Should be false");
     // If not authorized, show Get Started button
-    $(".feed-body").collapse('hide');
-    $("#disconnectFeed").collapse('show');
-    $("#getStarted").collapse('show');
-    // $("#getStarted").collapse('toggle').on('hidden.bs.collapse', function () {
-      // $(".feed-body").collapse('toggle');
-      // $("#disconnectFeed").collapse('toggle');
-    // });
-    // return;
+
+    // $(".feed-body").collapse('hide');
+    // $("#disconnectFeed").collapse('show');
+    // $("#getStarted").collapse('show');
+
+    $(".feed-body").collapse('hide').on('hidden.bs.collapse', function () {
+      $("#getStarted").collapse('show');
+      $("#disconnectFeed").collapse('show');
+    });
+    return;
   }
 }
 checkUserAuthorization();
