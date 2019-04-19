@@ -95,6 +95,7 @@ function loadPersonalRecords() {
 
 // Get personal records when tab is clicked
 $("#personal-records").click(function() {
+  alert("Get records");
   loadPersonalRecords();
 });
 
