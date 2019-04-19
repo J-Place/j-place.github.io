@@ -1,3 +1,8 @@
+
+
+
+
+////////////////////////////////////////////
 // Assume first time user is not authorized
 var isAuthorizedUser = false;
 
@@ -10,10 +15,10 @@ var checkUserAuthorization = function() {
       $("#disconnectFeed").collapse('show');
     });
      // Then load the latest X number of swims
-    loadLatestSwims();
+    getLatestSwims();
   }
   else if ( isAuthorizedUser === false ) {
-    // If not authorized, show Get Started button
+    // If not authorized, show Get Started button and hide tabs
     $(".feed-body").collapse('hide');
     $("#disconnectFeed").collapse('hide');
     $("#getStarted").collapse('show');
@@ -22,7 +27,10 @@ var checkUserAuthorization = function() {
 checkUserAuthorization();
 
 
-// This is to mock the authorization process //////////////////////////////
+
+
+////////////////////////////////////////////
+// Modal to mock the authorization window
 $("#getStarted").click(function() {
   $('#modalAuthorize').modal('show');
 });
@@ -32,28 +40,14 @@ $("#authorizeAgree").click(function() {
   checkUserAuthorization();
 
 });
-// End mock authorization //////////////////////////////
+// End mock authorization
 
 
 
+
+////////////////////////////////////////////
 // Get latest swim data
-
-// function loadLatestSwims() {
-//   $.ajax({
-//     type: "GET",
-//     dataType: "json",
-//     url: "https://j-place.github.io/swimFeed.json",
-//     success: function(response) {
-//       console.log(response);
-//       createSwimsHtml(response);
-//     },
-//     error: function() {
-//       console.log("FAIL");
-//     }
-//   });
-// }
-
-function loadLatestSwims() {
+function getLatestSwims() {
   showLoadingOverlay();
   const xhr = new XMLHttpRequest();
 
@@ -73,8 +67,15 @@ function loadLatestSwims() {
   xhr.send();
 }
 
+// To Do: Append more swims to latest swims
+function loadMoreSwims() {}
 
-function loadPersonalRecords() {
+
+
+
+////////////////////////////////////////////
+// Get personal records
+function getPersonalRecords() {
   showLoadingOverlay();
   const xhr = new XMLHttpRequest();
 
@@ -94,16 +95,15 @@ function loadPersonalRecords() {
   xhr.send();
 }
 
-// Get personal records when tab is clicked
+// Display personal records when tab is clicked
 $("#tabPersonalRecords").click(function() {
-  loadPersonalRecords();
+  getPersonalRecords();
 });
 
 
-// To Do: Append more swims to latest swims
-function loadMoreSwims() {}
 
 
+////////////////////////////////////////////
 // Populate Swim Feed Template
 function createSwimsHtml(swimData) {
   var rawTemplate = document.getElementById("swimTemplate").innerHTML;
@@ -122,8 +122,31 @@ function createRecordsHtml(recordsData) {
   recordsWrapper.innerHTML = ourGeneratedHTML;
 }
 
+
+
+
+////////////////////////////////////////////
+// To Do: Set up account de-authorization
+function disconnetFeed() {
+  isAuthorizedUser = false;
+  checkUserAuthorization();
+}
+
+// Revoke authorization modal
+$("#disconnectFeed").click(function() {
+  $('#modalDisconnect').modal('show');
+});
+ 
+$("#disconnectAgree").click(function() {
+  disconnetFeed();
+});
+
+
+
+
+////////////////////////////////////////////
+// Loading spinner
 function showLoadingOverlay() {
-  $("body").addClass("test");
   document.body.className = "loading";
 }
 
@@ -131,16 +154,5 @@ function hideLoadingOverlay() {
   document.body.className = "";
 }
 
-function disconnetFeed() {
-  isAuthorizedUser = false;
-  checkUserAuthorization();
-}
 
-// To Do: Set up revoke authorization
-$("#disconnectFeed").click(function() {
-  $('#modalDisconnect').modal('show');
-});
 
-$("#disconnectAgree").click(function() {
-  disconnetFeed();
-});
