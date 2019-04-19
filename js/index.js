@@ -1,10 +1,11 @@
 // Assume first time user is not authorized
 var isAuthorizedUser = false;
 console.log(isAuthorizedUser);
+
 // Check if user is authorized
 var checkUserAuthorization = function() {
   if ( isAuthorizedUser === true ) {
-    console.log(isAuthorizedUser);
+    console.log("Should be true");
     // If authorized, hide Get Started button and show tabs
     $("#getStarted").collapse('hide').on('hidden.bs.collapse', function () {
       $(".feed-body").collapse('show');
@@ -15,7 +16,7 @@ var checkUserAuthorization = function() {
     return;
   }
   else if ( isAuthorizedUser === false ) {
-    // console.log(isAuthorizedUser);
+    console.log("Should be false");
     // If not authorized, show Get Started button
     $(".feed-body").collapse('hide');
     $("#disconnectFeed").collapse('show');
