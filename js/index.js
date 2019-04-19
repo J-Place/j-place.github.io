@@ -19,14 +19,14 @@ var checkUserAuthorization = function() {
     console.log("Should be false");
     // If not authorized, show Get Started button
 
-    $(".feed-body").collapse('hide');
-    $("#disconnectFeed").collapse('show');
-    $("#getStarted").collapse('show');
+    // $(".feed-body").collapse('hide');
+    // $("#disconnectFeed").collapse('hide');
+    // $("#getStarted").collapse('show');
 
-    // $(".feed-body").collapse('hide').on('hidden.bs.collapse', function () {
-    //   $("#getStarted").collapse('show');
-    //   $("#disconnectFeed").collapse('show');
-    // });
+    $(".feed-body").collapse('hide').on('hidden.bs.collapse', function () {
+      $("#getStarted").collapse('show');
+      $("#disconnectFeed").collapse('hide');
+    });
     // return;
   }
 }
