@@ -1,10 +1,10 @@
 // Assume first time user is not authorized
 var isAuthorizedUser = false;
-
+console.log(isAuthorizedUser);
 // Check if user is authorized
 var checkUserAuthorization = function() {
   if ( isAuthorizedUser === true ) {
-    // console.log(isAuthorizedUser);
+    console.log(isAuthorizedUser);
     // If authorized, hide Get Started button and show tabs
     $("#getStarted").collapse('toggle').on('hidden.bs.collapse', function () {
       $(".feed-body").collapse('toggle');
