@@ -4,7 +4,7 @@ var isAuthorizedUser = false;
 // Check if user is authorized
 var checkUserAuthorization = function() {
   if ( isAuthorizedUser === true ) {
-    // Hide get started button and show tabs
+    // If authorized, hide Get Started button and show tabs
     $("#getStarted").collapse('toggle').on('hidden.bs.collapse', function () {
       $(".feed-body").collapse('toggle');
       $("#disconnectFeed").collapse('toggle');
@@ -136,8 +136,16 @@ function hideLoadingOverlay() {
   document.body.className = "";
 }
 
+function disconnetFeed() {
+  var isAuthorizedUser = false;
+  checkUserAuthorization();
+}
 
 // To Do: Revoke Authorization
 $("#disconnectFeed").click(function() {
   $('#modalDisconnect').modal('show');
+});
+
+$("#btnDisconnectFeed").click(function() {
+  disconnetFeed();
 });
