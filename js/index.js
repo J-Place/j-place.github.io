@@ -4,7 +4,7 @@ var isAuthorizedUser = false;
 // Check if user is authorized
 var checkUserAuthorization = function() {
   if ( isAuthorizedUser === true ) {
-    console.log(isAuthorizedUser);
+    // console.log(isAuthorizedUser);
     // If authorized, hide Get Started button and show tabs
     $("#getStarted").collapse('toggle').on('hidden.bs.collapse', function () {
       $(".feed-body").collapse('toggle');
@@ -14,7 +14,7 @@ var checkUserAuthorization = function() {
     loadLatestSwims();
   }
   else if ( isAuthorizedUser === false ) {
-    console.log(isAuthorizedUser);
+    // console.log(isAuthorizedUser);
     // If not authorized, show Get Started button
     $("#getStarted").collapse('toggle').on('hidden.bs.collapse', function () {
       $(".feed-body").collapse('toggle');
@@ -127,7 +127,7 @@ function createRecordsHtml(recordsData) {
 }
 
 function showLoadingOverlay() {
-  console.log("Loading");
+  // console.log("Loading");
   $("body").addClass("test");
   document.body.className = "loading";
 }
