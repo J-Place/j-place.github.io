@@ -16,10 +16,9 @@ var checkUserAuthorization = function() {
   else if ( isAuthorizedUser === false ) {
     // console.log(isAuthorizedUser);
     // If not authorized, show Get Started button
-    $("#getStarted").collapse('toggle').on('hidden.bs.collapse', function () {
-      $(".feed-body").collapse('hide');
-      $("#disconnectFeed").collapse('hide');
-    });
+    $("#getStarted").collapse('toggle');
+    $(".feed-body").collapse('toggle');
+    $("#disconnectFeed").collapse('toggle');
   }
 }
 checkUserAuthorization();
