@@ -9,9 +9,11 @@ var checkUserAuthorization = function() {
       $(".feed-body").collapse('toggle');
       $("#disconnectFeed").collapse('toggle');
     });
-    // loadLatestSwims(); // Loads the first X number of swims
+     // Then load the latest X number of swims
+    loadLatestSwims();
   }
   else if ( isAuthorizedUser === false ) {
+    // If not authorized, show Get Started button
     $("#getStarted").collapse('toggle');
   }
 }
