@@ -10,13 +10,13 @@ var checkUserAuthorization = function() {
       $("#disconnectFeed").collapse('toggle');
     });
     loadLatestSwims(); // Loads the first X number of swims
-    loadSwimRecords();
   }
   else if ( isAuthorizedUser === false ) {
     $("#getStarted").collapse('toggle');
   }
 }
 checkUserAuthorization();
+
 
 
 // This is to mock the authorization process //////////////////////////////
@@ -32,7 +32,10 @@ $("#authorizeAgree").click(function() {
 // End mock authorization //////////////////////////////
 
 
+
+
 // Get latest swim data
+
 // function loadLatestSwims() {
 //   $.ajax({
 //     type: "GET",
@@ -55,6 +58,7 @@ function loadLatestSwims() {
   xhr.open('GET', 'https://j-place.github.io/swimFeed.json', true);
   xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
   // xhr.withCredentials = true;
+  xhr.isAuthorizedUser = true;
   xhr.onload = function () {
     if (xhr.status === 200) {
       hideLoadingOverlay();
@@ -62,29 +66,44 @@ function loadLatestSwims() {
       createSwimsHtml(response);
       return;
     }
-    alert("Error retrieving swim information");
+    console.log("Error retrieving swim information");
     return null;
   };
   xhr.send();
 }
 
-// Get personal records data
-function loadSwimRecords() {
-  $.ajax({
-    type: "GET",
-    dataType: "json",
-    url: "https://j-place.github.io/personalRecords.json",
-    success: function(recordsResponse) {
-      createRecordsHtml(recordsResponse);
-    },
-    error: function(xhr) {
-      console.log("FAIL");
+
+function loadPersonalRecords() {
+  showLoadingOverlay();
+  const xhr = new XMLHttpRequest();
+
+  xhr.open('GET', 'https://j-place.github.io/personalRecords.json', true);
+  xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
+  // xhr.withCredentials = true;
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      hideLoadingOverlay();
+      const response = JSON.parse(xhr.response);
+      createRecordsHtml(response);
+      return;
     }
-  });
+    console.log("Error retrieving swim information");
+    return null;
+  };
+  xhr.send();
 }
+
+// Get personal records when tab is clicked
+$("#personal-records").click(function() {
+  loadPersonalRecords();
+});
+
 
 // To Do: Append more swims to latest swims
 function loadMoreSwims() {}
+
+
+
 
 // Populate Swim Feed Template
 function createSwimsHtml(swimData) {
