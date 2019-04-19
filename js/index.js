@@ -27,7 +27,7 @@ var checkUserAuthorization = function() {
     //   $("#getStarted").collapse('show');
     //   $("#disconnectFeed").collapse('show');
     // });
-    return;
+    // return;
   }
 }
 checkUserAuthorization();
