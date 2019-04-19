@@ -8,7 +8,7 @@ var checkUserAuthorization = function() {
     // If authorized, hide Get Started button and show tabs
     $("#getStarted").collapse('hide').on('hidden.bs.collapse', function () {
       $(".feed-body").collapse('show');
-      $("#disconnectFeed").collapse('show');
+      $("#disconnectFeed").collapse('hide');
     });
      // Then load the latest X number of swims
     loadLatestSwims();
