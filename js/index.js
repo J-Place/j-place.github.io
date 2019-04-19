@@ -14,11 +14,13 @@ var checkUserAuthorization = function() {
   }
   else if ( isAuthorizedUser === false ) {
     // If not authorized, show Get Started button
-    $("#getStarted").collapse('toggle');
+    $(".feed-body").collapse('toggle').on('hidden.bs.collapse', function () {
+      $("#disconnectFeed").collapse('toggle');
+      $("#getStarted").collapse('toggle');
+    });
   }
 }
 checkUserAuthorization();
-
 
 
 // This is to mock the authorization process //////////////////////////////
@@ -32,7 +34,6 @@ $("#authorizeAgree").click(function() {
 
 });
 // End mock authorization //////////////////////////////
-
 
 
 
@@ -105,8 +106,6 @@ $("#tabPersonalRecords").click(function() {
 function loadMoreSwims() {}
 
 
-
-
 // Populate Swim Feed Template
 function createSwimsHtml(swimData) {
   var rawTemplate = document.getElementById("swimTemplate").innerHTML;
@@ -125,7 +124,6 @@ function createRecordsHtml(recordsData) {
   recordsWrapper.innerHTML = ourGeneratedHTML;
 }
 
-
 function showLoadingOverlay() {
   console.log("Loading");
   $("body").addClass("test");
@@ -141,7 +139,7 @@ function disconnetFeed() {
   checkUserAuthorization();
 }
 
-// To Do: Revoke Authorization
+// To Do: Set up revoke authorization
 $("#disconnectFeed").click(function() {
   $('#modalDisconnect').modal('show');
 });
