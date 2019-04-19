@@ -59,9 +59,6 @@ function loadLatestSwims() {
     if (xhr.status === 200) {
       hideLoadingOverlay();
       const response = JSON.parse(xhr.response);
-      // coachesFromApi.push(
-        // `${response.firstName} ${response.lastName} ${response.city} ${response.state}`);
-      // return (coachesFromApi);
       createSwimsHtml(response);
       return;
     }
