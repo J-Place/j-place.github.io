@@ -146,7 +146,6 @@ function hideLoadingOverlay() {
 
 function disconnetFeed() {
   var isAuthorizedUser = false;
-  console.log(isAuthorizedUser);
   checkUserAuthorization();
 }
 
