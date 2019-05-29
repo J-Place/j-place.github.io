@@ -1,6 +1,6 @@
-
-
-
+let allSwims = {};
+let currentPage = 1;
+let perPage = 10;
 
 ////////////////////////////////////////////
 // Assume first time user is not authorized
@@ -51,14 +51,17 @@ function getLatestSwims() {
   showLoadingOverlay();
   const xhr = new XMLHttpRequest();
 
-  xhr.open('GET', 'https://j-place.github.io/swimFeed.json', true);
+  xhr.open('GET', '/swimFeedJP.json?ver=1', true);
+  // xhr.open('GET', '/swimFeedJP.json?asd=1', true);
   xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
   // xhr.withCredentials = true;
   xhr.onload = function () {
     if (xhr.status === 200) {
       hideLoadingOverlay();
       const response = JSON.parse(xhr.response);
-      createSwimsHtml(response);
+      allSwims = response.swims;
+      const stripped = { ...response, swims: response.swims.slice(0, (perPage - 1) * currentPage++) };
+      createSwimsHtml(stripped);
       return;
     }
     console.log("Error retrieving swim information");
@@ -68,7 +71,23 @@ function getLatestSwims() {
 }
 
 // To Do: Append more swims to latest swims
-function loadMoreSwims() {}
+function loadMoreSwims() {
+  let endElement = (currentPage * perPage) - 1;
+  let startElement = perPage * (currentPage - 1);
+  if (startElement > allSwims.length) {
+    console.log('no more elements to load');
+    return;
+  }
+  if (endElement >= allSwims.length - 1) endElement = allSwims.length - 1;
+  console.log(`showing swims from ${startElement} to ${endElement}`);
+  let result = {
+    swims: allSwims.slice(startElement, endElement)
+  }
+  const rawTemplate = document.getElementById("swimTemplate").innerHTML;
+  const compiledTemplate = Handlebars.compile(rawTemplate);
+  $('#swimsWrapper').append(compiledTemplate(result));
+  currentPage++;
+}
 
 
 
@@ -79,7 +98,7 @@ function getPersonalRecords() {
   showLoadingOverlay();
   const xhr = new XMLHttpRequest();
 
-  xhr.open('GET', 'https://j-place.github.io/personalRecords.json', true);
+  xhr.open('GET', 'personalRecords.json', true);
   xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
   // xhr.withCredentials = true;
   xhr.onload = function () {
@@ -153,6 +172,12 @@ function showLoadingOverlay() {
 function hideLoadingOverlay() {
   document.body.className = "";
 }
+
+window.onscroll = function(ev) {
+    if ((window.innerHeight + Math.ceil(window.pageYOffset + 1)) >= document.body.offsetHeight) {
+      loadMoreSwims();
+    }
+};
 
 
 
