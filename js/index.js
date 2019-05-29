@@ -174,7 +174,7 @@ function hideLoadingOverlay() {
 }
 
 window.onscroll = function(ev) {
-    if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
+    if ((window.innerHeight + Math.ceil(window.pageYOffset + 1)) >= document.body.offsetHeight) {
       loadMoreSwims();
     }
 };
