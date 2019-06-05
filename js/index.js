@@ -9,7 +9,7 @@ var isAuthorizedUser = true;
 // Check if user is authorized
 var checkUserAuthorization = function() {
   if ( isAuthorizedUser === true ) {
-    $(".feed-body").collapse('show');
+    alert("TEST");    
     // If authorized, hide Get Started button and show tabs
     $("#getStarted").collapse('hide').on('hidden.bs.collapse', function () {
       $(".feed-body").collapse('show');
