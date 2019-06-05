@@ -9,6 +9,7 @@ var isAuthorizedUser = true;
 // Check if user is authorized
 var checkUserAuthorization = function() {
   if ( isAuthorizedUser === true ) {
+    $(".feed-body").collapse('show');
     // If authorized, hide Get Started button and show tabs
     $("#getStarted").collapse('hide').on('hidden.bs.collapse', function () {
       $(".feed-body").collapse('show');
@@ -38,7 +39,6 @@ $("#authorizeAgree").click(function() {
   isAuthorizedUser = true;
   $("#modalAuthorize").modal('hide');
   checkUserAuthorization();
-
 });
 // End mock authorization
 
