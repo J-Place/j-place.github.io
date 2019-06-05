@@ -173,11 +173,16 @@ function hideLoadingOverlay() {
   document.body.className = "";
 }
 
-window.onscroll = function(ev) {
-    if ((window.innerHeight + Math.ceil(window.pageYOffset + 1)) >= document.body.offsetHeight) {
-      loadMoreSwims();
-    }
-};
+var loadBtn = document.getElementById('viewMore');
+loadBtn.click(function() {
+  loadMoreSwims();
+});
+
+// window.onscroll = function(ev) {
+//     if ((window.innerHeight + Math.ceil(window.pageYOffset + 1)) >= document.body.offsetHeight) {
+//       loadMoreSwims();
+//     }
+// };
 
 
 
