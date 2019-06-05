@@ -4,12 +4,11 @@ let perPage = 10;
 
 ////////////////////////////////////////////
 // Assume first time user is not authorized
-var isAuthorizedUser = true;
+var isAuthorizedUser = false;
 
 // Check if user is authorized
 var checkUserAuthorization = function() {
   if ( isAuthorizedUser === true ) {
-    alert("TEST");    
     // If authorized, hide Get Started button and show tabs
     $("#getStarted").collapse('hide').on('hidden.bs.collapse', function () {
       $(".feed-body").collapse('show');
@@ -39,6 +38,7 @@ $("#authorizeAgree").click(function() {
   isAuthorizedUser = true;
   $("#modalAuthorize").modal('hide');
   checkUserAuthorization();
+
 });
 // End mock authorization
 
@@ -174,15 +174,11 @@ function hideLoadingOverlay() {
 }
 
 var loadBtn = document.getElementById('viewMore');
-loadBtn.click(function() {
-  loadMoreSwims();
-});
-
-// window.onscroll = function(ev) {
-//     if ((window.innerHeight + Math.ceil(window.pageYOffset + 1)) >= document.body.offsetHeight) {
-//       loadMoreSwims();
-//     }
-// };
+window.onscroll = function(ev) {
+    if ((window.innerHeight + Math.ceil(window.pageYOffset + 1)) >= document.body.offsetHeight) {
+      loadMoreSwims();
+    }
+};
 
 
 
