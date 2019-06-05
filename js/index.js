@@ -4,7 +4,7 @@ let perPage = 10;
 
 ////////////////////////////////////////////
 // Assume first time user is not authorized
-var isAuthorizedUser = false;
+var isAuthorizedUser = true;
 
 // Check if user is authorized
 var checkUserAuthorization = function() {
