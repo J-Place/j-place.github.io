@@ -10,9 +10,10 @@ function getWorkouts() {
 	  if (xhr.status === 200) {
 		// hideLoadingOverlay();
 		const response = JSON.parse(xhr.response);
-		allSwims = response.swims;
-		const stripped = { ...response, swims: response.swims.slice(0, (perPage - 1) * currentPage++) };
-		createSwimsHtml(stripped);
+		// allSwims = response.swims;
+		// const stripped = { ...response, swims: response.swims.slice(0, (perPage - 1) * currentPage++) };
+		// createSwimsHtml(stripped);
+		console.log(response);
 		return;
 	  }
 	  console.log("Error retrieving swim information");
