@@ -58,7 +58,7 @@
 	  // xhr.withCredentials = true;
 	  xhr.onload = function () {
 	    if (xhr.status === 200) {
-	      hideLoadingOverlay();
+	      // hideLoadingOverlay();
 	      var response = JSON.parse(xhr.response);
 	      allWorkouts = response.workouts;
 	      var stripped = { response: response, workouts: response.workouts.slice(0, (perPage - 1) * currentPage++) };
