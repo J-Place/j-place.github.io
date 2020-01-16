@@ -22,5 +22,4 @@ function getWorkouts() {
 	xhr.send();
   }
   
-  
   getWorkouts();
