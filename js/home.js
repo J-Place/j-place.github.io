@@ -40,22 +40,45 @@
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 0:
-/***/ (function(module, exports, __webpack_require__) {
+/******/ ([
+/* 0 */
+/***/ (function(module, exports) {
 
 	'use strict';
 
-	__webpack_require__(5);
+	function getWorkoutData() {
+	  var xhr = new XMLHttpRequest();
 
-/***/ }),
+	  // xhr.open('GET', '/swimFeedJP.json?ver=1', true);
+	  xhr.open('GET', '/KD Great Workout.json', true);
+	  xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
+	  xhr.onload = function () {
+	    if (xhr.status === 200) {
+	      var response = JSON.parse(xhr.response);
+	      var workoutData = response;
+	      renderWorkouts(workoutData);
+	      return;
+	    }
+	    console.log("Error retrieving swim information");
+	    return null;
+	  };
+	  xhr.send();
+	}
+	getWorkoutData();
 
-/***/ 5:
-/***/ (function(module, exports) {
+	//   var workoutData = require('./KD Great Workout.json');
 
-	// removed by extract-text-webpack-plugin
+	//   renderWorkouts(workoutData);
+
+	// Populate Workout Results Template
+	function renderWorkouts(workout) {
+	  console.log(workout.data.workouttitle);
+	  var rawTemplate = document.getElementById("workoutResultsTemplate").innerHTML;
+	  var compiledTemplate = Handlebars.compile(rawTemplate);
+	  var ourGeneratedHTML = compiledTemplate(workout);
+	  var wrapper = document.getElementById("workoutResultsWrapper");
+	  wrapper.innerHTML = ourGeneratedHTML;
+	}
 
 /***/ })
-
-/******/ });
+/******/ ]);
