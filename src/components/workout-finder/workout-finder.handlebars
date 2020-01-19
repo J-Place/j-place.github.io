@@ -1,0 +1,216 @@
+<div class="section section-full bg-grayXXX">
+    <div class="usms-container">
+
+        <div class="row clubs-content-new">
+            <!-- Workout Filters -->
+            <div class="col-xs-12">
+                <div class="list-control">
+                    <div class="list-control-search">
+                        <div class="list-control-search__header">
+                            <!-- <span class="tag-list--title">Filters:</span> -->
+                            <div class="list-control-search--tags"></div><i class="fa fa-refresh fa-spin list-control-search--summary-loading" style="display:none;"></i>
+                            <div class="list-control-search--summary">
+                                Showing <strong>13 workouts</strong> for <strong> 25y Course</strong>, <strong>Ladder</strong>
+                            </div>
+                        </div>
+                        <div class="list-control-search-mobile__toggle show-search">Narrow Your Results</div>
+                        <div class="list-control-search__content form-group is-flex" style="display: flex;">
+                            <div class="list-control-search__input list-control-search__input--course">
+                                <label for="search-filter__club-name">Filter by Course</label>
+                                <div class="input-group">
+                                    <select id="search-filter__range" name="search-filter__range">
+                                        <option selected="" value="25y">25y</option>
+                                        <option value="25m">25m</option>
+                                        <option value="50m">50m</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="list-control-search__input list-control-search__input--distance">
+                                <label for="search-filter__range">Filter by Distance</label>
+                                <div class="input-group">
+                                    <select id="search-filter__range" name="search-filter__range">
+                                        <option selected="" value="min"> Under 1000</option>
+                                        <option value="1500">1000-1500</option>
+                                        <option value="2000">1500-2000</option>
+                                        <option value="3000">2000-3000</option>
+                                        <option value="max">Over 3000</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="list-control-search__input list-control-search__input--set-type">
+                                <label for="search-filter__location">Filter by Set Type</label>
+                                <div class="input-group">
+                                    <select id="search-filter__range" name="search-filter__range">
+                                        <option selected="" value="min">Repeats</option>
+                                        <option value="1500">Ladder</option>
+                                        <option value="2000">IM Drills</option>
+                                        <option value="3000">Kick Drills</option>
+                                        <option value="max">Sprints</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="list-control-search__input list-control-search__input--button align-self-end">
+                                <div class="input-group">
+                                    <button type="button" class="btn btn-primary" id="listSearchSubmit">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script id="workoutResultsTemplate" type="text/x-handlebars-template">
+                <h1>XXX {{unit}}</h1>
+            </script>
+
+
+            <div id="workoutResultsWrapper"></div>  
+                {{!-- Workout Results --}}
+                <div class="col-xs-12">
+                    <div class="list-results">
+                        <div class="list-item workout">
+                            <div class="workout__header">
+                                <div class="workout__title">KD: Great Workout</div>
+                                <div class="workout__stats">
+                                    <div class="workout_stats--date">01/06/2020</div>
+                                    <div class="workout_stats--course">Course: <strong>25y</strong></div>
+                                    <div class="workout_stats--distance">Distance: <strong>2700</strong></div>
+                                    <div class="workout_stats--time">Time: <strong>4h 50m</strong></div>
+                                </div>
+                                <a class="view-details btn btn-primary btn-small" href="./usms-workout-detail.html">View Workout Details</a>
+                            </div>
+                            <div class="workout__content">
+                                <div class="col-sm-4">
+                                    <div class="set">
+                                        <div class="set__title">KD: Easy Warm Up</div>
+                                        <!-- If ( item.listInterval.count > 1 ) -->
+                                            <!-- <div class="group-repeat">1</div> -->
+                                        <!-- End if -->
+                                        <div class="length">
+                                            <!-- If ( lengthRepeat.val > 1 ) -->
+                                                <!-- <div class="length-repeat" id="lengthRepeat">1</div> -->
+                                            <!-- End if -->
+                                            <div class="distance" id="distanceByUnit">400</div>   
+                                            <div class="stroke" id="strokeType">Choice</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="set">
+                                        <div class="set__title">KD: Repeat Main Set</div>
+                                        <!-- If ( item.listInterval.count > 1 ) -->
+                                            <!-- <div class="group-repeat">1</div> -->
+                                        <!-- End if -->
+                                        <div class="length">
+                                            <!-- If ( lengthRepeat.val > 1 ) -->
+                                                <div class="length-repeat" id="lengthRepeat">5</div>
+                                            <!-- End if -->
+                                            <div class="distance" id="distanceByUnit">100</div>   
+                                            <div class="stroke" id="strokeType">Free</div>
+                                        </div>
+                                    </div>
+                                    <div class="set">
+                                        <div class="set__title">KD: IM Set</div>
+                                        <!-- If ( item.listInterval.count > 1 ) -->
+                                            <div class="group-repeat">4<!-- item.listInterval.grouprepeat.value --></div>
+                                        <!-- End if -->
+                                        <div class="interval">
+                                            <!-- If ( item.listInterval.lengthRepeat.val > 1 ) -->
+                                                <div class="length-repeat" id="lengthRepeat">4</div>
+                                            <!-- End if -->
+                                            <div class="distance" id="distanceByUnit">50</div>   
+                                            <div class="stroke" id="strokeType">Choice</div>
+                                        </div>
+                                        <div class="interval">
+                                            <!-- If ( item.listInterval.lengthRepeat.val > 1 ) -->
+                                                <div class="length-repeat" id="lengthRepeat">2</div>
+                                            <!-- End if -->
+                                            <div class="distance" id="distanceByUnit">100</div>   
+                                            <div class="stroke" id="strokeType">Choice</div>
+                                        </div>
+                                        <div class="interval">
+                                            <!-- If ( lengthRepeat.val > 1 ) -->
+                                                <!-- <div class="length-repeat" id="lengthRepeat">1</div> -->
+                                            <!-- End if -->
+                                            <div class="distance" id="distanceByUnit">200</div>   
+                                            <div class="stroke" id="strokeType">Choice</div>
+                                        </div>  
+                                        <!-- If ( item.listInterval.count > 1 ) -->
+                                        <!--item.listInterval.grouprepeat.value -->
+                                        <!-- <div class="group-repeat">2</div>--> 
+                                        <!-- End if -->
+                                        <div class="length">
+                                            <!-- If ( item.listInterval.lengthRepeat.val > 1 ) -->
+                                                <div class="length-repeat" id="lengthRepeat">4</div>
+                                            <!-- End if -->
+                                            <div class="distance" id="distanceByUnit">100</div>   
+                                            <div class="stroke" id="strokeType">IM</div>
+                                        </div>
+                                        <div class="length">
+                                            <!-- If ( item.listInterval.lengthRepeat.val > 1 ) -->
+                                                <div class="length-repeat" id="lengthRepeat">2</div>
+                                            <!-- End if -->
+                                            <div class="distance" id="distanceByUnit">200</div>   
+                                            <div class="stroke" id="strokeType">IM</div>
+                                        </div>
+                                        <div class="length">
+                                            <!-- If ( item.listInterval.lengthRepeat.val > 1 ) -->
+                                                <!-- <div class="length-repeat" id="lengthRepeat">1</div> -->
+                                            <!-- End if -->
+                                            <div class="distance" id="distanceByUnit">400</div>   
+                                            <div class="stroke" id="strokeType">IM</div>
+                                        </div>
+                                    </div>
+                                    <div class="set">
+                                        <!-- If ( item.listInterval.count > 1 ) -->
+                                            <!-- <div class="group-repeat">4item.listInterval.grouprepeat.value</div> -->
+                                        <!-- End if -->
+                                        <div class="set__title">KD: Pull Set</div>
+                                        <div class="length">
+                                            <!-- If ( lengthRepeat.val > 1 ) -->
+                                                <div class="length-repeat" id="lengthRepeat">8</div>
+                                            <!-- End if -->
+                                            <div class="distance" id="distanceByUnit">50</div>   
+                                            <div class="stroke" id="strokeType">Pull</div>
+                                        </div>
+                                        <div class="length">
+                                            <!-- If ( lengthRepeat.val > 1 ) -->
+                                                <div class="length-repeat" id="lengthRepeat">4</div>
+                                            <!-- End if -->
+                                            <div class="distance" id="distanceByUnit">100</div>   
+                                            <div class="stroke" id="strokeType">Pull</div>
+                                        </div>
+                                        <div class="length">
+                                            <!-- If ( lengthRepeat.val > 1 ) -->
+                                                <div class="length-repeat" id="lengthRepeat">2</div>
+                                            <!-- End if -->
+                                            <div class="distance" id="distanceByUnit">200</div>   
+                                            <div class="stroke" id="strokeType">Pull</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="set">
+                                        <!-- If ( item.listInterval.count > 1 ) -->
+                                            <!-- <div class="group-repeat">4item.listInterval.grouprepeat.value</div> -->
+                                        <!-- End if -->
+                                        <div class="set__title">KD: Warm Down</div>
+                                        <div class="length">
+                                            <!-- If ( lengthRepeat.val > 1 ) -->
+                                                <!-- <div class="length-repeat" id="lengthRepeat">1</div> -->
+                                            <!-- End if -->
+                                            <div class="distance" id="distanceByUnit">200</div>   
+                                            <div class="stroke" id="strokeType">Choice</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="workout__footer"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
