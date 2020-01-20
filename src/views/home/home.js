@@ -7,7 +7,7 @@ function getWorkoutData() {
     xhr.onload = function () {
       if (xhr.status === 200) {
         const response = JSON.parse(xhr.response);
-        var workoutData = response;
+        var workoutData = response.data;
         renderWorkouts(workoutData);       
         return;
       }
@@ -25,7 +25,8 @@ function getWorkoutData() {
 
   // Populate Workout Results Template
 function renderWorkouts(workout) {
-    console.log(workout.data.workouttitle);
+    console.log(workout.workouttitle);
+    console.log(workout)
     var rawTemplate = document.getElementById("workoutResultsTemplate").innerHTML;
     var compiledTemplate = Handlebars.compile(rawTemplate);
     var ourGeneratedHTML = compiledTemplate(workout)
