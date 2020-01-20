@@ -9,7 +9,8 @@
     "start": "npm-run-all --parallel dev-build dev-server",
     "build": "webpack --color -p",
     "dev-build": "webpack --color --watch",
-    "dev-server": "webpack-dev-server --inline --content-base ./dist"
+    "dev-server": "webpack-dev-server --inline --content-base ./dist",
+    "update:packages": "node wipe-dependencies.js && rm -rf node_modules && npm update --save-dev && npm update --save"
   },
   "dependencies": {
     "babel-core": "^6.7.2",
