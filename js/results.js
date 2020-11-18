@@ -5,18 +5,19 @@ function getEventResults() {
     xhr.open('GET', 'https://763a048a-2a06-44c5-a12f-f004327581ab.mock.pstmn.io/get', true);
     xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
     xhr.onload = function () {
-      if (xhr.status === 200) {
-        const response = JSON.parse(xhr.response);
-        console.log(JSON.parse(xhr.response));
+        if (xhr.status === 200) {
+            const response = JSON.parse(xhr.response);
         return;
-      }
-      return null;
+        }
+        console.log(response);
+        // return null;
     };
     xhr.send();
-  }
+}
 
 getEventResults();
 
+console.log("TEST");
 
 
 /* List.js is required to make this table work. */
