@@ -1,63 +1,38 @@
+/* List.js is required to make this table work. */
+
 var options = {
-	valueNames: [
-		'name',
-		'born',
-		'address',
-		{ data: ['gender']}
-	],
-	page: 3,
-	pagination: true
-};
-var userList = new List('users', options);
-
-function resetList(){
-	userList.search();
-	userList.filter();
-	userList.update();
-	$(".filter-all").prop('checked', true);
-	$('.filter').prop('checked', false);
-	$('.search').val('');
-	//console.log('Reset Successfully!');
-};
+    valueNames: [ { data: ['timestamp'] }, { data: ['status'] }, 'jSortNumber', 'jSortName', 'jSortTotal' ],
+    page: 6,
+    pagination: {
+      innerWindow: 1,
+      left: 0,
+      right: 0,
+      paginationClass: "pagination",
+      }
+  };
   
-function updateList(){
-  var values_gender = $("input[name=gender]:checked").val();
-	var values_address = $("input[name=address]:checked").val();
-	console.log(values_gender, values_address);
-
-	userList.filter(function (item) {
-		var genderFilter = false;
-		var addressFilter = false;
-		
-		if(values_gender == "all")
-		{ 
-			genderFilter = true;
-		} else {
-			genderFilter = item.values().gender == values_gender;
-			
-		}
-		if(values_address == null)
-		{ 
-			addressFilter = true;
-		} else {
-			addressFilter = item.values().address.indexOf(values_address) >= 0;
-		}
-		return addressFilter && genderFilter
-	});
-	userList.update();
-	//console.log('Filtered: ' + values_gender);
-}
-                               
-$(function(){
-  //updateList();
-  $("input[name=gender]").change(updateList);
-	$('input[name=address]').change(updateList);
-	
-	userList.on('updated', function (list) {
-		if (list.matchingItems.length > 0) {
-			$('.no-result').hide()
-		} else {
-			$('.no-result').show()
-		}
-	});
-});
+  var tableList = new List('tableID', options);
+  
+  
+      $('.jPaginateNext').on('click', function(){
+          var list = $('.pagination').find('li');
+          $.each(list, function(position, element){
+              if($(element).is('.active')){
+                  $(list[position+1]).trigger('click');
+              }
+          })
+      });
+  
+  
+      $('.jPaginateBack').on('click', function(){
+          var list = $('.pagination').find('li');
+          $.each(list, function(position, element){
+              if($(element).is('.active')){
+                  $(list[position-1]).trigger('click');
+              }
+          })
+      });
+  
+  
+  
+  
