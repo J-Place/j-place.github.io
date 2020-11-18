@@ -74,10 +74,10 @@
 							<div class="col-xs-12">
 								<div class="breadcrumb__container">
 									<ul class="breadcrumb__items list--nostyle">
-										<li class="text-capitalize breadcrumb__item ">
+										<li class="text-capitalize breadcrumb__item">
 											<a class="breadcrumb__link" href="/">Home<i class="fa fa-chevron-right"></i></a>
 										</li>
-										<li class="text-capitalize breadcrumb__item ">
+										<li class="text-capitalize breadcrumb__item">
 											<a class="breadcrumb__link" href="/">Events<i class="fa fa-chevron-right"></i></a>
 										</li>
 									</ul>
@@ -88,333 +88,197 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="section section-full">
 				<div class="usms-container">
+					<style>
+
+
+					.table-list-container {
+					max-width:800px; margin:20px auto;
+					background-color:#ffffff; 
+					border:1px solid #d2d2d2;  
+					position: relative;
+					z-index: 0;
+					}
+
+					@media (max-width: 640px ) {
+					.table-list-container { border-width: 1px 0; } 
+					}
+
+					.table-list {
+					min-height:176px;
+					} 
+
+					.table-list th { 
+					border-bottom: .6px solid #d2d2d2;
+					}
+
+					.table-list td { 
+					white-space:nowrap;
+					height:1.75rem; 
+					vertical-align:top; 
+					padding:10px;
+					border-bottom:1px solid #d2d2d2; }
+
+					.table-list tr:last-child td { 
+					height:auto; }
+
+
+					th button.sort {
+					text-align:left; 
+					padding:0 10px;
+					line-height: 1.75rem;
+					border: none; background: none; 
+					display: block; width:100%; 
+					font-size: 12px; color: #888; 
+					border-bottom: 1px solid transparent;  
+					}
+
+					th button.sort.textcenter,
+					th button.sort.text-center { text-align:center; }
+
+					th button.sort.textright,
+					th button.sort.text-right { text-align:right; }
+
+					button.sort .bullet { margin-top:13px; }
+
+
+					.table-list .caret:after { content:""; }
+					.asc .caret:after {
+					width: 0;
+					height: 0;
+					border-left: 3px solid transparent;
+					border-right: 3px solid transparent;
+					border-top: 3px solid #808080;
+					content: "";
+					position: relative;
+					top: -3px;
+					right: -4px;
+					font-size:0; }
+					.desc .caret:after {
+					width: 0;
+					height: 0;
+					border-left: 3px solid transparent;
+					border-right: 3px solid transparent;
+					border-bottom: 3px solid #808080;
+					content: "";
+					position: relative;
+					top: -4px;
+					right: -4px;
+					font-size:0; }
+
+					button.sort .caret { display:none; }
+					button.sort.asc .caret { display:inline-block; }
+					button.sort.desc .caret { display:inline-block; }
+
+
+
+					.table-footer { 
+					background-color:#fff;
+					margin-top:-1px; 
+					position:relative; 
+					z-index:-1; }
+					.table-search {
+					width:310px;
+					border-left:1px solid #d2d2d2; }
+					.table-search .search { 
+					width:100%;
+					border:none; 
+					background:transparent; 
+					box-shadow:none; }
+
+					/**/
+
+					.table-pagination {
+					white-space:nowrap; }
+
+					.table-pagination:after {
+						display: block;
+						content: "";
+						clear: both;
+					}
+
+					.jPaginateBack, 
+					.jPaginateNext, 
+					.table-list-container .pagination {
+					float:left; }
+
+					.jPaginateBack, 
+					.jPaginateNext {  
+						line-height:1.75rem; 
+						width:1.75rem; 
+						text-align:center; 
+						user-select:none; }
+
+
+					.jPaginateBack .material-icons, 
+					.jPaginateNext .material-icons { 
+					display:block;
+					font-size:16px;
+					line-height:inherit;
+					} 
 
 
 
 
+					</style>
+					<div id="tableID" class="table-list-container">
 
-<style>
+						<table class="table-list" data-currentpage="1" style="height:268px;">
 
+							<thead>
+								<th><button type="button" class="sort" data-sort="status">Wasis?<i class="bullet"></i></button></th>
+								<th><button type="button" class="sort" data-sort="timestamp">Date<i class="caret"></i></button></th>
+								<th><button type="button" class="sort" data-sort="jSortNumber">#<i class="caret"></i></button></th>
+								<th><button type="button" class="sort" data-sort="jSortName">Description<i class="caret"></i></button></th>
+								<th><button type="button" class="sort textright" data-sort="jSortTotal">Total<i class="caret"></i></button></th>
+							</thead>
 
-.table-list-container {
-  max-width:800px; margin:20px auto;
-  background-color:#ffffff; 
-  border:1px solid #d2d2d2;  
-  position: relative;
-  z-index: 0;
-}
+							<!-- IMPORTANT, class="list" must be on tbody -->
+							<tbody class="list">
+								<tr data-timestamp="1478149200" data-status="1">
+									<td class="minify hidden-sm-down"><i class="bullet-danger"></i></td>
+									<td class="minify">11/03/2016</td>
+									<td class="minify jSortNumber">000018</td>
+									<td class="jSortName">Charlie Delto Echo</td>
+									<td class="minify textright jSortTotal">9.00</td>
+								</tr>
+								<tr data-timestamp="1478062800" data-status="1">
+									<td class="minify hidden-sm-down"><i class="bullet-danger"></i></td>
+									<td class="minify">11/02/2016</td>
+									<td class="minify jSortNumber">000019</td>
+									<td class="jSortName">Foxtrot</td>
+									<td class="minify textright jSortTotal">9.05</td>
+								</tr>
+								<tr data-timestamp="1478062800" data-status="1">
+									<td class="minify hidden-sm-down"><i class="bullet-danger"></i></td>
+									<td class="minify">11/01/2016</td>
+									<td class="minify jSortNumber">000020</td>
+									<td class="jSortName">Golf Hotel India</td>
+									<td class="minify textright jSortTotal">9.00</td>
+								</tr>
+							</tbody>
+						</table>
 
-@media (max-width: 640px ) {
-  .table-list-container { border-width: 1px 0; } 
-}
+						<table class="table-footer">
+							<tr>
+								<td class="table-pagination">
+									<button type="button" class="jPaginateBack"><i class="material-icons keyboard_arrow_left">&#xe314;</i></button>
+									<ul class="pagination"></ul>
+									<button type="button" class="jPaginateNext"><i class="material-icons keyboard_arrow_right">&#xe315;</i></button>
+								</td>
+								<td></td>
+								<td class="table-search">
+									<input class="search" placeholder="Search">
+								</td>
+							</tr>
+						</table>
 
-.table-list {
-  min-height:176px;
-} 
-
-.table-list th { 
-  border-bottom: .6px solid #d2d2d2;
-}
-
-.table-list td { 
-  white-space:nowrap;
-  height:1.75rem; 
-  vertical-align:top; 
-  padding:10px;
-  border-bottom:1px solid #d2d2d2; }
-
-.table-list tr:last-child td { 
-  height:auto; }
-
-
-th button.sort {
-  text-align:left; 
-  padding:0 10px;
-  line-height: 1.75rem;
-  border: none; background: none; 
-  display: block; width:100%; 
-  font-size: 12px; color: #888; 
-  border-bottom: 1px solid transparent;  
-}
-
-th button.sort.textcenter,
-th button.sort.text-center { text-align:center; }
-
-th button.sort.textright,
-th button.sort.text-right { text-align:right; }
-
-button.sort .bullet { margin-top:13px; }
-
-
-.table-list .caret:after { content:""; }
-.asc .caret:after {
-  width: 0;
-  height: 0;
-  border-left: 3px solid transparent;
-  border-right: 3px solid transparent;
-  border-top: 3px solid #808080;
-  content: "";
-  position: relative;
-  top: -3px;
-  right: -4px;
-  font-size:0; }
-.desc .caret:after {
-  width: 0;
-  height: 0;
-  border-left: 3px solid transparent;
-  border-right: 3px solid transparent;
-  border-bottom: 3px solid #808080;
-  content: "";
-  position: relative;
-  top: -4px;
-  right: -4px;
-  font-size:0; }
-
-button.sort .caret { display:none; }
-button.sort.asc .caret { display:inline-block; }
-button.sort.desc .caret { display:inline-block; }
-
-
-
-.table-footer { 
-  background-color:#fff;
-  margin-top:-1px; 
-  position:relative; 
-  z-index:-1; }
-.table-search {
-  width:310px;
-  border-left:1px solid #d2d2d2; }
-.table-search .search { 
-  width:100%;
-  border:none; 
-  background:transparent; 
-  box-shadow:none; }
-
-/**/
-
-.table-pagination {
-  white-space:nowrap; }
-
-.table-pagination:after {
-    display: block;
-    content: "";
-    clear: both;
-  }
-
-.jPaginateBack, 
-.jPaginateNext, 
-.table-list-container .pagination {
-  float:left; }
-
-.jPaginateBack, 
-.jPaginateNext {  
-    line-height:1.75rem; 
-    width:1.75rem; 
-    text-align:center; 
-    user-select:none; }
-
-
-.jPaginateBack .material-icons, 
-.jPaginateNext .material-icons { 
-  display:block;
-  font-size:16px;
-  line-height:inherit;
-} 
-
-
-
-
-</style>
-
-
-
-<div id="tableID" class="table-list-container">
-      
-	<table class="table-list" data-currentpage="1" style="height:268px;">
-
-	<thead>
-	<th><button type="button" class="sort" data-sort="status"><i class="bullet"></i></button></th>
-	<th><button type="button" class="sort" data-sort="timestamp">Date<i class="caret"></i></button></th>
-	<th><button type="button" class="sort" data-sort="jSortNumber">#<i class="caret"></i></button></th>
-	<th><button type="button" class="sort" data-sort="jSortName">Description<i class="caret"></i></button></th>
-	<th><button type="button" class="sort textright" data-sort="jSortTotal">Total<i class="caret"></i></button></th>
-	</thead>
-
-	<!-- IMPORTANT, class="list" must be on tbody -->
-	<tbody class="list">
-	<tr data-timestamp="1509426000" data-status="3">
-		<td class="minify hidden-sm-down"><i class="bullet-success"></i></td>
-		<td class="minify">10/31/2017</td>
-		<td class="minify jSortNumber">000001</td>
-		<td class="jSortName">Alpha Bravo Charlie</td>
-		<td class="minify textright jSortTotal">26.00</td>
-	</tr>
-	<tr data-timestamp="1509339600" data-status="3">
-		<td class="minify hidden-sm-down"><i class="bullet-success"></i></td>
-		<td class="minify">10/30/2017</td>
-		<td class="minify jSortNumber">000002</td>
-		<td class="jSortName">Bravo Charlie Delta</td>
-		<td class="minify textright jSortTotal">550.00</td>
-	</tr>
-	<tr data-timestamp="1509253200" data-status="3">
-		<td class="minify hidden-sm-down"><i class="bullet-success"></i></td>
-		<td class="minify">10/29/2017</td>
-		<td class="minify jSortNumber">000003</td>
-		<td class="jSortName">Charlie Delto Echo</td>
-		<td class="minify textright jSortTotal">9.00</td>
-	</tr>
-	<tr data-timestamp="1509166800" data-status="3">
-		<td class="minify hidden-sm-down"><i class="bullet-success"></i></td>
-		<td class="minify">10/28/2017</td>
-		<td class="minify jSortNumber">000004</td>
-		<td class="jSortName">Foxtrot</td>
-		<td class="minify textright jSortTotal">9.00</td>
-	</tr>
-	<tr data-timestamp="1509080400" data-status="2">
-		<td class="minify hidden-sm-down"><i class="bullet"></i></td>
-		<td class="minify">10/27/2017</td>
-		<td class="minify jSortNumber">000005</td>
-		<td class="jSortName">Golf Hotel India</td>
-		<td class="minify textright jSortTotal">9.00</td>
-	</tr>
-	<tr data-timestamp="1508994000" data-status="2">
-		<td class="minify hidden-sm-down"><i class="bullet"></i></td>
-		<td class="minify">10/26/2017</td>
-		<td class="minify jSortNumber">000006</td>
-		<td class="jSortName">Alpha Bravo Charlie</td>
-		<td class="minify textright jSortTotal">26.00</td>
-	</tr>
-	<tr data-timestamp="1508907600" data-status="2">
-		<td class="minify hidden-sm-down"><i class="bullet"></i></td>
-		<td class="minify">10/25/2017</td>
-		<td class="minify jSortNumber">000007</td>
-		<td class="jSortName">Bravo Charlie Delta</td>
-		<td class="minify textright jSortTotal">550.00</td>
-	</tr>
-	<tr data-timestamp="1508821200" data-status="2">
-		<td class="minify hidden-sm-down"><i class="bullet"></i></td>
-		<td class="minify">10/24/2017</td>
-		<td class="minify jSortNumber">000008</td>
-		<td class="jSortName">Charlie Delto Echo</td>
-		<td class="minify textright jSortTotal">9.00</td>
-	</tr>
-	<tr data-timestamp="1508734800" data-status="2">
-		<td class="minify hidden-sm-down"><i class="bullet"></i></td>
-		<td class="minify">10/23/2017</td>
-		<td class="minify jSortNumber">000009</td>
-		<td class="jSortName">Foxtrot</td>
-		<td class="minify textright jSortTotal">1.22</td>
-	</tr>
-	<tr data-timestamp="1508648400" data-status="2">
-		<td class="minify hidden-sm-down"><i class="bullet"></i></td>
-		<td class="minify">10/22/2017</td>
-		<td class="minify jSortNumber">000010</td>
-		<td class="jSortName">Golf Hotel India</td>
-		<td class="minify textright jSortTotal">9.00</td>
-	</tr>
-	<tr data-timestamp="1509426000" data-status="2">
-		<td class="minify hidden-sm-down"><i class="bullet"></i></td>
-		<td class="minify">10/21/2017</td>
-		<td class="minify jSortNumber">000011</td>
-		<td class="jSortName">Alpha Bravo Charlie</td>
-		<td class="minify textright jSortTotal">26.00</td>
-	</tr>
-	<tr data-timestamp="1508475600" data-status="1">
-		<td class="minify hidden-sm-down"><i class="bullet-danger"></i></td>
-		<td class="minify">10/20/2017</td>
-		<td class="minify jSortNumber">000012</td>
-		<td class="jSortName">Bravo Charlie Delta</td>
-		<td class="minify textright jSortTotal">550.00</td>
-	</tr>
-	<tr data-timestamp="1508389200" data-status="1">
-		<td class="minify hidden-sm-down"><i class="bullet-danger"></i></td>
-		<td class="minify">10/19/2017</td>
-		<td class="minify jSortNumber">000013</td>
-		<td class="jSortName">Charlie Delto Echo</td>
-		<td class="minify textright jSortTotal">9.00</td>
-	</tr>
-	<tr data-timestamp="1508302800" data-status="1">
-		<td class="minify hidden-sm-down"><i class="bullet-danger"></i></td>
-		<td class="minify">10/18/2017</td>
-		<td class="minify jSortNumber">000014</td>
-		<td class="jSortName">Foxtrot</td>
-		<td class="minify textright jSortTotal">1.00</td>
-	</tr>
-	<tr data-timestamp="1508216400" data-status="1">
-		<td class="minify hidden-sm-down"><i class="bullet-danger"></i></td>
-		<td class="minify">10/17/2017</td>
-		<td class="minify jSortNumber">000015</td>
-		<td class="jSortName">Golf Hotel India</td>
-		<td class="minify textright jSortTotal">9.00</td>
-	</tr>
-	<tr data-timestamp="1508130000" data-status="1">
-		<td class="minify hidden-sm-down"><i class="bullet-danger"></i></td>
-		<td class="minify">10/16/2017</td>
-		<td class="minify jSortNumber">000016</td>
-		<td class="jSortName">Alpha Bravo Charlie</td>
-		<td class="minify textright jSortTotal">26.00</td>
-	</tr>
-	<tr data-timestamp="1508043600" data-status="1">
-		<td class="minify hidden-sm-down"><i class="bullet-danger"></i></td>
-		<td class="minify">10/15/2017</td>
-		<td class="minify jSortNumber">000017</td>
-		<td class="jSortName">Bravo Charlie Delta</td>
-		<td class="minify textright jSortTotal">550.00</td>
-	</tr>
-	<tr data-timestamp="1478149200" data-status="1">
-		<td class="minify hidden-sm-down"><i class="bullet-danger"></i></td>
-		<td class="minify">11/03/2016</td>
-		<td class="minify jSortNumber">000018</td>
-		<td class="jSortName">Charlie Delto Echo</td>
-		<td class="minify textright jSortTotal">9.00</td>
-	</tr>
-	<tr data-timestamp="1478062800" data-status="1">
-		<td class="minify hidden-sm-down"><i class="bullet-danger"></i></td>
-		<td class="minify">11/02/2016</td>
-		<td class="minify jSortNumber">000019</td>
-		<td class="jSortName">Foxtrot</td>
-		<td class="minify textright jSortTotal">9.05</td>
-	</tr>
-	<tr data-timestamp="1478062800" data-status="1">
-		<td class="minify hidden-sm-down"><i class="bullet-danger"></i></td>
-		<td class="minify">11/01/2016</td>
-		<td class="minify jSortNumber">000020</td>
-		<td class="jSortName">Golf Hotel India</td>
-		<td class="minify textright jSortTotal">9.00</td>
-	</tr>
-	</tbody>
-	</table>
-
-	<table class="table-footer">
-	<tr>
-	<td class="table-pagination">
-	<button type="button" class="jPaginateBack"><i class="material-icons keyboard_arrow_left">&#xe314;</i></button>
-	<ul class="pagination"></ul>
-	<button type="button" class="jPaginateNext"><i class="material-icons keyboard_arrow_right">&#xe315;</i></button>
-	</td>
-	<td></td>
-	<td class="table-search">
-	<input class="search" placeholder="Search">
-	</td>
-	</tr>
-	</table>
-
-	</div>
-				
-</div>
-
-
-
-
-
+					</div>
+				</div>
 			</div>	
 		</main>
-
-
-
 	</div>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.2/handlebars.js"></script> -->
