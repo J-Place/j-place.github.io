@@ -1,3 +1,24 @@
+function getEventResults() {
+    // showLoadingOverlay();
+    const xhr = new XMLHttpRequest();
+  
+    xhr.open('GET', 'https://bonfire-rest-test.herokuapp.com/goTheDistance', true);
+    xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
+    xhr.onload = function () {
+      if (xhr.status === 200) {
+        const response = JSON.parse(xhr.response);
+        return;
+      }
+      console.log(response);
+      return null;
+    };
+    xhr.send();
+  }
+
+getEventResults();
+
+
+
 /* List.js is required to make this table work. */
 
 var options = {
@@ -34,5 +55,7 @@ var options = {
       });
   
   
+
+
   
   
