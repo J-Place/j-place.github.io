@@ -20,7 +20,7 @@ function getEventResults() {
 getEventResults();
 
 // console.log("TEST");
-console.log(response);
+// console.log(response);
 
 
 /* List.js is required to make this table work. */
