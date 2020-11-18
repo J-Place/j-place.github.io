@@ -9,7 +9,7 @@ function getEventResults() {
             const response = JSON.parse(xhr.response);
         return;
         }
-        console.log(response);
+        console.log(JSON.parse(xhr.response));
         // return null;
     };
     xhr.send();
