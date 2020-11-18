@@ -2,7 +2,7 @@ function getEventResults() {
     // showLoadingOverlay();
     const xhr = new XMLHttpRequest();
   
-    xhr.open('GET', 'https://bonfire-rest-test.herokuapp.com/goTheDistance', true);
+    xhr.open('GET', 'https://763a048a-2a06-44c5-a12f-f004327581ab.mock.pstmn.io/get', true);
     xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
     xhr.onload = function () {
       if (xhr.status === 200) {
