@@ -2,7 +2,7 @@
 
 var options = {
     valueNames: [ { data: ['timestamp'] }, { data: ['status'] }, 'jSortNumber', 'jSortName', 'jSortTotal' ],
-    page: 6,
+    page: 2,
     pagination: {
       innerWindow: 1,
       left: 0,
