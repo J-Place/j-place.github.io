@@ -8,6 +8,8 @@ function getEventResults() {
         if (xhr.status === 200) {
             const response = JSON.parse(xhr.response);
             console.log(JSON.parse(xhr.response));
+            console.log(response);
+            console.log("Go");
         return;
     }
         return null;
