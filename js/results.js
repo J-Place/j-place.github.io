@@ -7,9 +7,9 @@ function getEventResults() {
     xhr.onload = function () {
       if (xhr.status === 200) {
         const response = JSON.parse(xhr.response);
+        console.log(JSON.parse(xhr.response);
         return;
       }
-      console.log(response);
       return null;
     };
     xhr.send();
