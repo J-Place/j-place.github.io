@@ -16,11 +16,7 @@ function getEventResults() {
     };
     xhr.send();
 }
-
 getEventResults();
-
-// console.log("TEST");
-// console.log(response);
 
 
 /* List.js is required to make this table work. */
