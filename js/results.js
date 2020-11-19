@@ -20,9 +20,9 @@ getEventResults();
 
 
 
-function createHtml() {
+function createHtml(newData) {
     // console.log(response[0].name);
-    console.log(data);
+    console.log(newData);
 }
 createHtml();
 
