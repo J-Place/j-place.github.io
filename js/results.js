@@ -8,8 +8,8 @@ function getEventResults() {
         if (xhr.status === 200) {
             const response = JSON.parse(xhr.response);
             createHtml(response);
-        return;
-    }
+        return response;
+        }
         return null;
     };
     xhr.send();
