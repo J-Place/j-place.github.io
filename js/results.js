@@ -9,7 +9,7 @@ function getEventResults() {
             const response = JSON.parse(xhr.response);
             const data = response;
             console.log(data);
-            // createHtml(response);
+            createHtml(data);
         return;
         }
         return null;
@@ -22,7 +22,7 @@ getEventResults();
 
 function createHtml() {
     // console.log(response[0].name);
-    console.log('create html function');
+    console.log(data);
 }
 createHtml();
 
