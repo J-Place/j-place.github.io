@@ -5,9 +5,7 @@ function getEventResults(createHtml) {
   xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
   xhr.onload = function () {
       if (xhr.status === 200) {
-          const response = JSON.parse(xhr.response);
-          const data = response;
-          // console.log(data);
+          const data = JSON.parse(xhr.response);
           createHtml(data);
       return;
       }
@@ -19,15 +17,13 @@ function getEventResults(createHtml) {
 
 
 
-var options = {
-  page: 3,
-  pagination: true,
-  valueNames: [ 'name', 'age', 'club', 'total' ]
-};
+// var options = {
+//   page: 3,
+//   pagination: true,
+//   valueNames: [ 'name', 'age', 'club', 'total' ]
+// };
 
-var values = [];
-
-// var values = [
+// let values = [
 //   {
 //     name: 'Jay Place',
 //     age: 48,
@@ -48,27 +44,45 @@ var values = [];
 //   }
 // ];
 
-var resultsGtd = new List('resultsGtd', options, values );
+
+// var resultsGtd = new List('resultsGtd', options, values );
+
+// resultsGtd.sort('total', {
+//   order:'asc',
+// })
 
 
-resultsGtd.sort('total', {
-  order:'asc',
-})
 
 
 
-function createHtml() {
-  // var newDataName = newData.name;
-  
-  getEventResults(function(data){
-    for(var i in data)
-      
-    console.log([data[i]]);
+function createHtml() { 
+  getEventResults(function(data) {
 
-    values.push([data[i]]);
+    
+    // for (let i = 0; i < 5; i++) {
+    //   console.log(data[i]);
+    // }
 
-    // const age = data[0].age;
+    // for (var i in data) {
+      // newValues = data[i];
+    // }
+
+    var options = {
+      page: 3,
+      pagination: true,
+      valueNames: [ 'name', 'age', 'club', 'total' ]
+    };
+    var values = data;
+    var resultsGtd = new List('resultsGtd', options, values );
+    
+    resultsGtd.sort('total', {
+      order:'asc',
+    })
+
+
 
   });
+
 }
 createHtml();
+
