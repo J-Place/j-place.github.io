@@ -19,7 +19,7 @@ getEventResults();
 
 function createHtml(newData) {
     // var newDataName = newData.name;
-    console.log(newData[0]);
+    console.log(newData[0].Name);
 }
 createHtml();
 
