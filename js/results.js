@@ -21,7 +21,7 @@ getEventResults();
 
 
 function createHtml(newData) {
-    console.log(newData[0].);
+    console.log(newData.name);
 }
 createHtml();
 
@@ -46,3 +46,9 @@ var values = [
       total: 10,000
     }
 ];
+
+var resultsGtd = new List('resultsGtd', options, values);
+
+resultsGtd.sort("total", {
+  order: "asc"
+})
