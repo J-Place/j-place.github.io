@@ -1,66 +1,65 @@
 
 function getEventResults(createHtml) {
-    const xhr = new XMLHttpRequest();  
-    xhr.open('GET', 'https://763a048a-2a06-44c5-a12f-f004327581ab.mock.pstmn.io/get', true);
-    xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            const response = JSON.parse(xhr.response);
-            const data = response;
-            // console.log(data);
-            createHtml(data);
-        return;
-        }
-        return null;
-    };
-    xhr.send();
+  const xhr = new XMLHttpRequest();  
+  xhr.open('GET', 'https://763a048a-2a06-44c5-a12f-f004327581ab.mock.pstmn.io/get', true);
+  xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
+  xhr.onload = function () {
+      if (xhr.status === 200) {
+          const response = JSON.parse(xhr.response);
+          const data = response;
+          // console.log(data);
+          createHtml(data);
+      return;
+      }
+      return null;
+  };
+  xhr.send();
 }
 
 var options = {
-    valueNames: [ 'name', 'age', 'club', 'total' ],
-    page: 3,
-    pagination: true
+  page: 3,
+  pagination: true,
+  valueNames: [ 'name', 'age', 'club', 'total' ]
 };
 
 var values = [
-    {
-      name: 'Jay Place',
-      age: 48,
-      club: 'SRQM',
-      total: "13,132"
-    },
-    {
-      name: 'Tom Jones',
-      age: 80,
-      club: 'SHARK',
-      total: "1,000"
-    },
-    {
-        name: 'Daniel Pauling',
-        age: 40,
-        club: 'SHARK',
-        total: "199,999"
-    }
+  {
+    name: 'Jay Place',
+    age: 48,
+    club: 'SRQM',
+    total: "13,132"
+  },
+  {
+    name: 'Tom Jones',
+    age: 80,
+    club: 'SHARK',
+    total: "1,000"
+  },
+  {
+    name: 'Daniel Pauling',
+    age: 40,
+    club: 'SHARK',
+    total: "199,999"
+  }
 ];
 
-var resultsGtd = new List('resultsGtd', options, values);
+var resultsGtd = new List('resultsGtd', options, values );
 
 resultsGtd.sort("total", {
-    order: "asc"
+  order: "asc",
 })
 
 
-
-function createHtml() {
+// function createHtml() {
   // var newDataName = newData.name;
-  getEventResults(function(data){
+  // getEventResults(function(data){
     // for(var i in data)
     // // result.push([i,data[i]]);
     // console.log([data[i].Name]);
 
     // const age = data[0].age;
 
-  });
-}
-createHtml();
+  // });
+// }
+// createHtml();
 
