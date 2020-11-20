@@ -1,5 +1,5 @@
 
-function getEventResults() {
+function getEventResults(createHtml) {
     const xhr = new XMLHttpRequest();  
     xhr.open('GET', 'https://763a048a-2a06-44c5-a12f-f004327581ab.mock.pstmn.io/get', true);
     xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
@@ -15,7 +15,6 @@ function getEventResults() {
     };
     xhr.send();
 }
-getEventResults();
 
 var options = {
     valueNames: [ 'name', 'age', 'club', 'total' ]
@@ -50,9 +49,15 @@ resultsGtd.sort("total", {
 
 
 
-function createHtml(newData) {
+function createHtml() {
   // var newDataName = newData.name;
-  console.log(newData[0].Name);
+  getEventResults(function(data){
+    for(var i in data)
+    // result.push([i,data[i]]);
+    console.log([i,data[i]]);
+
+
+  });
 }
 createHtml();
 
