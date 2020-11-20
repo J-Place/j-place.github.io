@@ -87,17 +87,15 @@ resultsGtd.sort('total', {
 function createHtml() { 
   getEventResults(function(data) {
 
-    // console.log(data[100]);
-
+    // Show 5 Results
     for (let i = 0; i < 5; i++) {
       console.log(data[i]);
     }
 
+    // Show All Results
     // for (var i in data) {
       // console.log(data[i]);
     // }
-
-    // renderList(data);
     
   });
 
