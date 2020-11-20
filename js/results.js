@@ -16,50 +16,59 @@ function getEventResults(createHtml) {
   xhr.send();
 }
 
+
+
+
 var options = {
   page: 3,
   pagination: true,
   valueNames: [ 'name', 'age', 'club', 'total' ]
 };
 
-var values = [
-  {
-    name: 'Jay Place',
-    age: 48,
-    club: 'SRQM',
-    total: "13,132"
-  },
-  {
-    name: 'Tom Jones',
-    age: 80,
-    club: 'SHARK',
-    total: "1,000"
-  },
-  {
-    name: 'Daniel Pauling',
-    age: 40,
-    club: 'SHARK',
-    total: "199,999"
-  }
-];
+var values = [];
+
+// var values = [
+//   {
+//     name: 'Jay Place',
+//     age: 48,
+//     club: 'SRQM',
+//     total: "13,132"
+//   },
+//   {
+//     name: 'Tom Jones',
+//     age: 80,
+//     club: 'SHARK',
+//     total: "1,000"
+//   },
+//   {
+//     name: 'Daniel Pauling',
+//     age: 40,
+//     club: 'SHARK',
+//     total: "199,999"
+//   }
+// ];
 
 var resultsGtd = new List('resultsGtd', options, values );
 
-resultsGtd.sort("total", {
-  order: "asc",
+
+resultsGtd.sort('total', {
+  order:'asc',
 })
 
 
-// function createHtml() {
+
+function createHtml() {
   // var newDataName = newData.name;
-  // getEventResults(function(data){
-    // for(var i in data)
-    // // result.push([i,data[i]]);
-    // console.log([data[i].Name]);
+  
+  getEventResults(function(data){
+    for(var i in data)
+      data.push([i,data[i]]);
+    // console.log([data[i]]);
+
+    values = data;
 
     // const age = data[0].age;
 
-  // });
-// }
-// createHtml();
-
+  });
+}
+createHtml();
