@@ -1,18 +1,18 @@
 
-// function getEventResults(createHtml) {
-//   const xhr = new XMLHttpRequest();  
-//   xhr.open('GET', 'https://763a048a-2a06-44c5-a12f-f004327581ab.mock.pstmn.io/get', true);
-//   xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
-//   xhr.onload = function () {
-//       if (xhr.status === 200) {
-//           const data = JSON.parse(xhr.response);
-//           createHtml(data);
-//       return;
-//       }
-//       return null;
-//   };
-//   xhr.send();
-// }
+function getEventResults(createHtml) {
+  const xhr = new XMLHttpRequest();  
+  xhr.open('GET', 'https://763a048a-2a06-44c5-a12f-f004327581ab.mock.pstmn.io/get', true);
+  xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
+  xhr.onload = function () {
+      if (xhr.status === 200) {
+          const data = JSON.parse(xhr.response);
+          createHtml(data);
+      return;
+      }
+      return null;
+  };
+  xhr.send();
+}
 
 var options = {
   page: 6,
@@ -84,14 +84,14 @@ resultsGtd.sort('total', {
 })
 
 
-// function createHtml() { 
-//   getEventResults(function(data) {
+function createHtml() { 
+  getEventResults(function(data) {
 
     // console.log(data[100]);
 
-    // for (let i = 0; i < 5; i++) {
-    //   console.log(data[i]);
-    // }
+    for (let i = 0; i < 5; i++) {
+      console.log(data[i]);
+    }
 
     // for (var i in data) {
       // console.log(data[i]);
@@ -99,8 +99,8 @@ resultsGtd.sort('total', {
 
     // renderList(data);
     
-//   });
+  });
 
-// }
-// createHtml();
+}
+createHtml();
 
