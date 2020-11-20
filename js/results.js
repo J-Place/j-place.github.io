@@ -62,10 +62,10 @@ function createHtml() {
   
   getEventResults(function(data){
     for(var i in data)
-      data.push([i,data[i]]);
-    // console.log([data[i]]);
+      
+    console.log([data[i]]);
 
-    values = data;
+    values.push([data[i]]);
 
     // const age = data[0].age;
 
