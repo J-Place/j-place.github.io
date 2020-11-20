@@ -17,7 +17,9 @@ function getEventResults(createHtml) {
 }
 
 var options = {
-    valueNames: [ 'name', 'age', 'club', 'total' ]
+    valueNames: [ 'name', 'age', 'club', 'total' ],
+    page: 3,
+    pagination: true
 };
 
 var values = [
@@ -53,11 +55,10 @@ function createHtml() {
   // var newDataName = newData.name;
   getEventResults(function(data){
     // for(var i in data)
-    // result.push([i,data[i]]);
-    // console.log([i,data[i]]);
+    // // result.push([i,data[i]]);
+    // console.log([data[i].Name]);
 
-    const age = data.map(i => i.age);
-    console.log(age);
+    // const age = data[0].age;
 
   });
 }
