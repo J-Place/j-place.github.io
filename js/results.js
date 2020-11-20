@@ -17,12 +17,6 @@ function getEventResults() {
 }
 getEventResults();
 
-function createHtml(newData) {
-    // var newDataName = newData.name;
-    console.log(newData[0].Name);
-}
-createHtml();
-
 var options = {
     valueNames: [ 'name', 'age', 'club', 'total' ]
 };
@@ -53,3 +47,12 @@ var resultsGtd = new List('resultsGtd', options, values);
 resultsGtd.sort("total", {
     order: "asc"
 })
+
+
+
+function createHtml(newData) {
+  // var newDataName = newData.name;
+  console.log(newData[0].Name);
+}
+createHtml();
+
