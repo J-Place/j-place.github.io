@@ -36,13 +36,13 @@ var values = [
     {
       name: 'Jay Place',
       age: 48,
-      club: "SRQM",
+      club: 'SRQM',
       total: 13,132
     },
     {
-      name: "Tom Jones",
+      name: 'Tom Jones',
       age: 80,
-      club: "SHARK",
+      club: 'SHARK',
       total: 10,000
     }
 ];
