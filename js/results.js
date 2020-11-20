@@ -14,16 +14,13 @@ function getEventResults(createHtml) {
   xhr.send();
 }
 
-
-
-
 // var options = {
 //   page: 3,
 //   pagination: true,
 //   valueNames: [ 'name', 'age', 'club', 'total' ]
 // };
 
-// let values = [
+// var values = [
 //   {
 //     name: 'Jay Place',
 //     age: 48,
@@ -51,21 +48,66 @@ function getEventResults(createHtml) {
 //   order:'asc',
 // })
 
+function renderList(data) {
 
 
-var values = [];
+  console.log(data[0]);
+
+
+  var options = {
+    page: 100,
+    pagination: true,
+    valueNames: [ 'name', 'age', 'club', 'total' ]
+  };
+
+  values = data[0];
+
+  // var values = [
+  //   {
+  //     name: 'Jay Place',
+  //     age: 48,
+  //     club: 'SRQM',
+  //     total: "13,132"
+  //   },
+  //   {
+  //     name: 'Tom Jones',
+  //     age: 80,
+  //     club: 'SHARK',
+  //     total: "1,000"
+  //   },
+  //   {
+  //     name: 'Daniel Pauling',
+  //     age: 40,
+  //     club: 'SHARK',
+  //     total: "199,999"
+  //   }
+  // ];
+
+  var resultsGtd = new List('resultsGtd', options, values );
+
+  resultsGtd.sort('total', {
+    order:'asc',
+  });
+
+}
+
+
+
+
 
 function createHtml() { 
   getEventResults(function(data) {
 
-    
+    // console.log(data[100]);
+
     // for (let i = 0; i < 5; i++) {
     //   console.log(data[i]);
     // }
 
     // for (var i in data) {
-      // newValues = data[i];
+      // console.log(data[i]);
     // }
+
     renderList(data);
     
   });
@@ -73,16 +115,3 @@ function createHtml() {
 }
 createHtml();
 
-function renderList(data) {
-  var options = {
-    page: 100,
-    pagination: true,
-    valueNames: [ 'name', 'age', 'club', 'total' ]
-  };
-  var values = data;
-  var resultsGtd = new List('resultsGtd', options, values );
-  
-  resultsGtd.sort('total', {
-    order:'asc',
-  })
-}
