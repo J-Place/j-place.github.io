@@ -24,8 +24,6 @@ function getEventResults(createHtml) {
 }
 
 
-
-
 // var values = [
 //   {
 //     name: 'Jay Place',
