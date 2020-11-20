@@ -53,7 +53,7 @@ function getEventResults(createHtml) {
 
 
 
-
+var values = [];
 
 function createHtml() { 
   getEventResults(function(data) {
@@ -66,23 +66,23 @@ function createHtml() {
     // for (var i in data) {
       // newValues = data[i];
     // }
-
-    var options = {
-      page: 3,
-      pagination: true,
-      valueNames: [ 'name', 'age', 'club', 'total' ]
-    };
-    var values = data;
-    var resultsGtd = new List('resultsGtd', options, values );
+    renderList(data);
     
-    resultsGtd.sort('total', {
-      order:'asc',
-    })
-
-
-
   });
 
 }
 createHtml();
 
+function renderList(data) {
+  var options = {
+    page: 100,
+    pagination: true,
+    valueNames: [ 'name', 'age', 'club', 'total' ]
+  };
+  var values = data;
+  var resultsGtd = new List('resultsGtd', options, values );
+  
+  resultsGtd.sort('total', {
+    order:'asc',
+  })
+}
