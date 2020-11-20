@@ -52,10 +52,12 @@ resultsGtd.sort("total", {
 function createHtml() {
   // var newDataName = newData.name;
   getEventResults(function(data){
-    for(var i in data)
+    // for(var i in data)
     // result.push([i,data[i]]);
-    console.log([i,data[i]]);
+    // console.log([i,data[i]]);
 
+    const age = data.map(i => i.age);
+    console.log(age);
 
   });
 }
