@@ -21,47 +21,28 @@ getEventResults();
 
 
 function createHtml(newData) {
-    // console.log(response[0].name);
-    console.log(newData[0]);
+    console.log(newData[0].);
 }
 createHtml();
 
 
 
+var options = {
+    valueNames: [ 'name', 'age', 'club', 'total']
+};
 
 
-// /* List.js is required to make this table work. */
-
-// var options = {
-//     valueNames: [ { data: ['timestamp'] }, { data: ['status'] }, 'jSortNumber', 'jSortName', 'jSortTotal' ],
-//     page: 2,
-//     pagination: {
-//       innerWindow: 1,
-//       left: 0,
-//       right: 0,
-//       paginationClass: "pagination",
-//       }
-//   };
-
-
-
-
-//   var tableList = new List('tableID', options);  
-
-//       $('.jPaginateNext').on('click', function(){
-//           var list = $('.pagination').find('li');
-//           $.each(list, function(position, element){
-//               if($(element).is('.active')){
-//                   $(list[position+1]).trigger('click');
-//               }
-//           })
-//       });
-
-//       $('.jPaginateBack').on('click', function(){
-//           var list = $('.pagination').find('li');
-//           $.each(list, function(position, element){
-//               if($(element).is('.active')){
-//                   $(list[position-1]).trigger('click');
-//               }
-//           })
-//       });
+var values = [
+    {
+      name: 'Jay Place',
+      age: 48,
+      club: "SRQM",
+      total: 13,132
+    },
+    {
+      name: "Tom Jones",
+      age: 80,
+      club: "SHARK",
+      total: 10,000
+    }
+];
