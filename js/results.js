@@ -18,8 +18,8 @@ function getEventResults() {
 getEventResults();
 
 function createHtml(newData) {
-    var newDataName = newData.name;
-    console.log(newDataName);
+    // var newDataName = newData.name;
+    console.log(newData);
 }
 createHtml();
 
