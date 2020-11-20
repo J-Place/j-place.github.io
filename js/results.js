@@ -18,7 +18,7 @@ function getEventResults() {
 getEventResults();
 
 function createHtml(newData) {
-    console.log(newData.name);
+    console.log(newData[0]);
 }
 createHtml();
 
