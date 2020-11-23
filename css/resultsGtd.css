@@ -8,7 +8,6 @@
 #resultsGtd {
     width: 100%;
     margin: 30px auto;
-    padding: 10px;
 }
 
 #resultsGtd thead {
@@ -18,8 +17,16 @@
     padding: 5px 10px;
 }
 #resultsGtd td {
-    padding: 8px 15px;
+    padding: 8px 10px;
     line-height: 17px;
+}
+#resultsGtd td:first-of-type,
+#resultsGtd th:first-of-type {
+    padding-left: 20px;
+}
+#resultsGtd th:last-of-type,
+#resultsGtd td:last-of-type {
+    padding-right: 30px;
 }
 #resultsGtd th {
     background-color: #EEE;
@@ -38,15 +45,15 @@
 .search--name {
     max-width: 360px;
 }
-.name {
+.Name {
     width: 50%;
 }
-.age {
+.Age {
     width: 10%;
-    text-align: center;
+    /* text-align: center; */
 }
 .search--age {
-    margin: 5px auto 0 !important;
+    /* margin: 5px auto 0 !important; */
     max-width: 60px;
 }
 th.club,
@@ -59,7 +66,7 @@ td.club {
     margin: 5px 0 0 !important;
     max-width: 90px;
 }
-.total {
+.Miles {
     width: 30%;
     text-align: right;
     padding-right: 30px !important;
@@ -87,27 +94,28 @@ tfoot li {
     color: inherit;
     transition: all .2s ease;
 }
-.controls a:hover {
+/* .controls a:hover {
     color: green;    
-}
+} */
 
 
-.controls .sort {
+/* .controls .sort { */
     /* display: flex; */
     /* align-items: flex-end; */
-}
+/* } */
 
 .controls .sort:after {
-    display: block;
+    /* display: block; */
     opacity: 0;
     content: '';
-    margin-left: .25rem;
+    margin: 0 -5px 0 -1px;
     font-family: 'Material Icons';
     font-weight: 400;
     font-style: normal;
-    font-size: 1.5rem;
+    font-size: 2rem;
     display: inline-block;
-    line-height: 1;
+    vertical-align: sub;
+    line-height: inherit;
     text-transform: none;
     letter-spacing: normal;
     word-wrap: normal;
@@ -117,16 +125,55 @@ tfoot li {
     text-rendering: optimizeLegibility;
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: 'liga';
-}  
+}
+
+.controls .Miles .sort:after {
+    content: "";
+    display: none;
+}
+
+.controls .Miles .sort:before {
+    /* display: block; */
+    opacity: 0;
+    content: '';
+    margin: 0 -1px 0 0;
+    font-family: 'Material Icons';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 2rem;
+    display: inline-block;
+    vertical-align: sub;
+    line-height: inherit;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'liga';
+}
+
 .controls .sort.asc, 
 .controls .sort.desc {
-    color: red;
+    color: #1e3666;
 }
+
 .controls .sort.asc:after {
     opacity: 1;
     content: 'arrow_drop_up';
 }
 .controls .sort.desc:after {
+    opacity: 1;
+    content: 'arrow_drop_down';
+}
+
+.controls .Miles .sort.asc:before {
+    opacity: 1;
+    content: 'arrow_drop_up';
+}
+.controls .Miles .sort.desc:before {
     opacity: 1;
     content: 'arrow_drop_down';
 }
