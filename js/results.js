@@ -7,6 +7,7 @@ function getEventResults(createTable) {
     if (xhr.status === 200) {
         const data = JSON.parse(xhr.response);
         createTable(data);
+        hideLoadingSpinner();
     return;
     }
     return null;
@@ -14,19 +15,23 @@ function getEventResults(createTable) {
   xhr.send();
 }
 
+function hideLoadingSpinner() {
+  const loadingSpinner = document.getElementById('loadingWrapper');
+  loadingSpinner.classList.add('hide');
+}
 
 function createTable() { 
   getEventResults(function(data) {
 
     // Show 5 Results
-    for (let i = 0; i < 5; i++) {
-      console.log(data[i]);
-    }
+    // for (let i = 0; i < 5; i++) {
+    //   console.log(data[i]);
+    // }
 
     // Show All Results
-    // for (var i in data) {
-    //   console.log(data[i].Miles);
-    // }
+    for (var i in data) {
+      console.log(data[i].Miles);
+    }
 
     var options = {
       page: 9,
