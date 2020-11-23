@@ -92,13 +92,13 @@ var resultsGtd = new List('resultsGtd', options, values );
 function createHtml() { 
   getEventResults(function(data) {
     // Show 5 Results
-    for (let i = 0; i < 5; i++) {
+    // for (let i = 0; i < 5; i++) {
+    //   console.log(data[i]);
+    // }
+    // Show All Results
+    for (var i in data) {
       console.log(data[i]);
     }
-    // Show All Results
-    // for (var i in data) {
-      // console.log(data[i]);
-    // }
   });
 }
 createHtml();
