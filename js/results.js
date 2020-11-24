@@ -172,7 +172,7 @@ var data = [
     total: "39999.25",
     agegroup: '25-29',
     club: 'SHARK',
-    lmsc: 'Florida',
+    lmsc: 'San Diego-Imperial',
     zone: 'Southeast'
     }
   
