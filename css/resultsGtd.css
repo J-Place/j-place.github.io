@@ -25,18 +25,22 @@
     margin: 30px auto;
     position: relative;
 }
-
-
 #resultsGtd .filters .title {
     display: block !important;
     font-size: 18px;
     font-weight: bold;
     padding: 5px 0 10px;
 }
-#resultsGtd .filters .clear-filters {
-    /* position: absolute;
-    right: 20px;
-    top: 67px; */
+#resultsGtd .filters .title a {
+    font-size: 11px;
+    font-weight: normal;
+    margin-left: 4px;
+    padding-left: 8px;
+    text-decoration: underline;
+    border-left: 1px solid #CCC;
+    /* height: 40px; */
+}
+/* #resultsGtd .filters .clear-filters {
     font-size: 13px;
     font-weight: normal;
     margin-left: 25px;
@@ -45,12 +49,9 @@
     height: 40px;
     vertical-align: bottom;
     padding: 15px 0 0 20px;
-}
+} */
 #resultsGtd .filters {
-    /* padding: 5px 10px 15px; */
-    /* border-bottom: 1px solid #DDD; */
     background-color: #DDD;
-    /* border-bottom: 1px solid #EEE; */
 }
 #resultsGtd .filters div,
 #resultsGtd .filters ul,
@@ -76,6 +77,9 @@
 #resultsGtd .filters li {
     padding-left: 10px;
 }
+
+
+
 
 
 
@@ -128,7 +132,15 @@
 }
 /* #resultsGtd .filters .sex {
     max-width: 60px;
-} */
+    display: inline-block;
+}  */
+
+#resultsGtd .filters #sexForm {
+    display: inline;
+}
+#resultsGtd .filters #sexForm * {
+    display: inline-block;
+}
 #resultsGtd .filters .club {
     max-width: 60px;
     display: block;
@@ -155,32 +167,46 @@
     #resultsGtd .filters .name {
         width: 280px;
         max-width: 280px;
+        padding-right: 10px;
+    }
+    #resultsGtd .filters .agegroup {
+        padding-left: 10px;
+    }
+    
+    #resultsGtd .filters .sex div {
+        padding: 0 2px;
+        text-align: center;
     }
     #resultsGtd .filters .lmsc {
         margin-left: 30px;
         padding-left: 30px;
         border-left: 1px solid #CCC;
     }
-    #resultsGtd .sorting .namefirst {
+
+    #resultsGtd .sorting .namefirst,
+    #resultsGtd .list .namefirst {
         width: 300px;
         min-width: 300px;
     }
-    #resultsGtd .sorting .total {
+    #resultsGtd .sorting .total,
+    #resultsGtd .list .total {
         width: 150px;
         min-width: 150px;
+        padding-right: 100px;
     }
     #resultsGtd .filters .club {
         max-width: 60px;
         display: inline-block;
     }
-    #resultsGtd .sorting .club {
+    #resultsGtd .sorting .club,
+    #resultsGtd .list .club {
         width: 150px;
         min-width: 150px;
     }
-    #resultsGtd .sorting .club,
+    /* #resultsGtd .sorting .club,
     #resultsGtd .list .club {
         padding-left: 50px;
-    }
+    } */
 }
 
 
@@ -234,10 +260,10 @@ tfoot li {
     opacity: 1;
     content: 'arrow_drop_down';
 }
-.controls .agegroup .sort:after {
+/* .controls .agegroup .sort:after {
     position: absolute;
     left: 6px;
-} 
+}  */
  
 
 

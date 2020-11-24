@@ -232,17 +232,17 @@ resultsGtd.sort('total', {
 
 
 
-function handleSelectZone(e) {
-  var selectedZone = document.getElementById('selectZone').value;
-  if (selectedZone == "All") {
-    resultsGtd.filter();
-  } else {
-    resultsGtd.filter(function(item) {
-      return(item.values().zone == selectedZone);
-    });  
-  }
-}
-selectZone.onchange = handleSelectZone;
+// function handleSelectZone(e) {
+//   var selectedZone = document.getElementById('selectZone').value;
+//   if (selectedZone == "All") {
+//     resultsGtd.filter();
+//   } else {
+//     resultsGtd.filter(function(item) {
+//       return(item.values().zone == selectedZone);
+//     });  
+//   }
+// }
+// selectZone.onchange = handleSelectZone;
 
 
 function handleSelectZone(e) {
@@ -256,8 +256,24 @@ function handleSelectZone(e) {
   }
 }
 selectZone.onchange = handleSelectZone;
+
 
 function handleSelectSex(e) {
+//   var sexRadios = document.getElementById('sexForm');
+//   console.log(sexRadio);
+//   var prev = null;
+//   for (var i = 0; i < sexRadios.length; i++) {
+//       sexRadios[i].addEventListener('change', function() {
+//           (prev) ? console.log(prev.value): null;
+//           if (this !== prev) {
+//               prev = this;
+//           }
+//           console.log(this.value)
+//       });
+//   }
+// }
+// sexRadios.onchange = handleSelectSex;
+
   var selectedSex = document.getElementById('selectSex').value;
   if (selectedSex == "All") {
     resultsGtd.filter();
@@ -268,6 +284,20 @@ function handleSelectSex(e) {
   }
 }
 selectSex.onchange = handleSelectSex;
+
+// function clearFilters(e) {
+//   var clearFilters = document.getElementById('clearFilters');
+//   clearFilters.addEventListener('click', function() {
+//     resultsGtd.filter();
+//     alert("Deep");
+//   });
+// }
+// selectAgeGroup.onclick = clearFilters;
+
+$("#clearFilters").click(function(){
+  // alert("New!");
+  resultsGtd.filter();
+})
 
 function handleSelectAgeGroup(e) {
   var selectedAgeGroup = document.getElementById('selectAgeGroup').value;

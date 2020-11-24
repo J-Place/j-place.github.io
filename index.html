@@ -96,18 +96,25 @@
 									<th colspan="9">
 										<div class="title">
 											Filter Results
+											<a id="clearFilters" href="#">Clear Filters</a>
 										</div>
 										<div class="name">
 											<label for="search--namelast">Name, Age, Club, etc.</label>
 											<input class="search search--namefirst" type="text" data-target="resultsGtd" data-filter="namefirst" data-trigger="keyup" placeholder="" />
 										</div>
+										<!-- <form id="sexForm" name="sexForm" class="sex">
+												<label for="">M</label>
+												<input type="radio" id="sexMale" name="sexRadios" value="M">	
+												<label for="">F</label>
+												<input type="radio" id="sexFemale" name="sexRadios" value="F">
+										</form> -->
 										<div class="sex">
 											<label for="">Sex</label>
 											<select class="select select--sex" id="selectSex" placeholder="">
 												<option value="All" default selected></option>
 												<option value="M">Male</option>
 												<option value="F">Female</option>
-											</select>	
+											</select>
 										</div>
 										<div class="agegroup">
 											<label for="">Age Group</label>
@@ -202,9 +209,6 @@
 												<option value="Southwest">Southwest</option>
 											</select>	
 										</div>
-										<div class="clear-filters">
-											<a href="#">Clear Filters</a>
-										</div>
 									</th>
 								</tr>
 							</thead>
@@ -213,21 +217,20 @@
 									<th class="namefirst">
 										<a class="sort" href="#" data-sort="namefirst">Name</a>
 									</th>
+									<th class="total">
+										<a class="sort" href="#" data-sort="total">Miles</a>
+									</th>
 									<th class="sex">
-										<!-- <i class="material-icons">search</i> -->
 										<a class="sort" href="#" data-sort="sex">Sex</a>
 									</th>
 									<th class="age">
 										<a class="sort" href="#" data-sort="age">Age</a>
 									</th>
-									<th class="total">
-										<a class="sort" href="#" data-sort="total">Miles</a>
+									<th class="agegroup">
+										<a class="sort" href="#" data-sort="agegroup">Age Group</a>
 									</th>
 									<th class="club">
 										<a class="sort" href="#" data-sort="club">Club</a>
-									</th>
-									<th class="agegroup">
-										<a class="sort" href="#" data-sort="agegroup">Age Group</a>
 									</th>
 								</tr>
 							</thead>
@@ -237,11 +240,11 @@
 										<div class="namefirst"></div>
 										<div class="namelast"></div>
 									</td>
+									<td class="total"></td>
 									<td class="sex"></td>
 									<td class="age"></td>
-									<td class="total"></td>
-									<td class="club"></td>
 									<td class="agegroup"></td>
+									<td class="club"></td>
 								</tr>
 							</tbody>
 							<tfoot class="pagination"></tfoot>
