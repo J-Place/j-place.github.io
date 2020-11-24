@@ -184,6 +184,12 @@ resultsGtd.sort('total', {
   order:'desc',
 });
 
+
+// function testSearch() {
+  // resultsGtd.search('age');
+// }
+// testSearch();
+
 // function filterSex() {
 
 //   resultsGtd.filter(function(item) {
