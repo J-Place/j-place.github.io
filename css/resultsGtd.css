@@ -24,6 +24,31 @@
     width: 100%;
     margin: 30px auto;
 }
+
+
+
+#resultsGtd .filters * {
+    background-color: #FFF;
+}
+#resultsGtd .filters div,
+#resultsGtd .filters ul,
+#resultsGtd .filters li {
+    display: inline;
+    font-size: 14px;
+}
+#resultsGtd .filters ul {
+    list-style-type: none;
+    font-weight: normal;
+    padding: 0;
+}
+#resultsGtd .filters li {
+    padding-left: 10px;
+}
+
+
+
+
+
 #resultsGtd thead {
     vertical-align: bottom;
 }
@@ -50,24 +75,23 @@
     border: 1px solid #e0e0e0;
 }
 #resultsGtd select {
-    background-color: #DDD;
-    border: 0 none;
+    background-color: #F3F3F3;
+    border: 1px solid #E0E0E0;
+    width: 65px;
     height: 21px;
     font-size: 11px;
     margin: 0;
     padding-left: 5px;
-    max-width: 75px;
     font-weight: normal;
-    width: 45px;
 }
-#resultsGtd th.name-first {
-    width: 12%;
+#resultsGtd th.namefirst {
+    width: 13%;
 }
-#resultsGtd th.name-last {
-    width: 14%;
+#resultsGtd th.namelast {
+    width: 13%;
 }
 #resultsGtd th.sex {
-    width: 5%;
+    width: 7%;
 }
 #resultsGtd th.age {
     width: 5%;
@@ -75,14 +99,17 @@
 #resultsGtd th.total {
     width: 12%;
 }
-#resultsGtd th.age-group {
-    width: 13%;
+#resultsGtd th.agegroup {
+    width: 11%;
+    text-align: right;
 }
 #resultsGtd th.club {
     width: 10%;
+    text-align: center;
 }
 #resultsGtd th.lmsc {
     width: 9%;
+    text-align: center;
 }
 #resultsGtd th.zone {
     width: 11%;
@@ -91,12 +118,16 @@
 
 td.sex,
 td.age,
-td.age-group {
+td.club,
+td.lmsc {
     text-align: center;
 }
-th.club,
+/* th.club,
 td.club {
     text-align: left;
+} */
+td.agegroup {
+    text-align: right;
 }
 .search--club {
     margin: 5px 0 0 !important;
@@ -154,3 +185,37 @@ tfoot li {
     opacity: 1;
     content: 'arrow_drop_down';
 }
+.controls .agegroup .sort:after {
+    position: absolute;
+    left: 6px;
+} 
+ 
+
+
+
+
+
+
+
+
+
+/* #resultsGtd select {
+    display: inline-block;
+    margin: 0;      
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  } */
+
+/*
+.sex .material-icons {
+    position: absolute;
+    right: 18px;
+    font-size: 15px;
+    top: 10px;
+    background-color: red;
+    opacity: 1;
+    z-index: 999999999999;
+} */

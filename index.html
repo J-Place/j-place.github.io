@@ -91,18 +91,31 @@
 					<div class="usms-container">
 
 						<table id="resultsGtd">
+							<!-- <thead class="filters">
+								<tr>
+									<th colspan="9">
+										<div>
+											<div>Filters:</div>
+											<ul>
+												<li>x Male</li>
+											</ul>
+										</div>
+									</th>
+								</tr>
+							</thead> -->
 							<thead class="header">
 								<tr class="controls">
-									<th class="name-first">
-										<input class="search search--name-first" type="text" data-target="resultsGtd" data-filter="name-first" data-trigger="keyup" placeholder="" />
-										<a class="sort" href="#" data-sort="name-first">First Name</a>
+									<th class="namefirst">
+										<input class="search search--namefirst" type="text" data-target="resultsGtd" data-filter="namefirst" data-trigger="keyup" placeholder="" />
+										<a class="sort" href="#" data-sort="namefirst">First Name</a>
 									</th>
-									<th class="name-last">
-										<input class="search search--name-last" type="text" data-target="resultsGtd" data-filter="name-last" data-trigger="keyup" placeholder="" />
-										<a class="sort" href="#" data-sort="name-last">Last Name</a>
+									<th class="namelast">
+										<input class="search search--namelast" type="text" data-target="resultsGtd" data-filter="namelast" data-trigger="keyup" placeholder="" />
+										<a class="sort" href="#" data-sort="namelast">Last Name</a>
 									</th>
 									<th class="sex">
 										<!-- <input class="search search--name" type="text" data-target="resultsGtd" data-filter="name" data-trigger="keyup" placeholder="" /> -->
+										<!-- <i class="material-icons">search</i> -->
 										<select class="select select--sex" id="selectSex" placeholder="">
 											<option value="All" selected>All</option>
 											<option value="M">Male</option>
@@ -111,22 +124,73 @@
 										<a class="sort" href="#" data-sort="sex">Sex</a>
 									</th>
 									<th class="age">
-										<input class="search search--age" type="text" data-target="resultsGtd" data-filter="age" data-trigger="keyup" placeholder="" />
+										<input class="search search--age" type="text" data-target="resultsGtd.age" data-filter="age" data-trigger="keyup" placeholder="" />
 										<a class="sort" href="#" data-sort="age">Age</a>
 									</th>
 									<th class="total">
 										<a class="sort" href="#" data-sort="total">Miles</a>
-									</th>
-									<th class="age-group">
-										<input class="search search--age-group" type="text" data-target="resultsGtd" data-filter="age-group" data-trigger="keyup" placeholder="" />
-										<a class="sort" href="#" data-sort="age-group">Age Group</a>
 									</th>
 									<th class="club">
 										<input class="search search--club" type="text" data-target="resultsGtd" data-filter="club" data-trigger="keyup" placeholder="" />
 										<a class="sort" href="#" data-sort="club">Club</a>
 									</th>
 									<th class="lmsc">
-										<input class="search search--lmsc" type="text" data-target="resultsGtd" data-filter="lmsc" data-trigger="keyup" placeholder="" />
+										<!-- <input class="search search--lmsc" type="text" data-target="resultsGtd" data-filter="lmsc" data-trigger="keyup" placeholder="" /> -->
+										<select class="select select--lmsc" id="selectLmsc" placeholder="">
+											<option value="All">All</option>
+											<option value="3">(AD) Adirondack</option>
+											<option value="56">(AK) Alaska</option>
+											<option value="11">(AM) Allegheny Mountain</option>
+											<option value="48">(AZ) Arizona</option>
+											<option value="23">(AR) Arkansas</option>
+											<option value="32">(CO) Colorado</option>
+											<option value="5">(CT) Connecticut</option>
+											<option value="8">(DV) Delaware Valley</option>
+											<option value="14">(FL) Florida</option>
+											<option value="50">(FG) Florida Gold Coast</option>
+											<option value="45">(GA) Georgia</option>
+											<option value="25">(GU) Gulf</option>
+											<option value="39">(HI) Hawaii</option>
+											<option value="21">(IL) Illinois</option>
+											<option value="16">(IN) Indiana</option>
+											<option value="35">(IW) Inland Northwest</option>
+											<option value="40">(IA) Iowa</option>
+											<option value="41">(KY) Kentucky</option>
+											<option value="18">(LE) Lake Erie</option>
+											<option value="9">(MD) Maryland</option>
+											<option value="6">(MR) Metropolitan</option>
+											<option value="19">(MI) Michigan</option>
+											<option value="30">(MN) Minnesota</option>
+											<option value="28">(MV) Missouri Valley</option>
+											<option value="31">(MT) Montana</option>
+											<option value="29">(NB) Nebraska</option>
+											<option value="2">(NE) New England</option>
+											<option value="7">(NJ) New Jersey</option>
+											<option value="42">(NM) New Mexico</option>
+											<option value="4">(NI) Niagara</option>
+											<option value="13">(NC) North Carolina</option>
+											<option value="52">(ND) North Dakota</option>
+											<option value="26">(NT) North Texas</option>
+											<option value="17">(OH) Ohio</option>
+											<option value="27">(OK) Oklahoma</option>
+											<option value="37">(OR) Oregon</option>
+											<option value="22">(OZ) Ozark</option>
+											<option value="38">(PC) Pacific</option>
+											<option value="36">(PN) Pacific Northwest</option>
+											<option value="10">(PV) Potomac Valley</option>
+											<option value="44">(SI) San Diego-Imperial</option>
+											<option value="59">(SR) Snake River</option>
+											<option value="55">(SC) South Carolina</option>
+											<option value="54">(SD) South Dakota</option>
+											<option value="43">(ST) South Texas</option>
+											<option value="15">(SE) Southeastern</option>
+											<option value="24">(SO) Southern</option>
+											<option value="33">(SP) Southern Pacific</option>
+											<option value="34">(UT) Utah</option>
+											<option value="12">(VA) Virginia</option>
+											<option value="53">(WT) West Texas</option>
+											<option value="20">(WI) Wisconsin</option>
+										</select>
 										<a class="sort" href="#" data-sort="lmsc">LMSC</a>
 									</th>
 									<th class="zone">
@@ -142,19 +206,42 @@
 										</select>
 										<a class="sort" href="#" data-sort="zone">Zone</a>
 									</th>
+									<th class="agegroup">
+										<!-- <input class="search search--agegroup" type="text" data-target="resultsGtd" data-filter="agegroup" data-trigger="keyup" placeholder="" /> -->
+										<select class="select select--agegroup" id="selectAgeGroup" placeholder="">
+											<option value="All">All</option>
+											<option value="18-24">18-24</option>
+											<option value="25-29">25-29</option>
+											<option value="30-34">30-34</option>
+											<option value="35-39">35-39</option>
+											<option value="40-44">40-44</option>
+											<option value="45-49">45-49</option>
+											<option value="50-54">50-54</option>
+											<option value="55-59">55-59</option>
+											<option value="60-64">60-64</option>
+											<option value="65-69">65-69</option>
+											<option value="70-74">70-74</option>
+											<option value="75-79">75-79</option>
+											<option value="80-84">80-84</option>
+											<option value="85-89">85-89</option>
+											<option value="90-94">90-94</option>
+											<option value="95-99">95-99</option>
+										</select>
+										<a class="sort" href="#" data-sort="agegroup">Age Group</a>
+									</th>
 								</tr>
 							</thead>
 							<tbody class="list">
 								<tr class="list__item">
-									<td class="name-first"></td>
-									<td class="name-last"></td>
+									<td class="namefirst"></td>
+									<td class="namelast"></td>
 									<td class="sex"></td>
 									<td class="age"></td>
 									<td class="total"></td>
-									<td class="age-group"></td>
 									<td class="club"></td>
 									<td class="lmsc"></td>
 									<td class="zone"></td>
+									<td class="agegroup"></td>
 								</tr>
 							</tbody>
 							<tfoot class="pagination"></tfoot>
