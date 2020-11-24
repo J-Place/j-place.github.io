@@ -54,8 +54,8 @@ var options = {
 
 var data = [
   {
-  'name-first': 'Jay',
-  'name-last': 'Place',
+  'name-first': 'Jim',
+  'name-last': 'Jones',
   sex: 'M',
   age: 48,
   total: '13,132',
@@ -120,8 +120,8 @@ var data = [
   zone: 'Southeast'
   },
   {
-  'name-first': 'Jay',
-  'name-last': 'Place',
+  'name-first': 'Mike',
+  'name-last': 'Tyson',
   sex: 'M',
   age: 48,
   total: '13,132',
@@ -131,8 +131,8 @@ var data = [
   zone: 'Southeast'
   },
   {
-  'name-first': 'Jay',
-  'name-last': 'Place',
+  'name-first': 'Paul',
+  'name-last': 'Blart',
   sex: 'M',
   age: 48,
   total: '13,132',
