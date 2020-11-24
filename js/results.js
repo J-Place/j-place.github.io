@@ -1,20 +1,3 @@
-
-// function getEventResults(createTable) {
-//   const xhr = new XMLHttpRequest();  
-//   xhr.open('GET', 'https://763a048a-2a06-44c5-a12f-f004327581ab.mock.pstmn.io/get', true);
-//   xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
-//   xhr.onload = function () {
-//     if (xhr.status === 200) {
-//         const data = JSON.parse(xhr.response);
-//         createTable(data);
-//         hideLoadingSpinner();
-//     return;
-//     }
-//     return null;
-//   };
-//   xhr.send();
-// }
-
 function getEventResults() {
   hideLoadingSpinner();
 }
@@ -24,14 +7,16 @@ function hideLoadingSpinner() {
   loadingSpinner.classList.add('hide');
 }
 
+
+
+
+
+
+
 function createTable() { 
-  // alert("Yes");
   getEventResults(function() {
-
-
-
   
-        // Show 5 Results
+      // Show 5 Results
     // for (let i = 0; i < 5; i++) {
     //   console.log(data[i]);
     // }
@@ -41,10 +26,15 @@ function createTable() {
       console.log(data[i]);
     }
 
-
   });
 }
 createTable();
+
+
+
+
+
+
 
 var options = {
   page: 9,
@@ -172,7 +162,11 @@ resultsGtd.sort('total', {
 });
 
 
-// let selectZone = document.getElementById('selectZone');
+
+
+
+
+
 selectZone.onchange = handleSelectZone;
 
 function handleSelectZone(e) {
@@ -186,7 +180,6 @@ function handleSelectZone(e) {
   }
 }
 
-// let selectSex = document.getElementById('selectSex');
 selectSex.onchange = handleSelectSex;
 
 function handleSelectSex(e) {
