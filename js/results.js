@@ -159,11 +159,23 @@ var data = [
   sex: 'F',
   age: 11,
   total: "199.25",
-  agegroup: '10-14',
+  agegroup: '18-24',
   club: 'SRQM',
   lmsc: 'Florida',
   zone: 'Southeast'
-  }
+  },
+  {
+    namefirst: 'Onshalee',
+    namelast: 'Promchitmart',
+    sex: 'F',
+    age: 28,
+    total: "39999.25",
+    agegroup: '25-29',
+    club: 'SHARK',
+    lmsc: 'Florida',
+    zone: 'Southeast'
+    }
+  
 ];
 
 var resultsGtd = new List('resultsGtd', options, data );
