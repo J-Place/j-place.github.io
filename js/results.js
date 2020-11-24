@@ -11,31 +11,6 @@ hideLoadingSpinner();
 
 
 
-
-
-// function createTable() { 
-//   getEventResults(function() {
-  
-//       // Show 5 Results
-//     // for (let i = 0; i < 5; i++) {
-//     //   console.log(data[i]);
-//     // }
-
-//     // Show All Results
-//     for (var i in data) {
-//       console.log(data[i]);
-//     }
-
-//   });
-// }
-// createTable();
-
-
-
-
-
-
-
 var options = {
   page: 5,
   pagination: true,
@@ -239,7 +214,12 @@ function handleSelectZone(e) {
 selectZone.onchange = handleSelectZone;
 
 
+
+
 $("#clearFilters").click(function(){
   resultsGtd.filter();
   $("select").each(function() { this.selectedIndex = 0 });
 })
+
+
+
