@@ -34,6 +34,7 @@
 #resultsGtd .filters {
     padding: 5px 10px 15px;
     /* border-bottom: 1px solid #DDD; */
+    background-color: #F3F3F3;
     border-bottom: 1px solid #FFF;
 }
 #resultsGtd .filters div,
@@ -68,9 +69,9 @@
 #resultsGtd thead.filters th {
     padding: 15px;
 }
-#resultsGtd th {
+#resultsGtd .sorting th {
     padding: 0 10px;
-    background-color: #EEE;
+    background-color: #DDD;
     position: relative;
 }
 #resultsGtd td {
@@ -101,76 +102,67 @@
     font-weight: normal;
 }
 
-#resultsGtd .filters .namefirst {
-    /* width: 13%; */
-}
-#resultsGtd .filters .namelast {
-    /* width: 13%; */
-}
+
+
+
+
+
 #resultsGtd .filters .sex {
-    /* width: 7%; */
     max-width: 60px;
 }
 #resultsGtd .filters .age {
-    /* width: 5%; */
     max-width: 60px;
 }
-#resultsGtd .filters .total {
-    /* width: 12%; */
-}
-#resultsGtd .filters .agegroup {
-    /* width: 11%; */
-    /* text-align: right; */
-    /* display: block; */
-}
 #resultsGtd .filters .club {
-    /* width: 10%; */
-    /* text-align: center; */
     max-width: 60px;
     display: block;
 }
-#resultsGtd .filters .lmsc {
-    /* width: 9%; */
-    text-align: center;
-}
-#resultsGtd .filters .zone {
-    /* width: 11%; */
-}
-
-
-
-#resultsGtd .sorting th.namefirst {
+#resultsGtd .sorting .namefirst {
     width: 120px;
     min-width: 120px;
 }
-#resultsGtd .sorting th.sex {
+#resultsGtd .sorting .sex {
     width: 60px;
     min-width: 60px;
     padding-right: 0;
 }
-#resultsGtd .sorting th.age {
+#resultsGtd .sorting .age {
     width: 60px;
     min-width: 60px;
     padding-left: 0;
 }
 
+@media only screen and (min-width: 768px) {
+    #resultsGtd .sorting .namefirst {
+        width: 300px;
+        min-width: 300px;
+    }    
+    #resultsGtd .filters .club {
+        max-width: 60px;
+        display: inline-block;
+    }
+    #resultsGtd .sorting .club,
+    #resultsGtd .list .club {
+        padding-left: 30px;
+    }
+}
 
 
 
 
-td.sex,
+/* td.sex,
 td.age,
 td.club,
 td.lmsc {
     text-align: center;
-}
+} */
 /* th.club,
 td.club {
     text-align: left;
 } */
-td.agegroup {
+/* td.agegroup {
     text-align: right;
-}
+} */
 /* .search--club {
     margin: 5px 0 0 !important;
 } */
