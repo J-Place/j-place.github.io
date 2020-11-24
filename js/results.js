@@ -139,7 +139,7 @@ var data = [
   'age-group': '45-49',
   club: 'SRQM',
   lmsc: 'Florida',
-  zone: 'Southeast'
+  zone: 'Southwest'
   },
   {
   'name-first': 'Jay',
@@ -172,33 +172,30 @@ resultsGtd.sort('total', {
 });
 
 
-
 // let selectZone = document.getElementById('selectZone');
-
-
-// $("#selectZone").change(function() {
-//   var selection = this.value;
-//   if (selection == "All") {
-//     resultsGtd.filter();
-//   } else {
-//     resultsGtd.filter(function(item) {
-//       return(item.values().zone == selection);
-//     });  
-//   }
-// });
-
-
-let selectZone = document.getElementById('selectZone');
-
 selectZone.onchange = handleSelectZone;
 
 function handleSelectZone(e) {
-  var selection = this.value;
-  if (selection == "All") {
+  var selectedZone = document.getElementById('selectZone').value;
+  if (selectedZone == "All") {
     resultsGtd.filter();
   } else {
     resultsGtd.filter(function(item) {
-      return(item.values().zone == selection);
+      return(item.values().zone == selectedZone);
+    });  
+  }
+}
+
+// let selectSex = document.getElementById('selectSex');
+selectSex.onchange = handleSelectSex;
+
+function handleSelectSex(e) {
+  var selectedSex = document.getElementById('selectSex').value;
+  if (selectedSex == "All") {
+    resultsGtd.filter();
+  } else {
+    resultsGtd.filter(function(item) {
+      return(item.values().sex == selectedSex);
     });  
   }
 }

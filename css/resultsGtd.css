@@ -44,18 +44,20 @@
     padding: 8px 10px;
     line-height: 17px;
 }
-#resultsGtd td:first-of-type,
+/* #resultsGtd td:first-of-type,
 #resultsGtd th:first-of-type {
     padding-left: 20px;
-}
-#resultsGtd th:last-of-type,
+} */
+/* #resultsGtd th:last-of-type,
 #resultsGtd td:last-of-type {
     padding-right: 30px;
-}
+} */
 #resultsGtd tbody tr {
+    vertical-align: bottom;
     border-bottom: 1px solid #EEE;
 }
 #resultsGtd th input.search {
+    width: 100%;
     position: initial;
     display: block;
     line-height: 17px;
@@ -64,6 +66,7 @@
     border: 1px solid #e0e0e0;
 }
 #resultsGtd select {
+    background-color: #DDD;
     border: 0 none;
     height: 21px;
     font-size: 11px;
@@ -71,6 +74,7 @@
     padding-left: 5px;
     max-width: 75px;
     font-weight: normal;
+    width: 45px;
 }
 
 /* .search--name {
@@ -85,12 +89,19 @@
 /* .search--age {
     max-width: 60px;
 } */
+
+
 th.sex {
-    max-width: 120px;
+    max-width: 100px;
 }
+/* select.select-sex {
+    width: 80px;
+} */
 th.age {
-    max-width: 120px;
-}
+    max-width: 100px;
+} 
+
+
 th.club,
 td.club {
     /* width: 20%; */
@@ -139,14 +150,15 @@ tfoot li {
 } */
 
 .controls .sort:after {
-    opacity: 0;
-    content: '';
+    opacity: 0.35;
+    content: 'arrow_drop_down';
     margin: 0 -5px 0 -1px;
     font-family: 'Material Icons';
     font-weight: 400;
     font-style: normal;
     font-size: 2rem;
-    display: inline-block;
+    /* display: inline-block; */
+    display: inline;
     vertical-align: sub;
     line-height: inherit;
     text-transform: none;
@@ -158,10 +170,14 @@ tfoot li {
     text-rendering: optimizeLegibility;
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: 'liga';
+
+    /* position: absolute; */
+    /* bottom: 8px; */
+    /* left: -7px; */
 }
 
 .controls .total .sort:after {
-    content: "";
+    content: '';
     display: none;
 }
 
@@ -192,6 +208,9 @@ tfoot li {
     color: #1e3666;
     font-size: 15px;
     line-height: 16px;
+    text-decoration: none;
+    display: block;
+    margin: 5px 0;
 }
 
 /* .controls .sort.asc, 
