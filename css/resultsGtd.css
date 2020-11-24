@@ -34,14 +34,17 @@
 #resultsGtd .filters {
     padding: 5px 10px 15px;
     /* border-bottom: 1px solid #DDD; */
-    background-color: #F3F3F3;
-    border-bottom: 1px solid #FFF;
+    background-color: #DDD;
+    border-bottom: 1px solid #EEE;
 }
 #resultsGtd .filters div,
 #resultsGtd .filters ul,
 #resultsGtd .filters li {
     display: inline-block;
-    font-size: 14px;
+    font-size: 16px;
+    line-height: 20px;
+    margin: 0 auto;
+    padding: 0 0 10px;
 }
 #resultsGtd .filters label {
     display: block;
@@ -86,20 +89,24 @@
     width: 100%;
     position: initial;
     display: block;
-    line-height: 17px;
+    /* line-height: 17px; */
+    height: 25px;
     font-size: 12px;
-    color: #838383;
+    font-weight: normal;
+    margin: 0;
+    padding-left: 5px;
+    /* color: #838383; */
     border: 1px solid #e0e0e0;
 }
 #resultsGtd select {
     background-color: #F3F3F3;
     border: 1px solid #E0E0E0;
-    width: 65px;
-    height: 22px;
-    font-size: 11px;
+    width: 85px;
+    height: 25px;
+    font-size: 12px;
+    font-weight: normal;
     margin: 0;
     padding-left: 5px;
-    font-weight: normal;
 }
 
 
@@ -108,7 +115,7 @@
 
 
 #resultsGtd .filters .sex {
-    max-width: 60px;
+    /* max-width: 60px; */
 }
 #resultsGtd .filters .age {
     max-width: 60px;
@@ -133,17 +140,34 @@
 }
 
 @media only screen and (min-width: 768px) {
+    #resultsGtd .filters .name {
+        width: 350px;
+        max-width: 350px;
+        /* padding-right: 30px; */
+        /* display: inline-block; */
+    }
+    #resultsGtd .filters .agegroup {
+        padding-right: 50px;
+    }
     #resultsGtd .sorting .namefirst {
         width: 300px;
         min-width: 300px;
-    }    
+    }
+    #resultsGtd .sorting .total {
+        width: 150px;
+        min-width: 150px;
+    }
     #resultsGtd .filters .club {
         max-width: 60px;
         display: inline-block;
     }
+    #resultsGtd .sorting .club {
+        width: 150px;
+        min-width: 150px;
+    }
     #resultsGtd .sorting .club,
     #resultsGtd .list .club {
-        padding-left: 30px;
+        padding-left: 50px;
     }
 }
 
@@ -205,7 +229,7 @@ tfoot li {
 }
 .controls .sort {
     color: #1e3666;
-    font-size: 15px;
+    font-size: 14px;
     line-height: 16px;
     text-decoration: none;
     display: block;
