@@ -73,7 +73,7 @@ var data = [
   'age-group': '45-49',
   club: 'SRQM',
   lmsc: 'Florida',
-  zone: 'Southeast'
+  zone: 'Great Lakes'
   },
   {
   'name-first': 'Jay',
@@ -84,7 +84,7 @@ var data = [
   'age-group': '45-49',
   club: 'SRQM',
   lmsc: 'Florida',
-  zone: 'Southeast'
+  zone: 'Great Lakes'
   },
   {
   'name-first': 'Jay',
@@ -95,7 +95,7 @@ var data = [
   'age-group': '55-59',
   club: 'SRQM',
   lmsc: 'Texas',
-  zone: 'Southwest'
+  zone: 'Breadbasket'
   },
   {
   'name-first': 'Jay',
