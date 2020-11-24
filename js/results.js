@@ -185,64 +185,45 @@ resultsGtd.sort('total', {
 });
 
 
-// function testSearch() {
-  // resultsGtd.search('age');
-// }
-// testSearch();
-
-// function filterSex() {
-
-//   resultsGtd.filter(function(item) {
-//     if (item.values().sex == 'F') {
-//       return true;
-//     } else {
-//       return false;
-//     }
-//     for (var i in data) {
-//       if (item[i].values().sex == 'F') {
-//         console.log("TEST");    
-//       }
-//     }
-
-//   });
-
-  // for (var i in data) {
-  //   filteredSex = data[i].sex;
-  //   // console.log(filteredSex);
-  //   return;
-  // }
-
-  // for (var i in data) {
-  //   if (data[i].sex == 'F') {
-  //     console.log("TEST");    
-  //   }
-  // }
-
-  // for (let i = 0; i < 5; i++) {
-  //   filteredSex = data[i].sex;
-  //   // console.log(filteredSex);
-  // }
-
-// }
-// filterSex();
-
-// console.log(filteredSex);
 
 
+function handleSelectSex(e) {
+  var selectedSex = document.getElementById('selectSex').value;
+  if (selectedSex == "All") {
+    resultsGtd.filter();
+  } else {
+    resultsGtd.filter(function(item) {
+      return(item.values().sex == selectedSex);
+    });  
+  }
+}
+selectSex.onchange = handleSelectSex;
 
 
+function handleSelectAgeGroup(e) {
+  var selectedAgeGroup = document.getElementById('selectAgeGroup').value;
+  if (selectedAgeGroup == "All") {
+    resultsGtd.filter();
+  } else {
+    resultsGtd.filter(function(item) {
+      return(item.values().agegroup == selectedAgeGroup);
+    });  
+  }
+}
+selectAgeGroup.onchange = handleSelectAgeGroup;
 
-// function handleSelectZone(e) {
-//   var selectedZone = document.getElementById('selectZone').value;
-//   if (selectedZone == "All") {
-//     resultsGtd.filter();
-//   } else {
-//     resultsGtd.filter(function(item) {
-//       return(item.values().zone == selectedZone);
-//     });  
-//   }
-// }
-// selectZone.onchange = handleSelectZone;
+
+function handleSelectLmsc(e) {
+  var selectedLmsc = document.getElementById('selectLmsc').value;
+  if (selectedLmsc == "All") {
+    resultsGtd.filter();
+  } else {
+    resultsGtd.filter(function(item) {
+      return(item.values().lmsc == selectedLmsc);
+    });  
+  }
+}
+selectLmsc.onchange = handleSelectLmsc;
 
 
 function handleSelectZone(e) {
@@ -258,55 +239,7 @@ function handleSelectZone(e) {
 selectZone.onchange = handleSelectZone;
 
 
-function handleSelectSex(e) {
-//   var sexRadios = document.getElementById('sexForm');
-//   console.log(sexRadio);
-//   var prev = null;
-//   for (var i = 0; i < sexRadios.length; i++) {
-//       sexRadios[i].addEventListener('change', function() {
-//           (prev) ? console.log(prev.value): null;
-//           if (this !== prev) {
-//               prev = this;
-//           }
-//           console.log(this.value)
-//       });
-//   }
-// }
-// sexRadios.onchange = handleSelectSex;
-
-  var selectedSex = document.getElementById('selectSex').value;
-  if (selectedSex == "All") {
-    resultsGtd.filter();
-  } else {
-    resultsGtd.filter(function(item) {
-      return(item.values().sex == selectedSex);
-    });  
-  }
-}
-selectSex.onchange = handleSelectSex;
-
-// function clearFilters(e) {
-//   var clearFilters = document.getElementById('clearFilters');
-//   clearFilters.addEventListener('click', function() {
-//     resultsGtd.filter();
-//     alert("Deep");
-//   });
-// }
-// selectAgeGroup.onclick = clearFilters;
-
 $("#clearFilters").click(function(){
-  // alert("New!");
   resultsGtd.filter();
+  $("select").each(function() { this.selectedIndex = 0 });
 })
-
-function handleSelectAgeGroup(e) {
-  var selectedAgeGroup = document.getElementById('selectAgeGroup').value;
-  if (selectedAgeGroup == "All") {
-    resultsGtd.filter();
-  } else {
-    resultsGtd.filter(function(item) {
-      return(item.values().agegroup == selectedAgeGroup);
-    });  
-  }
-}
-selectAgeGroup.onchange = handleSelectAgeGroup;
