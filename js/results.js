@@ -1,18 +1,22 @@
 
-function getEventResults(createTable) {
-  const xhr = new XMLHttpRequest();  
-  xhr.open('GET', 'https://763a048a-2a06-44c5-a12f-f004327581ab.mock.pstmn.io/get', true);
-  xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
-  xhr.onload = function () {
-    if (xhr.status === 200) {
-        const data = JSON.parse(xhr.response);
-        createTable(data);
-        hideLoadingSpinner();
-    return;
-    }
-    return null;
-  };
-  xhr.send();
+// function getEventResults(createTable) {
+//   const xhr = new XMLHttpRequest();  
+//   xhr.open('GET', 'https://763a048a-2a06-44c5-a12f-f004327581ab.mock.pstmn.io/get', true);
+//   xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
+//   xhr.onload = function () {
+//     if (xhr.status === 200) {
+//         const data = JSON.parse(xhr.response);
+//         createTable(data);
+//         hideLoadingSpinner();
+//     return;
+//     }
+//     return null;
+//   };
+//   xhr.send();
+// }
+
+function getEventResults() {
+  hideLoadingSpinner();
 }
 
 function hideLoadingSpinner() {
@@ -21,9 +25,13 @@ function hideLoadingSpinner() {
 }
 
 function createTable() { 
-  getEventResults(function(data) {
+  // alert("Yes");
+  getEventResults(function() {
 
-    // Show 5 Results
+
+
+  
+        // Show 5 Results
     // for (let i = 0; i < 5; i++) {
     //   console.log(data[i]);
     // }
@@ -33,19 +41,102 @@ function createTable() {
       console.log(data[i]);
     }
 
-    var options = {
-      page: 9,
-      pagination: true,
-      valueNames: [ 'Name', 'Age', 'Club', 'Miles' ]
-    };
-    
-    var resultsGtd = new List('resultsGtd', options, data );
-    
-    resultsGtd.sort('Miles', {
-      order:'desc',
-    });
 
   });
 }
 createTable();
 
+var options = {
+  page: 9,
+  pagination: true,
+  valueNames: [ 'name-first', 'name-last', 'sex', 'age', 'total', 'age-group', 'club', 'lmsc', 'zone' ]
+};
+
+var data = [
+  {
+  'name-first': 'Jay',
+  'name-last': 'Place',
+  sex: 'M',
+  age: 48,
+  total: '13,132',
+  'age-group': '45-49',
+  club: 'SRQM',
+  lmsc: 'Florida',
+  zone: 'Southeast'
+  },
+  {
+  'name-first': 'Jay',
+  'name-last': 'Place',
+  sex: 'M',
+  age: 48,
+  total: '13,132',
+  'age-group': '45-49',
+  club: 'SRQM',
+  lmsc: 'Florida',
+  zone: 'Southeast'
+  },
+  {
+  'name-first': 'Jay',
+  'name-last': 'Place',
+  sex: 'M',
+  age: 48,
+  total: '13,132',
+  'age-group': '45-49',
+  club: 'SRQM',
+  lmsc: 'Florida',
+  zone: 'Southeast'
+  },
+  {
+  'name-first': 'Jay',
+  'name-last': 'Place',
+  sex: 'M',
+  age: 58,
+  total: '13,132',
+  'age-group': '55-59',
+  club: 'SRQM',
+  lmsc: 'Texas',
+  zone: 'Southwest'
+  },
+  {
+  'name-first': 'Jay',
+  'name-last': 'Place',
+  sex: 'M',
+  age: 48,
+  total: '13,132',
+  'age-group': '45-49',
+  club: 'SRQM',
+  lmsc: 'Florida',
+  zone: 'Southeast'
+  },
+  {
+  'name-first': 'Morgan',
+  'name-last': 'Place',
+  sex: 'F',
+  age: 11,
+  total: '13,132',
+  'age-group': '10-14',
+  club: 'SRQM',
+  lmsc: 'Florida',
+  zone: 'Southeast'
+  }
+];
+
+var resultsGtd = new List('resultsGtd', options, data );
+    
+resultsGtd.sort('total', {
+  order:'desc',
+});
+
+
+
+let selectZone = document.getElementById('selectZone').childNodes;
+
+console.log(selectZone.innerHTML);
+
+$("#selectZone").change(function() {
+  var selection = this.value;
+  // console.log(selection);
+  resultsGtd.filter(function(item) {
+    return(item.values().zone == selection);
+  });
+});
