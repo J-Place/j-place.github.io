@@ -37,7 +37,7 @@ createTable();
 
 
 var options = {
-  page: 500,
+  page: 5,
   pagination: true,
   valueNames: [ 'name-first', 'name-last', 'sex', 'age', 'total', 'age-group', 'club', 'lmsc', 'zone' ]
 };
