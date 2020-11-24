@@ -26,7 +26,7 @@
     position: relative;
 }
 #resultsGtd .filters .title {
-    display: block !important;
+    display: block;
     font-size: 18px;
     font-weight: bold;
     padding: 5px 0 10px;
@@ -42,14 +42,19 @@
 #resultsGtd .filters {
     background-color: #DDD;
 }
-#resultsGtd .filters div,
+
+/* #resultsGtd .filters div */
 #resultsGtd .filters ul,
 #resultsGtd .filters li {
     display: inline-block;
     font-size: 16px;
     line-height: 20px;
-    margin: 0 auto;
+    /* margin: 0 auto; */
+    margin: 0;
     padding: 0;
+}
+#resultsGtd .filters th {
+    padding: 15px 10px 20px;
 }
 #resultsGtd .filters label {
     display: block;
@@ -69,21 +74,18 @@
 
 
 
-#resultsGtd thead.filters th {
-    padding: 15px 20px 20px;
-}
 #resultsGtd .sorting th {
     padding: 10px 10px 0;
     background-color: #FFF;
     position: relative;
 }
-#resultsGtd td {
-    padding: 8px 10px;
-    line-height: 17px;
-}
-#resultsGtd tbody tr {
+#resultsGtd .list tr {
     vertical-align: top;
     border-bottom: 1px solid #EEE;
+}
+#resultsGtd .list td {
+    padding: 8px 10px;
+    line-height: 17px;
 }
 #resultsGtd th input.search {
     width: 100%;
@@ -100,49 +102,99 @@
 }
 #resultsGtd select {
     border: 1px solid #E0E0E0;
+    width: 100%;
     height: 25px;
     font-size: 12px;
     font-weight: normal;
     margin: 0;
     padding-left: 5px;
+    background-color: #F3F3F3;
 }
 
 #resultsGtd .filters .name {
     width: 150px;
     max-width: 150px;
+    display: inline-block;
 }
 /* #resultsGtd .filters .sex {
     max-width: 60px;
     display: inline-block;
 }  */
-
-#resultsGtd .filters #sexForm {
-    display: inline;
-}
-#resultsGtd .filters #sexForm * {
+#resultsGtd .filters .sex {
+    width: 60px;
+    max-width: 60px;
     display: inline-block;
 }
-#resultsGtd .filters .club {
+#resultsGtd .filters .agegroup {
+    width: 60px;
+    max-width: 60px;
+    display: inline-block;
+}
+
+/* #resultsGtd .filters #sexForm {
+    display: inline;
+} */
+/* #resultsGtd .filters #sexForm * {
+    display: inline-block;
+} */
+
+/* #resultsGtd .filters .club {
     max-width: 60px;
     display: block;
+} */
+
+#resultsGtd .filters .lmsc {
+    width: 90px;
+    min-width: 90px;
+    display: inline-block;
 }
+#resultsGtd .filters .zone {
+    width: 90px;
+    min-width: 90px;
+    display: inline-block;
+}
+
+
 #resultsGtd .sorting {
     vertical-align: bottom;
 }
 #resultsGtd .sorting .namefirst {
-    width: 120px;
-    min-width: 120px;
+    width: 130px;
+    min-width: 130px;
 }
-#resultsGtd .sorting .sex {
+#resultsGtd .sorting .total,
+#resultsGtd .list .total {
+    width: 90px;
+    min-width: 90px;
+}
+#resultsGtd .sorting .sex,
+#resultsGtd .list .sex {
     width: 60px;
     min-width: 60px;
-    padding-right: 0;
+    text-align: center;
 }
-#resultsGtd .sorting .age {
+#resultsGtd .sorting .age,
+#resultsGtd .list .age {
     width: 60px;
     min-width: 60px;
     padding-left: 0;
+    text-align: center;
 }
+
+
+
+/* #resultsGtd .filters .agegroup:after { 
+    content: "X";
+    width: 10px;
+    height: 10px;
+    border: 1px solid red;
+    display: block; 
+    clear: both;
+} */
+
+
+
+
 
 /* Hide from display but keep the LMSC ans Zone html so listjs can render the template data — so we can still filter by LSMC or Zone */
 .sorting .lmsc, 
@@ -156,24 +208,30 @@
     #resultsGtd select {
         background-color: #F3F3F3;
     }
+    #resultsGtd .filters th {
+        padding: 15px 20px 20px;
+    }    
     #resultsGtd .filters .name {
         width: 280px;
         max-width: 280px;
         padding-right: 10px;
     }
-    #resultsGtd .filters .agegroup {
-        padding-left: 5px;
-    }    
     #resultsGtd .filters .sex div {
         padding: 0 2px;
         text-align: center;
     }
+    #resultsGtd .filters .agegroup {
+        padding-left: 5px;
+    }    
     #resultsGtd .filters .lmsc {
+        display: inline-block;
+        max-width: initial;
         margin-left: 30px;
         padding-left: 30px;
         padding-right: 5px;
         border-left: 1px solid #CCC;
     }
+
 
     #resultsGtd .sorting .namefirst {
         width: 280px;
