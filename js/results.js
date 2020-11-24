@@ -30,7 +30,7 @@ function createTable() {
 
     // Show All Results
     for (var i in data) {
-      console.log(data[i].Miles);
+      console.log(data[i]);
     }
 
     var options = {
