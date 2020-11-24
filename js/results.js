@@ -129,14 +129,32 @@ resultsGtd.sort('total', {
 
 
 
-let selectZone = document.getElementById('selectZone').childNodes;
+// let selectZone = document.getElementById('selectZone');
 
-console.log(selectZone.innerHTML);
 
-$("#selectZone").change(function() {
+// $("#selectZone").change(function() {
+//   var selection = this.value;
+//   if (selection == "All") {
+//     resultsGtd.filter();
+//   } else {
+//     resultsGtd.filter(function(item) {
+//       return(item.values().zone == selection);
+//     });  
+//   }
+// });
+
+
+let selectZone = document.getElementById('selectZone');
+
+selectZone.onchange = handleSelectZone;
+
+function handleSelectZone(e) {
   var selection = this.value;
-  // console.log(selection);
-  resultsGtd.filter(function(item) {
-    return(item.values().zone == selection);
-  });
-});
+  if (selection == "All") {
+    resultsGtd.filter();
+  } else {
+    resultsGtd.filter(function(item) {
+      return(item.values().zone == selection);
+    });  
+  }
+}
