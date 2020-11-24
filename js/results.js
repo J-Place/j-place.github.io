@@ -174,10 +174,6 @@ resultsGtd.sort('total', {
 
 
 
-
-
-
-
 selectZone.onchange = handleSelectZone;
 
 function handleSelectZone(e) {
