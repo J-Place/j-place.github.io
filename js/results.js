@@ -3357,10 +3357,18 @@ var data = [
   }
 ];
 
-// console.log(data[1].age);
+function formatMiles(miles) {  
+  milesDecimal = miles.toFixed(2);;
+  cleanMiles = milesDecimal;
+  // cleanMiles = cleanMiles.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // Add comma to thousands
+  miles = cleanMiles;
+  
+  return miles;
+}
 
+// parseFloat(data.miles).toFixed(2);
 
-
+// Calculate Age Groups based on Age
 function formatAgeGroup(age, agegroup) {
   if (age > 64 && age < 70) {
     agegroup = '65-69';
@@ -3398,6 +3406,7 @@ function formatAgeGroup(age, agegroup) {
 
 function cleanData(data) {
   for (var i = 0; i < newData.length; i++) {
+    newData[i].miles = formatMiles(data[i].miles);
     newData[i].agegroup = formatAgeGroup(data[i].age, data[i].agegroup);
   }
 };
@@ -3490,6 +3499,7 @@ selectZone.onchange = handleSelectZone;
 
 $("#clearFilters").click(function(){
   resultsGtd.filter();
-  document.getElementById('searchGtd').value = '';
+  resultsGtd.search();
+  var resetSearch = document.getElementById('searchGtd').value = '';
   $("select").each(function() { this.selectedIndex = 0 });
 });
