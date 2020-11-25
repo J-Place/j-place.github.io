@@ -3476,6 +3476,7 @@ selectZone.onchange = handleSelectZone;
 
 $("#clearFilters").click(function(){
   resultsGtd.filter();
+  document.getElementById('searchGtd').value = '';
   $("select").each(function() { this.selectedIndex = 0 });
 })
 
