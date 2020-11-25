@@ -179,14 +179,26 @@
 
 
 /* Hide from display but keep the LMSC ans Zone html so listjs can render the template data — so we can still filter by LSMC or Zone */
-.sorting .lmsc, 
+.sorting .lmsc,
 .sorting .zone,
 .list .lmsc,
-.list .zone {
+.list .zone,
+.sorting .agegroup,
+.list .agegroup,
+.sorting .club,
+.list .club {
     display: none;
 }
 
 @media only screen and (min-width: 768px) {
+
+    .sorting .agegroup,
+    .list .agegroup,
+    .sorting .club,
+    .list .club {
+        display: table-cell;
+    }
+
     #resultsGtd input.search {
         margin-top: 2px;
     }
