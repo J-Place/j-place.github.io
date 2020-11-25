@@ -100,8 +100,8 @@
 										</div>
 										<div class="filters--swimmer">
 											<div class="name">
-												<label for="">Name, Age or Club</label>
-												<input class="search search--gtd" id="searchGtd" type="text" data-target="resultsGtd" data-filter="results-gtd" data-trigger="keyup" placeholder="" />
+												<label for="">Name</label>
+												<input class="search search--name" id="searchName" type="text" data-target="resultsGtd" data-filter="results-gtd" data-trigger="keyup" placeholder="" />
 											</div>
 											<div class="sex">
 												<label for="">Sex</label>
@@ -110,6 +110,10 @@
 													<option value="M">Male</option>
 													<option value="F">Female</option>
 												</select>
+											</div>
+											<div class="age">
+												<label for="">Age</label>
+												<input class="search search--age" id="searchAge" type="text" data-target="resultsGtd" data-filter="results-gtd" data-trigger="keyup" placeholder="" />
 											</div>
 											<div class="agegroup">
 												<label for="">Age Group</label>
@@ -135,19 +139,11 @@
 											</div>
 										</div>
 										<div class="filters--admin">
-											<div class="zone">
-												<label for="">Zone</label>
-												<select class="select select--zone" id="selectZone" placeholder="">
-													<option value="All" default selected></option>
-													<option value="Breadbasket">Breadbasket</option>
-													<option value="Colonies">Colonies</option>
-													<option value="Great Lakes">Great Lakes</option>
-													<option value="Northwest">Northwest</option>
-													<option value="South Central">South Central</option>
-													<option value="Southeast">Southeast</option>
-													<option value="Southwest">Southwest</option>
-												</select>	
+											<div class="club">
+												<label for="">Club</label>
+												<input class="search search--club" id="searchClub" type="text" data-target="resultsGtd" data-filter="results-gtd" data-trigger="keyup" placeholder="" />
 											</div>
+
 											<div class="lmsc">
 												<label for="">LMSC</label>
 												<select class="select select--lmsc" id="selectLmsc" placeholder="">
@@ -206,6 +202,21 @@
 													<option value="Wisconsin">Wisconsin</option>
 												</select>	
 											</div>
+
+											<div class="zone">
+												<label for="">Zone</label>
+												<select class="select select--zone" id="selectZone" placeholder="">
+													<option value="All" default selected></option>
+													<option value="Breadbasket">Breadbasket</option>
+													<option value="Colonies">Colonies</option>
+													<option value="Great Lakes">Great Lakes</option>
+													<option value="Northwest">Northwest</option>
+													<option value="South Central">South Central</option>
+													<option value="Southeast">Southeast</option>
+													<option value="Southwest">Southwest</option>
+												</select>	
+											</div>
+
 										</div>
 									</th>
 								</tr>
@@ -230,11 +241,11 @@
 									<th class="club">
 										<a class="sort" href="#" data-sort="club">Club</a>
 									</th>
-									<th class="zone">
-										<a class="sort" href="#" data-sort="zone">Zone</a>
-									</th>
 									<th class="lmsc">
 										<a class="sort" href="#" data-sort="lmsc">LMSC</a>
+									</th>
+									<th class="zone">
+										<a class="sort" href="#" data-sort="zone">Zone</a>
 									</th>
 								</tr>
 							</thead>
@@ -249,8 +260,8 @@
 									<td class="age"></td>
 									<td class="agegroup"></td>
 									<td class="club"></td>
-									<td class="zone"></td>
 									<td class="lmsc"></td>
+									<td class="zone"></td>
 								</tr>
 							</tbody>
 							<tfoot class="pagination">

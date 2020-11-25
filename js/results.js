@@ -3376,7 +3376,7 @@ function formatAgeGroup(age, agegroup) {
   } else if (age > 59 && age < 65) {
     agegroup = '60-64';
     return agegroup;
-  } else if (age > 54 && age < 59) {
+  } else if (age > 54 && age < 60) {
     agegroup = '55-59';
     return agegroup;
   } else if (age > 49 && age < 55) {
@@ -3418,17 +3418,42 @@ cleanData(data);
 
 // Initialize List
 var resultsGtd = new List('resultsGtd', options, newData );
-    
+
 resultsGtd.sort('miles', {
   order:'desc',
 });
 
 
 
+let searchName = document.getElementById('searchName');
+
+function handleNameSearch(e) {
+  var searchName = document.getElementById('searchName').value;
+  resultsGtd.search(searchName, ['lastname']);
+  return searchName;
+}
+searchName.onkeyup = handleNameSearch;
+
+
+let searchAge = document.getElementById('searchAge');
+
+function handleAgeSearch(e) {
+  var searchAge = document.getElementById('searchAge').value;
+  resultsGtd.search(searchAge, ['age']);
+  return searchAge;
+}
+searchAge.onkeyup = handleAgeSearch;
 
 
 
+let searchClub = document.getElementById('searchClub');
 
+function handleClubSearch(e) {
+  var searchClub = document.getElementById('searchClub').value;
+  resultsGtd.search(searchClub, ['club']);
+  return searchClub;
+}
+searchClub.onkeyup = handleClubSearch;
 
 
 
@@ -3497,9 +3522,12 @@ selectZone.onchange = handleSelectZone;
 
 
 
-$("#clearFilters").click(function(){
-  resultsGtd.filter();
-  resultsGtd.search();
-  var resetSearch = document.getElementById('searchGtd').value = '';
-  $("select").each(function() { this.selectedIndex = 0 });
-});
+// $("#clearFilters").click(function(){
+  // resultsGtd.filter();
+  // resultsGtd.search();
+  // var resetSearch = document.getElementById('searchGtd').value = '';
+  // $("select").each(function() { this.selectedIndex = 0 });
+  // let nameVal = document.getElementById('searchGtd').value;
+  // console.log(nameVal);
+  // resultsGtd.search(nameVal, ['lastname', 'firstname']); // Only search in the 'name' column
+// });

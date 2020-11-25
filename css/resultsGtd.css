@@ -1,3 +1,6 @@
+
+
+
 #loadingWrapper.hide {
     display: none;
 }
@@ -18,7 +21,9 @@
 
 
 
-
+.usms-container {
+    overflow: hidden;
+}
 
 #resultsGtd {
     width: 100%;
@@ -126,6 +131,11 @@
     display: inline-block;
     top: 0;
 }
+#resultsGtd .filters .age {
+    width: 60px;
+    max-width: 60px;
+    display: inline-block;
+}
 #resultsGtd .filters .sex {
     width: 60px;
     max-width: 60px;
@@ -134,6 +144,11 @@
 #resultsGtd .filters .agegroup {
     width: 70px;
     max-width: 70px;
+    display: inline-block;
+}
+#resultsGtd .filters .club {
+    width: 120px;
+    min-width: 120px;
     display: inline-block;
 }
 #resultsGtd .filters .lmsc {
@@ -193,6 +208,11 @@
 
 @media only screen and (min-width: 768px) {
 
+    .sorting .lmsc,
+    .sorting .zone,
+    .list .lmsc,
+    .list .zone,
+    
     .sorting .agegroup,
     .list .agegroup,
     .sorting .club,
@@ -219,19 +239,21 @@
         padding-right: 10px;
         /* top: 0; */
     }
-    #resultsGtd .filters .agegroup {
+    /* #resultsGtd .filters .agegroup {
         padding-left: 5px;
-    }    
+    }     */
+
     /* #resultsGtd .filters .lmsc */
+    #resultsGtd .filters .club {
+        margin-left: 30px;
+        padding-left: 30px;
+        /* padding-right: 5px; */
+        border-left: 1px solid #CCC;
+    }
     #resultsGtd .filters .zone {
         display: inline-block;
         max-width: initial;
-        margin-left: 30px;
-        padding-left: 30px;
-        padding-right: 5px;
-        border-left: 1px solid #CCC;
     }
-
     #resultsGtd .sorting .firstname {
         width: 280px;
         min-width: 280px;
@@ -240,7 +262,7 @@
     #resultsGtd .list .miles {
         width: 130px;
         min-width: 130px;
-        padding-right: 50px;
+        /* padding-right: 50px; */
     }
     #resultsGtd .sorting .age,
     #resultsGtd .list .age {
@@ -257,15 +279,16 @@
         max-width: 60px;
         display: inline-block;
     }
-   #resultsGtd .sorting .club,
+    #resultsGtd .sorting .club,
     #resultsGtd .list .club {
-        /* width: 150px; */
-        /* min-width: 150px; */
         width: 90px;
         min-width: 90px;
     }
+    #resultsGtd .sorting .lmsc,
     #resultsGtd .list .lmsc {
-        padding-right: 0;
+        /* padding-right: 0; */
+        width: 90px;
+        min-width: 90px;
     }
     #resultsGtd .sorting .zone {
         width: 120px;
