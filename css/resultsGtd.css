@@ -109,7 +109,12 @@
     background-color: #F3F3F3;
     border: 0px Solid #E0E0E0;
 }
-/********************************************* Filter */
+
+/********************************************* Filters */
+
+.filters--admin {
+    display: block;
+}
 #resultsGtd .filters tr th > * {
     vertical-align: top;
     position: relative;
@@ -141,7 +146,9 @@
     min-width: 90px;
     display: inline-block;
 }
+
 /********************************************* Sort and List */
+
 #resultsGtd .sorting {
     vertical-align: bottom;
 }
@@ -150,8 +157,8 @@
     width: 150px;
     min-width: 150px;
 }
-#resultsGtd .sorting .total,
-#resultsGtd .list .total {
+#resultsGtd .sorting .miles,
+#resultsGtd .list .miles {
     width: 90px;
     min-width: 90px;
 }
@@ -186,6 +193,10 @@
     #resultsGtd select {
         background-color: #F3F3F3;
     }
+    .filters--swimmer,
+    .filters--admin {
+        display: inline-block;
+    }
     #resultsGtd .filters th {
         padding: 15px 20px 20px;
     }    
@@ -198,7 +209,8 @@
     #resultsGtd .filters .agegroup {
         padding-left: 5px;
     }    
-    #resultsGtd .filters .lmsc {
+    /* #resultsGtd .filters .lmsc */
+    #resultsGtd .filters .zone {
         display: inline-block;
         max-width: initial;
         margin-left: 30px;
@@ -207,12 +219,12 @@
         border-left: 1px solid #CCC;
     }
 
-    #resultsGtd .sorting .namefirst {
+    #resultsGtd .sorting .firstname {
         width: 280px;
         min-width: 280px;
     }
-    #resultsGtd .sorting .total,
-    #resultsGtd .list .total {
+    #resultsGtd .sorting .miles,
+    #resultsGtd .list .miles {
         width: 130px;
         min-width: 130px;
         padding-right: 50px;
@@ -254,7 +266,7 @@
 
 
 
-.total {
+.miles {
     text-align: right;
 }
 tfoot li {
@@ -309,16 +321,16 @@ tfoot li {
 
 
 
-.list__item .namefirst,
-.list__item .namelast {
+.list__item .firstname,
+.list__item .lastname {
     display: block;
 }
-.list__item .namelast {
+.list__item .lastname {
     font-weight: bold;
 }
 @media only screen and (min-width: 768px) {
-    .list__item .namefirst,
-    .list__item .namelast {
+    .list__item .firstname,
+    .list__item .lastname {
         display: inline-block;
         font-weight: normal;
     }

@@ -98,121 +98,125 @@
 											Filter Results
 											<a id="clearFilters" href="#">Clear Filters</a>
 										</div>
-										<div class="name">
-											<label for="search--namelast">Name, Age or Club</label>
-											<input class="search search--namefirst" type="text" data-target="resultsGtd" data-filter="namefirst" data-trigger="keyup" placeholder="" />
+										<div class="filters--swimmer">
+											<div class="name">
+												<label for="search--namelast">Name, Age or Club</label>
+												<input class="search search--name" type="text" data-target="resultsGtd" data-filter="name" data-trigger="keyup" placeholder="" />
+											</div>
+											<div class="sex">
+												<label for="">Sex</label>
+												<select class="select select--sex" id="selectSex" placeholder="">
+													<option value="All" default selected></option>
+													<option value="M">Male</option>
+													<option value="F">Female</option>
+												</select>
+											</div>
+											<div class="agegroup">
+												<label for="">Age Group</label>
+												<select class="select select--agegroup" id="selectAgeGroup" placeholder="">
+													<option value="All" default></option>
+													<option value="18-24">18-24</option>
+													<option value="25-29">25-29</option>
+													<option value="30-34">30-34</option>
+													<option value="35-39">35-39</option>
+													<option value="40-44">40-44</option>
+													<option value="45-49">45-49</option>
+													<option value="50-54">50-54</option>
+													<option value="55-59">55-59</option>
+													<option value="60-64">60-64</option>
+													<option value="65-69">65-69</option>
+													<option value="70-74">70-74</option>
+													<option value="75-79">75-79</option>
+													<option value="80-84">80-84</option>
+													<option value="85-89">85-89</option>
+													<option value="90-94">90-94</option>
+													<option value="95-99">95-99</option>
+												</select>	
+											</div>
 										</div>
-										<div class="sex">
-											<label for="">Sex</label>
-											<select class="select select--sex" id="selectSex" placeholder="">
-												<option value="All" default selected></option>
-												<option value="M">Male</option>
-												<option value="F">Female</option>
-											</select>
-										</div>
-										<div class="agegroup">
-											<label for="">Age Group</label>
-											<select class="select select--agegroup" id="selectAgeGroup" placeholder="">
-												<option value="All" default></option>
-												<option value="18-24">18-24</option>
-												<option value="25-29">25-29</option>
-												<option value="30-34">30-34</option>
-												<option value="35-39">35-39</option>
-												<option value="40-44">40-44</option>
-												<option value="45-49">45-49</option>
-												<option value="50-54">50-54</option>
-												<option value="55-59">55-59</option>
-												<option value="60-64">60-64</option>
-												<option value="65-69">65-69</option>
-												<option value="70-74">70-74</option>
-												<option value="75-79">75-79</option>
-												<option value="80-84">80-84</option>
-												<option value="85-89">85-89</option>
-												<option value="90-94">90-94</option>
-												<option value="95-99">95-99</option>
-											</select>	
-										</div>
-										<div class="lmsc">
-											<label for="">LMSC</label>
-											<select class="select select--lmsc" id="selectLmsc" placeholder="">
-												<option value="All" default></option>
-												<option value="Adirondack">Adirondack</option>
-												<option value="Alaska">Alaska</option>
-												<option value="Allegheny Mountain">Allegheny Mountain</option>
-												<option value="Arizona">Arizona</option>
-												<option value="Arkansas">Arkansas</option>
-												<option value="Colorado">Colorado</option>
-												<option value="Connecticut">Connecticut</option>
-												<option value="Delaware Valley">Delaware Valley</option>
-												<option value="Florida">Florida</option>
-												<option value="Florida Gold Coast">Florida Gold Coast</option>
-												<option value="Georgia">Georgia</option>
-												<option value="Gulf">Gulf</option>
-												<option value="Hawaii">Hawaii</option>
-												<option value="Illinois">Illinois</option>
-												<option value="Indiana">Indiana</option>
-												<option value="Inland Northwest">Inland Northwest</option>
-												<option value="Iowa">Iowa</option>
-												<option value="Kentucky">Kentucky</option>
-												<option value="Lake Erie">Lake Erie</option>
-												<option value="Maryland">Maryland</option>
-												<option value="Metropolitan">Metropolitan</option>
-												<option value="Michigan">Michigan</option>
-												<option value="Minnesota">Minnesota</option>
-												<option value="Missouri Valley">Missouri Valley</option>
-												<option value="Montana">Montana</option>
-												<option value="Nebraska">Nebraska</option>
-												<option value="New England">New England</option>
-												<option value="New Jersey">New Jersey</option>
-												<option value="New Mexico">New Mexico</option>
-												<option value="Niagara">Niagara</option>
-												<option value="North Carolina">North Carolina</option>
-												<option value="North Dakota">North Dakota</option>
-												<option value="North Texas">North Texas</option>
-												<option value="Ohio">Ohio</option>
-												<option value="Oklahoma">Oklahoma</option>
-												<option value="Oregon">Oregon</option>
-												<option value="Ozark">Ozark</option>
-												<option value="Pacific">Pacific</option>
-												<option value="Pacific Northwest">Pacific Northwest</option>
-												<option value="Potomac Valley">Potomac Valley</option>
-												<option value="San Diego-Imperial">San Diego-Imperial</option>
-												<option value="Snake River">Snake River</option>
-												<option value="South Carolina">South Carolina</option>
-												<option value="South Dakota">South Dakota</option>
-												<option value="South Texas">South Texas</option>
-												<option value="Southeastern">Southeastern</option>
-												<option value="Southern">Southern</option>
-												<option value="Southern Pacific">Southern Pacific</option>
-												<option value="Utah">Utah</option>
-												<option value="Virginia">Virginia</option>
-												<option value="West Texas">West Texas</option>
-												<option value="Wisconsin">Wisconsin</option>
-											</select>	
-										</div>
-										<div class="zone">
-											<label for="">Zone</label>
-											<select class="select select--zone" id="selectZone" placeholder="">
-												<option value="All" default selected></option>
-												<option value="Breadbasket">Breadbasket</option>
-												<option value="Colonies">Colonies</option>
-												<option value="Great Lakes">Great Lakes</option>
-												<option value="Northwest">Northwest</option>
-												<option value="South Central">South Central</option>
-												<option value="Southeast">Southeast</option>
-												<option value="Southwest">Southwest</option>
-											</select>	
+										<div class="filters--admin">
+											<div class="zone">
+												<label for="">Zone</label>
+												<select class="select select--zone" id="selectZone" placeholder="">
+													<option value="All" default selected></option>
+													<option value="Breadbasket">Breadbasket</option>
+													<option value="Colonies">Colonies</option>
+													<option value="Great Lakes">Great Lakes</option>
+													<option value="Northwest">Northwest</option>
+													<option value="South Central">South Central</option>
+													<option value="Southeast">Southeast</option>
+													<option value="Southwest">Southwest</option>
+												</select>	
+											</div>
+											<div class="lmsc">
+												<label for="">LMSC</label>
+												<select class="select select--lmsc" id="selectLmsc" placeholder="">
+													<option value="All" default selected></option>
+													<option value="Adirondack">Adirondack</option>
+													<option value="Alaska">Alaska</option>
+													<option value="Allegheny Mountain">Allegheny Mountain</option>
+													<option value="Arizona">Arizona</option>
+													<option value="Arkansas">Arkansas</option>
+													<option value="Colorado">Colorado</option>
+													<option value="Connecticut">Connecticut</option>
+													<option value="Delaware Valley">Delaware Valley</option>
+													<option value="Florida">Florida</option>
+													<option value="Florida Gold Coast">Florida Gold Coast</option>
+													<option value="Georgia">Georgia</option>
+													<option value="Gulf">Gulf</option>
+													<option value="Hawaii">Hawaii</option>
+													<option value="Illinois">Illinois</option>
+													<option value="Indiana">Indiana</option>
+													<option value="Inland Northwest">Inland Northwest</option>
+													<option value="Iowa">Iowa</option>
+													<option value="Kentucky">Kentucky</option>
+													<option value="Lake Erie">Lake Erie</option>
+													<option value="Maryland">Maryland</option>
+													<option value="Metropolitan">Metropolitan</option>
+													<option value="Michigan">Michigan</option>
+													<option value="Minnesota">Minnesota</option>
+													<option value="Missouri Valley">Missouri Valley</option>
+													<option value="Montana">Montana</option>
+													<option value="Nebraska">Nebraska</option>
+													<option value="New England">New England</option>
+													<option value="New Jersey">New Jersey</option>
+													<option value="New Mexico">New Mexico</option>
+													<option value="Niagara">Niagara</option>
+													<option value="North Carolina">North Carolina</option>
+													<option value="North Dakota">North Dakota</option>
+													<option value="North Texas">North Texas</option>
+													<option value="Ohio">Ohio</option>
+													<option value="Oklahoma">Oklahoma</option>
+													<option value="Oregon">Oregon</option>
+													<option value="Ozark">Ozark</option>
+													<option value="Pacific">Pacific</option>
+													<option value="Pacific Northwest">Pacific Northwest</option>
+													<option value="Potomac Valley">Potomac Valley</option>
+													<option value="San Diego-Imperial">San Diego-Imperial</option>
+													<option value="Snake River">Snake River</option>
+													<option value="South Carolina">South Carolina</option>
+													<option value="South Dakota">South Dakota</option>
+													<option value="South Texas">South Texas</option>
+													<option value="Southeastern">Southeastern</option>
+													<option value="Southern">Southern</option>
+													<option value="Southern Pacific">Southern Pacific</option>
+													<option value="Utah">Utah</option>
+													<option value="Virginia">Virginia</option>
+													<option value="West Texas">West Texas</option>
+													<option value="Wisconsin">Wisconsin</option>
+												</select>	
+											</div>
 										</div>
 									</th>
 								</tr>
 							</thead>
 							<thead class="sorting">
 								<tr class="controls">
-									<th class="namefirst">
-										<a class="sort" href="#" data-sort="namefirst">Name</a>
+									<th class="name">
+										<a class="sort" href="#" data-sort="lastname">Name</a>
 									</th>
-									<th class="total">
-										<a class="sort" href="#" data-sort="total">Miles</a>
+									<th class="miles">
+										<a class="sort" href="#" data-sort="miles">Miles</a>
 									</th>
 									<th class="sex">
 										<a class="sort" href="#" data-sort="sex">Sex</a>
@@ -226,30 +230,31 @@
 									<th class="club">
 										<a class="sort" href="#" data-sort="club">Club</a>
 									</th>
-									<th class="lmsc">
-										<a class="sort" href="#" data-sort="lmsc">LMSC</a>
-									</th>
 									<th class="zone">
 										<a class="sort" href="#" data-sort="zone">Zone</a>
+									</th>
+									<th class="lmsc">
+										<a class="sort" href="#" data-sort="lmsc">LMSC</a>
 									</th>
 								</tr>
 							</thead>
 							<tbody class="list">
 								<tr class="list__item">
 									<td class="name">
-										<div class="namefirst"></div>
-										<div class="namelast"></div>
+										<div class="firstname"></div>
+										<div class="lastname"></div>
 									</td>
-									<td class="total"></td>
+									<td class="miles"></td>
 									<td class="sex"></td>
 									<td class="age"></td>
 									<td class="agegroup"></td>
 									<td class="club"></td>
-									<td class="lmsc"></td>
 									<td class="zone"></td>
+									<td class="lmsc"></td>
 								</tr>
 							</tbody>
-							<tfoot class="pagination"></tfoot>
+							<tfoot class="pagination">
+							</tfoot>
 						</table>
 
 					</div>
@@ -258,8 +263,6 @@
 		</div>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.2/handlebars.js"></script> -->
-		<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script> -->
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js" type="text/javascript"></script>
 		<script type="text/javascript" src="js/results.js"></script>
