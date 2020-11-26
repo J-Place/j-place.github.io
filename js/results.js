@@ -3432,7 +3432,7 @@ let searchName = document.getElementById('searchName');
 
 function handleNameSearch(e) {
   var searchName = document.getElementById('searchName').value;
-  resultsGtd.search(searchName, ['lastname']);
+  resultsGtd.search(searchName, ['lastname', 'firstname']);
   return searchName;
 }
 searchName.onkeyup = handleNameSearch;
