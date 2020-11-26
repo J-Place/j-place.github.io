@@ -12,7 +12,7 @@ hideLoadingSpinner();
 
 
 var options = {
-  page: 5,
+  page: 99,
   pagination: true,
   innerWindow: 1,
   left: 0,
@@ -3370,7 +3370,10 @@ function formatMiles(miles) {
 
 // Calculate Age Groups based on Age
 function formatAgeGroup(age, agegroup) {
-  if (age > 64 && age < 70) {
+  if (age > 69 && age < 75) {
+    agegroup = '70-74';
+    return agegroup;
+  } else if (age > 64 && age < 70) {
     agegroup = '65-69';
     return agegroup;
   } else if (age > 59 && age < 65) {
@@ -3522,12 +3525,10 @@ selectZone.onchange = handleSelectZone;
 
 
 
-// $("#clearFilters").click(function(){
-  // resultsGtd.filter();
-  // resultsGtd.search();
-  // var resetSearch = document.getElementById('searchGtd').value = '';
-  // $("select").each(function() { this.selectedIndex = 0 });
-  // let nameVal = document.getElementById('searchGtd').value;
-  // console.log(nameVal);
-  // resultsGtd.search(nameVal, ['lastname', 'firstname']); // Only search in the 'name' column
-// });
+$("#clearFilters").click(function(){
+  var searchInput = document.getElementById('searchName');
+  searchInput.value = '';
+  $("select").each(function() { this.selectedIndex = 0 });
+  resultsGtd.filter();
+  resultsGtd.search();
+});

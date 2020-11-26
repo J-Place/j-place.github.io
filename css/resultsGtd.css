@@ -30,8 +30,9 @@
     margin: 30px auto;
     position: relative;
 }
-#resultsGtd .filters .filters--swimmer > div,
-#resultsGtd .filters .filters--admin > div {
+#resultsGtd .filters .filters__swimmer-bio > div,
+#resultsGtd .filters .filters--swimmer > div > div,
+#resultsGtd .filters .filters--admin > div > div {
     margin-right: 5px;
 }
 #resultsGtd .filters .title {
@@ -95,7 +96,7 @@
 }
 #resultsGtd .list td {
     padding: 8px 10px;
-    line-height: 17px;
+    line-height: 18px;
 }
 #resultsGtd input.search {
     width: 100%;
@@ -123,6 +124,15 @@
 
 .filters--admin {
     display: block;
+}
+.filters__admin-club {
+    display: inline-block;
+    width: 50%;
+    margin-right: 5px;
+}
+.filters__admin-lmsc-zone {
+    display: inline-block;
+    width: 40%;
 }
 #resultsGtd .filters tr th > * {
     vertical-align: top;
@@ -152,19 +162,19 @@
     display: inline-block;
 }
 #resultsGtd .filters .club {
-    width: 100px;
-    min-width: 100px;
+    width: 100%;
+    min-width: 100%;
     display: inline-block;
     top: 0;
 }
 #resultsGtd .filters .lmsc {
-    width: 80px;
-    min-width: 80px;
+    width: 43%;
+    min-width: 43%;
     display: inline-block;
 }
 #resultsGtd .filters .zone {
-    width: 80px;
-    min-width: 80px;
+    width: 43%;
+    min-width: 43%;
     display: inline-block;
 }
 
@@ -187,17 +197,22 @@
 #resultsGtd .list .sex {
     /* width: 60px; */
     /* min-width: 60px; */
-    padding: 0;
+    padding-left: 0;
+    padding-right: 0;
     text-align: center;
 }
 #resultsGtd .sorting .age,
 #resultsGtd .list .age {
     /* width: 60px; */
     /* min-width: 60px; */
-    padding: 0;
+    padding-left: 0;
+    padding-right: 0;
     text-align: center;
 }
-
+#resultsGtd .sorting .club,
+#resultsGtd .list .club {
+    text-align: center;
+}
 
 
 /* Hide from display but keep the LMSC ans Zone html so listjs can render the template data — so we can still filter by LSMC or Zone */
@@ -237,33 +252,67 @@
     .filters--admin {
         display: inline-block;
     }
-    #resultsGtd .filters .filters--swimmer > div,
-    #resultsGtd .filters .filters--admin > div {
+    .filters--swimmer {
+        margin-right: 30px;
+        padding-right: 30px;
+        padding-bottom: 20px;
+        border-right: 1px solid #CCC;
+    }
+    .filters--swimmer > div,
+    .filters--admin > div {
         margin-right: 0;
-    }    
+    }
+    .filters__swimmer-name {
+        vertical-align: top;
+        display: inline-block;;
+    }
+    .filters__swimmer-bio {
+        display: block;
+    }
+
     #resultsGtd .filters th {
         padding: 15px 20px 20px;
     }    
     #resultsGtd .filters .name {
         width: 280px;
         max-width: 280px;
-        /* padding-right: 10px; */
         display: inline-block;
-        /* top: 0; */
+    }
+    #resultsGtd .filters .sex {
+        width: 80px;
+        max-width: 80px;
+        display: inline-block;
+    }
+    #resultsGtd .filters .age {
+        width: 60px;
+        max-width: 60px;
+        display: inline-block;
+    }
+    #resultsGtd .filters .agegroup {
+        width: 80px;
+        max-width: 80px;
+        display: inline-block;
     }
     #resultsGtd .filters .club {
+        width: 100px;
+        min-width: 100px;
+        display: inline-block;
+    }    
+    #resultsGtd .filters .zone {
         width: 120px;
         min-width: 120px;
         display: inline-block;
-        margin-left: 30px;
-        padding-left: 30px;
-        border-left: 1px solid #CCC;
-    }    
-
-    #resultsGtd .filters .zone {
+        max-width: initial;
+    }
+    #resultsGtd .filters .lmsc {
+        width: 150px;
+        min-width: 150px;
         display: inline-block;
         max-width: initial;
     }
+
+
+
     #resultsGtd .sorting .firstname {
         width: 280px;
         min-width: 280px;
@@ -272,7 +321,7 @@
     #resultsGtd .list .miles {
         width: 130px;
         min-width: 130px;
-        /* padding-right: 50px; */
+        padding-right: 40px;
     }
     #resultsGtd .sorting .age,
     #resultsGtd .list .age {
@@ -281,8 +330,8 @@
     }
     #resultsGtd .sorting .agegroup,
     #resultsGtd .list .agegroup {
-        width: 110px;
-        min-width: 110px;
+        width: 120px;
+        min-width: 120px;
         text-align: center;
     }
      #resultsGtd .filters .club {
@@ -293,6 +342,7 @@
     #resultsGtd .list .club {
         width: 90px;
         min-width: 90px;
+        padding-left: 0;
     }
     #resultsGtd .sorting .lmsc,
     #resultsGtd .list .lmsc {
