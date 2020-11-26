@@ -3429,7 +3429,6 @@ resultsGtd.sort('miles', {
 
 
 let searchName = document.getElementById('searchName');
-
 function handleNameSearch(e) {
   var searchName = document.getElementById('searchName').value;
   resultsGtd.search(searchName, ['lastname', 'firstname']);
@@ -3439,7 +3438,6 @@ searchName.onkeyup = handleNameSearch;
 
 
 let searchAge = document.getElementById('searchAge');
-
 function handleAgeSearch(e) {
   var searchAge = document.getElementById('searchAge').value;
   resultsGtd.search(searchAge, ['age']);
@@ -3450,7 +3448,6 @@ searchAge.onkeyup = handleAgeSearch;
 
 
 let searchClub = document.getElementById('searchClub');
-
 function handleClubSearch(e) {
   var searchClub = document.getElementById('searchClub').value;
   resultsGtd.search(searchClub, ['club']);
@@ -3460,7 +3457,10 @@ searchClub.onkeyup = handleClubSearch;
 
 
 
-
+// let searchGroup = ['searchName', 'searchAge', 'searchClub'];
+// function submitSearch(e) {
+//   function
+// }
 
 
 
