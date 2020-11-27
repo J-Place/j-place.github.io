@@ -3417,84 +3417,79 @@ let newData = data;
 cleanData(data);
 
 
-
-
 // Initialize List
 var resultsGtd = new List('resultsGtd', options, newData );
 
 resultsGtd.sort('miles', {
   order:'desc',
 });
+// resultsGtd.search(
+  // [
+  // 'age', {searchColumn:'age'},
+  // 'club', {searchColumne: 'club'}
+// ]
+// );
 
 
 
-let searchName = document.getElementById('searchName');
+// var searchName = document.getElementById('searchName');
+// var searchAge = document.getElementById('searchAge');
+// var searchClub = document.getElementById('searchClub');
+
+// function handleAllInputs(e) {
+//   var allInputValues = ['searchName', 'searchClub'];
+//   resultsGtd.search(allInputValues, )
+//   return allInputValues;
+// }
+// allInputs.onblur = handleAllInputs;
+
 function handleNameSearch(e) {
-  var searchName = document.getElementById('searchName').value;
-  resultsGtd.search(searchName, ['lastname', 'firstname']);
-  return searchName;
+  var searchNameValue = document.getElementById('searchName').value;
+  resultsGtd.search(searchNameValue, ['lastname', 'firstname']);
+  return searchNameValue;
 }
 searchName.onkeyup = handleNameSearch;
 
 
-let searchAge = document.getElementById('searchAge');
 function handleAgeSearch(e) {
-  var searchAge = document.getElementById('searchAge').value;
-  resultsGtd.search(searchAge, ['age']);
-  return searchAge;
+  var searchAgeValue = document.getElementById('searchAge').value;
+  // var selectAgeGroupValue = document.getElementById('selectAgeGroup').value;  
+  resultsGtd.search(searchAgeValue, ['age']);
+  // resultsGtd.search(selectAgeGroupValue, ['agegroup']);
+  // searchObjects = searchAgeValue;
+  // console.log(searchObjects);
+  return searchAgeValue;
 }
 searchAge.onkeyup = handleAgeSearch;
 
 
-
-let searchClub = document.getElementById('searchClub');
 function handleClubSearch(e) {
-  var searchClub = document.getElementById('searchClub').value;
-  resultsGtd.search(searchClub, ['club']);
-  return searchClub;
+  var searchClubValue = document.getElementById('searchClub').value;
+  resultsGtd.search(searchClubValue, ['club']);
+  return searchClubValue;
 }
 searchClub.onkeyup = handleClubSearch;
 
 
 
-// let searchGroup = ['searchName', 'searchAge', 'searchClub'];
-// function submitSearch(e) {
-//   function
-// }
 
 
 
-
-
-
-
-
-
+var filtersApplied = document.getElementById('filtersApplied');
 
 function handleSelectSex(e) {
+  var sexBreadcrumb = document.querySelector(".filter-breadcrumb-sex");
+  var sexBreadcrumbValue = document.querySelector(".filter-breadcrumb-sex-value");
+  var sexSelectValue = document.getElementById('selectSex').value; 
 
-  var selectedSex = document.getElementById('selectSex').value;
-  var filtersApplied = document.getElementById('filtersApplied');
-  var filterValue = document.querySelector(".filter-value");
-  
-  if (selectedSex == "All") {
+  if (sexSelectValue == "All") {
     resultsGtd.filter();
   } else {
     resultsGtd.filter(function(item) {      
-        return(item.values().sex == selectedSex);
+        return(item.values().sex == sexSelectValue);
     });
-
-    function getKeyByValue(object, selectedSex) {
-      console.log("TEST");
-      return Object.keys(object).find(key => object[key] === selectedSex);
-    }    
-    
-    // const map = {"first" : "1", "second" : "2"};
-    console.log(selectedSex);
-    console.log(Object.keys(selectedSex));
-
-    filterValue.textContent = selectedSex;
-    filtersApplied.classList.remove('hide'); 
+    sexBreadcrumbValue.textContent = sexSelectValue;
+    sexBreadcrumb.classList.remove('hide');
   }
 }
 selectSex.onchange = handleSelectSex;
@@ -3502,13 +3497,18 @@ selectSex.onchange = handleSelectSex;
 
 
 function handleSelectAgeGroup(e) {
-  var selectedAgeGroup = document.getElementById('selectAgeGroup').value;
-  if (selectedAgeGroup == "All") {
+  var ageGroupBreadcrumb = document.querySelector(".filter-breadcrumb-agegroup");
+  var ageGroupBreadcrumbValue = document.querySelector(".filter-breadcrumb-agegroup-value");
+  var ageGroupSelectValue = document.getElementById('selectAgeGroup').value;
+  
+  if (ageGroupSelectValue == "All") {    
     resultsGtd.filter();
   } else {
     resultsGtd.filter(function(item) {
-      return(item.values().agegroup == selectedAgeGroup);
+      return(item.values().agegroup == ageGroupSelectValue);
     });  
+    ageGroupBreadcrumbValue.textContent = ageGroupSelectValue;
+    ageGroupBreadcrumb.classList.remove('hide');
   }
 }
 selectAgeGroup.onchange = handleSelectAgeGroup;
@@ -3545,11 +3545,18 @@ selectZone.onchange = handleSelectZone;
 
 
 $("#clearFilters").click(function(){
-  var searchName = document.getElementById('searchName');
-  var searchAge = document.getElementById('searchAge');
+  // var searchName = document.getElementById('searchName');
+  // var searchAge = document.getElementById('searchAge');
+  var sexBreadcrumb = document.querySelector(".filter-breadcrumb-sex");
+  var ageGroupBreadcrumb = document.querySelector(".filter-breadcrumb-agegroup");
+  sexBreadcrumb.classList.add('hide');
+  ageGroupBreadcrumb.classList.add('hide');
   searchName.value = '';
   searchAge.value = '';
   $("select").each(function() { this.selectedIndex = 0 });
   resultsGtd.filter();
   resultsGtd.search();
 });
+
+
+
