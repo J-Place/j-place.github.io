@@ -3389,13 +3389,13 @@ function formatAgeGroup(age, agegroup) {
     agegroup = '45-49';
     return agegroup;
   } else if (age > 39 && age < 45) {
-    agegroup = '40-45';
+    agegroup = '40-44';
     return agegroup;
   } else if (age > 34 && age < 40) {
     agegroup = '35-39';
     return agegroup;
   } else if (age > 29 && age < 35) {
-    agegroup = '45-49';
+    agegroup = '30-34';
     return agegroup;
   } else if (age > 24 && age < 30) {
     agegroup = '25-29';
@@ -3472,16 +3472,33 @@ searchClub.onkeyup = handleClubSearch;
 
 
 function handleSelectSex(e) {
+
   var selectedSex = document.getElementById('selectSex').value;
+  var filtersApplied = document.getElementById('filtersApplied');
+  var filterValue = document.querySelector(".filter-value");
+  
   if (selectedSex == "All") {
     resultsGtd.filter();
   } else {
-    resultsGtd.filter(function(item) {
-      return(item.values().sex == selectedSex);
-    });  
+    resultsGtd.filter(function(item) {      
+        return(item.values().sex == selectedSex);
+    });
+
+    function getKeyByValue(object, selectedSex) {
+      console.log("TEST");
+      return Object.keys(object).find(key => object[key] === selectedSex);
+    }    
+    
+    // const map = {"first" : "1", "second" : "2"};
+    console.log(selectedSex);
+    console.log(Object.keys(selectedSex));
+
+    filterValue.textContent = selectedSex;
+    filtersApplied.classList.remove('hide'); 
   }
 }
 selectSex.onchange = handleSelectSex;
+
 
 
 function handleSelectAgeGroup(e) {
@@ -3497,6 +3514,7 @@ function handleSelectAgeGroup(e) {
 selectAgeGroup.onchange = handleSelectAgeGroup;
 
 
+
 function handleSelectLmsc(e) {
   var selectedLmsc = document.getElementById('selectLmsc').value;
   if (selectedLmsc == "All") {
@@ -3508,6 +3526,7 @@ function handleSelectLmsc(e) {
   }
 }
 selectLmsc.onchange = handleSelectLmsc;
+
 
 
 function handleSelectZone(e) {
@@ -3526,8 +3545,10 @@ selectZone.onchange = handleSelectZone;
 
 
 $("#clearFilters").click(function(){
-  var searchInput = document.getElementById('searchName');
-  searchInput.value = '';
+  var searchName = document.getElementById('searchName');
+  var searchAge = document.getElementById('searchAge');
+  searchName.value = '';
+  searchAge.value = '';
   $("select").each(function() { this.selectedIndex = 0 });
   resultsGtd.filter();
   resultsGtd.search();
