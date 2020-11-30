@@ -3570,8 +3570,6 @@ $("#filterSummaryItemAgeGroup").click(function() {
 
 
 $("#clearFilters").click(function(){
-  // var searchName = document.getElementById('searchName');
-  // var searchAge = document.getElementById('searchAge');
   var filterSummarySex = document.querySelector(".filter-summary-item--sex");
   var filterSummaryAgeGroup = document.querySelector(".filter-summary-item--agegroup");
   filterSummarySex.classList.add('hide');
