@@ -12,6 +12,7 @@ hideLoadingSpinner();
 
 
 var options = {
+  // searchColumns: 'club',
   page: 99,
   pagination: true,
   innerWindow: 1,
@@ -3358,15 +3359,11 @@ var data = [
 ];
 
 function formatMiles(miles) {  
-  milesDecimal = miles.toFixed(2);;
-  cleanMiles = milesDecimal;
-  // cleanMiles = cleanMiles.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // Add comma to thousands
-  miles = cleanMiles;
-  
+  miles = miles.toFixed(2);
   return miles;
 }
 
-// parseFloat(data.miles).toFixed(2);
+
 
 // Calculate Age Groups based on Age
 function formatAgeGroup(age, agegroup) {
@@ -3407,6 +3404,7 @@ function formatAgeGroup(age, agegroup) {
 }
 
 
+
 function cleanData(data) {
   for (var i = 0; i < newData.length; i++) {
     newData[i].miles = formatMiles(data[i].miles);
@@ -3420,9 +3418,13 @@ cleanData(data);
 // Initialize List
 var resultsGtd = new List('resultsGtd', options, newData );
 
-resultsGtd.sort('miles', {
+resultsGtd.sort(
+  'miles', {
   order:'desc',
-});
+  }
+);
+
+
 // resultsGtd.search(
   // [
   // 'age', {searchColumn:'age'},
@@ -3443,6 +3445,8 @@ resultsGtd.sort('miles', {
 // }
 // allInputs.onblur = handleAllInputs;
 
+
+
 function handleNameSearch(e) {
   var searchNameValue = document.getElementById('searchName').value;
   resultsGtd.search(searchNameValue, ['lastname', 'firstname']);
@@ -3451,45 +3455,38 @@ function handleNameSearch(e) {
 searchName.onkeyup = handleNameSearch;
 
 
-function handleAgeSearch(e) {
+
+function handleSearchAge(e) {
   var searchAgeValue = document.getElementById('searchAge').value;
-  // var selectAgeGroupValue = document.getElementById('selectAgeGroup').value;  
   resultsGtd.search(searchAgeValue, ['age']);
-  // resultsGtd.search(selectAgeGroupValue, ['agegroup']);
-  // searchObjects = searchAgeValue;
-  // console.log(searchObjects);
   return searchAgeValue;
 }
-searchAge.onkeyup = handleAgeSearch;
+searchAge.onkeyup = handleSearchAge;
 
 
-function handleClubSearch(e) {
+
+function handleSearchClub(e) {
   var searchClubValue = document.getElementById('searchClub').value;
   resultsGtd.search(searchClubValue, ['club']);
   return searchClubValue;
 }
-searchClub.onkeyup = handleClubSearch;
+searchClub.onkeyup = handleSearchClub;
 
 
-
-
-
-
-var filtersApplied = document.getElementById('filtersApplied');
 
 function handleSelectSex(e) {
-  var sexBreadcrumb = document.querySelector(".filter-breadcrumb-sex");
-  var sexBreadcrumbValue = document.querySelector(".filter-breadcrumb-sex-value");
-  var sexSelectValue = document.getElementById('selectSex').value; 
+  var filterSummaryItem = document.querySelector(".filter-summary-item--sex");
+  var filterSummaryItemValue = document.querySelector(".filter-summary-item-value--sex");
+  var selectValueSex = document.getElementById('selectSex').value; 
 
-  if (sexSelectValue == "All") {
+  if (selectValueSex == "All") {
     resultsGtd.filter();
   } else {
     resultsGtd.filter(function(item) {      
-        return(item.values().sex == sexSelectValue);
+        return(item.values().sex == selectValueSex);
     });
-    sexBreadcrumbValue.textContent = sexSelectValue;
-    sexBreadcrumb.classList.remove('hide');
+    filterSummaryItemValue.textContent = selectValueSex;
+    filterSummaryItem.classList.remove('hide');
   }
 }
 selectSex.onchange = handleSelectSex;
@@ -3497,21 +3494,31 @@ selectSex.onchange = handleSelectSex;
 
 
 function handleSelectAgeGroup(e) {
-  var ageGroupBreadcrumb = document.querySelector(".filter-breadcrumb-agegroup");
-  var ageGroupBreadcrumbValue = document.querySelector(".filter-breadcrumb-agegroup-value");
-  var ageGroupSelectValue = document.getElementById('selectAgeGroup').value;
+
+  var filterSummaryItemAgeGroup = document.querySelector(".filter-summary-item--agegroup");
+  var filterSummaryItemAgeGroupValue = document.querySelector(".filter-summary-item-value--agegroup");
+  var selectAgeGroupValue = document.getElementById('selectAgeGroup').value;
+  // var selectSexValue = document.getElementById('selectSex').value;
   
-  if (ageGroupSelectValue == "All") {    
+  if (selectAgeGroupValue == "All") {    
     resultsGtd.filter();
   } else {
-    resultsGtd.filter(function(item) {
-      return(item.values().agegroup == ageGroupSelectValue);
-    });  
-    ageGroupBreadcrumbValue.textContent = ageGroupSelectValue;
-    ageGroupBreadcrumb.classList.remove('hide');
+    resultsGtd.filter(
+      function(item) {
+      return item.values().agegroup == selectAgeGroupValue;
+    });
+
+    filterSummaryItemAgeGroupValue.textContent = selectAgeGroupValue;
+    filterSummaryItemAgeGroup.classList.remove('hide');
   }
 }
-selectAgeGroup.onchange = handleSelectAgeGroup;
+
+// selectAgeGroup.onchange = handleSelectAgeGroup;
+
+// handleBioSelects =  [handleSelectSex, handleSelectAgeGroup]
+// handleAdminSelects = [handleSelectLmsc, handleSelectZone]
+
+// selectAgeGroup.onchange = handleBioSelects;
 
 
 
@@ -3543,19 +3550,42 @@ selectZone.onchange = handleSelectZone;
 
 
 
+$("#filterSummaryItemSex").click(function() {
+  var filterSummarySex = document.querySelector(".filter-summary-item--sex");
+  filterSummarySex.classList.add('hide');
+  var selectSex = document.getElementById('selectSex');
+  selectSex.value = 'All';
+  resultsGtd.filter();
+});
+
+
+
+$("#filterSummaryItemAgeGroup").click(function() {
+  var filterSummaryAgeGroup = document.querySelector(".filter-summary-item--agegroup");
+  filterSummaryAgeGroup.classList.add('hide');
+  var selectAgeGroup = document.getElementById('selectAgeGroup');
+  selectAgeGroup.value = 'All';
+  resultsGtd.filter();
+});
+
 
 $("#clearFilters").click(function(){
   // var searchName = document.getElementById('searchName');
   // var searchAge = document.getElementById('searchAge');
-  var sexBreadcrumb = document.querySelector(".filter-breadcrumb-sex");
-  var ageGroupBreadcrumb = document.querySelector(".filter-breadcrumb-agegroup");
-  sexBreadcrumb.classList.add('hide');
-  ageGroupBreadcrumb.classList.add('hide');
+  var filterSummarySex = document.querySelector(".filter-summary-item--sex");
+  var filterSummaryAgeGroup = document.querySelector(".filter-summary-item--agegroup");
+  filterSummarySex.classList.add('hide');
+  filterSummaryAgeGroup.classList.add('hide');
   searchName.value = '';
   searchAge.value = '';
   $("select").each(function() { this.selectedIndex = 0 });
   resultsGtd.filter();
   resultsGtd.search();
+  resultsGtd.sort(
+    'miles', {
+    order:'desc',
+    }
+  );
 });
 
 

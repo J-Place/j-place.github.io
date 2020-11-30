@@ -27,17 +27,17 @@
     position: relative;
 }
 
-.filters-applied {
-    margin: 10px 0 -10px;
+.filter-summary {
+    margin: 0px 0 -10px;
 }
-.filter-breadcrumb {
+.filter-summary-item {
     margin-right: 12px;
 }
-.filter-breadcrumb-key {
+.filter-summary-item--key {
     font-size: 11px;
     font-weight: normal;
 }
-.filter-breadcrumb-value {
+.filter-summary-item--value {
     font-size: 12px;
     font-weight: bold;
     border-bottom: 1px solid #CCC;
@@ -273,18 +273,38 @@
     .filters-applied {
         margin: -5px 0 -10px;
     }
-    .filter-breadcrumb {
+    .filter-summary-item {
         margin-right: 12px;
     }
-    /* .filter-breadcrumb-key:before {
-        content: "x";
-        margin-right: 3px;
-    } */
-    .filter-breadcrumb-key {
+    .filter-summary-item:before {
+        opacity: 0.35;
+        content: 'close';
+        margin: 0 0 0 -3px;
+        font-family: 'Material Icons';
+        font-weight: 400;
+        font-style: normal;
+        font-size: 1.5rem;
+        position: relative;
+        top: -1px;
+        right: -2px;
+        display: inline;
+        vertical-align: sub;
+        line-height: inherit;
+        text-transform: none;
+        letter-spacing: normal;
+        word-wrap: normal;
+        white-space: nowrap;
+        direction: ltr;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        -moz-osx-font-smoothing: grayscale;
+        font-feature-settings: 'liga';
+    }
+    .filter-summary-item-key {
         font-size: 11px;
         font-weight: normal;
     }
-    .filter-breadcrumb-value {
+    .filter-summary-item-value {
         font-size: 12px;
         font-weight: bold;
         border-bottom: 1px solid #CCC;
@@ -318,7 +338,7 @@
         display: inline-block;
         margin-right: 30px;
         padding-right: 30px;
-        padding-bottom: 20px;
+        padding-bottom: 10px;
         border-right: 1px solid #CCC;
     }
     .filters--admin {
@@ -327,8 +347,7 @@
         margin-top: 0;
         padding-top: 0;
         border: 0 none;
-        /* overflow: hidden; */
-        padding-bottom: 20px;
+        padding-bottom: 10px;
     }
     .filters--swimmer > div,
     .filters--admin > div {
