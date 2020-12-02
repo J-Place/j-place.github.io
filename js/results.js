@@ -1977,50 +1977,10 @@ function formatMiles(miles) {
 
 
 
-// Calculate Age Groups based on Age
-function formatAgeGroup(age, agegroup) {
-  if (age > 69 && age < 75) {
-    agegroup = '70-74';
-    return agegroup;
-  } else if (age > 64 && age < 70) {
-    agegroup = '65-69';
-    return agegroup;
-  } else if (age > 59 && age < 65) {
-    agegroup = '60-64';
-    return agegroup;
-  } else if (age > 54 && age < 60) {
-    agegroup = '55-59';
-    return agegroup;
-  } else if (age > 49 && age < 55) {
-    agegroup = '50-54';
-    return agegroup;
-  } else if (age > 44 && age < 50) {
-    agegroup = '45-49';
-    return agegroup;
-  } else if (age > 39 && age < 45) {
-    agegroup = '40-44';
-    return agegroup;
-  } else if (age > 34 && age < 40) {
-    agegroup = '35-39';
-    return agegroup;
-  } else if (age > 29 && age < 35) {
-    agegroup = '30-34';
-    return agegroup;
-  } else if (age > 24 && age < 30) {
-    agegroup = '25-29';
-    return agegroup;
-  } else if (age > 17 && age < 25) {
-    agegroup = '18-24';
-    return agegroup;
-  }
-}
-
-
-
 function cleanData(data) {
   for (var i = 0; i < newData.length; i++) {
     newData[i].miles = formatMiles(data[i].miles);
-    newData[i].agegroup = formatAgeGroup(data[i].age, data[i].agegroup);
+    // newData[i].agegroup = formatAgeGroup(data[i].age, data[i].agegroup);
   }
 };
 let newData = data;
@@ -2040,7 +2000,7 @@ resultsGtd.sort(
 // resultsGtd.search(
   // [
   // 'age', {searchColumn:'age'},
-  // 'club', {searchColumne: 'club'}
+  // 'club', {searchColumn: 'club'}
 // ]
 // );
 
@@ -2087,50 +2047,42 @@ searchClub.onkeyup = handleSearchClub;
 
 
 function handleSelectSex(e) {
-  var filterSummaryItem = document.querySelector(".filter-summary-item--sex");
-  var filterSummaryItemValue = document.querySelector(".filter-summary-item-value--sex");
-  var selectValueSex = document.getElementById('selectSex').value; 
+  var filterSummaryItemSex = document.querySelector(".filter-summary-item--sex");
+  var filterSummaryItemSexValue = document.querySelector(".filter-summary-item-value--sex");
 
-  if (selectValueSex == "All") {
-    resultsGtd.filter();
-  } else {
-    resultsGtd.filter(function(item) {      
-        return(item.values().sex == selectValueSex);
-    });
-    filterSummaryItemValue.textContent = selectValueSex;
-    filterSummaryItem.classList.remove('hide');
-  }
+  var selectValueSex = document.getElementById('selectSex').value; 
+  var selectAgeGroupValue = document.getElementById('selectAgeGroup').value;
+
+  resultsGtd.filter(function(item) {
+    return item.values().sex === selectValueSex && item.values().ageGroup === selectAgeGroupValue;
+  });
+  filterSummaryItemSexValue.textContent = selectValueSex;
+  filterSummaryItemSex.classList.remove('hide');  
 }
 selectSex.onchange = handleSelectSex;
 
 
 
 function handleSelectAgeGroup(e) {
-
   var filterSummaryItemAgeGroup = document.querySelector(".filter-summary-item--agegroup");
   var filterSummaryItemAgeGroupValue = document.querySelector(".filter-summary-item-value--agegroup");
+
+  var selectValueSex = document.getElementById('selectSex').value;
   var selectAgeGroupValue = document.getElementById('selectAgeGroup').value;
-  // var selectSexValue = document.getElementById('selectSex').value;
-  
-  if (selectAgeGroupValue == "All") {    
-    resultsGtd.filter();
-  } else {
-    resultsGtd.filter(
-      function(item) {
-      return item.values().agegroup == selectAgeGroupValue;
+
+  if (selectValueSex == "M" || selectValueSex == "F") {
+    resultsGtd.filter(function(item) {
+      return item.values().sex === selectValueSex && item.values().ageGroup === selectAgeGroupValue;
     });
-
-    filterSummaryItemAgeGroupValue.textContent = selectAgeGroupValue;
-    filterSummaryItemAgeGroup.classList.remove('hide');
+  } else if (selectValueSex == "All") {
+    resultsGtd.filter(function(item) {
+      return item.values().ageGroup === selectAgeGroupValue;
+    });
   }
+  filterSummaryItemAgeGroupValue.textContent = selectAgeGroupValue;
+  filterSummaryItemAgeGroup.classList.remove('hide');
 }
-
-// selectAgeGroup.onchange = handleSelectAgeGroup;
-
-// handleBioSelects =  [handleSelectSex, handleSelectAgeGroup]
-// handleAdminSelects = [handleSelectLmsc, handleSelectZone]
-
-// selectAgeGroup.onchange = handleBioSelects;
+selectAgeGroup.onchange = handleSelectAgeGroup;
 
 
 
