@@ -1980,7 +1980,6 @@ function formatMiles(miles) {
 function cleanData(data) {
   for (var i = 0; i < newData.length; i++) {
     newData[i].miles = formatMiles(data[i].miles);
-    // newData[i].agegroup = formatAgeGroup(data[i].age, data[i].agegroup);
   }
 };
 let newData = data;
@@ -2049,15 +2048,19 @@ searchClub.onkeyup = handleSearchClub;
 function handleSelectSex(e) {
   var filterSummaryItemSex = document.querySelector(".filter-summary-item--sex");
   var filterSummaryItemSexValue = document.querySelector(".filter-summary-item-value--sex");
-
   var selectValueSex = document.getElementById('selectSex').value; 
-  var selectAgeGroupValue = document.getElementById('selectAgeGroup').value;
-
-  resultsGtd.filter(function(item) {
-    return item.values().sex === selectValueSex && item.values().ageGroup === selectAgeGroupValue;
-  });
+  var selectValueAgeGroup = document.getElementById('selectAgeGroup').value;
+  if (selectValueAgeGroup == "All") {
+    resultsGtd.filter(function(item) {
+      return item.values().sex === selectValueSex;
+    });
+  } else {
+    resultsGtd.filter(function(item) {
+      return item.values().sex === selectValueSex && item.values().ageGroup === selectValueAgeGroup;
+    });
+  }
   filterSummaryItemSexValue.textContent = selectValueSex;
-  filterSummaryItemSex.classList.remove('hide');  
+  filterSummaryItemSex.classList.remove('hide');
 }
 selectSex.onchange = handleSelectSex;
 
@@ -2066,20 +2069,19 @@ selectSex.onchange = handleSelectSex;
 function handleSelectAgeGroup(e) {
   var filterSummaryItemAgeGroup = document.querySelector(".filter-summary-item--agegroup");
   var filterSummaryItemAgeGroupValue = document.querySelector(".filter-summary-item-value--agegroup");
-
+  var selectValueAgeGroup = document.getElementById('selectAgeGroup').value;
   var selectValueSex = document.getElementById('selectSex').value;
-  var selectAgeGroupValue = document.getElementById('selectAgeGroup').value;
 
   if (selectValueSex == "M" || selectValueSex == "F") {
     resultsGtd.filter(function(item) {
-      return item.values().sex === selectValueSex && item.values().ageGroup === selectAgeGroupValue;
+      return item.values().sex === selectValueSex && item.values().ageGroup === selectValueAgeGroup;
     });
   } else if (selectValueSex == "All") {
     resultsGtd.filter(function(item) {
-      return item.values().ageGroup === selectAgeGroupValue;
+      return item.values().ageGroup === selectValueAgeGroup;
     });
   }
-  filterSummaryItemAgeGroupValue.textContent = selectAgeGroupValue;
+  filterSummaryItemAgeGroupValue.textContent = selectValueAgeGroup;
   filterSummaryItemAgeGroup.classList.remove('hide');
 }
 selectAgeGroup.onchange = handleSelectAgeGroup;
