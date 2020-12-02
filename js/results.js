@@ -2048,11 +2048,6 @@ searchClub.onkeyup = handleSearchClub;
 
 function handleAllFilters(e) {
 
-  var selectLmsc = document.getElementById('selectLmsc');
-  var selectAgeGroup = document.getElementById('selectAgeGroup');
-  var selectSex = document.getElementById('selectSex');
-  var selectZone = document.getElementById('selectZone');
-
   var selectValueLmsc = document.getElementById('selectLmsc').value;
   var selectValueAgeGroup = document.getElementById('selectAgeGroup').value;
   var selectValueSex = document.getElementById('selectSex').value;
@@ -2061,83 +2056,68 @@ function handleAllFilters(e) {
 // Start One Value Defs
   if (selectValueSex !== "All" && selectValueAgeGroup === "All" && selectValueLmsc === "All" && selectValueZone === "All" ) {
     resultsGtd.filter(function(item) {
-      console.log("A");
       return item.values().sex === selectValueSex;
     });
   } else if (selectValueSex === "All" && selectValueAgeGroup !== "All" && selectValueLmsc === "All" && selectValueZone === "All" ) {
     resultsGtd.filter(function(item) {
-      console.log("B");
       return item.values().ageGroup === selectValueAgeGroup;
     });
   } else if (selectValueSex === "All" && selectValueAgeGroup === "All" && selectValueLmsc !== "All" && selectValueZone === "All" ) {
     resultsGtd.filter(function(item) {
-      console.log("C");
       return item.values().lmsc === selectValueLmsc;
     });
   } else if (selectValueSex === "All" && selectValueAgeGroup === "All" && selectValueLmsc === "All" && selectValueZone !== "All" ) {
     resultsGtd.filter(function(item) {
-      console.log("D");
       return item.values().zone === selectValueZone;
     });
 // End One Value Defs
 // Start Two Value Defs
   } else if (selectValueSex !== "All" && selectValueAgeGroup !== "All" && selectValueLmsc === "All" && selectValueZone === "All" ) {
     resultsGtd.filter(function(item) {
-      console.log("E");
       return item.values().sex === selectValueSex && item.values().ageGroup === selectValueAgeGroup;
     });
   } else if (selectValueSex !== "All" && selectValueAgeGroup === "All" && selectValueLmsc !== "All" && selectValueZone === "All" ) {
     resultsGtd.filter(function(item) {
-      console.log("F");
       return item.values().sex === selectValueSex && item.values().lmsc === selectValueLmsc;
     });
   } else if (selectValueSex !== "All" && selectValueAgeGroup === "All" && selectValueLmsc === "All" && selectValueZone !== "All" ) {
     resultsGtd.filter(function(item) {
-      console.log("G");
       return item.values().sex === selectValueSex && item.values().zone === selectValueZone;
     });
   } else if (selectValueSex === "All" && selectValueAgeGroup !== "All" && selectValueLmsc !== "All" && selectValueZone === "All" ) {
     resultsGtd.filter(function(item) {
-      console.log("H");
       return item.values().ageGroup === selectValueAgeGroup && item.values().lmsc === selectValueLmsc;
     });
   } else if (selectValueSex === "All" && selectValueAgeGroup !== "All" && selectValueLmsc === "All" && selectValueZone !== "All" ) {
     resultsGtd.filter(function(item) {
-      console.log("I");
       return item.values().ageGroup === selectValueAgeGroup && item.values().zone === selectValueZone;
     });
   } else if (selectValueSex === "All" && selectValueAgeGroup === "All" && selectValueLmsc !== "All" && selectValueZone !== "All" ) {
     resultsGtd.filter(function(item) {
-      console.log("J");
       return item.values().lmsc === selectValueLmsc && item.values().zone === selectValueZone;
     });
 // End Two Value Defs
 // Start Three Value Defs
   } else if (selectValueSex !== "All" && selectValueAgeGroup !== "All" && selectValueLmsc !== "All" && selectValueZone === "All" ) {
     resultsGtd.filter(function(item) {
-      console.log("K");
       return item.values().sex === selectValueSex && item.values().ageGroup === selectValueAgeGroup && item.values().lmsc === selectValueLmsc;
     });
   } else if (selectValueSex !== "All" && selectValueAgeGroup !== "All" && selectValueLmsc === "All" && selectValueZone !== "All" ) {
     resultsGtd.filter(function(item) {
-      console.log("L");
       return item.values().sex === selectValueSex && item.values().ageGroup === selectValueAgeGroup && item.values().zone === selectValueZone;
     });
   } else if (selectValueSex !== "All" && selectValueAgeGroup === "All" && selectValueLmsc !== "All" && selectValueZone !== "All" ) {
     resultsGtd.filter(function(item) {
-      console.log("M");
       return item.values().sex === selectValueSex && item.values().lmsc === selectValueLmsc && item.values().zone === selectValueZone;
     });
   } else if (selectValueSex === "All" && selectValueAgeGroup !== "All" && selectValueLmsc !== "All" && selectValueZone !== "All" ) {
     resultsGtd.filter(function(item) {
-      console.log("N");
       return item.values().ageGroup === selectValueAgeGroup && item.values().lmsc === selectValueLmsc && item.values().zone === selectValueZone;
     });
 // End Three Value Defs
 // Start Four Value Defs
   } else if (selectValueSex !== "All" && selectValueAgeGroup !== "All" && selectValueLmsc !== "All" && selectValueZone !== "All" ) {
     resultsGtd.filter(function(item) {
-      console.log("N");
       return item.values().sex === selectValueSex && item.values().ageGroup === selectValueAgeGroup && item.values().lmsc === selectValueLmsc && item.values().zone === selectValueZone;
     });
 // End Four Value Defs
