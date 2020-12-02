@@ -1986,7 +1986,7 @@ let newData = data;
 cleanData(data);
 
 
-// Initialize List
+// Initialize List.js
 var resultsGtd = new List('resultsGtd', options, newData );
 
 resultsGtd.sort(
@@ -2048,57 +2048,103 @@ searchClub.onkeyup = handleSearchClub;
 function handleSelectSex(e) {
   var filterSummaryItemSex = document.querySelector(".filter-summary-item--sex");
   var filterSummaryItemSexValue = document.querySelector(".filter-summary-item-value--sex");
-  var selectValueSex = document.getElementById('selectSex').value; 
+  var selectValueSex = document.getElementById('selectSex').value;
   var selectValueAgeGroup = document.getElementById('selectAgeGroup').value;
-  if (selectValueAgeGroup == "All") {
+  var selectValueLmsc = document.getElementById('selectLmsc').value;
+  var selectValueZone = document.getElementById('selectZone').value;
+  // console.log(selectValueSex, selectValueAgeGroup, selectValueLmsc);
+  // value is collected after change
+  if (selectValueSex === "All") {
+    console.log("Sex is not selected.");
+  } if (selectValueSex !== "All") {
+    console.log("Sex has been selected.");
+  } if (selectValueAgeGroup === "All" && selectValueLmsc === "All" && selectValueZone === "All") {
+    console.log("No other filters have been selected");
     resultsGtd.filter(function(item) {
       return item.values().sex === selectValueSex;
+      //  && item.values().ageGroup === selectValueAgeGroup && item.values().lmsc === selectValueLmsc && item.values().zone === selectValueZone;
     });
-  } else {
-    resultsGtd.filter(function(item) {
-      return item.values().sex === selectValueSex && item.values().ageGroup === selectValueAgeGroup;
-    });
+  } else if (selectValueAgeGroup !== "All" || selectValueLmsc !== "All" || selectValueZone !== "All") {
+    console.log("Some other filter has been selected");
+    resultsGtd.filter();
+    // resultsGtd.filter(function(item) {
+    //   return item.values().sex === selectValueSex && item.values().ageGroup === selectValueAgeGroup;
+    // });
   }
   filterSummaryItemSexValue.textContent = selectValueSex;
   filterSummaryItemSex.classList.remove('hide');
 }
-selectSex.onchange = handleSelectSex;
+// selectSex.onchange = handleSelectSex;
 
 
 
 function handleSelectAgeGroup(e) {
   var filterSummaryItemAgeGroup = document.querySelector(".filter-summary-item--agegroup");
   var filterSummaryItemAgeGroupValue = document.querySelector(".filter-summary-item-value--agegroup");
+  var selectValueLmsc = document.getElementById('selectLmsc').value;
   var selectValueAgeGroup = document.getElementById('selectAgeGroup').value;
   var selectValueSex = document.getElementById('selectSex').value;
+  // console.log(selectValueSex, selectValueAgeGroup, selectValueLmsc);
 
-  if (selectValueSex == "M" || selectValueSex == "F") {
+  if (selectValueAgeGroup === "All") {
+    console.log("All");
+  }
+
+  if (selectValueAgeGroup !== "All") {
+    console.log("Not All");
+  }
+
+  if (selectValueSex === "All" && selectValueAgeGroup === "All" && selectValueLmsc ==="All") {
+    console.log("A - Nothing was selected.");
     resultsGtd.filter(function(item) {
-      return item.values().sex === selectValueSex && item.values().ageGroup === selectValueAgeGroup;
+      return item.values().ageGroup === selectValueAgeGroup && item.values().sex === selectValueSex;
     });
-  } else if (selectValueSex == "All") {
+  } else if (selectValueSex !== "All" || selectValueLmsc !== "All" && selectValueAgeGroup === "All") {
+    console.log("B - Age Group was selected, and something else was too.");
+    resultsGtd.filter(function(item) {
+      return item.values().ageGroup === selectValueAgeGroup && item.values().sex === selectValueSex;
+    });
+  } else if (selectValueSex !== "All" || selectValueLmsc !== "All" && selectValueAgeGroup !=="All") {
+    console.log("C - Age Group was selected, and something else was.");
+    resultsGtd.filter(function(item) {
+      return item.values().ageGroup === selectValueAgeGroup && item.values().sex === selectValueSex;
+    });
+  } else if (selectValueSex === "All" && selectValueLmsc === "All" && selectValueAgeGroup !=="All") {
+    console.log("D - Only Age Group has been selected.");
     resultsGtd.filter(function(item) {
       return item.values().ageGroup === selectValueAgeGroup;
     });
+  } else {
+    console.log("You missed them all.");
   }
   filterSummaryItemAgeGroupValue.textContent = selectValueAgeGroup;
   filterSummaryItemAgeGroup.classList.remove('hide');
 }
-selectAgeGroup.onchange = handleSelectAgeGroup;
+// selectAgeGroup.onchange = handleSelectAgeGroup;
 
 
 
 function handleSelectLmsc(e) {
-  var selectedLmsc = document.getElementById('selectLmsc').value;
-  if (selectedLmsc == "All") {
-    resultsGtd.filter();
-  } else {
+  var selectValueLmsc = document.getElementById('selectLmsc').value;
+  var selectValueAgeGroup = document.getElementById('selectAgeGroup').value;
+  var selectValueSex = document.getElementById('selectSex').value;
+  console.log(selectValueSex, selectValueAgeGroup, selectValueLmsc);
+  if (selectValueSex !== "All" || selectValueAgeGroup !=="All" ) {
+    console.log("A LMSC");
     resultsGtd.filter(function(item) {
-      return(item.values().lmsc == selectedLmsc);
-    });  
+      return item.values().lmsc === selectValueLmsc && item.values().ageGroup === selectValueAgeGroup;
+    });
+  } else if (selectValueSex == "All" || selectValueAgeGroup == "All" ) {
+    console.log("B LMSC");
+    resultsGtd.filter(function(item) {
+      return item.values().lmsc === selectValueLmsc;
+    });
+  } else {
+    console.log("C LMSC");
+    resultsGtd.filter();
   }
 }
-selectLmsc.onchange = handleSelectLmsc;
+// selectLmsc.onchange = handleSelectLmsc;
 
 
 
@@ -2112,7 +2158,114 @@ function handleSelectZone(e) {
     });  
   }
 }
-selectZone.onchange = handleSelectZone;
+// selectZone.onchange = handleSelectZone;
+
+
+
+function handleAllFilters(e) {
+
+  var selectLmsc = document.getElementById('selectLmsc');
+  var selectAgeGroup = document.getElementById('selectAgeGroup');
+  var selectSex = document.getElementById('selectSex');
+  var selectZone = document.getElementById('selectZone');
+
+  var selectValueLmsc = document.getElementById('selectLmsc').value;
+  var selectValueAgeGroup = document.getElementById('selectAgeGroup').value;
+  var selectValueSex = document.getElementById('selectSex').value;
+  var selectValueZone = document.getElementById('selectZone').value; 
+
+// Start One Value Defs
+  if (selectValueSex !== "All" && selectValueAgeGroup === "All" && selectValueLmsc === "All" && selectValueZone === "All" ) {
+    resultsGtd.filter(function(item) {
+      console.log("A");
+      return item.values().sex === selectValueSex;
+    });
+  } else if (selectValueSex === "All" && selectValueAgeGroup !== "All" && selectValueLmsc === "All" && selectValueZone === "All" ) {
+    resultsGtd.filter(function(item) {
+      console.log("B");
+      return item.values().ageGroup === selectValueAgeGroup;
+    });
+  } else if (selectValueSex === "All" && selectValueAgeGroup === "All" && selectValueLmsc !== "All" && selectValueZone === "All" ) {
+    resultsGtd.filter(function(item) {
+      console.log("C");
+      return item.values().lmsc === selectValueLmsc;
+    });
+  } else if (selectValueSex === "All" && selectValueAgeGroup === "All" && selectValueLmsc === "All" && selectValueZone !== "All" ) {
+    resultsGtd.filter(function(item) {
+      console.log("D");
+      return item.values().zone === selectValueZone;
+    });
+// End One Value Defs
+// Start Two Value Defs
+  } else if (selectValueSex !== "All" && selectValueAgeGroup !== "All" && selectValueLmsc === "All" && selectValueZone === "All" ) {
+    resultsGtd.filter(function(item) {
+      console.log("E");
+      return item.values().sex === selectValueSex && item.values().ageGroup === selectValueAgeGroup;
+    });
+  } else if (selectValueSex !== "All" && selectValueAgeGroup === "All" && selectValueLmsc !== "All" && selectValueZone === "All" ) {
+    resultsGtd.filter(function(item) {
+      console.log("F");
+      return item.values().sex === selectValueSex && item.values().lmsc === selectValueLmsc;
+    });
+  } else if (selectValueSex !== "All" && selectValueAgeGroup === "All" && selectValueLmsc === "All" && selectValueZone !== "All" ) {
+    resultsGtd.filter(function(item) {
+      console.log("G");
+      return item.values().sex === selectValueSex && item.values().zone === selectValueZone;
+    });
+  } else if (selectValueSex === "All" && selectValueAgeGroup !== "All" && selectValueLmsc !== "All" && selectValueZone === "All" ) {
+    resultsGtd.filter(function(item) {
+      console.log("H");
+      return item.values().ageGroup === selectValueAgeGroup && item.values().lmsc === selectValueLmsc;
+    });
+  } else if (selectValueSex === "All" && selectValueAgeGroup !== "All" && selectValueLmsc === "All" && selectValueZone !== "All" ) {
+    resultsGtd.filter(function(item) {
+      console.log("I");
+      return item.values().ageGroup === selectValueAgeGroup && item.values().zone === selectValueZone;
+    });
+  } else if (selectValueSex === "All" && selectValueAgeGroup === "All" && selectValueLmsc !== "All" && selectValueZone !== "All" ) {
+    resultsGtd.filter(function(item) {
+      console.log("J");
+      return item.values().lmsc === selectValueLmsc && item.values().zone === selectValueZone;
+    });
+// End Two Value Defs
+// Start Three Value Defs
+  } else if (selectValueSex !== "All" && selectValueAgeGroup !== "All" && selectValueLmsc !== "All" && selectValueZone === "All" ) {
+    resultsGtd.filter(function(item) {
+      console.log("K");
+      return item.values().sex === selectValueSex && item.values().ageGroup === selectValueAgeGroup && item.values().lmsc === selectValueLmsc;
+    });
+  } else if (selectValueSex !== "All" && selectValueAgeGroup !== "All" && selectValueLmsc === "All" && selectValueZone !== "All" ) {
+    resultsGtd.filter(function(item) {
+      console.log("L");
+      return item.values().sex === selectValueSex && item.values().ageGroup === selectValueAgeGroup && item.values().zone === selectValueZone;
+    });
+  } else if (selectValueSex !== "All" && selectValueAgeGroup === "All" && selectValueLmsc !== "All" && selectValueZone !== "All" ) {
+    resultsGtd.filter(function(item) {
+      console.log("M");
+      return item.values().sex === selectValueSex && item.values().lmsc === selectValueLmsc && item.values().zone === selectValueZone;
+    });
+  } else if (selectValueSex === "All" && selectValueAgeGroup !== "All" && selectValueLmsc !== "All" && selectValueZone !== "All" ) {
+    resultsGtd.filter(function(item) {
+      console.log("N");
+      return item.values().ageGroup === selectValueAgeGroup && item.values().lmsc === selectValueLmsc && item.values().zone === selectValueZone;
+    });
+// End Three Value Defs
+// Start Four Value Defs
+  } else if (selectValueSex !== "All" && selectValueAgeGroup !== "All" && selectValueLmsc !== "All" && selectValueZone !== "All" ) {
+    resultsGtd.filter(function(item) {
+      console.log("N");
+      return item.values().sex === selectValueSex && item.values().ageGroup === selectValueAgeGroup && item.values().lmsc === selectValueLmsc && item.values().zone === selectValueZone;
+    });
+// End Four Value Defs
+// Clear All
+  } else {
+    resultsGtd.filter();
+  }
+}
+selectSex.onchange = handleAllFilters;
+selectAgeGroup.onchange = handleAllFilters;
+selectLmsc.onchange = handleAllFilters;
+selectZone.onchange = handleAllFilters;
 
 
 
