@@ -37,8 +37,6 @@ var options = {
   valueNames: [ 'first', 'last', 'sex', 'age', 'ageGroup', 'clubAbbr', 'lmsc', 'zone', 'miles' ],
 };
 
-
-
 var dataLocal = [
   {"first":"Tom","last":"Barton","age":"64","ageGroup":"60-64","sex":"M","clubAbbr":"LSM","lmsc":"North Texas","zone":"South Central","miles":0.0},
   {"first":"Lori","last":"Gano-Overway","age":"51","ageGroup":"50-54","sex":"F","clubAbbr":"UC12","lmsc":"Virginia","zone":"Colonies","miles":170.0},
@@ -1967,8 +1965,6 @@ var dataLocal = [
   {"first":"Stephen","last":"Rich","age":"51","ageGroup":"50-54","sex":"M","clubAbbr":"PSM","lmsc":"Pacific Northwest","zone":"Northwest","miles":150.0},
   {"first":"Stephen","last":"Soboslay","age":"19","ageGroup":"18-24","sex":"M","clubAbbr":"AAC","lmsc":"Lake Erie","zone":"Great Lakes","miles":0.0}
 ];
-
-
 
 function formatMiles(miles) {  
   miles = miles.toFixed(2);
