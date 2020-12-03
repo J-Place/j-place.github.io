@@ -1996,7 +1996,7 @@ resultsGtd.sort(
 function handleSearchName(e) {
   resultsGtd.filter();
   var searchNameValue = document.getElementById('searchName').value;
-  resultsGtd.search(searchNameValue, ['lastname', 'firstname']);
+  resultsGtd.search(searchNameValue, ['last', 'first']);
   return searchNameValue;
 }
 searchName.onkeyup = handleSearchName;
@@ -2016,7 +2016,7 @@ searchAge.onkeyup = handleSearchAge;
 function handleSearchClub(e) {
   resultsGtd.filter();
   var searchClubValue = document.getElementById('searchClub').value;
-  resultsGtd.search(searchClubValue, ['club']);
+  resultsGtd.search(searchClubValue, ['clubAbbr']);
   return searchClubValue;
 }
 searchClub.onkeyup = handleSearchClub;
