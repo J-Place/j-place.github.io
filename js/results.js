@@ -9,7 +9,7 @@ function hideLoadingSpinner() {
 hideLoadingSpinner();
 
 function getEventResults() {
-  showLoadingOverlay();
+  // showLoadingOverlay();
   const xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://test.usms.org/apis/v1/gtd/participants', true);
   xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
@@ -23,7 +23,7 @@ function getEventResults() {
   };
   xhr.send();
 }
-// getEventResults();
+getEventResults();
 
 
 
