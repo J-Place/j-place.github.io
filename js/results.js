@@ -29,7 +29,6 @@ function getEventResults() {
 
 
 var options = {
-  // searchColumns: 'club',
   page: 99,
   pagination: true,
   innerWindow: 1,
@@ -1994,13 +1993,13 @@ resultsGtd.sort(
 );
 
 
-function handleNameSearch(e) {
+function handleSearchName(e) {
   resultsGtd.filter();
   var searchNameValue = document.getElementById('searchName').value;
   resultsGtd.search(searchNameValue, ['lastname', 'firstname']);
   return searchNameValue;
 }
-searchName.onkeyup = handleNameSearch;
+searchName.onkeyup = handleSearchName;
 
 
 
@@ -2025,26 +2024,78 @@ searchClub.onkeyup = handleSearchClub;
 
 
 
-function handleFilterSummary() {
-  // Clear filter list before drawing new
+function updateFilterSummary() {
+  // Clear all items before drawing new
   var filterSummary = document.getElementById('filterSummary');
+  // var filterSummaryItem = document.querySelectorAll('.filters__summary--item');
   filterSummary.innerHTML = '';
-  // Draw new filter list
+  // Draw new list items
   var sexSummaryItem = document.getElementById('selectSex');
   var ageGroupSummaryItem = document.getElementById('selectAgeGroup');
   var lmscSummaryItem = document.getElementById('selectLmsc');
   var zoneSummaryItem = document.getElementById('selectZone');
   var filterItems = [sexSummaryItem, ageGroupSummaryItem, lmscSummaryItem, zoneSummaryItem];
-  for (i = 0; i < filterItems.length; i++) {
-    if (filterItems[i].value !== "All") {
+  for (i = 0; i < filterItems.length; i++) {    
+    if (filterItems[i].value !== "All") {      
       var el = document.createElement('p');
       var elParent = document.getElementById('filterSummary');
-      el.className = "filters__summary--item";
+      el.className = "filters__summary--item filters__summary--item-" + filterItems[i].parentElement.classList.value;;
+      el.id = "summary_" + filterItems[i].parentElement.classList.value;
       el.textContent = filterItems[i].value;
+      el.onclick = function(){clearFilterSummaryItems()}
       elParent.append(el);
     }
+    
   }
 }
+
+function clearFilterSummaryItems(el) {
+  // var summaryItemSex = document.getElementById('selectSex');
+  // var summaryItemAgeGroup = document.getElementById('selectAgeGroup');
+  // var summaryItemLmsc = document.getElementById('selectLmsc');
+  // var summaryItemZone = document.getElementById('selectZone');
+
+  var clearSex = document.getElementById('summary_sex');
+  var clearAgeGroup = document.getElementById('summary_ageGroup');
+  var clearLmsc = document.getElementById('summary_lsmc');
+  var clearZone = document.getElementById('summary_zone');
+ 
+  if (el = clearSex) {
+    console.log("Clear Sex");
+  } else if (el = clearAgeGroup) {
+    console.log("Clear Age Group");
+  } else if (el = clearLmsc) {
+    console.log("Clear LMSC");
+  } else if (el = clearZone) {
+    console.log("Clear Zone");
+  }
+}
+
+// function updateFilterSummaryItems() {
+//     filterSummary = document.getElementById('filterSummary');
+
+    // var sexSummaryItem = document.getElementById('summary_ageGroup');
+    // var ageGroupSummaryItem = document.getElementById('selectAgeGroup');
+    // var lmscSummaryItem = document.getElementById('selectLmsc');
+    // var zoneSummaryItem = document.getElementById('selectZone');
+  
+//     // filterSummaryItems = filterSummary.childNodes;
+//     filterSUmmaryItems = document.querySelectorAll('.filters__summary--item');
+//     filterSummaryItems.click(function(){
+//       alert("Test");
+//     });
+//     // if (filterSummaryItems.length >= 0) {
+//     //   var filterItems = document.querySelectorAll('.filters__summary--item');
+//     //   for (i = 0; i < filterItems.length; i++) {
+//     //     if (filterItems[i].value !== "All") {
+//     //       console.log(filterItems[i].innerHtml);
+//     //     } else {
+//     //       return;
+//     //     }
+//     //     // console.log(filterItems[i].value);
+//     //   }
+//     // }  
+// }
 
 
 
@@ -2128,7 +2179,7 @@ function handleFilters(e) {
   } else {
     resultsGtd.filter();
   }
-  handleFilterSummary();
+  updateFilterSummary();
 }
 selectSex.onchange = handleFilters;
 selectAgeGroup.onchange = handleFilters;
@@ -2136,33 +2187,22 @@ selectLmsc.onchange = handleFilters;
 selectZone.onchange = handleFilters;
 
 
+// filterSelects = document.querySelectorAll('.select');
+// console.log(filterSelects[0].value);
 
-$("#filterSummaryItemSex").click(function() {
-  var filterSummarySex = document.querySelector(".filter-summary-item--sex");
-  filterSummarySex.classList.add('hide');
-  var selectSex = document.getElementById('selectSex');
-  selectSex.value = 'All';
-  resultsGtd.filter();
-});
+// filterSelects.onchange = handleFilters;
 
 
-
-$("#filterSummaryItemAgeGroup").click(function() {
-  var filterSummaryAgeGroup = document.querySelector(".filter-summary-item--agegroup");
-  filterSummaryAgeGroup.classList.add('hide');
-  var selectAgeGroup = document.getElementById('selectAgeGroup');
-  selectAgeGroup.value = 'All';
-  resultsGtd.filter();
-});
 
 
 $("#clearFilters").click(function(){
-  var filterSummarySex = document.querySelector(".filter-summary-item--sex");
-  var filterSummaryAgeGroup = document.querySelector(".filter-summary-item--agegroup");
-  filterSummarySex.classList.add('hide');
-  filterSummaryAgeGroup.classList.add('hide');
+  // alert("Clear Filters");
+  // var filterSummarySex = document.querySelector(".filter-summary-item--sex");
+  // var filterSummaryAgeGroup = document.querySelector(".filter-summary-item--agegroup");
+  // filterSummarySex.classList.add('hide');
+  // filterSummaryAgeGroup.classList.add('hide');
   searchName.value = '';
-  searchAge.value = '';
+  searchAge.value = '';  
   $("select").each(function() { this.selectedIndex = 0 });
   resultsGtd.filter();
   resultsGtd.search();
@@ -2171,7 +2211,15 @@ $("#clearFilters").click(function(){
     order:'desc',
     }
   );
+  updateFilterSummary();
 });
 
 
 
+// $(".filters__summary--item-sex").on("click", function(){
+//   alert("Clicked");
+// });
+
+// $(".filters__summary--item.sex").click(function(){
+//   alert("FInally");
+// });
