@@ -24,7 +24,7 @@ function getEventResults() {
   };
   xhr.send();
 }
-// getEventResults();
+getEventResults();
 
 
 
@@ -2062,7 +2062,6 @@ function updateFilterSummary() {
     handleFilters();
   });
 }
-
 
 
 
