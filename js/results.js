@@ -2162,13 +2162,9 @@ selectZone.onchange = handleFilters;
 
 
 $("#clearFilters").click(function(){
-  // alert("Clear Filters");
-  // var filterSummarySex = document.querySelector(".filter-summary-item--sex");
-  // var filterSummaryAgeGroup = document.querySelector(".filter-summary-item--agegroup");
-  // filterSummarySex.classList.add('hide');
-  // filterSummaryAgeGroup.classList.add('hide');
   searchName.value = '';
-  searchAge.value = '';  
+  searchAge.value = '';
+  searchClub.value = '';  
   $("select").each(function() { this.selectedIndex = 0 });
   resultsGtd.filter();
   resultsGtd.search();
@@ -2179,90 +2175,3 @@ $("#clearFilters").click(function(){
   );
   updateFilterSummary();
 });
-
-
-
-function clearFilterSummaryItems() {
-  var sexSummaryItem = document.getElementById('selectSex');
-  var ageGroupSummaryItem = document.getElementById('selectAgeGroup');
-  var lmscSummaryItem = document.getElementById('selectLmsc');
-  var zoneSummaryItem = document.getElementById('selectZone');
-  var filterItems = [sexSummaryItem, ageGroupSummaryItem, lmscSummaryItem, zoneSummaryItem];
-  
-
-  var clearSex = document.getElementById('sex');
-  var clearAgeGroup = document.getElementById('ageGroup');
-  var clearLmsc = document.getElementById('lsmc');
-  var clearZone = document.getElementById('zone');
-  var summaryItems = [clearSex, clearAgeGroup, clearLmsc, clearZone];
-
-  console.log(el.id);
-
-  for (i = 0; i < summaryItems.length; i++) {
-    
-    if (summaryItems[i] !== "All") {
-      // console.log(el[i].id);  
-      // if (summaryItems[i].id === selectAgeGroup) {
-        // console.log(filterItems[i].id);
-      // }
-    }
-
-    // if (filterItems[i].value === "M" || filterItems[i].value === "F") {
-        // console.log("Sex");
-    // } if (filterItems[i].id === selectAgeGroup) {
-    //   console.log("AG");
-    // } if (filterItems[i].id === selectLmsc) {
-    //   console.log("LMSC");
-    // } if (filterItems[i].id === selectZone) {
-    //   console.log("Zone");
-    // }
-
-  }
-
-  // if (sexSummaryItem == clearSex) {
-  //   console.log("Clear Sex A");
-  //   // resultsGtd.filter();
-  // } else if (summaryItemAgeGroup == clearAgeGroup) {
-  //   console.log("Clear Age Group");
-  //   // resultsGtd.filter();
-  // } else if (summaryItemLmsc == clearLmsc) {
-  //   console.log("Clear LMSC");
-  //   // resultsGtd.filter();
-  // } else if (summaryItemZone == clearZone) {
-  //   console.log("Clear Zone");
-  //   // resultsGtd.filter();
-  // }
-
-
-
-  // $("#summary_sex").each(function(){
-  //   console.log("Remove Sex");
-  //   // $("#selectSex").val("All");
-  // });
-  // $("#summary_ageGroup").each(function(){
-  //   console.log("Remove Age Group");
-  //   // $("#selectAgeGroup").val("All");
-  // });
-  // $("#summary_lmsc").each(function(){
-  //   console.log("Remove LMSC");
-  //   // $("#selectLmsc").val("All");
-  // });
-  // $("#summary_zone").each(function(){
-  //   console.log("Remove Zone");
-  //   // $("#selectZone").val("All");
-  // });
-
-
-  // $("select").each(function() { this.selectedIndex = 0 });
-  // resultsGtd.filter();
-
-  updateFilterSummary();
-}
-
-// $(".filters__summary--item-sex").on("click", function(){
-//   alert("Clicked");
-// });
-
-// $(".filters__summary--item.sex").click(function(){
-//   alert("FInally");
-// });
