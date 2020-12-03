@@ -39,7 +39,7 @@ var options = {
 
 
 
-var data = [
+var dataLocal = [
   {"first":"Tom","last":"Barton","age":"64","ageGroup":"60-64","sex":"M","clubAbbr":"LSM","lmsc":"North Texas","zone":"South Central","miles":0.0},
   {"first":"Lori","last":"Gano-Overway","age":"51","ageGroup":"50-54","sex":"F","clubAbbr":"UC12","lmsc":"Virginia","zone":"Colonies","miles":170.0},
   {"first":"Carl","last":"Ellefson","age":"46","ageGroup":"45-49","sex":"M","clubAbbr":"SPCO","lmsc":"Florida","zone":"Dixie","miles":0.0},
@@ -1977,13 +1977,13 @@ function formatMiles(miles) {
 
 
 
-function cleanData(data) {
+function cleanData(dataLocal) {
   for (var i = 0; i < newData.length; i++) {
-    newData[i].miles = formatMiles(data[i].miles);
+    newData[i].miles = formatMiles(dataLocal[i].miles);
   }
 };
-let newData = data;
-cleanData(data);
+let newData = dataLocal;
+cleanData(dataLocal);
 
 
 // Initialize List.js
