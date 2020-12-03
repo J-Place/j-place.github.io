@@ -2,11 +2,14 @@
 //   hideLoadingSpinner();
 // }
 
+
+
 function hideLoadingSpinner() {
   const loadingSpinner = document.getElementById('loadingWrapper');
   loadingSpinner.classList.add('hide');
 }
 hideLoadingSpinner();
+
 
 
 function getEventResults() {
@@ -37,6 +40,8 @@ var options = {
   paginationClass: "pagination",
   valueNames: [ 'first', 'last', 'sex', 'age', 'ageGroup', 'clubAbbr', 'lmsc', 'zone', 'miles' ],
 };
+
+
 
 var data = [
   {"first":"Tom","last":"Barton","age":"64","ageGroup":"60-64","sex":"M","clubAbbr":"LSM","lmsc":"North Texas","zone":"South Central","miles":0.0},
@@ -1967,6 +1972,8 @@ var data = [
   {"first":"Stephen","last":"Soboslay","age":"19","ageGroup":"18-24","sex":"M","clubAbbr":"AAC","lmsc":"Lake Erie","zone":"Great Lakes","miles":0.0}
 ];
 
+
+
 function formatMiles(miles) {  
   miles = miles.toFixed(2);
   return miles;
@@ -1985,6 +1992,7 @@ cleanData(data);
 
 // Initialize List.js
 var resultsGtd = new List('resultsGtd', options, newData );
+
 
 resultsGtd.sort(
   'miles', {
