@@ -2071,32 +2071,6 @@ function clearFilterSummaryItems(el) {
   }
 }
 
-// function updateFilterSummaryItems() {
-//     filterSummary = document.getElementById('filterSummary');
-
-    // var sexSummaryItem = document.getElementById('summary_ageGroup');
-    // var ageGroupSummaryItem = document.getElementById('selectAgeGroup');
-    // var lmscSummaryItem = document.getElementById('selectLmsc');
-    // var zoneSummaryItem = document.getElementById('selectZone');
-  
-//     // filterSummaryItems = filterSummary.childNodes;
-//     filterSUmmaryItems = document.querySelectorAll('.filters__summary--item');
-//     filterSummaryItems.click(function(){
-//       alert("Test");
-//     });
-//     // if (filterSummaryItems.length >= 0) {
-//     //   var filterItems = document.querySelectorAll('.filters__summary--item');
-//     //   for (i = 0; i < filterItems.length; i++) {
-//     //     if (filterItems[i].value !== "All") {
-//     //       console.log(filterItems[i].innerHtml);
-//     //     } else {
-//     //       return;
-//     //     }
-//     //     // console.log(filterItems[i].value);
-//     //   }
-//     // }  
-// }
-
 
 
 function handleFilters(e) {
