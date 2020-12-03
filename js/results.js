@@ -12,20 +12,18 @@ hideLoadingSpinner();
 function getEventResults() {
   // showLoadingOverlay();
   const xhr = new XMLHttpRequest();
-
   xhr.open('GET', 'https://test.usms.org/apis/v1/gtd/participants', true);
   xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
   xhr.onload = function () {
     if (xhr.status === 200) {
-      const data = JSON.parse(xhr.data);
+      const checkApi = JSON.parse(xhr.data);
       return;
     }
-    console.log(response);
+    console.log(checkApi);
     return null;
   };
   xhr.send();
 }
-
 // getEventResults();
 
 
@@ -1996,29 +1994,8 @@ resultsGtd.sort(
 );
 
 
-// resultsGtd.search(
-  // [
-  // 'age', {searchColumn:'age'},
-  // 'club', {searchColumn: 'club'}
-// ]
-// );
-
-
-
-// var searchName = document.getElementById('searchName');
-// var searchAge = document.getElementById('searchAge');
-// var searchClub = document.getElementById('searchClub');
-
-// function handleAllInputs(e) {
-//   var allInputValues = ['searchName', 'searchClub'];
-//   resultsGtd.search(allInputValues, )
-//   return allInputValues;
-// }
-// allInputs.onblur = handleAllInputs;
-
-
-
 function handleNameSearch(e) {
+  resultsGtd.filter();
   var searchNameValue = document.getElementById('searchName').value;
   resultsGtd.search(searchNameValue, ['lastname', 'firstname']);
   return searchNameValue;
@@ -2028,6 +2005,7 @@ searchName.onkeyup = handleNameSearch;
 
 
 function handleSearchAge(e) {
+  resultsGtd.filter();
   var searchAgeValue = document.getElementById('searchAge').value;
   resultsGtd.search(searchAgeValue, ['age']);
   return searchAgeValue;
@@ -2037,6 +2015,7 @@ searchAge.onkeyup = handleSearchAge;
 
 
 function handleSearchClub(e) {
+  resultsGtd.filter();
   var searchClubValue = document.getElementById('searchClub').value;
   resultsGtd.search(searchClubValue, ['club']);
   return searchClubValue;
@@ -2046,15 +2025,43 @@ searchClub.onkeyup = handleSearchClub;
 
 
 
-function handleAllFilters(e) {
+function handleFilterSummary() {
+  // Clear filter list before drawing new
+  var filterSummary = document.getElementById('filterSummary');
+  filterSummary.innerHTML = '';
+  // Draw new filter list
+  var sexSummaryItem = document.getElementById('selectSex');
+  var ageGroupSummaryItem = document.getElementById('selectAgeGroup');
+  var lmscSummaryItem = document.getElementById('selectLmsc');
+  var zoneSummaryItem = document.getElementById('selectZone');
+  var filterItems = [sexSummaryItem, ageGroupSummaryItem, lmscSummaryItem, zoneSummaryItem];
+  for (i = 0; i < filterItems.length; i++) {
+    if (filterItems[i].value !== "All") {
+      var el = document.createElement('p');
+      var elParent = document.getElementById('filterSummary');
+      el.className = "filters__summary--item";
+      el.textContent = filterItems[i].value;
+      elParent.append(el);
+    }
+  }
+}
 
+
+
+function handleFilters(e) {
   var selectValueLmsc = document.getElementById('selectLmsc').value;
   var selectValueAgeGroup = document.getElementById('selectAgeGroup').value;
   var selectValueSex = document.getElementById('selectSex').value;
-  var selectValueZone = document.getElementById('selectZone').value; 
+  var selectValueZone = document.getElementById('selectZone').value;
 
-// Start One Value Defs
+// One Value Defs
   if (selectValueSex !== "All" && selectValueAgeGroup === "All" && selectValueLmsc === "All" && selectValueZone === "All" ) {
+
+
+    // var filterSummary = document.getElementById('filterSummary');
+    // filterSummary.insertAdjacentHTML('beforeend', '<div id="sex" style="display: inline-block;">Sex</div>');
+
+
     resultsGtd.filter(function(item) {
       return item.values().sex === selectValueSex;
     });
@@ -2070,8 +2077,7 @@ function handleAllFilters(e) {
     resultsGtd.filter(function(item) {
       return item.values().zone === selectValueZone;
     });
-// End One Value Defs
-// Start Two Value Defs
+// Two Value Defs
   } else if (selectValueSex !== "All" && selectValueAgeGroup !== "All" && selectValueLmsc === "All" && selectValueZone === "All" ) {
     resultsGtd.filter(function(item) {
       return item.values().sex === selectValueSex && item.values().ageGroup === selectValueAgeGroup;
@@ -2096,8 +2102,7 @@ function handleAllFilters(e) {
     resultsGtd.filter(function(item) {
       return item.values().lmsc === selectValueLmsc && item.values().zone === selectValueZone;
     });
-// End Two Value Defs
-// Start Three Value Defs
+// Three Value Defs
   } else if (selectValueSex !== "All" && selectValueAgeGroup !== "All" && selectValueLmsc !== "All" && selectValueZone === "All" ) {
     resultsGtd.filter(function(item) {
       return item.values().sex === selectValueSex && item.values().ageGroup === selectValueAgeGroup && item.values().lmsc === selectValueLmsc;
@@ -2114,22 +2119,21 @@ function handleAllFilters(e) {
     resultsGtd.filter(function(item) {
       return item.values().ageGroup === selectValueAgeGroup && item.values().lmsc === selectValueLmsc && item.values().zone === selectValueZone;
     });
-// End Three Value Defs
-// Start Four Value Defs
+// Four Value Defs
   } else if (selectValueSex !== "All" && selectValueAgeGroup !== "All" && selectValueLmsc !== "All" && selectValueZone !== "All" ) {
     resultsGtd.filter(function(item) {
       return item.values().sex === selectValueSex && item.values().ageGroup === selectValueAgeGroup && item.values().lmsc === selectValueLmsc && item.values().zone === selectValueZone;
     });
-// End Four Value Defs
 // Clear All
   } else {
     resultsGtd.filter();
   }
+  handleFilterSummary();
 }
-selectSex.onchange = handleAllFilters;
-selectAgeGroup.onchange = handleAllFilters;
-selectLmsc.onchange = handleAllFilters;
-selectZone.onchange = handleAllFilters;
+selectSex.onchange = handleFilters;
+selectAgeGroup.onchange = handleFilters;
+selectLmsc.onchange = handleFilters;
+selectZone.onchange = handleFilters;
 
 
 
