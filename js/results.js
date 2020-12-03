@@ -2032,13 +2032,8 @@ function updateFilterSummary() {
   var selectItemAgeGroup = document.getElementById('selectAgeGroup');
   var selectItemLmsc = document.getElementById('selectLmsc');
   var selectItemZone = document.getElementById('selectZone');
-
-  // var selectItemZoneValue = selectItemZone.options[selectItemZone.selectedIndex].value;
-  // var selectedItemValueZone = document.getElementById('selectZone').value;
-  // selectedItemValueZone === "All";
-
   var filterItems = [selectItemSex, selectItemAgeGroup, selectItemLmsc, selectItemZone];
-
+  // Loop thru applied filters and render summary "buttons"
   for (i = 0; i < filterItems.length; i++) {    
     if (filterItems[i].value !== "All") {
       var el = document.createElement('p');
@@ -2049,7 +2044,7 @@ function updateFilterSummary() {
       elParent.append(el);
     }    
   }
-  // Set up filter summary "buttons"
+  // Remove filter summary "buttons"
   $("#sex").click(function(){
     document.getElementById("selectSex").selectedIndex = 0;
     handleFilters();
