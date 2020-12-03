@@ -27,7 +27,7 @@ function getEventResults() {
   };
   xhr.send();
 }
-getEventResults();
+// getEventResults();
 
 
 
@@ -2023,12 +2023,44 @@ searchAge.onkeyup = handleSearchAge;
 
 function handleSearchClub(e) {
   resultsGtd.filter();
-  var searchClubValue = document.getElementById('searchClub').value;
-  resultsGtd.search(searchClubValue, ['clubAbbr']);
-  return searchClubValue;
+  var searchValueClub = document.getElementById('searchClub').value;
+  var summaryItemClub = document.getElementById("clubAbbr");
+  console.log(searchValueClub);
+  if (searchValueClub !== null) {
+    console.log("Search has no value");
+    // summaryItemClub.parentNode.removeChild(summaryItemClub);
+  }
+  resultsGtd.search(searchValueClub, ['clubAbbr']);
+  updateSearchSummary();
+  return searchValueClub;
 }
 searchClub.onkeyup = handleSearchClub;
 
+
+
+function updateSearchSummary() {
+  // Clear all items before drawing new
+  var searchSummary = document.getElementById('searchSummary');
+  searchSummary.innerHTML = '';
+  // Draw new list items
+  var searchItemClub = document.getElementById('searchClub');
+  var searchItems = [searchItemClub];
+  for (i = 0; i < searchItems.length; i++) {
+    var el = document.createElement('p');
+    var elParent = document.getElementById('searchSummary');
+    el.className = "search__summary--item search__summary--item-" + searchItems[i].parentElement.classList.value;
+    el.id = searchItems[i].parentElement.classList.value;
+    el.textContent = searchItems[i].value;
+    elParent.append(el);
+  }
+  $("#clubAbbr").click(function(){    
+    var summaryItemClub = document.getElementById("clubAbbr");
+    summaryItemClub.parentNode.removeChild(summaryItemClub);
+    document.getElementById("searchClub").value = '';
+    // updateSearchSummary();
+    handleFilters();
+  });
+}
 
 
 function updateFilterSummary() {
@@ -2042,7 +2074,7 @@ function updateFilterSummary() {
   var selectItemZone = document.getElementById('selectZone');
   var filterItems = [selectItemSex, selectItemAgeGroup, selectItemLmsc, selectItemZone];
   // Loop thru applied filters and render summary "buttons"
-  for (i = 0; i < filterItems.length; i++) {    
+  for (i = 0; i < filterItems.length; i++) {
     if (filterItems[i].value !== "All") {
       var el = document.createElement('p');
       var elParent = document.getElementById('filterSummary');
@@ -2080,12 +2112,6 @@ function handleFilters(e) {
   var selectValueZone = document.getElementById('selectZone').value;
 // One Value Defs
   if (selectValueSex !== "All" && selectValueAgeGroup === "All" && selectValueLmsc === "All" && selectValueZone === "All" ) {
-
-
-    // var filterSummary = document.getElementById('filterSummary');
-    // filterSummary.insertAdjacentHTML('beforeend', '<div id="sex" style="display: inline-block;">Sex</div>');
-
-
     resultsGtd.filter(function(item) {
       return item.values().sex === selectValueSex;
     });
@@ -2164,7 +2190,7 @@ selectZone.onchange = handleFilters;
 $("#clearFilters").click(function(){
   searchName.value = '';
   searchAge.value = '';
-  searchClub.value = '';  
+  searchClub.value = '';
   $("select").each(function() { this.selectedIndex = 0 });
   resultsGtd.filter();
   resultsGtd.search();

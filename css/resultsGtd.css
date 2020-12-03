@@ -21,10 +21,15 @@
     margin: 30px auto;
     position: relative;
 }
-
+.summary-container {
+    position: relative;
+}
+.search__summary,
 .filters__summary {
     margin: 0px 0 -10px;
+    display: inline-block;
 }
+.search__summary--item,
 .filters__summary--item {
     font-size: 16px;
     /* margin-right: 12px; */
@@ -32,6 +37,7 @@
     display: inline-block;
     cursor: pointer;
 }
+.search__summary > p:before,
 .filters__summary > p:before {
     color: #000;
     opacity: 0.25;
@@ -183,11 +189,10 @@
     display: inline-block;
     width: 200px;
 }
-#resultsGtd .filters tr th > * {
+/* #resultsGtd .filters tr th > * {
     vertical-align: top;
     position: relative;
-}
-
+} */
 #resultsGtd .filters .name {
     width: 200px;
     max-width: 200px;
@@ -299,14 +304,20 @@
     .filters-applied {
         margin: -5px 0 -10px;
     }
+    .search__summary, 
     .filters__summary {
-        position: initial;
+        display: inline-block;
     }
+    .search__summary--item,
     .filters__summary--item {
         font-size: 14px;
         margin-right: 14px;
         display: inline-block;
     }
+    .search__summary--item {
+        text-transform: uppercase;
+    }
+    .search__summary > p:before,
     .filters__summary > p:before {
         color: #000;
         opacity: 0.25;
@@ -332,16 +343,18 @@
         -moz-osx-font-smoothing: grayscale;
         font-feature-settings: 'liga';
     }
+    /* .search__summary--item-key,
     .filters__summary--item-key {
         font-size: 11px;
         font-weight: normal;
     }
+    .search__summary--item-value,
     .filters__summary--item-value {
         font-size: 12px;
         font-weight: bold;
         border-bottom: 1px solid #CCC;
         cursor: pointer;
-    }
+    } */
     
     /**************************************** Filters */
 
@@ -362,6 +375,7 @@
 
     #resultsGtd input.search {
         margin-top: 2px;
+        text-transform: uppercase;
     }
     #resultsGtd select {
         background-color: #F3F3F3;
