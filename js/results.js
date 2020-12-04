@@ -8,22 +8,49 @@ function hideLoadingSpinner() {
 }
 hideLoadingSpinner();
 
+// function getEventResults() {
+//   // showLoadingOverlay();
+//   const xhr = new XMLHttpRequest();
+//   xhr.open('GET', 'https://test.usms.org/apis/v1/gtd/participants', true);
+//   xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
+//   xhr.onload = function () {
+//     if (xhr.status === 200) {
+//       const checkApi = JSON.parse(xhr.response);
+//       return;
+//     }
+//     console.log(checkApi);
+//     return null;
+//   };
+//   xhr.send();
+// }
+// getEventResults();
+
+
+
+
+
+
+
 function getEventResults() {
-  // showLoadingOverlay();
   const xhr = new XMLHttpRequest();
-  xhr.open('GET', 'https://test.usms.org/apis/v1/gtd/participants', true);
-  xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
+  // xhr.open('GET', `/apis/v1/gtd/participants`, true);
+  xhr.open('GET', `https://test.usms.org/apis/v1/gtd/participants`, true);
+  xhr.withCredentials = true;
   xhr.onload = function () {
     if (xhr.status === 200) {
-      const checkApi = JSON.parse(xhr.data);
-      return;
+      const response = JSON.parse(xhr.response);
     }
-    console.log(checkApi);
-    return null;
+    console.log(response);
   };
   xhr.send();
 }
 getEventResults();
+
+
+
+
+
+
 
 
 
