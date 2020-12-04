@@ -26,25 +26,20 @@ hideLoadingSpinner();
 // getEventResults();
 
 
-
-
-
-
-
-function getEventResults() {
-  const xhr = new XMLHttpRequest();
-  // xhr.open('GET', `/apis/v1/gtd/participants`, true);
-  xhr.open('GET', `https://test.usms.org/apis/v1/gtd/participants`, true);
-  xhr.withCredentials = true;
-  xhr.onload = function () {
-    if (xhr.status === 200) {
-      const response = JSON.parse(xhr.response);
-    }
-    console.log(response);
-  };
-  xhr.send();
-}
-getEventResults();
+// function getEventResults() {
+//   const xhr = new XMLHttpRequest();
+//   // xhr.open('GET', `/apis/v1/gtd/participants`, true);
+//   xhr.open('GET', `https://test.usms.org/apis/v1/gtd/participants`, true);
+//   xhr.withCredentials = true;
+//   xhr.onload = function () {
+//     if (xhr.status === 200) {
+//       const response = JSON.parse(xhr.response);
+//     }
+//     console.log(response);
+//   };
+//   xhr.send();
+// }
+// getEventResults();
 
 
 
@@ -1998,8 +1993,6 @@ function formatMiles(miles) {
   return miles;
 }
 
-
-
 function cleanData(dataLocal) {
   for (var i = 0; i < newData.length; i++) {
     newData[i].miles = formatMiles(dataLocal[i].miles);
@@ -2008,53 +2001,45 @@ function cleanData(dataLocal) {
 let newData = dataLocal;
 cleanData(dataLocal);
 
-
 // Initialize List.js
 var resultsGtd = new List('resultsGtd', options, newData );
 
-
+// List sort defaults
 resultsGtd.sort(
   'miles', {
   order:'desc',
   }
 );
 
-
 function handleSearchName(e) {
   resultsGtd.filter();
-  var searchNameValue = document.getElementById('searchName').value;
-  resultsGtd.search(searchNameValue, ['last', 'first']);
-  return searchNameValue;
+  var searchValueName = document.getElementById('searchName').value;
+  resultsGtd.search(searchValueName, ['last', 'first']);
+  updateSearchSummary();
+  handleFilters();
+  return searchValueName;
 }
 searchName.onkeyup = handleSearchName;
 
 
-
 function handleSearchAge(e) {
   resultsGtd.filter();
-  var searchAgeValue = document.getElementById('searchAge').value;
-  resultsGtd.search(searchAgeValue, ['age']);
-  return searchAgeValue;
+  var searchValueAge = document.getElementById('searchAge').value;
+  resultsGtd.search(searchValueAge, ['age']);
+  return searchValueAge;
 }
 searchAge.onkeyup = handleSearchAge;
-
 
 
 function handleSearchClub(e) {
   resultsGtd.filter();
   var searchValueClub = document.getElementById('searchClub').value;
-  var summaryItemClub = document.getElementById("clubAbbr");
-  console.log(searchValueClub);
-  if (searchValueClub !== null) {
-    console.log("Search has no value");
-    // summaryItemClub.parentNode.removeChild(summaryItemClub);
-  }
   resultsGtd.search(searchValueClub, ['clubAbbr']);
   updateSearchSummary();
+  handleFilters();
   return searchValueClub;
 }
 searchClub.onkeyup = handleSearchClub;
-
 
 
 function updateSearchSummary() {
@@ -2062,9 +2047,14 @@ function updateSearchSummary() {
   var searchSummary = document.getElementById('searchSummary');
   searchSummary.innerHTML = '';
   // Draw new list items
+  var searchItemName = document.getElementById('searchName');
   var searchItemClub = document.getElementById('searchClub');
-  var searchItems = [searchItemClub];
+  var searchItems = [searchItemClub, searchItemName];
   for (i = 0; i < searchItems.length; i++) {
+    console.log(searchItems[i].value);
+    if (searchItemName = true) {
+      console.log("Name Has Value.");
+    }
     var el = document.createElement('p');
     var elParent = document.getElementById('searchSummary');
     el.className = "search__summary--item search__summary--item-" + searchItems[i].parentElement.classList.value;
@@ -2072,12 +2062,26 @@ function updateSearchSummary() {
     el.textContent = searchItems[i].value;
     elParent.append(el);
   }
-  $("#clubAbbr").click(function(){    
+  $("#name").click(function(){
+    var summaryItemName = document.getElementById("name");
+    summaryItemName.parentNode.removeChild(summaryItemName);
+    document.getElementById("searchName").value = '';
+    updateSearchSummary();
+    handleFilters();
+    handleSearchClub();
+    var searchSummary = document.getElementById('searchSummary');
+    searchSummary.innerHTML = '';  
+  });
+
+  $("#clubAbbr").click(function(){
     var summaryItemClub = document.getElementById("clubAbbr");
     summaryItemClub.parentNode.removeChild(summaryItemClub);
     document.getElementById("searchClub").value = '';
-    // updateSearchSummary();
+    updateSearchSummary();
     handleFilters();
+    handleSearchClub();
+    var searchSummary = document.getElementById('searchSummary');
+    searchSummary.innerHTML = '';  
   });
 }
 
@@ -2121,7 +2125,6 @@ function updateFilterSummary() {
     handleFilters();
   });
 }
-
 
 
 function handleFilters(e) {
