@@ -43,12 +43,6 @@ hideLoadingSpinner();
 
 
 
-
-
-
-
-
-
 var options = {
   page: 99,
   pagination: true,
@@ -2011,94 +2005,150 @@ resultsGtd.sort(
   }
 );
 
+
+function handleSearchInput() {
+  // Clear all summary items before drawing new
+  var searchSummary = document.getElementById('searchSummary');
+  searchSummary.innerHTML = '';
+
+  var searchInputName = document.getElementById('searchName');
+  var searchInputAge = document.getElementById('searchAge');
+  var searchInputClub = document.getElementById('searchClub');
+
+// var searchInputItems = [searchInputName, searchInputAge, searchInputClub];
+// for (i = 0; i < searchInputItems.length; i++) {
+
+  var isEmptyName = searchInputName.value === '';
+  var isEmptyAge = searchInputAge.value === '';
+  var isEmptyClub = searchInputClub.value === '';
+
+  if (isEmptyName === false ) {
+    var el = document.createElement('p');
+    var elParent = document.getElementById('searchSummary');
+    el.className = "search__summary--item search__summary--item-name";
+    el.id = searchInputName.parentElement.classList.value;
+    el.textContent = searchInputName.value;
+    elParent.append(el);
+  } if (isEmptyAge === false ) {
+    var el = document.createElement('p');
+    var elParent = document.getElementById('searchSummary');
+    el.className = "search__summary--item search__summary--item-age";
+    el.id = searchInputAge.parentElement.classList.value;
+    el.textContent = searchInputAge.value;
+    elParent.append(el);
+  } if (isEmptyClub === false ) {
+    var el = document.createElement('p');
+    var elParent = document.getElementById('searchSummary');
+    el.className = "search__summary--item search__summary--item-club";
+    el.id = searchInputClub.parentElement.classList.value;
+    el.textContent = searchInputClub.value;
+    elParent.append(el);
+  }
+
+  $("#name").click(function(){
+    var summaryItemName = document.getElementById("name");
+    document.getElementById("searchName").value = '';
+    // handleSearchName();
+    handleSearchInput();
+    handleFilters();
+    summaryItemName.remove();
+  });
+  $("#age").click(function(){
+    var summaryItemAge = document.getElementById("age");
+    document.getElementById("searchAge").value = '';
+    // handleSearchAge();
+    handleSearchInput();
+    handleFilters();
+    summaryItemAge.remove();
+  });
+  $("#clubAbbr").click(function(){
+    var summaryItemClub = document.getElementById("clubAbbr");
+    document.getElementById("searchClub").value = '';
+    // handleSearchClub();
+    handleSearchInput();
+    handleFilters();
+    summaryItemClub.remove();
+  });
+
+}
+
 function handleSearchName(e) {
+  console.log("Searching Name");
   resultsGtd.filter();
   var searchValueName = document.getElementById('searchName').value;
   resultsGtd.search(searchValueName, ['last', 'first']);
-  updateSearchSummary();
-  handleFilters();
+  handleSearchInput();
+  // handleFilters();
   return searchValueName;
 }
 searchName.onkeyup = handleSearchName;
-
-
+// var searchInputName = document.getElementById('searchName');
+// searchInputName.onkeyup = function(e) {
+//   if (( e.keyCode || e.which ) != 9) { 
+//     handleSearchName(); 
+//   };
+// }
+// 
+console.log(onkeyup.value);
+document.onkeyup
 function handleSearchAge(e) {
-  resultsGtd.filter();
+  console.log("Searching Age");
+  // resultsGtd.filter();
   var searchValueAge = document.getElementById('searchAge').value;
   resultsGtd.search(searchValueAge, ['age']);
+  // resultsGtd.search(
+  //   (searchValueName, ['first'], ['last']), 
+  //   (searchValueAge, ['age']),
+  //   (searchClub, ['club'])
+  // );
+  // handleSearchInput();
+  // handleFilters();  
   return searchValueAge;
 }
 searchAge.onkeyup = handleSearchAge;
+// searchAge.onkeyup = function(e) {
+  // if (( e.keyCode || e.which ) == 9) {
+    // alert("Tabbed into field");
+    // handleSearchName();
+    // handleSearchAge();
+    // handleSearchClub();
+  // };
+// }
+
+
 
 
 function handleSearchClub(e) {
+  console.log("Searching Club");
   resultsGtd.filter();
   var searchValueClub = document.getElementById('searchClub').value;
   resultsGtd.search(searchValueClub, ['clubAbbr']);
-  updateSearchSummary();
-  handleFilters();
+  // handleSearchInput();
+  // handleFilters();
   return searchValueClub;
 }
 searchClub.onkeyup = handleSearchClub;
+// searchClub.onkeyup = function(e) {
+//   if (( e.keyCode || e.which ) != 9) { 
+//     handleSearchClub(); 
+//   };
+// }
 
-
-function updateSearchSummary() {
-  // Clear all items before drawing new
-  var searchSummary = document.getElementById('searchSummary');
-  searchSummary.innerHTML = '';
-  // Draw new list items
-  var searchItemName = document.getElementById('searchName');
-  var searchItemClub = document.getElementById('searchClub');
-  var searchItems = [searchItemClub, searchItemName];
-  for (i = 0; i < searchItems.length; i++) {
-    console.log(searchItems[i].value);
-    if (searchItemName = true) {
-      console.log("Name Has Value.");
-    }
-    var el = document.createElement('p');
-    var elParent = document.getElementById('searchSummary');
-    el.className = "search__summary--item search__summary--item-" + searchItems[i].parentElement.classList.value;
-    el.id = searchItems[i].parentElement.classList.value;
-    el.textContent = searchItems[i].value;
-    elParent.append(el);
-  }
-  $("#name").click(function(){
-    var summaryItemName = document.getElementById("name");
-    summaryItemName.parentNode.removeChild(summaryItemName);
-    document.getElementById("searchName").value = '';
-    updateSearchSummary();
-    handleFilters();
-    handleSearchClub();
-    var searchSummary = document.getElementById('searchSummary');
-    searchSummary.innerHTML = '';  
-  });
-
-  $("#clubAbbr").click(function(){
-    var summaryItemClub = document.getElementById("clubAbbr");
-    summaryItemClub.parentNode.removeChild(summaryItemClub);
-    document.getElementById("searchClub").value = '';
-    updateSearchSummary();
-    handleFilters();
-    handleSearchClub();
-    var searchSummary = document.getElementById('searchSummary');
-    searchSummary.innerHTML = '';  
-  });
-}
 
 
 function updateFilterSummary() {
   // Clear all items before drawing new
   var filterSummary = document.getElementById('filterSummary');
   filterSummary.innerHTML = '';
-  // Draw new list items
+
+  // Loop thru applied filters and render summary "buttons"
   var selectItemSex = document.getElementById('selectSex');
   var selectItemAgeGroup = document.getElementById('selectAgeGroup');
   var selectItemLmsc = document.getElementById('selectLmsc');
   var selectItemZone = document.getElementById('selectZone');
   var filterItems = [selectItemSex, selectItemAgeGroup, selectItemLmsc, selectItemZone];
-  // Loop thru applied filters and render summary "buttons"
   for (i = 0; i < filterItems.length; i++) {
-    if (filterItems[i].value !== "All") {
+    if (filterItems[i].value !== 'All') {
       var el = document.createElement('p');
       var elParent = document.getElementById('filterSummary');
       el.className = "filters__summary--item filters__summary--item-" + filterItems[i].parentElement.classList.value;
