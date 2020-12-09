@@ -2005,134 +2005,141 @@ resultsGtd.sort(
   }
 );
 
+let searchNameInput = document.getElementById('searchName');
+let searchAgeInput = document.getElementById('searchAge');
+let searchClubInput = document.getElementById('searchClub');
 
-function handleSearchInput() {
+// let searchNameValue = document.getElementById('searchName').value;
+// let searchAgeValue = document.getElementById('searchAge').value;
+// let searchClubValue = document.getElementById('searchClub').value;
+
+
+function updateSearchSummary() {
   // Clear all summary items before drawing new
   var searchSummary = document.getElementById('searchSummary');
   searchSummary.innerHTML = '';
 
-  var searchInputName = document.getElementById('searchName');
-  var searchInputAge = document.getElementById('searchAge');
-  var searchInputClub = document.getElementById('searchClub');
+  var searchNameValue = document.getElementById('searchName').value;
+  var searchAgeValue = document.getElementById('searchAge').value;
+  var searchClubValue = document.getElementById('searchClub').value;
 
-// var searchInputItems = [searchInputName, searchInputAge, searchInputClub];
-// for (i = 0; i < searchInputItems.length; i++) {
-
-  var isEmptyName = searchInputName.value === '';
-  var isEmptyAge = searchInputAge.value === '';
-  var isEmptyClub = searchInputClub.value === '';
+  // True or False
+  var isEmptyName = searchNameInput.value === '';
+  var isEmptyAge = searchAgeInput.value === '';
+  var isEmptyClub = searchClubInput.value === '';
 
   if (isEmptyName === false ) {
-    var el = document.createElement('p');
-    var elParent = document.getElementById('searchSummary');
-    el.className = "search__summary--item search__summary--item-name";
-    el.id = searchInputName.parentElement.classList.value;
-    el.textContent = searchInputName.value;
-    elParent.append(el);
+      var el = document.createElement('p');
+      var elParent = document.getElementById('searchSummary');
+      el.className = "search__summary--item search__summary--item-name";
+      el.id = searchNameInput.parentElement.classList.value;
+      el.textContent = searchNameInput.value;
+      elParent.append(el);
+      // return isEmptyName;
   } if (isEmptyAge === false ) {
-    var el = document.createElement('p');
-    var elParent = document.getElementById('searchSummary');
-    el.className = "search__summary--item search__summary--item-age";
-    el.id = searchInputAge.parentElement.classList.value;
-    el.textContent = searchInputAge.value;
-    elParent.append(el);
+      var el = document.createElement('p');
+      var elParent = document.getElementById('searchSummary');
+      el.className = "search__summary--item search__summary--item-age";
+      el.id = searchAgeInput.parentElement.classList.value;
+      el.textContent = searchAgeInput.value;
+      elParent.append(el);
+      // return isEmptyAge;
   } if (isEmptyClub === false ) {
-    var el = document.createElement('p');
-    var elParent = document.getElementById('searchSummary');
-    el.className = "search__summary--item search__summary--item-club";
-    el.id = searchInputClub.parentElement.classList.value;
-    el.textContent = searchInputClub.value;
-    elParent.append(el);
+      var el = document.createElement('p');
+      var elParent = document.getElementById('searchSummary');
+      el.className = "search__summary--item search__summary--item-club";
+      el.id = searchClubInput.parentElement.classList.value;
+      el.textContent = searchClubInput.value;
+      elParent.append(el);
+      // return isEmptyClub;
   }
-
+  // Initiate Summary Buttons
   $("#name").click(function(){
-    var summaryItemName = document.getElementById("name");
-    document.getElementById("searchName").value = '';
-    // handleSearchName();
-    handleSearchInput();
+    resultsGtd.search(searchNameValue, ['name']);
+    // resultsGtd.search(function(item){
+    //   return( item.values().name === searchNameValue && item.values().age === searchAgeValue && item.values().club === searchClubValue )
+    // });
+    updateSearchSummary();
     handleFilters();
+    var summaryItemName = document.getElementById("name");    
     summaryItemName.remove();
   });
   $("#age").click(function(){
-    var summaryItemAge = document.getElementById("age");
-    document.getElementById("searchAge").value = '';
-    // handleSearchAge();
-    handleSearchInput();
+    resultsGtd.search(searchAgeValue, ['age']);
+    // resultsGtd.search(function(item){
+    //   return( item.values().name === searchNameValue && item.values().age === searchAgeValue && item.values().club === searchClubValue )
+    // });
+    updateSearchSummary();
     handleFilters();
+    var summaryItemAge = document.getElementById("age");
     summaryItemAge.remove();
   });
   $("#clubAbbr").click(function(){
-    var summaryItemClub = document.getElementById("clubAbbr");
-    document.getElementById("searchClub").value = '';
-    // handleSearchClub();
-    handleSearchInput();
+    resultsGtd.search(searchClubValue, ['club']);
+    // resultsGtd.search(function(item){
+    //   return( item.values().name === searchNameValue && item.values().age === searchAgeValue && item.values().club === searchClubValue )
+    // });
+    updateSearchSummary();
     handleFilters();
+    var summaryItemClub = document.getElementById("clubAbbr");
     summaryItemClub.remove();
   });
-
 }
 
-function handleSearchName(e) {
+
+function getValueName(e) {
   console.log("Searching Name");
-  resultsGtd.filter();
-  var searchValueName = document.getElementById('searchName').value;
-  resultsGtd.search(searchValueName, ['last', 'first']);
-  handleSearchInput();
-  // handleFilters();
-  return searchValueName;
-}
-searchName.onkeyup = handleSearchName;
-// var searchInputName = document.getElementById('searchName');
-// searchInputName.onkeyup = function(e) {
-//   if (( e.keyCode || e.which ) != 9) { 
-//     handleSearchName(); 
-//   };
-// }
-// 
-console.log(onkeyup.value);
-document.onkeyup
-function handleSearchAge(e) {
-  console.log("Searching Age");
+  var searchNameValue = document.getElementById('searchName').value;
+  var searchAgeValue = document.getElementById('searchAge').value;
+  var searchClubValue = document.getElementById('searchClub').value;
   // resultsGtd.filter();
-  var searchValueAge = document.getElementById('searchAge').value;
-  resultsGtd.search(searchValueAge, ['age']);
-  // resultsGtd.search(
-  //   (searchValueName, ['first'], ['last']), 
-  //   (searchValueAge, ['age']),
-  //   (searchClub, ['club'])
-  // );
-  // handleSearchInput();
-  // handleFilters();  
-  return searchValueAge;
+  resultsGtd.search(searchNameValue, ['last', 'first']);
+  // resultsGtd.search(function(item){
+  //   return( item.values().name === searchNameValue && item.values().age === searchAgeValue && item.values().clubAbbr === searchClubValue )
+  // });
+  updateSearchSummary();
+  // searchNameValue = name;
+  return searchNameValue;
 }
-searchAge.onkeyup = handleSearchAge;
-// searchAge.onkeyup = function(e) {
-  // if (( e.keyCode || e.which ) == 9) {
-    // alert("Tabbed into field");
-    // handleSearchName();
-    // handleSearchAge();
-    // handleSearchClub();
-  // };
-// }
+searchName.onkeyup = getValueName;
 
+function getValueAge(e) {
+  console.log("Searching Age");
+  var searchNameValue = document.getElementById('searchName').value;
+  var searchAgeValue = document.getElementById('searchAge').value;
+  var searchClubValue = document.getElementById('searchClub').value;
+  // resultsGtd.filter();
+  // resultsGtd.search(searchAgeValue, ['age']);
+  // resultsGtd.search(function(item){
+  //   return( item.values().name === searchNameValue && item.values().age === searchAgeValue && item.values().clubAbbr === searchClubValue )
+  // });
+  resultsGtd.search(function(item){
+      return( item.values().name === searchNameValue )
+  });
+  updateSearchSummary();
+  // searchAgeValue = age;
+  return searchAgeValue;
+}
+searchAge.onkeyup = getValueAge;
 
-
-
-function handleSearchClub(e) {
+function getValueClub(e) {
   console.log("Searching Club");
-  resultsGtd.filter();
-  var searchValueClub = document.getElementById('searchClub').value;
-  resultsGtd.search(searchValueClub, ['clubAbbr']);
-  // handleSearchInput();
-  // handleFilters();
-  return searchValueClub;
+  var searchNameValue = document.getElementById('searchName').value;
+  var searchAgeValue = document.getElementById('searchAge').value;
+  var searchClubValue = document.getElementById('searchClub').value;
+  // resultsGtd.filter();
+  resultsGtd.search(searchClubValue, ['club']);
+  // resultsGtd.search(function(item){
+  //   return( item.values().name === searchNameValue && item.values().age === searchAgeValue && item.values().clubAbbr === searchClubValue )
+  // });
+  updateSearchSummary();
+  // searchClubValue = club;
+  return searchClubValue;
 }
-searchClub.onkeyup = handleSearchClub;
-// searchClub.onkeyup = function(e) {
-//   if (( e.keyCode || e.which ) != 9) { 
-//     handleSearchClub(); 
-//   };
-// }
+searchClub.onkeyup = getValueClub;
+
+
+
 
 
 
@@ -2246,7 +2253,6 @@ function handleFilters(e) {
     resultsGtd.filter(function(item) {
       return item.values().sex === selectValueSex && item.values().ageGroup === selectValueAgeGroup && item.values().lmsc === selectValueLmsc && item.values().zone === selectValueZone;
     });
-// Clear All
   } else {
     resultsGtd.filter();
   }
