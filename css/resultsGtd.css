@@ -22,18 +22,21 @@
     position: relative;
 }
 .summary-container {
-    position: relative;
+    /* position: relative; */
+    position: absolute;
+    top: 40px;
 }
 .search__summary,
 .filters__summary {
-    margin: 0px 0 -10px;
+    /* margin: 0px 0 -10px; */
+    margin: 0px 0 0px;
     display: inline-block;
 }
 .search__summary--item,
 .filters__summary--item {
-    font-size: 16px;
+    font-size: 19px;
     /* margin-right: 12px; */
-    margin: 20px 15px 10px 0;
+    margin: 10px 15px 15px 0;
     display: inline-block;
     cursor: pointer;
 }
@@ -84,6 +87,7 @@
     font-size: 18px;
     font-weight: bold;
     padding: 5px 0;
+    margin-bottom: 40px;
 }
 #resultsGtd .filters .title a {
     font-size: 13px;
@@ -189,10 +193,10 @@
     display: inline-block;
     width: 200px;
 }
-#resultsGtd .filters tr th > * {
+/* #resultsGtd .filters tr th > * {
     vertical-align: top;
     position: relative;
-}
+} */
 #resultsGtd .filters .name {
     width: 200px;
     max-width: 200px;
@@ -314,9 +318,9 @@
         margin-right: 14px;
         display: inline-block;
     }
-    .search__summary--item {
+    /* .search__summary--item {
         text-transform: uppercase;
-    }
+    } */
     .search__summary > p:before,
     .filters__summary > p:before {
         color: #000;
@@ -357,16 +361,22 @@
     } */
     
     /**************************************** Filters */
-
+    .summary-container {
+        position: relative;
+        top: initial;
+        /* position: absolute; */
+        /* top: 30px; */
+    }    
+    #resultsGtd .filters .title {
+        margin-bottom: 0;
+    }    
     #resultsGtd .filters .title a {
         font-size: 11px;
     }
-
     #resultsGtd .filters label {
         font-size: 12px;
         line-height: 15px;
     }
-
     #resultsGtd .filters .filters__swimmer--bio > div,
     #resultsGtd .filters .filters__swimmer > div > div,
     #resultsGtd .filters .filters__admin > div > div {
@@ -415,7 +425,7 @@
         width: auto;
     }
     #resultsGtd .filters th {
-        padding: 15px 20px 20px;
+        padding: 15px 20px 0px;
     }    
     #resultsGtd .filters .name {
         width: 280px;

@@ -2018,9 +2018,11 @@ function handleSearch() {
   var isEmptyName = searchNameInput.value === '';
   if (isEmptyName === false) {
     resultsGtd.search(searchNameValue, ['first', 'last', 'age', 'clubAbbr']);
-    handleFilters();
-    updateSearchSummary();
+    // handleFilters();
+    // updateSearchSummary();
   }
+  updateSearchSummary();
+  handleFilters();
 }
 searchNameInput.onkeyup = handleSearch;
 
@@ -2051,8 +2053,8 @@ function searchSummaryBtn() {
     searchNameInput.value = '';
     handleSearch();
     handleFilters();
-    var summaryItemName = document.getElementById("name");    
-    summaryItemName.remove();
+    // var summaryItemName = document.getElementById("name");    
+    // summaryItemName.remove();
     resultsGtd.search();
   });
 }
@@ -2178,27 +2180,19 @@ function handleFilters(e) {
   }
   updateFilterSummary();
 }
-// let select = document.querySelectorAll('select');
-selectSex.onchange = handleFilters;
-selectAgeGroup.onchange = handleFilters;
-selectLmsc.onchange = handleFilters;
-selectZone.onchange = handleFilters;
-// select.onchange = handleFilters;
+
+$(".select").change(function(){
+  handleFilters();
+});
 
 $("#clearFilters").click(function(){
   searchName.value = '';
-  // searchAge.value = '';
-  // searchClub.value = '';
   $("select").each(function() { this.selectedIndex = 0 });
   resultsGtd.filter();
   resultsGtd.search();
-  resultsGtd.sort(
-    'miles', {
-    order:'desc',
-    }
-  );
+  resultsGtd.sort('miles', {order:'desc'});
   handleSearch();
-  updateSearchSummary();
+  // updateSearchSummary();
   handleFilters();
-  updateFilterSummary();
+  // updateFilterSummary();
 });
