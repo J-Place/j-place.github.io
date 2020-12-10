@@ -8,25 +8,26 @@ function hideLoadingSpinner() {
 }
 hideLoadingSpinner();
 
-// function getEventResults() {
-//   // showLoadingOverlay();
-//   const xhr = new XMLHttpRequest();
-//   xhr.open('GET', 'https://test.usms.org/apis/v1/gtd/participants', true);
-//   xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
-//   xhr.onload = function () {
-//     if (xhr.status === 200) {
-//       const checkApi = JSON.parse(xhr.response);
-//       return;
-//     }
-//     console.log(checkApi);
-//     return null;
-//   };
-//   xhr.send();
-// }
+function getEventResults() {
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://test.usms.org/apis/v1/gtd/participants', true);
+  xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
+    xhr.withCredentials = true;
+  xhr.onload = function () {
+    if (xhr.status === 200) {
+      const checkApi = JSON.parse(xhr.response);
+      return;
+    }
+    console.log(checkApi);
+    return null;
+  };
+  xhr.send();
+}
 // getEventResults();
 
 
 // function getEventResults() {
+// showLoadingOverlay();
 //   const xhr = new XMLHttpRequest();
 //   // xhr.open('GET', `/apis/v1/gtd/participants`, true);
 //   xhr.open('GET', `https://test.usms.org/apis/v1/gtd/participants`, true);
@@ -1982,6 +1983,17 @@ var dataLocal = [
   {"first":"Stephen","last":"Soboslay","age":"19","ageGroup":"18-24","sex":"M","clubAbbr":"AAC","lmsc":"Lake Erie","zone":"Great Lakes","miles":0.0}
 ];
 
+
+
+
+
+
+
+
+
+
+
+
 function formatMiles(miles) {  
   miles = miles.toFixed(2);
   return miles;
@@ -2005,138 +2017,230 @@ resultsGtd.sort(
   }
 );
 
-let searchNameInput = document.getElementById('searchName');
-let searchAgeInput = document.getElementById('searchAge');
-let searchClubInput = document.getElementById('searchClub');
-
-// let searchNameValue = document.getElementById('searchName').value;
-// let searchAgeValue = document.getElementById('searchAge').value;
-// let searchClubValue = document.getElementById('searchClub').value;
 
 
-function updateSearchSummary() {
-  // Clear all summary items before drawing new
-  var searchSummary = document.getElementById('searchSummary');
-  searchSummary.innerHTML = '';
-
-  var searchNameValue = document.getElementById('searchName').value;
-  var searchAgeValue = document.getElementById('searchAge').value;
-  var searchClubValue = document.getElementById('searchClub').value;
-
-  // True or False
-  var isEmptyName = searchNameInput.value === '';
-  var isEmptyAge = searchAgeInput.value === '';
-  var isEmptyClub = searchClubInput.value === '';
-
-  if (isEmptyName === false ) {
-      var el = document.createElement('p');
-      var elParent = document.getElementById('searchSummary');
-      el.className = "search__summary--item search__summary--item-name";
-      el.id = searchNameInput.parentElement.classList.value;
-      el.textContent = searchNameInput.value;
-      elParent.append(el);
-      // return isEmptyName;
-  } if (isEmptyAge === false ) {
-      var el = document.createElement('p');
-      var elParent = document.getElementById('searchSummary');
-      el.className = "search__summary--item search__summary--item-age";
-      el.id = searchAgeInput.parentElement.classList.value;
-      el.textContent = searchAgeInput.value;
-      elParent.append(el);
-      // return isEmptyAge;
-  } if (isEmptyClub === false ) {
-      var el = document.createElement('p');
-      var elParent = document.getElementById('searchSummary');
-      el.className = "search__summary--item search__summary--item-club";
-      el.id = searchClubInput.parentElement.classList.value;
-      el.textContent = searchClubInput.value;
-      elParent.append(el);
-      // return isEmptyClub;
-  }
-  // Initiate Summary Buttons
-  $("#name").click(function(){
-    resultsGtd.search(searchNameValue, ['name']);
-    // resultsGtd.search(function(item){
-    //   return( item.values().name === searchNameValue && item.values().age === searchAgeValue && item.values().club === searchClubValue )
-    // });
-    updateSearchSummary();
-    handleFilters();
-    var summaryItemName = document.getElementById("name");    
-    summaryItemName.remove();
-  });
-  $("#age").click(function(){
-    resultsGtd.search(searchAgeValue, ['age']);
-    // resultsGtd.search(function(item){
-    //   return( item.values().name === searchNameValue && item.values().age === searchAgeValue && item.values().club === searchClubValue )
-    // });
-    updateSearchSummary();
-    handleFilters();
-    var summaryItemAge = document.getElementById("age");
-    summaryItemAge.remove();
-  });
-  $("#clubAbbr").click(function(){
-    resultsGtd.search(searchClubValue, ['club']);
-    // resultsGtd.search(function(item){
-    //   return( item.values().name === searchNameValue && item.values().age === searchAgeValue && item.values().club === searchClubValue )
-    // });
-    updateSearchSummary();
-    handleFilters();
-    var summaryItemClub = document.getElementById("clubAbbr");
-    summaryItemClub.remove();
-  });
-}
 
 
-function getValueName(e) {
-  console.log("Searching Name");
-  var searchNameValue = document.getElementById('searchName').value;
-  var searchAgeValue = document.getElementById('searchAge').value;
-  var searchClubValue = document.getElementById('searchClub').value;
-  // resultsGtd.filter();
-  resultsGtd.search(searchNameValue, ['last', 'first']);
-  // resultsGtd.search(function(item){
-  //   return( item.values().name === searchNameValue && item.values().age === searchAgeValue && item.values().clubAbbr === searchClubValue )
+
+
+
+
+
+// Original Search
+// let searchNameInput = document.getElementById('searchName');
+// let searchAgeInput = document.getElementById('searchAge');
+// let searchClubInput = document.getElementById('searchClub');
+// // let searchNameValue = document.getElementById('searchName').value;
+// // let searchAgeValue = document.getElementById('searchAge').value;
+// // let searchClubValue = document.getElementById('searchClub').value;
+// function updateSearchSummary() {
+//   // Clear all summary items before drawing new
+//   var searchSummary = document.getElementById('searchSummary');
+//   searchSummary.innerHTML = '';
+//   var searchNameValue = document.getElementById('searchName').value;
+//   var searchAgeValue = document.getElementById('searchAge').value;
+//   var searchClubValue = document.getElementById('searchClub').value;
+//   // True or False
+//   var isEmptyName = searchNameInput.value === '';
+//   var isEmptyAge = searchAgeInput.value === '';
+//   var isEmptyClub = searchClubInput.value === '';
+//   if (isEmptyName === false ) {
+//       var el = document.createElement('p');
+//       var elParent = document.getElementById('searchSummary');
+//       el.className = "search__summary--item search__summary--item-name";
+//       el.id = searchNameInput.parentElement.classList.value;
+//       el.textContent = searchNameInput.value;
+//       elParent.append(el);
+//       // return isEmptyName;
+//   } if (isEmptyAge === false ) {
+//       var el = document.createElement('p');
+//       var elParent = document.getElementById('searchSummary');
+//       el.className = "search__summary--item search__summary--item-age";
+//       el.id = searchAgeInput.parentElement.classList.value;
+//       el.textContent = searchAgeInput.value;
+//       elParent.append(el);
+//       // return isEmptyAge;
+//   } if (isEmptyClub === false ) {
+//       var el = document.createElement('p');
+//       var elParent = document.getElementById('searchSummary');
+//       el.className = "search__summary--item search__summary--item-club";
+//       el.id = searchClubInput.parentElement.classList.value;
+//       el.textContent = searchClubInput.value;
+//       elParent.append(el);
+//       // return isEmptyClub;
+//   }
+//   // Initiate Summary Buttons
+//   $("#name").click(function(){
+//     resultsGtd.search(searchNameValue, name);
+//     // resultsGtd.search(function(item){
+//     //   return( item.values().name === searchNameValue && item.values().age === searchAgeValue && item.values().club === searchClubValue )
+//     // });
+//     updateSearchSummary();
+//     handleFilters();
+//     var summaryItemName = document.getElementById("name");    
+//     summaryItemName.remove();
+//   });
+//   $("#age").click(function(){
+//     resultsGtd.search(searchAgeValue, age);
+//     // resultsGtd.search(function(item){
+//     //   return( item.values().name === searchNameValue && item.values().age === searchAgeValue && item.values().club === searchClubValue )
+//     // });
+//     updateSearchSummary();
+//     handleFilters();
+//     var summaryItemAge = document.getElementById("age");
+//     summaryItemAge.remove();
+//   });
+//   $("#clubAbbr").click(function(){
+//     resultsGtd.search(searchClubValue, 'club');
+//     // resultsGtd.search(function(item){
+//     //   return( item.values().name === searchNameValue && item.values().age === searchAgeValue && item.values().club === searchClubValue )
+//     // });
+//     updateSearchSummary();
+//     handleFilters();
+//     var summaryItemClub = document.getElementById("clubAbbr");
+//     summaryItemClub.remove();
+//   });
+// }
+// function getValueName(e) {
+//   console.log("Searching Name");
+//   var searchNameValue = document.getElementById('searchName').value;
+//   var searchAgeValue = document.getElementById('searchAge').value;
+//   var searchClubValue = document.getElementById('searchClub').value;
+//   // resultsGtd.filter();
+//   // resultsGtd.search(searchNameValue, ['last', 'first']);
+//   resultsGtd.search(function(item){
+//     return( item.values().name === searchNameValue && item.values().age === searchAgeValue && item.values().clubAbbr === searchClubValue )
+//   });
+//   updateSearchSummary();
+//   // searchNameValue = name;
+//   return searchClubValue && searchAgeValue && searchNameValue;
+// }
+// searchName.onkeyup = getValueName;
+// function getValueAge(e) {
+//   console.log("Searching Age");
+//   var searchNameValue = document.getElementById('searchName').value;
+//   var searchAgeValue = document.getElementById('searchAge').value;
+//   var searchClubValue = document.getElementById('searchClub').value;
+//   // resultsGtd.filter();
+//   resultsGtd.search(searchAgeValue, ['age']);
+//   resultsGtd.search(function(item){
+//     return( item.values().name === searchNameValue && item.values().age === searchAgeValue && item.values().clubAbbr === searchClubValue )
+//   });
+//   // resultsGtd.search(function(item){
+//   //     return( item.values().name === searchNameValue )
+//   // });
+//   updateSearchSummary();
+//   // searchAgeValue = age;
+//   return searchClubValue && searchAgeValue && searchNameValue;
+// }
+// searchAge.onkeyup = getValueAge;
+// function getValueClub(e) {
+//   console.log("Searching Club");
+//   var searchNameValue = document.getElementById('searchName').value;
+//   var searchAgeValue = document.getElementById('searchAge').value;
+//   var searchClubValue = document.getElementById('searchClub').value;
+//   // resultsGtd.filter();
+//   // resultsGtd.search(searchClubValue, ['club']);
+//   resultsGtd.search(function(item){
+//     return( item.values().name === searchNameValue && item.values().age === searchAgeValue && item.values().clubAbbr === searchClubValue )
+//   });
+//   updateSearchSummary();
+//   // searchClubValue = club;
+//   return searchClubValue && searchAgeValue && searchNameValue;
+// }
+// searchClub.onkeyup = getValueClub;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // $('input.search').change(function() {
+  //   // alert("Blur");
+  //   resultsGtd.search( function( item ) {
+  //       $('input.search').each(function() {
+  //           var search = $(this),
+  //               id = search.data('id'),
+  //               value = search.val();
+  //           if (value !== '' && value !== item[id]) {
+  //               return false;
+  //           }
+  //       });
+  //   });
   // });
-  updateSearchSummary();
-  // searchNameValue = name;
-  return searchNameValue;
-}
-searchName.onkeyup = getValueName;
 
-function getValueAge(e) {
-  console.log("Searching Age");
-  var searchNameValue = document.getElementById('searchName').value;
-  var searchAgeValue = document.getElementById('searchAge').value;
-  var searchClubValue = document.getElementById('searchClub').value;
-  // resultsGtd.filter();
-  // resultsGtd.search(searchAgeValue, ['age']);
-  // resultsGtd.search(function(item){
-  //   return( item.values().name === searchNameValue && item.values().age === searchAgeValue && item.values().clubAbbr === searchClubValue )
-  // });
-  resultsGtd.search(function(item){
-      return( item.values().name === searchNameValue )
-  });
-  updateSearchSummary();
-  // searchAgeValue = age;
-  return searchAgeValue;
-}
-searchAge.onkeyup = getValueAge;
 
-function getValueClub(e) {
-  console.log("Searching Club");
-  var searchNameValue = document.getElementById('searchName').value;
-  var searchAgeValue = document.getElementById('searchAge').value;
-  var searchClubValue = document.getElementById('searchClub').value;
-  // resultsGtd.filter();
-  resultsGtd.search(searchClubValue, ['club']);
-  // resultsGtd.search(function(item){
-  //   return( item.values().name === searchNameValue && item.values().age === searchAgeValue && item.values().clubAbbr === searchClubValue )
-  // });
-  updateSearchSummary();
-  // searchClubValue = club;
-  return searchClubValue;
-}
-searchClub.onkeyup = getValueClub;
+
+
+
+
+
+
+
+
+
+
+
+
+
+  $(".search").keyup(function() {
+    alert("Searching ...")
+    var searchData = [];
+    // add search values
+    $('.search').each(function() {
+        var value = $(this).val();
+        // var searchField = $(this).attr( "title" );
+        var searchField = $(this).attr( "id" );
+        if(value !== "") {
+            searchData.push({
+                field: searchField,
+                value: value
+            });
+        }
+    });
+    resultsGtd.search(function(item) {
+        var searchName, searchAge, searchClub;
+        // set true if the added search values is in list area
+        $.each(searchData, function(key, value) {
+            if(searchData[key]["field"] == "name")
+                searchName = item.values().user.toLowerCase().indexOf(searchData[key]["value"].toLowerCase()) != -1;
+            if(searchData[key]["field"] == "age")
+                searchAge = item.values().location.toLowerCase().indexOf(searchData[key]["value"].toLowerCase()) != -1;
+            if(searchData[key]["field"] == "club")
+                searchClub = item.values().prognosis.toLowerCase().indexOf(searchData[key]["value"].toLowerCase()) != -1;
+        });
+        // if the searchValues is true or not set
+        return  (searchName || typeof searchName == "undefined") &&
+                (searchAge || typeof searchAge == "undefined") &&
+                (searchClub || typeof searchClub == "undefined")
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
