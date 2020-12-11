@@ -50,7 +50,6 @@ var options = {
   left: 0,
   right: 0,
   paginationClass: "pagination",
-  searchDelay : 5050,
   valueNames: [ 'first', 'last', 'sex', 'age', 'ageGroup', 'clubAbbr', 'lmsc', 'zone', 'miles' ],
 };
 

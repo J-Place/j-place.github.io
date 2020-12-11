@@ -12,15 +12,15 @@ $(".search").keyup(function() {
             });
         }
     });
-    resultsGtd.filter(function(item) {
+    resultsGtd.search(function(item) {
         var searchName, searchAge, searchClub;
         // set true if the added search values is in list area
         $.each(searchData, function(key, value) {
-            if(searchData[key]["field"] == "searchName")
+            if(searchData[key]["field"] == "name")
                 searchName = item.values().user.toLowerCase().indexOf(searchData[key]["value"].toLowerCase()) != -1;
-            if(searchData[key]["field"] == "searchAge")
+            if(searchData[key]["field"] == "age")
                 searchAge = item.values().location.toLowerCase().indexOf(searchData[key]["value"].toLowerCase()) != -1;
-            if(searchData[key]["field"] == "searchClub")
+            if(searchData[key]["field"] == "club")
                 searchClub = item.values().prognosis.toLowerCase().indexOf(searchData[key]["value"].toLowerCase()) != -1;
         });
         // if the searchValues is true or not set

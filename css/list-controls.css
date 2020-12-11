@@ -1,0 +1,589 @@
+#loadingWrapper.hide {
+    display: none;
+}
+#loadingOverlay {
+    background-color: rgba(1, 1, 1, .25);
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 999999;
+}
+#loadingSpinner {
+    top: 50%;
+    position: absolute;
+    left: 50%;
+    vertical-align: top;
+}
+
+.listjs {
+    width: 100%;
+    margin: 30px auto;
+    position: relative;
+}
+.summary-container {
+    /* position: relative; */
+    position: absolute;
+    top: 40px;
+}
+.search__summary,
+.filters__summary {
+    margin: 0px 0 0px;
+    display: inline-block;
+}
+.search__summary--item,
+.filters__summary--item {
+    font-size: 19px;
+    /* margin-right: 12px; */
+    margin: 10px 15px 15px 0;
+    display: inline-block;
+    cursor: pointer;
+}
+.search__summary > p:before,
+.filters__summary > p:before {
+    color: #000;
+    opacity: 0.25;
+    content: 'close';
+    margin: 0 0 0 -3px;
+    font-family: 'Material Icons';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.5rem;
+    position: relative;
+    top: -1px;
+    right: 1px;
+    display: inline;
+    vertical-align: sub;
+    line-height: inherit;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'liga';
+}
+.filters__summary--item--key {
+    font-size: 11px;
+    font-weight: normal;
+}
+.filters__summary--item--value {
+    font-size: 12px;
+    font-weight: bold;
+    border-bottom: 1px solid #CCC;
+    cursor: pointer;
+}
+
+.listjs .filters .filters__swimmer--bio > div,
+.listjs .filters .filters__swimmer > div > div,
+.listjs .filters .filters__admin > div > div {
+    margin-right: 10px;
+}
+.listjs .filters .title {
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 5px 0;
+    margin-bottom: 40px;
+}
+.listjs .filters .title a {
+    font-size: 13px;
+    font-weight: normal;
+    margin-left: 4px;
+    padding-left: 8px;
+    text-decoration: underline;
+    border-left: 1px solid #BBB;
+}
+.listjs .filters {
+    background-color: #DDD;
+}
+
+.listjs .filters ul,
+.listjs .filters li {
+    display: inline-block;
+    font-size: 16px;
+    line-height: 20px;
+    margin: 0;
+    padding: 0;}
+.listjs .filters th {
+    padding: 15px 10px 25px;
+}
+.listjs .filters label {
+    display: block;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: normal;
+    margin: 10px 0 0;
+    height: 18px;
+    padding: 0;
+    overflow: hidden;
+}
+.listjs .filters ul {
+    list-style-type: none;
+    font-weight: normal;
+    padding: 0;
+}
+.listjs .filters li {
+    padding-left: 10px;
+}
+
+
+/************************************ Sorting and List */
+
+.listjs .sorting th {
+    padding: 10px 10px 0;
+    background-color: #FFF;
+    position: relative;
+}
+.listjs .list tr {
+    vertical-align: middle;
+    height: 50px;
+    border-bottom: 1px solid #EEE;
+}
+.listjs .list td {
+    font-size: 16px;
+    padding: 0 10px;
+    line-height: 19px;
+}
+.listjs .list .miles {
+    font-size: 18px;
+}
+.listjs input.search {
+    width: 100%;
+    position: initial;
+    display: block;
+    height: 25px;
+    font-size: 12px;
+    font-weight: normal;
+    margin: 0;
+    padding: 0 0 0 5px;
+    border: 0 none;
+}
+.listjs select {
+    width: 100%;
+    height: 25px;
+    font-size: 12px;
+    font-weight: normal;
+    margin: 0;
+    padding: 0 0 0 5px;
+    /* background-color: #F3F3F3; */
+    background-color: #FFF;
+    border: 0 none;
+}
+
+/********************************************* Filters */
+
+.filters__admin {
+    display: block;
+    /* margin-top: 15px; */
+    /* margin-bottom: 10px; */
+    margin: 15px 0 10px;
+    padding-top: 0;
+    border-top: 1px solid #CCC;
+}
+.filters__admin--club {
+    display: inline-block;
+    width: 80px;
+    margin-right: 10px;
+}
+.filters__admin--lmsc-zone {
+    display: inline-block;
+    width: 200px;
+}
+/* .listjs .filters tr th > * {
+    vertical-align: top;
+    position: relative;
+} */
+.listjs .filters .name {
+    width: 200px;
+    max-width: 200px;
+    display: block;
+    top: 0;
+}
+.listjs .filters .age {
+    /* width: 20%; */
+    /* max-width: 20%; */
+    width: 80px;
+    max-width: 80px;
+    min-width: 80px;
+    display: inline-block;
+    top: 0;
+}
+.listjs .filters .sex {
+    /* width: 25%;
+    max-width: 25%; */
+    width: 70px;
+    max-width: 70px;
+    min-width: 70px;
+    display: inline-block;
+}
+.listjs .filters .ageGroup {
+    width: 30%;
+    max-width: 30%;
+    display: inline-block;
+}
+.listjs .filters .clubAbbr {
+    width: 100%;
+    min-width: 100%;
+    display: inline-block;
+    top: 0;
+}
+.listjs .filters .lmsc {
+    width: 43%;
+    min-width: 43%;
+    display: inline-block;
+}
+.listjs .filters .zone {
+    width: 43%;
+    min-width: 43%;
+    display: inline-block;
+}
+
+/********************************************* Sort and List */
+
+.listjs .sorting {
+    vertical-align: bottom;
+}
+.listjs .list .name {
+    width: 170px;
+    min-width: 170px;
+}
+.listjs .sorting .sex,
+.listjs .list .sex {
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center;
+}
+.listjs .list .sex {
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center;
+}
+.listjs .sorting .age {
+    padding-left: 0;
+    padding-right: 10px;
+    text-align: center;
+}
+.listjs .sorting .clubAbbr,
+.listjs .list .clubAbbr {
+    text-align: center;
+}
+
+
+/* Hide from display but keep the LMSC ans Zone html so listjs can render the template data — so we can still filter by LSMC or Zone */
+.sorting .lmsc,
+.sorting .zone,
+.list .lmsc,
+.list .zone,
+.sorting .ageGroup,
+.list .ageGroup,
+.sorting .clubAbbr,
+.list .clubAbbr {
+    display: none;
+}
+
+@media only screen and (min-width: 768px) {
+
+    .listjs .list tr {
+        height: 50px;
+    }
+    .sorting .lmsc,
+    .sorting .zone,
+    .list .lmsc,
+    .list .zone,    
+    .sorting .ageGroup,
+    .list .ageGroup,
+    .sorting .clubAbbr,
+    .list .clubAbbr {
+        display: table-cell;
+    }
+    .listjs .list td {
+        font-size: 15px;
+    }
+
+    /******************************* Filter Breadcrumbs */
+    .filters-applied {
+        margin: -5px 0 -10px;
+    }
+    .search__summary, 
+    .filters__summary {
+        display: inline-block;
+    }
+    .search__summary--item,
+    .filters__summary--item {
+        font-size: 14px;
+        margin-right: 14px;
+        display: inline-block;
+    }
+    /* .search__summary--item {
+        text-transform: uppercase;
+    } */
+    .search__summary > p:before,
+    .filters__summary > p:before {
+        color: #000;
+        opacity: 0.25;
+        content: 'close';
+        margin: 0 0 0 -3px;
+        font-family: 'Material Icons';
+        font-weight: 400;
+        font-style: normal;
+        font-size: 1.5rem;
+        position: relative;
+        top: -1px;
+        right: 1px;
+        display: inline;
+        vertical-align: sub;
+        line-height: inherit;
+        text-transform: none;
+        letter-spacing: normal;
+        word-wrap: normal;
+        white-space: nowrap;
+        direction: ltr;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        -moz-osx-font-smoothing: grayscale;
+        font-feature-settings: 'liga';
+    }
+    /* .search__summary--item-key,
+    .filters__summary--item-key {
+        font-size: 11px;
+        font-weight: normal;
+    }
+    .search__summary--item-value,
+    .filters__summary--item-value {
+        font-size: 12px;
+        font-weight: bold;
+        border-bottom: 1px solid #CCC;
+        cursor: pointer;
+    } */
+    
+    /**************************************** Filters */
+    .summary-container {
+        position: relative;
+        top: initial;
+        /* position: absolute; */
+        /* top: 30px; */
+    }    
+    .listjs .filters .title {
+        margin-bottom: 0;
+    }    
+    .listjs .filters .title a {
+        font-size: 11px;
+    }
+    .listjs .filters label {
+        font-size: 12px;
+        line-height: 15px;
+    }
+    .listjs .filters .filters__swimmer--bio > div,
+    .listjs .filters .filters__swimmer > div > div,
+    .listjs .filters .filters__admin > div > div {
+        margin-right: 5px;
+    }
+    .listjs input.search {
+        margin-top: 2px;
+    }
+    .listjs input.search--club {
+        text-transform: uppercase;
+    }
+    .listjs select {
+        background-color: #F3F3F3;
+    }
+    .filters__swimmer {
+        display: inline-block;
+        margin-right: 30px;
+        padding-right: 30px;
+        padding-bottom: 10px;
+        border-right: 1px solid #CCC;
+    }
+    .filters__admin {
+        width: 35%;
+        display: inline-block;
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-top: 0;
+        border: 0 none;
+        padding-bottom: 10px;
+    }
+    .filters__swimmer > div,
+    .filters__admin > div {
+        margin-right: 0;
+    }
+    .filters__swimmer--name {
+        vertical-align: top;
+        display: inline-block;;
+    }
+    .filters__swimmer--bio {
+        display: inline-block;
+    }
+    .filters__admin--club {
+        width: 280px;
+    }
+    .filters__admin--lmsc-zone {
+        width: auto;
+    }
+    .listjs .filters th {
+        padding: 15px 20px 0px;
+    }    
+    .listjs .filters .name {
+        width: 280px;
+        max-width: 280px;
+        display: inline-block;
+    }
+    .listjs .filters .sex {
+        width: 80px;
+        max-width: 80px;
+        display: inline-block;
+    }
+    .listjs .filters .age {
+        width: 60px;
+        max-width: 60px;
+        display: inline-block;
+    }
+    .listjs .filters .ageGroup {
+        width: 80px;
+        max-width: 80px;
+        display: inline-block;
+    }
+    .listjs .filters .clubAbbr {
+        display: inline-block;
+    }    
+    .listjs .filters .zone {
+        width: 120px;
+        min-width: 120px;
+        display: inline-block;
+        max-width: initial;
+    }
+    .listjs .filters .lmsc {
+        width: 150px;
+        min-width: 150px;
+        display: inline-block;
+        max-width: initial;
+    }
+
+
+    /**************************************** Sort and List */
+
+    .listjs .sprting .name,
+    .listjs .list .name {
+        width: 230px;
+        min-width: 230px;
+    }
+    
+    .listjs .sorting .first {
+        width: 280px;
+        min-width: 280px;
+    }
+    .listjs .sorting .miles,
+    .listjs .list .miles {
+        font-size: 15px;
+        width: 130px;
+        min-width: 130px;
+        padding-right: 40px;
+    }
+    .listjs .sorting .age,
+    .listjs .list .age {
+        width: 60px;
+        min-width: 60px;
+    }
+    .listjs .sorting .ageGroup,
+    .listjs .list .ageGroup {
+        width: 120px;
+        min-width: 120px;
+        text-align: center;
+    }
+    .listjs .sorting .clubAbbr,
+    .listjs .list .clubAbbr {
+        width: 90px;
+        min-width: 90px;
+        padding-left: 0;
+    }
+    .listjs .list .clubAbbr {
+        font-size: 14px;
+    }
+    .listjs .sorting .lmsc,
+    .listjs .list .lmsc {
+        width: 130px;
+        min-width: 130px;
+    }
+    .listjs .list .lmsc {
+        font-size: 14px;
+        line-height: 16px;
+    }
+    .listjs .sorting .zone,
+    .listjs .list .zone {
+        width: 120px;
+        min-width: 120px;
+    }
+    .listjs .list .zone {
+        font-size: 14px;
+    }
+}
+
+
+.miles {
+    text-align: right;
+}
+tfoot li {
+    display: inline-block;
+    padding: 5px 0;
+  }
+  .controls .sort {
+    color: #1e3666;
+    font-size: 14px;
+    line-height: 16px;
+    text-decoration: none;
+    display: block;
+    margin: 5px 0;
+}
+.controls .sort:after {
+    opacity: 0.35;
+    content: 'arrow_drop_down';
+    margin: 0 0 0 -3px;
+    font-family: 'Material Icons';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 2.5rem;
+    position: relative;
+    top: 4px;
+    display: inline;
+    vertical-align: sub;
+    line-height: inherit;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'liga';
+}
+.controls .sort.asc:after {
+    opacity: 1;
+    content: 'arrow_drop_up';
+    top: 5px;
+}
+.controls .sort.desc:after {
+    opacity: 1;
+    content: 'arrow_drop_down';
+}
+.list__item .first {
+    font-size: 14px;
+    display: block;
+}
+.list__item .last {
+    display: block;
+    font-size: 21px;
+    font-weight: bold;
+}
+@media only screen and (min-width: 768px) {
+    .list__item .first,
+    .list__item .last {
+        display: inline-block;
+        font-size: 15px;
+        font-weight: normal;
+    }
+}
+
