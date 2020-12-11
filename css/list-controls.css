@@ -16,7 +16,7 @@
     vertical-align: top;
 }
 
-.listjs {
+{
     width: 100%;
     margin: 30px auto;
     position: relative;
@@ -76,19 +76,19 @@
     cursor: pointer;
 }
 
-.listjs .filters .filters__swimmer--bio > div,
-.listjs .filters .filters__swimmer > div > div,
-.listjs .filters .filters__admin > div > div {
+.filters .filters__swimmer--bio > div,
+.filters .filters__swimmer > div > div,
+.filters .filters__admin > div > div {
     margin-right: 10px;
 }
-.listjs .filters .title {
+.filters .title {
     display: block;
     font-size: 18px;
     font-weight: bold;
     padding: 5px 0;
     margin-bottom: 40px;
 }
-.listjs .filters .title a {
+.filters .title a {
     font-size: 13px;
     font-weight: normal;
     margin-left: 4px;
@@ -96,21 +96,24 @@
     text-decoration: underline;
     border-left: 1px solid #BBB;
 }
-.listjs .filters {
+.filters {
     background-color: #DDD;
 }
 
-.listjs .filters ul,
-.listjs .filters li {
+.filters ul,
+.filters li {
     display: inline-block;
     font-size: 16px;
     line-height: 20px;
     margin: 0;
     padding: 0;}
-.listjs .filters th {
+.filters th {
     padding: 15px 10px 25px;
 }
-.listjs .filters label {
+div.filters {
+    padding: 15px 20px 0px;
+}
+.filters label {
     display: block;
     font-size: 14px;
     line-height: 16px;
@@ -120,37 +123,37 @@
     padding: 0;
     overflow: hidden;
 }
-.listjs .filters ul {
+.filters ul {
     list-style-type: none;
     font-weight: normal;
     padding: 0;
 }
-.listjs .filters li {
+.filters li {
     padding-left: 10px;
 }
 
 
 /************************************ Sorting and List */
 
-.listjs .sorting th {
+.filters .sorting th {
     padding: 10px 10px 0;
     background-color: #FFF;
     position: relative;
 }
-.listjs .list tr {
+.filters .list tr {
     vertical-align: middle;
     height: 50px;
     border-bottom: 1px solid #EEE;
 }
-.listjs .list td {
+.filters .list td {
     font-size: 16px;
     padding: 0 10px;
     line-height: 19px;
 }
-.listjs .list .miles {
+.filters .list .miles {
     font-size: 18px;
 }
-.listjs input.search {
+.filters input.search {
     width: 100%;
     position: initial;
     display: block;
@@ -161,7 +164,7 @@
     padding: 0 0 0 5px;
     border: 0 none;
 }
-.listjs select {
+.filters select {
     width: 100%;
     height: 25px;
     font-size: 12px;
@@ -192,17 +195,17 @@
     display: inline-block;
     width: 200px;
 }
-/* .listjs .filters tr th > * {
+/* .filters tr th > * {
     vertical-align: top;
     position: relative;
 } */
-.listjs .filters .name {
+.filters .name {
     width: 200px;
     max-width: 200px;
     display: block;
     top: 0;
 }
-.listjs .filters .age {
+.filters .age {
     /* width: 20%; */
     /* max-width: 20%; */
     width: 80px;
@@ -211,7 +214,7 @@
     display: inline-block;
     top: 0;
 }
-.listjs .filters .sex {
+.filters .sex {
     /* width: 25%;
     max-width: 25%; */
     width: 70px;
@@ -219,23 +222,23 @@
     min-width: 70px;
     display: inline-block;
 }
-.listjs .filters .ageGroup {
+.filters .ageGroup {
     width: 30%;
     max-width: 30%;
     display: inline-block;
 }
-.listjs .filters .clubAbbr {
+.filters .clubAbbr {
     width: 100%;
     min-width: 100%;
     display: inline-block;
     top: 0;
 }
-.listjs .filters .lmsc {
+.filters .lmsc {
     width: 43%;
     min-width: 43%;
     display: inline-block;
 }
-.listjs .filters .zone {
+.filters .zone {
     width: 43%;
     min-width: 43%;
     display: inline-block;
@@ -243,31 +246,31 @@
 
 /********************************************* Sort and List */
 
-.listjs .sorting {
+.sorting {
     vertical-align: bottom;
 }
-.listjs .list .name {
+.list .name {
     width: 170px;
     min-width: 170px;
 }
-.listjs .sorting .sex,
-.listjs .list .sex {
+.sorting .sex,
+.list .sex {
     padding-left: 0;
     padding-right: 0;
     text-align: center;
 }
-.listjs .list .sex {
+.list .sex {
     padding-left: 0;
     padding-right: 0;
     text-align: center;
 }
-.listjs .sorting .age {
+.sorting .age {
     padding-left: 0;
     padding-right: 10px;
     text-align: center;
 }
-.listjs .sorting .clubAbbr,
-.listjs .list .clubAbbr {
+.sorting .clubAbbr,
+.list .clubAbbr {
     text-align: center;
 }
 
@@ -286,7 +289,7 @@
 
 @media only screen and (min-width: 768px) {
 
-    .listjs .list tr {
+    .list tr {
         height: 50px;
     }
     .sorting .lmsc,
@@ -299,7 +302,7 @@
     .list .clubAbbr {
         display: table-cell;
     }
-    .listjs .list td {
+    .list td {
         font-size: 15px;
     }
 
@@ -366,28 +369,28 @@
         /* position: absolute; */
         /* top: 30px; */
     }    
-    .listjs .filters .title {
+    .filters .title {
         margin-bottom: 0;
     }    
-    .listjs .filters .title a {
+    .filters .title a {
         font-size: 11px;
     }
-    .listjs .filters label {
+    .filters label {
         font-size: 12px;
         line-height: 15px;
     }
-    .listjs .filters .filters__swimmer--bio > div,
-    .listjs .filters .filters__swimmer > div > div,
-    .listjs .filters .filters__admin > div > div {
+    .filters .filters__swimmer--bio > div,
+    .filters .filters__swimmer > div > div,
+    .filters .filters__admin > div > div {
         margin-right: 5px;
     }
-    .listjs input.search {
+    input.search {
         margin-top: 2px;
     }
-    .listjs input.search--club {
+    input.search--club {
         text-transform: uppercase;
     }
-    .listjs select {
+    select {
         background-color: #F3F3F3;
     }
     .filters__swimmer {
@@ -423,39 +426,39 @@
     .filters__admin--lmsc-zone {
         width: auto;
     }
-    .listjs .filters th {
+    .filters th {
         padding: 15px 20px 0px;
     }    
-    .listjs .filters .name {
+    .filters .name {
         width: 280px;
         max-width: 280px;
         display: inline-block;
     }
-    .listjs .filters .sex {
+    .filters .sex {
         width: 80px;
         max-width: 80px;
         display: inline-block;
     }
-    .listjs .filters .age {
+    .filters .age {
         width: 60px;
         max-width: 60px;
         display: inline-block;
     }
-    .listjs .filters .ageGroup {
+    .filters .ageGroup {
         width: 80px;
         max-width: 80px;
         display: inline-block;
     }
-    .listjs .filters .clubAbbr {
+    .filters .clubAbbr {
         display: inline-block;
     }    
-    .listjs .filters .zone {
+    .filters .zone {
         width: 120px;
         min-width: 120px;
         display: inline-block;
         max-width: initial;
     }
-    .listjs .filters .lmsc {
+    .filters .lmsc {
         width: 150px;
         min-width: 150px;
         display: inline-block;
@@ -465,58 +468,58 @@
 
     /**************************************** Sort and List */
 
-    .listjs .sprting .name,
-    .listjs .list .name {
+    .sprting .name,
+    .list .name {
         width: 230px;
         min-width: 230px;
     }
     
-    .listjs .sorting .first {
+    .sorting .first {
         width: 280px;
         min-width: 280px;
     }
-    .listjs .sorting .miles,
-    .listjs .list .miles {
+    .sorting .miles,
+    .list .miles {
         font-size: 15px;
         width: 130px;
         min-width: 130px;
         padding-right: 40px;
     }
-    .listjs .sorting .age,
-    .listjs .list .age {
+    .sorting .age,
+    .list .age {
         width: 60px;
         min-width: 60px;
     }
-    .listjs .sorting .ageGroup,
-    .listjs .list .ageGroup {
+    .sorting .ageGroup,
+    .list .ageGroup {
         width: 120px;
         min-width: 120px;
         text-align: center;
     }
-    .listjs .sorting .clubAbbr,
-    .listjs .list .clubAbbr {
+    .sorting .clubAbbr,
+    .list .clubAbbr {
         width: 90px;
         min-width: 90px;
         padding-left: 0;
     }
-    .listjs .list .clubAbbr {
+    .list .clubAbbr {
         font-size: 14px;
     }
-    .listjs .sorting .lmsc,
-    .listjs .list .lmsc {
+    .sorting .lmsc,
+    .list .lmsc {
         width: 130px;
         min-width: 130px;
     }
-    .listjs .list .lmsc {
+    .list .lmsc {
         font-size: 14px;
         line-height: 16px;
     }
-    .listjs .sorting .zone,
-    .listjs .list .zone {
+    .sorting .zone,
+    .list .zone {
         width: 120px;
         min-width: 120px;
     }
-    .listjs .list .zone {
+    .list .zone {
         font-size: 14px;
     }
 }

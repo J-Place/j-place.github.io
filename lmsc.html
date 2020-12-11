@@ -9,7 +9,8 @@
 		<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="./css/bootstrap-theme.min.css">
 		<link href="./css/usms.min.css" rel="stylesheet">
-		<link href="./css/list-controls.css" rel="stylesheet">
+        <link href="./css/list-controls.css" rel="stylesheet">
+        <link href="./css/lmsc.css" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
@@ -93,16 +94,66 @@
 				<div class="section section-full">
                     <div class="usms-container">
 
-                        <div id="lmscWrapper" class="lmsc-wrapper">TEST</div>
+                        <div id="lmscWrapper" class="lmsc-wrapper"></div>
             
                         <script id="lmscTemplate" type="text/x-handlebars-template">
-                            {{#each zone}}
-                                <div class="feed__item">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            {{name}}
-                                        </div>	
+
+                            <div class="filters">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="filter--zone">
+                                            <label for="selectLmsc">Jump to Zone</label>
+                                            <select class="select select--zone" id="selectZone" placeholder="" onchange="if (this.selectedIndex > 0) location.href=this[this.selectedIndex].value;">
+                                                {{#each data}}
+                                                    <option value="#{{name}}">{{name}}</option>
+                                                {{/each}}
+                                            </select>
+                                        </div>
+                                        <div class="filter--lmsc">
+                                            <label for="selectLmsc">Jump to LMSC</label>
+                                            <select class="select select--lmsc" id="selectLmsc" placeholder="" onchange="if (this.selectedIndex > 0) location.href=this[this.selectedIndex].value;">
+                                                {{#each data}}
+                                                    {{#each lmscs}}
+                                                        <option value="#{{name}}">{{name}}</option>
+                                                    {{/each}}
+                                                {{/each}}
+                                            </select>            
+                                        </div>    
                                     </div>
+                                </div>
+                            </div>
+
+                            {{#each data}}
+                                <div class="row zone">
+                                    <div class="col-sm-12 zone__title" id="{{name}}">
+                                        <div class="zone-name"><strong>{{name}} Zone</strong></div>
+                                        <div class="zone-stats">{{swimmers}} Swimmers | {{miles}} Total Miles | {{average}} Average Miles per Swimmer</div>
+                                    </div>
+                                    {{#each lmscs}}
+                                        <div class="row lmsc">
+                                            <div class="col-sm-12 lmsc__title" id="{{name}}">
+                                                <div class="lmsc-name"><strong>{{name}} LMSC</strong></div>
+                                                <div class="lmsc-stats">{{swimmers}} Swimmers | {{miles}} Total Miles | {{average}} Average Miles per Swimmer</div>
+                                            </div>
+                                        </div>
+                                        {{#each clubs}}
+                                            <div class="row club">
+                                                <div class="col-sm-12 club__title">
+                                                    <div class="club-name"><strong>{{name}} ({{abbreviation}})</strong></div>
+                                                    <div class="club-stats">{{swimmers}} Swimmers | {{miles}} Total Miles | {{average}} Average Miles per Swimmer</div>
+                                                </div>
+                                            </div>
+                                            {{#each members}}
+                                                <div class="row participant">
+                                                    <div class="col-sm-3 participant__title">
+                                                        {{firstName}} {{lastName}}
+                                                    </div>
+                                                    <div class="col-sm-1 col-sm-push-3">{{age}}</div>
+                                                    <div class="col-sm-2 col-sm-push-3">{{miles}} miles</div>
+                                                </div>
+                                            {{/each}}
+                                        {{/each}}
+                                    {{/each}}
                                 </div>
                             {{/each}}
                         </script>
