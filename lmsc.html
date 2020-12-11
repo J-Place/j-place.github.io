@@ -104,6 +104,7 @@
                                         <div class="filter--zone">
                                             <label for="selectLmsc">Jump to Zone</label>
                                             <select class="select select--zone" id="selectZone" placeholder="" onchange="if (this.selectedIndex > 0) location.href=this[this.selectedIndex].value;">
+                                                <option value="" default selected></option>
                                                 {{#each data}}
                                                     <option value="#{{name}}">{{name}}</option>
                                                 {{/each}}
@@ -112,6 +113,7 @@
                                         <div class="filter--lmsc">
                                             <label for="selectLmsc">Jump to LMSC</label>
                                             <select class="select select--lmsc" id="selectLmsc" placeholder="" onchange="if (this.selectedIndex > 0) location.href=this[this.selectedIndex].value;">
+                                                <option value="" default selected></option>
                                                 {{#each data}}
                                                     {{#each lmscs}}
                                                         <option value="#{{name}}">{{name}}</option>
@@ -126,6 +128,7 @@
                             {{#each data}}
                                 <div class="row zone">
                                     <div class="col-sm-12 zone__title" id="{{name}}">
+                                        <a href="#top" class="top-link">Back to Top</a>
                                         <div class="zone-name"><strong>{{name}} Zone</strong></div>
                                         <div class="zone-stats">{{swimmers}} Swimmers | {{miles}} Total Miles | {{average}} Average Miles per Swimmer</div>
                                     </div>
@@ -139,17 +142,22 @@
                                         {{#each clubs}}
                                             <div class="row club">
                                                 <div class="col-sm-12 club__title">
-                                                    <div class="club-name"><strong>{{name}} ({{abbreviation}})</strong></div>
+                                                    <div class="club-name"><strong>{{name}}</strong> ({{abbreviation}})</div>
                                                     <div class="club-stats">{{swimmers}} Swimmers | {{miles}} Total Miles | {{average}} Average Miles per Swimmer</div>
                                                 </div>
+                                            </div>
+                                            <div class="row participant participant-column-labels">
+                                                <div class="col-sm-3 participant__title">Name</div>
+                                                <div class="col-sm-1 col-sm-push-1">Age</div>
+                                                <div class="col-sm-2 col-sm-push-1">Distance</div>
                                             </div>
                                             {{#each members}}
                                                 <div class="row participant">
                                                     <div class="col-sm-3 participant__title">
                                                         {{firstName}} {{lastName}}
                                                     </div>
-                                                    <div class="col-sm-1 col-sm-push-3">{{age}}</div>
-                                                    <div class="col-sm-2 col-sm-push-3">{{miles}} miles</div>
+                                                    <div class="col-sm-1 col-sm-push-1">{{age}}</div>
+                                                    <div class="col-sm-2 col-sm-push-1">{{miles}} miles</div>
                                                 </div>
                                             {{/each}}
                                         {{/each}}
