@@ -125,25 +125,27 @@
                                 </div>
                             </div>
 
-                            {{#each data}}
+                            {{#each data}}                                
                                 <div class="row zone">
-                                    <div class="col-sm-12 zone__title" id="{{name}}">
-                                        <a href="#top" class="top-link">Back to Top</a>
-                                        <div class="zone-name"><strong>{{name}} Zone</strong></div>
-                                        <div class="zone-stats">{{swimmers}} Swimmers | {{miles}} Total Miles | {{average}} Average Miles per Swimmer</div>
-                                    </div>
+                                    <a class="" data-toggle="collapse" href="#{{lmsc-name}}" role="button" aria-expanded="false" aria-controls="collapseExample">Hide LMSC's and Clubs
+                                        <div class="col-sm-12 zone__title" id="{{name}}">
+                                            <a href="#top" class="top-link">Back to Top</a>
+                                            <div class="zone-name"><strong>{{name}} Zone</strong></div>
+                                            <div class="zone-stats">{{swimmers}} Swimmers | {{miles}} Total Miles | {{average}} Avg Miles per Swimmer</div>
+                                        </div>
+                                    </a>
                                     {{#each lmscs}}
-                                        <div class="row lmsc">
-                                            <div class="col-sm-12 lmsc__title" id="{{name}}">
+                                        <div class="row collapse in lmsc">
+                                            <div class="col-sm-12 lmsc__title" id="lmsc-{{name}}">
                                                 <div class="lmsc-name"><strong>{{name}} LMSC</strong></div>
-                                                <div class="lmsc-stats">{{swimmers}} Swimmers | {{miles}} Total Miles | {{average}} Average Miles per Swimmer</div>
+                                                <div class="lmsc-stats">{{swimmers}} Swimmers | {{miles}} Total Miles | {{average}} Avg Miles per Swimmer</div>
                                             </div>
                                         </div>
                                         {{#each clubs}}
                                             <div class="row club">
                                                 <div class="col-sm-12 club__title">
                                                     <div class="club-name"><strong>{{name}}</strong> ({{abbreviation}})</div>
-                                                    <div class="club-stats">{{swimmers}} Swimmers | {{miles}} Total Miles | {{average}} Average Miles per Swimmer</div>
+                                                    <div class="club-stats">{{swimmers}} Swimmers | {{miles}} Total Miles | {{average}} Avg Miles per Swimmer</div>
                                                 </div>
                                             </div>
                                             <div class="row participant participant-column-labels">
