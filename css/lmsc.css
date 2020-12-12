@@ -40,6 +40,10 @@
     margin: 1.5rem auto -0.25rem;
 }
 
+#Breadbasket .top-link {
+    display: none;
+}
+
 .row.lmsc {
     margin-bottom: 2rem;
 }
@@ -47,7 +51,7 @@
 .row.lmsc .lmsc__title {
     padding-left: 1.5rem;
     border: 1px solid #CCC;
-    margin-top: 1rem;
+    /* margin-top: 1rem; */
 }
 
 .row.club {
@@ -64,17 +68,13 @@
     margin-bottom: 0.5rem;
 }
 
-#Breadbasket .top-link {
-    display: none;
-}
-
 .row.participant + .row.lmsc {
     margin-top: 2rem;
     /* color: red; */
 }
 
 .zone__title + .row.lmsc {
-    margin-top: 7rem;
+    margin-top: 2rem;
     margin-bottom: 0.5rem;
 }
 
@@ -90,8 +90,8 @@
 .zone-name,
 .lmsc-name,
 .club-name {
-    margin: 2rem auto;
-    line-height: 1rem;
+    margin: 1.5rem auto 0;
+    line-height: 2rem;
 }
 
 .zone-name,
@@ -106,9 +106,9 @@
 .zone-stats,
 .lmsc-stats,
 .club-stats {
-    line-height: 1rem;
+    line-height: 1.5rem;
     font-size: 13px;
-    margin: 1rem auto 1.5rem;
+    margin: 0 auto 1.5rem;
 }
 .filters {
     margin-bottom: 2rem;
@@ -117,12 +117,72 @@
 
 .filters .filter--zone,
 .filters .filter--lmsc {
-    width: 200px;
-    max-width: 200px;
+    width: 140px;
+    max-width: 140px;
     display: inline-block;
     margin: 0 auto 2rem;
 }
 
 .filters .filter--zone {
     margin-right: 1.5rem;
+}
+
+
+@media only screen and (min-width: 768px) {
+    .row.lmsc {
+        margin-bottom: 2rem;
+    }
+    
+    .row.lmsc .lmsc__title {
+        padding-left: 1.5rem;
+        border: 1px solid #CCC;
+    }
+    
+    .row.club {
+        margin-left: 1.5rem;
+        margin-right: 1.5rem;
+    }
+    .row.participant {
+        margin-left: 1.5rem;
+        margin-right: 1.5rem;
+    }
+    
+    .row.zone + .row.zone {
+        margin-top: 7rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .row.participant + .row.lmsc {
+        margin-top: 2rem;
+        /* color: red; */
+    }
+    
+    .zone__title + .row.lmsc {
+        margin-top: 7rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .row.participant + .row.lmsc {
+        margin-top: 5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .row.participant + .row.club {
+        margin-top: 2rem;
+    }
+
+    .zone-name,
+    .lmsc-name,
+    .club-name {
+        margin: 2rem auto;
+        line-height: 1rem;
+    }
+    .zone-stats,
+    .lmsc-stats,
+    .club-stats {
+        line-height: 1rem;
+        font-size: 13px;
+        margin: 1rem auto 1.5rem;
+    }
+    
 }

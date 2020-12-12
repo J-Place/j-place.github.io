@@ -127,39 +127,49 @@
 
                             {{#each data}}                                
                                 <div class="row zone">
-                                    <a class="" data-toggle="collapse" href="#{{lmsc-name}}" role="button" aria-expanded="false" aria-controls="collapseExample">Hide LMSC's and Clubs
-                                        <div class="col-sm-12 zone__title" id="{{name}}">
-                                            <a href="#top" class="top-link">Back to Top</a>
-                                            <div class="zone-name"><strong>{{name}} Zone</strong></div>
-                                            <div class="zone-stats">{{swimmers}} Swimmers | {{miles}} Total Miles | {{average}} Avg Miles per Swimmer</div>
+                                    <div class="col-sm-12 zone__title" id="{{name}}">
+                                        <a href="#top" class="top-link">Back to Top</a>
+                                        <div class="zone-name"><strong>{{name}} Zone</strong> – </div>
+                                        <div class="zone-stats">
+                                            <div class="stats__swimmers">{{swimmers}} Swimmers</div>
+                                            <div class="stats__total">{{miles}} Total Miles</div>
+                                            <div class="stats__avg">{{average}} Avg Miles per Swimmer</div>
                                         </div>
-                                    </a>
+                                    </div>
                                     {{#each lmscs}}
-                                        <div class="row collapse in lmsc">
-                                            <div class="col-sm-12 lmsc__title" id="lmsc-{{name}}">
-                                                <div class="lmsc-name"><strong>{{name}} LMSC</strong></div>
-                                                <div class="lmsc-stats">{{swimmers}} Swimmers | {{miles}} Total Miles | {{average}} Avg Miles per Swimmer</div>
+                                        <div class="row lmsc">
+                                            <div class="col-sm-12 lmsc__title" id="{{name}}">
+                                                <div class="lmsc-name"><strong>{{name}} LMSC</strong> — </div>
+                                                <div class="lmsc-stats">
+                                                    <div class="stats__swimmers">{{swimmers}} Swimmers</div>
+                                                    <div class="stats__total">{{miles}} Total Miles</div>
+                                                    <div class="stats__avg">{{average}} Avg Miles per Swimmer</div>
+                                                </div>
                                             </div>
                                         </div>
                                         {{#each clubs}}
                                             <div class="row club">
                                                 <div class="col-sm-12 club__title">
-                                                    <div class="club-name"><strong>{{name}}</strong> ({{abbreviation}})</div>
-                                                    <div class="club-stats">{{swimmers}} Swimmers | {{miles}} Total Miles | {{average}} Avg Miles per Swimmer</div>
+                                                    <div class="club-name"><strong>{{name}}</strong> ({{abbreviation}}) – </div>
+                                                    <div class="club-stats">
+                                                        <div class="stats__swimmers">{{swimmers}} Swimmers</div>
+                                                        <div class="stats__total">{{miles}} Total Miles</div>
+                                                        <div class="stats__avg">{{average}} Avg Miles per Swimmer</div>    
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="row participant participant-column-labels">
-                                                <div class="col-sm-3 participant__title">Name</div>
-                                                <div class="col-sm-1 col-sm-push-1">Age</div>
-                                                <div class="col-sm-2 col-sm-push-1">Distance</div>
+                                                <div class="col-xs-6 col-sm-3 participant__title">Name</div>
+                                                <div class="col-xs-2 col-sm-1">Age</div>
+                                                <div class="col-xs-4 col-sm-2">Distance</div>
                                             </div>
                                             {{#each members}}
                                                 <div class="row participant">
-                                                    <div class="col-sm-3 participant__title">
+                                                    <div class="col-xs-6 col-sm-3 participant__title">
                                                         {{firstName}} {{lastName}}
                                                     </div>
-                                                    <div class="col-sm-1 col-sm-push-1">{{age}}</div>
-                                                    <div class="col-sm-2 col-sm-push-1">{{miles}} miles</div>
+                                                    <div class="col-xs-2 col-sm-1">{{age}}</div>
+                                                    <div class="col-xs-4 col-sm-2">{{miles}} miles</div>
                                                 </div>
                                             {{/each}}
                                         {{/each}}
