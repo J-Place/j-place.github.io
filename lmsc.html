@@ -129,17 +129,18 @@
                                 <div class="row zone">
                                     <div class="col-sm-12 zone__title" id="{{name}}">
                                         <a href="#top" class="top-link">Back to Top</a>
-                                        <div class="zone-name"><strong>{{name}} Zone</strong> – </div>
+                                        <div class="zone-name"><strong>{{name}} Zone</strong></div>
                                         <div class="zone-stats">
                                             <div class="stats__swimmers">{{swimmers}} Swimmers</div>
                                             <div class="stats__total">{{miles}} Total Miles</div>
                                             <div class="stats__avg">{{average}} Avg Miles per Swimmer</div>
                                         </div>
                                     </div>
+                                </div>
                                     {{#each lmscs}}
                                         <div class="row lmsc">
                                             <div class="col-sm-12 lmsc__title" id="{{name}}">
-                                                <div class="lmsc-name"><strong>{{name}} LMSC</strong> — </div>
+                                                <div class="lmsc-name"><strong>{{name}} LMSC</strong></div>
                                                 <div class="lmsc-stats">
                                                     <div class="stats__swimmers">{{swimmers}} Swimmers</div>
                                                     <div class="stats__total">{{miles}} Total Miles</div>
@@ -150,7 +151,7 @@
                                         {{#each clubs}}
                                             <div class="row club">
                                                 <div class="col-sm-12 club__title">
-                                                    <div class="club-name"><strong>{{name}}</strong> ({{abbreviation}}) – </div>
+                                                    <div class="club-name"><strong>{{name}}</strong> ({{abbreviation}})</div>
                                                     <div class="club-stats">
                                                         <div class="stats__swimmers">{{swimmers}} Swimmers</div>
                                                         <div class="stats__total">{{miles}} Total Miles</div>
@@ -160,172 +161,24 @@
                                             </div>
                                             <div class="row participant participant-column-labels">
                                                 <div class="col-xs-6 col-sm-3 participant__title">Name</div>
-                                                <div class="col-xs-2 col-sm-1">Age</div>
-                                                <div class="col-xs-4 col-sm-2">Distance</div>
+                                                <div class="col-xs-2 col-sm-1 participant__age">Age</div>
+                                                <div class="col-xs-4 col-sm-2 participant__miles">Distance</div>
                                             </div>
                                             {{#each members}}
                                                 <div class="row participant">
                                                     <div class="col-xs-6 col-sm-3 participant__title">
                                                         {{firstName}} {{lastName}}
                                                     </div>
-                                                    <div class="col-xs-2 col-sm-1">{{age}}</div>
-                                                    <div class="col-xs-4 col-sm-2">{{miles}} miles</div>
+                                                    <div class="col-xs-2 col-sm-1 participant__age">{{age}}</div>
+                                                    <div class="col-xs-4 col-sm-2 participant__miles">{{miles}} miles</div>
                                                 </div>
                                             {{/each}}
                                         {{/each}}
                                     {{/each}}
-                                </div>
+                                <!-- </div> -->
                             {{/each}}
                         </script>
                     </div>
-
-
-
-
-
-                    <div class="usms-container">
-						<table id="listLmsc" class="listjs">
-							<thead class="filters">
-								<tr>
-									<th colspan="9">
-										<div class="title">
-											Filter Results
-											<a id="clearFilters" href="#">Clear All</a>
-										</div>
-
-										<div class="filters__swimmer">
-											<div class="filters__swimmer--name">
-												<div class="name">
-													<label for="">Search</label>
-													<input class="search search--name" id="searchName" type="text" placeholder="Name, Age or Club" data-target="resultsGtd" data-filter="results-gtd" data-trigger="keyup" placeholder="" />
-												</div>	
-											</div>
-										</div>
-										<div class="filters__admin">
-											<div class="filters__admin--lmsc-zone">
-												<div class="lmsc">
-													<label for="">LMSC</label>
-													<select class="select select--lmsc" id="selectLmsc" placeholder="">
-														<option value="All" default selected></option>
-														<option value="Adirondack">Adirondack</option>
-														<option value="Alaska">Alaska</option>
-														<option value="Allegheny Mountain">Allegheny Mountain</option>
-														<option value="Arizona">Arizona</option>
-														<option value="Arkansas">Arkansas</option>
-														<option value="Colorado">Colorado</option>
-														<option value="Connecticut">Connecticut</option>
-														<option value="Delaware Valley">Delaware Valley</option>
-														<option value="Florida">Florida</option>
-														<option value="Florida Gold Coast">Florida Gold Coast</option>
-														<option value="Georgia">Georgia</option>
-														<option value="Gulf">Gulf</option>
-														<option value="Hawaii">Hawaii</option>
-														<option value="Illinois">Illinois</option>
-														<option value="Indiana">Indiana</option>
-														<option value="Inland Northwest">Inland Northwest</option>
-														<option value="Iowa">Iowa</option>
-														<option value="Kentucky">Kentucky</option>
-														<option value="Lake Erie">Lake Erie</option>
-														<option value="Maryland">Maryland</option>
-														<option value="Metropolitan">Metropolitan</option>
-														<option value="Michigan">Michigan</option>
-														<option value="Minnesota">Minnesota</option>
-														<option value="Missouri Valley">Missouri Valley</option>
-														<option value="Montana">Montana</option>
-														<option value="Nebraska">Nebraska</option>
-														<option value="New England">New England</option>
-														<option value="New Jersey">New Jersey</option>
-														<option value="New Mexico">New Mexico</option>
-														<option value="Niagara">Niagara</option>
-														<option value="North Carolina">North Carolina</option>
-														<option value="North Dakota">North Dakota</option>
-														<option value="North Texas">North Texas</option>
-														<option value="Ohio">Ohio</option>
-														<option value="Oklahoma">Oklahoma</option>
-														<option value="Oregon">Oregon</option>
-														<option value="Ozark">Ozark</option>
-														<option value="Pacific">Pacific</option>
-														<option value="Pacific Northwest">Pacific Northwest</option>
-														<option value="Potomac Valley">Potomac Valley</option>
-														<option value="San Diego-Imperial">San Diego-Imperial</option>
-														<option value="Snake River">Snake River</option>
-														<option value="South Carolina">South Carolina</option>
-														<option value="South Dakota">South Dakota</option>
-														<option value="South Texas">South Texas</option>
-														<option value="Southeastern">Southeastern</option>
-														<option value="Southern">Southern</option>
-														<option value="Southern Pacific">Southern Pacific</option>
-														<option value="Utah">Utah</option>
-														<option value="Virginia">Virginia</option>
-														<option value="West Texas">West Texas</option>
-														<option value="Wisconsin">Wisconsin</option>
-													</select>	
-												</div>
-												<div class="zone">
-													<label for="">Zone</label>
-													<select class="select select--zone" id="selectZone" placeholder="">
-														<option value="All" default selected></option>
-														<option value="Breadbasket">Breadbasket</option>
-														<option value="Colonies">Colonies</option>
-														<option value="Dixie">Dixie</option>
-														<option value="Great Lakes">Great Lakes</option>
-														<option value="Northwest">Northwest</option>
-														<option value="South Central">South Central</option>
-														<option value="Southeast">Southeast</option>
-														<option value="Southwest">Southwest</option>
-													</select>	
-												</div>	
-											</div>
-										</div>
-
-										<div class="summary-container">
-											<div class="search__summary" id="searchSummary"></div>
-											<div class="filters__summary" id="filterSummary"></div>
-										</div>
-
-									</th>
-								</tr>
-							</thead>
-							<thead class="sorting">
-								<tr class="controls">
-									<th class="name">
-										<a class="sort" href="#" data-sort="lastName">Name</a>
-									</th>
-									<th class="miles">
-										<a class="sort" href="#" data-sort="miles">Miles</a>
-									</th>
-									<th class="age">
-										<a class="sort" href="#" data-sort="age">Age</a>
-									</th>
-									<th class="abbreviation">
-										<a class="sort" href="#" data-sort="abbreviation">Club</a>
-									</th>
-									<th class="lmsc">
-										<a class="sort" href="#" data-sort="lmsc">LMSC</a>
-									</th>
-									<th class="zone">
-										<a class="sort" href="#" data-sort="zone">Zone</a>
-									</th>
-								</tr>
-							</thead>
-							<tbody class="list">
-								<tr class="list__item">
-									<td class="name-full">
-										<div class="firstName"></div>
-										<div class="lastName"></div>
-									</td>
-									<td class="miles"></td> <!-- Member Miles -->
-									<td class="age"></td><!-- Member Age -->
-                                    <td class="abbreviation"></td> <!-- Club Abbr -->
-									<td class="lmsc"></td> <!-- LMSC Name -->
-									<td class="name"></td> <!-- Zone Name -->
-								</tr>
-							</tbody>
-							<tfoot class="pagination">
-							</tfoot>
-						</table>
-
-					</div>
 				</div>
 			</main>
 		</div>

@@ -1995,6 +1995,7 @@ function cleanData(dataLocal) {
 let newData = dataLocal; // Use local data object until api access is fixed
 cleanData(dataLocal);
 
+
 // Initialize List.js
 var resultsGtd = new List('resultsGtd', options, newData );
 

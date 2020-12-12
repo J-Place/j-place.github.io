@@ -13,13 +13,30 @@ var getParticipants = $.ajax({
     type: "GET",
     success: function(response) {
       var data = JSON.parse(getParticipants.responseText);
-      console.log(data.data[0].name);
       createHtml(data);
+    //   formatMiles(data);
+      cleanData(data);
+      console.log(data.data[0].miles.toFixed(2));
     },
     error: function(xhr) {
       console.log("Failed to load data.");
     }
 })
+
+function formatMiles(miles) {  
+    miles = data[0].miles.toFixed(2);
+    return miles;
+}
+
+
+function cleanData(data) {
+    for (var i = 0; i < tempData.length; i++) {
+        tempData[i].miles = formatMiles(data[i].miles);
+    }
+};
+
+let tempData = data; // Use local data object until api access is fixed
+cleanData(data);
 
 
 function createHtml(dataLmsc) {

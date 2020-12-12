@@ -100,7 +100,7 @@
 .zone-stats,
 .lmsc-stats,
 .club-stats {
-    display: inline-block;
+    display: block;
 }
 
 .zone-stats,
@@ -110,6 +110,13 @@
     font-size: 13px;
     margin: 0 auto 1.5rem;
 }
+
+.zone-stats > *,
+.lmsc-stats > *,
+.club-stats > * {
+    display: block;
+}
+
 .filters {
     margin-bottom: 2rem;
 }
@@ -127,6 +134,13 @@
     margin-right: 1.5rem;
 }
 
+.participant__age {
+    text-align: center;
+}
+
+.participant__miles {
+    text-align: right;
+}
 
 @media only screen and (min-width: 768px) {
     .row.lmsc {
@@ -139,12 +153,12 @@
     }
     
     .row.club {
-        margin-left: 1.5rem;
-        margin-right: 1.5rem;
+        margin-left: 1.0rem;
+        margin-right: 1.0rem;
     }
     .row.participant {
-        margin-left: 1.5rem;
-        margin-right: 1.5rem;
+        margin-left: 1.0rem;
+        margin-right: 1.0rem;
     }
     
     .row.zone + .row.zone {
@@ -157,8 +171,8 @@
         /* color: red; */
     }
     
-    .zone__title + .row.lmsc {
-        margin-top: 7rem;
+    .row.zone + .row.lmsc {
+        margin-top: 1.5rem;
         margin-bottom: 0.5rem;
     }
     
@@ -172,17 +186,40 @@
     }
 
     .zone-name,
-    .lmsc-name,
-    .club-name {
-        margin: 2rem auto;
+    .lmsc-name {
+        margin: 1.5rem auto;
         line-height: 1rem;
     }
+    .club-name {
+        margin: 1.25rem auto 0.25rem;
+    }
+
+    .zone-name,
+    .lmsc-name,
+    .club-name,
+    .zone-stats,
+    .lmsc-stats,
+    .club-stats {
+        display: inline-block;
+    }
+    
     .zone-stats,
     .lmsc-stats,
     .club-stats {
         line-height: 1rem;
         font-size: 13px;
-        margin: 1rem auto 1.5rem;
+        margin: 1rem auto;
+    }
+
+    .zone-stats > *,
+    .lmsc-stats > *,
+    .club-stats > * {
+        display: inline-block;
+        padding-left: 0.75rem;
+        padding-right: 0;
+        margin-left: 0.5rem;
+        margin-right: 0;
+        border-left: 1px solid #CCC;
     }
     
 }
