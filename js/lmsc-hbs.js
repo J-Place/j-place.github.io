@@ -15,28 +15,42 @@ var getParticipants = $.ajax({
       var data = JSON.parse(getParticipants.responseText);
       createHtml(data);
     //   formatMiles(data);
-      cleanData(data);
-      console.log(data.data[0].miles.toFixed(2));
+    //   formatAverage(data);
+    //   cleanData(data);
+    //   console.log(data.data[0].average.toFixed(2));
     },
     error: function(xhr) {
       console.log("Failed to load data.");
     }
 })
 
-function formatMiles(miles) {  
-    miles = data[0].miles.toFixed(2);
-    return miles;
-}
 
+// function formatAverage(average) {
+//     let formattedAvg = average.toFixed(2);;
+//     average = formattedAvg;  
+//     return average;
+//   }
+  
 
-function cleanData(data) {
-    for (var i = 0; i < tempData.length; i++) {
-        tempData[i].miles = formatMiles(data[i].miles);
-    }
-};
+// function formatMiles(miles) {  
+//     miles = data[0].miles.toFixed(2);
+//     return miles;
+// }
 
-let tempData = data; // Use local data object until api access is fixed
-cleanData(data);
+// function formatAvg(average) {  
+//     average = data.data[0].average.toFixed(2);
+//     return average;
+// }
+
+// function cleanData(data) {
+//     let tempData = data; // Use local data object until api access is fixed
+//     for (var i = 0; i < tempData.length; i++) {
+//         // tempData[i].miles = formatMiles(data[i].miles);
+//         tempData[i].average = formatAverage(data[i].average);
+//     }
+// };
+
+// cleanData(data);
 
 
 function createHtml(dataLmsc) {

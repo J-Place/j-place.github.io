@@ -45,7 +45,8 @@
 }
 
 .row.lmsc {
-    margin-bottom: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
 }
 
 .row.lmsc .lmsc__title {
@@ -55,22 +56,34 @@
 }
 
 .row.club {
-    margin-left: 1.5rem;
-    margin-right: 1.5rem;
+    margin-left: 2.0rem;
+    margin-right: 2.0rem;
 }
+
 .row.participant {
     margin-left: 1.5rem;
     margin-right: 1.5rem;
 }
 
-.row.zone + .row.zone {
+.club__participants {
+    margin: 1rem auto 2rem;
+}
+
+.row.club + .row.lmsc {
+    margin-top: 4rem;
+}
+
+.row.club + .row.zone {
+    margin-top: 4rem;
+}
+
+/* .row.zone + .row.zone {
     margin-top: 7rem;
     margin-bottom: 0.5rem;
 }
 
 .row.participant + .row.lmsc {
     margin-top: 2rem;
-    /* color: red; */
 }
 
 .zone__title + .row.lmsc {
@@ -85,7 +98,7 @@
 
 .row.participant + .row.club {
     margin-top: 2rem;
-}
+} */
 
 .zone-name,
 .lmsc-name,
@@ -141,10 +154,62 @@
     text-align: right;
 }
 
+.club .club__title {
+    /* color: #1e3666; */
+    font-size: 14px;
+    line-height: 16px;
+    text-decoration: none;
+    display: block;
+    margin: 5px 0;
+}
+.club .club__title:before {
+    opacity: 1;
+    content: 'arrow_drop_up';
+    margin: 0;
+    font-family: 'Material Icons';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 2.5rem;
+    position: relative;
+    top: 4px;
+    display: inline;
+    vertical-align: sub;
+    line-height: inherit;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'liga';
+}
+
+.club .club__title:before {
+    top: 37px;
+    left: -22px;
+}
+/* .club .club__title:before {
+    opacity: 1;
+    content: 'arrow_drop_up';
+    top: 5px;
+} */
+.club .club__title.collapsed:before {
+    opacity: 0.35;
+    content: 'arrow_drop_down';
+}
+
 @media only screen and (min-width: 768px) {
-    .row.lmsc {
-        margin-bottom: 2rem;
+
+    .club .club__title:before {
+        top: 37px;
+        left: -22px;
     }
+    
+    /* .row.lmsc {
+        margin-bottom: 2rem;
+    } */
     
     .row.lmsc .lmsc__title {
         padding-left: 1.5rem;
@@ -152,22 +217,22 @@
     }
     
     .row.club {
-        margin-left: 1.0rem;
-        margin-right: 1.0rem;
+        margin-left: 1.5rem;
+        margin-right: 1.5rem;
     }
+
     .row.participant {
         margin-left: 1.0rem;
         margin-right: 1.0rem;
     }
     
-    .row.zone + .row.zone {
+    /* .row.zone + .row.zone {
         margin-top: 7rem;
         margin-bottom: 0.5rem;
     }
     
     .row.participant + .row.lmsc {
         margin-top: 2rem;
-        /* color: red; */
     }
     
     .row.zone + .row.lmsc {
@@ -178,11 +243,11 @@
     .row.participant + .row.lmsc {
         margin-top: 5rem;
         margin-bottom: 1rem;
-    }
+    } */
     
-    .row.participant + .row.club {
+    /* .row.participant + .row.club {
         margin-top: 2rem;
-    }
+    } */
 
     .zone-name,
     .lmsc-name {
