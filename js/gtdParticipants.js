@@ -1997,10 +1997,10 @@ cleanData(dataLocal);
 
 
 // Initialize List.js
-var resultsGtd = new List('resultsGtd', options, newData );
+var gtdParticipants = new List('gtdParticipants', options, newData );
 
 // List sort defaults
-resultsGtd.sort(
+gtdParticipants.sort(
   'miles', {
   order:'desc',
   }
@@ -2017,7 +2017,7 @@ function handleSearch() {
   var searchNameValue = document.getElementById('searchName').value;
   var isEmptyName = searchNameInput.value === '';
   if (isEmptyName === false) {
-    resultsGtd.search(searchNameValue, ['first', 'last', 'age', 'clubAbbr']);
+    gtdParticipants.search(searchNameValue, ['first', 'last', 'age', 'clubAbbr']);
     // handleFilters();
     // updateSearchSummary();
   }
@@ -2055,7 +2055,7 @@ function searchSummaryBtn() {
     handleFilters();
     // var summaryItemName = document.getElementById("name");    
     // summaryItemName.remove();
-    resultsGtd.search();
+    gtdParticipants.search();
   });
 }
 
@@ -2113,70 +2113,70 @@ function handleFilters(e) {
   var selectValueZone = document.getElementById('selectZone').value;
 // One Value Defs
   if (selectValueSex !== "All" && selectValueAgeGroup === "All" && selectValueLmsc === "All" && selectValueZone === "All" ) {
-    resultsGtd.filter(function(item) {
+    gtdParticipants.filter(function(item) {
       return item.values().sex === selectValueSex;
     });
   } else if (selectValueSex === "All" && selectValueAgeGroup !== "All" && selectValueLmsc === "All" && selectValueZone === "All" ) {
-    resultsGtd.filter(function(item) {
+    gtdParticipants.filter(function(item) {
       return item.values().ageGroup === selectValueAgeGroup;
     });
   } else if (selectValueSex === "All" && selectValueAgeGroup === "All" && selectValueLmsc !== "All" && selectValueZone === "All" ) {
-    resultsGtd.filter(function(item) {
+    gtdParticipants.filter(function(item) {
       return item.values().lmsc === selectValueLmsc;
     });
   } else if (selectValueSex === "All" && selectValueAgeGroup === "All" && selectValueLmsc === "All" && selectValueZone !== "All" ) {
-    resultsGtd.filter(function(item) {
+    gtdParticipants.filter(function(item) {
       return item.values().zone === selectValueZone;
     });
 // Two Value Defs
   } else if (selectValueSex !== "All" && selectValueAgeGroup !== "All" && selectValueLmsc === "All" && selectValueZone === "All" ) {
-    resultsGtd.filter(function(item) {
+    gtdParticipants.filter(function(item) {
       return item.values().sex === selectValueSex && item.values().ageGroup === selectValueAgeGroup;
     });
   } else if (selectValueSex !== "All" && selectValueAgeGroup === "All" && selectValueLmsc !== "All" && selectValueZone === "All" ) {
-    resultsGtd.filter(function(item) {
+    gtdParticipants.filter(function(item) {
       return item.values().sex === selectValueSex && item.values().lmsc === selectValueLmsc;
     });
   } else if (selectValueSex !== "All" && selectValueAgeGroup === "All" && selectValueLmsc === "All" && selectValueZone !== "All" ) {
-    resultsGtd.filter(function(item) {
+    gtdParticipants.filter(function(item) {
       return item.values().sex === selectValueSex && item.values().zone === selectValueZone;
     });
   } else if (selectValueSex === "All" && selectValueAgeGroup !== "All" && selectValueLmsc !== "All" && selectValueZone === "All" ) {
-    resultsGtd.filter(function(item) {
+    gtdParticipants.filter(function(item) {
       return item.values().ageGroup === selectValueAgeGroup && item.values().lmsc === selectValueLmsc;
     });
   } else if (selectValueSex === "All" && selectValueAgeGroup !== "All" && selectValueLmsc === "All" && selectValueZone !== "All" ) {
-    resultsGtd.filter(function(item) {
+    gtdParticipants.filter(function(item) {
       return item.values().ageGroup === selectValueAgeGroup && item.values().zone === selectValueZone;
     });
   } else if (selectValueSex === "All" && selectValueAgeGroup === "All" && selectValueLmsc !== "All" && selectValueZone !== "All" ) {
-    resultsGtd.filter(function(item) {
+    gtdParticipants.filter(function(item) {
       return item.values().lmsc === selectValueLmsc && item.values().zone === selectValueZone;
     });
 // Three Value Defs
   } else if (selectValueSex !== "All" && selectValueAgeGroup !== "All" && selectValueLmsc !== "All" && selectValueZone === "All" ) {
-    resultsGtd.filter(function(item) {
+    gtdParticipants.filter(function(item) {
       return item.values().sex === selectValueSex && item.values().ageGroup === selectValueAgeGroup && item.values().lmsc === selectValueLmsc;
     });
   } else if (selectValueSex !== "All" && selectValueAgeGroup !== "All" && selectValueLmsc === "All" && selectValueZone !== "All" ) {
-    resultsGtd.filter(function(item) {
+    gtdParticipants.filter(function(item) {
       return item.values().sex === selectValueSex && item.values().ageGroup === selectValueAgeGroup && item.values().zone === selectValueZone;
     });
   } else if (selectValueSex !== "All" && selectValueAgeGroup === "All" && selectValueLmsc !== "All" && selectValueZone !== "All" ) {
-    resultsGtd.filter(function(item) {
+    gtdParticipants.filter(function(item) {
       return item.values().sex === selectValueSex && item.values().lmsc === selectValueLmsc && item.values().zone === selectValueZone;
     });
   } else if (selectValueSex === "All" && selectValueAgeGroup !== "All" && selectValueLmsc !== "All" && selectValueZone !== "All" ) {
-    resultsGtd.filter(function(item) {
+    gtdParticipants.filter(function(item) {
       return item.values().ageGroup === selectValueAgeGroup && item.values().lmsc === selectValueLmsc && item.values().zone === selectValueZone;
     });
 // Four Value Defs
   } else if (selectValueSex !== "All" && selectValueAgeGroup !== "All" && selectValueLmsc !== "All" && selectValueZone !== "All" ) {
-    resultsGtd.filter(function(item) {
+    gtdParticipants.filter(function(item) {
       return item.values().sex === selectValueSex && item.values().ageGroup === selectValueAgeGroup && item.values().lmsc === selectValueLmsc && item.values().zone === selectValueZone;
     });
   } else {
-    resultsGtd.filter();
+    gtdParticipants.filter();
   }
   updateFilterSummary();
 }
@@ -2188,9 +2188,9 @@ $(".select").change(function(){
 $("#clearFilters").click(function(){
   searchName.value = '';
   $("select").each(function() { this.selectedIndex = 0 });
-  resultsGtd.filter();
-  resultsGtd.search();
-  resultsGtd.sort('miles', {order:'desc'});
+  gtdParticipants.filter();
+  gtdParticipants.search();
+  gtdParticipants.sort('miles', {order:'desc'});
   handleSearch();
   // updateSearchSummary();
   handleFilters();

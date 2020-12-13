@@ -59,6 +59,6 @@ function createHtml(dataLmsc) {
     var rawTemplate = document.getElementById("lmscTemplate").innerHTML;
     var compiledTemplate = Handlebars.compile(rawTemplate);
     var generatedHTML = compiledTemplate(dataLmsc)
-    var lmscWrapper = document.getElementById("lmscWrapper");
-    lmscWrapper.innerHTML = generatedHTML;
+    var gtdZones = document.getElementById("gtdZones");
+    gtdZones.innerHTML = generatedHTML;
 }
