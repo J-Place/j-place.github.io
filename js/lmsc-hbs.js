@@ -25,6 +25,10 @@ var getParticipants = $.ajax({
 })
 
 
+var lmscGroup = _.groupBy(data, function(lmsc){ 
+    return lmsc.name.substr(0,1); 
+});
+
 // function formatAverage(average) {
 //     let formattedAvg = average.toFixed(2);;
 //     average = formattedAvg;  

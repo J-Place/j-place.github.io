@@ -18,9 +18,9 @@
     border-bottom: 1px solid #CCC;
 }
 
-.lmsc-wrapper .row.participant:first-of-type {
-    border-top: 1px solid #CCC;
-}
+/* .lmsc-wrapper .row.participant:first-of-type {
+    border-top: 1px solid red;
+} */
 
 .row.zone .zone__title {
     background-color: #EEE;
@@ -31,17 +31,33 @@
     text-decoration: none;
 }
 
-.top-link {
+/* .top-link {
     font-size: 10px;
     text-decoration: underline;
     color: #666;
     display: block;
     line-height: 1rem;
-    margin: 1.5rem auto -0.25rem;
+    margin: 1.5rem auto -1.5rem;
+} */
+
+.top-link {
+    position: relative;
+    float: right;
+    top: 23px;
+    right: 20px;
+    font-size: 10px;
+    text-align: right;
+    text-decoration: underline;
+    color: #666;
 }
 
 #Breadbasket .top-link {
-    display: none;
+    /* display: none; */
+}
+
+.row.zone {
+    /* margin-top: 2rem; */
+    margin-bottom: 3rem;
 }
 
 .row.lmsc {
@@ -70,7 +86,7 @@
 }
 
 .row.club + .row.lmsc {
-    margin-top: 4rem;
+    margin-top: 3rem;
 }
 
 .row.club + .row.zone {
@@ -155,12 +171,11 @@
 }
 
 .club .club__title {
-    /* color: #1e3666; */
     font-size: 14px;
     line-height: 16px;
     text-decoration: none;
     display: block;
-    margin: 5px 0;
+    margin: 0;
 }
 .club .club__title:before {
     opacity: 1;
@@ -171,7 +186,6 @@
     font-style: normal;
     font-size: 2.5rem;
     position: relative;
-    top: 4px;
     display: inline;
     vertical-align: sub;
     line-height: inherit;
@@ -185,28 +199,32 @@
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: 'liga';
 }
-
 .club .club__title:before {
     top: 37px;
     left: -22px;
 }
-/* .club .club__title:before {
-    opacity: 1;
-    content: 'arrow_drop_up';
-    top: 5px;
-} */
+
 .club .club__title.collapsed:before {
     opacity: 0.35;
     content: 'arrow_drop_down';
+    top: 37px;
+    left: -22;
 }
 
 @media only screen and (min-width: 768px) {
 
-    .club .club__title:before {
-        top: 37px;
-        left: -22px;
+    .club .club__title.collapsed:before {
+        /* opacity: 0.35; */
+        /* content: 'arrow_drop_down'; */
+        top: 2px;
+        left: 0;
     }
-    
+
+    .club .club__title:before {
+        top: 3px;
+        left: 0;
+    }
+        
     /* .row.lmsc {
         margin-bottom: 2rem;
     } */
@@ -217,13 +235,13 @@
     }
     
     .row.club {
-        margin-left: 1.5rem;
-        margin-right: 1.5rem;
+        margin-left: 0;
+        margin-right: 0;
     }
 
     .row.participant {
-        margin-left: 1.0rem;
-        margin-right: 1.0rem;
+        margin-left: 2.5rem;
+        margin-right: 2.5rem;
     }
     
     /* .row.zone + .row.zone {
@@ -249,14 +267,19 @@
         margin-top: 2rem;
     } */
 
-    .zone-name,
-    .lmsc-name {
-        margin: 1.5rem auto;
+    .zone-name {
+        margin: 3rem auto;
         line-height: 1rem;
     }
-    .club-name {
-        margin: 1.25rem auto 0.25rem;
+    
+    .club-name,
+    .lmsc-name {
+        margin: 1rem auto;
+        line-height: 1rem;
     }
+    /* .club-name {
+        margin: 1.25rem auto 0.25rem;
+    } */
 
     .zone-name,
     .lmsc-name,
