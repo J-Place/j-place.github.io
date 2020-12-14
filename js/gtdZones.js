@@ -25,7 +25,6 @@ function getParticipants() {
   const xhr = new XMLHttpRequest();
   xhr.open('GET', `https://test.usms.org/apis/v1/gtd/zlc-participation`, true);
   xhr.withCredentials = true;
-  xhr.setRequestHeader( 'Access-Control-Allow-Credentials', 'true' );
   console.log("Status is " + xhr.status);
   xhr.onload = function () {
     console.log("Loading Data");
