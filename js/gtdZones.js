@@ -23,12 +23,12 @@ hideLoadingSpinner();
 
 function getParticipants() {
   const xhr = new XMLHttpRequest();
-  xhr.withCredentials = true;
   xhr.open('GET', `https://test.usms.org/apis/v1/gtd/zlc-participation`, true);
-  
+  xhr.withCredentials = true;
+  xhr.setRequestHeader( 'Access-Control-Allow-Credentials', 'true' );
   console.log("Status is " + xhr.status);
   xhr.onload = function () {
-    console.log("Loading");
+    console.log("Loading Data");
     if (xhr.status === 200) {
       const response = JSON.parse(xhr.responseText);
       console.log(response.data);
@@ -36,7 +36,7 @@ function getParticipants() {
       showErrorModal('Error updating coaches');
     }
   };
-  xhr.send();
+  xhr.send(null);
 }
 getParticipants();
 
