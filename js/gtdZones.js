@@ -22,10 +22,10 @@ hideLoadingSpinner();
 
 
 function getParticipants() {
-  console.log("Getting Participants");
   const xhr = new XMLHttpRequest();
   xhr.open('GET', `https://test.usms.org/apis/v1/gtd/zlc-participation`, true);
   xhr.withCredentials = true;
+  console.log("Status is " + xhr.status);
   xhr.onload = function () {
     console.log("Loading");
     if (xhr.status === 200) {
