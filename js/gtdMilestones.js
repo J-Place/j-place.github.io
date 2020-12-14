@@ -38,7 +38,10 @@ function handleFilters() {
   if (!gtdMilestones) {
     console.error('gtdMilestones not defined');
     return;
+  } else {
+    console.log(gtdMilestones.matchingItems.milestone);
   }
+
   // if (selectValueMilestone !== "All") {
   //     gtdMilestones.filter('milestone', selectValueMilestone );
   // } else {
@@ -49,7 +52,7 @@ function handleFilters() {
   // })
 
   gtdMilestones.filter(function(item) {
-      if (item.values().milestone > selectValueMilestone) {
+      if (item.values().milestone === selectValueMilestone) {
         console.log("True");
         return true;
       } else {
@@ -57,6 +60,10 @@ function handleFilters() {
         return false;
       }
   });
+
+  // gtdMilestones.filter('milestone', selectValueMilestone );
+
+
 }
 
 $(".select").change(function () {
