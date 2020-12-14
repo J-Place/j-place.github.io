@@ -8,6 +8,7 @@ function hideLoadingSpinner() {
 }
 hideLoadingSpinner();
 
+
 // function getEventResults() {
 //   // showLoadingOverlay();
 //   const xhr = new XMLHttpRequest();
@@ -2111,7 +2112,7 @@ function handleFilters(e) {
   var selectValueAgeGroup = document.getElementById('selectAgeGroup').value;
   var selectValueSex = document.getElementById('selectSex').value;
   var selectValueZone = document.getElementById('selectZone').value;
-// One Value Defs
+  // One Value Defs
   if (selectValueSex !== "All" && selectValueAgeGroup === "All" && selectValueLmsc === "All" && selectValueZone === "All" ) {
     gtdParticipants.filter(function(item) {
       return item.values().sex === selectValueSex;
@@ -2128,7 +2129,7 @@ function handleFilters(e) {
     gtdParticipants.filter(function(item) {
       return item.values().zone === selectValueZone;
     });
-// Two Value Defs
+  // Two Value Defs
   } else if (selectValueSex !== "All" && selectValueAgeGroup !== "All" && selectValueLmsc === "All" && selectValueZone === "All" ) {
     gtdParticipants.filter(function(item) {
       return item.values().sex === selectValueSex && item.values().ageGroup === selectValueAgeGroup;
