@@ -91,13 +91,14 @@ function hideLoadingSpinner() {
 
   function handleFilters() {
 
-    // var selectValueMilestone = document.getElementById('selectMilestone').value;
+    var selectValueMilestone = document.getElementById('selectMilestone').value;
   
     
-
-    // gtdMilestones.sort(age, {
-    //     order: 'desc'
-    // })
+    console.log(selectValueMilestone);
+    
+    gtdMilestones.sort(age, {
+        order: 'desc'
+    })
 
     // gtdMilestones.filter(function(item) {
     //     if (item.values().milestone > selectValueMilestone) {
