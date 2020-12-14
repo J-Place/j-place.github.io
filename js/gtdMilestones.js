@@ -1,6 +1,3 @@
-// function getEventResults() {
-//   hideLoadingSpinner();
-// }
 
 function hideLoadingSpinner() {
     const loadingSpinner = document.getElementById('loadingWrapper');
