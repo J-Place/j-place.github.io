@@ -127,3 +127,6 @@ function hideLoadingSpinner() {
   $(".select").change(function(){
     handleFilters();
   });
+  
+
+}
