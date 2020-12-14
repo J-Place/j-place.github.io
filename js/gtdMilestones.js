@@ -39,31 +39,14 @@ function handleFilters() {
     console.error('gtdMilestones not defined');
     return;
   } else {
-    console.log(gtdMilestones.matchingItems.milestone);
-  }
-
-  // if (selectValueMilestone !== "All") {
-  //     gtdMilestones.filter('milestone', selectValueMilestone );
-  // } else {
-  //     gtdMilestones.filter();
-  // }
-  // gtdMilestones.sort(milestone, {
-  //   order: 'desc'
-  // })
-
-  gtdMilestones.filter(function(item) {
+    gtdMilestones.filter(function(item) {
       if (item.values().milestone === selectValueMilestone) {
-        console.log("True");
         return true;
       } else {
-        console.log("False");
         return false;
       }
-  });
-
-  // gtdMilestones.filter('milestone', selectValueMilestone );
-
-
+    });
+  }
 }
 
 $(".select").change(function () {
