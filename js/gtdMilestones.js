@@ -12,10 +12,18 @@ var getData = $.ajax({
   success: function (response) {
     var data = JSON.parse(getData.responseText);
     var dataLocal = data.data;
+    // var dataToClean = dataLocal;
+
+    // formatMilestone(dataToClean);
+
+    // for (var i = 0; i < dataLocal.length; i++) {
+    //   dataLocal[i].milestone = dataLocal[i].milestone.slice(0, -6);
+    // }
+
     gtdMilestones = new List('gtdMilestones', options, dataLocal);
+
     gtdMilestones.filter(function(item) {
       if (item.values().milestone === "50 miles") {
-        // return true;
         return gtdMilestones.matchingItems.length && true;
       } else {
         return false;
@@ -60,6 +68,34 @@ function handleFilters() {
   }
   updateFilterSummary();
 }
+
+// console.log(item.values().milestone.slice(0, -6));
+// item.values().milestone = item.values().milestone.slice(0, -6);
+// for (var i = 0; i < item.length; i++) {
+//   // newItem.values().milestone = item.values().milestone.slice(0, -6);
+//   item.values().milestone.slice(0, -6);
+// }
+// // let newItem = dataLocal;
+
+
+
+function formatMilestone(dataToClean) {
+
+  // cleanData = null;
+
+  for (var i = 0; i < dataToClean.length; i++) {
+    
+    dataToClean[i].milestone = dataToClean[i].milestone.slice(0, -6);
+    console.log(dataToClean[i].milestone);
+  }
+  return dataToClean;
+}
+
+// let tempData = dataLocal; // Use local data object until api access is fixed
+// cleanData(dataLocal);
+
+
+
 
 function updateFilterSummary() {
   // Clear all items before drawing new
