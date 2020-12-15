@@ -98,12 +98,13 @@
 									<th colspan="9">
 										<div class="title">
 											Milestone Achievements
+											<a id="clearFilters" href="#">Clear All Filters</a>
 										</div>
 
-										<div class="filters__swimmer filters__milestones">
+										<div class="filters__milestones">
                                             <label for="">Miles</label>
                                             <select class="select select--milestone" id="selectMilestone" placeholder="">
-                                                <option value="All" default selected></option>
+                                                <!-- <option value="All"></option> -->
                                                 <option value="1500 miles">1500</option>
                                                 <option value="1250 miles">1250</option>
                                                 <option value="1000 miles">1000</option>
@@ -116,11 +117,13 @@
                                                 <option value="200 miles">200</option>
                                                 <option value="150 miles">150</option>
                                                 <option value="100 miles">100</option>
-                                                <option value="50 miles">50</option>
+                                                <option value="50 miles" default selected>50</option>
                                             </select>
 										</div>
 										<div class="summary-container">
-											<div class="filters__summary" id="filterSummary"></div>
+											<div class="filters__summary--wrapper">
+												Showing <span class="filters__summary--count" id="filterCount"></span> swimmers completing <span class="filters__summary" id="filterSummary"></span>.
+											</div>
 										</div>
 									</th>
 								</tr>
@@ -149,7 +152,7 @@
 							</thead>
 							<tbody class="list">
 								<tr class="list__item">
-                                    <td class="milestone">50</td>
+                                    <td class="milestone">${milestone}</td>
 									<td class="name">
 										<div class="first">First</div>
 										<div class="last">Last</div>

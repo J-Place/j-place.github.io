@@ -17,6 +17,7 @@ var getData = $.ajax({
         order: 'asc',
       }
     );
+    updateFilterSummary();
   },
   error: function (xhr) {
     console.log("Failed to load data.");
@@ -34,24 +35,61 @@ var options = {
 }
 
 function handleFilters() {
+  // console.log(gtdMilestones.items.length);
   var selectValueMilestone = document.getElementById('selectMilestone').value;
+  // console.log(gtdMilestones.matchingItems.length - 1);
   if (!gtdMilestones) {
     console.error('gtdMilestones not defined');
     return;
   } else {
     gtdMilestones.filter(function(item) {
       if (item.values().milestone === selectValueMilestone) {
-        return true;
+        return gtdMilestones.matchingItems.length;
       } else {
         return false;
       }
     });
   }
+  updateFilterSummary();
 }
+
+function updateFilterSummary() {
+  console.log(gtdMilestones.matchingItems.length - 1);
+  // Clear all items before drawing new
+  var filterSummary = document.getElementById('filterSummary');
+  filterSummary.innerHTML = '';
+  filterCount.innerHTML = '';
+  var selectItemMilestone = document.getElementById('selectMilestone');
+  if (selectItemMilestone.value !== 'undefined') {
+      var el = document.createElement('p');
+      var elParent = document.getElementById('filterSummary');
+      el.className = "filters__summary--item filters__summary--item-" + selectItemMilestone.parentElement.classList.value;
+      el.id = selectItemMilestone.parentElement.classList.value;
+      el.textContent = selectItemMilestone.value;
+      elParent.append(el);
+    } if (gtdMilestones.matchingItems.length > 0 ) {
+      var elWrp = document.createElement('p');
+      var elWrpParent = document.getElementById('filterCount');
+      elWrp.textContent = gtdMilestones.matchingItems.length - 1;
+      elWrpParent.append(elWrp);
+    }
+  }
+
 
 $(".select").change(function () {
   handleFilters();
 });
+
+let searchNameInput = document.getElementById('searchName');
+
+$("#clearFilters").click(function(){
+  $("select").each(function() { this.selectedIndex = 0 });
+  gtdMilestones.filter();
+  gtdMilestones.sort('milestone', {order:'asc'});
+  handleFilters();
+    // updateFilterSummary();
+});
+
 
 (function () {
   hideLoadingSpinner();
