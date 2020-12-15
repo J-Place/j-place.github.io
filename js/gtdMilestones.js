@@ -1,3 +1,4 @@
+
 var gtdMilestones = null;
 
 function hideLoadingSpinner() {
@@ -14,8 +15,11 @@ var getData = $.ajax({
     gtdMilestones = new List('gtdMilestones', options, dataLocal);
     gtdMilestones.filter(function(item) {
       if (item.values().milestone === "50 miles") {
+        // return true;
         return gtdMilestones.matchingItems.length && true;
-      }
+      } else {
+        return false;
+     }
     });
     gtdMilestones.sort(
       'last', {
@@ -32,7 +36,7 @@ var getData = $.ajax({
 var options = {
   page: 99,
   pagination: true,
-  innerWindow: 1,
+  innerWindow: 5,
   left: 0,
   right: 0,
   paginationClass: "pagination",
@@ -47,6 +51,7 @@ function handleFilters() {
   } else {
     gtdMilestones.filter(function(item) {
       if (item.values().milestone === selectValueMilestone) {
+        // return true;
         return gtdMilestones.matchingItems.length && true;
       } else {
         return false;
@@ -59,8 +64,10 @@ function handleFilters() {
 function updateFilterSummary() {
   // Clear all items before drawing new
   var filterSummary = document.getElementById('filterSummary');
+  var pageInfo = document.getElementById('pageInfo');
   filterSummary.innerHTML = '';
   filterCount.innerHTML = '';
+  pageInfo.innerHTML = '';
   var selectItemMilestone = document.getElementById('selectMilestone');
   if (selectItemMilestone.value !== 'undefined') {
     var el = document.createElement('p');
@@ -72,6 +79,10 @@ function updateFilterSummary() {
     var elWrpParent = document.getElementById('filterCount');
     elWrp.textContent = gtdMilestones.matchingItems.length - 1;
     elWrpParent.append(elWrp);
+    var elPageInfo = document.createElement('p');
+    var elPageInfoParent = document.getElementById('pageInfo');
+    elPageInfo.textContent = gtdMilestones.matchingItems.length - 1;
+    elPageInfoParent.append(elPageInfo);
   }
 }
 
@@ -80,10 +91,10 @@ $(".select").change(function () {
   handleFilters();
 });
 
-let searchNameInput = document.getElementById('searchName');
+// let selectItemMilestone = document.getElementById('selectMilestone');
 
 $("#clearFilters").click(function(){
-  $("select").each(function() { this.selectedIndex = 0 });
+  $("select").each(function() { this.selectedIndex = 12 });
   gtdMilestones.filter();
   gtdMilestones.sort('last', {order:'asc'});
   handleFilters();
