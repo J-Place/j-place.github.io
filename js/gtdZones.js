@@ -21,7 +21,6 @@ var getParticipants = $.ajax({
 })
 
 
-
 // function getParticipants() {
 //   const xhr = new XMLHttpRequest();
 //   xhr.open('GET', `https://test.usms.org/apis/v1/gtd/zlc-participation`, true);
