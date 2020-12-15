@@ -1,6 +1,7 @@
 
 var gtdMilestones = null;
 
+
 function hideLoadingSpinner() {
   const loadingSpinner = document.getElementById('loadingWrapper');
   loadingSpinner.classList.add('hide');
@@ -12,18 +13,12 @@ var getData = $.ajax({
   success: function (response) {
     var data = JSON.parse(getData.responseText);
     var dataLocal = data.data;
-
-    if (dataLocal) {
-      console.log("Has DataLocal");
-      for (var i = 0; i < dataLocal.length; i++) {
-        let milestone = dataLocal[i].milestone;
-        let milestoneFixed = milestone.slice(0, -6);
-        milestone = milestoneFixed;
-        console.log(milestone); // Logs Updated Value
-      }
-      // return dataLocal;
-    }
-    console.log(dataLocal[0].milestone); // Logs Original Value with "Miles"
+    // for (var i = 0; i < dataLocal.length; i++) {
+    //   let milestone = dataLocal[i].milestone;
+    //   let milestoneFixed = milestone.slice(0, -6);
+    //   dataLocal[i].milestone = milestoneFixed;
+    // }
+    // console.log(dataLocal);
 
     gtdMilestones = new List('gtdMilestones', options, dataLocal);
 
