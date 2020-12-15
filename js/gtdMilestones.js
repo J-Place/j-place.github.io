@@ -40,9 +40,7 @@ var options = {
 }
 
 function handleFilters() {
-  // console.log(gtdMilestones.items.length);
   var selectValueMilestone = document.getElementById('selectMilestone').value;
-  // console.log(gtdMilestones.matchingItems.length - 1);
   if (!gtdMilestones) {
     console.error('gtdMilestones not defined');
     return;
@@ -67,8 +65,6 @@ function updateFilterSummary() {
   if (selectItemMilestone.value !== 'undefined') {
     var el = document.createElement('p');
     var elParent = document.getElementById('filterSummary');
-    // el.className = "filters__summary--item filters__summary--item-" + selectItemMilestone.parentElement.classList.value;
-    // el.id = selectItemMilestone.parentElement.classList.value;
     el.textContent = selectItemMilestone.value;
     elParent.append(el);
   } if (gtdMilestones.matchingItems.length > 0 ) {
@@ -91,7 +87,6 @@ $("#clearFilters").click(function(){
   gtdMilestones.filter();
   gtdMilestones.sort('last', {order:'asc'});
   handleFilters();
-    // updateFilterSummary();
 });
 
 
