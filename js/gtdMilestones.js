@@ -12,70 +12,39 @@ var getData = $.ajax({
   success: function (response) {
     var data = JSON.parse(getData.responseText);
     var dataLocal = data.data;
-    // var testData = dataLocal;
 
-    // (function (dataLocal) {
-    //   console.log(dataLocal);
-    //   // dataLocal.milestone = dataLocal.milestone.slice(0, -6);
-    //   // return milestone;
-    // })();
+    if (dataLocal) {
+      console.log("Has DataLocal");
+      for (var i = 0; i < dataLocal.length; i++) {
+        let milestone = dataLocal[i].milestone;
+        let milestoneFixed = milestone.slice(0, -6);
+        milestone = milestoneFixed;
+        console.log(milestone); // Logs Updated Value
+      }
+      // return dataLocal;
+    }
+    console.log(dataLocal[0].milestone); // Logs Original Value with "Miles"
 
-    // formatMiles(testData);
-    // for (var i = 0; i < testData.length; i++) {
-    //   testData[i].milestone = testData[i].milestone.slice(0, -6);
-    //   console.log(testData[i].milestone);
-    // }
-
-    // function formatMiles(testData) {  
-    //   for (var i = 0; i < testData.length; i++) {
-    //     testData[i].milestone = testData[i].milestone.slice(0, -6);
-    //     console.log(testData[i].milestone);
-    //   }
-    //   let dataLocal = testData;
-    // }
-    
     gtdMilestones = new List('gtdMilestones', options, dataLocal);
 
-    gtdMilestones.filter(function(item) {
-      
-
-      // for (var i = 0; i < dataLocal.length; i++) {
-        // let dataLocal[i].milestone = dataLocal[i].milestone.slice(0, -6);
-        // console.log(dataLocal[i].milestone);
-      // }
-  
+    gtdMilestones.filter(function(item) { 
       if (item.values().milestone === "50 miles") {
         return gtdMilestones.matchingItems.length && true;
       } else {
         return false;
       }
     });
-
     gtdMilestones.sort(
       'last', {
         order: 'asc',
       }
-    );
-    
-    // var dataToClean = dataLocal;
-
-    // formatMilestone(dataToClean);
-
-    // for (var i = 0; i < dataLocal.length; i++) {
-    //   dataLocal[i].milestone = dataLocal[i].milestone.slice(0, -6);
-    // }
-
-    
+    );    
     updateFilterSummary();
   },
   error: function (xhr) {
     console.log("Failed to load data.");
   },
 });
-
-
-
-
 
 var options = {
   page: 99,
@@ -86,10 +55,6 @@ var options = {
   paginationClass: "pagination",
   valueNames: ['milestone', 'first', 'last', 'age', 'sex', 'clubAbbr', 'dateAchieved'],
 }
-
-
-
-
 
 
 
@@ -110,29 +75,6 @@ function handleFilters() {
   }
   updateFilterSummary();
 }
-
-
-
-
-
-
-
-// function formatMilestone(dataToClean) {
-
-//   for (var i = 0; i < dataToClean.length; i++) {
-    
-//     dataToClean[i].milestone = dataToClean[i].milestone.slice(0, -6);
-//     console.log(dataToClean[i].milestone);
-//   }
-//   return dataToClean;
-// }
-
-// let tempData = dataLocal; // Use local data object until api access is fixed
-// cleanData(dataLocal);
-
-
-
-
 
 
 
