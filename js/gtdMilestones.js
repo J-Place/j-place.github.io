@@ -12,6 +12,51 @@ var getData = $.ajax({
   success: function (response) {
     var data = JSON.parse(getData.responseText);
     var dataLocal = data.data;
+    // var testData = dataLocal;
+
+    // (function (dataLocal) {
+    //   console.log(dataLocal);
+    //   // dataLocal.milestone = dataLocal.milestone.slice(0, -6);
+    //   // return milestone;
+    // })();
+
+    // formatMiles(testData);
+    // for (var i = 0; i < testData.length; i++) {
+    //   testData[i].milestone = testData[i].milestone.slice(0, -6);
+    //   console.log(testData[i].milestone);
+    // }
+
+    // function formatMiles(testData) {  
+    //   for (var i = 0; i < testData.length; i++) {
+    //     testData[i].milestone = testData[i].milestone.slice(0, -6);
+    //     console.log(testData[i].milestone);
+    //   }
+    //   let dataLocal = testData;
+    // }
+    
+    gtdMilestones = new List('gtdMilestones', options, dataLocal);
+
+    gtdMilestones.filter(function(item) {
+      
+
+      // for (var i = 0; i < dataLocal.length; i++) {
+        // let dataLocal[i].milestone = dataLocal[i].milestone.slice(0, -6);
+        // console.log(dataLocal[i].milestone);
+      // }
+  
+      if (item.values().milestone === "50 miles") {
+        return gtdMilestones.matchingItems.length && true;
+      } else {
+        return false;
+      }
+    });
+
+    gtdMilestones.sort(
+      'last', {
+        order: 'asc',
+      }
+    );
+    
     // var dataToClean = dataLocal;
 
     // formatMilestone(dataToClean);
@@ -20,26 +65,17 @@ var getData = $.ajax({
     //   dataLocal[i].milestone = dataLocal[i].milestone.slice(0, -6);
     // }
 
-    gtdMilestones = new List('gtdMilestones', options, dataLocal);
-
-    gtdMilestones.filter(function(item) {
-      if (item.values().milestone === "50 miles") {
-        return gtdMilestones.matchingItems.length && true;
-      } else {
-        return false;
-     }
-    });
-    gtdMilestones.sort(
-      'last', {
-        order: 'asc',
-      }
-    );
+    
     updateFilterSummary();
   },
   error: function (xhr) {
     console.log("Failed to load data.");
   },
 });
+
+
+
+
 
 var options = {
   page: 99,
@@ -50,6 +86,12 @@ var options = {
   paginationClass: "pagination",
   valueNames: ['milestone', 'first', 'last', 'age', 'sex', 'clubAbbr', 'dateAchieved'],
 }
+
+
+
+
+
+
 
 function handleFilters() {
   var selectValueMilestone = document.getElementById('selectMilestone').value;
@@ -69,30 +111,27 @@ function handleFilters() {
   updateFilterSummary();
 }
 
-// console.log(item.values().milestone.slice(0, -6));
-// item.values().milestone = item.values().milestone.slice(0, -6);
-// for (var i = 0; i < item.length; i++) {
-//   // newItem.values().milestone = item.values().milestone.slice(0, -6);
-//   item.values().milestone.slice(0, -6);
-// }
-// // let newItem = dataLocal;
 
 
 
-function formatMilestone(dataToClean) {
 
-  // cleanData = null;
 
-  for (var i = 0; i < dataToClean.length; i++) {
+
+// function formatMilestone(dataToClean) {
+
+//   for (var i = 0; i < dataToClean.length; i++) {
     
-    dataToClean[i].milestone = dataToClean[i].milestone.slice(0, -6);
-    console.log(dataToClean[i].milestone);
-  }
-  return dataToClean;
-}
+//     dataToClean[i].milestone = dataToClean[i].milestone.slice(0, -6);
+//     console.log(dataToClean[i].milestone);
+//   }
+//   return dataToClean;
+// }
 
 // let tempData = dataLocal; // Use local data object until api access is fixed
 // cleanData(dataLocal);
+
+
+
 
 
 
