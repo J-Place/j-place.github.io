@@ -33,8 +33,8 @@ var getData = $.ajax({
       }
     });
     gtdMilestones.sort(
-      'last', {
-        order: 'asc',
+      'dateAchieved', {
+        order: 'desc',
       }
     );    
     updateFilterSummary();
@@ -111,7 +111,7 @@ $(".select").change(function () {
 $("#clearFilters").click(function(){
   $("select").each(function() { this.selectedIndex = 12 });
   gtdMilestones.filter();
-  gtdMilestones.sort('last', {order:'asc'});
+  gtdMilestones.sort('dateAchieved', {order:'desc'});
   handleFilters();
 });
 
