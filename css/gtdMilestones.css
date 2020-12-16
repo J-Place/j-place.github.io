@@ -21,7 +21,7 @@
     margin: 0 auto;
 }
 .gtd-milestones .list__item .milestone {
-    width: 150px;
+    width: 100px;
 }
 .gtd-milestones .sorting .name,
 .gtd-milestones .list__item .name {
@@ -42,11 +42,40 @@
     bottom: -90px;
     right: 70px;
 }
+.sorting .name,
+.list .name {
+    width: 170px;
+    min-width: 170px;
+}
+.sorting .sex,
+.list .sex {
+    /* padding-left: 0;
+    padding-right: 0; */
+    width: 60px;
+    min-width: 60px;
+    text-align: center;
+}
+.sorting .age,
+.list .age {
+    /* padding-left: 0;
+    padding-right: 10px; */
+    width: 60px;
+    min-width: 60px;
+    text-align: center;
+}
+.sorting .clubAbbr,
+.list .clubAbbr {
+    text-align: center;
+}
+.gtd-milestones th.clubAbbr,
+.gtd-milestones td.clubAbbr,
 .gtd-milestones th.milestone,
 .gtd-milestones td.milestone {
     display: none;
 }
 @media only screen and (min-width: 768px) {
+    .gtd-milestones th.clubAbbr,
+    .gtd-milestones td.clubAbbr,
     .gtd-milestones th.milestone,
     .gtd-milestones td.milestone {
         display: table-cell;
@@ -64,5 +93,68 @@
     }
     .gtd-milestones .summary-container {
         display: inline-block;
+    }
+    .sorting .name,
+    .list .name {
+        width: 280px;
+        min-width: 280px;
+    }
+    .sorting .first,
+    .list .first {
+        /* width: 280px; */
+        /* min-width: 280px; */
+        display: inline-block;
+        font-size: 16px;
+        /* font-weight: normal; */
+    }
+    .sorting .last,
+    .list .last {
+        display: inline-block;
+        font-size: 16px;
+        font-weight: normal;
+    }
+    .sorting .miles,
+    .list .miles {
+        font-size: 15px;
+        width: 130px;
+        min-width: 130px;
+        padding-right: 40px;
+    }
+    .sorting .age,
+    .list .age {
+        width: 60px;
+        min-width: 60px;
+    }
+    .sorting .ageGroup,
+    .list .ageGroup {
+        width: 120px;
+        min-width: 120px;
+        text-align: center;
+    }
+    .sorting .clubAbbr,
+    .list .clubAbbr {
+        width: 90px;
+        min-width: 90px;
+        padding-left: 0;
+    }
+    .list .clubAbbr {
+        font-size: 14px;
+    }
+    .sorting .lmsc,
+    .list .lmsc {
+        width: 130px;
+        min-width: 130px;
+    }
+    .list .lmsc {
+        font-size: 14px;
+        line-height: 16px;
+    }
+    .sorting .zone,
+    .list .zone {
+        width: 120px;
+        min-width: 120px;
+    }
+    .list .zone {
+        font-size: 14px;
     }
 }
