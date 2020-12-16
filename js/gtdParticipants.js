@@ -49,7 +49,7 @@ function hideLoadingSpinner() {
 }
 
 var getData = $.ajax({
-  url: "https://j-place.github.io/participants_all.json",
+  url: "https://j-place.github.io/participants.json",
   type: "GET",
   success: function (response) {
     var data = JSON.parse(getData.responseText);
@@ -59,6 +59,7 @@ var getData = $.ajax({
     //   let milestoneFixed = milestone.slice(0, -6);
     //   dataLocal[i].milestone = milestoneFixed;
     // }
+
     console.log(dataLocal[0].name);
 
     gtdParticipants = new List('gtdParticipants', options, dataLocal);

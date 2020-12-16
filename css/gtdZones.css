@@ -1,183 +1,144 @@
-#gtdZones {
+.gtd-zones {
     width: 100%;
     margin: 3rem auto;
     position: relative;
 }
-.lmsc-wrapper .row {
+.gtd-zones .row {
     margin: 0;
 }
-/* .lmsc-wrapper .row.club { */
-    /* border-top: 1px solid #CCC; */
-    /* border-bottom: 1px solid #CCC; */
-/* } */
-
-.participant-column-labels {
+.gtd-zones .participant-column-labels {
     font-size: 1.2rem;
     font-weight: bold;
 }
-
-.lmsc-wrapper .row.participant {
+.gtd-zones .row.participant {
+    height: 3.5rem;
     border-bottom: 1px solid #CCC;
 }
-
-/* .lmsc-wrapper .row.participant:first-of-type {
-    border-top: 1px solid red;
-} */
-
-.row.zone .zone__title {
-    background-color: yellow;
-    padding-left: 2rem;
+.gtd-zones .row.participant.participant-column-labels {
+    height: 2rem;
+    /* margin-top: 1rem; */
 }
-
-.row a:hover {
+.gtd-zones .row.participant > * {
+    line-height: 3.5rem;
+}
+.gtd-zones .row.participant.participant-column-labels > * {
+    line-height: 2rem;
+}
+.gtd-zones .row.zone .zone__title {
+    background-color: yellow;
+    padding: 1.5rem;
+}
+.gtd-zones .row.lmsc .lmsc__title {
+    background-color: #EEE;
+    padding: 1.5rem;
+}
+.gtd-zones .row.club .club__title {
+    padding: 0 1.0rem;
+}
+.gtd-zones .row a:hover {
     text-decoration: none;
 }
-
-.top-link {
+.gtd-zones .top-link {
     position: relative;
     float: right;
-    /* top: 23px; */
-    /* right: 20px; */
     margin: .5rem 1rem;
-    font-size: 10px;
+    font-size: 1rem;
     text-align: right;
     text-decoration: underline;
     color: #000;
 }
-
-#Breadbasket .top-link {
+.gtd-zones #Breadbasket .top-link {
     display: none;
 }
-
-.row.zone {
+.gtd-zones .row.zone {
     margin: 3rem auto;
 }
-
-.row.lmsc {
+.gtd-zones .row.lmsc {
     margin-top: 2rem;
     margin-bottom: 1.5rem;
 }
-
-.row.lmsc .lmsc__title {
-    padding-left: 1.5rem;
-}
-
-.row.club {
+.gtd-zones .row.club {
     margin-left: 2.0rem;
     margin-right: 2.0rem;
 }
-
-.row.participant {
+.gtd-zones .row.participant {
     margin-left: 1.5rem;
     margin-right: 1.5rem;
 }
-
-.club__participants {
-    margin: 0.5rem auto 2rem;
+.gtd-zones .club__participants {
+    margin: 1rem auto 2rem;
 }
-
-.row.club + .row.lmsc {
+.gtd-zones .row.club + .row.lmsc {
     margin-top: 3rem;
 }
-
-.row.club + .row.zone {
+.gtd-zones .row.club + .row.zone {
     margin-top: 4rem;
 }
-
-/* .row.zone + .row.zone {
-    margin-top: 7rem;
-    margin-bottom: 0.5rem;
-}
-
-.row.participant + .row.lmsc {
-    margin-top: 2rem;
-}
-
-.zone__title + .row.lmsc {
-    margin-top: 2rem;
-    margin-bottom: 0.5rem;
-}
-
-.row.participant + .row.lmsc {
-    margin-top: 5rem;
-    margin-bottom: 1rem;
-}
-
-.row.participant + .row.club {
-    margin-top: 2rem;
-} */
-
-.zone-name,
-.lmsc-name,
-.club-name {
-    margin: 1.5rem auto 0;
+/* .zone-name, */
+.gtd-zones .lmsc-name,
+.gtd-zones .club-name {
+    /* margin: 1.5rem auto 0; */
     line-height: 2rem;
+    margin-bottom: 0;
 }
-
-.zone-name,
-.lmsc-name,
-.club-name,
-.zone-stats,
-.lmsc-stats,
-.club-stats {
+.gtd-zones .zone-name,
+.gtd-zones .lmsc-name,
+.gtd-zones .club-name,
+.gtd-zones .zone-stats,
+.gtd-zones .lmsc-stats,
+.gtd-zones .club-stats {
     display: block;
 }
-
-.zone-stats,
-.lmsc-stats,
-.club-stats {
-    line-height: 1.5rem;
+.gtd-zones .zone-stats,
+.gtd-zones .lmsc-stats,
+.gtd-zones .club-stats {
+    line-height: 1.75rem;
     font-size: 13px;
-    margin: 0 auto 1.5rem;
+    /* margin: 0 auto 1.5rem; */
 }
-
-.zone-stats > *,
-.lmsc-stats > *,
-.club-stats > * {
+.gtd-zones .zone-stats > *,
+.gtd-zones .lmsc-stats > *,
+.gtd-zones .club-stats > * {
     display: block;
 }
-
-.filters {
+.gtd-zones .filters {
     margin-bottom: 2rem;
 }
-
-.filters .filter__zone,
-.filters .filter__lmsc {
+.gtd-zones .filters__zone,
+.filters__lmsc {
     width: 140px;
     max-width: 140px;
     display: inline-block;
     margin: 0 auto 2rem;
 }
-
-.filters .filter__zone {
-    margin-right: 1.5rem;
+.gtd-zones .filters__zone {
+    display: inline-block;
+    margin-top: 1.5rem;
+    margin-right: 3rem;
+    padding-right: 3rem;
+    padding-bottom: 1.25rem;
+    border-right: 1px solid #CCC;
 }
-
-.participant__age {
+.gtd-zones .participant__age {
     text-align: center;
 }
-
-.participant__miles {
+.gtd-zones .participant__miles {
     text-align: right;
 }
-
-.club .club__title {
+.gtd-zones .club .club__title {
     font-size: 14px;
     line-height: 16px;
     text-decoration: none;
     display: block;
     margin: 0;
 }
-.club .club__title:before {
+.gtd-zones .club .club__title:before {
     opacity: 1;
-    /* content: 'arrow_drop_up'; */
     content: 'remove';
     margin: 0;
     font-family: 'Material Icons';
-    /* font-weight: 400; */
     font-weight: bold;
     font-style: normal;
-    /* font-size: 2.5rem; */
     font-size: 1.5rem;
     position: relative;
     display: inline;
@@ -192,120 +153,75 @@
     text-rendering: optimizeLegibility;
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: 'liga';
+    top: 18px;
+    left: -20px;
 }
-/* .club .club__title:before {
-    top: 37px;
-    left: -22px;
-} */
-
-.club .club__title.collapsed:before {
+.gtd-zones .club .club__title.collapsed:before {
     opacity: 0.35;
-    /* content: 'arrow_drop_down'; */
     content: 'add';
-    /* top: 37px; */
-    top: 20px;
-    left: -22;
+    top: 18px;
+    left: -20px;
 }
 
 @media only screen and (min-width: 768px) {
-
-    .club .club__title.collapsed:before {
-        /* opacity: 0.35; */
-        /* content: 'arrow_drop_down'; */
-        /* top: 2px; */
+    .gtd-zones .club .club__title.collapsed:before {
         top: -2px;
         left: 0;
     }
-
-    .club .club__title:before {
-        /* top: 3px; */
+    .gtd-zones .club .club__title:before {
         top: -2px;
         left: 0;
     }
-        
-    /* .row.lmsc {
-        margin-bottom: 2rem;
-    } */
-    
-    .row.lmsc .lmsc__title {
-        padding-left: 1.5rem;
-        /* border: 1px solid #CCC; */
-        background-color: #EEE;
+    .gtd-zones .row.zone .zone__title {
+        padding: 0.5rem 1.5rem;
     }
-    
-    .row.club {
-        margin-left: 0;
-        margin-right: 0;
+    .gtd-zones .row.lmsc .lmsc__title {
+        padding: 0.5rem 1.5rem;
+        /* padding-left: 1.5rem; */
+        /* background-color: #EEE; */
     }
-
-    .row.participant {
+    .gtd-zones .row.club {
+        /* margin-left: 0; */
+        /* margin-right: 0; */
+        margin: 1rem 0;
+    }
+    .gtd-zones .row.participant {
         margin-left: 2.5rem;
         margin-right: 2.5rem;
     }
-    
-    /* .row.zone + .row.zone {
-        margin-top: 7rem;
-        margin-bottom: 0.5rem;
-    }
-    
-    .row.participant + .row.lmsc {
-        margin-top: 2rem;
-    }
-    
-    .row.zone + .row.lmsc {
-        margin-top: 1.5rem;
-        margin-bottom: 0.5rem;
-    }
-    
-    .row.participant + .row.lmsc {
-        margin-top: 5rem;
-        margin-bottom: 1rem;
-    } */
-    
-    /* .row.participant + .row.club {
-        margin-top: 2rem;
-    } */
-
-    .zone-name {
+    /* .zone-name {
         margin: 1rem auto;
         line-height: 1rem;
     }
-    
-    .club-name,
-    .lmsc-name {
+    .gtd-zones .club-name,
+    .gtd-zones .lmsc-name {
         margin: 1rem auto;
         line-height: 1rem;
-    }
-    /* .club-name {
-        margin: 1.25rem auto 0.25rem;
     } */
-
-    .zone-name,
-    .lmsc-name,
-    .club-name,
-    .zone-stats,
-    .lmsc-stats,
-    .club-stats {
+    .gtd-zones .zone-name,
+    .gtd-zones .lmsc-name,
+    .gtd-zones .club-name,
+    .gtd-zones .zone-stats,
+    .gtd-zones .lmsc-stats,
+    .gtd-zones .club-stats {
         display: inline-block;
     }
-    
-    .zone-stats,
-    .lmsc-stats,
-    .club-stats {
-        line-height: 1rem;
+    .gtd-zones .zone-stats,
+    .gtd-zones .lmsc-stats,
+    .gtd-zones .club-stats {
+        /* line-height: 1rem; */
         font-size: 13px;
-        margin: 1rem auto;
+        /* margin: 1rem auto; */
     }
-
-    .zone-stats > *,
-    .lmsc-stats > *,
-    .club-stats > * {
+    .gtd-zones .zone-stats > *,
+    .gtd-zones .lmsc-stats > *,
+    .gtd-zones .club-stats > * {
         display: inline-block;
         padding-left: 0.75rem;
         padding-right: 0;
         margin-left: 0.5rem;
         margin-right: 0;
-        border-left: 1px solid #000;
-    }
-    
+        line-height: 1rem;
+        border-left: 1px solid #777;
+    }    
 }

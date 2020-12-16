@@ -14,6 +14,9 @@ var getData = $.ajax({
     var data = JSON.parse(getData.responseText);
     var dataLocal = data.data;
     // for (var i = 0; i < dataLocal.length; i++) {
+    //   if (haystack.includes(needle)) {
+    //     // do your thing
+    //   }
     //   let milestone = dataLocal[i].milestone;
     //   let milestoneFixed = milestone.slice(0, -6);
     //   dataLocal[i].milestone = milestoneFixed;

@@ -94,7 +94,7 @@
 				<div class="section section-full">
                     <div class="usms-container">
 
-                        <div id="gtdZones" class="lmsc-wrapper"></div>
+                        <div id="gtdZones" class="gtd-zones"></div>
             
                         <script id="zoneTemplate" type="text/x-handlebars-template">
 
@@ -104,7 +104,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <div class="filter--zone">
+                                        <div class="filters__zone">
                                             <label for="selectLmsc">Jump to Zone</label>
                                             <select class="select select--zone" id="selectZone" placeholder="" onchange="if (this.selectedIndex > 0) location.href=this[this.selectedIndex].value;">
                                                 <option value="" default selected></option>
@@ -113,7 +113,7 @@
                                                 {{/each}}
                                             </select>
                                         </div>
-                                        <div class="filter--lmsc">
+                                        <div class="filters__lmsc">
                                             <label for="selectLmsc">Jump to LMSC</label>
                                             <select class="select select--lmsc" id="selectLmsc" placeholder="" onchange="if (this.selectedIndex > 0) location.href=this[this.selectedIndex].value;">
                                                 <option value="" default selected></option>
@@ -134,8 +134,8 @@
                                         <div class="zone-name"><strong>{{name}} Zone</strong></div>
                                         <div class="zone-stats">
                                             <div class="stats__swimmers">{{swimmers}} Swimmers</div>
-                                            <div class="stats__total">{{miles}} Total Miles</div>
-                                            <div class="stats__avg">{{average}} Avg Miles per Swimmer</div>
+                                            <div class="stats__total">{{miles}} Miles</div>
+                                            <div class="stats__avg">{{average}} Miles per Swimmer</div>
                                         </div>
                                         <a href="#top" class="top-link">Back to Top</a>
                                     </div>
