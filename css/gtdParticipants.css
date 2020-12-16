@@ -1,27 +1,101 @@
-#gtdParticipants {
+.gtd-participants {
     width: 100%;
     margin: 3rem auto;
     position: relative;
 }
-.summary-container {
+
+
+
+.gtd-participants .filters .filters__swimmer--bio > div,
+.gtd-participants .filters .filters__swimmer > div > div,
+.gtd-participants .filters .filters__admin > div > div {
+    margin-right: 10px;
+}
+.gtd-participants .summary-container {
     position: absolute;
-    top: 40px;
+    top: 50px;
 }
-.search__summary,
-.filters__summary {
-    margin: 0px 0 0px;
+.gtd-participants .filters .title {
+    margin-bottom: 50px;
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 5px 0;
+}
+.gtd-participants .filters .title a {
+    font-size: 13px;
+    font-weight: normal;
+    margin-left: 4px;
+    padding-left: 8px;
+    text-decoration: underline;
+    border-left: 1px solid #BBB;
+}
+.gtd-participants .filters__admin {
+    display: block;
+    margin: 15px 0 10px;
+    padding-top: 0;
+    border-top: 1px solid #CCC;
+}
+.gtd-participants .filters__admin--club {
+    display: inline-block;
+    width: 80px;
+    margin-right: 10px;
+}
+.gtd-participants .filters__admin--lmsc-zone {
+    display: inline-block;
+    /* width: 200px; */
+}
+.gtd-participants .filters .name {
+    width: 200px;
+    max-width: 200px;
+    display: block;
+    top: 0;
+}
+.gtd-participants .filters .age {
+    width: 80px;
+    max-width: 80px;
+    min-width: 80px;
+    display: inline-block;
+    top: 0;
+}
+.gtd-participants .filters .sex {
+    width: 90px;
+    max-width: 90px;
+    min-width: 90px;
     display: inline-block;
 }
-.search__summary--item,
-.filters__summary--item {
-    font-size: 19px;
-    /* margin-right: 12px; */
-    margin: 10px 15px 15px 0;
+.gtd-participants .filters .ageGroup {
+    width: 90px;
+    max-width: 90px;
+    min-width: 90px;
     display: inline-block;
-    cursor: pointer;
 }
-.search__summary > p:before,
-.filters__summary > p:before {
+.gtd-participants .filters .clubAbbr {
+    width: 100%;
+    min-width: 100%;
+    display: inline-block;
+    top: 0;
+}
+.gtd-participants .filters .lmsc {
+    width: 110px;
+    max-width: 110px;
+    min-width: 110px;
+    display: inline-block;
+}
+.gtd-participants .filters .zone {
+    width: 110px;
+    max-width: 110px;
+    min-width: 110px;
+    display: inline-block;
+}
+.gtd-participants .search__summary--item,
+.gtd-participants .filters__summary--item {
+    font-size: 14px;
+    margin-right: 14px;
+    display: inline-block;
+}
+.gtd-participants .search__summary > p:before,
+.gtd-participants .filters__summary > p:before {
     color: #000;
     opacity: 0.25;
     content: 'close';
@@ -46,321 +120,69 @@
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: 'liga';
 }
-.filters__summary--item--key {
+.gtd-participants .search__summary--item-key,
+.gtd-participants .filters__summary--item-key {
     font-size: 11px;
     font-weight: normal;
 }
-.filters__summary--item--value {
+.gtd-participants .search__summary--item-value,
+.gtd-participants .filters__summary--item-value {
     font-size: 12px;
     font-weight: bold;
     border-bottom: 1px solid #CCC;
     cursor: pointer;
 }
 
-#gtdParticipants .filters .filters__swimmer--bio > div,
-#gtdParticipants .filters .filters__swimmer > div > div,
-#gtdParticipants .filters .filters__admin > div > div {
-    margin-right: 10px;
-}
-#gtdParticipants .filters .title {
-    display: block;
-    font-size: 18px;
-    font-weight: bold;
-    padding: 5px 0;
-    margin-bottom: 40px;
-}
-#gtdParticipants .filters .title a {
-    font-size: 13px;
-    font-weight: normal;
-    margin-left: 4px;
-    padding-left: 8px;
-    text-decoration: underline;
-    border-left: 1px solid #BBB;
-}
-#gtdParticipants .filters {
-    background-color: #DDD;
-}
-
-#gtdParticipants .filters ul,
-#gtdParticipants .filters li {
-    display: inline-block;
-    font-size: 16px;
-    line-height: 20px;
-    margin: 0;
-    padding: 0;}
-#gtdParticipants .filters th {
-    padding: 15px 10px 25px;
-}
-#gtdParticipants .filters label {
-    display: block;
-    font-size: 14px;
-    line-height: 16px;
-    font-weight: normal;
-    margin: 10px 0 0;
-    height: 18px;
-    padding: 0;
-    overflow: hidden;
-}
-#gtdParticipants .filters ul {
-    list-style-type: none;
-    font-weight: normal;
-    padding: 0;
-}
-#gtdParticipants .filters li {
-    padding-left: 10px;
-}
-
-
-/************************************ Sorting and List */
-
-#gtdParticipants .list .miles {
-    font-size: 18px;
-}
-#gtdParticipants input.search {
-    width: 100%;
-    position: initial;
-    display: block;
-    height: 25px;
-    font-size: 12px;
-    font-weight: normal;
-    margin: 0;
-    padding: 0 0 0 5px;
-    border: 0 none;
-}
-#gtdParticipants select {
-    width: 100%;
-    height: 25px;
-    font-size: 12px;
-    font-weight: normal;
-    margin: 0;
-    padding: 0 0 0 5px;
-    /* background-color: #F3F3F3; */
-    background-color: #FFF;
-    border: 0 none;
-}
-
-/********************************************* Filters */
-
-.filters__admin {
-    display: block;
-    /* margin-top: 15px; */
-    /* margin-bottom: 10px; */
-    margin: 15px 0 10px;
-    padding-top: 0;
-    border-top: 1px solid #CCC;
-}
-.filters__admin--club {
-    display: inline-block;
-    width: 80px;
-    margin-right: 10px;
-}
-.filters__admin--lmsc-zone {
-    display: inline-block;
-    width: 200px;
-}
-/* #gtdParticipants .filters tr th > * {
-    vertical-align: top;
-    position: relative;
-} */
-#gtdParticipants .filters .name {
-    width: 200px;
-    max-width: 200px;
-    display: block;
-    top: 0;
-}
-#gtdParticipants .filters .age {
-    /* width: 20%; */
-    /* max-width: 20%; */
-    width: 80px;
-    max-width: 80px;
-    min-width: 80px;
-    display: inline-block;
-    top: 0;
-}
-#gtdParticipants .filters .sex {
-    /* width: 25%;
-    max-width: 25%; */
-    width: 70px;
-    max-width: 70px;
-    min-width: 70px;
-    display: inline-block;
-}
-#gtdParticipants .filters .ageGroup {
-    width: 30%;
-    max-width: 30%;
-    display: inline-block;
-}
-#gtdParticipants .filters .clubAbbr {
-    width: 100%;
-    min-width: 100%;
-    display: inline-block;
-    top: 0;
-}
-#gtdParticipants .filters .lmsc {
-    width: 43%;
-    min-width: 43%;
-    display: inline-block;
-}
-#gtdParticipants .filters .zone {
-    width: 43%;
-    min-width: 43%;
-    display: inline-block;
-}
-
-/********************************************* Sort and List */
-
-#gtdParticipants .sorting {
-    vertical-align: bottom;
-}
-#gtdParticipants .list .name {
-    width: 170px;
-    min-width: 170px;
-}
-#gtdParticipants .sorting .sex,
-#gtdParticipants .list .sex {
-    padding-left: 0;
-    padding-right: 0;
-    text-align: center;
-}
-#gtdParticipants .list .sex {
-    padding-left: 0;
-    padding-right: 0;
-    text-align: center;
-}
-#gtdParticipants .sorting .age {
-    padding-left: 0;
-    padding-right: 10px;
-    text-align: center;
-}
-#gtdParticipants .sorting .clubAbbr,
-#gtdParticipants .list .clubAbbr {
-    text-align: center;
-}
-
-
 /* Hide from display but keep the LMSC ans Zone html so listjs can render the template data — so we can still filter by LSMC or Zone */
-.sorting .lmsc,
-.sorting .zone,
-.list .lmsc,
-.list .zone,
-.sorting .ageGroup,
-.list .ageGroup,
-.sorting .clubAbbr,
-.list .clubAbbr {
+.gtd-participants .sorting .lmsc,
+.gtd-participants .sorting .zone,
+.gtd-participants .list .lmsc,
+.gtd-participants .list .zone,
+.gtd-participants .sorting .ageGroup,
+.gtd-participants .list .ageGroup,
+.gtd-participants .sorting .clubAbbr,
+.gtd-participants .list .clubAbbr {
     display: none;
 }
 
 @media only screen and (min-width: 768px) {
 
-    .sorting .lmsc,
-    .sorting .zone,
-    .list .lmsc,
-    .list .zone,    
-    .sorting .ageGroup,
-    .list .ageGroup,
-    .sorting .clubAbbr,
-    .list .clubAbbr {
+    .gtd-participants .sorting .lmsc,
+    .gtd-participants .sorting .zone,
+    .gtd-participants .list .lmsc,
+    .gtd-participants .list .zone,    
+    .gtd-participants .sorting .ageGroup,
+    .gtd-participants .list .ageGroup,
+    .gtd-participants .sorting .clubAbbr,
+    .gtd-participants .list .clubAbbr {
         display: table-cell;
     }
-    #gtdParticipants .list td {
-        font-size: 15px;
-    }
-
-    /******************************* Filter Breadcrumbs */
-    .filters-applied {
-        margin: -5px 0 -10px;
-    }
-    .search__summary, 
-    .filters__summary {
-        display: inline-block;
-    }
-    .search__summary--item,
-    .filters__summary--item {
-        font-size: 14px;
-        margin-right: 14px;
-        display: inline-block;
-    }
-    /* .search__summary--item {
-        text-transform: uppercase;
-    } */
-    .search__summary > p:before,
-    .filters__summary > p:before {
-        color: #000;
-        opacity: 0.25;
-        content: 'close';
-        margin: 0 0 0 -3px;
-        font-family: 'Material Icons';
-        font-weight: 400;
-        font-style: normal;
-        font-size: 1.5rem;
-        position: relative;
-        top: -1px;
-        right: 1px;
-        display: inline;
-        vertical-align: sub;
-        line-height: inherit;
-        text-transform: none;
-        letter-spacing: normal;
-        word-wrap: normal;
-        white-space: nowrap;
-        direction: ltr;
-        -webkit-font-smoothing: antialiased;
-        text-rendering: optimizeLegibility;
-        -moz-osx-font-smoothing: grayscale;
-        font-feature-settings: 'liga';
-    }
-    /* .search__summary--item-key,
-    .filters__summary--item-key {
-        font-size: 11px;
-        font-weight: normal;
-    }
-    .search__summary--item-value,
-    .filters__summary--item-value {
-        font-size: 12px;
-        font-weight: bold;
-        border-bottom: 1px solid #CCC;
-        cursor: pointer;
-    } */
-    
-    /**************************************** Filters */
-    .summary-container {
+    .gtd-participants .summary-container {
         position: relative;
         top: initial;
-        /* position: absolute; */
-        /* top: 30px; */
-    }    
-    #gtdParticipants .filters .title {
+    }
+    .gtd-participants .filters .title {
         margin-bottom: 0;
     }    
-    #gtdParticipants .filters .title a {
+    .gtd-participants .filters .title a {
         font-size: 11px;
     }
-    #gtdParticipants .filters label {
-        font-size: 12px;
-        line-height: 15px;
-    }
-    #gtdParticipants .filters .filters__swimmer--bio > div,
-    #gtdParticipants .filters .filters__swimmer > div > div,
-    #gtdParticipants .filters .filters__admin > div > div {
+    .gtd-participants .filters .filters__swimmer--bio > div,
+    .gtd-participants .filters .filters__swimmer > div > div,
+    .gtd-participants .filters .filters__admin > div > div {
         margin-right: 5px;
     }
-    #gtdParticipants input.search {
-        margin-top: 2px;
-    }
-    #gtdParticipants input.search--club {
+    .gtd-participants input.search--club {
         text-transform: uppercase;
     }
-    #gtdParticipants select {
-        background-color: #F3F3F3;
-    }
-    .filters__swimmer {
+    .gtd-participants .filters__swimmer {
         display: inline-block;
         margin-right: 30px;
         padding-right: 30px;
         padding-bottom: 10px;
         border-right: 1px solid #CCC;
     }
-    .filters__admin {
+    .gtd-participants .filters__admin {
         width: 35%;
         display: inline-block;
         margin-top: 0;
@@ -369,184 +191,56 @@
         border: 0 none;
         padding-bottom: 10px;
     }
-    .filters__swimmer > div,
-    .filters__admin > div {
+    .gtd-participants .filters__swimmer > div,
+    .gtd-participants .filters__admin > div {
         margin-right: 0;
     }
-    .filters__swimmer--name {
+    .gtd-participants .filters__swimmer--name {
         vertical-align: top;
         display: inline-block;;
     }
-    .filters__swimmer--bio {
+    .gtd-participants .filters__swimmer--bio {
         display: inline-block;
     }
-    .filters__admin--club {
+    .gtd-participants .filters__admin--club {
         width: 280px;
     }
-    .filters__admin--lmsc-zone {
+    .gtd-participants .filters__admin--lmsc-zone {
         width: auto;
     }
-    #gtdParticipants .filters th {
-        padding: 15px 20px 0px;
-    }    
-    #gtdParticipants .filters .name {
+    .gtd-participants .filters .name {
         width: 280px;
         max-width: 280px;
         display: inline-block;
     }
-    #gtdParticipants .filters .sex {
+    .gtd-participants .filters .sex {
         width: 80px;
         max-width: 80px;
         display: inline-block;
     }
-    #gtdParticipants .filters .age {
+    .gtd-participants .filters .age {
         width: 60px;
         max-width: 60px;
         display: inline-block;
     }
-    #gtdParticipants .filters .ageGroup {
+    .gtd-participants .filters .ageGroup {
         width: 80px;
         max-width: 80px;
         display: inline-block;
     }
-    #gtdParticipants .filters .clubAbbr {
+    .gtd-participants .filters .clubAbbr {
         display: inline-block;
     }    
-    #gtdParticipants .filters .zone {
+    .gtd-participants .filters .zone {
         width: 120px;
         min-width: 120px;
         display: inline-block;
         max-width: initial;
     }
-    #gtdParticipants .filters .lmsc {
+    .gtd-participants .filters .lmsc {
         width: 150px;
         min-width: 150px;
         display: inline-block;
         max-width: initial;
     }
-
-
-    /**************************************** Sort and List */
-
-    #gtdParticipants .sorting .name,
-    #gtdParticipants .list .name {
-        width: 230px;
-        min-width: 230px;
-    }
-    
-    #gtdParticipants .sorting .first {
-        width: 280px;
-        min-width: 280px;
-    }
-    #gtdParticipants .sorting .miles,
-    #gtdParticipants .list .miles {
-        font-size: 15px;
-        width: 130px;
-        min-width: 130px;
-        padding-right: 40px;
-    }
-    #gtdParticipants .sorting .age,
-    #gtdParticipants .list .age {
-        width: 60px;
-        min-width: 60px;
-    }
-    #gtdParticipants .sorting .ageGroup,
-    #gtdParticipants .list .ageGroup {
-        width: 120px;
-        min-width: 120px;
-        text-align: center;
-    }
-    #gtdParticipants .sorting .clubAbbr,
-    #gtdParticipants .list .clubAbbr {
-        width: 90px;
-        min-width: 90px;
-        padding-left: 0;
-    }
-    #gtdParticipants .list .clubAbbr {
-        font-size: 14px;
-    }
-    #gtdParticipants .sorting .lmsc,
-    #gtdParticipants .list .lmsc {
-        width: 130px;
-        min-width: 130px;
-    }
-    #gtdParticipants .list .lmsc {
-        font-size: 14px;
-        line-height: 16px;
-    }
-    #gtdParticipants .sorting .zone,
-    #gtdParticipants .list .zone {
-        width: 120px;
-        min-width: 120px;
-    }
-    #gtdParticipants .list .zone {
-        font-size: 14px;
-    }
 }
-
-
-.miles {
-    text-align: right;
-}
-tfoot li {
-    display: inline-block;
-    padding: 5px 0;
-  }
-  .controls .sort {
-    color: #1e3666;
-    font-size: 14px;
-    line-height: 16px;
-    text-decoration: none;
-    display: block;
-    margin: 5px 0;
-}
-.controls .sort:after {
-    opacity: 0.35;
-    content: 'arrow_drop_down';
-    margin: 0 0 0 -3px;
-    font-family: 'Material Icons';
-    font-weight: 400;
-    font-style: normal;
-    font-size: 2.5rem;
-    position: relative;
-    top: 4px;
-    display: inline;
-    vertical-align: sub;
-    line-height: inherit;
-    text-transform: none;
-    letter-spacing: normal;
-    word-wrap: normal;
-    white-space: nowrap;
-    direction: ltr;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    -moz-osx-font-smoothing: grayscale;
-    font-feature-settings: 'liga';
-}
-.controls .sort.asc:after {
-    opacity: 1;
-    content: 'arrow_drop_up';
-    top: 5px;
-}
-.controls .sort.desc:after {
-    opacity: 1;
-    content: 'arrow_drop_down';
-}
-.list__item .first {
-    font-size: 14px;
-    display: block;
-}
-.list__item .last {
-    display: block;
-    font-size: 21px;
-    font-weight: bold;
-}
-@media only screen and (min-width: 768px) {
-    .list__item .first,
-    .list__item .last {
-        display: inline-block;
-        font-size: 15px;
-        font-weight: normal;
-    }
-}
-

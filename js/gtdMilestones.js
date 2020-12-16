@@ -90,7 +90,7 @@ function updateFilterSummary() {
     el.textContent = selectItemMilestone.value;
     elParent.append(el);
   } if (gtdMilestones.matchingItems.length > 0 ) {
-    var elWrp = document.createElement('p');
+    var elWrp = document.createElement('span');
     var elWrpParent = document.getElementById('filterCount');
     elWrp.textContent = gtdMilestones.matchingItems.length;
     elWrpParent.append(elWrp);

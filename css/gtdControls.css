@@ -15,6 +15,16 @@
     left: 50%;
     vertical-align: top;
 }
+
+
+.gtd-participants,
+.gtd-milestones,
+.gtd-zones {
+    width: 100%;
+    margin: 3rem auto;
+    position: relative;
+}
+
 .search__summary,
 .filters__summary {
     margin: 0px 0 0px;
@@ -37,6 +47,8 @@
     border-bottom: 1px solid #CCC;
     cursor: pointer;
 }
+
+/*
 .filters .filters__swimmer--bio > div,
 .filters .filters__swimmer > div > div,
 .filters .filters__admin > div > div {
@@ -47,7 +59,6 @@
     font-size: 18px;
     font-weight: bold;
     padding: 5px 0;
-    /* margin-bottom: 40px; */
     margin-bottom: 0;
 }
 .filters .title a {
@@ -57,10 +68,11 @@
     padding-left: 8px;
     text-decoration: underline;
     border-left: 1px solid #BBB;
-}
-.filters {
+} */
+
+/* .filters {
     background-color: #DDD;
-}
+} */
 
 .filters ul,
 .filters li {
@@ -72,8 +84,11 @@
 .filters th {
     padding: 15px 10px 25px;
 }
+
+thead.filters,
 div.filters {
-    padding: 15px 20px 0px;
+    padding: 15px 20px 20px;
+    background-color: #DDD;
 }
 .filters label {
     display: block;
@@ -139,10 +154,8 @@ input.search {
 
 /********************************************* Filters */
 
-.filters__admin {
+/* .filters__admin {
     display: block;
-    /* margin-top: 15px; */
-    /* margin-bottom: 10px; */
     margin: 15px 0 10px;
     padding-top: 0;
     border-top: 1px solid #CCC;
@@ -155,11 +168,14 @@ input.search {
 .filters__admin--lmsc-zone {
     display: inline-block;
     width: 200px;
-}
+} */
+
 /* .filters tr th > * {
     vertical-align: top;
     position: relative;
-} */
+} 
+*/
+/*
 .filters .name {
     width: 200px;
     max-width: 200px;
@@ -167,8 +183,6 @@ input.search {
     top: 0;
 }
 .filters .age {
-    /* width: 20%; */
-    /* max-width: 20%; */
     width: 80px;
     max-width: 80px;
     min-width: 80px;
@@ -176,8 +190,6 @@ input.search {
     top: 0;
 }
 .filters .sex {
-    /* width: 25%;
-    max-width: 25%; */
     width: 70px;
     max-width: 70px;
     min-width: 70px;
@@ -203,7 +215,8 @@ input.search {
     width: 43%;
     min-width: 43%;
     display: inline-block;
-}
+} 
+*/
 
 /********************************************* Sort and List */
 
@@ -236,7 +249,7 @@ input.search {
 }
 
 /* Hide from display but keep the LMSC ans Zone html so listjs can render the template data — so we can still filter by LSMC or Zone */
-.sorting .lmsc,
+/* .sorting .lmsc,
 .sorting .zone,
 .list .lmsc,
 .list .zone,
@@ -245,7 +258,7 @@ input.search {
 .sorting .clubAbbr,
 .list .clubAbbr {
     display: none;
-}
+} */
 
 
 .pagination {
@@ -257,7 +270,7 @@ input.search {
     .list tr {
         height: 40px;
     }
-    .sorting .lmsc,
+    /* .sorting .lmsc,
     .sorting .zone,
     .list .lmsc,
     .list .zone,    
@@ -266,7 +279,7 @@ input.search {
     .sorting .clubAbbr,
     .list .clubAbbr {
         display: table-cell;
-    }
+    } */
     .list td {
         font-size: 15px;
     }
@@ -275,12 +288,12 @@ input.search {
     .filters-applied {
         margin: -5px 0 -10px;
     }
-    .search__summary--item,
+    /* .search__summary--item,
     .filters__summary--item {
         font-size: 14px;
         margin-right: 14px;
         display: inline-block;
-    }
+    } */
     /* .search__summary--item {
         text-transform: uppercase;
     } */
@@ -309,8 +322,8 @@ input.search {
         text-rendering: optimizeLegibility;
         -moz-osx-font-smoothing: grayscale;
         font-feature-settings: 'liga';
-    } */
-    /* .search__summary--item-key,
+    }
+    .search__summary--item-key,
     .filters__summary--item-key {
         font-size: 11px;
         font-weight: normal;
@@ -327,29 +340,36 @@ input.search {
     .summary-container {
         position: relative;
         top: initial;
-    }    
+    }
     .filters .title {
-        /* margin-bottom: 40px; */
+        display: block;
+        font-size: 18px;
+        font-weight: bold;
+        padding: 5px 0;
         margin-bottom: 0;
-    }    
+    }
     .filters .title a {
-        font-size: 11px;
+        font-size: 13px;
+        font-weight: normal;
+        margin-left: 4px;
+        padding-left: 8px;
+        text-decoration: underline;
+        border-left: 1px solid #BBB;
     }
     .filters label {
         font-size: 12px;
         line-height: 15px;
         margin: 0 auto;
     }
-    .filters .filters__swimmer--bio > div,
+
+    /* .filters .filters__swimmer--bio > div,
     .filters .filters__swimmer > div > div,
     .filters .filters__admin > div > div {
         margin-right: 5px;
-    }
+    } */
+
     input.search {
         margin-top: 2px;
-    }
-    input.search--club {
-        text-transform: uppercase;
     }
     select {
         background-color: #F3F3F3;
@@ -363,7 +383,7 @@ input.search {
         border: 0 none;
         padding-bottom: 10px;
     }
-    .filters__swimmer > div,
+    /* .filters__swimmer > div,
     .filters__admin > div {
         margin-right: 0;
     }
@@ -379,11 +399,11 @@ input.search {
     }
     .filters__admin--lmsc-zone {
         width: auto;
-    }
+    } */
     .filters th {
         padding: 15px 20px 0px;
-    }    
-    .filters .name {
+    }
+    /* .filters .name {
         width: 280px;
         max-width: 280px;
         display: inline-block;
@@ -417,7 +437,7 @@ input.search {
         min-width: 150px;
         display: inline-block;
         max-width: initial;
-    }
+    } */
 
 
     /**************************************** Sort and List */
@@ -479,15 +499,31 @@ input.search {
 }
 
 
+
+
+
+
+
+
 .miles {
     text-align: right;
 }
 tfoot li {
     display: inline-block;
     padding: 5px 0;
-  }
-  .controls .sort-disabled,
-  .controls .sort {
+}
+.controls tr {
+    vertical-align: middle;
+    height: 30px;
+}
+.controls th,
+.list td {
+    font-size: 16px;
+    line-height: 19px;
+    padding: 5px 10px;
+}
+.controls .sort-disabled,
+.controls .sort {
     color: #1e3666;
     font-size: 14px;
     line-height: 16px;
@@ -536,6 +572,7 @@ tfoot li {
     font-size: 21px;
     font-weight: bold;
 }
+
 @media only screen and (min-width: 768px) {
     .list__item .first,
     .list__item .last {

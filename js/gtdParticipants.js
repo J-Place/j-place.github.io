@@ -72,8 +72,8 @@ var getData = $.ajax({
       }
     });
     gtdParticipants.sort(
-      'last', {
-        order: 'asc',
+      'miles', {
+        order: 'desc',
       }
     );    
     updateFilterSummary();
