@@ -92,11 +92,11 @@ function updateFilterSummary() {
   } if (gtdMilestones.matchingItems.length > 0 ) {
     var elWrp = document.createElement('p');
     var elWrpParent = document.getElementById('filterCount');
-    elWrp.textContent = gtdMilestones.matchingItems.length - 1;
+    elWrp.textContent = gtdMilestones.matchingItems.length;
     elWrpParent.append(elWrp);
     var elPageInfo = document.createElement('p');
     var elPageInfoParent = document.getElementById('pageInfo');
-    elPageInfo.textContent = gtdMilestones.matchingItems.length - 1;
+    elPageInfo.textContent = gtdMilestones.matchingItems.length;
     elPageInfoParent.append(elPageInfo);
   }
 }
