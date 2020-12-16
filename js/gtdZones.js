@@ -5,7 +5,7 @@ function hideLoadingSpinner() {
 hideLoadingSpinner();  
 
 var getParticipants = $.ajax({
-    url: "https://j-place.github.io/participants_all.json",
+    url: "https://j-place.github.io/zones.json",
     type: "GET",
     success: function(response) {
       var data = JSON.parse(getParticipants.responseText);
