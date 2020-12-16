@@ -85,7 +85,7 @@ function updateFilterSummary() {
   pageInfo.innerHTML = '';
   var selectItemMilestone = document.getElementById('selectMilestone');
   if (selectItemMilestone.value !== 'undefined') {
-    var el = document.createElement('p');
+    var el = document.createElement('span');
     var elParent = document.getElementById('filterSummary');
     el.textContent = selectItemMilestone.value;
     elParent.append(el);
