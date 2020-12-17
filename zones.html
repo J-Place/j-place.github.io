@@ -103,7 +103,7 @@
                                     <div class="col-sm-12">
                                         <div class="filters__zone">
                                             <label for="selectLmsc">Jump to Zone</label>
-                                            <select class="select select--zone" id="selectZone" placeholder="" onchange="if (this.selectedIndex > 0) location.href=this[this.selectedIndex].value;">
+                                            <select class="select select--zone" id="selectZone" placeholder="" onchange="if (this.selectedIndex > 0) location.href=this[this.selectedIndex].value">
                                                 <option value="" default selected></option>
                                                 {{#each data}}
                                                     <option value="#{{name}}">{{name}}</option>
@@ -112,7 +112,7 @@
                                         </div>
                                         <div class="filters__lmsc">
                                             <label for="selectLmsc">Jump to LMSC</label>
-                                            <select class="select select--lmsc" id="selectLmsc" placeholder="" onchange="if (this.selectedIndex > 0) location.href=this[this.selectedIndex].value;">
+                                            <select class="select select--lmsc" id="selectLmsc" placeholder="" onchange="if (this.selectedIndex > 0) location.href=this[this.selectedIndex].value">
                                                 <option value="" default selected></option>
                                                 {{#each data}}
                                                     {{#each lmscs}}
@@ -134,7 +134,7 @@
                                             <div class="stats__total">{{miles}} Miles</div>
                                             <div class="stats__avg">{{average}} Miles per Swimmer</div>
                                         </div>
-                                        <a href="#top" class="top-link">Back to Top</a>
+                                        <a href="#top" class="top-link" onclick="(function(){resetSelects()})()">Back to Top</a>
                                     </div>
                                 </div>
                                 {{#each lmscs}}

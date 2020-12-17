@@ -10,10 +10,6 @@ var getParticipants = $.ajax({
     success: function(response) {
       var data = JSON.parse(getParticipants.responseText);
       createHtml(data);
-      // formatMiles(data);
-      // formatAvg(data);
-      // cleanData(data);
-      // console.log(data.data[0].average.toFixed(2));
     },
     error: function(xhr) {
       console.log("Failed to load data.");
@@ -40,31 +36,12 @@ var getParticipants = $.ajax({
 // getParticipants();
 
 
+// Clear the select inputs on back to top
+function resetSelects() {
+  $('select').prop('selectedIndex', 0);
+}
 
-// function formatAvg(average) {
-//   let formattedAvg = average.toFixed(2);;
-//     average = formattedAvg;  
-//     return average;
-// }
-  
-  
-
-// function formatMiles(miles) {  
-//     miles = data[0].miles.toFixed(2);
-//     return miles;
-// }
-
-// function cleanData(data) {
-//   console.log("Cleaning data ...");
-//   // data.data[0].average.toFixed(2)
-//     let tempData = data;
-//     for (var i = 0; i < tempData.length; i++) {
-//         tempData[i].average = formatAvg(data[i].average);
-//     }
-// };
-// cleanData(data);
-
-
+// Populate Handlebars template
 function createHtml(data) {
     var rawTemplate = document.getElementById("zoneTemplate").innerHTML;
     var compiledTemplate = Handlebars.compile(rawTemplate);
