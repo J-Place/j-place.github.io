@@ -158,13 +158,11 @@ function updateFilterSummary() {
   // Clear all items before drawing new
   var filterCount = document.getElementById('filterCount');
   var filterSummary = document.getElementById('filterSummary');
-  // var pageInfo = document.getElementById('paginationInfo');
   var paginationCount = document.getElementById('paginationCount');
-  var paginationMilestone = document.getElementById('paginationMilestone');
+  // var paginationMilestone = document.getElementById('paginationMilestone');
 
   filterCount.innerHTML = '';
   filterSummary.innerHTML = '';
-  // pageInfo.innerHTML = '';
   paginationCount.innerHTML = '';
 
 
