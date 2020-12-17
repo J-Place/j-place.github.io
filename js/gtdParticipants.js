@@ -196,6 +196,9 @@ function updateFilterSummary() {
   }
 
   // Remove filter summary "buttons"
+  $("#name").click(function(){
+    handleFilters();
+  });
   $("#sex").click(function(){
     document.getElementById("selectSex").selectedIndex = 0;
     handleFilters();
