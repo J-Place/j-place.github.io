@@ -50,7 +50,6 @@ var getData = $.ajax({
     gtdParticipants = new List('gtdParticipants', options, dataLocal);
     gtdParticipants.filter(function(item) { 
       if (item.values() !== undefined) {
-        console.log(gtdParticipants);
         return gtdParticipants.matchingItems.length && true;
       } else {
         return false;
