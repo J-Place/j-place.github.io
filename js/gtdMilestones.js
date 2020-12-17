@@ -45,7 +45,7 @@ var getData = $.ajax({
 });
 
 var options = {
-  page: 25,
+  page: 50,
   pagination: true,
   left: 0,
   right: 0,
