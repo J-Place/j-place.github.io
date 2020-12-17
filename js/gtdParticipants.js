@@ -47,15 +47,9 @@ var getData = $.ajax({
   success: function (response) {
     var data = JSON.parse(getData.responseText);
     var dataLocal = data.data;
-    // for (var i = 0; i < dataLocal.length; i++) {
-    //   let milestone = dataLocal[i].milestone;
-    //   let milestoneFixed = milestone.slice(0, -6);
-    //   dataLocal[i].milestone = milestoneFixed;
-    // }
     gtdParticipants = new List('gtdParticipants', options, dataLocal);
     gtdParticipants.filter(function(item) { 
       if (item.values() !== undefined) {
-        // console.log(gtdParticipants.visibleItems.length);
         console.log(gtdParticipants);
         return gtdParticipants.matchingItems.length && true;
       } else {
@@ -77,8 +71,6 @@ var getData = $.ajax({
 var options = {
   page: 25,
   pagination: true,
-  // left: 0,
-  // right: 0,
   pagination: {
     left: 1,
     right: 1,
@@ -164,7 +156,6 @@ function updateFilterSummary() {
   filterCount.innerHTML = '';
   filterSummary.innerHTML = '';
   paginationCount.innerHTML = '';
-
 
   // Render page counts
   var elFilterCount = document.createElement('span');
