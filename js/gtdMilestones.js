@@ -45,12 +45,15 @@ var getData = $.ajax({
 });
 
 var options = {
-  page: 99,
+  page: 25,
   pagination: true,
-  innerWindow: 5,
   left: 0,
   right: 0,
-  paginationClass: "pagination",
+  pagination: {
+    innerWindow: 3,
+    outerWindow: 1,
+    paginationClass: "pagination",
+  },
   valueNames: ['milestone', 'first', 'last', 'age', 'sex', 'clubAbbr', 'dateAchieved'],
 }
 
@@ -80,12 +83,14 @@ function updateFilterSummary() {
 
   // Clear all items before drawing new
   var filterSummary = document.getElementById('filterSummary');
-  var pageInfo = document.getElementById('pageInfo');
+  var paginationCount = document.getElementById('paginationCount');
+  var paginationMilestone = document.getElementById('paginationMilestone');
   filterSummary.innerHTML = '';
   filterCount.innerHTML = '';
-  pageInfo.innerHTML = '';
+  paginationCount.innerHTML = '';
+  paginationMilestone.innerHTML = '';
 
-  // Loop thru and render summary items
+  // Render summary items
   var selectItemMilestone = document.getElementById('selectMilestone');
 
   if (selectItemMilestone.value !== 'undefined') {
@@ -95,6 +100,11 @@ function updateFilterSummary() {
     el.textContent = selectItemMilestone.value;
     elParent.append(el);
 
+    var elPageMilestone = document.createElement('span');
+    var elPageMilestoneParent = document.getElementById('paginationMilestone');
+    elPageMilestone.textContent = selectItemMilestone.value;
+    elPageMilestoneParent.append(elPageMilestone);
+
   } if (gtdMilestones.matchingItems.length > 0 ) {
 
     var elWrp = document.createElement('span');
@@ -102,10 +112,10 @@ function updateFilterSummary() {
     elWrp.textContent = gtdMilestones.matchingItems.length;
     elWrpParent.append(elWrp);
 
-    var elPageInfo = document.createElement('p');
-    var elPageInfoParent = document.getElementById('pageInfo');
-    elPageInfo.textContent = gtdMilestones.matchingItems.length;
-    elPageInfoParent.append(elPageInfo);
+    var elPageCount = document.createElement('span');
+    var elPageCountParent = document.getElementById('paginationCount');
+    elPageCount.textContent = gtdMilestones.matchingItems.length;
+    elPageCountParent.append(elPageCount);
 
   }
 }

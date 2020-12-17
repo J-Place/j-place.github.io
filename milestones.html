@@ -98,11 +98,9 @@
 									<th colspan="9">
 										<div class="title">
 											Milestone Achievements
-											<!-- <a id="clearFilters" href="#">Clear All Filters</a> -->
 										</div>
 
 										<div class="filters__milestones">
-                                            <!-- <label for="">Miles</label> -->
                                             <select class="select select--milestone" id="selectMilestone" placeholder="">
 												<option value="50 miles" default selected>50 Miles</option>
 												<option value="100 miles">100 Miles</option>
@@ -110,7 +108,7 @@
 												<option value="200 miles">200 Miles</option>
                                                 <option value="250 miles">250 Miles</option>
                                                 <option value="300 miles">300 Miles</option>
-                                                <option value="365.25 miles">365 Miles</option>
+                                                <option value="365.25 miles">365.25 Miles</option>
                                                 <option value="400 miles">400 Miles</option>
                                                 <option value="500 miles">500 Miles</option>
                                                 <option value="750 miles">750 Miles</option>
@@ -142,7 +140,6 @@
 										<a class="sort" href="#" data-sort="clubAbbr">Club</a>
 									</th>
 									<th class="milestone">
-										<!-- <a class="sort" href="#" data-sort="milestone">Distance</a> -->
 										<span class="sort-disabled">Distance</span>
 									</th>
 									<th class="dateAchieved">
@@ -163,9 +160,16 @@
                                     <td class="dateAchieved"></td>
 								</tr>
 							</tbody>
-							<tfoot class="pagination">
+							<tfoot>
+								<tr>
+									<td colspan="6" align="center">
+										<ul class="pagination"></ul>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="6" align="center"><span id="paginationCount"></span> swimmers completed <span id="paginationMilestone"></span></td>
+								</tr>
 							</tfoot>
-							<tfoot id="pageInfo"></tfoot>
 						</table>
 
 					</div>

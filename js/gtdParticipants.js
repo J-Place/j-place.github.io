@@ -55,6 +55,8 @@ var getData = $.ajax({
     gtdParticipants = new List('gtdParticipants', options, dataLocal);
     gtdParticipants.filter(function(item) { 
       if (item.values() !== undefined) {
+        // console.log(gtdParticipants.visibleItems.length);
+        console.log(gtdParticipants);
         return gtdParticipants.matchingItems.length && true;
       } else {
         return false;
@@ -73,12 +75,17 @@ var getData = $.ajax({
 });
 
 var options = {
-  page: 99,
+  page: 25,
   pagination: true,
-  innerWindow: 1,
-  left: 0,
-  right: 0,
-  paginationClass: "pagination",
+  // left: 0,
+  // right: 0,
+  pagination: {
+    left: 1,
+    right: 1,
+    innerWindow: 2,
+    outerWindow: 2,
+    paginationClass: "pagination",
+  },
   valueNames: [ 'first', 'last', 'miles', 'sex', 'ageGroup', 'age', 'clubAbbr', 'lmsc', 'zone' ],
 };
 
@@ -117,8 +124,6 @@ function handleSearch() {
   var isEmptyName = searchNameInput.value === '';
   if (isEmptyName === false) {
     gtdParticipants.search(searchNameValue, ['first', 'last', 'age', 'clubAbbr']);
-    // handleFilters();
-    // updateSearchSummary();
   }
   updateSearchSummary();
   handleFilters();
@@ -128,19 +133,21 @@ searchNameInput.onkeyup = handleSearch;
 
 function updateSearchSummary() {
 
+  // Clear all items before drawing new
   var searchSummary = document.getElementById('searchSummary');
-  searchSummary.innerHTML = '';
+  pageInfo.innerHTML = '';
 
+  // Loop thru and render summary items
   var searchNameInput = document.getElementById('searchName');
   var isEmptyName = searchNameInput.value === '';
 
   if (isEmptyName === false ) {
-      var el = document.createElement('p');
-      var elParent = document.getElementById('searchSummary');
-      el.className = "search__summary--item search__summary--item-name";
-      el.id = searchNameInput.parentElement.classList.value;
-      el.textContent = searchNameInput.value;
-      elParent.append(el);
+    var el = document.createElement('p');
+    var elParent = document.getElementById('searchSummary');
+    el.className = "search__summary--item search__summary--item-name";
+    el.id = searchNameInput.parentElement.classList.value;
+    el.textContent = searchNameInput.value;
+    elParent.append(el);  
   }
   searchSummaryBtn();
 }
@@ -158,22 +165,35 @@ function searchSummaryBtn() {
 function updateFilterSummary() {
 
   // Clear all items before drawing new
-  var FilterCount = document.getElementById('filterCount');
+  var filterCount = document.getElementById('filterCount');
   var filterSummary = document.getElementById('filterSummary');
-  FilterCount.innerHTML = '';
+  // var pageInfo = document.getElementById('paginationInfo');
+  var paginationCount = document.getElementById('paginationCount');
+  var paginationMilestone = document.getElementById('paginationMilestone');
+
+  filterCount.innerHTML = '';
   filterSummary.innerHTML = '';
+  // pageInfo.innerHTML = '';
+  paginationCount.innerHTML = '';
+
+
+  // Render page counts
+  var elFilterCount = document.createElement('span');
+  var elFilterCountParent = document.getElementById('filterCount');
+  elFilterCount.textContent = gtdParticipants.matchingItems.length;
+  elFilterCountParent.append(elFilterCount);
   
+  var elPageCount = document.createElement('span');
+  var elPageCountParent = document.getElementById('paginationCount');
+  elPageCount.textContent = gtdParticipants.matchingItems.length;
+  elPageCountParent.append(elPageCount);
+
   // Loop thru applied filters and render summary "buttons"
   var selectItemSex = document.getElementById('selectSex');
   var selectItemAgeGroup = document.getElementById('selectAgeGroup');
   var selectItemLmsc = document.getElementById('selectLmsc');
   var selectItemZone = document.getElementById('selectZone');
   var filterItems = [selectItemSex, selectItemAgeGroup, selectItemLmsc, selectItemZone];
-
-  var elFilterCount = document.createElement('span');
-  var elFilterCountParent = document.getElementById('filterCount');
-  elFilterCount.textContent = gtdParticipants.matchingItems.length;
-  elFilterCountParent.append(elFilterCount);      
 
   for (i = 0; i < filterItems.length; i++) {
     if (filterItems[i].value !== 'All') {
