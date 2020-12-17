@@ -3,7 +3,6 @@
     margin: 3rem auto;
     position: relative;
 }
-
 .gtd-participants .filters .filters__swimmer--bio > div,
 .gtd-participants .filters .filters__swimmer > div > div,
 .gtd-participants .filters .filters__admin > div > div {
@@ -30,8 +29,8 @@
 }
 .gtd-participants .filters__admin {
     display: block;
-    margin: 15px 0 10px;
-    padding-top: 0;
+    margin: 20px 0 10px;
+    padding-top: 5px;
     border-top: 1px solid #CCC;
 }
 .gtd-participants .filters__admin--club {
@@ -39,9 +38,12 @@
     width: 80px;
     margin-right: 10px;
 }
+/* .gtd-participants .filters__count {
+    margin: 10px 15px 15px 0;
+    font-weight: normal;
+} */
 .gtd-participants .filters__admin--lmsc-zone {
     display: inline-block;
-    /* width: 200px; */
 }
 .gtd-participants .filters .name {
     width: 200px;
@@ -86,6 +88,15 @@
     min-width: 110px;
     display: inline-block;
 }
+
+
+/* .gtd-participants .filters__count {
+    font-size: 13px;
+    margin-right: 14px;
+    display: inline-block;
+} */
+
+
 .gtd-participants .search__summary--item,
 .gtd-participants .filters__summary--item {
     font-size: 14px;
@@ -130,7 +141,6 @@
     border-bottom: 1px solid #CCC;
     cursor: pointer;
 }
-
 /* Hide from display but keep the LMSC ans Zone html so listjs can render the template data — so we can still filter by LSMC or Zone */
 .gtd-participants .sorting .lmsc,
 .gtd-participants .sorting .zone,
@@ -154,6 +164,19 @@
     .gtd-participants .sorting .clubAbbr,
     .gtd-participants .list .clubAbbr {
         display: table-cell;
+    }
+    .sorting .first,
+    .list .first {
+        /* width: 280px; */
+        /* min-width: 280px; */
+        display: inline-block;
+        font-size: 16px;
+    }
+    .sorting .last,
+    .list .last {
+        display: inline-block;
+        font-size: 16px;
+        font-weight: normal;
     }
     .gtd-participants .summary-container {
         position: relative;

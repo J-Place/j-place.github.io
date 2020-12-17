@@ -1,13 +1,8 @@
-// function getEventResults() {
-//   hideLoadingSpinner();
-// }
-
 function hideLoadingSpinner() {
   const loadingSpinner = document.getElementById('loadingWrapper');
   loadingSpinner.classList.add('hide');
 }
 hideLoadingSpinner();
-
 
 // function getEventResults() {
 //   // showLoadingOverlay();
@@ -26,7 +21,6 @@ hideLoadingSpinner();
 // }
 // getEventResults();
 
-
 // function getEventResults() {
 //   const xhr = new XMLHttpRequest();
 //   // xhr.open('GET', `/apis/v1/gtd/participants`, true);
@@ -41,7 +35,6 @@ hideLoadingSpinner();
 //   xhr.send();
 // }
 // getEventResults();
-
 
 function hideLoadingSpinner() {
   const loadingSpinner = document.getElementById('loadingWrapper');
@@ -59,11 +52,7 @@ var getData = $.ajax({
     //   let milestoneFixed = milestone.slice(0, -6);
     //   dataLocal[i].milestone = milestoneFixed;
     // }
-
-    console.log(dataLocal[0].name);
-
     gtdParticipants = new List('gtdParticipants', options, dataLocal);
-
     gtdParticipants.filter(function(item) { 
       if (item.values() !== undefined) {
         return gtdParticipants.matchingItems.length && true;
@@ -82,7 +71,6 @@ var getData = $.ajax({
     console.log("Failed to load data.");
   },
 });
-
 
 var options = {
   page: 99,
@@ -118,14 +106,12 @@ var options = {
 //   }
 // );
 
-
 let searchNameInput = document.getElementById('searchName');
 let searchAgeInput = document.getElementById('searchAge');
 let searchClubInput = document.getElementById('searchClub');
 
 
 function handleSearch() {
-  console.log("Handling Search");
   var searchNameInput = document.getElementById('searchName');
   var searchNameValue = document.getElementById('searchName').value;
   var isEmptyName = searchNameInput.value === '';
@@ -141,11 +127,13 @@ searchNameInput.onkeyup = handleSearch;
 
 
 function updateSearchSummary() {
-  console.log("Updating Search Summary");
+
   var searchSummary = document.getElementById('searchSummary');
   searchSummary.innerHTML = '';
+
   var searchNameInput = document.getElementById('searchName');
   var isEmptyName = searchNameInput.value === '';
+
   if (isEmptyName === false ) {
       var el = document.createElement('p');
       var elParent = document.getElementById('searchSummary');
@@ -157,39 +145,36 @@ function updateSearchSummary() {
   searchSummaryBtn();
 }
 
-
 function searchSummaryBtn() {  
-  console.log("Creating Search Summary Button");
   var searchNameInput = document.getElementById('searchName');
   $("#name").click(function(){
-    console.log("Removing Search Summary Button");
     searchNameInput.value = '';
     handleSearch();
     handleFilters();
-    // var summaryItemName = document.getElementById("name");    
-    // summaryItemName.remove();
     gtdParticipants.search();
   });
 }
 
-
-
-
-
-
-
-
 function updateFilterSummary() {
-  // Clear all items before drawing new
-  var filterSummary = document.getElementById('filterSummary');
-  filterSummary.innerHTML = '';
 
+  // Clear all items before drawing new
+  var FilterCount = document.getElementById('filterCount');
+  var filterSummary = document.getElementById('filterSummary');
+  FilterCount.innerHTML = '';
+  filterSummary.innerHTML = '';
+  
   // Loop thru applied filters and render summary "buttons"
   var selectItemSex = document.getElementById('selectSex');
   var selectItemAgeGroup = document.getElementById('selectAgeGroup');
   var selectItemLmsc = document.getElementById('selectLmsc');
   var selectItemZone = document.getElementById('selectZone');
   var filterItems = [selectItemSex, selectItemAgeGroup, selectItemLmsc, selectItemZone];
+
+  var elFilterCount = document.createElement('span');
+  var elFilterCountParent = document.getElementById('filterCount');
+  elFilterCount.textContent = gtdParticipants.matchingItems.length;
+  elFilterCountParent.append(elFilterCount);      
+
   for (i = 0; i < filterItems.length; i++) {
     if (filterItems[i].value !== 'All') {
       var el = document.createElement('p');
@@ -198,8 +183,9 @@ function updateFilterSummary() {
       el.id = filterItems[i].parentElement.classList.value;
       el.textContent = filterItems[i].value;
       elParent.append(el);
-    }    
+    }
   }
+
   // Remove filter summary "buttons"
   $("#sex").click(function(){
     document.getElementById("selectSex").selectedIndex = 0;
@@ -305,7 +291,5 @@ $("#clearFilters").click(function(){
   gtdParticipants.search();
   gtdParticipants.sort('miles', {order:'desc'});
   handleSearch();
-  // updateSearchSummary();
   handleFilters();
-  // updateFilterSummary();
 });

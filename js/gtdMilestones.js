@@ -77,27 +77,36 @@ function handleFilters() {
 
 
 function updateFilterSummary() {
+
   // Clear all items before drawing new
   var filterSummary = document.getElementById('filterSummary');
   var pageInfo = document.getElementById('pageInfo');
   filterSummary.innerHTML = '';
   filterCount.innerHTML = '';
   pageInfo.innerHTML = '';
+
+  // Loop thru and render summary items
   var selectItemMilestone = document.getElementById('selectMilestone');
+
   if (selectItemMilestone.value !== 'undefined') {
+
     var el = document.createElement('span');
     var elParent = document.getElementById('filterSummary');
     el.textContent = selectItemMilestone.value;
     elParent.append(el);
+
   } if (gtdMilestones.matchingItems.length > 0 ) {
+
     var elWrp = document.createElement('span');
     var elWrpParent = document.getElementById('filterCount');
     elWrp.textContent = gtdMilestones.matchingItems.length;
     elWrpParent.append(elWrp);
+
     var elPageInfo = document.createElement('p');
     var elPageInfoParent = document.getElementById('pageInfo');
     elPageInfo.textContent = gtdMilestones.matchingItems.length;
     elPageInfoParent.append(elPageInfo);
+
   }
 }
 
