@@ -58,7 +58,6 @@ var options = {
 }
 
 
-
 function handleFilters() {
   var selectValueMilestone = document.getElementById('selectMilestone').value;
   if (!gtdMilestones) {
@@ -76,7 +75,6 @@ function handleFilters() {
   }
   updateFilterSummary();
 }
-
 
 
 function updateFilterSummary() {
@@ -125,7 +123,6 @@ $(".select").change(function () {
   handleFilters();
 });
 
-// let selectItemMilestone = document.getElementById('selectMilestone');
 
 $("#clearFilters").click(function(){
   $("select").each(function() { this.selectedIndex = 12 });
