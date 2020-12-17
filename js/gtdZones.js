@@ -42,14 +42,12 @@ var getParticipants = $.ajax({
 
 
 
-
 // function formatAvg(average) {
 //   let formattedAvg = average.toFixed(2);;
 //     average = formattedAvg;  
 //     return average;
 // }
   
-
   
 
 // function formatMiles(miles) {  
