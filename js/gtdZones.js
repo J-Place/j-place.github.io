@@ -16,7 +16,6 @@ var getParticipants = $.ajax({
     }
 })
 
-
 // function getParticipants() {
 //   const xhr = new XMLHttpRequest();
 //   xhr.open('GET', `https://test.usms.org/apis/v1/gtd/zlc-participation`, true);
@@ -34,7 +33,6 @@ var getParticipants = $.ajax({
 //   xhr.send(null);
 // }
 // getParticipants();
-
 
 // Clear the select inputs on back to top
 function resetSelects() {
