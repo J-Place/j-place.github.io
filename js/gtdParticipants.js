@@ -103,16 +103,6 @@ var options = {
 // cleanData(dataLocal);
 
 
-// // Initialize List.js
-// var gtdParticipants = new List('gtdParticipants', options, newData );
-
-// // List sort defaults
-// gtdParticipants.sort(
-//   'miles', {
-//   order:'desc',
-//   }
-// );
-
 let searchNameInput = document.getElementById('searchName');
 let searchAgeInput = document.getElementById('searchAge');
 let searchClubInput = document.getElementById('searchClub');
@@ -135,13 +125,14 @@ function updateSearchSummary() {
 
   // Clear all items before drawing new
   var searchSummary = document.getElementById('searchSummary');
-  pageInfo.innerHTML = '';
+  searchSummary.innerHTML = '';
 
   // Loop thru and render summary items
   var searchNameInput = document.getElementById('searchName');
   var isEmptyName = searchNameInput.value === '';
 
   if (isEmptyName === false ) {
+  // if (searchNameInput.value !== '' || searchNameInput.value !== undefined)
     var el = document.createElement('p');
     var elParent = document.getElementById('searchSummary');
     el.className = "search__summary--item search__summary--item-name";
