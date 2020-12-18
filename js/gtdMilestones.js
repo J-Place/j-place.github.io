@@ -13,15 +13,6 @@ var getData = $.ajax({
   success: function (response) {
     var data = JSON.parse(getData.responseText);
     var dataLocal = data.data;
-    // for (var i = 0; i < dataLocal.length; i++) {
-    //   if (haystack.includes(needle)) {
-    //     // do your thing
-    //   }
-    //   let milestone = dataLocal[i].milestone;
-    //   let milestoneFixed = milestone.slice(0, -6);
-    //   dataLocal[i].milestone = milestoneFixed;
-    // }
-    // console.log(dataLocal);
 
     gtdMilestones = new List('gtdMilestones', options, dataLocal);
 
@@ -43,6 +34,25 @@ var getData = $.ajax({
     console.log("Failed to load data.");
   },
 });
+
+// function getParticipants() {
+//   const xhr = new XMLHttpRequest();
+//   xhr.open('GET', `https://test.usms.org/apis/v1/gtd/milestones`, true);
+//   xhr.withCredentials = true;
+//   console.log("Status is " + xhr.status);
+//   xhr.onload = function () {
+//     console.log("Loading Data");
+//     if (xhr.status === 200) {
+//       const response = JSON.parse(xhr.responseText);
+//       console.log(response.data);
+//     } else {
+//       showErrorModal('Error updating coaches');
+//     }
+//   };
+//   xhr.send(null);
+// }
+// getParticipants();
+
 
 var options = {
   page: 50,

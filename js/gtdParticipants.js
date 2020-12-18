@@ -4,6 +4,7 @@ function hideLoadingSpinner() {
 }
 hideLoadingSpinner();
 
+
 // function getEventResults() {
 //   // showLoadingOverlay();
 //   const xhr = new XMLHttpRequest();
@@ -21,20 +22,6 @@ hideLoadingSpinner();
 // }
 // getEventResults();
 
-// function getEventResults() {
-//   const xhr = new XMLHttpRequest();
-//   // xhr.open('GET', `/apis/v1/gtd/participants`, true);
-//   xhr.open('GET', `https://test.usms.org/apis/v1/gtd/participants`, true);
-//   xhr.withCredentials = true;
-//   xhr.onload = function () {
-//     if (xhr.status === 200) {
-//       const response = JSON.parse(xhr.response);
-//     }
-//     console.log(response);
-//   };
-//   xhr.send();
-// }
-// getEventResults();
 
 function hideLoadingSpinner() {
   const loadingSpinner = document.getElementById('loadingWrapper');
@@ -92,7 +79,6 @@ var options = {
 // };
 // let newData = dataLocal; // Use local data object until api access is fixed
 // cleanData(dataLocal);
-
 
 let searchNameInput = document.getElementById('searchName');
 let searchAgeInput = document.getElementById('searchAge');
