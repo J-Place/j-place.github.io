@@ -18,51 +18,99 @@
     line-height: 150%;
 }
 
-.carousel-item {
-    /* height: auto; */
-    height: 500px;
+.carousel {
+    height: 100%;
 }
 
-.carousel-item > img {
+.carousel-inner {
+    height: 100%;
+}
+
+.carousel-item {
+    height: 100%;
+}
+
+.carousel-image-container {
+    height: auto;
+    width: auto;
+}
+
+.carousel-image-container img {
     width: 100%;
     height: auto;
 }
 
-.carousel-inner {
-    height: 150%;
+.carousel-indicators {
+    position: relative;
 }
 
+.carousel-indicators [data-bs-target] {
+    text-indent: initial;
+    height: 30px;
+    border-radius: 100%;
+    background-color: #333;
+    color: #FFF;
+}
+
+.carousel-indicators [data-bs-slide-to="0"]:before {
+    content: "1";
+}
+.carousel-indicators [data-bs-slide-to="1"]:before {
+    content: "2";
+}
+.carousel-indicators [data-bs-slide-to="2"]:before {
+    content: "3";
+}
+.carousel-indicators [data-bs-slide-to="3"]:before {
+    content: "4";
+}
+.carousel-indicators [data-bs-slide-to="4"]:before {
+    content: "5";
+}
+.carousel-indicators [data-bs-slide-to="5"]:before {
+    content: "6";
+}
+.carousel-indicators [data-bs-slide-to="6"]:before {
+    content: "7";
+}
+.carousel-indicators [data-bs-slide-to="7"]:before {
+    content: "8";
+}
+.carousel-indicators [data-bs-slide-to="8"]:before {
+    content: "9";
+}
+
+.carousel-indicators [data-bs-slide="prev"],
+.carousel-indicators [data-bs-slide="next"] {
+    background-color: #FFF;
+}
+
+
 .carousel-control-prev {
-    bottom: 0;
+    bottom: initial;
     height: 15rem;
-    top: initial;
+    top: 0%;
     z-index: 11;
     width: 10%;
     left: -10%;
 }
 
 .carousel-control-next {
-    bottom: 0;
+    bottom: initial;
     height: 15rem;
-    top: initial;
+    top: 0%;
     z-index: 11;
     width: 10%;
     right: -10%;
 }
 
-.carousel-caption {
-    /* background-color: #051d37; */
-    background-color: #FFF;
-    /* color:#FFF; */
-    color: #333;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: auto;
-    padding: 1rem 0 2rem;
+.carousel-text-container {
+    display: block;
+    position: relative;
+    padding: 2rem 0 0;
 }
 
-.carousel-caption p {
+.carousel-text-container p {
     font-size: 1.8rem;
 }
 
