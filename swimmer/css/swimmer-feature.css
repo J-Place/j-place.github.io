@@ -152,36 +152,51 @@ main {
     }
 }
 
-.pull-quote p {
+.pull-quote .pull-quote-text {
     font-size: 3.6rem;
-    line-height: 5rem;
+    line-height: 140%;
     font-weight: 300;
     color: #888;
-    display: inline;
+    display: inline-block;
 }
 
-/* .pull-quote p:first-letter {
-    font-size: 4.9rem;
-    padding-right: 0.1rem;
-    font-weight: 500;
-} */
-
-.pull-quote::before {
+.pull-quote .pull-quote-text::before {
     color: #888;
     content: "\201C";
     display: inline;
     font-size: 3.8rem;
     font-family: Arial, Helvetica, sans-serif;
-    margin-right: -0.2rem;
+    margin-right: 0.2rem;
 }
 
-.pull-quote::after {
+.pull-quote .pull-quote-text::after {
     color: #888;
     content: "\201D";
     display: inline;
     font-size: 3.8rem;
     font-family: Arial, Helvetica, sans-serif;
-    margin-left: -0.8rem;
+    margin-left: -0.4rem;
+}
+
+.pull-quote .pull-quote-attribution {
+    font-size: 1.8rem;
+    line-height: 150%;
+    font-weight: 300;
+    color: #888;
+    text-align: right;
+    display: inline-block;
+    margin: 2rem auto 0;
+    padding: 0 5rem;
+}
+
+.pull-quote .pull-quote-attribution::before {
+    color: #888;
+    content: "-";
+    display: inline;
+    font-size: 1.8rem;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: -25px;
+    padding-right: 5px;
 }
 
 .ad-inline {
