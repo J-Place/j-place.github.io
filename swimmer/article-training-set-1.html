@@ -331,7 +331,7 @@
                                     </ul>
                                 </div>
                             </div>
-                             <div class="article-author bg-ltblue">
+                              <div class="article-author bg-ltblue">
                                     <div class="article-author__header">
                                         <div class="article-author__image-container bg-gray">
                                             <img class="article-author__image" src="https://usms-cdn.azureedge.net/-/media/usms/non-lightroom images/usms logos/usms logo/usmslogosquare.png?h=1000&amp;w=1000&amp;rev=a64baa1416514c5494e20dbf612a5246&amp;hash=A5E52F1B431630C95249262AB3C6981A" alt="Article image">
@@ -344,168 +344,171 @@
                                         </div>
                                     </div>
                                  </div>
+                              </div>
 
+                              <style>
 
+                                 .carousel-control-prev {
+                                    left: -80px;
+                                    /* background-color: red !important; */
+                                    height: 100%;
+                                 }
 
+                                 .carousel-control-next {
+                                    right: -80px;
+                                    /* background-color: red !important; */
+                                    height: 100%;
+                                 }
+                                 .carousel-control-prev-icon {
+                                    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23333'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e")
+                                 }
 
+                                 .carousel-control-next-icon {
+                                    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23333'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e")
+                                 }
 
-
-
-                                 <style>
-
-                                    .carousel-control-prev {
-                                       left: -80px;
-                                       /* background-color: red !important; */
-                                       height: 100%;
+                                 @media (max-width: 767px) {
+                                    .carousel-inner .carousel-item > div {
+                                       display: none;
                                     }
-
-                                    .carousel-control-next {
-                                       right: -80px;
-                                       /* background-color: red !important; */
-                                       height: 100%;
+                                    .carousel-inner .carousel-item > div:first-child {
+                                       display: block;
                                     }
-                                    .carousel-control-prev-icon {
-                                       background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23333'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e")
-                                    }
+                                 }
 
-                                    .carousel-control-next-icon {
-                                       background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23333'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e")
-                                    }
+                                 .carousel-inner .carousel-item.active,
+                                 .carousel-inner .carousel-item-next,
+                                 .carousel-inner .carousel-item-prev {
+                                    display: flex;
+                                 }
 
-                                    @media (max-width: 767px) {
-                                       .carousel-inner .carousel-item > div {
-                                          display: none;
-                                       }
-                                       .carousel-inner .carousel-item > div:first-child {
-                                          display: block;
-                                       }
+                                 /* medium and up screens */
+                                 @media (min-width: 768px) {
+                                    .carousel-inner .carousel-item-end.active,
+                                    .carousel-inner .carousel-item-next {
+                                       transform: translateX(25%);
                                     }
-
-                                    .carousel-inner .carousel-item.active,
-                                    .carousel-inner .carousel-item-next,
+                                    
+                                    .carousel-inner .carousel-item-start.active, 
                                     .carousel-inner .carousel-item-prev {
-                                       display: flex;
+                                       transform: translateX(-25%);
                                     }
+                                 }
 
-                                    /* medium and up screens */
-                                    @media (min-width: 768px) {
-                                       .carousel-inner .carousel-item-end.active,
-                                       .carousel-inner .carousel-item-next {
-                                          transform: translateX(25%);
-                                       }
-                                       
-                                       .carousel-inner .carousel-item-start.active, 
-                                       .carousel-inner .carousel-item-prev {
-                                          transform: translateX(-25%);
-                                       }
-                                    }
+                                 .carousel-inner .carousel-item-end,
+                                 .carousel-inner .carousel-item-start { 
+                                 transform: translateX(0);
+                                 }
+                                 .article-stepper .carousel-item {
+                                    height: 100%;
+                                 }
+                                 .article-stepper .carousel-image-container {
+                                    height: 120px;
+                                    width: 100%;
+                                    background-color: #333;
+                                    text-align: center;
+                                    overflow: hidden;
+                                 }
+                                 .article-stepper .carousel-image-container img {
+                                    width: auto;
+                                    height: 102%;
+                                    margin: 0 auto;
+                                 }
+                                 .article-stepper .carousel-text-container {
+                                    font-size: 14px;
+                                    line-height: 16px;
+                                    text-align: center;
+                                    padding: 8px 8px;
+                                    font-weight: bold;
+                                 }
+                                 .article-stepper a {
+                                    text-decoration: none;
+                                    color:#777;
+                                 }
+                                 .article-stepper h3 {
+                                    margin: 0 auto 3rem;
+                                 }
 
-                                    .carousel-inner .carousel-item-end,
-                                    .carousel-inner .carousel-item-start { 
-                                    transform: translateX(0);
-                                    }
-                                    #articleStepper .carousel-item {
-                                       height: 100%;
-                                    }
-                                    #articleStepper .carousel-image-container {
-                                       height: 120px;
-                                       width: 100%;
-                                       background-color: #333;
-                                       text-align: center;
-                                       overflow: hidden;
-                                    }
-                                    #articleStepper .carousel-image-container img {
-                                       width: auto;
-                                       height: 102%;
-                                       margin: 0 auto;
-                                    }
-                                    #articleStepper .carousel-text-container {
-                                       font-size: 14px;
-                                       line-height: 16px;
-                                       text-align: center;
-                                       padding: 8px 8px;
-                                       font-weight: bold;
-                                    }
-                                    #articleStepper a {
-                                       text-decoration: none;
-                                       color:#777;
-                                    }
+                              </style>
 
-                                 </style>
-
+                              <div class="usms-container article-stepper">
                                  <div class="row">
-                                    <h3>Also in This Issue</h3>
-                                    <div id="articleStepper" class="carousel slide" data-bs-ride="carousel"> 
-                                       <div class="carousel-inner">
-                                          <div class="carousel-item active">
-                                             <div class="col-sm-3">
-                                                <a href="#">
-                                                   <div class="carousel-image-container">
-                                                      <img src="https://usms-cdn.azureedge.net/-/media/usms/Developers/Swimmer-UI-Temporary/Pull apart 1.jpg" alt="">
-                                                   </div>
-                                                   <div class="carousel-text-container">
-                                                      <p>Building a Healthy Streamline</p>
-                                                   </div>
-                                                </a>
+                                    <div class="col-xs-12 col-md-3"></div>
+                                    <div class="col-xs-12 col-md-6">
+                                       <h3>Also in This Issue</h3>
+                                       <div id="articleStepper" class="carousel slide" data-bs-ride="carousel"> 
+                                          <div class="carousel-inner">
+                                             <div class="carousel-item active">
+                                                <div class="col-sm-3">
+                                                   <a href="#">
+                                                      <div class="carousel-image-container">
+                                                         <img src="https://usms-cdn.azureedge.net/-/media/usms/Developers/Swimmer-UI-Temporary/Pull apart 1.jpg" alt="">
+                                                      </div>
+                                                      <div class="carousel-text-container">
+                                                         <p>Building a Healthy Streamline</p>
+                                                      </div>
+                                                   </a>
+                                                </div>
+                                             </div>
+                                             <div class="carousel-item">
+                                                <div class="col-sm-3">
+                                                   <a href="#">
+                                                      <div class="carousel-image-container">
+                                                         <img src="https://usms-cdn.azureedge.net/-/media/usms/Developers/Swimmer-UI-Temporary/Peeing600.jpg" alt="">
+                                                      </div>
+                                                      <div class="carousel-text-container">
+                                                         <p>The Delicate Art of Peeing in Open Water</p>
+                                                      </div>
+                                                   </a>
+                                                </div>
+                                             </div>
+                                             <div class="carousel-item">
+                                                <div class="col-sm-3">
+                                                   <a href="#">
+                                                      <div class="carousel-image-container">
+                                                         <img src="https://usms-cdn.azureedge.net/-/media/usms/Developers/Swimmer-UI-Temporary/Psych%20Sheet.jpg" alt="">
+                                                      </div>
+                                                      <div class="carousel-text-container">
+                                                         <p>Why Don't You Feel Like Swimming</p>
+                                                      </div>
+                                                   </a>
+                                                </div>
+                                             </div>
+                                             <div class="carousel-item">
+                                                <div class="col-sm-3">
+                                                   <a href="#">
+                                                      <div class="carousel-image-container">
+                                                         <img src="https://usms-cdn.azureedge.net/-/media/usms/Developers/Swimmer-UI-Temporary/Power%20of%20Naps.jpg" alt="">
+                                                      </div>
+                                                      <div class="carousel-text-container">
+                                                         <p>The Power of Naps</p>
+                                                      </div>
+                                                   </a>
+                                                </div>
                                              </div>
                                           </div>
-                                          <div class="carousel-item">
-                                             <div class="col-sm-3">
-                                                <a href="#">
-                                                   <div class="carousel-image-container">
-                                                      <img src="https://usms-cdn.azureedge.net/-/media/usms/Developers/Swimmer-UI-Temporary/Peeing600.jpg" alt="">
-                                                   </div>
-                                                   <div class="carousel-text-container">
-                                                      <p>The Delicate Art of Peeing in Open Water</p>
-                                                   </div>
-                                                </a>
-                                             </div>
-                                          </div>
-                                          <div class="carousel-item">
-                                             <div class="col-sm-3">
-                                                <a href="#">
-                                                   <div class="carousel-image-container">
-                                                      <img src="https://usms-cdn.azureedge.net/-/media/usms/Developers/Swimmer-UI-Temporary/Psych%20Sheet.jpg" alt="">
-                                                   </div>
-                                                   <div class="carousel-text-container">
-                                                      <p>Why Don't You Feel Like Swimming</p>
-                                                   </div>
-                                                </a>
-                                             </div>
-                                          </div>
-                                          <div class="carousel-item">
-                                             <div class="col-sm-3">
-                                                <a href="#">
-                                                   <div class="carousel-image-container">
-                                                      <img src="https://usms-cdn.azureedge.net/-/media/usms/Developers/Swimmer-UI-Temporary/Power%20of%20Naps.jpg" alt="">
-                                                   </div>
-                                                   <div class="carousel-text-container">
-                                                      <p>The Power of Naps</p>
-                                                   </div>
-                                                </a>
-                                             </div>
-                                          </div>
-                                       </div>
 
-                                       <!-- <div class="carousel-indicators">
-                                          <button class="carousel-control-prev" type="button" data-bs-target="#articleStepper" data-bs-slide="prev">
+                                          <!-- <div class="carousel-indicators">
+                                             <button class="carousel-control-prev" type="button" data-bs-target="#articleStepper" data-bs-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Previous</span>
+                                             </button>    
+                                             <button class="carousel-control-next" type="button" data-bs-target="#articleStepper" data-bs-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="visually-hidden">Next</span>
+                                             </button>
+                                          </div> -->
+
+                                          <a class="carousel-control-prev bg-transparent w-aut" href="#articleStepper" role="button" data-bs-slide="prev">
                                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                             <span class="visually-hidden">Previous</span>
-                                          </button>    
-                                          <button class="carousel-control-next" type="button" data-bs-target="#articleStepper" data-bs-slide="next">
+                                          </a>
+                                          <a class="carousel-control-next bg-transparent w-aut" href="#articleStepper" role="button" data-bs-slide="next">
                                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                             <span class="visually-hidden">Next</span>
-                                          </button>
-                                       </div> -->
+                                          </a>
 
-                                       <a class="carousel-control-prev bg-transparent w-aut" href="#articleStepper" role="button" data-bs-slide="prev">
-                                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                       </a>
-                                       <a class="carousel-control-next bg-transparent w-aut" href="#articleStepper" role="button" data-bs-slide="next">
-                                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                       </a>
-
+                                       </div>
                                     </div>
+                                    <div class="col-xs-12 col-md-3"></div>
                                  </div>
 
                                  <script>
