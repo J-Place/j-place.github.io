@@ -48,8 +48,9 @@
          <script src="https://usms-cdn.azureedge.net/scripts/home.min.js?version=20211213.1"></script>
          <link rel="stylesheet" href="https://www.usms.org/styles/rte.min.css?version=20210920.1">
 
-         <link rel="stylesheet" href="css/carousel.css">
+         <link rel="stylesheet" href="css/carousel.css">         
          <link rel="stylesheet" href="css/bootstrap.min.css">
+         <link rel="stylesheet" href="css/article-stepper.css">
          <!-- <link rel="stylesheet" href="css/carousel-overrides.css"> -->
 
 
@@ -318,124 +319,6 @@
                         <div class="col-xs-12 col-md-3">
                         </div>
                         <div class="col-xs-12 col-md-6">
-                            <style>
-                                .carousel-control-prev {
-                                left: -20px;
-                                /* background-color: red !important; */
-                                height: 70%;
-                                }
-                                
-                                .carousel-control-next {
-                                right: -20px;
-                                /* background-color: red !important; */
-                                height: 70%;
-                                }
-                                .carousel-control-prev-icon {
-                                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23333'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e")
-                                }
-                                
-                                .carousel-control-next-icon {
-                                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23333'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e")
-                                }
-
-                                @media (max-width: 767px) {
-
-                                    .carousel-inner {
-                                        width: 90%;
-                                        margin: 0 auto;
-                                    }
-
-                                    .carousel-inner .carousel-item > div {
-                                        display: none;
-                                    }
-                                    .carousel-inner .carousel-item > div:first-child {
-                                        display: block;
-                                    }
-                                }
-    
-                                .carousel-inner .carousel-item.active,
-                                .carousel-inner .carousel-item-next,
-                                .carousel-inner .carousel-item-prev {
-                                display: flex;
-                                }
-
-                                .article-stepper .carousel-image-container {
-                                        height: 220px;
-                                        width: 100%;
-                                        background-color: #333;
-                                        text-align: center;
-                                        overflow: hidden;
-                                    }
-
-                                /* medium and up screens */
-                                @media (min-width: 768px) {
-
-                                    .article-stepper .carousel-image-container {
-                                        height: 170px;
-                                    }
-
-                                    .carousel-control-prev {
-                                    left: -80px;
-                                    height: 70%;
-                                    }
-                                    
-                                    .carousel-control-next {
-                                    right: -80px;
-                                    height: 70%;
-                                    }
-
-                                    .carousel-inner .carousel-item-end.active,
-                                    .carousel-inner .carousel-item-next {
-                                        transform: translateX(25%);
-                                    }
-                                    
-                                    .carousel-inner .carousel-item-start.active, 
-                                    .carousel-inner .carousel-item-prev {
-                                        transform: translateX(-25%);
-                                    }
-
-                                    .article-stepper .carousel {
-                                        margin-left: -128px;
-                                        margin-right: -128px;
-                                    }
-                                }
-                            
-                            .carousel-inner .carousel-item-end,
-                            .carousel-inner .carousel-item-start { 
-                                transform: translateX(0);
-                            }
-                            .article-stepper {
-                                border-top: 1px solid #CCC;
-                                margin-top: 2rem;
-                                padding-top: 3rem;
-                            }
-                            .article-stepper .carousel-item {
-                                height: 100%;
-                            }
-                            .article-stepper .carousel-image-container img {
-                                width: auto;
-                                height: 102%;
-                                margin: 0 auto;
-                            }
-                            .article-stepper .carousel-text-container {
-                                font-size: 14px;
-                                line-height: 16px;
-                                text-align: center;
-                                padding: 8px 8px;
-                                font-weight: bold;
-                                /* display: block; */
-                                /* width: 100%; */
-                                background-color: #FFF;
-                            }
-                            .article-stepper a {
-                                text-decoration: none;
-                                color:#777;
-                            }
-                            .article-stepper h3 {
-                                margin: 0 auto 3rem;
-                            }
-
-                            </style>
                             
                             <div class="article-stepper">
                                 <h3>Also in This Issue</h3>
@@ -524,33 +407,6 @@
 
 
                         </div>
-
-
-
-                              
-
-
-
-                                 <script>
-                                    let mobile = window.matchMedia('(max-width: 575px)');
-                                    let items = document.querySelectorAll('.carousel .carousel-item')
-                                    if (mobile.matches == false) {
-                                        items.forEach((el) => {
-                                        const minPerSlide = 4
-                                        let next = el.nextElementSibling
-                                        for (var i=1; i<minPerSlide; i++) {
-                                            if (!next) {
-                                                    // wrap carousel by using first child
-                                                next = items[0]
-                                                }
-                                            let cloneChild = next.cloneNode(true)
-                                            el.appendChild(cloneChild.children[0])
-                                            next = next.nextElementSibling
-                                        }
-                                        })
-                                    }
-                                    </script>
-
 
                             <div class="col-xs-12 col-md-3 column-center"></div>
                         </div>
@@ -1041,6 +897,8 @@
          <script src="https://www.usms.org/scripts/jquery.mask.min.js?version=20210920.1"></script>
          <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
          <script src="https://www.usms.org/scripts/Registration/Registration.js?version=20210920.1"></script>
+
+         <script src="js/article-stepper.js"></script>
 
          <script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
