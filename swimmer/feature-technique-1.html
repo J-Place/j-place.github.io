@@ -874,45 +874,6 @@
                   </div>
                </div>
             </footer>
-
-            <div class="ie-banner__container">
-               <div class="container">
-                  <div class="row is-flex">
-                     <div class="col-xs-12 col-sm-8">
-                        <p class="ie-banner__summary">We see you are using Internet Explorer as your browser. Microsoft no longer supports Internet Explorer so you will experience issues on our website and others. Please use another browser like: Google Chrome, Mozilla Firefox, or Apple Safari. </p>
-                     </div>
-                     <div class="col-xs-12 col-sm-2 column-middle">
-                        <button class="ie-banner__accept btn btn-primary btn-lg text-uppercase" onclick="setIEBannerCookie(event)">Accept </button>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <script>
-               function checkIEBannerCookie() {
-                   if (!document.cookie) return false;
-                   var entries = document.cookie.split(';');
-                   if (entries.length === 0) return false;
-                   for (var i = 0; i < entries.length; i += 1) {
-                       if (entries[i].indexOf('ieBanner') !== -1) {
-                           return entries[i].split('=')[1] === 'true';
-                       }
-                   }
-                   return false;
-               }
-               
-               function setIEBannerCookie(e) {
-                   e.preventDefault();
-               
-                   document.cookie = 'ieBanner=true;secure;max-age=86400;';
-                   document.querySelector('.ie-banner__container').classList.remove('ie-banner__container--show')
-               }
-               
-               (function () {
-                   if (/MSIE|Triden/.test(window.navigator.userAgent)) {
-                       if (!checkIEBannerCookie()) document.querySelector('.ie-banner__container').classList.add('ie-banner__container--show');
-                   }
-               })();
-            </script>
          </div>
          <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
          <script src="https://d79i1fxsrar4t.cloudfront.net/jquery.liveaddress/5.1/jquery.liveaddress.min.js"></script>
