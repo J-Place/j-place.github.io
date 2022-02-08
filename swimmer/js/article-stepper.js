@@ -1,5 +1,5 @@
 let mobile = window.matchMedia('(max-width: 575px)');
-let items = document.querySelectorAll('.carousel .carousel-item')
+let items = document.querySelectorAll('.article-stepper .carousel .carousel-item')
 if (mobile.matches == false) {
     items.forEach((el) => {
     const minPerSlide = 4

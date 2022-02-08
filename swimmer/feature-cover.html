@@ -26,9 +26,11 @@
          <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous"> -->
          <link rel="stylesheet" href="https://www.usms.org/styles/font-awesome.min.css">
          <link rel="stylesheet" href="https://www.usms.org/styles/common.min.css?version=20210920.1">
-         <link rel="stylesheet" href="https://usms-cdn.azureedge.net/styles/home.min.css?version=20211213.1">
+         <!-- <link rel="stylesheet" href="https://usms-cdn.azureedge.net/styles/home.min.css?version=20211213.1"> -->
          <link href="https://www.usms.org/styles/registration.min.css?version=20210920.1" rel="stylesheet" />
+         <!-- <link href="https://usms-cdn.azureedge.net/styles/home.min.css?version=20211213.1" rel="stylesheet" /> -->
          <link rel="stylesheet" href="https://www.usms.org/styles/print.min.css?version=20210920.1">
+
          <link rel="stylesheet" href="css/common-updates.css">
          <link rel="stylesheet" href="css/swimmer-feature.css">
 
@@ -45,6 +47,11 @@
          <script src="https://usms-cdn.azureedge.net/scripts/common.min.js?version=20211213.1"></script>
          <script src="https://usms-cdn.azureedge.net/scripts/home.min.js?version=20211213.1"></script>
          <link rel="stylesheet" href="https://www.usms.org/styles/rte.min.css?version=20210920.1">
+
+         <link rel="stylesheet" href="css/carousel.css">
+         <link rel="stylesheet" href="css/bootstrap.min.css">
+         <link rel="stylesheet" href="css/article-stepper.css">
+         <!-- <link rel="stylesheet" href="css/carousel-overrides.css"> -->
 
       </head>
       <body class="">
@@ -247,9 +254,12 @@
                            <div class="author feature-author">
                               <div class="author__container">
                                  <div class="author__detail">
-                                    <p class="author__name">By <strong>ELAINE K. HOWLEY</strong> | Photographs by <strong>SUSIE POWELL</strong></p>
+                                    <p class="author__name">By <strong>ELAINE K. HOWLEY</strong></p>
                                  </div>
                               </div>
+                           </div>
+                           <div class="article-attribution">
+                              <p>Photographs by <strong>SUSIE POWELL</strong></p>
                            </div>
                         </div>
                         <div class="col-xs-12 col-md-3  ">
@@ -323,150 +333,94 @@
                         <div class="col-xs-12 col-md-3">
                         </div>
                         <div class="col-xs-12 col-md-6">
-                            <hr>
-                            <div class="categories">
-                                <div class="categories__container">
-                                    <p class="categories__header">
-                                        <strong>Categories:</strong>
-                                    </p>
-                                    <ul class="categories__list list--nostyle">
-                                        <li class="categories__item text-uppercase text-center">Technique and Training</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="tags">
-                                <div class="tags__container">
-                                    <p class="tags__header">
-                                        <strong>Tags:</strong>
-                                    </p>
-                                    <ul class="tags__list list--nostyle">
-                                        <li class="tags__item text-uppercase text-center">Training</li>
-                                    </ul>
-                                </div>
-                            </div>
-                             <div class="article-author bg-ltblue">
-                                    <div class="article-author__header">
-                                        <div class="article-author__image-container bg-gray">
-                                            <img class="article-author__image" src="https://usms-cdn.azureedge.net/-/media/usms/non-lightroom images/usms logos/usms logo/usmslogosquare.png?h=1000&amp;w=1000&amp;rev=a64baa1416514c5494e20dbf612a5246&amp;hash=A5E52F1B431630C95249262AB3C6981A" alt="Article image">
-                                        </div>
-                                        <h3 class="text-capitalize article-author__title"><small>About the Author</small><br>Laura Goodwin</h3>
+
+                           <div class="article-stepper">
+                              <h3>Also in This Issue</h3>
+                              <div id="articleStepper" class="carousel slide" data-bs-ride="carousel"> 
+                                 <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                          <div class="col-xs-12 col-sm-3">
+                                             <a href="#">
+                                             <div class="carousel-image-container">
+                                                <img src="https://usms-cdn.azureedge.net/-/media/usms/Developers/Swimmer-UI-Temporary/Pull apart 1.jpg" alt="">
+                                             </div>
+                                             <div class="carousel-text-container">
+                                                <p>Building a Healthy Streamline</p>
+                                             </div>
+                                             </a>
+                                          </div>
                                     </div>
-                                    <div class="article-author__content">
-                                        <div class="html-container">
-                                            Laura Goodwin is a USMS Level 2 coach and member of North Carolina Masters Swimming.
-                                        </div>
+                                    <div class="carousel-item">
+                                          <div class="col-xs-12 col-sm-3">
+                                             <a href="#">
+                                             <div class="carousel-image-container">
+                                                <img src="https://usms-cdn.azureedge.net/-/media/usms/Developers/Swimmer-UI-Temporary/Peeing600.jpg" alt="">
+                                             </div>
+                                             <div class="carousel-text-container">
+                                                <p>The Delicate Art of Peeing in Open Water</p>
+                                             </div>
+                                             </a>
+                                          </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                          <div class="col-xs-12 col-sm-3">
+                                             <a href="#">
+                                             <div class="carousel-image-container">
+                                                <img src="https://usms-cdn.azureedge.net/-/media/usms/Developers/Swimmer-UI-Temporary/Psych%20Sheet.jpg" alt="">
+                                             </div>
+                                             <div class="carousel-text-container">
+                                                <p>Why Don't You Feel Like Swimming</p>
+                                             </div>
+                                             </a>
+                                          </div>
+                                    </div>
+                                    <div class="carousel-item">
+                                          <div class="col-xs-12 col-sm-3">
+                                             <a href="#">
+                                             <div class="carousel-image-container">
+                                                <img src="https://usms-cdn.azureedge.net/-/media/usms/Developers/Swimmer-UI-Temporary/Power%20of%20Naps.jpg" alt="">
+                                             </div>
+                                             <div class="carousel-text-container">
+                                                <p>The Power of Naps</p>
+                                             </div>
+                                             </a>
+                                          </div>
                                     </div>
                                  </div>
-                            <div class="col-xs-12 col-md-3 column-center"></div>
+
+                                 <a class="carousel-control-prev bg-transparent w-aut" href="#articleStepper" role="button" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                 </a>
+                                 <a class="carousel-control-next bg-transparent w-aut" href="#articleStepper" role="button" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                 </a>
+                              </div>
+                           </div>
+
+
+                           <div class="article-author">
+                              <div class="article-author__header">
+                                    <div class="article-author__image-container bg-gray">
+                                       <img class="article-author__image" src="https://usms-cdn.azureedge.net/-/media/usms/non-lightroom images/usms logos/usms logo/usmslogosquare.png?h=1000&amp;w=1000&amp;rev=a64baa1416514c5494e20dbf612a5246&amp;hash=A5E52F1B431630C95249262AB3C6981A" alt="Article image">
+                                    </div>
+                                    <h3 class="text-capitalize article-author__title"><small>About the Author</small><br>Laura Goodwin</h3>
+                              </div>
+                              <div class="article-author__content">
+                                    <div class="html-container">
+                                       Laura Goodwin is a USMS Level 2 coach and member of North Carolina Masters Swimming.
+                                    </div>
+                              </div>
+                           </div>
+
+                           <aside class="ad-inline ad-inline-footer">
+                              <img src="https://tpc.googlesyndication.com/simgad/2062369351845760689" alt="">
+                           </aside>
+
                         </div>
-                    </div>
-                </div>
-
-
-
-
-
-
-
-
-
-
-                <div class="usms-container p-b-10">
-                  <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-                     <!-- Indicators -->
-                     <ol class="carousel-indicators">
-                     <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                     <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                     <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                     </ol>
-                  
-                     <!-- Wrapper for slides -->
-                     <div class="carousel-inner" role="listbox">
-                     <div class="item active">
-                        <img src="..." alt="...">
-                        <div class="carousel-caption">
-                           ...
-                        </div>
-                     </div>
-                     <div class="item">
-                        <img src="..." alt="...">
-                        <div class="carousel-caption">
-                           ...
-                        </div>
-                     </div>
-                     ...
-                     </div>
-                  
-                     <!-- Controls -->
-                     <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-                     <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                     <span class="sr-only">Previous</span>
-                     </a>
-                     <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-                     <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                     <span class="sr-only">Next</span>
-                     </a>
+                        <div class="col-xs-12 col-md-3 column-center"></div>
                   </div>
-                </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                <div class="carousel-container" data-reactroot="" data-reactid="1">
-                  <button class="carousel-previous-button" style="display:none;" data-reactid="2"><i class="fa fa-chevron-left" data-reactid="3"></i></button>
-                  <ul class="carousel list--nostyle" data-reactid="4" style="left: -200%;">
-                     <li class="carousel__slide active" data-reactid="5"><div class="carousel__slide-content" data-reactid="6"><h1 class="text-capitalize" data-reactid="7">Renew today through the end of 2022 for $60</h1><p class="lead" data-reactid="8">Let's Improve Together in 2022</p><a href="/join-usms/join-or-renew" class="text-capitalize text-center" data-reactid="9">RENEW TODAY</a></div><div class="carousel__slide-image--desktop" data-reactid="10"><div class="carousel__slide-image" style="background-image:url('https://usms-cdn.azureedge.net/-/media/usms/lightroom/summernats2016-50.jpg?rev=d15411c201cd482d8242212aae3d83e9');" data-reactid="11"></div></div><div class="carousel__slide-image--mobile" data-reactid="12"><div class="carousel__slide-image" style="background-image:url('https://usms-cdn.azureedge.net/-/media/usms/lightroom/summernats2016-50.jpg?rev=d15411c201cd482d8242212aae3d83e9');" data-reactid="13"></div></div></li>
-                     <li class="carousel__slide" data-reactid="14"><div class="carousel__slide-content" data-reactid="15"><h1 class="text-capitalize" data-reactid="16">2022 USMS 1-Hour Virtual Championship</h1><p class="lead" data-reactid="17">How Far Can You Go?</p><a href="/events/national-championships/virtual-championships/2022-virtual-championships/2022-1-hour-virtual-championship" class="text-capitalize text-center" data-reactid="18">SWIM NOW</a></div><div class="carousel__slide-image--desktop" data-reactid="19"><div class="carousel__slide-image" style="background-image:url('https://usms-cdn.azureedge.net/-/media/usms/lightroom/6023966686_0f37a918d4_o.jpg?rev=47cf3fd7297948ba8ba327c913c9378b');" data-reactid="20"></div></div><div class="carousel__slide-image--mobile" data-reactid="21"><div class="carousel__slide-image" style="background-image:url('https://usms-cdn.azureedge.net/-/media/usms/lightroom/6023966686_0f37a918d4_o.jpg?rev=47cf3fd7297948ba8ba327c913c9378b');" data-reactid="22"></div></div></li>
-                     <li class="carousel__slide" data-reactid="23"><div class="carousel__slide-content" data-reactid="24"><h1 class="text-capitalize" data-reactid="25">COVID-19 Vaccines and Coronavirus Variants Info for Swimmers</h1><p class="lead" data-reactid="26">Important Updated Information</p><a href="/fitness-and-training/articles-and-videos/articles/covid-19-vaccines-and-coronavirus-variants-what-swimmers-need-to-know" class="text-capitalize text-center" data-reactid="27">LEARN MORE</a></div><div class="carousel__slide-image--desktop" data-reactid="28"><div class="carousel__slide-image" style="background-image:url('https://usms-cdn.azureedge.net/-/media/usms/lightroom/summernats2016-50.jpg?rev=d15411c201cd482d8242212aae3d83e9');" data-reactid="29"></div></div><div class="carousel__slide-image--mobile" data-reactid="30"><div class="carousel__slide-image" style="background-image:url('https://usms-cdn.azureedge.net/-/media/usms/lightroom/summernats2016-50.jpg?rev=d15411c201cd482d8242212aae3d83e9');" data-reactid="31"></div></div></li>
-                  </ul>
-                  <ul class="carousel-nav list--nostyle" data-reactid="32">
-                     <li class="carousel-nav__item" id="carousel-nav__item-0" data-reactid="33"><button class="carousel-nav__item-button" aria-label="carousel navigation button 0" id="carousel-nav__item-button-0" data-reactid="34"></button></li>
-                     <li class="carousel-nav__item" id="carousel-nav__item-1" data-reactid="35"><button class="carousel-nav__item-button" aria-label="carousel navigation button 1" id="carousel-nav__item-button-1" data-reactid="36"></button></li><li class="carousel-nav__item carousel-nav__item--active" id="carousel-nav__item-2" data-reactid="37"><button class="carousel-nav__item-button" aria-label="carousel navigation button 2" id="carousel-nav__item-button-2" data-reactid="38"></button></li>
-                  </ul>
-                  <button class="carousel-next-button" style="display:none;" data-reactid="39"><i class="fa fa-chevron-right" data-reactid="40"></i></button>
                </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
             </main>
@@ -945,86 +899,17 @@
                </div>
             </footer>
 
-            <div class="ie-banner__container">
-               <div class="container">
-                  <div class="row is-flex">
-                     <div class="col-xs-12 col-sm-8">
-                        <p class="ie-banner__summary">We see you are using Internet Explorer as your browser. Microsoft no longer supports Internet Explorer so you will experience issues on our website and others. Please use another browser like: Google Chrome, Mozilla Firefox, or Apple Safari. </p>
-                     </div>
-                     <div class="col-xs-12 col-sm-2 column-middle">
-                        <button class="ie-banner__accept btn btn-primary btn-lg text-uppercase" onclick="setIEBannerCookie(event)">Accept </button>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <script>
-               function checkIEBannerCookie() {
-                   if (!document.cookie) return false;
-                   var entries = document.cookie.split(';');
-                   if (entries.length === 0) return false;
-                   for (var i = 0; i < entries.length; i += 1) {
-                       if (entries[i].indexOf('ieBanner') !== -1) {
-                           return entries[i].split('=')[1] === 'true';
-                       }
-                   }
-                   return false;
-               }
-               
-               function setIEBannerCookie(e) {
-                   e.preventDefault();
-               
-                   document.cookie = 'ieBanner=true;secure;max-age=86400;';
-                   document.querySelector('.ie-banner__container').classList.remove('ie-banner__container--show')
-               }
-               
-               (function () {
-                   if (/MSIE|Triden/.test(window.navigator.userAgent)) {
-                       if (!checkIEBannerCookie()) document.querySelector('.ie-banner__container').classList.add('ie-banner__container--show');
-                   }
-               })();
-            </script>
+
          </div>
          <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
          <script src="https://d79i1fxsrar4t.cloudfront.net/jquery.liveaddress/5.1/jquery.liveaddress.min.js"></script>
          <script src="https://www.usms.org/scripts/jquery.mask.min.js?version=20210920.1"></script>
          <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
          <script src="https://www.usms.org/scripts/Registration/Registration.js?version=20210920.1"></script>
-         <div id="session" hidden="hidden">
-            {
-            "ContactInfo": {
-            "FirstName": "Reg",
-            "MiddleInitial": null,
-            "LastName": "Club",
-            "Email": "jplace72@gmail.com",
-            "Address": null,
-            "City": null,
-            "State": null,
-            "Zip": null,
-            "Gender": null,
-            "Month": 0,
-            "Day": 0,
-            "Year": 0,
-            "Phone": "123-123-1234",
-            "Country": null,
-            "BirthDate": null
-            },
-            "Club": {
-            "SelectedClub": 0,
-            "SelectedLmsc": 0,
-            "SelectedWorkoutGroup": 0
-            },
-            "Interests": {
-            "SelectedInterests": null,
-            "Magazine": null,
-            "Coach": false
-            },
-            "RegistrationStatus": {
-            "Active": false,
-            "Renewal": false,
-            "SwimmerId": null,
-            "IsLapsed": false
-            }
-            }
-         </div>
+
+         <script src="js/article-stepper.js"></script>
+
+         <script src="https://getbootstrap.com/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
       </body>
    </html>
