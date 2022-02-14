@@ -1,3 +1,4 @@
+
 let mobile = window.matchMedia('(max-width: 575px)');
 let items = document.querySelectorAll('.article-stepper .carousel .carousel-item')
 if (mobile.matches == false) {
@@ -9,9 +10,9 @@ if (mobile.matches == false) {
                 // wrap carousel by using first child
             next = items[0]
             }
-        let cloneChild = next.cloneNode(true)
-        el.appendChild(cloneChild.children[0])
-        next = next.nextElementSibling
-    }
+            let cloneChild = next.cloneNode(true)
+            el.appendChild(cloneChild.children[0])
+            next = next.nextElementSibling
+        }
     })
 }
