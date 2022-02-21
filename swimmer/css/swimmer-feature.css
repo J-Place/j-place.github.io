@@ -43,12 +43,11 @@ main {
 }
 
 .article-issue__title {
-    font-weight: bold;
-    display: inline-block;
+    display: block;
 }
 
 .article-issue__date {
-    display: inline-block;
+    display: block;
 }
 
 .author__name,
@@ -208,7 +207,19 @@ main {
 }
 
 @media (min-width: 768px) {
-
+    .article-issue__title {
+        display: inline-block;
+    }
+    
+    .article-issue__date {
+        display: inline-block;
+    }
+    
+    .article-issue__date:before {
+        content: "|";
+        padding: 0 10px 0 6px;
+    }
+    
     .page-header__image {
         height: 360px;
     }
