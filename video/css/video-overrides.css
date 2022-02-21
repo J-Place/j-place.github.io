@@ -22,10 +22,26 @@
 }
 
 .video-issue__title {
-    font-weight: bold;
-    display: inline-block;
+    display: block;
+    margin-bottom: 8px;
 }
 
 .video-issue__date {
-    display: inline-block;
+    display: block;
+    margin-bottom: 8px;
+}
+
+@media (min-width: 768px) {
+    .video-issue__title {
+        display: inline-block;
+    }
+    
+    .video-issue__date {
+        display: inline-block;
+    }
+    
+    .video-issue__date:before {
+        content: "|";
+        padding: 0 10px 0 6px;
+    }
 }
