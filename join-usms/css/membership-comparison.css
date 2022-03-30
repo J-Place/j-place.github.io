@@ -103,6 +103,22 @@
 
 /* Compare Details Table */
 
+.membership-comparison {
+    margin-bottom: 5rem;
+    overflow: hidden;
+    -webkit-transition: height 0.5s ease, opacity 2.0s ease;
+    transition: height 0.5s ease, opacity 2.0s ease;
+    height: 0;
+    opacity: 0;
+}
+.membership-comparison.show {
+    -webkit-transition: height 2.0s ease, opacity 0.5s ease;
+    transition: height 2.0s ease, opacity 0.5s ease;
+    height: 100%;
+    opacity: 1;
+    overflow-x: scroll;
+}
+
 .compare-details table {
     width: 100%;
     background-color: #FFF;
@@ -128,6 +144,7 @@
 .compare-details td:first-child {
     text-align: left;
     width: 50%;
+    min-width: 270px;
 }
 
 .compare-details .table-section td {
@@ -162,21 +179,6 @@
 }
 
 @media (min-width: 720px) {
-
-    .membership-comparison {
-        margin-bottom: 5rem;
-        overflow: hidden;
-        -webkit-transition: height 0.5s ease, opacity 2.0s ease;
-        transition: height 0.5s ease, opacity 2.0s ease;
-        height: 0;
-        opacity: 0;
-    }
-    .membership-comparison.show {
-        -webkit-transition: height 2.0s ease, opacity 0.5s ease;
-        transition: height 2.0s ease, opacity 0.5s ease;
-        height: 100%;
-        opacity: 1;
-    }    
     .membership-option p.ribbon {
         display: block;
         margin: 0 auto 1.5rem;
