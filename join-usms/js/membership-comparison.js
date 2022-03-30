@@ -14,10 +14,15 @@
 
 
 function handleTableDetails() {
+    var comparisonChart = document.getElementById("membershipComparison");
+    if (comparisonChart.classList.contains("show")) {
+        comparisonChart.classList.remove("show");
+    } else {
+        comparisonChart.classList.add("show");
+    }
     // alert("click");
-    document.getElementById("compareDetails").style.height = '100%';
+    // document.getElementById("compareDetails").style.height = '100%';
     // document.getElementById("compareDetails").style.display = 'block';
-    
 }
 
 

@@ -3,179 +3,206 @@
     display: initial !important;
 }
 
-.membership-comparison {
-    margin-top: 2rem;
-}
-
-.membership-comparison table {
-    width: 100%;
-    background-color: #FFF;
-    /* box-shadow: 0 0 20px #ccc; */
-    /* margin-bottom: 60px; */
-    min-width: 1000px;
-}
-.membership-comparison td {
-    padding: 12px;
-}
-
-.membership-comparison th {
-    /* height: 50px; */
+.membership-option {
     font-size: 14px;
     line-height: 16px;
+    margin: 3rem auto 0;
     padding: 12px;
     vertical-align: bottom;
 }
 
-.membership-comparison th p {
+.membership-option {
+    height: auto;
+}
+
+.membership-option p {
     margin: 0 auto;
     padding: 0;
     line-height: 120%;
     font-weight: normal;
-    text-align: center;
+    text-align: left;
 }
 
-.membership-comparison th p.ribbon {
-    margin: 0 auto 1.5rem;
+.membership-option p.ribbon {
+    margin: 0 0 1.5rem;
     padding: 0.25rem;
     font-size: 1.3rem;
+    text-align: center;
     border-radius: 3px;
     color: #FFF;
-    /* text-align: center; */
+    display: none;
 }
 
-.ribbon-most-popular {
+.membership-option p.ribbon.ribbon-most-popular {
+    display: block;
     width: 100px;
     background-color: rgb(101, 182, 76);
 }
 
-.ribbon-best-value {
+.membership-option p.ribbon.ribbon-best-value {
+    display: block;
     width: 85px;
     background-color: rgb(0, 133, 29);
 }
 
-.membership-comparison th p.type {
+.membership-option {
+    margin: 4rem 2rem 0;
+    padding: 0 3rem;
+}
+
+.membership-option p.type {
     font-size: 2.3rem;
     font-weight: bold;
     margin: 1rem auto 0;
-    /* text-align: center; */
 }
 
-.membership-comparison th p.price {
+.membership-option p.price {
     margin: 0.75rem auto 0.5rem;
     font-size: 2.2rem;
-    /* text-align: center; */
 }
 
-.membership-comparison th p.savings {
+.membership-option p.savings {
     margin: 0 auto;
     font-size: 1.3rem;
     font-style: italic;
-    /* text-align: center; */
 }
 
-/* .membership-comparison th p.savings:before {
-    content: "(";
-} */
+.standard .membership-option p.savings {
+    display: none;
+}
 
-/* .membership-comparison th p.savings:after {
-    content: ")";
-} */
-
-.membership-comparison th p.duration {
+.membership-option p.duration {
     font-size: 1.2rem;
-    border-bottom: 1px solid #CCC;
-    margin: 0.25rem 9rem 0;
+    margin: 0;
     padding-bottom: 1rem;
 }
 
-.comparison-featured-benefits ul {
-    /* list-style: none; */
+.membership-option-list {
+    font-size: 14px;
+    line-height: 16px;
+    margin: 0 2rem;
+    padding: 0 3rem 3rem;
+    border-bottom: 1px solid #CCC;
+}
+
+.membership-option-list .list-header {
     text-align: left;
-    margin-top: 1.25rem;
+    margin: 1.25rem auto;
+    font-weight: bold;
+}
+
+.membership-option-list ul {
     margin-left: -2rem;
 }
 
-.comparison-featured-benefits ul li {
+.membership-option-list li {
     margin: 0 auto .75rem;
 }
 
-.membership-comparison td {
+
+
+/* Compare Details Table */
+
+.compare-details table {
+    width: 100%;
+    background-color: #FFF;
+}
+
+.compare-details td {
+    border: 0 none !important;
+    padding-top: 11px !important;
+    padding-bottom: 11px !important;
+    padding-left: 15px !important;
+    text-align: left;
+}
+
+.compare-details td {
     min-width: 100px;
     height: 40px;
     font-size: 15px;
     line-height: 17px;
-}
-.table-section td {
+    text-align: center;
     width: 10%;
+}
+
+.compare-details td:first-child {
     text-align: left;
-    padding-left: 15px;
+    width: 50%;
+}
+
+.compare-details .table-section td {
     background-color: #AAA;
     border-top: 20px solid #FFF;
-    color: #FFF;    
+    font-size: 1.3rem;
+    min-width: 125px;
 }
-.table-section td:first-child {
+
+.compare-details .table-section td:first-child {
     text-align: left;
-    width: 60%;
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding-right: 3rem;
 }
-.membership-comparison td img {
+
+/* Checkmark */
+.compare-details td img {
     width: 20px;
 }
 
-.comparison-table__overview td {
-    width: 25%;
-    padding: 0 7rem;
-}
-
-/* .membership-comparison th, */
-.comparison-table__details td {
-    text-align: center;
-    /* border: 1px solid #f4f4f4; */
-    border-bottom: 1px solid #CCC;
-}
-
-.membership-comparison .feature {
-    /* min-width: 200px; */
-    text-align: left;
-    padding-left: 15px;
-}
-
-.membership-comparison .btn {
-    display: block;
-    margin: 10px auto 30px;
-    width: 88px;
-}
-
 .show-details {
-    /* display: block; */
     width: 100%;
     text-align: center;
 }
-.show-details__button {
-    display: block;
-    margin: 2rem auto 4rem;
-}
-.show-details__button:hover {
-    text-decoration: none;
-}
-.show-details__button:before {
-    content: "+ ";
-    font-size: 2.3rem;
-}
 
-#compareDetails {
-    /* display: none; */
-    /* height: 0; */
-    /* -webkit-transition: all 0.5s; */
-    /* transition: all 0.5s; */
-    /* overflow: hidden; */
-}
-
-.collapsing {
-    -webkit-transition: all 0.5s;
-    transition: all 0.5s;
+.show-details .btn {
+    margin: 7rem auto;
 }
 
 @media (min-width: 480px) {
 }
+
 @media (min-width: 720px) {
+
+    .membership-comparison {
+        margin-bottom: 5rem;
+        overflow: hidden;
+        -webkit-transition: height 0.5s ease, opacity 2.0s ease;
+        transition: height 0.5s ease, opacity 2.0s ease;
+        height: 0;
+        opacity: 0;
+    }
+    .membership-comparison.show {
+        -webkit-transition: height 2.0s ease, opacity 0.5s ease;
+        transition: height 2.0s ease, opacity 0.5s ease;
+        height: 100%;
+        opacity: 1;
+    }    
+    .membership-option p.ribbon {
+        display: block;
+        margin: 0 auto 1.5rem;
+    }
+    .membership-option p {
+        text-align: center;
+    }
+    .membership-option p.duration {
+        font-size: 1.2rem;
+        border-bottom: 1px solid #CCC;
+        margin: 0.25rem 9rem 0;
+        padding-bottom: 1rem;
+    }
+    .standard .membership-option p.savings {
+        display: block;
+    }
+    .membership-option-list {
+        border: 0 none;
+        padding: 0 2rem 0 5rem;
+    }
+
+    .table-section {
+        border-top: 60px solid #FFF;
+    }
+
+    .show-details .btn {
+        margin: 5rem auto 7rem;
+    }
 }
