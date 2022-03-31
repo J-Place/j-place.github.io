@@ -124,11 +124,15 @@
     background-color: #FFF;
 }
 
+.compare-details > tbody > tr:nth-of-type(odd) {
+    background-color: #f9f9f9;
+}
+
 .compare-details td {
-    border: 0 none !important;
-    padding-top: 11px !important;
-    padding-bottom: 11px !important;
-    padding-left: 15px !important;
+    border: 0 none;
+    padding-top: 11px;
+    padding-bottom: 11px;
+    padding-left: 15px;
     text-align: left;
 }
 
@@ -147,9 +151,14 @@
     min-width: 270px;
 }
 
+.compare-details td.feature {
+    padding-left: 40px;
+    padding-right: 60px;
+}
+
 .compare-details .table-section td {
-    background-color: #AAA;
-    border-top: 20px solid #FFF;
+    background-color: #CCC;
+    border-top: 50px solid #FFF;
     font-size: 1.3rem;
     min-width: 125px;
 }
@@ -175,11 +184,31 @@
     margin: 7rem auto;
 }
 
-.table-striped > tbody > tr.price-row {
-    background-color: #4097cc;
-    color: #FFF;
+.show-details .btn:before {
+    content: "+";
+    margin: 0 5px 0 0px;
+    top: -1px;
+    position: relative;
+    width: 15px;
+    font-size: 2rem;
+    line-height: 18px;
+}
+
+.show-details .btn.open:before {
+    content: "-";
+    margin: 0 6px 0 3px;
+    width: 15px;
+    position: relative;
+    font-size: 2rem;
+    line-height: 18px;
+    /* line-height: 2rem; */
+    /* padding: 0 5px; */
+}
+
+#compareDetails > tbody > tr.price-row {
+    background-color: #FFF;
+    border-top: 2px solid;
     font-weight: bold !important;
-    border-top: 60px solid #FFF;
 }
 
 @media (min-width: 480px) {
@@ -207,16 +236,17 @@
         padding: 0 2rem 0 5rem;
     }
 
-    .table-section {
-        border-top: 60px solid #FFF;
-    }
+    /* .table-section {
+        border-top: 50px solid #FFF;
+    } */
 
     .show-details .btn {
-        margin: 5rem auto 7rem;
+        margin: 5rem auto 1rem;
     }
 
     .membership-comparison.show {
         overflow-x: initial;
+        overflow: hidden;
     }
     
 }
