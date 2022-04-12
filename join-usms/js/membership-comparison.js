@@ -35,6 +35,10 @@ function handleShowDetails() {
 }
 
 
+if (comparisonChart.classList.contains("show-filters")) {
+    alert("Hola");
+}
+
 
 
 
