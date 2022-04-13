@@ -23,3 +23,23 @@ function handleShowFilters() {
     // }
 
 }
+
+
+
+function handleMobileToggle() {
+    var mobileToggleSearch = document.querySelector('.list-control-search-mobile__toggle');
+    var mobileSearch = document.querySelector('.list-control-search__content');
+    var mobileFilterToggle = document.querySelector('div.list-control-filter');
+    if(mobileToggleSearch.classList.contains('show-search')) {
+        mobileSearch.classList.remove('is-flex');
+        mobileToggleSearch.classList.remove('show-search');
+        mobileFilterToggle.classList.remove('is-flex');
+        // mobileSearch.setAttribute('display', 'none');
+    }
+    else {
+        mobileSearch.classList.add('is-flex');
+        mobileToggleSearch.classList.add('show-search');
+        mobileFilterToggle.classList.add('is-flex');
+        // mobileSearch.setAttribute('display', 'flex');
+    }
+}

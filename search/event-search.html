@@ -136,9 +136,7 @@
                               <div class="events-summary-content">
                                     <div class="row">
                                        <div class="col-xs-12">
-
                                           <!-- <h3 class="text-primary filter-form-title"><strong>Filter by</strong></h3> -->
-
                                           <div class="list-control">
                                              <div class="list-control-search">
                                                 <div class="list-control-search__header">
@@ -147,13 +145,11 @@
                                                    <i class="fa fa-refresh fa-spin list-control-search--summary-loading" style="display:none;"></i>
                                                    <div class="list-control-search--summary">
                                                       Showing 
-                                                      <strong>
-                                                         0 Events
-                                                      </strong>
-                                                       within <strong>25 Miles</strong> 
+                                                      <strong>5 Events</strong> within <strong>25 Miles</strong> 
                                                    </div>
                                                 </div>
-                                                <div class="list-control-search__content form-group is-flex">
+                                                <div class="list-control-search-mobile__toggle" onclick="handleMobileToggle()">Narrow Your Results</div>
+                                                <div class="list-control-search__content form-group">
                                                    <div class="list-control-search__input list-control-search__input--club-name">
                                                       <label for="search-filter__club-name">Search by Event Name</label>
                                                       <div class="input-group"><span class="help-block help-block--ClubName">Please Enter an Event Name</span><input type="text" class="form-control" name="search-filter__club-name" placeholder="Event Name"></div>
@@ -185,7 +181,7 @@
                                                    </div>
                                                 </div>
                                              </div>
-                                             <div class="list-control-filter show-filtersXXX">
+                                             <div class="list-control-filter">
                                                 <div class="list-control-filter__header">
                                                    <button class="toggle-filters" onclick="handleShowFilters();">More Filters</button>
                                                 </div>
@@ -216,7 +212,7 @@
                                                                      </div>
                                                                   </div>
                                                             </div>
-                                                            <h5 class="form-group__inline-separator">To</h5>
+                                                            <h5 class="form-group__inline-separator">to</h5>
                                                             <div class="form-group has-feedback events-filter-form__dropdown-end-date-container">
                                                                <div class="SingleDatePicker SingleDatePicker_1">
                                                                   <div class="SingleDatePickerInput SingleDatePickerInput_1 SingleDatePickerInput__withBorder SingleDatePickerInput__withBorder_2">
@@ -239,127 +235,173 @@
                                                    </div>
                                                    <div class="row">
                                                       <div class="col-xs-12 col-sm-3">
-                                                         <h5 class="events-filter-form__dropdown-title text-capitalize">course type</h5>
+                                                         <h5 class="events-filter-form__dropdown-title text-capitalize">Course Type</h5>
                                                          <div class="events-filter-form__dropdown-event-filter">
-                                                            <div class="check-list check-list--certifications"> 
+                                                            <div class="check-list check-list--course-type"> 
+                                                            
                                                                <div class="input-group check-list-item">
-                                                               <label id="Short Course Yards__label" class="checkbox-label " for="Short Course Yards">
-                                                                  <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-courses-0" id="Short Course Yards" value=""><span class="checkbox__placeholder"></span></div>
-                                                                  Short Course Yards
-                                                               </label>
-                                                            </div>
-                                                         </div>
-                                                         <div class="check-list check-list--certifications">
-                                                            <div class="input-group check-list-item">
-                                                               <label id="Open Water__label" class="checkbox-label " for="Open Water">
-                                                                  <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-courses-1" id="Open Water" value=""><span class="checkbox__placeholder"></span></div>
-                                                                  Open Water
-                                                               </label>
-                                                            </div>
-                                                         </div>
-                                                         <div class="check-list check-list--certifications">
-                                                            <div class="input-group check-list-item">
-                                                               <label id="Long Course Meters__label" class="checkbox-label " for="Long Course Meters">
-                                                                  <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-courses-2" id="Long Course Meters" value=""><span class="checkbox__placeholder"></span></div>
-                                                                  Long Course Meters
-                                                               </label>
-                                                            </div>
-                                                         </div>
-                                                         <div class="check-list check-list--certifications">
-                                                            <div class="input-group check-list-item">
-                                                               <label id="Short Course Meters__label" class="checkbox-label " for="Short Course Meters">
-                                                                  <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-courses-3" id="Short Course Meters" value=""><span class="checkbox__placeholder"></span></div>
-                                                                  Short Course Meters
-                                                               </label>
-                                                            </div>
-                                                         </div>
-                                                         <div class="check-list check-list--certifications">
-                                                            <div class="input-group check-list-item">
-                                                               <label id="Long Distance__label" class="checkbox-label " for="Long Distance">
-                                                                  <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-courses-4" id="Long Distance" value=""><span class="checkbox__placeholder"></span></div>
-                                                                  Long Distance
-                                                               </label>
-                                                            </div>
-                                                         </div>
-                                                      </div>
-                                                      </div>
-                                                      <div class="col-xs-12 col-sm-3">
-                                                         <h5 class="events-filter-form__dropdown-title text-capitalize">other details</h5>
-                                                         <div class="events-filter-form__dropdown-event-filter">
-                                                            <div class="input-group check-list-item">
-                                                               <label id="Championship__label" class="checkbox-label " for="Championship">
-                                                                  <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-include-0" id="Championship" value=""><span class="checkbox__placeholder"></span></div>
-                                                                  Championship
-                                                               </label>
-                                                            </div>
-                                                            <div class="input-group check-list-item">
-                                                               <label id="International Event__label" class="checkbox-label " for="International Event">
-                                                                  <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-include-1" id="International Event" value=""><span class="checkbox__placeholder"></span></div>
-                                                                  International Event
-                                                               </label>
-                                                            </div>
-                                                            <div class="input-group check-list-item">
-                                                               <label id="Virtual Event__label" class="checkbox-label " for="Virtual Event">
-                                                                  <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-include-2" id="Virtual Event" value=""><span class="checkbox__placeholder"></span></div>
-                                                                  Virtual Event
-                                                               </label>
-                                                            </div>
-                                                            <div class="input-group check-list-item">
-                                                               <label id="Clinic__label" class="checkbox-label " for="Clinic">
-                                                                  <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-include-3" id="Clinic" value=""><span class="checkbox__placeholder"></span></div>
-                                                                  Clinic
-                                                               </label>
+                                                                  <label id="Short Course Yards__label" class="checkbox-label " for="Short Course Yards">
+                                                                     <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-courses-0" id="Short Course Yards" value=""><span class="checkbox__placeholder"></span></div>
+                                                                     Short Course Yards
+                                                                  </label>
+                                                               </div>
+                                                            
+                                                               <div class="input-group check-list-item">
+                                                                  <label id="Open Water__label" class="checkbox-label " for="Open Water">
+                                                                     <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-courses-1" id="Open Water" value=""><span class="checkbox__placeholder"></span></div>
+                                                                     Open Water
+                                                                  </label>
+                                                               </div>
+                                                            
+                                                               <div class="input-group check-list-item">
+                                                                  <label id="Long Course Meters__label" class="checkbox-label " for="Long Course Meters">
+                                                                     <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-courses-2" id="Long Course Meters" value=""><span class="checkbox__placeholder"></span></div>
+                                                                     Long Course Meters
+                                                                  </label>
+                                                               </div>                                                         
+                                                            
+                                                               <div class="input-group check-list-item">
+                                                                  <label id="Short Course Meters__label" class="checkbox-label " for="Short Course Meters">
+                                                                     <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-courses-3" id="Short Course Meters" value=""><span class="checkbox__placeholder"></span></div>
+                                                                     Short Course Meters
+                                                                  </label>
+                                                               </div>                                                         
+                                                            
+                                                               <div class="input-group check-list-item">
+                                                                  <label id="Long Distance__label" class="checkbox-label " for="Long Distance">
+                                                                     <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-courses-4" id="Long Distance" value=""><span class="checkbox__placeholder"></span></div>
+                                                                     Long Distance
+                                                                  </label>
+                                                               </div>
+                                                         
                                                             </div>
                                                          </div>
                                                       </div>
                                                       <div class="col-xs-12 col-sm-3">
-                                                         <h5 class="events-filter-form__dropdown-title text-capitalize">sanction type</h5>
+                                                         <h5 class="events-filter-form__dropdown-title text-capitalize">Other Details</h5>
                                                          <div class="events-filter-form__dropdown-event-filter">
-                                                            <div class="input-group check-list-item">
-                                                               <label id="Sanctioned__label" class="checkbox-label " for="Sanctioned">
-                                                                  <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-types-0" id="Sanctioned" value=""><span class="checkbox__placeholder"></span></div>
-                                                                  Sanctioned
-                                                               </label>
-                                                            </div>
-                                                            <div class="input-group check-list-item">
-                                                               <label id="Recognized__label" class="checkbox-label " for="Recognized">
-                                                                  <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-types-1" id="Recognized" value=""><span class="checkbox__placeholder"></span></div>
-                                                                  Recognized
-                                                               </label>
-                                                            </div>
-                                                            <div class="input-group check-list-item">
-                                                               <label id="Another__label" class="checkbox-label " for="Another">
-                                                                  <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-types-2" id="Another" value=""><span class="checkbox__placeholder"></span></div>
-                                                                  Sanctioned by Other NGB
-                                                               </label>
-                                                            </div>
-                                                            <div class="input-group check-list-item">
-                                                               <label id="Not__label" class="checkbox-label " for="Not">
-                                                                  <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-types-3" id="Not" value=""><span class="checkbox__placeholder"></span></div>
-                                                                  Not Sanctioned/Recognized
-                                                               </label>
+                                                            <div class="check-list check-list--other-event-details">
+                                                               <div class="input-group check-list-item">
+                                                                  <label id="Championship__label" class="checkbox-label " for="Championship">
+                                                                     <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-include-0" id="Championship" value=""><span class="checkbox__placeholder"></span></div>
+                                                                     Championship
+                                                                  </label>
+                                                               </div>
+                                                               <div class="input-group check-list-item">
+                                                                  <label id="International Event__label" class="checkbox-label " for="International Event">
+                                                                     <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-include-1" id="International Event" value=""><span class="checkbox__placeholder"></span></div>
+                                                                     International Event
+                                                                  </label>
+                                                               </div>
+                                                               <div class="input-group check-list-item">
+                                                                  <label id="Virtual Event__label" class="checkbox-label " for="Virtual Event">
+                                                                     <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-include-2" id="Virtual Event" value=""><span class="checkbox__placeholder"></span></div>
+                                                                     Virtual Event
+                                                                  </label>
+                                                               </div>
+                                                               <div class="input-group check-list-item">
+                                                                  <label id="Clinic__label" class="checkbox-label " for="Clinic">
+                                                                     <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-include-3" id="Clinic" value=""><span class="checkbox__placeholder"></span></div>
+                                                                     Clinic
+                                                                  </label>
+                                                               </div>
                                                             </div>
                                                          </div>
                                                       </div>
-
+                                                      <div class="col-xs-12 col-sm-3">
+                                                         <h5 class="events-filter-form__dropdown-title text-capitalize">Sanction Type</h5>
+                                                         <div class="events-filter-form__dropdown-event-filter">
+                                                            <div class="check-list check-list--sanction-type">
+                                                               <div class="input-group check-list-item">
+                                                                  <label id="Sanctioned__label" class="checkbox-label " for="Sanctioned">
+                                                                     <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-types-0" id="Sanctioned" value=""><span class="checkbox__placeholder"></span></div>
+                                                                     Sanctioned
+                                                                  </label>
+                                                               </div>
+                                                               <div class="input-group check-list-item">
+                                                                  <label id="Recognized__label" class="checkbox-label " for="Recognized">
+                                                                     <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-types-1" id="Recognized" value=""><span class="checkbox__placeholder"></span></div>
+                                                                     Recognized
+                                                                  </label>
+                                                               </div>
+                                                               <div class="input-group check-list-item">
+                                                                  <label id="Another__label" class="checkbox-label " for="Another">
+                                                                     <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-types-2" id="Another" value=""><span class="checkbox__placeholder"></span></div>
+                                                                     Sanctioned by Other NGB
+                                                                  </label>
+                                                               </div>
+                                                               <div class="input-group check-list-item">
+                                                                  <label id="Not__label" class="checkbox-label " for="Not">
+                                                                     <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-types-3" id="Not" value=""><span class="checkbox__placeholder"></span></div>
+                                                                     Not Sanctioned/Recognized
+                                                                  </label>
+                                                               </div>
+                                                            </div>
+                                                         </div>
+                                                      </div>
                                                       <div class="col-xs-12 col-sm-3" style="padding-right:35px;">
                                                          <h5 class="events-filter-form__dropdown-title text-capitalize">LMSC</h5>
                                                          <div class="">
-                                                            <!-- <label for="search-filter__range">LMSC</label> -->
+                                                            <!-- <label for="search-filter__lmsc">LMSC</label> -->
                                                             <div class="input-group">
-                                                               <select id="search-filter__range" name="search-filter__range">
-                                                                  <!-- <option selected="" value="25">25 Miles</option> -->
-                                                                  <option value="x">Name</option>
-                                                                  <option value="x">Name</option>
-                                                                  <option value="x">Name</option>
-                                                                  <option value="x">Name</option>
-                                                               </select>
+                                                               <select id="search-filter__lmsc" name="search-filter__lmsc">
+                                                                  <!-- <option value="">Select an LMSC</option> -->
+                                                                  <option value="3">(AD) Adirondack</option>
+                                                                  <option value="56">(AK) Alaska</option>
+                                                                  <option value="11">(AM) Allegheny Mountain</option>
+                                                                  <option value="48">(AZ) Arizona</option>
+                                                                  <option value="23">(AR) Arkansas</option>
+                                                                  <option value="32">(CO) Colorado</option>
+                                                                  <option value="5">(CT) Connecticut</option>
+                                                                  <option value="8">(DV) Delaware Valley</option>
+                                                                  <option value="14">(FL) Florida</option>
+                                                                  <option value="50">(FG) Florida Gold Coast</option>
+                                                                  <option value="45">(GA) Georgia</option>
+                                                                  <option value="25">(GU) Gulf</option>
+                                                                  <option value="39">(HI) Hawaii</option>
+                                                                  <option value="21">(IL) Illinois</option>
+                                                                  <option value="16">(IN) Indiana</option>
+                                                                  <option value="35">(IW) Inland Northwest</option>
+                                                                  <option value="40">(IA) Iowa</option>
+                                                                  <option value="41">(KY) Kentucky</option>
+                                                                  <option value="18">(LE) Lake Erie</option>
+                                                                  <option value="9">(MD) Maryland</option>
+                                                                  <option value="6">(MR) Metropolitan</option>
+                                                                  <option value="19">(MI) Michigan</option>
+                                                                  <option value="30">(MN) Minnesota</option>
+                                                                  <option value="28">(MV) Missouri Valley</option>
+                                                                  <option value="31">(MT) Montana</option>
+                                                                  <option value="29">(NB) Nebraska</option>
+                                                                  <option value="2">(NE) New England</option>
+                                                                  <option value="7">(NJ) New Jersey</option>
+                                                                  <option value="42">(NM) New Mexico</option>
+                                                                  <option value="4">(NI) Niagara</option>
+                                                                  <option value="13">(NC) North Carolina</option>
+                                                                  <option value="52">(ND) North Dakota</option>
+                                                                  <option value="26">(NT) North Texas</option>
+                                                                  <option value="17">(OH) Ohio</option>
+                                                                  <option value="27">(OK) Oklahoma</option>
+                                                                  <option value="37">(OR) Oregon</option>
+                                                                  <option value="22">(OZ) Ozark</option>
+                                                                  <option value="38">(PC) Pacific</option>
+                                                                  <option value="36">(PN) Pacific Northwest</option>
+                                                                  <option value="10">(PV) Potomac Valley</option>
+                                                                  <option value="44">(SI) San Diego - Imperial</option>
+                                                                  <option value="59">(SR) Snake River</option>
+                                                                  <option value="55">(SC) South Carolina</option>
+                                                                  <option value="54">(SD) South Dakota</option>
+                                                                  <option value="43">(ST) South Texas</option>
+                                                                  <option value="15">(SE) Southeastern</option>
+                                                                  <option value="24">(SO) Southern</option>
+                                                                  <option value="33">(SP) Southern Pacific</option>
+                                                                  <option value="34">(UT) Utah</option>
+                                                                  <option value="12">(VA) Virginia</option>
+                                                                  <option value="53">(WT) West Texas</option>
+                                                                  <option value="20">(WI) Wisconsin</option>                                                               </select>
                                                             </div>      
                                                          </div>
                                                       </div>
-
-
-
+                                                   </div>
                                                 </div>
                                              </div>
                                           </div>
@@ -377,9 +419,9 @@
                         <div class="col-xs-12">
                            <div class="results-content">
 
-                              <div class="results-list__summary">
+                              <!-- <div class="results-list__summary">
                                  Showing <strong>5</strong> Events within <strong>25</strong> miles
-                              </div>
+                              </div> -->
 
                               <div class="results-list">
                                  <div class="results-list__item">
