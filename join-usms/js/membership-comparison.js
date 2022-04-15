@@ -16,25 +16,37 @@
 function handleShowDetails() {
     var comparisonChart = document.getElementById("membershipComparison");
     var comparisonBtn = document.getElementById("compareDetailsBtn");
-    var membershipOverview = document.getElementById("membershipOverview");
+    // var membershipOverview = document.getElementById("membershipOverview");
 
-    window.scroll(0, 300);
+    
+    var mediaMax480 = window.matchMedia("screen and (max-width:480px)").matches;
 
     if (comparisonChart.classList.contains("show")) {
         comparisonChart.classList.remove("show");
         comparisonBtn.classList.remove("open");
-        window.scrollTo({top: 0, behavior: "smooth"});
+        
+        if ( mediaMax480 ) {
+            console.log("This is mobile view");
+        } else {
+            console.log("This is desktop and tablet view");
+            // window.scroll(0, 300);
+            window.scrollTo({top: 0, behavior: "smooth"});
+            document.getElementById("showDetails").scrollIntoView({behavior: "smooth"});
+            document.getElementById("membershipOverview").scrollIntoView({behavior: "smooth"}); 
+        }
     } else {
         comparisonChart.classList.add("show");
         comparisonBtn.classList.add("open");
-        document.getElementById("showDetails").scrollIntoView({behavior: "smooth"});
-        document.getElementById("membershipOverview").scrollIntoView({behavior: "smooth"}); 
+        if ( mediaMax480 ) {
+
+        } else {
+            document.getElementById("showDetails").scrollIntoView({behavior: "smooth"});
+            document.getElementById("membershipOverview").scrollIntoView({behavior: "smooth"});     
+        }
         // membershipOverview.classList.add('is-fixed');
-        var pageFooter = document.querySelector('footer-content');
+        // var pageFooter = document.querySelector('footer-content');
     }
 }
-
-
 
 
 // window.addEventListener("scroll", () => {
