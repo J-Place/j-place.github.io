@@ -1,3 +1,34 @@
+.is-fixed {
+    position: fixed;
+    /* top: 340px; */
+    background-color: #FFF;
+    width: 1400px;
+    margin: 0 auto;
+    padding: 0 0 40px;
+    left: 0;
+    right: 0;
+    z-index: 999;
+}
+
+#membershipOverview.is-fixed {
+    top: -10px;
+}
+
+#showDetails.is-fixed {
+    top: 355px;
+}
+
+#showDetails.is-fixed.is-fixed-footer {
+    position: absolute;
+    /* bottom: 0; */
+    top: 2160px;
+}
+#membershipOverview.is-fixed.is-fixed-footer {
+    position: absolute;
+    /* bottom: 0; */
+    top: 1790px;
+}
+
 .section {
     background-color: #f4f4f4;
     display: initial !important;
@@ -152,8 +183,12 @@
 }
 
 .compare-details td.feature {
-    padding-left: 40px;
-    padding-right: 60px;
+    padding-left: 10px;
+    padding-right: 20px;
+    position: sticky;
+    z-index: 999;
+    left: 0;
+    background-color: #FFF;
 }
 
 .compare-details .table-section td {
@@ -168,12 +203,32 @@
     font-size: 1.5rem;
     font-weight: bold;
     padding-right: 3rem;
+    position: sticky;
+    z-index: 999;
+    left: 0;
+    background-color: #CCC;
+}
+
+.compare-details .table-section td:nth-child(2):after {
+    content: ">";
+    position: relative;
+    left: 2rem;
 }
 
 /* Checkmark */
 .compare-details td img {
     width: 20px;
 }
+
+/* .compare-details thead th, 
+.compare-details tfoot th {
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 999;
+  top: 0;
+  z-index: 2;
+  background: #FFF;
+} */
 
 .show-details {
     width: 100%;
@@ -219,6 +274,13 @@
 }
 
 @media (min-width: 720px) {
+    .compare-details .table-section td:nth-child(2):after {
+        content: "";
+    }    
+    .compare-details td.feature {
+        padding-left: 40px;
+        padding-right: 60px;
+    }    
     .membership-option p.ribbon {
         display: block;
         margin: 0 auto 1.5rem;
@@ -245,7 +307,7 @@
     } */
 
     .show-details .btn {
-        margin: 5rem auto 1rem;
+        margin: 3.5rem auto 1rem;
     }
 
     .membership-comparison.show {

@@ -18,31 +18,54 @@ function handleShowDetails() {
     var comparisonBtn = document.getElementById("compareDetailsBtn");
     var membershipOverview = document.getElementById("membershipOverview");
 
+    window.scroll(0, 300);
+
     if (comparisonChart.classList.contains("show")) {
         comparisonChart.classList.remove("show");
         comparisonBtn.classList.remove("open");
-        // membershipOverview.scrollIntoView({behavior: "smooth"});
         window.scrollTo({top: 0, behavior: "smooth"});
-        // document.body.scrollTop = document.documentElement.scrollTop = 0;
     } else {
         comparisonChart.classList.add("show");
         comparisonBtn.classList.add("open");
         document.getElementById("showDetails").scrollIntoView({behavior: "smooth"});
+        document.getElementById("membershipOverview").scrollIntoView({behavior: "smooth"}); 
+        // membershipOverview.classList.add('is-fixed');
+        var pageFooter = document.querySelector('footer-content');
     }
-    // alert("click");
-    // document.getElementById("compareDetails").style.height = '100%';
-    // document.getElementById("compareDetails").style.display = 'block';
-}
-
-
-if (comparisonChart.classList.contains("show-filters")) {
-    alert("Hola");
 }
 
 
 
 
+// window.addEventListener("scroll", () => {
+//     var tableShown = document.getElementById('membershipComparison');
+//     var membershipOverview = document.getElementById('membershipOverview');
+//     var showDetailsButton = document.getElementById('showDetails');
+//     var pageFooter = document.querySelector('.footer-content');
+//     const pageFooterPosition = pageFooter.scrollTop;
+//     const currentScroll = window.pageYOffset;
+//     console.log(currentScroll);
+//     console.log(pageFooterPosition);
 
+//     if (tableShown.classList.contains('show')) {
+//         if (currentScroll >= 344) {
+//             membershipOverview.classList.add('is-fixed');
+//             showDetailsButton.classList.add('is-fixed');
+//         } else if (currentScroll < 344) {
+//             membershipOverview.classList.remove('is-fixed');
+//             showDetailsButton.classList.remove('is-fixed');
+//         } 
+        
+//         if (currentScroll >= 2265) {
+//             membershipOverview.classList.add('is-fixed-footer');
+//             showDetailsButton.classList.add('is-fixed-footer');
+//         }
 
+//         if (currentScroll < 2265) {
+//             membershipOverview.classList.remove('is-fixed-footer');
+//             showDetailsButton.classList.remove('is-fixed-footer');
+//         }
+//     }
+// }); 
 
-// onclick="handleTableDetails()"
+// }
