@@ -49,7 +49,7 @@ $('.personalize__content-column-description').height(heightDescription);
     }
     for(i = 0; i < elementsHeader.length; i++){
       var elementHeightHeader = elementsHeader[i].clientHeight;
-      var elementHeightDescription = elementsHeader[i].clientHeight;
+      var elementHeightDescription = elementsDescription[i].clientHeight;
       allHeightsHeader.push(elementHeightHeader);
       allHeightsDescription.push(elementHeightDescription);
     }
