@@ -35,25 +35,6 @@ var getData = $.ajax({
   },
 });
 
-// function getParticipants() {
-//   const xhr = new XMLHttpRequest();
-//   xhr.open('GET', `https://test.usms.org/apis/v1/gtd/milestones`, true);
-//   xhr.withCredentials = true;
-//   console.log("Status is " + xhr.status);
-//   xhr.onload = function () {
-//     console.log("Loading Data");
-//     if (xhr.status === 200) {
-//       const response = JSON.parse(xhr.responseText);
-//       console.log(response.data);
-//     } else {
-//       showErrorModal('Error updating coaches');
-//     }
-//   };
-//   xhr.send(null);
-// }
-// getParticipants();
-
-
 var options = {
   page: 50,
   pagination: true,
