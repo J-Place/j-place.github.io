@@ -70,8 +70,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-    const navListItems = document.querySelectorAll('.article-nav li');
-    const navListItemActive = document.querySelectorAll('.article-nav li.active');
+    const navListItems = document.querySelectorAll('.article-nav li a');
+    const navListItemActive = document.querySelectorAll('.article-nav li a.active');
     // const navItemActive = navListItems.item.classList.contains('.active');
 
     // function navbarDisplay() {
@@ -83,25 +83,30 @@ document.addEventListener("DOMContentLoaded", function () {
     // navbarDisplay();
     
     document.addEventListener('click', function(e) {
-        var isActive = e.target.classList.contains('active');
+        var isActive = e.target.classList.contains('active')
         
-        console.log(navListItemActive);
+        // navListItems.classList.remove('active');
+        
+        console.log(navListItems.classList);
         // console.log("Clicked" + isActive);
         // navListItemActive.classList.remove('active');
         // navListItemActive[0].classList.add('reactive');
+        console.log(e.target.navListItems);
         if (e.target = navListItems && !isActive) {
+            console.log(navListItemActive.classList);
+            // navListItemActive.classList.add('testy')
             e.target.classList.add('active');
         } else if (e.target = navListItems && isActive) {
             console.log("Is the Active Nav Link");
             return;
         } 
-        else {
+        // else {
             // isActive.classList.remove('active');
             // e.target.classList.add('active');
-            console.log("Click That.");
-            console.log(isActive);
+            // console.log("Click That.");
+            // console.log(isActive);
             // console.log(navListItems[i].classList);
-        }
+        // }
     });
 
 
