@@ -9,12 +9,12 @@
     transition: opacity .5s;
     opacity: 0;
 }
-h3.article-nav-title {
+.article-nav h3.article-nav-title {
     display: block;
     /* font-size: 2.5rem; */
     margin-top: 0;
     margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
+    padding-bottom: 2rem;
     border-bottom: 1px solid #CCC;
  }
  .article-nav ul {
@@ -27,38 +27,53 @@ h3.article-nav-title {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
  }
- .article-nav ul li.h3link {
-    font-size: 1.6rem;
-    line-height: 130%;
-    /* margin-left: 3rem; */
-    padding-left: 3rem;
- }
- .article-nav ul li.h3link .active {
-    font-size: 1.5rem;
- }
- .article-nav ul li.h3link:before {
-    content: "- ";
-    margin-left: -1rem;
-}
- .article-nav ul li.h2link {
-    font-size: 1.8rem;
-    line-height: 130%;
-    /* padding-top: 2rem; */
-    margin-top: 2.3rem;
- }
- .article-nav ul li.h2link .active {
-    font-size: 1.6rem;
- }
-.article-nav ul li a {
-    color: #0068ad;
+ .article-nav ul li a {
+    color: #666;
     text-decoration: none;
   }
- .article-nav ul li a.active {
+ .article-nav ul li.active a {
     font-weight: bold;
+    color: #0068ad;
  }
  /* .article-nav ul li a.active::before {
     content: ">";
  } */
+ .article-nav ul li.H2link {
+    font-size: 1.8rem;
+    line-height: 130%;
+    /* padding-top: 2rem; */
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+ }
+ .article-nav ul li.H2link.active {
+    font-size: 1.65rem;
+    line-height: 143%;
+    letter-spacing: .3px;
+ }
+ .article-nav ul li.H3link {
+    font-size: 1.6rem;
+    line-height: 130%;
+    /* margin-left: 3rem; */
+    margin-bottom: 1.25rem;
+    padding-left: 3rem;
+ }
+ .article-nav ul li.H3link.active {
+    font-size: 1.5rem;
+    line-height: 136%;
+ }
+ .article-nav ul li.H3link:before {
+    content: "- ";
+    margin-left: -1rem;
+}
+
+ .row.icon-nav {
+    display: none;
+ }
+ @media (min-width:768px) {
+ .row.icon-nav {
+    display: flex;
+ }
+}
 
 
 
@@ -68,8 +83,10 @@ h3.article-nav-title {
     position: fixed;
 }
 .sticky-end {
-    opacity: 0; /* You don't see the opacity transition at the bottom because the element is positioned off screen at the same time */
-    position: absolute;    
+    opacity: 1; /* You don't see the opacity transition at the bottom because the element is positioned off screen at the same time */
+    position: absolute;
+    right: 140px;
+    left: auto;
 }
 
 
@@ -194,17 +211,17 @@ font-size: 2.0rem;
     width: 75% !important;
     height: 75% !important;
 }
-.col-xs-12 > div > h3 {
-    /* background-color: #fff; */
+.article-body > h3 {
+    background-color: red;
     padding: 1.5rem 0 0;
 }
-.col-xs-12 > div > h4 {
+.article-body > h4 {
     margin: 31px auto 4px !important 
 }
-.col-xs-12 > div > h5 {
+.article-body > h5 {
     margin: 20px auto 2px !important;
 }
-.col-xs-12 > div > p {
+.article-body > p {
     margin: 0 auto 15px;
 }
 .content-anchor {

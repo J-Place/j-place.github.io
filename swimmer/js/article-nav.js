@@ -1,87 +1,120 @@
 document.addEventListener("DOMContentLoaded", function () {
-// setTimeout(() => {
-    const articleNav = document.querySelector('.article-nav');
-    const articleTitle = document.querySelector('.feature-title');
-    const relatedArticles = document.querySelector('.article-stepper');
-    const articleNavHeight = articleNav.offsetHeight;
-    // const articleStart = articleTitle.offsetParent.offsetTop; // This one works with technique article; relative to container
-    const articleStart = articleTitle.offsetTop; // This one works with swimming 101 page; relative to container
-    const relatedArticlesTop = relatedArticles.offsetParent.offsetTop;
-    const relatedArticlesHeight = relatedArticles.offsetHeight;
-    // const articleEnd = relatedArticlesTop + relatedArticlesHeight;
-    const articleEnd = relatedArticlesTop - articleNavHeight;
 
-
-    // Set position on page load
-    if (window.scrollY >= articleStart && window.scrollY <= articleEnd) {
-        // articleNav.style.top = articleStart + 'px';
-        articleNav.style.top = 0 + 'px';
-        articleNav.classList.add('sticky-start');
-        articleNav.classList.remove('sticky-end');
+    var mobile = window.matchMedia("screen and (max-width:480px)").matches;
+    if (mobile) {
+        // Run javascript for mobile only
+        document.querySelector('.article-nav').classList.add('mobile');
     } else {
-        articleNav.style.top = articleStart + 'px';
-        console.log("on page load else set px position on article nav");
-    }
+        // Run javascript for sizes above mobile
 
-    // Set position on scroll
-    function stickynavbar() {
+        handleNavUI(); // Draw nav on page load
+        function handleNavUI() {
+            const ab = document.querySelectorAll('.article-body h2, .article-body h3');
+            var str = '';        
+            for (i = 0; i < ab.length; i++) {            
+                var id = ab[i];
+                var idPos = id.offsetParent.getBoundingClientRect().top;
+                var idZero = idPos + ab[i].offsetTop;
+                var activeClass = '';
+                // if (idPos + ab[i].offsetTop == 0) {
+                if (idZero < window.screenTop + 90) {
+                    activeClass = " active";    
+                    console.log("AAA");
+                } 
+                else if (idZero > window.screenTop) {
+                    activeClass = " BBB";
+                    console.log("BBB");
+                }
+                else if (idZero >= -100 && idZero <= 100) {
+                    activeClass = " activeXXX";
+                    console.log("XXX");
+                } 
+                str  += '<li class="' + ab[i].tagName + 'link' +  activeClass + '"><a href="#' + ab[i].id + '">' + ab[i].innerHTML + '</a></li>';
+                // console.log(ab[i].offsetTop);
+            }        
+            document.getElementById('navList').innerHTML = str;
+            // window.addEventListener('scroll', '');
+        }
+        window.addEventListener('scroll', handleNavUI);
         
-        // console.log("running stickynavbar function ...");
+    
+        const articleNav = document.querySelector('.article-nav');
+        const articleTitle = document.querySelector('.article-body'); // was '.feature-title'
+        const relatedArticles = document.querySelector('.article-stepper');
+        const articleNavHeight = articleNav.offsetHeight;
+        // const articleStart = articleTitle.offsetParent.offsetTop; // This one works with technique article; relative to parent container
+        const articleStart = articleTitle.offsetTop; // This one works with swimming 101 page; relative to container
+        const relatedArticlesTop = relatedArticles.offsetParent.offsetTop;
+        const relatedArticlesHeight = relatedArticles.offsetHeight;
+        const articleEnd = relatedArticlesTop - articleNavHeight;
 
-        if (window.scrollY < articleStart) {
-            articleNav.style.top = articleStart + 'px';
-            articleNav.classList.remove('sticky-start');
-            articleNav.classList.add('sticky-end');
-            console.log("Start scrolling at top of page");
-        }
-        if (!articleNav.classList.contains('sticky-start') && !articleNav.classList.contains('sticky-end') && window.scrollY >= articleStart && window.scrollY <= articleEnd) {    
-            articleNav.classList.add('sticky-start');
+        // const articleTop = articleBody.offsetParent.getBoundingClientRect().top;
+        // const articleBottom = articleBody.offsetParent.getBoundingClientRect().bottom;
+    
+    
+        if (window.scrollY >= articleStart && window.scrollY <= articleEnd) {
+            // Set nav position on initial page load
             articleNav.style.top = 0 + 'px';
-            console.log("Scroll is at top of article");
-        }
-        // Scroll back up after scrolling down
-        if (!articleNav.classList.contains('sticky-start') && articleNav.classList.contains('sticky-end') && window.scrollY >= articleStart && window.scrollY <= articleEnd + articleNavHeight) {
             articleNav.classList.add('sticky-start');
             articleNav.classList.remove('sticky-end');
-            articleNav.style.top = 0 + 'px';
-            console.log("Scroll back up after scrolling down");
+        } else { 
+            // Set nav position on page reload or loading page from hash links
+            articleNav.style.top = articleStart + 'px'; 
         }
-        if (articleNav.classList.contains('sticky-start') && window.scrollY >= articleStart && window.scrollY >= articleEnd) {
-            articleNav.classList.remove('sticky-start');
-            articleNav.classList.add('sticky-end');
-            // articleNav.style.top = articleEnd + articleNavHeight + 'px';
-            articleNav.style.top = articleEnd + articleNavHeight + 'px';
-            // articleNav.style.top = articleEnd + 'px';
-            console.log("Scrolled to bottom of article");
-        }
-    }
-    window.addEventListener('scroll', stickynavbar);
-
-
-
-
-
-
-
-    const navListItems = document.querySelectorAll('.article-nav li a');
-    const navListItemActive = document.querySelectorAll('.article-nav li a.active');
-    // const navItemActive = navListItems.item.classList.contains('.active');
     
-    document.addEventListener('click', function(e) {
-        var isActive = e.target.classList.contains('active')
-        
-        if (e.target = navListItems && !isActive) {
-            for (elem of document.getElementsByClassName("active")) {
-                elem.classList.remove("active");
+    
+        // Set position on scroll
+        function setNavPosition() {
+            if (window.scrollY < articleStart) {
+                articleNav.style.top = articleStart - articleNavHeight + 30 + 'px';
+                articleNav.classList.remove('sticky-start');
+                articleNav.classList.add('sticky-end');
+                // console.log("Start scrolling at top of page");
+                console.log(articleStart);
             }
-            // console.log(navListItemActive.classList);
-            // navListItemActive.classList.add('testy')
-            e.target.classList.add('active');
-        } else if (e.target = navListItems && isActive) {
-            console.log("Is the Active Nav Link");
-            return;
-        } 
-    });
+            if (!articleNav.classList.contains('sticky-start') && !articleNav.classList.contains('sticky-end') && window.scrollY >= articleStart && window.scrollY <= articleEnd) {    
+                articleNav.classList.add('sticky-start');
+                articleNav.style.top = 0 + 'px';
+                // console.log("Scroll is at top of article");
+                console.log("222");
+            }
+            // Scroll back up after scrolling down
+            if (!articleNav.classList.contains('sticky-start') && articleNav.classList.contains('sticky-end') && window.scrollY >= articleStart && window.scrollY <= articleEnd + articleNavHeight) {
+                articleNav.classList.add('sticky-start');
+                articleNav.classList.remove('sticky-end');
+                articleNav.style.top = 0 + 'px';
+                // console.log("Scroll back up after scrolling down");
+                console.log("333");
+            }
+            if (articleNav.classList.contains('sticky-start') && window.scrollY >= articleStart && window.scrollY >= articleEnd) {
+                articleNav.classList.remove('sticky-start');
+                articleNav.classList.add('sticky-end');
+                // articleNav.style.top = articleEnd + articleNavHeight + 'px';
+                articleNav.style.top = articleStart + 'px';
+                // console.log("Scrolled to bottom of article");
+                console.log("444");
+            }
+        }
+        window.addEventListener('scroll', setNavPosition);
+    
+    
+    
+        
+        // function setActiveItem(e) {
+        //     const navListItems = document.querySelectorAll('.article-nav li a');
+        //     var isActive = e.target.classList.contains('active')        
+        //     if (e.target = navListItems && !isActive) {
+        //         for (elem of document.getElementsByClassName("active")) {
+        //             elem.classList.remove("active");
+        //         }
+        //         e.target.classList.add('active');
+        //     } else if (e.target = navListItems && isActive) {
+        //         console.log("Is the Active Nav Link");
+        //         return;
+        //     } 
+        // }
+        // window.addEventListener('click', setActiveItem);
 
+        
+    }
 });
-// }, 2000);
