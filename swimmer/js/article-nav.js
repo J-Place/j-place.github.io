@@ -18,13 +18,6 @@ document.addEventListener("DOMContentLoaded", function () {
         articleNav.style.top = 0 + 'px';
         articleNav.classList.add('sticky-start');
         articleNav.classList.remove('sticky-end');
-        // console.log(articleNav);
-        // console.log(articleTitle);
-        // console.log(relatedArticles);
-        // console.log(relatedArticlesTop);
-        // console.log(relatedArticlesHeight);
-        // console.log(articleStart);
-        // console.log("on page load, if window has been scrolled down");
     } else {
         articleNav.style.top = articleStart + 'px';
         console.log("on page load else set px position on article nav");
@@ -73,43 +66,22 @@ document.addEventListener("DOMContentLoaded", function () {
     const navListItems = document.querySelectorAll('.article-nav li a');
     const navListItemActive = document.querySelectorAll('.article-nav li a.active');
     // const navItemActive = navListItems.item.classList.contains('.active');
-
-    // function navbarDisplay() {
-        // if (navListItemActive) {
-            // console.log("Yes");
-        // }
-        // console.log(navItemActive);
-    // }
-    // navbarDisplay();
     
     document.addEventListener('click', function(e) {
         var isActive = e.target.classList.contains('active')
         
-        // navListItems.classList.remove('active');
-        
-        console.log(navListItems.classList);
-        // console.log("Clicked" + isActive);
-        // navListItemActive.classList.remove('active');
-        // navListItemActive[0].classList.add('reactive');
-        console.log(e.target.navListItems);
         if (e.target = navListItems && !isActive) {
-            console.log(navListItemActive.classList);
+            for (elem of document.getElementsByClassName("active")) {
+                elem.classList.remove("active");
+            }
+            // console.log(navListItemActive.classList);
             // navListItemActive.classList.add('testy')
             e.target.classList.add('active');
         } else if (e.target = navListItems && isActive) {
             console.log("Is the Active Nav Link");
             return;
         } 
-        // else {
-            // isActive.classList.remove('active');
-            // e.target.classList.add('active');
-            // console.log("Click That.");
-            // console.log(isActive);
-            // console.log(navListItems[i].classList);
-        // }
     });
-
-
 
 });
 // }, 2000);
