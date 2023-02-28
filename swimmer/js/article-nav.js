@@ -33,7 +33,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 // console.log(ab[i].offsetTop);
             }        
             document.getElementById('navList').innerHTML = str;
-            // window.addEventListener('scroll', '');
         }
         window.addEventListener('scroll', handleNavUI);
         
@@ -69,21 +68,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 articleNav.style.top = articleStart - articleNavHeight + 30 + 'px';
                 articleNav.classList.remove('sticky-start');
                 articleNav.classList.add('sticky-end');
-                // console.log("Start scrolling at top of page");
-                console.log(articleStart);
+                console.log("111", articleStart);
             }
             if (!articleNav.classList.contains('sticky-start') && !articleNav.classList.contains('sticky-end') && window.scrollY >= articleStart && window.scrollY <= articleEnd) {    
                 articleNav.classList.add('sticky-start');
                 articleNav.style.top = 0 + 'px';
-                // console.log("Scroll is at top of article");
                 console.log("222");
             }
-            // Scroll back up after scrolling down
             if (!articleNav.classList.contains('sticky-start') && articleNav.classList.contains('sticky-end') && window.scrollY >= articleStart && window.scrollY <= articleEnd + articleNavHeight) {
                 articleNav.classList.add('sticky-start');
                 articleNav.classList.remove('sticky-end');
                 articleNav.style.top = 0 + 'px';
-                // console.log("Scroll back up after scrolling down");
                 console.log("333");
             }
             if (articleNav.classList.contains('sticky-start') && window.scrollY >= articleStart && window.scrollY >= articleEnd) {
@@ -91,7 +86,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 articleNav.classList.add('sticky-end');
                 // articleNav.style.top = articleEnd + articleNavHeight + 'px';
                 articleNav.style.top = articleStart + 'px';
-                // console.log("Scrolled to bottom of article");
                 console.log("444");
             }
         }
@@ -99,7 +93,6 @@ document.addEventListener("DOMContentLoaded", function () {
     
     
     
-        
         // function setActiveItem(e) {
         //     const navListItems = document.querySelectorAll('.article-nav li a');
         //     var isActive = e.target.classList.contains('active')        
