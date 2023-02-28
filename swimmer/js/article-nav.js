@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // Set position on scroll
         function setNavPosition() {
             if (window.scrollY < articleStart) {
-                articleNav.style.top = articleStart - articleNavHeight + 30 + 'px';
+                articleNav.style.top = articleStart - articleNavHeight + 150 + 'px';
                 articleNav.classList.remove('sticky-start');
                 articleNav.classList.add('sticky-end');
                 console.log("111", articleStart);
