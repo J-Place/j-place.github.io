@@ -1,10 +1,8 @@
 .article-nav {
     position: absolute;
     left: 0;
-    padding-top: 5rem;
-    /* padding-bottom: 5rem; */
-    padding-left: 5rem;
-    width: 360px;
+    padding: 0;
+    width: 100%;
     z-index: 9999;
     transition: opacity .5s;
     opacity: 0;
@@ -12,16 +10,46 @@
 .article-nav h3.article-nav-title {
     display: block;
     /* font-size: 2.5rem; */
-    margin-top: 0;
-    margin-bottom: 2rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid #CCC;
+    background-color: rgb(165, 214, 243);
+    margin: 0 -5px;
+    padding: 1rem 3rem;
  }
  .article-nav ul {
     list-style: none;
     margin: 1rem auto 3rem;
     padding: 0;
     font-size: 1.8rem;
+    background-color: #FFF;
+ }
+
+ @media (min-width: 768px) {
+    .article-nav {
+        position: absolute;
+        left: 0;
+        padding-top: 5rem;
+        /* padding-bottom: 5rem; */
+        padding-left: 5rem;
+        width: 360px;
+        z-index: 9999;
+        transition: opacity .5s;
+        opacity: 0;
+    }
+    .article-nav h3.article-nav-title {
+        display: block;
+        /* font-size: 2.5rem; */
+        margin-top: 0;
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+        background-color: #FFF;
+        border-bottom: 1px solid #CCC;
+     }
+     .article-nav ul {
+        list-style: none;
+        margin: 1rem auto 3rem;
+        padding: 0;
+        font-size: 1.8rem;
+        background-color: #FFF;
+     }    
  }
  .article-nav ul li {
     font-size: 1.5rem;
@@ -77,7 +105,6 @@
 
 
 
-
 .sticky-start {
     opacity: 1;
     position: fixed;
@@ -85,10 +112,21 @@
 .sticky-end {
     opacity: 1; /* You don't see the opacity transition at the bottom because the element is positioned off screen at the same time */
     position: absolute;
-    right: 140px;
+    right: auto;
     left: auto;
 }
-
+@media (min-width:768px) {
+    .sticky-start {
+        opacity: 1;
+        position: fixed;
+    }
+    .sticky-end {
+        opacity: 1; /* You don't see the opacity transition at the bottom because the element is positioned off screen at the same time */
+        position: absolute;
+        right: 139px;
+        left: auto;
+    }
+}
 
 
 
@@ -169,7 +207,15 @@ font-size: 2.0rem;
     padding: 0;
     min-height: 160px;
 }
+#navList { 
+    display: none; 
+    margin-top: 0;
+    padding: 1rem 2rem 4rem;
+}
+
 @media (min-width: 768px) {
+    #navList { display: block; }
+
     .usms-container {
         width: 100%;
    }
@@ -211,21 +257,32 @@ font-size: 2.0rem;
     width: 75% !important;
     height: 75% !important;
 }
-.article-body > h3 {
-    background-color: red;
-    padding: 1.5rem 0 0;
+.article-body {
+    margin-top: 4rem !important;
 }
-.article-body > h4 {
+.article-body h3 {
+    background-color: #FFF;
+    padding: 1.5rem 0 1.5rem;
+}
+.article-body h4 {
     margin: 31px auto 4px !important 
 }
-.article-body > h5 {
+.article-body h5 {
     margin: 20px auto 2px !important;
 }
-.article-body > p {
+.article-body p {
     margin: 0 auto 15px;
 }
 .content-anchor {
     height: 20px;
     display: block;
     margin-top: -20px;
+}
+@media (min-width: 768px) {
+    .article-body {
+        margin-top: 1rem;
+    }
+    .article-body h3 {
+        padding: 1.5rem 0;
+    }
 }
