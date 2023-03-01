@@ -87,12 +87,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Set position on scroll
     function setNavPosition() {
         if (mobile) {
-
-            // articleNav.style.top = articleStart - articleStart + 'px';
-            // articleNav.classList.add('sticky-start');
-            // articleNav.classList.remove('sticky-end');
-            // console.log("111 mobile", articleStart - articleStart);
-
             if (window.scrollY < articleStart) {
                 // articleNav.style.top = articleStart - articleNavHeight + 'px';
                 // articleNav.style.top = articleStart - articleStart - 20 + 'px';
@@ -101,7 +95,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 articleNav.classList.add('sticky-end');
                 console.log("111 mobile");
             }
-
             if (window.scrollY >= articleStart) {
                 articleNav.style.top = 0 + 'px';
                 // articleNav.classList.remove('sticky-start');
@@ -110,7 +103,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 articleNav.classList.remove('sticky-end');
                 console.log("111XXX mobile");
             }
-
         } else if (!mobile) {
             if (window.scrollY < articleStart) {
                 // articleNav.style.top = articleStart - articleNavHeight + 150 + 'px';
