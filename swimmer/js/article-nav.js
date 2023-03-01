@@ -97,8 +97,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             if (window.scrollY >= articleStart) {
                 articleNav.style.top = 0 + 'px';
-                // articleNav.classList.remove('sticky-start');
-                // articleNav.classList.add('sticky-end');
                 articleNav.classList.add('sticky-start');
                 articleNav.classList.remove('sticky-end');
                 console.log("111XXX mobile");
