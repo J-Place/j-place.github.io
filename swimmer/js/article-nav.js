@@ -90,19 +90,20 @@ document.addEventListener("DOMContentLoaded", function () {
     handleNavUI(); // Draw nav on page load
 
 
-    let containingElement = document.querySelector('#navList');
+    let mobileNavList = document.querySelector('#navList');
+    let mobileNavButton = document.querySelector('.article-nav-title');
     document.body.addEventListener('click', function(event){
-        if (mobile && window.scrollY < articleStart) {
+        if (mobile && window.scrollY < articleStart && mobileNavButton.contains(event.target)) {
             // articleNav.style.top = 0 + 'px';
             document.querySelector('.article-body').scrollIntoView();
+            console.log("This one ...");
         }
-        if (mobile && containingElement.contains(event.target)){
+        if (mobile && mobileNavList.contains(event.target)){
             toggleMobileNav();
             console.log("Toggling Nav");
         } else {
-            console.log("Returning False");
-            document.querySelector('.article-body').scrollIntoView();
-            // return false
+            console.log("Returning False");            
+            return false
         }
     });
 
@@ -110,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Set position on scroll
     function setNavPosition() {
         if (mobile) {
-            if (window.scrollY < articleStart) {
+            if (window.scrollY < articleStart) {                
                 // articleNav.style.top = - 20 + 'px';
                 articleNav.style.top = 0 + 'px';
                 articleNav.classList.remove('sticky-start');
