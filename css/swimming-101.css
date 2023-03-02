@@ -1,11 +1,43 @@
+
+.page-header:not(.page-header__image) {
+    height: 100%;
+}
+.page-header:not(.page-header__image) h1 {
+    padding: 5rem 0;
+}
+
+.mega-main-menu__toggle-mobile.btn {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-right: 1px solid #ccc;
+    border-radius: 0;
+    margin: 10px 0;
+    padding: 0;
+    width: 60px;
+    z-index: 10;
+}
+@media (min-width: 992px) {
+    .mega-main-menu__toggle-mobile.btn {
+        display: none;
+    }
+}
+
+
+
+
+
+
 .article-nav {
     position: absolute;
-    left: 0;
+    left: -75px;
     padding: 0;
     width: 100%;
     z-index: 9999;
     transition: opacity .5s;
-    opacity: 1;
+    /* opacity: 1; */
 }
 .article-nav h3.article-nav-title {
     display: block;
@@ -24,15 +56,14 @@
 
  @media (min-width: 768px) {
     .article-nav {
-        position: absolute;
-        left: 0;
-        padding-top: 5rem;
+        /* padding-top: 5rem; */
         /* padding-bottom: 5rem; */
-        padding-left: 5rem;
+        /* padding-left: 5rem; */
+        padding: 5rem 3rem 3rem 3rem;
         width: 360px;
-        z-index: 9999;
-        transition: opacity .5s;
-        opacity: 0;
+        /* left: -30px; */
+        /* transition: opacity .5s; */
+        /* opacity: 0; */
     }
     .article-nav h3.article-nav-title {
         display: block;
@@ -51,6 +82,11 @@
         background-color: #FFF;
      }    
  }
+ .article-nav .article-nav-title::before {
+    content: "+";
+    padding: 0 0.7rem 0 0;
+    font-weight: 400;
+}
  .article-nav ul li {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
@@ -63,57 +99,78 @@
     font-weight: bold;
     color: #0068ad;
  }
- /* .article-nav ul li a.active::before {
-    content: ">";
- } */
  .article-nav ul li.H2link {
-    font-size: 1.8rem;
+    font-size: 2.5rem;
     line-height: 130%;
-    /* padding-top: 2rem; */
-    margin-top: 2.5rem;
-    margin-bottom: 1rem;
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+ }
+ .article-nav ul li.H2link:first-of-type {
+    margin-top: 1rem;
  }
  .article-nav ul li.H2link.active {
-    font-size: 1.65rem;
+    font-size: 2.25rem;
     line-height: 143%;
     letter-spacing: .3px;
  }
  .article-nav ul li.H3link {
-    font-size: 1.6rem;
+    font-size: 2.0rem;
     line-height: 130%;
-    /* margin-left: 3rem; */
-    margin-bottom: 1.25rem;
+    margin-bottom: 2rem;
     padding-left: 3rem;
  }
  .article-nav ul li.H3link.active {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     line-height: 136%;
  }
  .article-nav ul li.H3link:before {
     content: "- ";
     margin-left: -1rem;
 }
-
  .row.icon-nav {
     display: none;
  }
  @media (min-width:768px) {
- .row.icon-nav {
-    display: flex;
- }
+    .row.icon-nav {
+        display: flex;
+    }
+    .article-nav ul li.H2link {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+    }
+    .article-nav ul li.H2link.active {
+        font-size: 1.65rem;
+        line-height: 143%;
+        letter-spacing: .3px;
+    }
+     .article-nav .article-nav-title::before {
+        content: "";
+     }    
+    .article-nav ul li.H3link {
+        font-size: 1.6rem;
+        margin-bottom: 1.25rem;
+    }
+    .article-nav ul li.H3link.active {
+        font-size: 1.5rem;
+        line-height: 136%;
+    }
 }
 
 
 
 .sticky-start {
+    transition: opacity .5s;
     opacity: 1;
     position: fixed;
+    left: 0;
 }
 .sticky-end {
-    opacity: 0; /* You don't see the opacity transition at the bottom because the element is positioned off screen at the same time */
+    transition: opacity .5s;
+    opacity: 0; 
+    /* You don't see the opacity transition at the bottom because the element is positioned off screen at the same time */
     position: absolute;
-    right: auto;
-    left: auto;
+    /* right: auto; */
+    /* left: auto; */
 }
 @media (min-width:768px) {
     .sticky-start {
@@ -121,10 +178,13 @@
         position: fixed;
     }
     .sticky-end {
-        opacity: 0; /* You don't see the opacity transition at the bottom because the element is positioned off screen at the same time */
+        opacity: 0; 
+        /* You don't see the opacity transition at the bottom because the element is positioned off screen at the same time */
         position: absolute;
-        right: 175px;
-        left: auto;
+        display: none;
+        /* right: 175px; */
+        /* left: auto; */
+        /* left: -60px; */
     }
 }
 
@@ -187,13 +247,17 @@ font-size: 2.0rem;
 .col-sm-6 div > p:first-of-type {
     margin-bottom: 15px !important;
 }
-.usms-container h2 {
+.article-body h2 {
     background-color: #0060a7;
     color: #FFF;
     font-size: 3rem;
     margin: 50px 0px 30px;
-    padding: 18px 30px;
+    padding: 18px 15px;
     height: auto;
+    border-top: 0;
+}
+.article-body h2:first-of-type {
+    margin-top: 10px;
 }
 .icon-index .col-xs-12.col-sm-4 {
    margin-top: 20px; 
@@ -222,10 +286,6 @@ font-size: 2.0rem;
     .icon-index .col-xs-12.col-sm-4 {
         margin-top: 15px;
    }
-.usms-container h2 {
-    margin: 50px -30px 30px;
-     border-radius: 3px;
-}
     .col-xs-12.col-sm-4 > p {
         padding: 0 40px;
    }
@@ -258,16 +318,24 @@ font-size: 2.0rem;
     width: 75% !important;
     height: 75% !important;
 }
+
 .article-body {
-    margin-top: 4rem !important;
+    /* margin-top: 4rem !important; */
+    padding: 0 15px !important;
+}
+.article-body .html-container {
+    top: 4rem !important;
+    position: relative;
 }
 .article-body h2 {
     border-top: 90px solid #FFF;
+    margin-top: -80px;
 }
 .article-body h3 {
     background-color: #FFF;
     padding: 1.5rem 0 1.5rem;
     border-top: 70px solid #FFF;
+    margin-top: -60px;
 }
 .article-body h4 {
     margin: 31px auto 4px !important 
@@ -286,12 +354,16 @@ font-size: 2.0rem;
 @media (min-width: 768px) {
     .article-body {
         margin-top: 1rem;
+        padding-right: calc(var(--bs-gutter-x) * .5);
+        padding-left: calc(var(--bs-gutter-x) * .5);
     }
     .article-body h2 {
-        border-top: 10px;
+        border-radius: 3px;
+        border-top: 25px solid #FFF;
+        margin: 0 -15px 30px;
     }
     .article-body h3 {
-        padding: 1rem 0 .5rem;
-        border-top: 10px;
+        border-top: 10px solid #FFF;
+        margin-top: -10px;
     }
 }
