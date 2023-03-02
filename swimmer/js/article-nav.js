@@ -49,8 +49,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const relatedArticlesTop = relatedArticles.offsetParent.offsetTop;
     const relatedArticlesHeight = relatedArticles.offsetHeight;
     const articleEnd = relatedArticlesTop - articleNavHeight;
-    // const articleTop = articleBody.offsetParent.getBoundingClientRect().top;
-    // const articleBottom = articleBody.offsetParent.getBoundingClientRect().bottom;
 
     if (window.scrollY >= articleStart && window.scrollY <= articleEnd) {
         // Set nav position on initial page load
@@ -75,12 +73,10 @@ document.addEventListener("DOMContentLoaded", function () {
             var idZero = idPos + ab[i].offsetTop;
             var activeClass = '';
             if (idZero < window.screenTop + 90) {
-                activeClass = " active";    
-                // console.log("AAA");
+                activeClass = " active";
             } 
             else if (idZero > window.screenTop) {
                 activeClass = " BBB";
-                // console.log("BBB");
             }
             else if (idZero >= -100 && idZero <= 100) {
                 activeClass = " active XXX";
