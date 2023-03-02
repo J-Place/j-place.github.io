@@ -35,7 +35,7 @@ function toggleMobileNav() {
     } else {
         return false
     }
-    document.querySelector('.article-nav').style.maxHeight = mobileWindowHeight + 20 + "px";    
+    document.querySelector('#navList').style.maxHeight = mobileWindowHeight - 50 + "px";    
 }
 
 
