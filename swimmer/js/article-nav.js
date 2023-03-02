@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // articleNav.style.top = articleEnd - articleNavHeight + 'px';
                 console.log("333");
             }
-            if (window.scrollY >= articleEnd - articleNavHeight  
+            if (window.scrollY >= articleEnd - articleNavHeight - articleNavHeight - 140 
                 && articleNav.classList.contains('sticky-start')) {
                 articleNav.classList.remove('sticky-start');
                 articleNav.classList.add('sticky-end');
