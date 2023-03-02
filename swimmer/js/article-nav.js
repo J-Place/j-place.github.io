@@ -93,12 +93,17 @@ document.addEventListener("DOMContentLoaded", function () {
     let mobileNavList = document.querySelector('#navList');
     let mobileNavButton = document.querySelector('.article-nav-title');
     document.body.addEventListener('click', function(event){
-        if (mobile && window.scrollY < articleStart && mobileNavButton.contains(event.target)) {
-            // articleNav.style.top = 0 + 'px';
+        if (mobile && window.scrollY < articleStart - 70) {
             document.querySelector('.article-body').scrollIntoView();
+        }
+        if (mobile && window.scrollY < articleStart && mobileNavButton.contains(event.target)) {
+            articleNav.style.top = 0 + 'px';
+            
+            console.log("Freeze");
         }
         if (mobile && mobileNavList.contains(event.target)){
             toggleMobileNav();
+            console.log("Twister");
         } else {
             return false
         }
