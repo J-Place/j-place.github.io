@@ -65,11 +65,11 @@ document.addEventListener("DOMContentLoaded", function () {
             // if (idPos + ab[i].offsetTop == 0) {
             if (idZero < window.screenTop + 90) {
                 activeClass = " active";    
-                console.log("AAA");
+                // console.log("AAA");
             } 
             else if (idZero > window.screenTop) {
                 activeClass = " BBB";
-                console.log("BBB");
+                // console.log("BBB");
             }
             else if (idZero >= -100 && idZero <= 100) {
                 activeClass = " active XXX";
@@ -91,21 +91,41 @@ document.addEventListener("DOMContentLoaded", function () {
                 // articleNav.style.top = articleStart - articleNavHeight + 'px';
                 // articleNav.style.top = articleStart - articleStart - 20 + 'px';
                 articleNav.style.top = 0 + 'px';
-                articleNav.classList.remove('sticky-start');
-                articleNav.classList.add('sticky-end');
+                // articleNav.classList.remove('sticky-start');
+                // articleNav.classList.add('sticky-end');
                 console.log("111 mobile");
             }
             if (window.scrollY >= articleStart) {
-                articleNav.style.top = 0 + 'px';
+                // articleNav.style.top = 0 + 'px';
+                articleNav.style.top = articleStart - articleNavHeight - 198 + 'px';
                 articleNav.classList.add('sticky-start');
                 articleNav.classList.remove('sticky-end');
                 console.log("111XXX mobile");
             }
+            if (!articleNav.classList.contains('sticky-start') && !articleNav.classList.contains('sticky-end') && window.scrollY >= articleStart && window.scrollY <= articleEnd) {    
+                articleNav.classList.add('sticky-start');
+                articleNav.style.top = 0 + 'px';
+                console.log("222 mobile");
+            }
+            if (!articleNav.classList.contains('sticky-start') && articleNav.classList.contains('sticky-end') && window.scrollY >= articleStart && window.scrollY <= articleEnd + articleNavHeight) {
+                articleNav.classList.add('sticky-start');
+                articleNav.classList.remove('sticky-end');
+                articleNav.style.top = 60 + 'px';
+                console.log("333 mobile");
+            }
+            if (articleNav.classList.contains('sticky-start') && window.scrollY >= articleStart && window.scrollY >= articleEnd - articleNavHeight - articleNavHeight) {
+                articleNav.classList.remove('sticky-start');
+                articleNav.classList.add('sticky-end');
+                // articleNav.style.top = articleEnd - articleNavHeight - 800 + 'px';
+                // articleNav.style.top = articleStart + 'px';
+                articleNav.style.top = 0 + 'px';
+                console.log("444 mobileq");
+            } 
         } else if (!mobile) {
             if (window.scrollY < articleStart) {
                 // articleNav.style.top = articleStart - articleNavHeight + 150 + 'px';
                 // articleNav.style.top = articleStart - articleNavHeight + 'px';
-                articleNav.style.top = articleStart - articleNavHeight - 198 + 'px';
+                articleNav.style.top = articleStart - articleNavHeight - 60 + 'px';
                 // articleNav.style.top = articleEnd - articleNavHeight + 'px';
                 articleNav.classList.remove('sticky-start');
                 articleNav.classList.add('sticky-end');
@@ -119,27 +139,26 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!articleNav.classList.contains('sticky-start') && articleNav.classList.contains('sticky-end') && window.scrollY >= articleStart && window.scrollY <= articleEnd + articleNavHeight) {
                 articleNav.classList.add('sticky-start');
                 articleNav.classList.remove('sticky-end');
-                articleNav.style.top = 0 + 'px';
+                articleNav.style.top = 60 + 'px';
                 console.log("333");
             }
-            if (articleNav.classList.contains('sticky-start') && window.scrollY >= articleStart && window.scrollY >= articleEnd) {
+            if (articleNav.classList.contains('sticky-start') && window.scrollY >= articleStart && window.scrollY >= articleEnd - articleNavHeight - articleNavHeight) {
                 articleNav.classList.remove('sticky-start');
                 articleNav.classList.add('sticky-end');
-                // articleNav.style.top = articleEnd + articleNavHeight + 'px';
-                articleNav.style.top = articleStart + 'px';
+                // articleNav.style.top = articleEnd - articleNavHeight - 800 + 'px';
+                // articleNav.style.top = articleStart + 'px';
+                articleNav.style.top = 0 + 'px';
                 console.log("444");
             }    
         }
     }
     window.addEventListener('scroll', setNavPosition);
-
-    // setNavPosition();
-    // handleNavUI();
+    setNavPosition();
 
 
     
     let scrolling = false;
-    console.log(scrolling);
+    console.log("SSS" , scrolling);
     window.scroll = () => {
         scrolling = true;
     };
