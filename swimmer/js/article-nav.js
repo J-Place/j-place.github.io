@@ -40,13 +40,6 @@ function toggleMobileNav() {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-
-    // var mobile = window.matchMedia("screen and (max-width:480px)").matches;
-    // if (mobile) {
-    //     // Run javascript for mobile only
-    //     document.querySelector('.article-nav').classList.add('mobile');
-    // } else {
-    // }
     const articleNav = document.querySelector('.article-nav');
     const articleTitle = document.querySelector('.article-body'); // was '.feature-title'
     const relatedArticles = document.querySelector('.article-stepper');
@@ -56,10 +49,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const relatedArticlesTop = relatedArticles.offsetParent.offsetTop;
     const relatedArticlesHeight = relatedArticles.offsetHeight;
     const articleEnd = relatedArticlesTop - articleNavHeight;
-
     // const articleTop = articleBody.offsetParent.getBoundingClientRect().top;
     // const articleBottom = articleBody.offsetParent.getBoundingClientRect().bottom;
-
 
     if (window.scrollY >= articleStart && window.scrollY <= articleEnd) {
         // Set nav position on initial page load
@@ -83,7 +74,6 @@ document.addEventListener("DOMContentLoaded", function () {
             var idPos = id.offsetParent.getBoundingClientRect().top;
             var idZero = idPos + ab[i].offsetTop;
             var activeClass = '';
-            // if (idPos + ab[i].offsetTop == 0) {
             if (idZero < window.screenTop + 90) {
                 activeClass = " active";    
                 // console.log("AAA");
