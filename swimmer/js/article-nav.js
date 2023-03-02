@@ -97,10 +97,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log("XXX");
             } 
             str  += '<li class="' + ab[i].tagName + 'link' +  activeClass + '"><a href="#' + ab[i].id + '">' + ab[i].innerHTML + '</a></li>';
-            // if (mobile) {
-            //     document.querySelector('.article-nav-title').classList.remove('open');
-            //     document.getElementById('navList').classList.remove('show');    
-            // }
         }        
         document.getElementById('navList').innerHTML = str;
     }
@@ -111,10 +107,11 @@ document.addEventListener("DOMContentLoaded", function () {
     let containingElement = document.querySelector('#navList');
     document.body.addEventListener('click', function( event ){
         if( mobile && containingElement.contains( event.target ) ){
-            // do nothing, click was inside container
             toggleMobileNav();
+            console.log("Toggling Nav");
         } else {
-            // hide autocomplete, click was outside container.
+            console.log("Returning False");
+            return false
         }
     });
 
