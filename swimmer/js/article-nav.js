@@ -30,14 +30,11 @@ function toggleMobileNav() {
         mobileNavList.classList.add('show');
         document.querySelector('.article-nav-title').classList.add('open');
         var mobileWindowHeight = window.screen.height;
-        // mobileNavContainer.style.maxHeight = mobileWindowHeight;
     } else {
         return false
     }
-    // document.querySelector('.article-nav').style.maxHeight = mobileWindowHeight + 100 + "px";
     document.querySelector('.article-nav').style.maxHeight = mobileWindowHeight + 20 + "px";
     document.querySelector('body').style.overflow = "hidden";
-    // console.log(mobileWindowHeight);
 }
 
 
