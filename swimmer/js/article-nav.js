@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("Toggling Nav");
         } else {
             console.log("Returning False");
-            // document.querySelector('.article-body').scrollIntoView();
+            document.querySelector('.article-body').scrollIntoView();
             // return false
         }
     });
