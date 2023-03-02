@@ -1,17 +1,31 @@
 var mobile = window.matchMedia("screen and (max-width:480px)").matches;
 if (mobile) {
-    // Run javascript for mobile only
     document.querySelector('.article-nav').classList.add('mobile');
-} else {
-
 }
+
+// document.addEventListener('click', toggleMobileNav); 
+// const mobileNavListItem = document.querySelector('article-nav li');
+// function closeMobileNav() {
+
+//     console.log("Closing Mobile Nav");
+    
+//     if (e.target = mobileNavListItem) {
+//         toggleMobileNav();
+//     }
+// }
+// mobileNavListItem.onclick = toggleMobileNav();
+
+// mobileNavListItem.addEventListener('click', closeMobileNav); 
 
 function toggleMobileNav() {
     console.log("Clicked Mobile Nav");
     const mobileNavButton = document.querySelector('article-nav-title');
-    const mobileNavList = document.getElementById('navList');
-    const mobileNavListItem = document.querySelector('article-nav li a');
-    // document.querySelector('article-nav').click();
+    const mobileNavList = document.getElementById('navList');    
+    // const mobileNavOpen = mobileNavButton.classList.contains('.open');
+
+    // mobileNavButton.classList.remove('open');
+    // mobileNavList.classList.remove('show');
+    console.log(mobileNavButton);
     
     if (mobile && mobileNavList.classList.contains('show')) {
         mobileNavList.classList.remove('show');
@@ -23,23 +37,16 @@ function toggleMobileNav() {
         return false;
     }
 }
-// document.addEventListener('click', toggleMobileNav);         
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    // function scrollTo(hash) {
-    //     console.log("SCROLLHASH");
-    //     location.hash = "#" + hash;
+
+    // var mobile = window.matchMedia("screen and (max-width:480px)").matches;
+    // if (mobile) {
+    //     // Run javascript for mobile only
+    //     document.querySelector('.article-nav').classList.add('mobile');
+    // } else {
     // }
-
-    var mobile = window.matchMedia("screen and (max-width:480px)").matches;
-    if (mobile) {
-        // Run javascript for mobile only
-        document.querySelector('.article-nav').classList.add('mobile');
-    } else {
-
-    }
-
     const articleNav = document.querySelector('.article-nav');
     const articleTitle = document.querySelector('.article-body'); // was '.feature-title'
     const relatedArticles = document.querySelector('.article-stepper');
@@ -90,12 +97,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log("XXX");
             } 
             str  += '<li class="' + ab[i].tagName + 'link' +  activeClass + '"><a href="#' + ab[i].id + '">' + ab[i].innerHTML + '</a></li>';
+            if (mobile) {
+                document.querySelector('.article-nav-title').classList.remove('open');
+                document.getElementById('navList').classList.remove('show');    
+            }
         }        
         document.getElementById('navList').innerHTML = str;
     }
     window.addEventListener('scroll', handleNavUI);
     handleNavUI(); // Draw nav on page load
-
 
 
     // Set position on scroll
@@ -141,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 articleNav.classList.add('sticky-end');
                 articleNav.style.top = 0 + 'px';
                 console.log("444 mobileq");
-            } 
+            }
         } else if (!mobile) {
             if (window.scrollY < articleStart 
                 && !articleNav.classList.contains('sticky-start')) {
