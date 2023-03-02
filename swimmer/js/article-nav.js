@@ -26,15 +26,16 @@ function toggleMobileNav() {
     if (mobile && mobileNavList.classList.contains('show')) {
         mobileNavList.classList.remove('show');
         document.querySelector('.article-nav-title').classList.remove('open');
+        document.querySelector('body').style.overflow = "scroll";
     } else if (mobile && !mobileNavList.classList.contains('show')) {
         mobileNavList.classList.add('show');
         document.querySelector('.article-nav-title').classList.add('open');
         var mobileWindowHeight = window.screen.height;
+        document.querySelector('body').style.overflow = "hidden";
     } else {
         return false
     }
-    document.querySelector('.article-nav').style.maxHeight = mobileWindowHeight + 20 + "px";
-    document.querySelector('body').style.overflow = "hidden";
+    document.querySelector('.article-nav').style.maxHeight = mobileWindowHeight + 20 + "px";    
 }
 
 
