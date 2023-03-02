@@ -89,15 +89,16 @@ document.addEventListener("DOMContentLoaded", function () {
         if (mobile) {
             if (window.scrollY < articleStart) {
                 // articleNav.style.top = articleStart - articleNavHeight + 'px';
-                // articleNav.style.top = articleStart - articleStart - 20 + 'px';
-                articleNav.style.top = 0 + 'px';
-                // articleNav.classList.remove('sticky-start');
-                // articleNav.classList.add('sticky-end');
+                articleNav.style.top = articleStart - articleNavHeight + 'px';
+                // articleNav.style.top = articleStart + 'px';
+                // articleNav.style.top = - 20 + 'px';
+                articleNav.classList.remove('sticky-start');
+                articleNav.classList.remove('sticky-end');
                 console.log("111 mobile");
             }
             if (window.scrollY >= articleStart) {
-                // articleNav.style.top = 0 + 'px';
-                articleNav.style.top = articleStart - articleNavHeight - 198 + 'px';
+                articleNav.style.top = 0 + 'px';
+                // articleNav.style.top = articleStart - articleNavHeight - 198 + 'px';
                 articleNav.classList.add('sticky-start');
                 articleNav.classList.remove('sticky-end');
                 console.log("111XXX mobile");
@@ -110,14 +111,12 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!articleNav.classList.contains('sticky-start') && articleNav.classList.contains('sticky-end') && window.scrollY >= articleStart && window.scrollY <= articleEnd + articleNavHeight) {
                 articleNav.classList.add('sticky-start');
                 articleNav.classList.remove('sticky-end');
-                articleNav.style.top = 60 + 'px';
+                articleNav.style.top = 0 + 'px';
                 console.log("333 mobile");
             }
             if (articleNav.classList.contains('sticky-start') && window.scrollY >= articleStart && window.scrollY >= articleEnd - articleNavHeight - articleNavHeight) {
                 articleNav.classList.remove('sticky-start');
                 articleNav.classList.add('sticky-end');
-                // articleNav.style.top = articleEnd - articleNavHeight - 800 + 'px';
-                // articleNav.style.top = articleStart + 'px';
                 articleNav.style.top = 0 + 'px';
                 console.log("444 mobileq");
             } 
