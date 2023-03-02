@@ -40,6 +40,7 @@ function toggleMobileNav() {
 
 
 document.addEventListener("DOMContentLoaded", function () {
+
     const articleNav = document.querySelector('.article-nav');
     const articleTitle = document.querySelector('.article-body'); // was '.feature-title'
     const relatedArticles = document.querySelector('.article-stepper');
@@ -49,7 +50,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const relatedArticlesTop = relatedArticles.offsetParent.offsetTop;
     const relatedArticlesHeight = relatedArticles.offsetHeight;
     const articleEnd = relatedArticlesTop - articleNavHeight;
-
     if (window.scrollY >= articleStart && window.scrollY <= articleEnd) {
         // Set nav position on initial page load
         articleNav.style.top = 0 + 'px';
@@ -91,13 +91,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     let containingElement = document.querySelector('#navList');
-    document.body.addEventListener('click', function( event ){
-        if( mobile && containingElement.contains( event.target ) ){
+    document.body.addEventListener('click', function(event){
+        if (mobile && window.scrollY < articleStart) {
+            articleNav.style.top = 0 + 'px';
+        }
+        if (mobile && containingElement.contains(event.target)){
             toggleMobileNav();
             console.log("Toggling Nav");
         } else {
             console.log("Returning False");
-            return false
+            // articleNav.style.top = 0 + 'px';w
+            document.querySelector('.article-body').scrollIntoView();
+            // return false
         }
     });
 
