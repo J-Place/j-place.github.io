@@ -89,9 +89,9 @@ document.addEventListener("DOMContentLoaded", function () {
         if (mobile) {
             if (window.scrollY < articleStart) {
                 // articleNav.style.top = articleStart - articleNavHeight + 'px';
-                articleNav.style.top = articleStart - articleNavHeight + 'px';
+                // articleNav.style.top = articleStart - articleNavHeight + 'px';
                 // articleNav.style.top = articleStart + 'px';
-                // articleNav.style.top = - 20 + 'px';
+                articleNav.style.top = - 20 + 'px';
                 articleNav.classList.remove('sticky-start');
                 articleNav.classList.remove('sticky-end');
                 console.log("111 mobile");
