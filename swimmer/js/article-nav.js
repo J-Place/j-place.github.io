@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 articleNav.classList.remove('sticky-start');
                 articleNav.classList.add('sticky-end');
                 articleNav.style.top = 0 + 'px';
-                console.log("444 mobileq");
+                console.log("444 mobile");
             }
         } else if (!mobile) {
             if (window.scrollY < articleStart 
@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // articleNav.style.top = articleEnd - articleNavHeight + 'px';
                 console.log("333");
             }
-            if (window.scrollY >= articleEnd - articleNavHeight - articleNavHeight 
+            if (window.scrollY >= articleEnd - articleNavHeight  
                 && articleNav.classList.contains('sticky-start')) {
                 articleNav.classList.remove('sticky-start');
                 articleNav.classList.add('sticky-end');
