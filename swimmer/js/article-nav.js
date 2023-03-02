@@ -93,15 +93,15 @@ document.addEventListener("DOMContentLoaded", function () {
     let containingElement = document.querySelector('#navList');
     document.body.addEventListener('click', function(event){
         if (mobile && window.scrollY < articleStart) {
-            articleNav.style.top = 0 + 'px';
+            // articleNav.style.top = 0 + 'px';
+            document.querySelector('.article-body').scrollIntoView();
         }
         if (mobile && containingElement.contains(event.target)){
             toggleMobileNav();
             console.log("Toggling Nav");
         } else {
             console.log("Returning False");
-            // articleNav.style.top = 0 + 'px';w
-            document.querySelector('.article-body').scrollIntoView();
+            // document.querySelector('.article-body').scrollIntoView();
             // return false
         }
     });
