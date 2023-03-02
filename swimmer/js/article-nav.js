@@ -97,15 +97,26 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log("XXX");
             } 
             str  += '<li class="' + ab[i].tagName + 'link' +  activeClass + '"><a href="#' + ab[i].id + '">' + ab[i].innerHTML + '</a></li>';
-            if (mobile) {
-                document.querySelector('.article-nav-title').classList.remove('open');
-                document.getElementById('navList').classList.remove('show');    
-            }
+            // if (mobile) {
+            //     document.querySelector('.article-nav-title').classList.remove('open');
+            //     document.getElementById('navList').classList.remove('show');    
+            // }
         }        
         document.getElementById('navList').innerHTML = str;
     }
     window.addEventListener('scroll', handleNavUI);
     handleNavUI(); // Draw nav on page load
+
+
+    let containingElement = document.querySelector('#navList');
+    document.body.addEventListener('click', function( event ){
+        if( mobile && containingElement.contains( event.target ) ){
+            // do nothing, click was inside container
+            toggleMobileNav();
+        } else {
+            // hide autocomplete, click was outside container.
+        }
+    });
 
 
     // Set position on scroll
