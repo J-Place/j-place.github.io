@@ -96,13 +96,10 @@ document.addEventListener("DOMContentLoaded", function () {
         if (mobile && window.scrollY < articleStart && mobileNavButton.contains(event.target)) {
             // articleNav.style.top = 0 + 'px';
             document.querySelector('.article-body').scrollIntoView();
-            console.log("This one ...");
         }
         if (mobile && mobileNavList.contains(event.target)){
             toggleMobileNav();
-            console.log("Toggling Nav");
         } else {
-            console.log("Returning False");            
             return false
         }
     });
