@@ -1,3 +1,31 @@
+var mobile = window.matchMedia("screen and (max-width:480px)").matches;
+if (mobile) {
+    // Run javascript for mobile only
+    document.querySelector('.article-nav').classList.add('mobile');
+} else {
+
+}
+
+function toggleMobileNav() {
+    console.log("Clicked Mobile Nav");
+    const mobileNavButton = document.querySelector('article-nav-title');
+    const mobileNavList = document.getElementById('navList');
+    const mobileNavListItem = document.querySelector('article-nav li a');
+    // document.querySelector('article-nav').click();
+    
+    if (mobile && mobileNavList.classList.contains('show')) {
+        mobileNavList.classList.remove('show');
+        document.querySelector('.article-nav-title').classList.remove('open');
+    } else if (mobile && !mobileNavList.classList.contains('show')) {
+        mobileNavList.classList.add('show');
+        document.querySelector('.article-nav-title').classList.add('open');
+    } else {
+        return false;
+    }
+}
+// document.addEventListener('click', toggleMobileNav);         
+
+
 document.addEventListener("DOMContentLoaded", function () {
     // function scrollTo(hash) {
     //     console.log("SCROLLHASH");
@@ -39,24 +67,6 @@ document.addEventListener("DOMContentLoaded", function () {
             articleNav.style.top = articleStart + 'px';
         }
     }
-
-    function toggleMobileNav(e) {
-        console.log("Clicked Mobile Nav");
-        const mobileNavButton = document.querySelector('article-nav');
-        const mobileNavList = document.getElementById('navList');
-        const mobileNavListItem = document.querySelector('article-nav li a');
-        // document.querySelector('article-nav').click();
-        if (mobile && mobileNavList.classList.contains('show')) {
-            mobileNavList.classList.remove('show');
-        } else if (mobile && !mobileNavList.classList.contains('show')) {
-            mobileNavList.classList.add('show');
-        } else {
-            return false;
-        }
-    }
-    document.addEventListener('click', toggleMobileNav);         
-    
-
 
     function handleNavUI() {
         const ab = document.querySelectorAll('.article-body h2, .article-body h3');
@@ -138,7 +148,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 // articleNav.style.top = articleStart - articleNavHeight + 150 + 'px';
                 // articleNav.style.top = articleStart - articleNavHeight + 'px';
                 // articleNav.style.top = articleStart - articleNavHeight - 80 + 'px';
-                // articleNav.style.top = articleStart - articleNavHeight + 'px';
+                // articleNav.style.top = articleStaclrt - articleNavHeight + 'px';
                 articleNav.style.top = 0 + 'px';
                 // articleNav.classList.remove('sticky-start');
                 // articleNav.classList.add('sticky-end');
