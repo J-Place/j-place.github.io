@@ -33,7 +33,7 @@
 .article-nav {
     position: absolute;
     left: 0;
-    padding: 0 20px;
+    padding: 0 10px;
     width: 100%;
     z-index: 9999;
     transition: opacity .5s;
@@ -45,7 +45,7 @@
     display: block;
     /* font-size: 2.5rem; */
     background-color: rgb(165, 214, 243);
-    margin: 0 -7px;
+    margin: 0 -5px;
     padding: 1rem 3rem;
  }
  .article-nav ul {
@@ -168,11 +168,12 @@
 
 
 
-.sticky-start {
+.article-nav.sticky-start {
+    width: calc(100% - 25px) !important;
     transition: opacity .5s;
     opacity: 1;
     position: fixed;
-    left: 0;
+    left: -5px;
 }
 .sticky-end {
     transition: opacity .5s;
@@ -328,9 +329,12 @@ font-size: 2.0rem;
     height: 75% !important;
 }
 
-.article-body {
+.article-body,
+.article-nav {
     /* margin-top: 4rem !important; */
-    padding: 0 15px !important;
+    /* padding: 0 !important; */
+    margin: 0 15px !important;
+    width: calc(100% - 25px) !important;
 }
 .article-body .html-container {
     top: 4rem !important;
