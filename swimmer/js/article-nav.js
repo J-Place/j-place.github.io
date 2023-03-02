@@ -112,9 +112,6 @@ document.addEventListener("DOMContentLoaded", function () {
     function setNavPosition() {
         if (mobile) {
             if (window.scrollY < articleStart) {
-                // articleNav.style.top = articleStart - articleNavHeight + 'px';
-                // articleNav.style.top = articleStart - articleNavHeight + 'px';
-                // articleNav.style.top = articleStart + 'px';
                 // articleNav.style.top = - 20 + 'px';
                 articleNav.style.top = 0 + 'px';
                 articleNav.classList.remove('sticky-start');
