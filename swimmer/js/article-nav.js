@@ -166,29 +166,10 @@ document.addEventListener("DOMContentLoaded", function () {
         if (scrolling) {
             console.log("Finsihing 2");
             scrolling = false;
-            
-            // place the scroll handling logic here
             // setNavPosition();
             // handleNavUI();
         }
     },200);
             
-
-
-
-    // function setActiveItem(e) {
-    //     const navListItems = document.querySelectorAll('.article-nav li a');
-    //     var isActive = e.target.classList.contains('active')        
-    //     if (e.target = navListItems && !isActive) {
-    //         for (elem of document.getElementsByClassName("active")) {
-    //             elem.classList.remove("active");
-    //         }
-    //         e.target.classList.add('active');
-    //     } else if (e.target = navListItems && isActive) {
-    //         console.log("Is the Active Nav Link");
-    //         return;
-    //     } 
-    // }
-    // window.addEventListener('click', setActiveItem);
 
 });
