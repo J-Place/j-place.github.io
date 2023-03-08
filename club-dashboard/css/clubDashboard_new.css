@@ -37,11 +37,45 @@ li.member-name.member-renewed {
 
 .member-list {
     padding-left: 18px;
+    max-height: 400px;
+    overflow-y: scroll;
+    position: relative;
+}
+p.select-all {
+    position: relative;
+    top: 0;
+    font-size: 1.35rem;
+    font-weight: 500;;
 }
 
+.select-all input[type=checkbox] {
+    /* margin-left: -18px; */
+    position: relative;
+    top: 1px;
+}
 .member-list input[type=checkbox] {
     margin-left: -18px;
+    position: relative;
+    top: 1px;
 }
+
+
+.member-name .first,
+.member-name .last,
+.member-name .swimmer-id {
+    display: inline-flex;
+    font-size: 1.5rem;
+    vertical-align: auto;
+}
+
+
+input:disabled[type=checkbox] + .last,
+input:disabled[type=checkbox] + .last + .first,
+input:disabled[type=checkbox] + .last + .first + .swimmer-id {
+    color: green;
+}
+
+
 .form__container h6 {
     /* display: inline; */
     /* float: left; */
