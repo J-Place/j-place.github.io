@@ -33,6 +33,7 @@
 .article-nav {
     position: absolute;
     left: 0;
+    top: unset;
     padding: 0 10px;
     width: 100%;
     z-index: 9999;
@@ -46,6 +47,7 @@
     left: 3px !important;
 }
 .article-nav.sticky-start {
+    top: 10px;
     /* left: 25px !important; */
     left: 18px !important;
 }
@@ -158,6 +160,10 @@
     .article-nav ul li.H2link {
         font-size: 1.8rem;
         margin-bottom: 1.5rem;
+        /* margin-top: 3.25rem; */
+        margin-top: 2rem;
+    }
+    .article-nav ul li.H3link + .H2link {
         margin-top: 3.25rem;
     }
     .article-nav ul li.H2link.active {
@@ -184,22 +190,26 @@
     transition: opacity .5s;
     opacity: 1;
     position: fixed;
+    top: 10px;
 }
 .sticky-end {
     transition: opacity .5s;
     opacity: 0;
     position: absolute;
+    top: unset;
 }
 @media (min-width:768px) {
     .article-nav.sticky-start {
         width: 350px !important;
         opacity: 1;
         position: fixed;
+        top: 10px;
     }
     .sticky-end {
         opacity: 0; 
         position: absolute;
         display: none;
+        top: 0px;
     }
 }
 

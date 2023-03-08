@@ -26,23 +26,23 @@ function toggleMobileNav() {
 document.addEventListener("DOMContentLoaded", function () {
     const articleNav = document.querySelector('.article-nav');
     const articleNavHeight = articleNav.offsetHeight;
-    const articleTitle = document.querySelector('.article-body');
-    const relatedArticles = document.querySelector('.article-stepper');
-    const relatedArticlesTop = relatedArticles.offsetParent.offsetTop;
-    const articleStart = articleTitle.offsetTop;
-    const articleEnd = relatedArticlesTop - articleNavHeight;
+    // const articleTitle = document.querySelector('.article-body');
+    // const relatedArticles = document.querySelector('.article-end');
+    // const relatedArticlesTop = relatedArticles.offsetParent.offsetTop;
+    const articleStart = document.querySelector('.article-body').offsetTop;
+    const articleEnd = document.querySelector('.article-end').offsetTop;
 
     if (window.scrollY >= articleStart && window.scrollY <= articleEnd) {
         // Set nav position on initial page load
-        articleNav.style.top = 0 + 'px';
+        // articleNav.style.top = 0 + 'px';
         articleNav.classList.add('sticky-start');
         articleNav.classList.remove('sticky-end');
     } else { 
         // Set nav position on page reload or loading page from hash links
         if (mobile) {
-            articleNav.style.top = 30 + 'px';
+            // articleNav.style.top = 30 + 'px';
         } else if (!mobile) {
-            articleNav.style.top = articleStart + 'px';
+            // articleNav.style.top = articleStart + 'px';
         }
     }
 
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 activeClass = " active";
             } 
             else if (idZero > window.screenTop) {
-                activeClass = " not-active BBB";
+                activeClass = " BBB";
             }
             else if (idZero >= -100 && idZero <= 100) {
                 activeClass = " active XXX";
@@ -158,6 +158,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 && !articleNav.classList.contains('sticky-end')) {    
                 articleNav.classList.add('sticky-start');
                 articleNav.style.top = 0 + 'px';
+                console.log("SAT");
             }
             if (window.scrollY >= articleStart 
                 && window.scrollY <= articleEnd - articleNavHeight - articleNavHeight 
@@ -166,12 +167,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 articleNav.classList.add('sticky-start');
                 articleNav.classList.remove('sticky-end');
                 articleNav.style.top = 0 + 'px';
+                console.log("ACT");
             }
             if (window.scrollY >= articleEnd - articleNavHeight - articleNavHeight - 140 
                 && articleNav.classList.contains('sticky-start')) {
                 articleNav.classList.remove('sticky-start');
                 articleNav.classList.add('sticky-end');
                 articleNav.style.top = 0 + 'px';
+                console.log("TST");
             }    
         }
     }
