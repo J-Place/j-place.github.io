@@ -3,21 +3,6 @@ if (mobile) {
     document.querySelector('.article-nav').classList.add('mobile');
 }
 
-// document.addEventListener('click', toggleMobileNav); 
-// const mobileNavListItem = document.querySelector('article-nav li');
-// function closeMobileNav() {
-
-//     console.log("Closing Mobile Nav");
-    
-//     if (e.target = mobileNavListItem) {
-//         toggleMobileNav();
-//     }
-// }
-// mobileNavListItem.onclick = toggleMobileNav();
-
-// mobileNavListItem.addEventListener('click', closeMobileNav); 
-
-
 function toggleMobileNav() {
     console.log("Clicked Mobile Nav");
     const mobileNavContainer = document.querySelector('.article-nav');
@@ -38,9 +23,7 @@ function toggleMobileNav() {
     document.querySelector('#navList').style.maxHeight = mobileWindowHeight - 50 + "px";    
 }
 
-
 document.addEventListener("DOMContentLoaded", function () {
-
     const articleNav = document.querySelector('.article-nav');
     const articleNavHeight = articleNav.offsetHeight;
     const articleTitle = document.querySelector('.article-body');
@@ -48,6 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const relatedArticlesTop = relatedArticles.offsetParent.offsetTop;
     const articleStart = articleTitle.offsetTop;
     const articleEnd = relatedArticlesTop - articleNavHeight;
+    
     if (window.scrollY >= articleStart && window.scrollY <= articleEnd) {
         // Set nav position on initial page load
         articleNav.style.top = 0 + 'px';
@@ -194,7 +178,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     window.addEventListener('scroll', setNavPosition);
     setNavPosition();
-
 
     // window.addEventListener('scroll', function () {
     //     console.log("EVFWQEWEEDWEDWE");
