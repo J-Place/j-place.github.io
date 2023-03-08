@@ -42,13 +42,11 @@ function toggleMobileNav() {
 document.addEventListener("DOMContentLoaded", function () {
 
     const articleNav = document.querySelector('.article-nav');
-    const articleTitle = document.querySelector('.article-body'); // was '.feature-title'
-    const relatedArticles = document.querySelector('.article-stepper');
     const articleNavHeight = articleNav.offsetHeight;
-    // const articleStart = articleTitle.offsetParent.offsetTop; // This one works with technique article; relative to parent container
-    const articleStart = articleTitle.offsetTop; // This one works with swimming 101 page; relative to container
+    const articleTitle = document.querySelector('.article-body');
+    const relatedArticles = document.querySelector('.article-stepper');
     const relatedArticlesTop = relatedArticles.offsetParent.offsetTop;
-    const relatedArticlesHeight = relatedArticles.offsetHeight;
+    const articleStart = articleTitle.offsetTop;
     const articleEnd = relatedArticlesTop - articleNavHeight;
     if (window.scrollY >= articleStart && window.scrollY <= articleEnd) {
         // Set nav position on initial page load
@@ -64,25 +62,41 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    // Last Article Body container ///////////////////////////////////////////////
+    // const articleContainers = document.querySelectorAll('.article-body');
+    // const articleLastContainer = articleContainers[articleContainers.length- 1];
+    // let articleLastContainerSize = articleLastContainer.getBoundingClientRect();
+    // let articleLastContainerBottom = articleLastContainer.getBoundingClientRect().bottom;
+    // console.log(articleLastContainer);
+
+    function setArticleIds() {
+        const contentHeadings = document.querySelectorAll('.article-body div + div h2, .article-body div + div h3');        
+        for (i = 0; i < contentHeadings.length; i++) {  
+            var contentHeadingHtml = contentHeadings[i].innerHTML;
+            var contentHeadingHtmlClean = contentHeadingHtml = contentHeadingHtml.replace(/\s/g, '').replace(/[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g, '');
+            contentHeadings[i].id = contentHeadingHtmlClean;
+        };         
+    }
+    setArticleIds();
+
     function handleNavUI() {
-        const ab = document.querySelectorAll('.article-body h2, .article-body h3');
-        var str = '';        
-        for (i = 0; i < ab.length; i++) {            
-            var id = ab[i];
+        const contentHeadings = document.querySelectorAll('.article-body div + div h2, .article-body div + div h3');
+        var str = '';
+        for (i = 0; i < contentHeadings.length; i++) {            
+            var id = contentHeadings[i];
             var idPos = id.offsetParent.getBoundingClientRect().top;
-            var idZero = idPos + ab[i].offsetTop;
+            var idZero = idPos + contentHeadings[i].offsetTop;
             var activeClass = '';
             if (idZero < window.screenTop + 90) {
                 activeClass = " active";
             } 
             else if (idZero > window.screenTop) {
-                activeClass = " BBB";
+                activeClass = " not-active BBB";
             }
             else if (idZero >= -100 && idZero <= 100) {
                 activeClass = " active XXX";
-                console.log("XXX");
             } 
-            str  += '<li class="' + ab[i].tagName + 'link' +  activeClass + '"><a href="#' + ab[i].id + '">' + ab[i].innerHTML + '</a></li>';
+            str  += '<li class="' + contentHeadings[i].tagName + 'link' +  activeClass + '"><a href="#' + contentHeadings[i].id + '">' + contentHeadings[i].innerHTML + '</a></li>';
         }        
         document.getElementById('navList').innerHTML = str;
     }
@@ -114,18 +128,14 @@ document.addEventListener("DOMContentLoaded", function () {
     function setNavPosition() {
         if (mobile) {
             if (window.scrollY < articleStart) {                
-                // articleNav.style.top = - 20 + 'px';
                 articleNav.style.top = 0 + 'px';
                 articleNav.classList.remove('sticky-start');
                 articleNav.classList.remove('sticky-end');
-                console.log("111 mobile");
             }
             if (window.scrollY >= articleStart) {
                 articleNav.style.top = 0 + 'px';
-                // articleNav.style.top = articleStart - articleNavHeight - 198 + 'px';
                 articleNav.classList.add('sticky-start');
                 articleNav.classList.remove('sticky-end');
-                console.log("111XXX mobile");
             }
             if (!articleNav.classList.contains('sticky-start') 
                 && !articleNav.classList.contains('sticky-end') 
@@ -133,7 +143,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 && window.scrollY <= articleEnd) {    
                 articleNav.classList.add('sticky-start');
                 articleNav.style.top = 0 + 'px';
-                console.log("222 mobile");
             }
             if (!articleNav.classList.contains('sticky-start') 
                 && articleNav.classList.contains('sticky-end') 
@@ -142,7 +151,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 articleNav.classList.add('sticky-start');
                 articleNav.classList.remove('sticky-end');
                 articleNav.style.top = 0 + 'px';
-                console.log("333 mobile");
             }
             if (articleNav.classList.contains('sticky-start') 
                 && window.scrollY >= articleStart 
@@ -150,27 +158,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 articleNav.classList.remove('sticky-start');
                 articleNav.classList.add('sticky-end');
                 articleNav.style.top = 0 + 'px';
-                console.log("444 mobile");
             }
         } else if (!mobile) {
             if (window.scrollY < articleStart 
                 && !articleNav.classList.contains('sticky-start')) {
-                // articleNav.style.top = articleStart - articleNavHeight + 150 + 'px';
-                // articleNav.style.top = articleStart - articleNavHeight + 'px';
-                // articleNav.style.top = articleStart - articleNavHeight - 80 + 'px';
-                // articleNav.style.top = articleStaclrt - articleNavHeight + 'px';
                 articleNav.style.top = 0 + 'px';
-                // articleNav.classList.remove('sticky-start');
-                // articleNav.classList.add('sticky-end');
-                console.log("111", articleStart);
             }
             if (window.scrollY < articleStart 
                 && articleNav.classList.contains('sticky-start')) {
                 articleNav.classList.remove('sticky-start');
-                // articleNav.classList.remove('sticky-end');
                 articleNav.style.top = 0 + 'px';
-                // articleNav.style.top = articleStart + 'px';
-                console.log("QQQ");
             }
             if (window.scrollY >= articleStart 
                 && window.scrollY <= articleEnd
@@ -178,8 +175,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 && !articleNav.classList.contains('sticky-end')) {    
                 articleNav.classList.add('sticky-start');
                 articleNav.style.top = 0 + 'px';
-                // articleNav.style.top = articleStart - articleNavHeight + 'px';
-                console.log("222");
             }
             if (window.scrollY >= articleStart 
                 && window.scrollY <= articleEnd - articleNavHeight - articleNavHeight 
@@ -187,19 +182,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 && articleNav.classList.contains('sticky-end')) {
                 articleNav.classList.add('sticky-start');
                 articleNav.classList.remove('sticky-end');
-                // articleNav.style.top = 60 + 'px';
                 articleNav.style.top = 0 + 'px';
-                // articleNav.style.top = articleEnd - articleNavHeight + 'px';
-                console.log("333");
             }
             if (window.scrollY >= articleEnd - articleNavHeight - articleNavHeight - 140 
                 && articleNav.classList.contains('sticky-start')) {
                 articleNav.classList.remove('sticky-start');
                 articleNav.classList.add('sticky-end');
-                // articleNav.style.top = articleEnd - articleNavHeight - 800 + 'px';
-                // articleNav.style.top = articleStart + 'px';
                 articleNav.style.top = 0 + 'px';
-                console.log("444");
             }    
         }
     }
@@ -211,25 +200,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //     console.log("EVFWQEWEEDWEDWE");
     //         setNavPosition();
     //         handleNavUI();
-    // });
-    
-    
-    // let scrolling = false; 
-    // console.log("RRR" , scrolling);   
-    // window.scroll = () => {
-    //     scrolling = true;
-    //     console.log("SSS" , scrolling);
-    // };
-    
-    // setInterval(() => {
-    //     if (scrolling) {
-    //         setNavPosition();
-    //         handleNavUI();
-    //         console.log("Finsihing 2");
-    //         scrolling = false;
-    //     }
-    // },20);
-            
+    // });       
 
 });
 
