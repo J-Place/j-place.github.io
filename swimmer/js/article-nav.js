@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const relatedArticlesTop = relatedArticles.offsetParent.offsetTop;
     const articleStart = articleTitle.offsetTop;
     const articleEnd = relatedArticlesTop - articleNavHeight;
-    
+
     if (window.scrollY >= articleStart && window.scrollY <= articleEnd) {
         // Set nav position on initial page load
         articleNav.style.top = 0 + 'px';
@@ -46,10 +46,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Last Article Body container ///////////////////////////////////////////////
+    // Last insgance of div.article-body ///////////////////////////////////////////////
     // const articleContainers = document.querySelectorAll('.article-body');
     // const articleLastContainer = articleContainers[articleContainers.length- 1];
-    // let articleLastContainerSize = articleLastContainer.getBoundingClientRect();
     // let articleLastContainerBottom = articleLastContainer.getBoundingClientRect().bottom;
     // console.log(articleLastContainer);
 
