@@ -24,14 +24,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Last insgance of div.article-body ///////////////////////////////////////////////
-    // const articleContainers = document.querySelectorAll('.article-body');
-    // const articleLastContainer = articleContainers[articleContainers.length- 1];
-    // let articleLastContainerBottom = articleLastContainer.getBoundingClientRect().bottom;
-    // console.log(articleLastContainer);
-
-
-
     let mobileNavList = document.querySelector('#navList');
     let mobileNavButton = document.querySelector('.article-nav-title');
     document.body.addEventListener('click', function(event){
@@ -125,12 +117,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     window.addEventListener('scroll', setNavPosition);
     setNavPosition();
-
-    // window.addEventListener('scroll', function () {
-    //     console.log("EVFWQEWEEDWEDWE");
-    //         setNavPosition();
-    //         renderNavList();
-    // });       
 
 });
 
