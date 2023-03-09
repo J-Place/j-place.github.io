@@ -26,8 +26,6 @@ function toggleMobileNav() {
 document.addEventListener("DOMContentLoaded", function () {
     const articleNav = document.querySelector('.article-nav');
     const articleNavHeight = articleNav.offsetHeight;
-    // const articleTitle = document.querySelector('.article-body');
-    // const relatedArticles = document.querySelector('.article-end');
     // const relatedArticlesTop = relatedArticles.offsetParent.offsetTop;
     const articleStart = document.querySelector('.article-body').offsetTop;
     const articleEnd = document.querySelector('.article-end').offsetTop;
