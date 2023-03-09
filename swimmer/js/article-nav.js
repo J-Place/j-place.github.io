@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
     } else { 
         // Set nav position on page reload or loading page from hash links
         if (mobile) {
-            // articleNav.style.top = 30 + 'px';
+            articleNav.style.top = 30 + 'px';
         } else if (!mobile) {
             // articleNav.style.top = articleStart + 'px';
         }
