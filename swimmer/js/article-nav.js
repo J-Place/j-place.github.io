@@ -12,12 +12,15 @@ function toggleMobileNav() {
         mobileNavList.classList.remove('show');
         document.querySelector('.article-nav-title').classList.remove('open');
         document.querySelector('body').style.overflow = "scroll";
+        console.log("Open Mobile Nav");
     } else if (mobile && !mobileNavList.classList.contains('show')) {
         mobileNavList.classList.add('show');
         document.querySelector('.article-nav-title').classList.add('open');
         var mobileWindowHeight = window.screen.height;
         document.querySelector('body').style.overflow = "hidden";
+        console.log("Close Mobile Nav");
     } else {
+        console.log("Else Mobile Nav");
         return false
     }
     document.querySelector('#navList').style.maxHeight = mobileWindowHeight - 50 + "px";    
