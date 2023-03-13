@@ -32,8 +32,8 @@
          <link rel="stylesheet" href="https://www.usms.org/styles/print.min.css?version=20210920.1">
          
          <!-- <link rel="stylesheet" href="../css/common-updates.css"> -->
-         <link rel="stylesheet" href="css/clubDashboard.min.css">
-         <link rel="stylesheet" href="css/clubDashboard_new.css">
+         <!-- <link rel="stylesheet" href="css/clubDashboard.min.css"> -->
+         <!-- <link rel="stylesheet" href="css/clubDashboard_new.css"> -->
 
          <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react.min.js"></script>
          <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script>
@@ -49,7 +49,7 @@
          <script src="https://usms-cdn.azureedge.net/scripts/home.min.js?version=20211213.1"></script>
          <link rel="stylesheet" href="https://www.usms.org/styles/rte.min.css">
 
-         <link rel="stylesheet" href="css/bootstrap.min.css">
+         <!-- <link rel="stylesheet" href="../css/bootstrap.min.css"> -->
          <link href="https://usms-cdn.azureedge.net/styles/Club/club2.min.css" rel="stylesheet" />
      
 
@@ -343,15 +343,15 @@
                             <div class="col-xs-12 ">
                                 <div class="club-edit" id="accordion">
                                     <form id="form-event-type">
-                                        <div class="section section-name" id="event-type">
+                                        <div class="section section-event-type" id="event-type">
                                             <h3 class="section__header" data-target="#event-type__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-type__content"><span class="section__number">1</span>Event Type</h3>
-                                            <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button" onclick="editClubName(event)"></button></span>
+                                            <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button" onclick=""></button></span>
                                             
                                             <div class="section__content collapse" id="event-type__content" data-parent="#accordion">
                                                 <div class="row">
                                                     <div class="col-xs-12 col-sm-8 col-md-5">
                                                         <div class="input-group event-type required">
-                                                            <label for="ClubName">Club Name</label>
+                                                            <label for="ClubName">Input Label</label>
                                                             <input class="form-control club-name__input" id="clubName" maxlength="200" minlength="3" name="ClubName" required="True" type="text" value="">
                                                             <span class="help-block help-block--ClubName">Club name is required.</span>
                                                         </div>
@@ -359,7 +359,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-xs-12 col-sm-8 col-md-5">
-                                                        <div class="input-group club-abbr required">
+                                                        <!-- <div class="input-group club-abbr required">
                                                             <label for="ClubAbbr">
                                                                 Club Abbreviation
                                                                 <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Select a club abbreviation that is 2 to 5 characters. The abbreviation must be unique. If the abbreviation you selected is not available, you will be prompted to select another one. "></span>
@@ -367,14 +367,14 @@
                                                             <input class="form-control club-name__input text-uppercase" id="clubAbbr" maxlength="5" minlength="2" name="ClubAbbr" pattern="[A-Za-z]{5}" required="True" type="text" value="">
                                                             <span class="help-block help-block--ClubAbbr">Club abbreviation is required</span>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
-                                                <div class="modal fade" id="modalClubName" tabindex="-1" role="dialog">
+                                                <div class="modal fade" id="modalID" tabindex="-1" role="dialog">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                                                <h4 class="modal-title">Club Abbreviation</h4>
+                                                                <h4 class="modal-title"></h4>
                                                             </div>
                                                             <div class="modal-body">
                                                                 <p>The abbreviation you have selected is already in use by another club. Please pick another one.</p>
@@ -384,26 +384,24 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="section__controls">
-                                                        <button class="btn save-section" id="saveClubName" type="button" onclick="saveName(event)">Save &amp; Continue</button>
-                                                        
-                                                        
+                                                        <button class="btn save-section" id="buttonId" type="button" onclick="">Save &amp; Continue</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </form>
                                     <form id="form-event-info">
-                                        <div class="section section-name" id="event-info">
+                                        <div class="section section-event-info" id="event-info">
                                             <h3 class="section__header" data-target="#event-info__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-info__content">
                                                 <span class="section__number">2</span> Event Information
                                             </h3>
-                                            <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button" onclick="editClubName(event)"></button></span>
+                                            <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button" onclick=""></button></span>
                                             
                                             <div class="section__content collapse" id="event-info__content" data-parent="#accordion">
                                                 <div class="row">
                                                     <div class="col-xs-12 col-sm-8 col-md-5">
                                                         <div class="input-group event-info required">
-                                                            <label for="ClubName">Club Name</label>
+                                                            <label for="ClubName">Input Label</label>
                                                             <input class="form-control club-name__input" id="clubName" maxlength="200" minlength="3" name="ClubName" required="True" type="text" value="">
                                                             <span class="help-block help-block--ClubName">Club name is required.</span>
                                                         </div>
@@ -411,7 +409,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-xs-12 col-sm-8 col-md-5">
-                                                        <div class="input-group club-abbr required">
+                                                        <!-- <div class="input-group club-abbr required">
                                                             <label for="ClubAbbr">
                                                                 Club Abbreviation
                                                                 <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Select a club abbreviation that is 2 to 5 characters. The abbreviation must be unique. If the abbreviation you selected is not available, you will be prompted to select another one. "></span>
@@ -419,14 +417,14 @@
                                                             <input class="form-control club-name__input text-uppercase" id="clubAbbr" maxlength="5" minlength="2" name="ClubAbbr" pattern="[A-Za-z]{5}" required="True" type="text" value="">
                                                             <span class="help-block help-block--ClubAbbr">Club abbreviation is required</span>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
-                                                <div class="modal fade" id="modalClubName" tabindex="-1" role="dialog">
+                                                <div class="modal fade" id="modalID" tabindex="-1" role="dialog">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                                                <h4 class="modal-title">Club Abbreviation</h4>
+                                                                <h4 class="modal-title"></h4>
                                                             </div>
                                                             <div class="modal-body">
                                                                 <p>The abbreviation you have selected is already in use by another club. Please pick another one.</p>
@@ -436,26 +434,24 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="section__controls">
-                                                        <button class="btn save-section" id="saveClubName" type="button" onclick="saveName(event)">Save &amp; Continue</button>
-                                                        
-                                                        
+                                                        <button class="btn save-section" id="buttonId" type="button" onclick="">Save &amp; Continue</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </form>
                                     <form id="form-contact-info">
-                                        <div class="section section-name" id="event-type">
-                                            <h3 class="section__header" data-target="#event-type__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-type__content">
+                                        <div class="section section-contact-information" id="contact-information">
+                                            <h3 class="section__header" data-target="#contact-information__content" data-toggle="collapse" aria-expanded="false" aria-controls="contact-information__content">
                                                 <span class="section__number">3</span>Contact Information
                                             </h3>
-                                            <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button" onclick="editClubName(event)"></button></span>
+                                            <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button" onclick=""></button></span>
                                             
-                                            <div class="section__content collapse" id="event-type__content" data-parent="#accordion">
+                                            <div class="section__content collapse" id="contact-information__content" data-parent="#accordion">
                                                 <div class="row">
                                                     <div class="col-xs-12 col-sm-8 col-md-5">
-                                                        <div class="input-group event-type required">
-                                                            <label for="ClubName">Club Name</label>
+                                                        <div class="input-group contact-information required">
+                                                            <label for="ClubName">Input Label</label>
                                                             <input class="form-control club-name__input" id="clubName" maxlength="200" minlength="3" name="ClubName" required="True" type="text" value="">
                                                             <span class="help-block help-block--ClubName">Club name is required.</span>
                                                         </div>
@@ -463,7 +459,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-xs-12 col-sm-8 col-md-5">
-                                                        <div class="input-group club-abbr required">
+                                                        <!-- <div class="input-group club-abbr required">
                                                             <label for="ClubAbbr">
                                                                 Club Abbreviation
                                                                 <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Select a club abbreviation that is 2 to 5 characters. The abbreviation must be unique. If the abbreviation you selected is not available, you will be prompted to select another one. "></span>
@@ -471,14 +467,14 @@
                                                             <input class="form-control club-name__input text-uppercase" id="clubAbbr" maxlength="5" minlength="2" name="ClubAbbr" pattern="[A-Za-z]{5}" required="True" type="text" value="">
                                                             <span class="help-block help-block--ClubAbbr">Club abbreviation is required</span>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
-                                                <div class="modal fade" id="modalClubName" tabindex="-1" role="dialog">
+                                                <div class="modal fade" id="modalID" tabindex="-1" role="dialog">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                                                <h4 class="modal-title">Club Abbreviation</h4>
+                                                                <h4 class="modal-title"></h4>
                                                             </div>
                                                             <div class="modal-body">
                                                                 <p>The abbreviation you have selected is already in use by another club. Please pick another one.</p>
@@ -488,26 +484,24 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="section__controls">
-                                                        <button class="btn save-section" id="saveClubName" type="button" onclick="saveName(event)">Save &amp; Continue</button>
-                                                        
-                                                        
+                                                        <button class="btn save-section" id="buttonId" type="button" onclick="">Save &amp; Continue</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </form>
-                                    <form id="form-accept-submit">
-                                        <div class="section section-name" id="event-type">
-                                            <h3 class="section__header" data-target="#event-type__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-type__content">
+                                    <form id="form-location-info">
+                                        <div class="section section-location-information" id="location-information">
+                                            <h3 class="section__header" data-target="#location-information__content" data-toggle="collapse" aria-expanded="false" aria-controls="location-information__content">
                                                 <span class="section__number">4</span>Location Information
                                             </h3>
-                                            <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button" onclick="editClubName(event)"></button></span>
+                                            <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button" onclick=""></button></span>
                                             
-                                            <div class="section__content collapse" id="event-type__content" data-parent="#accordion">
+                                            <div class="section__content collapse" id="location-information__content" data-parent="#accordion">
                                                 <div class="row">
                                                     <div class="col-xs-12 col-sm-8 col-md-5">
-                                                        <div class="input-group event-type required">
-                                                            <label for="ClubName">Club Name</label>
+                                                        <div class="input-group location-information required">
+                                                            <label for="ClubName">Input Label</label>
                                                             <input class="form-control club-name__input" id="clubName" maxlength="200" minlength="3" name="ClubName" required="True" type="text" value="">
                                                             <span class="help-block help-block--ClubName">Club name is required.</span>
                                                         </div>
@@ -515,7 +509,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-xs-12 col-sm-8 col-md-5">
-                                                        <div class="input-group club-abbr required">
+                                                        <!-- <div class="input-group club-abbr required">
                                                             <label for="ClubAbbr">
                                                                 Club Abbreviation
                                                                 <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Select a club abbreviation that is 2 to 5 characters. The abbreviation must be unique. If the abbreviation you selected is not available, you will be prompted to select another one. "></span>
@@ -523,14 +517,14 @@
                                                             <input class="form-control club-name__input text-uppercase" id="clubAbbr" maxlength="5" minlength="2" name="ClubAbbr" pattern="[A-Za-z]{5}" required="True" type="text" value="">
                                                             <span class="help-block help-block--ClubAbbr">Club abbreviation is required</span>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
-                                                <div class="modal fade" id="modalClubName" tabindex="-1" role="dialog">
+                                                <div class="modal fade" id="modalID" tabindex="-1" role="dialog">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                                                <h4 class="modal-title">Club Abbreviation</h4>
+                                                                <h4 class="modal-title"></h4>
                                                             </div>
                                                             <div class="modal-body">
                                                                 <p>The abbreviation you have selected is already in use by another club. Please pick another one.</p>
@@ -540,26 +534,24 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="section__controls">
-                                                        <button class="btn save-section" id="saveClubName" type="button" onclick="saveName(event)">Save &amp; Continue</button>
-                                                        
-                                                        
+                                                        <button class="btn save-section" id="buttonId" type="button" onclick="">Save &amp; Continue</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </form>
                                     <form id="form-entry-info">
-                                        <div class="section section-name" id="event-type">
-                                            <h3 class="section__header" data-target="#event-type__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-type__content">
+                                        <div class="section section-entry-information" id="entry-information">
+                                            <h3 class="section__header" data-target="#entry-information__content" data-toggle="collapse" aria-expanded="false" aria-controls="entry-information__content">
                                                 <span class="section__number">5</span>Entry Information
                                             </h3>
-                                            <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button" onclick="editClubName(event)"></button></span>
+                                            <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button" onclick=""></button></span>
                                             
-                                            <div class="section__content collapse" id="event-type__content" data-parent="#accordion">
+                                            <div class="section__content collapse" id="entry-information__content" data-parent="#accordion">
                                                 <div class="row">
                                                     <div class="col-xs-12 col-sm-8 col-md-5">
-                                                        <div class="input-group event-type required">
-                                                            <label for="ClubName">Club Name</label>
+                                                        <div class="input-group entry-information required">
+                                                            <label for="ClubName">Input Label</label>
                                                             <input class="form-control club-name__input" id="clubName" maxlength="200" minlength="3" name="ClubName" required="True" type="text" value="">
                                                             <span class="help-block help-block--ClubName">Club name is required.</span>
                                                         </div>
@@ -567,7 +559,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-xs-12 col-sm-8 col-md-5">
-                                                        <div class="input-group club-abbr required">
+                                                        <!-- <div class="input-group club-abbr required">
                                                             <label for="ClubAbbr">
                                                                 Club Abbreviation
                                                                 <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Select a club abbreviation that is 2 to 5 characters. The abbreviation must be unique. If the abbreviation you selected is not available, you will be prompted to select another one. "></span>
@@ -575,14 +567,14 @@
                                                             <input class="form-control club-name__input text-uppercase" id="clubAbbr" maxlength="5" minlength="2" name="ClubAbbr" pattern="[A-Za-z]{5}" required="True" type="text" value="">
                                                             <span class="help-block help-block--ClubAbbr">Club abbreviation is required</span>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
-                                                <div class="modal fade" id="modalClubName" tabindex="-1" role="dialog">
+                                                <div class="modal fade" id="modalID" tabindex="-1" role="dialog">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                                                <h4 class="modal-title">Club Abbreviation</h4>
+                                                                <h4 class="modal-title"></h4>
                                                             </div>
                                                             <div class="modal-body">
                                                                 <p>The abbreviation you have selected is already in use by another club. Please pick another one.</p>
@@ -592,26 +584,24 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="section__controls">
-                                                        <button class="btn save-section" id="saveClubName" type="button" onclick="saveName(event)">Save &amp; Continue</button>
-                                                        
-                                                        
+                                                        <button class="btn save-section" id="buttonId" type="button" onclick="">Save &amp; Continue</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </form>
-                                    <form id="form-contact-info">
-                                        <div class="section section-name" id="accept-submit">
+                                    <form id="form-accept-submit">
+                                        <div class="section section-accept-submit" id="accept-submit">
                                             <h3 class="section__header" data-target="#accept-submit__content" data-toggle="collapse" aria-expanded="false" aria-controls="accept-submit__content">
                                                 <span class="section__number">6</span>Accept Terms and Submit
                                             </h3>
-                                            <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button" onclick="editClubName(event)"></button></span>
+                                            <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button" onclick=""></button></span>
                                             
                                             <div class="section__content collapse" id="accept-submit__content" data-parent="#accordion">
                                                 <div class="row">
                                                     <div class="col-xs-12 col-sm-8 col-md-5">
                                                         <div class="input-group event-type required">
-                                                            <label for="ClubName">Club Name</label>
+                                                            <label for="ClubName">Input Label</label>
                                                             <input class="form-control club-name__input" id="clubName" maxlength="200" minlength="3" name="ClubName" required="True" type="text" value="">
                                                             <span class="help-block help-block--ClubName">Club name is required.</span>
                                                         </div>
@@ -619,7 +609,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-xs-12 col-sm-8 col-md-5">
-                                                        <div class="input-group club-abbr required">
+                                                        <!-- <div class="input-group club-abbr required">
                                                             <label for="ClubAbbr">
                                                                 Club Abbreviation
                                                                 <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Select a club abbreviation that is 2 to 5 characters. The abbreviation must be unique. If the abbreviation you selected is not available, you will be prompted to select another one. "></span>
@@ -627,14 +617,14 @@
                                                             <input class="form-control club-name__input text-uppercase" id="clubAbbr" maxlength="5" minlength="2" name="ClubAbbr" pattern="[A-Za-z]{5}" required="True" type="text" value="">
                                                             <span class="help-block help-block--ClubAbbr">Club abbreviation is required</span>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
-                                                <div class="modal fade" id="modalClubName" tabindex="-1" role="dialog">
+                                                <div class="modal fade" id="modalID" tabindex="-1" role="dialog">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                                                <h4 class="modal-title">Club Abbreviation</h4>
+                                                                <h4 class="modal-title"></h4>
                                                             </div>
                                                             <div class="modal-body">
                                                                 <p>The abbreviation you have selected is already in use by another club. Please pick another one.</p>
@@ -644,9 +634,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="section__controls">
-                                                        <button class="btn save-section" id="saveClubName" type="button" onclick="saveName(event)">Save &amp; Continue</button>
-                                                        
-                                                        
+                                                        <button class="btn save-section" id="buttonId" type="button" onclick="">Save &amp; Continue</button>
                                                     </div>
                                                 </div>
                                             </div>
