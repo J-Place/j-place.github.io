@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log("SAT");
             }
             if (window.scrollY >= articleStart 
-                && window.scrollY <= articleEnd - articleNavHeight - articleNavHeight 
+                && window.scrollY <= articleEnd - articleNavHeight
                 && !articleNav.classList.contains('sticky-start') 
                 && articleNav.classList.contains('sticky-end')) {
                 articleNav.classList.add('sticky-start');
@@ -170,7 +170,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 articleNav.style.top = 0 + 'px';
                 console.log("ACT");
             }
-            if (window.scrollY >= articleEnd - articleNavHeight - articleNavHeight - 140 
+            // if (window.scrollY >= articleEnd - articleNavHeight - articleNavHeight - 140 
+            if (window.scrollY >= articleEnd - articleNavHeight - 140
                 && articleNav.classList.contains('sticky-start')) {
                 articleNav.classList.remove('sticky-start');
                 articleNav.classList.add('sticky-end');
