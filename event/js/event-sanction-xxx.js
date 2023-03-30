@@ -41,7 +41,7 @@ $("#accordion .collapse").on("show.bs.collapse", function(t) {
         window.scroll(0, FindPos(t.target.parentNode))
     }, 450))
     switch (setSectionInputStatus(e, !1),
-    e.parentElement.classList.add(".isEdit"),
+    e.parentElement.classList.add("isEdit"),
     e.id) {
         case "event-type__content":
         case "event-information__content":
