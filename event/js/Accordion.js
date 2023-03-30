@@ -7,18 +7,17 @@ let currentCallback = null;
 // let isRegionalClub = false;
 
 $('#accordion .collapse').on('show.bs.collapse', (e) => {
+  console.log("On collapse ...");
   const currentSection = e.target;
   setTimeout(() => {
     window.scroll(0, FindPos(e.target.parentNode));
   }, 450);
 
   setSectionInputStatus(currentSection, false);
-  currentSection.parentElement.classList.add('isEdit');
+  // currentSection.parentElement.classList.add('isEdit');
   switch (currentSection.id) {    
-    case "event-type__content":
-      console.log("Accordion/onCollapse/Event Type");
-    case "event-information__content":
-      console.log("Accordion/onCollapse/Event Information");
+    case "event-type__content": // console.log("Accordion/onCollapse/Event Type");
+    case "event-information__content": // console.log("Accordion/onCollapse/Event Information");
     case "contact-information__content":
     case "location-information__content":
     case "entry-information__content":
@@ -40,15 +39,13 @@ $('#accordion h3.section__header').on('click', (e) => {
   const currentSection = e.target.parentNode;
   const previousSection = document.querySelector('.section__content.collapse.in');
   console.log("Current Section is", currentSection.id);
-  // console.log("Next Section is", nextSection.id);
-  console.log("Previous Section is", previousSection.id);
-  // alert(previousSection);
+  console.log("Previous Section is", previousSection.parentNode.id);
   if (!previousSection) return;
   if (!sectionSaved(previousSection)) {
     nextSection = currentSection;
     e.stopPropagation();
     e.preventDefault();
-    showSaveModal(previousSection.querySelector('button.btn.save-section').onclick);
+    // showSaveModal(previousSection.querySelector('button.btn.save-section').onclick);
   } else {
     nextSection = null;
   }

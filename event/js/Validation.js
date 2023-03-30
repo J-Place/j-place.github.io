@@ -327,11 +327,15 @@ function sectionSaved(section) {
     switch (section.id) {
         case "event-type__content":
             console.log("Validation/sectionSaved/Event Type");
+            break;
         case "event-information__content":
             console.log("Validation/sectionSaved/Event Information");
+            break;
         case "contact-information__content":
         case "location-information__content":
         case "entry-information__content":
+            console.log("Validation/sectionSaved/Entry Information");
+            break;
         case "accept-submit__content":
         default:
     }

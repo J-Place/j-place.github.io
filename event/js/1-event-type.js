@@ -33,19 +33,18 @@ const sectionEventType = document.querySelector('#event-type');
 })();
 
 // function saveEventType(e) {
-//   'use strict';
-//   // alert("Save");
 //     e.preventDefault();
 //     showLoadingOverlay();
 // }
 
 const saveEventTypeButton = document.querySelector('#saveEventType');
 saveEventTypeButton.addEventListener('click', function(e) {
-  // alert("Save");
+  sectionEventType.classList.add('hasData');
   e.preventDefault();
   showLoadingOverlay();
   console.log("Dynamically Set Next Section is", nextSection);
   if (nextSection) {
+    console.log("Showing Next Section");
     $(nextSection).find('.section__content').collapse('show');
     nextSection = null;
   } else {
@@ -53,5 +52,4 @@ saveEventTypeButton.addEventListener('click', function(e) {
     $('#event-type .section__content').collapse('hide');
     $('#event-info .section__content').collapse('show');
   }
-
 });

@@ -1,7 +1,4 @@
-
-// const sectionClubContact = document.querySelector('#club-contact');
-const sectionContactInfo = document.querySelector('#contact-info');
-// const selectContactType = document.querySelector('#contactType');
+const sectionEventInfo = document.querySelector('#event-info');
 const radioEventDirectorCurrent = document.querySelector('#eventDirectorCurrent');
 const radioEventDirectorOther = document.querySelector('#eventDirectorOther');
 // let googlePlaceContact = null;
@@ -51,10 +48,10 @@ function toggleContactInfoSection(status, section) {
     return contact;
   }
   
-  function editContact() {
-    setSectionInputStatus(sectionClubContact, false);
-    sectionClubContact.classList.add('isEdit');
-  }
+  // function editContact() {
+  //   setSectionInputStatus(sectionClubContact, false);
+  //   sectionClubContact.classList.add('isEdit');
+  // }
 
 
 
@@ -139,6 +136,7 @@ function showNewEventDirectorInputs() {
   
   const saveEventInfoButton = document.querySelector('#saveEventInfo');
   saveEventInfoButton.addEventListener('click', function(e) {
+    sectionEventInfo.classList.add('hasData');
     e.preventDefault();
     showLoadingOverlay();
     console.log("Dynamically Set Next Section is", nextSection);
