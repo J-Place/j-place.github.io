@@ -343,22 +343,22 @@ function sectionSaved(section) {
 }
 
 
-// function setSubmitStatus(status) {
-//   if (status) {
-//     // document.querySelector('.section-payment__contact-pending').style.display = 'none';
-//     // if (document.querySelector('#club-payment button#saveClubName')) {
-//     //   document.querySelector('#club-payment button#saveClubName').disabled = false;
-//     // }
-//     // if (document.querySelector('#club-payment button#submit-button')) {
-//     //   document.querySelector('#club-payment button#submit-button').disabled = false;
-//     // }
-//   } else {
-//     // document.querySelector('.section-payment__contact-pending').style.display = 'block';
-//     // if (document.querySelector('#club-payment button#saveClubName')) {
-//     //   document.querySelector('#club-payment button#saveClubName').disabled = true;
-//     // }
-//     // if (document.querySelector('#club-payment button#submit-button')) {
-//     //   document.querySelector('#club-payment button#submit-button').disabled = true;
-//     // }
-//   }
-// }
+function setSubmitStatus(status) {
+    if (status) {
+    // document.querySelector('.section-payment__contact-pending').style.display = 'none';
+    // if (document.querySelector('#club-payment button#saveClubName')) {
+    //   document.querySelector('#club-payment button#saveClubName').disabled = false;
+    // }
+    // if (document.querySelector('#club-payment button#submit-button')) {
+    //   document.querySelector('#club-payment button#submit-button').disabled = false;
+    // }
+    } else {
+    // document.querySelector('.section-payment__contact-pending').style.display = 'block';
+    // if (document.querySelector('#club-payment button#saveClubName')) {
+    //   document.querySelector('#club-payment button#saveClubName').disabled = true;
+    // }
+    // if (document.querySelector('#club-payment button#submit-button')) {
+    //   document.querySelector('#club-payment button#submit-button').disabled = true;
+    // }
+    }
+}

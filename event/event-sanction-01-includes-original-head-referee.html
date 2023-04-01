@@ -36,9 +36,8 @@
          <link rel="stylesheet" href="https://www.usms.org/styles/rte.min.css">
          <!-- <link rel="stylesheet" href="../css/bootstrap.min.css"> -->
          <!-- <link href="https://usms-cdn.azureedge.net/styles/Club/club2.min.css" rel="stylesheet" /> -->
-         <!-- <link href="https://usms-cdn.azureedge.net/styles/Club/club2.min.css?version=20221130.2A" rel="stylesheet" /> -->
+         <link href="https://usms-cdn.azureedge.net/styles/Club/club2.min.css?version=20221130.2A" rel="stylesheet" />         
          <link rel="stylesheet" href="css/date-picker.css">
-         <link rel="stylesheet" href="css/convert-this-from-club.css">
          <link rel="stylesheet" href="css/event-sanction.css">
 
 
@@ -625,90 +624,22 @@
                                     </div>
                                  </form>
 
-                                 <!-- JP: These need to be Sitecore dictionary items -->
-                                 <script type="text/javascript">
-                                    const memberIdText = 'Member ID:';
-                                    const contactRequiredText = 'A contact is required';
-                                    const errorSavingContactText = 'Error saving contact';
-                                    const awaitingContactText = 'Awaiting Contact';
-                                    const currentContactText = 'Current Contact';
-                                </script>
 
                                  <form id="form-contact-info">
                                        <div class="section section-contact-info" id="contact-info">
-                                          <div class="modal fade" id="modalContactInfoConfirmation" tabindex="-1" role="dialog">
-                                             <div class="modal-dialog" role="document">
-                                                 <div class="modal-content">
-                                                     <div class="modal-header">
-                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                         <!-- <h4 class="modal-title">@Html.Sitecore().Dictionary(new ID("{5136ED9D-3604-4DF6-B119-493D9ACD4CBC}"), "SwimmerExistsTitle")</h4> -->
-                                                         <h4 class="modal-title">Email Address Is Already In Use</h4>
-                                                     </div>
-                                                     <div class="modal-body">
-                                                         <!-- <p>@Html.Sitecore().Dictionary(new ID("{BD691F65-DE2A-4597-B4C3-75334578EEDD}"), "SwimmerExistsSummary")</p> -->
-                                                         <p>The email you have entered belongs to an existing USMS member. Please search for that member using option 2 from the dropdown or to use a different email address.</p>
-                                                     </div>
-                                                     <div class="modal-footer">
-                                                         <!-- <button type="button" class="btn btn-default" onclick="handleContactConfirmation(this)">@Model.Labels.OkButton</button> -->
-                                                         <button type="button" class="btn btn-default" onclick="handleContactConfirmation(this)">Okay</button>
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                         </div>                                     
                                           <h3 class="section__header" data-target="#contact-info__content" data-toggle="collapse" aria-expanded="false" aria-controls="contact-info__content">
                                              <span class="section__number">3</span>Contact Information
                                           </h3>
 
-                                          <!-- <input type="hidden" id="currentEventDirectorFirstName" value="">
-                                          <input type="hidden" id="currentEventDirectorLastName" value="">
-                                          <input type="hidden" id="currentEventDirectorEmail" value="">
-                                          <input type="hidden" id="currentEventDirectorPhone" value="">
-                                          <input type="hidden" id="currentEventDirectorSwimmerId" value="">
-                                          <input type="hidden" id="currentEventDirectorCity" value="">
-                                          <input type="hidden" id="currentEventDirectorState" value="">
-                                          <input type="hidden" id="currentEventDirectorValidated" value="">
-                                          <input type="hidden" id="currentEventDirectorIsMember" value=""> -->
-
-                                          <input type="hidden" id="currentEventDirectorFirstName" value="Jay">
-                                          <input type="hidden" id="currentEventDirectorLastName" value="Place">
-                                          <input type="hidden" id="currentEventDirectorEmail" value="jplace@usmastersswimming.org">
-                                          <input type="hidden" id="currentEventDirectorPhone" value="941-266-1909">
-                                          <input type="hidden" id="currentEventDirectorSwimmerId" value="KT2JH">
-                                          <input type="hidden" id="currentEventDirectorCity" value="Sarasota">
-                                          <input type="hidden" id="currentEventDirectorState" value="FL">
-                                          <input type="hidden" id="currentEventDirectorValidated" value="true">
-                                          <input type="hidden" id="currentEventDirectorIsMember" value="true">
-
-                                          <!-- <input type="hidden" id="newEventDirectorFirstName" value="Jay">
-                                          <input type="hidden" id="newEventDirectorLastName" value="Place">
-                                          <input type="hidden" id="newEventDirectorEmail" value="jplace@usmastersswimming.org">
-                                          <input type="hidden" id="newEventDirectorPhone" value="941-266-1909">
-                                          <input type="hidden" id="newEventDirectorSwimmerId" value="KT2JH">
-                                          <input type="hidden" id="newEventDirectorCity" value="Sarasota">
-                                          <input type="hidden" id="newEventDirectorState" value="FL">
-                                          <input type="hidden" id="newEventDirectorValidated" value="true">
-                                          <input type="hidden" id="newEventDirectorIsMember" value="true"> -->
-
-                                          <input type="hidden" id="newEventDirectorFirstName" value="">
-                                          <input type="hidden" id="newEventDirectorLastName" value="">
-                                          <input type="hidden" id="newEventDirectorEmail" value="">
-                                          <input type="hidden" id="newEventDirectorPhone" value="">
-                                          <input type="hidden" id="newEventDirectorSwimmerId" value="">
-                                          <input type="hidden" id="newEventDirectorCity" value="">
-                                          <input type="hidden" id="newEventDirectorState" value="">
-                                          <input type="hidden" id="newEventDirectorValidated" value="">
-                                          <input type="hidden" id="newEventDirectorIsMember" value="">
-
-                                          <!-- <input type="hidden" id="currentFirstName" value="">
+                                          <input type="hidden" id="currentFirstName" value="">
                                           <input type="hidden" id="currentLastName" value="">
-                                          <input type="hidden" id="currentEmail" value="">
                                           <input type="hidden" id="currentPhone" value="">
+                                          <input type="hidden" id="currentEmail" value="">
                                           <input type="hidden" id="currentSwimmerId" value="">
-                                          <input type="hidden" id="currentCity" value="">
-                                          <input type="hidden" id="currentState" value="">
                                           <input type="hidden" id="currentValidated" value="">
                                           <input type="hidden" id="currentIsMember" value="">
-
+                                          <input type="hidden" id="currentCity" value="">
+                                          <input type="hidden" id="currentState" value="">
                                           <input type="hidden" id="contactSwimmerId" value="">
                                           <input type="hidden" id="contactFirstName" value="">
                                           <input type="hidden" id="contactLastName" value="">
@@ -717,34 +648,33 @@
                                           <input type="hidden" id="contactCity" value="">
                                           <input type="hidden" id="contactState" value="">
                                           <input type="hidden" id="contactIsMember" value="">
-                                          <input type="hidden" id="contactValidated" value=""> -->
-
+                                          <input type="hidden" id="contactValidated" value="">
                                           <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button" onclick=""></button></span>
                                           
 
                                  <!-- Event Director -->
                                           <div class="section__content collapse in" id="contact-info__content" data-parent="#accordion">
 
-                                             <div class="form-group contact-info__event-director-type-form">
+                                             <div class="form-group contact-info__event-director-type">
                                                 <div class="row">
                                                    <div class="col-xs-12">
                                                       <div class="input-group-header radio-group-header">Event Director</div>
                                                       <!-- contact-info__event-director-current -->
                                                       <div class="input-group checkbox-group">
-                                                         <label class="radio-label" for="contactTypeEventDirectorCurrent">
+                                                         <label class="radio-label" for="eventDirectorTypeCurrent">
                                                                I'm the event director
                                                                <span class="radio-container">
-                                                                  <input type="radio" id="contactTypeEventDirectorCurrent" name="ContactTypeEventDirector" value="contactTypeEventDirectorCurrent">
+                                                                  <input type="radio" id="eventDirectorTypeCurrent" name="EventDirectorType" value="eventDirectorTypeCurrent">
                                                                   <span class="radio__placeholder"></span>
                                                                </span>
                                                          </label>
                                                       </div>
                                                       <!-- contact-info__event-director-other -->
                                                       <div class="input-group checkbox-group">
-                                                         <label class="radio-label" for="contactTypeEventDirectorOther">
+                                                         <label class="radio-label" for="eventDirectorTypeOther">
                                                                Someone else is the event director
                                                                <span class="radio-container">
-                                                                  <input type="radio" id="contactTypeEventDirectorOther" name="ContactTypeEventDirector" value="contactTypeEventDirectorOther">
+                                                                  <input type="radio" id="eventDirectorTypeOther" name="EventDirectorType" value="eventDirectorTypeOther">
                                                                   <span class="radio__placeholder"></span>
                                                                </span>
                                                          </label>
@@ -804,9 +734,40 @@
                                                 </div>
                                              </div>
 
-
                                              <!-- list__event-director-current -->
-                                             <div class="form-group contact-info__event-director--add-new-container add-new-inputs" style="display: none;">
+                                             <div class="form-group">
+                                                <div class="list list--lookup people">
+                                                   <div class="list__header contact-list__event-director--header">
+                                                      <span class="lookup-results--event-director">Event Director </span>
+                                                      <div class="list__controls contact-list__controls">
+                                                         <button class="list__controls--settings" id="listContactSettings" onclick="editContactList()" style=""></button>
+                                                         <button class="btn btn-link" id="editContactList" onclick="editContactList()">Edit</button>
+                                                         <button class="btn btn-link" id="saveContactList" onclick="saveContactList(event)">Done Editing</button>
+                                                         <button class="btn btn-link" id="cancelContactList" onclick="cancelContactList()">Cancel</button>
+                                                      </div>
+                                                   </div>
+                                                   <div class="contact-list__event-director--awaiting-message" style="display: none;">
+                                                      You will remain the contact until the new contact has finished creating their My USMS account and then the club has been approved. Once the club has been approved, they will be the club contact and your permissions will be removed.
+                                                   </div>
+                                                   <div class="list__container">
+                                                      <div class="row is-flex">
+                                                         <div class="col-xs-12 col-sm-6 col-md-4 contact-column" style="display: none;">
+                                                            <div class="list-item list-item--new">
+                                                               <input type="hidden" class="contact-isMember" value="true">
+                                                               <button class="list-item__delete">Remove</button>
+                                                               <div class="contact-name">Jay Place</div>
+                                                               <div class="contact-location">Sarasota, FL</div>
+                                                               <div class="contact-phone"></div>
+                                                               <div class="contact-email">jplace@usmastersswimming.org</div>
+                                                               <div class="contact-id">Member ID: <span class="contact-id__value">KT2JH</span></div>
+                                                            </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                   <button class="btn btn-small btn-success" id="confirmCurrentEventDirector" style="display: none;">Confirm</button>
+                                                </div>
+                                             </div>
+                                             <div class="form-group contact-info__event-director--add-new-container add-new-inputs" style="display: none; visibility: hidden;">
                                                 <div class="row">
                                                    <div class="col-sm-6">
                                                       <div class="input-group contact-first-name required">
@@ -849,7 +810,7 @@
                                                    <div class="col-sm-5">
                                                       <div class="input-group contact-state required">
                                                             <label for="newEventDirectorState" class="">State</label>
-                                                            <select name="newEventDirectorState" class="form-control" id="newEventDirectorState" onchange="validateField(this)">
+                                                            <select name="newEventDirectorState" class="form-control" id="newEventDirectorState" onchange="validateField(this)" required="True">
                                                                <option value="">Select State</option>
                                                                <option value="AL">Alabama</option>
                                                                <option value="AK">Alaska</option>
@@ -862,88 +823,303 @@
                                                 <div class="row">
                                                    <div class="col-sm-5 col-md-6">
                                                       <div class="form-group lookup person">
-                                                            <!-- <button class="btn btn-small" type="button" id="addEventDirectorBtn" onclick="handleAddEventDirectorButton()">Accept</button> -->
-                                                            <button class="btn btn-small" type="button" id="addEventDirectorBtn">Accept</button>
+                                                            <button class="btn btn-small" type="button" id="addEventDirectorBtn" onclick="handleAddEventDirectorButton()">Accept</button>
                                                             <button class="btn btn-small btn-outline" type="button" id="cancelAddEventDirectorBtn" onclick="handleCancelAddEventDirector()">Cancel</button>
-                                                            <!-- <button class="btn btn-small btn-outline" type="button" id="cancelAddEventDirectorBtn">Cancel</button> -->
                                                       </div>
                                                    </div>
                                                 </div>
                                              </div>
 
-                                             <div class="form-group">
-                                                <div class="list list--lookup people">
-                                                   <div class="list__header contact-list__event-director--header">
-                                                      <span class="lookup-results--event-director">Event Director </span>
-                                                      <div class="list__controls contact-list__controls">
-                                                         <button class="list__controls--settings" id="listContactSettings" onclick="editContactList()"></button>
-                                                         <!-- <button class="list__controls--settings" id="listContactSettings"></button> -->
-                                                         <button class="btn btn-link" id="editContactList" onclick="editContactList()">Edit</button>
-                                                         <button class="btn btn-link" id="saveContactList" onclick="saveContactList(event)">Done Editing</button>
-                                                         <!-- <button class="btn btn-link" id="saveContactList">Done Editing</button> -->
-                                                         <!-- <button class="btn btn-link" id="cancelContactList" onclick="cancelContactList()">Cancel</button> -->
-                                                         <button class="btn btn-link" id="cancelContactList">Cancel</button>
-                                                      </div>
-                                                   </div>
-                                                   <div class="contact-list__event-director--awaiting-message" style="display: none;">
-                                                      You will remain the contact until the new contact has finished creating their My USMS account and then the club has been approved. Once the club has been approved, they will be the club contact and your permissions will be removed.
-                                                   </div>
-                                                   <div class="list__container">
-                                                      <div class="row is-flex">
-                                                      </div>
-                                                   </div>
-                                                   <button class="btn btn-small btn-success" id="confirmCurrentEventDirector" onclick="confirmCurrentEventDirector(event)">Confirm</button>
-                                                </div>
-                                             </div>
 
-                                             <div class="form-group">
+
+                                    <!-- Head Referee -->
+                                             <div class="form-group contact-info__head-referee-type">
                                                 <div class="row">
-                                                    <div class="col-sm-12">
-                                                        <div class="club-privacy" style="display: none;">
-                                                            <div class="club-privacy__header">
-                                                               Display the Event Director's information on the USMS website event page.
-                                                            </div>
-                                                            <div class="input-group checkbox-group contact-privacy-name">
-                                                               <label class="checkbox-label" for="privacyName">
-                                                                  <div class="checkbox-container">
-                                                                        <input type="checkbox" name="privacyName" id="privacyName" />
-                                                                        <span class="checkbox__placeholder"></span>
-                                                                  </div>
-                                                                  Name
-                                                               </label>
-                                                            </div>
-                                                            <div class="input-group checkbox-group contact-privacy-email">
-                                                               <label class="checkbox-label" for="privacyEmail">
-                                                                  <div class="checkbox-container">
-                                                                        <input type="checkbox" name="privacyEmail" id="privacyEmail" />
-                                                                        <span class="checkbox__placeholder"></span>
-                                                                  </div>
-                                                                  Email
-                                                               </label>
-                                                            </div>
-                                                            <div class="input-group checkbox-group contact-privacy-phone">
-                                                               <label class="checkbox-label" for="privacyPhone">
-                                                                  <div class="checkbox-container">
-                                                                        <input type="checkbox" name="privacyPhone" id="privacyPhone" />
-                                                                        <span class="checkbox__placeholder"></span>
-                                                                  </div>
-                                                                  Phone
-                                                               </label>
-                                                            </div>   
-                                                        </div>
-                                                    </div>
+                                                   <hr />
+                                                   <div class="col-xs-12">
+                                                      <div class="input-group checkbox-group contact-info-head-referee__current">
+                                                         <div class="input-group-header radio-group-header">Head Referee</div>
+                                                         <span class="help-block help-block--contact-info-head-referee">Please make a selection</span>
+                                                         <label class="radio-label" for="contactInfoHeadRefereeCurrent">
+                                                               I'm the head referee
+                                                               <span class="radio-container">
+                                                                  <input type="radio" id="contactInfoHeadRefereeCurrent" name="ContactInfoHeadReferee" value="contactInfoHeadRefereeCurrent">
+                                                                  <span class="radio__placeholder"></span>
+                                                               </span>
+                                                         </label>
+                                                      </div>
+                                                      <div class="input-group checkbox-group contact-info-head-referee__other">
+                                                         <label class="radio-label" for="contactInfoHeadRefereeOther">
+                                                               Someone else is the head referee
+                                                               <span class="radio-container">
+                                                                  <input type="radio" id="contactInfoHeadRefereeOther" name="ContactInfoHeadReferee" value="contactInfoHeadRefereeOther">
+                                                                  <span class="radio__placeholder"></span>
+                                                               </span>
+                                                         </label>
+                                                      </div>
+                                                      <span class="help-block help-block--ContactInfoHeadReferee">Please select a head referee</span>
+                                                   </div>
                                                 </div>
-                                            </div>
-   
+                                                <div class="form-group contact-info-head-referee__other--container" style="display: none; visibility: hidden;">
+                                                   <div class="section__header--summary"><p>The head referee must have a My USMS account. If they are not in the dropdown list, they will need to create an account. You can get the account creation started by clicking 'Add New' below. Once the form is completed, the new head referee will receive an email to finish the process and you will see them listed here as 'Account Pending'. <em>You will not be able to register/update your event until the new contact has completed the account set up</em>. After you have registered/updated your event and then it is approved by USMS, you will receive an email notifying you the new contact is done and your permissions are removed. </p></div>
+                                                   <div class="row">
+                                                         <div class="col-sm-4">
+                                                            <div class="input-group lookup-name">
+                                                               <label for="lookupHeadRefereeName">Search Head Referees</label>
+                                                               <input tabindex="0" type="text" class="form-control lookup__input lookup-primary__input" min="3" max="30" name="LookupHeadRefereeName" id="lookupHeadRefereeName" autocomplete="off">
+                                                               <span class="help-block help-block--LookupHeadRefereeName">Please enter head referee name</span>
+                                                            </div>
+                                                         </div>
+                                                   </div>
+                                                   <div class="row">
+                                                         <div class="col-sm-12 col-md-8">
+                                                            <div class="input-group lookup-confirm">
+                                                               <button class="btn btn-small save-as-contact" type="button" id="addAsHeadReferee" onclick="setHeadRefereeTitle(event)"><span class="lookup-confirm--name"></span></button>
+                                                            </div>
+                                                         </div>
+                                                   </div>
+                                                </div>
+                                                <div class="form-group contact-info-head-referee__add-new" style="display: none; visibility: hidden;">
+                                                   <div class="row">
+                                                      <div class="col-sm-12 col-md-8">
+                                                         <p>Or Add a New Head Referee</p>
+                                                         <div>
+                                                               <input class="btn btn-small btn-outline" id="addNewEventDirector" name="addNewEventDirector" type="button" value="Add New" onclick="showNewEventDirectorInputs()">
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="form-group contact-info-head-referee__current-message" style="display: none; visibility: hidden;">
+                                                   <div class="row">
+                                                         <div class="col-sm-4">
+                                                            <p id="contact__recentlyadded" style="display: block; visibility: visible;">
+                                                               The current contact has been added and an email has been sent for them to validate their email. Once validated, they will be able to edit this club.
+                                                            </p>
+                                                            <p id="contact__recentlyadded-valid" style="display: block; visibility: visible;">
+                                                               The current contact has validated their email and has the ability to edit his club.
+                                                            </p>
+                                                            <p id="contact__recentlyadded-invalid" style="display: block; visibility: visible;">
+                                                               The current contact has NOT validated their email and does NOT have the ability to edit his club.
+                                                            </p>
+                                                         </div>
+                                                   </div>
+                                                </div>
+                                                <div class="form-group contact-info-head-referee__not-member--container add-new-inputs" style="display: none; visibility: hidden;">
+                                                   <div class="row">
+                                                      <div class="col-sm-6">
+                                                         <div class="input-group contact-info-head-referee-first-name required">
+                                                               <label for="contactFirstName">First Name</label>
+                                                               <input type="text" maxlength="30" onblur="handleInputBlur(this)" class="form-control" name="NewHeadRefereeFirstName" id="newHeadRefereeFirstName" value="">
+                                                               <span class="help-block help-block--NewHeadRefereeFirstName">Please enter the head referee's first name.</span>
+                                                         </div>
+                                                      </div>
+                                                      <div class="col-sm-6">
+                                                         <div class="input-group contact-info-head-referee-last-name required">
+                                                               <label for="contactLastName" class="">Last Name</label>
+                                                               <input type="text" maxlength="30" onblur="handleInputBlur(this)" class="form-control" name="NewHeadRefereeLastName" id="newHeadRefereeLastName" value="">
+                                                               <span class="help-block help-block--NewHeadRefereeLastName">Please enter the head referee's last name. </span>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                   <div class="row">
+                                                      <div class="col-sm-12">
+                                                         <div class="input-group contact-info-head-referee-primary-email required">
+                                                               <label for="contactEmailPrimary">
+                                                                  Primary Email Address
+                                                                  <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Enter the head referee's primary email address."></span>
+                                                               </label>
+                                                               <input type="email" class="form-control" onblur="handleInputBlur(this)" name="NewHeadRefereeEmailPrimary" id="newHeadRefereeEmailPrimary" maxlength="50" value="">
+                                                               <span class="help-block help-block--NewHeadRefereeEmailPrimary">Please enter the head referee's primary email address.</span>
+                                                         </div>
+                                                         <div class="input-group contact-info-head-referee-primary-phone required">
+                                                               <label for="contactPhonePrimary">Primary Phone Number</label>
+                                                               <input type="text" class="form-control" onblur="handleInputBlur(this)" pattern="[0-9]{3}[-][0-9]{3}[-][0-9]{4}" name="NewHeadRefereePhonePrimary" id="newHeadRefereePhonePrimary" value="" maxlength="12">
+                                                               <span class="help-block help-block--NewHeadRefereePhonePrimary">Please enter the head referee's primary phone number.</span>
+                                                         </div>
+                                       
+                                                      </div>
+                                                   </div>
+                                                   <div class="row">
+                                                      <div class="col-sm-7">
+                                                         <div class="input-group contact-info-head-referee-city required">
+                                                               <label for="newHeadRefereeCity">City</label>
+                                                               <input type="text" maxlength="30" onblur="handleInputBlur(this)" class="form-control" name="NewHeadRefereeCity" id="newHeadRefereeCity" value="">
+                                                               <span class="help-block help-block--NewHeadRefereeCity">Please enter the head referee's city.</span>
+                                                         </div>
+                                                      </div>
+                                                      <div class="col-sm-5">
+                                                         <div class="input-group contact-info-head-referee-state required">
+                                                               <label for="newHeadRefereeState" class="">State</label>
+                                                               <select name="newHeadRefereeState" class="form-control" id="newHeadRefereeState" onchange="validateField(this)" required="True"><option value="">Select State</option>
+                                                                  <option value="AL">Alabama</option>
+                                                                  <option value="AK">Alaska</option>
+                                                                  <option value="AZ">Arizona</option>
+                                                               </select>
+                                                               <span class="help-block help-block--newHeadRefereeState">Please select your head referee's state.</span>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                   <div class="row">
+                                                      <div class="col-sm-5 col-md-6">
+                                                         <div class="form-group lookup person">
+                                                               <button class="btn btn-small" type="button" id="addHeadRefereeBtn" onclick="handleAddHeadRefereeButton()">Accept</button>
+                                                               <button class="btn btn-small btn-outline" type="button" id="cancelAddHeadRefereeBtn" onclick="handleCancelAddHeadReferee()">Cancel</button>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                    <!-- End Head Referee -->
 
+                                    <!-- Safety Coordinator -->
+                                             <div class="form-group contact-info__safety-coordinator-type">
+                                                <div class="row">
+                                                   <hr />
+                                                   <div class="col-xs-12">
+                                                      <div class="input-group checkbox-group contact-info-safety-coordinator__current">
+                                                         <div class="input-group-header radio-group-header">Safety Coordinator</div>
+                                                         <span class="help-block help-block--contact-info-safety-coordinator">Please make a selection</span>
+                                                         <label class="radio-label" for="contactInfoSafetyCoordinatorCurrent">
+                                                               I'm the safety coordinator
+                                                               <span class="radio-container">
+                                                                  <input type="radio" id="contactInfoSafetyCoordinatorCurrent" name="ContactInfoSafetyCoordinator" value="contactInfoSafetyCoordinatorCurrent">
+                                                                  <span class="radio__placeholder"></span>
+                                                               </span>
+                                                         </label>
+                                                      </div>
+                                                      <div class="input-group checkbox-group contact-info-safety-coordinator__other">
+                                                         <label class="radio-label" for="contactInfoSafetyCoordinatorOther">
+                                                               Someone else is the safety coordinator
+                                                               <span class="radio-container">
+                                                                  <input type="radio" id="contactInfoSafetyCoordinatorOther" name="ContactInfoSafetyCoordinator" value="contactInfoSafetyCoordinatorOther">
+                                                                  <span class="radio__placeholder"></span>
+                                                               </span>
+                                                         </label>
+                                                      </div>
+                                                      <span class="help-block help-block--ContactInfoSafetyCoordinator">Please select a safety coordinator</span>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             <div class="form-group contact-info-safety-coordinator__other--container" style="display: none; visibility: hidden;">
+                                                <div class="section__header--summary">
+                                                   <p>The safety coordinator must have a My USMS account. If they are not in the dropdown list, they will need to create an account. You can get the account creation started by clicking 'Add New' below. Once the form is completed, the new safety coordinator will receive an email to finish the process and you will see them listed here as 'Account Pending'. <em>You will not be able to register/update your event until the new contact has completed the account set up</em>. After you have registered/updated your event and then it is approved by USMS, you will receive an email notifying you the new contact is done and your permissions are removed. </p>
+                                                </div>
+                                                <div class="row">
+                                                      <div class="col-sm-4">
+                                                         <div class="input-group lookup-name">
+                                                            <label for="lookupSafetyCoordinatorName">Search Safety Coordinators</label>
+                                                            <input tabindex="0" type="text" class="form-control lookup__input lookup-primary__input" min="3" max="30" name="LookupSafetyCoordinatorName" id="lookupSafetyCoordinatorName" autocomplete="off">
+                                                            <span class="help-block help-block--LookupSafetyCoordinatorName">Please enter safety coordinator name</span>
+                                                         </div>
+                                                      </div>
+                                                </div>
+                                                <div class="row">
+                                                      <div class="col-sm-12 col-md-8">
+                                                         <div class="input-group lookup-confirm">
+                                                            <button class="btn btn-small save-as-contact" type="button" id="addAsSafetyCoordinator" onclick="setSafetyCoordinatorTitle(event)"><span class="lookup-confirm--name"></span></button>
+                                                         </div>
+                                                      </div>
+                                                </div>
+                                             </div>
+                                             <div class="form-group contact-info-host-type-other-organization__add-new" style="display: none; visibility: hidden;">
+                                                <div class="row">
+                                                   <div class="col-sm-12 col-md-8">
+                                                      <p>Or Add a New Safety Coordinator</p>
+                                                      <div>
+                                                         <input class="btn btn-small btn-outline" id="addNewSafetyCoordinator" name="addNewSafetyCoordinator" type="button" value="Add New" onclick="showNewSafetyCoordinatorInputs()">
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             <div class="form-group contact-info-host-type__other-organization--current-message" style="display: none; visibility: hidden;">
+                                                <div class="row">
+                                                   <div class="col-sm-4">
+                                                      <p id="contact__recentlyadded" style="display: block; visibility: visible;">
+                                                         The current contact has been added and an email has been sent for them to validate their email. Once validated, they will be able to edit this club.
+                                                      </p>
+                                                      <p id="contact__recentlyadded-valid" style="display: block; visibility: visible;">
+                                                         The current contact has validated their email and has the ability to edit his club.
+                                                      </p>
+                                                      <p id="contact__recentlyadded-invalid" style="display: block; visibility: visible;">
+                                                         The current contact has NOT validated their email and does NOT have the ability to edit his club.
+                                                      </p>
+                                                   </div>
+                                                </div>
+                                             </div>
+                                             <div class="form-group contact-info-host-type-other-organization__not-member-container add-new-inputs" style="display: none; visibility: hidden;">
+                                                <div class="row">
+                                                   <div class="col-sm-6">
+                                                      <div class="input-group contact-first-name required">
+                                                            <label for="newSafetyCoordinatorFirstName">First Name</label>
+                                                            <input type="text" maxlength="30" onblur="handleInputBlur(this)" class="form-control" name="NewSafetyCoordinatorFirstName" id="newSafetyCoordinatorFirstName" value="">
+                                                            <span class="help-block help-block--NewSafetyCoordinatorFirstName">Please enter the safety coordinator's first name.</span>
+                                                      </div>
+                                                   </div>
+                                                   <div class="col-sm-6">
+                                                      <div class="input-group contact-last-name required">
+                                                            <label for="newSafetyCoordinatorLastName" class="">Last Name</label>
+                                                            <input type="text" maxlength="30" onblur="handleInputBlur(this)" class="form-control" name="NewSafetyCoordinatorLastName" id="newSafetyCoordinatorLastName" value="">
+                                                            <span class="help-block help-block--NewSafetyCoordinatorLastName">Please enter the safety coordinator's last name. </span>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="row">
+                                                   <div class="col-sm-12">
+                                                      <div class="input-group contact-primary-email required">
+                                                            <label for="newSafetyCoordinatorEmailPrimary">
+                                                               Primary Email Address
+                                                               <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Enter the safety coordinator's primary email address."></span>
+                                                            </label>
+                                                            <input type="email" class="form-control" onblur="handleInputBlur(this)" name="NewSafetyCoordinatorEmailPrimary" id="newSafetyCoordinatorEmailPrimary" maxlength="50" value="">
+                                                            <span class="help-block help-block--NewSafetyCoordinatorEmailPrimary">Please enter the safety coordinator's primary email address.</span>
+                                                      </div>
+                                                      <div class="input-group contact-primary-phone required">
+                                                            <label for="newSafetyCoordinatorPhonePrimary">Primary Phone Number</label>
+                                                            <input type="text" class="form-control" onblur="handleInputBlur(this)" pattern="[0-9]{3}[-][0-9]{3}[-][0-9]{4}" name="NewSafetyCoordinatorPhonePrimary" id="newSafetyCoordinatorPhonePrimary" value="" maxlength="12">
+                                                            <span class="help-block help-block--NewSafetyCoordinatorPhonePrimary">Please enter the safety coordinator's primary phone number.</span>
+                                                      </div>
+                                    
+                                                   </div>
+                                                </div>
+                                                <div class="row">
+                                                   <div class="col-sm-7">
+                                                      <div class="input-group contact-city required">
+                                                            <label for="newSafetyCoordinatorCity">City</label>
+                                                            <input type="text" maxlength="30" onblur="handleInputBlur(this)" class="form-control" name="NewSafetyCoordinatorCity" id="newSafetyCoordinatorCity" value="">
+                                                            <span class="help-block help-block--NewSafetyCoordinatorCity">Please enter the safety coordinator's city.</span>
+                                                      </div>
+                                                   </div>
+                                                   <div class="col-sm-5">
+                                                      <div class="input-group contact-state required">
+                                                            <label for="newSafetyCoordinatorState" class="">State</label>
+                                                            <select name="newSafetyCoordinatorState" class="form-control" id="newSafetyCoordinatorState" onchange="validateField(this)" required="True"><option value="">Select State</option>
+                                                               <option value="AL">Alabama</option>
+                                                               <option value="AK">Alaska</option>
+                                                               <option value="AZ">Arizona</option>
+                                                            </select>
+                                                            <span class="help-block help-block--newSafetyCoordinatorState">Please select your safety coordinator's state.</span>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                <div class="row">
+                                                   <div class="col-sm-5 col-md-6">
+                                                      <div class="form-group lookup person">
+                                                            <button class="btn btn-small" type="button" id="addSafetyCoordinatorBtn" onclick="handleAddSafetyCoordinatorButton()">Accept</button>
+                                                            <button class="btn btn-small btn-outline" type="button" id="cancelAddSafetyCoordinatorBtn" onclick="handleCancelAddSafetyCoordinator()">Cancel</button>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                             </div>
 
-                                 <!-- Host Type -->
                                              <div class="row">
                                                 <hr />
                                                 <div class="col-xs-12 col-sm-8 col-md-5">
-                                                   <div class="input-group contact-info__host-type required">
+                                                   <div class="input-group event-info-classification required">
                                                       <label for="selectHostType">
-                                                         Host Type<a tabindex="0" class="popover-link" role="button" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="top" data-content="Do we need a tooltip here?" data-original-title="" title=""><span class="icon-help"></span></a>
+                                                         Host Type<a tabindex="0" class="popover-link" role="button" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="top" 
+                                                         data-content="Do we need a tooltip here?" data-original-title="" title="">
+                                                         <span class="icon-help"></span>
+                                                         </a>
                                                       </label>
                                                       <select name="SelectHostType" class="form-control" id="selectHostType" onchange="validateField(this)" required="True">                                                            
                                                          <option value="{Sitecore ID}" disabled selected>Select a Host Type</option>
@@ -952,7 +1128,7 @@
                                                          <option value="{Sitecore ID}">Event Director/One person</option>
                                                          <option value="{Sitecore ID}">Other Organization</option>
                                                       </select>
-                                                      <span class="help-block help-block--SelectHostType">Host type is required.</span>
+                                                         <span class="help-block help-block--SelectHostType">Host type is required.</span>
                                                    </div>
                                                 </div>
                                              </div>
@@ -1082,7 +1258,7 @@
                                                 <div class="col-sm-3">
                                                    <div class="input-group contact-info-host-type__other-organization--state required">
                                                          <label for="hostTypeOtherState" class="">State</label>
-                                                         <select name="HostTypeOtherState" class="form-control" id="hostTypeOtherState" onchange="validateField(this)"><option value="">Select State</option>
+                                                         <select name="HostTypeOtherState" class="form-control" id="hostTypeOtherState" onchange="validateField(this)" required="True"><option value="">Select State</option>
                                                             <option value="AL">Alabama</option>
                                                             <option value="AK">Alaska</option>
                                                             <option value="AZ">Arizona</option>
@@ -1107,13 +1283,15 @@
                                                 </div>
                                              </div>
                                           </div>
-                                 
 
                                           <div class="row">
                                                 <div class="section__controls">
-                                                   <button class="btn save-section" id="saveContactInfoSection" type="button" onclick="">Save &amp; Continue</button>
+                                                   <button class="btn save-section" id="saveContactInfo" type="button" onclick="">Save &amp; Continue</button>
                                                 </div>
                                           </div>
+
+
+
                                           </div>
                                        </div>
                                  </form>
@@ -1354,7 +1532,6 @@
          <script src="js/Validation.js"></script>
          <script src="js/Util.js"></script>
          <script src="js/Accordion.js"></script>
-         <script src="js/Autocomplete.js"></script>
 
 
          <script src="js/1-event-type.js"></script>
