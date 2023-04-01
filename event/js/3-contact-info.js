@@ -16,6 +16,7 @@ let latestContact = null;
 
 
 function toggleEventDirectorSection(status, section) {
+  alert("Toggling event director section ...");
     if (status === 'show') {
       document.querySelector(`.contact-info__${section}--container`).style.display = 'block';
       document.querySelector(`.contact-info__${section}--container`).style.visibility = 'visible';
@@ -26,6 +27,7 @@ function toggleEventDirectorSection(status, section) {
 }
   
 function getContact() {
+  alert("Getting contact ...");
     let contact = null;
     const listContainer = document.querySelector('.section#contact-info .list__container .row');
     if (listContainer) {
@@ -50,20 +52,24 @@ return contact;
 }
 
 function editContact() {
+  alert("Editing contact ...");
     setSectionInputStatus(sectionContactInfo, false);
     sectionContactInfo.classList.add('isEdit');
 }
 
 function handleBlur(input) {
+  alert("Handling blur ...");
     validateField(input);
 }
 
 function cancelContact() {
+  alert("Canceling contact ...");
     setSectionInputStatus(sectionContactInfo, true);
     sectionContactInfo.classList.remove('isEdit');
 }
 
 function hideContactConfirmation() {
+  alert("Hiding contact confirmation ...");
     if (sectionContactInfo) {
       const contactConfirmation = sectionContactInfo.querySelector('.lookup-confirm');
       if (contactConfirmation) {
@@ -74,6 +80,7 @@ function hideContactConfirmation() {
 }
 
 function removeContact(e) {
+  alert("Removing contact ...");
     e.preventDefault();
     const contactList = sectionContactInfo.querySelector('.list__container');
     contactList.classList.add('list__container--modified');
@@ -92,6 +99,7 @@ function removeContact(e) {
 }
 
 function showContactConfirmation() {
+  alert("Showing contact confirmation ...");
     if (sectionContactInfo) {
       const contactConfirmation = sectionContactInfo.querySelector('.lookup-confirm');
       if (contactConfirmation) {
@@ -101,6 +109,7 @@ function showContactConfirmation() {
 }  
 
 function setCurrentContact(contact) {
+  alert("Setting current contact ...");
     latestContact = contact;
     if (sectionContactInfo) {
         const contactName = sectionContactInfo.querySelector('.lookup-confirm--name');
@@ -112,7 +121,7 @@ function setCurrentContact(contact) {
 }
 
 function clearContactInputs() {
-    // alert("Clearing contact inputs ...")
+    alert("Clearing contact inputs ...")
     document.querySelector('#newEventDirectorFirstName').value = '';
     setInputStatus(document.querySelector('#newEventDirectorFirstName'), true);
     document.querySelector('#newEventDirectorLastName').value = '';
@@ -128,6 +137,7 @@ function clearContactInputs() {
 }
 
 function hideContactLookupInputs() {
+  alert("Hiding contact lookup inputs ...");
     $('.contact-info__event-director-other--container').hide();
     $(".contact-info__event-director-other--add-new").hide();
     clearContactInputs();
@@ -140,12 +150,14 @@ function hideContactLookupInputs() {
 //     document.querySelector('.club-contact__not-member-container').style.visibility = 'visible';
 // }
 function showNewEventDirectorInputs() {
+  alert("Showing new event director inputs ...");
     $('.contact-info__event-director--add-new-container').show();
     document.querySelector('.contact-info__event-director--add-new-container').style.display = 'block';
 }
 
 
 function cancelContactList() {
+  alert("Canceling contact list ...");
     const list = sectionContactInfo.querySelector('.list');
     const contactItemsHidden = sectionContactInfo.querySelectorAll('.list-item--fade-out');
     if (contactItemsHidden.length >= 1) {
@@ -168,6 +180,7 @@ editContactListButton.addEventListener('click', function(e) {
     editContactList(e);
 });
 function editContactList() {
+  alert("Editing contact list ...");
     const list = document.querySelector('.section#contact-info .list');
     if (list.classList.contains('edit-list')) {
       list.classList.remove('edit-list');
@@ -189,6 +202,7 @@ function editContactList() {
 }
 
 function removeCurrentContacts() {
+  alert("Removing current contacts ...");
     const listContainer = document.querySelector('.section#contact-list .list__container .row');
     if (listContainer) {
       const contactItems = listContainer.querySelectorAll('.list-item');
@@ -202,6 +216,7 @@ function removeCurrentContacts() {
 }
 
 function uncheckContactTypeRadios() {
+  alert("Unchecking contact type radios...");
     radioEventDirectorCurrent.checked = false;
     radioEventDirectorOther.checked = false;
 }
@@ -212,7 +227,7 @@ function uncheckContactTypeRadios() {
 //     confirmCurrentEventDirector(e);
 // });
 function confirmCurrentEventDirector() {
-    alert("1");
+    alert("Confirming current event director ...");
     document.querySelector('#confirmCurrentEventDirector').style.display = 'none';
     document.querySelector('#saveContactInfoSection').disabled = false;
     $('.contact-info__event-director-type-form').hide();
@@ -323,7 +338,8 @@ function addContact(contact, headerText = '', removeCurrent = true, fromApi = fa
     }
 }
 
-// function addNewNonmemberContact(contact) {
+function addNewNonmemberContact(contact) {
+  alert("Adding new non-member contact ...");
 //     const xhr = new XMLHttpRequest();
 //     const formData = new FormData();
   
@@ -360,9 +376,10 @@ function addContact(contact, headerText = '', removeCurrent = true, fromApi = fa
 //       }
 //     };
 //     xhr.send(formData);
-//   }
+  }
 
-// function validateNotMemberForm() {
+function validateNotMemberForm() {
+  alert("Validating non member contact form ...");
 //     const inputFirstName = document.querySelector('#newContactFirstName');
 //     const inputLastName = document.querySelector('#newContactLastName');
 //     const inputPhone = document.querySelector('#newContactPhonePrimary');
@@ -381,12 +398,11 @@ function addContact(contact, headerText = '', removeCurrent = true, fromApi = fa
 //       window.scroll(0, FindPos(formNotMember.querySelectorAll('span.help-block.has-error')[0]));
 //       return false;
 //     }
-//     return true;
-// }
+    return true;
+}
 
 function buildContact() {
-    const inputFirstName = document.querySelector('#newEventDirectorFirstName');
-    const inputLastName = document.querySelector('#newEventDirectorLastName');
+  alert("BuiinputLastName = document.querySelector('#newEventDirectorLastName');
     const inputPhone = document.querySelector('#newEventDirectorPhonePrimary');
     const inputEmail = document.querySelector('#newEventDirectorEmailPrimary');
     const inputCity = document.querySelector('#newEventDirectorCity');
@@ -408,7 +424,8 @@ function buildContact() {
 
 // AJAX Request here needs wired up <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 function checkContactExists(email) {
-    // showLoadingOverlay();
+  alert("Checking if contact exists ...");
+    showLoadingOverlay();
     // const xhr = new XMLHttpRequest();
     // xhr.open('GET', `/apis/v1/account/swimmerexists?email=${email}`, true);
     // xhr.withCredentials = true;
@@ -435,6 +452,7 @@ function checkContactExists(email) {
 }
 
 function handleAddContactButton() {
+  alert("Handling add contact button ...");
     if (!validateNotMemberForm()) {
       return;
     }  
@@ -445,7 +463,7 @@ function handleAddContactButton() {
 }
 
 function checkInitContactData() {
-    // alert("Checking initial contact data ...");
+    alert("Checking initial contact data ...");
     document.querySelector('#confirmCurrentEventDirector').style.display = 'none';
     const contactType = sectionContactInfo.querySelector('input[name="EventDirectorType"]:checked');
     if (!contactType) {
@@ -506,6 +524,7 @@ function checkInitContactData() {
 }
 
 function setContactTitle(e) {
+  alert("Setting contact title ...");
     e.preventDefault();
     $('.contact-info__event-director-type-form').hide();
     $('.contact-info__event-director-other--add-new').hide();
@@ -520,6 +539,7 @@ function setContactTitle(e) {
 }
 
 function handleContactTypeEventDirector(e) {
+  alert("Handling contact type event director ...");
     validateField(radioEventDirectorCurrent);
     clearContactInputs();
     document.querySelector('#lookupEventDirectorName').value = '';
@@ -586,6 +606,7 @@ function handleContactTypeEventDirector(e) {
 }
 
 function handleContactConfirmation(e) {
+  alert("Handling contact confirmation ...");
     $('#modalContactInfoConfirmation').modal('hide');
     // selectContactType.value = 'contactOther';
     handleContactType(e);
@@ -597,6 +618,7 @@ saveContactListButton.addEventListener('click', function(e) {
     saveContactList(e);
 });
 function saveContactList() {
+  alert("Saving contact list ...");
     const updatedItems = sectionContactInfo.querySelectorAll('.list-item--new');
     for (let i = 0; i < updatedItems.length; i += 1) {
       updatedItems[i].classList.remove('list-item--new');
@@ -620,6 +642,7 @@ function saveContactList() {
 }
 
 function validateSectionContact() {
+  alert("Validating section contact ...");
     validateField(radioEventDirectorCurrent);
     if (sectionContainsErrors(sectionContactInfo)) {
       hideLoadingOverlay();
@@ -632,6 +655,7 @@ function validateSectionContact() {
 
 // AJAX Request here needs wired up <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 function saveContact(e) {
+  alert("Saving contact ...");
     e.preventDefault();
     showLoadingOverlay();
   
@@ -730,6 +754,7 @@ function hideNewContact_RecentlyAdded_Invalid() {
 }
 
 function showNewContactMessage() {
+  alert("Showing new contact message ...");
     $('.contact-info-event-director__current-message').show();
 }
 
@@ -739,11 +764,13 @@ function showNewContactMessage() {
 //     handleCancelAddEventDirector(e);
 // });
 function handleCancelAddEventDirector() {
+  alert("Handle canceling add event director ...");
     hideContactLookupInputs();
     uncheckContactTypeRadios();
 }
 
 function GetBoolean(input) {
+  alert("Getting boolean ...");
     let data = true;
     if (typeof input === 'boolean') {
       data = input;
@@ -754,6 +781,7 @@ function GetBoolean(input) {
 }
 
 function unvalidatedContactOnPage() {
+  alert("Unvalidated contact on page ...");
     var unvalidatedContact = sectionContactInfo.querySelector('.coach-validated');
   
     if (unvalidatedContact)
