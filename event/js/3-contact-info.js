@@ -402,7 +402,9 @@ function validateNotMemberForm() {
 }
 
 function buildContact() {
-  alert("BuiinputLastName = document.querySelector('#newEventDirectorLastName');
+  alert("Building contact ...");
+    const inputFirstName = document.querySelector('#newEventDirectorLFirstName');  
+    const inputLastName = document.querySelector('#newEventDirectorLastName');
     const inputPhone = document.querySelector('#newEventDirectorPhonePrimary');
     const inputEmail = document.querySelector('#newEventDirectorEmailPrimary');
     const inputCity = document.querySelector('#newEventDirectorCity');
