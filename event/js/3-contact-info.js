@@ -16,7 +16,7 @@ let latestContact = null;
 
 
 function toggleEventDirectorSection(status, section) {
-  alert("Toggling event director section ...");
+  // console.log("Toggling event director section ...");
     if (status === 'show') {
       document.querySelector(`.contact-info__${section}--container`).style.display = 'block';
       document.querySelector(`.contact-info__${section}--container`).style.visibility = 'visible';
@@ -27,7 +27,7 @@ function toggleEventDirectorSection(status, section) {
 }
   
 function getContact() {
-  alert("Getting contact ...");
+  // console.log("Getting contact ...");
     let contact = null;
     const listContainer = document.querySelector('.section#contact-info .list__container .row');
     if (listContainer) {
@@ -45,31 +45,31 @@ function getContact() {
             };
         }
     } else {
-        alert("Contact Unknown");
+        // console.log("Contact Unknown");
     }
 }
 return contact;
 }
 
 function editContact() {
-  alert("Editing contact ...");
+  // console.log("Editing contact ...");
     setSectionInputStatus(sectionContactInfo, false);
     sectionContactInfo.classList.add('isEdit');
 }
 
 function handleBlur(input) {
-  alert("Handling blur ...");
+  // console.log("Handling blur ...");
     validateField(input);
 }
 
 function cancelContact() {
-  alert("Canceling contact ...");
+  // console.log("Canceling contact ...");
     setSectionInputStatus(sectionContactInfo, true);
     sectionContactInfo.classList.remove('isEdit');
 }
 
 function hideContactConfirmation() {
-  alert("Hiding contact confirmation ...");
+  // console.log("Hiding contact confirmation ...");
     if (sectionContactInfo) {
       const contactConfirmation = sectionContactInfo.querySelector('.lookup-confirm');
       if (contactConfirmation) {
@@ -80,7 +80,7 @@ function hideContactConfirmation() {
 }
 
 function removeContact(e) {
-  alert("Removing contact ...");
+  // console.log("Removing contact ...");
     e.preventDefault();
     const contactList = sectionContactInfo.querySelector('.list__container');
     contactList.classList.add('list__container--modified');
@@ -99,7 +99,7 @@ function removeContact(e) {
 }
 
 function showContactConfirmation() {
-  alert("Showing contact confirmation ...");
+  // console.log("Showing contact confirmation ...");
     if (sectionContactInfo) {
       const contactConfirmation = sectionContactInfo.querySelector('.lookup-confirm');
       if (contactConfirmation) {
@@ -109,7 +109,7 @@ function showContactConfirmation() {
 }  
 
 function setCurrentContact(contact) {
-  alert("Setting current contact ...");
+  // console.log("Setting current contact ...");
     latestContact = contact;
     if (sectionContactInfo) {
         const contactName = sectionContactInfo.querySelector('.lookup-confirm--name');
@@ -121,7 +121,7 @@ function setCurrentContact(contact) {
 }
 
 function clearContactInputs() {
-    alert("Clearing contact inputs ...")
+    // console.log("Clearing contact inputs ...")
     document.querySelector('#newEventDirectorFirstName').value = '';
     setInputStatus(document.querySelector('#newEventDirectorFirstName'), true);
     document.querySelector('#newEventDirectorLastName').value = '';
@@ -137,7 +137,7 @@ function clearContactInputs() {
 }
 
 function hideContactLookupInputs() {
-  alert("Hiding contact lookup inputs ...");
+  // console.log("Hiding contact lookup inputs ...");
     $('.contact-info__event-director-other--container').hide();
     $(".contact-info__event-director-other--add-new").hide();
     clearContactInputs();
@@ -150,14 +150,14 @@ function hideContactLookupInputs() {
 //     document.querySelector('.club-contact__not-member-container').style.visibility = 'visible';
 // }
 function showNewEventDirectorInputs() {
-  alert("Showing new event director inputs ...");
+  // console.log("Showing new event director inputs ...");
     $('.contact-info__event-director--add-new-container').show();
     document.querySelector('.contact-info__event-director--add-new-container').style.display = 'block';
 }
 
 
 function cancelContactList() {
-  alert("Canceling contact list ...");
+  // console.log("Canceling contact list ...");
     const list = sectionContactInfo.querySelector('.list');
     const contactItemsHidden = sectionContactInfo.querySelectorAll('.list-item--fade-out');
     if (contactItemsHidden.length >= 1) {
@@ -180,7 +180,7 @@ editContactListButton.addEventListener('click', function(e) {
     editContactList(e);
 });
 function editContactList() {
-  alert("Editing contact list ...");
+  // console.log("Editing contact list ...");
     const list = document.querySelector('.section#contact-info .list');
     if (list.classList.contains('edit-list')) {
       list.classList.remove('edit-list');
@@ -202,7 +202,7 @@ function editContactList() {
 }
 
 function removeCurrentContacts() {
-  alert("Removing current contacts ...");
+  // console.log("Removing current contacts ...");
     const listContainer = document.querySelector('.section#contact-list .list__container .row');
     if (listContainer) {
       const contactItems = listContainer.querySelectorAll('.list-item');
@@ -216,7 +216,7 @@ function removeCurrentContacts() {
 }
 
 function uncheckContactTypeRadios() {
-  alert("Unchecking contact type radios...");
+  // console.log("Unchecking contact type radios...");
     radioEventDirectorCurrent.checked = false;
     radioEventDirectorOther.checked = false;
 }
@@ -227,7 +227,7 @@ function uncheckContactTypeRadios() {
 //     confirmCurrentEventDirector(e);
 // });
 function confirmCurrentEventDirector() {
-    alert("Confirming current event director ...");
+    // console.log("Confirming current event director ...");
     document.querySelector('#confirmCurrentEventDirector').style.display = 'none';
     document.querySelector('#saveContactInfoSection').disabled = false;
     $('.contact-info__event-director-type-form').hide();
@@ -237,7 +237,7 @@ function confirmCurrentEventDirector() {
 }
 
 function addContact(contact, headerText = '', removeCurrent = true, fromApi = false) {
-    alert("Adding contact ...");
+    // console.log("Adding contact ...");
     latestContact = null;
     if (removeCurrent) removeCurrentContacts();
   
@@ -245,12 +245,15 @@ function addContact(contact, headerText = '', removeCurrent = true, fromApi = fa
     hideContactLookupInputs();
     $('#listContactSettings').show();
     if (listContainer) {
+      // console.log("List container exists ...");
       const col = document.createElement('div');
       col.className = 'col-xs-12 col-sm-6 col-md-4 contact-column';
       const div = document.createElement('div');
       if (fromApi) {
+        // console.log("From api ...");
         div.className = 'list-item list-item--fade-out';
       } else {
+        // console.log("Not from api ...");
         div.className = 'list-item list-item--fade-out list-item--new';
       }
       const button = document.createElement('button');
@@ -280,6 +283,7 @@ function addContact(contact, headerText = '', removeCurrent = true, fromApi = fa
       const id = document.createElement('div');
       id.classList.add('contact-id');
       if (!isMember) {
+        // console.log("Is member ...");
         id.style.display = 'none';
       }
   
@@ -339,17 +343,17 @@ function addContact(contact, headerText = '', removeCurrent = true, fromApi = fa
 }
 
 function addNewNonmemberContact(contact) {
-  alert("Adding new non-member contact ...");
+  console.log("Adding new non-member contact ...");
 //     const xhr = new XMLHttpRequest();
-//     const formData = new FormData();
+    const formData = new FormData();
   
 //     // gather the data
-//     formData.append('firstName', contact.firstName);
-//     formData.append('lastName', contact.lastName);
-//     formData.append('email', contact.email);
-//     formData.append('phoneNumber', contact.phone);
-//     formData.append('city', contact.city);
-//     formData.append('state', contact.state);
+    formData.append('firstName', contact.firstName);
+    formData.append('lastName', contact.lastName);
+    formData.append('email', contact.email);
+    formData.append('phoneNumber', contact.phone);
+    formData.append('city', contact.city);
+    formData.append('state', contact.state);
   
 //     // create the api event
 //     xhr.open('POST', `/apis/v1/account/club/`, true);
@@ -379,19 +383,19 @@ function addNewNonmemberContact(contact) {
   }
 
 function validateNotMemberForm() {
-  alert("Validating non member contact form ...");
-//     const inputFirstName = document.querySelector('#newContactFirstName');
-//     const inputLastName = document.querySelector('#newContactLastName');
-//     const inputPhone = document.querySelector('#newContactPhonePrimary');
-//     const inputEmail = document.querySelector('#newContactEmailPrimary');
-//     const inputCity = document.querySelector('#newContactCity');
-//     const inputState = document.querySelector('#newContactState');
-//     validateField(inputFirstName);
-//     validateField(inputLastName);
-//     validateField(inputPhone);
-//     validateField(inputEmail);
-//     validateField(inputCity);
-//     validateField(inputState);
+  console.log("Validating non member contact form ...");
+    const inputFirstName = document.querySelector('#newContactFirstName');
+    const inputLastName = document.querySelector('#newContactLastName');
+    const inputPhone = document.querySelector('#newContactPhonePrimary');
+    const inputEmail = document.querySelector('#newContactEmailPrimary');
+    const inputCity = document.querySelector('#newContactCity');
+    const inputState = document.querySelector('#newContactState');
+    validateField(inputFirstName);
+    validateField(inputLastName);
+    validateField(inputPhone);
+    validateField(inputEmail);
+    validateField(inputCity);
+    validateField(inputState);
   
 //     const formNotMember = document.querySelector('.club-contact__not-member-container');
 //     if (sectionContainsErrors(formNotMember)) {
@@ -402,8 +406,8 @@ function validateNotMemberForm() {
 }
 
 function buildContact() {
-  alert("Building contact ...");
-    const inputFirstName = document.querySelector('#newEventDirectorLFirstName');  
+  // console.log("Building contact ...");
+    const inputFirstName = document.querySelector('#newEventDirectorFirstName');  
     const inputLastName = document.querySelector('#newEventDirectorLastName');
     const inputPhone = document.querySelector('#newEventDirectorPhonePrimary');
     const inputEmail = document.querySelector('#newEventDirectorEmailPrimary');
@@ -426,7 +430,7 @@ function buildContact() {
 
 // AJAX Request here needs wired up <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 function checkContactExists(email) {
-  alert("Checking if contact exists ...");
+  // console.log("Checking if contact exists ...");
     showLoadingOverlay();
     // const xhr = new XMLHttpRequest();
     // xhr.open('GET', `/apis/v1/account/swimmerexists?email=${email}`, true);
@@ -452,9 +456,9 @@ function checkContactExists(email) {
     // xhr.send();
     return true;
 }
-
-function handleAddContactButton() {
-  alert("Handling add contact button ...");
+// addEventDirectorBtn
+function handleAddEventDirectorButton() {
+  console.log("Handling add contact button ...");
     if (!validateNotMemberForm()) {
       return;
     }  
@@ -465,18 +469,18 @@ function handleAddContactButton() {
 }
 
 function checkInitContactData() {
-    alert("Checking initial contact data ...");
+    // console.log("Checking initial contact data ...");
     document.querySelector('#confirmCurrentEventDirector').style.display = 'none';
-    const contactType = sectionContactInfo.querySelector('input[name="EventDirectorType"]:checked');
+    const contactType = sectionContactInfo.querySelector('input[name="ContactTypeEventDirectorType"]:checked');
     if (!contactType) {
-        // alert("No contact type ...");
+        // console.log("No contact type ...");
         document.querySelector('.section#contact-info').classList.remove('hasData');
         $('.contact-list__event-director--header').hide();
         $('#listContactSettings').hide();
         return;
     }
     if (contactType.value) {
-        alert("Contact type has value ...");
+        // console.log("Contact type has value ...");
         const contact = {
             swimmerId: document.querySelector('#newEventDirectorSwimmerId').value,
             firstName: document.querySelector('#newEventDirectorFirstName').value,
@@ -491,12 +495,15 @@ function checkInitContactData() {
     
         let contactValidated = GetBoolean(contact.validated);
         if (!contactValidated) {
+            // console.log("Contact not validated, first ...");
             addContact(contact, `${awaitingContactText}`, false);
         } else {
+            // console.log("Contact validated ...");
             addContact(contact, '', false);
         }
     
         if (!contactValidated) {
+          // console.log("Contact not validated, second ...");
             const currentContact = {
                 swimmerId: document.querySelector('#currentEventDirectorSwimmerId').value,
                 firstName: document.querySelector('#currentEventDirectorFirstName').value,
@@ -517,6 +524,7 @@ function checkInitContactData() {
         $('#listContactSettings').show();
         document.querySelector('#saveContact').disabled = false;
     } else {
+      // console.log("Contact type else ...");
         document.querySelector('.section#contact-list').classList.remove('hasData');
         $('.contact-list__event-director--header').hide();
         $('#listContactSettings').hide();
@@ -526,7 +534,7 @@ function checkInitContactData() {
 }
 
 function setContactTitle(e) {
-  alert("Setting contact title ...");
+  // console.log("Setting contact title ...");
     e.preventDefault();
     $('.contact-info__event-director-type-form').hide();
     $('.contact-info__event-director-other--add-new').hide();
@@ -541,7 +549,7 @@ function setContactTitle(e) {
 }
 
 function handleContactTypeEventDirector(e) {
-  alert("Handling contact type event director ...");
+  // console.log("Handling contact type event director ...");
     validateField(radioEventDirectorCurrent);
     clearContactInputs();
     document.querySelector('#lookupEventDirectorName').value = '';
@@ -608,7 +616,7 @@ function handleContactTypeEventDirector(e) {
 }
 
 function handleContactConfirmation(e) {
-  alert("Handling contact confirmation ...");
+  // console.log("Handling contact confirmation ...");
     $('#modalContactInfoConfirmation').modal('hide');
     // selectContactType.value = 'contactOther';
     handleContactType(e);
@@ -620,7 +628,7 @@ saveContactListButton.addEventListener('click', function(e) {
     saveContactList(e);
 });
 function saveContactList() {
-  alert("Saving contact list ...");
+  // console.log("Saving contact list ...");
     const updatedItems = sectionContactInfo.querySelectorAll('.list-item--new');
     for (let i = 0; i < updatedItems.length; i += 1) {
       updatedItems[i].classList.remove('list-item--new');
@@ -644,7 +652,7 @@ function saveContactList() {
 }
 
 function validateSectionContact() {
-  alert("Validating section contact ...");
+  // console.log("Validating section contact ...");
     validateField(radioEventDirectorCurrent);
     if (sectionContainsErrors(sectionContactInfo)) {
       hideLoadingOverlay();
@@ -657,7 +665,7 @@ function validateSectionContact() {
 
 // AJAX Request here needs wired up <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 function saveContact(e) {
-  alert("Saving contact ...");
+  // console.log("Saving contact ...");
     e.preventDefault();
     showLoadingOverlay();
   
@@ -756,7 +764,7 @@ function hideNewContact_RecentlyAdded_Invalid() {
 }
 
 function showNewContactMessage() {
-  alert("Showing new contact message ...");
+  // console.log("Showing new contact message ...");
     $('.contact-info-event-director__current-message').show();
 }
 
@@ -766,13 +774,13 @@ function showNewContactMessage() {
 //     handleCancelAddEventDirector(e);
 // });
 function handleCancelAddEventDirector() {
-  alert("Handle canceling add event director ...");
+  // console.log("Handle canceling add event director ...");
     hideContactLookupInputs();
     uncheckContactTypeRadios();
 }
 
 function GetBoolean(input) {
-  alert("Getting boolean ...");
+  // console.log("Getting boolean ...");
     let data = true;
     if (typeof input === 'boolean') {
       data = input;
@@ -783,11 +791,15 @@ function GetBoolean(input) {
 }
 
 function unvalidatedContactOnPage() {
-  alert("Unvalidated contact on page ...");
+  // console.log("Unvalidated contact on page ...");
     var unvalidatedContact = sectionContactInfo.querySelector('.coach-validated');
   
-    if (unvalidatedContact)
+    if (unvalidatedContact) {
+      // console.log("Returning true ...");
       return true;
-    else
-      return false;  
+    }
+    else {
+      // console.log("Returning false ...");
+      return false;
+    }
 }  
