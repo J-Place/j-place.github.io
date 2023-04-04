@@ -6,7 +6,7 @@ if (mobile) {
 function toggleMobileNav() {
     const mobileNavContainer = document.querySelector('.article-nav');
     const mobileNavButton = document.querySelector('article-nav-title');
-    const mobileNavList = document.getElementById('navList');    
+    const mobileNavList = document.getElementById('navList');
     if (mobile && mobileNavList.classList.contains('show')) {
         mobileNavList.classList.remove('show');
         document.querySelector('.article-nav-title').classList.remove('open');
@@ -36,25 +36,23 @@ document.addEventListener("DOMContentLoaded", function () {
         // Set nav position on page reload or loading page from hash links
         if (mobile) {
             articleNav.style.top = 30 + 'px';
-        } else if (!mobile) {
-            return
         }
     }
 
     function setArticleIds() {
-        const contentHeadings = document.querySelectorAll('.article-body div + div h2, .article-body div + div h3');        
+        const contentHeadings = document.querySelectorAll('.article-body div + div h2, .article-body div + div h3');
         for (i = 0; i < contentHeadings.length; i++) {  
             var contentHeadingHtml = contentHeadings[i].innerHTML;
             var contentHeadingHtmlClean = contentHeadingHtml = contentHeadingHtml.replace(/\s/g, '').replace(/[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g, '');
             contentHeadings[i].id = contentHeadingHtmlClean;
-        };         
+        };
     }
     setArticleIds();
 
     function renderNavList() {
         const contentHeadings = document.querySelectorAll('.article-body div + div h2, .article-body div + div h3');
         var str = '';
-        for (i = 0; i < contentHeadings.length; i++) {            
+        for (i = 0; i < contentHeadings.length; i++) {
             var id = contentHeadings[i];
             var idPos = id.offsetParent.getBoundingClientRect().top;
             var idZero = idPos + contentHeadings[i].offsetTop;
@@ -92,11 +90,10 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-
     // Set position on scroll
     function setNavPosition() {
         if (mobile) {
-            if (window.scrollY < articleStart) {                
+            if (window.scrollY < articleStart) {
                 articleNav.style.top = 0 + 'px';
                 articleNav.classList.remove('sticky-start');
                 articleNav.classList.remove('sticky-end');
@@ -106,55 +103,38 @@ document.addEventListener("DOMContentLoaded", function () {
                 articleNav.classList.add('sticky-start');
                 articleNav.classList.remove('sticky-end');
             }
-            if (!articleNav.classList.contains('sticky-start') 
-                && !articleNav.classList.contains('sticky-end') 
-                && window.scrollY >= articleStart 
-                && window.scrollY <= articleEnd) {    
+            if (!articleNav.classList.contains('sticky-start') && !articleNav.classList.contains('sticky-end') && window.scrollY >= articleStart && window.scrollY <= articleEnd) {    
                 articleNav.classList.add('sticky-start');
                 articleNav.style.top = 0 + 'px';
             }
-            if (!articleNav.classList.contains('sticky-start') 
-                && articleNav.classList.contains('sticky-end') 
-                && window.scrollY >= articleStart 
-                && window.scrollY <= articleEnd + articleNavHeight) {
+            if (!articleNav.classList.contains('sticky-start') && articleNav.classList.contains('sticky-end') && window.scrollY >= articleStart && window.scrollY <= articleEnd + articleNavHeight) {
                 articleNav.classList.add('sticky-start');
                 articleNav.classList.remove('sticky-end');
                 articleNav.style.top = 0 + 'px';
             }
-            if (articleNav.classList.contains('sticky-start') 
-                && window.scrollY >= articleStart 
-                && window.scrollY >= articleEnd - articleNavHeight - articleNavHeight) {
+            if (articleNav.classList.contains('sticky-start') && window.scrollY >= articleStart && window.scrollY >= articleEnd - articleNavHeight - articleNavHeight) {
                 articleNav.classList.remove('sticky-start');
                 articleNav.classList.add('sticky-end');
                 articleNav.style.top = 0 + 'px';
             }
         } else if (!mobile) {
-            if (window.scrollY < articleStart 
-                && !articleNav.classList.contains('sticky-start')) {
+            if (window.scrollY < articleStart && !articleNav.classList.contains('sticky-start')) {
                 articleNav.style.top = 0 + 'px';
             }
-            if (window.scrollY < articleStart 
-                && articleNav.classList.contains('sticky-start')) {
+            if (window.scrollY < articleStart && articleNav.classList.contains('sticky-start')) {
                 articleNav.classList.remove('sticky-start');
                 articleNav.style.top = 0 + 'px';
             }
-            if (window.scrollY >= articleStart 
-                && window.scrollY <= articleEnd
-                && !articleNav.classList.contains('sticky-start') 
-                && !articleNav.classList.contains('sticky-end')) {    
+            if (window.scrollY >= articleStart && window.scrollY <= articleEnd && !articleNav.classList.contains('sticky-start') && !articleNav.classList.contains('sticky-end')) {
                 articleNav.classList.add('sticky-start');
                 articleNav.style.top = 0 + 'px';
             }
-            if (window.scrollY >= articleStart 
-                && window.scrollY <= articleEnd - articleNavHeight
-                && !articleNav.classList.contains('sticky-start') 
-                && articleNav.classList.contains('sticky-end')) {
+            if (window.scrollY >= articleStart && window.scrollY <= articleEnd - articleNavHeight && !articleNav.classList.contains('sticky-start') && articleNav.classList.contains('sticky-end')) {
                 articleNav.classList.add('sticky-start');
                 articleNav.classList.remove('sticky-end');
                 articleNav.style.top = 0 + 'px';
             }
-            if (window.scrollY >= articleEnd - articleNavHeight - 140
-                && articleNav.classList.contains('sticky-start')) {
+            if (window.scrollY >= articleEnd - articleNavHeight - 140 && articleNav.classList.contains('sticky-start')) {
                 articleNav.classList.remove('sticky-start');
                 articleNav.classList.add('sticky-end');
                 articleNav.style.top = 0 + 'px';
@@ -164,6 +144,3 @@ document.addEventListener("DOMContentLoaded", function () {
     window.addEventListener('scroll', setNavPosition);
     setNavPosition();
 });
-
-
-
