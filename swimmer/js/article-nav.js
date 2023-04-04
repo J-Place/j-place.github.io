@@ -4,8 +4,8 @@ if (mobile) {
 }
 
 function toggleMobileNav() {
-    const mobileNavContainer = document.querySelector('.article-nav');
-    const mobileNavButton = document.querySelector('article-nav-title');
+    // const mobileNavContainer = document.querySelector('.article-nav');
+    // const mobileNavButton = document.querySelector('article-nav-title');
     const mobileNavList = document.getElementById('navList');
     if (mobile && mobileNavList.classList.contains('show')) {
         mobileNavList.classList.remove('show');
