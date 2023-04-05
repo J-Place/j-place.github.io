@@ -34,8 +34,11 @@
     padding: 0 12.5px;
     width: 100%;
     z-index: 9999;
-    transition: opacity .5s;
+    transition: opacity .25s;
     opacity: 0;
+}
+.article-nav:not(.mobile) {
+    height: 800px;
 }
 #navList {
     overflow-y: scroll;
@@ -46,8 +49,8 @@
     font-weight: normal;
     background-color: #CCC;
     color: #FFF;
-    margin: 0 -5px;
-    padding: .5rem 3rem .5rem 1rem;
+    margin: 0 auto;
+    padding: 1rem 3rem .5rem 2rem;
  }
  .article-nav ul {
     list-style: none;
@@ -61,7 +64,7 @@
     .article-nav {
         position: fixed;
         top: 10px;    
-        padding: 8rem 3rem 3rem 3rem;
+        padding: 6rem 3rem 3rem 3rem;
         width: 350px;
     }
     .article-nav h3.article-nav-title {
@@ -106,15 +109,15 @@
  .article-nav ul li.H2link {
     font-size: 2.0125rem;
     margin: 1rem auto;
-    padding: 1rem 0;
+    padding: 0.5rem 0;
  }
  .article-nav ul li.H2link a {
     margin: 2rem auto 1rem;
     padding: 2rem 0;
  }
- .article-nav ul li.H2link:first-of-type {
-    margin-top: 1rem;
- }
+ /* .article-nav ul li.H2link:first-of-type {
+    margin-top: 0.5rem;
+ } */
  .article-nav ul li.H2link.active {
     font-size: 1.9rem;
     line-height: 130%;
@@ -140,18 +143,23 @@
  @media (min-width:992px) {
     .row.icon-nav {
         display: flex;
+        padding-top: 3rem;
     }
     .article-nav ul li.H2link {
         font-size: 1.8rem;
+        line-height: 2rem;
         margin: 0 auto;
+        padding: 1rem 0;
     }
     .article-nav ul li.H2link + .H3link {
         margin-top: 0;
     }
     .article-nav ul li.H2link.active {
         font-size: 1.65rem;
-        line-height: 140%;
+        line-height: 2rem;
         letter-spacing: .2px;
+        margin: 0 auto;
+        padding: 1rem 0;
     }
      .article-nav .article-nav-title::before {
         content: "";
@@ -171,12 +179,12 @@
     }
 }
 .article-nav.sticky-start {
-    transition: opacity .5s;
+    transition: opacity .25s;
     opacity: 1;
     position: fixed;
 }
 .sticky-end {
-    transition: opacity .5s;
+    transition: opacity .25s;
     opacity: 0;
 }
 
@@ -350,9 +358,10 @@ font-size: 2.0rem;
 .article-body,
 .article-nav {
     margin: 0 auto !important;
-    width: 100%;
-    left: 0;
-    right:0;
+    width: calc(100% + 30px);
+    left: -15px;
+    right: -15px;
+    /* padding-left: 30px; */
 }
 .article-body div + div .html-container {
     top: 4rem !important;
