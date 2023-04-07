@@ -1,19 +1,23 @@
+
 document.addEventListener("DOMContentLoaded", function () {
 
-    const stickyAd = document.querySelector('.sticky-ad'); // stickyAd.parentElement.getBoundingClientRect().top;
+    const stickyAd = document.querySelector('.ad__space'); // stickyAd.parentElement.getBoundingClientRect().top;
     const stickyAdTop = stickyAd.parentElement.offsetTop;
-    const stickyAds = document.querySelectorAll('.sticky-ad');
+    const stickyAds = document.querySelectorAll('.ad__space');
+    let stickyAdHeight = 0;
 
     function setAdTop() {
         for (let i = 0; i < stickyAds.length; i++) {
-            stickyAds[i].style.top = stickyAdTop + 'px';
+            if (window.scrollY < stickyAdTop) {
+                stickyAds[i].style.top = stickyAdTop + 'px';
+            }
         }
     }
     setAdTop();
 
     const footer = document.querySelector('footer');
     const footerTop = footer.offsetTop;
-    const adHeight = stickyAd.clientHeight + 200;
+    
     const viewXS = window.matchMedia("screen and (max-width:575px)").matches;
     const viewSM = window.matchMedia("screen and (min-width:576px)").matches;
     const viewMD = window.matchMedia("screen and (min-width:768px)").matches;
@@ -37,16 +41,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function handleAdDisplay() {
         var mobile = window.matchMedia("screen and (max-width:991px)").matches; // window.innerWidth < 992;
-        if (mobile) {
-            document.querySelector('body').classList.add('mobile');
-            for (let i = 0; i < stickyAds.length; i++) {
-                stickyAds[i].style.display = 'none';
-            }
-        } else if (!mobile && window.scrollY < footerTop - adHeight) {
+        if (!mobile && window.scrollY < footerTop - stickyAdHeight) {
             for (let i = 0; i < stickyAds.length; i++) {
                 stickyAds[i].style.display = 'block';
             }
-        } else if (!mobile && window.scrollY >= footerTop - adHeight) {
+        }
+        if (!mobile && window.scrollY >= footerTop - stickyAdHeight) {
             for (let i = 0; i < stickyAds.length; i++) {
                 stickyAds[i].style.display = 'none';
             }
@@ -55,7 +55,6 @@ document.addEventListener("DOMContentLoaded", function () {
     handleAdDisplay();
 
     function handleAdPosition() {
-        var stickyAds = document.querySelectorAll('.sticky-ad');
         var scrollTop = window.pageYOffset; // window.scrollTop;
         if (scrollTop === 0) {
             console.log("At the top ...");
@@ -69,6 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
     }
+    // handleAdPosition();
 
     function scroll() {
         handleAdDisplay();
@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
         handleAdDisplay();
         setAdTop();
     }
-    
+
     window.addEventListener('scroll', scroll);
     window.addEventListener('resize', resize);
 });
