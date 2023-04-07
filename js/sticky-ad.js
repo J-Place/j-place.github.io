@@ -1,10 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     const stickyAd = document.querySelector('.sticky-ad');
+    // const stickyAdTop = stickyAd.parentElement.getBoundingClientRect().top;
+    const stickyAdTop = stickyAd.parentElement.offsetTop;
+    // const stickyScrollTop = stickyAd.parentElement.scrollTop;
     const stickyAds = document.querySelectorAll('.sticky-ad');
-    const stickyAdTop = stickyAd.parentElement.offsetTop || stickyAd.parentElement.getBoundingClientRect().top;
 
-    // Position ads on page load
     function setAdTop() {
         for (let i = 0; i < stickyAds.length; i++) {
             stickyAds[i].style.top = stickyAdTop + 'px';
@@ -14,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const footer = document.querySelector('footer');
     const footerTop = footer.offsetTop;
+    const adHeight = stickyAd.clientHeight + 200;
 
     const viewXS = window.matchMedia("screen and (max-width:575px)").matches;
     const viewSM = window.matchMedia("screen and (min-width:576px)").matches;
@@ -27,28 +29,11 @@ document.addEventListener("DOMContentLoaded", function () {
     } else if (viewSM) {
         stickyAdHeight = 255;
     } else if (viewMD) {
-        stickyAdHeight = 255;
+        stickyAdHeight = 315;
     } else if (viewLG) {
         stickyAdHeight = 315;
     } else if (viewXL) {
         stickyAdHeight = 315;
-    } else if (viewXXL) {
-        stickyAdHeight = 315;
-    }
-
-    console.log(stickyAdTop);
-
-    function handleAdPosition() {
-        var stickyAds = document.querySelectorAll('.sticky-ad');
-        var scrollTop = window.pageYOffset || window.scrollTop;
-        if (scrollTop = 0) {
-            stickyAds[i].style.top = stickyAdTop + 'px';
-        } else if (scrollTop <= stickyAdTop) {
-            console.log("Start moving ads");
-            for (let i = 0; i < stickyAds.length; i++) {
-                stickyAds[i].style.top = stickyAdTop - window.pageYOffset + 'px';
-            }
-        }
     }
 
     function handleAdDisplay() {
@@ -59,13 +44,31 @@ document.addEventListener("DOMContentLoaded", function () {
             for (let i = 0; i < stickyAds.length; i++) {
                 stickyAds[i].style.display = 'none';
             }
-        } else if (!mobile && window.scrollY < footerTop - stickyAdHeight) {
+        } else if (!mobile && window.scrollY < footerTop - adHeight) {
             for (let i = 0; i < stickyAds.length; i++) {
                 stickyAds[i].style.display = 'block';
             }
-        } else if (!mobile && window.scrollY >= footerTop - stickyAdHeight) {
+        } else if (!mobile && window.scrollY >= footerTop - adHeight) {
             for (let i = 0; i < stickyAds.length; i++) {
                 stickyAds[i].style.display = 'none';
+            }
+        }
+    }
+    handleAdDisplay();
+
+    function handleAdPosition() {
+        var stickyAds = document.querySelectorAll('.sticky-ad');
+        var scrollTop = window.pageYOffset;
+        // var scrollTop = window.scrollTop;
+        if (scrollTop === 0) {
+            console.log("At the top ...");
+            for (let i = 0; i < stickyAds.length; i++) {
+                stickyAds[i].style.top = stickyAdTop + 'px';
+            }            
+        }
+        if (scrollTop <= stickyAdTop) {
+            for (let i = 0; i < stickyAds.length; i++) {
+                stickyAds[i].style.top = stickyAdTop - window.pageYOffset + 'px';
             }
         }
     }
@@ -80,7 +83,6 @@ document.addEventListener("DOMContentLoaded", function () {
         setAdTop();
     }
 
-    handleAdDisplay();
     window.addEventListener('scroll', scroll);
     window.addEventListener('resize', resize);
 
