@@ -36,6 +36,8 @@ document.addEventListener("DOMContentLoaded", function () {
         stickyAdHeight = 315;
     }
 
+    console.log(stickyAdTop);
+    
     function handleAdPosition() {
         var stickyAds = document.querySelectorAll('.sticky-ad');
         var scrollTop = window.pageYOffset || window.scrollTop;
