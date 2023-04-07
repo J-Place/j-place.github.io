@@ -1,9 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    const stickyAd = document.querySelector('.sticky-ad');
-    // const stickyAdTop = stickyAd.parentElement.getBoundingClientRect().top;
+    const stickyAd = document.querySelector('.sticky-ad'); // stickyAd.parentElement.getBoundingClientRect().top;
     const stickyAdTop = stickyAd.parentElement.offsetTop;
-    // const stickyScrollTop = stickyAd.parentElement.scrollTop;
     const stickyAds = document.querySelectorAll('.sticky-ad');
 
     function setAdTop() {
@@ -16,7 +14,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const footer = document.querySelector('footer');
     const footerTop = footer.offsetTop;
     const adHeight = stickyAd.clientHeight + 200;
-
     const viewXS = window.matchMedia("screen and (max-width:575px)").matches;
     const viewSM = window.matchMedia("screen and (min-width:576px)").matches;
     const viewMD = window.matchMedia("screen and (min-width:768px)").matches;
@@ -34,11 +31,12 @@ document.addEventListener("DOMContentLoaded", function () {
         stickyAdHeight = 315;
     } else if (viewXL) {
         stickyAdHeight = 315;
+    } else if (viewXXL) {
+        stickyAdHeight = 315;
     }
 
     function handleAdDisplay() {
-        var mobile = window.matchMedia("screen and (max-width:991px)").matches;
-        // var mobile = window.innerWidth < 992;
+        var mobile = window.matchMedia("screen and (max-width:991px)").matches; // window.innerWidth < 992;
         if (mobile) {
             document.querySelector('body').classList.add('mobile');
             for (let i = 0; i < stickyAds.length; i++) {
@@ -58,8 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function handleAdPosition() {
         var stickyAds = document.querySelectorAll('.sticky-ad');
-        var scrollTop = window.pageYOffset;
-        // var scrollTop = window.scrollTop;
+        var scrollTop = window.pageYOffset; // window.scrollTop;
         if (scrollTop === 0) {
             console.log("At the top ...");
             for (let i = 0; i < stickyAds.length; i++) {
@@ -82,8 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
         handleAdDisplay();
         setAdTop();
     }
-
+    
     window.addEventListener('scroll', scroll);
     window.addEventListener('resize', resize);
-
 });
