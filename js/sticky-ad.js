@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (scrollTop = 0) {
             stickyAds[i].style.top = stickyAdTop + 'px';
         } else if (scrollTop <= stickyAdTop) {
+            console.log("Start moving ads");
             for (let i = 0; i < stickyAds.length; i++) {
                 stickyAds[i].style.top = stickyAdTop - window.pageYOffset + 'px';
             }
