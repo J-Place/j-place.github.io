@@ -27,10 +27,12 @@ document.addEventListener("DOMContentLoaded", function () {
     } else if (viewSM) {
         stickyAdHeight = 255;
     } else if (viewMD) {
-        stickyAdHeight = 315;
+        stickyAdHeight = 255;
     } else if (viewLG) {
         stickyAdHeight = 315;
     } else if (viewXL) {
+        stickyAdHeight = 315;
+    } else if (viewXXL) {
         stickyAdHeight = 315;
     }
 
@@ -50,18 +52,18 @@ document.addEventListener("DOMContentLoaded", function () {
         var mobile = window.matchMedia("screen and (max-width:991px)").matches;
         // var mobile = window.innerWidth < 992;
         if (mobile) {
-            console.log("Mobile ...");
+            // console.log("Mobile ...");
             document.querySelector('body').classList.add('mobile');
             for (let i = 0; i < stickyAds.length; i++) {
                 stickyAds[i].style.display = 'none';
             }
         } else if (!mobile && window.scrollY < footerTop - stickyAdHeight) {
-            console.log("Above footer ...");
+            // console.log("Above footer ...");
             for (let i = 0; i < stickyAds.length; i++) {
                 stickyAds[i].style.display = 'block';
             }
         } else if (!mobile && window.scrollY >= footerTop - stickyAdHeight) {
-            console.log("Below footer ...");
+            // console.log("Below footer ...");
             for (let i = 0; i < stickyAds.length; i++) {
                 stickyAds[i].style.display = 'none';
             }
