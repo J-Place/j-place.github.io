@@ -1,51 +1,36 @@
 .sticky-ad {
     display: none;
-    margin: 0;
     position: fixed;
+    top: 10px;
+    margin: 0;
+    padding: 5rem 0 0;
 }
 .sticky-ad-left {
-    left: 0;
+    left: 15px;
+    text-align: left;
 }
 .sticky-ad-right {
-    right: 0;
+    right: 15px;
+    text-align: right;
 }
+
 @media (min-width: 992px) {
     .sticky-ad {
-        display: block;
-    }
-}
-/* .sticky-ad {
-    display: none;
-    opacity: 0;
-} */
-/* .sticky-ad:not(.sticky-start) {
-    position: relative;
-} */
-@media (min-width: 992px) {
-    .sticky-ad {
-        display: block;
         position: fixed;
-        top: 10px;    
-        padding: 3rem;
     }
-    /* .sticky-ad.sticky-start {
-        width: 25%;
-        margin: 0 -15.3px;
-    } */
     .sticky-ad-left {
-        text-align: left;
-        /* left: 50px; */
-        /* text-align: center; */
+        left: 45px;
     }
     .sticky-ad-right {
-        /* right: 50px; */
-        text-align: right;
-        /* text-align: center; */
+        right: 45px;
     }
+
+    /* Temporary ad sizing — will be handled dynamically by component */
     .sticky-ad img {
         width: 150px;
         height: auto;
     }
+
     /* .sticky-ad:not(.sticky-start).sticky-ad-left {
         left: -30px !important;
     }
@@ -53,23 +38,29 @@
         left: 25px !important;
     } */
 }
+
 @media (min-width: 1200px) {
-    .sticky-ad {
-        position: fixed;
-        /* top: 600px; */
-        padding: 5rem 0;
-    }
     .sticky-ad-left {
-        left: 100px;
+        left: 50px;
     }
     .sticky-ad-right {
-        right: 100px;
+        right: 50px;
     }
+
+    /* Temporary ad sizing — will be handled dynamically by component */
     .sticky-ad img {
         width: 210px;
         height: auto;
     }
 }
-@media (min-width: 1400px) {
 
+@media (min-width: 1400px) {
+    .sticky-ad-left {
+        /* left: 320px; */
+        left: 100px;
+    }
+    .sticky-ad-right {
+        /* right: 320px; */
+        right: 100px;
+    }
 }

@@ -1,83 +1,93 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    const stickyAd = document.querySelector('.ad__space'); // stickyAd.parentElement.getBoundingClientRect().top;
-    const stickyAdTop = stickyAd.parentElement.offsetTop;
+    let stickyHeight = 0;    
+
+    const mobile = window.matchMedia("screen and (max-width:991px)").matches; // window.innerWidth < 992;
+    const viewSm = window.matchMedia("screen and (min-width:576px)").matches;
+    const viewMd = window.matchMedia("screen and (min-width:768px)").matches;
+    const viewLg = window.matchMedia("screen and (min-width:992px)").matches;
+    const viewXl = window.matchMedia("screen and (min-width:1200px)").matches;
+    const viewXxl = window.matchMedia("screen and (min-width:1400px)").matches;
+
+    // Sets height for known ad sizes
+    if (viewSm) {
+        stickyHeight = 255;
+    } else if (viewMd) {
+        stickyHeight = 315;
+    } else if (viewLg) {
+        stickyHeight = 315;
+    } else if (viewXl) {
+        stickyHeight = 315;
+    } else if (viewXxl) {
+        stickyHeight = 315;
+    }
+
+    const stickyAd = document.querySelector('.ad__space'); // JP: create a new class to toggle via rendering parameter, this is temp for testing in QA
     const stickyAds = document.querySelectorAll('.ad__space');
-    let stickyAdHeight = 0;
+    const mainContent = document.querySelector('header + .section');
+    // const mainContentTop = mainContent.getBoundingClientRect().top;
+    // const mainContentHeight = mainContent.getBoundingClientRect().height;
+    const mainContentHeight = mainContent.scrollHeight;
+    const stickyTop = stickyAd.parentElement.offsetTop;
+    const stickyBottom = stickyHeight*4 + mainContentHeight;
+    const footer = document.querySelector('footer');
 
     function setAdTop() {
         for (let i = 0; i < stickyAds.length; i++) {
-            if (window.scrollY < stickyAdTop) {
-                stickyAds[i].style.top = stickyAdTop + 'px';
-            }
+            // if (window.scrollY < stickyTop) {
+            //     stickyAds[i].style.top = stickyTop + 'px';
+            // }
+            stickyAd.style.top = stickyTop + 'px';
         }
     }
     setAdTop();
 
-    const footer = document.querySelector('footer');
-    const footerTop = footer.offsetTop;
-    
-    const viewXS = window.matchMedia("screen and (max-width:575px)").matches;
-    const viewSM = window.matchMedia("screen and (min-width:576px)").matches;
-    const viewMD = window.matchMedia("screen and (min-width:768px)").matches;
-    const viewLG = window.matchMedia("screen and (min-width:992px)").matches;
-    const viewXL = window.matchMedia("screen and (min-width:1200px)").matches;
-    const viewXXL = window.matchMedia("screen and (min-width:1400px)").matches;
-
-    if (viewXS) {
-        stickyAdHeight = 255;
-    } else if (viewSM) {
-        stickyAdHeight = 255;
-    } else if (viewMD) {
-        stickyAdHeight = 315;
-    } else if (viewLG) {
-        stickyAdHeight = 315;
-    } else if (viewXL) {
-        stickyAdHeight = 315;
-    } else if (viewXXL) {
-        stickyAdHeight = 315;
-    }
-
-    function handleAdDisplay() {
-        var mobile = window.matchMedia("screen and (max-width:991px)").matches; // window.innerWidth < 992;
-        if (!mobile && window.scrollY < footerTop - stickyAdHeight) {
-            for (let i = 0; i < stickyAds.length; i++) {
-                stickyAds[i].style.display = 'block';
-            }
-        }
-        if (!mobile && window.scrollY >= footerTop - stickyAdHeight) {
-            for (let i = 0; i < stickyAds.length; i++) {
-                stickyAds[i].style.display = 'none';
-            }
-        }
-    }
-    handleAdDisplay();
-
     function handleAdPosition() {
         var scrollTop = window.pageYOffset; // window.scrollTop;
-        if (scrollTop === 0) {
-            console.log("At the top ...");
-            for (let i = 0; i < stickyAds.length; i++) {
-                stickyAds[i].style.top = stickyAdTop + 'px';
-            }            
+        if (!mobile && scrollTop === 0) {
+            // console.log("At the top ...");
+            // for (let i = 0; i < stickyAds.length; i++) {
+            //     stickyAds[i].style.display = 'block';
+            //     stickyAds[i].style.top = stickyTop + 'px';
+            // }
+            stickyAd.style.display = 'block';
+            stickyAd.style.top = stickyTop + 'px';
         }
-        if (scrollTop <= stickyAdTop) {
-            for (let i = 0; i < stickyAds.length; i++) {
-                stickyAds[i].style.top = stickyAdTop - window.pageYOffset + 'px';
-            }
+        if (!mobile && scrollTop <= stickyTop) {
+            // console.log("Scroll is above main content ...");
+            // for (let i = 0; i < stickyAds.length; i++) {
+            //     stickyAds[i].style.display = 'block';
+            //     stickyAds[i].style.top = stickyTop - window.pageYOffset + 'px';
+            // }
+            stickyAd.style.display = 'block';
+            stickyAd.style.top = stickyTop - window.pageYOffset + 'px';
+    }
+        if (!mobile && scrollTop > stickyTop) {
+            // console.log("Scroll is in main content ...");
+            // for (let i = 0; i < stickyAds.length; i++) {
+            //     stickyAds[i].style.display = 'block';
+            //     stickyAds[i].style.top = 10 + 'px';
+            // }
+            stickyAd.style.display = 'block';
+            stickyAd.style.top = 10 + 'px';
+    }
+        if (!mobile && scrollTop >= stickyBottom) {
+            // console.log("Scroll is below main content ...");
+            // for (let i = 0; i < stickyAds.length; i++) {
+            //     stickyAds[i].style.display = 'none';
+            // }
+            stickyAd.style.display = 'none';
         }
     }
-    // handleAdPosition();
+    handleAdPosition();
 
     function scroll() {
-        handleAdDisplay();
         handleAdPosition();
     }
 
     function resize() {
-        handleAdDisplay();
-        setAdTop();
+        handleAdPosition();
     }
 
     window.addEventListener('scroll', scroll);
