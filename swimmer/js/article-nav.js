@@ -10,10 +10,10 @@ function toggleMobileNav() {
         document.querySelector('.article-nav-title').classList.remove('open');
         document.querySelector('body').style.overflow = "scroll";
     } else if (mobile && !mobileNavList.classList.contains('show')) {
-        $(this).click();
         mobileNavList.classList.add('show');
         document.querySelector('.article-nav-title').classList.add('open');
         var mobileWindowHeight = window.screen.height;
+        mobileNavList.click();
         document.querySelector('body').style.overflow = "hidden";
     } else {
         return false
