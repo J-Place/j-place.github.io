@@ -13,7 +13,6 @@ function toggleMobileNav() {
         mobileNavList.classList.add('show');
         document.querySelector('.article-nav-title').classList.add('open');
         var mobileWindowHeight = window.screen.height;
-        mobileNavList.click();
         document.querySelector('body').style.overflow = "hidden";
     } else {
         return false
