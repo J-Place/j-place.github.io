@@ -464,7 +464,7 @@
                                           </div>
                                           <div class="row" data-reactid="19">
                                              <div class="col-xs-12 col-lg-4" data-reactid="24">
-                                                <div class="form-group has-feedback event-info__start-date--dropdown-start-date-container" data-reactid="23">
+                                                <div class="form-group has-feedback event-info__start-date--dropdown-start-date-container required" data-reactid="23">
                                                 
                                                    <label for="">Start Date</label>
                                                    <div class="SingleDatePicker SingleDatePicker_1" data-reactid="25">
@@ -483,7 +483,7 @@
                                                 </div>
                                              </div>
                                              <div class="col-xs-12 col-lg-4" data-reactid="36">
-                                                <div class="form-group has-feedback event-info__start-date--dropdown-end-date-container" data-reactid="35">
+                                                <div class="form-group has-feedback event-info__start-date--dropdown-end-date-container required" data-reactid="35">
                                                 
                                                    <label for="">End Date</label>
                                                    <div class="SingleDatePicker SingleDatePicker_1" data-reactid="37">
@@ -555,7 +555,7 @@
                                           </div>
                                           <div class="row">
                                              <div class="col-xs-12 col-sm-6 col-md-5">
-                                                   <div class="input-group event-info-name">
+                                                   <div class="input-group event-info-name required">
                                                       <label for="eventInfoName" class="label-large">
                                                          Event Name
                                                          <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="If it is an annual event, use the same name each year. Make sure you have selected the event year as well. Your application will not be approved if you use the word Olympic and/or Paralympic."></span>
@@ -570,7 +570,7 @@
                                              <div class="col-xs-12 col-sm-8">
                                                    <div class="input-group event-info-details required">
                                                       <label for="eventInfoDetails" class="label-large">
-                                                         Event Details
+                                                         Event Description
                                                          <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="This will be displayed to the public and help sell someone on participating in the event. Be thorough and be sure to include…. Your application will not be approved if you use the word Olympic and/or Paralympic."></span>
                                                          <span class="caption"></span>
                                                       </label>
@@ -719,7 +719,7 @@
                                              <div class="form-group contact-info__event-director-type-form">
                                                 <div class="row">
                                                    <div class="col-xs-12">
-                                                      <div class="input-group-header radio-group-header">Event Director</div>
+                                                      <div class="input-group-header radio-group-header required">Event Director</div>
                                                       <!-- contact-info__event-director-current -->
                                                       <div class="input-group checkbox-group">
                                                          <label class="radio-label" for="contactTypeEventDirectorCurrent">
@@ -1203,9 +1203,12 @@
                                                 <div class="row">
                                                     <div class="col-sm-12 col-md-8">
                                                         <p class="add-new__label">Or Add a New Location</p>
-                                                        <div>
+                                                        <!-- <div>
                                                             <input class="btn btn-small btn-outline" id="addNewLocation" name="AddNewLocation" type="button" value="Add New" onclick="showAddNewLocationInputs()">
-                                                        </div>
+                                                        </div> -->
+                                                        <button class="btn btn-small btn-outline" id="addLocationBtn" onclick="showLocationInputs()">
+                                                            <span><i class="fa fa-plus"></i></span>Add A Location
+                                                         </button>
                                                     </div>
                                                 </div>
 
@@ -1288,67 +1291,117 @@
 
 
 
-                                            <div class="form-group contact-info__event-director--add-new-container add-new-inputs" style="display: none;">
-                                                <div class="row">
-                                                   <div class="col-sm-6">
-                                                      <div class="input-group contact-first-name required">
-                                                            <label for="newEventDirectorFirstName">First Name</label>
-                                                            <input type="text" maxlength="30" onblur="handleInputBlur(this)" class="form-control" name="NewEventDirectorFirstName" id="newEventDirectorFirstName" value="">
-                                                            <span class="help-block help-block--NewEventDirectorFirstName">Please enter the event director's first name.</span>
+                                            <div class="form-group">
+                                                <div class="list locations edit-list">
+                                                   <div class="list__header locations-list__header" style="display: none;">
+                                                      <div class="list__controls locations-list__controls" style="display: inline-block;">
+                                                            <button class="list__controls--settings" id="listLocationsSettings" onclick="editLocationList()"></button>
+                                                            <button class="btn btn-link" id="editLocationsList" onclick="editLocationList()">Edit</button>
+                                                            <button class="btn btn-link" id="saveLocationsList" onclick="saveLocationList()">Done Editing</button>
+                                                            <button class="btn btn-link" id="cancelLocationsList" onclick="cancelLocationList()">Cancel</button>
                                                       </div>
                                                    </div>
-                                                   <div class="col-sm-6">
-                                                      <div class="input-group contact-last-name required">
-                                                            <label for="newEventDirectorLastName" class="">Last Name</label>
-                                                            <input type="text" maxlength="30" onblur="handleInputBlur(this)" class="form-control" name="NewEventDirectorLastName" id="newEventDirectorLastName" value="">
-                                                            <span class="help-block help-block--NewEventDirectorLastName">Please enter the event director's last name. </span>
+                                                   <div class="list__container">
+                                                      <div class="row">
+                                                         <div class="col-xs-12">
+                                                            <div class="list-item is-edit">
+                                                               <input type="hidden" class="location-id--value" value="">
+                                                               <input type="hidden" class="location-address--value" value="7125 Fruitville Road">
+                                                               <input type="hidden" class="location-city--value" value="Sarasota">
+                                                               <input type="hidden" class="location-state--value" value="FL">
+                                                               <input type="hidden" class="location-zip--value" value="34240">
+                                                               <input type="hidden" class="location-type--value" value="{B1E60FD8-E265-454F-9402-89CAC33B3B3F}">
+                                                               <input type="hidden" class="location-lng--value" value="-82.4271246">
+                                                               <input type="hidden" class="location-lat--value" value="27.3390516">
+                                                               <input type="hidden" class="location-isOpenWater--value" value="false">
+                                                               <div class="list__controls" style="display: inline-block;">
+                                                                  <button class="btn btn-link list-item__edit">Edit</button>
+                                                                  <button class="btn btn-link list-item__delete">Remove</button>
+                                                               </div>
+                                                               <p class="location-name text-bold">Sun Outdoors</p>
+                                                               <p class="location-address-street">7125 Fruitville Road | Sarasota, FL 34240</p>
+                                                               <span class="help-block">Venue or Pool missing</span>
+                                                               <button class="location-add-venue btn btn-small btn-outline" style="display: block;"><span><i class="fa fa-plus"></i></span>Add Pool</button>
+                                                               <div class="venue__list"></div>
+                                                            </div>
+                                                         </div>
                                                       </div>
-                                                   </div>
-                                                </div>
-                                                <div class="row">
-                                                   <div class="col-sm-12">
-                                                      <div class="input-group contact-primary-email required">
-                                                            <label for="newEventDirectorEmailPrimary">Primary Email Address<span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Enter the event director's primary email address."></span>
-                                                            </label>
-                                                            <input type="email" class="form-control" onblur="handleInputBlur(this)" name="NewEventDirectorEmailPrimary" id="newEventDirectorEmailPrimary" maxlength="50" value="">
-                                                            <span class="help-block help-block--NewEventDirectorEmailPrimary">Please enter the event director's primary email address.</span>
-                                                      </div>
-                                                      <div class="input-group contact-primary-phone required">
-                                                            <label for="newEventDirectorPhonePrimary">Primary Phone Number</label>
-                                                            <input type="text" class="form-control" onblur="handleInputBlur(this)" pattern="[0-9]{3}[-][0-9]{3}[-][0-9]{4}" name="NewEventDirectorPhonePrimary" id="newEventDirectorPhonePrimary" value="" maxlength="12">
-                                                            <span class="help-block help-block--NewEventDirectorPhonePrimary">Please enter the event director's primary phone number.</span>
-                                                      </div>
-                                                   </div>
-                                                </div>
-                                                <div class="row">
-                                                   <div class="col-sm-7">
-                                                      <div class="input-group contact-city required">
-                                                         <label for="newEventDirectorCity">City</label>
-                                                         <input type="text" maxlength="30" onblur="handleInputBlur(this)" class="form-control" name="NewEventDirectorCity" id="newEventDirectorCity" value="">
-                                                         <span class="help-block help-block--NewEventDirectorCity">Please enter the event director's city.</span>
-                                                      </div>
-                                                   </div>
-                                                   <div class="col-sm-5">
-                                                      <div class="input-group contact-state required">
-                                                            <label for="newEventDirectorState" class="">State</label>
-                                                            <select name="newEventDirectorState" class="form-control" id="newEventDirectorState" onchange="validateField(this)">
-                                                               <option value="">Select State</option>
-                                                               <option value="AL">Alabama</option>
-                                                               <option value="AK">Alaska</option>
-                                                               <option value="AZ">Arizona</option>
-                                                            </select>
-                                                            <span class="help-block help-block--newEventDirectorState">Please select your event director's state.</span>
-                                                      </div>
-                                                   </div>
-                                                </div>
-                                                <div class="row">
-                                                   <div class="col-sm-5 col-md-6">
-                                                      <div class="form-group lookup person">
-                                                            <button class="btn btn-small" type="button" id="addEventDirectorBtn" onclick="handleAddEventDirectorButton()">Accept</button>
-                                                            <!-- <button class="btn btn-small" type="button" id="addEventDirectorBtn">Accept</button> -->
-                                                            <button class="btn btn-small btn-outline" type="button" id="cancelAddEventDirectorBtn" onclick="handleCancelAddEventDirector()">Cancel</button>
-                                                            <!-- <button class="btn btn-small btn-outline" type="button" id="cancelAddEventDirectorBtn">Cancel</button> -->
-                                                      </div>
+                                                      <div class="row">
+                                                         <div class="col-sm-12 col-md-6">
+                                                             <div class="list-venue-form">
+                                                                 <input type="hidden" value="false" id="venueIsOpenWater">
+                                                                 <div class="input-group required">
+                                                                     <label for="venueName">Pool or Open Water Venue Name</label>
+                                                                     <input type="text" class="form-control" name="venueName" id="venueName" maxlength="80">
+                                                                     <span class="help-block help-block--venueName">Please enter a venue name</span>
+                                                                 </div>
+                                                                 <div class="input-group input-group--poolType">
+                                                                     <label for="poolType">Body of Water</label>
+                                                                     <select name="poolType" class="form-control" id="poolType" required=""><option value="">Pool Types</option>
+                                                                        <option value="{BC937DC4-82A6-4DEE-94C8-5CD97856D9D3}">Indoor</option>
+                                                                        <option value="{C55F881B-CA54-4630-90D3-562EC8BDCB77}">Outdoor</option>
+                                                                     </select>
+                                                                     <span class="help-block help-block--poolType">Please enter a pool type</span>
+                                                                 </div>
+                                                                 <div class="input-group required input-group--openWaterType fade">
+                                                                     <label for="openWaterType">Body of Water</label>
+                                                                     <select name="openWaterType" class="form-control" id="openWaterType" required=""><option value="">Open Water Types</option>
+                                                                        <option value="{596ECA16-B1B8-4823-BB43-A50E703F4FA8}">Lake</option>
+                                                                        <option value="{DEDF123E-A83F-454C-8044-A661705991EA}">Ocean</option>
+                                                                        <option value="{1B26CC36-47B8-4E40-A51F-E5684B82DBB1}">Reservoir</option>
+                                                                        <option value="{0F05A72D-DAB4-4836-A282-C70AFD2407E7}">River</option>
+                                                                     </select>
+                                                                     <span class="help-block help-block--openWaterType">Please enter a type</span>
+                                                                 </div>
+                                                                 <div class="input-group checkbox-group input-group--bulkhead">
+                                                                     <label class="checkbox-label" for="bulkhead">
+                                                                         <div class="checkbox-container">
+                                                                             <input type="checkbox" name="bulkhead" id="bulkhead">
+                                                                             <span class="checkbox__placeholder"></span>
+                                                                         </div>
+                                                                         Bulkhead
+                                                                     </label>
+                                                                 </div>
+                                                                 <div class="input-group checkbox-group input-group--venueCableCourse fade">
+                                                                     <label class="checkbox-label" for="venueCableCourse">
+                                                                         <div class="checkbox-container">
+                                                                             <input type="checkbox" name="venueCableCourse" id="venueCableCourse" onchange="handleCableCourseChange(event)">
+                                                                             <span class="checkbox__placeholder"></span>
+                                                                         </div>
+                                                                         Cable Course
+                                                                     </label>
+                                                                 </div>
+                                                                 <div class="input-group list-venue-form__cable-course-form list-venue-form__cable-course-form--fade">
+                                                                     <div class="row">
+                                                                         <div class="col-xs-6">
+                                                                             <div class="input-group required">
+                                                                                 <label>Distance</label>
+                                                                                 <input class="form-control" type="number" id="venueCableCourseValue" name="venueCableCourseValue">
+                                                                                 <span class="help-block help-block--venueCableCourseValue">Please enter a distance</span>
+                                                                             </div>
+                                                                         </div>
+                                                                         <div class="col-xs-6">
+                                                                             <div class="input-group required">
+                                                                                 <label>Unit</label>
+                                                                                 <select name="venueCableCourseUnit" class="form-control" id="venueCableCourseUnit" required=""><option value="">Unit</option>
+                                                                                    <option value="{2BCA126B-F6CF-41A2-9258-6EAEB16F4DB2}">Kilometers</option>
+                                                                                    <option value="{6021E0B2-9CEE-4C12-8BD4-D68A4912ADC1}">Meters</option>
+                                                                                    <option value="{715DA5F7-495A-4CE1-89A4-B01969E447BC}">Miles</option>
+                                                                                    <option value="{554983F8-D93B-4555-8075-224A7F3CB9BB}">Yards</option>
+                                                                                 </select>
+                                                                                 <span class="help-block help-block--venueCableCourseUnit">Please enter a unit</span>
+                                                                             </div>
+                                                                         </div>
+                                                                     </div>
+                                                                 </div>
+                                                                 <div class="input-group">
+                                                                     <label>After you've entered your pool information, click the button below to save and continue</label>
+                                                                     <button class="btn btn-small" id="saveVenue" onclick="handleSavePool()">Confirm</button>
+                                                                     <button class="btn btn-small btn-outline" id="cancelSaveVenue" onclick="handleCancelVenue()">Cancel</button>
+                                                                 </div>
+                                                             </div>
+                                                         </div>
+                                                     </div>
                                                    </div>
                                                 </div>
                                              </div>
@@ -1491,7 +1544,7 @@
                                  <form id="form-accept-submit">
                                     <div class="section section-accept-submit" id="accept-submit">
                                        <h3 class="section__header" data-target="#accept-submit__content" data-toggle="collapse" aria-expanded="false" aria-controls="accept-submit__content">
-                                          <span class="section__number">6</span>Accept Terms and Submit
+                                          <span class="section__number">6</span>Accept Terms
                                        </h3>
                                        <span class="section__edit">
                                           <button class="section__edit-btn section__edit-btn--name" type="button" onclick=""></button>
@@ -1499,7 +1552,6 @@
                                        <div class="section__content collapse in" id="accept-submit__content" data-parent="#accordion">
                                              <div class="row">
                                                 <div class="col-xs-12">
-
                                                    <div class="card liability" data-reactid="1">
                                                       <!-- <h3 class="liability___form-header text-primary m-b-30" data-reactid="2">Liability Waiver</h3> -->
                                                       <div class="html-container" data-reactid="3">
@@ -1539,7 +1591,6 @@
                                                             </p>
                                                          </div>
                                                       </div>
-
                                                       <form class="form-liability form-horizontal" data-reactid="5">
                                                          <div class="modal-container" style="transition:all 250ms ease-in-out;transform:translateY(-10px);opacity:0;z-index:-1;" data-reactid="6">
                                                             <div class="modal" data-reactid="7">
@@ -1573,20 +1624,7 @@
                                                             </div>
                                                          </div>
                                                       </form>
-                                                </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
+                                                   </div>
                                                 </div>
                                              </div>
                                              <div class="modal fade" id="modalID" tabindex="-1" role="dialog">
@@ -1604,7 +1642,7 @@
                                              </div>
                                              <div class="row">
                                                    <div class="section__controls">
-                                                      <button class="btn save-section" id="buttonId" type="button" onclick="">Submit</button>
+                                                      <button class="btn save-section" id="buttonId" type="button" onclick="">Save & Continue</button>
                                                    </div>
                                              </div>
                                           </div>
@@ -1612,6 +1650,158 @@
                                        </div>
                                     </div>
                                  </form>
+
+
+
+
+                                 <form action="">
+                                    <div class="section section-payment" id="club-payment">
+                                       <h3 class="section__header">
+                                          Finish &amp; Pay
+                                       </h3>
+                                       <div class="row">
+                                          <div class="col-sm-10">
+                                             <p>If you’re finished entering your event information please enter your payment information below. You can log in to the Event Dashboard at any time to update your event details.</p>
+                                          </div>
+                                       </div>
+                                       <span class="section__edit"><button class="section__edit-btn" onclick="editPayment()"></button></span>
+                                       <div class="section__content" id="club-payment__content">
+                                          <div class="card payment-info clearfix">
+                                             <input type="hidden" name="clientKey" value="5yAZk3Hes8Xs6dLrf6JEcw6u6q4CgVK88Kt9Z5S47u3VTwzu545VGAMzz7P3PQqp">
+                                             <input type="hidden" name="loginId" value="3XTk4y26">
+                                             <input type="hidden" id="clubItemId" name="clubItemId">
+                                             <input type="hidden" name="dataDesc" value="">
+                                             <input type="hidden" name="dataValue" value="">
+                                             <input type="hidden" name="billingAmount">
+                                             <input type="hidden" name="isWog" value="false">
+                                             <input type="hidden" name="missingLmsc" value="Please select your LMSC to calculate pricing">
+                                             <div class="row">
+                                                   <div class="col-xs-12">
+                                                      <div class="payment-info__information form-horizontal">
+                                                         <div class="form-group">
+                                                               <div class="col-xs-12">
+                                                                  <label class="control-label payment-info__price-label">USMS Event Sanction Fee:</label>
+                                                                  <p class="form-control-static payment-info__price section-payment__usms-cost">$0.00</p>
+                                                               </div>
+                                                         </div>
+                                                         
+                                                      </div>
+                                                   </div>
+                                             </div>
+                                             <div class="row">
+                                                   <div class="col-xs-12">
+                                                      <div class="form-group card-name required">
+                                                         <div class="row">
+                                                               <label class="col-xs-12">Cardholder Name</label>
+                                                               <div class="col-xs-12">
+                                                                  <input type="text" onblur="handleInputBlur(this)" class="form-control" id="cardName" name="cardName">
+                                                                  <span class="help-block help-block--cardName">Card holder name is required</span>
+                                                               </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                             </div>
+                                             <div class="row">
+                                                   <div class="col-xs-12 col-sm-7">
+                                                      <div class="form-group required">
+                                                         <div class="row">
+                                                               <label class="col-xs-12">Credit Card Number</label>
+                                                               <div class="col-xs-12">
+                                                                  <input type="text" class="form-control" onblur="handleInputBlur(this)" id="cardNumber" name="cardNumber">
+                                                                  <span class="help-block help-block--cardNumber">Card number is required</span>
+                                                               </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                   <div class="col-xs-5 col-sm-2">
+                                                      <div class="form-group required">
+                                                         <div class="row">
+                                                               <label class="col-xs-12">CVV</label>
+                                                               <div class="col-xs-12">
+                                                                  <input type="text" class="form-control" onblur="handleInputBlur(this)" id="cardCode" name="cardCode">
+                                                                  <span class="help-block help-block--cardCode">Card CVV is required</span>
+                                                               </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                                   <div class="col-xs-7 col-sm-3">
+                                                      <div class="form-group required">
+                                                         <div class="row">
+                                                               <label class="col-xs-12">Expiration</label>
+                                                               <div class="col-xs-12">
+                                                                  <input type="text" class="form-control" onblur="handleInputBlur(this)" id="expiration" pattern="\d{1,2}/\d{1,2}" name="expiration" maxlength="5">
+                                                                  <span class="help-block help-block--expiration">Invalid expiration date</span>
+                                                               </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                             </div>
+                                             <div class="row">
+                                                   <div class="col-xs-8 col-sm-3">
+                                                      <div class="form-group card-zip required">
+                                                         <div class="row">
+                                                               <label class="control-label col-xs-12">Zip</label>
+                                                               <div class="col-xs-12">
+                                                                  <input type="text" class="form-control" onblur="handleInputBlur(this)" id="cardZip" name="cardZip">
+                                                                  <span class="help-block help-block--cardZip">Zip is required</span>
+                                                               </div>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                             </div>
+                                             <div class="row">
+                                                   <div class="col-xs-12">
+                                                      <div class="form-group agree-terms">
+                                                         <div class="input-group checkbox-group payment-agreement">
+                                                               <label class="checkbox-label" for="agreeTerms">
+                                                                  <div class="checkbox-container">
+                                                                     <input name="agree-terms" type="checkbox" id="agreeTerms" onchange="handleAgreementChange()">
+                                                                     <span class="checkbox__placeholder"></span>
+                                                                  </div>
+                                                                  I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming <a href="/content/privacy" target="_blank">Privacy Policy</a>. I understand that this membership is non-refundable, non-transferable, and expires on December 31, <span class="agree-terms--year">2023</span>.
+                                                               </label>
+                                                         </div>
+                                                         <span class="help-block help-block--agreeTerms">You need to agree to the terms in order to continue</span>
+                                                      </div>
+                                                   </div>
+                                             </div>
+                                             <div class="modal fade" id="modalPayment" tabindex="-1" role="dialog">
+                                                   <div class="modal-dialog" role="document">
+                                                      <div class="modal-content">
+                                                         <div class="modal-header">
+                                                               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                                               <h4 class="modal-title">Payment</h4>
+                                                         </div>
+                                                         <div class="modal-body">
+                                                               <p></p>
+                                                         </div>
+                                                         <div class="modal-footer">
+                                                               <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">Close</button>
+                                                         </div>
+                                                      </div>
+                                                   </div>
+                                             </div>
+                                             <p class="section-payment__contact-pending" style="display: none;">You cannot submit your club until your new club contact has approved their My USMS account.</p>
+                                             <button onclick="submitCreditCard(event)" id="submit-button" class="btn btn-pay btn-large text-uppercase pull-left membership-length__submit">
+                                                   Submit Payment
+                                             </button>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                               </div>

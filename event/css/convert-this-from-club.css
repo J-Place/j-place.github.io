@@ -257,12 +257,29 @@ input[disabled] + span {
   padding-left: 1rem;
 }
 
+.event-info__start-date--dropdown-start-date-container label,
+.event-info__start-date--dropdown-end-date-container label {
+  padding-left: 1rem;
+}
+
+.event-info__start-date--dropdown-start-date-container.required:before,
+.event-info__start-date--dropdown-end-date-container.required:before,
 .input-group.required label:before {
   content: "*";
-  font-size: 16px;
-  font-weight: normal;
+  font-size: 18px;
+  font-weight: 300;
   position: absolute;
   left: 0;
+}
+
+.event-info__start-date--dropdown-start-date-container.required:before,
+.event-info__start-date--dropdown-end-date-container.required:before {
+  top: -4px;
+}
+
+
+.club-edit .input-group-header.radio-group-header.required:before {
+  top: 20px;
 }
 
 .form-group-header {
@@ -1237,7 +1254,8 @@ input[disabled] + span {
 .club-edit .input-group-header.required:before {
   opacity: 100;
   content: "*";
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: 300;
   position: absolute;
   top: 0;
   left: 0;
@@ -1904,6 +1922,8 @@ input[disabled] + span {
 .club-edit .location-details.show .input-group.required label:before {
   opacity: 100;
   content: "*";
+  font-size: 18px;
+  font-weight: 300;
   position: absolute;
   top: 0;
   left: 0;
