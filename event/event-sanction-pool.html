@@ -1301,107 +1301,185 @@
                                                             <button class="btn btn-link" id="cancelLocationsList" onclick="cancelLocationList()">Cancel</button>
                                                       </div>
                                                    </div>
+
                                                    <div class="list__container">
-                                                      <div class="row">
-                                                         <div class="col-xs-12">
-                                                            <div class="list-item is-edit">
-                                                               <input type="hidden" class="location-id--value" value="">
-                                                               <input type="hidden" class="location-address--value" value="7125 Fruitville Road">
-                                                               <input type="hidden" class="location-city--value" value="Sarasota">
-                                                               <input type="hidden" class="location-state--value" value="FL">
-                                                               <input type="hidden" class="location-zip--value" value="34240">
-                                                               <input type="hidden" class="location-type--value" value="{B1E60FD8-E265-454F-9402-89CAC33B3B3F}">
-                                                               <input type="hidden" class="location-lng--value" value="-82.4271246">
-                                                               <input type="hidden" class="location-lat--value" value="27.3390516">
-                                                               <input type="hidden" class="location-isOpenWater--value" value="false">
-                                                               <div class="list__controls" style="display: inline-block;">
-                                                                  <button class="btn btn-link list-item__edit">Edit</button>
-                                                                  <button class="btn btn-link list-item__delete">Remove</button>
-                                                               </div>
-                                                               <p class="location-name text-bold">Sun Outdoors</p>
-                                                               <p class="location-address-street">7125 Fruitville Road | Sarasota, FL 34240</p>
-                                                               <span class="help-block">Venue or Pool missing</span>
-                                                               <button class="location-add-venue btn btn-small btn-outline" style="display: block;"><span><i class="fa fa-plus"></i></span>Add Pool</button>
-                                                               <div class="venue__list"></div>
+                                                   </div>
+
+                                                   <div class="row">
+                                                      <div class="col-xs-12">
+                                                         <div class="list-item is-edit">
+                                                            <input type="hidden" class="location-id--value" value="">
+                                                            <input type="hidden" class="location-address--value" value="7125 Fruitville Road">
+                                                            <input type="hidden" class="location-city--value" value="Sarasota">
+                                                            <input type="hidden" class="location-state--value" value="FL">
+                                                            <input type="hidden" class="location-zip--value" value="34240">
+                                                            <input type="hidden" class="location-type--value" value="{B1E60FD8-E265-454F-9402-89CAC33B3B3F}">
+                                                            <input type="hidden" class="location-lng--value" value="-82.4271246">
+                                                            <input type="hidden" class="location-lat--value" value="27.3390516">
+                                                            <input type="hidden" class="location-isOpenWater--value" value="false">
+                                                            <div class="list__controls" style="display: inline-block;">
+                                                               <button class="btn btn-link list-item__edit">Edit</button>
+                                                               <button class="btn btn-link list-item__delete">Remove</button>
                                                             </div>
+                                                            <p class="location-name text-bold">Sun Outdoors</p>
+                                                            <p class="location-address-street">7125 Fruitville Road | Sarasota, FL 34240</p>
+                                                            <span class="help-block">Venue or Pool missing</span>
                                                          </div>
                                                       </div>
-                                                      <div class="row">
-                                                         <div class="col-sm-12 col-md-6">
-                                                             <div class="list-venue-form">
-                                                                 <input type="hidden" value="false" id="venueIsOpenWater">
-                                                                 <div class="input-group required">
-                                                                     <label for="venueName">Pool or Open Water Venue Name</label>
-                                                                     <input type="text" class="form-control" name="venueName" id="venueName" maxlength="80">
-                                                                     <span class="help-block help-block--venueName">Please enter a venue name</span>
-                                                                 </div>
-                                                                 <div class="input-group input-group--poolType">
-                                                                     <label for="poolType">Body of Water</label>
-                                                                     <select name="poolType" class="form-control" id="poolType" required=""><option value="">Pool Types</option>
-                                                                        <option value="{BC937DC4-82A6-4DEE-94C8-5CD97856D9D3}">Indoor</option>
-                                                                        <option value="{C55F881B-CA54-4630-90D3-562EC8BDCB77}">Outdoor</option>
-                                                                     </select>
-                                                                     <span class="help-block help-block--poolType">Please enter a pool type</span>
-                                                                 </div>
-                                                                 <div class="input-group required input-group--openWaterType fade">
-                                                                     <label for="openWaterType">Body of Water</label>
-                                                                     <select name="openWaterType" class="form-control" id="openWaterType" required=""><option value="">Open Water Types</option>
-                                                                        <option value="{596ECA16-B1B8-4823-BB43-A50E703F4FA8}">Lake</option>
-                                                                        <option value="{DEDF123E-A83F-454C-8044-A661705991EA}">Ocean</option>
-                                                                        <option value="{1B26CC36-47B8-4E40-A51F-E5684B82DBB1}">Reservoir</option>
-                                                                        <option value="{0F05A72D-DAB4-4836-A282-C70AFD2407E7}">River</option>
-                                                                     </select>
-                                                                     <span class="help-block help-block--openWaterType">Please enter a type</span>
-                                                                 </div>
-                                                                 <div class="input-group checkbox-group input-group--bulkhead">
-                                                                     <label class="checkbox-label" for="bulkhead">
-                                                                         <div class="checkbox-container">
-                                                                             <input type="checkbox" name="bulkhead" id="bulkhead">
-                                                                             <span class="checkbox__placeholder"></span>
-                                                                         </div>
-                                                                         Bulkhead
-                                                                     </label>
-                                                                 </div>
-                                                                 <div class="input-group checkbox-group input-group--venueCableCourse fade">
-                                                                     <label class="checkbox-label" for="venueCableCourse">
-                                                                         <div class="checkbox-container">
-                                                                             <input type="checkbox" name="venueCableCourse" id="venueCableCourse" onchange="handleCableCourseChange(event)">
-                                                                             <span class="checkbox__placeholder"></span>
-                                                                         </div>
-                                                                         Cable Course
-                                                                     </label>
-                                                                 </div>
-                                                                 <div class="input-group list-venue-form__cable-course-form list-venue-form__cable-course-form--fade">
-                                                                     <div class="row">
-                                                                         <div class="col-xs-6">
-                                                                             <div class="input-group required">
-                                                                                 <label>Distance</label>
-                                                                                 <input class="form-control" type="number" id="venueCableCourseValue" name="venueCableCourseValue">
-                                                                                 <span class="help-block help-block--venueCableCourseValue">Please enter a distance</span>
-                                                                             </div>
-                                                                         </div>
-                                                                         <div class="col-xs-6">
-                                                                             <div class="input-group required">
-                                                                                 <label>Unit</label>
-                                                                                 <select name="venueCableCourseUnit" class="form-control" id="venueCableCourseUnit" required=""><option value="">Unit</option>
-                                                                                    <option value="{2BCA126B-F6CF-41A2-9258-6EAEB16F4DB2}">Kilometers</option>
-                                                                                    <option value="{6021E0B2-9CEE-4C12-8BD4-D68A4912ADC1}">Meters</option>
-                                                                                    <option value="{715DA5F7-495A-4CE1-89A4-B01969E447BC}">Miles</option>
-                                                                                    <option value="{554983F8-D93B-4555-8075-224A7F3CB9BB}">Yards</option>
-                                                                                 </select>
-                                                                                 <span class="help-block help-block--venueCableCourseUnit">Please enter a unit</span>
-                                                                             </div>
-                                                                         </div>
-                                                                     </div>
-                                                                 </div>
-                                                                 <div class="input-group">
-                                                                     <label>After you've entered your pool information, click the button below to save and continue</label>
-                                                                     <button class="btn btn-small" id="saveVenue" onclick="handleSavePool()">Confirm</button>
-                                                                     <button class="btn btn-small btn-outline" id="cancelSaveVenue" onclick="handleCancelVenue()">Cancel</button>
-                                                                 </div>
-                                                             </div>
-                                                         </div>
-                                                     </div>
+                                                   </div>
+
+
+
+
+
+
+                                                   <div class="row">
+                                                      <div class="col-sm-12 col-md-6">
+                                                         <button class="location-add-venue btn btn-small btn-outline" style="display: block;"><span><i class="fa fa-plus"></i></span>Add Pool</button>
+
+                                                          <div class="list-venue-form">
+                                                              <input type="hidden" value="false" id="venueIsOpenWater">
+                                                              <div class="input-group required">
+                                                                  <label for="venueName">Pool or Open Water Venue Name</label>
+                                                                  <input type="text" class="form-control" name="venueName" id="venueName" maxlength="80">
+                                                                  <span class="help-block help-block--venueName">Please enter a venue name</span>
+                                                              </div>
+                                                              <div class="input-group input-group--poolType">
+                                                                  <label for="poolType">Body of Water</label>
+                                                                  <select name="poolType" class="form-control" id="poolType" required=""><option value="">Pool Types</option>
+                                                                     <option value="{BC937DC4-82A6-4DEE-94C8-5CD97856D9D3}">Indoor</option>
+                                                                     <option value="{C55F881B-CA54-4630-90D3-562EC8BDCB77}">Outdoor</option>
+                                                                  </select>
+                                                                  <span class="help-block help-block--poolType">Please enter a pool type</span>
+                                                              </div>
+                                                              <div class="input-group required input-group--openWaterType fade">
+                                                                  <label for="openWaterType">Body of Water</label>
+                                                                  <select name="openWaterType" class="form-control" id="openWaterType" required=""><option value="">Open Water Types</option>
+                                                                     <option value="{596ECA16-B1B8-4823-BB43-A50E703F4FA8}">Lake</option>
+                                                                     <option value="{DEDF123E-A83F-454C-8044-A661705991EA}">Ocean</option>
+                                                                     <option value="{1B26CC36-47B8-4E40-A51F-E5684B82DBB1}">Reservoir</option>
+                                                                     <option value="{0F05A72D-DAB4-4836-A282-C70AFD2407E7}">River</option>
+                                                                  </select>
+                                                                  <span class="help-block help-block--openWaterType">Please enter a type</span>
+                                                              </div>
+                                                              <div class="input-group checkbox-group input-group--bulkhead">
+                                                                  <label class="checkbox-label" for="bulkhead">
+                                                                      <div class="checkbox-container">
+                                                                          <input type="checkbox" name="bulkhead" id="bulkhead">
+                                                                          <span class="checkbox__placeholder"></span>
+                                                                      </div>
+                                                                      Bulkhead
+                                                                  </label>
+                                                              </div>
+                                                              <div class="input-group checkbox-group input-group--venueCableCourse fade">
+                                                                  <label class="checkbox-label" for="venueCableCourse">
+                                                                      <div class="checkbox-container">
+                                                                          <input type="checkbox" name="venueCableCourse" id="venueCableCourse" onchange="handleCableCourseChange(event)">
+                                                                          <span class="checkbox__placeholder"></span>
+                                                                      </div>
+                                                                      Cable Course
+                                                                  </label>
+                                                              </div>
+                                                              <div class="input-group list-venue-form__cable-course-form list-venue-form__cable-course-form--fade">
+                                                                  <div class="row">
+                                                                      <div class="col-xs-6">
+                                                                          <div class="input-group required">
+                                                                              <label>Distance</label>
+                                                                              <input class="form-control" type="number" id="venueCableCourseValue" name="venueCableCourseValue">
+                                                                              <span class="help-block help-block--venueCableCourseValue">Please enter a distance</span>
+                                                                          </div>
+                                                                      </div>
+                                                                      <div class="col-xs-6">
+                                                                          <div class="input-group required">
+                                                                              <label>Unit</label>
+                                                                              <select name="venueCableCourseUnit" class="form-control" id="venueCableCourseUnit" required=""><option value="">Unit</option>
+                                                                                 <option value="{2BCA126B-F6CF-41A2-9258-6EAEB16F4DB2}">Kilometers</option>
+                                                                                 <option value="{6021E0B2-9CEE-4C12-8BD4-D68A4912ADC1}">Meters</option>
+                                                                                 <option value="{715DA5F7-495A-4CE1-89A4-B01969E447BC}">Miles</option>
+                                                                                 <option value="{554983F8-D93B-4555-8075-224A7F3CB9BB}">Yards</option>
+                                                                              </select>
+                                                                              <span class="help-block help-block--venueCableCourseUnit">Please enter a unit</span>
+                                                                          </div>
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                              <div class="input-group">
+                                                                  <label>After you've entered your pool information, click the button below to save and continue</label>
+                                                                  <button class="btn btn-small" id="saveVenue" onclick="handleSavePool()">Confirm</button>
+                                                                  <button class="btn btn-small btn-outline" id="cancelSaveVenue" onclick="handleCancelVenue()">Cancel</button>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+
+                                                     <div class="row">
+                                                      <div class="venue__list">
+                                                         <button class="location-add-configuration btn btn-small btn-outline"><span><i class="fa fa-plus"></i></span>Add Configuration</button>
+                                                      </div>
+
+                                                      <div class="col-xs-12 col-sm-6">
+                                                          <div class="input-group list-configuration-form">
+                                                              <div class="row">
+                                                                  <div class="col-xs-12">
+                                                                      <div class="input-group required">
+                                                                          <label>Configuration Name</label>
+                                                                          <input class="form-control" type="text" id="configurationName" name="configurationName" maxlength="80">
+                                                                          <span class="help-block help-block--configurationName">Please enter a configuration name</span>
+                                                                      </div>
+                                                                  </div>
+                                                                  <div class="col-xs-4">
+                                                                      <div class="input-group required">
+                                                                          <label>Lanes (1-50)</label>
+                                                                          <input class="form-control" type="number" min="1" max="50" id="configurationLanes" name="configurationLanes">
+                                                                          <span class="help-block help-block--configurationLanes">Please enter number of lanes</span>
+                                                                      </div>
+                                                                  </div>
+                                                                  <div class="col-xs-8">
+                                                                      <div class="input-group required">
+                                                                           <label>Length</label>
+                                                                           <select name="configurationLength" class="form-control" id="configurationLength" required=""><option value="">Length</option>
+                                                                              <option value="{FBC05006-2B5B-4766-8D20-2CDF2D3DF728}">25 Meters</option>
+                                                                              <option value="{62FF80B0-908C-4C71-9059-399BE1C72531}">25 Yards</option>
+                                                                              <option value="{D0AE60BD-5695-49FB-9FFD-51855B2AEC1C}">50 Meters</option>
+                                                                              <option value="{A6CD0D8F-C9E6-4432-AF6F-4162984EE7D2}">Other</option>
+                                                                           </select>
+                                                                           <span class="help-block help-block--configurationLength">You must select a length</span>
+                                                                      </div>
+                                                                  </div>
+                                                                  <div class="col-xs-12">
+                                                                      <div class="input-group required input-group--configurationLengthOther fade">
+                                                                          <label>Other Length</label>
+                                                                          <input class="form-control" type="text" maxlength="50" id="configurationOtherLength" name="configurationLengthOther">
+                                                                          <span class="help-block help-block--configurationLengthOther">Please enter length value</span>
+                                                                      </div>
+                                                                  </div>
+                                                                  <div class="input-group">
+                                                                      <label class="checkbox-label">
+                                                                          <div class="checkbox-container">
+                                                                              <input type="checkbox" name="usmsVerified" id="usmsVerified" onchange="handleUsmsVerifiedChange(event)">
+                                                                              <span class="checkbox__placeholder"></span>
+                                                                          </div>
+                                                                          USMS Verified
+                                                                          <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="The distance for the listed pool configuration has been measured then submitted to and verified by USMS so it can host sanctioned meets and be used to break records. If you are not sure of the date, enter 1/1/1111."></span>
+                                                                      </label>
+                                                                  </div>
+                                                                  <div class="input-group usms-verified-form usms-verified-form--fade required">
+                                                                      <input type="text" name="usmsVerifiedDate" id="usmsVerifiedDate" placeholder="YYYY-MM-DD" maxlength="10">
+                                                                      <span class="help-block help-block--usmsVerifiedDate">Please enter a valid date</span>
+                                                                  </div>
+                                                                  <div class="input-group">
+                                                                      <label>After you've entered a pool configuration, click the button below to save and continue.</label>
+                                                                      <button class="btn btn-small" id="saveConfiguration" onclick="handleSaveConfiguration()">Confirm</button>
+                                                                      <button class="btn btn-small btn-outline" id="cancelSaveConfiguration" onclick="handleCancelConfiguration()">Cancel</button>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+
+
+
+
                                                    </div>
                                                 </div>
                                              </div>
