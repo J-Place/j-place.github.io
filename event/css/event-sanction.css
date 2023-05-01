@@ -140,9 +140,10 @@ label.radio-label {
 .event-card {
     display: flex;
     align-items: flex-start;
-    flex-direction: column;
+    flex-direction: column-reverse;
     margin: 1rem auto;
     padding: 2rem 0 0;
+    text-align: left;
 }
 
 .event-card:not(:first-of-type) {
@@ -150,16 +151,18 @@ label.radio-label {
 }
 
 .event-card .btn {
-    margin-top: 0.5rem;
-    margin-right: 2rem;
+    /* margin-top: 0.5rem; */
+    /* margin-right: 2rem; */
+    margin: 1rem 0 4rem;
 }
 
 .event-card__title {
     margin: 0 1rem 0.5rem 0;
     max-width: 400px;
+    margin-left: 0 !important;
 }
 
-.event-card__date {
+.event-card p.event-card__date {
     margin: 0 1rem 0.5rem 0;
 }
 
@@ -213,34 +216,74 @@ label.radio-label {
     }
 }
 
+.event-list__container h2 {
+    /* background-color: #0068ad; */
+    background-color: #accbdf;
+    color: #FFF;
+    margin: 5rem -15px 1.5rem;
+    padding: 1rem;
+}
+
 @media (min-width: 768px) {
     .event-list__container {
         margin: 0 4rem;
-        padding: 4rem 2rem;
+        padding: 6rem 2rem 4rem;
+    }
+    .event-list__container h2 {
+        background-color: transparent;
+        color: #0068ad;
+        margin: 1rem 0;
+        padding: 0;
     }
     .event-list__container:not(:first-of-type) {
         border-top: 1px solid #CCC;
     }
+    .event-list__container.all-events-past:not(.event-list__filters) {
+        border: 0 none;
+        margin-top: 0;
+        padding-top: 0;
+    }
+    .event-list__filters {
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+    }
     .event-card {
-        align-items: center;
+        align-items: baseline;
         flex-direction: row;
         border-top: 0;
         padding-top: 1rem;
         padding-right: 1.5rem;
+        /* flex-direction: column; */
+        text-align: left;
     }
     .event-card:not(:first-of-type) {
         border: 0;
     }
     .event-card .btn {
         margin-top: 0;
+        margin-right: 2rem;
     }
     h3.event-card__title {
         margin: 1rem 1rem 1rem 0;
     }
-    .event-card__date {
+    .event-card p.event-card__date {
         margin: 1rem 1rem 1rem 0;
         padding-left: 1rem;
         border-left: 1px solid #CCC;
+    }
+    .usms-container.form__container .event-list__container h2 {
+        font-size: 2.7rem;
+        margin: 0 0 4rem;
+    }
+    .event-list__container h3.event-card__title,
+    .event-list__container p.event-card__date {
+        margin: 0 1rem;
+    }
+    .usms-container.form__container .event-list__container h3.event-card__title {
+        font-size: 2rem;
+    }
+    .event-list__container p.event-card__date {
+        font-size: 1.6rem;
     }
 }
 
