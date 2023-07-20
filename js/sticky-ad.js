@@ -1,31 +1,31 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    // let stickyHeight = 0;
-    // const viewSm = window.matchMedia("screen and (min-width:576px)").matches;
-    // const viewMd = window.matchMedia("screen and (min-width:768px)").matches;
+    let stickyHeight = 0;
+    const viewSm = window.matchMedia("screen and (min-width:576px)").matches;
+    const viewMd = window.matchMedia("screen and (min-width:768px)").matches;
 
-    // // Sets height for known ad sizes
-    // if (viewSm) {
-    //     stickyHeight = 255;
-    // } else if (viewMd) {
-    //     stickyHeight = 315;
-    // }
-    // const stickyAd = document.querySelector('.ad__space'); // JP: create a new class to toggle via rendering parameter
-    // const stickyAds = document.querySelectorAll('.ad__space');
-    // const articleBylineHeight = document.querySelector('.article__byline').clientHeight;
-    // const articleBodyHeight = document.querySelector('.article__body').clientHeight;
-    // const mainContentHeight = articleBylineHeight + articleBodyHeight;
-    // const stickyTop = stickyAd.parentElement.offsetTop;
-    // // const stickyBottom = mainContentHeight - stickyHeight;
-    // const stickyBottom = mainContentHeight;
+    // Sets height for known ad sizes
+    if (viewSm) {
+        stickyHeight = 255;
+    } else if (viewMd) {
+        stickyHeight = 315;
+    }
+    const stickyAd = document.querySelector('.ad__space'); // JP: create a new class to toggle via rendering parameter
+    const stickyAds = document.querySelectorAll('.ad__space');
+    const articleBylineHeight = document.querySelector('.article__byline').clientHeight;
+    const articleBodyHeight = document.querySelector('.article__body').clientHeight;
+    const mainContentHeight = articleBylineHeight + articleBodyHeight;
+    const stickyTop = stickyAd.parentElement.offsetTop;
+    // const stickyBottom = mainContentHeight - stickyHeight;
+    const stickyBottom = mainContentHeight;
 
-    // function setAdTop() {
-    //     for (let i = 0; i < stickyAds.length; i++) {
-    //         stickyAd.style.top = stickyTop + 'px';
-    //     }
-    // }
-    // setAdTop();
+    function setAdTop() {
+        // for (let i = 0; i < stickyAds.length; i++) {
+            stickyAd.style.top = stickyTop + 'px';
+        // }
+    }
+    setAdTop();
 
     // function handleAdPosition() {
     //     const contentWidth = document.querySelector('.usms-container').offsetWidth;
@@ -58,19 +58,18 @@ document.addEventListener("DOMContentLoaded", function () {
     function handleAdPosition() {
         const footerTop = document.querySelector('#footerOverlay');
         const stickyAd = document.querySelector('.sticky-ad');
-        console.log(window.pageYOffset)
-        console.log(footerTop.offsetTop);
-        // console.log(footerTop.offsetHeight);
-        // console.log(footerTop.clientHeight);
-        stickyAd.classList.remove('sticky-ad--bottom');
-        if (window.pageYOffset > footerTop.offsetTop - 400) {
-            console.log("Boo");
+        // if (window.pageYOffset > footerTop.offsetTop - 400) {
+        if (window.scrollY > footerTop.offsetTop - 400) {
+            stickyAd.classList.add('sticky-ad--bottom');
+        } else {
+            stickyAd.classList.remove('sticky-ad--bottom');
         }
     }
     handleAdPosition();
 
     function scroll() {
         handleAdPosition();
+        setAdTop();
     }
 
     function resize() {

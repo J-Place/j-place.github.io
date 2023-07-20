@@ -17,8 +17,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const articleBodyHeight = document.querySelector('.article__body').clientHeight;
     const mainContentHeight = articleBylineHeight + articleBodyHeight;
     const stickyTop = stickyAd.parentElement.offsetTop;
-    // const stickyBottom = mainContentHeight - stickyHeight;
-    const stickyBottom = mainContentHeight;
+    const stickyBottom = mainContentHeight - stickyHeight;
+    // const stickyBottom = mainContentHeight;
+
+
+
+    const footerTop = document.querySelector('#footerOverlay');
+    const stickyAdTag = document.querySelector('.sticky-ad');
+    console.log(footerTop.offsetTop);
+    console.log(window.scrollY);
+
 
     function setAdTop() {
         for (let i = 0; i < stickyAds.length; i++) {
@@ -33,20 +41,19 @@ document.addEventListener("DOMContentLoaded", function () {
         const contentMargins = windowWidth - contentWidth;
         const contentMargin = contentMargins/2;
         const contentMarginWhole = Math.round(contentMargin);
-        stickyAd.style.right = contentMarginWhole + 7 + 'px';
 
         var scrollTop = window.pageYOffset;
 
         if (viewSm && scrollTop === 0) {
-            stickyAd.style.display = 'block';
+            // stickyAd.style.display = 'block';
             stickyAd.style.top = stickyTop + 'px';
         }
         if (viewSm && scrollTop <= stickyTop) {
-            stickyAd.style.display = 'block';
+            // stickyAd.style.display = 'block';
             stickyAd.style.top = stickyTop - window.pageYOffset + 'px';
     }
         if (viewSm && scrollTop > stickyTop) {
-            stickyAd.style.display = 'block';
+            // stickyAd.style.display = 'block';
             stickyAd.style.top = 10 + 'px';
     }
         if (viewSm && scrollTop >= stickyBottom) {
