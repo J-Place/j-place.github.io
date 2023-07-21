@@ -69,7 +69,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function scroll() {
         handleAdPosition();
-        setAdTop();
     }
 
     function resize() {
