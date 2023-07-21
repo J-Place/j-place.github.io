@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+		<title>Go The Distance | Milestone Achievements | U.S. Masters Swimming</title>
+
+        <link rel="stylesheet" href="https://www.usms.org/styles/bootstrap.min.css">
+		<link rel="stylesheet" href="https://www.usms.org/styles/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="https://www.usms.org/styles/font-awesome.min.css">
+		<link href="https://www.usms.org/styles/common.min.css?version=20201101.1" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
+		<link href="./css/gtdControls.css" rel="stylesheet">
+        <link href="./css/gtdZones.css" rel="stylesheet">
+	</head>
+	<body>
+		<div id="loadingWrapper">
+			<div id="loadingOverlay"></div>
+			<img src="https://www.usms.org/img/loader.gif" id="loadingSpinner" />
+		</div>
+		<div id="main-container" class="">
+			<!-- Header -->
+			<header class="header-static">
+				<div id="">
+					<nav class="mega-main-menu">
+						<div class="mega-main-menu__logo-container">
+							<a class="mega-main-menu__logo" href="index.html"><img src="https://www.usms.org/-/media/usms/developers/images/Logo/USMS-Logo-Hrz.svg" alt="" width="264" height="auto"></a>
+						</div>
+						<div class="mega-main-menu__nav-search-container">
+							<form method="GET" action="https://www.usms.org/search" class="search" style="transition:all 250ms ease-in-out;transform:translateY(-10px);opacity:0;z-index:-1;">
+								<div class="input-group">
+									<input type="text" name="filter" class="form-control search__input" placeholder="Search USMS" aria-describedby="basic-addon">
+									<input type="hidden" name="page" value="1">
+									<input type="hidden" name="perPage" value="10" data-reactid="10">
+									<span class="input-group-addon btn search__button text-uppercase" id="basic-addon" data-reactid="11">Search</span>
+								</div>
+							</form>
+							<div class="mega-main-menu__items-container" data-reactid="12"><ul class="mega-main-menu__items list--nostyle" style="width:auto;">
+								<li class="has--children" id="menu-item-0"<!-- react-text: 15 -->Fitness &amp; Training<span class="fa"></span></li>
+								<li class="has--children" id="menu-item-1"<!-- react-text: 19 -->Events<span class="fa"></span></li>
+								<li id="menu-item-2"><a href="https://www.usms.org/club-resources">Club Finder</a></li>
+								<li class="has--children" id="menu-item-3"<!-- react-text: 25 -->About USMS<span class="fa"></span></li>
+								<li class="has--children" id="menu-item-4"<!-- react-text: 29 -->Join<span class="fa"></span></li>
+								</ul>
+							</div>
+							<button class="mega-main-menu__toggle-mobile btn btn-default"><i class="fa fa-bars text-primary"></i></button>
+							<div class="mega-main-menu__actions">
+								<a href="#" class="btn bg-primary mega-main-menu__actions-login">My USMS</a><i class="fa fa-search text-primary mega-main-menu__actions-search"></i>
+							</div>
+						</div>
+						<div class="mobile-menu" style="transition:all 250ms ease-in-out;transform:translateY(-10px);opacity:0;z-index:-1;">
+							<div class="mobile-menu__container">
+								<form class="mobile-menu__form" action="https://www.usms.org/search">
+									<div class="mobile-menu__input"><input type="text" name="filter" placeholder="Search">
+										<button class="mobile-menu__search-button" type="submit"><i class="fa fa-search text-primary"></i></button>
+									</div>
+								</form>
+								<button class="mobile-menu__toggle"><i class="fa fa-times"></i></button>
+							</div>
+						</div>
+					</nav>
+				</div>
+			</header>	
+
+			<main>
+				<!-- Breadcrumb -->
+				<div class="breadcrumb-container" style="position: relative; padding-bottom: 50px;">
+					<div class="breadcrumb">
+						<div class="usms-container">
+							<div class="row">
+								<div class="col-xs-12">
+									<div class="breadcrumb__container">
+										<ul class="breadcrumb__items list--nostyle">
+											<li class="text-capitalize breadcrumb__item">
+												<a class="breadcrumb__link" href="/">Home<i class="fa fa-chevron-right"></i></a>
+											</li>
+											<li class="text-capitalize breadcrumb__item">
+												<a class="breadcrumb__link" href="/">Events<i class="fa fa-chevron-right"></i></a>
+											</li>
+										</ul>
+										<span class="breadcrumb__title text-capitalize">Go The Distance</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="section section-full">
+                    <div class="usms-container">
+
+                        <div id="gtdZones" class="gtd-zones"></div>
+            
+                        <script id="zoneTemplate" type="text/x-handlebars-template">
+
+                            <div class="filters">
+                                <div class="title">
+                                    All Participants by Zone, LMSC, Club
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="filters__zone">
+                                            <label for="selectLmsc">Jump to Zone</label>
+                                            <select class="select select--zone" id="selectZone" placeholder="" onchange="if (this.selectedIndex > 0) location.href=this[this.selectedIndex].value">
+                                                <option value="" default selected></option>
+                                                {{#each data}}
+                                                    <option value="#{{name}}">{{name}}</option>
+                                                {{/each}}
+                                            </select>
+                                        </div>
+                                        <div class="filters__lmsc">
+                                            <label for="selectLmsc">Jump to LMSC</label>
+                                            <select class="select select--lmsc" id="selectLmsc" placeholder="" onchange="if (this.selectedIndex > 0) location.href=this[this.selectedIndex].value">
+                                                <option value="" default selected></option>
+                                                {{#each data}}
+                                                    {{#each lmscs}}
+                                                        <option value="#{{name}}">{{name}}</option>
+                                                    {{/each}}
+                                                {{/each}}
+                                            </select>            
+                                        </div>    
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{#each data}}                                
+                                <div class="row zone">
+                                    <div class="col-sm-12 zone__title" id="{{name}}">                                        
+                                        <div class="zone-name"><strong>{{name}} Zone</strong></div>
+                                        <div class="zone-stats">
+                                            <div class="stats__swimmers">{{swimmers}} Swimmers</div>
+                                            <div class="stats__total">{{miles}} Miles</div>
+                                            <div class="stats__avg">{{average}} Miles per Swimmer</div>
+                                        </div>
+                                        <a href="#top" class="top-link" onclick="(function(){resetSelects()})()">Back to Top</a>
+                                    </div>
+                                </div>
+                                {{#each lmscs}}
+                                    <div class="row lmsc">
+                                        <div class="col-sm-12 lmsc__title" id="{{name}}">
+                                            <div class="lmsc-name"><strong>{{name}} LMSC</strong></div>
+                                            <div class="lmsc-stats">
+                                                <div class="stats__swimmers">{{swimmers}} Swimmers</div>
+                                                <div class="stats__total">{{miles}} Total Miles</div>
+                                                <div class="stats__avg">{{average}} Avg Miles per Swimmer</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{#each clubs}}
+                                    <div class="row club">
+                                        <div class="club__title collapsed" role="button" data-toggle="collapse" data-target="#abbr-{{abbreviation}}" aria-expanded="false" aria-controls="abbr-{{abbreviation}}">
+                                            <div class="club-name"><strong>{{name}}</strong> ({{abbreviation}})</div>
+                                            <div class="club-stats">
+                                                <div class="stats__swimmers">{{swimmers}} Swimmers</div>
+                                                <div class="stats__total">{{miles}} Total Miles</div>
+                                                <div class="stats__avg">{{average}} Avg Miles per Swimmer</div>    
+                                            </div>
+                                        </div>
+                                        <div class="club__participants collapse" id="abbr-{{abbreviation}}">
+                                            <div class="row participant participant-column-labels">
+                                                <div class="col-xs-6 col-sm-3 participant__title">Name</div>
+                                                <div class="col-xs-2 col-sm-1 participant__age">Age</div>
+                                                <div class="col-xs-4 col-sm-2 participant__miles">Distance</div>
+                                            </div>
+                                            {{#each members}}
+                                                <div class="row participant">
+                                                    <div class="col-xs-6 col-sm-3 participant__title">
+                                                        {{firstName}} {{lastName}}
+                                                    </div>
+                                                    <div class="col-xs-2 col-sm-1 participant__age">{{age}}</div>
+                                                    <div class="col-xs-4 col-sm-2 participant__miles">{{miles}} miles</div>
+                                                </div>
+                                            {{/each}}
+                                        </div>
+                                    </div>
+                                    {{/each}}
+                                {{/each}}
+                            {{/each}}
+                        </script>
+                    </div>
+				</div>
+			</main>
+		</div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.js" integrity="sha512-MQkEjxbZvzs4TX8ES4/tTIyaYdtDlJzVocnPo0GoysTR0jCmNg0P2is7uqpCoWxmoS9X84CDVzuWgZD/R/Q2oQ==" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.bundle.min.js" integrity="sha512-iceXjjbmB2rwoX93Ka6HAHP+B76IY1z0o3h+N1PeDtRSsyeetU3/0QKJqGyPJcX63zysNehggFwMC/bi7dvMig==" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js" type="text/javascript"></script>
+        <script type="text/javascript" src="js/gtdZones.js"></script>
+	</body>
+</html>
