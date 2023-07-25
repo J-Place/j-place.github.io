@@ -1,4 +1,4 @@
-var mobile = window.matchMedia("screen and (max-width:991px)").matches;
+var mobile = window.matchMedia("screen and (max-width:1199px)").matches;
 if (mobile) {
     document.querySelector('.article-nav').classList.add('mobile');
 }
