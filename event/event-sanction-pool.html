@@ -6,298 +6,18 @@
    <html lang="en">
       <!--<![endif]-->
       <head>
-         <meta charset="utf-8" />
-         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-         <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-         <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
-
          <title>U.S. Masters Swimming</title>
-
-         <meta name="twitter:card" content="summary_large_image" />
-         <meta property="og:title" content="Register" />
-         <meta property="og:image" content="" />
-         <meta property="og:description" content="" />
-         <meta property="og:url" content="https://www.usms.orghttps://www.usms.org:443/en/registration-page" />
-         <meta name="robots" content="noindex">
-
-         <link rel="stylesheet" href="https://www.usms.org/styles/bootstrap.min.css">
-         <link rel="stylesheet" href="https://www.usms.org/styles/bootstrap-theme.min.css">
-         <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous"> -->
-         <link rel="stylesheet" href="https://www.usms.org/styles/font-awesome.min.css">
-         <link rel="stylesheet" href="https://www.usms.org/styles/common.min.css?version=20210920.1">
-         <link rel="stylesheet" href="https://www.usms.org/styles/print.min.css?version=20210920.1">
-         <link rel="stylesheet" href="https://www.usms.org/styles/rte.min.css">
-         <!-- <link rel="stylesheet" href="../css/bootstrap.min.css"> -->
-         <!-- <link href="https://usms-cdn.azureedge.net/styles/Club/club2.min.css" rel="stylesheet" /> -->
-         <link href="https://usms-cdn.azureedge.net/styles/Club/club2.min.css?version=20221130.2A" rel="stylesheet" />
+         <sergey-import src="head_meta" />
+         <sergey-import src="head_js" />
+         <sergey-import src="head_css" />
+         <!-- <link href="https://usms-cdn.azureedge.net/styles/Club/club2.min.css?version=20221130.2A" rel="stylesheet" /> -->
          <link rel="stylesheet" href="./css/date-picker.css">
          <link rel="stylesheet" href="./css/convert-this-from-club.css">
          <link rel="stylesheet" href="./css/event-sanction.css">
-
-         <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react.min.js"></script>
-         <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script>
-         <script src="https://www.usms.org/scripts/common.min.js?version=20210920.1"></script>
-         <!-- <script src="https://jstest.authorize.net/v1/Accept.js"></script> -->
-         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.12/jquery.mask.min.js"></script>
-         <!-- <script src="https://d79i1fxsrar4t.cloudfront.net/jquery.liveaddress/5.1/jquery.liveaddress.min.js"></script> -->
-         <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-         <script src="https://usms-cdn.azureedge.net/scripts/common.min.js?version=20211213.1"></script>
-
       </head>
       <body>
          <div id="main-container">
-
-            <header class="header-static">
-               <div>
-                  <nav class="mega-main-menu">
-                     <button class="mega-main-menu__toggle-mobile btn btn-default" aria-label="toggle mobile">
-                     <i class="fa fa-bars text-primary">
-                     </i>
-                     <label>
-                     </button>
-                     <div class="mega-main-menu__logo-container">
-                        <a class="mega-main-menu__logo" href="/">
-                           <img src="https://www.usms.org/-/media/usms/developers/images/Logo/USMS-Logo-Hrz.svg" alt="" width="264" height="auto">
-                        </a>
-                     </div>
-                     <div class="mega-main-menu__nav-search-container">
-                        <div class="login__items-container">
-                           <ul class="login__list">
-                              <li class="login__list-item">
-                                 <a href="/myusmslogin">My USMS</a>
-                              </li>
-                              <li class="login__list-item">
-                                 <a href="https://community.usms.org/">Community/Forums</a>
-                              </li>
-                              <li class="login__list-item">
-                                 <a href="/">USMS Website</a>
-                              </li>
-                              <li class="login__list-item">
-                                 <a href="/account/single-sign-out">Logout</a>
-                              </li>
-                           </ul>
-                        </div>
-                        <form method="GET" action="/search" class="search" style="transition:all 0ms ease-in-out;transform:translateX(0px);opacity:0;z-index:-1;">
-                           <div class="input-group">
-                              <input type="text" name="filter" class="form-control search__input" placeholder="Search USMS" aria-describedby="basic-addon">
-                              <input type="hidden" name="page" value="1">
-                              <input type="hidden" name="perPage" value="10">
-                              <span class="input-group-addon btn search__button text-uppercase" id="basic-addon">Search</span>
-                           </div>
-                        </form>
-                        <div class="mega-main-menu__items-container">
-                           <ul class="mega-main-menu__items list--nostyle" style="width:auto;">
-                              <li class="has--children" id="menu-item-0" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                 <span class="fa fa-chevron-right">
-                                 </span>
-                                 <!-- react-text: 29 -->Training<!-- /react-text -->
-                              </li>
-                              <li class="has--children" id="menu-item-1" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                 <span class="fa fa-chevron-right">
-                                 </span>
-                                 <!-- react-text: 32 -->Events<!-- /react-text -->
-                              </li>
-                              <li id="menu-item-2" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                 <a href="/clubs">Club Finder</a>
-                              </li>
-                              <li id="menu-item-3" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                 <a href="/workout-library">Workout Library</a>
-                              </li>
-                              <li class="has--children" id="menu-item-4" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                 <span class="fa fa-chevron-right">
-                                 </span>
-                                 <!-- react-text: 39 -->About Us<!-- /react-text -->
-                              </li>
-                              <li id="menu-item-5" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                                 <a href="/join-usms/join-or-renew">Join</a>
-                              </li>
-                              <!-- react-text: 42 -->
-                              <!-- /react-text -->
-                           </ul>
-                        </div>
-                        <div class="mega-main-menu__actions">
-                           <div class="mega-main-menu__actions-search--wrapper">
-                              <i class="search--icon">
-                              </i>
-                              <label>Search</label>
-                           </div>
-                           <div class="mega-main-menu__actions-login--wrapper">
-                              <a href="/myusmslogin">
-                              <i class="login--icon">
-                              </i>
-                              <label>Log In</label>
-                              </a>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="mobile-menu" style="transition:all 0ms ease-in-out;transform:translateY(0);opacity:0;z-index:-1;">w
-                        <div class="mobile-menu__container">
-                           <button class="mobile-menu__toggle" aria-label="toggle menu">
-                           <i class="mobile-menu__close">
-                           </i>
-                           <label>Close</label>
-                           </button>
-                           <form class="mobile-menu__form" action="/search">
-                              <div class="mobile-menu__input">
-                                 <input type="text" name="filter" placeholder="Search">
-                                 <button class="mobile-menu__search-button" type="submit" aria-label="search button">
-                                 <i class="fa fa-search text-primary">
-                                 </i>
-                                 </button>
-                              </div>
-                           </form>
-                        </div>
-                        <div class="mobile-menu-overlay">
-                           <ul class="mobile-menu-overlay__items list--nostyle">
-                              <li class="mobile-menu-overlay__item text-capitalize">
-                                 <div class="mobile-menu-overlay__item-content">
-                                    <i class="fa fa-chevron-right ">
-                                    </i>
-                                    <!-- react-text: 66 -->Training<!-- /react-text -->
-                                 </div>
-                                 <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
-                                    <ul class="mobile-menu-overlay__submenu list--nostyle">
-                                       <li class="mobile-menu-overlay__submenu-items text-capitalize">
-                                          <a href="/workout-library">Workout Library</a>
-                                       </li>
-                                       <li class="mobile-menu-overlay__submenu-items text-capitalize">
-                                          <a href="/fitness-and-training/articles-and-videos">Articles and Videos</a>
-                                       </li>
-                                       <li class="mobile-menu-overlay__submenu-items text-capitalize">
-                                          <a href="/clubs">Club Finder</a>
-                                       </li>
-                                       <li class="mobile-menu-overlay__submenu-items text-capitalize">
-                                          <a href="/search?filter=swimming+101&amp;page=1&amp;perPage=10">Swimming 101</a>
-                                       </li>
-                                       <li class="mobile-menu-overlay__submenu-items text-capitalize">
-                                          <a href="/fitness-and-training/workout-tracking">Workout Tracking</a>
-                                       </li>
-                                       <li class="mobile-menu-overlay__submenu-items text-capitalize">
-                                          <a href="/about-usms/swimmer-magazine">SWIMMER Magazine</a>
-                                       </li>
-                                    </ul>
-                                 </div>
-                              </li>
-                              <li class="mobile-menu-overlay__item text-capitalize">
-                                 <div class="mobile-menu-overlay__item-content">
-                                    <i class="fa fa-chevron-right ">
-                                    </i>
-                                    <!-- react-text: 84 -->Events<!-- /react-text -->
-                                 </div>
-                                 <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
-                                    <ul class="mobile-menu-overlay__submenu list--nostyle">
-                                       <li class="mobile-menu-overlay__submenu-items text-capitalize">
-                                          <a href="/events">Calendar of Events</a>
-                                       </li>
-                                       <li class="mobile-menu-overlay__submenu-items text-capitalize">
-                                          <a href="/events/fitness-events">Virtual and Fitness Events</a>
-                                       </li>
-                                       <li class="mobile-menu-overlay__submenu-items text-capitalize">
-                                          <a href="/events/national-championships/pool-national-championships/2023-pool-national-championships/2023-spring-national-championship">2023 Spring Nationals</a>
-                                       </li>
-                                       <li class="mobile-menu-overlay__submenu-items text-capitalize">
-                                          <a href="/events/national-championships">National Championships</a>
-                                       </li>
-                                       <li class="mobile-menu-overlay__submenu-items text-capitalize">
-                                          <a href="/events/event-results-database">Results and Rankings</a>
-                                       </li>
-                                       <li class="mobile-menu-overlay__submenu-items text-capitalize">
-                                          <a href="/events/usms-records">Records</a>
-                                       </li>
-                                    </ul>
-                                 </div>
-                              </li>
-                              <li class="mobile-menu-overlay__item text-capitalize">
-                                 <div class="mobile-menu-overlay__item-content">
-                                    <i class=" ">
-                                    </i>
-                                    <a href="/clubs" style="text-decoration:none;">
-                                       <!-- react-text: 103 --> <!-- /react-text -->
-                                       <!-- react-text: 104 -->Club Finder<!-- /react-text -->
-                                       <!-- react-text: 105 --> <!-- /react-text -->
-                                    </a>
-                                 </div>
-                                 <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
-                                    <ul class="mobile-menu-overlay__submenu list--nostyle">
-                                    </ul>
-                                 </div>
-                              </li>
-                              <li class="mobile-menu-overlay__item text-capitalize">
-                                 <div class="mobile-menu-overlay__item-content">
-                                    <i class=" ">
-                                    </i>
-                                    <a href="/workout-library" style="text-decoration:none;">
-                                       <!-- react-text: 112 --> <!-- /react-text -->
-                                       <!-- react-text: 113 -->Workout Library<!-- /react-text -->
-                                       <!-- react-text: 114 --> <!-- /react-text -->
-                                    </a>
-                                 </div>
-                                 <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
-                                    <ul class="mobile-menu-overlay__submenu list--nostyle">
-                                    </ul>
-                                 </div>
-                              </li>
-                              <li class="mobile-menu-overlay__item text-capitalize">
-                                 <div class="mobile-menu-overlay__item-content">
-                                    <i class="fa fa-chevron-right "></i>
-                                    <!-- react-text: 120 -->About Us<!-- /react-text -->
-                                 </div>
-                                 <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
-                                    <ul class="mobile-menu-overlay__submenu list--nostyle">
-                                       <li class="mobile-menu-overlay__submenu-items text-capitalize">
-                                          <a href="/about-usms/what-is-us-masters-swimming">What is Masters Swimming?</a>
-                                       </li>
-                                       <li class="mobile-menu-overlay__submenu-items text-capitalize">
-                                          <a href="http://community.usms.org">USMS Community</a>
-                                       </li>
-                                       <li class="mobile-menu-overlay__submenu-items text-capitalize">
-                                          <a href="https://www.swimoutlet.com/ProductBrand.asp?Brand=1766&amp;click=1668780">Logo Merchandise</a>
-                                       </li>
-                                       <li class="mobile-menu-overlay__submenu-items text-capitalize">
-                                          <a href="/join-usms/membership-benefits">Membership Benefits</a>
-                                       </li>
-                                       <li class="mobile-menu-overlay__submenu-items text-capitalize">
-                                          <a href="/open-water-central">Open Water Central</a>
-                                       </li>
-                                       <li class="mobile-menu-overlay__submenu-items text-capitalize">
-                                          <a href="/club-central">Club Central</a>
-                                       </li>
-                                       <li class="mobile-menu-overlay__submenu-items text-capitalize">
-                                          <a href="/coach-central">Coach Central</a>
-                                       </li>
-                                       <li class="mobile-menu-overlay__submenu-items text-capitalize">
-                                          <a href="/volunteer-central">Volunteer Central</a>
-                                       </li>
-                                       <li class="mobile-menu-overlay__submenu-items text-capitalize">
-                                          <a href="/alts-central">Adult Learn-to-Swim Central</a>
-                                       </li>
-                                    </ul>
-                                 </div>
-                              </li>
-                              <li class="mobile-menu-overlay__item text-capitalize">
-                                 <div class="mobile-menu-overlay__item-content">
-                                    <i class=" "></i>
-                                    <a href="/join-usms/join-or-renew" style="text-decoration:none;">
-                                       <!-- react-text: 145 --> <!-- /react-text -->
-                                       <!-- react-text: 146 -->Join<!-- /react-text -->
-                                       <!-- react-text: 147 --> <!-- /react-text -->
-                                    </a>
-                                 </div>
-                                 <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
-                                    <ul class="mobile-menu-overlay__submenu list--nostyle">
-                                    </ul>
-                                 </div>
-                              </li>
-                           </ul>
-                        </div>
-                     </div>
-                  </nav>
-               </div>
-               <!-- <script>ReactDOM.render(React.createElement(Components.MegaMainMenu, {"placeholder":{},"data":{"Image":{"Src":"https://usms-cdn.azureedge.net/-/media/usms/developers/images/logo/usms-logo-hrz.svg?rev=fb463362f2fb496d9eae400e3198386e","Alt":"U.S. Masters Swimming"},"Items":[{"Title":"Training","Image":{"Src":"https://usms-cdn.azureedge.net/-/media/usms/developers/images/megamenu/fittraincta-200x150.png?rev=dc95a7fc0d8348648260d6495466eb1e","Alt":"","Title":"Workout Library"},"Link":{"Src":"/workout-library","Title":"Workout Library","Default":false},"Children":[{"Title":"Workout Library","Url":"/workout-library"},{"Title":"Articles and Videos","Url":"/fitness-and-training/articles-and-videos"},{"Title":"Club Finder","Url":"/clubs"},{"Title":"Swimming 101","Url":"/search?filter=swimming+101\u0026page=1\u0026perPage=10"},{"Title":"Workout Tracking","Url":"/fitness-and-training/workout-tracking"},{"Title":"SWIMMER Magazine","Url":"/about-usms/swimmer-magazine"}]},{"Title":"Events","Image":{"Src":"https://usms-cdn.azureedge.net/-/media/usms/developers/images/megamenu/eventscta_2-200x150.jpg?rev=4c1890fbd1bb4c19be738fbeb3fd13d0","Alt":"","Title":"Calendar of Events"},"Link":{"Src":"/events","Title":"Calendar of Events","Default":false},"Children":[{"Title":"Calendar of Events","Url":"/events"},{"Title":"Virtual and Fitness Events","Url":"/events/fitness-events"},{"Title":"2023 Spring Nationals","Url":"/events/national-championships/pool-national-championships/2023-pool-national-championships/2023-spring-national-championship"},{"Title":"National Championships","Url":"/events/national-championships"},{"Title":"Results and Rankings","Url":"/events/event-results-database"},{"Title":"Records","Url":"/events/usms-records"}]},{"Title":"Club Finder","Image":null,"Link":{"Src":"/clubs","Title":"Club Finder","Default":false},"Children":[]},{"Title":"Workout Library","Image":null,"Link":{"Src":"/workout-library","Title":"","Default":false},"Children":[]},{"Title":"About Us","Image":{"Src":"https://usms-cdn.azureedge.net/-/media/usms/developers/images/megamenu/aboutcta-200x150.png?rev=d3379460971e4ab1946a4e2971b7d818","Alt":"","Title":"What is Masters Swimming?"},"Link":{"Src":"/about-usms/what-is-us-masters-swimming","Title":"What is Masters Swimming?","Default":false},"Children":[{"Title":"What is Masters Swimming?","Url":"/about-usms/what-is-us-masters-swimming"},{"Title":"USMS Community","Url":"http://community.usms.org"},{"Title":"Logo Merchandise","Url":"https://www.swimoutlet.com/ProductBrand.asp?Brand=1766\u0026click=1668780"},{"Title":"Membership Benefits","Url":"/join-usms/membership-benefits"},{"Title":"Open Water Central","Url":"/open-water-central"},{"Title":"Club Central","Url":"/club-central"},{"Title":"Coach Central","Url":"/coach-central"},{"Title":"Volunteer Central","Url":"/volunteer-central"},{"Title":"Adult Learn-to-Swim Central","Url":"/alts-central"}]},{"Title":"Join","Image":null,"Link":{"Src":"/join-usms/join-or-renew","Title":"Join or Renew","Default":false},"Children":[]}],"MyUsmsLink":{"Src":"/myusmslogin","Title":"My USMS","Default":false},"LoginInfo":{"LoginLinks":[{"Src":"/myusmslogin","Title":"My USMS","Default":true},{"Src":"https://community.usms.org/","Title":"Community/Forums","Default":false},{"Src":"/","Title":"USMS Website","Default":false},{"Src":"/account/single-sign-out","Title":"Logout","Default":false}],"UserName":"","SwimmerId":"","LoggedIn":false}},"isSitecore":true,"isEditing":false}), document.getElementById("react_FXkW5i3GgkW5H9dv9R2ooA"))</script> -->
-            </header>
-
+            <sergey-import src="header" />
             <main role="main">
 
                <div class="breadcrumb-container" style="position: relative; padding-bottom: 50px;">
@@ -1876,29 +1596,24 @@
                </div>
 
             </main>
-
+            <sergey-import src="footer" />
          </div>
-
-         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+         <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
          <script src="https://d79i1fxsrar4t.cloudfront.net/jquery.liveaddress/5.1/jquery.liveaddress.min.js"></script>
          <script src="https://www.usms.org/scripts/jquery.mask.min.js?version=20210920.1"></script>         
          <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-         <script src="https://www.usms.org/scripts/Registration/Registration.js?version=20210920.1"></script>
+         <script src="https://www.usms.org/scripts/Registration/Registration.js?version=20210920.1"></script> -->
 
+         <sergey-import src="footer_scripts" />
 
          <script src="js/Validation.js"></script>
          <script src="js/Util.js"></script>
          <script src="js/Accordion.js"></script>
          <script src="js/Autocomplete.js"></script>
 
-
          <script src="js/1-event-type.js"></script>
          <script src="js/2-event-info.js"></script>
          <script src="js/3-contact-info.js"></script>
          <script src="js/Payment.js"></script>
-
-
-
-
       </body>
    </html>
