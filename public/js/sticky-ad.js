@@ -75,10 +75,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function resize() {
+        var mobile = window.matchMedia("screen and (max-width:1199px)").matches;
         handleAdPosition();
     }
 
     window.addEventListener('scroll', scroll);
     window.addEventListener('resize', resize);
+
+    document.addEventListener("DOMContentLoaded", function () {});
 
 });
