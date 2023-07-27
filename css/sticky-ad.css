@@ -1,8 +1,11 @@
-.article-nav.sticky-start {
+.sticky-start {
     transition: opacity .25s;
     opacity: 1;
     position: fixed;
+    border-top: 0;
+    z-index: 9999999;
 }
+
 .sticky-end {
     transition: opacity .25s;
     opacity: 0;
@@ -64,18 +67,17 @@
         margin: 0 auto 0 0;
     }
     .ad__space.sticky-ad-right {
-        margin: -2rem auto 0;
+        margin: 0 0 0 auto;
         padding: 2rem 0;
     }
 }
 
 @media (min-width: 768px) {
     .sticky-ad {
-        top: 0;
-        position: sticky;
-        align-self: flex-start;
-        display: block;
-        /* position: absolute; */
+        /* top: 0; */
+        /* position: sticky; */
+        /* align-self: flex-start; */
+        /* display: block; */
     }
     .ad__space.sticky-ad.sticky-ad--bottom {
         position: relative;

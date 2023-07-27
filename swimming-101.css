@@ -185,69 +185,9 @@ body {
         margin-top: 0;
         padding-top: 0.5rem;
     }
-}
-.article-nav.sticky-start {
-    transition: opacity .25s;
-    opacity: 1;
-    position: fixed;
-}
-.sticky-end {
-    transition: opacity .25s;
-    opacity: 0;
-}
+ }
 
-@media (min-width:1200px) {
-    .article-nav,
-    .article-nav.sticky-start {
-        width: 280px;
-        max-width: 280px;
-        padding-left: 3rem;
-    }
-    .article-nav.sticky-start {
-        opacity: 1;
-    }
-    .sticky-end {
-        opacity: 0; 
-        position: absolute;
-    }
-}
-@media (min-width:1200px) {
-    .article-nav,
-    .article-nav.sticky-start {
-        width: 290px;
-        max-width: 290px;
-        padding-left: 3rem;
-    }
-}
-
-@media (min-width:1260px) {
-    .article-nav,
-    .article-nav.sticky-start {
-        width: 300px;
-        max-width: 300px;
-        padding-left: 4rem;
-    }
-}
-
-@media (min-width:1340px) {
-    .article-nav,
-    .article-nav.sticky-start {
-        width: 320px;
-        max-width: 320px;
-        padding-left: 4rem;
-    }
-}
-
-@media (min-width:1610px) {
-    .article-nav,
-    .article-nav.sticky-start {
-        width: 400px;
-        max-width: 400px;
-        padding-left: 8rem;
-    }
-}
-
-.page-top {
+ .page-top {
     font-size: 12px;
     float: right;
     margin-top: 20px !important;
@@ -272,11 +212,14 @@ body {
 }
 
 @media (min-width: 1200px) {
-    .col-xl-3 .ad__space img {
+    /* This is for setting margin when using the stick positioning parameter */
+    /* Not needed when setting ad position with javascript */
+    /* Note this targets the ad when in the right col */
+    /* .col-xl-3 .ad__space img {
         width: auto;
         margin-left: calc(50% - 210px);
         margin-right: calc(50% - 210px);
-    }
+    } */
 }
 
 @media (min-width: 1400px) {
@@ -405,9 +348,6 @@ b, strong {
     padding: 1.5rem 0 1.5rem;
     border-top: 70px solid #FFF;
     margin-top: -60px;
-}
-.article-nav.sticky-start {
-    border-top: 0;
 }
 .article-body div + div h4 {
     margin: 31px auto 4px !important 
