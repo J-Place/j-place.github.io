@@ -24,16 +24,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function handleAdPosition() {
         const contentWidth = document.querySelector('.usms-container').offsetWidth;
+        console.log(document.querySelector('.usms-container').offsetWidth);
+        console.log(document.querySelector('.usms-container').innerWidth);
         const windowWidth = window.innerWidth;
         const contentMargins = windowWidth - contentWidth;
         const contentMargin = contentMargins/2;
         const contentMarginWhole = Math.round(contentMargin);
         stickyAd.style.right = contentMarginWhole - 4 + 'px';
-
-        var scrollTop = window.scrollY;
-        console.log(scrollTop);
-
         const stickyTop = stickyAd.parentElement.offsetTop;
+        var scrollTop = window.scrollY;
+        if (mobile) {
+            return;
+        }
         if (mobile == false && window.scrollY > stickyTop ) {
             stickyAd.classList.add('sticky-start');
         } else {
@@ -76,6 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function resize() {
         var mobile = window.matchMedia("screen and (max-width:1199px)").matches;
+        console.log(mobile);
         handleAdPosition();
     }
 
@@ -83,5 +86,5 @@ document.addEventListener("DOMContentLoaded", function () {
     window.addEventListener('resize', resize);
 
     document.addEventListener("DOMContentLoaded", function () {});
-
 });
+
