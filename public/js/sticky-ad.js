@@ -28,61 +28,49 @@ document.addEventListener("DOMContentLoaded", function () {
         const contentMargins = windowWidth - contentWidth;
         const contentMargin = contentMargins/2;
         const contentMarginWhole = Math.round(contentMargin);
-        stickyAd.style.right = contentMarginWhole - 4 + 'px';
+        stickyAd.style.right = contentMarginWhole + 'px';
         const stickyTop = stickyAd.parentElement.offsetTop;
         var scrollTop = window.scrollY;
         if (mobile) {
+            console.log("0");
             return;
         }
         if (mobile == false && window.scrollY > stickyTop ) {
             stickyAd.classList.add('sticky-start');
+            console.log("1");
         } else {
             stickyAd.classList.remove('sticky-start');
         }
 
         if (mobile == false && scrollTop === 0) {
-            // stickyAd.style.display = 'block';
+            stickyAd.style.display = 'block';
             stickyAd.style.top = stickyTop + 'px';
+            console.log("2");
         }
         if (mobile == false && scrollTop <= stickyTop) {
-            // stickyAd.style.display = 'block';
+            stickyAd.style.display = 'block';
             stickyAd.style.top = stickyTop - window.scrollY + 'px';
+            console.log("3");
         }
         if (mobile == false && scrollTop > stickyTop) {
             stickyAd.style.display = 'block';
             stickyAd.style.top = 0 + 'px';
-    }
+            console.log("4");
+        }
         if (mobile == false && scrollTop >= stickyBottom) {
             stickyAd.style.display = 'none';
+            console.log("5");
         }
     }
     handleAdPosition();
-
-    // function handleAdPosition() {
-    //     const footerTop = document.querySelector('#footerOverlay');
-    //     const stickyAd = document.querySelector('.sticky-ad');
-    //     // if (window.scrollY > footerTop.offsetTop - 400) {
-    //     if (window.scrollY > footerTop.offsetTop - 400) {
-    //         stickyAd.classList.add('sticky-ad--bottom');
-    //     } else {
-    //         stickyAd.classList.remove('sticky-ad--bottom');
-    //     }
-    // }
-    // handleAdPosition();
-
     function scroll() {
         handleAdPosition();
     }
-
     function resize() {
         var mobile = window.matchMedia("screen and (max-width:1199px)").matches;
-        console.log(mobile);
         handleAdPosition();
     }
-
     window.addEventListener('scroll', scroll);
     window.addEventListener('resize', resize);
-
-    document.addEventListener("DOMContentLoaded", function () {});
 });
 

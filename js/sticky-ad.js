@@ -32,10 +32,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const stickyTop = stickyAd.parentElement.offsetTop;
         var scrollTop = window.scrollY;
         if (mobile) {
+            console.log("0");
             return;
         }
         if (mobile == false && window.scrollY > stickyTop ) {
             stickyAd.classList.add('sticky-start');
+            console.log("1");
         } else {
             stickyAd.classList.remove('sticky-start');
         }
