@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const contentMargins = windowWidth - contentWidth;
         const contentMargin = contentMargins/2;
         // const contentMarginWhole = Math.round(contentMargin);
-        stickyAd.style.right = contentMargin + 'px';
+        stickyAd.style.right = contentMargin + 23 + 'px';
         const stickyTop = stickyAd.parentElement.offsetTop;
         var scrollTop = window.scrollY;
         if (mobile) {
