@@ -10,6 +10,7 @@
          <sergey-import src="head_meta" />
          <sergey-import src="head_js" />
          <sergey-import src="head_css" />
+         <link rel="stylesheet" href="./css/ListControl.css">
          <link rel="stylesheet" href="./css/ResultsFilterForm.css">
          <link rel="stylesheet" href="./css/ResultList.css">
          <link rel="stylesheet" href="./css/ResultsPagination.css">
@@ -57,6 +58,10 @@
                                  <span>Go to:</span>
                                  <a href="#">Calendar of Events</a> | <a href="#">Club Finder</a>
                               </div> -->
+                              <div class="filter-form__nav">
+                                 <span class="tag-list--title">Filters:</span>
+                                 <div class="list-control-search--tags" data-reactid="16"><span class="tag-list--item">Filter Name</span></div>   
+                              </div>
                               <form class="filter-form filter-form--results form-horizontal">
                                  <div class="filter-form__title">
                                     <div class="filter-form__input">
@@ -88,6 +93,10 @@
                                     </div>
                                  </div>
                               </form>
+                              <div class="results-list__summary">
+                                 <i class="fa fa-refresh fa-spin list-control-search--summary-loading" ></i>
+                                 Showing <strong>1-10</strong> of <strong>256</strong> Results
+                              </div>
                               <div class="hub-nav">
                                 <p>Or explore our content hubs: </p>
                                 <ul class="content-nav-list">
@@ -102,9 +111,6 @@
                                     <li><a href="#">Triathlon</a></li>
                                 </ul>
                               </div>
-                              <div class="results-list__summary">
-                                 Showing <strong>1-10</strong> of <strong>256</strong> Results
-                              </div>                           
                               <div class="results-list">
                                  <div class="results-list__item">
                                     <div class="results-list__item-detail" role="main">

@@ -24,8 +24,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function handleAdPosition() {
         const contentWidth = document.querySelector('.usms-container').offsetWidth;
-        console.log(document.querySelector('.usms-container').offsetWidth);
-        console.log(document.querySelector('.usms-container').innerWidth);
         const windowWidth = window.innerWidth;
         const contentMargins = windowWidth - contentWidth;
         const contentMargin = contentMargins/2;
