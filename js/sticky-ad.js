@@ -22,16 +22,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     setAdTop();
 
+    const windowWidth = window.innerWidth;
+    alert(windowWidth);
+
     function handleAdPosition() {
         const contentWidth = document.querySelector('.usms-container').offsetWidth;
         const windowWidth = window.innerWidth;
         const clientWidth = document.querySelector('html').innerWidth;
-        console.log(clientWidth);
-        console.log(windowWidth);
+        // console.log(contentWidth);
+        // console.log(windowWidth);
         const contentMargins = windowWidth - contentWidth;
         const contentMargin = contentMargins/2;
         // const contentMarginWhole = Math.round(contentMargin);
-        stickyAd.style.right = contentMargin + 23 + 'px';
+        stickyAd.style.right = contentMargin + 'px';
         const stickyTop = stickyAd.parentElement.offsetTop;
         var scrollTop = window.scrollY;
         if (mobile) {
