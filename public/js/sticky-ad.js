@@ -22,15 +22,30 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     setAdTop();
 
+    // const windowWidth = window.innerWidth;
+    // alert(windowWidth);
+
+    const contentWidth = document.querySelector('.usms-container').offsetWidth;
     const windowWidth = window.innerWidth;
-    alert(windowWidth);
+    const clientWidth = document.querySelector('html').innerWidth;
+    // console.log(contentWidth);
+    // console.log(windowWidth);
+    console.log(window.innerWidth);
+    console.log(window.outerWidth);
+    console.log(window.document.body.offsetWidth);
+    console.log(screen.width);
+    console.log(screen.availWidth);
+    // console.log(window.screenX);
+    // console.log(window.screenY);
+
+
 
     function handleAdPosition() {
         const contentWidth = document.querySelector('.usms-container').offsetWidth;
         const windowWidth = window.innerWidth;
         const clientWidth = document.querySelector('html').innerWidth;
         // console.log(contentWidth);
-        // console.log(windowWidth);
+        // console.log(window);
         const contentMargins = windowWidth - contentWidth;
         const contentMargin = contentMargins/2;
         // const contentMarginWhole = Math.round(contentMargin);
@@ -38,12 +53,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const stickyTop = stickyAd.parentElement.offsetTop;
         var scrollTop = window.scrollY;
         if (mobile) {
-            console.log("0");
+            // console.log("0");
             return;
         }
         if (mobile == false && window.scrollY > stickyTop ) {
             stickyAd.classList.add('sticky-start');
-            console.log("1");
+            // console.log("1");
         } else {
             stickyAd.classList.remove('sticky-start');
         }
@@ -51,21 +66,21 @@ document.addEventListener("DOMContentLoaded", function () {
         if (mobile == false && scrollTop === 0) {
             stickyAd.style.display = 'block';
             stickyAd.style.top = stickyTop + 'px';
-            console.log("2");
+            // console.log("2");
         }
         if (mobile == false && scrollTop <= stickyTop) {
             stickyAd.style.display = 'block';
             stickyAd.style.top = stickyTop - window.scrollY + 'px';
-            console.log("3");
+            // console.log("3");
         }
         if (mobile == false && scrollTop > stickyTop) {
             stickyAd.style.display = 'block';
             stickyAd.style.top = 0 + 'px';
-            console.log("4");
+            // console.log("4");
         }
         if (mobile == false && scrollTop >= stickyBottom) {
             stickyAd.style.display = 'none';
-            console.log("5");
+            // console.log("5");
         }
     }
     handleAdPosition();
