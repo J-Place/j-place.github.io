@@ -25,31 +25,29 @@ document.addEventListener("DOMContentLoaded", function () {
     // const windowWidth = window.innerWidth;
     // alert(windowWidth);
 
-    const contentWidth = document.querySelector('.usms-container').offsetWidth;
-    const windowWidth = window.innerWidth;
-    const clientWidth = document.querySelector('html').innerWidth;
-    // console.log(contentWidth);
-    // console.log(windowWidth);
     console.log(window.innerWidth);
     console.log(window.outerWidth);
     console.log(window.document.body.offsetWidth);
     console.log(screen.width);
     console.log(screen.availWidth);
-    // console.log(window.screenX);
-    // console.log(window.screenY);
-
 
 
     function handleAdPosition() {
         const contentWidth = document.querySelector('.usms-container').offsetWidth;
-        const windowWidth = window.innerWidth;
+        // const windowWidth = window.innerWidth;
+        const windowWidth = window.document.body.offsetWidth;
+        const adPosX = stickyAd.offsetLeft;
         const clientWidth = document.querySelector('html').innerWidth;
+        // console.log(clientWidth);
         // console.log(contentWidth);
-        // console.log(window);
+        // console.log(adPosX);
         const contentMargins = windowWidth - contentWidth;
+        // console.log(contentMargins);
         const contentMargin = contentMargins/2;
-        // const contentMarginWhole = Math.round(contentMargin);
-        stickyAd.style.right = contentMargin + 'px';
+        // console.log(contentMargin);
+        const contentMarginWhole = Math.round(contentMargin);
+        // console.log(contentMarginWhole);
+        stickyAd.style.right = contentMargin + 15 + 'px';
         const stickyTop = stickyAd.parentElement.offsetTop;
         var scrollTop = window.scrollY;
         if (mobile) {
