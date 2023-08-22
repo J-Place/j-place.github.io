@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const stickyAd = document.querySelector('.sticky-ad'); // JP: create a new class to toggle via rendering parameter
     const footerTop = document.querySelector('footer').offsetTop;
     const stickyTop = stickyAd.parentElement.offsetTop;
-    // const stickyBottom = footerTop - stickyHeight - 150;
+    const stickyBottom = footerTop - stickyHeight - 150;
 
     function setAdTop() {
             stickyAd.style.top = stickyTop + 'px';
@@ -24,14 +24,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function handleAdPosition() {
         const contentWidth = document.querySelector('.usms-container').offsetWidth;
+        console.log(contentWidth);
         const windowWidth = window.document.body.offsetWidth;
+        console.log(windowWidth);
         const contentMargins = windowWidth - contentWidth;
         const contentMargin = contentMargins/2;
-        // const contentMarginWhole = Math.round(contentMargin);
+        const contentMarginWhole = Math.round(contentMargin);
         stickyAd.style.right = contentMargin + 15 + 'px';
+        // stickyAd.style.right = contentMarginWhole + 15 + 'px';
         const stickyTop = stickyAd.parentElement.offsetTop;
         var scrollTop = window.scrollY;
-        console.log(stickyAd.getBoundingClientRect().left);
 
         if (mobile) {
             return;
@@ -53,9 +55,9 @@ document.addEventListener("DOMContentLoaded", function () {
             stickyAd.style.display = 'block';
             stickyAd.style.top = 0 + 'px';
         }
-        // if (mobile == false && scrollTop >= stickyBottom) {
-        //     stickyAd.style.display = 'none';
-        // }
+        if (mobile == false && scrollTop >= stickyBottom) {
+            stickyAd.style.display = 'none';
+        }
     }
     handleAdPosition();
     function scroll() {
