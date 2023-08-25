@@ -22,16 +22,25 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     setAdTop();
 
+    const contentWidth = document.querySelector('.usms-container').offsetWidth;
+    console.log(contentWidth);
+    const windowWidth = window.document.body.offsetWidth;
+    console.log(windowWidth);
+    const contentMargins = windowWidth - contentWidth;
+    const contentMargin = contentMargins/2;
+    console.log(contentMargin);
+    const contentMarginWhole = Math.round(contentMargin);
+    console.log(contentMarginWhole);
+
+
     function handleAdPosition() {
         const contentWidth = document.querySelector('.usms-container').offsetWidth;
-        console.log(contentWidth);
         const windowWidth = window.document.body.offsetWidth;
-        console.log(windowWidth);
         const contentMargins = windowWidth - contentWidth;
         const contentMargin = contentMargins/2;
         const contentMarginWhole = Math.round(contentMargin);
-        stickyAd.style.right = contentMargin + 15 + 'px';
-        // stickyAd.style.right = contentMarginWhole + 15 + 'px';
+        stickyAd.style.right = contentMargin + 16 + 'px';
+        // stickyAd.style.right = contentMarginWhole + 16 + 'px';
         const stickyTop = stickyAd.parentElement.offsetTop;
         var scrollTop = window.scrollY;
 
@@ -64,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
         handleAdPosition();
     }
     function resize() {
-        var mobile = window.matchMedia("screen and (max-width:1199px)").matches;
+        // var mobile = window.matchMedia("screen and (max-width:1199px)").matches;
         handleAdPosition();
     }
     window.addEventListener('scroll', scroll);
