@@ -14,8 +14,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     const stickyAd = document.querySelector('.sticky-ad'); // JP: create a new class to toggle via rendering parameter
     const footerTop = document.querySelector('footer').offsetTop;
+    // const articleStepper = document.querySelector('article-stepper').offsetTop;
     const stickyTop = stickyAd.parentElement.offsetTop;
     const stickyBottom = footerTop - stickyHeight - 150;
+
 
     function setAdTop() {
             stickyAd.style.top = stickyTop + 'px';
@@ -31,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log(contentMargin);
     const contentMarginWhole = Math.round(contentMargin);
     console.log(contentMarginWhole);
+    console.log(document.querySelector('.sticky-ad').getBoundingClientRect().right);
 
 
     function handleAdPosition() {
