@@ -1,6 +1,7 @@
-
 document.addEventListener("DOMContentLoaded", function () {
 
+    // alert("Test");
+    
     var mobile = window.matchMedia("screen and (max-width:1199px)").matches;
     let stickyHeight = 0;
     const viewSm = window.matchMedia("screen and (min-width:576px)").matches;
@@ -13,28 +14,32 @@ document.addEventListener("DOMContentLoaded", function () {
         stickyHeight = 315;
     }
     const stickyAd = document.querySelector('.sticky-ad'); // JP: create a new class to toggle via rendering parameter
+    const articleStepperTop = document.querySelector('.article-stepper').offsetTop;
     const footerTop = document.querySelector('footer').offsetTop;
-    // const articleStepper = document.querySelector('article-stepper').offsetTop;
-    const stickyTop = stickyAd.parentElement.offsetTop;
-    const stickyBottom = footerTop - stickyHeight - 150;
+    // const stickyTop = stickyAd.parentElement.offsetTop;
+    var stickyBottom = footerTop - stickyHeight - 150;
 
+    // function setAdTop() {
+    //         stickyAd.style.top = stickyTop + 'px';
+    //     }
+    // setAdTop();
 
-    function setAdTop() {
-            stickyAd.style.top = stickyTop + 'px';
-        }
-    setAdTop();
+    if (articleStepperTop) {
+        stickyBottom = articleStepperTop - stickyHeight - 150;
+    } else {
+        stickyBottom = footerTop - stickyHeight - 150;
+    }
 
-    const contentWidth = document.querySelector('.usms-container').offsetWidth;
-    console.log(contentWidth);
-    const windowWidth = window.document.body.offsetWidth;
-    console.log(windowWidth);
-    const contentMargins = windowWidth - contentWidth;
-    const contentMargin = contentMargins/2;
-    console.log(contentMargin);
-    const contentMarginWhole = Math.round(contentMargin);
-    console.log(contentMarginWhole);
-    console.log(document.querySelector('.sticky-ad').getBoundingClientRect().right);
-
+    // const contentWidth = document.querySelector('.usms-container').offsetWidth;
+    // console.log(contentWidth);
+    // const windowWidth = window.document.body.offsetWidth;
+    // console.log(windowWidth);
+    // const contentMargins = windowWidth - contentWidth;
+    // const contentMargin = contentMargins/2;
+    // console.log(contentMargin);
+    // const contentMarginWhole = Math.round(contentMargin);
+    // console.log(contentMarginWhole);
+    // console.log(document.querySelector('.sticky-ad').getBoundingClientRect().right);
 
     function handleAdPosition() {
         const contentWidth = document.querySelector('.usms-container').offsetWidth;
