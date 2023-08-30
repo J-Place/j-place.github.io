@@ -1,10 +1,9 @@
-document.addEventListener("DOMContentLoaded", function () {    
-    var mobile = window.matchMedia("screen and (max-width:1199px)").matches;
+document.addEventListener("DOMContentLoaded", function () {
+    const mobile = window.matchMedia("screen and (max-width:1199px)").matches;
+    // Sets height of different ad sizes
     let stickyHeight = 0;
     const viewSm = window.matchMedia("screen and (min-width:576px)").matches;
     const viewMd = window.matchMedia("screen and (min-width:768px)").matches;
-
-    // Sets ad pixel height for different ad sizes
     if (viewSm) {
         stickyHeight = 255;
     } else if (viewMd) {
@@ -15,15 +14,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const articleStepper = document.querySelector('.article-stepper');
     // const stickyTop = stickyAd.parentElement.offsetTop;
     // const stickyBottom = footerTop - stickyHeight - 150
-    let stickyBottom = 0;
+    let stickyBottom = 0;    
 
     if (articleStepper) {
-        const footer = document.querySelector('footer')
-        const articleStepper = document.querySelector('.article-stepper');
+        // const footer = document.querySelector('footer')
+        // const articleStepper = document.querySelector('.article-stepper');
         const articleStepperTop = document.querySelector('.article-stepper').parentElement.offsetTop;
-        console.log(footer.offsetTop);
+        // const articleStepperTop = articleStepper.offsetTop;
         console.log(articleStepperTop);
-        stickyBottom = articleStepperTop - stickyHeight - 150;
+        console.log(footerTop);
+        // stickyBottom = articleStepperTop - stickyHeight - 150;
+        stickyBottom = articleStepperTop - stickyHeight - 100;
+        // stickyBottom = articleStepperTop;
+        console.log(articleStepperTop - stickyHeight - 50);
+        console.log(stickyHeight);
     } else {
         stickyBottom = footerTop - stickyHeight - 150;
     }
@@ -33,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const windowWidth = window.document.body.offsetWidth;
         const contentMargins = windowWidth - contentWidth;
         const contentMargin = contentMargins/2;
-        const contentMarginWhole = Math.round(contentMargin);
+        // const contentMarginWhole = Math.round(contentMargin);
         stickyAd.style.right = contentMargin + 16 + 'px';
         // stickyAd.style.right = contentMarginWhole + 16 + 'px';
         const stickyTop = stickyAd.parentElement.offsetTop;
