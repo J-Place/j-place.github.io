@@ -14,21 +14,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const stickyAd = document.querySelector('.sticky-ad');
     const footerTop = document.querySelector('footer').offsetTop;
     const articleStepper = document.querySelector('.article-stepper');
-    // const stickyTop = stickyAd.parentElement.offsetTop;
-    // const stickyBottom = footerTop - stickyHeight - 150
     let stickyBottom = 0;    
-
     if (articleStepper) {
         const articleStepperTop = document.querySelector('.article-stepper').parentElement.offsetTop;
+        stickyBottom = articleStepperTop - stickyHeight - 50;
         console.log(articleStepperTop);
         console.log(footerTop);
-        stickyBottom = articleStepperTop - stickyHeight - 50;
         console.log(articleStepperTop - stickyHeight - 50);
         console.log(stickyHeight);
     } else {
         stickyBottom = footerTop - stickyHeight - 150;
     }
-
     function handleAdPosition() {
         const contentWidth = document.querySelector('.usms-container').offsetWidth;
         const windowWidth = window.document.body.offsetWidth;
@@ -69,7 +65,6 @@ document.addEventListener("DOMContentLoaded", function () {
         handleAdPosition();
     }
     function resize() {
-        // var mobile = window.matchMedia("screen and (max-width:1199px)").matches;
         handleAdPosition();
     }
     window.addEventListener('scroll', scroll);
