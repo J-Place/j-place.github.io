@@ -154,7 +154,7 @@ p.author__name,
     max-width: 100%;
 }
 
-.pull-quote,
+/* .pull-quote,
 .pull-quote-left,
 .pull-quote-center,
 .pull-quote-right {
@@ -165,14 +165,14 @@ p.author__name,
     border-top: 1px solid #CCC;
     border-bottom: 1px solid #CCC;
     text-align: center;
-}
+} */
 
 @media (min-width: 768px) {
     /* .page-header__photo-credit {
         right: -7rem;
         top: 39rem;
     } */
-    .pull-quote-left {
+    /* .pull-quote-left {
         width: 35rem;
         float: left;
         margin: 1rem 4rem 2rem -40rem;
@@ -197,18 +197,37 @@ p.author__name,
         border-top: 1px solid #ccc;
         border-bottom: 1px solid #ccc;
         text-align: center;
-    }
+    } */
 }
 
-.pull-quote .pull-quote-text {
+p.pull-quote-text-only {
     font-size: 3.6rem;
     line-height: 140%;
     font-weight: 300;
     color: #888;
     display: inline-block;
+    margin: 6rem 0;
+    padding: 4rem 2rem;
+    border: 0;
+    border-top: 1px solid #CCC;
+    border-bottom: 1px solid #CCC;
 }
 
-.pull-quote .pull-quote-text::before {
+p.pull-quote-text {
+    font-size: 3.6rem;
+    line-height: 140%;
+    font-weight: 300;
+    color: #888;
+    text-align: center;
+    display: inline-block;
+    margin: 6rem 0 0;
+    padding: 4rem 2rem;
+    border: 0;
+    border-top: 1px solid #CCC;
+}
+
+p.pull-quote-text-only::before, 
+p.pull-quote-text::before {
     color: #888;
     content: "\201C";
     display: inline;
@@ -216,8 +235,8 @@ p.author__name,
     font-family: Arial, Helvetica, sans-serif;
     margin-right: 0.2rem;
 }
-
-.pull-quote .pull-quote-text::after {
+p.pull-quote-text-only::after,
+p.pull-quote-text::after {
     color: #888;
     content: "\201D";
     display: inline;
@@ -226,18 +245,20 @@ p.author__name,
     margin-left: -0.4rem;
 }
 
-.pull-quote .pull-quote-attribution {
+p.pull-quote-attribution {
     font-size: 1.8rem;
     line-height: 150%;
     font-weight: 300;
     color: #888;
     text-align: right;
     display: inline-block;
-    margin: 2rem auto 0;
-    padding: 0 7rem;
+    margin: 0 0 6rem;
+    padding: 0 8rem 4rem;
+    border: 0;
+    border-bottom: 1px solid #CCC;
 }
 
-.pull-quote .pull-quote-attribution::before {
+p.pull-quote-attribution::before {
     color: #888;
     content: "–";
     display: inline;
