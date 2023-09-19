@@ -47,61 +47,79 @@
                            </div>
                         </div>
                   </div>
+                  <div class="usms-container form__header ">
+                     <div class="row is-flex ">
+                       <div class="col-xs-12  column-right">
+                           <div class="club-logout">
+                              <form action="/club-central/club-dashboard" class="form-signin login-form" method="post">        <input type="hidden" name="fhController" value="ClubLoginController">
+                                 <input type="hidden" name="fhAction" value="ClubLogout">
+                                 <div class="form-group">
+                                    <input type="submit" class="btn btn-ko" value="Logout">
+                                 </div>
+                              </form>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
                   <div class="usms-container form__container  p-tb-10">
 
-                     <!-- <div class="modal fade in" id="modalMessage" tabindex="-1" role="dialog" style="">
+                     <div class="modal" id="manageModal" tabindex="-1" role="dialog" style="display: none;">
                         <div class="modal-dialog" role="document">
                               <div class="modal-content" style="margin: 0 auto;">
                                  <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button> -->
                                  </div>
                                  <div class="modal-body">
                                  <p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliquam</p></p>
 
-                                 <div class="modal-footer">
-                                 <a class="btn btn-outlineXXX club-link-button">Manage Your Club</a>
+                                 <div class="modal-footer">                                     
+                                    <a class="btn btn-outlineXXX club-link-button">Manage Your Club</a>
                                     <a href="club-dashboard-02.html" class="btn btn-outlineXXX club-link-button">Manage Your Members</a>
                                  </div>
                               </div>
                               </div>
                         </div>
-                     </div> -->
+                     </div>
 
                      <div class="row ">
                         <div class="col-xs-12 ">
-                           <div>
-                              Here are some helpful pages to get you ready for the 2023 club registration<br /><br />
-                              <ul>
-                                 <li style="text-align: left; text-decoration:underline;"><a href="/club-central/club-and-workout-group-registration-information">Information to have ready for the registration process</a></li>
-                                 <li style="text-align: left; text-decoration:underline;"><a href="/club-central/club-registration-updates">2023 club registration updates</a></li>
-                                 <li style="text-align: left; text-decoration:underline;"><a href="/club-central/club-contact-information">Club contact information</a></li>
-                              </ul>
-                              <strong><br />If you do not see your club or workout group abbreviation on your dashboard, please reach out to&nbsp;<a href="mailto:clubandcoach@usmastersswimming.org" style="background-color: transparent;">clubandcoach@usmastersswimming.org</a>&nbsp;to gain access to the club or workout group renewal.</strong>
+                           <!-- <div>
+                              <strong><br />If you do not see your club or workout group abbreviation on your dashboard, please <a href="mailto:clubandcoach@usmastersswimming.org" style="background-color: transparent;">email us</a> to gain access to the club or workout group renewal.</strong>
                               <br>
-                              <a href="#" class="btn-hero-modal" data-toggle="modal" data-target="#modalImage">+ View Full Image</a>
-                           </div>
+                           </div> -->
 
                            <form action="/club-central/club-dashboard" class="form-horizontal" method="post">
-                           <div class="row button-row__content club-dashboard align-center">
-                              <h3>Confirm Your Club or Workout Group</h3>
-                              <div class="club-button-wrapper">
-                                    <a class="btn btn-outline club-link-button" href="/club-central/club-dashboard/club-edit?clubId=0f3fec21-dc78-41a7-9ebc-61e4a99a6b85">J926A</a>
+                              <div class="row button-row__content club-dashboard align-center">
+                                 <h3>Confirm Your Club or Workout Group</h3>
+                                 <p style="font-size: 13px;">If you do not see your club or workout group abbreviation on your dashboard, please <a href="mailto:clubandcoach@usmastersswimming.org" style="background-color: transparent;">email us</a> to gain access to the club or workout group renewal.</p>
+                                 <!-- <div class="club-button-wrapper">
+                                       <a class="btn btn-outline club-link-button" href="">J926A</a>
+                                 </div> -->
+                                 <!-- <div class="club-button-wrapper">
+                                       <a class="btn btn-outline club-link-button" href="" data-bs-toggle="modal" data-bs-target="#manageModal">JTC1</a>
+                                 </div> -->
+                                 <!-- <button class="btn btn-outline club-link-button" href="" data-bs-toggle="modal" data-bs-target="#manageModal">J926A</button>    -->
+                                 <button class="btn btn-outline club-link-button" href="" data-bs-toggle="modal" data-bs-target="#manageModal">JTC1</button>
                               </div>
-                              <div class="club-button-wrapper">
-                                    <a class="btn btn-outline club-link-button" href="/club-central/club-dashboard/club-edit?clubId=6422e398-ea5b-4aec-8fe4-9504d6fa83c9">JTC1</a>
+                              <!-- <hr> -->
+                              
+                              <div class="button-row__footer">
+                                 <hr>
+                                 <br><br>
+
+                                    <a class="btn" href="">+ Add a New Club or Workout Group</a>
                               </div>
-                           </div>
-                           <div class="button-row__footer">
-                                 <a class="btn" href="/club-central/club-add-choice">+ Add a New Club or Workout Group</a>
-                           </div>
-                           <div class="form__notes">
-                              <p>Here are some helpful pages to get you ready for the 2023 club registration process</p>
-                              <ul>
-                                 <li><a href="#">Information to ahve ready for the registration process</a></li>
-                                 <li><a href="#">2023 club registration updates</a></li>
-                                 <li><a href="#">Club contact information</a></li>
-                              </ul>
-                           </div>
+
+                              <div class="form__notes" style="max-width:500px; margin: 0 auto;">
+                                 <p>Here are some helpful pages to get you ready for the 2023 club registration process</p>
+                                 <ul>
+                                    <li><a href="#">Information to have ready for the registration process</a></li>
+                                    <li><a href="#">2023 club registration updates</a></li>
+                                    <li><a href="#">Club contact information</a></li>
+                                 </ul>
+                              </div>
+
                            </form>
 
                         </div>
@@ -109,7 +127,8 @@
 
                      <div class="row">
                         <div class="col-xs-12">
-                           <div class="modal club-detail-modal show" tabindex="-1" role="dialog" id="modalImage" aria-modal="true" style="padding-right: 0px; display: block;">
+                           <!-- <a href="#" class="btn-hero-modal" data-toggle="modal" data-target="#modalImage">+ View Full Image</a> -->
+                           <!-- <div class="modal club-detail-modal" tabindex="-1" role="dialog" id="modalImage">
                               <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                                   <div class="modal-content">
                                       <div class="modal-header">
@@ -125,6 +144,9 @@
                                   </div>
                               </div>
                           </div>
+                          <script>
+                              $(".btn-hero-modal").modal();
+                           </script> -->
                         </div>
                      </div>
 
