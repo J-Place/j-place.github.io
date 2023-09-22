@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (mobile) {
         document.querySelector('.article-nav').classList.add('mobile');
     }
-    const stickyNav = document.querySelector('.article-nav');
+
     function setArticleIds() {
         const contentHeadings = document.querySelectorAll('.article-body h2, .article-body h3');
         for (i = 0; i < contentHeadings.length; i++) {  
@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
         };
     }
     setArticleIds();
+
     function renderNavList() {
         const contentHeadings = document.querySelectorAll('.article-body h2, .article-body h3');
         var str = '';
@@ -37,7 +38,6 @@ document.addEventListener("DOMContentLoaded", function () {
     window.addEventListener('scroll', renderNavList);
     renderNavList(); // Draw nav on page load
 
-
     function toggleMobileNav() {
         const mobileNavList = document.getElementById('navList');
         if (mobile && mobileNavList.classList.contains('show')) {
@@ -57,12 +57,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const footerTop = document.getElementById('footerOverlay').offsetTop;
     const articleStepper = document.querySelector('.article-stepper');
+    const stickyNav = document.querySelector('.article-nav');
+    const stickyNavHeight = stickyNav.clientHeight;
     let stickyNavBottom = 0;
     if (articleStepper) {
         const articleStepperTop = document.querySelector('.article-stepper').parentElement.offsetTop;
         stickyNavBottom = articleStepperTop;
     } else {
-        stickyNavBottom = footerTop - window.innerHeight;
+        stickyNavBottom = footerTop - stickyNavHeight;
     }
     function handleNavPosition() {
         stickyNav.style.left = 0;
