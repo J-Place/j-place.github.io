@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     function handleNavPosition() {
         stickyNav.style.left = 0;
-        const stickyNavTop = stickyNav.parentElement.offsetTop - 20;
+        const stickyNavTop = stickyNav.parentElement.offsetTop -20;
         var scrollTop = window.scrollY;
         if (mobile) {
             return;
