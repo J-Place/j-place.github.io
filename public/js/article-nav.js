@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function setArticleIds() {
-        const contentHeadings = document.querySelectorAll('.section div + div h2, .section div + div h3');
+        const contentHeadings = document.querySelectorAll('.article-body h2, .article-body h3');
         for (i = 0; i < contentHeadings.length; i++) {  
             var contentHeadingHtml = contentHeadings[i].innerHTML;
             var contentHeadingHtmlClean = contentHeadingHtml = contentHeadingHtml.replace(/\s/g, '').replace(/[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g, '');
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
     setArticleIds();
 
     function renderNavList() {
-        const contentHeadings = document.querySelectorAll('.section div + div h2, .section div + div h3');
+        const contentHeadings = document.querySelectorAll('.article-body h2, .article-body h3');
         var str = '';
         for (i = 0; i < contentHeadings.length; i++) {
             var id = contentHeadings[i];
