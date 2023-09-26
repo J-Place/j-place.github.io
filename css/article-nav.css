@@ -19,6 +19,7 @@
     background-color: #EEE;
     overflow-y: scroll;
     overflow-x: hidden;
+    display: none;
 }
 #navList.show {
     display: block;
@@ -122,7 +123,12 @@
         border-bottom: 1px solid #CCC;
         color: #0060a7;
      }
-     .article-nav ul {
+     .article-nav .article-nav-title::before {
+        content: "";
+        padding: 0;
+        width: 0;
+    }
+    .article-nav ul {
         list-style: none;
         margin: 1rem auto 3rem;
         padding: 0;
