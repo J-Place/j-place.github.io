@@ -26,16 +26,13 @@ document.addEventListener("DOMContentLoaded", function () {
         stickyBottom = footerTop - stickyHeight - 150;
     }
     function handleAdPosition() {
-        const contentWidth = document.querySelector('.usms-container').offsetWidth;
-        const windowWidth = window.document.body.offsetWidth;
+        const contentWidth = document.querySelector('.usms-container').clientWidth;
+        const windowWidth = window.document.body.scrollWidth;
         const contentMargins = windowWidth - contentWidth;
         const contentMargin = contentMargins/2;
-        stickyAd.style.right = contentMargin + 16 + 'px';
-        // const contentMarginWhole = Math.round(contentMargin);
-        // stickyAd.style.right = contentMarginWhole + 16 + 'px';
+        stickyAd.style.right = contentMargin + 2 + 'px';
         const stickyTop = stickyAd.parentElement.offsetTop;
         var scrollTop = window.scrollY;
-
         if (mobile) {
             return;
         }
