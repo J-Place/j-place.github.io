@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function setArticleIds() {
         const contentHeadings = document.querySelectorAll('.article-body h2, .article-body h3');
-        for (i = 0; i < contentHeadings.length; i++) {  
+        for (i = 0; i < contentHeadings.length; i++) {
             var contentHeadingHtml = contentHeadings[i].innerHTML;
             var contentHeadingHtmlClean = contentHeadingHtml = contentHeadingHtml.replace(/\s/g, '').replace(/[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g, '');
             contentHeadings[i].id = contentHeadingHtmlClean;
