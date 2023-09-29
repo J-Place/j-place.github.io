@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const mobile = window.matchMedia("screen and (max-width:1199px)").matches;
+    const mobile = window.matchMedia("screen and (max-width:991px)").matches;
     // Sets height of responsive ad sizes
     let stickyHeight = 0;
     const viewSm = window.matchMedia("screen and (min-width:576px)").matches;
@@ -43,9 +43,9 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
         if (mobile == false && window.scrollY > stickyTop ) {
-            stickyAd.classList.add('sticky-ad-start');
+            stickyAd.classList.add('sticky-start');
         } else {
-            stickyAd.classList.remove('sticky-ad-start');
+            stickyAd.classList.remove('sticky-start');
         }
         if (mobile == false && scrollTop <= stickyTop) {
             stickyAd.style.display = 'block';
