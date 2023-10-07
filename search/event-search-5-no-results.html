@@ -5,391 +5,47 @@
    <!--[if !IE]><!-->
    <html lang="en">
       <!--<![endif]-->
-      <title>Event Search No Results</title>
+      <head>
+         <title>Search | U.S. Masters Swimming</title>
          <sergey-import src="head_meta" />
          <sergey-import src="head_js" />
          <sergey-import src="head_css" />
-         <link rel="stylesheet" href="./css/ListControl.css">
-         <link rel="stylesheet" href="./css/ResultList.css">
-         <link rel="stylesheet" href="./css/ResultsPagination.css">
-         <link rel="stylesheet" href="./css/ListControl.css">
-         <!-- <link rel="stylesheet" href="./css/ResultsFilterForm.css"> -->
-         <link rel="stylesheet" href="./css/ClubFilterForm.css">
-         <link rel="stylesheet" href="./css/EventsFilterForm.css">
-         <link rel="stylesheet" href="./css/EventsFilterDropdown.css">
-         <link rel="stylesheet" href="./css/results-overrides.css">
-         <link rel="stylesheet" href="./css/events-filter-overrrides.css">
-         <!-- <link rel="stylesheet" href="./css/events.min.css"> -->
+         <sergey-import src="head_css-search" />
       </head>
       <body class="">
          <div id="main-container">
             <sergey-import src="site-header" />
             <main role="main">
-               <div class="breadcrumb-container" style="position: relative; padding-bottom: 50px;">
-                  <div class="breadcrumb">
-                     <div class="usms-container">
-                        <div class="row">
-                           <div class="col-xs-12">
-                              <div class="breadcrumb__container">
-                                 <ul class="breadcrumb__items list--nostyle">
-                                    <li class="text-capitalize breadcrumb__item ">
-                                       <a class="breadcrumb__link" href="../index.html">Home<i class="fa fa-chevron-right"></i></a>
-                                    </li>
-                                  </ul>
-                                 <span class="breadcrumb__title text-capitalize">Event Calendar</span>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
+               <sergey-import src="breadcrumb"><sergey-template name="current-page">Search</sergey-template></sergey-import>
                <header class="page-header">
-                  <h1>Event Calendar</h1>
-               </header>
-               <div class="section section-full  p-tb-10  ">
-                  <div class="usms-container p-t-10">
-                     <div class="row">
-                        <div class="col-xs-12">
-                           <div id="react###">
-                              <div class="events-summary-content">
-                                    <div class="row">
-                                       <div class="col-xs-12">
-                                          <div class="list-control">
-                                             <div class="list-control-search">
-                                                <div class="list-control-search__header">
-                                                   <span class="tag-list--title">Filters:</span>
-                                                   <div class="list-control-search--tags" data-reactid="16"><span class="tag-list--item">Filter Name</span></div>
-                                                   <!-- <i class="fa fa-refresh fa-spin list-control-search--summary-loading" ></i>
-                                                   <div class="list-control-search--summary">
-                                                      Showing 
-                                                      <strong>72 Events</strong> within <strong>500 Miles</strong>
-                                                      <span class="list-control-search--summary-detail">of <strong>City, State</strong></span>
-                                                   </div> -->
-                                                </div>
-                                                <div class="list-control-search-mobile__toggle" onclick="handleMobileToggle()">Update Your Results</div>
-                                                <div class="list-control-search__content form-group">
-                                                   <div class="list-control-search__input list-control-search__input--club-name">
-                                                      <label for="search-filter__club-name">Search by Event Name</label>
-                                                      <div class="input-group"><span class="help-block help-block--ClubName">Please Enter an Event Name</span><input type="text" class="form-control" name="search-filter__club-name" placeholder="Event Name"></div>
-                                                   </div>
-                                                   <div class="list-control-search__input list-control-search__input--range">
-                                                      <label for="search-filter__range">Select a Range</label>
-                                                      <div class="input-group">
-                                                         <select id="search-filter__range" name="search-filter__range">
-                                                            <option value="25">25 Miles</option>
-                                                            <option value="50">50 Miles</option>
-                                                            <option value="100">100 Miles</option>
-                                                            <option value="250">250 Miles</option>
-                                                            <option value="500" selected="">500 Miles</option>
-                                                            <option value="max">Nationwide</option>
-                                                         </select>
-                                                      </div>
-                                                   </div>
-                                                   <div class="list-control-search__input list-control-search__input--location">
-                                                      <label for="search-filter__location">Search by City, State or Zip</label>
-                                                      <div class="input-group">
-                                                         <span class="help-block help-block--CityStateZip">Please enter a City, State or Zip</span>
-                                                         <div>
-                                                            <div class="map" style="display:none;"></div>
-                                                            <input type="text" class="google-places-input form-control pac-target-input" placeholder="Select city &amp; state or zip" name="location" autocomplete="off"><input type="hidden" class="google-places-input--zip" name="google-places-input--zip" value=""><input type="hidden" class="google-places-input--lat" name="google-places-input--lat" value=""><input type="hidden" class="google-places-input--lng" name="google-places-input--lng" value="">
-                                                         </div>
-                                                      </div>
-                                                   </div>
-                                                   <div class="list-control-search__input list-control-search__input--button align-self-end">
-                                                      <div class="input-group"><button type="button" class="btn btn-primary" id="listSearchSubmit">Submit</button></div>
-                                                   </div>
-                                                </div>
-                                             </div>
-                                             <div class="list-control-filter">
-                                                <div class="list-control-filter__header">
-                                                   <button class="toggle-filters" onclick="handleShowFilters();">More Filters</button>
-                                                </div>
-                                                <div class="list-control-filter__content">
-                                                   <div class="row">
-                                                      <div class="col-xs-12">
-                                                         <h5 class="events-filter-form__dropdown-title text-capitalize">Date Range</h5>
-                                                         <div class="date-range__wrapper">
-                                                            <div class="form-group has-feedback events-filter-form__dropdown-start-date-container">
-                                                                  <div class="SingleDatePicker SingleDatePicker_1">
-                                                                     <div class="SingleDatePickerInput SingleDatePickerInput_1 SingleDatePickerInput__withBorder SingleDatePickerInput__withBorder_2">
-                                                                        <button class="SingleDatePickerInput_calendarIcon SingleDatePickerInput_calendarIcon_1" type="button">
-                                                                           <svg class="SingleDatePickerInput_calendarIcon_svg SingleDatePickerInput_calendarIcon_svg_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1393.1 1500">
-                                                                              <path d="M107.2 1392.9h241.1v-241.1H107.2v241.1zm294.7 0h267.9v-241.1H401.9v241.1zm-294.7-294.7h241.1V830.4H107.2v267.8zm294.7 0h267.9V830.4H401.9v267.8zM107.2 776.8h241.1V535.7H107.2v241.1zm616.2 616.1h267.9v-241.1H723.4v241.1zM401.9 776.8h267.9V535.7H401.9v241.1zm642.9 616.1H1286v-241.1h-241.1v241.1zm-321.4-294.7h267.9V830.4H723.4v267.8zM428.7 375V133.9c0-7.3-2.7-13.5-8-18.8-5.3-5.3-11.6-8-18.8-8h-53.6c-7.3 0-13.5 2.7-18.8 8-5.3 5.3-8 11.6-8 18.8V375c0 7.3 2.7 13.5 8 18.8 5.3 5.3 11.6 8 18.8 8h53.6c7.3 0 13.5-2.7 18.8-8 5.3-5.3 8-11.5 8-18.8zm616.1 723.2H1286V830.4h-241.1v267.8zM723.4 776.8h267.9V535.7H723.4v241.1zm321.4 0H1286V535.7h-241.1v241.1zm26.8-401.8V133.9c0-7.3-2.7-13.5-8-18.8-5.3-5.3-11.6-8-18.8-8h-53.6c-7.3 0-13.5 2.7-18.8 8-5.3 5.3-8 11.6-8 18.8V375c0 7.3 2.7 13.5 8 18.8 5.3 5.3 11.6 8 18.8 8h53.6c7.3 0 13.5-2.7 18.8-8 5.4-5.3 8-11.5 8-18.8zm321.5-53.6v1071.4c0 29-10.6 54.1-31.8 75.3-21.2 21.2-46.3 31.8-75.3 31.8H107.2c-29 0-54.1-10.6-75.3-31.8C10.6 1447 0 1421.9 0 1392.9V321.4c0-29 10.6-54.1 31.8-75.3s46.3-31.8 75.3-31.8h107.2v-80.4c0-36.8 13.1-68.4 39.3-94.6S311.4 0 348.3 0h53.6c36.8 0 68.4 13.1 94.6 39.3 26.2 26.2 39.3 57.8 39.3 94.6v80.4h321.5v-80.4c0-36.8 13.1-68.4 39.3-94.6C922.9 13.1 954.4 0 991.3 0h53.6c36.8 0 68.4 13.1 94.6 39.3s39.3 57.8 39.3 94.6v80.4H1286c29 0 54.1 10.6 75.3 31.8 21.2 21.2 31.8 46.3 31.8 75.3z"></path>
-                                                                           </svg>
-                                                                        </button>
-                                                                           <div class="DateInput DateInput_1">
-                                                                           <input type="text" class="DateInput_input DateInput_input_1" aria-label="MM/DD/YYYY" id="date" name="date" value="" placeholder="MM/DD/YYYY" autocomplete="off" aria-describedby="DateInput__screen-reader-message-date">
-                                                                           <!-- <p class="DateInput_screenReaderMessage DateInput_screenReaderMessage_1" id="DateInput__screen-reader-message-date">Press the down arrow key to interact with the calendar and
-                                                                              select a date. Press the question mark key to get the keyboard shortcuts for changing dates.
-                                                                           </p> -->
-                                                                        </div>
-                                                                     </div>
-                                                                  </div>
-                                                            </div>
-                                                            <h5 class="form-group__inline-separator">to</h5>
-                                                            <div class="form-group has-feedback events-filter-form__dropdown-end-date-container">
-                                                               <div class="SingleDatePicker SingleDatePicker_1">
-                                                                  <div class="SingleDatePickerInput SingleDatePickerInput_1 SingleDatePickerInput__withBorder SingleDatePickerInput__withBorder_2">
-                                                                     <button class="SingleDatePickerInput_calendarIcon SingleDatePickerInput_calendarIcon_1" type="button">
-                                                                        <svg class="SingleDatePickerInput_calendarIcon_svg SingleDatePickerInput_calendarIcon_svg_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1393.1 1500">
-                                                                           <path d="M107.2 1392.9h241.1v-241.1H107.2v241.1zm294.7 0h267.9v-241.1H401.9v241.1zm-294.7-294.7h241.1V830.4H107.2v267.8zm294.7 0h267.9V830.4H401.9v267.8zM107.2 776.8h241.1V535.7H107.2v241.1zm616.2 616.1h267.9v-241.1H723.4v241.1zM401.9 776.8h267.9V535.7H401.9v241.1zm642.9 616.1H1286v-241.1h-241.1v241.1zm-321.4-294.7h267.9V830.4H723.4v267.8zM428.7 375V133.9c0-7.3-2.7-13.5-8-18.8-5.3-5.3-11.6-8-18.8-8h-53.6c-7.3 0-13.5 2.7-18.8 8-5.3 5.3-8 11.6-8 18.8V375c0 7.3 2.7 13.5 8 18.8 5.3 5.3 11.6 8 18.8 8h53.6c7.3 0 13.5-2.7 18.8-8 5.3-5.3 8-11.5 8-18.8zm616.1 723.2H1286V830.4h-241.1v267.8zM723.4 776.8h267.9V535.7H723.4v241.1zm321.4 0H1286V535.7h-241.1v241.1zm26.8-401.8V133.9c0-7.3-2.7-13.5-8-18.8-5.3-5.3-11.6-8-18.8-8h-53.6c-7.3 0-13.5 2.7-18.8 8-5.3 5.3-8 11.6-8 18.8V375c0 7.3 2.7 13.5 8 18.8 5.3 5.3 11.6 8 18.8 8h53.6c7.3 0 13.5-2.7 18.8-8 5.4-5.3 8-11.5 8-18.8zm321.5-53.6v1071.4c0 29-10.6 54.1-31.8 75.3-21.2 21.2-46.3 31.8-75.3 31.8H107.2c-29 0-54.1-10.6-75.3-31.8C10.6 1447 0 1421.9 0 1392.9V321.4c0-29 10.6-54.1 31.8-75.3s46.3-31.8 75.3-31.8h107.2v-80.4c0-36.8 13.1-68.4 39.3-94.6S311.4 0 348.3 0h53.6c36.8 0 68.4 13.1 94.6 39.3 26.2 26.2 39.3 57.8 39.3 94.6v80.4h321.5v-80.4c0-36.8 13.1-68.4 39.3-94.6C922.9 13.1 954.4 0 991.3 0h53.6c36.8 0 68.4 13.1 94.6 39.3s39.3 57.8 39.3 94.6v80.4H1286c29 0 54.1 10.6 75.3 31.8 21.2 21.2 31.8 46.3 31.8 75.3z"></path>
-                                                                        </svg>
-                                                                     </button>
-                                                                     <div class="DateInput DateInput_1">
-                                                                        <input type="text" class="DateInput_input DateInput_input_1" aria-label="MM/DD/YYYY" id="date" name="date" value="" placeholder="MM/DD/YYYY" autocomplete="off" aria-describedby="DateInput__screen-reader-message-date">
-                                                                        <!-- <p class="DateInput_screenReaderMessage DateInput_screenReaderMessage_1" id="DateInput__screen-reader-message-date">Press the down arrow key to interact with the calendar and
-                                                                           select a date. Press the question mark key to get the keyboard shortcuts for changing dates.
-                                                                        </p> -->
-                                                                     </div>
-                                                                  </div>
-                                                               </div>
-                                                            </div>
-                                                         </div>
-                                                      </div>
-                                                   </div>
-                                                   <div class="row">
-                                                      <div class="col-xs-12 col-sm-3">
-                                                         <h5 class="events-filter-form__dropdown-title text-capitalize">Course Type</h5>
-                                                         <div class="events-filter-form__dropdown-event-filter">
-                                                            <div class="check-list check-list--course-type"> 
-                                                            
-                                                               <div class="input-group check-list-item">
-                                                                  <label id="Short Course Yards__label" class="checkbox-label " for="Short Course Yards">
-                                                                     <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-courses-0" id="Short Course Yards" value=""><span class="checkbox__placeholder"></span></div>
-                                                                     Short Course Yards
-                                                                  </label>
-                                                               </div>
-                                                            
-                                                               <div class="input-group check-list-item">
-                                                                  <label id="Open Water__label" class="checkbox-label " for="Open Water">
-                                                                     <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-courses-1" id="Open Water" value=""><span class="checkbox__placeholder"></span></div>
-                                                                     Open Water
-                                                                  </label>
-                                                               </div>
-                                                            
-                                                               <div class="input-group check-list-item">
-                                                                  <label id="Long Course Meters__label" class="checkbox-label " for="Long Course Meters">
-                                                                     <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-courses-2" id="Long Course Meters" value=""><span class="checkbox__placeholder"></span></div>
-                                                                     Long Course Meters
-                                                                  </label>
-                                                               </div>                                                         
-                                                            
-                                                               <div class="input-group check-list-item">
-                                                                  <label id="Short Course Meters__label" class="checkbox-label " for="Short Course Meters">
-                                                                     <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-courses-3" id="Short Course Meters" value=""><span class="checkbox__placeholder"></span></div>
-                                                                     Short Course Meters
-                                                                  </label>
-                                                               </div>                                                         
-                                                            
-                                                               <div class="input-group check-list-item">
-                                                                  <label id="Long Distance__label" class="checkbox-label " for="Long Distance">
-                                                                     <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-courses-4" id="Long Distance" value=""><span class="checkbox__placeholder"></span></div>
-                                                                     Long Distance
-                                                                  </label>
-                                                               </div>
-                                                         
-                                                            </div>
-                                                         </div>
-                                                      </div>
-                                                      <div class="col-xs-12 col-sm-3">
-                                                         <h5 class="events-filter-form__dropdown-title text-capitalize">Other Details</h5>
-                                                         <div class="events-filter-form__dropdown-event-filter">
-                                                            <div class="check-list check-list--other-event-details">
-                                                               <div class="input-group check-list-item">
-                                                                  <label id="Championship__label" class="checkbox-label " for="Championship">
-                                                                     <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-include-0" id="Championship" value=""><span class="checkbox__placeholder"></span></div>
-                                                                     Championship
-                                                                  </label>
-                                                               </div>
-                                                               <div class="input-group check-list-item">
-                                                                  <label id="International Event__label" class="checkbox-label " for="International Event">
-                                                                     <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-include-1" id="International Event" value=""><span class="checkbox__placeholder"></span></div>
-                                                                     International Event
-                                                                  </label>
-                                                               </div>
-                                                               <div class="input-group check-list-item">
-                                                                  <label id="Virtual Event__label" class="checkbox-label " for="Virtual Event">
-                                                                     <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-include-2" id="Virtual Event" value=""><span class="checkbox__placeholder"></span></div>
-                                                                     Virtual Event
-                                                                  </label>
-                                                               </div>
-                                                               <div class="input-group check-list-item">
-                                                                  <label id="Clinic__label" class="checkbox-label " for="Clinic">
-                                                                     <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-include-3" id="Clinic" value=""><span class="checkbox__placeholder"></span></div>
-                                                                     Clinic
-                                                                  </label>
-                                                               </div>
-                                                            </div>
-                                                         </div>
-                                                      </div>
-                                                      <div class="col-xs-12 col-sm-3">
-                                                         <h5 class="events-filter-form__dropdown-title text-capitalize">Sanction Type</h5>
-                                                         <div class="events-filter-form__dropdown-event-filter">
-                                                            <div class="check-list check-list--sanction-type">
-                                                               <div class="input-group check-list-item">
-                                                                  <label id="Sanctioned__label" class="checkbox-label " for="Sanctioned">
-                                                                     <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-types-0" id="Sanctioned" value=""><span class="checkbox__placeholder"></span></div>
-                                                                     Sanctioned
-                                                                  </label>
-                                                               </div>
-                                                               <div class="input-group check-list-item">
-                                                                  <label id="Recognized__label" class="checkbox-label " for="Recognized">
-                                                                     <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-types-1" id="Recognized" value=""><span class="checkbox__placeholder"></span></div>
-                                                                     Recognized
-                                                                  </label>
-                                                               </div>
-                                                               <div class="input-group check-list-item">
-                                                                  <label id="Another__label" class="checkbox-label " for="Another">
-                                                                     <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-types-2" id="Another" value=""><span class="checkbox__placeholder"></span></div>
-                                                                     Sanctioned by Other NGB
-                                                                  </label>
-                                                               </div>
-                                                               <div class="input-group check-list-item">
-                                                                  <label id="Not__label" class="checkbox-label " for="Not">
-                                                                     <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-types-3" id="Not" value=""><span class="checkbox__placeholder"></span></div>
-                                                                     Not Sanctioned/Recognized
-                                                                  </label>
-                                                               </div>
-                                                            </div>
-                                                         </div>
-                                                      </div>
-                                                      <div class="col-xs-12 col-sm-3" style="padding-right:35px;">
-                                                         <h5 class="events-filter-form__dropdown-title text-capitalize">LMSC</h5>
-                                                         <div class="">
-                                                            <!-- <label for="search-filter__lmsc">LMSC</label> -->
-                                                            <div class="input-group">
-                                                               <select id="search-filter__lmsc" name="search-filter__lmsc">
-                                                                  <!-- <option value="">Select an LMSC</option> -->
-                                                                  <option value="3">(AD) Adirondack</option>
-                                                                  <option value="56">(AK) Alaska</option>
-                                                                  <option value="11">(AM) Allegheny Mountain</option>
-                                                                  <option value="48">(AZ) Arizona</option>
-                                                                  <option value="23">(AR) Arkansas</option>
-                                                                  <option value="32">(CO) Colorado</option>
-                                                                  <option value="5">(CT) Connecticut</option>
-                                                                  <option value="8">(DV) Delaware Valley</option>
-                                                                  <option value="14">(FL) Florida</option>
-                                                                  <option value="50">(FG) Florida Gold Coast</option>
-                                                                  <option value="45">(GA) Georgia</option>
-                                                                  <option value="25">(GU) Gulf</option>
-                                                                  <option value="39">(HI) Hawaii</option>
-                                                                  <option value="21">(IL) Illinois</option>
-                                                                  <option value="16">(IN) Indiana</option>
-                                                                  <option value="35">(IW) Inland Northwest</option>
-                                                                  <option value="40">(IA) Iowa</option>
-                                                                  <option value="41">(KY) Kentucky</option>
-                                                                  <option value="18">(LE) Lake Erie</option>
-                                                                  <option value="9">(MD) Maryland</option>
-                                                                  <option value="6">(MR) Metropolitan</option>
-                                                                  <option value="19">(MI) Michigan</option>
-                                                                  <option value="30">(MN) Minnesota</option>
-                                                                  <option value="28">(MV) Missouri Valley</option>
-                                                                  <option value="31">(MT) Montana</option>
-                                                                  <option value="29">(NB) Nebraska</option>
-                                                                  <option value="2">(NE) New England</option>
-                                                                  <option value="7">(NJ) New Jersey</option>
-                                                                  <option value="42">(NM) New Mexico</option>
-                                                                  <option value="4">(NI) Niagara</option>
-                                                                  <option value="13">(NC) North Carolina</option>
-                                                                  <option value="52">(ND) North Dakota</option>
-                                                                  <option value="26">(NT) North Texas</option>
-                                                                  <option value="17">(OH) Ohio</option>
-                                                                  <option value="27">(OK) Oklahoma</option>
-                                                                  <option value="37">(OR) Oregon</option>
-                                                                  <option value="22">(OZ) Ozark</option>
-                                                                  <option value="38">(PC) Pacific</option>
-                                                                  <option value="36">(PN) Pacific Northwest</option>
-                                                                  <option value="10">(PV) Potomac Valley</option>
-                                                                  <option value="44">(SI) San Diego - Imperial</option>
-                                                                  <option value="59">(SR) Snake River</option>
-                                                                  <option value="55">(SC) South Carolina</option>
-                                                                  <option value="54">(SD) South Dakota</option>
-                                                                  <option value="43">(ST) South Texas</option>
-                                                                  <option value="15">(SE) Southeastern</option>
-                                                                  <option value="24">(SO) Southern</option>
-                                                                  <option value="33">(SP) Southern Pacific</option>
-                                                                  <option value="34">(UT) Utah</option>
-                                                                  <option value="12">(VA) Virginia</option>
-                                                                  <option value="53">(WT) West Texas</option>
-                                                                  <option value="20">(WI) Wisconsin</option>                                                               </select>
-                                                            </div>      
-                                                         </div>
-                                                      </div>
-                                                   </div>
-                                                </div>
-                                             </div>
-                                             <div class="list-control-search--summary">
-                                                <i class="fa fa-refresh fa-spin list-control-search--summary-loading" ></i>
-                                                Showing 
-                                                <strong>72 Events</strong> within <strong>500 Miles</strong>
-                                                <span class="list-control-search--summary-detail">of <strong>City, State</strong></span>
-                                             </div>
-
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                           </div>
-                        </div>
-                        <div class="col-xs-12">
-                           <div class="results-content">
-
-                              <div class="results-list">
-                                 <div class="results-list__item results-list__item-not-found">
-                                    <div class="results-list__item-detail" role="main">
-                                       <!-- <div class="results-list__item-type text-uppercase"></div> -->
-                                       <h3 class="results-list__item-title">No results were found</h3>
-                                       <p>To show event results, you can expand your range or change location in the filters above. Or check back in a few days, as new events are added regularly.</p>
-                                       <div class="results-list__item-footer">
-                                          And don't forget our <a class="" href="">Virtual Events</a>
-                                          <p></p>
-                                       </div>
-                                    </div>
-                                    <div class="results-list__item-image-container" href="">
-                                        <div class="results-list__item-image" style="background-image: url('https://usms-test-cdn.azureedge.net/-/media/usms/lightroom/venue-flags-usms-summer-nats-2017%200661.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center;">
-                                           <!-- <div class="results-list__event-status--sanctioned">Sanctioned</div> -->
+                    <h1>Event Calendar</h1>
+                </header>
+                <div class="section section-full  p-tb-10  ">
+                    <div class="usms-container p-t-10">
+                        <div class="row">
+                            <div class="results-content">
+                                <div class="results-list">
+                                    <div class="results-list__item results-list__item-not-found">
+                                        <div class="results-list__item-detail" role="main">
+                                            <h3 class="results-list__item-title">No results were found</h3>
+                                            <p>To show event results, you can expand your range or change location in the filters above. Or check back in a few days, as new events are added regularly.</p>
+                                            <div class="results-list__item-footer">
+                                                <p>And don't forget our <a class="" href="">Virtual Events</a></p>
+                                            </div>
                                         </div>
-                                    </div> 
-                                 </div>
-                              </div>
-                              
-                              <div class="results-list__pagination-container">
-                                 <ul class="results-list__pagination list--nostyle">
-                                    <li>
-                                       <button class="btn btn-chevron-left" type="submit" disabled=""><i class="fa fa-chevron-left"></i></button>
-                                    </li>
-                                    <li><button class="btn btn-results-1 btn-active" type="submit" data-page="1">1</button></li>
-                                    <li><button class="btn btn-results-2" type="submit" data-page="2">2</button></li>
-                                    <li><button class="btn btn-results-3" type="submit" data-page="3">3</button></li>
-                                    <li><button class="btn btn-results-4" type="submit" data-page="4">4</button></li>
-                                    <li>
-                                       <button class="btn" type="submit">...</button>
-                                    </li>
-                                    <li><button class="btn btn-results-56" type="submit" data-page="56">56</button></li>
-                                    <li>
-                                       <button class="btn btn-chevron-right" type="submit"><i class="fa fa-chevron-right"></i></button>
-                                    </li>
-                                 </ul>
-                              </div>
-                             
-
-                           </div>
+                                        <div class="results-list__item-image-container" href="">
+                                            <div class="results-list__item-image" style="background-image: url('https://usms-test-cdn.azureedge.net/-/media/usms/lightroom/venue-flags-usms-summer-nats-2017%200661.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center;"></div>
+                                        </div> 
+                                    </div>
+                                </div>
+                                <sergey-import src="search-pagination" />
+                            </div>
                         </div>
-                     </div>
-                  </div>
-                  <div class="usms-container p-b-10">
-                     <div class="row is-flex">
-                        <div class="col-xs-12 col-md-3"></div>
-                        <div class="col-xs-12 col-md-6"></div>
-                        <div class="col-xs-12 col-md-3"></div>
-                     </div>
-                  </div>
-               </div>
+                    </div>
+                </div>
             </main>
             <sergey-import src="footer" />
          </div>
          <sergey-import src="footer_scripts" />
-         <script src="js/sort-button.js"></script>
-         <script src="../js/mockup-functions.js"></script>
       </body>
    </html>
