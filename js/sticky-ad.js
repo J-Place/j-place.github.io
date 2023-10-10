@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const relatedArticles = document.querySelector('.related-content');
     const offsetX = 50;
     let stickyBottom = 0;
-    console.log(articleStepper.parentElement.offsetTop);
     if (articleStepper) {
         const articleStepperTop = document.querySelector('.article-stepper').parentElement.offsetTop;
         stickyBottom = articleStepperTop - stickyHeight - offsetX;
