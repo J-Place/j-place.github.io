@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<!--[if IE 9]>
+<html lang="en" class="ie9 no-js">
+   <![endif]-->
+   <!--[if !IE]><!-->
+   <html lang="en">
+      <!--<![endif]-->
+      <head>
+         <title>Psych Sheet - Why You Don't Feel Like Swimming</title>
+         <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="og:title" content="Register" />
+<meta property="og:image" content="" />
+<meta property="og:description" content="" />
+<meta property="og:url" content="https://www.usms.org:443/en/registration-page" />
+<meta name="robots" content="noindex">
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script>
+<script src="https://www.usms.org/scripts/common.min.js?version=20210920.1"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.12/jquery.mask.min.js"></script> -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://usms-cdn.azureedge.net/scripts/common.min.js"></script>
+<script src="https://usms-cdn.azureedge.net/scripts/home.min.js?version=20211213.1"></script>
+         
+<!-- Bonfire Source Files -->
+    <link rel="stylesheet" href="https://test.usms.org/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="https://test.usms.org/styles/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/fontawesome-webfont.woff2">
+    <link rel="stylesheet" href="/assets/fontawesome-webfont.ttf">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v4.7.0/css/font-awesome-css.min.css">
+    <link rel="stylesheet" href="https://test.usms.org/styles/common.min.css">
+    <link rel="stylesheet" href="https://test.usms.org/styles/bootstrap-3-usms-patch.css">
+    <link rel="stylesheet" href="https://test.usms.org/styles/print.min.css">
+    <link rel="stylesheet" href="https://test.usms.org/styles/rte.min.css">
+
+<!-- Local Dev Files -->
+    <link rel="stylesheet" href="/css/rte-updates.css">
+    <link rel="stylesheet" href="/css/common-updates.css">
+    
+         <link rel="stylesheet" href="./css/swimmer-feature.css">
+<link rel="stylesheet" href="./css/article-header.css">
+<link rel="stylesheet" href="./css/pull-quote.css">
+      </head>
+      <body class="">
+         <div id="main-container">
+            <header class="header-static">
+    <div id="">
+       <nav class="mega-main-menu">
+          <button class="mega-main-menu__toggle-mobile btn btn-default" aria-label="toggle mobile">
+          <i class="fa fa-bars text-primary">
+          </i>
+          <label>Menu</label>
+          </button>
+          <div class="mega-main-menu__logo-container">
+             <a class="mega-main-menu__logo" href="/public">
+               <img src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/logo/usms-logo-hrz.svg?rev=fb463362f2fb496d9eae400e3198386e" alt="U.S. Masters Swimming" width="264" height="50">
+             </a>
+          </div>
+          <div class="mega-main-menu__nav-search-container">
+             <div class="login__items-container">
+                <ul class="login__list">
+                   <li class="login__list-item">
+                      <a href="/myusmslogin">My USMS</a>
+                   </li>
+                   <li class="login__list-item">
+                      <a href="https://community.usms.org/">Community/Forums</a>
+                   </li>
+                   <li class="login__list-item">
+                      <a href="/">USMS Website</a>
+                   </li>
+                   <li class="login__list-item">
+                      <a href="/account/single-sign-out">Logout</a>
+                   </li>
+                </ul>
+             </div>
+             <form method="GET" action="/search" class="search" style="transition:all 0ms ease-in-out;transform:translateX(0px);opacity:0;z-index:-1;">
+                <div class="input-group">
+                   <input type="text" name="filter" class="form-control search__input" placeholder="Search USMS" aria-describedby="basic-addon">
+                   <input type="hidden" name="page" value="1">
+                   <input type="hidden" name="perPage" value="10">
+                   <span class="input-group-addon btn search__button text-uppercase" id="basic-addon">Search</span>
+                </div>
+             </form>
+             <div class="mega-main-menu__items-container">
+                <ul class="mega-main-menu__items list--nostyle" style="width:auto;">
+                   <li class="has--children" id="menu-item-0" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                      <span class="fa fa-chevron-right">
+                      </span>
+                      Training
+                   </li>
+                   <li class="has--children" id="menu-item-1" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                      <span class="fa fa-chevron-right">
+                      </span>
+                      Events
+                   </li>
+                   <li id="menu-item-2" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                      <a href="/clubs">Club Finder</a>
+                   </li>
+                   <li id="menu-item-3" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                      <a href="/workout-library">Workout Library</a>
+                   </li>
+                   <li class="has--children" id="menu-item-4" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                      <span class="fa fa-chevron-right">
+                      </span>
+                      About Us
+                   </li>
+                   <li id="menu-item-5" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                      <a href="/join-usms/join-or-renew">Join</a>
+                   </li>
+                   
+                   
+                </ul>
+             </div>
+             <div class="mega-main-menu__actions">
+                <div class="mega-main-menu__actions-search--wrapper">
+                   <i class="search--icon">
+                   </i>
+                   <label>Search</label>
+                </div>
+                <div class="mega-main-menu__actions-login--wrapper">
+                   <a href="/myusmslogin">
+                   <i class="login--icon">
+                   </i>
+                   <label>Log In</label>
+                   </a>
+                </div>
+             </div>
+          </div>
+          <div class="mobile-menu" style="transition:all 0ms ease-in-out;transform:translateY(0);opacity:0;z-index:-1;">w
+             <div class="mobile-menu__container">
+                <button class="mobile-menu__toggle" aria-label="toggle menu">
+                <i class="mobile-menu__close">
+                </i>
+                <label>Close</label>
+                </button>
+                <form class="mobile-menu__form" action="/search">
+                   <div class="mobile-menu__input">
+                      <input type="text" name="filter" placeholder="Search">
+                      <button class="mobile-menu__search-button" type="submit" aria-label="search button">
+                      <i class="fa fa-search text-primary">
+                      </i>
+                      </button>
+                   </div>
+                </form>
+             </div>
+             <div class="mobile-menu-overlay">
+                <ul class="mobile-menu-overlay__items list--nostyle">
+                   <li class="mobile-menu-overlay__item text-capitalize">
+                      <div class="mobile-menu-overlay__item-content">
+                         <i class="fa fa-chevron-right "></i>Training
+                      </div>
+                      <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+                         <ul class="mobile-menu-overlay__submenu list--nostyle">
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/workout-library">Workout Library</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/fitness-and-training/articles-and-videos">Articles and Videos</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/clubs">Club Finder</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/search?filter=swimming+101&amp;page=1&amp;perPage=10">Swimming 101</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/fitness-and-training/workout-tracking">Workout Tracking</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/about-usms/swimmer-magazine">SWIMMER Magazine</a>
+                            </li>
+                         </ul>
+                      </div>
+                   </li>
+                   <li class="mobile-menu-overlay__item text-capitalize">
+                      <div class="mobile-menu-overlay__item-content">
+                         <i class="fa fa-chevron-right "></i>Events
+                      </div>
+                      <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+                         <ul class="mobile-menu-overlay__submenu list--nostyle">
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/events">Calendar of Events</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/events/fitness-events">Virtual and Fitness Events</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/events/national-championships/pool-national-championships/2023-pool-national-championships/2023-spring-national-championship">2023 Spring Nationals</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/events/national-championships">National Championships</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/events/event-results-database">Results and Rankings</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/events/usms-records">Records</a>
+                            </li>
+                         </ul>
+                      </div>
+                   </li>
+                   <li class="mobile-menu-overlay__item text-capitalize">
+                      <div class="mobile-menu-overlay__item-content">
+                         <i class=" ">
+                         </i>
+                         <a href="/clubs" style="text-decoration:none;">Club Finder</a>
+                      </div>
+                      <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+                         <ul class="mobile-menu-overlay__submenu list--nostyle">
+                         </ul>
+                      </div>
+                   </li>
+                   <li class="mobile-menu-overlay__item text-capitalize">
+                      <div class="mobile-menu-overlay__item-content">
+                         <i class=" ">
+                         </i>
+                         <a href="/workout-library" style="text-decoration:none;">Workout Library</a>
+                      </div>
+                      <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+                         <ul class="mobile-menu-overlay__submenu list--nostyle">
+                         </ul>
+                      </div>
+                   </li>
+                   <li class="mobile-menu-overlay__item text-capitalize">
+                      <div class="mobile-menu-overlay__item-content">
+                         <i class="fa fa-chevron-right "></i>About Us
+                      </div>
+                      <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+                         <ul class="mobile-menu-overlay__submenu list--nostyle">
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/about-usms/what-is-us-masters-swimming">What is Masters Swimming?</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="http://community.usms.org">USMS Community</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="https://www.swimoutlet.com/ProductBrand.asp?Brand=1766&amp;click=1668780">Logo Merchandise</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/join-usms/membership-benefits">Membership Benefits</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/open-water-central">Open Water Central</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/club-central">Club Central</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/coach-central">Coach Central</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/volunteer-central">Volunteer Central</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/alts-central">Adult Learn-to-Swim Central</a>
+                            </li>
+                         </ul>
+                      </div>
+                   </li>
+                   <li class="mobile-menu-overlay__item text-capitalize">
+                      <div class="mobile-menu-overlay__item-content">
+                         <i class=""></i>
+                         <a href="/join-usms/join-or-renew" style="text-decoration:none;">Join</a>
+                      </div>
+                      <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+                         <ul class="mobile-menu-overlay__submenu list--nostyle">
+                         </ul>
+                      </div>
+                   </li>
+                </ul>
+             </div>
+          </div>
+       </nav>
+    </div>
+ </header>
+            <main role="main">
+               <div class="breadcrumb-container" style="position: relative; padding-bottom: 50px;">
+                  <div class="breadcrumb">
+                     <div class="usms-container">
+                        <div class="row">
+                           <div class="col-xs-12">
+                              <div class="breadcrumb__container">
+                                 <ul class="breadcrumb__items list--nostyle">
+                                    <li class="text-capitalize breadcrumb__item ">
+                                       <a class="breadcrumb__link" href="/public">Home<i class="fa fa-chevron-right"></i></a>
+                                    </li>
+                                    <li class="text-capitalize breadcrumb__item ">
+                                       <a class="breadcrumb__link" href="library.html">Swimmer Magazine<i class="fa fa-chevron-right"></i></a>
+                                    </li>
+                                    <li class="text-capitalize breadcrumb__item ">
+                                        <a class="breadcrumb__link" href="toc.html">March-April 2022<i class="fa fa-chevron-right"></i></a>
+                                     </li>
+                                  </ul>
+                                 <span class="breadcrumb__title text-capitalize">Tune Up</span>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <header class="page-header bg-media page-header__image" data-background="background-image: url('https://usms-cdn.azureedge.net/-/media/usms/Developers/Swimmer-UI-Temporary/Psych-Sheet-Large.jpg'); background-position: center;" style="background-image: url('https://usms-cdn.azureedge.net/-/media/usms/Developers/Swimmer-UI-Temporary/Psych-Sheet-Large.jpg'); background-position: center center;">
+                  <img src="https://usms-cdn.azureedge.net/-/media/usms/Developers/Swimmer-UI-Temporary/Psych-Sheet-Large.jpg" alt="">
+                  <div class="page-header__tint-placeholder page-header--dark"></div>
+                  <h1></h1>
+               </header>
+               <div class="section section-full  p-tb-10  ">
+                  <div class="usms-container p-t-10">
+                     <div class="row">
+                        <div class="col-xs-12 col-md-3"></div>
+                        <div class="col-xs-12 col-md-6">
+                           <div class="article-issue">
+                              <div class="article-issue__title">SWIMMER Magazine</div>
+                              <div class="article-issue__date">March–April 2022</div>
+                           </div>
+                            <div class="feature-title">
+                                <h1>Why You Don’t Feel Like Swimming</h1>
+                                <h2>Burnout doesn’t just come from overtraining—here’s what’s keeping your enthusiasm down and how to notch it back up</h2>
+                            </div>
+                           <div class="author feature-author">
+                              <div class="author__container">
+                                 <div class="author__detail">
+                                    <p class="author__name">By <strong>MARTY MUNSON</strong></p>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-xs-12 col-md-3  ">
+                           <div class="social-share">
+    <iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen="true" class="twitter-share-button twitter-share-button-rendered twitter-tweet-button" style="position: static; visibility: visible; width: 81px; height: 28px;" title="Twitter Tweet Button" src="https://platform.twitter.com/widgets/tweet_button.2b2d73daf636805223fb11d48f3e94f7.en.html#dnt=false&amp;id=twitter-widget-0&amp;lang=en&amp;original_referer=https%3A%2F%2Fwww.usms.org%2Ffitness-and-training%2Farticles-and-videos%2Farticles%2Fhow-to-train-for-a-long-open-water-race&amp;size=l&amp;text=How%20to%20Train%20for%20a%20Long%20Open%20Water%20Race%20%7C%20U.S.%20Masters%20Swimming&amp;time=1695847794846&amp;type=share&amp;url=https%3A%2F%2Fwww.usms.org%2Ffitness-and-training%2Farticles-and-videos%2Farticles%2Fhow-to-train-for-a-long-open-water-race"></iframe>
+    <div class="fb-like fb_iframe_widget" data-href="/fitness-and-training/articles-and-videos/articles/how-to-train-for-a-long-open-water-race" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true" fb-xfbml-state="rendered" fb-iframe-plugin-query="action=like&amp;app_id=&amp;container_width=0&amp;href=https%3A%2F%2Fwww.usms.org%2Ffitness-and-training%2Farticles-and-videos%2Farticles%2Fhow-to-train-for-a-long-open-water-race&amp;layout=button_count&amp;locale=en_GB&amp;sdk=joey&amp;share=true&amp;show_faces=true&amp;size=large"><span style="vertical-align: bottom; width: 174px; height: 28px;"><iframe name="f2b3c43d260f01c" width="1000px" height="1000px" data-testid="fb:like Facebook Social Plugin" title="fb:like Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="https://www.facebook.com/v2.10/plugins/like.php?action=like&amp;app_id=&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Df37a71e4d553f8%26domain%3Dwww.usms.org%26is_canvas%3Dfalse%26origin%3Dhttps%253A%252F%252Fwww.usms.org%252Ff95dc126b777c8%26relation%3Dparent.parent&amp;container_width=0&amp;href=https%3A%2F%2Fwww.usms.org%2Ffitness-and-training%2Farticles-and-videos%2Farticles%2Fhow-to-train-for-a-long-open-water-race&amp;layout=button_count&amp;locale=en_GB&amp;sdk=joey&amp;share=true&amp;show_faces=true&amp;size=large" style="border: none; visibility: visible; width: 174px; height: 28px;" class=""></iframe></span></div>
+</div>
+
+                        </div>
+                     </div>
+                  </div>
+                  <div class="usms-container p-b-10">
+                     <div class="row is-flex ">
+                        <div class="col-xs-12 col-md-3"></div>
+                        <div class="col-xs-12 col-md-6">
+                           <div class="html-container">
+                              <p>Why is it that you couldn’t wait to get back in the pool when it reopened a few months ago and you can’t wait to get out now or are having a hard time committing to even getting in?</p>
+                              <p>You might be experiencing the symptoms of burnout even if you haven’t been training hard. Often, people think of burnout in swimmers as something that happens from logging tons of tough hours at the pool and under-resting. Those things will drive burnout. But experts say you don’t need an overabundance of swimming to feel this reduced sense of accomplishment, undervaluing of the sport, and lack of drive to do it.</p>
+                              <p class="pull-quote-text">Instead of spending two hours in the pool and zero time on everything else, consider swimming for an hour and a half and doing 30 minutes of stress reduction training.</p>
+                              <p class="pull-quote-attribution">Timothy Baghurst, the director of Florida State University’s Interdisciplinary Center for Athletic Coaching</p>
+                              <p>“Burnout is often a function of chronic stress,” says Jeffrey Martin, professor of exercise psychology at Wayne State University. And you’ve probably had at least a little bit of that of late. </p>
+                              <p>Here are ways to get your internal flame going again without flaming out.</p>
+                              <h3>Reconnect With What Swimming Gives You</h3>
+                              <p>If you’re drawing a blank on what you love about swimming, Heather Larson, a postdoctoral fellow on the faculty of Kinesiology, Sport, and Recreation at the University of Alberta, suggests seeing if any of the following ways of enjoying things resonate with you. They’re dimensions of pleasure that people get out of physical activity, according to research done at the European Centre for Environment and Human Health. Although that research looked at what older people found enjoyable about activity, a look at the list may help remind and reconnect you with the great things you get from swimming.</p>
+                              <ul>
+                                    <li><strong>The pleasure of habitual action.</strong> “Structure and purpose can derive from habit,” Larson says, and those things can keep your motivation going. “This one’s relevant when our lives have been disrupted so much,” she says. Snapping back into a routine may help connect you with some of the good feelings you get from swimming.</li>
+                                    <li><strong>Sensual pleasure.</strong> “The feeling of the water can be so beautiful,” Larson says. “Enjoy that and allow yourself to experience it. You might even do some dolphin dives off the bottom and play and enjoy that.”</li>
+                                    <li><strong>Documented pleasure.</strong> The satisfaction of tracking and logging your workout can keep you coming back for more.</li>
+                                    <li><strong>The pleasure of immersion.</strong> The researchers didn’t even mean literal immersion in water. They meant immersion of focus—“losing yourself in the activity and just being in the moment,” Larson says.</li>
+                              </ul>
+                              <h3>Accept Change</h3>
+                              <p>You may tap into what you love about swimming and find that what used to feed you is, for COVID reasons, still out of reach. Larson, who swims for a Masters program in Canada, points out that if one of the big things you got from swimming was a sense of community and relatedness, you might have to work to get it back.</p>
+                              <p class="pull-quote-text-only">Instead of spending two hours in the pool and zero time on everything else, consider swimming for an hour and a half and doing 30 minutes of stress reduction training.</p>
+                              <p>“We still have a lot of restrictions here,” she says. “A big highlight was sitting in the hot tub socializing after workouts.” If that’s not happening, or if people you were close to aren’t returning, you may need to make a little effort to restore that aspect of what swimming gave you. There are tons of ways: planning to do the same workout “with” friends in different pools or connecting on walks or group texts. But it’s worth recognizing that although you used to just show up and plug in, you may need to do a little extra now to get this need met.</p>
+                              <h3>Give Yourself Something to Get Better At</h3>
+                              <p>One factor that helps prevent burnout is a feeling of mastery, the sense that you’re actually progressing toward a goal. If you’ve been out of the water for a while, you may enjoy tracking your comeback. But if you’re not coming back as quickly as you’d hoped, it’s no surprise you don’t want to swim right now.</p>
+                              <p>To regain that sense of mastery, you may need to switch up your goals. Instead of aiming to hit the times you did two years ago, which may take a while, this may be the moment to bring your alternate-side breathing up to speed or to nail the timing in your butterfly. You can also go for something you’ve never attempted. “I think there’s something to be said for trying something new,” Martin says. “Then you’re nowhere close to your ceiling, and you have a lot of opportunity to experience mastery.” That doesn’t mean abandoning swimming. You can train for an open water event or a swim–run, the newish sport where you swim in your shoes, run in your wetsuit, and repeat over various terrain and through various bodies of water.</p>
+                              <h3>Compare Yourself to Others Every Now and Then</h3>
+                              <p>Measuring yourself against others is usually the last thing sport psychologists recommend. Usually, they recommend that you focus on your own physiological and psychological game: Do what you need to do to execute your best stroke or have your own personal best, and don’t worry about trying to beat other people. But sometimes, “I think you can still derive a sense of mastery relative to your age group and gender, especially if you’ve been involved in your sport for your whole life,” Martin says. Look around and see how everyone else is doing, and you might get the sense you really are doing just fine, which helps you rebuild your energy for getting in the pool.</p>
+                              <h3>Tackle Your Stress</h3>
+                              <p>As adults, there’s often an internal conflict between taking time to train and taking time to meet all your other demands in life. This stress can sap your performance and your motivation. Instead of trying to do everything, think of the demands on you as balloons, says Timothy Baghurst, the director of Florida State University’s Interdisciplinary Center for Athletic Coaching. “All of the balloons are filled with air. But you can’t fill all of them all the way up. As an athlete, you have to decide which will be full and which need to have some air taken out of them so that you have some kind of balance. Try to fill all of them and everything suffers.” To take the air out of some without creating even more stress, agree with family, your volunteer groups, and the other carpool parents on what needs to give and for how long.</p>
+                              <p>Because stress can drive burnout, take some time to actually tackle that stress. “Instead of spending two hours in the pool and zero time on everything else, consider swimming for an hour and a half and doing 30 minutes of stress reduction training,” Baghurst says. That may not just benefit your desire to get in the water and stay in for the whole practice. It can help the rest of your life too.</p>
+                           </div>
+                        </div>
+                        <div class="col-xs-12 col-md-3">
+                           <link rel="stylesheet" href="/css/sticky-ad.css">
+<div class="ad__space sticky-ad">
+   <!-- <img class="" src="https://tpc.googlesyndication.com/simgad/6872066819959037096" alt=""> -->
+   <img class="d-none d-lg-block d-xl-none" src="https://tpc.googlesyndication.com/simgad/6872066819959037096" border="0" width="150" height="225" alt="" class="img_ad">
+   <img class="d-none d-xl-block" src="https://tpc.googlesyndication.com/simgad/10020185090574455854" border="0" width="210" height="315" alt="" class="img_ad">
+</div>
+<script src="/js/sticky-ad.js"></script>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="usms-container p-b-10">
+                     <div class="row is-flex">
+                        <div class="col-xs-12">
+                           <link rel="stylesheet" href="./css/article-stepper.css">
+<div class="article-stepper issue">
+   <h3>Also in This Issue</h3>
+   <div id="articleStepper" class="carousel" data-bs-ride="carousel">
+      <a class="carousel-control-prev bg-transparent w-aut" href="#articleStepper" role="button" data-bs-slide="prev">
+         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      </a>
+      <a class="carousel-control-next bg-transparent w-aut" href="#articleStepper" role="button" data-bs-slide="next">
+         <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      </a>   
+      <div class="carousel-inner">
+         <div class="carousel-item active" data-bs-interval="5000">
+            <div class="col-xs-12 col-md-3">
+               <a href="#">
+                  <div class="carousel-image-container" style="background-image: url('https://usms-cdn.azureedge.net/-/media/usms/Developers/Swimmer-UI-Temporary/Pull apart 1.jpg')"></div>
+                  <div class="carousel-text-container">
+                     <p>Building a Healthy Streamline</p>
+                  </div>
+               </a>
+            </div>
+         </div>
+         <div class="carousel-item" data-bs-interval="5000">
+            <div class="col-xs-12 col-md-3">
+               <a href="#">
+                  <div class="carousel-image-container" style="background-image: url('https://www.usms.org/-/media/usms/lightroom/dsc_0093.jpg?cx=0.48&cy=0.41&cw=667&ch=667&hash=A8CB94EC224D9F2503146222F58AD911')"></div>
+                  <div class="carousel-text-container">
+                     <p>The Delicate Art of Peeing in Open Water</p>
+                  </div>
+               </a>
+            </div>
+         </div>
+         <div class="carousel-item" data-bs-interval="5000">
+            <div class="col-xs-12 col-md-3">
+               <a href="#">
+                  <div class="carousel-image-container" style="background-image: url('https://usms-cdn.azureedge.net/-/media/usms/Developers/Swimmer-UI-Temporary/Psych%20Sheet.jpg')"></div>
+                  <div class="carousel-text-container">
+                     <p>Why Don't You Feel Like Swimming</p>
+                  </div>
+               </a>
+            </div>
+         </div>
+         <div class="carousel-item" data-bs-interval="5000">
+            <div class="col-xs-12 col-md-3">
+               <a href="#">
+                  <div class="carousel-image-container" style="background-image: url('https://www.usms.org/-/media/usms/lightroom/dsc_0093.jpg?cx=0.48&cy=0.41&cw=667&ch=667&hash=A8CB94EC224D9F2503146222F58AD911')"></div>
+                  <div class="carousel-text-container">
+                     <p>The Delicate Art of Peeing in Open Water</p>
+                  </div>
+               </a>
+            </div>
+         </div>
+         <div class="carousel-item" data-bs-interval="5000">
+            <div class="col-xs-12 col-md-3">
+               <a href="#">
+                  <div class="carousel-image-container" style="background-image: url('https://usms-cdn.azureedge.net/-/media/usms/Developers/Swimmer-UI-Temporary/Power%20of%20Naps.jpg')"></div>
+                  <div class="carousel-text-container">
+                     <p>The Power of Naps</p>
+                  </div>
+               </a>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<script src="./js/article-stepper.js"></script>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="usms-container p-b-10">
+                     <div class="row is-flex">
+                        <div class="col-xs-12 col-md-3"></div>
+                        <div class="col-xs-12 col-md-6">
+                           <div class="article-author">
+   <div class="article-author__header">
+         <div class="article-author__image-container bg-gray">
+            <img class="article-author__image" src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/non-lightroom%20images/author%20bios/elaine-howley.jpg" alt="Article image">
+         </div>
+         <h3 class="text-capitalize article-author__title"><small>About the Author</small><br>Jeff Commings</h3>
+   </div>
+   <div class="article-author__content">
+         <div class="html-container">
+            <p>Author Name is a USMS Level 2 coach and member of Masters Swimming Club.</p>
+         </div>
+   </div>
+</div>
+
+                        </div>
+                        <div class="col-xs-12 col-md-3"></div>
+                     </div>
+                  </div>
+               </div>
+            </main>
+            <footer>
+   <div id="footerOverlay">
+      <div class="container-fluid">
+         <div class="row">
+            <div class="footer-content">
+               <div class="footer-left">
+                  <div class="footer-left__menu">
+                     <div class="row">
+                        <div class="col-xs-6 col-md-3">
+                           <div class="footer-menu">
+                              <h3 class="footer-menu__header">
+                                 About USMS
+                              </h3>
+                              <ul class="footer-menu__list list--nostyle">
+                                 <li class="footer-menu__list-item">
+                                    <a href="/about-usms/what-is-us-masters-swimming" target="" title="What is Masters Swimming?">
+                                    What is Masters Swimming?
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/org.php" target="" title="Organization">
+                                    Organization
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/natoffice.php" target="" title="National Office">
+                                    National Office
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/hist/" target="" title="USMS History">
+                                    USMS History
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="https://www.swimoutlet.com/ProductBrand.asp?Brand=1766&amp;click=1668780" target="_blank" title="Logo Merchandise">
+                                    Logo Merchandise
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/about-usms/partners" target="" title="Partners">
+                                    Partners
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/about-usms/swimmer-magazine" target="" title="SWIMMER Magazine">
+                                    SWIMMER Magazine
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/about-usms/usms-swimming-saves-lives-foundation" target="" title="Swimming Saves Lives Foundation">
+                                    Swimming Saves Lives Foundation
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/content/applyforgrant" target="" title="How to Apply for a Grant">
+                                    How to Apply for a Grant
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="https://www.collegeclubswimming.com/" target="_blank" title="College Club Swimming">
+                                    College Club Swimming
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="http://forums.usms.org" target="" title="Discussion Forums">
+                                    Discussion Forums
+                                    </a>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                           <div class="footer-menu">
+                              <h3 class="footer-menu__header">
+                                 Events
+                              </h3>
+                              <ul class="footer-menu__list list--nostyle">
+                                 <li class="footer-menu__list-item">
+                                    <a href="/events" target="" title="Calendar of Events">
+                                    Calendar of Events
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/comp/sanction/request.php" target="" title="Sanction an Event">
+                                    Sanction an Event
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/events/fitness-events" target="" title="Fitness Events">
+                                    Fitness Events
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/events/national-championships" target="" title="National Championships">
+                                    National Championships
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/events/event-results-database" target="" title="Event Results">
+                                    Event Results
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/comp/meets/toptimes.php" target="" title="Rankings">
+                                    Rankings
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/events/usms-records" target="" title="Records">
+                                    Records
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/comp/tt/" target="" title="Top 10">
+                                    Top 10
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/comp/aa/" target="" title="All-American">
+                                    All-American
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/comp/as/" target="" title="All-Stars">
+                                    All-Stars
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/events/18th-fina-world-masters-championships" target="" title="FINA World Masters Championships">
+                                    FINA World Masters Championships
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="https://www.teamunify.com/SubTabGeneric.jsp?team=uana&amp;_stabid_=57815" target="_blank" title="Pan American Championships">
+                                    Pan American Championships
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/events/usms-stroke-development-clinics" target="" title="Stroke Development Clinic">
+                                    Stroke Development Clinic
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="https://www.trianglesportscommission.com/usms-hpc/" target="_blank" title="High Performance Camp">
+                                    High Performance Camp
+                                    </a>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                           <div class="footer-menu">
+                              <h3 class="footer-menu__header">
+                                 Join
+                              </h3>
+                              <ul class="footer-menu__list list--nostyle">
+                                 <li class="footer-menu__list-item">
+                                    <a href="/join-usms/join-or-renew" target="" title="Join or Renew">
+                                    Join or Renew
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/join-usms/membership-benefits" target="" title="Membership Benefits">
+                                    Membership Benefits
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/join-usms/trial-membership-general" target="" title="TMF - General">
+                                    TMF - General
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/join-usms/trial-membership" target="" title="TMF - TMS">
+                                    TMF - TMS
+                                    </a>
+                                 </li>
+                              </ul>
+                           </div>
+                           <div class="footer-menu">
+                              <h3 class="footer-menu__header">
+                                 Club Central
+                              </h3>
+                              <ul class="footer-menu__list list--nostyle">
+                                 <li class="footer-menu__list-item">
+                                    <a href="/club-central" target="" title="Club Central">
+                                    Club Central
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/club-central/start-a-club" target="" title="How to Start a Club">
+                                    How to Start a Club
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/club-central/club-login" target="" title="Register or Renew a Club">
+                                    Register or Renew a Club
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/content/coachresources" target="" title="Club Resources">
+                                    Club Resources
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/club-central/gold-club-designation" target="" title="Gold Club Designation">
+                                    Gold Club Designation
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/content/insuranceinfo" target="" title="Insurance">
+                                    Insurance
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/reg/members/" target="" title="Membership Lists">
+                                    Membership Lists
+                                    </a>
+                                 </li>
+                              </ul>
+                           </div>
+                           <div class="footer-menu">
+                              <h3 class="footer-menu__header">
+                                 Coach Central
+                              </h3>
+                              <ul class="footer-menu__list list--nostyle">
+                                 <li class="footer-menu__list-item">
+                                    <a href="/coach-central" target="" title="Coach Central">
+                                    Coach Central
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/coach/content/becomeacoach" target="" title="Become a Coach">
+                                    Become a Coach
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/content/coachcert" target="" title="Coach Certification">
+                                    Coach Certification
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/coach/certified/certifiedcoaches.php" target="" title="Certified Coaches">
+                                    Certified Coaches
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/coach/certified/coachinfo.php" target="" title="Designated Coach Resources">
+                                    Designated Coach Resources
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/content/cliniccourse" target="" title="Clinic Course for Coaches">
+                                    Clinic Course for Coaches
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/coach-central/coach-mentor-program" target="" title="Mentor Coach Program">
+                                    Mentor Coach Program
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/content/ondeckcoach" target="" title="On-Deck Coaching">
+                                    On-Deck Coaching
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="http://forums.usms.org/forumdisplay.php?8-Coaching" target="_blank" title="Coaching Jobs">
+                                    Coaching Jobs
+                                    </a>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                           <div class="footer-menu">
+                              <h3 class="footer-menu__header">
+                                 ALTS Central
+                              </h3>
+                              <ul class="footer-menu__list list--nostyle">
+                                 <li class="footer-menu__list-item">
+                                    <a href="/alts-central" target="" title="ALTS Central">
+                                    ALTS Central
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/alts-central/april-is-alts-month" target="" title="April is Adult Learn-to-Swim Month">
+                                    April is Adult Learn-to-Swim Month
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/alts-central/alts-initiatives" target="" title="Adult Learn-to-Swim Initiatives">
+                                    Adult Learn-to-Swim Initiatives
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/content/alts_cert" target="" title="Instructor Certification">
+                                    Instructor Certification
+                                    </a>
+                                 </li>
+                              </ul>
+                           </div>
+                           <div class="footer-menu">
+                              <h3 class="footer-menu__header">
+                                 Fitness and Training
+                              </h3>
+                              <ul class="footer-menu__list list--nostyle">
+                                 <li class="footer-menu__list-item">
+                                    <a href="/club-resources" target="" title="Club Finder">
+                                    Club Finder
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/fitness-and-training/online-workouts" target="" title="Online Workouts">
+                                    Online Workouts
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/events/fitness-events/fitness-series/fitness-series-training-plans" target="" title="Training Plans">
+                                    Training Plans
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/fitness/content/fitnesslogs" target="" title="Fitness Logs">
+                                    Fitness Logs
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/fitness-and-training/articles-and-videos" target="" title="Articles and Videos">
+                                    Articles and Videos
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/fitness-and-training/articles-and-videos?contentType[0]=Article&amp;contentType[1]=Video&amp;filter=&amp;tags[0]=Drills&amp;categories[0]=Technique%20and%20Training&amp;page=1&amp;perPage=10&amp;filterItem=20cf26a9-68b1-490f-8408-471cdd7513f8" target="" title="Drills and Technique">
+                                    Drills and Technique
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/fitness-and-training/articles-and-videos?contentType[0]=Article&amp;contentType[1]=Video&amp;filter=swimming%20101&amp;page=1&amp;perPage=10&amp;filterItem=20cf26a9-68b1-490f-8408-471cdd7513f8" target="" title="Swimming 101">
+                                    Swimming 101
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/alts-central/learn-to-swim" target="" title="Learn to Swim">
+                                    Learn to Swim
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/content/triathlon" target="" title="Triathletes">
+                                    Triathletes
+                                    </a>
+                                 </li>
+                              </ul>
+                           </div>
+                           <div class="footer-menu">
+                              <h3 class="footer-menu__header">
+                                 Volunteers
+                              </h3>
+                              <ul class="footer-menu__list list--nostyle">
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/lmschb/" target="" title="Guide to Operations">
+                                    Guide to Operations
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/policies/" target="" title="Policy and Governance">
+                                    Policy and Governance
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/volunteer-central/us-masters-swimming-rule-book" target="" title="Rule Book">
+                                    Rule Book
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/lmsc/" target="" title="LMSCs">
+                                    LMSCs
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/content/volunteer" target="" title="Become a Volunteer">
+                                    Become a Volunteer
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/gto/gto_officials" target="" title="Officials">
+                                    Officials
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/committee.php" target="" title="Committees and Assignments">
+                                    Committees and Assignments
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/minutes/" target="" title="Meeting Minutes">
+                                    Meeting Minutes
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/conv/" target="" title="Convention">
+                                    Convention
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/elections/" target="" title="Elections">
+                                    Elections
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/awards/" target="" title="Awards">
+                                    Awards
+                                    </a>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="footer-right">
+                  <div class="subscribe">
+                     <div>
+                        <h4 class="subscribe__header m-b-30"></h4>
+                        <p class="m-b-30"></p>
+                        <a class="btn btn-primary btn-lg text-uppercase" href="/login-to-registration-page">Join Now</a>
+                     </div>
+                  </div>
+                  <nav>
+                     <ul class="social-share-icons list--nostyle p-tb-30">
+                        <li class="social-share-icons__item">
+                           <a href="http://facebook.com/USMastersSwimmingFanPage/" target="_blank" title="Facebook">
+                           <i class="fa fa-facebook"></i>
+                           </a>
+                        </li>
+                        <li class="social-share-icons__item">
+                           <a href="https://www.instagram.com/mastersswimming" target="_blank" title="Instagram">
+                           <i class="fa fa-instagram"></i>
+                           </a>
+                        </li>
+                        <li class="social-share-icons__item">
+                           <a href="https://twitter.com/MastersSwimming" target="_blank" title="Twitter">
+                           <i class="fa fa-twitter"></i>
+                           </a>
+                        </li>
+                        <li class="social-share-icons__item">
+                           <a href="https://www.youtube.com/user/USMastersSwimming" target="_blank" title="YouTube">
+                           <i class="fa fa-youtube"></i>
+                           </a>
+                        </li>
+                     </ul>
+                  </nav>
+                  <small class="copyright">
+                  &copy; 2018 U.S. Masters Swimming
+                  </small>
+                  <nav>
+                     <ul class="nav nav-service navbar-nav nav-pills">
+                        <li class="">
+                           <a href="/about-usms/contact-usms" target="" title="Contact Us" class="">
+                           Contact Us        </a>
+                        </li>
+                        <li class="">
+                           <a href="/content/privacy" target="" title="USMS Privacy Policy" class="">
+                           USMS Privacy Policy        </a>
+                        </li>
+                     </ul>
+                  </nav>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</footer>
+
+         </div>
+         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+      </body>
+   </html>
