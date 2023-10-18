@@ -390,20 +390,22 @@
 </div>
 
 <script>
+    // Sets height of container s the succes message does not shrink in height
     var signupHeight = $('.sign-up--inline').height();
     $('.sign-up--inline').height(signupHeight);
-    // Temporary show/hide for demo purposes
-    $('#sign-up__button').on("click", function(){
-        $('.sign-up__container').css('display','none');
-        $('.sign-up__confirmation').css('display', 'block');
+
+    // Temporary show/hide for mockup
+    $('.sign-up--inline #sign-up__button').on("click", function(){
+        $('.sign-up--inline .sign-up__container').css('display','none');
+        $('.sign-up--inline .sign-up__confirmation').css('display', 'block');
     });
     $('#emailAddress').on("click", function(){
         $('.help-block.help-block--email').toggleClass('has-error');
         $('#emailAddress').toggleClass('has-error');
     });
-    $('.sign-up__confirmation').on("click", function(){
-        $('.sign-up__container').css('display','block');
-        $('.sign-up__confirmation').css('display', 'none');
+    $('.sign-up--inline .sign-up__confirmation').on("click", function(){
+        $('.sign-up--inline .sign-up__container').css('display','block');
+        $('.sign-up--inline .sign-up__confirmation').css('display', 'none');
     });
 </script></div>
                      <div class="col-xs-12 col-lg-3"></div>
