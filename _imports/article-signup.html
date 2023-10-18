@@ -17,7 +17,7 @@
         </div>
     </div>
     <div class="sign-up__confirmation" style="display: none;">
-        <p>Thanks! You're signed up for our newsletter. Thanks! You're signed up for our newsletter. Thanks! You're signed up for our newsletter. Thanks! You're signed up for our newsletter. Thanks! You're signed up for our newsletter.</p>
+        <p>Thanks! You're signed up for our newsletter.</p>
     </div>
 </div>
 
@@ -30,8 +30,8 @@
         $('.sign-up__confirmation').css('display', 'block');
     });
     $('#emailAddress').on("click", function(){
-        $('.help-block.help-block--email').addClass('has-error');
-        $('#emailAddress').addClass('has-error');
+        $('.help-block.help-block--email').toggleClass('has-error');
+        $('#emailAddress').toggleClass('has-error');
     });
     $('.sign-up__confirmation').on("click", function(){
         $('.sign-up__container').css('display','block');
