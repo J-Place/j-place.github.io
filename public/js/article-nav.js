@@ -55,17 +55,31 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelector('#navList').style.maxHeight = mobileWindowHeight - 50 + "px";    
     }
 
-    const footerTop = document.getElementById('footerOverlay').offsetTop;
-    const articleStepper = document.querySelector('.article-stepper');
     const stickyNav = document.querySelector('.article-nav');
     const stickyNavHeight = stickyNav.clientHeight;
+    const footerTop = document.getElementById('footerOverlay').offsetTop;
+    const articleStepper = document.querySelector('.article-stepper');
+    const articleAuthor = document.querySelector('.article-author');
+    const emailSignup = document.querySelectorAll('.sign-up:not(.sign-up--inline)');
+    const relatedArticles = document.querySelector('.related-content');
+    const offsetX = 50;
     let stickyNavBottom = 0;
     if (articleStepper) {
         const articleStepperTop = document.querySelector('.article-stepper').parentElement.offsetTop;
-        stickyNavBottom = articleStepperTop;
+        stickyNavBottom = articleStepperTop - stickyNavHeight - offsetX;
+    } else if (articleAuthor){
+        const articleAuthorTop = document.querySelector('.article-author').parentElement.offsetTop;
+        stickyNavBottom = articleAuthorTop - stickyNavHeight - offsetX;
+    } else if (emailSignup){
+        const emailSignupTop = document.querySelector('.sign-up:not(.sign-up--inline').parentElement.offsetTop;
+        stickyNavBottom = emailSignupTop - stickyNavHeight - offsetX;
+    } else if (relatedArticles){
+        const relatedArticlesTop = document.querySelector('.related-content').parentElement.offsetTop;
+        stickyNavBottom = relatedArticlesTop - stickyNavHeight - offsetX;
     } else {
-        stickyNavBottom = footerTop - stickyNavHeight;
+        stickyNavBottom = footerTop - stickyNavHeight - offsetX;
     }
+
     function handleNavPosition() {
         stickyNav.style.left = 0;
         const stickyNavTop = stickyNav.parentElement.offsetTop -20;
@@ -94,6 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
             stickyNav.style.display = 'none';
         }
     }
+
     handleNavPosition();
     function scroll() {
         handleNavPosition();
@@ -104,4 +119,3 @@ document.addEventListener("DOMContentLoaded", function () {
     window.addEventListener('scroll', scroll);
     window.addEventListener('resize', resize);
 });
-
