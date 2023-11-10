@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const articleAuthor = document.querySelector('.article-author');
     const emailSignup = document.querySelector('.sign-up');
     const relatedArticles = document.querySelector('.related-content');
-    console.log(relatedArticles.parentElement.offsetTop);
     const offsetX = 50;
     let stickyBottom = 0;
     if (articleStepper) {
