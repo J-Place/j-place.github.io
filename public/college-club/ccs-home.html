@@ -4,10 +4,10 @@
 <![endif]-->
 <!--[if !IE]><!-->
 <html lang="en">
-   <!--<![endif]-->
-   <head>
-      <title>U.S. Masters Swimming</title>
-      <meta charset="utf-8" />
+<!--<![endif]-->
+    <head>
+        <title>Homepage - U.S. Masters Swimming</title>
+        <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
@@ -17,7 +17,7 @@
 <meta property="og:description" content="" />
 <meta property="og:url" content="" />
 <meta name="robots" content="noindex">
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script>
 <script src="https://www.usms.org/scripts/common.min.js?version=20210920.1"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -26,7 +26,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://usms-cdn.azureedge.net/scripts/common.min.js"></script>
 <script src="https://usms-cdn.azureedge.net/scripts/home.min.js?version=20211213.1"></script>
-      
+        
 <!-- Bonfire Source Files -->
     <link rel="stylesheet" href="https://test.usms.org/styles/bootstrap.min.css">
     <link rel="stylesheet" href="https://test.usms.org/styles/font-awesome.min.css">
@@ -42,10 +42,53 @@
     <link rel="stylesheet" href="/css/rte-updates.css">
     <link rel="stylesheet" href="/css/common-updates.css">
     
-   </head>
-   <body class="">
-      <div id="main-container">
-         <header class="header-static">
+        <link rel="stylesheet" href="https://test.usms.org/styles/home.min.css">
+        <link rel="stylesheet" href="/css/home-carousel-updates.css">
+    </head>
+    <body class="">
+        <div id="main-container">
+        <style>
+    .carousel__slide-content,
+    .carousel__slide-content > h1,
+    .carousel__slide-content > p {
+        text-align: center;
+        margin: 1rem auto 0;
+    }
+    .carousel__slide-content > p {
+        border: 0 none;
+    }
+    .carousel__slide-content > a {
+        margin-top: 5rem;
+        display: block;
+    }
+    @media (min-width: 1200px) {
+        .header-static {
+            background-color: transparent;
+        }
+        .mega-main-menu__logo img {
+            width: 220px;
+            height: auto;
+            margin-top: 3px;
+        }
+        .mega-main-menu__items > li.has--children,
+        .mega-main-menu__items > li > a {
+            color: #FFF;
+            text-shadow: 0 0 10px #000;
+        }
+        .carousel-container {
+            margin-top: -101px;
+            z-index: -1;
+        }
+        .carousel {
+            max-height: 710px;
+        }
+        .carousel-previous-button,
+        .carousel-next-button {
+            display: block;
+        }
+    }
+</style>
+<header class="header-static">
     <div id="">
        <nav class="mega-main-menu">
           <button class="mega-main-menu__toggle-mobile btn btn-default" aria-label="toggle mobile">
@@ -55,7 +98,7 @@
           </button>
           <div class="mega-main-menu__logo-container">
              <a class="mega-main-menu__logo" href="/public">
-               <img src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/logo/usms-logo-hrz.svg?rev=fb463362f2fb496d9eae400e3198386e" alt="U.S. Masters Swimming" width="264" height="50">
+               <img src="https://www.collegeclubswimming.com/c/72E6D32/website/collegeClubSwimmingLogo.png" alt="College CLub Swimming">
              </a>
           </div>
           <div class="mega-main-menu__nav-search-container">
@@ -275,90 +318,77 @@
        </nav>
     </div>
  </header>
-         <main>
-            <div class="section section-full">
-               <div class="usms-container" style="margin: 4rem auto 6rem;">
-                  <div class="row">
-                     <div class="col-lg-4">
-                        <h5>Miscellaneous Pages</h5>
-                        <ul style="margin-top: 1rem; list-style-type: none; padding-left: 0;">
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="email/Member Registration Welcome.html">Member Registration Welcome Email</a></li>
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="email/Member Renewal Welcome.html">Member Renewal Welcome Email</a></li>
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="font-sizes.html">Heading Font Sizes</a></li>
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="usms-home.html">USMS Homepage</a></li>
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="sticky-ad-col-9-3.html">Sticky Ad Col 9-3</a></li>
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="sticky-ad-col-3-6-3.html">Sticky Ad Col 3-6-3</a></li>
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="swimming-101.html">Swimming 101</a></li>
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="https://test.usms.org/events/swim-across-america">Swim Across America</a></li>
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="welcome-member.html">Member Registration Welcome</a></li>
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="welcome-club.html">Club Registration Welcome</a></li>
-                        </ul>
-                        <br />
-                        <h5>Independent Swimmer</h5>
-                        <ul style="margin-top: 1rem; list-style-type: none; padding-left: 0;">
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="independent/account.html">My Account</a></li>
-                        </ul>
-                        <br />
-                        <h5>College Club Swimming</h5>
-                        <ul style="margin-top: 1rem; list-style-type: none; padding-left: 0;">
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="college-club/ccs-home.html">Homepage</a></li>
-                        </ul>
-                     </div>
-                     <div class="col-lg-4">
-                        <h5>Search</h5>
-                        <ul style="margin-top: 1rem; list-style-type: none; padding-left: 0;">
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="search/site-search.html">Site Search</a></li>
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="search/site-search-no-results.html">Site Search No Results</a></li>
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="search/content-hub-2.html">Article Search</a></li>
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="search/content-hub-2-no-results.html">Article Search No Results</a></li>
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="search/event-search-5.html">Event Search</a></li>
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="search/event-search-5-no-results.html">Event Search No Results</a></li>
-                        </ul>
-                        <br />
-                        <h5>Event Sanction</h5>
-                        <ul style="margin-top: 1rem; list-style-type: none; padding-left: 0;">
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="event/event-sanction-login.html">Event Login</a></li>
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="event/event-sanction-dashboard.html">Event Dashboard</a></li>
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="event/event-sanction-add-new.html">Event Add</a></li>
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="event/event-sanction-pool.html">Event Detail Pool</a></li>
-                        </ul>
-                        <br />
-                        <h5>SWIMMER Magazine</h5>
-                        <ul style="margin-top: 1rem; list-style-type: none; padding-left: 0;">
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="swimmer/library.html">Library</a></li>
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="swimmer/toc.html">TOC</a></li>
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="swimmer/feature-cover-inset.html">Article Inset Header</a></li>
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="swimmer/feature-cover-full.html">Article Full Header</a></li>
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="swimmer/feature-technique-1.html">Technique</a></li>
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="swimmer/article-training-set-2.html">Tune Up</a></li>
-                        </ul>   
-                     </div>
-                     <div class="col-lg-4">
-                        <h5>Club Dashboard</h5>
-                        <ul style="margin-top: 1rem; list-style-type: none; padding-left: 0;">
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="club-dashboard/club-dashboard-01.html">Club Dashboard 1</a></li>
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="club-dashboard/club-dashboard-02.html">Club Dashboard 2</a></li>
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="club-dashboard/club-bulk-reg-01.html">Club Bulk Registration</a></li>
-                        </ul>
-                        <br />
-                        <h5>Registration</h5>
-                        <ul style="margin-top: 1rem; list-style-type: none; padding-left: 0;">
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="registration/welcome-member.html">Registration Confirmation</a></li>
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="registration/auto-renew-02.html">Auto-Renew Checkbox</a></li>
-                        </ul>
-                        <br />
-                        <h5>Video Layout</h5>
-                        <ul style="margin-top: 1rem; list-style-type: none; padding-left: 0;">
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="video/video-1.html">Video Option 1</a></li>
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="video/video-2.html">Video Option 2</a></li>
-                           <li style="padding: 3px 0; font-size: 15px;"><a href="video/video-3.html">Video Option 3</a></li>
-                        </ul>
-                     </div>
-                  </div>
-               </div>
+        <div class="carousel-container" data-reactroot="" data-reactid="1">
+   <button class="carousel-previous-button" style="display:none;" data-reactid="2"><i class="fa fa-chevron-left" data-reactid="3"></i></button>
+   <ul class="carousel list--nostyle" data-reactid="4" style="left: 0%;">
+      <li class="carousel__slide" data-reactid="5">
+         <div class="carousel__slide-content" data-reactid="6">
+             <h1 class="text-capitalize" data-reactid="7">Free with your USMS+ membership</h1>
+             <p class="lead" data-reactid="8">1-Hour Virtual Championship</p>
+             <a href="/events/national-championships/virtual-championships/2022-virtual-championships/2022-1-hour-virtual-championship" class="text-capitalize text-center" data-reactid="9">REGISTER NOW</a>
+         </div>
+         <div class="page-header__photo-credit photo-credit--dark-1">
+            <div class="photo-credit__wrapper">
+               <p>Image: William Kolb</p> 
             </div>
-         </main>
-         <footer>
+         </div>
+          <div class="carousel__slide-image--desktop" data-reactid="10">
+             <div class="carousel__slide-image" style="background-image:url('https://www.usms.org/-/media/usms/lightroom/6023966686_0f37a918d4_o.jpg');" data-reactid="11"></div>
+          </div>
+          <div class="carousel__slide-image--mobile" data-reactid="12">
+             <div class="carousel__slide-image" style="background-image:url('https://www.usms.org/-/media/usms/lightroom/6023966686_0f37a918d4_o.jpg');" data-reactid="13"></div>
+          </div>
+      </li>
+      <li class="carousel__slide" data-reactid="14">
+         <div class="carousel__slide-content" data-reactid="15">
+             <h1 class="text-capitalize" data-reactid="16">Calendar of Events</h1>
+             <p class="lead" data-reactid="17">Find an Event Near You</p>
+             <a href="https://www.usms.org/events" class="text-capitalize text-center" data-reactid="18">Compete Now</a>
+         </div>
+         <div class="page-header__photo-credit photo-credit--dark-1">
+            <div class="photo-credit__wrapper">
+               <p>Image: William Kolb</p> 
+            </div>
+         </div>
+         <div class="carousel__slide-video" data-reactid="19">
+             <video autoplay="" loop="" muted="" class="" preload="none" data-reactid="20">
+                <source src="https://www.usms.org/-/media/videos/homepage hero videos/swimmer dive 15.mp4" type="video/mp4" data-reactid="21">
+             </video>
+         </div>
+         <div class="carousel__slide-image--mobile" data-reactid="22">
+             <div class="carousel__slide-image" style="background-image:url('https://www.usms.org/-/media/usms/lightroom/anthony-kung- 2023 usms sp nats 2962-enhanced-nr.jpg');" data-reactid="23"></div>
+         </div>
+      </li>
+      <!-- <li class="carousel__slide" data-reactid="5">
+         <div class="carousel__slide-content" data-reactid="6">
+            <h1 class="text-capitalize" data-reactid="7">Learn More About Your Swimming Pool</h1>
+            <p class="lead" data-reactid="8">How Swimming Pools Stay Clean</p>
+            <a href="/fitness-and-training/articles-and-videos/articles/how-are-swimming-pools-kept-clean" class="text-capitalize text-center" data-reactid="9">Learn How</a></div><div class="carousel__slide-video" data-reactid="10"><video autoplay="" loop="" muted="" class="video--only" preload="none" data-reactid="11"><source src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/videos/homepage hero videos/male swimmer underwater with group15.mp4?rev=cd2d555f89cb4e5aae0e87123bac8b8f" type="video/mp4" data-reactid="12"></video></div><div class="carousel__slide-image--mobile" data-reactid="13">
+               <div class="carousel__slide-image" style="background-image:url('https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/usms technique 2018 1769.jpg?rev=b28eb9b8d589413d8fb10e632642660b');" data-reactid="14">
+         </div>
+         </div>
+      </li> -->
+   </ul>
+   <ul class="carousel-nav list--nostyle" data-reactid="24">
+      <li class="carousel-nav__item carousel-nav__item--active" id="carousel-nav__item-0" data-reactid="25"><button class="carousel-nav__item-button" aria-label="carousel navigation button 0" id="carousel-nav__item-button-0" data-reactid="26"></button></li>
+      <li class="carousel-nav__item" id="carousel-nav__item-1" data-reactid="27"><button class="carousel-nav__item-button" aria-label="carousel navigation button 1" id="carousel-nav__item-button-1" data-reactid="28"></button></li>
+   </ul>
+   <button class="carousel-next-button" style="display:none;" data-reactid="29"><i class="fa fa-chevron-right" data-reactid="30"></i></button>
+ </div>
+        <main role="main">
+            <div class="section section-full p-mh-500">
+                <div class="usms-container p-tb-50">
+                    <div class="row is-flex">
+                    <div class="col-xs-12 col-lg-3"></div>
+                    <div class="col-xs-12 col-lg-6">
+                        <h3>Page Content Header</h3>
+                    </div>
+                    <div class="col-xs-12 col-lg-3"></div>
+                    </div>
+                </div>
+            </div>
+        </main>            
+        <footer>
    <div id="footerOverlay">
       <div class="container-fluid">
          <div class="row">
@@ -832,8 +862,10 @@
    </div>
 </footer>
 
-      </div>
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-   </body>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://test.usms.org/scripts/home.min.js"></script>
+    </body>
 </html>

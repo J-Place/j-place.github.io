@@ -1,0 +1,271 @@
+<style>
+    .carousel__slide-content,
+    .carousel__slide-content > h1,
+    .carousel__slide-content > p {
+        text-align: center;
+        margin: 1rem auto 0;
+    }
+    .carousel__slide-content > p {
+        border: 0 none;
+    }
+    .carousel__slide-content > a {
+        margin-top: 5rem;
+        display: block;
+    }
+    @media (min-width: 1200px) {
+        .header-static {
+            background-color: transparent;
+        }
+        .mega-main-menu__logo img {
+            width: 220px;
+            height: auto;
+            margin-top: 3px;
+        }
+        .mega-main-menu__items > li.has--children,
+        .mega-main-menu__items > li > a {
+            color: #FFF;
+            text-shadow: 0 0 10px #000;
+        }
+        .carousel-container {
+            margin-top: -101px;
+            z-index: -1;
+        }
+        .carousel {
+            max-height: 710px;
+        }
+        .carousel-previous-button,
+        .carousel-next-button {
+            display: block;
+        }
+    }
+</style>
+<header class="header-static">
+    <div id="">
+       <nav class="mega-main-menu">
+          <button class="mega-main-menu__toggle-mobile btn btn-default" aria-label="toggle mobile">
+          <i class="fa fa-bars text-primary">
+          </i>
+          <label>Menu</label>
+          </button>
+          <div class="mega-main-menu__logo-container">
+             <a class="mega-main-menu__logo" href="/public">
+               <img src="https://www.collegeclubswimming.com/c/72E6D32/website/collegeClubSwimmingLogo.png" alt="College CLub Swimming">
+             </a>
+          </div>
+          <div class="mega-main-menu__nav-search-container">
+             <div class="login__items-container">
+                <ul class="login__list">
+                   <li class="login__list-item">
+                      <a href="/myusmslogin">My USMS</a>
+                   </li>
+                   <li class="login__list-item">
+                      <a href="https://community.usms.org/">Community/Forums</a>
+                   </li>
+                   <li class="login__list-item">
+                      <a href="/">USMS Website</a>
+                   </li>
+                   <li class="login__list-item">
+                      <a href="/account/single-sign-out">Logout</a>
+                   </li>
+                </ul>
+             </div>
+             <form method="GET" action="/search" class="search" style="transition:all 0ms ease-in-out;transform:translateX(0px);opacity:0;z-index:-1;">
+                <div class="input-group">
+                   <input type="text" name="filter" class="form-control search__input" placeholder="Search USMS" aria-describedby="basic-addon">
+                   <input type="hidden" name="page" value="1">
+                   <input type="hidden" name="perPage" value="10">
+                   <span class="input-group-addon btn search__button text-uppercase" id="basic-addon">Search</span>
+                </div>
+             </form>
+             <div class="mega-main-menu__items-container">
+                <ul class="mega-main-menu__items list--nostyle" style="width:auto;">
+                   <li class="has--children" id="menu-item-0" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                      <span class="fa fa-chevron-right">
+                      </span>
+                      Training
+                   </li>
+                   <li class="has--children" id="menu-item-1" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                      <span class="fa fa-chevron-right">
+                      </span>
+                      Events
+                   </li>
+                   <li id="menu-item-2" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                      <a href="/clubs">Club Finder</a>
+                   </li>
+                   <li id="menu-item-3" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                      <a href="/workout-library">Workout Library</a>
+                   </li>
+                   <li class="has--children" id="menu-item-4" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                      <span class="fa fa-chevron-right">
+                      </span>
+                      About Us
+                   </li>
+                   <li id="menu-item-5" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                      <a href="/join-usms/join-or-renew">Join</a>
+                   </li>
+                   
+                   
+                </ul>
+             </div>
+             <div class="mega-main-menu__actions">
+                <div class="mega-main-menu__actions-search--wrapper">
+                   <i class="search--icon">
+                   </i>
+                   <label>Search</label>
+                </div>
+                <div class="mega-main-menu__actions-login--wrapper">
+                   <a href="/myusmslogin">
+                   <i class="login--icon">
+                   </i>
+                   <label>Log In</label>
+                   </a>
+                </div>
+             </div>
+          </div>
+          <div class="mobile-menu" style="transition:all 0ms ease-in-out;transform:translateY(0);opacity:0;z-index:-1;">w
+             <div class="mobile-menu__container">
+                <button class="mobile-menu__toggle" aria-label="toggle menu">
+                <i class="mobile-menu__close">
+                </i>
+                <label>Close</label>
+                </button>
+                <form class="mobile-menu__form" action="/search">
+                   <div class="mobile-menu__input">
+                      <input type="text" name="filter" placeholder="Search">
+                      <button class="mobile-menu__search-button" type="submit" aria-label="search button">
+                      <i class="fa fa-search text-primary">
+                      </i>
+                      </button>
+                   </div>
+                </form>
+             </div>
+             <div class="mobile-menu-overlay">
+                <ul class="mobile-menu-overlay__items list--nostyle">
+                   <li class="mobile-menu-overlay__item text-capitalize">
+                      <div class="mobile-menu-overlay__item-content">
+                         <i class="fa fa-chevron-right "></i>Training
+                      </div>
+                      <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+                         <ul class="mobile-menu-overlay__submenu list--nostyle">
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/workout-library">Workout Library</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/fitness-and-training/articles-and-videos">Articles and Videos</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/clubs">Club Finder</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/search?filter=swimming+101&amp;page=1&amp;perPage=10">Swimming 101</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/fitness-and-training/workout-tracking">Workout Tracking</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/about-usms/swimmer-magazine">SWIMMER Magazine</a>
+                            </li>
+                         </ul>
+                      </div>
+                   </li>
+                   <li class="mobile-menu-overlay__item text-capitalize">
+                      <div class="mobile-menu-overlay__item-content">
+                         <i class="fa fa-chevron-right "></i>Events
+                      </div>
+                      <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+                         <ul class="mobile-menu-overlay__submenu list--nostyle">
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/events">Calendar of Events</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/events/fitness-events">Virtual and Fitness Events</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/events/national-championships/pool-national-championships/2023-pool-national-championships/2023-spring-national-championship">2023 Spring Nationals</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/events/national-championships">National Championships</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/events/event-results-database">Results and Rankings</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/events/usms-records">Records</a>
+                            </li>
+                         </ul>
+                      </div>
+                   </li>
+                   <li class="mobile-menu-overlay__item text-capitalize">
+                      <div class="mobile-menu-overlay__item-content">
+                         <i class=" ">
+                         </i>
+                         <a href="/clubs" style="text-decoration:none;">Club Finder</a>
+                      </div>
+                      <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+                         <ul class="mobile-menu-overlay__submenu list--nostyle">
+                         </ul>
+                      </div>
+                   </li>
+                   <li class="mobile-menu-overlay__item text-capitalize">
+                      <div class="mobile-menu-overlay__item-content">
+                         <i class=" ">
+                         </i>
+                         <a href="/workout-library" style="text-decoration:none;">Workout Library</a>
+                      </div>
+                      <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+                         <ul class="mobile-menu-overlay__submenu list--nostyle">
+                         </ul>
+                      </div>
+                   </li>
+                   <li class="mobile-menu-overlay__item text-capitalize">
+                      <div class="mobile-menu-overlay__item-content">
+                         <i class="fa fa-chevron-right "></i>About Us
+                      </div>
+                      <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+                         <ul class="mobile-menu-overlay__submenu list--nostyle">
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/about-usms/what-is-us-masters-swimming">What is Masters Swimming?</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="http://community.usms.org">USMS Community</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="https://www.swimoutlet.com/ProductBrand.asp?Brand=1766&amp;click=1668780">Logo Merchandise</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/join-usms/membership-benefits">Membership Benefits</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/open-water-central">Open Water Central</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/club-central">Club Central</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/coach-central">Coach Central</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/volunteer-central">Volunteer Central</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/alts-central">Adult Learn-to-Swim Central</a>
+                            </li>
+                         </ul>
+                      </div>
+                   </li>
+                   <li class="mobile-menu-overlay__item text-capitalize">
+                      <div class="mobile-menu-overlay__item-content">
+                         <i class=""></i>
+                         <a href="/join-usms/join-or-renew" style="text-decoration:none;">Join</a>
+                      </div>
+                      <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+                         <ul class="mobile-menu-overlay__submenu list--nostyle">
+                         </ul>
+                      </div>
+                   </li>
+                </ul>
+             </div>
+          </div>
+       </nav>
+    </div>
+ </header>
