@@ -43,6 +43,7 @@
     <link rel="stylesheet" href="/css/common-updates.css">
     
         <link rel="stylesheet" href="../event/css/event-sanction.css">
+        <link rel="stylesheet" href="css/lane-mate.css">
     </head>
     <body>
         <div class="loading" style="display: none;">
@@ -326,70 +327,97 @@
                             <div class="col-xs-12 col-lg-6">
                                 <div class="current-plan">
                                     <h3>Your Plan</h3>
-                                    <p>LaneMate Monthly $9.99</p>
-                                    <a href="#">Change Plan</a>
+                                    <div class="current-plan">
+                                        <p class="plan-name">LaneMate</p>
+                                        <p class="plan-type">Monthly</p>
+                                        <p class="plan-price">$9.99</p>
+                                        <a href="#">Change Plan</a>
+                                    </div>
+                                </div>
+                                <div class="available-plans">
+                                    <h3>Other Plan Options</h3>
+                                    <div class="plan-option">
+                                            <p class="plan-name">LaneMate</p>
+                                            <p class="plan-type">Yearly</p>
+                                            <p class="plan-price">$6.99</p>
+                                            <ul>
+                                                <li>Our discounted option that lets you pay for the entire year at one time</li>
+                                            </ul>
+                                            <a href="#">Switch to this plan</a>
+                                    </div>
+                                    <div class="plan-option">
+                                            <p class="plan-name">USMS Membership</p>
+                                            <p class="plan-type">Yearly</p>
+                                            <p class="plan-price">$70.00</p>
+                                            <ul>
+                                                <li>All the LaneMate benefits</li>
+                                                <li>Can swim in events</li>
+                                                <li>Can swim with a club</li>
+                                            </ul>
+                                            <a href="#">Switch to this plan</a>
+                                    </div>
+                                    <div class="plan-option">
+                                            <p class="plan-name">LaneMate</p>
+                                            <p class="plan-type">Monthly</p>
+                                            <p class="plan-price">$9.99</p>
+                                            <ul>
+                                                <li>Our flexible option that lets you pay monthly</li>
+                                                <li>All the LaneMate benefits</li>
+                                                <li>Can swim in events</li>
+                                                <li>Can swim with a club</li>
+                                            </ul>
+                                            <a href="#">Switch to this plan</a>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-lg-6">
                                 <div class="billing-information">
+                                    <h3>Billing Information</h3>
                                     <div class="billing-invoice">
-                                        <h3>Billing Information</h3>
-                                        <span class="date">8/7/23</span>
-                                        <span class="product">LaneMate</span>
-                                        <span class="amount">$9.99</span>
+                                        <p class="date">8/7/23</p>
+                                        <p class="product">LaneMate</p>
+                                        <p class="amount">$9.99</p>
                                     </div>
                                     <div class="billing-invoice">
-                                        <span class="date">7/7/23</span>
-                                        <span class="product">LaneMate</span>
-                                        <span class="amount">$9.99</span>
+                                        <p class="date">7/7/23</p>
+                                        <p class="product">LaneMate</p>
+                                        <p class="amount">$9.99</p>
+                                    </div>
+
+                                    <div class="billing-invoice">
+                                        <p class="date">6/7/23</p>
+                                        <p class="product">LaneMate</p>
+                                        <p class="amount">$9.99</p>
+                                    </div>
+
+                                    <div class="billing-invoice">
+                                        <p class="date">5/7/23</p>
+                                        <p class="product">LaneMate</p>
+                                        <p class="amount">$9.99</p>
+                                    </div>
+
+                                    <div class="billing-invoice">
+                                        <p class="date">4/7/23</p>
+                                        <p class="product">LaneMate</p>
+                                        <p class="amount">$9.99</p>
+                                    </div>
+
+                                    <div class="billing-invoice">
+                                        <p class="date">3/7/23</p>
+                                        <p class="product">LaneMate</p>
+                                        <p class="amount">$9.99</p>
                                     </div>
                                     <a href="#">Show More Transactions</a>
                                 </div>
-
                                 <div class="payment-information">
                                     <h3>Payment Method</h3>
-                                    <span class="card-number">************7744</span>
-                                    <span class="card-expiration">06/28</span>
+                                    <p class="card-number">************7744</p>
+                                    <p class="card-expiration">06/28</p>
+                                    <a href="#">Update payment method</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- <div class="usms-container form__container p-tb-10">
-                        <div class="row event-list__container">
-                            <div class="col-xs-12 col-md-3">
-                                <form action="/" class="form-horizontal" method="post">
-                                    <div class="button-row__footer">
-                                        <a class="btn" href="event-sanction-add-new.html">
-                                            + Create a New Event
-                                        </a>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="col-xs-12 col-md-6">
-                                <div class="input-group input-name">
-                                    <label for="inputName" class="label-large">Input Label</label>
-                                    <input type="email" class="form-control" onblur="handleInputBlur(this)" name="inputName" id="inputName" value="" placeholder="Input Name">
-                                    <span class="help-block help-block--eventInfoName">Error message</span>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-md-3">
-                                <div class="input-group contact-info__host-type">
-                                    <label for="selectHostType">Pre-filter by LMSC</label>
-                                    <select name="SelectHostType" class="form-control" id="selectHostType" onchange="validateField(this)" required="True">                                                            
-                                    <option value="{Sitecore ID}" disabled="" selected="">Select an LMSC</option>
-                                    <option value="{Sitecore ID}">LMSC</option>
-                                    <option value="{Sitecore ID}">LMSC</option>
-                                    <option value="{Sitecore ID}">LMSC</option>
-                                    <option value="{Sitecore ID}">LMSC</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-
-
-
 
                 </div>
             </main>
@@ -867,11 +895,7 @@
    </div>
 </footer>
 
-
         </div>
-        <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-        <script src="https://www.usms.org/scripts/jquery.mask.min.js?version=20210920.1"></script>         
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     </body>
