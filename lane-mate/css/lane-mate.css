@@ -13,12 +13,6 @@
     text-decoration: underline;
 }
 
-.current-plan .plan-name,
-.current-plan .plan-type,
-.current-plan .plan-price {
-    display: inline-flex;
-}
-
 .date,
 .product,
 .amount {
@@ -31,7 +25,7 @@
 }
 
 .plan-option {
-    border: 1px solid #0068ad;
+    border: 1px solid #777777;
     border-radius: 4px;
     margin: 0 auto 2rem;
     padding: 0;
@@ -41,44 +35,78 @@
     align-items: flex-start;
 }
 
-.current-plan .plan-name,
+/* .current-plan .plan-name,
 .current-plan .plan-type {
     padding: 0 2rem 0 0;
-}
+} */
 
-.current-plan .plan-name {
+p.plan-name {
     font-weight: 500;
 }
 
-.current-plan a {
+p span.plan-type {
+    font-weight: 300;
+    font-size: 2.1rem;
+    padding-left: 1rem;
+}
+
+/* .current-plan a {
     display: block;
     margin-bottom: 6rem;
+} */
+
+.current-plan .plan-name,
+.current-plan .plan-type,
+.current-plan .plan-price {
+    display: inline-flex;
+    color: #FFF;
+}
+
+.current-plan__summary {
+    color: #FFF;
+    background-color: #777;
+    border-radius: 4px;
 }
 
 .plan-option .plan-name,
 .plan-option .plan-type {
-    background-color: #0068ad;
-    color: #FFF !important;
+    background-color: #777;
+    color: #FFF;
     flex: auto;
 }
 
-.plan-option .plan-name {
-    font-size: 1.8rem;
-    font-weight: 500;
-    padding-left: 1rem;
-    line-height: 4rem;
+.plan-option.plan-option-selected {
+    border-color: #0068ad;
+    background-color: #accbdf;
+    background-color: aliceblue;
 }
 
-.plan-option .plan-type {
+.plan-option.plan-option-selected a {
+    display: none;
+}
+
+.current-plan__summary,
+.plan-option.plan-option-selected .plan-name,
+.plan-option.plan-option-selected .plan-type {
+    background-color: #0068ad;
+    /* color: #FFF; */
+    /* flex: auto; */
+}
+
+.current-plan .current-plan__summary p,
+.plan-option p {
     font-size: 1.8rem;
+    margin: 0;
+    padding: 0 3rem;
     line-height: 4rem;
 }
 
 .plan-option .plan-price {
     flex: 100%;
     margin: 0;
-    padding-left: 3rem;
+    padding-top: 1.5rem;
     padding-bottom: 1rem;
+    padding-left: 3rem;
     font-size: 3rem;
 }
 
