@@ -26,8 +26,14 @@
 
 .available-plans {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    /* align-items: flex-start; */
     margin: 2rem auto 0;
+}
+@media (min-width: 1200px) {
+    .available-plans {
+        flex-direction: row;
+    }
 }
 
 .billing-information,
@@ -57,17 +63,29 @@
 }
 
 .plan-option {
-    max-width: 260px;
+    /* max-width: 260px; */
+    height: auto;
+    width: 100%;
     margin: 0 0.5rem 2rem;
     padding: 0 0 5rem;
     display: flex;
     justify-content: space-around;
     flex-flow: row wrap;
     align-items: flex-start;
+    padding-bottom: 4rem;
+}
+
+@media (min-width: 1200px) {
+    .plan-option {
+        max-width: 260px;
+        height: 350px;
+        padding-bottom: 30%;
+    }
 }
 
 p.plan-name {
     font-weight: 500;
+    width: 100%;
 }
 
 p span.plan-type {
@@ -84,13 +102,35 @@ p span.plan-type {
 
 .plan-option p.plan-selected-label {
     font-size: 1.6rem;
-    /* color: green; */
     margin: 0;
-    padding: 1rem 0 3rem;
-    position: absolute;
-    bottom: 1.5rem;
+    padding: 0;
     font-weight: 500;
+    /* height: 5rem;
+    line-height: 5rem; */
 }
+
+.current-plan .current-plan__summary p {
+    font-size: 1.8rem;
+    margin: 0;
+    padding: 0;
+    line-height: 120%;
+}
+
+.plan-option p {
+    font-size: 1.8rem;
+    margin: 0;
+    padding: 0;
+    line-height: 120%;
+}
+
+.plan-option a { 
+    margin: 0;
+    padding: 0;
+    /* height: 5rem;
+    line-height: 5rem; */
+    font-size: 1.6rem;
+}
+
 
 .current-plan .plan-name,
 .current-plan .plan-type,
@@ -118,8 +158,15 @@ p span.plan-type {
     border-top-width: 1px;
 }
 
-.plan-option.plan-option-selected a {
+/* .plan-option.plan-option-selected a {
     display: none;
+} */
+
+p.switch-plan-label,
+p.plan-selected-label {
+    height: 5rem;
+    line-height: 5rem;
+    /* display: block; */
 }
 
 .plan-selected-label {
@@ -130,18 +177,14 @@ p span.plan-type {
     display: block;
 }
 
+.plan-option-selected .switch-plan-label {
+    display: none;
+}
+
 .current-plan__summary,
 .plan-option.plan-option-selected .plan-name,
 .plan-option.plan-option-selected .plan-type {
     background-color: #0068ad;
-}
-
-.current-plan .current-plan__summary p,
-.plan-option p {
-    font-size: 1.8rem;
-    margin: 0;
-    padding: 0 3rem;
-    line-height: 120%;
 }
 
 .plan-option .plan-price {
@@ -172,13 +215,6 @@ p span.plan-type {
     display: block;
     padding: 5rem 0;
     text-align: center;
-}
-
-.plan-option a { 
-    margin: 0;
-    padding: 1rem 0 3rem;
-    position: absolute;
-    bottom: 1.5rem;
 }
 
 .billing-information {
