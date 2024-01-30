@@ -28,7 +28,7 @@
     border: 1px solid #777777;
     border-radius: 4px;
     margin: 0 auto 2rem;
-    padding: 0;
+    padding: 0 0 1.5rem;
     display: flex;
     justify-content: space-around;
     flex-flow: row wrap;
@@ -54,6 +54,13 @@ p span.plan-type {
     display: block;
     margin-bottom: 6rem;
 } */
+
+.current-plan__summary {
+    display: none;
+}
+.current-plan__summary.current-plan--selected {
+    display: block;
+}
 
 .current-plan .plan-name,
 .current-plan .plan-type,
@@ -125,10 +132,43 @@ p span.plan-type {
 .payment-information a,
 .billing-information a {
     display: block;
-    padding: 2rem 0;
+    padding: 3rem 0;
 }
 
 .plan-option a { 
     flex: 100%;
     padding: 1rem 0 3rem 3rem;
+}
+
+.billing-information {
+    width: 100%;
+}
+
+.billing-invoice {
+    display: flex;
+}
+
+.billing-invoice {
+    /* flex: auto; */
+    border-bottom: 1px solid #EEE;
+    margin: 1rem 0;
+    padding: 1rem 0;
+}
+.billing-invoice > p {
+    margin: 0;
+    line-height: 100%;
+}
+.billing-invoice .date {
+    flex: 0 0 20%;
+    font-size: 1.6rem;
+    padding-top: .2rem;
+}
+.billing-invoice .product {
+    flex: 0 0 50%;
+    margin: 0 2rem;
+}
+.billing-invoice .amount {
+    /* width: 50%; */
+    text-align: right;
+    flex: 0 0 30%;
 }
