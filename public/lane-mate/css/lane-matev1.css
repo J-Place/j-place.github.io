@@ -24,30 +24,8 @@
     margin-bottom: 6rem;
 }
 
-.available-plans {
-    display: flex;
-    flex-direction: row;
-    margin: 2rem auto 0;
-}
-
-.billing-information,
-.payment-information {
-    margin-top: 2rem;
-}
-
-
-@media (min-width: 1200px) {
-    .payment-information {
-        margin: 3rem auto;
-    }
-
-    .modal-dialog {
-        top: 30%;
-    }
-}
-
 .plan-option {
-    text-align: center;
+    /* text-align: center; */
     vertical-align: top;
     transition: opacity .25s ease;
     cursor: pointer;
@@ -57,14 +35,20 @@
 }
 
 .plan-option {
-    max-width: 260px;
-    margin: 0 0.5rem 2rem;
-    padding: 0 0 5rem;
+    /* border: 1px solid #777777; */
+    /* border-radius: 4px; */
+    margin: 0 auto 2rem;
+    padding: 0 0 1.5rem;
     display: flex;
     justify-content: space-around;
     flex-flow: row wrap;
     align-items: flex-start;
 }
+
+/* .current-plan .plan-name,
+.current-plan .plan-type {
+    padding: 0 2rem 0 0;
+} */
 
 p.plan-name {
     font-weight: 500;
@@ -72,24 +56,20 @@ p.plan-name {
 
 p span.plan-type {
     font-weight: 300;
+    font-size: 2.0rem;
     padding-left: 1rem;
 }
+
+/* .current-plan a {
+    display: block;
+    margin-bottom: 6rem;
+} */
 
 .current-plan__summary {
     display: none;
 }
 .current-plan__summary.current-plan--selected {
     display: block;
-}
-
-.plan-option p.plan-selected-label {
-    font-size: 1.6rem;
-    color: green;
-    margin: 0;
-    padding: 1rem 0 3rem;
-    position: absolute;
-    bottom: 1.5rem;
-    font-weight: 500;
 }
 
 .current-plan .plan-name,
@@ -107,8 +87,6 @@ p span.plan-type {
 
 .plan-option .plan-name,
 .plan-option .plan-type {
-    padding: 0.5rem 0;
-    font-size: 1.6rem;
     background-color: #777;
     color: #FFF;
     flex: auto;
@@ -124,14 +102,6 @@ p span.plan-type {
     display: none;
 }
 
-.plan-selected-label {
-    display: none;
-}
-
-.plan-option-selected .plan-selected-label {
-    display: block;
-}
-
 .current-plan__summary,
 .plan-option.plan-option-selected .plan-name,
 .plan-option.plan-option-selected .plan-type {
@@ -143,7 +113,7 @@ p span.plan-type {
     font-size: 1.8rem;
     margin: 0;
     padding: 0 3rem;
-    line-height: 120%;
+    line-height: 4rem;
 }
 
 .plan-option .plan-price {
@@ -152,12 +122,10 @@ p span.plan-type {
     padding-top: 1.5rem;
     padding-bottom: 1rem;
     padding-left: 3rem;
-    font-size: 2.3rem;
-    font-weight: 700;
+    font-size: 3rem;
 }
 
 .plan-option ul {
-    text-align: left;
     margin: 0 0 2rem;
     padding: 0 6rem 0 4rem;
     display: flex;
@@ -172,15 +140,12 @@ p span.plan-type {
 .payment-information a,
 .billing-information a {
     display: block;
-    padding: 5rem 0;
-    text-align: center;
+    padding: 3rem 0;
 }
 
 .plan-option a { 
-    margin: 0;
-    padding: 1rem 0 3rem;
-    position: absolute;
-    bottom: 1.5rem;
+    flex: 100%;
+    padding: 1rem 0 3rem 3rem;
 }
 
 .billing-information {
@@ -219,26 +184,4 @@ p span.plan-type {
 .card-expiration {
     display: inline;
     padding-left: 2.5rem;
-}
-
-
-
-
-/* Overrides source form container styling */
-
-@media (min-width: 768px) {
-    .usms-container.form__container>.row>[class*=col-lg-]:nth-of-type(2), 
-    .usms-container.form__container>.row>[class*=col-md-]:nth-of-type(2), 
-    .usms-container.form__container>.row>[class*=col-sm-]:nth-of-type(2) {
-        border: 0 none;
-        margin-top: 6rem;
-    }
-    .usms-container.form__container>.row>[class*=col-lg-]:nth-of-type(3), 
-    .usms-container.form__container>.row>[class*=col-md-]:nth-of-type(3), 
-    .usms-container.form__container>.row>[class*=col-sm-]:nth-of-type(3) {
-        border-top: 0 none;
-        margin-top: 6rem;
-        padding-top: 0;
-        border-left: 1px solid #ccc;
-    }
 }
