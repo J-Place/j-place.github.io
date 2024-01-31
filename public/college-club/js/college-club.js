@@ -23,6 +23,7 @@ $('.mega-main-menu__items li').click(function() {
 });
 
 $(document).on('click', function(event) {
+    $('.mega-main-menu__items li').removeClass("active");
     var target = $(event.target);
     // Check if the clicked element is not a menu item or dropdown
     if (!target.closest('.mega-main-menu__items li, .mega-menu-overlay').length) {
