@@ -16,6 +16,11 @@
         background-color: transparent;
         background-color: rgba(0,0,0,0.5);
     }
+    /* TEST THIS - Position Sticky !!!!!!! */
+    .header-static {
+        position: sticky;
+        z-index: 2;
+    }
     .mega-main-menu__logo img {
         width: 220px;
         height: auto;
@@ -28,13 +33,18 @@
     }
     .carousel-container {
         margin-top: -101px;
-        z-index: -1;
+        /* z-index: 1; */
     }
     .carousel {
         max-height: 710px;
     }
     .carousel-previous-button,
     .carousel-next-button {
+        display: block;
+    }
+
+    .carousel-container .carousel-previous-button,
+    .carousel-container .carousel-next-button {
         display: block;
     }
 }
