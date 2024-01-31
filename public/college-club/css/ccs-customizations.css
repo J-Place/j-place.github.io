@@ -4,15 +4,42 @@
         display: none;
     }
     .mega-menu-overlay {
+        height: 310px;
         width: 100%;
         padding-left: calc(1200px - 50%);
         padding-right: calc(1200px - 50%);
     }
 
+    .mega-menu-overlay__items {
+        max-height: 270px;
+    }
+
+
+
+    .mega-menu-overlay__items > li {
+        height: 5rem;
+        width: calc(50% - 10px);
+    }
+
     .mega-menu-overlay__items > li > a {
         color: #FFF;
-        font-size: 1.8rem;
-        font-weight: 500;
+        font-size: 2.3rem;
+        font-weight: 300;
+        line-height: 5rem;
+        transition: none;
+    }
+
+    .mega-menu-overlay__items > li > a:hover {
+        padding-left: 0;
+    }
+
+    .mega-menu-overlay__items > li:hover {
+        border-left: 0 none;
+        color: #d2202e;
+        transition: none;
+    }
+    .mega-main-menu__items > li.active {
+        border-color: transparent;
     }
 }
 

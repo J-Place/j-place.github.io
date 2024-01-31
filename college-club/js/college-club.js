@@ -14,7 +14,8 @@
 
 
 
-$('.mega-main-menu__items li').click(function() {    
+$('.mega-main-menu__items li').click(function() {
+    $(this).toggleClass("active");
     var target = $(this).data('target');
     // $('#' + target).slideToggle();
     $('#' + target).toggle();
