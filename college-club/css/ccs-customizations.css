@@ -8,6 +8,12 @@
         padding-left: calc(1200px - 50%);
         padding-right: calc(1200px - 50%);
     }
+
+    .mega-menu-overlay__items > li > a {
+        color: #FFF;
+        font-size: 1.8rem;
+        font-weight: 500;
+    }
 }
 
 .search--icon,
@@ -16,15 +22,16 @@
 }
 
 .mega-main-menu__items>li:last-of-type>a {
-    border-color: #000;
-    background-color: #000;
+    border-color: #fff;
+    background-color: transparent;
+    color: #FFF;
 }
 
 .mega-main-menu__actions-login--wrapper label, 
 .mega-main-menu__actions-search--wrapper label, 
 .mega-main-menu__actions a label, 
 .mega-main-menu__toggle-mobile label {
-    color: #000;
+    color: #fff;
 }
 
 .carousel__slide-content,
@@ -67,7 +74,7 @@
     /* TEST THIS - Position Sticky !!!!!!! */
     .header-static {
         position: sticky;
-        z-index: 2;
+        z-index: 100;
     }
     
     .mega-main-menu__logo img {
@@ -83,9 +90,14 @@
     }
     
     .carousel-container {
-        margin-top: -101px;
+        margin-top: 0;
+        overflow: visible;
     }
     
+    .carousel__slide {
+        margin-top: -101px;
+    }
+
     .carousel {
         max-height: 710px;
     }
