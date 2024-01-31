@@ -4,40 +4,60 @@
     text-align: center;
     margin: 1rem auto 0;
 }
+
 .carousel__slide-content > p {
     border: 0 none;
 }
+
 .carousel__slide-content > a {
     margin-top: 5rem;
     display: block;
 }
+
+.carousel-nav {
+    z-index: 100;
+}
+
+.carousel-nav__item-button {
+    height: 20px;
+    width: 60px;
+    border-radius: 0;
+}
+
 @media (min-width: 1200px) {
+
     .header-static {
         background-color: transparent;
         background-color: rgba(0,0,0,0.5);
     }
+    
     /* TEST THIS - Position Sticky !!!!!!! */
     .header-static {
         position: sticky;
         z-index: 2;
     }
+    
     .mega-main-menu__logo img {
         width: 220px;
         height: auto;
         margin-top: 3px;
     }
+
     .mega-main-menu__items > li.has--children,
     .mega-main-menu__items > li > a {
         color: #FFF;
         text-shadow: 0 0 10px #000;
     }
+    
     .carousel-container {
         margin-top: -101px;
         /* z-index: 1; */
     }
+    
     .carousel {
         max-height: 710px;
     }
+    
     .carousel-previous-button,
     .carousel-next-button {
         display: block;
@@ -47,4 +67,5 @@
     .carousel-container .carousel-next-button {
         display: block;
     }
+
 }
