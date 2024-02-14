@@ -25,6 +25,9 @@ $('.mega-main-menu__items li').click(function() {
 
 $(document).on('click', function(event) {    
     var target = $(event.target);
+    if (target) {
+        
+    }
     // Check if the clicked element is not a menu item or dropdown
     if (!target.closest('.mega-main-menu__items li, .mega-menu-overlay').length) {
         $('.mega-menu-overlay').removeClass("is-flex");

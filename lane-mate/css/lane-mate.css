@@ -1,9 +1,20 @@
+.payment-information--form {
+    display: none;
+}
+
+.usms-container.form__container h3,
 .usms-container .current-plan h3,
 .usms-container .available-plans h3,
 .usms-container .billing-information h3,
 .usms-container .payment-information h3 {
-    font-size: 3rem;
+    /* font-size: 3rem; */
     margin: 0 0 3rem;
+    display: inline-flex;
+}
+
+.usms-container p,
+.usms-container.form__container p {
+    margin: 0 !important;
 }
 
 .current-plan a,
@@ -19,6 +30,10 @@
     display: inline-flex;
 }
 
+.current-plan__renewal-date {
+    display: inline-flex;
+}
+
 .current-plan,
 .billing-information {
     margin-bottom: 6rem;
@@ -30,21 +45,23 @@
     /* align-items: flex-start; */
     margin: 2rem auto 0;
 }
+
 @media (min-width: 1200px) {
     .available-plans {
         flex-direction: row;
+        margin-bottom: 8rem;
     }
 }
 
 .billing-information,
-.payment-information {
+.payment-information--form {
     margin-top: 2rem;
 }
 
 
 @media (min-width: 1200px) {
-    .payment-information {
-        margin: 3rem auto;
+    .payment-information--form {
+        margin: 7rem 0 3rem;
     }
 
     .modal-dialog {
@@ -210,10 +227,13 @@ p.plan-selected-label {
     margin: 0;
 }
 
+.payment-information {
+    padding: 0 0 5rem;
+}
+
 .payment-information a,
 .billing-information a {
-    display: block;
-    padding: 5rem 0;
+    display: inline-flex;
     text-align: center;
 }
 
@@ -248,13 +268,26 @@ p.plan-selected-label {
     flex: 0 0 30%;
 }
 
+.card-number,
 .card-expiration {
-    display: inline;
-    padding-left: 2.5rem;
+    display: inline-flex;
 }
 
+.card-expiration {
+        padding-left: 2.5rem;
+}
 
+.card-expiration + a {
+    display: flex;
+    /* border-right: 1px solid #CCC; */
+    /* margin-right: .5rem; */
+    /* padding-right: 1rem; */
+    margin: 1rem 0;
+}
 
+.payment-information--form > div {
+    margin-bottom: 3rem;
+}
 
 /* Overrides source form container styling */
 
@@ -265,9 +298,9 @@ p.plan-selected-label {
         border: 0 none;
         margin-top: 6rem;
     }
-    .usms-container.form__container>.row>[class*=col-lg-]:nth-of-type(3), 
-    .usms-container.form__container>.row>[class*=col-md-]:nth-of-type(3), 
-    .usms-container.form__container>.row>[class*=col-sm-]:nth-of-type(3) {
+    .usms-container.form__container>.row>[class*=col-lg-]:nth-of-type(4), 
+    .usms-container.form__container>.row>[class*=col-md-]:nth-of-type(4), 
+    .usms-container.form__container>.row>[class*=col-sm-]:nth-of-type(4) {
         border-top: 0 none;
         margin-top: 6rem;
         padding-top: 0;

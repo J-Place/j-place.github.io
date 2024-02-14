@@ -1,9 +1,19 @@
+.payment-information--form {
+    display: none;
+}
+
+.usms-container.form__container h3,
 .usms-container .current-plan h3,
 .usms-container .available-plans h3,
 .usms-container .billing-information h3,
 .usms-container .payment-information h3 {
-    font-size: 3rem;
+    /* font-size: 3rem; */
     margin: 0 0 3rem;
+    display: inline-flex;
+}
+
+.current-plan__renewal-date {
+    display: inline-flex;
 }
 
 .current-plan a,
@@ -137,10 +147,13 @@ p span.plan-type {
     margin: 0;
 }
 
+.payment-information {
+    padding: 0 0 3rem;
+}
+
 .payment-information a,
 .billing-information a {
     display: block;
-    padding: 3rem 0;
 }
 
 .plan-option a { 
@@ -181,7 +194,26 @@ p span.plan-type {
     flex: 0 0 30%;
 }
 
+.card-number, .card-expiration {
+    display: inline-flex;
+}
+
 .card-expiration {
     display: inline;
     padding-left: 2.5rem;
+}
+
+.card-expiration + a {
+    display: flex;
+      margin: 1rem 0;
+}
+
+@media (min-width: 1200px) {
+    .payment-information--form {
+        margin-top: 5rem;
+    }
+
+    .payment-information--form > div {
+        margin-bottom: 3rem;
+    }
 }

@@ -19,3 +19,16 @@ $("#confirmUsmsYearlyPlan").on( "click", function() {
     $(".plan-option").removeClass("plan-option-selected");
     $(".plan-option_usms-yearly").addClass("plan-option-selected");
 });
+
+$("#btnEditCreditCard").on("click", function() {
+    // .payment-information--form
+    // $("").removeClass("");
+    // $("").addClass("");
+    $(".payment-information--form").show();
+});
+$("#btnEditCreditCardSubmit").on("click", function() {
+    $(".payment-information--form").hide();
+});
+$("#btnEditCreditCardCancel").on("click", function() {
+    $(".payment-information--form").hide();
+});
