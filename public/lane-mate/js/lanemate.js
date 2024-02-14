@@ -1,3 +1,5 @@
+// $("").removeClass("");
+// $("").addClass("");
 
 $("#confirmLaneMateMonthlyPlan").on( "click", function() {
     $(".current-plan__summary").removeClass("current-plan--selected");
@@ -21,14 +23,13 @@ $("#confirmUsmsYearlyPlan").on( "click", function() {
 });
 
 $("#btnEditCreditCard").on("click", function() {
-    // .payment-information--form
-    // $("").removeClass("");
-    // $("").addClass("");
     $(".payment-information--form").show();
 });
+
 $("#btnEditCreditCardSubmit").on("click", function() {
     $(".payment-information--form").hide();
 });
+
 $("#btnEditCreditCardCancel").on("click", function() {
     $(".payment-information--form").hide();
 });
