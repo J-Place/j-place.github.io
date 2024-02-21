@@ -1,4 +1,6 @@
-.payment-information--form {
+.payment-information--form,
+.cancel-auto-renew--form,
+.cancel-auto-renew--confirmation {
     display: none;
 }
 
@@ -17,6 +19,10 @@
     margin: 0;
 }
 
+.cancel-auto-renew-message {
+    margin: -1rem 0 2rem;
+}
+
 .current-plan a,
 .plan-option a,
 .payment-information a,
@@ -31,7 +37,8 @@
 }
 
 .current-plan__renewal-date {
-    display: inline-flex;
+    /* display: inline-flex; */
+    display: none;
 }
 
 .current-plan,
@@ -61,7 +68,7 @@
 
 @media (min-width: 1200px) {
     .payment-information--form {
-        margin: 7rem 0 3rem;
+        margin: 0 0 3rem;
     }
 
     .modal-dialog {
@@ -112,7 +119,19 @@ p span.plan-type {
 
 .current-plan__summary {
     display: none;
+    background-color: #0068ad;
+    margin-bottom: 5rem;
 }
+
+.current-plan__summary p {
+    color: #FFF;
+}
+
+.current-plan__renewal-date {
+    margin: 0 0 1rem;
+}
+
+.current-plan__renewal-date.current-plan--selected,
 .current-plan__summary.current-plan--selected {
     /* display: block; */
     display: flex;
@@ -153,7 +172,7 @@ p span.plan-type {
 .current-plan__summary p.plan-price {
     margin-right: 1rem;
     font-size: 1.8rem;
-    margin-bottom: 5rem;
+    padding: 1rem 2rem;
 }
 
 .current-plan .plan-name,
@@ -170,7 +189,7 @@ p span.plan-type {
 
 .plan-option .plan-name,
 .plan-option .plan-type {
-    padding: 0.5rem 0;
+    padding: 0.5rem 2rem;
     font-size: 1.6rem;
     background-color: #777;
     color: #FFF;
