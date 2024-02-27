@@ -1,29 +1,23 @@
-			<div class="modal-container" style="transition:all 250ms ease-in-out;transform:translateY(-10px);opacity:0;z-index:-1;">
-				<div class="modal">
-					<div class="modal-close"><button><i class="fa fa-times"></i></button></div>
-					<div class="row ">
-						<div class="col-xs-12">
-							<p class="text-danger text-center" style="display:flex;flex-direction:column;"></p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<input type="hidden" name="dataDesc" value=""><input type="hidden" name="dataValue" value=""><input type="hidden" name="current-reg-year" value="2024">
+			<input type="hidden" name="dataDesc" value="">
+			<input type="hidden" name="dataValue" value="">
+			<input type="hidden" name="current-reg-year" value="2024">
+			
 			<div class="card membership-length">
-				<!-- react-empty: 15 -->
-				<h3 class="membership-length__form-header">Membership Options</h3>
-				<p class="membership-length__form-summary">Pick a membership option that works best for you</p>
-				<div class="col-xs-12 text-center"><span class="help-block help-block--length">Please select a membership option</span></div>
+				
+				<h3 class="membership-length__form-header">Subscription Plans</h3>
+				<p class="membership-length__form-summary">Pick the subscription plan that works best for you</p>
+				<div class="col-xs-12 text-center"><span class="help-block help-block--length">Please select a subscription plan</span></div>
 				<div class="row is-flex membership-length--container">
 
-					<div class="col-xs-12 col-md-3" style="display:flex;">
-						<div class="membership-length--option membership-length--currentYear">
-							<span class="promo current-year-promo">LaneMate Annual</span>
-							<label for="currentYear" class="control-label">
-								<div class="radio-container"><input type="radio" name="length" id="currentYear" value="currentYear"></div>
-								<div class="current-year-container">
+					<!-- Yearly -->
+					<div class="col-xs-12 col-md-3 offset-md-3">
+						<div class="membership-length--option membership-length--lanemate-yearly">
+							<span class="promo lanemate-yearly-promo">LaneMate Annual</span>
+							<label for="lanemateYearly" class="control-label">
+								<div class="radio-container"><input type="radio" name="length" id="lanemateYearly" value="lanemateYearly"></div>
+								<div class="lanemate-yearly-container">
 									<span class="membership-length--price">
-										<p class="form-control-static current-year-cost">$6.99</p>
+										<p class="form-control-static lanemate-yearly-cost">$6.99</p>
 									</span>
 									<span class="membership-length--description">Per Month</span>
 								</div>
@@ -32,21 +26,22 @@
 							<span class="membership-length--note">
                                 <ul class="payment-bullets">
 									<li>Our discounted option that lets you pay for the entire year at one time</li>
-									<li>$82.88 total billed at one time</li>
-                                    <li>$99 Video Stroke Analysis</li>
+									<li>$83.88 total billed at one time</li>
+                                    <li>Optional Video Stroke Analysis (Discounted Price $99)</li>
 								</ul>
                             </span>
 						</div>
 					</div>
 
-					<div class="col-xs-12 col-md-3" style="display:flex;">
-						<div class="membership-length--option membership-length--usmsPlus" style="display:block;;">
-							<span class="promo usms-plus-promo">LaneMate Monthly</span><span class="savings"></span>
-							<label for="usmsPlus" class="control-label">
-								<div class="radio-container"><input type="radio" name="length" id="usmsPlus" value="usmsPlus"></div>
-								<div class="usms-plus-container">
+					<!-- Monthly -->
+					<div class="col-xs-12 col-md-3">
+						<div class="membership-length--option membership-length--lanemate-monthly" style="display:block;;">
+							<span class="promo lanemate-monthly-promo">LaneMate Monthly</span><span class="savings"></span>
+							<label for="lanemateMonthly" class="control-label">
+								<div class="radio-container"><input type="radio" name="length" id="lanemateMonthly" value="lanemateMonthly"></div>
+								<div class="lanemate-monthly-container">
 									<span class="membership-length--price">
-										<p class="form-control-static usms-plus-cost">$9.99</p>
+										<p class="form-control-static lanemate-monthly-cost">$9.99</p>
 									</span>
 									<span class="membership-length--description">Per Month</span>
 								</div>
@@ -56,60 +51,23 @@
 								<ul class="payment-bullets">
 									<li>Our flexible option that lets you pay monthly</li>
 									<li>All the LaneMate benefits</li>
-                                    <li>$120 Video Stroke Analysis</li>
+                                    <li>Optional Video Stroke Analysis (Standard Price $120)</li>
 								</ul>
-								<div class="modal" id="modalYearPlus" tabindex="-1" role="dialog">
-									<div class="modal-dialog" role="document">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-												<span aria-hidden="true">×</span>
-												</button>
-											</div>
-											<div class="modal-body">
-												<ul>
-													<li>A standard USMS membership</li>
-													<li>
-														Exclusive welcome package including:
-														<ul>
-															<li>Premium USMS-branded item of your choosing</li>
-															<li>USMS cap</li>
-															<li>USMS stickers</li>
-															<li>Plastic membership card</li>
-														</ul>
-													</li>
-													<li>
-														Free registration to all of these events
-														<ul>
-															<li>Swim.com USMS Fitness Series (three challenges per year)</li>
-															<li>Virtual Championships (five distances per year)</li>
-														</ul>
-													</li>
-													<li>Access to exclusive Olympian-featured webinars</li>
-													<li>
-														Free USA Swimming Supporters Club membership which includes a donation to support Adult Learn-to-Swim grants and:
-														<ul>
-															<li>&nbsp;A Supporters Club merchandise items</li>
-															<li>"Skip the line" access to autograph signings at major events</li>
-															<li>Invitations to participate in USA Swimming fan surveys and pools</li>
-															<li>Exclusive offer from USA Swimming and USA Swimming Foundation partners</li>
-														</ul>
-													</li>
-													<li>Free All American patches<span style="font-size: 14px;">&nbsp;(<em>once you reach All American status</em>)</span></li>
-													<li>Free Go the Distance 50-mile cap&nbsp;<span style="font-size: 14px;">(<em>once you reach 50 miles</em>)</span></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-								</div>
 							</span>
 						</div>
 					</div>
-                </div>
+
+				</div>
+
+				<!-- Total -->
 				<h4 class="card__total">
-					<!-- react-text: 90 -->LaneMate Subscription: <!-- /react-text --><span class="membership-length--total card__total--amount"></span>
+					LaneMate Subscription:	
+					<span class="membership-length--total total-lanemate-blank card__total--amount">$__.__</span>
+					<span class="membership-length--total total-lanemate-yearly card__total--amount">$83.88</span>
+					<span class="membership-length--total total-lanemate-monthly card__total--amount">$9.99</span>
 				</h4>
+
 			</div>
-		</form>
+		<!-- </form>
 	</div>
-</div>
+</div> -->

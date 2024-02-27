@@ -16,7 +16,8 @@
         <!-- <link rel="stylesheet" href="./css/registration.min.css"> -->
         <!-- <link rel="stylesheet" href="./css/registration-edits.css"> -->
         <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
-        <link rel="stylesheet" href="./css/auto-renew-checkbox.css">
+        <!-- <link rel="stylesheet" href="./css/auto-renew-checkbox.css"> -->
+        <link rel="stylesheet" href="/lane-mate/css/registration-lane-mate.css">
     </head>
     <body class="">
         <div id="main-container">
@@ -32,21 +33,19 @@
                                     <div class="row">
                                         <div class="col-xs-12">
                                             <div class="renew__header">
-                                                <h2>Independent Swimmer Member Registration</h2>
+                                                <h2>LaneMate Subscription</h2>
                                                 <!-- <p>Tom, welcome to U.S. Masters Swimming. Let's finish your registration.</p> -->
                                             </div>
                                             <div class="renew__form-body">
                                                 <sergey-import src="registration/contact-information" />
-                                                <sergey-import src="registration/club-information" />
-                                                <sergey-import src="registration/interests" />
-                                                <sergey-import src="registration/liability" />
                                                 <div id="reactId">
                                                     <div data-reactroot="">
                                                         <form class="form-membership-length form-horizontal">
+                                                            <sergey-import src="registration/interests" />
                                                             <sergey-import src="registration/membership-options-lane-mate" />
-                                                            <sergey-import src="registration/add-on-video-stroke-analysis" />
-                                                            <sergey-import src="registration/donations" />
-                                                            <sergey-import src="registration/payment-info" />
+                                                            <sergey-import src="registration/video-stroke-analysis" />
+                                                            <sergey-import src="registration/donations-lanemate" />
+                                                            <sergey-import src="registration/payment-info-lanemate" />
                                                         </form>
                                                     </div>
                                                 </div>
@@ -63,5 +62,6 @@
             <sergey-import src="footer" />
         </div>
         <sergey-import src="footer_scripts" />
+        <script src="/lane-mate/js/registration-lane-mate.js"></script>
     </body>
 </html>
