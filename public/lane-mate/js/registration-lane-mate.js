@@ -40,8 +40,7 @@ $(document.body).on('change','#strokeFocus',function(){
     }
 });
 
-$("#videoStrokeAnalysisNo").on( "click", function () {
-    
+$("#videoStrokeAnalysisNo").on( "click", function () {    
     if ($(".membership-length--option.selected")[0]) {
         $(".select-stroke-focus").hide();
         $("#videoStrokeAnalysisYesInput").prop( "checked", false );
@@ -51,10 +50,8 @@ $("#videoStrokeAnalysisNo").on( "click", function () {
     } else return;
 });
 
-$("#videoStrokeAnalysisYes").on( "click", function () {
-    
+$("#videoStrokeAnalysisYes").on( "click", function () {    
     if ($(".membership-length--option.selected")[0]) {
-        alert("Cleck yes radio");
         $(".select-stroke-focus").show();
         $("#videoStrokeAnalysisYesInput").prop( "checked", true );
         $("#videoStrokeAnalysisNoInput").prop( "checked", false );
