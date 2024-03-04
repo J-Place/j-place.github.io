@@ -5,7 +5,13 @@ $( document ).ready(function() {
 
 $(".membership-length--option").on( "click", function() {
     $(".membership-length--option").removeClass("selected");
-    $(".card.payment-info.un-selected").removeClass("un-selected");
+    // $(".card.payment-info.un-selected").removeClass("un-selected");
+    $(".card.payment-info").css({
+        'height':'0',
+        'overflow':'hidden',
+        'opacity':'0',
+        'border':'0 none'
+    });
     $(this).addClass("selected");
 
     // Add-On cost is dependent upon plan selection; enable inputs after a selection is made.

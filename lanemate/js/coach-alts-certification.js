@@ -3,13 +3,7 @@ $( document ).ready(function() {
     $(".payment-info__line-item--usms").after('<p class="payment-info__line-item payment-info__line-item--coach-alts-certification">Coach and ALTS Certification: <span class="payment-info__line-item--price">$__.__</span></p>');
 });
 
-// coachAltsCertificationYes
-
-// .coach-alts-certification--total.card__total--amount
-
-
-
-
+// Handle Radio Inputs
 $("#coachAltsCertificationNo").on( "click", function () {    
     if ($(".membership-length--option.selected")[0]) {
         $("#coachAltsCertificationYesInput").prop( "checked", false );
@@ -18,7 +12,6 @@ $("#coachAltsCertificationNo").on( "click", function () {
         $(".payment-info__line-item--coach-alts-certification .payment-info__line-item--price").text("$__.__");
     } else return;
 });
-
 $("#coachAltsCertificationYes").on( "click", function () {    
     if ($(".membership-length--option.selected")[0]) {
         $("#coachAltsCertificationYesInput").prop( "checked", true );
@@ -27,6 +20,3 @@ $("#coachAltsCertificationYes").on( "click", function () {
         $(".payment-info__line-item--coach-alts-certification .payment-info__line-item--price").text("$30.00");
     } else return;
 });
-
-
-
