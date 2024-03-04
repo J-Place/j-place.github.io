@@ -7,10 +7,8 @@ $(".membership-length--option").on( "click", function() {
     $(".membership-length--option").removeClass("selected");
     // $(".card.payment-info.un-selected").removeClass("un-selected");
     $(".card.payment-info").css({
-        'height':'0',
-        'overflow':'hidden',
-        'opacity':'0',
-        'border':'0 none'
+        'height':'100%',
+        'opacity':'100',
     });
     $(this).addClass("selected");
 
@@ -25,7 +23,7 @@ $(".membership-length--usmsPlus").on( "click", function() {
     $(".price-string__video-stroke-analysis").text(" for FREE!");
     var strokeFocus = $('#strokeFocus').val();
     if (strokeFocus !== 'blank' && $("#videoStrokeAnalysisYesInput").prop( "checked", true )) {
-        $(".video-stroke-analysis--total").text("$120.00");
+        $(".video-stroke-analysis--total").text("$0.00");
         $(".payment-info__line-item--video-stroke-analysis .payment-info__line-item--price").text("$__.__");
     }
 });

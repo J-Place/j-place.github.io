@@ -1,3 +1,13 @@
+
+
+
+.card {
+    border-bottom: unset;
+    border-top: 1px solid #ccc;
+}
+
+
+
 .radio-label--inline {
     padding-left: 2.8rem;
 } 
@@ -59,9 +69,7 @@
 
 .card.payment-info {
     height: 0;
-    overflow: hidden;
     opacity: 0;
-    border: 0 none;
 }
 
 .membership-length--total.total-lanemate-blank,
@@ -93,6 +101,26 @@
 
 .membership-length--option.selected .promo {
     background-color: #0068ad;
+}
+
+.membership-length--currentYear .promo,
+.membership-length--usmsPlus .promo, 
+.membership-length--usmsPlusYearPlus .promo {
+    background-color: #999;
+}
+
+.membership-length--usmsPlus.selected .promo, 
+.membership-length--usmsPlusYearPlus.selected .promo {
+    background-color: #0068ad;
+}
+
+.membership-length--currentYear.selected {
+    border-color: green;
+    border: 2px solid green;
+}
+
+.membership-length--currentYear.selected .promo {
+    background-color: green;
 }
 
 label#videoStrokeAnalysisYes,
