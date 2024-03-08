@@ -1,4 +1,4 @@
-<div class="card payment-info un-selected">
+<div class="card payment-info un-selectedXXX">
 	<h3 class="payment-info___form-header m-b-30">Payment Information</h3>
 	<div class="payment-info__form-summary">
 	   <p class="payment-info__line-item payment-info__line-item--total">
@@ -6,13 +6,13 @@
 	   </p>
 	</div>
 
-    <div class="form-group card-name">
+    <div class="form-group card-name un-selected">
 	   <div class="col-xs-12">
 		  <label class="font-weight-bold">Name on Card</label>
 		  <div><span class="help-block help-block--cardName">Please enter a value for cardName</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardName" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardName" aria-hidden="true"></span></div>
 	   </div>
 	</div>
-	<div class="form-group card-number">
+	<div class="form-group card-number un-selected">
 	   <div class="col-xs-12 col-sm-7">
 		  <label class="font-weight-bold">Card Number</label>
 		  <div><span class="help-block help-block--cardNumberID">Please enter a valid credit card number</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardNumberID" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardNumberID" aria-hidden="true"></span></div>
@@ -26,12 +26,13 @@
 		  <div><span class="help-block help-block--expiration">Please enter a valid expiration date</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="expiration" autocomplete="true" maxlength="5" value=""><span class="glyphicon form-control-feedback glyphicon--expiration" aria-hidden="true"></span></div>
 	   </div>
 	</div>
-	<div class="form-group card-zip">
+	<div class="form-group card-zip un-selected">
 	   <div class="col-xs-8 col-sm-4">
 		  <label class="font-weight-bold">Billing Zip</label>
 		  <div><span class="help-block help-block--cardZipID">Please enter a valid billing zip</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardZipID" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardZipID" aria-hidden="true"></span></div>
 	   </div>
 	</div>
+
 	<div class="form-group agree-terms">
 	   <div class="col-xs-12">
 		  <span class="help-block help-block--agree-terms">You need to agree to the terms to complete your registration.</span>
@@ -41,5 +42,21 @@
 		  <span class="font-weight-bold">I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming Privacy Policy. I understand that I am opting in to automatically continuing my subscription until I cancel. I understand that I can cancel at any time in My Account. I understand that this subscription is non-refundable, non-transferable, and {{ renews monthly/yearly }}.</span>
 	   </div>
 	</div>
-	<button id="subscribe-button" class="btn btn-primary btn-large text-uppercase pull-left membership-length__submit">Subscribe</button>
+
+
+	<div class="form-group agree-usmsplus-terms" style="display: block;">
+		<div class="col-xs-12">
+		   <span class="help-block help-block--agree-usmsplus-terms">You need to agree to the USMS+ terms and  conditions to complete your registration.</span>
+		   <label id="agreeUsmsPlusTerms__label" class="checkbox-label " for="agreeUsmsPlusTerms">
+			  	<div class="checkbox-container">
+					<input type="checkbox" name="agree-usmsplus-terms" id="agreeUsmsPlusTerms" value="">
+					<span class="checkbox__placeholder"></span>
+				</div>
+		   </label>
+		   <span class="font-weight-bold">By selecting the USMS+ membership, I agree that USMS may share my information with the USA Swimming Foundation and USA Swimming in accordance with the USMS Privacy Policy, linked below (you may still opt out at any time).</span>
+		</div>
+	</div>
+
+
+	<button id="subscribe-button" class="btn btn-primary btn-large text-uppercase pull-left membership-length__submit">Register</button>
  </div>

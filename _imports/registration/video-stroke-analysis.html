@@ -4,22 +4,33 @@
     <p>Get a single video stroke analysis by a certified coach. You will have two rounds of feedback. The analysis will be up to five minutes long and contain visual and verbal feedback as well as links to additional resources.</p>
     <!-- <div class="col-xs-12"> -->
         <div class="form-group">
-                <label id="videoStrokeAnalysisNo" class="radio-label radio-label--inline col-xs-12" for="videoStrokeAnalysisNo">
+            <label id="videoStrokeAnalysisYes" class="radio-label radio-label--inline col-xs-12" for="videoStrokeAnalysisYes">
+                <div class="radio-container">
+                    <input type="radio" disabled name="VideoStrokeAnalysisYesInput" id="videoStrokeAnalysisYesInput" value="yes">
+                    <span class="radio__placeholder"></span>
+                </div>
+                <strong>Yes, I want to purchase the Video Stroke Analysis Add-On <span class="price-string__video-stroke-analysis"></span></strong>
+            </label>
+            <div class="select-stroke-focus col-xs-12">
+                <label for="stroke-video-analysis__focus">Select a stroke</label>
+                <select name="stroke-video-analysis__focus" id="strokeFocus">
+                    <option value="blank" selected="true"></option>
+                    <option value="Freestyle">Freestyle</option>
+                    <option value="Backstroke">Backstroke</option>
+                    <option value="Breaststroke">Breaststroke</option>
+                    <option value="Butterfly">Butterfly</option>
+                    <option value="Starts/Turns">Starts/Turns</option>
+                </select>    
+        </div>
+            <label id="videoStrokeAnalysisNo" class="radio-label radio-label--inline col-xs-12" for="videoStrokeAnalysisNo">
                     <div class="radio-container">
                         <input type="radio" disabled name="VideoStrokeAnalysisNoInput" id="videoStrokeAnalysisNoInput" value="no">
                         <span class="radio__placeholder"></span>
                     </div>
                     No, thanks
                 </label>
-                <label id="videoStrokeAnalysisYes" class="radio-label radio-label--inline col-xs-12" for="videoStrokeAnalysisYes">
-                    <div class="radio-container">
-                        <input type="radio" disabled name="VideoStrokeAnalysisYesInput" id="videoStrokeAnalysisYesInput" value="yes">
-                        <span class="radio__placeholder"></span>
-                    </div>
-                    <strong>Yes, I want to purchase the Video Stroke Analysis Add-On <span class="price-string__video-stroke-analysis"></span></strong>
-                </label>
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
                 <div class="select-stroke-focus col-xs-12">
                     <label for="stroke-video-analysis__focus">Select a stroke</label>
                     <select name="stroke-video-analysis__focus" id="strokeFocus">
@@ -31,7 +42,7 @@
                         <option value="Starts/Turns">Starts/Turns</option>
                     </select>    
             </div>
-        </div>
+        </div> -->
         <h4 class="card__total">
             Video Stroke Analysis:
             <span class="video-stroke-analysis--total card__total--amount">$__.__</span>

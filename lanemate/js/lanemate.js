@@ -5,6 +5,7 @@ $("#confirmLaneMateMonthlyPlan").on( "click", function() {
     $(".current-plan_lanemate-monthly").addClass("current-plan--selected");
     $(".plan-option").removeClass("plan-option-selected");
     $(".plan-option_lanemate-monthly").addClass("plan-option-selected");
+    $(".plan-option_usms-yearly .switch-plan-label a").text("Switch to this plan");
 });
 
 $("#confirmLaneMateYearlyPlan").on( "click", function() {
@@ -14,6 +15,7 @@ $("#confirmLaneMateYearlyPlan").on( "click", function() {
     $(".current-plan_lanemate-yearly").addClass("current-plan--selected");
     $(".plan-option").removeClass("plan-option-selected");
     $(".plan-option_lanemate-yearly").addClass("plan-option-selected");
+    $(".plan-option_usms-yearly .switch-plan-label a").text("Contact Membership Services");
 });
 
 $("#confirmUsmsYearlyPlan").on( "click", function() {
