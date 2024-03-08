@@ -57,3 +57,9 @@ $("#videoStrokeAnalysisYes").on( "click", function () {
         $("#videoStrokeAnalysisNoInput").prop( "checked", false );
     } else return;
 });
+
+
+$("#subscribe-button").on( "click", function () {
+    $(".help-block").addClass("has-error");
+    $(".form-control").addClass("has-error");
+});
