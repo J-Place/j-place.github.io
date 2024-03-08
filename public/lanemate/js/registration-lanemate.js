@@ -5,7 +5,7 @@ $(".membership-length--option").on( "click", function() {
 });
 
 $(".membership-length--lanemate-monthly").on( "click", function() {
-    $(".membership-length--total").text("$9.99");
+    // $(".membership-length--total").text("$9.99");
     $(".payment-info__line-item--lanemate .payment-info__line-item--price").text("$9.99");
     $(".price-string__video-stroke-analysis").text(" for $120.00");
     var strokeFocus = $('#strokeFocus').val();
@@ -30,7 +30,7 @@ $(document.body).on('change','#strokeFocus',function(){
     var strokeFocus = $('#strokeFocus').val();
     if (strokeFocus === 'blank') {
         $(".video-stroke-analysis--total").text("$__.__");
-        $(".payment-info__line-item--video-stroke-analysis .payment-info__line-item--price").text("$__.__");
+        // $(".payment-info__line-item--video-stroke-analysis .payment-info__line-item--price").text("$__.__");
     } else if ($(".membership-length--lanemate-monthly.selected")[0]) {
         $(".video-stroke-analysis--total").text("$120.00");
         $(".payment-info__line-item--video-stroke-analysis .payment-info__line-item--price").text("$120.00");

@@ -36,7 +36,7 @@ $(".membership-length--usmsPlus").on( "click", function() {
     var strokeFocus = $('#strokeFocus').val();
     if (strokeFocus !== 'blank' && $("#videoStrokeAnalysisYesInput").prop( "checked", true )) {
         $(".video-stroke-analysis--total").text("$0.00");
-        $(".payment-info__line-item--video-stroke-analysis .payment-info__line-item--price").text("$__.__");
+        // $(".payment-info__line-item--video-stroke-analysis .payment-info__line-item--price").text("$__.__");
     }
     $(".price-string__coach-alts-certification").text("for $30.00");
 });
