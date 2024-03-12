@@ -5,7 +5,7 @@ $(".membership-length--option").on( "click", function() {
 });
 
 $(".membership-length--lanemate-monthly").on( "click", function() {
-    // $(".membership-length--total").text("$9.99");
+    $(".membership-length--total").text("$9.99");
     $(".payment-info__line-item--lanemate .payment-info__line-item--price").text("$9.99");
     $(".price-string__video-stroke-analysis").text(" for $120.00");
     var strokeFocus = $('#strokeFocus').val();
