@@ -69,9 +69,11 @@ $(".usms-modal-link").on("click", function() {
     // }
     if ($(".plan-option_lanemate-monthly.plan-option-selected").length) {
         $("#usmsModalMonthly").show();
+        $("body").addClass("modal-open");
     }
     if ($(".plan-option_lanemate-yearly.plan-option-selected").length) {
         $("#usmsModalYearly").show();
+        $("body").addClass("modal-open");
     }
 });
 
@@ -79,10 +81,12 @@ $("#confirmMonthlyUpgrade").on("click", function () {
     $("#usmsModalMonthly").hide();
     $(".plan-option").removeClass("plan-option-selected");
     $(".plan-option_usms-yearly").addClass("plan-option-selected");
+    $("body").removeClass("modal-open");
 });
 
 $("#confirmYearlyUpgrade").on("click", function () {
     $("#usmsModalYearly").hide();
     $(".plan-option").removeClass("plan-option-selected");
     $(".plan-option_usms-yearly").addClass("plan-option-selected");
+    $("body").removeClass("modal-open");
 });
