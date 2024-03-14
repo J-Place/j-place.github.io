@@ -5,7 +5,7 @@ $("#confirmLaneMateMonthlyPlan").on( "click", function() {
     $(".current-plan_lanemate-monthly").addClass("current-plan--selected");
     $(".plan-option").removeClass("plan-option-selected");
     $(".plan-option_lanemate-monthly").addClass("plan-option-selected");
-    $(".plan-option_usms-yearly .switch-plan-label a").text("Switch to this plan");
+    // $(".plan-option_usms-yearly .switch-plan-label a").text("Switch to this plan");
 });
 
 $("#confirmLaneMateYearlyPlan").on( "click", function() {
@@ -15,7 +15,7 @@ $("#confirmLaneMateYearlyPlan").on( "click", function() {
     $(".current-plan_lanemate-yearly").addClass("current-plan--selected");
     $(".plan-option").removeClass("plan-option-selected");
     $(".plan-option_lanemate-yearly").addClass("plan-option-selected");
-    $(".plan-option_usms-yearly .switch-plan-label a").text("Contact Membership Services");
+    // $(".plan-option_usms-yearly .switch-plan-label a").text("Contact Membership Services");
 });
 
 $("#confirmUsmsYearlyPlan").on( "click", function() {
@@ -56,4 +56,33 @@ $("#btnYesCancelAutoRenew").on("click", function() {
 $("#btnNoKeepAutoRenew").on("click", function() {
     $(".payment-information--form").hide();
     $(".cancel-auto-renew--form").hide();
+});
+
+$(".usms-modal-link").on("click", function() { 
+    
+    // var planMonthly = $(".plan-option_lanemate-monthly.plan-option-selected");
+    // var planYearly = $(".plan-option_lanemate-yearly.plan-option-selected");
+    // if (planMonthly) { 
+    //     $(".usmsModalMonthly").show();
+    // } if (planYearly) {
+    //     $(".usmsModalYearly").show();
+    // }
+    if ($(".plan-option_lanemate-monthly.plan-option-selected").length) {
+        $("#usmsModalMonthly").show();
+    }
+    if ($(".plan-option_lanemate-yearly.plan-option-selected").length) {
+        $("#usmsModalYearly").show();
+    }
+});
+
+$("#confirmMonthlyUpgrade").on("click", function () {
+    $("#usmsModalMonthly").hide();
+    $(".plan-option").removeClass("plan-option-selected");
+    $(".plan-option_usms-yearly").addClass("plan-option-selected");
+});
+
+$("#confirmYearlyUpgrade").on("click", function () {
+    $("#usmsModalYearly").hide();
+    $(".plan-option").removeClass("plan-option-selected");
+    $(".plan-option_usms-yearly").addClass("plan-option-selected");
 });

@@ -51,7 +51,7 @@
 
                     <div class="usms-container p-tb-10">
 
-                        <div class="modal" id="laneMateMonthlyModal" tabindex="-1" role="dialog" style="display: none;">
+                        <div class="modal" id="laneMateModalMonthly" tabindex="-1" role="dialog" style="display: none;">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content" style="margin: 0 auto;">
                                     <div class="modal-header">
@@ -72,7 +72,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal" id="laneMateYearlyModal" tabindex="-1" role="dialog" style="display: none;">
+                        <div class="modal" id="laneMateModalYearly" tabindex="-1" role="dialog" style="display: none;">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content" style="margin: 0 auto;">
                                     <div class="modal-header">
@@ -91,7 +91,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="modal" id="usmsYearlyModal" tabindex="-1" role="dialog" style="display: none;">
+                        <div class="modal" id="usmsModalMonthly" tabindex="-1" role="dialog" style="display: none;">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content" style="margin: 0 auto;">
                                     <div class="modal-header">
@@ -99,12 +99,31 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <p>You are chosing to switch to a USMS membership. You will now be redirected to the USMS Membership Registration page.</p>
+                                        <p>I am choosing to switch to a USMS membership. I understand that effective immediately my LaneMate subscription will be canceled. I will now be re directed to the USMS website to complete member registration.</p>
                                         <!-- <input type="checkbox" name="accept" id="accept"> -->
                                         <!-- <label for="accept">By selecting this box you accept <a href="www.usms.org">terms and conditions</a>.</label> -->
                                     </div>
                                     <div class="modal-footer">                                     
-                                        <button class="btn btn-lg btn-primary" data-bs-dismiss="modal" id="confirmUsmsYearlyPlan">Go!</butotn>
+                                        <button class="btn btn-lg btn-primary" data-bs-dismiss="modal" id="confirmMonthlyUpgrade">Go!</butotn>
+                                        <!-- <button class="btn btn-lg btn-link" data-bs-dismiss="modal">Cancel</butotn> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal" id="usmsModalYearly" tabindex="-1" role="dialog" style="display: none;">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" style="margin: 0 auto;">
+                                    <div class="modal-header">
+                                        <h4>USMS Membership</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Please contact Membership Services if you would like to cancel your LaneMate subscription and switch to USMS membership.</p>
+                                        <!-- <input type="checkbox" name="accept" id="accept"> -->
+                                        <!-- <label for="accept">By selecting this box you accept <a href="www.usms.org">terms and conditions</a>.</label> -->
+                                    </div>
+                                    <div class="modal-footer">                                     
+                                        <button class="btn btn-lg btn-primary" data-bs-dismiss="modal" id="confirmYearlyUpgrade">Go!</butotn>
                                         <!-- <button class="btn btn-lg btn-link" data-bs-dismiss="modal">Cancel</butotn> -->
                                     </div>
                                 </div>
@@ -121,6 +140,7 @@
                                 </header>
                             </div>
                         </div>
+
                     </div>
                     <div class="usms-container form__container">
                         <div class="row is-flex">
@@ -148,9 +168,12 @@
                                 <h3>Plan Options</h3>
                                 <p class="current-plan__how-to-change">If you want to change your plan, select from one of the options below:</p>
                                 <div class="available-plans">
+
                                     <div class="plan-option plan-option_lanemate-monthly">
                                         <p class="plan-name">LaneMate<span class="plan-type">Monthly</span></p>
-                                        <p class="switch-plan-label"><a class="" href="#/" data-bs-toggle="modal" data-bs-target="#laneMateMonthlyModal">Switch to this plan</a></p>
+                                        <p class="switch-plan-label">
+                                            <a class="" href="#/" data-bs-toggle="modal" data-bs-target="#laneMateModalMonthly">Switch to this plan</a>
+                                        </p>
                                         <p class="plan-selected-label">Current Plan</p>
                                         <p class="plan-price">$9.99/mo.</p>
                                         <ul>
@@ -160,7 +183,9 @@
                                     </div>
                                     <div class="plan-option plan-option_lanemate-yearly plan-option-selected">
                                         <p class="plan-name">LaneMate<span class="plan-type">Yearly</span></p>
-                                        <p class="switch-plan-label"><a class="" href="#/" data-bs-toggle="modal" data-bs-target="#laneMateYearlyModal">Switch to this plan</a></p>
+                                        <p class="switch-plan-label">
+                                            <a class="" href="#/" data-bs-toggle="modal" data-bs-target="#laneMateModalYearly">Switch to this plan</a>
+                                        </p>
                                         <p class="plan-selected-label">Current Plan</p>
                                         <p class="plan-price">$6.99/mo.</p>
                                         <ul>
@@ -170,7 +195,10 @@
                                     </div>
                                     <div class="plan-option plan-option_usms-yearly">
                                         <p class="plan-name">USMS Membership</p>
-                                        <p class="switch-plan-label"><a class="" href="#/" data-bs-toggle="modal" data-bs-target="#usmsYearlyModal">Contact Membership Services</a></p>
+                                        <p class="switch-plan-label">
+                                            <!-- <a class="" href="#/" data-bs-toggle="modal" data-bs-target="#usmsModalYearly">Switch to this plan</a> -->
+                                            <a class="usms-modal-link" href="#/" id="#usmsModal">Switch to this plan</a>
+                                        </p>
                                         <p class="plan-selected-label">Current Plan</p>
                                         <p class="plan-price">$70.00</p>
                                         <ul>
@@ -195,13 +223,21 @@
                             <div class="col-xs-12 col-lg-7">
 
 
-                                <div class="row form-group payment-information--form">
+                                <div class="row payment-information--form">
+
+                                    <!-- <div class="form-group card-name" data-reactid="150">
+                                        <div class="col-xs-12" data-reactid="151">
+                                           <label class="font-weight-bold" data-reactid="152">Name on Card</label>
+                                           <div data-reactid="153"><span class="help-block help-block--cardName" data-reactid="154">Please enter a value for cardName</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardName" autocomplete="true" maxlength="100" value="" data-reactid="155"><span class="glyphicon form-control-feedback glyphicon--cardName" aria-hidden="true" data-reactid="156"></span></div>
+                                        </div>
+                                     </div>
+                                 
                                     <div class="col-xs-12 col-lg-6">
                                         <div data-reactid="">
                                             <span class="help-block help-block--CardNumber has-error" data-reactid="54">Please enter a valid card number</span>
                                             <input type="text" min="1" max="30" class="form-control has-error" placeholder="Card Number" name="CardNumber" autocomplete="true" maxlength="100" value="" data-reactid="">
                                             <span class="glyphicon form-control-feedback glyphicon--CardNumber" aria-hidden="true" data-reactid=""></span>
-                                        </div>    
+                                        </div>
                                     </div>
                                     <div class="col-xs-8 col-lg-4">
                                         <div data-reactid="">
@@ -216,11 +252,29 @@
                                             <input type="text" min="1" max="30" class="form-control has-error" placeholder="CVV" name="CardCVV" autocomplete="true" maxlength="3" value="" data-reactid="">
                                             <span class="glyphicon form-control-feedback glyphicon--CardCVV" aria-hidden="true" data-reactid=""></span>
                                         </div>    
-                                    </div>
+                                    </div> -->
+
+                                    <sergey-import src="foundation/credit-card-inputs-no-label" />
+
                                     <div class="payment-information--submit">
+                                        <div class="col-xs-12">
+                                            <div class="form-group agree-terms">
+                                                <div class="col-xs-12">
+                                                   <span class="help-block help-block--agree-terms">You need to agree to the terms to complete your registration.</span>
+                                                   <label id="agreeTerms__label" class="checkbox-label " for="agreeTerms">
+                                                        <div class="checkbox-container">
+                                                            <input type="checkbox" name="agree-terms" id="agreeTerms" value="" class="has-success" data-gtm-form-interact-field-id="7">
+                                                            <span class="checkbox__placeholder"></span>
+                                                        </div>
+                                                   </label>
+                                                   <span>This check indicates your consent to store this information consistent with our <a href="#/">Privacy Policy</a>.</span>
+                                                </div>
+                                             </div>
+                                        </div>
+
                                         <div class="col-xs-12" data-reactid="">
-                                            <button class="btn btn-primary text-uppercaseX payment-information__submit" id="btnEditCreditCardSubmit" data-reactid="">Submit</button>
-                                            <button class="btn btn-outline text-uppercaseX payment-information__cancel" id="btnEditCreditCardCancel" data-reactid="">Cancel</button>
+                                            <button class="btn btn-primary btn-large text-uppercase payment-information__submit" id="btnEditCreditCardSubmit" data-reactid="">Submit</button>
+                                            <button class="btn btn-outline btn-large text-uppercase payment-information__cancel" id="btnEditCreditCardCancel" data-reactid="">Cancel</button>
                                         </div>
                                     </div>
                                 </div>
