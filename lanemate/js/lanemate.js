@@ -33,9 +33,9 @@ $("#btnEditCreditCard").on("click", function() {
     $(".payment-information--form").show();
 });
 
-$("#btnEditCreditCardSubmit").on("click", function() {
-    $(".payment-information--form").hide();
-});
+// $("#btnEditCreditCardSubmit").on("click", function() {
+//     $(".payment-information--form").hide();
+// });
 
 $("#btnEditCreditCardCancel").on("click", function() {
     $(".payment-information--form").hide();
@@ -89,4 +89,9 @@ $("#confirmYearlyUpgrade").on("click", function () {
     $(".plan-option").removeClass("plan-option-selected");
     $(".plan-option_usms-yearly").addClass("plan-option-selected");
     $("body").removeClass("modal-open");
+});
+
+$("#btnEditCreditCardSubmit").on("click", function () {
+    // document.querySelectorAll('.help-block').classList.add('has-error');
+    $('.help-block').addClass('has-error');
 });
