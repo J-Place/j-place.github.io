@@ -39,12 +39,14 @@ $("#btnEditCreditCard").on("click", function() {
 
 $("#btnEditCreditCardCancel").on("click", function() {
     $(".payment-information--form").hide();
+    $('.help-block').removeClass('has-error');
 });
 
 $("#btnCancelAutoRenew").on("click", function() {
     $(".cancel-auto-renew--confirmation").hide();
     $(".payment-information--form").hide();
     $(".cancel-auto-renew--form").show();
+    $('.help-block').removeClass('has-error');
 });
 
 $("#btnYesCancelAutoRenew").on("click", function() {
