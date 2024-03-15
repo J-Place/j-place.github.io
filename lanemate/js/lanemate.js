@@ -70,11 +70,11 @@ $(".usms-modal-link").on("click", function() {
     //     $(".usmsModalYearly").show();
     // }
     if ($(".plan-option_lanemate-monthly.plan-option-selected").length) {
-        $("#usmsModalMonthly").show();
+        $("#usmsModalMonthly").modal('show');
         $("body").addClass("modal-open");
     }
     if ($(".plan-option_lanemate-yearly.plan-option-selected").length) {
-        $("#usmsModalYearly").show();
+        $("#usmsModalYearly").modal('show');
         $("body").addClass("modal-open");
     }
 });
