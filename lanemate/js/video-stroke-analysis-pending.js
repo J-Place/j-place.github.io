@@ -7,23 +7,15 @@
 // Render Card and Line Item Prices
 $(document.body).on('change','#strokeFocus',function(){
     var strokeFocusVal = $('#strokeFocus').val();
-    // var paymentLineItemRendered = $(".payment-info__line-item--video-stroke-analysis").length;
-    // var membershipSelected = $('$(".membership-length--option.selected');
-    // var strokeSelected = $('');
     var strokeSelected = strokeFocusVal != 'blank';
-
-    // if (paymentLineItemRendered) {
-    //     return;
-    // }
-
-    // if (strokeFocusVal === 'blank' && !paymentLineItemRendered) {
-    // if (strokeFocusVal === 'blank' && !paymentLineItemRendered && membershipSelected) {
-    // if (strokeFocusVal === 'blank') {
+    // var paymentLineItemRendered = $(".payment-info__line-item--video-stroke-analysis").length();
     if (strokeSelected === false) {
         $(".video-stroke-analysis--total.card__total--amount").text("$__.__");
         $(".payment-info__line-item--video-stroke-analysis .payment-info__line-item--price").text("$__.__");
         console.log("If condition 1");
         console.log(strokeSelected);
+    } if ($(".payment-info__line-item--video-stroke-analysis").length) {
+        return;
     } else if ($(".membership-length--option.membership-length--currentYear.selected")[0]) {
         $(".video-stroke-analysis--total.card__total--amount").text("$99.00");
         // Render line item markup in payment section
@@ -37,7 +29,6 @@ $(document.body).on('change','#strokeFocus',function(){
         console.log("Else if condition 3");
         console.log(strokeSelected);
     }
-    // $(".un-selected").removeClass();
     $('.form-group.card-name').removeClass('un-selected');
     $('.form-group.card-number').removeClass('un-selected');
     $('.form-group.card-zip').removeClass('un-selected');

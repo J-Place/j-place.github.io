@@ -6,8 +6,10 @@
 
 // Render Card and Line Item Prices
 $(document.body).on('change','#strokeFocus',function(){
-    var strokeFocus = $('#strokeFocus').val();
-    if (strokeFocus === 'blank') {
+    var strokeFocusVal = $('#strokeFocus').val();
+    var strokeSelected = strokeFocusVal != 'blank';
+
+    if (strokeSelected === false) {
         $(".video-stroke-analysis--total.card__total--amount").text("$__.__");
         $(".payment-info__line-item--video-stroke-analysis .payment-info__line-item--price").text("$__.__");
     } if ($(".payment-info__line-item--video-stroke-analysis").length) {
