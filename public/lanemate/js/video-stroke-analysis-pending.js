@@ -43,13 +43,9 @@ $("#videoStrokeAnalysisNo").on( "click", function () {
         $(".video-stroke-analysis--total.card__total--amount").text("$__.__");
         $(".payment-info__line-item--video-stroke-analysis").remove();
         $('#strokeFocus').val('blank');
-
         $('.form-group.card-name').addClass('un-selected');
         $('.form-group.card-number').addClass('un-selected');
         $('.form-group.card-zip').addClass('un-selected');
-
-        // alert("No");
-
     } else return;
 });
 
