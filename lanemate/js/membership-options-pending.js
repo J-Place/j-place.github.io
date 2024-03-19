@@ -6,7 +6,9 @@ $( document ).ready(function() {
 $(".membership-length--option").on( "click", function() {
     $(".membership-length--option").removeClass("selected");
     $(this).addClass("selected");
-    $(".card.payment-info.un-selected").removeClass("un-selected");
+    
+    // $(".card.payment-info.un-selected").removeClass("un-selected");
+
     // Add-On cost is dependent upon plan selection; enable inputs after a selection is made.
     $(".video-stroke-analysis input").attr( "disabled", false);
     $(".agree-coach-alts-certification input").attr( "disabled", false);
@@ -22,6 +24,9 @@ $(".membership-length--currentYear").on( "click", function() {
         $(".payment-info__line-item--video-stroke-analysis .payment-info__line-item--price").text("$99.00");
     }
     $(".price-string__coach-alts-certification").text("for $30.00");
+    $('.form-group.card-name').addClass('un-selected');
+    $('.form-group.card-number').addClass('un-selected');
+    $('.form-group.card-zip').addClass('un-selected');
 });
 
 $(".membership-length--usmsPlus").on( "click", function() {
@@ -34,4 +39,7 @@ $(".membership-length--usmsPlus").on( "click", function() {
         $(".payment-info__line-item--video-stroke-analysis .payment-info__line-item--price").text("$0.00");
     }
     $(".price-string__coach-alts-certification").text("for $30.00");
+    $('.form-group.card-name').removeClass('un-selected');
+    $('.form-group.card-number').removeClass('un-selected');
+    $('.form-group.card-zip').removeClass('un-selected');
 });
