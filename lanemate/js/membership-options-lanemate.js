@@ -1,3 +1,8 @@
+// Add Default Component Line Item to Payment on Page Load
+$( document ).ready(function() {
+    $(".payment-info__form-summary").prepend('<p class="payment-info__line-item payment-info__line-item--lanemate">LaneMate Subscription: <span class="payment-info__line-item--price">$__.__</span></p>');
+});
+
 $(".membership-length--option").on( "click", function() {
     $(".membership-length--option").removeClass("selected");
     $(this).addClass("selected");
@@ -25,7 +30,6 @@ $(".membership-length--lanemate-yearly").on( "click", function() {
         $(".payment-info__line-item--video-stroke-analysis .payment-info__line-item--price").text("$99.00");
     }
 });
-
 
 
 

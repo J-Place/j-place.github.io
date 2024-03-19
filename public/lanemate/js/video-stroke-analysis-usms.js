@@ -10,13 +10,13 @@ $(document.body).on('change','#strokeFocus',function(){
     if (strokeFocus === 'blank') {
         $(".video-stroke-analysis--total.card__total--amount").text("$__.__");
         $(".payment-info__line-item--video-stroke-analysis .payment-info__line-item--price").text("$__.__");
+    } if ($(".payment-info__line-item--video-stroke-analysis").length) {
+        return;
     } else if ($(".membership-length--option.membership-length--currentYear.selected")[0]) {
         $(".video-stroke-analysis--total.card__total--amount").text("$99.00");
-        // $(".payment-info__line-item--video-stroke-analysis .payment-info__line-item--price").text("$120.00");
         $(".payment-info__line-item--usms").after('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">Video Stroke Analysis: <span class="payment-info__line-item--price">$99.00</span></p>');
     } else if ($(".membership-length--option.membership-length--usmsPlus.selected")[0]) {
         $(".video-stroke-analysis--total.card__total--amount").text("$0.00");
-        // $(".payment-info__line-item--video-stroke-analysis .payment-info__line-item--price").text("$0.00");
         $(".payment-info__line-item--usms").after('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">Video Stroke Analysis: <span class="payment-info__line-item--price">$0.00</span></p>');
     }
     $(".un-selected").removeClass();
@@ -29,7 +29,6 @@ $("#videoStrokeAnalysisNo").on( "click", function () {
         $("#videoStrokeAnalysisYesInput").prop( "checked", false );
         $("#videoStrokeAnalysisNoInput").prop( "checked", true );
         $(".video-stroke-analysis--total.card__total--amount").text("$__.__");
-        // $(".payment-info__line-item--video-stroke-analysis .payment-info__line-item--price").text("$__.__");
         $(".payment-info__line-item--video-stroke-analysis").remove();
         $('#strokeFocus').val('blank');
     } else return;
