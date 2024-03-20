@@ -36,19 +36,43 @@
 
                     <style>
                         .confirmation-charges-info {
-                            border-top: 1px solid #CCC;
+                            /* border-top: 1px solid #CCC;
                             margin-top: 2.5rem;
-                            padding-top: 1rem;
-                            text-align: center;
+                            margin-left: 6rem;
+                            padding-top: 1rem; */
+                            /* text-align: center; */
                         }
-                        .confirmation-charges-info h5 {
+                        .payment-info__form-summary {
+                            margin-top: 1rem;
+                        }
+                        .payment-info__line-item--price {
+                            width: 52%;
+                            padding-right: 25%;
+                        }
+                        @media (min-width: 768px) {
+                            .confirmation-charges-info h5 {
+                                margin-left: 8rem;
+                                /* margin-right: -8rem; */
+                            }
+                            .confirmation-membership,
+                            .confirmation-charges-info {
+                                margin-left: 14rem;
+                                margin-right: -14rem;
+                            }
+                            .payment-info__line-item--price {
+                                width: 42%;
+                                padding-right: 25%;
+                            }
+                        }
+
+                        /* .confirmation-charges-info h5 {
                             color: #434343;
                             margin-bottom: 3rem;
                             font-size: 2.4rem;
                             font-weight: 400;
                             text-align: center;
                             margin: 2.4rem auto 3rem;
-                        }
+                        } */
                         .confirmation-charges-label + p {
                             display: inline-block;
                         }
@@ -80,10 +104,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-4XXX">
+                        <div class="row" style="border-top: 1px solid #ccc; margin-top: 3rem; padding-top: 4rem;">
+                            <div class="col-xs-12 col-sm-4">
                                 <div class="confirmation-charges-info">
-                                    <h5>Today's Charges</h5>
+                                    <h3 style="margin-top: 0;">Today's Charges</h3>
                                     <!-- <p class="confirmation-charges-label">Subscription:</p>
                                     <p>$0.00 (7-Day Trial)</p>
                                     <p class="confirmation-charges-label">Video Stroke Analysis:</p>
@@ -92,21 +116,24 @@
                                     <p>$20.00</p> -->
                                     <!-- <p class="confirmation-charges-label">One-time Total:</p>
                                     <p>$140.00</p> -->
-
-                                    <div class="payment-info__form-summary">
-                                        <p class="payment-info__line-item payment-info__line-item--lanemate">
-                                            Subscription: <span class="payment-info__line-item--price" style="margin-right: -7rem; margin-left: 7rem;">$0.00 <span style="font-size: 1.2rem; margin-left:0;">(7-Day Trial)</span></span>
-                                        </p>
-                                        <p class="payment-info__line-item payment-info__line-item--lanemate">
-                                            Video Stroke Analysis: <span class="payment-info__line-item--price">$120.00</span>
-                                        </p>
-                                        <p class="payment-info__line-item payment-info__line-item--lanemate">
-                                            Donation: <span class="payment-info__line-item--price">$20.00</span>
-                                        </p>
-                                        <p class="payment-info__line-item payment-info__line-item--total">
-                                           One-time Total: <span class="payment-info__line-item--price">$140.00</span>
-                                        </p>
-                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-8">
+                                <!-- <div class="payment-info__form-summary" style="margin-left: -10rem; margin-top: -3rem; margin-bottom: 5rem;"> -->
+                                <div class="payment-info__form-summary" style="">
+                                    <p class="payment-info__line-item payment-info__line-item--lanemate">
+                                        <!-- Subscription: <span class="payment-info__line-item--price" style="margin-right: -7rem; margin-left: 7rem;">$0.00 <span style="font-size: 1.2rem; margin-left:0;">(7-Day Trial)</span></span> -->
+                                        Subscription: <span class="payment-info__line-item--price" style="">$0.00 <span style="font-size: 1.2rem; margin-left:0; position:absolute;">(7-Day Trial)</span></span>
+                                    </p>
+                                    <p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">
+                                        Video Stroke Analysis: <span class="payment-info__line-item--price">$120.00</span>
+                                    </p>
+                                    <p class="payment-info__line-item payment-info__line-item--donation">
+                                        Donation: <span class="payment-info__line-item--price">$20.00</span>
+                                    </p>
+                                    <p class="payment-info__line-item payment-info__line-item--total">
+                                        One-time Total: <span class="payment-info__line-item--price">$140.00</span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
