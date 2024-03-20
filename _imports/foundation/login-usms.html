@@ -1,0 +1,111 @@
+<div class="usms-container form__container p-t-200">
+   <div class="row  ">
+      <div class="col-xs-12 col-md-6  ">
+         <div class="html-container  ">
+            <div class="form-col__header">
+               <h3>Log in to My USMS</h3>
+               <style>
+                  .login-form a { display: block; font-size: 13px;}
+                  .form-col__header h3 { font-size: 21px !important; }
+                  .form-col__header h3+p { font-size: 14px !important; }
+                  .login-form__submit,
+                  .register-form__submit { width: 100px !important; }
+               </style>
+            </div>
+         </div>
+         <form action="/myusmslogin" class="login-form" method="post" data-bitwarden-watching="1">
+            <input type="hidden" name="fhController" value="MembershipController">
+            <input type="hidden" name="fhAction" value="MemberLogin">
+            <input name="__RequestVerificationToken" type="hidden" value="Iq-4M0JRP320hs4QxcNBCsCuel1bZIeXpOLvYwyK_Q7oLXAW6hgluVh1vj8QzvaSQc5veVBtnjkSG1219mIYXk95Z9ixkvYGjnhqQ2D3Rbk1"><input id="ReturnUrl" name="ReturnUrl" type="hidden" value=""><input id="uid" name="uid" type="hidden" value="cb981420-da7e-4e73-a261-e4f76068b8e8">        
+            <div class="form-group">
+               <input class="form-control" id="loginEmail" name="Email" placeholder="Email Address" type="text" value="">
+            </div>
+            <div class="form-group">
+               <input class="form-control" id="loginPassword" name="Password" placeholder="Password" type="password">
+            </div>
+            <div class="form-group">
+               <input id="rememberMe" name="RememberMe" type="checkbox" value="true"><input name="RememberMe" type="hidden" value="false">
+               <label class="label--rememberme" for="RememberMe">Remember Me</label>
+            </div>
+            <div class="form-group">
+               <input type="submit" onclick="loadSpinner()" class="btn btn-primary text-uppercase login-form__submit" value="GO!">
+               <div class="button-spinner" style="display: none;">
+                  <img src="-/media/usms/developers/images/loader.gif" alt="loading">
+               </div>
+            </div>
+            <div class="form-group">
+               <a href="/account/forgotpassword">
+               Forgot/Reset Password
+               </a>
+               <a href="/login-to-registration-page">
+               Join USMS Today
+               </a>
+            </div>
+            <style>
+               .form__container .btn:focus, .form__container .btn:hover {
+               outline: none;
+               }
+               .button-spinner {
+               display: none;
+               /* background: #0068ad; */
+               background: transparent;
+               height: 4.6rem;
+               padding-right: 27px;
+               border-radius: 0 4px 4px 0;
+               /* margin-left: -31px; */
+               margin-left: 5px;
+               vertical-align: bottom;
+               }
+               .button-spinner img {
+               height: 23px;
+               margin-top: 11px;
+               }
+               .button-spinner:hover, .button-spinner:focus, .login-form__submit:hover + .button-spinner, .login-form__submit:focus + .button-spinner {
+               /* background-color: #4097cc; */
+               background-color: transparent;
+               }
+            </style>
+            <script>
+               function loadSpinner() {
+                   const spinner = document.querySelector(".button-spinner");
+                   spinner.style.display = 'inline-block';
+                   return true;
+               }
+            </script>
+         </form>
+      </div>
+      <div class="col-xs-12 col-md-6  ">
+         <div class="html-container  ">
+            <h3 style="margin-top: 0; font-size: 21px;">Join U.S. Masters Swimming</h3>
+            <p style="font-size: 14px; line-height: 18px; margin-bottom: 10px;">Become a USMS member and enjoy all of the benefits of membership, including:</p>
+            <ul style="padding-left: 15px;">
+               <li>
+                  <strong>Workout Library</strong>
+                  <div style="line-height: 17px; margin-top: -1px; margin-bottom: 8px; font-size: 13px;">Search through our 5,000 workouts designed for all skill levels and a variety of distances and themes</div>
+               </li>
+               <li>
+                  <strong>Exclusive Content</strong>
+                  <div style="line-height: 17px; margin-top: -1px; margin-bottom: 8px; font-size: 13px;">Don't miss our SWIMMER magazine, web articles, and videos with tips to improve your swimming</div>
+               </li>
+               <li>
+                  <strong>On-Deck Coaching</strong>
+                  <div style="line-height: 17px; margin-top: -1px; margin-bottom: 8px; font-size: 13px;">Our 1,200 clubs provide organized workouts, technique advice, and a group to swim with</div>
+               </li>
+               <li>
+                  <strong>In-person and Virtual Events</strong>
+                  <div style="line-height: 17px; margin-top: -1px; margin-bottom: 8px; font-size: 13px;">We sanction over 400 pool, open water, and virtual events each year</div>
+               </li>
+               <li>
+                  <strong>Discounted Products</strong>
+                  <div style="line-height: 17px; margin-top: -1px; margin-bottom: 8px; font-size: 13px;">Get exclusive access to discounts from our partners</div>
+               </li>
+               <li>
+                  <strong>Online Community</strong>
+                  <div style="line-height: 17px; margin-top: -1px; margin-bottom: 8px; font-size: 13px;">Our vibrant forums provide an opportunity to connect and learn with other swimmers</div>
+               </li>
+            </ul>
+            <a class="btn btn-primary btn-large" style="margin-top: 35px; margin-bottom: 20px;" href="/join-usms/join-or-renew">Join Now</a>
+         </div>
+      </div>
+   </div>
+</div>
