@@ -11,9 +11,11 @@
         <sergey-import src="site/head_js" />
         <sergey-import src="site/head_css" />
         <link rel="stylesheet" href="https://www.usms.org/styles/login.min.css">
+        <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
         <link rel="stylesheet" href="/lanemate/css/lanemate.css">
+        <link rel="stylesheet" href="/lanemate/css/registration-lanemate.css">
     </head>
-    <body class="">
+    <body   class="">
         <div id="main-container">
             <sergey-import src="foundation/site-header-lanemate" />
             <main role="main">
@@ -32,10 +34,29 @@
                         </div>
                     </div>
 
+                    <style>
+                        .confirmation-charges-info {
+                            border-top: 1px solid #CCC;
+                            margin-top: 2.5rem;
+                            padding-top: 1rem;
+                            text-align: center;
+                        }
+                        .confirmation-charges-info h5 {
+                            color: #434343;
+                            margin-bottom: 3rem;
+                            font-size: 2.4rem;
+                            font-weight: 400;
+                            text-align: center;
+                            margin: 2.4rem auto 3rem;
+                        }
+                        .confirmation-charges-label + p {
+                            display: inline-block;
+                        }
+                    </style>
                     <div class="usms-container p-b-50">
                         <div class="row">
-                            <div class="col-xs-12 col-sm-4">
-                                <div class="confirmation-membership" style="margin-left: 0em;margin-right: 0rem;">
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="confirmation-membership">
                                     <h3>Your Information</h3>
                                     <p class="confirmation-membership-label">Name:</p>
                                     <p>Jay Place</p>
@@ -43,11 +64,11 @@
                                     <p>jplace72@gmail.com</p>
                                     <p class="confirmation-membership-label">Current Plan:</p>
                                     <p>LaneMate 7-Day Trial</p>
-                                    <p style="font-size: 1.5rem;">You have started a 7-Day Free trial. You can cancel at any time. Your next billing cycle is indicated ...</p>
+                                    <p style="font-size: 1.5rem; max-width: 280px; margin-left: 0;">You have started a 7-Day Free trial. You can cancel at any time. Your next billing cycle is indicated ...</p>
                                     <!-- <p style="font-size: 1.5rem;">You are signing up for a 7-day free trial. You can cancel at any time. After the seven day trial, your subscription will ...  </p>-->
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-4">
+                            <div class="col-xs-12 col-sm-6">
                                 <div class="confirmation-contact-info">
                                     <h3>Plans and Payment</h3>
                                     <p class="confirmation-membership-label">Subscription Plan:</p>
@@ -58,17 +79,34 @@
                                     <p>04/08/2024</p>
                                 </div>
                             </div>
-                            <div class="col-xs-12 col-sm-4">
-                                <div class="confirmation-contact-info">
-                                    <h3>Today's Charges</h3>
-                                    <p class="confirmation-membership-label">Subscription:</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4XXX">
+                                <div class="confirmation-charges-info">
+                                    <h5>Today's Charges</h5>
+                                    <!-- <p class="confirmation-charges-label">Subscription:</p>
                                     <p>$0.00 (7-Day Trial)</p>
-                                    <p class="confirmation-membership-label">Video Stroke Analysis:</p>
+                                    <p class="confirmation-charges-label">Video Stroke Analysis:</p>
                                     <p>$120.00</p>
-                                    <p class="confirmation-membership-label">Donation:</p>
-                                    <p>$20.00</p>
-                                    <!-- <p class="confirmation-membership-label">One-time Total:</p>
+                                    <p class="confirmation-charges-label">Donation:</p>
+                                    <p>$20.00</p> -->
+                                    <!-- <p class="confirmation-charges-label">One-time Total:</p>
                                     <p>$140.00</p> -->
+
+                                    <div class="payment-info__form-summary">
+                                        <p class="payment-info__line-item payment-info__line-item--lanemate">
+                                            Subscription: <span class="payment-info__line-item--price" style="margin-right: -7rem; margin-left: 7rem;">$0.00 <span style="font-size: 1.2rem; margin-left:0;">(7-Day Trial)</span></span>
+                                        </p>
+                                        <p class="payment-info__line-item payment-info__line-item--lanemate">
+                                            Video Stroke Analysis: <span class="payment-info__line-item--price">$120.00</span>
+                                        </p>
+                                        <p class="payment-info__line-item payment-info__line-item--lanemate">
+                                            Donation: <span class="payment-info__line-item--price">$20.00</span>
+                                        </p>
+                                        <p class="payment-info__line-item payment-info__line-item--total">
+                                           One-time Total: <span class="payment-info__line-item--price">$140.00</span>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
