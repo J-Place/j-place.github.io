@@ -86,6 +86,5 @@ $("#confirmYearlyUpgrade").on("click", function () {
 });
 
 $("#btnEditCreditCardSubmit").on("click", function () {
-    // document.querySelectorAll('.help-block').classList.add('has-error');
     $('.help-block').toggleClass('has-error');
 });
