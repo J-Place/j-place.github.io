@@ -17,25 +17,27 @@
 <meta property="og:description" content="" />
 <meta property="og:url" content="" />
 <meta name="robots" content="noindex">
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react.min.js"></script> -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.5.4/react-dom.min.js"></script> -->
-<script src="https://www.usms.org/scripts/common.min.js?version=20210920.1"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.12/jquery.mask.min.js"></script> -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://usms-cdn.azureedge.net/scripts/common.min.js"></script>
-<script src="https://usms-cdn.azureedge.net/scripts/home.min.js?version=20211213.1"></script>
+<script src="https://usms-cdn.azureedge.net/scripts/home.min.js"></script>
+
+<!-- Local Fallbacks -->
+<!-- <script src="/js/src/jquery-3.6.0.min.js"></script> -->
+<!-- <script src="/js/src/bootstrap.min.js"></script> -->
+<!-- <script src="/js/src/common.min.js"></script> -->
+<!-- <script src="/js/src/home.min.js"></script> -->
         <!-- Bonfire Source Files -->
-    <link rel="stylesheet" href="https://test.usms.org/styles/bootstrap.min.css">
-    <link rel="stylesheet" href="https://test.usms.org/styles/font-awesome.min.css">
+    <link rel="stylesheet" href="https://www.usms.org/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="https://www.usms.org/styles/font-awesome.min.css">
     <link rel="stylesheet" href="/assets/fontawesome-webfont.woff2">
     <link rel="stylesheet" href="/assets/fontawesome-webfont.ttf">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v4.7.0/css/font-awesome-css.min.css">
-    <link rel="stylesheet" href="https://test.usms.org/styles/common.min.css">
-    <link rel="stylesheet" href="https://test.usms.org/styles/bootstrap-3-usms-patch.css">
-    <link rel="stylesheet" href="https://test.usms.org/styles/print.min.css">
-    <link rel="stylesheet" href="https://test.usms.org/styles/rte.min.css">
+    <link rel="stylesheet" href="https://www.usms.org/styles/common.min.css">
+    <link rel="stylesheet" href="https://www.usms.org/styles/print.min.css">
+    <link rel="stylesheet" href="https://www.usms.org/styles/rte.min.css">
+    <link rel="stylesheet" href="https://www.usms.org/styles/bootstrap-3-usms-patch.css">
 
 <!-- Local Dev Files -->
     <link rel="stylesheet" href="/css/rte-updates.css">
@@ -358,7 +360,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <p>I am choosing to switch to a USMS membership. I understand that effective immediately my LaneMate subscription will be canceled. I will now be re directed to the USMS website to complete member registration.</p>
+                                        <p>I am choosing to switch to a USMS membership. I understand that effective immediately my LaneMate subscription will be canceled. I will now be redirected to the USMS website to complete member registration.</p>
                                         <!-- <input type="checkbox" name="accept" id="accept"> -->
                                         <!-- <label for="accept">By selecting this box you accept <a href="www.usms.org">terms and conditions</a>.</label> -->
                                     </div>
@@ -438,7 +440,8 @@
                                         <p class="plan-price">$9.99/mo.</p>
                                         <ul>
                                             <li>Our flexible option that lets you pay monthly</li>
-                                            <li>All the LaneMate benefits</li>
+                                            <li>Standard LaneMate benefits</li>
+                                            <li>Optional Video Stroke Analysis (Standard Price $120)</li>
                                         </ul>
                                     </div>
                                     <div class="plan-option plan-option_lanemate-yearly plan-option-selected">
@@ -449,8 +452,9 @@
                                         <p class="plan-selected-label">Current Plan</p>
                                         <p class="plan-price">$6.99/mo.</p>
                                         <ul>
-                                            <li>Our discounted option that lets you pay for the entire year at one time</li>
-                                            <li>$83.88 total billed at one time</li>
+                                            <li>Our discounted option that lets you pay for the entire year at one time for $83.88</li>
+                                            <li>All the LaneMate Benefits</li>
+                                            <li>Optional Video Stroke Analysis (Discounted Price $99)</li>
                                         </ul>
                                     </div>
                                     <div class="plan-option plan-option_usms-yearly">
@@ -465,8 +469,9 @@
                                             <li>All the LaneMate benefits</li>
                                             <li>Can swim in events</li>
                                             <li>Can swim with a club</li>
-                                            <li>Membership options available</li>
+                                            <!-- <li>Membership options available</li> -->
                                             <li>Expires Dec. 31, 2024</li>
+                                            <li>Optional Video Stroke Analysis (Discounted Price $70)</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -573,7 +578,7 @@
                                                             <span class="checkbox__placeholder"></span>
                                                         </div>
                                                    </label>
-                                                   <span>This check indicates your consent to store this information consistent with our <a href="#/">Privacy Policy</a>.</span>
+                                                   <span>I understand my payment information will be stored in My Account.</span>
                                                 </div>
                                              </div>
                                         </div>
@@ -588,7 +593,7 @@
 
                                 <div class="row form-group cancel-auto-renew--form">
                                     <div class="col-xs-12 cancel-auto-renew-message">
-                                        <p>I want to cancel my plan's auto-renewal. By cancelling, I will no longer receive benefits after XX/XX/XXXX.</p>
+                                        <p>I want to cancel my plan's auto renewal. By cancelling, I will no longer receive benefits after XX/XX/XXXX.</p>
                                     </div>
                                     <div class="col-xs-12 cancel-auto-renew--submit" data-reactid="">
                                         <button class="btn btn-primary text-uppercaseX cancel-auto-renew__cancel" id="btnYesCancelAutoRenew" data-reactid="">Yes, Cancel Auto Renew</button>
@@ -597,7 +602,7 @@
                                 </div>
 
                                 <div class="row cancel-auto-renew--confirmation">
-                                    <p>Auto Renew has been turned off. You will no longer receive benefits after XX/XX/XXXX.</p>
+                                    <p>Auto renew has been turned off. You will no longer receive benefits after XX/XX/XXXX.</p>
                                 </div>
 
 
@@ -1081,8 +1086,12 @@
 </footer>
 
         </div>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Local Fallbacks -->
+<!-- <script src="/js/src/jquery-3.6.0.min.js"></script> -->
+<!-- <script src="/js/src/bootstrap.bundle.min.js"></script> -->
         <script src="/lanemate/js/lanemate.js"></script>  
     </body>
 </html>
