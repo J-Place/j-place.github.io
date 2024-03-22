@@ -61,14 +61,6 @@ $("#btnNoKeepAutoRenew").on("click", function() {
 });
 
 $(".usms-modal-link").on("click", function() { 
-    
-    // var planMonthly = $(".plan-option_lanemate-monthly.plan-option-selected");
-    // var planYearly = $(".plan-option_lanemate-yearly.plan-option-selected");
-    // if (planMonthly) { 
-    //     $(".usmsModalMonthly").show();
-    // } if (planYearly) {
-    //     $(".usmsModalYearly").show();
-    // }
     if ($(".plan-option_lanemate-monthly.plan-option-selected").length) {
         $("#usmsModalMonthly").modal('show');
         $("body").addClass("modal-open");
