@@ -74,14 +74,14 @@ $(".usms-modal-link").on("click", function() {
 $("#confirmMonthlyUpgrade").on("click", function () {
     $("#usmsModalMonthly").hide();
     $(".plan-option").removeClass("plan-option-selected");
-    $(".plan-option_usms-yearly").addClass("plan-option-selected");
+    // $(".plan-option_usms-yearly").addClass("plan-option-selected");
     $("body").removeClass("modal-open");
 });
 
 $("#confirmYearlyUpgrade").on("click", function () {
     $("#usmsModalYearly").hide();
-    $(".plan-option").removeClass("plan-option-selected");
-    $(".plan-option_usms-yearly").addClass("plan-option-selected");
+    // $(".plan-option").removeClass("plan-option-selected");
+    // $(".plan-option_usms-yearly").addClass("plan-option-selected");
     $("body").removeClass("modal-open");
 });
 
