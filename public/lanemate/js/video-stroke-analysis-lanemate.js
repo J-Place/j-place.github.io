@@ -17,11 +17,11 @@ $(document.body).on('change','#strokeFocus',function(){
     } else if ($(".membership-length--lanemate-monthly.selected")[0]) {
         $(".video-stroke-analysis--total.card__total--amount").text("$120.00");
         // $(".payment-info__line-item--video-stroke-analysis .payment-info__line-item--price").text("$120.00");
-        $(".payment-info__line-item--lanemate").after('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">Video Stroke Analysis: <span class="payment-info__line-item--price">$120.00</span></p>');
+        $(".payment-info__line-item--trial").after('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">Video Stroke Analysis: <span class="payment-info__line-item--price">$120.00</span></p>');
     } else if ($(".membership-length--lanemate-yearly.selected")[0]) {
         $(".video-stroke-analysis--total.card__total--amount").text("$99.00");
         // $(".payment-info__line-item--video-stroke-analysis .payment-info__line-item--price").text("$99.00");
-        $(".payment-info__line-item--lanemate").after('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">Video Stroke Analysis: <span class="payment-info__line-item--price">$99.00</span></p>');
+        $(".payment-info__line-item--trial").after('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">Video Stroke Analysis: <span class="payment-info__line-item--price">$99.00</span></p>');
     }
 });
 
