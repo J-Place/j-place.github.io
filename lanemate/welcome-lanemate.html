@@ -11,9 +11,11 @@
         <sergey-import src="site/head_js" />
         <sergey-import src="site/head_css" />
         <link rel="stylesheet" href="https://www.usms.org/styles/login.min.css">
+        <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
         <link rel="stylesheet" href="/lanemate/css/lanemate.css">
+        <link rel="stylesheet" href="/lanemate/css/registration-lanemate.css">
     </head>
-    <body class="">
+    <body   class="">
         <div id="main-container">
             <sergey-import src="foundation/site-header-lanemate" />
             <main role="main">
@@ -35,15 +37,14 @@
                     <div class="usms-container p-b-50">
                         <div class="row">
                             <div class="col-xs-12 col-sm-4">
-                                <div class="confirmation-membership" style="margin-left: 0em;margin-right: 0rem;">
+                                <div class="confirmation-membership">
                                     <h3>Your Information</h3>
                                     <p class="confirmation-membership-label">Name:</p>
                                     <p>Jay Place</p>
                                     <p class="confirmation-membership-label">Email:</p>
                                     <p>jplace72@gmail.com</p>
-                                    <p class="confirmation-membership-label">Current Plan:</p>
-                                    <p>LaneMate 7-Day Trial</p>
-                                    <p style="font-size: 1.5rem;">You have started a 7-Day Free trial. You can cancel at any time. Your next billing cycle is indicated ...</p>
+                                    <p class="confirmation-membership-label">City, State:</p>
+                                    <p>Sarasota, FL</p>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-4">
@@ -53,24 +54,58 @@
                                     <p>LaneMate Monthly</p>
                                     <p class="confirmation-membership-label">Plan Rate:</p>
                                     <p>$9.99/mo.</p>
-                                    <p class="confirmation-membership-label">Next Billing Date:</p>
+                                    <p class="confirmation-membership-label">Next Plan Billing Date:</p>
                                     <p>04/08/2024</p>
+                                    <!-- <p style="font-size: 1.5rem; max-width: 280px; margin-left: 0;">You have started a 7-Day Free Trial. You can cancel at any time. You will be charged on on your plan's next billing date.</p> -->
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-4">
-                                <div class="confirmation-contact-info">
+                                <div class="confirmation-payment" style="">
                                     <h3>Today's Charges</h3>
                                     <p class="confirmation-membership-label">Subscription:</p>
-                                    <p>$0.00 (7-Day Trial)</p>
+                                    <p>$0.00</p>
                                     <p class="confirmation-membership-label">Video Stroke Analysis:</p>
                                     <p>$120.00</p>
                                     <p class="confirmation-membership-label">Donation:</p>
                                     <p>$20.00</p>
+                                    <p class="confirmation-membership-label">Total Charges:</p>
+                                    <p>$0.00</p>
+
                                 </div>
                             </div>
                         </div>
        
                         <sergey-import src="content/welcome-links-lanemate" />
+
+                        <style>
+                            .payment-info__form-summary {
+                                margin-top: 1rem;
+                            }
+                            .payment-info__line-item--price {
+                                width: 52%;
+                                padding-right: 10%;
+                            }
+                            @media (min-width: 768px) {
+                                .confirmation-charges-info h5 {
+                                    margin-left: 8rem;
+                                }
+                                .confirmation-membership {
+                                    margin-left: auto;
+                                    margin-right: auto;
+                                }
+                                .payment-info__form-summary {
+                                    margin-left: 14rem;
+                                }
+                                .payment-info__line-item--price {
+                                    width: 42%;
+                                    padding-right: 25%;
+                                }
+                            }
+                            .confirmation-charges-label + p {
+                                display: inline-block;
+                            }
+                        </style>
+    
        
                     </div>
                 </div>
