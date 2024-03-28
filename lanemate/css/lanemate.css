@@ -42,10 +42,9 @@
 /* Add contact info h3 to existing classes */
 .confirmation-membership h3, 
 .confirmation-contact-info h3,
-.confirmation-payment h3 {
-    margin: 10px auto 20px;
+.confirmation-charges h3 {
+    margin: 1rem auto 2rem;
 }
-
 
 .un-selected {
     height: 0;
@@ -76,16 +75,6 @@
 .cancel-auto-renew--form,
 .cancel-auto-renew--confirmation {
     display: none;
-}
-
-@media (max-width: 1199px) {
-    .payment-information--form,
-    .cancel-auto-renew--form,
-    .cancel-auto-renew--confirmation {
-        padding-top: 2rem;
-        border-top: 1px solid #CCC;
-        margin-top: 3rem;
-    }
 }
 
 .usms-container.form__container h3,
@@ -457,8 +446,17 @@ p.plan-selected-label {
 }
 
 /* Overrides source form container styling */
+@media (max-width: 991px) {
+    .payment-information--form,
+    .cancel-auto-renew--form,
+    .cancel-auto-renew--confirmation {
+        padding-top: 3rem;
+        border-top: 1px solid #CCC;
+        margin-top: 3rem;
+    }
+}
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
     .usms-container.form__container>.row>[class*=col-lg-]:nth-of-type(2), 
     .usms-container.form__container>.row>[class*=col-md-]:nth-of-type(2), 
     .usms-container.form__container>.row>[class*=col-sm-]:nth-of-type(2) {
