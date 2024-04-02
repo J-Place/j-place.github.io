@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<!--[if IE 9]>
+<html lang="en" class="ie9 no-js">
+<![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+    <!--<![endif]-->
+    <head>
+        <title>U.S. Masters Swimming</title>
+        <sergey-import src="site/head_meta" />
+        <sergey-import src="site/head_js" />
+        <sergey-import src="site/head_css" />
+        <!-- <link rel="stylesheet" href="https://www.usms.org/styles/login.min.css"> -->
+        <link rel="stylesheet" href="/lanemate/css/lanemate.css">
+        <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
+        <link rel="stylesheet" href="./css/registration-edits.css">
+        <link rel="stylesheet" href="/lanemate/css/registration-lanemate.css">
+    </head>
+    <body>
+        <div class="loading" style="display: none;">
+            <img src="../img/loader.gif" alt="loading">
+        </div>
+
+        <div id="main-container">
+
+            <sergey-import src="foundation/site-header-lanemate" />
+
+            <main role="main">
+
+                <div class="breadcrumb-container" style="position: relative; padding-bottom: 50px;">
+                    <div class="breadcrumb">
+                        <div class="usms-container">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="breadcrumb__container">
+                                        <ul class="breadcrumb__items list--nostyle">
+                                            <li class="text-capitalize breadcrumb__item ">
+                                                <a class="breadcrumb__link" href="/public">Home<i class="fa fa-chevron-right"></i></a>
+                                            </li>
+                                            <li class="text-capitalize breadcrumb__item ">
+                                                <a class="breadcrumb__link" href="/public">My Account<i class="fa fa-chevron-right"></i></a>
+                                            </li>
+                                        </ul>
+                                        <span class="breadcrumb__title text-capitalize">Add-On</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section section-full bg-gray p-tb-10 p-mh-500 ">
+
+                    <div class="usms-container p-tb-10">
+
+                        <div class="modal" id="laneMateModalMonthly" tabindex="-1" role="dialog" style="display: none;">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" style="margin: 0 auto;">
+                                    <div class="modal-header">
+                                        <h4>LaneMate Monthly</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>You are chosing to switch to the LaneMate monthly subscription. Please accept the terms below and confirm. </p>
+                                        <span style="position: relative; top: 0;" class="help-block help-block--AcceptTerms has-error" data-reactid="54">You must agree to the terms and conditions</span>
+                                        <input type="checkbox" name="accept" id="accept">
+                                        <label for="accept">By selecting this box you accept the <a href="www.usms.org">terms and conditions</a>.</label>
+                                    </div>
+                                    <div class="modal-footer">                                     
+                                        <!-- <a class="btn btn-lg btn-primary" data-bs-dismiss="modal" id="confirmLaneMateMonthlyPlan">Confirm</a>
+                                        <a class="btn btn-lg btn-link" href="" data-bs-dismiss="modal">Cancel</a> -->
+                                        <button class="btn btn-lg btn-primary" data-bs-dismiss="modal" id="confirmLaneMateMonthlyPlan">Confirm</button>
+                                        <button class="btn btn-lg btn-link" data-bs-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal" id="laneMateModalYearly" tabindex="-1" role="dialog" style="display: none;">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" style="margin: 0 auto;">
+                                    <div class="modal-header">
+                                        <h4>LaneMate Yearly</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>You are chosing to switch to the LaneMate yearly subscription. Please accept the terms below and confirm. </p>
+                                        <span style="position: relative; top: 0;" class="help-block help-block--AcceptTermsLMY has-error" data-reactid="54">You must agree to the terms and conditions</span>
+                                        <input type="checkbox" name="accept" id="accept">
+                                        <label for="accept">By selecting this box you accept the <a href="www.usms.org">terms and conditions</a>.</label>
+                                    </div>
+                                    <div class="modal-footer">                                     
+                                        <button class="btn btn-lg btn-primary" data-bs-dismiss="modal" id="confirmLaneMateYearlyPlan">Confirm</button>
+                                        <button class="btn btn-lg btn-link" data-bs-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal" id="usmsModalMonthly" tabindex="-1" role="dialog" style="display: none;">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" style="margin: 0 auto;">
+                                    <div class="modal-header">
+                                        <h4>USMS Membership</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>I am choosing to switch to a USMS membership. I understand that effective immediately my LaneMate subscription will be canceled. I will now be redirected to the USMS website to complete member registration.</p>
+                                    </div>
+                                    <div class="modal-footer">                                     
+                                        <button class="btn btn-lg btn-primary" data-bs-dismiss="modal" id="confirmMonthlyUpgrade">Go!</butotn>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal" id="usmsModalYearly" tabindex="-1" role="dialog" style="display: none;">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" style="margin: 0 auto;">
+                                    <div class="modal-header">
+                                        <h4>USMS Membership</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Switching from a LaneMate yearly subscription to a USMS membership will be handled by Membership Services. You will now be redirected to a form to get the process started.</p>
+                                    </div>
+                                    <div class="modal-footer">                                     
+                                        <button class="btn btn-lg btn-primary" data-bs-dismiss="modal" id="confirmYearlyUpgrade">Go!</butotn>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <header>
+                                    <h1>Add-On</h1>
+                                    <div class="lead">
+                                        <p style="font-size: 15px; line-height: 25px;font-weight: normal;">RTE text ...</p>
+                                    </div>
+                                </header>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="usms-container renew__form-container">
+                        <div class="row is-flex">
+                            <div class="col-xs-12">
+                                <div class="renew__form-body">
+                                <!-- <h3>Plan Options</h3> -->
+                                <!-- <p class="current-plan__how-to-change">If you want to change your plan, select from one of the options below:</p> -->
+                                    <div class="available-plans">
+                                        <div class="plan-option plan-option_usms-plus">
+                                            <p class="plan-name">USMS<span class="plan-type">+</span></p>
+                                            <p class="switch-plan-labelXXX">
+                                                <a class="" href="#/" data-bs-toggle="modal" data-bs-target="#laneMateModalMonthly">Icon</a>
+                                            </p>
+                                            <!-- <p class="plan-selected-label">Current Plan</p> -->
+                                            <p class="plan-price">$149</p>
+                                            <div class="plan-summary">
+                                                <p>RTE text ...</p>
+                                                <ul>
+                                                    <li>Bullet</li>
+                                                    <li>Bullet</li>
+                                                    <li>Bullet</li>
+                                                </ul>
+                                            </div>
+                                            <button class="btn btn-md add-on">Add to Bag</button>
+                                        </div>
+
+                                        <div class="plan-option plan-option_coach-alts plan-option-selectedXXX">
+                                            <p class="plan-name">Coach/ALTS Designation</p>
+                                            <p class="switch-plan-labelXXX">
+                                                <a class="usms-modal-link" href="#/" id="#usmsModal">Icon</a>
+                                            </p>
+                                            <!-- <p class="plan-selected-label">Current Plan</p> -->
+                                            <p class="plan-price">$30</p>
+                                            <div class="plan-summary">
+                                                <p>RTE text ...</p>
+                                                <ul>
+                                                    <li>Bullet</li>
+                                                    <li>Bullet</li>
+                                                    <li>Bullet</li>
+                                                </ul>
+                                            </div>
+                                            <button class="btn btn-md add-on">Add to Bag</button>
+                                        </div>
+                                        <div class="plan-option plan-option_video-stroke-analysis">
+                                            <p class="plan-name">Video Stroke Analysis</p>
+                                            <p class="switch-plan-labelXXX">
+                                                <a class="usms-modal-link" href="#/" id="#usmsModal">Icon</a>
+                                            </p>
+                                            <!-- <p class="plan-selected-label">Current Plan</p> -->
+                                            <p class="plan-price">$120</p>
+                                            <div class="plan-summary">
+                                                <p>RTE text ...</p>
+                                                <ul>
+                                                    <li>Bullet</li>
+                                                    <li>Bullet</li>
+                                                    <li>Bullet</li>
+                                                </ul>
+                                            </div>
+                                            <!-- <button class="btn btn-md add-on">Add to Bag</button> -->
+                                            <div class="form-group">
+                                                <!-- <div class="col-xs-4"> -->
+                                                <div>
+                                                    <span class="help-block help-block--StrokeSelect has-error">Please select a stroke</span>
+                                                    <select name="StrokeSelect" class="form-control">
+                                                        <option value="">Select Stroke</option> 
+                                                        <option value="Freestyle">Freestyle</option>
+                                                        <option value="Breaststroke">Breaststroke</option>
+                                                        <option value="Backstroke">Backstroke</option>
+                                                        <option value="Butterfly">Butterfly</option>
+                                                        <option value="Starts/Turns">Starts/Turns</option>
+                                                    </select>
+                                                </div>
+                                                <!-- </div> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <sergey-import src="registration/donations" />
+                            
+                                    <style>
+                                        .lanemate__cart-summary {
+                                            width: 100%;
+                                            margin: 2rem auto;
+                                        }
+                                        .lanemate__cart-summary .cart-item {
+                                            display: flex;
+                                            align-items: baseline;
+                                        }
+                                        .cart-item-name {
+                                            text-align: left;
+                                            width: 100%;
+                                            line-height: 120%;
+                                        }
+                                        .lanemate__cart-summary .cart-item-quantity {
+                                            display: flex;
+                                        }
+                                        .cart-item-icon {
+                                            background: url(https://www.usms.org/-/media/usms/developers/images/myusms/icon-profile-login.svg);
+                                            height: 40px;
+                                            width: 40px;
+                                            margin: 0 15px 0 0;
+                                            padding: 0;
+                                            cursor: pointer;
+                                            background-repeat: no-repeat;
+                                            align-self: center;
+                                        }
+                                        .cart-item-quantity--increase,
+                                        .cart-item-quantity--decrease {
+                                            font-size: 2.5rem;
+                                            /* font-weight: bold; */
+                                            width: 3rem;
+                                            height: 3rem;
+                                            line-height: 2.5rem;
+                                            border-radius: 2rem;
+                                            background-color: gray;
+                                            border: 0 none;
+                                            color: #FFF;
+                                            text-align: center;
+                                        }
+                                        .cart-item-quantity--amount {
+                                            width: 5rem;
+                                            border: 1px solid #CCC;
+                                            font-size: 2rem;
+                                            text-align: center;
+                                            margin: 0 1rem;
+                                        }
+                                        p.cart-item-price {
+                                            margin: 0 2rem 1rem 0;
+                                            width: 200px;
+                                            text-align: right;
+                                        }
+                                        p.cart-item-price-total {
+                                            margin: 0 0 1rem 2rem;
+                                            width: 200px;
+                                            text-align: right;
+                                        }
+                                    </style>
+
+                                    <div class="col-xs-12">
+                                        <h3>My Bag</h3>
+                                        <div class="lanemate__cart-summary">
+                                            <div class="cart-item">
+                                                <div class="cart-item-icon"></div>
+                                                <p class="cart-item-name">USMS+</p>
+                                                <p class="cart-item-price">$149.00</p>
+                                                <div class="cart-item-quantity">
+                                                    <a href="#/" class="cart-item-quantity--decrease">-</a>
+                                                    <div class="cart-item-quantity--amount">1</div>
+                                                    <a href="#/" class="cart-item-quantity--increase">+</a>
+                                                </div>
+                                                <p class="cart-item-price-total">$149.00</p>
+                                            </div>
+                                            <div class="cart-item">
+                                                <div class="cart-item-icon"></div>
+                                                <p class="cart-item-name">Coach/ALTS Certification Designation</p>
+                                                <p class="cart-item-price">$30.00</p>
+                                                <div class="cart-item-quantity">
+                                                    <a href="#/" class="cart-item-quantity--decrease">-</a>
+                                                    <div class="cart-item-quantity--amount">3</div>
+                                                    <a href="#/" class="cart-item-quantity--increase">+</a>
+                                                </div>
+                                                <p class="cart-item-price-total">$30.00</p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <sergey-import src="foundation/footer" />
+        </div>
+        <sergey-import src="site/footer_scripts" />
+        <!-- <script src="/lanemate/js/lanemate.js"></script>   -->
+    </body>
+</html>
