@@ -52,81 +52,6 @@
                 <div class="section section-full bg-gray p-tb-10 p-mh-500 ">
 
                     <div class="usms-container p-tb-10">
-
-                        <div class="modal" id="laneMateModalMonthly" tabindex="-1" role="dialog" style="display: none;">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content" style="margin: 0 auto;">
-                                    <div class="modal-header">
-                                        <h4>LaneMate Monthly</h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>You are chosing to switch to the LaneMate monthly subscription. Please accept the terms below and confirm. </p>
-                                        <span style="position: relative; top: 0;" class="help-block help-block--AcceptTerms has-error" data-reactid="54">You must agree to the terms and conditions</span>
-                                        <input type="checkbox" name="accept" id="accept">
-                                        <label for="accept">By selecting this box you accept the <a href="www.usms.org">terms and conditions</a>.</label>
-                                    </div>
-                                    <div class="modal-footer">                                     
-                                        <!-- <a class="btn btn-lg btn-primary" data-bs-dismiss="modal" id="confirmLaneMateMonthlyPlan">Confirm</a>
-                                        <a class="btn btn-lg btn-link" href="" data-bs-dismiss="modal">Cancel</a> -->
-                                        <button class="btn btn-lg btn-primary" data-bs-dismiss="modal" id="confirmLaneMateMonthlyPlan">Confirm</button>
-                                        <button class="btn btn-lg btn-link" data-bs-dismiss="modal">Cancel</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal" id="laneMateModalYearly" tabindex="-1" role="dialog" style="display: none;">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content" style="margin: 0 auto;">
-                                    <div class="modal-header">
-                                        <h4>LaneMate Yearly</h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>You are chosing to switch to the LaneMate yearly subscription. Please accept the terms below and confirm. </p>
-                                        <span style="position: relative; top: 0;" class="help-block help-block--AcceptTermsLMY has-error" data-reactid="54">You must agree to the terms and conditions</span>
-                                        <input type="checkbox" name="accept" id="accept">
-                                        <label for="accept">By selecting this box you accept the <a href="www.usms.org">terms and conditions</a>.</label>
-                                    </div>
-                                    <div class="modal-footer">                                     
-                                        <button class="btn btn-lg btn-primary" data-bs-dismiss="modal" id="confirmLaneMateYearlyPlan">Confirm</button>
-                                        <button class="btn btn-lg btn-link" data-bs-dismiss="modal">Cancel</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal" id="usmsModalMonthly" tabindex="-1" role="dialog" style="display: none;">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content" style="margin: 0 auto;">
-                                    <div class="modal-header">
-                                        <h4>USMS Membership</h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>I am choosing to switch to a USMS membership. I understand that effective immediately my LaneMate subscription will be canceled. I will now be redirected to the USMS website to complete member registration.</p>
-                                    </div>
-                                    <div class="modal-footer">                                     
-                                        <button class="btn btn-lg btn-primary" data-bs-dismiss="modal" id="confirmMonthlyUpgrade">Go!</butotn>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal" id="usmsModalYearly" tabindex="-1" role="dialog" style="display: none;">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content" style="margin: 0 auto;">
-                                    <div class="modal-header">
-                                        <h4>USMS Membership</h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Switching from a LaneMate yearly subscription to a USMS membership will be handled by Membership Services. You will now be redirected to a form to get the process started.</p>
-                                    </div>
-                                    <div class="modal-footer">                                     
-                                        <button class="btn btn-lg btn-primary" data-bs-dismiss="modal" id="confirmYearlyUpgrade">Go!</butotn>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         
                         <div class="row">
                             <div class="col-xs-12">
@@ -202,8 +127,8 @@
                                                 <!-- <div class="col-xs-4"> -->
                                                 <div>
                                                     <span class="help-block help-block--StrokeSelect has-error">Please select a stroke</span>
-                                                    <select name="StrokeSelect" class="form-control">
-                                                        <option value="">Select Stroke</option> 
+                                                    <select name="StrokeSelect" id="strokeSelect" class="form-control">
+                                                        <option value="">Select a Stroke</option> 
                                                         <option value="Freestyle">Freestyle</option>
                                                         <option value="Breaststroke">Breaststroke</option>
                                                         <option value="Backstroke">Backstroke</option>
@@ -218,67 +143,173 @@
                                     <sergey-import src="registration/donations" />
                             
                                     <style>
+                                        @media (min-width: 1200px) {
+                                            .available-plans {
+                                                justify-content: center;
+                                                padding-top: 6rem;
+                                            }
+                                        }
+                                        .available-plans #strokeSelect {
+                                            width: 180px;
+                                        }
                                         .lanemate__cart-summary {
                                             width: 100%;
                                             margin: 2rem auto;
                                         }
                                         .lanemate__cart-summary .cart-item {
                                             display: flex;
-                                            align-items: baseline;
+                                            align-items: center;
+                                            flex-direction: column;
+                                            margin: 5rem 0 0;
+                                            padding: 4rem 0 1rem;
+                                            border-top: 1px solid #CCC;
                                         }
-                                        .cart-item-name {
-                                            text-align: left;
+                                        .lanemate__cart-summary .cart-item-name {
+                                            text-align: center;
                                             width: 100%;
                                             line-height: 120%;
+                                            font-size: 3rem;
+                                        }
+                                        @media (min-width: 1200px) {
+                                            .lanemate__cart-summary .cart-item {
+                                                align-items: center;
+                                                flex-direction: row;
+                                                margin: 0;
+                                                padding: 0;
+                                                border: 0 none;
+                                            }
+                                            .lanemate__cart-summary .cart-item-name {
+                                                text-align: left;
+                                                width: 100%;
+                                                line-height: 120%;
+                                                font-size: 2rem;
+                                            }
                                         }
                                         .lanemate__cart-summary .cart-item-quantity {
                                             display: flex;
                                         }
-                                        .cart-item-icon {
+                                        .lanemate__cart-summary .cart-item-icon {
                                             background: url(https://www.usms.org/-/media/usms/developers/images/myusms/icon-profile-login.svg);
-                                            height: 40px;
-                                            width: 40px;
-                                            margin: 0 15px 0 0;
+                                            /* height: 40px; */
+                                            /* width: 40px; */
+                                            height: 100px;
+                                            width: 140px;
+                                            margin: 0 15px 2rem 0;
                                             padding: 0;
                                             cursor: pointer;
                                             background-repeat: no-repeat;
+                                            background-position: center center;
                                             align-self: center;
                                         }
-                                        .cart-item-quantity--increase,
-                                        .cart-item-quantity--decrease {
-                                            font-size: 2.5rem;
+                                        .lanemate__cart-summary .cart-item-quantity--increase,
+                                        .lanemate__cart-summary .cart-item-quantity--decrease {
+                                            font-size: 2rem;
                                             /* font-weight: bold; */
-                                            width: 3rem;
-                                            height: 3rem;
-                                            line-height: 2.5rem;
+                                            width: 2rem;
+                                            height: 2rem;
+                                            line-height: 85%;
                                             border-radius: 2rem;
                                             background-color: gray;
                                             border: 0 none;
                                             color: #FFF;
                                             text-align: center;
+                                            margin: 0.5rem 0;
                                         }
-                                        .cart-item-quantity--amount {
+                                        .lanemate__cart-summary .cart-item-quantity-label {
+                                            font-size: 1.5rem;
+                                            text-align: center;
+                                            width: 13rem;
+                                            margin: 0 0 1rem;
+                                        }
+                                        .lanemate__cart-summary .cart-item-price-label {
+                                            font-size: 1.5rem;
+                                            text-align: center;
+                                            width: 200px;
+                                            margin: 0 0 1rem;
+                                        }
+                                        .lanemate__cart-summary .cart-item-price-total-label {
+                                            font-size: 1.5rem;
+                                            text-align: center;
+                                            width: 12rem;
+                                            margin: 0 0 1rem;
+                                        }
+                                        @media (min-width: 1200px) {
+                                            .lanemate__cart-summary .cart-item-quantity-label {
+                                                text-align: center;
+                                            }
+                                            .lanemate__cart-summary .cart-item-price-label {
+                                                text-align: right;
+                                            }
+                                            .lanemate__cart-summary .cart-item-price-total-label {
+                                                text-align: right;
+                                            }
+                                        }
+                                        .lanemate__cart-summary .cart-item-quantity--amount {
                                             width: 5rem;
                                             border: 1px solid #CCC;
                                             font-size: 2rem;
                                             text-align: center;
                                             margin: 0 1rem;
                                         }
-                                        p.cart-item-price {
-                                            margin: 0 2rem 1rem 0;
-                                            width: 200px;
-                                            text-align: right;
+                                        .lanemate__cart-summary .cart-item-price {
+                                            margin: 0 auto;
+                                            width: 100%;
+                                            text-align: center;
                                         }
-                                        p.cart-item-price-total {
-                                            margin: 0 0 1rem 2rem;
-                                            width: 200px;
+                                        .lanemate__cart-summary .cart-summary__header {
+                                            display: none;
+                                        }
+                                        @media (min-width: 1200px) {
+                                            .lanemate__cart-summary .cart-summary__header {
+                                                display: flex;
+                                                justify-content: end;
+                                            }
+                                        }
+                                        .lanemate__cart-summary .cart-item-price-total {
+                                            margin: 0 auto;
+                                            width: 100%;
+                                            text-align: center;
+                                        }
+                                        .lanemate__cart-total {
+                                            display: flex;
+                                            justify-content: end;
+                                        }
+                                        .lanemate__cart-total .sub-total {
+                                            font-size: 2rem;
                                             text-align: right;
+                                            border-top: 1px solid #000;
+                                            margin: 1rem 0 2rem;
+                                            padding-top: 2rem;
+                                            width: 100%;
+                                        }
+                                        .lanemate__cart-total label {
+                                            padding-right: 3rem;
+                                        }
+                                        @media (min-width: 1200px) {
+                                            .lanemate__cart-summary .cart-item-price-total {
+                                                margin: 0 0 1rem 2rem;
+                                                width: 20rem;
+                                                text-align: right;
+                                            }
+                                            .lanemate__cart-summary .cart-item-price {
+                                                margin: 0 2rem 1rem 0;
+                                                width: 200px;
+                                                text-align: center;
+                                            }
+                                            .lanemate__cart-total .sub-total {
+                                                width: 200px;
+                                            }
                                         }
                                     </style>
 
-                                    <div class="col-xs-12">
+                                    <div class="col-xs-12 card shopping-cart">
                                         <h3>My Bag</h3>
                                         <div class="lanemate__cart-summary">
+                                            <div class="cart-summary__header">
+                                                <p class="cart-item-price-label">Price</p>
+                                                <p class="cart-item-quantity-label">Qty</p>
+                                                <p class="cart-item-price-total-label">Total</p>
+                                            </div>
                                             <div class="cart-item">
                                                 <div class="cart-item-icon"></div>
                                                 <p class="cart-item-name">USMS+</p>
@@ -303,10 +334,15 @@
                                             </div>
 
                                         </div>
+                                        <div class="lanemate__cart-total">
+                                            <div class="sub-total">
+                                                <label for="">Subtotal</label>
+                                                $179.00
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                        </div>
-
+                            </div>
                         </div>
                     </div>
                 </div>
