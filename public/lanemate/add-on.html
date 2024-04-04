@@ -335,18 +335,23 @@
                                 <!-- <p class="current-plan__how-to-change">If you want to change your plan, select from one of the options below:</p> -->
                                     <div class="available-plans">
                                         <div class="plan-option plan-option_usms-plus">
-
-                                            <p class="plan-name">USMS<span class="plan-type">+</span></p>
+                                            
+                                            <p class="plan-name">USMS+</p><!-- <span class="plan-type">+</span> -->
                                             <!-- <p class="switch-plan-labelXXX">
                                                 <a class="" href="#/" id="#laneMateModalMonthly">Icon</a>
                                             </p> -->
-                                            <img style="margin-top: 4rem;" class="plan-icon" src="/img/USMSplus_Logo_final_V1_Color%20copy.png" alt=""><p class="plan-price">$149</p>
+                                            <!-- <img style="margin-top: 4rem;" class="plan-icon" src="/img/USMSplus_Logo_final_V1_Color%20copy.png" alt=""><p class="plan-price">$149</p> -->
+                                            <p class="plan-price">$149</p>
                                             <div class="plan-summary">
-                                                <p>RTE text ...</p>
+                                                <!-- <p>RTE text ...</p> -->
                                                 <ul>
-                                                    <li>Bullet</li>
-                                                    <li>Bullet</li>
-                                                    <li>Bullet</li>
+                                                    <li>Standard membership</li>
+                                                    <li>Premium welcome box</li>
+                                                    <li>Free virtual event entry</li>
+                                                    <li>Entry to USA Swimming Supporters Club</li>
+                                                    <li>Olympian webinars</li>
+                                                    <li>Optional Video Stroke Analysis (1 free analysis per year)</li>
+                                                    <!-- <li><a data-toggle="modal" data-target="#modalYearPlus">And even more</a></li> -->
                                                 </ul>
                                             </div>
                                             <button class="btn btn-blue btn-md add-on">Add to Bag</button>
@@ -358,13 +363,15 @@
                                             <!-- <p class="switch-plan-labelXXX">
                                                 <a class="usms-modal-link" href="#/" id="#usmsModal">Icon</a>
                                             </p> -->
-                                            <img class="plan-icon" src="https://www.usms.org/-/media/usms/developers/images/club%20detail/club-badge-coach.png" alt=""><p class="plan-price">$30</p>
+                                            <!-- <img class="plan-icon" src="https://www.usms.org/-/media/usms/developers/images/club%20detail/club-badge-coach.png" alt=""><p class="plan-price">$30</p> -->
+                                            <p class="plan-price">$30</p>
                                             <div class="plan-summary">
-                                                <p>RTE text ...</p>
+                                                <!-- <p>RTE text ...</p> -->
                                                 <ul>
-                                                    <li>Bullet</li>
-                                                    <li>Bullet</li>
-                                                    <li>Bullet</li>
+                                                    <li>Discounts on USMS education courses</li>
+                                                    <li>Pool nationals hospitality passes</li>
+                                                    <li>Access to exclusive content</li>
+                                                    <li>Opportunity for special coaching assignments</li>
                                                 </ul>
                                             </div>
                                             <button class="btn btn-blue btn-md add-on">Add to Bag</button>
@@ -375,14 +382,15 @@
                                             <!-- <p class="switch-plan-labelXXX">
                                                 <a class="usms-modal-link" href="#/" id="#usmsModal">Icon</a>
                                             </p> -->
-                                            <img class="plan-icon" src="https://www.usms.org/fitness-and-training/guides/-/media/usms/non-lightroom%20images/house%20art/101%20icons/icon-video-stroke-analysis.png" alt="">                                           <!-- <p class="plan-selected-label">Current Plan</p> -->
+                                            <!-- <img class="plan-icon" src="https://www.usms.org/fitness-and-training/guides/-/media/usms/non-lightroom%20images/house%20art/101%20icons/icon-video-stroke-analysis.png" alt="">                                           <p class="plan-selected-label">Current Plan</p> -->
                                             <p class="plan-price">$120</p>
                                             <div class="plan-summary">
-                                                <p>RTE text ...</p>
+                                                <!-- <p>RTE text ...</p> -->
                                                 <ul>
-                                                    <li>Bullet</li>
-                                                    <li>Bullet</li>
-                                                    <li>Bullet</li>
+                                                    <li>Single stroke analysis by certified coach</li>
+                                                    <li>~5 five-minute long analysis</li>
+                                                    <li>Two rounds of visual and verbal feedback</li>
+                                                    <li>Additional resources to help improve</li>
                                                 </ul>
                                             </div>
                                             <!-- <button class="btn btn-md add-on">Add to Bag</button> -->
@@ -467,8 +475,11 @@
                                             }
                                             .plan-option {
                                                 max-width: 260px;
-                                                height: 450px;
+                                                height: 380px;
                                                 padding-bottom: 30%;
+                                            }
+                                            .plan-option ul {
+                                                height: 150px;
                                             }
                                             .btn.add-on {
                                                 margin-top: 1.5rem;
@@ -496,7 +507,7 @@
                                             .lanemate__cart-summary .cart-item {
                                                 align-items: center;
                                                 flex-direction: row;
-                                                margin: 0;
+                                                margin: 0 0 4rem;
                                                 padding: 0;
                                                 border: 0 none;
                                             }
@@ -505,10 +516,13 @@
                                                 width: 100%;
                                                 line-height: 120%;
                                                 font-size: 2rem;
+                                                margin-bottom: 5rem;
                                             }
                                         }
                                         .lanemate__cart-summary .cart-item-quantity {
                                             display: flex;
+                                            position: relative;
+                                            margin-bottom: 8rem;
                                         }
                                         .lanemate__cart-summary .cart-item-icon {
                                             background: url(https://www.usms.org/-/media/usms/developers/images/myusms/icon-profile-login.svg);
@@ -525,17 +539,17 @@
                                         }
                                         .lanemate__cart-summary .cart-item-quantity--increase,
                                         .lanemate__cart-summary .cart-item-quantity--decrease {
-                                            font-size: 2rem;
+                                            font-size: 4rem;
                                             /* font-weight: bold; */
-                                            width: 2rem;
-                                            height: 2rem;
+                                            width: 4rem;
+                                            height: 4rem;
                                             line-height: 85%;
-                                            border-radius: 2rem;
+                                            border-radius: 4rem;
                                             background-color: gray;
                                             border: 0 none;
                                             color: #FFF;
                                             text-align: center;
-                                            margin: 0.5rem 0;
+                                            margin: 0.5rem 1rem;
                                         }
                                         .lanemate__cart-summary .cart-item-quantity-label {
                                             font-size: 1.5rem;
@@ -552,10 +566,21 @@
                                         .lanemate__cart-summary .cart-item-price-total-label {
                                             font-size: 1.5rem;
                                             text-align: center;
-                                            width: 14.5rem;
+                                            width: 160px;
                                             margin: 0 0 1rem;
                                         }
                                         @media (min-width: 1200px) {
+                                            .lanemate__cart-summary .cart-item-quantity {
+                                                margin-bottom: 5rem;
+                                            }
+                                            .lanemate__cart-summary .cart-item-quantity--increase,
+                                            .lanemate__cart-summary .cart-item-quantity--decrease {
+                                                font-size: 2rem;
+                                                /* font-weight: bold; */
+                                                width: 2rem;
+                                                height: 2rem;
+                                                margin: 0.5rem 0;
+                                            }
                                             .lanemate__cart-summary .cart-item-quantity-label {
                                                 text-align: center;
                                             }
@@ -567,9 +592,9 @@
                                             }
                                         }
                                         .lanemate__cart-summary .cart-item-quantity--amount {
-                                            width: 5rem;
+                                            width: 8rem;
                                             border: 1px solid #CCC;
-                                            font-size: 2rem;
+                                            font-size: 3rem;
                                             text-align: center;
                                             margin: 0 1rem;
                                         }
@@ -577,6 +602,19 @@
                                             margin: 0 auto;
                                             width: 100%;
                                             text-align: center;
+                                        }
+                                        .cart-item--remove {
+                                            font-size: 1.8rem;
+                                            text-decoration: underline;
+                                            position: absolute;
+                                            top: 65px;
+                                            /* left: -35px;
+                                            width: 200px;
+                                            text-align: center; */
+                                            left: -50%;
+                                            width: 100%;
+                                            text-align: center;
+                                            margin-left: 50%;
                                         }
                                         .lanemate__cart-summary .cart-summary__header {
                                             display: none;
@@ -586,11 +624,24 @@
                                                 display: flex;
                                                 justify-content: end;
                                             }
+                                            .cart-item--remove {
+                                                font-size: 1.2rem;
+                                                top: 35px;
+                                                /* text-wrap: nowrap; */
+                                                /* left: -35px; */
+                                                /* width: 180px; */
+                                            }
+                                            .lanemate__cart-summary .cart-item-quantity--amount {
+                                                width: 5rem;
+                                                font-size: 2rem;
+                                                margin: 0 1rem;
+                                            }
                                         }
                                         .lanemate__cart-summary .cart-item-price-total {
                                             margin: 0 auto;
                                             width: 100%;
                                             text-align: center;
+                                            font-size: 3rem;
                                         }
                                         .lanemate__cart-total {
                                             display: flex;
@@ -611,9 +662,10 @@
                                         }
                                         @media (min-width: 1200px) {
                                             .lanemate__cart-summary .cart-item-price-total {
-                                                margin: 0 0 1rem 2rem;
+                                                margin: 0 0 5rem 2rem;
                                                 width: 20rem;
                                                 text-align: right;
+                                                font-size: 2rem;
                                             }
                                             .lanemate__cart-summary .cart-item-price {
                                                 margin: 0 2rem 1rem 0;
@@ -632,45 +684,138 @@
                                     </style>
 
                                     <div class="col-xs-12 card shopping-cart">
-                                        <h3>My Bag</h3>
+                                        <h3>My Swim Bag</h3>
                                         <div class="lanemate__cart-summary">
                                             <div class="cart-summary__header">
                                                 <p class="cart-item-quantity-label">Qty</p>
                                                 <p class="cart-item-price-total-label">Total</p>
                                             </div>
                                             <div class="cart-item">
-                                                <img class="plan-icon" src="/img/USMSplus_Logo_final_V1_Color%20copy.png" alt="">
+                                                <!-- <img class="plan-icon" src="/img/USMSplus_Logo_final_V1_Color%20copy.png" alt=""> -->
                                                 <p class="cart-item-name">USMS+</p>
                                                 <div class="cart-item-quantity">
                                                     <a href="#/" class="cart-item-quantity--decrease">-</a>
                                                     <div class="cart-item-quantity--amount">1</div>
+                                                    <!-- <input type="number" name="item-quantity" id="" class="cart-item-quantity--amount" value="1"> -->
                                                     <a href="#/" class="cart-item-quantity--increase">+</a>
+                                                    <a href="#/" class="cart-item--remove">Remove from My Swim Bag</a>
                                                 </div>
                                                 <p class="cart-item-price-total">$149.00</p>
                                             </div>
                                             <div class="cart-item">
-                                                <img class="plan-icon" src="https://www.usms.org/-/media/usms/developers/images/club%20detail/club-badge-coach.png" alt="">
+                                                <!-- <img class="plan-icon" src="https://www.usms.org/-/media/usms/developers/images/club%20detail/club-badge-coach.png" alt=""> -->
                                                 <p class="cart-item-name">Coach/ALTS Certification Designation</p>
                                                 <div class="cart-item-quantity">
                                                     <a href="#/" class="cart-item-quantity--decrease">-</a>
                                                     <div class="cart-item-quantity--amount">3</div>
+                                                    <!-- <input type="number" name="item-quantity" id="" class="cart-item-quantity--amount" value="3"> -->
                                                     <a href="#/" class="cart-item-quantity--increase">+</a>
+                                                    <a href="#/" class="cart-item--remove">Remove from My Swim Bag</a>
                                                 </div>
                                                 <p class="cart-item-price-total">$30.00</p>
                                             </div>
 
                                         </div>
-                                        <div class="lanemate__cart-total">
+
+                                        <h4 class="card__total">
+                                            <!-- react-text: 133 -->Total Add-Ons: <!-- /react-text --><span class="total-add-ons card__total--amount">$__.__</span>
+                                        </h4>
+
+                                        <!-- <div class="lanemate__cart-total">
                                             <div class="sub-total">
                                                 <label for="">Subtotal</label>
                                                 $179.00
                                             </div>
-                                        </div>
+                                        </div> -->
+
                                     </div>
+
+
+
+                                    <div class="card payment-info un-selectedXXX">
+	<h3 class="payment-info___form-header m-b-30">Payment Information</h3>
+	<div class="payment-info__form-summary">
+	   <p class="payment-info__line-item payment-info__line-item--total">
+		  Total Charge: <span class="payment-info__line-item--price">$__.__</span>
+	   </p>
+	</div>
+
+    <div class="form-group card-name">
+	   <div class="col-xs-12">
+		  <label class="font-weight-bold">Name on Card</label>
+		  <div><span class="help-block help-block--cardName">Please enter a value for cardName</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardName" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardName" aria-hidden="true"></span></div>
+	   </div>
+	</div>
+	<div class="form-group card-number">
+	   <div class="col-xs-12 col-sm-7">
+		  <label class="font-weight-bold">Card Number</label>
+		  <div><span class="help-block help-block--cardNumberID">Please enter a valid credit card number</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardNumberID" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardNumberID" aria-hidden="true"></span></div>
+	   </div>
+	   <div class="col-xs-5 col-sm-2 form-membership-length__security-code">
+		  <label class="font-weight-bold">Security Code</label>
+		  <div><span class="help-block help-block--cardCodeID">Please enter a value for Security Code</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardCodeID" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardCodeID" aria-hidden="true"></span></div>
+	   </div>
+	   <div class="col-xs-7 col-sm-3">
+		  <label class="font-weight-bold">Expiration (mm/yy)</label>
+		  <div><span class="help-block help-block--expiration">Please enter a valid expiration date</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="expiration" autocomplete="true" maxlength="5" value=""><span class="glyphicon form-control-feedback glyphicon--expiration" aria-hidden="true"></span></div>
+	   </div>
+	</div>
+	<div class="form-group card-zip">
+	   <div class="col-xs-8 col-sm-4">
+		  <label class="font-weight-bold">Billing Zip</label>
+		  <div><span class="help-block help-block--cardZipID">Please enter a valid billing zip</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardZipID" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardZipID" aria-hidden="true"></span></div>
+	   </div>
+	</div>
+
+	<div class="form-group agree-terms">
+   <div class="col-xs-12">
+      <span class="help-block help-block--agree-terms">You need to agree to the terms to complete your registration.</span>
+      <label id="agreeTerms__label" class="checkbox-label " for="agreeTerms">
+         <div class="checkbox-container"><input type="checkbox" name="agree-terms" id="agreeTerms" value="" class="has-success" data-gtm-form-interact-field-id="7"><span class="checkbox__placeholder"></span></div>
+      </label>
+      <!-- <span class="font-weight-bold">I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming Privacy Policy. I understand that I am opting in to automatically continuing mysubscription until I cancel. I understand that I can cancel at any time in My Account. I understand my credit or debit card will be stored in My Account. I understand that this subscription is non-refundable, non-transferable, and renews {monthly/yearly}.</span> -->
+      <span class="font-weight-bold">I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming <a href="/#">Privacy Policy</a>. I understand that this transaction will take effect immediately and is non-refundable and non-transferable.</span>
+   </div>
+</div>
+
+	
+<div class="form-group agree-usmsplus-terms" style="display: block;">
+	<div class="col-xs-12">
+		<span class="help-block help-block--agree-usmsplus-terms">You need to agree to the USMS+ terms and  conditions to complete your registration.</span>
+		<label id="agreeUsmsPlusTerms__label" class="checkbox-label " for="agreeUsmsPlusTerms">
+			<div class="checkbox-container">
+				<input type="checkbox" name="agree-usmsplus-terms" id="agreeUsmsPlusTerms" value="">
+				<span class="checkbox__placeholder"></span>
+			</div>
+		</label>
+		<span class="font-weight-bold">By selecting the USMS+ membership, I agree that USMS may share my information with the USA Swimming Foundation and USA Swimming in accordance with the USMS <a href="/#">Privacy Policy</a> (you may still opt out at any time).</span>
+	</div>
+</div>
+
+
+
+
+	<button id="subscribe-button" class="btn btn-primary btn-large text-uppercase pull-left membership-length__submit--lanemate">Register</button>
+ </div>
+
+
+
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="usms-container  p-b-10">
+    <div class="row  ">
+       <div class="col-xs-12  ">
+          <div class="html-container  ">
+             The USA Swimming Foundation is registered as a 501(c)(3) nonprofit organization. Contributions to the USA Swimming Foundation are tax deductible to the fullest extent of the law. USA Swimming Foundation’s tax identification number is 72-1581977. You can find out more about us on guidestar.org under USA Swimming Foundation. A COPY OF THE OFFICIAL REGISTRATION AND FINANCIAL INFORMATION MAY BE OBTAINED FROM THE DIVISION OF CONSUMER SERVICES BY CALLING TOLL-FREE WITHIN THE STATE. 1- 800-HELP-FLA (435-7352) OR www.FloridaConsumerHelp.com. REGISTRATION DOES NOT IMPLY ENDORSEMENT, APPROVAL, OR RECOMMENDATION BY THE STATE." FLORIDA REGISTRATION CH22685
+             <div style="display: none;">&nbsp;</div>
+          </div>
+       </div>
+    </div>
+ </div>
+
                 </div>
             </main>
             <footer>
