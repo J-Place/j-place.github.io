@@ -101,6 +101,6 @@ $("#confirmYearlyUpgrade").on("click", function () {
     $("body").removeClass("modal-open");
 });
 
-// $("#btnEditCreditCardSubmit").on("click", function () {
-//     $('.help-block').toggleClass('has-error');
-// });
+$("#showValidation").on("click", function () {
+    $('.help-block').toggleClass('has-error');
+});
