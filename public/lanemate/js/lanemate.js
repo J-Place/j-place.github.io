@@ -1,3 +1,12 @@
+$(document).ready(function() {
+    $("#usmsModalPaymentFailed").modal('show');
+    $("body").addClass("modal-open");
+});
+
+$("#confirmPaymentFailedModal").on( "click", function() {
+    $(".payment-information--form").show();
+});
+
 $("#confirmLaneMateMonthlyPlan").on( "click", function() {
     $(".current-plan__renewal-date").removeClass("current-plan--selected");
     $(".current-plan__renewal-date__lanemate-monthly").addClass("current-plan--selected");
@@ -30,6 +39,7 @@ $("#confirmUsmsYearlyPlan").on( "click", function() {
 $("#btnEditCreditCard").on("click", function() {
     $(".cancel-auto-renew--confirmation").hide();
     $(".cancel-auto-renew--form").hide();
+    $(".payment-information--confirmation").hide();
     $(".payment-information--form").show();
 });
 
@@ -37,12 +47,18 @@ $("#btnEditCreditCard").on("click", function() {
 //     $(".payment-information--form").hide();
 // });
 
+$("#btnEditCreditCardSubmit").on("click", function() {
+    $(".payment-information--form").hide();
+    $(".payment-information--confirmation").show();
+});
+
 $("#btnEditCreditCardCancel").on("click", function() {
     $(".payment-information--form").hide();
     $('.help-block').removeClass('has-error');
 });
 
 $("#btnCancelAutoRenew").on("click", function() {
+    $(".payment-information--confirmation").hide();
     $(".cancel-auto-renew--confirmation").hide();
     $(".payment-information--form").hide();
     $(".cancel-auto-renew--form").show();
@@ -85,6 +101,6 @@ $("#confirmYearlyUpgrade").on("click", function () {
     $("body").removeClass("modal-open");
 });
 
-$("#btnEditCreditCardSubmit").on("click", function () {
-    $('.help-block').toggleClass('has-error');
-});
+// $("#btnEditCreditCardSubmit").on("click", function () {
+//     $('.help-block').toggleClass('has-error');
+// });

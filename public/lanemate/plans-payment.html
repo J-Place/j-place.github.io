@@ -311,7 +311,22 @@
                 <div class="section section-full bg-gray p-tb-10 p-mh-500 ">
 
                     <div class="usms-container p-tb-10">
-
+                        <div class="modal" id="usmsModalPaymentFailed" tabindex="-1" role="dialog" style="display: none;">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" style="margin: 0 auto;">
+                                    <div class="modal-header">
+                                        <h4>Update Your Payment Method</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p><strong>We were unable to process your last payment for your LaneMate subscription.</strong> To keep your subscription active, update your payment method.</p>
+                                    </div>
+                                    <div class="modal-footer">                                     
+                                        <button class="btn btn-lg btn-primary" data-bs-dismiss="modal" id="confirmPaymentFailedModal">OK</butotn>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="modal" id="laneMateModalMonthly" tabindex="-1" role="dialog" style="display: none;">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content" style="margin: 0 auto;">
@@ -558,6 +573,9 @@
                                             <button class="btn btn-outline btn-large text-uppercase payment-information__cancel" id="btnEditCreditCardCancel" data-reactid="">Cancel</button>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="row payment-information--confirmation">
+                                    <p>Your payment method has been successfully updated to your My Account</p>
                                 </div>
                                 <div class="row form-group cancel-auto-renew--form">
                                     <div class="col-xs-12 cancel-auto-renew-message">
