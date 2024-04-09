@@ -7,6 +7,10 @@ $("#confirmPaymentFailedModal").on( "click", function() {
     $(".payment-information--form").show();
 });
 
+$("#usmsModalPaymentFailed").on( "click", function() {
+    $(".payment-information--form").show();
+});
+
 $("#confirmLaneMateMonthlyPlan").on( "click", function() {
     $(".current-plan__renewal-date").removeClass("current-plan--selected");
     $(".current-plan__renewal-date__lanemate-monthly").addClass("current-plan--selected");
