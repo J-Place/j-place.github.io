@@ -13,18 +13,15 @@
         <link rel="stylesheet" href="/lanemate/css/lanemate.css">
         <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
         <link rel="stylesheet" href="/lanemate/css/registration-lanemate.css">
+        <link rel="stylesheet" href="/lanemate/css/product-options.css">
     </head>
     <body>
         <div class="loading" style="display: none;">
             <img src="../img/loader.gif" alt="loading">
         </div>
-
         <div id="main-container">
-
             <sergey-import src="foundation/site-header-lanemate" />
-
             <main role="main">
-
                 <div class="breadcrumb-container" style="position: relative; padding-bottom: 50px;">
                     <div class="breadcrumb">
                         <div class="usms-container">
@@ -46,11 +43,8 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="section section-full bg-gray p-tb-10 p-mh-500 ">
-
-                    <div class="usms-container p-tb-10">
-                        
+                    <div class="usms-container p-tb-10">                        
                         <div class="row">
                             <div class="col-xs-12">
                                 <header>
@@ -62,416 +56,24 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="usms-container renew__form-container">
                         <div class="row is-flex">
                             <div class="col-xs-12">
                                 <div class="renew__form-body">
-                                    <div class="card add-on-products">
-                                        <h3>Products</h3>
-                                        <div class="available-plans">
-                                            <div class="plan-option plan-option_usms-plus">
-                                                
-                                                <p class="plan-name">USMS+</p><!-- <span class="plan-type">+</span> -->
-                                                <!-- <p class="switch-plan-labelXXX">
-                                                    <a class="" href="#/" id="#laneMateModalMonthly">Icon</a>
-                                                </p> -->
-                                                <!-- <img style="margin-top: 4rem;" class="plan-icon" src="/img/USMSplus_Logo_final_V1_Color%20copy.png" alt=""><p class="plan-price">$149</p> -->
-                                                <p class="plan-price">$149</p>
-                                                <div class="plan-summary">
-                                                    <!-- <p>RTE text ...</p> -->
-                                                    <ul>
-                                                        <li>Standard membership</li>
-                                                        <li>Premium welcome box</li>
-                                                        <li>Free virtual event entry</li>
-                                                        <li>Entry to USA Swimming Supporters Club</li>
-                                                        <li>Olympian webinars</li>
-                                                        <li>Optional Video Stroke Analysis (1 free analysis per year)</li>
-                                                        <!-- <li><a data-toggle="modal" data-target="#modalYearPlus">And even more</a></li> -->
-                                                    </ul>
-                                                </div>
-                                                <button class="btn btn-blue btn-md add-on">Add to Bag</button>
-                                            </div>
-                                            <div class="plan-option plan-option_coach-alts plan-option-selectedXXX">
-
-                                                <p class="plan-name">Coach/ALTS Designation</p>
-                                                <!-- <p class="switch-plan-labelXXX">
-                                                    <a class="usms-modal-link" href="#/" id="#usmsModal">Icon</a>
-                                                </p> -->
-                                                <!-- <img class="plan-icon" src="https://www.usms.org/-/media/usms/developers/images/club%20detail/club-badge-coach.png" alt=""><p class="plan-price">$30</p> -->
-                                                <p class="plan-price">$30</p>
-                                                <div class="plan-summary">
-                                                    <!-- <p>RTE text ...</p> -->
-                                                    <ul>
-                                                        <li>Discounts on USMS education courses</li>
-                                                        <li>Pool nationals hospitality passes</li>
-                                                        <li>Access to exclusive content</li>
-                                                        <li>Opportunity for special coaching assignments</li>
-                                                    </ul>
-                                                </div>
-                                                <button class="btn btn-blue btn-md add-on">Add to Bag</button>
-                                            </div>
-                                            <div class="plan-option plan-option_video-stroke-analysis">
-
-                                                <p class="plan-name">Video Stroke Analysis</p>
-                                                <!-- <p class="switch-plan-labelXXX">
-                                                    <a class="usms-modal-link" href="#/" id="#usmsModal">Icon</a>
-                                                </p> -->
-                                                <!-- <img class="plan-icon" src="https://www.usms.org/fitness-and-training/guides/-/media/usms/non-lightroom%20images/house%20art/101%20icons/icon-video-stroke-analysis.png" alt="">                                           <p class="plan-selected-label">Current Plan</p> -->
-                                                <p class="plan-price">$120</p>
-                                                <div class="plan-summary">
-                                                    <!-- <p>RTE text ...</p> -->
-                                                    <ul>
-                                                        <li>Single stroke analysis by certified coach</li>
-                                                        <li>~5 five-minute long analysis</li>
-                                                        <li>Two rounds of visual and verbal feedback</li>
-                                                        <li>Additional resources to help improve</li>
-                                                    </ul>
-                                                </div>
-                                                <!-- <button class="btn btn-md add-on">Add to Bag</button> -->
-                                                <div class="form-group">
-                                                    <!-- <div class="col-xs-4"> -->
-                                                    <div>
-                                                        <span class="help-block help-block--StrokeSelect has-error">Please select a stroke</span>
-                                                        <select name="StrokeSelect" id="strokeSelect" class="form-control">
-                                                            <option value="">Select a Stroke</option> 
-                                                            <option value="Freestyle">Freestyle</option>
-                                                            <option value="Breaststroke">Breaststroke</option>
-                                                            <option value="Backstroke">Backstroke</option>
-                                                            <option value="Butterfly">Butterfly</option>
-                                                            <option value="Starts/Turns">Starts/Turns</option>
-                                                        </select>
-                                                    </div>
-                                                    
-                                                    <!-- </div> -->
-                                                </div>
-                                                <button class="btn btn-blue btn-md add-on" id="addVideoStrokeAnalysis">Add to Bag</button>
-                                            </div>
-                                        </div>
-                                        <!-- <h4 class="card__total">
-                                            Product Total:
-                                            <span class="membership-length--total total-lanemate-blank card__total--amount">$__.__</span>
-                                        </h4> -->
-                                    </div>
-
-
-                            
-                                    <style>
-                                        .plan-option .plan-icon {
-                                            width: 150px;
-                                            margin: 5rem auto 2rem;
-                                        }
-                                        .cart-item .plan-icon {
-                                            width: auto;
-                                            height: 70px;
-                                            margin: 0rem 1rem 3rem 0;
-                                        }
-                                        .available-plans #strokeSelect {
-                                            width: 180px;
-                                        }
-                                        @media (min-width: 1200px) {
-                                            .available-plans {
-                                                justify-content: center;
-                                                align-items: baseline;
-                                                /* padding-top: 6rem; */
-                                            }
-                                            .plan-option .plan-icon {
-                                                width: 90px;
-                                                margin: 2rem auto;
-                                            }
-                                            .plan-option {
-                                                max-width: 260px;
-                                                /* height: 440px; */
-                                                height: auto;
-                                                padding-bottom: 4rem;
-                                            }
-                                            .plan-option ul {
-                                                /* height: 150px; */
-                                            }
-                                            .btn.add-on {
-                                                margin-top: 1.5rem;
-                                            }
-                                            #addVideoStrokeAnalysis {
-                                                margin-top: 0;
-                                            }
-                                        }                                        
-                                        .lanemate__cart-summary {
-                                            width: 100%;
-                                            margin: 2rem auto;
-                                        }
-                                        .lanemate__cart-summary .cart-item {
-                                            display: flex;
-                                            align-items: center;
-                                            flex-direction: column;
-                                            margin: 5rem 0 0;
-                                            padding: 4rem 0 1rem;
-                                            border-top: 1px solid #CCC;
-                                        }
-                                        .lanemate__cart-summary .cart-item-name {
-                                            text-align: center;
-                                            width: 100%;
-                                            line-height: 120%;
-                                            font-size: 3rem;
-                                        }
-                                        @media (min-width: 1200px) {
-                                            .lanemate__cart-summary .cart-item {
-                                                align-items: center;
-                                                flex-direction: row;
-                                                margin: 0 0 4rem;
-                                                padding: 0;
-                                                border: 0 none;
-                                            }
-                                            .lanemate__cart-summary .cart-item-name {
-                                                text-align: left;
-                                                width: 100%;
-                                                line-height: 120%;
-                                                font-size: 2rem;
-                                                margin-bottom: 5rem;
-                                            }
-                                        }
-                                        .lanemate__cart-summary .cart-item-quantity {
-                                            display: flex;
-                                            position: relative;
-                                            margin-bottom: 8rem;
-                                        }
-                                        .lanemate__cart-summary .cart-item-icon {
-                                            background: url(https://www.usms.org/-/media/usms/developers/images/myusms/icon-profile-login.svg);
-                                            /* height: 40px; */
-                                            /* width: 40px; */
-                                            height: 100px;
-                                            width: 140px;
-                                            margin: 0 15px 2rem 0;
-                                            padding: 0;
-                                            /* cursor: pointer; */
-                                            background-repeat: no-repeat;
-                                            background-position: center center;
-                                            align-self: center;
-                                        }
-                                        .lanemate__cart-summary .cart-item-quantity--increase,
-                                        .lanemate__cart-summary .cart-item-quantity--decrease {
-                                            font-size: 4rem;
-                                            /* font-weight: bold; */
-                                            width: 4rem;
-                                            height: 4rem;
-                                            line-height: 85%;
-                                            border-radius: 4rem;
-                                            background-color: gray;
-                                            border: 0 none;
-                                            color: #FFF;
-                                            text-align: center;
-                                            margin: 0.5rem 1rem;
-                                        }
-                                        .lanemate__cart-summary .cart-item-quantity-label {
-                                            font-size: 1.5rem;
-                                            text-align: center;
-                                            width: 13rem;
-                                            margin: 0 0 1rem;
-                                        }
-                                        .lanemate__cart-summary .cart-item-price-label {
-                                            font-size: 1.5rem;
-                                            text-align: center;
-                                            width: 200px;
-                                            margin: 0 0 1rem;
-                                        }
-                                        .lanemate__cart-summary .cart-item-price-total-label {
-                                            font-size: 1.5rem;
-                                            text-align: center;
-                                            width: 160px;
-                                            margin: 0 0 1rem;
-                                        }
-                                        @media (min-width: 1200px) {
-                                            .lanemate__cart-summary .cart-item-quantity {
-                                                margin-bottom: 5rem;
-                                            }
-                                            .lanemate__cart-summary .cart-item-quantity--increase,
-                                            .lanemate__cart-summary .cart-item-quantity--decrease {
-                                                font-size: 2rem;
-                                                /* font-weight: bold; */
-                                                width: 2rem;
-                                                height: 2rem;
-                                                margin: 0.5rem 0;
-                                            }
-                                            .lanemate__cart-summary .cart-item-quantity-label {
-                                                text-align: center;
-                                            }
-                                            .lanemate__cart-summary .cart-item-price-label {
-                                                text-align: right;
-                                            }
-                                            .lanemate__cart-summary .cart-item-price-total-label {
-                                                text-align: right;
-                                            }
-                                        }
-                                        .lanemate__cart-summary .cart-item-quantity--amount {
-                                            width: 8rem;
-                                            border: 1px solid #CCC;
-                                            font-size: 3rem;
-                                            text-align: center;
-                                            margin: 0 1rem;
-                                        }
-                                        .lanemate__cart-summary .cart-item-price {
-                                            margin: 0 auto;
-                                            width: 100%;
-                                            text-align: center;
-                                        }
-                                        .cart-item--remove {
-                                            font-size: 1.8rem;
-                                            text-decoration: underline;
-                                            position: absolute;
-                                            top: 65px;
-                                            /* left: -35px;
-                                            width: 200px;
-                                            text-align: center; */
-                                            left: -50%;
-                                            width: 100%;
-                                            text-align: center;
-                                            margin-left: 50%;
-                                        }
-                                        .lanemate__cart-summary .cart-summary__header {
-                                            display: none;
-                                        }
-                                        @media (min-width: 1200px) {
-                                            .lanemate__cart-summary .cart-summary__header {
-                                                display: flex;
-                                                justify-content: end;
-                                            }
-                                            .cart-item--remove {
-                                                font-size: 1.2rem;
-                                                top: 35px;
-                                                /* text-wrap: nowrap; */
-                                                /* left: -35px; */
-                                                /* width: 180px; */
-                                            }
-                                            .lanemate__cart-summary .cart-item-quantity--amount {
-                                                width: 5rem;
-                                                font-size: 2rem;
-                                                margin: 0 1rem;
-                                            }
-                                        }
-                                        .lanemate__cart-summary .cart-item-price-total {
-                                            margin: 0 auto;
-                                            width: 100%;
-                                            text-align: center;
-                                            font-size: 3rem;
-                                        }
-                                        .lanemate__cart-total {
-                                            display: flex;
-                                            justify-content: end;
-                                        }
-                                        .lanemate__cart-total .sub-total {
-                                            font-size: 2rem;
-                                            text-align: center;
-                                            border-top: 1px solid #000;
-                                            margin: 1rem auto 2rem;
-                                            padding-top: 2rem;
-                                            width: 100%;
-                                        }
-                                        .lanemate__cart-total label {
-                                            display: block;
-                                            padding: 0;
-                                            text-align: center;
-                                        }
-                                        @media (min-width: 1200px) {
-                                            .lanemate__cart-summary .cart-item-price-total {
-                                                margin: 0 0 5rem 2rem;
-                                                width: 20rem;
-                                                text-align: right;
-                                                font-size: 2rem;
-                                            }
-                                            .lanemate__cart-summary .cart-item-price {
-                                                margin: 0 2rem 1rem 0;
-                                                width: 200px;
-                                                text-align: center;
-                                            }
-                                            .lanemate__cart-total .sub-total {
-                                                width: 200px;
-                                                margin: 1rem 0 2rem;
-                                                text-align: right;
-                                            }
-                                            .lanemate__cart-total label {
-                                                padding-right: 3rem;
-                                            }
-                                        }
-                                    </style>
-
-
-
-                                    <div class="col-xs-12 card shopping-cart">
-                                        <h3>My Swim Bag</h3>
-                                        <div class="lanemate__cart-summary">
-                                            <div class="cart-summary__header">
-                                                <p class="cart-item-quantity-label">Qty</p>
-                                                <p class="cart-item-price-total-label">Total</p>
-                                            </div>
-                                            <div class="cart-item">
-                                                <!-- <img class="plan-icon" src="/img/USMSplus_Logo_final_V1_Color%20copy.png" alt=""> -->
-                                                <p class="cart-item-name">USMS+</p>
-                                                <div class="cart-item-quantity">
-                                                    <a href="#/" class="cart-item-quantity--decrease" style="opacity:0;cursor:default;">-</a>
-                                                    <div class="cart-item-quantity--amount">1</div>
-                                                    <!-- <input type="number" name="item-quantity" id="" class="cart-item-quantity--amount" value="1"> -->
-                                                    <a href="#/" class="cart-item-quantity--increase" style="opacity:0;cursor:default;">+</a>
-                                                    <a href="#/" class="cart-item--remove">Remove from My Swim Bag</a>
-                                                </div>
-                                                <p class="cart-item-price-total">$149.00</p>
-                                            </div>
-                                            <div class="cart-item">
-                                                <!-- <img class="plan-icon" src="https://www.usms.org/-/media/usms/developers/images/club%20detail/club-badge-coach.png" alt=""> -->
-                                                <p class="cart-item-name">Coach/ALTS Certification Designation</p>
-                                                <div class="cart-item-quantity">
-                                                    <a href="#/" class="cart-item-quantity--decrease" style="opacity:0;cursor:default;">-</a>
-                                                    <div class="cart-item-quantity--amount">1</div>
-                                                    <!-- <input type="number" name="item-quantity" id="" class="cart-item-quantity--amount" value="3"> -->
-                                                    <a href="#/" class="cart-item-quantity--increase" style="opacity:0;cursor:default;">+</a>
-                                                    <a href="#/" class="cart-item--remove">Remove from My Swim Bag</a>
-                                                </div>
-                                                <p class="cart-item-price-total">$30.00</p>
-                                            </div>
-
-                                        </div>
-
-                                        <h4 class="card__total">
-                                            <!-- react-text: 133 -->Product Total: <!-- /react-text --><span class="total-add-ons card__total--amount">$__.__</span>
-                                        </h4>
-
-                                        <!-- <div class="lanemate__cart-total">
-                                            <div class="sub-total">
-                                                <label for="">Subtotal</label>
-                                                $179.00
-                                            </div>
-                                        </div> -->
-
-                                    </div>
-
-                                    <sergey-import src="registration/donations" />
+                                    <sergey-import src="registration/product-options-add-on" />
+                                    <sergey-import src="registration/shopping-cart-add-on" />                                    
+                                    <sergey-import src="registration/donations-add-on" />
                                     <sergey-import src="registration/review-order-add-on" />
                                     <sergey-import src="registration/payment-info-add-on" />
-
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     <sergey-import src="registration/disclaimer-usa-swimming-donations" />
-
                 </div>
             </main>
             <sergey-import src="foundation/footer" />
         </div>
         <sergey-import src="site/footer_scripts" />
-        <!-- <script src="/lanemate/js/lanemate.js"></script>   -->
-        <script>
-            $(document).ready(function() {
-                // Find the tallest height
-                var tallestHeight = 0;
-                $('.plan-option').each(function() {
-                    var currentHeight = $(this).height();
-                    if (currentHeight > tallestHeight) {
-                    tallestHeight = currentHeight;
-                    }
-                });
-            // Set the height
-                $('.plan-option').height(tallestHeight);
-            });
-        </script>
     </body>
 </html>
