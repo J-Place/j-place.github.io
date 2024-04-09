@@ -74,15 +74,20 @@
 </div>
 <script>
     $(document).ready(function() {
-        // Find the tallest height
-        var tallestHeight = 0;
-        $('.product-option').each(function() {
-            var currentHeight = $(this).height();
-            if (currentHeight > tallestHeight) {
-            tallestHeight = currentHeight;
-            }
-        });
-    // Set the height
-        $('.product-option').height(tallestHeight);
+        const mobile = window.matchMedia("screen and (max-width:1199px)").matches;
+        if (mobile) {
+            return
+        } else {
+            // Find the tallest height
+            var tallestHeight = 0;
+            $('.product-option').each(function() {
+                var currentHeight = $(this).height();
+                if (currentHeight > tallestHeight) {
+                tallestHeight = currentHeight;
+                }
+            });
+            // Set the height
+            $('.product-option').height(tallestHeight);
+        }
     });
 </script>

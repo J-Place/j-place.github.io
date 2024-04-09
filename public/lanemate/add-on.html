@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <!--[if IE 9]>
 <html lang="en" class="ie9 no-js">
-   <![endif]-->
-   <!--[if !IE]><!-->
-   <html lang="en">
-      <!--<![endif]-->
-      <head>
-         <title>U.S. Masters Swimming</title>
-         <meta charset="utf-8" />
+<![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+    <!--<![endif]-->
+    <head>
+        <title>U.S. Masters Swimming</title>
+        <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
@@ -17,7 +17,7 @@
 <meta property="og:description" content="" />
 <meta property="og:url" content="" />
 <meta name="robots" content="noindex">
-         <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+        <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.12/jquery.mask.min.js"></script> -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -29,7 +29,7 @@
 <!-- <script src="/js/src/bootstrap.min.js"></script> -->
 <!-- <script src="/js/src/common.min.js"></script> -->
 <!-- <script src="/js/src/home.min.js"></script> -->
-         <!-- Bonfire Source Files -->
+        <!-- Bonfire Source Files -->
     <link rel="stylesheet" href="https://www.usms.org/styles/bootstrap.min.css">
     <link rel="stylesheet" href="https://www.usms.org/styles/font-awesome.min.css">
     <link rel="stylesheet" href="/assets/fontawesome-webfont.woff2">
@@ -42,13 +42,16 @@
 <!-- Local Dev Files -->
     <link rel="stylesheet" href="/css/rte-updates.css">
     <link rel="stylesheet" href="/css/common-updates.css">
-         <link rel="stylesheet" href="./css/club2.min.css">
-         <link rel="stylesheet" href="./css/club2_new.css">
-         <link rel="stylesheet" href="./css/clubDashboard.min.css">
-         <link rel="stylesheet" href="./css/clubDashboard_new.css">
-      </head>
-      <body class="">
-         <div id="main-container">
+        <link rel="stylesheet" href="/lanemate/css/lanemate.css">
+        <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
+        <link rel="stylesheet" href="/lanemate/css/registration-lanemate.css">
+        <link rel="stylesheet" href="/lanemate/css/product-options.css">
+    </head>
+    <body>
+        <div class="loading" style="display: none;">
+            <img src="../img/loader.gif" alt="loading">
+        </div>
+        <div id="main-container">
             <header class="header-static">
     <div id="">
        <nav class="mega-main-menu">
@@ -59,7 +62,8 @@
           </button>
           <div class="mega-main-menu__logo-container">
              <a class="mega-main-menu__logo" href="/public">
-               <img src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/logo/usms-logo-hrz.svg?rev=fb463362f2fb496d9eae400e3198386e" alt="U.S. Masters Swimming" width="264" height="50">
+               <!-- <img src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/logo/usms-logo-hrz.svg?rev=fb463362f2fb496d9eae400e3198386e" alt="U.S. Masters Swimming" width="264" height="50"> -->
+               <img src="/lanemate/img/lanemate-temp-logo.png" alt="U.S. Masters Swimming" style="width:auto; height: 70px; margin-top: -7px;">
              </a>
           </div>
           <div class="mega-main-menu__nav-search-container">
@@ -240,7 +244,7 @@
                                <a href="http://community.usms.org">USMS Community</a>
                             </li>
                             <li class="mobile-menu-overlay__submenu-items text-capitalize">
-                               <a href="https://www.swimoutlet.com/ProductBrand.asp?Brand=1766&amp;click=1668780">Logo Merchandise</a>
+                               <a href="/">Logo Merchandise</a>
                             </li>
                             <li class="mobile-menu-overlay__submenu-items text-capitalize">
                                <a href="/join-usms/membership-benefits">Membership Benefits</a>
@@ -280,76 +284,314 @@
     </div>
  </header>
             <main role="main">
-
                 <div class="breadcrumb-container" style="position: relative; padding-bottom: 50px;">
-                  <div class="breadcrumb">
-                     <div class="usms-container">
-                        <div class="row">
-                           <div class="col-xs-12">
-                              <div class="breadcrumb__container">
-                                 <ul class="breadcrumb__items list--nostyle">
-                                    <li class="text-capitalize breadcrumb__item ">
-                                       <a class="breadcrumb__link" href="/public">Home<i class="fa fa-chevron-right"></i></a>
-                                    </li>
-                                  </ul>
-                                 <span class="breadcrumb__title text-capitalize">Club Dashboard</span>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-
-               <div class="section section-full bg-gray p-tb-10 p-mh-500 ">
-
-                  <div class="usms-container p-tb-10">
-                        <div class="row">
-                           <div class="col-xs-12">
-                              <header>
-                                 <h1>Manage Members</h1>
-                              </header>
-                           </div>
-                        </div>
-                   </div>
-
-                   <div class="usms-container form__container  p-tb-10">
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <div class="modal fade in" id="modalMessage" tabindex="-1" role="dialog" style="display: block;">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content" style="margin: 0 auto;">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                                            </div>
-                                            <div class="modal-body">
-                                            <p><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliquam</p></p>
-
-                                            <div class="modal-footer">
-                                            <a class="btn btn-outlineXXX club-link-button">Manage Your Club</a>
-                                                <a href="club-dashboard-02.html" class="btn btn-outlineXXX club-link-button">Manage Your Members</a>
-                                            </div>
-                                            </div>
-                                        </div>
+                    <div class="breadcrumb">
+                        <div class="usms-container">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="breadcrumb__container">
+                                        <ul class="breadcrumb__items list--nostyle">
+                                            <li class="text-capitalize breadcrumb__item ">
+                                                <a class="breadcrumb__link" href="/public">Home<i class="fa fa-chevron-right"></i></a>
+                                            </li>
+                                            <li class="text-capitalize breadcrumb__item ">
+                                                <a class="breadcrumb__link" href="/public">My Account<i class="fa fa-chevron-right"></i></a>
+                                            </li>
+                                        </ul>
+                                        <span class="breadcrumb__title text-capitalize">Add-On</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row ">
-                            <div class="col-xs-12 ">                   
-                                <div>
-                                    Here are some helpful pages to get you ready for the 2023 club registration
-                                    <ul>
-                                        <li style="text-align: left; text-decoration:underline;"><a href="/club-central/club-and-workout-group-registration-information">Information to have ready for the registration process</a></li>
-                                        <li style="text-align: left; text-decoration:underline;"><a href="/club-central/club-registration-updates">2023 club registration updates</a></li>
-                                        <li style="text-align: left; text-decoration:underline;"><a href="/club-central/club-contact-information">Club contact information</a></li>
-                                    </ul>
-                                    <strong>If you do not see your club or workout group abbreviation on your dashboard, please reach out to&nbsp;<a href="mailto:clubandcoach@usmastersswimming.org" style="background-color: transparent;">clubandcoach@usmastersswimming.org</a>&nbsp;to gain access to the club or workout group renewal.</strong>
-                                    <br>
+                    </div>
+                </div>
+                <div class="section section-full bg-gray p-tb-10 p-mh-500 ">
+                    <div class="usms-container p-tb-10">                        
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <header>
+                                    <h1>Add-On</h1>
+                                    <div class="lead">
+                                        <p style="font-size: 15px; line-height: 25px;font-weight: normal;">RTE text ...</p>
+                                    </div>
+                                </header>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="usms-container renew__form-container">
+                        <div class="row is-flex">
+                            <div class="col-xs-12">
+                                <div class="renew__form-body">
+                                    <link rel="stylesheet" href="/lanemate/css/product-options.css">
+<div class="card add-on-products">
+    <h3>Products</h3>
+    <div class="available-products">
+        <div class="product-option product-option_usms-plus">
+            <p class="product-name">USMS+</p>
+            <p class="product-price">$149</p>
+            <div class="product-summary">
+                <ul>
+                    <li>Standard membership</li>
+                    <li>Premium welcome box</li>
+                    <li>Free virtual event entry</li>
+                    <li>Entry to USA Swimming Supporters Club</li>
+                    <li>Olympian webinars</li>
+                    <li>Optional Video Stroke Analysis (1 free analysis per year)</li>
+                </ul>
+            </div>
+            <button class="btn btn-blue btn-md add-on">Add to Bag</button>
+        </div>
+        <div class="product-option product-option_coach-alts product-option-selectedXXX">
+            <p class="product-name">Coach/ALTS Designation</p>
+            <p class="product-price">$30</p>
+            <div class="product-summary">
+                <ul>
+                    <li>Discounts on USMS education courses</li>
+                    <li>Pool nationals hospitality passes</li>
+                    <li>Access to exclusive content</li>
+                    <li>Opportunity for special coaching assignments</li>
+                </ul>
+            </div>
+            <button class="btn btn-blue btn-md add-on">Add to Bag</button>
+        </div>
+        <div class="product-option product-option_video-stroke-analysis">
+            <p class="product-name">Video Stroke Analysis</p>
+            <p class="product-price">$120</p>
+            <div class="product-summary">
+                <ul>
+                    <li>Single stroke analysis by certified coach</li>
+                    <li>~5 five-minute long analysis</li>
+                    <li>Two rounds of visual and verbal feedback</li>
+                    <li>Additional resources to help improve</li>
+                </ul>
+            </div>
+            <div class="form-group">
+                <!-- <div class="col-xs-4"> -->
+                <!-- <div> -->
+                    <span class="help-block help-block--StrokeSelect has-error">Please select a stroke</span>
+                    <select name="StrokeSelect" id="strokeSelect" class="form-control">
+                        <option value="">Select a Stroke</option> 
+                        <option value="Freestyle">Freestyle</option>
+                        <option value="Breaststroke">Breaststroke</option>
+                        <option value="Backstroke">Backstroke</option>
+                        <option value="Butterfly">Butterfly</option>
+                        <option value="Starts/Turns">Starts/Turns</option>
+                    </select>
+                <!-- </div>                                                     -->
+                <!-- </div> -->
+            </div>
+            <button class="btn btn-blue btn-md add-on" id="addVideoStrokeAnalysis">Add to Bag</button>
+        </div>
+        <div class="product-option product-option_usms-plus">
+            <p class="product-name">USMS Rule Book</p>
+            <p class="product-price">$12</p>
+            <div class="product-summary">
+                <p>Order a printed full version of the official USMS code of regulations and rules of competition.</p>
+            </div>
+            <button class="btn btn-blue btn-md add-on">Add to Bag</button>
+        </div>
+    </div>
+    <!-- <h4 class="card__total">
+        Product Total:
+        <span class="membership-length--total total-lanemate-blank card__total--amount">$__.__</span>
+    </h4> -->
+</div>
+<script>
+    $(document).ready(function() {
+        const mobile = window.matchMedia("screen and (max-width:1199px)").matches;
+        if (mobile) {
+            return
+        } else {
+            // Find the tallest height
+            var tallestHeight = 0;
+            $('.product-option').each(function() {
+                var currentHeight = $(this).height();
+                if (currentHeight > tallestHeight) {
+                tallestHeight = currentHeight;
+                }
+            });
+            // Set the height
+            $('.product-option').height(tallestHeight);
+        }
+    });
+</script>
+                                    <link rel="stylesheet" href="/lanemate/css/shopping-cart.css">
+<div class="card shopping-cart">
+    <h3>My Swim Bag</h3>
+    <div class="lanemate__cart-summary">
+        <div class="cart-summary__header">
+            <p class="cart-item-quantity-label">Qty</p>
+            <p class="cart-item-price-total-label">Total</p>
+        </div>
+        <div class="cart-item">
+            <p class="cart-item-name">USMS+</p>
+            <div class="cart-item-quantity">
+                <a href="#a" class="cart-item-quantity--decrease" style="opacity:0;cursor:default;">-</a>
+                <div class="cart-item-quantity--amount">1</div>
+                <a href="#a" class="cart-item-quantity--increase" style="opacity:0;cursor:default;">+</a>
+                <a href="#a" class="cart-item--remove">Remove from My Swim Bag</a>
+            </div>
+            <p class="cart-item-price-total">$149.00</p>
+        </div>
+        <div class="cart-item">
+            <p class="cart-item-name">Coach/ALTS Certification Designation</p>
+            <div class="cart-item-quantity">
+                <a href="#a" class="cart-item-quantity--decrease" style="opacity:0;cursor:default;">-</a>
+                <div class="cart-item-quantity--amount">1</div>
+                <a href="#a" class="cart-item-quantity--increase" style="opacity:0;cursor:default;">+</a>
+                <a href="#a" class="cart-item--remove">Remove from My Swim Bag</a>
+            </div>
+            <p class="cart-item-price-total">$30.00</p>
+        </div>
+        <div class="cart-item">
+            <p class="cart-item-name">Video Stroke Analysis - Freestyle</p>
+            <div class="cart-item-quantity">
+                <a href="#a" class="cart-item-quantity--decrease" style="opacity:0;cursor:default;">-</a>
+                <div class="cart-item-quantity--amount">1</div>
+                <a href="#a" class="cart-item-quantity--increase" style="opacity:0;cursor:default;">+</a>
+                <a href="#a" class="cart-item--remove">Remove from My Swim Bag</a>
+            </div>
+            <p class="cart-item-price-total">$120.00</p>
+        </div>
+        <div class="cart-item">
+            <p class="cart-item-name">USMS 2024 Rule Book</p>
+            <div class="cart-item-quantity">
+                <a href="#a" class="cart-item-quantity--decrease" style="">-</a>
+                <div class="cart-item-quantity--amount">10</div>
+                <a href="#a" class="cart-item-quantity--increase" style="">+</a>
+                <a href="#a" class="cart-item--remove">Remove from My Swim Bag</a>
+            </div>
+            <p class="cart-item-price-total">$120.00</p>
+        </div>
+    </div>
+    <h4 class="card__total">
+        <!-- react-text: 133 -->Product Total: <!-- /react-text --><span class="total-add-ons card__total--amount">$__.__</span>
+    </h4>
+</div>
+                                    
+                                    <div class="form-membership-length"><!-- Mock wrapper. Do not include in component -->
+<div class="card donations">
+    <h3 class="donation__form-header">Make a Donation</h3>
+    <!-- react-text: 94 --><!-- /react-text -->
+    <div class="form-group donation donation--sslf">
+        <span class="help-block help-block--swimming-saves-lives">The minimum donation to the USA Swimming Foundation is $5. Please correct this value and try again</span>
+        <div class="donate__text"><label for="swimming-saves-lives" class="control-label"><strong>Adult Learn-to-Swim Grant Donation</strong></label></div>
+        <div class="donate__buttons">
+            <button class="btn btn-donate btn-donate--1" value="30">
+                <span class="btn-donate-symbol">$</span><!-- react-text: 103 -->30<!-- /react-text -->
+            </button>
+            <button class="btn btn-donate btn-donate--2" value="60">
+                <span class="btn-donate-symbol">$</span><!-- react-text: 106 -->60<!-- /react-text -->
+            </button>
+            <button class="btn btn-donate btn-donate--3" value="120">
+                <span class="btn-donate-symbol">$</span><!-- react-text: 109 -->120<!-- /react-text -->
+            </button>
+            <button class="btn btn-donate btn-donate--4" value="240">
+                <span class="btn-donate-symbol">$</span><!-- react-text: 112 -->240<!-- /react-text -->
+            </button>
+            <div class="donate__buttons--footnote">Supported by the USA Swimming Foundation. Funds will benefit adult learn-to-swim programs</div>
+        </div>
+        <div class="donate__input"><span class="currency-symbol">$</span><input type="text" name="swimming-saves-lives" class="form-control currency" value="0.00"></div>
+    </div>
+    <div class="form-group donation donation--shff">
+        <span class="help-block help-block--swimming-hall-of-fame">The minimum donation to the International Swimming Hall of Fame is $5. Please correct this value and try again</span>
+        <div class="donate__text"><label for="swimming-hall-of-fame" class="control-label col-xs-12">International Swimming Hall of Fame Donation:</label></div>
+        <div class="donate__input"><span class="currency-symbol">$</span><input type="text" name="swimming-hall-of-fame" class="form-control currency" value="0.00"></div>
+    </div>
+    <div class="form-group donation donation--lmsc" style="display: flex;">
+        <span class="help-block help-block--lmsc">The minimum donation to the LMSC is $5. Please correct this value and try again</span>
+        <div class="donate__text"><label for="lmsc" class="label-lmsc-donation control-label col-xs-12">LMSC Donation:</label><span class="hidden-lmsc-text">LMSC Donation:</span></div>
+        <div class="donate__input"><span class="currency-symbol">$</span><input type="text" name="lmsc" class="form-control currency" value="0.00"></div>
+    </div>
+    <h4 class="card__total">
+        <!-- react-text: 133 -->Donation Total: <!-- /react-text --><span class="total-donations card__total--amount">$__.__</span>
+    </h4>
+</div>
+</div>
+                                    <link rel="stylesheet" href="/lanemate/css/review-order.css">
+<div class="card review-order clearfix">
+	<h3 class="payment-info___form-header m-b-30">Review Your Order</h3>
+	<div class="payment-info__form-summary subscription-info__form-summary">
+		<p class="payment-info__line-item payment-info__line-item--subscription">
+			Product Total: <span class="payment-info__line-item--price"></span>
+		</p>
+		<!-- <p class="payment-info__line-item payment-info__line-item--plan-rate" style="font-weight: normal !important;">
+			Donation Total: <span class="payment-info__line-item--price"></span>
+		</p> -->
+	</div>
+	<div class="payment-info__form-summary">
+		<h4>Total Due Today</h4>
+	   <p class="payment-info__line-item payment-info__line-item--total">
+		  Total Charge: <span class="payment-info__line-item--price">$__.__</span>
+	   </p>
+	</div>
+</div>
+                                    <div class="card payment-info">
+	<h3 class="payment-info___form-header">Enter Your Payment Details</h3>
+    <div class="form-group card-name">
+	   <div class="col-xs-12">
+		  <label class="font-weight-bold">Name on Card</label>
+		  <div><span class="help-block help-block--cardName">Please enter a value for cardName</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardName" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardName" aria-hidden="true"></span></div>
+	   </div>
+	</div>
+	<div class="form-group card-number">
+	   <div class="col-xs-12 col-sm-7">
+		  <label class="font-weight-bold">Card Number</label>
+		  <div><span class="help-block help-block--cardNumberID">Please enter a valid credit card number</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardNumberID" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardNumberID" aria-hidden="true"></span></div>
+	   </div>
+	   <div class="col-xs-5 col-sm-2 form-membership-length__security-code">
+		  <label class="font-weight-bold">Security Code</label>
+		  <div><span class="help-block help-block--cardCodeID">Please enter a value for Security Code</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardCodeID" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardCodeID" aria-hidden="true"></span></div>
+	   </div>
+	   <div class="col-xs-7 col-sm-3">
+		  <label class="font-weight-bold">Expiration (mm/yy)</label>
+		  <div><span class="help-block help-block--expiration">Please enter a valid expiration date</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="expiration" autocomplete="true" maxlength="5" value=""><span class="glyphicon form-control-feedback glyphicon--expiration" aria-hidden="true"></span></div>
+	   </div>
+	</div>
+	<div class="form-group card-zip">
+	   <div class="col-xs-8 col-sm-4">
+		  <label class="font-weight-bold">Billing Zip</label>
+		  <div><span class="help-block help-block--cardZipID">Please enter a valid billing zip</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardZipID" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardZipID" aria-hidden="true"></span></div>
+	   </div>
+	</div>
+	<div class="form-group agree-terms">
+   <div class="col-xs-12">
+      <span class="help-block help-block--agree-terms">You need to agree to the terms to complete your registration.</span>
+      <label id="agreeTerms__label" class="checkbox-label " for="agreeTerms">
+         <div class="checkbox-container"><input type="checkbox" name="agree-terms" id="agreeTerms" value="" class="has-success" data-gtm-form-interact-field-id="7"><span class="checkbox__placeholder"></span></div>
+      </label>
+      <span class="font-weight-bold">I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming <a href="/#">Privacy Policy</a>. I understand that this transaction will take effect immediately and is non-refundable and non-transferable.</span>
+   </div>
+</div>
+	
+<div class="form-group agree-usmsplus-terms" style="display: block;">
+	<div class="col-xs-12">
+		<span class="help-block help-block--agree-usmsplus-terms">You need to agree to the USMS+ terms and  conditions to complete your registration.</span>
+		<label id="agreeUsmsPlusTerms__label" class="checkbox-label " for="agreeUsmsPlusTerms">
+			<div class="checkbox-container">
+				<input type="checkbox" name="agree-usmsplus-terms" id="agreeUsmsPlusTerms" value="">
+				<span class="checkbox__placeholder"></span>
+			</div>
+		</label>
+		<span class="font-weight-bold">By selecting the USMS+ membership, I agree that USMS may share my information with the USA Swimming Foundation and USA Swimming in accordance with the USMS <a href="/#">Privacy Policy</a> (you may still opt out at any time).</span>
+	</div>
+</div>
+	<button id="btnSubmitOrder" style="width: 175px;margin-top: 4rem; margin-bottom: 6rem;" class="btn btn-primary btn-large text-uppercase pull-left membership-length__submit--lanemate">Submit Order</button>
+ </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
+                    <div class="usms-container  p-b-10">
+    <div class="row  ">
+       <div class="col-xs-12  ">
+          <div class="html-container  ">
+             The USA Swimming Foundation is registered as a 501(c)(3) nonprofit organization. Contributions to the USA Swimming Foundation are tax deductible to the fullest extent of the law. USA Swimming Foundation’s tax identification number is 72-1581977. You can find out more about us on guidestar.org under USA Swimming Foundation. A COPY OF THE OFFICIAL REGISTRATION AND FINANCIAL INFORMATION MAY BE OBTAINED FROM THE DIVISION OF CONSUMER SERVICES BY CALLING TOLL-FREE WITHIN THE STATE. 1- 800-HELP-FLA (435-7352) OR www.FloridaConsumerHelp.com. REGISTRATION DOES NOT IMPLY ENDORSEMENT, APPROVAL, OR RECOMMENDATION BY THE STATE." FLORIDA REGISTRATION CH22685
+             <div style="display: none;">&nbsp;</div>
+          </div>
+       </div>
+    </div>
+ </div>
                 </div>
             </main>
             <footer>
@@ -826,12 +1068,12 @@
    </div>
 </footer>
 
-         </div>
-         <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+        </div>
+        <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- Local Fallbacks -->
 <!-- <script src="/js/src/jquery-3.6.0.min.js"></script> -->
 <!-- <script src="/js/src/bootstrap.bundle.min.js"></script> -->
-      </body>
-   </html>
+    </body>
+</html>
