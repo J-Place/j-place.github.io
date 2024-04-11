@@ -5,6 +5,9 @@ $(document).ready(function() {
 
 $("#confirmPaymentFailedModal").on( "click", function() {
     $(".payment-information--form").show();
+    $([document.documentElement, document.body]).animate({
+        scrollTop: $("#paymentInformationForm").offset().top
+    }, 0);
 });
 
 $("#usmsModalPaymentFailed").on( "click", function() {
