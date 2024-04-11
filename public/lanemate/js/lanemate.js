@@ -19,9 +19,9 @@ $("#confirmLaneMateMonthlyPlan").on( "click", function() {
     $(".current-plan__renewal-date__lanemate-monthly").addClass("current-plan--selected");
     $(".current-plan__summary").removeClass("current-plan--selected");
     $(".current-plan_lanemate-monthly").addClass("current-plan--selected");
-    $(".plan-option").removeClass("plan-option-selected");
-    $(".plan-option_lanemate-monthly").addClass("plan-option-selected");
-    // $(".plan-option_usms-yearly .switch-plan-label a").text("Switch to this plan");
+    $(".product-option").removeClass("product-option-selected");
+    $(".product-option_lanemate-monthly").addClass("product-option-selected");
+    // $(".product-option_usms-yearly .switch-plan-label a").text("Switch to this plan");
 });
 
 $("#confirmLaneMateYearlyPlan").on( "click", function() {
@@ -29,9 +29,9 @@ $("#confirmLaneMateYearlyPlan").on( "click", function() {
     $(".current-plan__renewal-date__lanemate-yearly").addClass("current-plan--selected");
     $(".current-plan__summary").removeClass("current-plan--selected");
     $(".current-plan_lanemate-yearly").addClass("current-plan--selected");
-    $(".plan-option").removeClass("plan-option-selected");
-    $(".plan-option_lanemate-yearly").addClass("plan-option-selected");
-    // $(".plan-option_usms-yearly .switch-plan-label a").text("Contact Membership Services");
+    $(".product-option").removeClass("product-option-selected");
+    $(".product-option_lanemate-yearly").addClass("product-option-selected");
+    // $(".product-option_usms-yearly .switch-plan-label a").text("Contact Membership Services");
 });
 
 $("#confirmUsmsYearlyPlan").on( "click", function() {
@@ -39,8 +39,8 @@ $("#confirmUsmsYearlyPlan").on( "click", function() {
     $(".current-plan__renewal-date__usms-yearly").addClass("current-plan--selected");
     $(".current-plan__summary").removeClass("current-plan--selected");
     $(".current-plan_usms-yearly").addClass("current-plan--selected");
-    $(".plan-option").removeClass("plan-option-selected");
-    $(".plan-option_usms-yearly").addClass("plan-option-selected");
+    $(".product-option").removeClass("product-option-selected");
+    $(".product-option_usms-yearly").addClass("product-option-selected");
 });
 
 $("#btnEditCreditCard").on("click", function() {
@@ -83,12 +83,13 @@ $("#btnNoKeepAutoRenew").on("click", function() {
     $(".cancel-auto-renew--form").hide();
 });
 
+
 $(".usms-modal-link").on("click", function() { 
-    if ($(".plan-option_lanemate-monthly.plan-option-selected").length) {
+    if ($(".product-option_lanemate-monthly.product-option-selected").length) {
         $("#usmsModalMonthly").modal('show');
         $("body").addClass("modal-open");
     }
-    if ($(".plan-option_lanemate-yearly.plan-option-selected").length) {
+    if ($(".product-option_lanemate-yearly.product-option-selected").length) {
         $("#usmsModalYearly").modal('show');
         $("body").addClass("modal-open");
     }
@@ -96,15 +97,15 @@ $(".usms-modal-link").on("click", function() {
 
 $("#confirmMonthlyUpgrade").on("click", function () {
     $("#usmsModalMonthly").hide();
-    $(".plan-option").removeClass("plan-option-selected");
-    // $(".plan-option_usms-yearly").addClass("plan-option-selected");
+    $(".product-option").removeClass("product-option-selected");
+    // $(".product-option_usms-yearly").addClass("product-option-selected");
     $("body").removeClass("modal-open");
 });
 
 $("#confirmYearlyUpgrade").on("click", function () {
     $("#usmsModalYearly").hide();
-    // $(".plan-option").removeClass("plan-option-selected");
-    // $(".plan-option_usms-yearly").addClass("plan-option-selected");
+    // $(".product-option").removeClass("product-option-selected");
+    // $(".product-option_usms-yearly").addClass("product-option-selected");
     $("body").removeClass("modal-open");
 });
 
