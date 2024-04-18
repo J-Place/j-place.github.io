@@ -1,6 +1,6 @@
 .usms-container.form__container h3,
 .usms-container .current-product h3,
-.usms-container .available-products h3,
+.usms-container .product-group h3,
 .usms-container .billing-information h3,
 .usms-container .payment-information h3 {
     margin: 0 0 1rem;
@@ -10,6 +10,20 @@ button:disabled,
 button[disabled]{
     background-color: #CCC !important;
     color: #FFF !important;
+}
+
+.product-group {
+    display: flex;
+    flex-direction: column;
+    /* align-items: flex-start; */
+    margin: 2rem auto 0;
+}
+
+@media (min-width: 1200px) {
+    .product-group {
+        flex-direction: row;
+        margin-bottom: 8rem;
+    }
 }
 
 .product-option {
@@ -31,7 +45,7 @@ button[disabled]{
     position: relative;
 }
 
-.available-products #strokeSelect {
+.product-group #strokeSelect {
     width: 180px;
     margin: 0 auto 1rem;
 }
@@ -52,7 +66,7 @@ button[disabled]{
         height: auto;
         padding-bottom: 6rem;
     }
-    /* .available-products {
+    /* .product-group {
         justify-content: center;
         align-items: baseline;
     } */
@@ -215,14 +229,14 @@ p.product-selected-label {
     flex: auto;
 }
 
-.available-products .product-option .product-summary li {
+.product-group .product-option .product-summary li {
     margin: 0 0 0.5rem;
     font-size: 1.4rem;
     line-height: 130%;
 }
 
-.available-products .product-option.product-option_lanemate-monthly,
-.available-products .product-option.product-option_lanemate-yearly,
-.available-products .product-option.product-option_usms-yearly {
+.product-group .product-option.product-option_lanemate-monthly,
+.product-group .product-option.product-option_lanemate-yearly,
+.product-group .product-option.product-option_usms-yearly {
     padding-bottom: 2rem;
 }
