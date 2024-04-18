@@ -1,13 +1,18 @@
-<div class="card payment-info">
-	<h3 class="payment-info___form-header">Enter Your Payment Details</h3>
-	<!-- <p class="footnote" style="font-size: 1.6rem; text-align: center; margin-bottom: 4rem;">RTE text ...</p> -->
-    <div class="form-group card-name">
+<div class="card payment-info un-selectedXXX">
+	<h3 class="payment-info___form-header m-b-30">Payment Information</h3>
+	<div class="payment-info__form-summary">
+	   <p class="payment-info__line-item payment-info__line-item--total">
+		  Total Charge: <span class="payment-info__line-item--price">$__.__</span>
+	   </p>
+	</div>
+
+    <div class="form-group card-name un-selected">
 	   <div class="col-xs-12">
 		  <label class="font-weight-bold">Name on Card</label>
 		  <div><span class="help-block help-block--cardName">Please enter a value for cardName</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardName" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardName" aria-hidden="true"></span></div>
 	   </div>
 	</div>
-	<div class="form-group card-number">
+	<div class="form-group card-number un-selected">
 	   <div class="col-xs-12 col-sm-7">
 		  <label class="font-weight-bold">Card Number</label>
 		  <div><span class="help-block help-block--cardNumberID">Please enter a valid credit card number</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardNumberID" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardNumberID" aria-hidden="true"></span></div>
@@ -21,13 +26,19 @@
 		  <div><span class="help-block help-block--expiration">Please enter a valid expiration date</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="expiration" autocomplete="true" maxlength="5" value=""><span class="glyphicon form-control-feedback glyphicon--expiration" aria-hidden="true"></span></div>
 	   </div>
 	</div>
-	<div class="form-group card-zip">
+	<div class="form-group card-zip un-selected">
 	   <div class="col-xs-8 col-sm-4">
 		  <label class="font-weight-bold">Billing Zip</label>
 		  <div><span class="help-block help-block--cardZipID">Please enter a valid billing zip</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardZipID" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardZipID" aria-hidden="true"></span></div>
 	   </div>
 	</div>
-	<sergey-import src="registration/disclaimer-add-on" />
-	<sergey-import src="registration/disclaimer-add-on-usms-plus" />
-	<button id="btnSubmitOrder" style="width: 175px;margin-top: 4rem; margin-bottom: 6rem;" class="btn btn-primary btn-large text-uppercase pull-left membership-length__submit--lanemate">Submit Order</button>
+
+	<sergey-import src="lanemate/registration/disclaimer-usms" />
+
+	<sergey-import src="lanemate/registration/disclaimer-usms-plus" />
+
+
+
+
+	<button id="subscribe-button" class="btn btn-primary btn-large text-uppercase pull-left membership-length__submit--lanemate">Register</button>
  </div>
