@@ -1,0 +1,269 @@
+/* Update all input labels sitewode, check for scoped classes */
+.input-group label,
+.form-group label {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 110%;
+}
+
+.form__container .help-block.has-error {
+    display: block;
+    margin: 5px 0;
+    height: 16px;
+    height: 1rem;
+    line-height: 1em;
+    position: relative;
+    top: 0;
+    background: transparent;
+}
+
+.required label:before {
+    content: "*";
+    font-size: 16px;
+    font-weight: normal;
+    position: absolute;
+    top: 5px;
+    left: 0;
+}
+
+.required label {
+    padding-left: 0.2rem;
+}
+
+/* Add contact info h3 to existing classes */
+.confirmation-membership h3, 
+.confirmation-contact-info h3,
+.confirmation-charges h3 {
+    margin: 1rem auto 2rem;
+}
+
+.un-selected {
+    height: 0;
+    opacity: 0;
+}
+
+.modal input[type=checkbox] + label {
+    padding: 0 0 0 2rem;
+    margin: -2.5rem 0 0;
+}
+
+@media (min-width: 1200px) {
+    .modal input[type=checkbox] + label {
+        padding: 0 0 0 0.5rem;
+        margin: -2.5rem 0 0;
+    }    
+}
+
+.form-notes {
+    font-size: 1.2rem;
+}
+
+.form__container .btn {
+    margin-bottom: 1rem;
+}
+
+.renew__form-body .card:first-of-type,
+.cart-item:last-of-type {
+    border-top: 0 none;
+}
+
+.payment-information--form,
+.payment-information--confirmation,
+.cancel-auto-renew--form,
+.cancel-auto-renew--confirmation {
+    display: none;
+}
+
+.usms-container.form__container h3,
+.usms-container .billing-information h3,
+.usms-container .payment-information h3 {
+    margin: 0 0 1rem;
+    display: inline-flex;
+}
+
+.payment-information--summary {
+    margin-top: 3rem;
+}
+
+@media (min-width: 1200px) {
+    .payment-information--summary {
+        margin-top: 0;
+    }
+}
+
+.payment-information--summary h3 {
+    margin: 3rem 0 2rem;
+}
+
+.payment-information--form .form-group {
+    margin: 0 0 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    align-items: end
+}
+
+.payment-information--form .form-group.agree-terms {
+    margin: 1rem 0 3rem;
+}
+.form-group.agree-terms .help-block {
+    margin-left: -2.6rem;
+}
+
+.payment-information--form input[type=email], 
+.payment-information--form input[type=number], 
+.payment-information--form input[type=password], 
+.payment-information--form input[type=tel], 
+.payment-information--form input[type=text], 
+.payment-information--form select {
+    box-sizing: content-box;
+    padding: 0.25rem 0 0.5rem;
+    font-size: 1.75rem;
+    text-indent: 15px;
+    height: 3.4rem;
+    margin: 0.5rem 0;
+    color: #656565;
+    box-shadow: none;
+}
+
+.payment-information--submit {
+    margin: 1rem 0 0;
+}
+
+.payment-information--submit .agree-terms {
+    padding-left: 2.5rem;
+}
+
+.payment-information--form .checkbox-label {
+    margin-left: 0;
+}
+
+@media (min-width: 1200px) {
+    .cancel-auto-renew-message {
+        margin: -1rem 0 2rem;
+    }
+}
+
+.current-product a,
+.product-option a,
+.payment-information a,
+.billing-information a {
+    text-decoration: underline;
+}
+
+.date,
+.product,
+.amount {
+    display: inline-flex;
+}
+
+.current-product__renewal-date {
+    display: none;
+}
+
+.current-product,
+.billing-information {
+    margin-bottom: 6rem;
+}
+
+@media (min-width: 1200px) {
+    .payment-information--form {
+        margin: 0 0 3rem;
+    }
+    .modal-dialog {
+        top: 30%;
+    }
+}
+
+.payment-information {
+    padding: 0 0 5rem;
+}
+
+.payment-information a,
+.billing-information a {
+    display: inline-flex;
+    text-align: center;
+}
+
+.billing-information {
+    width: 100%;
+}
+
+.billing-invoice {
+    display: flex;
+}
+
+.billing-invoice {
+    border-bottom: 1px solid #EEE;
+    margin: 0;
+    padding: 1.5rem 0;
+}
+.billing-invoice > p {
+    margin: 0;
+    line-height: 100%;
+}
+.billing-invoice .date {
+    flex: 0 0 20%;
+    font-size: 1.6rem;
+    padding-top: .2rem;
+}
+.billing-invoice .product {
+    flex: 0 0 50%;
+    margin: 0 2rem;
+}
+.billing-invoice .amount {
+    text-align: right;
+    flex: 0 0 30%;
+}
+
+.card-number,
+.card-expiration {
+    display: inline-flex;
+}
+
+.card-expiration {
+        padding-left: 2.5rem;
+}
+
+.card-expiration + a {
+    display: flex;
+    margin: 1rem 0;
+}
+
+.payment-information--form > div {
+    margin-bottom: 2rem;
+}
+
+/* Overrides source form container styling */
+@media (max-width: 991px) {
+    .payment-information--form,
+    .cancel-auto-renew--form,
+    .cancel-auto-renew--confirmation {
+        padding-top: 3rem;
+        border-top: 1px solid #CCC;
+        margin-top: 3rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .usms-container.form__container>.row>[class*=col-lg-]:nth-of-type(2), 
+    .usms-container.form__container>.row>[class*=col-md-]:nth-of-type(2), 
+    .usms-container.form__container>.row>[class*=col-sm-]:nth-of-type(2) {
+        border: 0 none;
+        margin-top: 6rem;
+    }
+    .usms-container.form__container>.row>[class*=col-lg-]:nth-of-type(4), 
+    .usms-container.form__container>.row>[class*=col-md-]:nth-of-type(4), 
+    .usms-container.form__container>.row>[class*=col-sm-]:nth-of-type(4) {
+        border-top: 0 none;
+        margin-top: 1rem;
+        padding-top: 0;
+        border-left: 1px solid #ccc;
+    }
+    .cancel-auto-renew--form, .cancel-auto-renew--confirmation {
+        padding-top: 2rem;
+    }
+}
