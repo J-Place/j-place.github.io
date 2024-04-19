@@ -1,18 +1,19 @@
 $(document).ready(function() {
-    $(".btn-donate--1").on('click', function() {
-        $("input[name='swimming-saves-lives']").val("30.00");
-    });
-    $(".btn-donate--2").on('click', function() {
-        $("input[name='swimming-saves-lives']").val("60.00");
-    });
-    $(".btn-donate--3").on('click', function() {
-        $("input[name='swimming-saves-lives']").val("120.00");
-    });
-    $(".btn-donate--4").on('click', function() {
-        $("input[name='swimming-saves-lives']").val("240.00");
-    });
+    // $(".btn-donate--1").on('click', function() {
+    //     $("input[name='swimming-saves-lives']").val("30.00");
+    // });
+    // $(".btn-donate--2").on('click', function() {
+    //     $("input[name='swimming-saves-lives']").val("60.00");
+    // });
+    // $(".btn-donate--3").on('click', function() {
+    //     $("input[name='swimming-saves-lives']").val("120.00");
+    // });
+    // $(".btn-donate--4").on('click', function() {
+    //     $("input[name='swimming-saves-lives']").val("240.00");
+    // });
 
     $(".btn-donate").on('click', function() {
+        setInputValue();
         removeLineItem();
         setCardValue();
         renderLineItem();
@@ -21,8 +22,9 @@ $(document).ready(function() {
 
 });
 
-var setInoputValue = function() {
-
+var setInputValue = function() {
+    var btnValue = $(this).val();
+    $("input[name='swimming-saves-lives']").val(btnValue);
 }
 
 var getDonationValue = function() {
