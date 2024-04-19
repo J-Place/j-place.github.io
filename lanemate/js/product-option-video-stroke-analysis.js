@@ -4,6 +4,7 @@ $(document).ready(function() {
         $("#addVideoStrokeAnalysis").hide();
         $("#removeVideoStrokeAnalysis").show();
         $(".payment-info__line-item--summary").prepend('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">Video Stroke Analysis: <span class="payment-info__line-item--price">$120.00</span></p>');
+        // console.log(videoVal);
     });
     $("#removeVideoStrokeAnalysis").on('click', function() {
         $("#strokeSelect").val('Select a stroke').change();
@@ -17,23 +18,21 @@ $(document).ready(function() {
 
 $(document.body).on('change','#strokeSelect',function(){
     var strokeSelectVal = $('#strokeSelect').val();
-    // console.log(strokeSelectVal);
     var strokeNotSelected = strokeSelectVal === 'Select a stroke';
     if (strokeNotSelected === false) {
-        // alert("One");
         $("#addVideoStrokeAnalysis").prop('disabled', false);
     } else {
         $("#addVideoStrokeAnalysis").prop('disabled', true);
-        // alert("Two");
     }
-    updateTotal();
 });
 
-var updateTotal = function(){  
+var videoVal = '120.00';
+
+var updateTotalVideo = function() {  
     var priceTextVideoStrokeAnalysis = $('payment-info__line-item--video-stroke-analysis');
     if (!priceTextVideoStrokeAnalysis) {
-        console.log("test 1");
+        console.log("test 1 zzz");
     } else {
-        console.log("test 2");
+        console.log("test 2 zzz");
     }
 };
