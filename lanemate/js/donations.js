@@ -14,12 +14,9 @@ $(document).ready(function() {
     });
 
     $(".btn-donate").on('click', function() {
-        // setInputValue();
         getDonationValue();
         setDonationCardValue();
-        // removeDonationLineItem();
         updateDonationLineItem();
-        // updateDonationPaymentTotal();
     });
 
 });
@@ -47,10 +44,6 @@ var updateDonationLineItem = function() {
     $('.payment-info__line-item--donation .payment-info__line-item--price').prepend('<span>$ </span>');
 }
 
-// var removeDonationLineItem = function () {
-//     $(".payment-info__line-item--summary").find('.payment-info__line-item--donation').remove();
-// }
-
 var formatCurrency = function(number) {
     if(number == "") return;
     number = parseFloat(number).toFixed(2);
@@ -68,7 +61,6 @@ var formatCurrency = function(number) {
 //     var n2 = n.replace(/\d\d\d(?!$)/g, "$&,");    
 //     return '$' + n2.split('').reverse().join('');
 // }
-
 
 $(document.body).on('change',function(){
     
