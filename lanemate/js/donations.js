@@ -20,11 +20,11 @@ $(document).ready(function() {
     // Handle Input Values //////////////////////////////////////////////////////////////
     $('#swimmingSavesLivesInput').on('blur', function() {
         let addOnVideo = $(".payment-info__line-item--video-stroke-analysis");
-        if ($(this).val() === "0" || $(this).val() === "0.00" && addOnVideo.length !== 1 ) {
+        if ($(this).val() === "0" && addOnVideo.length !== 1 ) {
             $('.total-donations.card__total--amount').text("$__.__");
             $(".payment-info__line-item--summary").find('.payment-info__line-item--donation').remove();
             $(".payment-info__line-item--total .payment-info__line-item--price").text("$__.__");
-        } else if ($(this).val() === "0" || $(this).val() === "0.00" && addOnVideo.length === 1 ) { 
+        } else if ($(this).val() === "0" && addOnVideo.length === 1 ) { 
             $('.total-donations.card__total--amount').text("$__.__");
             $(".payment-info__line-item--summary").find('.payment-info__line-item--donation').remove();
             updateTotalPayment(value);
@@ -40,7 +40,13 @@ $(document).ready(function() {
         if (e.which == 13) // Enter key
             $(this).blur();
     });
+    // function renderInputValue() {
+    //     updateCardValue();
+    //     updateLineItem();
+    //     updateTotalPayment();
+    // }
 });
+
 var updateCardValue = function() {
     $('.total-donations.card__total--amount').text($('[name=swimming-saves-lives]').val());
     $('.total-donations.card__total--amount').prepend('<span>$ </span>');
