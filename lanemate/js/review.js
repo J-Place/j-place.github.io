@@ -1,14 +1,3 @@
-// $(document).ready(function() {
-    // updateTotal();
-    // getDonationValue();
-    // console.log(videoVal);
-    // console.log(donationVal);
-// });
-
-// $(document.body).on('change',function(){
-    // updateTotal();
-// });
-
 var updateTotalPayment = function(){
     var inputDonation = $("input[name='swimming-saves-lives']");
     var donationVal = inputDonation.val();

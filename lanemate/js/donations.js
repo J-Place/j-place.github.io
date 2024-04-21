@@ -30,7 +30,6 @@ $(document).ready(function() {
             updateTotalPayment(value);
         } else {
             var value = $(this).val(parseFloat($(this).val()).toFixed(2));
-            // renderInputValue(value);
             updateCardValue(value);
             updateLineItem(value);
             updateTotalPayment(value);
@@ -40,11 +39,6 @@ $(document).ready(function() {
         if (e.which == 13) // Enter key
             $(this).blur();
     });
-    // function renderInputValue() {
-    //     updateCardValue();
-    //     updateLineItem();
-    //     updateTotalPayment();
-    // }
 });
 
 var updateCardValue = function() {
