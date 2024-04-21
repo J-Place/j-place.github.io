@@ -19,18 +19,27 @@ $(document).ready(function() {
     });
     // Handle Input Values //////////////////////////////////////////////////////////////
     $('#swimmingSavesLivesInput').on('blur', function() {
-        var value = $(this).val(parseFloat($(this).val()).toFixed(2));
-        renderInputValue(value);
+        let addOnVideo = $(".payment-info__line-item--video-stroke-analysis");
+        if ($(this).val() === "0" || $(this).val() === "0.00" && addOnVideo.length !== 1 ) {
+            $('.total-donations.card__total--amount').text("$__.__");
+            $(".payment-info__line-item--summary").find('.payment-info__line-item--donation').remove();
+            $(".payment-info__line-item--total .payment-info__line-item--price").text("$__.__");
+        } else if ($(this).val() === "0" || $(this).val() === "0.00" && addOnVideo.length === 1 ) { 
+            $('.total-donations.card__total--amount').text("$__.__");
+            $(".payment-info__line-item--summary").find('.payment-info__line-item--donation').remove();
+            updateTotalPayment(value);
+        } else {
+            var value = $(this).val(parseFloat($(this).val()).toFixed(2));
+            // renderInputValue(value);
+            updateCardValue(value);
+            updateLineItem(value);
+            updateTotalPayment(value);
+        }
     });
     $("#swimmingSavesLivesInput").keyup(function(e) {
         if (e.which == 13) // Enter key
             $(this).blur();
     });
-    function renderInputValue() {
-        updateCardValue();
-        updateLineItem();
-        updateTotalPayment();
-    }
 });
 var updateCardValue = function() {
     $('.total-donations.card__total--amount').text($('[name=swimming-saves-lives]').val());
