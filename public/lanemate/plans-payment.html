@@ -42,9 +42,11 @@
 <!-- Local Dev Files -->
     <link rel="stylesheet" href="/css/rte-updates.css">
     <link rel="stylesheet" href="/css/common-updates.css">
-        <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
+        <link rel="stylesheet" href="https://www.usms.org/styles/login.min.css">
         <link rel="stylesheet" href="/lanemate/css/lanemate.css">
-        <link rel="stylesheet" href="/lanemate/css/registration-lanemate.css">
+        <link rel="stylesheet" href="/lanemate/css/plans-payment.css">
+        <!-- Using product-group.css here in place of it being in the component. There is no component (yet) for the Plans and Payment product tiles -->
+        <link rel="stylesheet" href="/lanemate/css/product-group.css">
     </head>
     <body>
         <div class="loading" style="display: none;">
@@ -297,7 +299,7 @@
                                                 <a class="breadcrumb__link" href="/public">My Account<i class="fa fa-chevron-right"></i></a>
                                             </li>
                                         </ul>
-                                        <span class="breadcrumb__title text-capitalize">Add-On</span>
+                                        <span class="breadcrumb__title text-capitalize">Plans and Payment</span>
                                     </div>
                                 </div>
                             </div>
@@ -305,215 +307,293 @@
                     </div>
                 </div>
                 <div class="section section-full bg-gray p-tb-10 p-mh-500 ">
-                    <div class="usms-container p-tb-10">                        
+
+                    <div class="usms-container p-tb-10">
+                        <div class="modal" id="usmsModalPaymentFailed" tabindex="-1" role="dialog" style="display: none;">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" style="margin: 0 auto;">
+                                    <div class="modal-header">
+                                        <h4>Update Your Payment Method</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p><strong>We were unable to process your last payment for your LaneMate subscription.</strong> To keep your subscription active, update your payment method.</p>
+                                    </div>
+                                    <div class="modal-footer">                                     
+                                        <button class="btn btn-lg btn-primary" data-bs-dismiss="modal" id="confirmPaymentFailedModal">OK</butotn>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal" id="laneMateModalMonthly" tabindex="-1" role="dialog" style="display: none;">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" style="margin: 0 auto;">
+                                    <div class="modal-header">
+                                        <h4>LaneMate Monthly</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>You are chosing to switch to the LaneMate monthly subscription. Please accept the terms below and confirm. </p>
+                                        <span style="position: relative; top: 0;" class="help-block help-block--AcceptTerms has-error" data-reactid="54">You must agree to the terms and conditions</span>
+                                        <input type="checkbox" name="accept" id="accept">
+                                        <label for="accept">By selecting this box you accept the <a href="www.usms.org">terms and conditions</a>.</label>
+                                    </div>
+                                    <div class="modal-footer">                                     
+                                        <!-- <a class="btn btn-lg btn-primary" data-bs-dismiss="modal" id="confirmLaneMateMonthlyPlan">Confirm</a>
+                                        <a class="btn btn-lg btn-link" href="" data-bs-dismiss="modal">Cancel</a> -->
+                                        <button class="btn btn-lg btn-primary" data-bs-dismiss="modal" id="confirmLaneMateMonthlyPlan">Confirm</button>
+                                        <button class="btn btn-lg btn-link" data-bs-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal" id="laneMateModalYearly" tabindex="-1" role="dialog" style="display: none;">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" style="margin: 0 auto;">
+                                    <div class="modal-header">
+                                        <h4>LaneMate Yearly</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>You are chosing to switch to the LaneMate yearly subscription. Please accept the terms below and confirm. </p>
+                                        <span style="position: relative; top: 0;" class="help-block help-block--AcceptTermsLMY has-error" data-reactid="54">You must agree to the terms and conditions</span>
+                                        <input type="checkbox" name="acceptTermsLMY" id="acceptTermsLMY">
+                                        <label for="accept">By selecting this box you accept the <a href="www.usms.org">terms and conditions</a>.</label>
+                                    </div>
+                                    <div class="modal-footer">                                     
+                                        <button class="btn btn-lg btn-primary" data-bs-dismiss="modal" id="confirmLaneMateYearlyPlan">Confirm</button>
+                                        <button class="btn btn-lg btn-link" data-bs-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal" id="usmsModalMonthly" tabindex="-1" role="dialog" style="display: none;">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" style="margin: 0 auto;">
+                                    <div class="modal-header">
+                                        <h4>USMS Membership</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>I am choosing to switch to a USMS membership. I understand that effective immediately my LaneMate subscription will be canceled. I will now be redirected to the USMS website to complete member registration.</p>
+                                    </div>
+                                    <div class="modal-footer">                                     
+                                        <button class="btn btn-lg btn-primary" data-bs-dismiss="modal" id="confirmMonthlyUpgrade">Go!</butotn>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal" id="usmsModalYearly" tabindex="-1" role="dialog" style="display: none;">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" style="margin: 0 auto;">
+                                    <div class="modal-header">
+                                        <h4>USMS Membership</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Switching from a LaneMate yearly subscription to a USMS membership will be handled by Membership Services. You will now be redirected to a form to get the process started.</p>
+                                    </div>
+                                    <div class="modal-footer">                                     
+                                        <button class="btn btn-lg btn-primary" data-bs-dismiss="modal" id="confirmYearlyUpgrade">Go!</butotn>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <div class="row">
                             <div class="col-xs-12">
                                 <header>
-                                    <h1>Add-Ons and Upgrades</h1>
+                                    <h1>Plans and Payment</h1>
                                     <div class="lead">
-                                        <p style="font-size: 15px; line-height: 25px;font-weight: normal;">RTE text ...</p>
+                                        <!-- <p style="font-size: 15px; line-height: 25px;font-weight: normal;">Intro message ...</p> -->
                                     </div>
                                 </header>
                             </div>
                         </div>
+
                     </div>
-                    <div class="usms-container renew__form-container">
+                    <div class="usms-container form__container">
                         <div class="row is-flex">
                             <div class="col-xs-12">
-                                <div class="renew__form-body">
-                                    <link rel="stylesheet" href="/lanemate/css/product-group.css">
-<div class="card add-on-products">
-    <h3>Product Options</h3>
-    <div class="product-group">
-        <!-- <div class="product-option product-option_usms-plus">
-            <p class="product-name">USMS+</p>
-            <p class="product-price">$149</p>
-            <div class="product-summary">
-                <ul>
-                    <li>Standard membership</li>
-                    <li>Premium welcome box</li>
-                    <li>Free virtual event entry</li>
-                    <li>Entry to USA Swimming Supporters Club</li>
-                    <li>Olympian webinars</li>
-                    <li>Optional Video Stroke Analysis (1 free analysis per year)</li>
-                </ul>
+                                <div class="flex-row">
+                                    <h3>My Current Plan</h3>
+                                    <div class="current-product__renewal-date current-product__renewal-date__lanemate-monthly">Renews on 3/31/2024</div>
+                                    <div class="current-product__summary current-product_lanemate-monthly">
+                                        <p class="product-name">LaneMate<span class="product-type">Monthly</span></p>
+                                        <p class="product-price">$9.99/mo.</p>
+                                    </div>
+                                    <div class="current-product__renewal-date current-product__renewal-date__lanemate-yearly current-product--selected">Renews on 12/31/2024</div>
+                                    <div class="current-product__summary current-product_lanemate-yearly current-product--selected">
+                                        <p class="product-name">LaneMate<span class="product-type">Yearly</span></p>
+                                        <p class="product-price">$6.99/mo.</p>
+                                    </div>
+                                    <div class="current-product__renewal-date current-product__renewal-date__usms-yearly">Expires 12/31/2024</div>
+                                    <div class="current-product__summary current-product_usms-yearly">
+                                        <p class="product-name">USMS Membership</p>
+                                        <p class="product-price">$70.00</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <h3>Plan Options</h3>
+                                <p class="current-product__how-to-change">If you want to change your plan, select from one of the options below:</p>
+                                <div class="product-group">
+
+                                    <div class="product-option product-option_lanemate-monthly">
+                                        <p class="product-name">LaneMate<span class="product-type">Monthly</span></p>
+                                        <p class="switch-product-label">
+                                            <a class="" href="#/" data-bs-toggle="modal" data-bs-target="#laneMateModalMonthly">Switch to this plan</a>
+                                        </p>
+                                        <p class="product-selected-label">Current Plan</p>
+                                        <p class="product-price">$9.99/mo.</p>
+                                        <div class="product-summary">
+                                            <ul>
+                                                <li>Our flexible option that lets you pay monthly</li>
+                                                <li>Standard LaneMate benefits</li>
+                                                <li>Optional Video Stroke Analysis (Standard Price $120)</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-option product-option_lanemate-yearly product-option-selected">
+                                        <p class="product-name">LaneMate<span class="product-type">Yearly</span></p>
+                                        <p class="switch-product-label">
+                                            <a class="" href="#/" data-bs-toggle="modal" data-bs-target="#laneMateModalYearly">Switch to this plan</a>
+                                        </p>
+                                        <p class="product-selected-label">Current Plan</p>
+                                        <p class="product-price">$6.99/mo.</p>
+                                        <div class="product-summary">
+                                            <ul>
+                                                <li>Save $36 for the year. Pay $83.88 for the entire year at one time</li>
+                                                <li>All the LaneMate benefits</li>
+                                                <li>Optional Video Stroke Analysis (Discounted Price $99)</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="product-option product-option_usms-yearly">
+                                        <p class="product-name">USMS Membership</p>
+                                        <p class="switch-product-label">
+                                            <a class="usms-modal-link" href="#/" id="#usmsModal">Switch to this plan</a>
+                                        </p>
+                                        <p class="product-selected-label">Current Plan</p>
+                                        <p class="product-price">$70.00</p>
+                                        <div class="product-summary">
+                                            <ul>
+                                                <li>All the LaneMate benefits</li>
+                                                <li>Can swim in events</li>
+                                                <li>Can swim with a club</li>
+                                                <li>Expires Dec. 31, 2024</li>
+                                                <li>Optional Video Stroke Analysis (Discounted Price $70)</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-lg-5">
+                                <div class="payment-information--summary">
+                                    <h3>Manage Payment Method</h3>
+                                    <p class="card-number">************7744</p>
+                                    <p class="card-expiration">exp. 06/28</p>
+                                    <a href="#/" id="btnEditCreditCard">Update Debit or Credit Card</a>
+                                    <a href="#/" id="btnCancelAutoRenew">Cancel Auto Renew</a>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-lg-7">
+                                <div class="row payment-information--form" id="paymentInformationForm">
+                                    	<div class="form-notes">All fields required</div>
+    <div class="form-group">
+        <div class="col-xs-5">
+            <label class="font-weight-bold">First Name</label>
+           <div>
+                <span class="help-block help-block--FirstName">Please enter a value for First Name</span>
+                <input type="text" min="1" max="100" class="form-control" placeholder="First Name" name="FirstName" autocomplete="true" maxlength="100" value="">
+                <span class="glyphicon form-control-feedback glyphicon--FirstName" aria-hidden="true"></span>
             </div>
-            <button class="btn btn-blue btn-md add-on">Add to Bag</button>
         </div>
-        <div class="product-option product-option_coach-alts product-option-selectedXXX">
-            <p class="product-name">Coach/ALTS Designation</p>
-            <p class="product-price">$30</p>
-            <div class="product-summary">
-                <ul>
-                    <li>Discounts on USMS education courses</li>
-                    <li>Pool nationals hospitality passes</li>
-                    <li>Access to exclusive content</li>
-                    <li>Opportunity for special coaching assignments</li>
-                </ul>
+        <div class="col-xs-7">
+            <label class="font-weight-bold">Last Name</label>
+            <div>
+                <span class="help-block help-block--LastName">Please enter a value for Last Name</span>
+                <input type="text" min="1" max="100" class="form-control" placeholder="Last Name" name="LastName" autocomplete="true" maxlength="100" value="">
+                <span class="glyphicon form-control-feedback glyphicon--LastName" aria-hidden="true"></span>
             </div>
-            <button class="btn btn-blue btn-md add-on">Add to Bag</button>
-        </div> -->
-        <div class="product-option product-option_video-stroke-analysis">
-            <p class="product-name">Video Stroke Analysis</p>
-            <p class="product-price">$120</p>
-            <div class="product-summary">
-                <ul>
-                    <li>Single stroke analysis by certified coach</li>
-                    <li>~5 five-minute long analysis</li>
-                    <li>Two rounds of visual and verbal feedback</li>
-                    <li>Additional resources to help improve</li>
-                </ul>
-            </div>
-            <div class="form-group">
-                <!-- <div class="col-xs-4"> -->
-                <!-- <div> -->
-                    <!-- <span class="help-block help-block--StrokeSelect has-error">Please select a stroke</span> -->
-                    <select name="StrokeSelect" id="strokeSelect" class="form-control">
-                        <option value="Select a stroke" disabled selected>Select a stroke</option> 
-                        <option value="Freestyle">Freestyle</option>
-                        <option value="Breaststroke">Breaststroke</option>
-                        <option value="Backstroke">Backstroke</option>
-                        <option value="Butterfly">Butterfly</option>
-                        <option value="Starts/Turns">Starts/Turns</option>
-                    </select>
-                <!-- </div>                                                     -->
-                <!-- </div> -->
-            </div>
-            <button class="btn btn-blue btn-md add-on" id="addVideoStrokeAnalysis" disabled>Add</button>
-            <button class="btn btn-outline btn-md add-on" id="removeVideoStrokeAnalysis" style="display:none;">Remove</button>
-        </div>
-    </div>
-    <h4 class="card__total">
-        Product Total: <span class="total-product card__total--amount">$__.__</span>
-    </h4>
-</div>
-<script src="/lanemate/js/product-option-video-stroke-analysis.js"></script>
-<script>
-    $(document).ready(function() {
-        const mobile = window.matchMedia("screen and (max-width:1199px)").matches;
-        if (mobile) {
-            return;
-        } else {
-            // Find the tallest height
-            var tallestHeight = 0;
-            $('.product-option').each(function() {
-                var currentHeight = $(this).height();
-                if (currentHeight > tallestHeight) {
-                tallestHeight = currentHeight;
-                }
-            });
-            // Set the height
-            $('.product-option').height(tallestHeight);
-        }
-    });
-</script>
-                                    <link rel="stylesheet" href="/lanemate/css/donations.css">
-<div class="card donations">
-    <h3 class="donation__form-header">Make a Donation</h3>
-    <div class="form-group donation donation--sslf">
-        <span class="help-block help-block--swimming-saves-lives">The minimum donation to the USA Swimming Foundation is $5. Please correct this value and try again</span>
-        <div class="donate__text"><label for="swimming-saves-lives" class="control-label"><strong>Adult Learn-to-Swim Grant Donation</strong></label></div>
-        <div class="donate__buttons">
-            <button class="btn btn-donate btn-donate--1" value="30.00">
-                <span class="btn-donate-symbol">$</span>30
-            </button>
-            <button class="btn btn-donate btn-donate--2" value="60.00">
-                <span class="btn-donate-symbol">$</span>60
-            </button>
-            <button class="btn btn-donate btn-donate--3" value="120.00">
-                <span class="btn-donate-symbol">$</span>120
-            </button>
-            <button class="btn btn-donate btn-donate--4" value="240.00">
-                <span class="btn-donate-symbol">$</span>240
-            </button>
-            <div class="donate__buttons--footnote">Supported by the USA Swimming Foundation. Funds will benefit adult learn-to-swim programs</div>
-        </div>
-        <div class="donate__input">
-            <span class="currency-symbol">$</span>
-            <input type="text" name="swimming-saves-lives" id="swimmingSavesLivesInput"class="form-control" value="0.00">
-            <!-- <input type="number" min="0.00" step="0.01" min="5.00" max="2500" value="0.00" name="swimming-saves-lives" class="form-control currency"> -->
         </div>
     </div>
-    <h4 class="card__total">
-        Donation Total: <span class="total-donations card__total--amount">$__.__</span>
-    </h4>
-</div>
-<script src="/lanemate/js/donations.js"></script>
-                                    <link rel="stylesheet" href="/lanemate/css/review-order.css">
-<div class="card review-order clearfix">
-	<h3 class="payment-info___form-header m-b-30">Review Add-Ons</h3>
-	<div class="payment-info__form-summary payment-info__line-item--summary">
-		<!-- <p class="payment-info__line-item payment-info__line-item--product-total">
-			Product Total: <span class="payment-info__line-item--price"></span>
-		</p> -->
-		<!-- <p class="payment-info__line-item payment-info__line-item--plan-rate" style="font-weight: normal !important;">
-			Donation Total: <span class="payment-info__line-item--price"></span>
-		</p> -->
-	</div>
-	<div class="payment-info__form-summary">
-		<h4>Total Due Today</h4>
-	   <p class="payment-info__line-item payment-info__line-item--total">
-		  Total Charge: <span class="payment-info__line-item--price">$__.__</span>
-	   </p>
-	</div>
-</div>
-<script src="/lanemate/js/review.js"></script>
-                                    <div class="card payment-info">
-	<h3 class="payment-info___form-header">Enter Your Payment Details</h3>
-	<!-- <p class="footnote" style="font-size: 1.6rem; text-align: center; margin-bottom: 4rem;">RTE text ...</p> -->
-    <div class="form-group card-name">
-	   <div class="col-xs-12">
-		  <label class="font-weight-bold">Name on Card</label>
-		  <div><span class="help-block help-block--cardName">Please enter a value for cardName</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardName" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardName" aria-hidden="true"></span></div>
-	   </div>
-	</div>
-	<div class="form-group card-number">
+    <div class="form-group card-number requiredXXX">
 	   <div class="col-xs-12 col-sm-7">
-		  <label class="font-weight-bold">Card Number</label>
-		  <div><span class="help-block help-block--cardNumberID">Please enter a valid credit card number</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardNumberID" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardNumberID" aria-hidden="true"></span></div>
+            <label class="font-weight-bold">Card Number</label>
+            <div>
+                <span class="help-block help-block--cardNumberID">Card number required</span>
+                <input type="text" min="1" max="100" class="form-control" placeholder="Card Number" name="cardNumberID" autocomplete="true" maxlength="100" value="">
+                <span class="glyphicon form-control-feedback glyphicon--cardNumberID" aria-hidden="true"></span>
+            </div>
 	   </div>
 	   <div class="col-xs-5 col-sm-2 form-membership-length__security-code">
-		  <label class="font-weight-bold">Security Code</label>
-		  <div><span class="help-block help-block--cardCodeID">Please enter a value for Security Code</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardCodeID" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardCodeID" aria-hidden="true"></span></div>
+            <label class="font-weight-bold">CVV</label>
+            <div>
+                <span class="help-block help-block--cardCodeID">CVV required</span>
+                <input type="text" min="1" max="100" class="form-control" placeholder="CVV" name="cardCodeID" autocomplete="true" maxlength="100" value="">
+                <span class="glyphicon form-control-feedback glyphicon--cardCodeID" aria-hidden="true"></span>
+            </div>
 	   </div>
 	   <div class="col-xs-7 col-sm-3">
-		  <label class="font-weight-bold">Expiration (mm/yy)</label>
-		  <div><span class="help-block help-block--expiration">Please enter a valid expiration date</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="expiration" autocomplete="true" maxlength="5" value=""><span class="glyphicon form-control-feedback glyphicon--expiration" aria-hidden="true"></span></div>
+            <label class="font-weight-bold">Expiration Date</label>
+            <div>
+                <span class="help-block help-block--expiration">Expiration date required</span>
+                <input type="text" min="1" max="100" class="form-control" placeholder="MM/YY" name="expiration" autocomplete="true" maxlength="5" value="">
+                <span class="glyphicon form-control-feedback glyphicon--expiration" aria-hidden="true"></span>
+            </div>
 	   </div>
 	</div>
-	<div class="form-group card-zip">
+	<div class="form-group card-zip requiredXXX">
 	   <div class="col-xs-8 col-sm-4">
-		  <label class="font-weight-bold">Billing Zip</label>
-		  <div><span class="help-block help-block--cardZipID">Please enter a valid billing zip</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardZipID" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardZipID" aria-hidden="true"></span></div>
+            <label class="font-weight-bold">Billing Zip</label>
+            <div>
+                <span class="help-block help-block--cardZipID">Billing zip required</span>
+                <input type="text" min="1" max="100" class="form-control" placeholder="Billing Zip" name="cardZipID" autocomplete="true" maxlength="100" value="">
+                <span class="glyphicon form-control-feedback glyphicon--cardZipID" aria-hidden="true"></span>
+            </div>
 	   </div>
 	</div>
-	<div class="form-group agree-terms">
-   <div class="col-xs-12">
-      <span class="help-block help-block--agree-terms">You need to agree to the terms to complete your registration.</span>
-      <label id="agreeTerms__label" class="checkbox-label " for="agreeTerms">
-         <div class="checkbox-container"><input type="checkbox" name="agree-terms" id="agreeTerms" value="" class="has-success" data-gtm-form-interact-field-id="7"><span class="checkbox__placeholder"></span></div>
-      </label>
-      <span class="font-weight-bold">I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming <a href="/#">Privacy Policy</a>. I understand that this transaction will take effect immediately and is non-refundable and non-transferable.</span>
-   </div>
-</div>
-	
-	<button id="btnSubmitOrder" style="width: 200px;margin-top: 4rem; margin-bottom: 6rem;" class="btn btn-primary btn-large text-uppercase pull-left">Submit Payment</button>
- </div>
- <script src="/lanemate/js/payment-info.js"></script>
+                                    <div class="payment-information--submit">
+                                        <div class="col-xs-12">
+                                            <div class="form-group agree-terms">
+                                                <div class="col-xs-12">
+                                                   <span class="help-block help-block--agree-terms">You need to agree to the terms to update your payment method</span>
+                                                   <label id="agreeTerms__label" class="checkbox-label " for="agreeTerms">
+                                                        <div class="checkbox-container">
+                                                            <input type="checkbox" name="agree-terms" id="agreeTerms" value="" class="has-success" data-gtm-form-interact-field-id="7">
+                                                            <span class="checkbox__placeholder"></span>
+                                                        </div>
+                                                   </label>
+                                                   <span>I understand my payment information will be stored in My Account.</span>
+                                                </div>
+                                             </div>
+                                        </div>
+                                        <div class="col-xs-12" data-reactid="">
+                                            <button class="btn btn-primary btn-large text-uppercase payment-information__submit" id="btnEditCreditCardSubmit" data-reactid="">Submit</button>
+                                            <button class="btn btn-outline btn-large text-uppercase payment-information__cancel" id="btnEditCreditCardCancel" data-reactid="">Cancel</button>
+                                        </div>
+                                        <a style="text-decoration:underline;" href="#/" id="showValidation">Toggle Validation</a>
+                                    </div>
+                                </div>
+                                <div class="row payment-information--confirmation">
+                                    <p>Your payment method has been successfully updated to your My Account</p>
+                                </div>
+                                <div class="row form-group cancel-auto-renew--form">
+                                    <div class="col-xs-12 cancel-auto-renew-message">
+                                        <p>I want to cancel my plan's auto renewal. By cancelling, I will no longer receive benefits after XX/XX/XXXX.</p>
+                                    </div>
+                                    <div class="col-xs-12 cancel-auto-renew--submit" data-reactid="">
+                                        <button class="btn btn-primary text-uppercaseX cancel-auto-renew__cancel" id="btnYesCancelAutoRenew" data-reactid="">Yes, Cancel Auto Renew</button>
+                                        <button class="btn btn-outline text-uppercaseX cancel-auto-renew__submit" id="btnNoKeepAutoRenew" data-reactid="">Keep Auto Renew</button>
+                                    </div>
+                                </div>
+                                <div class="row cancel-auto-renew--confirmation">
+                                    <p>Auto renew has been turned off. You will no longer receive benefits after XX/XX/XXXX.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="usms-container  p-b-10">
-    <div class="row  ">
-       <div class="col-xs-12  ">
-          <div class="html-container  ">
-             The USA Swimming Foundation is registered as a 501(c)(3) nonprofit organization. Contributions to the USA Swimming Foundation are tax deductible to the fullest extent of the law. USA Swimming Foundation’s tax identification number is 72-1581977. You can find out more about us on guidestar.org under USA Swimming Foundation. A COPY OF THE OFFICIAL REGISTRATION AND FINANCIAL INFORMATION MAY BE OBTAINED FROM THE DIVISION OF CONSUMER SERVICES BY CALLING TOLL-FREE WITHIN THE STATE. 1- 800-HELP-FLA (435-7352) OR www.FloridaConsumerHelp.com. REGISTRATION DOES NOT IMPLY ENDORSEMENT, APPROVAL, OR RECOMMENDATION BY THE STATE." FLORIDA REGISTRATION CH22685
-             <div style="display: none;">&nbsp;</div>
-          </div>
-       </div>
-    </div>
- </div>
                 </div>
             </main>
             <footer>
@@ -560,11 +640,36 @@
                                     Partners
                                     </a>
                                  </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/about-usms/swimmer-magazine" target="" title="SWIMMER Magazine">
+                                    SWIMMER Magazine
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/about-usms/usms-swimming-saves-lives-foundation" target="" title="Swimming Saves Lives Foundation">
+                                    Swimming Saves Lives Foundation
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/content/applyforgrant" target="" title="How to Apply for a Grant">
+                                    How to Apply for a Grant
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="https://www.collegeclubswimming.com/" target="_blank" title="College Club Swimming">
+                                    College Club Swimming
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="http://forums.usms.org" target="" title="Discussion Forums">
+                                    Discussion Forums
+                                    </a>
+                                 </li>
                               </ul>
                            </div>
                         </div>
                         <div class="col-xs-6 col-md-3">
-                           <!-- <div class="footer-menu">
+                           <div class="footer-menu">
                               <h3 class="footer-menu__header">
                                  Events
                               </h3>
@@ -614,8 +719,33 @@
                                     All-American
                                     </a>
                                  </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/comp/as/" target="" title="All-Stars">
+                                    All-Stars
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/events/18th-fina-world-masters-championships" target="" title="FINA World Masters Championships">
+                                    FINA World Masters Championships
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="https://www.teamunify.com/SubTabGeneric.jsp?team=uana&amp;_stabid_=57815" target="_blank" title="Pan American Championships">
+                                    Pan American Championships
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/events/usms-stroke-development-clinics" target="" title="Stroke Development Clinic">
+                                    Stroke Development Clinic
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="https://www.trianglesportscommission.com/usms-hpc/" target="_blank" title="High Performance Camp">
+                                    High Performance Camp
+                                    </a>
+                                 </li>
                               </ul>
-                           </div> -->
+                           </div>
                         </div>
                         <div class="col-xs-6 col-md-3">
                            <div class="footer-menu">
@@ -645,7 +775,7 @@
                                  </li>
                               </ul>
                            </div>
-                           <!-- <div class="footer-menu">
+                           <div class="footer-menu">
                               <h3 class="footer-menu__header">
                                  Club Central
                               </h3>
@@ -660,6 +790,31 @@
                                     How to Start a Club
                                     </a>
                                  </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/club-central/club-login" target="" title="Register or Renew a Club">
+                                    Register or Renew a Club
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/content/coachresources" target="" title="Club Resources">
+                                    Club Resources
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/club-central/gold-club-designation" target="" title="Gold Club Designation">
+                                    Gold Club Designation
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/content/insuranceinfo" target="" title="Insurance">
+                                    Insurance
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/reg/members/" target="" title="Membership Lists">
+                                    Membership Lists
+                                    </a>
+                                 </li>
                               </ul>
                            </div>
                            <div class="footer-menu">
@@ -667,6 +822,36 @@
                                  Coach Central
                               </h3>
                               <ul class="footer-menu__list list--nostyle">
+                                 <li class="footer-menu__list-item">
+                                    <a href="/coach-central" target="" title="Coach Central">
+                                    Coach Central
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/coach/content/becomeacoach" target="" title="Become a Coach">
+                                    Become a Coach
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/content/coachcert" target="" title="Coach Certification">
+                                    Coach Certification
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/coach/certified/certifiedcoaches.php" target="" title="Certified Coaches">
+                                    Certified Coaches
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/coach/certified/coachinfo.php" target="" title="Designated Coach Resources">
+                                    Designated Coach Resources
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/content/cliniccourse" target="" title="Clinic Course for Coaches">
+                                    Clinic Course for Coaches
+                                    </a>
+                                 </li>
                                  <li class="footer-menu__list-item">
                                     <a href="/coach-central/coach-mentor-program" target="" title="Mentor Coach Program">
                                     Mentor Coach Program
@@ -683,10 +868,10 @@
                                     </a>
                                  </li>
                               </ul>
-                           </div> -->
+                           </div>
                         </div>
                         <div class="col-xs-6 col-md-3">
-                           <!-- <div class="footer-menu">
+                           <div class="footer-menu">
                               <h3 class="footer-menu__header">
                                  ALTS Central
                               </h3>
@@ -733,6 +918,36 @@
                                     Training Plans
                                     </a>
                                  </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/fitness/content/fitnesslogs" target="" title="Fitness Logs">
+                                    Fitness Logs
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/fitness-and-training/articles-and-videos" target="" title="Articles and Videos">
+                                    Articles and Videos
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/fitness-and-training/articles-and-videos?contentType[0]=Article&amp;contentType[1]=Video&amp;filter=&amp;tags[0]=Drills&amp;categories[0]=Technique%20and%20Training&amp;page=1&amp;perPage=10&amp;filterItem=20cf26a9-68b1-490f-8408-471cdd7513f8" target="" title="Drills and Technique">
+                                    Drills and Technique
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/fitness-and-training/articles-and-videos?contentType[0]=Article&amp;contentType[1]=Video&amp;filter=swimming%20101&amp;page=1&amp;perPage=10&amp;filterItem=20cf26a9-68b1-490f-8408-471cdd7513f8" target="" title="Swimming 101">
+                                    Swimming 101
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/alts-central/learn-to-swim" target="" title="Learn to Swim">
+                                    Learn to Swim
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/content/triathlon" target="" title="Triathletes">
+                                    Triathletes
+                                    </a>
+                                 </li>
                               </ul>
                            </div>
                            <div class="footer-menu">
@@ -760,8 +975,43 @@
                                     LMSCs
                                     </a>
                                  </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/content/volunteer" target="" title="Become a Volunteer">
+                                    Become a Volunteer
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/gto/gto_officials" target="" title="Officials">
+                                    Officials
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/committee.php" target="" title="Committees and Assignments">
+                                    Committees and Assignments
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/minutes/" target="" title="Meeting Minutes">
+                                    Meeting Minutes
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/conv/" target="" title="Convention">
+                                    Convention
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/elections/" target="" title="Elections">
+                                    Elections
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/awards/" target="" title="Awards">
+                                    Awards
+                                    </a>
+                                 </li>
                               </ul>
-                           </div> -->
+                           </div>
                         </div>
                      </div>
                   </div>
@@ -799,15 +1049,17 @@
                      </ul>
                   </nav>
                   <small class="copyright">
-                  &copy; 2024 LaneMate
+                  &copy; 2018 U.S. Masters Swimming
                   </small>
                   <nav>
                      <ul class="nav nav-service navbar-nav nav-pills">
                         <li class="">
-                           <a href="/about-usms/contact-usms" target="" title="Contact Us" class="">Contact Us</a>
+                           <a href="/about-usms/contact-usms" target="" title="Contact Us" class="">
+                           Contact Us        </a>
                         </li>
                         <li class="">
-                           <a href="/content/privacy" target="" title="USMS Privacy Policy" class="">LaneMate Privacy Policy</a>
+                           <a href="/content/privacy" target="" title="USMS Privacy Policy" class="">
+                           USMS Privacy Policy        </a>
                         </li>
                      </ul>
                   </nav>
@@ -825,5 +1077,6 @@
 <!-- Local Fallbacks -->
 <!-- <script src="/js/src/jquery-3.6.0.min.js"></script> -->
 <!-- <script src="/js/src/bootstrap.bundle.min.js"></script> -->
+        <script src="/lanemate/js/lanemate.js"></script>  
     </body>
 </html>

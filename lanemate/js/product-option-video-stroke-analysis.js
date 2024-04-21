@@ -36,12 +36,3 @@ var removeVideo = function(updateTotalPayment) {
     $(".payment-info__line-item--summary").find('.payment-info__line-item--video-stroke-analysis').remove();
     updateTotalPayment();
 }
-
-// var updateTotalVideo = function() {  
-//     var priceTextVideoStrokeAnalysis = $('payment-info__line-item--video-stroke-analysis');
-//     if (!priceTextVideoStrokeAnalysis) {
-//         console.log("test 1 zzz");
-//     } else {
-//         console.log("test 2 zzz");
-//     }
-// };
