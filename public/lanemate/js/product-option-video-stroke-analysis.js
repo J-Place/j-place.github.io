@@ -1,0 +1,38 @@
+$(document).ready(function() {
+    $("#addVideoStrokeAnalysis").on('click', function() {
+        addVideo(updateTotalPayment);
+    });
+    $("#removeVideoStrokeAnalysis").on('click', function() {
+        removeVideo(updateTotalPayment);
+    });
+});
+
+$(document.body).on('change','#strokeSelect',function(){
+    var strokeSelectVal = $('#strokeSelect').val();
+    var strokeNotSelected = strokeSelectVal === 'Select a stroke';
+    if (strokeNotSelected === false) {
+        $("#addVideoStrokeAnalysis").prop('disabled', false);
+    } else {
+        $("#addVideoStrokeAnalysis").prop('disabled', true);
+    }
+});
+
+let videoVal = '120.00';
+
+var addVideo = function(updateTotalPayment) {
+    $(".add-on-products .card__total--amount").text("$120.00");
+    $("#addVideoStrokeAnalysis").hide();
+    $("#removeVideoStrokeAnalysis").show();
+    $(".payment-info__line-item--summary").prepend('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">Video Stroke Analysis: <span class="payment-info__line-item--price">$120.00</span></p>');
+    updateTotalPayment();
+}
+
+var removeVideo = function(updateTotalPayment) {
+    $("#strokeSelect").val('Select a stroke').change();
+    $(".add-on-products .card__total--amount").text("$__.__");
+    $("#addVideoStrokeAnalysis").prop("disabled",true);
+    $("#addVideoStrokeAnalysis").show();
+    $("#removeVideoStrokeAnalysis").hide();
+    $(".payment-info__line-item--summary").find('.payment-info__line-item--video-stroke-analysis').remove();
+    updateTotalPayment();
+}
