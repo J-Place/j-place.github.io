@@ -10,7 +10,7 @@ $(document).ready(function(updateProductCardTotal) {
 // var coachAltsVal = 0;
 
 var addCoachAlts = function() {
-    coachAltsVal = 30;
+    // coachAltsVal = 30;
     $(".product-option.product-option_coach-alts").addClass('selected');
     $("#addCoachAlts").hide();
     $("#removeCoachAlts").show();

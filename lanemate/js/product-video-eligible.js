@@ -14,6 +14,7 @@ var addVideoEligible = function() {
     $(".product-option.product-option_video-stroke-analysis-eligible").addClass('selected');
     $("#addVideoStrokeAnalysisEligible").hide();
     $("#removeVideoStrokeAnalysisEligible").show();
+    renderProductCardTotal();
     renderLineItemVideo();
     updateProductCardTotal();
 }
