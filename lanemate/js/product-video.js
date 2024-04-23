@@ -19,6 +19,7 @@ var addVideo = function() {
 }
 
 var removeVideo = function() {
+    // videoVal = 0;
     $(".product-option.product-option_video-stroke-analysis").removeClass('selected');
     $("#strokeSelect").val('Select a stroke').change();
     $("#addVideoStrokeAnalysis").prop("disabled",true);

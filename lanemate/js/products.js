@@ -31,25 +31,43 @@ var updateProductCardTotal = function() {
     var usmsPlusSelected = $(".product-option_usms-plus.selected");
     var videoSelected = $(".product-option_video-stroke-analysis.selected");
     var coachAltsSelected = $(".product-option_coach-alts.selected");
+    var tileUsmsPlus = $(".product-option.product-option_usms-plus");
+    var tileCoachAlts = $(".product-option.product-option_coach-alts");
     if (coachAltsSelected.length !== 1 && usmsPlusSelected.length !== 1 && videoSelected.length !== 1) {
         console.log("Coach Alts 1");
         usmsPlusVal = 0;
         videoVal = 0;
         coachAltsVal = 0;
-        $(".add-on-products .card__total--amount").text('$__.__');
-        removeLineItemUsmsPlus();
-        removeLineItemCoachAlts();
+        if (tileUsmsPlus.length === 1 ) {
+            removeLineItemUsmsPlus();
+        }
+        if (tileUsmsPlus.length === 1 ) {
+            removeLineItemCoachAlts();
+        }
         removeLineItemVideo();
-        updateTotalPayment();
+        // updateTotalPayment();
+        // $(".add-on-products .card__total--amount").text('$__.__');
+        var tileUsmsPlus = $(".product-option.product-option_usms-plus");
+        if (tileUsmsPlus.length !== 1 ) {
+            console.log("USMS+ Tile is on the page")
+            updateTotalPayment();
+            
+        } else if (tileUsmsPlus.length === 1 ) {
+            $(".add-on-products .card__total--amount").text('$__.__');
+        }
         // return;
     } else if (coachAltsSelected.length !== 1 && usmsPlusSelected.length === 1 && videoSelected.length !== 1) {
         console.log("Coach Alts 2");
         usmsPlusVal = 179;
         videoVal = 0;
         coachAltsVal = 0;
-        removeLineItemCoachAlts();
+        if (tileUsmsPlus.length === 1 ) {
+            removeLineItemCoachAlts();
+        }
         renderProductCardTotal();
-        renderLineItemUsmsPlus();
+        if (tileUsmsPlus.length === 1 ) {
+            renderLineItemUsmsPlus();
+        }
         updateTotalPayment();
         // return;
     } else if (coachAltsSelected.length !== 1 && usmsPlusSelected.length !== 1 && videoSelected.length === 1) {
@@ -58,10 +76,23 @@ var updateProductCardTotal = function() {
         videoVal = 120;
         coachAltsVal = 0;
         renderProductCardTotal();
-        removeLineItemUsmsPlus();
+        if (tileUsmsPlus.length === 1 ) {
+            removeLineItemUsmsPlus();
+            }
         renderLineItemVideo();
-        removeLineItemCoachAlts();
-        updateTotalPayment();
+        if (tileUsmsPlus.length === 1 ) {
+            removeLineItemCoachAlts();
+        }
+        // updateTotalPayment();
+        // $(".add-on-products .card__total--amount").text('$__.__');
+        var tileUsmsPlus = $(".product-option.product-option_usms-plus");
+        if (tileUsmsPlus.length !== 1 ) {
+            console.log("USMS+ Tile is not on the page")
+            updateTotalPayment();
+            
+        } else if (tileUsmsPlus.length === 1 ) {
+            $(".add-on-products .card__total--amount").text('$__.__');
+        }
         // return;
     } else if (coachAltsSelected.length !== 1 && usmsPlusSelected.length === 1 && videoSelected.length === 1) {
         console.log("Coach Alts 4");
@@ -71,7 +102,9 @@ var updateProductCardTotal = function() {
         renderProductCardTotal();
         // removeLineItemUsmsPlus();
         renderLineItemVideo();
-        removeLineItemCoachAlts();
+        if (tileUsmsPlus.length === 1 ) {
+            removeLineItemCoachAlts();
+        }
         updateTotalPayment();
         // return;
     } else if (coachAltsSelected.length === 1 && usmsPlusSelected.length !== 1 && videoSelected.length !== 1) {
@@ -80,9 +113,13 @@ var updateProductCardTotal = function() {
         videoVal = 0;
         coachAltsVal = 30;
         renderProductCardTotal();
-        removeLineItemUsmsPlus();
+        if (tileUsmsPlus.length === 1 ) {
+            removeLineItemUsmsPlus();
+        }
         removeLineItemVideo();
-        renderLineItemCoachAlts();
+        if (tileUsmsPlus.length === 1 ) {
+            renderLineItemCoachAlts();
+        }
         updateTotalPayment();
         // return;
     } else if (coachAltsSelected.length === 1 && usmsPlusSelected.length === 1 && videoSelected.length === 1) {
@@ -91,9 +128,13 @@ var updateProductCardTotal = function() {
         videoVal = 0;
         coachAltsVal = 30;
         // renderProductCardTotal();
-        renderLineItemUsmsPlus();
+        if (tileUsmsPlus.length === 1 ) {
+            renderLineItemUsmsPlus();
+        }
         renderLineItemVideo();
-        renderLineItemCoachAlts(); // <!---------------- ???
+        if (tileUsmsPlus.length === 1 ) {
+            renderLineItemCoachAlts(); // <!---------------- ???
+        }
         updateTotalPayment();
     } else if (coachAltsSelected.length === 1 && usmsPlusSelected.length !== 1 && videoSelected.length === 1) {
         console.log("Product Options 3");
@@ -101,9 +142,13 @@ var updateProductCardTotal = function() {
         videoVal = 120;
         coachAltsVal = 30;
         renderProductCardTotal();
-        removeLineItemUsmsPlus();
+        if (tileUsmsPlus.length === 1 ) {
+            removeLineItemUsmsPlus();
+        }
         renderLineItemVideo();
-        renderLineItemCoachAlts();
+        if (tileUsmsPlus.length === 1 ) {
+            renderLineItemCoachAlts();
+        }
         updateTotalPayment();
     } else if (coachAltsSelected.length === 1 && usmsPlusSelected.length === 1 && videoSelected.length !== 1) {
         console.log("Product Options 4");
@@ -111,9 +156,13 @@ var updateProductCardTotal = function() {
         videoVal = 0;
         coachAltsVal = 30;
         renderProductCardTotal();
-        renderLineItemUsmsPlus();
+        if (tileUsmsPlus.length === 1 ) {
+            renderLineItemUsmsPlus();
+        }
         removeLineItemVideo();
-        renderLineItemCoachAlts();
+        if (tileUsmsPlus.length === 1 ) {
+            renderLineItemCoachAlts();
+        }
         updateTotalPayment();
     }
 };
