@@ -10,6 +10,7 @@ $(document).ready(function() {
 // var videoVal = 120;
 
 var addVideo = function() {
+    videoVal = 120;
     $(".product-option.product-option_video-stroke-analysis").addClass('selected');
     $("#addVideoStrokeAnalysis").hide();
     $("#removeVideoStrokeAnalysis").show();
@@ -29,7 +30,7 @@ var removeVideo = function() {
 
 var renderLineItemVideo = function() {
     removeLineItemVideo();
-    $(".payment-info__line-item--summary").append('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
+    $(".payment-info__line-item--summary").append('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis xxx">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
     $(".payment-info__line-item--video-stroke-analysis .payment-info__line-item--price").text('$ ' + videoVal + '.00');
 }
 var removeLineItemVideo = function() {
