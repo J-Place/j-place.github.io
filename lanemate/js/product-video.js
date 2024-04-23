@@ -12,7 +12,8 @@ $(document).ready(function() {
 var addVideo = function() {
     $(".product-option.product-option_video-stroke-analysis").addClass('selected');
     $("#addVideoStrokeAnalysis").hide();
-    $("#removeVideoStrokeAnalysis").show();    
+    $("#removeVideoStrokeAnalysis").show();
+    renderLineItemVideo();
     updateProductCardTotal();
 }
 
@@ -22,6 +23,7 @@ var removeVideo = function() {
     $("#addVideoStrokeAnalysis").prop("disabled",true);
     $("#addVideoStrokeAnalysis").show();
     $("#removeVideoStrokeAnalysis").hide();
+    removeLineItemVideo();
     updateProductCardTotal();
 }
 

@@ -25,6 +25,7 @@ var renderProductCardTotal = function() {
 var resetProductCardTotal = function() {
     $(".add-on-products .card__total--amount").text("$__.__");
 }
+
 var updateProductCardTotal = function() {
     var usmsPlusSelected = $(".product-option_usms-plus.selected");
     var videoSelected = $(".product-option_video-stroke-analysis.selected");
@@ -35,6 +36,8 @@ var updateProductCardTotal = function() {
         videoVal = 0;
         coachAltsVal = 0;
         $(".add-on-products .card__total--amount").text('$__.__');
+        removeLineItemCoachAlts();
+        removeLineItemVideo();
         updateTotalPayment();
         // return;
     } else if (coachAltsSelected.length !== 1 && usmsPlusSelected.length === 1 && videoSelected.length !== 1) {
@@ -42,6 +45,7 @@ var updateProductCardTotal = function() {
         usmsPlusVal = 179;
         videoVal = 0;
         coachAltsVal = 0;
+        removeLineItemCoachAlts();
         renderProductCardTotal();
         renderLineItemUsmsPlus();
         updateTotalPayment();
@@ -53,6 +57,17 @@ var updateProductCardTotal = function() {
         coachAltsVal = 0;
         renderProductCardTotal();
         removeLineItemUsmsPlus();
+        renderLineItemVideo();
+        removeLineItemCoachAlts();
+        updateTotalPayment();
+        // return;
+    } else if (coachAltsSelected.length !== 1 && usmsPlusSelected.length === 1 && videoSelected.length === 1) {
+        console.log("Coach Alts 4");
+        usmsPlusVal = 179;
+        videoVal = 0;
+        coachAltsVal = 0;
+        renderProductCardTotal();
+        // removeLineItemUsmsPlus();
         renderLineItemVideo();
         removeLineItemCoachAlts();
         updateTotalPayment();
@@ -73,10 +88,10 @@ var updateProductCardTotal = function() {
         usmsPlusVal = 179;
         videoVal = 0;
         coachAltsVal = 30;
-        renderProductCardTotal();
+        // renderProductCardTotal();
         renderLineItemUsmsPlus();
         renderLineItemVideo();
-        renderLineItemCoachAlts();
+        renderLineItemCoachAlts(); // <!---------------- ???
         updateTotalPayment();
     } else if (coachAltsSelected.length === 1 && usmsPlusSelected.length !== 1 && videoSelected.length === 1) {
         console.log("Product Options 3");

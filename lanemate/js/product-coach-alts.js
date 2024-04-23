@@ -12,13 +12,16 @@ $(document).ready(function(updateProductCardTotal) {
 var addCoachAlts = function() {
     $(".product-option.product-option_coach-alts").addClass('selected');
     $("#addCoachAlts").hide();
-    $("#removeCoachAlts").show();    
+    $("#removeCoachAlts").show();
+    renderLineItemCoachAlts();
     updateProductCardTotal();
 }
 var removeCoachAlts = function() {
+    coachAltsVal = 0;
     $(".product-option.product-option_coach-alts").removeClass('selected');
     $("#addCoachAlts").show();
     $("#removeCoachAlts").hide();
+    removeLineItemCoachAlts();
     updateProductCardTotal();
 }
 var renderLineItemCoachAlts = function() {
