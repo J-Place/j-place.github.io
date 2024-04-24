@@ -1,32 +1,37 @@
+console.log("load product-tile-video.js");
 $(document).ready(function() {
-    $("#addVideoStrokeAnalysis").on('click', function() {
+    $("#addVideoStrokeAnalysis").on('click', function(updateProductCardTotal) {
         addVideo(updateProductCardTotal);
     });
-    $("#removeVideoStrokeAnalysis").on('click', function() {
+    $("#removeVideoStrokeAnalysis").on('click', function(updateProductCardTotal) {
         removeVideo(updateProductCardTotal);
     });
 });
 
 // var videoVal = 120;
 
-var addVideo = function() {
-    // videoVal = 120;
+var addVideo = function(callback) {
     $(".product-option.product-option_video-stroke-analysis").addClass('selected');
     $("#addVideoStrokeAnalysis").hide();
     $("#removeVideoStrokeAnalysis").show();
+    videoVal = 120;
+    productCardTotal = productCardTotal + videoVal;
     renderLineItemVideo();
-    updateProductCardTotal();
+    updateProductCardTotal(callback);
+    return productCardTotal;
 }
 
-var removeVideo = function() {
-    videoVal = 0;
+var removeVideo = function(callback) {
     $(".product-option.product-option_video-stroke-analysis").removeClass('selected');
     $("#strokeSelect").val('Select a stroke').change();
     $("#addVideoStrokeAnalysis").prop("disabled",true);
     $("#addVideoStrokeAnalysis").show();
     $("#removeVideoStrokeAnalysis").hide();
-    // removeLineItemVideo();
-    updateProductCardTotal();
+    videoVal = 120;
+    productCardTotal = productCardTotal - videoVal;
+    removeLineItemVideo();
+    updateProductCardTotal(callback);
+    return productCardTotal;
 }
 
 var renderLineItemVideo = function() {

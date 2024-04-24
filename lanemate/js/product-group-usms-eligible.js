@@ -1,3 +1,4 @@
+console.log("load product-group-usms-eligible.js");
 $(document).ready(function() {
     const mobile = window.matchMedia("screen and (max-width:1199px)").matches;
     if (mobile) {
@@ -15,9 +16,6 @@ $(document).ready(function() {
         $('.product-option').height(tallestHeight);
     }
 });
-var usmsPlusVal = 0;
-var videoVal = 0;
-var coachAltsVal = 0;
 var renderProductCardTotal = function() {
     var cardTotalValProduct = usmsPlusVal + videoVal + coachAltsVal;
     $(".add-on-products .card__total--amount").text("$ " + cardTotalValProduct + ".00");
@@ -27,22 +25,24 @@ var resetProductCardTotal = function() {
 }
 var updateProductCardTotal = function() {
     
-    console.log(usmsPlusVal);
-    console.log(videoVal);
-    console.log(coachAltsVal);
-    
+    // console.log(usmsPlusVal);
+    // console.log(videoVal);
+    // console.log(coachAltsVal);
+    // console.log(donationVal);
+
     var usmsPlusSelected = $(".product-option_usms-plus.selected");
-    // var videoSelected = $(".product-option_video-stroke-analysis.selected");
+    var videoSelected = $(".product-option_video-stroke-analysis.selected");
     var videoEligibleSelected = $(".product-option_video-stroke-analysis-eligible.selected");
     var coachAltsSelected = $(".product-option_coach-alts.selected");
+
     if (coachAltsSelected.length !== 1 && videoEligibleSelected.length !== 1) {
-        console.log("Eligible 1");
+        console.log("if 1.0");
         $(".add-on-products .card__total--amount").text('$__.__');
         updateTotalPayment();
         // return;
     }
     if (coachAltsSelected.length !== 1 && usmsPlusSelected.length !== 1 && videoEligibleSelected.length !== 1) {
-        console.log("Coach Alts 1");
+        console.log("if 2.0");
         usmsPlusVal = 0;
         videoVal = 0;
         coachAltsVal = 0;
@@ -54,7 +54,7 @@ var updateProductCardTotal = function() {
         updateTotalPayment();
         // return;
     } else if (coachAltsSelected.length !== 1 && usmsPlusSelected.length === 1 && videoEligibleSelected.length !== 1) {
-        console.log("Coach Alts 2");
+        console.log("else if 2.1");
         usmsPlusVal = 179;
         videoVal = 0;
         coachAltsVal = 0;
@@ -64,7 +64,7 @@ var updateProductCardTotal = function() {
         updateTotalPayment();
         // return;
     } else if (coachAltsSelected.length !== 1 && usmsPlusSelected.length !== 1 && videoEligibleSelected.length === 1) {
-        console.log("Coach Alts 3");
+        console.log("else if 2.2");
         usmsPlusVal = 0;
         videoVal = 0;
         coachAltsVal = 30;
@@ -75,7 +75,7 @@ var updateProductCardTotal = function() {
         updateTotalPayment();
         // return;
     } else if (coachAltsSelected.length !== 1 && usmsPlusSelected.length === 1 && videoEligibleSelected.length === 1) {
-        console.log("Coach Alts 4");
+        console.log("else if 2.3");
         usmsPlusVal = 179;
         videoVal = 0;
         coachAltsVal = 0;
@@ -86,7 +86,7 @@ var updateProductCardTotal = function() {
         updateTotalPayment();
         // return;
     } else if (coachAltsSelected.length === 1 && usmsPlusSelected.length !== 1 && videoEligibleSelected.length !== 1) {
-        console.log("Product Options 1");
+        console.log("else if 2.4");
         usmsPlusVal = 0;
         videoVal = 0;
         coachAltsVal = 30;
@@ -97,7 +97,7 @@ var updateProductCardTotal = function() {
         updateTotalPayment();
         // return;
     } else if (coachAltsSelected.length === 1 && usmsPlusSelected.length === 1 && videoEligibleSelected.length === 1) {
-        console.log("Product Options 2");
+        console.log("else if 2.5");
         usmsPlusVal = 179;
         videoVal = 0;
         coachAltsVal = 30;
@@ -107,7 +107,7 @@ var updateProductCardTotal = function() {
         renderLineItemCoachAlts(); // <!---------------- ???
         updateTotalPayment();
     } else if (coachAltsSelected.length === 1 && usmsPlusSelected.length !== 1 && videoEligibleSelected.length === 1) {
-        console.log("Product Options 3");
+        console.log("else if 2.6");
         usmsPlusVal = 0;
         videoVal = 0;
         coachAltsVal = 30;
@@ -117,7 +117,7 @@ var updateProductCardTotal = function() {
         renderLineItemCoachAlts();
         updateTotalPayment();
     } else if (coachAltsSelected.length === 1 && usmsPlusSelected.length === 1 && videoEligibleSelected.length !== 1) {
-        console.log("Product Options 4");
+        console.log("else if 2.7");
         usmsPlusVal = 179;
         videoVal = 0;
         coachAltsVal = 30;

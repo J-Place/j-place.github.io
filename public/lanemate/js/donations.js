@@ -19,16 +19,15 @@ $(document).ready(function() {
     });
     // Handle Input Values //////////////////////////////////////////////////////////////
     $('#swimmingSavesLivesInput').on('blur', function() {
-        let addOnVideo = $(".payment-info__line-item--video-stroke-analysis");
-        if ($(this).val() === "0" && addOnVideo.length !== 1 ) {
-            $('.total-donations.card__total--amount').text("$__.__");
-            $(".payment-info__line-item--summary").find('.payment-info__line-item--donation').remove();
-            $(".payment-info__line-item--total .payment-info__line-item--price").text("$__.__");
-        } else if ($(this).val() === "0" && addOnVideo.length === 1 ) { 
-            $('.total-donations.card__total--amount').text("$__.__");
-            $(".payment-info__line-item--summary").find('.payment-info__line-item--donation').remove();
+        if ($(this).val() > 0 ) {
+            console.log("x");
+            // $(".payment-info__line-item--summary").find('.payment-info__line-item--donation').remove();
+        } else if ($(this).val() === 0) { 
+            console.log("y");
+            // $(".payment-info__line-item--summary").find('.payment-info__line-item--donation').remove();
             updateTotalPayment(value);
         } else {
+            console.log("z");
             var value = $(this).val(parseFloat($(this).val()).toFixed(2));
             updateDonationCardValue(value);
             updateLineItemDonation(value);

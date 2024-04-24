@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    console.log("load product-group.js");
     const mobile = window.matchMedia("screen and (max-width:1199px)").matches;
     if (mobile) {
         return;
@@ -48,11 +49,6 @@ var updateProductCardTotal = function() {
         if (tileCoachAlts.length === 1 ) {
             removeLineItemCoachAlts();
         }
-        // if (tileUsmsPlus.length !== 1 ) {
-        //     console.log("USMS+ Tile is not on the page");
-        //     $(".add-on-products .card__total--amount").text('$__.__');
-        // }
-        // renderProductCardTotal();
         if (donationVal === 0 ) {
             $(".payment-info__line-item--price").text('$__.__');
         } else {

@@ -1,10 +1,11 @@
+console.log("load product-tile-usms-plus.js");
 $(document).ready(function() {
-    $("#addUsmsPlus").on('click', function() {
-        addUsmsPlus();
+    $("#addUsmsPlus").on('click', function(updateProductCardTotal) {
+        addUsmsPlus(updateProductCardTotal);
         $(".agree-usmsplus-terms").show();
     });
-    $("#removeUsmsPlus").on('click', function() {
-        removeUsmsPlus();
+    $("#removeUsmsPlus").on('click', function(updateProductCardTotal) {
+        removeUsmsPlus(updateProductCardTotal);
         $(".agree-usmsplus-terms").hide();
     });
 });
@@ -12,19 +13,30 @@ $(document).ready(function() {
 // var usmsPlusVal = 179;
 
 var addUsmsPlus = function() {
-    // videoPriceShown = 0
     $(".product-option.product-option_usms-plus").toggleClass('selected');
     $("#addUsmsPlus").hide();
     $("#removeUsmsPlus").show();
-    removeLineItemVideoEligible();
+    usmsPlusVal = 179;
+    console.log(productCardTotal);
+    productCardTotal = productCardTotal + usmsPlusVal;
+    console.log(productCardTotal);
+    renderLineItemUsmsPlus();
     updateProductCardTotal();
 }
 var removeUsmsPlus = function() {
-    // videoPriceShown = 120;
     $(".product-option.product-option_usms-plus").removeClass('selected');
     $("#addUsmsPlus").show();
     $("#removeUsmsPlus").hide();
+    usmsPlusVal = 179;
+    console.log(productCardTotal);
+    productCardTotal = productCardTotal - usmsPlusVal;
+    console.log(productCardTotal);
+    removeLineItemUsmsPlus();
     updateProductCardTotal();
+    // if (videoEligibleSelected.length === 1 ) {
+    //     console.log("yup");
+    //     productCardTotal = productCardTotal - usmsvideoVal;    
+    // }
 }
 var renderLineItemUsmsPlus = function() {
     removeLineItemUsmsPlus();
