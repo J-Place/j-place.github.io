@@ -24,12 +24,6 @@ var resetProductCardTotal = function() {
     $(".add-on-products .card__total--amount").text("$__.__");
 }
 var updateProductCardTotal = function() {
-    
-    // console.log(usmsPlusVal);
-    // console.log(videoVal);
-    // console.log(coachAltsVal);
-    // console.log(donationVal);
-
     var usmsPlusSelected = $(".product-option_usms-plus.selected");
     var videoSelected = $(".product-option_video-stroke-analysis.selected");
     var videoEligibleSelected = $(".product-option_video-stroke-analysis-eligible.selected");
@@ -46,7 +40,6 @@ var updateProductCardTotal = function() {
         usmsPlusVal = 0;
         videoVal = 0;
         coachAltsVal = 0;
-        // $(".add-on-products .card__total--amount").text('$__.__');
         renderProductCardTotal();
         removeLineItemUsmsPlus();
         removeLineItemCoachAlts();
@@ -80,7 +73,6 @@ var updateProductCardTotal = function() {
         videoVal = 0;
         coachAltsVal = 0;
         renderProductCardTotal();
-        // removeLineItemUsmsPlus();
         renderLineItemVideo();
         removeLineItemCoachAlts();
         updateTotalPayment();
@@ -101,7 +93,6 @@ var updateProductCardTotal = function() {
         usmsPlusVal = 179;
         videoVal = 0;
         coachAltsVal = 30;
-        // renderProductCardTotal();
         renderLineItemUsmsPlus();
         renderLineItemVideo();
         renderLineItemCoachAlts(); // <!---------------- ???
