@@ -40,7 +40,9 @@ $(document).ready(function() {
             $(this).blur();
     });
 });
-
+var inputDonation = $("input[name='swimming-saves-lives']");
+var donationVal = inputDonation.val();
+var donationNum = parseInt(donationVal);
 var updateDonationCardValue = function() {
     $('.total-donations.card__total--amount').text($('[name=swimming-saves-lives]').val());
     $('.total-donations.card__total--amount').prepend('<span>$ </span>');

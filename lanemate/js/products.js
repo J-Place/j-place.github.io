@@ -32,6 +32,7 @@ var updateProductCardTotal = function() {
     var videoSelected = $(".product-option_video-stroke-analysis.selected");
     var coachAltsSelected = $(".product-option_coach-alts.selected");
     var tileUsmsPlus = $(".product-option.product-option_usms-plus");
+    var tileVideo = $(".product-option.product-option_video-stroke-analysis");
     var tileCoachAlts = $(".product-option.product-option_coach-alts");
     if (coachAltsSelected.length !== 1 && usmsPlusSelected.length !== 1 && videoSelected.length !== 1) {
         console.log("Coach Alts 1");
@@ -41,27 +42,31 @@ var updateProductCardTotal = function() {
         if (tileUsmsPlus.length === 1 ) {
             removeLineItemUsmsPlus();
         }
-        if (tileUsmsPlus.length === 1 ) {
+        if (tileVideo.length === 1 ) {
+            removeLineItemVideo();
+        }
+        if (tileCoachAlts.length === 1 ) {
             removeLineItemCoachAlts();
         }
-        removeLineItemVideo();
-        // updateTotalPayment();
-        // $(".add-on-products .card__total--amount").text('$__.__');
-        var tileUsmsPlus = $(".product-option.product-option_usms-plus");
-        if (tileUsmsPlus.length !== 1 ) {
-            console.log("USMS+ Tile is on the page")
+        // if (tileUsmsPlus.length !== 1 ) {
+        //     console.log("USMS+ Tile is not on the page");
+        //     $(".add-on-products .card__total--amount").text('$__.__');
+        // }
+        // renderProductCardTotal();
+        if (donationVal === 0 ) {
+            $(".payment-info__line-item--price").text('$__.__');
+        } else {
             updateTotalPayment();
-            
-        } else if (tileUsmsPlus.length === 1 ) {
-            $(".add-on-products .card__total--amount").text('$__.__');
         }
+        $(".add-on-products .card__total--amount").text('$__.__');
+        // updateTotalPayment();
         // return;
     } else if (coachAltsSelected.length !== 1 && usmsPlusSelected.length === 1 && videoSelected.length !== 1) {
         console.log("Coach Alts 2");
         usmsPlusVal = 179;
         videoVal = 0;
         coachAltsVal = 0;
-        if (tileUsmsPlus.length === 1 ) {
+        if (tileCoachAlts.length === 1 ) {
             removeLineItemCoachAlts();
         }
         renderProductCardTotal();
@@ -74,13 +79,14 @@ var updateProductCardTotal = function() {
         console.log("Coach Alts 3");
         usmsPlusVal = 0;
         videoVal = 120;
+        // videoVal = 0;
         coachAltsVal = 0;
         renderProductCardTotal();
         if (tileUsmsPlus.length === 1 ) {
             removeLineItemUsmsPlus();
             }
         renderLineItemVideo();
-        if (tileUsmsPlus.length === 1 ) {
+        if (tileCoachAlts.length === 1 ) {
             removeLineItemCoachAlts();
         }
         // updateTotalPayment();
@@ -88,8 +94,8 @@ var updateProductCardTotal = function() {
         var tileUsmsPlus = $(".product-option.product-option_usms-plus");
         if (tileUsmsPlus.length !== 1 ) {
             console.log("USMS+ Tile is not on the page")
-            updateTotalPayment();
-            
+            // updateTotalPayment();
+            $(".add-on-products .card__total--amount").text('$__.__');
         } else if (tileUsmsPlus.length === 1 ) {
             $(".add-on-products .card__total--amount").text('$__.__');
         }

@@ -26,8 +26,11 @@ var resetProductCardTotal = function() {
     $(".add-on-products .card__total--amount").text("$__.__");
 }
 var updateProductCardTotal = function() {
+    
+    console.log(usmsPlusVal);
     console.log(videoVal);
     console.log(coachAltsVal);
+    
     var usmsPlusSelected = $(".product-option_usms-plus.selected");
     // var videoSelected = $(".product-option_video-stroke-analysis.selected");
     var videoEligibleSelected = $(".product-option_video-stroke-analysis-eligible.selected");
@@ -36,7 +39,7 @@ var updateProductCardTotal = function() {
         console.log("Eligible 1");
         $(".add-on-products .card__total--amount").text('$__.__');
         updateTotalPayment();
-        return;
+        // return;
     }
     if (coachAltsSelected.length !== 1 && usmsPlusSelected.length !== 1 && videoEligibleSelected.length !== 1) {
         console.log("Coach Alts 1");
@@ -64,7 +67,7 @@ var updateProductCardTotal = function() {
         console.log("Coach Alts 3");
         usmsPlusVal = 0;
         videoVal = 0;
-        coachAltsVal = 0;
+        coachAltsVal = 30;
         renderProductCardTotal();
         removeLineItemUsmsPlus();
         renderLineItemVideo();
