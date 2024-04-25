@@ -74,7 +74,7 @@ var renderLineItemVideoEligible = function() {
     var donationVal = inputDonation.val();
     var donationNum = parseInt(donationVal);
     if (donationNum == 0 ) {
-        $(".payment-info__line-item--summary").last().append('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis-eligible">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
+        $(".payment-info__line-item--summary").first().append('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis-eligible">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
     } else {
         $(".payment-info__line-item--summary").find('.payment-info__line-item--donation').prepend('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis-eligible">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
     }
