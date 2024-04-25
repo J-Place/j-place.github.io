@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
     // Handle Button Values //////////////////////////////////////////////////////////////
     $(".btn-donate--1").on('click', function() {
         $("input[name='swimming-saves-lives']").val("30.00");
@@ -17,11 +18,13 @@ $(document).ready(function() {
         updateLineItemDonation();
         updateTotalPayment();
     });
+
     // Handle Input Values //////////////////////////////////////////////////////////////
     $("#swimmingSavesLivesInput").keyup(function(e) {
         if (e.which == 13) // Enter key
             $(this).blur();
     });
+
     $('#swimmingSavesLivesInput').on('blur', function() {
         var value = $(this).val(parseFloat($(this).val()).toFixed(2));
         if ($(this).val() == 0 ) {
@@ -34,14 +37,18 @@ $(document).ready(function() {
             updateTotalPayment(value);
         }
     });
+
 });
+
 var inputDonation = $("input[name='swimming-saves-lives']");
 var donationVal = inputDonation.val();
 var donationNum = parseInt(donationVal);
+
 var updateDonationCardValue = function() {
     $('.total-donations.card__total--amount').text($('[name=swimming-saves-lives]').val());
     $('.total-donations.card__total--amount').prepend('<span>$ </span>');
 }
+
 var updateLineItemDonation = function() {
     removeLineItemDonation();
     $(".payment-info__line-item--summary").find('.payment-info__line-item--donation').remove();
@@ -49,7 +56,7 @@ var updateLineItemDonation = function() {
     $('.payment-info__line-item--donation .payment-info__line-item--price').text($('[name=swimming-saves-lives]').val());
     $('.payment-info__line-item--donation .payment-info__line-item--price').prepend('<span>$ </span>');
 }
+
 var removeLineItemDonation = function() {
-    // $(".total-donations.card__total--amount").find('.payment-info__line-item--donation').remove();
     $(".payment-info__line-item--summary").find('.payment-info__line-item--donation').remove();
 }
