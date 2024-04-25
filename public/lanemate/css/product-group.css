@@ -37,13 +37,17 @@ button[disabled]{
     height: auto;
     width: 100%;
     margin: 0 0.5rem 2rem;
-    padding: 0 0 13rem;
+    padding: 0 0 7rem;
     position: relative;
 }
 
 .current-product a,
 .product-option a {
     text-decoration: underline;
+}
+
+.product-option-select-btn {
+    padding-bottom: 13rem;
 }
 
 .product-option.selected .product-name {
@@ -64,6 +68,8 @@ button[disabled]{
     left: 0;
     right: 0;
     bottom: 3rem;
+    width: 12rem;
+    margin: 0 auto;
 }
 
 .product-option .product-summary + .form-group {
@@ -77,7 +83,10 @@ button[disabled]{
     .product-option {
         max-width: 260px;
         height: auto;
-        padding-bottom: 14rem;
+        padding-bottom: 13rem;
+    }
+    .product-group select {
+        margin-bottom: 0.5rem;
     }
     /* .product-group {
         justify-content: center;
@@ -214,11 +223,17 @@ p.product-selected-label {
 .product-option .product-price {
     flex: 100%;
     margin: 0;
-    padding-top: 1.5rem;
-    padding-bottom: 1rem;
+    padding-top: 2rem;
+    padding-bottom: 0;
     padding-left: 0;
     font-size: 2.3rem;
     font-weight: 700;
+}
+
+@media (min-width: 1200px) {
+    .product-option .product-price {
+        padding-top: 1.5rem;
+    }    
 }
 
 .product-summary {
