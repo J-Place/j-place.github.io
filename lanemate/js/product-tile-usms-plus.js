@@ -17,9 +17,7 @@ var addUsmsPlus = function() {
     $("#addUsmsPlus").hide();
     $("#removeUsmsPlus").show();
     usmsPlusVal = 179;
-    console.log(productCardTotal);
     productCardTotal = productCardTotal + usmsPlusVal;
-    console.log(productCardTotal);
     renderLineItemUsmsPlus();
     updateProductCardTotal();
 }
@@ -28,15 +26,9 @@ var removeUsmsPlus = function() {
     $("#addUsmsPlus").show();
     $("#removeUsmsPlus").hide();
     usmsPlusVal = 179;
-    console.log(productCardTotal);
     productCardTotal = productCardTotal - usmsPlusVal;
-    console.log(productCardTotal);
     removeLineItemUsmsPlus();
     updateProductCardTotal();
-    // if (videoEligibleSelected.length === 1 ) {
-    //     console.log("yup");
-    //     productCardTotal = productCardTotal - usmsvideoVal;    
-    // }
 }
 var renderLineItemUsmsPlus = function() {
     removeLineItemUsmsPlus();

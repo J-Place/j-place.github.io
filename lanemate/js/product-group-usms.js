@@ -1,5 +1,6 @@
+console.log("load product-group-usms.js");
 $(document).ready(function() {
-    console.log("load product-group-usms.js");
+
     const mobile = window.matchMedia("screen and (max-width:1199px)").matches;
     if (mobile) {
         return;
@@ -34,7 +35,7 @@ var lineItemUsmsPlus = $('.payment-info__line-item--usms-plus');
 var lineItemVideo = $('.payment-info__line-item--video-stroke-analysis');
 var lineItemVideoEligible = $('.payment-info__line-item--video-stroke-analysis-eligible');
 var lineItemCoachAlts = $('.payment-info__line-item--coach-alts');
-var lineItemDonation = $('.payment-info__line-item--donation');
+var lineItemDonation = $('.payment-info__line-item--donation .payment-info__line-item--price');
 
 var inputDonation = $("input[name='swimming-saves-lives']");
 var donationVal = inputDonation.val();
@@ -44,7 +45,6 @@ var totalProductCardVal = usmsPlusVal + videoVal + videoEligibleVal + coachAltsV
 var totalPaymentVal = totalProductCardVal + donationNum;
 
 var updateProductCardTotal = function() {
-    console.log('updating card total');
     $(".add-on-products .card__total--amount").text("$ " + productCardTotal + ".00");
     updateTotalPayment();
 }

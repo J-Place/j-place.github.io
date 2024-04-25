@@ -33,7 +33,14 @@ var removeCoachAlts = function() {
 
 var renderLineItemCoachAlts = function() {
     removeLineItemCoachAlts();
-    $(".payment-info__line-item--summary").append('<p class="payment-info__line-item payment-info__line-item--coach-alts">Coach/ALTS Designation: <span class="payment-info__line-item--price"></span></p>');
+    var inputDonation = $("input[name='swimming-saves-lives']");
+    var donationVal = inputDonation.val();
+    var donationNum = parseInt(donationVal);
+    if (donationNum == 0 ) {
+        $(".payment-info__line-item--summary").last().append('<p class="payment-info__line-item payment-info__line-item--coach-alts">Coach/ALTS Designation: <span class="payment-info__line-item--price"></span></p>');
+    } else {
+        $(".payment-info__line-item--summary").find('.payment-info__line-item--donation').prepend('<p class="payment-info__line-item payment-info__line-item--coach-alts">Coach/ALTS Designation: <span class="payment-info__line-item--price"></span></p>');
+    }
     $(".payment-info__line-item--coach-alts .payment-info__line-item--price").text('$ ' + coachAltsVal + '.00');
 }
 var removeLineItemCoachAlts = function() {

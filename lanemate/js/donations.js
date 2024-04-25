@@ -51,8 +51,8 @@ var updateDonationCardValue = function() {
 
 var updateLineItemDonation = function() {
     removeLineItemDonation();
-    $(".payment-info__line-item--summary").find('.payment-info__line-item--donation').remove();
-    $(".payment-info__line-item--summary").append('<p class="payment-info__line-item payment-info__line-item--donation">Donation Total: <span class="payment-info__line-item--price"></span></p>');
+    var lineItemDonationBlank = $('<p class="payment-info__line-item payment-info__line-item--donation">Donation Total: <span class="payment-info__line-item--price"></span></p>');
+    $(".payment-info__line-item--summary").last().append(lineItemDonationBlank);
     $('.payment-info__line-item--donation .payment-info__line-item--price').text($('[name=swimming-saves-lives]').val());
     $('.payment-info__line-item--donation .payment-info__line-item--price').prepend('<span>$ </span>');
 }

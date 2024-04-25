@@ -10,18 +10,17 @@ $(document).ready(function() {
 
 // var videoVal = 120;
 
-var addVideo = function(callback) {
+var addVideo = function() {
     $(".product-option.product-option_video-stroke-analysis").addClass('selected');
     $("#addVideoStrokeAnalysis").hide();
     $("#removeVideoStrokeAnalysis").show();
     videoVal = 120;
     productCardTotal = productCardTotal + videoVal;
     renderLineItemVideo();
-    updateProductCardTotal(callback);
-    return productCardTotal;
+    updateProductCardTotal();
 }
 
-var removeVideo = function(callback) {
+var removeVideo = function() {
     $(".product-option.product-option_video-stroke-analysis").removeClass('selected');
     $("#strokeSelect").val('Select a stroke').change();
     $("#addVideoStrokeAnalysis").prop("disabled",true);
@@ -31,12 +30,18 @@ var removeVideo = function(callback) {
     productCardTotal = productCardTotal - videoVal;
     removeLineItemVideo();
     updateProductCardTotal(callback);
-    return productCardTotal;
 }
 
 var renderLineItemVideo = function() {
     removeLineItemVideo();
-    $(".payment-info__line-item--summary").append('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
+    var inputDonation = $("input[name='swimming-saves-lives']");
+    var donationVal = inputDonation.val();
+    var donationNum = parseInt(donationVal);
+    if (donationNum == 0 ) {
+        $(".payment-info__line-item--summary").last().append('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
+    } else {
+        $(".payment-info__line-item--summary").find('.payment-info__line-item--donation').prepend('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
+    }
     $(".payment-info__line-item--video-stroke-analysis .payment-info__line-item--price").text('$ ' + videoVal + '.00');
 }
 
