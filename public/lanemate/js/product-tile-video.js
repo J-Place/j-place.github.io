@@ -29,11 +29,13 @@ var removeVideo = function() {
     videoVal = 120;
     productCardTotal = productCardTotal - videoVal;
     removeLineItemVideo();
-    updateProductCardTotal(callback);
+    updateProductCardTotal();
 }
 
 var renderLineItemVideo = function() {
     removeLineItemVideo();
+    // videoVal = 120;
+    console.log("render Video line item");
     // var inputDonation = $("input[name='swimming-saves-lives']");
     // var lineItemCoachAlts = $('.payment-info__line-item--coach-alts');
     // var donationVal = inputDonation.val();
@@ -45,7 +47,8 @@ var renderLineItemVideo = function() {
     // } else {
     //     $(".payment-info__line-item--summary").find('.payment-info__line-item--donation').prepend('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
     // }
-    $(".payment-info__line-item--summary").find('.payment-info__line-item--donation').prepend('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
+    // $(".payment-info__line-item--summary").first().append('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
+    $(".payment-info__line-item--summary").last().append('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
     $(".payment-info__line-item--video-stroke-analysis .payment-info__line-item--price").text('$ ' + videoVal + '.00');
 }
 
