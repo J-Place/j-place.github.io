@@ -34,17 +34,18 @@ var removeVideo = function() {
 
 var renderLineItemVideo = function() {
     removeLineItemVideo();
-    var inputDonation = $("input[name='swimming-saves-lives']");
-    var lineItemCoachAlts = $('.payment-info__line-item--coach-alts');
-    var donationVal = inputDonation.val();
-    var donationNum = parseInt(donationVal);
-    if (lineItemCoachAlts.length === 1 ) {
-        $(".payment-info__line-item--summary").find('.payment-info__line-item--coach-alts').prepend('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
-    } else if (donationNum == 0 ) {
-        $(".payment-info__line-item--summary").first().append('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
-    } else {
-        $(".payment-info__line-item--summary").find('.payment-info__line-item--donation').prepend('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
-    }
+    // var inputDonation = $("input[name='swimming-saves-lives']");
+    // var lineItemCoachAlts = $('.payment-info__line-item--coach-alts');
+    // var donationVal = inputDonation.val();
+    // var donationNum = parseInt(donationVal);
+    // if (lineItemCoachAlts.length === 1 ) {
+    //     $(".payment-info__line-item--summary").find('.payment-info__line-item--coach-alts').prepend('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
+    // } else if (donationNum == 0 ) {
+    //     $(".payment-info__line-item--summary").first().append('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
+    // } else {
+    //     $(".payment-info__line-item--summary").find('.payment-info__line-item--donation').prepend('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
+    // }
+    $(".payment-info__line-item--summary").find('.payment-info__line-item--donation').prepend('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
     $(".payment-info__line-item--video-stroke-analysis .payment-info__line-item--price").text('$ ' + videoVal + '.00');
 }
 
