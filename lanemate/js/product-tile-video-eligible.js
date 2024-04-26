@@ -35,6 +35,7 @@ $(document).ready(function() {
 var videoEligibleVal = 0;
 // var videoEligibleSelected =  $(".product-option_video-stroke-analysis-eligible.selected");
 // var videoEligible = false;
+// var videoEligibleVal = 0;
 var isVideoEligible = false;
 
 var addVideoEligible = function() {
