@@ -50,10 +50,6 @@ $("#btnEditCreditCard").on("click", function() {
     $(".payment-information--form").show();
 });
 
-// $("#btnEditCreditCardSubmit").on("click", function() {
-//     $(".payment-information--form").hide();
-// });
-
 $("#btnEditCreditCardSubmit").on("click", function() {
     $(".payment-information--form").hide();
     $(".payment-information--confirmation").show();
@@ -98,14 +94,11 @@ $(".usms-modal-link").on("click", function() {
 $("#confirmMonthlyUpgrade").on("click", function () {
     $("#usmsModalMonthly").hide();
     $(".product-option").removeClass("product-option-selected");
-    // $(".product-option_usms-yearly").addClass("product-option-selected");
     $("body").removeClass("modal-open");
 });
 
 $("#confirmYearlyUpgrade").on("click", function () {
     $("#usmsModalYearly").hide();
-    // $(".product-option").removeClass("product-option-selected");
-    // $(".product-option_usms-yearly").addClass("product-option-selected");
     $("body").removeClass("modal-open");
 });
 
