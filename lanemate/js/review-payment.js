@@ -13,3 +13,10 @@ var updateTotalPayment = function(callback) {
     var totalPaymentNum = Number(totalPaymentVal);
     $(".payment-info__line-item--total .payment-info__line-item--price").text('$ ' + totalPaymentNum + '.00');
 };
+
+var showValidation = function() {
+    $('.help-block').addClass('has-error');
+}
+var hideValidation = function() {
+    $('.help-block').removeClass('has-error');
+}

@@ -1,4 +1,5 @@
 console.log("load product-group-usms.js");
+
 $(document).ready(function() {
 
     const mobile = window.matchMedia("screen and (max-width:1199px)").matches;
