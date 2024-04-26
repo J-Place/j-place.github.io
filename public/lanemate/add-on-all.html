@@ -342,28 +342,77 @@
     <button class="btn btn-outline btn-md add-on" id="removeUsmsPlus" style="display:none;">Remove</button>
 </div>
 <script src="/lanemate/js/product-tile-usms-plus.js"></script>
-        <div class="product-option product-option_usms-plus">
-    <p class="product-name">USMS+</p>
-    <p class="product-price">$179</p>
-    <div class="product-summary"><!-- form-group -->
-        <ul class="payment-bullets">
-            <li>Standard membership</li>
-            <li>Premium welcome box</li>
-            <li>Free virtual event entry</li>
-            <li>Entry to USA Swimming Supporters Club</li>
-            <li>Olympian webinars</li>
-            <li>Optional Video Stroke Analysis (1 free analysis per year)</li>
-            <!-- <li><a data-toggle="modal" data-target="#modalYearPlus">And even more</a></li> -->
+        
+        <div class="product-option product-option-select-btn product-option_video-stroke-analysis-eligible" style="display: none;">
+    <p class="product-name">Video Stroke Analysis</p>
+    <p class="product-price">$0</p>
+    <div class="product-summary">
+        <ul>
+            <li><strong>USMS+ members receive their first stroke analysis complimentary</strong></li>
+            <li>Single stroke analysis by certified coach</li>
+            <li>~5 five-minute long analysis</li>
+            <li>Two rounds of visual and verbal feedback</li>
+            <li>Additional resources to help improve</li>
         </ul>
     </div>
-    <button class="btn btn-outline btn-md add-on" id="addUsmsPlus">Add</button>
-    <button class="btn btn-outline btn-md add-on" id="removeUsmsPlus" style="display:none;">Remove</button>
+    <div class="form-group">
+        <select name="StrokeSelectEligible" id="strokeSelectEligible" class="form-control">
+            <option value="Select a stroke" disabled selected>Select a stroke</option> 
+            <option value="Freestyle">Freestyle</option>
+            <option value="Breaststroke">Breaststroke</option>
+            <option value="Backstroke">Backstroke</option>
+            <option value="Butterfly">Butterfly</option>
+            <option value="Starts/Turns">Starts/Turns</option>
+        </select>
+    </div>
+    <button class="btn btn-outline btn-md add-on" id="addVideoStrokeAnalysisEligible" disabled>Add</button>
+    <button class="btn btn-outline btn-md add-on" id="removeVideoStrokeAnalysisEligible" style="display:none;">Remove</button>
 </div>
-<script src="/lanemate/js/product-tile-usms-plus.js"></script>
+<script src="/lanemate/js/product-tile-video-eligible-static.js"></script>
+        <div class="product-option product-option-select-btn product-option_video-stroke-analysis">
+    <p class="product-name">Video Stroke Analysis</p>
+    <p class="product-price">$120</p>
+    <div class="product-summary">
+        <ul>
+            <li>Single stroke analysis by certified coach</li>
+            <li>~5 five-minute long analysis</li>
+            <li>Two rounds of visual and verbal feedback</li>
+            <li>Additional resources to help improve</li>
+        </ul>
+    </div>
+    <div class="form-group">
+        <select name="StrokeSelect" id="strokeSelect" class="form-control">
+            <option value="Select a stroke" disabled selected>Select a stroke</option> 
+            <option value="Freestyle">Freestyle</option>
+            <option value="Breaststroke">Breaststroke</option>
+            <option value="Backstroke">Backstroke</option>
+            <option value="Butterfly">Butterfly</option>
+            <option value="Starts/Turns">Starts/Turns</option>
+        </select>
+    </div>
+    <button class="btn btn-outline btn-md add-on" id="addVideoStrokeAnalysis" disabled>Add</button>
+    <button class="btn btn-outline btn-md add-on" id="removeVideoStrokeAnalysis" style="display:none;">Remove</button>
+</div>
+<script src="/lanemate/js/product-tile-video.js"></script>
         
-        
-        
-        <sergey-import src="lanemate/add-ons/product-tile-coach-alts-XXX" />
+        <div class="product-option product-option_coach-alts">
+    <p class="product-name">Coach/ALTS Designation</p>
+    <p class="product-price">$30</p>
+    <div class="product-summary">
+        <p>
+            Renew your USMS-Certified Masters Coach and/or ALTS designation. If you are a USMS-Certified Masters Coach and ALTS instructor, only one purchase is required to activate the designation for both certifications.
+        </p>
+        <!-- <ul>
+            <li>Single stroke analysis by certified coach</li>
+            <li>~5 five-minute long analysis</li>
+            <li>Two rounds of visual and verbal feedback</li>
+            <li>Additional resources to help improve</li>
+        </ul> -->
+    </div>
+    <button class="btn btn-outline btn-md add-on" id="addCoachAlts" >Add</button>
+    <button class="btn btn-outline btn-md add-on" id="removeCoachAlts" style="display:none;">Remove</button>
+</div>
+<script src="/lanemate/js/product-tile-coach-alts.js"></script>
     </div>
     <h4 class="card__total">
         Product Total: <span class="total-product card__total--amount">$__.__</span>
