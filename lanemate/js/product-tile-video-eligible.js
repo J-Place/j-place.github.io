@@ -17,25 +17,15 @@ $(document).ready(function() {
         removeVideoEligible();
     });
     $("#removeUsmsPlus").on('click', function() {
-        console.log("NNNNNNNNNNNNN");
         $(".product-option_video-stroke-analysis-eligible").hide();
         $(".product-option_video-stroke-analysis").show();
         $("#addVideoStrokeAnalysisEligible").prop("disabled",false);
         $("#removeVideoStrokeAnalysisEligible").prop("disabled",false);
-        // if (videoEligibleSelected.length === 1 ) {
-        //     videoVal = 120;
-        //     productCardTotal = productCardTotal - videoVal;
-        // }
         productCardTotal = productCardTotal - videoEligibleVal;
         if (coachAltsSelected.length === 1 ) {
-            // videoVal = 120;
             coachAltsVal = 30;
             productCardTotal = productCardTotal - coachAltsVal;
-            console.log("TTTTTTTTTTTTTTT");
-            console.log(productCardTotal);
         } else {
-            console.log("SSSSSSSSSSSSSSSSSSS");
-            console.log(productCardTotal);
         }
         removeVideoEligible();
         removeLineItemVideoEligible();
@@ -43,13 +33,16 @@ $(document).ready(function() {
 });
 
 var videoEligibleVal = 0;
-var videoEligibleSelected =  $(".product-option_video-stroke-analysis-eligible.selected");
+// var videoEligibleSelected =  $(".product-option_video-stroke-analysis-eligible.selected");
+// var videoEligible = false;
+var isVideoEligible = false;
 
 var addVideoEligible = function() {
     $(".product-option.product-option_video-stroke-analysis-eligible").addClass('selected');
     $("#addVideoStrokeAnalysisEligible").prop("disabled",true);
     $("#addVideoStrokeAnalysisEligible").hide();
     $("#removeVideoStrokeAnalysisEligible").show();
+    isVideoEligible = true;
     videoEligibleVal = 0;
     productCardTotal = productCardTotal + videoEligibleVal;
     renderLineItemVideoEligible();
@@ -62,6 +55,7 @@ var removeVideoEligible = function() {
     $("#addVideoStrokeAnalysisEligible").prop("disabled",true);
     $("#addVideoStrokeAnalysisEligible").show();
     $("#removeVideoStrokeAnalysisEligible").hide();
+    isVideoEligible = false;
     videoEligibleVal = 0;
     productCardTotal = productCardTotal - videoEligibleVal;
     removeLineItemVideoEligible();
@@ -71,17 +65,6 @@ var removeVideoEligible = function() {
 var renderLineItemVideoEligible = function() {
     removeLineItemVideoEligible();
     videoEligibleVal = 0;
-    // var inputDonation = $("input[name='swimming-saves-lives']");
-    // var lineItemVideo = $('.payment-info__line-item--video-stroke-analysis');
-    // var donationVal = inputDonation.val();
-    // var donationNum = parseInt(donationVal);
-    // if (lineItemVideo.length === 1 ) {
-    //     $(".payment-info__line-item--summary").find('.payment-info__line-item--coach-alts').prepend('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis-eligible">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
-    // } else if (donationNum == 0 ) {
-    //     $(".payment-info__line-item--summary").first().append('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis-eligible">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
-    // } else {
-    //     $(".payment-info__line-item--summary").find('.payment-info__line-item--donation').prepend('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis-eligible">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
-    // }
     $(".payment-info__line-item--summary").append('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis-eligible">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
     $(".payment-info__line-item--video-stroke-analysis-eligible .payment-info__line-item--price").text('$ ' + videoEligibleVal + '.00');
 }

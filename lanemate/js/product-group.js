@@ -27,8 +27,6 @@ var resetProductCardTotal = function() {
     $(".add-on-products .card__total--amount").text("$__.__");
 }
 var updateProductCardTotal = function() {
-    console.log(videoVal);
-    console.log(coachAltsVal);
     var usmsPlusSelected = $(".product-option_usms-plus.selected");
     var videoSelected = $(".product-option_video-stroke-analysis.selected");
     var coachAltsSelected = $(".product-option_coach-alts.selected");

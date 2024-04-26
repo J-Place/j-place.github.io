@@ -1,34 +1,37 @@
+<link rel="stylesheet" href="/lanemate/css/payment-info.css">
 <div class="card payment-info">
-	<h3 class="payment-info___form-header">Enter Your Payment Details</h3>
-	<!-- <p class="footnote" style="font-size: 1.6rem; text-align: center; margin-bottom: 4rem;">RTE text ...</p> -->
-    <div class="form-group card-name">
-	   <div class="col-xs-12">
-		  <label class="font-weight-bold">Name on Card</label>
-		  <div><span class="help-block help-block--cardName">Please enter a value for cardName</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardName" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardName" aria-hidden="true"></span></div>
-	   </div>
-	</div>
-	<div class="form-group card-number">
-	   <div class="col-xs-12 col-sm-7">
-		  <label class="font-weight-bold">Card Number</label>
-		  <div><span class="help-block help-block--cardNumberID">Please enter a valid credit card number</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardNumberID" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardNumberID" aria-hidden="true"></span></div>
-	   </div>
-	   <div class="col-xs-5 col-sm-2 form-membership-length__security-code">
-		  <label class="font-weight-bold">Security Code</label>
-		  <div><span class="help-block help-block--cardCodeID">Please enter a value for Security Code</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardCodeID" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardCodeID" aria-hidden="true"></span></div>
-	   </div>
-	   <div class="col-xs-7 col-sm-3">
-		  <label class="font-weight-bold">Expiration (mm/yy)</label>
-		  <div><span class="help-block help-block--expiration">Please enter a valid expiration date</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="expiration" autocomplete="true" maxlength="5" value=""><span class="glyphicon form-control-feedback glyphicon--expiration" aria-hidden="true"></span></div>
-	   </div>
-	</div>
-	<div class="form-group card-zip">
-	   <div class="col-xs-8 col-sm-4">
-		  <label class="font-weight-bold">Billing Zip</label>
-		  <div><span class="help-block help-block--cardZipID">Please enter a valid billing zip</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardZipID" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardZipID" aria-hidden="true"></span></div>
-	   </div>
+	<div class="card__content">
+		<h3 class="payment-info___form-header">Enter Your Payment Details</h3>
+		<!-- <p class="footnote" style="font-size: 1.6rem; text-align: center; margin-bottom: 4rem;">RTE text ...</p> -->
+		<div class="form-group card-name">
+		   <div class="col-xs-12">
+			  <label class="font-weight-bold">Name on Card</label>
+			  <div><span class="help-block help-block--cardName">Please enter a value for cardName</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardName" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardName" aria-hidden="true"></span></div>
+		   </div>
+		</div>
+		<div class="form-group card-number">
+		   <div class="col-xs-12 col-sm-7">
+			  <label class="font-weight-bold">Card Number</label>
+			  <div><span class="help-block help-block--cardNumberID">Please enter a valid credit card number</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardNumberID" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardNumberID" aria-hidden="true"></span></div>
+		   </div>
+		   <div class="col-xs-5 col-sm-2 form-membership-length__security-code">
+			  <label class="font-weight-bold">Security Code</label>
+			  <div><span class="help-block help-block--cardCodeID">Please enter a value for Security Code</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardCodeID" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardCodeID" aria-hidden="true"></span></div>
+		   </div>
+		   <div class="col-xs-7 col-sm-3">
+			  <label class="font-weight-bold">Expiration (mm/yy)</label>
+			  <div><span class="help-block help-block--expiration">Please enter a valid expiration date</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="expiration" autocomplete="true" maxlength="5" value=""><span class="glyphicon form-control-feedback glyphicon--expiration" aria-hidden="true"></span></div>
+		   </div>
+		</div>
+		<div class="form-group card-zip">
+		   <div class="col-xs-8 col-sm-4">
+			  <label class="font-weight-bold">Billing Zip</label>
+			  <div><span class="help-block help-block--cardZipID">Please enter a valid billing zip</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardZipID" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardZipID" aria-hidden="true"></span></div>
+		   </div>
+		</div>	
 	</div>
 	<sergey-import src="lanemate/disclaimers/add-on-standard" />
 	<sergey-import src="lanemate/disclaimers/add-on-usms-plus" />
-	<button id="btnSubmitOrder" style="width: 200px;margin-top: 4rem; margin-bottom: 6rem;" class="btn btn-primary btn-large text-uppercase pull-left">Submit Payment</button>
+	<button id="btnSubmitOrder" class="btn btn-primary btn-large text-uppercase pull-left" disabled>Submit</button>
  </div>
  <script src="/lanemate/js/payment-info.js"></script>

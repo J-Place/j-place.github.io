@@ -1,4 +1,4 @@
-console.log("load product-tile-video-eligible.js");
+console.log("load product-tile-video-eligible-static.js");
 $(document).ready(function() {
     $("#addVideoStrokeAnalysisEligible").on('click', function(updateProductCardTotal) {
         addVideoEligible(updateProductCardTotal);
@@ -8,6 +8,7 @@ $(document).ready(function() {
     });
 });
 
+var isVideoEligible = false;
 var videoEligibleVal = 0;
 var videoEligibleSelected =  $(".product-option_video-stroke-analysis-eligible.selected");
 
@@ -18,6 +19,7 @@ var addVideoEligible = function() {
     $("#removeVideoStrokeAnalysisEligible").show();
     videoEligibleVal = 0;
     productCardTotal = productCardTotal + videoEligibleVal;
+    isVideoEligible = true;
     renderLineItemVideoEligible();
     updateProductCardTotal();
 }
@@ -28,6 +30,7 @@ var removeVideoEligible = function() {
     $("#addVideoStrokeAnalysisEligible").prop("disabled",true);
     $("#addVideoStrokeAnalysisEligible").show();
     $("#removeVideoStrokeAnalysisEligible").hide();
+    isVideoEligible = false;
     videoEligibleVal = 0;
     productCardTotal = productCardTotal - videoEligibleVal;
     removeLineItemVideoEligible();
@@ -37,17 +40,6 @@ var removeVideoEligible = function() {
 var renderLineItemVideoEligible = function() {
     removeLineItemVideoEligible();
     videoEligibleVal = 0;
-    // var inputDonation = $("input[name='swimming-saves-lives']");
-    // var lineItemVideo = $('.payment-info__line-item--video-stroke-analysis');
-    // var donationVal = inputDonation.val();
-    // var donationNum = parseInt(donationVal);
-    // if (lineItemVideo.length === 1 ) {
-    //     $(".payment-info__line-item--summary").find('.payment-info__line-item--coach-alts').prepend('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis-eligible">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
-    // } else if (donationNum == 0 ) {
-    //     $(".payment-info__line-item--summary").first().append('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis-eligible">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
-    // } else {
-    //     $(".payment-info__line-item--summary").find('.payment-info__line-item--donation').prepend('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis-eligible">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
-    // }
     $(".payment-info__line-item--summary").append('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis-eligible">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
     $(".payment-info__line-item--video-stroke-analysis-eligible .payment-info__line-item--price").text('$ ' + videoEligibleVal + '.00');
 }
