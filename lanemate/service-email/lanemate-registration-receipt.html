@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width" /> <!-- Forcing initial-scale shouldn't be necessary -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Use the latest (edge) version of IE rendering engine -->
     <meta name="x-apple-disable-message-reformatting" />  <!-- Disable auto-scale in iOS 10 Mail entirely -->
-    <title>Registration Receipt – U.S. Masters Swimming</title> <!-- The title tag shows in email notifications, like Android 4.4. -->
+    <title>Registration Receipt – LaneMate</title> <!-- The title tag shows in email notifications, like Android 4.4. -->
 
     <!-- Web Font / @font-face : BEGIN -->
     <!-- NOTE: If web fonts are not required, lines 10 - 27 can be safely removed. -->
@@ -121,8 +121,8 @@
 .email-receipt__transaction,
 .email-receipt__payment {
     font-size: 14px;
-    border: 3px solid #256BB2;
-    padding: 1rem;
+    /* border: 3px solid #256BB2; */
+    padding: 1rem 0;
     text-align: center;
 }
 
@@ -291,7 +291,7 @@
         <tr>
             <td style="background-color: #ffffff; padding: 20px;">
                 <div class="email-receipt__transaction">
-                    Transaction ID #$transactionId$ for Individual Membership on $date$.
+                    Transaction ID #$transactionId$ for LaneMate Subscription on $date$.
                 </div>
             </td>
         </tr>
@@ -304,7 +304,7 @@
                             Description of Purchase:
                         </td>
                         <td width="60%" valign="top" style="background-color: #ffffff; padding: 0px 10px 5px; text-align: left;">
-                            U.S. Masters Swimming Individual Membership
+                            LaneMate Monthly Subscription
                         </td>
                     </tr>
                     <tr>
@@ -325,53 +325,77 @@
                     </tr>
                     <tr>
                         <td width="40%" valign="top" style="background-color: #ffffff; padding: 0px 10px 5px; text-align: right;">
-                            USMS Member ID:
+                            Name:
                         </td>
                         <td width="60%" valign="top" style="background-color: #ffffff; padding: 0px 10px 5px; text-align: left;">
-                            $regNumber$
+                            $fullName$
                         </td>
                     </tr>
                     <tr>
                         <td width="40%" valign="top" style="background-color: #ffffff; padding: 0px 10px 5px; text-align: right;">
-                            Contact Information:
+                            Email:
                         </td>
                         <td width="60%" valign="top" style="background-color: #ffffff; padding: 0px 10px 35px; text-align: left;">
-                            $firstname$ $lastname$<br />
-                            $address1$<br />
-                            $city$, $state$ $zip$ $country$
+                            $email$
                         </td>
                     </tr>
                     <tr>
-                        ${autoRenewPH}
+                        <td colspan="2" width="40%" valign="top" style="background-color: #ffffff; padding: 0px 10px 5px; text-align: left;">
+                            <h3>Plans and Payment</h3>
+                        </td>
                     </tr>
                     <tr>
                         <td width="40%" valign="top" style="background-color: #ffffff; padding: 0px 10px 5px; text-align: right;">
-                            Payment For:
+                            Subscription Plan and Rate:
                         </td>
                         <td width="60%" valign="top" style="background-color: #ffffff; padding: 0px 10px 5px; text-align: left;">
-                            Charge
+                            $subscriptionPlanAndRate$
                         </td>
                     </tr>
                     <tr>
                         <td width="40%" valign="bottom" style="background-color: #ffffff; padding: 0px 10px 5px; text-align: right;">
-                            $currentRegYear$ $USMSMembershipFee$:
+                            Next Plan Billing Date:
+                        </td>
+                        <td width="60%" valign="bottom" style="background-color: #ffffff; padding: 0px 10px 5px; text-align: left;">
+                            $nextPlanBillingDate$
+                        </td>
+                    </tr>
+                    <!-- <tr>${sslDonationPH}</tr>
+                    <tr>${certifiedCoachPH}</tr> -->
+                    <tr>
+                        <td colspan="2" width="40%" valign="top" style="background-color: #ffffff; padding: 30px 10px 5px; text-align: left;">
+                            <h3>Today's Charges</h3>
+                        </td>
+                    </tr>
+                        <td width="40%" valign="bottom" style="background-color: #ffffff; padding: 0px 10px 5px; text-align: right;">
+                            7-Day Free Trial:
                         </td>
                         <td width="60%" valign="bottom" style="background-color: #ffffff; padding: 0px 10px 5px; text-align: left;">
                             $$fee$
                         </td>
                     </tr>
-                    <tr>${lmscDiscountPH}</tr>
-                    <tr>${sslDonationPH}</tr>
-                    <tr>${ishofDonationPH}</tr>
-                    <tr>${lmscDonationPH}</tr>
-                    <tr>${certifiedCoachPH}</tr>
-                    <tr>${clubFeePH}</tr>
-                    <tr>
+                    </tr>
+                        <td width="40%" valign="bottom" style="background-color: #ffffff; padding: 0px 10px 5px; text-align: right;">
+                            Video Stroke Analysis:
+                        </td>
+                        <td width="60%" valign="bottom" style="background-color: #ffffff; padding: 0px 10px 5px; text-align: left;">
+                            $$fee$
+                        </td>
+                    </tr>
+                    </tr>
+                        <td width="40%" valign="bottom" style="background-color: #ffffff; padding: 0px 10px 5px; text-align: right;">
+                            Donation:
+                        </td>
+                        <td width="60%" valign="bottom" style="background-color: #ffffff; padding: 0px 10px 5px; text-align: left;">
+                            $$fee$
+                        </td>
+                    </tr>
+                    </tr>
                         <td width="40%" valign="bottom" style="background-color: #ffffff; padding: 0px 10px 5px; text-align: right;">
                             Total:
                         </td>
                         <td width="60%" valign="bottom" style="background-color: #ffffff; padding: 0px 10px 5px; text-align: left;">
-                            $$total$
+                            $$fee$
                         </td>
                     </tr>
                     <!-- Clear Spacer : BEGIN -->
@@ -382,7 +406,10 @@
                     </tr>
                     <!-- Clear Spacer : END -->
                     <tr>
-                        ${sslf501cPH}
+                        <!-- ${sslf501cPH} -->
+                        <td style="font-size: 10px; padding: 5px 10px;" colspan="2">
+                            The USA Swimming Foundation is registered as a 501(c)(3) nonprofit organization. Contributions to the USA Swimming Foundation are tax deductible to the fullest extent of the law. USA Swimming Foundation’s tax identification number is 72-1581977. You can find out more about us on guidestar.org under USA Swimming Foundation. A COPY OF THE OFFICIAL REGISTRATION AND FINANCIAL INFORMATION MAY BE OBTAINED FROM THE DIVISION OF CONSUMER SERVICES BY CALLING TOLL-FREE WITHIN THE STATE. 1- 800-HELP-FLA (435-7352) OR www.FloridaConsumerHelp.com. REGISTRATION DOES NOT IMPLY ENDORSEMENT, APPROVAL, OR RECOMMENDATION BY THE STATE." FLORIDA REGISTRATION CH22685
+                        </td>
                     </tr>
                 </table>
             </td>
