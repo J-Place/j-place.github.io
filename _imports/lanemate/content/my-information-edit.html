@@ -6,24 +6,27 @@
 </div>
 <div class="input-group fullName">
     <label for="fullName" class="label-large control-label">Name</label>
-    <p class="full-name">Firstname Lastname</p>
+    <span class="full-name">Firstname Lastname</span>
     <span>(Edit your name in the Private Membership Info section below.)</span>
 </div>
 
 <div class="input-group location">
     <label for="location" class="label-large control-label">Location</label>
+    <span class="hide">Sarasota</span>
     <textarea class="form-control" rows="1" cols="50" name="location" id="location" required="" maxlength="250"></textarea>
     <!-- <span class="help-block help-block--location">Description is required</span> -->
 </div>
 
 <div class="input-group biography">
     <label for="biography" class="label-large control-label">Biography</label>
+    <span class="hide">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</span>
     <textarea class="form-control" rows="3" cols="50" name="biography" id="biography" required="" maxlength="32768"></textarea>
     <!-- <span class="help-block help-block--biography">Description is required</span> -->
 </div>
 
 <div class="input-group checkbox-group favorite-events">
     <div class="input-group-header">Favorite events</div>
+    <span class="hide">50 Free, 100 Free</span>
     <div class="col-sm-3">
         <label class="checkbox-label" for="25Free"><div class="checkbox-container"><input type="checkbox" name="25Free" id="25Free" value="true"><span class="checkbox__placeholder"></span></div>25 Free</label>
         <label class="checkbox-label" for="50Free"><div class="checkbox-container"><input type="checkbox" name="50Free" id="50Free" value="true"><span class="checkbox__placeholder"></span></div>50 Free</label>
@@ -71,7 +74,6 @@
 <div class="form-header">
     <h3>Private Membership Information <span style="font-size:14px;">(Only you can see these fields. They can be updated by clicking the "Edit Profile" button above. NOTE: This information updates your USMS membership record.)
     </span></h3>
-    <!-- <p>(Anyone can see these on your profile.)</p> -->
 </div>
 <div class="row form-group permanent-id">
     <label class="font-weight-bold" for="PermID">Permanent ID</label>
@@ -83,6 +85,7 @@
 <div class="row form-group clearfix first-last">
     <div class="col-xs-12 col-sm-5">
         <label class="font-weight-bold" for="FirstName">First Name</label>
+        <span class="hide">Firstname</span>
         <div>
             <span class="help-block help-block--FirstName">Please enter a value for FirstName</span>
             <input type="text" min="1" max="30" class="form-control" placeholder="First Name" name="FirstName" autocomplete="true" maxlength="100" value="Firstname">
@@ -91,10 +94,12 @@
     </div>
     <div class="col-xs-12 col-sm-1">
         <label for="MiddleInitial">MI</label>
+        <span class="hide">M</span>
         <input type="text" class="form-control" placeholder="MI" name="MiddleInitial" maxlength="1">
     </div>
     <div class="col-xs-12 col-sm-6">
         <label class="font-weight-bold" for="LastName">Last Name</label>
+        <span class="hide">Lastname</span>
         <div>
             <span class="help-block help-block--LastName">Please enter a value for LastName</span>
             <input type="text" min="1" max="40" class="form-control" placeholder="Last Name" name="LastName" autocomplete="true" maxlength="100" value="Lastname">
@@ -109,8 +114,9 @@
         <span>Male</span>
     </div>
     <div class="col-xs-12 col-sm-3">
-        <label for="Gender">Gender Identity</label>
+        <!-- <label for="Gender">Gender Identity</label> -->
         <div class="form-group gender">
+            <label for="Gender">Gender Identity</label>
             <input type="hidden" name="hiddenGender">
             <span class="hide">Male</span>
             <div>
@@ -126,7 +132,7 @@
         </div>        
     </div>
     <div class="col-xs-12 col-sm-3">
-        <label for="Ethnicity">Ethnicity</label>
+        <!-- <label for="Ethnicity">Ethnicity</label> -->
         <div class="form-group ethnicity">
             <input type="hidden" name="hiddenEthnicity">
             <span class="hide">Caucasian</span>
@@ -222,11 +228,11 @@
 </div>
 
 <div class="row form-group clearfix member-info">
-    <div class="col-xs-12 col-sm-2">
+    <div class="col-xs-12 col-sm-3">
         <label class="font-weight-bold" for="regId">Registration ID</label>
         <span>####-#####</span>
     </div>
-    <div class="col-xs-12 col-sm-2">
+    <div class="col-xs-12 col-sm-3">
         <label class="font-weight-bold" for="status">Membership Status</label>
         <span>Renewed</span>
     </div>
@@ -246,30 +252,22 @@
 
 
 <div class="row form-group clearfix workouts">
-    <div class="col-xs-12 col-sm-2">
+    <div class="col-xs-12 col-sm-3">
         <label class="font-weight-bold" for="swimComConnected">Swim.com Connected</label>
-        <span>0</span>
+        <span>Yes</span>
     </div>
-    <div class="col-xs-12 col-sm-2">
+    <div class="col-xs-12 col-sm-3">
         <label class="font-weight-bold" for="swimComThisYear">Swim.com Workouts Completed This Year</label>
         <span>101</span>
     </div>
-    <div class="col-xs-12 col-sm-2">
+    <div class="col-xs-12 col-sm-3">
         <label class="font-weight-bold" for="swimComLastYear">Swim.com Workouts Completed Last Year</label>
         <span>231</span>
-    </div>
-    <div class="col-xs-12 col-sm-2">
-        <label class="font-weight-bold" for="LastYear">Last Year</label>
-        <span>2024</span>
-    </div>
-    <div class="col-xs-12 col-sm-2">
-        <label class="font-weight-bold" for="YearsTenure">Years Tenure</label>
-        <span>36</span>
     </div>
 </div>
 
 <div class="row form-group clearfix alts-donation">
-    <div class="col-xs-12 col-sm-2">
+    <div class="col-xs-12 col-sm-3">
         <label class="font-weight-bold" for="altsDonation">ALTS Donation This Year</label>
         <span>No</span>
     </div>
