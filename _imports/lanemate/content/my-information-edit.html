@@ -10,13 +10,13 @@
     <span>(Edit your name in the Private Membership Info section below.)</span>
 </div>
 
-<div class="input-group location required">
+<div class="input-group location">
     <label for="location" class="label-large control-label">Location</label>
     <textarea class="form-control" rows="1" cols="50" name="location" id="location" required="" maxlength="250"></textarea>
     <!-- <span class="help-block help-block--location">Description is required</span> -->
 </div>
 
-<div class="input-group biography required">
+<div class="input-group biography">
     <label for="biography" class="label-large control-label">Biography</label>
     <textarea class="form-control" rows="3" cols="50" name="biography" id="biography" required="" maxlength="32768"></textarea>
     <!-- <span class="help-block help-block--biography">Description is required</span> -->
@@ -51,7 +51,6 @@
         <label class="checkbox-label" for="100Butterfly"><div class="checkbox-container"><input type="checkbox" name="100Butterfly" id="100Butterfly" value="true"><span class="checkbox__placeholder"></span></div>100 Butterfly</label>
         <label class="checkbox-label" for="200Butterfly"><div class="checkbox-container"><input type="checkbox" name="200Butterfly" id="200Butterfly" value="true"><span class="checkbox__placeholder"></span></div>200 Butterfly</label>
     </div>
-
 </div>
 
 <div class="form-group favorite-stroke">
@@ -158,3 +157,120 @@
 <div class="form-group clearfix street"><div class="col-xs-12 col-sm-12"><label class="font-weight-bold" for="Address">Address</label><div><span class="help-block help-block--Address">Please enter a value for Address</span><input type="text" min="1" max="100" class="form-control" placeholder="Address" name="Address" id="address" autocomplete="true" maxlength="255"><span class="glyphicon form-control-feedback glyphicon--Address" aria-hidden="true"></span></div></div></div>
 
 <div class="form-group clearfix city-state-zip"><div class="col-xs-12 col-sm-5"><label class="font-weight-bold" for="City">City</label><div><span class="help-block help-block--City">Please enter a value for City</span><input type="text" min="1" max="80" class="form-control" placeholder="City" name="City" id="city" autocomplete="true" maxlength="100"><span class="glyphicon form-control-feedback glyphicon--City" aria-hidden="true"></span></div></div><div class="col-xs-12 col-sm-4"><div><label class="font-weight-bold" for="SelectedState">State</label><div><span class="help-block help-block--SelectedState">Please select a valid state</span><select name="SelectedState" id="state" class="form-control"><option value="-1">State</option><option value="AL">Alabama</option><option value="AK">Alaska</option><option value="AZ">Arizona</option><option value="AR">Arkansas</option><option value="CA">California</option><option value="CO">Colorado</option><option value="CT">Connecticut</option><option value="DE">Delaware</option><option value="DC">District Of Columbia</option><option value="FL">Florida</option><option value="GA">Georgia</option><option value="HI">Hawaii</option><option value="ID">Idaho</option><option value="IL">Illinois</option><option value="IN">Indiana</option><option value="IA">Iowa</option><option value="KS">Kansas</option><option value="KY">Kentucky</option><option value="LA">Louisiana</option><option value="ME">Maine</option><option value="MD">Maryland</option><option value="MA">Massachusetts</option><option value="MI">Michigan</option><option value="MN">Minnesota</option><option value="MS">Mississippi</option><option value="MO">Missouri</option><option value="MT">Montana</option><option value="NE">Nebraska</option><option value="NV">Nevada</option><option value="NH">New Hampshire</option><option value="NJ">New Jersey</option><option value="NM">New Mexico</option><option value="NY">New York</option><option value="NC">North Carolina</option><option value="ND">North Dakota</option><option value="OH">Ohio</option><option value="OK">Oklahoma</option><option value="OR">Oregon</option><option value="PA">Pennsylvania</option><option value="RI">Rhode Island</option><option value="SC">South Carolina</option><option value="SD">South Dakota</option><option value="TN">Tennessee</option><option value="TX">Texas</option><option value="UT">Utah</option><option value="VT">Vermont</option><option value="VA">Virginia</option><option value="WA">Washington</option><option value="WV">West Virginia</option><option value="WI">Wisconsin</option><option value="WY">Wyoming</option></select></div></div></div><div class="col-xs-7 col-sm-3"><input type="hidden" name="hiddenZip" value=""><label class="font-weight-bold" for="ZipUs">Zip Code</label><div><span class="help-block help-block--ZipInt">Please enter a value for Zip</span><input type="text" min="1" max="15" class="form-control" placeholder="Zip Code" name="ZipInt" id="zipInt" autocomplete="true" maxlength="100" style="display: none;"><span class="glyphicon form-control-feedback glyphicon--ZipInt" aria-hidden="true"></span></div><div><span class="help-block help-block--ZipUs">Please enter a value for Zip</span><input type="text" min="1" max="15" class="form-control" placeholder="Zip Code" name="ZipUs" id="zipUs" autocomplete="true" maxlength="10" style="display: block;"><span class="glyphicon form-control-feedback glyphicon--ZipUs" aria-hidden="true"></span></div><input type="hidden" name="swimmerId" id="swimmerId" value=""><input type="hidden" name="salesforceId" id="salesforceId" value=""><input type="hidden" name="isRenewal" id="isRenewal" value="false"></div></div>
+
+<div class="form-group clearfix email-phone">
+    <div class="col-xs-12 col-sm-6">
+        <label class="font-weight-bold" for="Email">Email</label>
+        <span>email@address.com</span>
+        <!-- <div class="hide">
+            <span class="help-block help-block--Email">Please enter a valid email</span>
+            <input type="text" min="1" max="40" class="form-control" placeholder="Last Name" name="Email" autocomplete="true" maxlength="100" value="Email">
+            <span class="glyphicon form-control-feedback glyphicon--Email" aria-hidden="true"></span>
+        </div> -->
+    </div>
+    <div class="col-xs-12 col-sm-6">
+        <label class="font-weight-bold" for="Phone">Phone</label>
+        <span class="hide">111-111-1111</span>
+        <div>
+            <span class="help-block help-block--Phone">Please enter your phone number</span>
+            <input type="text" min="1" max="40" class="form-control" placeholder="Last Name" name="Phone" autocomplete="true" maxlength="100" value="Phone">
+            <span class="glyphicon form-control-feedback glyphicon--Phone" aria-hidden="true"></span>
+        </div>
+    </div>
+</div>
+
+<div class="input-group checkbox-group mail-text">
+    <div class="input-group-header">&nbsp;</div>
+    <div class="col-sm-6">
+        <label class="checkbox-label" for="sendMail"><div class="checkbox-container"><input type="checkbox" name="sendMail" id="sendMail" value="true"><span class="checkbox__placeholder"></span></div>USMS can send me physical mail (aside from SWIMMER magazine)</label>
+        <label class="checkbox-label" for="sendText"><div class="checkbox-container"><input type="checkbox" name="sendText" id="sendText" value="true"><span class="checkbox__placeholder"></span></div>USMS can text me</label>
+    </div>
+</div>
+
+<div class="input-group checkbox-group interests">
+    <div class="input-group-header">Interests</div>
+    <div class="col-sm-3">
+        <label class="checkbox-label" for="healthFitness">
+            <div class="checkbox-container">
+                <input type="checkbox" name="healthFitness" id="healthFitness" value="true">
+                <span class="checkbox__placeholder"></span>
+            </div>
+            Health and Fitness
+        </label>
+        <label class="checkbox-label" for="triathlon">
+            <div class="checkbox-container">
+                <input type="checkbox" name="triathlon" id="triathlon" value="true">
+                <span class="checkbox__placeholder"></span>
+            </div>
+            Triathlon
+        </label>
+        <label class="checkbox-label" for="openWater">
+            <div class="checkbox-container">
+                <input type="checkbox" name="openWater" id="openWater" value="true">
+                <span class="checkbox__placeholder"></span>
+            </div>
+            Open Water
+        </label>
+        <label class="checkbox-label" for="competition">
+            <div class="checkbox-container">
+                <input type="checkbox" name="competition" id="competition" value="true">
+                <span class="checkbox__placeholder"></span>
+            </div>
+            Competition
+        </label>
+    </div>
+</div>
+
+<div class="row form-group clearfix member-info">
+    <div class="col-xs-12 col-sm-2">
+        <label class="font-weight-bold" for="regId">Registration ID</label>
+        <span>####-#####</span>
+    </div>
+    <div class="col-xs-12 col-sm-2">
+        <label class="font-weight-bold" for="status">Membership Status</label>
+        <span>Renewed</span>
+    </div>
+    <div class="col-xs-12 col-sm-2">
+        <label class="font-weight-bold" for="FirstYear">First Year</label>
+        <span>1988</span>
+    </div>
+    <div class="col-xs-12 col-sm-2">
+        <label class="font-weight-bold" for="LastYear">Last Year</label>
+        <span>2024</span>
+    </div>
+    <div class="col-xs-12 col-sm-2">
+        <label class="font-weight-bold" for="YearsTenure">Years Tenure</label>
+        <span>36</span>
+    </div>
+</div>
+
+
+<div class="row form-group clearfix workouts">
+    <div class="col-xs-12 col-sm-2">
+        <label class="font-weight-bold" for="swimComConnected">Swim.com Connected</label>
+        <span>0</span>
+    </div>
+    <div class="col-xs-12 col-sm-2">
+        <label class="font-weight-bold" for="swimComThisYear">Swim.com Workouts Completed This Year</label>
+        <span>101</span>
+    </div>
+    <div class="col-xs-12 col-sm-2">
+        <label class="font-weight-bold" for="swimComLastYear">Swim.com Workouts Completed Last Year</label>
+        <span>231</span>
+    </div>
+    <div class="col-xs-12 col-sm-2">
+        <label class="font-weight-bold" for="LastYear">Last Year</label>
+        <span>2024</span>
+    </div>
+    <div class="col-xs-12 col-sm-2">
+        <label class="font-weight-bold" for="YearsTenure">Years Tenure</label>
+        <span>36</span>
+    </div>
+</div>
+
+<div class="row form-group clearfix alts-donation">
+    <div class="col-xs-12 col-sm-2">
+        <label class="font-weight-bold" for="altsDonation">ALTS Donation This Year</label>
+        <span>No</span>
+    </div>
+</div>
