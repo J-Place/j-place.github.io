@@ -66,7 +66,7 @@ var hideInputsPublic = function() {
     inputCheckboxPublic.hide();
     inputSelectPublic.hide();
     inputTextPublic.hide();
-    $(".form-group-display-value").show();
+    $(".public-information .form-group-display-value").show();
 }
 
 var showInputsPublic = function() {
@@ -74,7 +74,7 @@ var showInputsPublic = function() {
     inputCheckboxPublic.show();
     inputSelectPublic.show();
     inputTextPublic.show();
-    $(".form-group-display-value").hide();
+    $(".public-information .form-group-display-value").hide();
 }
 
 var hideInputsPrivate = function() {
@@ -88,7 +88,7 @@ var hideInputsPrivate = function() {
     $(".swimmer").addClass('disabled');
     labelSwimmer.show();
     inputSwimmer.prop("disabled", true);
-    $(".form-group-display-value").show();
+    $(".private-information .form-group-display-value").show();
 }
 
 var showInputsPrivate = function() {
@@ -102,5 +102,5 @@ var showInputsPrivate = function() {
     $(".swimmer").removeClass('disabled');
     labelSwimmer.show();
     inputSwimmer.prop("disabled", false);
-    $(".form-group-display-value").hide();
+    $(".private-information .form-group-display-value").hide();
 }
