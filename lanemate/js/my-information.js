@@ -1,10 +1,21 @@
 $(document).ready(function() {
     hideInputsPublic();
     hideInputsPrivate();
+    inputMailText.show();
+    inputSwimmer.show();
+    $(".form-group-display-value").show();
 });
 
 $("#editPublicInfo").on( "click", function() {
     showInputsPublic();
+    toggleEditButtonsPublic();
+});
+$("#cancelPublicInfo").on( "click", function() {
+    hideInputsPublic();
+    toggleEditButtonsPublic();
+});
+$("#confirmPublicInfoModal").on( "click", function() {
+    hideInputsPublic();
     toggleEditButtonsPublic();
 });
 
@@ -12,23 +23,11 @@ $("#editPrivateInfo").on( "click", function() {
     showInputsPrivate();
     toggleEditButtonsPrivate();
 });
-
-$("#cancelPublicInfo").on( "click", function() {
-    hideInputsPublic();
-    toggleEditButtonsPublic();
-});
-
 $("#cancelPrivateInfo").on( "click", function() {
     hideInputsPrivate();
     toggleEditButtonsPrivate();
 });
-
-$("#savePublicInfo").on( "click", function() {
-    hideInputsPublic();
-    toggleEditButtonsPublic();
-});
-
-$("#savePrivateInfo").on( "click", function() {
+$("#confirmPrivateInfoModal").on( "click", function() {
     hideInputsPrivate();
     toggleEditButtonsPrivate();
 });
@@ -39,7 +38,14 @@ var inputSelectPublic = $(".public-information .form-group select");
 var inputTextPublic = $(".public-information .form-group input[type=text]");
 
 var inputTextAreaPrivate = $(".private-information .input-group textarea");
-var inputCheckboxPrivate = $(".private-information .checkbox-label");
+var inputCheckboxPrivate = $(".private-information .checkbox-group:not('mail-text') .checkbox-label");
+
+var labelMailText = $(".private-information .mail-text .checkbox-label");
+var inputMailText = $(".private-information .mail-text input[type=checkbox");
+
+var labelSwimmer = $(".private-information .swimmer .checkbox-label");
+var inputSwimmer = $(".private-information .swimmer input[type=checkbox");
+
 var inputSelectPrivate = $(".private-information .form-group select");
 var inputTextPrivate = $(".private-information .form-group input[type=text]");
 
@@ -60,7 +66,7 @@ var hideInputsPublic = function() {
     inputCheckboxPublic.hide();
     inputSelectPublic.hide();
     inputTextPublic.hide();
-    $(".public-information .hide").show();
+    $(".form-group-display-value").show();
 }
 
 var showInputsPublic = function() {
@@ -68,7 +74,7 @@ var showInputsPublic = function() {
     inputCheckboxPublic.show();
     inputSelectPublic.show();
     inputTextPublic.show();
-    $(".public-information .hide").hide();
+    $(".form-group-display-value").hide();
 }
 
 var hideInputsPrivate = function() {
@@ -76,7 +82,13 @@ var hideInputsPrivate = function() {
     inputCheckboxPrivate.hide();
     inputSelectPrivate.hide();
     inputTextPrivate.hide();
-    $(".private-information .hide").show();
+    $(".mail-text").addClass('disabled');
+    labelMailText.show();
+    inputMailText.prop("disabled", true);
+    $(".swimmer").addClass('disabled');
+    labelSwimmer.show();
+    inputSwimmer.prop("disabled", true);
+    $(".form-group-display-value").show();
 }
 
 var showInputsPrivate = function() {
@@ -84,5 +96,11 @@ var showInputsPrivate = function() {
     inputCheckboxPrivate.show();
     inputSelectPrivate.show();
     inputTextPrivate.show();
-    $(".private-information .hide").hide();
+    $(".mail-text").removeClass('disabled');
+    labelMailText.show();
+    inputMailText.prop("disabled", false);
+    $(".swimmer").removeClass('disabled');
+    labelSwimmer.show();
+    inputSwimmer.prop("disabled", false);
+    $(".form-group-display-value").hide();
 }

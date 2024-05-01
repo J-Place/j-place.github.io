@@ -1,3 +1,43 @@
+/* These should not be needed in source, or compared with source */
+.modal {
+    align-content: center;
+}
+.modal-content {
+    border: 0 none;
+}
+.modal-body {
+    padding-top: 2rem;
+}
+
+.checkbox-group.disabled .checkbox-label,
+.checkbox-group.disabled .checkbox-container,
+.checkbox-group.disabled input {
+    cursor: default;
+}
+
+/* input:disabled + .checkbox__placeholder, */
+.checkbox-group.disabled input[type=checkbox]:checked ~ .checkbox__placeholder {
+    background-color: #666;
+}
+.checkbox-group.disabled .checkbox-container {
+-webkit-text-stroke: #666;
+}
+
+.form-group-display-value {
+    font-size: 1.8rem;
+    font-weight: 300;
+    line-height: 1.8rem;
+}
+
+.social-share-icons {
+    justify-content: flex-start;
+}
+
+.social-share-icons .fa {
+    padding-top: 1rem;
+    font-size: 3.5rem !important;
+}
+
 .my-account__container h3,
 .my-account__container p {
     text-align: left;
@@ -10,6 +50,10 @@
     line-height: 1.6rem;
     margin: 2rem 0 1rem;
     width: 100%;
+}
+
+.form-group-header {
+    margin: 1rem auto;
 }
 
 .full-name {
@@ -27,6 +71,7 @@
     margin-top: 3rem;
     padding-top: 4rem;    
 }
+.form-group,
 .form-header {
     width: 100%;
 }
