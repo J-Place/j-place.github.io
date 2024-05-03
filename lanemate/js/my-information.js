@@ -4,6 +4,8 @@ $(document).ready(function() {
     inputMailText.show();
     inputSwimmer.show();
     $(".form-group-display-value").show();
+    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="popover"]').popover();
 });
 
 $("#editPublicInfo").on( "click", function() {
