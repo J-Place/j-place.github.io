@@ -8,43 +8,34 @@ $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
 });
 
-// env = 'lanemate';
-
 var setEnv = function() {
     if (env === 'usms') {
         console.log("environment is usms");
-        // $('.my-account__container').toggleClass('usms');
-        // $('.my-account__container').toggleClass('lanemate');
+        $('.my-account__container').addClass('usms');
+        $('.my-account__container').removeClass('lanemate');
     } else {
         console.log("environment is lanemate");
-        $('.my-account__container').toggleClass('usms');
-        $('.my-account__container').toggleClass('lanemate');
+        $('.my-account__container').removeClass('usms');
+        $('.my-account__container').addClass('lanemate');
     }
 };
 
+$('#showUsmsView').on('click', function() {
+    env = 'usms';
+    setEnv();
+    $('#showUsmsView').removeClass('btn-outline');
+    $('#showLanemateView').addClass('btn-outline');
+    // $(this).removeClass('btn-outline');
+});
 
+$('#showLanemateView').on('click', function() {
+    env = 'lanemate';
+    setEnv();
+    $('#showUsmsView').addClass('btn-outline');
+    $('#showLanemateView').removeClass('btn-outline');
+    // $(this).removeClass('btn-outline');
+});
 
-
-
-// // Public
-// $("#editPublicInfo").on( "click", function() {
-//     showInputsPublic();
-//     toggleEditButtonsPublic();
-// });
-// $("#cancelPublicInfo").on( "click", function() {
-//     hideInputsPublic();
-//     toggleEditButtonsPublic();
-// });
-// $("#confirmPublicInfoModal").on( "click", function() {
-//     hideInputsPublic();
-//     toggleEditButtonsPublic();
-// });
-
-
-
-
-
-// Private
 $("#editPrivateInfo").on( "click", function() {
     showInputsPrivate();
     toggleEditButtonsPrivate();
@@ -77,29 +68,6 @@ var inputSelectPrivate = $(".general-information .form-group select");
 var inputTextPrivate = $(".general-information .form-group input[type=text]");
 
 
-// var toggleEditButtonsPublic = function() {
-//     $("#editPublicInfo").toggle();
-//     $("#savePublicInfo").toggle();
-//     $("#cancelPublicInfo").toggle();    
-// };
-
-// var hideInputsPublic = function() {
-//     inputTextAreaPublic.hide();
-//     inputCheckboxPublic.hide();
-//     inputSelectPublic.hide();
-//     inputTextPublic.hide();
-//     $(".public-information .form-group-display-value").show();
-// }
-
-// var showInputsPublic = function() {
-//     inputTextAreaPublic.show();
-//     inputCheckboxPublic.show();
-//     inputSelectPublic.show();
-//     inputTextPublic.show();
-//     $(".public-information .form-group-display-value").hide();
-// }
-
-
 var toggleEditButtonsPrivate = function() {
     $("#editPrivateInfo").toggle();
     $("#savePrivateInfo").toggle();
@@ -110,14 +78,21 @@ var hideInputsPrivate = function() {
     inputTextPrivate.hide();
     inputTextAreaPrivate.hide();
     // inputCheckboxPrivate.hide();
-    // inputSelectPrivate.hide();
+    inputSelectPrivate.hide();
     $('#SwimmerPrint').hide();
     $(".mail-text").addClass('disabled');
     // labelMailTextUsms.show();
     // inputMailTextUsms.prop("disabled", true);
+
     $('#sendMailUSMS').prop("disabled", true);
     $('#sendTextUSMS').prop("disabled", true);
+
+    $('#sendMailLaneMate').prop("disabled", true);
+    $('#sendTextLaneMate').prop("disabled", true);
+
+    $('.interests .checkbox-label').hide();
     $('.interests-swimmer input[type=checkbox').prop("disabled", true);
+    inputSelectPrivate.prop("disabled", true);
     $(".swimmer").addClass('disabled');
     labelSwimmer.show();
     inputSwimmer.prop("disabled", true);
@@ -128,14 +103,21 @@ var showInputsPrivate = function(env) {
     inputTextPrivate.show();
     inputTextAreaPrivate.show();
     // inputCheckboxPrivate.show();
-    // inputSelectPrivate.show();
+    inputSelectPrivate.show();
     $('#SwimmerPrint').show();
     $(".mail-text").removeClass('disabled');
     // labelMailTextUsms.show();
     // inputMailTextUsms.prop("disabled", false);
+
     $('#sendMailUSMS').prop("disabled", false);
     $('#sendTextUSMS').prop("disabled", false);
+
+    $('#sendMailLaneMate').prop("disabled", false);
+    $('#sendTextLaneMate').prop("disabled", false);
+
+    $('.interests .checkbox-label').show();
     $('.interests-swimmer input[type=checkbox').prop("disabled", false);
+    inputSelectPrivate.prop("disabled", false);
     $(".swimmer").removeClass('disabled');
     labelSwimmer.show();
     inputSwimmer.prop("disabled", false);
