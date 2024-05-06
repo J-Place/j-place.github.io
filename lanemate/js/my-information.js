@@ -1,27 +1,24 @@
 $(document).ready(function() {
     // hideInputsPublic();
     hideInputsPrivate();
-    // inputMailText.show();
+    // inputMailTextUsms.show();
     // inputSwimmer.show();
     $(".form-group-display-value").show();
     $('[data-toggle="tooltip"]').tooltip();
     $('[data-toggle="popover"]').popover();
 });
 
+// env = 'lanemate';
 
-
-
-var setEnv = function(env) {
+var setEnv = function() {
     if (env === 'usms') {
-        alert("usms");
+        console.log("environment is usms");
         // $('.my-account__container').toggleClass('usms');
         // $('.my-account__container').toggleClass('lanemate');
-    } else if (env === 'lanemate') {
-        alert("lanemate");
+    } else {
+        console.log("environment is lanemate");
         $('.my-account__container').toggleClass('usms');
         $('.my-account__container').toggleClass('lanemate');
-    } else {
-        alert("other");
     }
 };
 
@@ -70,8 +67,8 @@ $("#confirmPrivateInfoModal").on( "click", function() {
 var inputTextAreaPrivate = $(".general-information .input-group textarea");
 var inputCheckboxPrivate = $(".general-information .checkbox-group:not('mail-text') .checkbox-label");
 
-var labelMailText = $(".general-information .mail-text .checkbox-label");
-var inputMailText = $(".general-information .mail-text input[type=checkbox");
+// var labelMailTextUsms = $(".general-information .mail-text-usms .checkbox-label");
+// var inputMailTextUsms = $(".general-information .mail-text-usms input[type=checkbox");
 
 var labelSwimmer = $(".general-information .swimmer label");
 var inputSwimmer = $(".general-information .swimmer select");
@@ -110,29 +107,36 @@ var toggleEditButtonsPrivate = function() {
 };
 
 var hideInputsPrivate = function() {
-    inputTextAreaPrivate.hide();
-    inputCheckboxPrivate.hide();
-    inputSelectPrivate.hide();
-    $('#SwimmerPrint').hide();
     inputTextPrivate.hide();
+    inputTextAreaPrivate.hide();
+    // inputCheckboxPrivate.hide();
+    // inputSelectPrivate.hide();
+    $('#SwimmerPrint').hide();
     $(".mail-text").addClass('disabled');
-    labelMailText.show();
-    inputMailText.prop("disabled", true);
-    // $(".swimmer").addClass('disabled');
+    // labelMailTextUsms.show();
+    // inputMailTextUsms.prop("disabled", true);
+    $('#sendMailUSMS').prop("disabled", true);
+    $('#sendTextUSMS').prop("disabled", true);
+    $('.interests-swimmer input[type=checkbox').prop("disabled", true);
+    $(".swimmer").addClass('disabled');
     labelSwimmer.show();
     inputSwimmer.prop("disabled", true);
     $(".general-information .form-group-display-value").show();
 }
 
 var showInputsPrivate = function(env) {
-    inputTextAreaPrivate.show();
-    inputCheckboxPrivate.show();
-    inputSelectPrivate.show();
     inputTextPrivate.show();
+    inputTextAreaPrivate.show();
+    // inputCheckboxPrivate.show();
+    // inputSelectPrivate.show();
+    $('#SwimmerPrint').show();
     $(".mail-text").removeClass('disabled');
-    labelMailText.show();
-    inputMailText.prop("disabled", false);
-    // $(".swimmer").removeClass('disabled');
+    // labelMailTextUsms.show();
+    // inputMailTextUsms.prop("disabled", false);
+    $('#sendMailUSMS').prop("disabled", false);
+    $('#sendTextUSMS').prop("disabled", false);
+    $('.interests-swimmer input[type=checkbox').prop("disabled", false);
+    $(".swimmer").removeClass('disabled');
     labelSwimmer.show();
     inputSwimmer.prop("disabled", false);
     $(".general-information .form-group-display-value").hide();

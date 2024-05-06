@@ -68,7 +68,7 @@
         </div>
         <div class="col-xs-12 col-sm-3">
             <!-- <label for="Gender">Gender Identity</label> -->
-            <div class="form-groupXXX gender">
+            <div class= gender">
                 <label for="Gender">Gender Identity</label>
                 <input type="hidden" name="hiddenGender">
                 <span class="form-group-display-value">Male</span>
@@ -85,7 +85,7 @@
             </div>        
         </div>
         <div class="col-xs-12 col-sm-3">
-            <div class="form-groupXXX ethnicity">
+            <div class= ethnicity">
                 <label for="Ethnicity">Ethnicity</label>
                 <input type="hidden" name="hiddenEthnicity">
                 <span class="form-group-display-value">Caucasian</span>
@@ -190,7 +190,57 @@
         </div>
     </div>
 
-    <div class="row input-group checkbox-group interests">
+
+    <div class=" row form-group interests-swimmer">
+        <div class="col-sm-5 input-group checkbox-group interests">
+            <div class="input-group-header">Interests</div>
+            <span class="form-group-display-value">Health and Fitness, Triathlon</span>
+            <div class="col-xs-12 col-sm-4">
+                <label class="checkbox-label" for="healthFitness">
+                    <div class="checkbox-container">
+                        <input type="checkbox" name="healthFitness" id="healthFitness" value="true" checked>
+                        <span class="checkbox__placeholder"></span>
+                    </div>
+                    Health and Fitness
+                </label>
+                <label class="checkbox-label" for="triathlon">
+                    <div class="checkbox-container">
+                        <input type="checkbox" name="triathlon" id="triathlon" value="true" checked>
+                        <span class="checkbox__placeholder"></span>
+                    </div>
+                    Triathlon
+                </label>
+                <label class="checkbox-label" for="openWater">
+                    <div class="checkbox-container">
+                        <input type="checkbox" name="openWater" id="openWater" value="true">
+                        <span class="checkbox__placeholder"></span>
+                    </div>
+                    Open Water
+                </label>
+                <label class="checkbox-label" for="competition">
+                    <div class="checkbox-container">
+                        <input type="checkbox" name="competition" id="competition" value="true">
+                        <span class="checkbox__placeholder"></span>
+                    </div>
+                    Competition
+                </label>
+            </div>
+        </div>        
+        <div class="col-sm-5 swimmer-print">
+            <label for="swimmerPrint">How would you like to receive your copy of SWIMMER magazine? Our digital edition now offers a more readable experience.</label>
+            <input type="hidden" name="hiddenSwimmerPrint">
+            <span class="form-group-display-value">Digital</span>
+            <div>
+                <span class="help-block help-block--SwimmerPrint"></span>
+                <select name="swimmerPrint" id="SwimmerPrint" class="form-control" style="min-width: 180px;">
+                    <option value="digital">Digital</option>
+                    <option value="print">Print</option>
+                </select>
+            </div>
+        </div>    
+    </div>
+
+    <!-- <div class="row input-group checkbox-group interests">
         <div class="input-group-header">Interests</div>
         <span class="form-group-display-value">Health and Fitness, Triathlon</span>
         <div class="col-xs-12 col-sm-4">
@@ -224,6 +274,20 @@
             </label>
         </div>
     </div>
+    <div class="row form-group swimmer" id="swimmerMagazine">
+        <div class="col-sm-4 swimmer-print">
+            <label for="swimmerPrint">How would you like to receive your copy of SWIMMER magazine? Our digital edition now offers a more readable experience.</label>
+            <input type="hidden" name="hiddenSwimmerPrint">
+            <span class="form-group-display-value">Digital</span>
+            <div>
+                <span class="help-block help-block--SwimmerPrint"></span>
+                <select name="swimmerPrint" id="SwimmerPrint" class="form-control" style="min-width: 180px;">
+                    <option value="digital">Digital</option>
+                    <option value="print">Print</option>
+                </select>
+            </div>
+        </div>
+    </div> -->
 
 </div>
 <div class="registration-information">
@@ -255,7 +319,7 @@
         </div>
     </div>
     <div class="row input-group club-lmsc usms-only">
-        <div class="col-xs-12 col-sm-4" id="clubAbbr">
+        <div class="col-xs-12 col-sm-3" id="clubAbbr">
             <label class="font-weight-bold" for="clubAbbr">Club Abbr</label>
             <span class="form-group-display-value-static">SHARK</span>
         </div>
@@ -375,20 +439,5 @@
             </label>
         </div>
     </div> -->
-
-    <div class="row form-group swimmer" id="swimmerMagazine">
-        <div class="col-sm-4 form-groupXXX swimmer-print">
-            <label for="swimmerPrint">How would you like to receive your copy of SWIMMER magazine? Our digital edition now offers a more readable experience.</label>
-            <input type="hidden" name="hiddenSwimmerPrint">
-            <span class="form-group-display-value">Digital</span>
-            <div>
-                <span class="help-block help-block--SwimmerPrint"></span>
-                <select name="swimmerPrint" id="SwimmerPrint" class="form-control" style="min-width: 180px;">
-                    <option value="digital">Digital</option>
-                    <option value="print">Print</option>
-                </select>
-            </div>
-        </div>
-    </div>
 
 </div>
