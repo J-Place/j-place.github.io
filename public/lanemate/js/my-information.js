@@ -36,17 +36,25 @@ $('#showLanemateView').on('click', function() {
     // $(this).removeClass('btn-outline');
 });
 
+$("#showValidation").on('click', function() {
+    $(this).toggleClass('btn-outline')
+    $('.help-block').toggleClass('has-error');
+});
+
 $("#editPrivateInfo").on( "click", function() {
     showInputsPrivate();
     toggleEditButtonsPrivate();
+    $("#showValidation").show();
 });
 $("#cancelPrivateInfo").on( "click", function() {
     hideInputsPrivate();
     toggleEditButtonsPrivate();
+    $("#showValidation").hide();
 });
 $("#confirmPrivateInfoModal").on( "click", function() {
     hideInputsPrivate();
     toggleEditButtonsPrivate();
+    $("#showValidation").hide();
 });
 
 
