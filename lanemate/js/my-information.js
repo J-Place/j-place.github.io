@@ -1,26 +1,53 @@
 $(document).ready(function() {
-    hideInputsPublic();
+    // hideInputsPublic();
     hideInputsPrivate();
-    inputMailText.show();
-    inputSwimmer.show();
+    // inputMailText.show();
+    // inputSwimmer.show();
     $(".form-group-display-value").show();
     $('[data-toggle="tooltip"]').tooltip();
     $('[data-toggle="popover"]').popover();
 });
 
-$("#editPublicInfo").on( "click", function() {
-    showInputsPublic();
-    toggleEditButtonsPublic();
-});
-$("#cancelPublicInfo").on( "click", function() {
-    hideInputsPublic();
-    toggleEditButtonsPublic();
-});
-$("#confirmPublicInfoModal").on( "click", function() {
-    hideInputsPublic();
-    toggleEditButtonsPublic();
-});
 
+
+
+var setEnv = function(env) {
+    if (env === 'usms') {
+        alert("usms");
+        // $('.my-account__container').toggleClass('usms');
+        // $('.my-account__container').toggleClass('lanemate');
+    } else if (env === 'lanemate') {
+        alert("lanemate");
+        $('.my-account__container').toggleClass('usms');
+        $('.my-account__container').toggleClass('lanemate');
+    } else {
+        alert("other");
+    }
+};
+
+
+
+
+
+// // Public
+// $("#editPublicInfo").on( "click", function() {
+//     showInputsPublic();
+//     toggleEditButtonsPublic();
+// });
+// $("#cancelPublicInfo").on( "click", function() {
+//     hideInputsPublic();
+//     toggleEditButtonsPublic();
+// });
+// $("#confirmPublicInfoModal").on( "click", function() {
+//     hideInputsPublic();
+//     toggleEditButtonsPublic();
+// });
+
+
+
+
+
+// Private
 $("#editPrivateInfo").on( "click", function() {
     showInputsPrivate();
     toggleEditButtonsPrivate();
@@ -34,28 +61,47 @@ $("#confirmPrivateInfoModal").on( "click", function() {
     toggleEditButtonsPrivate();
 });
 
-var inputTextAreaPublic = $(".public-information .input-group textarea");
-var inputCheckboxPublic = $(".public-information .checkbox-label");
-var inputSelectPublic = $(".public-information .form-group select");
-var inputTextPublic = $(".public-information .form-group input[type=text]");
 
-var inputTextAreaPrivate = $(".private-information .input-group textarea");
-var inputCheckboxPrivate = $(".private-information .checkbox-group:not('mail-text') .checkbox-label");
+// var inputTextAreaPublic = $(".public-information .input-group textarea");
+// var inputCheckboxPublic = $(".public-information .checkbox-label");
+// var inputSelectPublic = $(".public-information .form-group select");
+// var inputTextPublic = $(".public-information .form-group input[type=text]");
 
-var labelMailText = $(".private-information .mail-text .checkbox-label");
-var inputMailText = $(".private-information .mail-text input[type=checkbox");
+var inputTextAreaPrivate = $(".general-information .input-group textarea");
+var inputCheckboxPrivate = $(".general-information .checkbox-group:not('mail-text') .checkbox-label");
 
-var labelSwimmer = $(".private-information .swimmer .checkbox-label");
-var inputSwimmer = $(".private-information .swimmer input[type=checkbox");
+var labelMailText = $(".general-information .mail-text .checkbox-label");
+var inputMailText = $(".general-information .mail-text input[type=checkbox");
 
-var inputSelectPrivate = $(".private-information .form-group select");
-var inputTextPrivate = $(".private-information .form-group input[type=text]");
+var labelSwimmer = $(".general-information .swimmer label");
+var inputSwimmer = $(".general-information .swimmer select");
 
-var toggleEditButtonsPublic = function() {
-    $("#editPublicInfo").toggle();
-    $("#savePublicInfo").toggle();
-    $("#cancelPublicInfo").toggle();    
-};
+var inputSelectPrivate = $(".general-information .form-group select");
+var inputTextPrivate = $(".general-information .form-group input[type=text]");
+
+
+// var toggleEditButtonsPublic = function() {
+//     $("#editPublicInfo").toggle();
+//     $("#savePublicInfo").toggle();
+//     $("#cancelPublicInfo").toggle();    
+// };
+
+// var hideInputsPublic = function() {
+//     inputTextAreaPublic.hide();
+//     inputCheckboxPublic.hide();
+//     inputSelectPublic.hide();
+//     inputTextPublic.hide();
+//     $(".public-information .form-group-display-value").show();
+// }
+
+// var showInputsPublic = function() {
+//     inputTextAreaPublic.show();
+//     inputCheckboxPublic.show();
+//     inputSelectPublic.show();
+//     inputTextPublic.show();
+//     $(".public-information .form-group-display-value").hide();
+// }
+
 
 var toggleEditButtonsPrivate = function() {
     $("#editPrivateInfo").toggle();
@@ -63,37 +109,22 @@ var toggleEditButtonsPrivate = function() {
     $("#cancelPrivateInfo").toggle();    
 };
 
-var hideInputsPublic = function() {
-    inputTextAreaPublic.hide();
-    inputCheckboxPublic.hide();
-    inputSelectPublic.hide();
-    inputTextPublic.hide();
-    $(".public-information .form-group-display-value").show();
-}
-
-var showInputsPublic = function() {
-    inputTextAreaPublic.show();
-    inputCheckboxPublic.show();
-    inputSelectPublic.show();
-    inputTextPublic.show();
-    $(".public-information .form-group-display-value").hide();
-}
-
 var hideInputsPrivate = function() {
     inputTextAreaPrivate.hide();
     inputCheckboxPrivate.hide();
     inputSelectPrivate.hide();
+    $('#SwimmerPrint').hide();
     inputTextPrivate.hide();
     $(".mail-text").addClass('disabled');
     labelMailText.show();
     inputMailText.prop("disabled", true);
-    $(".swimmer").addClass('disabled');
+    // $(".swimmer").addClass('disabled');
     labelSwimmer.show();
     inputSwimmer.prop("disabled", true);
-    $(".private-information .form-group-display-value").show();
+    $(".general-information .form-group-display-value").show();
 }
 
-var showInputsPrivate = function() {
+var showInputsPrivate = function(env) {
     inputTextAreaPrivate.show();
     inputCheckboxPrivate.show();
     inputSelectPrivate.show();
@@ -101,8 +132,39 @@ var showInputsPrivate = function() {
     $(".mail-text").removeClass('disabled');
     labelMailText.show();
     inputMailText.prop("disabled", false);
-    $(".swimmer").removeClass('disabled');
+    // $(".swimmer").removeClass('disabled');
     labelSwimmer.show();
     inputSwimmer.prop("disabled", false);
-    $(".private-information .form-group-display-value").hide();
+    $(".general-information .form-group-display-value").hide();
+    
+    setEnv(env);
+
+    // if (env === 'usms') {
+    //     alert("usms xxx");
+    //     $('label[for=sendMailLaneMate]').hide();
+    //     $('label[for=sendTextLaneMate]').hide();
+    // } else if (env === 'lanemate') {
+    //     alert("lanemate xxx");
+    //     $('label[for=sendMailUSMS]').hide();
+    //     $('label[for=sendTextUSMS]').hide();    
+    // }
 }
+
+
+
+// var hideMastersInputs = function() {
+//     $('#swimmerMagazine').hide();
+//     $('#eventsThisYear').hide();
+//     $('.club-lmsc').hide();
+//     $('.coach-alts').hide();
+//     $('#swimmerMagazine').hide();
+//     // $('label[for=sendMailUSMS]').hide();
+//     // $('label[for=sendTextUSMS]').hide();
+// }
+
+
+
+// var hideLaneMateInputs = function() {
+//     // $('label[for=sendMailLaneMate]').hide();
+//     // $('label[for=sendTextLaneMate]').hide();
+// }
