@@ -37,9 +37,9 @@ $('#showLanemateView').on('click', function() {
 });
 
 $("#showValidation").on('click', function() {
-    $(this).toggleClass('btn-outline')
+    // $(this).toggleClass('btn-outline');
     $('.help-block').toggleClass('has-error');
-    $('.form-control').toggleClass('has-error');
+    $('.help-block + .form-control').toggleClass('has-error');
 });
 
 $("#editPrivateInfo").on( "click", function() {

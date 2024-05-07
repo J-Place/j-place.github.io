@@ -97,24 +97,23 @@
                       </span>
                       Training
                    </li>
-                   <li class="has--children" id="menu-item-1" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                   <li class="has--children" id="menu-item-2" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                     <span class="fa fa-chevron-right">
+                     </span>
+                     Workout Library
+                  </li>
+                  <li class="has--children" id="menu-item-3" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
                       <span class="fa fa-chevron-right">
                       </span>
-                      Events
-                   </li>
-                   <li id="menu-item-2" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                      <a href="/clubs">Club Finder</a>
-                   </li>
-                   <li id="menu-item-3" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                      <a href="/workout-library">Workout Library</a>
+                      Articles and Videos
                    </li>
                    <li class="has--children" id="menu-item-4" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
                       <span class="fa fa-chevron-right">
                       </span>
-                      About Us
+                      About
                    </li>
                    <li id="menu-item-5" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                      <a href="/join-usms/join-or-renew">Join</a>
+                      <a href="/join-usms/join-or-renew">Subscribe</a>
                    </li>
                    
                    
@@ -335,31 +334,23 @@
     </div>
 </div>
 
+<div id="tempNav">
+    <button class="btn-small btn-link" style="margin-top: -2px; display: none;" id="showValidation">Toggle Validation</button>
+    <!-- <label for="" style="font-size:12px; margin-right: 1rem; line-height:3rem;">Toggle User View:</label> -->
+    <button class="btn-small btn-blue" style="margin-right: .7rem;" id="showUsmsView">USMS</button>
+    <button class="btn-small btn-blue btn-outline" id="showLanemateView">LaneMate</button>
+</div>
+
+<div class="button-row" style="text-align:right; margin-top:-1rem; margin-bottom:3rem; width: 100%;">
+    <button class="btn-small btn-danger" id="editPrivateInfo">Edit My Information</button>
+    <button class="btn-small btn-blue" id="savePrivateInfo" href="#/" data-bs-toggle="modal" data-bs-target="#savePrivateInfoModal" style="display: none;">Save</button>
+    <button class="btn-small btn-blue btn-outline" id="cancelPrivateInfo" style="display: none;">Cancel</button>
+</div>
 <div class="general-information">
-
-    <div class="form-header__button-row" style="margin-top:-1rem; margin-bottom:3rem;">
-        <button class="btn-small btn-blue btn-outline" id="editPrivateInfo">Edit</button>
-        <button class="btn-small btn-blue" id="savePrivateInfo" href="#/" data-bs-toggle="modal" data-bs-target="#savePrivateInfoModal" style="display: none;">Save</button>
-        <button class="btn-small btn-blue btn-outline" id="cancelPrivateInfo" style="display: none;">Cancel</button>
-        
-        <button class="btn-small btn-blue btn-outline" style="float:right; margin-left: .7rem; display: none;" id="showValidation">Validation</button>
-        <button class="btn-small btn-blue btn-outline" style="float:right;" id="showLanemateView">LaneMate</button>
-        <button class="btn-small btn-blue" style="float:right; margin-right: .7rem;" id="showUsmsView">USMS</button>
-        <label for="" style="font-size:12px;float:right; margin-right: 1rem; line-height:3rem;">Change User View</label>
-    </div>
-
     <div class="form-header">
         <h3>General Information</h3>
         <!-- <p style="font-size:14px; margin: -1rem auto 2rem;">(Only you can see these fields. They can be updated by clicking the "Edit Profile" button above. NOTE: This information updates your USMS membership record.)</p>     -->
     </div>
-
-    <div class="row form-group member-type usms-only">
-        <div class="col-xs-12 col-sm-4">
-            <label class="font-weight-bold" for="MemberType">Member Type</label>
-            <span class="form-group-display-value-static">USMS+</span>
-        </div>
-    </div>
-
     <div class="row form-group clearfix first-last">
         <div class="col-xs-12 col-sm-5">
             <label class="font-weight-bold" for="FirstName">First Name</label>
@@ -385,7 +376,6 @@
             </div>
         </div>
     </div>
-
     <div class="row form-group clearfix bio-detail">
         <div class="col-xs-12 form-group-header">
             <span>Sex is binary for the purpose of racing and results. Gender identity and Race/Ethnicity are optional fields that help USMS better understand and serve our Membership.</span>
@@ -396,12 +386,12 @@
         </div>
         <div class="col-xs-12 col-sm-3">
             <!-- <label for="Gender">Gender Identity</label> -->
-            <div class= gender">
+            <div class="gender">
                 <label for="Gender">Gender Identity</label>
                 <input type="hidden" name="hiddenGender">
                 <span class="form-group-display-value">Male</span>
                 <div>
-                    <span class="help-block help-block--Gender"></span>
+                    <!-- <span class="help-block help-block--Gender"></span> -->
                     <select disabled name="gender" id="Gender" class="form-control" style="min-width: 180px;">
                         <option value="female">Female</option>
                         <option value="male">Male</option>
@@ -413,12 +403,12 @@
             </div>        
         </div>
         <div class="col-xs-12 col-sm-3">
-            <div class= ethnicity">
+            <div class="ethnicity">
                 <label for="Ethnicity">Ethnicity</label>
                 <input type="hidden" name="hiddenEthnicity">
                 <span class="form-group-display-value">Caucasian</span>
                 <div>
-                    <span class="help-block help-block--Ethnicity"></span>
+                    <!-- <span class="help-block help-block--Ethnicity"></span> -->
                     <select disabled name="Ethnicity" id="Ethnicity" class="form-control" style="min-width: 180px;">
                         <option value="caucasian">Caucasian</option>
                         <option value="male">Male</option>
@@ -434,7 +424,6 @@
             <span class="form-group-display-value-static">##/##/####</span>
         </div>
     </div>
-
     <div class="row form-group clearfix country">
         <div class="col-xs-12 col-sm-6">
             <input type="hidden" name="hiddenCountry"  value=""><label class="font-weight-bold" for="SelectedCountry">Country</label>
@@ -449,7 +438,6 @@
             </div>
         </div>
     </div>
-
     <div class="row form-group clearfix street">
         <div class="col-xs-12">
             <label class="font-weight-bold" for="Address">Address</label>
@@ -461,7 +449,6 @@
             </div>
         </div>
     </div>
-
     <div class="row form-group clearfix city-state-zip">
         <div class="col-xs-12 col-sm-5">
             <label class="font-weight-bold" for="City">City</label>
@@ -496,7 +483,6 @@
             </div>
         </div>
     </div>
-
     <div class="row form-group clearfix email-phone">
         <div class="col-xs-12 col-sm-6">
             <label class="font-weight-bold" for="Email">Email</label>
@@ -518,8 +504,6 @@
             </div>
         </div>
     </div>
-
-
     <div class=" row form-group interests-swimmer usms-only">
         <div class="col-sm-5 input-group checkbox-group interests">
             <div class="input-group-header">Interests</div>
@@ -560,7 +544,7 @@
             <input type="hidden" name="hiddenSwimmerPrint">
             <span class="form-group-display-value">Digital</span>
             <div>
-                <span class="help-block help-block--SwimmerPrint"></span>
+                <span class="help-block help-block--SwimmerPrint">Please select a preference for SWIMMER Magazine</span>
                 <select name="swimmerPrint" id="SwimmerPrint" class="form-control" style="min-width: 180px;">
                     <option value="digital">Digital</option>
                     <option value="print">Print</option>
@@ -568,56 +552,47 @@
             </div>
         </div>    
     </div>
-
-    <!-- <div class="row input-group checkbox-group interests">
-        <div class="input-group-header">Interests</div>
-        <span class="form-group-display-value">Health and Fitness, Triathlon</span>
-        <div class="col-xs-12 col-sm-4">
-            <label class="checkbox-label" for="healthFitness">
+</div>
+<div class="contact-preferences">
+    <div class="form-header">
+        <h3>Contact Preferences</h3>
+        <!-- <p style="font-size:14px; margin: -1rem auto 2rem;"></p>     -->
+    </div>
+    <div class="row input-group checkbox-group mail-text">
+        <!-- <div class="input-group-header">Contact Preferences</div> -->
+        <div class="col-sm-6 mail-text-usms usms-only">
+            <label class="checkbox-label" for="sendMailUSMS">
                 <div class="checkbox-container">
-                    <input type="checkbox" name="healthFitness" id="healthFitness" value="true" checked>
+                    <input type="checkbox" name="sendMailUSMS" id="sendMailUSMS" value="true" disabled checked>
                     <span class="checkbox__placeholder"></span>
                 </div>
-                Health and Fitness
+                USMS can send me physical mail (aside from SWIMMER magazine)
             </label>
-            <label class="checkbox-label" for="triathlon">
+            <label class="checkbox-label" for="sendTextUSMS">
                 <div class="checkbox-container">
-                    <input type="checkbox" name="triathlon" id="triathlon" value="true" checked>
+                    <input type="checkbox" name="sendTextUSMS" id="sendTextUSMS" value="true" disabled>
                     <span class="checkbox__placeholder"></span>
                 </div>
-                Triathlon
+                USMS can text me
             </label>
-            <label class="checkbox-label" for="openWater">
+        </div>
+        <div class="col-sm-6 mail-text-lanemate lanemate-only">
+            <label class="checkbox-label" for="sendMailLaneMate">
                 <div class="checkbox-container">
-                    <input type="checkbox" name="openWater" id="openWater" value="true">
+                    <input type="checkbox" name="sendMailLaneMate" id="sendMailLaneMate" value="true" disabled checked>
                     <span class="checkbox__placeholder"></span>
                 </div>
-                Open Water
+                LaneMate can send me physical mail (aside from SWIMMER magazine)
             </label>
-            <label class="checkbox-label" for="competition">
+            <label class="checkbox-label" for="sendTextLaneMate">
                 <div class="checkbox-container">
-                    <input type="checkbox" name="competition" id="competition" value="true">
+                    <input type="checkbox" name="sendTextLaneMate" id="sendTextLaneMate" value="true" disabled>
                     <span class="checkbox__placeholder"></span>
                 </div>
-                Competition
+                LaneMate can text me
             </label>
         </div>
     </div>
-    <div class="row form-group swimmer" id="swimmerMagazine">
-        <div class="col-sm-4 swimmer-print">
-            <label for="swimmerPrint">How would you like to receive your copy of SWIMMER magazine? Our digital edition now offers a more readable experience.</label>
-            <input type="hidden" name="hiddenSwimmerPrint">
-            <span class="form-group-display-value">Digital</span>
-            <div>
-                <span class="help-block help-block--SwimmerPrint"></span>
-                <select name="swimmerPrint" id="SwimmerPrint" class="form-control" style="min-width: 180px;">
-                    <option value="digital">Digital</option>
-                    <option value="print">Print</option>
-                </select>
-            </div>
-        </div>
-    </div> -->
-
 </div>
 <div class="registration-information usms-only">
     <div class="form-header">
@@ -680,12 +655,16 @@
         </div>
     </div>
 </div>
-<div class="swimming-history usms-only">
+<div class="swimming-history">
     <div class="form-header">
         <h3>Swimming History</h3>
         <!-- <p style="font-size:14px; margin: -1rem auto 2rem;">(Only you can see these fields. They can be updated by clicking the "Edit Profile" button above. NOTE: This information updates your USMS membership record.)</p>     -->
     </div>
     <div class="row form-group clearfix workouts">
+        <div class="col-xs-12 col-sm-3 usms-only" id="eventsCompleted">
+            <label class="font-weight-bold" for="eventsCompleted">Events Completed This Year</label>
+            <span class="form-group-display-value-static">2</span>
+        </div>
         <div class="col-xs-12 col-sm-3" id="swimComConnect">
             <label class="font-weight-bold" for="swimComConnected">Swim.com Connected</label>
             <span class="form-group-display-value-static">Yes</span>
@@ -700,50 +679,6 @@
         </div>
     </div>
 </div>
-<div class="contact-preferences">
-    <div class="form-header">
-        <h3>Contact Preferences</h3>
-        <!-- <p style="font-size:14px; margin: -1rem auto 2rem;"></p>     -->
-    </div>
-    <div class="row input-group checkbox-group mail-text">
-        <!-- <div class="input-group-header">Contact Preferences</div> -->
-        <div class="col-sm-6 mail-text-usms usms-only">
-            <label class="checkbox-label" for="sendMailUSMS">
-                <div class="checkbox-container">
-                    <input type="checkbox" name="sendMailUSMS" id="sendMailUSMS" value="true" disabled checked>
-                    <span class="checkbox__placeholder"></span>
-                </div>
-                USMS can send me physical mail (aside from SWIMMER magazine)
-            </label>
-            <label class="checkbox-label" for="sendTextUSMS">
-                <div class="checkbox-container">
-                    <input type="checkbox" name="sendTextUSMS" id="sendTextUSMS" value="true" disabled>
-                    <span class="checkbox__placeholder"></span>
-                </div>
-                USMS can text me
-            </label>
-        </div>
-        <div class="col-sm-6 mail-text-lanemate lanemate-only">
-            <label class="checkbox-label" for="sendMailLaneMate">
-                <div class="checkbox-container">
-                    <input type="checkbox" name="sendMailLaneMate" id="sendMailLaneMate" value="true" disabled checked>
-                    <span class="checkbox__placeholder"></span>
-                </div>
-                LaneMate can send me physical mail (aside from SWIMMER magazine)
-            </label>
-            <label class="checkbox-label" for="sendTextLaneMate">
-                <div class="checkbox-container">
-                    <input type="checkbox" name="sendTextLaneMate" id="sendTextLaneMate" value="true" disabled>
-                    <span class="checkbox__placeholder"></span>
-                </div>
-                LaneMate can text me
-            </label>
-        </div>
-    </div>
-</div>
-
-
-<!-- </div> -->
                                 <script src="/lanemate/js/my-information.js"></script>
                                 <script>
                                     $(document).ready(function() {
@@ -765,409 +700,148 @@
                   <div class="footer-left__menu">
                      <div class="row">
                         <div class="col-xs-6 col-md-3">
-                           <div class="footer-menu">
+                            <div class="footer-menu">
+                                <h3 class="footer-menu__header">
+                                   Subscribe
+                                </h3>
+                                <ul class="footer-menu__list list--nostyle">
+                                   <li class="footer-menu__list-item">
+                                      <a href="/events" target="" title="Subscribe">
+                                      Subscribe
+                                      </a>
+                                   </li>
+                                   <li class="footer-menu__list-item">
+                                      <a href="https://www.trianglesportscommission.com/usms-hpc/" target="_blank" title="Membership Comparison">
+                                      Membership Comparison
+                                      </a>
+                                   </li>
+                                </ul>
+                             </div>  
+                            <div class="footer-menu">
                               <h3 class="footer-menu__header">
-                                 About USMS
+                                 About
                               </h3>
                               <ul class="footer-menu__list list--nostyle">
                                  <li class="footer-menu__list-item">
-                                    <a href="/about-usms/what-is-us-masters-swimming" target="" title="What is Masters Swimming?">
-                                    What is Masters Swimming?
+                                    <a href="/about/what-is-lanemate" target="" title="What is LaneMate?">
+                                    What is LaneMate?
                                     </a>
                                  </li>
                                  <li class="footer-menu__list-item">
-                                    <a href="/admin/org.php" target="" title="Organization">
-                                    Organization
+                                    <a href="" target="" title="Subscription Benefits">
+                                    Subscription Benefits
+                                    </a>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="footer-menu">
+                                <h3 class="footer-menu__header">
+                                   Training
+                                </h3>
+                                <ul class="footer-menu__list list--nostyle">
+                                   <li class="footer-menu__list-item">
+                                      <a href="/workout-library" target="" title="Workout Library">
+                                      Workout Library
+                                      </a>
+                                   </li>
+                                   <li class="footer-menu__list-item">
+                                      <a href="/swimming-guides" target="" title="Swimming Guides">
+                                      Swimming Guides
+                                      </a>
+                                   </li>
+                                   <li class="footer-menu__list-item">
+                                      <a href="/workout-tracking" target="" title="Workout Tracking">
+                                      Workout Tracking
+                                      </a>
+                                   </li>
+                                   <li class="footer-menu__list-item">
+                                      <a href="/swim-com" target="" title="Swim.com Integration">
+                                      Swim.com Integration
+                                      </a>
+                                   </li>
+                                   <li class="footer-menu__list-item">
+                                      <a href="/articles-and-videos" target="" title="Articles and Videos">
+                                      Articles and Videos
+                                      </a>
+                                   </li>
+                                </ul>
+                             </div>
+                          </div>
+                        <div class="col-xs-6 col-md-3">
+                           <div class="footer-menu">
+                              <h3 class="footer-menu__header">
+                                 Workout Library
+                              </h3>
+                              <ul class="footer-menu__list list--nostyle">
+                                 <li class="footer-menu__list-item">
+                                    <a href="/" target="" title="Basic Training">
+                                    Basic Training
                                     </a>
                                  </li>
                                  <li class="footer-menu__list-item">
-                                    <a href="/admin/natoffice.php" target="" title="National Office">
-                                    National Office
+                                    <a href="/" target="" title="High Intensity">
+                                    High Intensity
                                     </a>
                                  </li>
                                  <li class="footer-menu__list-item">
-                                    <a href="/hist/" target="" title="USMS History">
-                                    USMS History
+                                    <a href="/" target="" title="Stroke and IM">
+                                    Stroke and IM
                                     </a>
                                  </li>
                                  <li class="footer-menu__list-item">
-                                    <a href="https://www.swimoutlet.com/ProductBrand.asp?Brand=1766&amp;click=1668780" target="_blank" title="Logo Merchandise">
-                                    Logo Merchandise
+                                    <a href="/" target="" title="Open Water">
+                                    Open Water
                                     </a>
                                  </li>
                                  <li class="footer-menu__list-item">
-                                    <a href="/about-usms/partners" target="" title="Partners">
-                                    Partners
+                                    <a href="/" target="" title="High-Volume">
+                                    High-Volume
                                     </a>
                                  </li>
                                  <li class="footer-menu__list-item">
-                                    <a href="/about-usms/swimmer-magazine" target="" title="SWIMMER Magazine">
+                                    <a href="/" target="" title="Triathlon">
+                                    Triathlon
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/" target="" title="Low-Volume">
+                                    Low-Volume
+                                    </a>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                           <div class="footer-menu">
+                              <h3 class="footer-menu__header">
+                                 Articles and Videos
+                              </h3>
+                              <ul class="footer-menu__list list--nostyle">
+                                 <li class="footer-menu__list-item">
+                                    <a href="/articles" target="" title="Articles">
+                                    Articles
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/articles" target="" title="Articles with Videos">
+                                    Articles with Videos
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/swimmer-magazine" target="" title="SWIMMER Magazine">
                                     SWIMMER Magazine
                                     </a>
                                  </li>
                                  <li class="footer-menu__list-item">
-                                    <a href="/about-usms/usms-swimming-saves-lives-foundation" target="" title="Swimming Saves Lives Foundation">
-                                    Swimming Saves Lives Foundation
+                                    <a href="/content/alts_cert" target="" title="YouTube Videos">
+                                    YouTube Videos
                                     </a>
                                  </li>
                                  <li class="footer-menu__list-item">
-                                    <a href="/content/applyforgrant" target="" title="How to Apply for a Grant">
-                                    How to Apply for a Grant
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="https://www.collegeclubswimming.com/" target="_blank" title="College Club Swimming">
-                                    College Club Swimming
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="http://forums.usms.org" target="" title="Discussion Forums">
-                                    Discussion Forums
-                                    </a>
-                                 </li>
-                              </ul>
-                           </div>
-                        </div>
-                        <div class="col-xs-6 col-md-3">
-                           <div class="footer-menu">
-                              <h3 class="footer-menu__header">
-                                 Events
-                              </h3>
-                              <ul class="footer-menu__list list--nostyle">
-                                 <li class="footer-menu__list-item">
-                                    <a href="/events" target="" title="Calendar of Events">
-                                    Calendar of Events
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/comp/sanction/request.php" target="" title="Sanction an Event">
-                                    Sanction an Event
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/events/fitness-events" target="" title="Fitness Events">
-                                    Fitness Events
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/events/national-championships" target="" title="National Championships">
-                                    National Championships
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/events/event-results-database" target="" title="Event Results">
-                                    Event Results
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/comp/meets/toptimes.php" target="" title="Rankings">
-                                    Rankings
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/events/usms-records" target="" title="Records">
-                                    Records
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/comp/tt/" target="" title="Top 10">
-                                    Top 10
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/comp/aa/" target="" title="All-American">
-                                    All-American
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/comp/as/" target="" title="All-Stars">
-                                    All-Stars
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/events/18th-fina-world-masters-championships" target="" title="FINA World Masters Championships">
-                                    FINA World Masters Championships
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="https://www.teamunify.com/SubTabGeneric.jsp?team=uana&amp;_stabid_=57815" target="_blank" title="Pan American Championships">
-                                    Pan American Championships
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/events/usms-stroke-development-clinics" target="" title="Stroke Development Clinic">
-                                    Stroke Development Clinic
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="https://www.trianglesportscommission.com/usms-hpc/" target="_blank" title="High Performance Camp">
-                                    High Performance Camp
-                                    </a>
-                                 </li>
-                              </ul>
-                           </div>
-                        </div>
-                        <div class="col-xs-6 col-md-3">
-                           <div class="footer-menu">
-                              <h3 class="footer-menu__header">
-                                 Join
-                              </h3>
-                              <ul class="footer-menu__list list--nostyle">
-                                 <li class="footer-menu__list-item">
-                                    <a href="/join-usms/join-or-renew" target="" title="Join or Renew">
-                                    Join or Renew
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/join-usms/membership-benefits" target="" title="Membership Benefits">
-                                    Membership Benefits
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/join-usms/trial-membership-general" target="" title="TMF - General">
-                                    TMF - General
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/join-usms/trial-membership" target="" title="TMF - TMS">
-                                    TMF - TMS
-                                    </a>
-                                 </li>
-                              </ul>
-                           </div>
-                           <div class="footer-menu">
-                              <h3 class="footer-menu__header">
-                                 Club Central
-                              </h3>
-                              <ul class="footer-menu__list list--nostyle">
-                                 <li class="footer-menu__list-item">
-                                    <a href="/club-central" target="" title="Club Central">
-                                    Club Central
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/club-central/start-a-club" target="" title="How to Start a Club">
-                                    How to Start a Club
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/club-central/club-login" target="" title="Register or Renew a Club">
-                                    Register or Renew a Club
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/content/coachresources" target="" title="Club Resources">
-                                    Club Resources
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/club-central/gold-club-designation" target="" title="Gold Club Designation">
-                                    Gold Club Designation
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/admin/content/insuranceinfo" target="" title="Insurance">
-                                    Insurance
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/reg/members/" target="" title="Membership Lists">
-                                    Membership Lists
-                                    </a>
-                                 </li>
-                              </ul>
-                           </div>
-                           <div class="footer-menu">
-                              <h3 class="footer-menu__header">
-                                 Coach Central
-                              </h3>
-                              <ul class="footer-menu__list list--nostyle">
-                                 <li class="footer-menu__list-item">
-                                    <a href="/coach-central" target="" title="Coach Central">
-                                    Coach Central
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/coach/content/becomeacoach" target="" title="Become a Coach">
-                                    Become a Coach
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/content/coachcert" target="" title="Coach Certification">
-                                    Coach Certification
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/coach/certified/certifiedcoaches.php" target="" title="Certified Coaches">
-                                    Certified Coaches
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/coach/certified/coachinfo.php" target="" title="Designated Coach Resources">
-                                    Designated Coach Resources
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/content/cliniccourse" target="" title="Clinic Course for Coaches">
-                                    Clinic Course for Coaches
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/coach-central/coach-mentor-program" target="" title="Mentor Coach Program">
-                                    Mentor Coach Program
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/content/ondeckcoach" target="" title="On-Deck Coaching">
-                                    On-Deck Coaching
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="http://forums.usms.org/forumdisplay.php?8-Coaching" target="_blank" title="Coaching Jobs">
-                                    Coaching Jobs
-                                    </a>
-                                 </li>
-                              </ul>
-                           </div>
-                        </div>
-                        <div class="col-xs-6 col-md-3">
-                           <div class="footer-menu">
-                              <h3 class="footer-menu__header">
-                                 ALTS Central
-                              </h3>
-                              <ul class="footer-menu__list list--nostyle">
-                                 <li class="footer-menu__list-item">
-                                    <a href="/alts-central" target="" title="ALTS Central">
-                                    ALTS Central
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/alts-central/april-is-alts-month" target="" title="April is Adult Learn-to-Swim Month">
-                                    April is Adult Learn-to-Swim Month
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/alts-central/alts-initiatives" target="" title="Adult Learn-to-Swim Initiatives">
-                                    Adult Learn-to-Swim Initiatives
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/content/alts_cert" target="" title="Instructor Certification">
-                                    Instructor Certification
-                                    </a>
-                                 </li>
-                              </ul>
-                           </div>
-                           <div class="footer-menu">
-                              <h3 class="footer-menu__header">
-                                 Fitness and Training
-                              </h3>
-                              <ul class="footer-menu__list list--nostyle">
-                                 <li class="footer-menu__list-item">
-                                    <a href="/club-resources" target="" title="Club Finder">
-                                    Club Finder
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/fitness-and-training/online-workouts" target="" title="Online Workouts">
-                                    Online Workouts
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/events/fitness-events/fitness-series/fitness-series-training-plans" target="" title="Training Plans">
-                                    Training Plans
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/fitness/content/fitnesslogs" target="" title="Fitness Logs">
-                                    Fitness Logs
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/fitness-and-training/articles-and-videos" target="" title="Articles and Videos">
-                                    Articles and Videos
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/fitness-and-training/articles-and-videos?contentType[0]=Article&amp;contentType[1]=Video&amp;filter=&amp;tags[0]=Drills&amp;categories[0]=Technique%20and%20Training&amp;page=1&amp;perPage=10&amp;filterItem=20cf26a9-68b1-490f-8408-471cdd7513f8" target="" title="Drills and Technique">
-                                    Drills and Technique
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/fitness-and-training/articles-and-videos?contentType[0]=Article&amp;contentType[1]=Video&amp;filter=swimming%20101&amp;page=1&amp;perPage=10&amp;filterItem=20cf26a9-68b1-490f-8408-471cdd7513f8" target="" title="Swimming 101">
-                                    Swimming 101
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/alts-central/learn-to-swim" target="" title="Learn to Swim">
-                                    Learn to Swim
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/content/triathlon" target="" title="Triathletes">
-                                    Triathletes
-                                    </a>
-                                 </li>
-                              </ul>
-                           </div>
-                           <div class="footer-menu">
-                              <h3 class="footer-menu__header">
-                                 Volunteers
-                              </h3>
-                              <ul class="footer-menu__list list--nostyle">
-                                 <li class="footer-menu__list-item">
-                                    <a href="/admin/lmschb/" target="" title="Guide to Operations">
-                                    Guide to Operations
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/admin/policies/" target="" title="Policy and Governance">
-                                    Policy and Governance
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/volunteer-central/us-masters-swimming-rule-book" target="" title="Rule Book">
-                                    Rule Book
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/lmsc/" target="" title="LMSCs">
-                                    LMSCs
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/admin/content/volunteer" target="" title="Become a Volunteer">
-                                    Become a Volunteer
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/gto/gto_officials" target="" title="Officials">
-                                    Officials
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/admin/committee.php" target="" title="Committees and Assignments">
-                                    Committees and Assignments
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/admin/minutes/" target="" title="Meeting Minutes">
-                                    Meeting Minutes
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/admin/conv/" target="" title="Convention">
-                                    Convention
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/admin/elections/" target="" title="Elections">
-                                    Elections
-                                    </a>
-                                 </li>
-                                 <li class="footer-menu__list-item">
-                                    <a href="/admin/awards/" target="" title="Awards">
-                                    Awards
+                                    <a href="/swimming-guides" target="" title="Swimming Guides">
+                                    Swimming Guides
                                     </a>
                                  </li>
                               </ul>
@@ -1181,7 +855,7 @@
                      <div>
                         <h4 class="subscribe__header m-b-30"></h4>
                         <p class="m-b-30"></p>
-                        <a class="btn btn-primary btn-lg text-uppercase" href="/login-to-registration-page">Join Now</a>
+                        <a class="btn btn-primary btn-lg text-uppercase" href="/sybscribe">Subscribe</a>
                      </div>
                   </div>
                   <nav>
@@ -1209,17 +883,18 @@
                      </ul>
                   </nav>
                   <small class="copyright">
-                  &copy; 2018 U.S. Masters Swimming
+                  &copy; 2024 LaneMate
                   </small>
                   <nav>
                      <ul class="nav nav-service navbar-nav nav-pills">
                         <li class="">
-                           <a href="/about-usms/contact-usms" target="" title="Contact Us" class="">
+                           <a href="/about/contact-usms" target="" title="Contact Us" class="">
                            Contact Us        </a>
                         </li>
                         <li class="">
                            <a href="/content/privacy" target="" title="USMS Privacy Policy" class="">
-                           USMS Privacy Policy        </a>
+                           LaneMate Privacy Policy
+                           </a>
                         </li>
                      </ul>
                   </nav>

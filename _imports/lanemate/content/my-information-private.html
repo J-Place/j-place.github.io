@@ -12,31 +12,23 @@
     </div>
 </div>
 
+<div id="tempNav">
+    <button class="btn-small btn-link" style="margin-top: -2px; display: none;" id="showValidation">Toggle Validation</button>
+    <!-- <label for="" style="font-size:12px; margin-right: 1rem; line-height:3rem;">Toggle User View:</label> -->
+    <button class="btn-small btn-blue" style="margin-right: .7rem;" id="showUsmsView">USMS</button>
+    <button class="btn-small btn-blue btn-outline" id="showLanemateView">LaneMate</button>
+</div>
+
+<div class="button-row" style="text-align:right; margin-top:-1rem; margin-bottom:3rem; width: 100%;">
+    <button class="btn-small btn-danger" id="editPrivateInfo">Edit My Information</button>
+    <button class="btn-small btn-blue" id="savePrivateInfo" href="#/" data-bs-toggle="modal" data-bs-target="#savePrivateInfoModal" style="display: none;">Save</button>
+    <button class="btn-small btn-blue btn-outline" id="cancelPrivateInfo" style="display: none;">Cancel</button>
+</div>
 <div class="general-information">
-
-    <div class="form-header__button-row" style="margin-top:-1rem; margin-bottom:3rem;">
-        <button class="btn-small btn-blue btn-outline" id="editPrivateInfo">Edit</button>
-        <button class="btn-small btn-blue" id="savePrivateInfo" href="#/" data-bs-toggle="modal" data-bs-target="#savePrivateInfoModal" style="display: none;">Save</button>
-        <button class="btn-small btn-blue btn-outline" id="cancelPrivateInfo" style="display: none;">Cancel</button>
-        
-        <button class="btn-small btn-blue btn-outline" style="float:right; margin-left: .7rem; display: none;" id="showValidation">Validation</button>
-        <button class="btn-small btn-blue btn-outline" style="float:right;" id="showLanemateView">LaneMate</button>
-        <button class="btn-small btn-blue" style="float:right; margin-right: .7rem;" id="showUsmsView">USMS</button>
-        <label for="" style="font-size:12px;float:right; margin-right: 1rem; line-height:3rem;">Change User View</label>
-    </div>
-
     <div class="form-header">
         <h3>General Information</h3>
         <!-- <p style="font-size:14px; margin: -1rem auto 2rem;">(Only you can see these fields. They can be updated by clicking the "Edit Profile" button above. NOTE: This information updates your USMS membership record.)</p>     -->
     </div>
-
-    <div class="row form-group member-type usms-only">
-        <div class="col-xs-12 col-sm-4">
-            <label class="font-weight-bold" for="MemberType">Member Type</label>
-            <span class="form-group-display-value-static">USMS+</span>
-        </div>
-    </div>
-
     <div class="row form-group clearfix first-last">
         <div class="col-xs-12 col-sm-5">
             <label class="font-weight-bold" for="FirstName">First Name</label>
@@ -62,7 +54,6 @@
             </div>
         </div>
     </div>
-
     <div class="row form-group clearfix bio-detail">
         <div class="col-xs-12 form-group-header">
             <span>Sex is binary for the purpose of racing and results. Gender identity and Race/Ethnicity are optional fields that help USMS better understand and serve our Membership.</span>
@@ -73,12 +64,12 @@
         </div>
         <div class="col-xs-12 col-sm-3">
             <!-- <label for="Gender">Gender Identity</label> -->
-            <div class= gender">
+            <div class="gender">
                 <label for="Gender">Gender Identity</label>
                 <input type="hidden" name="hiddenGender">
                 <span class="form-group-display-value">Male</span>
                 <div>
-                    <span class="help-block help-block--Gender"></span>
+                    <!-- <span class="help-block help-block--Gender"></span> -->
                     <select disabled name="gender" id="Gender" class="form-control" style="min-width: 180px;">
                         <option value="female">Female</option>
                         <option value="male">Male</option>
@@ -90,12 +81,12 @@
             </div>        
         </div>
         <div class="col-xs-12 col-sm-3">
-            <div class= ethnicity">
+            <div class="ethnicity">
                 <label for="Ethnicity">Ethnicity</label>
                 <input type="hidden" name="hiddenEthnicity">
                 <span class="form-group-display-value">Caucasian</span>
                 <div>
-                    <span class="help-block help-block--Ethnicity"></span>
+                    <!-- <span class="help-block help-block--Ethnicity"></span> -->
                     <select disabled name="Ethnicity" id="Ethnicity" class="form-control" style="min-width: 180px;">
                         <option value="caucasian">Caucasian</option>
                         <option value="male">Male</option>
@@ -111,7 +102,6 @@
             <span class="form-group-display-value-static">##/##/####</span>
         </div>
     </div>
-
     <div class="row form-group clearfix country">
         <div class="col-xs-12 col-sm-6">
             <input type="hidden" name="hiddenCountry"  value=""><label class="font-weight-bold" for="SelectedCountry">Country</label>
@@ -126,7 +116,6 @@
             </div>
         </div>
     </div>
-
     <div class="row form-group clearfix street">
         <div class="col-xs-12">
             <label class="font-weight-bold" for="Address">Address</label>
@@ -138,7 +127,6 @@
             </div>
         </div>
     </div>
-
     <div class="row form-group clearfix city-state-zip">
         <div class="col-xs-12 col-sm-5">
             <label class="font-weight-bold" for="City">City</label>
@@ -173,7 +161,6 @@
             </div>
         </div>
     </div>
-
     <div class="row form-group clearfix email-phone">
         <div class="col-xs-12 col-sm-6">
             <label class="font-weight-bold" for="Email">Email</label>
@@ -195,8 +182,6 @@
             </div>
         </div>
     </div>
-
-
     <div class=" row form-group interests-swimmer usms-only">
         <div class="col-sm-5 input-group checkbox-group interests">
             <div class="input-group-header">Interests</div>
@@ -237,7 +222,7 @@
             <input type="hidden" name="hiddenSwimmerPrint">
             <span class="form-group-display-value">Digital</span>
             <div>
-                <span class="help-block help-block--SwimmerPrint"></span>
+                <span class="help-block help-block--SwimmerPrint">Please select a preference for SWIMMER Magazine</span>
                 <select name="swimmerPrint" id="SwimmerPrint" class="form-control" style="min-width: 180px;">
                     <option value="digital">Digital</option>
                     <option value="print">Print</option>
@@ -245,56 +230,47 @@
             </div>
         </div>    
     </div>
-
-    <!-- <div class="row input-group checkbox-group interests">
-        <div class="input-group-header">Interests</div>
-        <span class="form-group-display-value">Health and Fitness, Triathlon</span>
-        <div class="col-xs-12 col-sm-4">
-            <label class="checkbox-label" for="healthFitness">
+</div>
+<div class="contact-preferences">
+    <div class="form-header">
+        <h3>Contact Preferences</h3>
+        <!-- <p style="font-size:14px; margin: -1rem auto 2rem;"></p>     -->
+    </div>
+    <div class="row input-group checkbox-group mail-text">
+        <!-- <div class="input-group-header">Contact Preferences</div> -->
+        <div class="col-sm-6 mail-text-usms usms-only">
+            <label class="checkbox-label" for="sendMailUSMS">
                 <div class="checkbox-container">
-                    <input type="checkbox" name="healthFitness" id="healthFitness" value="true" checked>
+                    <input type="checkbox" name="sendMailUSMS" id="sendMailUSMS" value="true" disabled checked>
                     <span class="checkbox__placeholder"></span>
                 </div>
-                Health and Fitness
+                USMS can send me physical mail (aside from SWIMMER magazine)
             </label>
-            <label class="checkbox-label" for="triathlon">
+            <label class="checkbox-label" for="sendTextUSMS">
                 <div class="checkbox-container">
-                    <input type="checkbox" name="triathlon" id="triathlon" value="true" checked>
+                    <input type="checkbox" name="sendTextUSMS" id="sendTextUSMS" value="true" disabled>
                     <span class="checkbox__placeholder"></span>
                 </div>
-                Triathlon
+                USMS can text me
             </label>
-            <label class="checkbox-label" for="openWater">
+        </div>
+        <div class="col-sm-6 mail-text-lanemate lanemate-only">
+            <label class="checkbox-label" for="sendMailLaneMate">
                 <div class="checkbox-container">
-                    <input type="checkbox" name="openWater" id="openWater" value="true">
+                    <input type="checkbox" name="sendMailLaneMate" id="sendMailLaneMate" value="true" disabled checked>
                     <span class="checkbox__placeholder"></span>
                 </div>
-                Open Water
+                LaneMate can send me physical mail (aside from SWIMMER magazine)
             </label>
-            <label class="checkbox-label" for="competition">
+            <label class="checkbox-label" for="sendTextLaneMate">
                 <div class="checkbox-container">
-                    <input type="checkbox" name="competition" id="competition" value="true">
+                    <input type="checkbox" name="sendTextLaneMate" id="sendTextLaneMate" value="true" disabled>
                     <span class="checkbox__placeholder"></span>
                 </div>
-                Competition
+                LaneMate can text me
             </label>
         </div>
     </div>
-    <div class="row form-group swimmer" id="swimmerMagazine">
-        <div class="col-sm-4 swimmer-print">
-            <label for="swimmerPrint">How would you like to receive your copy of SWIMMER magazine? Our digital edition now offers a more readable experience.</label>
-            <input type="hidden" name="hiddenSwimmerPrint">
-            <span class="form-group-display-value">Digital</span>
-            <div>
-                <span class="help-block help-block--SwimmerPrint"></span>
-                <select name="swimmerPrint" id="SwimmerPrint" class="form-control" style="min-width: 180px;">
-                    <option value="digital">Digital</option>
-                    <option value="print">Print</option>
-                </select>
-            </div>
-        </div>
-    </div> -->
-
 </div>
 <div class="registration-information usms-only">
     <div class="form-header">
@@ -357,12 +333,16 @@
         </div>
     </div>
 </div>
-<div class="swimming-history usms-only">
+<div class="swimming-history">
     <div class="form-header">
         <h3>Swimming History</h3>
         <!-- <p style="font-size:14px; margin: -1rem auto 2rem;">(Only you can see these fields. They can be updated by clicking the "Edit Profile" button above. NOTE: This information updates your USMS membership record.)</p>     -->
     </div>
     <div class="row form-group clearfix workouts">
+        <div class="col-xs-12 col-sm-3 usms-only" id="eventsCompleted">
+            <label class="font-weight-bold" for="eventsCompleted">Events Completed This Year</label>
+            <span class="form-group-display-value-static">2</span>
+        </div>
         <div class="col-xs-12 col-sm-3" id="swimComConnect">
             <label class="font-weight-bold" for="swimComConnected">Swim.com Connected</label>
             <span class="form-group-display-value-static">Yes</span>
@@ -377,47 +357,3 @@
         </div>
     </div>
 </div>
-<div class="contact-preferences">
-    <div class="form-header">
-        <h3>Contact Preferences</h3>
-        <!-- <p style="font-size:14px; margin: -1rem auto 2rem;"></p>     -->
-    </div>
-    <div class="row input-group checkbox-group mail-text">
-        <!-- <div class="input-group-header">Contact Preferences</div> -->
-        <div class="col-sm-6 mail-text-usms usms-only">
-            <label class="checkbox-label" for="sendMailUSMS">
-                <div class="checkbox-container">
-                    <input type="checkbox" name="sendMailUSMS" id="sendMailUSMS" value="true" disabled checked>
-                    <span class="checkbox__placeholder"></span>
-                </div>
-                USMS can send me physical mail (aside from SWIMMER magazine)
-            </label>
-            <label class="checkbox-label" for="sendTextUSMS">
-                <div class="checkbox-container">
-                    <input type="checkbox" name="sendTextUSMS" id="sendTextUSMS" value="true" disabled>
-                    <span class="checkbox__placeholder"></span>
-                </div>
-                USMS can text me
-            </label>
-        </div>
-        <div class="col-sm-6 mail-text-lanemate lanemate-only">
-            <label class="checkbox-label" for="sendMailLaneMate">
-                <div class="checkbox-container">
-                    <input type="checkbox" name="sendMailLaneMate" id="sendMailLaneMate" value="true" disabled checked>
-                    <span class="checkbox__placeholder"></span>
-                </div>
-                LaneMate can send me physical mail (aside from SWIMMER magazine)
-            </label>
-            <label class="checkbox-label" for="sendTextLaneMate">
-                <div class="checkbox-container">
-                    <input type="checkbox" name="sendTextLaneMate" id="sendTextLaneMate" value="true" disabled>
-                    <span class="checkbox__placeholder"></span>
-                </div>
-                LaneMate can text me
-            </label>
-        </div>
-    </div>
-</div>
-
-
-<!-- </div> -->
