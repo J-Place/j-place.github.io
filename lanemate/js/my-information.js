@@ -21,23 +21,29 @@ var setEnv = function() {
 };
 
 $('#showUsmsView').on('click', function() {
+    if (env === 'lanemate') {
+        $('#showLanemateView').toggleClass('btn-link-selected');
+        $(this).toggleClass('btn-link-selected');
+    }
     env = 'usms';
     setEnv();
-    $('#showUsmsView').removeClass('btn-outline');
-    $('#showLanemateView').addClass('btn-outline');
-    // $(this).removeClass('btn-outline');
 });
 
 $('#showLanemateView').on('click', function() {
+    if (env === 'usms') {
+        $('#showUsmsView').toggleClass('btn-link-selected');
+        $(this).toggleClass('btn-link-selected');
+    }
+    //  else {
+    //     $('#showUsmsView').toggleClass('btn-link-selected');
+    //     $(this).toggleClass('btn-link-selected');
+    // }
     env = 'lanemate';
     setEnv();
-    $('#showUsmsView').addClass('btn-outline');
-    $('#showLanemateView').removeClass('btn-outline');
-    // $(this).removeClass('btn-outline');
 });
 
 $("#showValidation").on('click', function() {
-    // $(this).toggleClass('btn-outline');
+    // $(this).toggleClass('btn-link-selected');
     $('.help-block').toggleClass('has-error');
     $('.help-block + .form-control').toggleClass('has-error');
 });
