@@ -43,7 +43,7 @@ $('#showLanemateView').on('click', function() {
 });
 
 $("#showValidation").on('click', function() {
-    // $(this).toggleClass('btn-link-selected');
+    $(this).toggleClass('btn-link-selected');
     $('.help-block').toggleClass('has-error');
     $('.help-block + .form-control').toggleClass('has-error');
 });
@@ -57,11 +57,15 @@ $("#cancelPrivateInfo").on( "click", function() {
     hideInputsPrivate();
     toggleEditButtonsPrivate();
     $("#showValidation").hide();
+    $('.help-block').removeClass('has-error');
+    $('.help-block + .form-control').removeClass('has-error');
 });
 $("#confirmPrivateInfoModal").on( "click", function() {
     hideInputsPrivate();
     toggleEditButtonsPrivate();
     $("#showValidation").hide();
+    $('.help-block').removeClass('has-error');
+    $('.help-block + .form-control').removeClass('has-error');
 });
 
 
