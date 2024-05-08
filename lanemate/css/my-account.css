@@ -1,192 +1,196 @@
-#tempNav {
-    float: right;
-    position: absolute;
-    top: -20rem;
-    right: 0;
+.my-usms--wrapper {
+    margin-bottom: 80px;
 }
 
-/* These should not be needed in source, or compared with source */
-.modal {
-    align-content: center;
+.myusms--tile {
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    margin: 0 auto 10px;
+    padding: 10px;
+    border:1px solid #0068ad;
 }
-.modal-content {
+
+.myusms--tile--renew {
+    background-color: #0068ad;
     border: 0 none;
 }
-.modal-body {
-    padding-top: 2rem;
+
+.myusms--tile.myusms--tile--renew > h4 {
+    color: #FFF;
 }
 
-#tempNav .btn-link {
-    color: #000;
+.myusms--tile:hover {
+    border:3px solid #c0eeff;
+    padding:8px;
+    background-color: #c0eeff;
+}
+
+.myusms--tile.myusms--tile--renew:hover {
+    border:3px solid #0068ad;
+    padding:7px;
+    background-color: #0068ad;
+}
+
+.myusms--tile--secondary {
+    color: #CCC !important;
+    border:2px solid #0068ad;
+}
+.myusms--tile--secondary h5 {
+    font-size: 14px;
+    padding: 5px 0;
+    color: #565656;
+    font-weight: normal;
+    text-decoration: underline;
+}
+
+.myusms--page-title > h1 {
+    color: #0068ad;
+    margin:15px 0 5px 0;
+}
+
+.myusms--tile > h4 {
+    font-size: 18px;
+    color: #0068ad;
+    margin:0 7px 0 0;
+}
+
+.myusms--tile > h5 {
+    font-size: 16px;
+    color: #0068ad;
+    margin: 0 7px 0 3px;
+}
+
+.myusms__section-header {
+    margin: 23px auto 10px;
+    color:#0068ad;
+}
+
+.myusms--tile img {
+    height: 50px;
+}
+
+.myusms--tile > a {
+    position: absolute;
+    width: calc(90%);
+    height: calc(90%);
+    margin: 0;
+    padding: 0;
+    top:0;
+}
+
+.myusms--tile-image {
+    display: flex;
+    align-items: center;
+    height: 110px;
+    border-radius: 4px;
+    margin: 0 auto 10px;
+    position: relative;
+    overflow:hidden;
+}
+
+.myusms--tile-image a {
+    font-size: 19px;
+    font-weight: bold;
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-line-pack: center;
+    align-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 100%;
+    text-shadow: 0 0 10px #111;
+    text-shadow:0 0 30px #111;
+}
+
+.myusms--tile-image a, .myusms--tile-image a:visited {
+    color:#fff;
+}
+
+.myusms--tile-image a:hover {
+    text-decoration:none;
+}
+
+.myusms--tile-image > h4 {
+    color:#fff;
+}
+
+.myusms--link a {
+    color: #fff;
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-line-pack: center;
+    align-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width:100%;
+}
+
+.myusms--link a:visited {
+    color:#fff;
+}
+
+.myusms--link, #membership-info, #my-badges {
+    background-color: #0068ad;
+    border-radius: 4px;
+    margin: 0 0 15px;
+    padding: 15px 10px;
+    color: #fff;
+    text-align:center;
+}
+
+.myusms__section-header {
+    margin: 20px 15px 20px 0;
+    color:#0068ad;
+    display: inline-block;
+}
+
+.my-usms__btn--renew {
+    display: inline-block;
+    position: relative;
+    background-color: #d2202e;
+    color: #fff;
+    font-size: 13px;
+    top: -3px;
+    padding: 5px 8px;
+    border-radius: 3px;
+    border: 1px solid #d2202e;
+    margin-bottom: 1rem;
+}
+
+.my-usms__tile--edit {
+    font-size: 13px;
+    line-height: 16px;
+    font-weight: normal;
     text-decoration: none;
 }
 
-#tempNav .btn-link-selected {
-    color: #0068ad;
+.my-usms__tile--description {
+    font-size: 13px;
+    font-weight: normal;
+    text-decoration: none;
 }
 
-
-
-.checkbox-group.disabled .checkbox-label,
-.checkbox-group.disabled .checkbox-container,
-.checkbox-group.disabled input {
-    cursor: default;
-}
-
-/* input:disabled + .checkbox__placeholder, */
-.checkbox-group.disabled input[type=checkbox]:checked ~ .checkbox__placeholder {
-    background-color: #666;
-}
-.checkbox-group.disabled .checkbox-container {
--webkit-text-stroke: #666;
-}
-
-.form-group-display-value,
-.form-group-display-value-static {
-    font-size: 1.8rem;
-    font-weight: 300;
-    line-height: 150%;
-}
-
-.social-share-icons {
-    justify-content: flex-start;
-}
-
-.social-share-icons .fa {
-    padding-top: 1rem;
-    font-size: 3.5rem !important;
-}
-
-.my-account__container h3,
-.my-account__container p {
-    text-align: left;
-    margin-left: 0;
-}
-
-.input-group-header {
-    font-size: 1.4rem;
-    font-weight: 600;
-    line-height: 1.6rem;
-    margin: 0;
-    width: 100%;
-}
-@media (min-width: 1200px) {
-    .input-group-header {
-        margin: 0 0 1rem;
-    }
-}
-
-.input-group-header,
-.my-account__container label {
-    margin-top: 2.4rem;
-}
-
-@media (min-width: 1200px) {
-    .input-group-header,
-    .my-account__container label {
-        margin-top: 0;
-    }    
-}
-
-
-.form-group-header {
-    margin: 1rem auto;
-}
-
-.general-information,
-.registration-information,
-.swimming-history,
-.contact-preferences {
-    width: 100%;
-    border-top: 1px solid #CCC;
-    margin: 1rem 0 0rem;
-    padding: 3rem 0 1rem;
-}
-
-.general-information {
-    border: 0 none;
-}
-
-.usms-container.form__container .form-header h3 {
-    color: #0068ad;
-    margin-bottom: 3rem;
-    font-size: 2.5rem;
-    font-weight: 500;
-}
-
-.full-name {
-    /* display: block; */
-    width: 100%;
-}
-
-/* .full-name + span {
-    margin-top: -1.5rem;
-    margin-bottom: 1.5rem;
-} */
-
-/* .private-information {
-    border-top: 1px solid #CCC;
-    margin-top: 3rem;
-    padding-top: 4rem;    
-} */
-
-.form-group,
-.form-header {
-    width: 100%;
-}
-
-/* .form-header:first-of-type {
-    border: 0 none;
-} */
-
-.first-last {
-    width: 100%;
-}
-
-.hide {
-    display: none;
-}
-
-.row.form-group,
-.row.input-group {
-    /* width: 100%; */
-    /* margin-bottom: 3rem; */
-    margin-bottom: 0;
-}
-
-@media (min-width: 1200px) {
-    .row.form-group,
-    .row.input-group {
-        /* width: 100%; */
-        /* margin-bottom: 3rem; */
-        margin-bottom: 3rem;
-    }    
-}
-
-.form-group label:not(.checkbox-label) {
-    width: 100%;
-    font-weight: 700;
-}
-
-/* .form-group span:not(.hide) {
-
-} */
-
-/* .interests {
-    margin-bottom: 4rem;
-} */
-
-.swimmer .radio-label {
-    display: inline-block;
-    width: auto;
-}
-
-
-
-/* Temporary css for toggling between USMS and LaneMate in the mockups */
-.usms .lanemate-only {
-    display: none;
-}
-.lanemate .usms-only {
-    display: none;
+.myusms--tile--same {
+    height: 70px;
 }
