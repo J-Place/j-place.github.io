@@ -25,12 +25,12 @@ $("#confirmPrivateInfoModal").on( "click", function() {
     $('.help-block + .form-control').removeClass('has-error');
 });
 
-var inputTextAreaPrivate = $(".general-information .input-group textarea");
-var inputCheckboxPrivate = $(".general-information .checkbox-group:not('mail-text') .checkbox-label");
-var labelSwimmer = $(".general-information .swimmer label");
-var inputSwimmer = $(".general-information .swimmer select");
-var inputSelectPrivate = $(".general-information .form-group select");
-var inputTextPrivate = $(".general-information .form-group input[type=text]");
+var inputTextAreaPrivate = $(".my-account__container .input-group textarea");
+var inputCheckboxPrivate = $(".my-account__container .checkbox-group:not('mail-text') .checkbox-label");
+var labelSwimmer = $(".my-account__container .swimmer label");
+var inputSwimmer = $(".my-account__container .swimmer select");
+var inputSelectPrivate = $(".my-account__container .form-group select");
+var inputTextPrivate = $(".my-account__container .form-group input[type=text]");
 
 var toggleEditButtons = function() {
     $("#editPrivateInfo").toggle();
@@ -49,12 +49,13 @@ var hideInputs = function() {
     $('#sendMailLaneMate').prop("disabled", true);
     $('#sendTextLaneMate').prop("disabled", true);
     $('.interests .checkbox-label').hide();
+    $('.fun-facts .checkbox-label').hide();
     $('.interests-swimmer input[type=checkbox').prop("disabled", true);
     inputSelectPrivate.prop("disabled", true);
     $(".swimmer").addClass('disabled');
     labelSwimmer.show();
     inputSwimmer.prop("disabled", true);
-    $(".general-information .form-group-display-value").show();
+    $(".my-account__container .form-group-display-value").show();
 }
 
 var showInputs = function(env) {
@@ -68,12 +69,13 @@ var showInputs = function(env) {
     $('#sendMailLaneMate').prop("disabled", false);
     $('#sendTextLaneMate').prop("disabled", false);
     $('.interests .checkbox-label').show();
+    $('.fun-facts .checkbox-label').show();
     $('.interests-swimmer input[type=checkbox').prop("disabled", false);
     inputSelectPrivate.prop("disabled", false);
     $(".swimmer").removeClass('disabled');
     labelSwimmer.show();
     inputSwimmer.prop("disabled", false);
-    $(".general-information .form-group-display-value").hide();    
+    $(".my-account__container .form-group-display-value").hide();    
     setEnv(env);
 }
 
