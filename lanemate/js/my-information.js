@@ -25,12 +25,12 @@ $("#confirmPrivateInfoModal").on( "click", function() {
     $('.help-block + .form-control').removeClass('has-error');
 });
 
-var inputTextAreaPrivate = $(".my-account__container .input-group textarea");
-var inputCheckboxPrivate = $(".my-account__container .checkbox-group:not('mail-text') .checkbox-label");
+var inputTextArea = $(".my-account__container .input-group textarea");
+// var inputCheckbox = $(".my-account__container .checkbox-group:not('mail-text') .checkbox-label");
 var labelSwimmer = $(".my-account__container .swimmer label");
 var inputSwimmer = $(".my-account__container .swimmer select");
-var inputSelectPrivate = $(".my-account__container .form-group select");
-var inputTextPrivate = $(".my-account__container .form-group input[type=text]");
+var inputSelect = $(".my-account__container .form-group select");
+var inputText = $(".my-account__container .form-group input[type=text]");
 
 var toggleEditButtons = function() {
     $("#editPrivateInfo").toggle();
@@ -39,9 +39,10 @@ var toggleEditButtons = function() {
 };
 
 var hideInputs = function() {
-    inputTextPrivate.hide();
-    inputTextAreaPrivate.hide();
-    inputSelectPrivate.hide();
+    inputText.hide();
+    inputTextArea.hide();
+    inputSelect.hide();
+    $(".favorite-events .checkbox-col").hide();
     $('#SwimmerPrint').hide();
     $(".mail-text").addClass('disabled');
     $('#sendMailUSMS').prop("disabled", true);
@@ -51,7 +52,7 @@ var hideInputs = function() {
     $('.interests .checkbox-label').hide();
     $('.fun-facts .checkbox-label').hide();
     $('.interests-swimmer input[type=checkbox').prop("disabled", true);
-    inputSelectPrivate.prop("disabled", true);
+    inputSelect.prop("disabled", true);
     $(".swimmer").addClass('disabled');
     labelSwimmer.show();
     inputSwimmer.prop("disabled", true);
@@ -59,9 +60,10 @@ var hideInputs = function() {
 }
 
 var showInputs = function(env) {
-    inputTextPrivate.show();
-    inputTextAreaPrivate.show();
-    inputSelectPrivate.show();
+    inputText.show();
+    inputTextArea.show();
+    inputSelect.show();
+    $(".favorite-events .checkbox-col").show();
     $('#SwimmerPrint').show();
     $(".mail-text").removeClass('disabled');
     $('#sendMailUSMS').prop("disabled", false);
@@ -71,7 +73,7 @@ var showInputs = function(env) {
     $('.interests .checkbox-label').show();
     $('.fun-facts .checkbox-label').show();
     $('.interests-swimmer input[type=checkbox').prop("disabled", false);
-    inputSelectPrivate.prop("disabled", false);
+    inputSelect.prop("disabled", false);
     $(".swimmer").removeClass('disabled');
     labelSwimmer.show();
     inputSwimmer.prop("disabled", false);
