@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="popover"]').popover();  
     hideInputs();
     $(".form-group-display-value").show();
     $('[data-toggle="tooltip"]').tooltip();
@@ -39,45 +41,61 @@ var toggleEditButtons = function() {
 };
 
 var hideInputs = function() {
+    $(".my-account__container .form-group-display-value").show();
     inputText.hide();
     inputTextArea.hide();
     inputSelect.hide();
-    $(".favorite-events .checkbox-col").hide();
+    inputSelect.prop("disabled", true);
+
+    $(".self-id-coach .checkbox-label").hide();
+    $("#selfIdCoach").prop('disabled', true);
+    $(".self-id-coach").addClass('disabled');
+
     $('#SwimmerPrint').hide();
+
     $(".mail-text").addClass('disabled');
     $('#sendMailUSMS').prop("disabled", true);
     $('#sendTextUSMS').prop("disabled", true);
     $('#sendMailLaneMate').prop("disabled", true);
     $('#sendTextLaneMate').prop("disabled", true);
-    $('.interests .checkbox-label').hide();
+
     $('.fun-facts .checkbox-label').hide();
+    $(".favorite-events .checkbox-col").hide();
+    $('.interests .checkbox-label').hide();
     $('.interests-swimmer input[type=checkbox').prop("disabled", true);
-    inputSelect.prop("disabled", true);
+    
     $(".swimmer").addClass('disabled');
     labelSwimmer.show();
     inputSwimmer.prop("disabled", true);
-    $(".my-account__container .form-group-display-value").show();
 }
 
 var showInputs = function(env) {
+    $(".my-account__container .form-group-display-value").hide();
     inputText.show();
     inputTextArea.show();
     inputSelect.show();
-    $(".favorite-events .checkbox-col").show();
+    inputSelect.prop("disabled", false);
+
+    $(".self-id-coach .checkbox-label").show();
+    $("#selfIdCoach").prop('disabled', false);
+    $(".self-id-coach").removeClass('disabled');
+    
     $('#SwimmerPrint').show();
+
     $(".mail-text").removeClass('disabled');
     $('#sendMailUSMS').prop("disabled", false);
     $('#sendTextUSMS').prop("disabled", false);
     $('#sendMailLaneMate').prop("disabled", false);
     $('#sendTextLaneMate').prop("disabled", false);
-    $('.interests .checkbox-label').show();
+    
     $('.fun-facts .checkbox-label').show();
+    $(".favorite-events .checkbox-col").show();
+    $('.interests .checkbox-label').show();
     $('.interests-swimmer input[type=checkbox').prop("disabled", false);
-    inputSelect.prop("disabled", false);
+    
     $(".swimmer").removeClass('disabled');
     labelSwimmer.show();
     inputSwimmer.prop("disabled", false);
-    $(".my-account__container .form-group-display-value").hide();    
     setEnv(env);
 }
 
