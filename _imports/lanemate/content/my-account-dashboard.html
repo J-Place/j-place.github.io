@@ -1,6 +1,13 @@
 <link rel="stylesheet" href="/lanemate/css/my-account.css">
 <link rel="stylesheet" href="/lanemate/css/my-account-dashboard.css">
+
+
 <div class="row">
+    <div id="tempNav">
+        <button class="btn-small btn-link" style="margin-top: -2px; display: none;" id="showValidation">Toggle Validation</button>
+        <button class="btn-small btn-link btn-link-selected" style="margin-right: .7rem;" id="showUsmsView">USMS</button>
+        <button class="btn-small btn-link" id="showLanemateView">LaneMate</button>
+    </div>    
     <div class="col-xs-12">
         <h3 class="myusms__section-header">Account</h3>
         <div class="myusms__section-header--details">
@@ -26,7 +33,16 @@
             <h4>Email Preferences</h4>
         </div>
     </div>
+    <!-- Blank -->
     <div class="col-sm-4"></div>
+    <!-- End Blank -->
+    <div class="col-sm-4">
+        <div class="myusms--tile myusms--tile--same">
+            <a class="myusms__link myusms__link--app" href="/#"></a>
+            <img alt="Community Settings" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-community-settings.png">
+            <h4>Community Settings</h4>
+        </div>
+    </div>
     <div class="col-sm-4">
         <div class="myusms--tile myusms--tile--same">
             <a class="myusms__link myusms__link--app" href="/#"></a>
@@ -48,18 +64,11 @@
             <h4>Public Swimmer Info Page</h4>
         </div>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-4 usms-only">
         <div class="myusms--tile myusms--tile--same">
             <a class="myusms__link myusms__link--app" href="/#"></a>
             <img alt="CommunityPublicProfile" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-profile.png">
-            <h4>Community Public Profile</h4>
-        </div>
-    </div>
-    <div class="col-sm-4">
-        <div class="myusms--tile myusms--tile--same">
-            <a class="myusms__link myusms__link--app" href="/#"></a>
-            <img alt="Community Settings" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-community-settings.png">
-            <h4>Community Settings</h4>
+            <h4>Public Swimmer Info Page</h4>
         </div>
     </div>
     <div class="col-sm-4">
@@ -69,7 +78,7 @@
             <h4>Community Achievements</h4>
         </div>
     </div>
-    <!-- <div class="col-sm-4">
+    <div class="col-sm-4 usms-only">
         <div class="myusms--tile myusms--tile--same">
             <a class="myusms__link myusms__link--app" href="/#"></a>
             <img alt="Membership Card (PDF Download)" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-card-pdf.png">
@@ -77,14 +86,14 @@
             <span class="my-usms__tile--description"><span>(PDF Download)</span>
         </span></div>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-4 usms-only">
         <div class="myusms--tile">
             <a class="myusms__link myusms__link--app" href="/#"></a>
             <img alt="Membership Card (Digital App)" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-card-digital.png">
             <h4>Membership Card</h4>
             <span class="my-usms__tile--description">(Digital App)</span>
         </div>
-    </div> -->
+    </div>
 </div>
 
 <h3 class="myusms__section-header">Swimming</h3>
@@ -101,6 +110,13 @@
             <a class="myusms__link myusms__link--app" href="/#"></a>
             <img alt="Swim.com/My SwimFeed" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-swim.png">
             <h4>Swim.com/My SwimFeed</h4>
+        </div>
+    </div>
+    <div class="col-sm-4 usms-only">
+        <div class="myusms--tile">
+            <a class="myusms__link myusms__link--app" href="/#"></a>
+            <img alt="Places to Swim" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-places.png">
+            <h4>My Results</h4>
         </div>
     </div>
 </div>
@@ -123,7 +139,7 @@
         <div class="myusms--tile">
             <a class="myusms__link myusms__link--app" href="/#"></a>
             <img alt="Fitness Series Training Plans" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-fitness-series.png">
-            <h4>Fitness Series Training Plans</h4>
+            <h4>Training Plans</h4>
         </div>
     </div>
 </div>
@@ -168,3 +184,4 @@
     </div>
 
 </div>
+<script src="/lanemate/js/my-account.js"></script>
