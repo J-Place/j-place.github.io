@@ -1,6 +1,8 @@
 $(document).ready(function() {
-    $("#usmsModalPaymentFailed").modal('show');
+    // $("#usmsModalPaymentFailed").modal('show');
     $("body").addClass("modal-open");
+    $(".form-group.agree-terms").hide();
+    $(".form-group.agree-terms-auto-renew").show();
 });
 
 $("#confirmPaymentFailedModal").on( "click", function() {
@@ -13,6 +15,31 @@ $("#confirmPaymentFailedModal").on( "click", function() {
 $("#usmsModalPaymentFailed").on( "click", function() {
     $(".payment-information--form").show();
 });
+
+
+
+
+
+$("#btnEnableAutoRenew").on( "click", function() {
+    $(".cancel-auto-renew--confirmation").hide();
+    $(".cancel-auto-renew--form").hide();
+    $(".payment-information--confirmation").hide();
+    $(".payment-information--form").show();
+});
+
+$("#btnEnableAutoRenewSubmit").on( "click", function() {
+    $("#btnEnableAutoRenew").hide();
+    $("#btnEditCreditCard").show();
+    $("#btnCancelAutoRenew").show();
+    $(".card-number").show();
+    $(".card-expiration").show();
+    $(".payment-information--form").hide();
+    $(".agree-terms-auto-renew").hide();
+});
+
+
+
+
 
 $("#confirmLaneMateMonthlyPlan").on( "click", function() {
     $(".current-plan__renewal-date").removeClass("current-plan--selected");
@@ -48,6 +75,8 @@ $("#btnEditCreditCard").on("click", function() {
     $(".cancel-auto-renew--form").hide();
     $(".payment-information--confirmation").hide();
     $(".payment-information--form").show();
+    $(".agree-terms").not(".agree-terms-auto-renew").show();
+    $(".agree-terms-auto-renew").hide();
 });
 
 $("#btnEditCreditCardSubmit").on("click", function() {

@@ -1,6 +1,6 @@
 $(document).ready(function() {
-    $("#usmsModalPaymentFailed").modal('show');
-    $("body").addClass("modal-open");
+    // $("#usmsModalPaymentFailed").modal('show');
+    // $("body").addClass("modal-open");
 });
 
 $("#confirmPaymentFailedModal").on( "click", function() {
