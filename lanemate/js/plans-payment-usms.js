@@ -21,6 +21,8 @@ $("#usmsModalPaymentFailed").on( "click", function() {
 
 $("#btnEnrollAutoRenew").on( "click", function() {
     $(".agree-terms").hide();
+    $("#btnEditCreditCardSubmit").hide();
+    $("#btnEnrollAutoRenewSubmit").show();
     $(".cancel-auto-renew--confirmation").hide();
     $(".cancel-auto-renew--form").hide();
     $(".payment-information--confirmation").hide();
