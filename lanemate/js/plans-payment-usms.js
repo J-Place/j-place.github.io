@@ -67,6 +67,7 @@ $("#btnEditCreditCardCancel").on("click", function() {
 
 $("#btnCancelAutoRenew").on("click", function() {
     disableEditButtons();
+    hideConfirmationMessages();
     $(".payment-information--form").hide();
     $(".cancel-auto-renew--form").show();
     $('.help-block').removeClass('has-error');
@@ -103,8 +104,6 @@ $("#btnNoKeepAutoRenew").on("click", function() {
 
 $("#btnEnrollAutoRenew").on( "click", function() {
     disableEditButtons();
-    // $(".cancel-auto-renew--confirmation").hide();
-    // $(".payment-information--confirmation").hide();
     hideConfirmationMessages();
     $(".agree-terms").hide();
     $("#btnEditCreditCardSubmit").hide();
@@ -116,14 +115,12 @@ $("#btnEnrollAutoRenew").on( "click", function() {
 
 $("#btnEnrollAutoRenewSubmit").on( "click", function() {
     enableEditButtons();
+    hideConfirmationMessages();
     $("#btnEnrollAutoRenew").hide();
     $("#btnEditCreditCard").show();
     $("#btnCancelAutoRenew").show();
     $(".payment-information--summary .card-number").show();
     $(".payment-information--summary .card-expiration").show();
-    // $(".payment-information--confirmation").hide();
-    // $(".enroll-auto-renew--confirmation").hide();
-    hideConfirmationMessages();
     $(".enroll-auto-renew--confirmation").show();
     $(".payment-information--form").hide();
     $(".agree-terms-auto-renew").hide();
