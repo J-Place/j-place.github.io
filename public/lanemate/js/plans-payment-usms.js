@@ -102,6 +102,7 @@ $("#btnEditCreditCardCancel").on("click", function() {
 $("#btnCancelAutoRenew").on("click", function() {
     $(".payment-information--summary .card-number").hide();
     $(".payment-information--summary .card-expiration").hide();
+    // $(".payment-information--confirmation").hide();
     $(".payment-information--confirmation").hide();
     $(".enroll-auto-renew--confirmation").hide();
     $(".cancel-auto-renew--confirmation").hide();
