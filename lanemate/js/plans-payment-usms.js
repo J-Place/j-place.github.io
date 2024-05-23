@@ -2,7 +2,6 @@ $(document).ready(function() {
     // $("#usmsModalPaymentFailed").modal('show');
     $("body").addClass("modal-open");
     $(".form-group.agree-terms").hide();
-    $(".form-group.agree-terms-auto-renew").show();
 });
 
 $("#confirmPaymentFailedModal").on( "click", function() {
@@ -20,21 +19,26 @@ $("#usmsModalPaymentFailed").on( "click", function() {
 
 
 
-$("#btnEnableAutoRenew").on( "click", function() {
+$("#btnEnrollAutoRenew").on( "click", function() {
+    $(".agree-terms").hide();
     $(".cancel-auto-renew--confirmation").hide();
     $(".cancel-auto-renew--form").hide();
     $(".payment-information--confirmation").hide();
+    $(".form-group.agree-terms-auto-renew").show();
     $(".payment-information--form").show();
 });
 
-$("#btnEnableAutoRenewSubmit").on( "click", function() {
-    $("#btnEnableAutoRenew").hide();
+$("#btnEnrollAutoRenewSubmit").on( "click", function() {
+    $("#btnEnrollAutoRenew").hide();
     $("#btnEditCreditCard").show();
     $("#btnCancelAutoRenew").show();
-    $(".card-number").show();
-    $(".card-expiration").show();
+    $(".payment-information--summary .card-number").show();
+    $(".payment-information--summary .card-expiration").show();
+    $(".payment-information--confirmation").hide();
+    $(".enroll-auto-renew--confirmation").hide();
     $(".payment-information--form").hide();
     $(".agree-terms-auto-renew").hide();
+    $(".enroll-auto-renew--confirmation").show();
 });
 
 
@@ -71,12 +75,16 @@ $("#confirmUsmsYearlyPlan").on( "click", function() {
 });
 
 $("#btnEditCreditCard").on("click", function() {
+    $(".enroll-auto-renew--confirmation").hide();
     $(".cancel-auto-renew--confirmation").hide();
     $(".cancel-auto-renew--form").hide();
     $(".payment-information--confirmation").hide();
     $(".payment-information--form").show();
     $(".agree-terms").not(".agree-terms-auto-renew").show();
     $(".agree-terms-auto-renew").hide();
+    $("#btnEnrollAutoRenewSubmit").hide();
+    $("#btnEditCreditCardSubmit").show();
+    
 });
 
 $("#btnEditCreditCardSubmit").on("click", function() {
@@ -90,7 +98,10 @@ $("#btnEditCreditCardCancel").on("click", function() {
 });
 
 $("#btnCancelAutoRenew").on("click", function() {
+    $(".payment-information--summary .card-number").hide();
+    $(".payment-information--summary .card-expiration").hide();
     $(".payment-information--confirmation").hide();
+    $(".enroll-auto-renew--confirmation").hide();
     $(".cancel-auto-renew--confirmation").hide();
     $(".payment-information--form").hide();
     $(".cancel-auto-renew--form").show();
@@ -100,6 +111,14 @@ $("#btnCancelAutoRenew").on("click", function() {
 $("#btnYesCancelAutoRenew").on("click", function() {
     $(".payment-information--form").hide();
     $(".cancel-auto-renew--form").hide();
+
+    $("#btnEnrollAutoRenew").show();
+    $("#btnEditCreditCard").hide();
+    $("#btnCancelAutoRenew").hide();
+    // $(".card-number").hide();
+    // $(".card-expiration").hide();
+
+
     $(".cancel-auto-renew--confirmation").show();
 });
 
