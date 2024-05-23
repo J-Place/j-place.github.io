@@ -1,13 +1,7 @@
 $(document).ready(function() {
     $(".form-group.agree-terms").hide();
     enableEditButtons();
-    $("#btnEnrollAutoRenew").prop('disabled', false);
-    console.log($("#btnEnrollAutoRenew"));
 });
-
-
-
-
 
 var enableEditButtons = function() {
     $("#btnEnrollAutoRenew").prop('disabled', false);
@@ -27,12 +21,7 @@ var hideConfirmationMessages = function() {
     $(".payment-information--confirmation").hide();
 }
 
-
-
-
-
 // Manage Payment Method Edit Buttons
-
 $("#btnEditCreditCard").on("click", function() {
     disableEditButtons();
     hideConfirmationMessages();
@@ -43,28 +32,42 @@ $("#btnEditCreditCard").on("click", function() {
     $("#btnEnrollAutoRenewSubmit").hide();
     $("#btnEditCreditCardSubmit").show();
 });
-
 $("#btnEditCreditCardSubmit").on("click", function() {
     enableEditButtons();
     $(".payment-information--form").hide();
     $(".payment-information--confirmation").show();
 });
-
 $("#btnEditCreditCardCancel").on("click", function() {
     enableEditButtons();
     $(".payment-information--form").hide();
     $('.help-block').removeClass('has-error');
 });
 
-
-
-
-
-
-
+// Enroll in Auto Renew
+$("#btnEnrollAutoRenew").on( "click", function() {
+    disableEditButtons();
+    hideConfirmationMessages();
+    $(".agree-terms").hide();
+    $("#btnEditCreditCardSubmit").hide();
+    $("#btnEnrollAutoRenewSubmit").show();
+    $(".cancel-auto-renew--form").hide();
+    $(".form-group.agree-terms-auto-renew").show();
+    $(".payment-information--form").show();
+});
+$("#btnEnrollAutoRenewSubmit").on( "click", function() {
+    enableEditButtons();
+    hideConfirmationMessages();
+    $("#btnEnrollAutoRenew").hide();
+    $("#btnEditCreditCard").show();
+    $("#btnCancelAutoRenew").show();
+    $(".payment-information--summary .card-number").show();
+    $(".payment-information--summary .card-expiration").show();
+    $(".enroll-auto-renew--confirmation").show();
+    $(".payment-information--form").hide();
+    $(".agree-terms-auto-renew").hide();
+});
 
 // Cancel Auto Renew
-
 $("#btnCancelAutoRenew").on("click", function() {
     disableEditButtons();
     hideConfirmationMessages();
@@ -72,7 +75,6 @@ $("#btnCancelAutoRenew").on("click", function() {
     $(".cancel-auto-renew--form").show();
     $('.help-block').removeClass('has-error');
 });
-
 $("#btnYesCancelAutoRenew").on("click", function() {    
     enableEditButtons();
     hideConfirmationMessages();
@@ -87,7 +89,6 @@ $("#btnYesCancelAutoRenew").on("click", function() {
     $(".cancel-auto-renew--confirmation").show();
     $(".cancel-auto-renew--form").hide();
 });
-
 $("#btnNoKeepAutoRenew").on("click", function() {
     enableEditButtons();
     hideConfirmationMessages();
@@ -95,53 +96,7 @@ $("#btnNoKeepAutoRenew").on("click", function() {
     $(".cancel-auto-renew--form").hide();
 });
 
-
-
-
-
-
-// Enroll in Auto Renew
-
-$("#btnEnrollAutoRenew").on( "click", function() {
-    disableEditButtons();
-    hideConfirmationMessages();
-    $(".agree-terms").hide();
-    $("#btnEditCreditCardSubmit").hide();
-    $("#btnEnrollAutoRenewSubmit").show();
-    $(".cancel-auto-renew--form").hide();
-    $(".form-group.agree-terms-auto-renew").show();
-    $(".payment-information--form").show();
-});
-
-$("#btnEnrollAutoRenewSubmit").on( "click", function() {
-    enableEditButtons();
-    hideConfirmationMessages();
-    $("#btnEnrollAutoRenew").hide();
-    $("#btnEditCreditCard").show();
-    $("#btnCancelAutoRenew").show();
-    $(".payment-information--summary .card-number").show();
-    $(".payment-information--summary .card-expiration").show();
-    $(".enroll-auto-renew--confirmation").show();
-    $(".payment-information--form").hide();
-    $(".agree-terms-auto-renew").hide();
-});
-
-
-
-
-
-
-
-
-
-
+// Temporary: toggle validation
 $("#showValidation").on("click", function () {
     $('.help-block').toggleClass('has-error');
 });
-
-
-
-
-
-
-
