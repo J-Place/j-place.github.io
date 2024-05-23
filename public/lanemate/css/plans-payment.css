@@ -11,6 +11,7 @@
 .payment-information--form,
 .payment-information--confirmation,
 .cancel-auto-renew--form,
+.enroll-auto-renew--confirmation,
 .cancel-auto-renew--confirmation {
     display: none;
 }
@@ -27,14 +28,29 @@
     text-decoration: underline;
 }
 
-.payment-information--summary {
+/* .payment-information--summary {
     margin-top: 3rem;
-}
+} */
 
 @media (min-width: 1200px) {
     .payment-information--summary {
         margin-top: 0;
     }
+}
+
+.card-number,
+.card-expiration {
+    display: inline-flex;
+}
+
+.card-expiration {
+        padding-left: 2.5rem;
+}
+
+.payment-information--summary a,
+.card-expiration + a {
+    display: flex;
+    margin: 1rem 0;
 }
 
 .payment-information--summary h3 {
@@ -58,9 +74,22 @@
 
 .payment-information--form .form-group.agree-terms {
     margin: 1rem 0 3rem;
+    align-items: start;
+    flex-wrap: nowrap;
 }
+
+/*
+.payment-information--form .form-group.agree-terms-auto-renew {
+    margin-top: -1rem;
+}
+*/
+
 .form-group.agree-terms .help-block {
     margin-left: -2.6rem;
+}
+
+.payment-information--form .checkbox-label + span {
+    padding-top: 0.5rem;
 }
 
 .payment-information--form input[type=email], 
@@ -92,7 +121,7 @@
 }
 
 /* Overrides source form container styling */
-@media (max-width: 991px) {
+/* @media (max-width: 991px) {
     .payment-information--form,
     .cancel-auto-renew--form,
     .cancel-auto-renew--confirmation {
@@ -100,7 +129,7 @@
         border-top: 1px solid #CCC;
         margin-top: 3rem;
     }
-}
+} */
 
 @media (min-width: 1200px) {
     .cancel-auto-renew-message {
@@ -120,4 +149,51 @@
 
 #enrollAutoRenew {
     margin-top: 3rem;
+}
+
+
+
+/* Override Common.css */
+@media (min-width: 992px) {
+    /* .usms-container.form__container>.row>[class*=col-lg-]:nth-of-type(2), 
+    .usms-container.form__container>.row>[class*=col-md-]:nth-of-type(2), 
+    .usms-container.form__container>.row>[class*=col-sm-]:nth-of-type(2) {
+        border: 0 none;
+    } */
+    /* .usms-container.form__container>.row>[class*=col-lg-]:nth-of-type(2), 
+    .usms-container.form__container>.row>[class*=col-md-]:nth-of-type(2), 
+    .usms-container.form__container>.row>[class*=col-sm-]:nth-of-type(2) {
+        border-top: 0 none;
+        margin-top: 1rem;
+        padding-top: 0;
+        border-left: 1px solid #ccc;
+    } */
+    .cancel-auto-renew--form, .cancel-auto-renew--confirmation {
+        padding-top: 2rem;
+    }
+    .enroll-auto-renew--confirmation {
+        padding-top: 5rem;
+    }
+}
+
+
+
+
+
+
+@media (max-width: 1199px) {
+    .usms-container.form__container > .row > [class*=col-lg-]:nth-of-type(2),
+    .usms-container.form__container > .row > [class*=col-md-]:nth-of-type(2),
+    .usms-container.form__container > .row > [class*=col-sm-]:nth-of-type(2) {
+        border: 0 none;
+        margin-top: 0rem;
+        padding-top: 0rem;
+    }
+    .usms-container.form__container > .row > [class*=col-lg-]:nth-of-type(3), 
+    .usms-container.form__container > .row > [class*=col-md-]:nth-of-type(3), 
+    .usms-container.form__container > .row > [class*=col-sm-]:nth-of-type(3) {
+        border: 0 none;
+        margin-top: 1rem;
+        padding-top: 1rem;
+    }
 }
