@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    // $("#usmsModalPaymentFailed").modal('show');
     $("body").addClass("modal-open");
     $(".form-group.agree-terms").hide();
 });
@@ -14,38 +13,6 @@ $("#confirmPaymentFailedModal").on( "click", function() {
 $("#usmsModalPaymentFailed").on( "click", function() {
     $(".payment-information--form").show();
 });
-
-
-
-
-
-$("#btnEnrollAutoRenew").on( "click", function() {
-    $(".agree-terms").hide();
-    $("#btnEditCreditCardSubmit").hide();
-    $("#btnEnrollAutoRenewSubmit").show();
-    $(".cancel-auto-renew--confirmation").hide();
-    $(".cancel-auto-renew--form").hide();
-    $(".payment-information--confirmation").hide();
-    $(".form-group.agree-terms-auto-renew").show();
-    $(".payment-information--form").show();
-});
-
-$("#btnEnrollAutoRenewSubmit").on( "click", function() {
-    $("#btnEnrollAutoRenew").hide();
-    $("#btnEditCreditCard").show();
-    $("#btnCancelAutoRenew").show();
-    $(".payment-information--summary .card-number").show();
-    $(".payment-information--summary .card-expiration").show();
-    $(".payment-information--confirmation").hide();
-    $(".enroll-auto-renew--confirmation").hide();
-    $(".payment-information--form").hide();
-    $(".agree-terms-auto-renew").hide();
-    $(".enroll-auto-renew--confirmation").show();
-});
-
-
-
-
 
 $("#confirmLaneMateMonthlyPlan").on( "click", function() {
     $(".current-plan__renewal-date").removeClass("current-plan--selected");
@@ -102,7 +69,6 @@ $("#btnEditCreditCardCancel").on("click", function() {
 $("#btnCancelAutoRenew").on("click", function() {
     $(".payment-information--summary .card-number").hide();
     $(".payment-information--summary .card-expiration").hide();
-    // $(".payment-information--confirmation").hide();
     $(".payment-information--confirmation").hide();
     $(".enroll-auto-renew--confirmation").hide();
     $(".cancel-auto-renew--confirmation").hide();
@@ -114,14 +80,9 @@ $("#btnCancelAutoRenew").on("click", function() {
 $("#btnYesCancelAutoRenew").on("click", function() {
     $(".payment-information--form").hide();
     $(".cancel-auto-renew--form").hide();
-
     $("#btnEnrollAutoRenew").show();
     $("#btnEditCreditCard").hide();
     $("#btnCancelAutoRenew").hide();
-    // $(".card-number").hide();
-    // $(".card-expiration").hide();
-
-
     $(".cancel-auto-renew--confirmation").show();
 });
 
@@ -130,28 +91,51 @@ $("#btnNoKeepAutoRenew").on("click", function() {
     $(".cancel-auto-renew--form").hide();
 });
 
-
-$(".usms-modal-link").on("click", function() { 
-    if ($(".product-option_lanemate-monthly.product-option-selected").length) {
-        $("#usmsModalMonthly").modal('show');
-        $("body").addClass("modal-open");
-    }
-    if ($(".product-option_lanemate-yearly.product-option-selected").length) {
-        $("#usmsModalYearly").modal('show');
-        $("body").addClass("modal-open");
-    }
+$("#btnEnrollAutoRenew").on( "click", function() {
+    $(".agree-terms").hide();
+    $("#btnEditCreditCardSubmit").hide();
+    $("#btnEnrollAutoRenewSubmit").show();
+    $(".cancel-auto-renew--confirmation").hide();
+    $(".cancel-auto-renew--form").hide();
+    $(".payment-information--confirmation").hide();
+    $(".form-group.agree-terms-auto-renew").show();
+    $(".payment-information--form").show();
 });
 
-$("#confirmMonthlyUpgrade").on("click", function () {
-    $("#usmsModalMonthly").hide();
-    $(".product-option").removeClass("product-option-selected");
-    $("body").removeClass("modal-open");
+$("#btnEnrollAutoRenewSubmit").on( "click", function() {
+    $("#btnEnrollAutoRenew").hide();
+    $("#btnEditCreditCard").show();
+    $("#btnCancelAutoRenew").show();
+    $(".payment-information--summary .card-number").show();
+    $(".payment-information--summary .card-expiration").show();
+    $(".payment-information--confirmation").hide();
+    $(".enroll-auto-renew--confirmation").hide();
+    $(".payment-information--form").hide();
+    $(".agree-terms-auto-renew").hide();
+    $(".enroll-auto-renew--confirmation").show();
 });
 
-$("#confirmYearlyUpgrade").on("click", function () {
-    $("#usmsModalYearly").hide();
-    $("body").removeClass("modal-open");
-});
+// $(".usms-modal-link").on("click", function() { 
+//     if ($(".product-option_lanemate-monthly.product-option-selected").length) {
+//         $("#usmsModalMonthly").modal('show');
+//         $("body").addClass("modal-open");
+//     }
+//     if ($(".product-option_lanemate-yearly.product-option-selected").length) {
+//         $("#usmsModalYearly").modal('show');
+//         $("body").addClass("modal-open");
+//     }
+// });
+
+// $("#confirmMonthlyUpgrade").on("click", function () {
+//     $("#usmsModalMonthly").hide();
+//     $(".product-option").removeClass("product-option-selected");
+//     $("body").removeClass("modal-open");
+// });
+
+// $("#confirmYearlyUpgrade").on("click", function () {
+//     $("#usmsModalYearly").hide();
+//     $("body").removeClass("modal-open");
+// });
 
 $("#showValidation").on("click", function () {
     $('.help-block').toggleClass('has-error');
