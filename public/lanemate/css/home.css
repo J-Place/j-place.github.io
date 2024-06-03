@@ -1,5 +1,112 @@
+/* Needs to go in Bootstrap patch */
+
+@media (min-width: 1400px) {
+    .col-xxl-4 {
+        flex: 0 0 auto;
+        width: 33.33333333%;
+    }
+}
+
+
+
+
 .page-header {
     background-color: #FFF;
+    flex-direction: column;
+}
+
+.page-header h1,
+.page-header h1 small {
+    text-shadow: 0 0 10rem #000
+}
+
+.page-header__image h1,
+.page-header__image h1 small {
+    text-shadow: 0 .5rem 1.0rem rgba(0,0,0,.5), 0 .5rem 5rem rgba(0,0,0,.8);
+    text-align: center;
+    font-weight: 900;
+    line-height: 100%;
+}
+
+.page-header__image h1 {
+    font-size: 4rem;
+    margin: 6rem auto 4rem;
+    padding: 0 2rem;
+}
+
+.page-header .btn {
+    box-shadow: 0 1rem 4.5rem rgba(0,0,0,.5);
+}
+
+
+
+.gradient-left {
+    position: absolute;
+    left: -0%;
+    bottom: -60%;
+    width: 960px;
+    z-index: 0;
+}
+.gradient-right {
+    position: absolute;
+    right: -30%;
+    top: 0;
+    width: 960px;
+    z-index: 0;
+}
+
+.section-cta {
+    position: relative;
+    overflow: hidden;
+}
+
+.section-cta .gradient-left {
+    left: 0;
+    bottom: 0;
+    width: 2000px;
+}
+
+.section-cta .gradient-right {
+    right: 0;
+    top: 0;
+    width: 2000px;
+    transform: rotate(180deg);
+    opacity: 0.5;
+}
+
+@media (min-width: 562px) {
+    .gradient-left {
+        left: -20%;
+        bottom: 0;
+    }
+    .gradient-right {
+        right: -10%;
+        top: 0;
+    }    
+}
+
+@media (min-width: 992px) {
+    .gradient-left {
+        left: 0;
+        bottom: -300px;
+        /* width: 70%; */
+        width: 2000px;
+        opacity: 0.5;
+    }
+    .gradient-right {
+        right: 0;
+        top: -300px;
+        /* width: 70%; */
+        width: 2000px;
+        opacity: 0.5;
+    }    
+}
+
+
+
+
+.section-testimonials .row > div {
+    margin-bottom: 3rem;
 }
 
 p {
@@ -11,7 +118,18 @@ p {
     font-weight: 300;
 } */
 
-.highlight {
+.btn.btn-xl {
+    border-radius: 6px;
+}
+
+h1 .highlight {
+    /* font-size: 5rem; */
+    /* color: #092C5C; */
+    /* background-color: transparent; */
+    color: rgba(143, 188, 230, 1);
+}
+
+h3 .highlight {
     /* background-color: yellow; */
     background-color: rgba(143, 188, 230, 1);
     padding-left: 20px;
@@ -21,26 +139,22 @@ p {
     /* margin-bottom: 2rem; */
     line-height: 140%;
     text-shadow: none !important;
+    font-size: 4rem;
     font-weight: 900;
 }
 
-h3 {
+/* h3 {
     font-weight: 300;
-}
+} */
 
-h1 .highlight {
-    /* font-size: 5rem; */
-    color: #092C5C;
+.section {
+    width: 100%;
 }
-h3 .highlight {
-    font-size: 4rem;
-}
-
 
 .section-cta {
     padding-top: 5rem;
-    padding-left: 20%;
-    padding-right: 20%;
+    padding-left: 1rem;
+    padding-right: 1rem;
     padding-bottom: 10rem;
     text-align: center;
 }
@@ -101,6 +215,13 @@ h3 .highlight {
     height: 100%;
 }
 
+.cta-checkbox-items .row > div {
+    margin-bottom: 2rem;
+}
+.cta-checkbox-items {
+    margin: 8rem 0 5rem 5rem;
+}
+
 @media (min-width: 992px) {
     .page-header__image {
         height: 800px;
@@ -109,28 +230,18 @@ h3 .highlight {
     }
     .page-header__image h1 {
         /* align-self: auto; */
-        margin-top: 15%
+        margin-top: 15%;
+        margin-bottom: 15rem;
+        font-size: 6rem;
+    }
+    .section-cta {
+        padding-left: 10rem;
+        padding-right: 10rem;
     }
 }
 
 
 
-
-
-.page-header h1,
-.page-header h1 small {
-    text-shadow: 0 0 10rem #000
-}
-
-.page-header__image h1,
-.page-header__image h1 small {
-    /* text-shadow: 0 0 10rem #000 */
-    text-shadow: 0 .5rem 1.0rem rgba(0,0,0,.5), 0 .5rem 5rem rgba(0,0,0,.8);
-}
-
-.page-header .btn {
-    box-shadow: 0 1rem 4.5rem rgba(0,0,0,.5);
-}
 
 
 
@@ -145,13 +256,26 @@ h3 .highlight {
 .check-label {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
 }
 
-.section-tiles .tile .check-label p {
+.check-label img {
+    margin-top: -5px;
+    margin-right: -2px;
+}
+
+.check-label h6 {
     text-align: left;
     margin: 0;
     padding-left: 1rem;
+}
+
+.check-label h6 span {
+    font-weight: 300;
+    color: #666;
+    font-size: 2rem;
+    display: block;
+    margin-top: .8rem;
 }
 
 .section-tiles .tile img {
@@ -163,3 +287,18 @@ h3 .highlight {
     max-width: 1200px;
     margin: 0 auto;
 }
+
+
+
+
+
+
+
+
+
+/* .section-cta {
+    background-image: url("https://www.usms.org/-/media/usms/Non-Lightroom Images/House Art/Video Stroke Analysis/corner-grid-gradient-3-gray.png");
+    background-size: 2000px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+} */
