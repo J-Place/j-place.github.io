@@ -60,6 +60,21 @@
     overflow: hidden;
 }
 
+.section-cta h2,
+.section-cta h3,
+.section-cta p {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.section-cta h2 + p {
+    margin: 2rem auto 2rem;
+}
+
+.section-cta h2 + p + a {
+    margin: 2rem auto 4rem;
+}
+
 .section-cta .gradient-left {
     left: 0;
     bottom: 0;
@@ -68,10 +83,12 @@
 }
 
 .section-cta .gradient-right {
+    top: initial; 
     right: 0;
-    top: 0;
+    bottom: 0;
     width: 2000px;
-    transform: rotate(180deg);
+    /* transform: rotate(180deg); */
+    transform: rotateY(180deg);
     opacity: 0.5;
 }
 
@@ -101,6 +118,9 @@
         width: 2000px;
         /* opacity: 0.5; */
     }    
+    /* .section-cta .gradient-right {
+        bottom: 0;
+    } */
 }
 
 
@@ -258,6 +278,7 @@ h3 .highlight {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
+    padding-left: 4rem;
 }
 
 .check-label img {
@@ -269,6 +290,28 @@ h3 .highlight {
     text-align: left;
     margin: 0;
     padding-left: 1rem;
+}
+
+@media (min-width: 992px) {
+    .check-label {
+        padding-left: 0;
+    }
+    .check-label h6 {
+        padding-left: 1rem;
+        padding-right: 4rem;
+    }  
+}
+
+@media (min-width: 1200px) {
+    .check-label h6 {
+        padding-right: 7rem;
+    }  
+}
+
+@media (min-width: 1400px) {
+    .check-label h6 {
+        padding-right: 10rem;
+    }  
 }
 
 .check-label h6 span {
