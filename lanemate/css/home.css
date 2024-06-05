@@ -13,7 +13,8 @@
         url('https://www.usms.org/-/media/usms/Non-Lightroom%20Images/House%20Art/Video%20Stroke%20Analysis/bg-checked-gradient-blue.png') !important;
     background-repeat: 
         repeat-y !important;
-    background-position: 100% !important;
+    /* background-position: 100% !important; */
+    background-position: -380px;
     /* background-size: 715px; */
     background-size: 900px;
 }
@@ -75,24 +76,23 @@
     box-shadow: 0 1rem 4.5rem rgba(0,0,0,0.5);
 }
 
-.gradient-left {
-    position: absolute;
-    left: -0%;
-    bottom: -60%;
-    width: 960px;
-    z-index: 0;
-}
-.gradient-right {
-    position: absolute;
-    right: -30%;
-    top: 0;
-    width: 960px;
-    z-index: 0;
-}
-
 .section-cta {
     position: relative;
     overflow: hidden;
+}
+
+.section-cta p.cta-text-lg {
+    font-size: 2.8rem;
+    letter-spacing: 0.2px;
+    color: #565656;
+    margin: 3rem 1rem 4rem;
+    line-height: 150%;
+}
+
+@media (min-width: 562px) {
+    .section-cta p.cta-text-lg {
+        margin: 3rem auto 4rem;
+    }    
 }
 
 .section-cta h2,
@@ -129,6 +129,19 @@
 .gradient-left,
 .gradient-right {
     opacity: 0.4;
+    position: absolute;
+    width: 900px;
+    z-index: 0;
+}
+
+.gradient-left {
+    left: -200px;
+    bottom: 0%;
+}
+
+.gradient-right {
+    right: -500px;
+    top: 0;
 }
 
 @media (min-width: 562px) {
@@ -144,29 +157,14 @@
 
 @media (min-width: 992px) {
     .gradient-left {
-        /* left: 0; */
         left: -5px;
-        bottom: -324px;
-        /* width: 70%; */
-        /* width: 2000px; */
-        width: 2445px;
-        /* opacity: 0.5; */
+        bottom: -1  0px;
     }
     .gradient-right {
         right: 0;
         top: -300px;
-        /* width: 70%; */
-        /* width: 2000px; */
-        width: 2445px;
-        /* opacity: 0.5; */
     }    
-    /* .section-cta .gradient-right {
-        bottom: 0;
-    } */
 }
-
-
-
 
 .section-testimonials .row > div {
     margin-bottom: 3rem;
@@ -178,7 +176,7 @@ p {
 }
 
 .btn.btn-xl {
-    border-radius: 10px;
+    border-radius: 6px;
     font-size: 2.3rem;
     letter-spacing: .2px;
     padding: 0 3rem;
@@ -252,7 +250,7 @@ h1 .highlight {
 }
 
 .section-tiles {
-    padding-top: 4rem;
+    padding-top: 1rem;
     padding-left: 5px;
     padding-right: 5px;
 }
@@ -296,6 +294,7 @@ h1 .highlight {
 .section-tiles .tile .btn {
     margin-top: 2.5rem;
     margin-bottom: 3rem;
+    border-radius: 6px;
 }
 
 .section-testimonials {
@@ -305,7 +304,7 @@ h1 .highlight {
 
 @media (min-width: 992px) {
     .section-tiles {
-        padding-top: 1rem;
+        padding-top: 5rem;
     }
     .section-tiles,
     .section-testimonials {
