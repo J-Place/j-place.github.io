@@ -321,24 +321,27 @@ a {
   --bs-btn-disabled-border-color: var(--bs-blue);
 }
 
-.btn-primary:focus, 
-.btn-primary:hover {
-    background-color: red;
-}
-
 .btn:hover {
     color: var(--bs-btn-hover-color);
     background-color: var(--bs-btn-hover-bg);
     border-color: var(--bs-btn-hover-border-color);
 }
+
 a:hover {
     color: var(--bs-link-hover-color);
     background-color: var(--lm-blue-md);
     border-color: var(--lm-blue-md);
 }
 
+footer a:hover {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+
 .btn-primary:focus, 
 .btn-primary:hover {
+    background-color: var(--lm-blue-md);
     color: #FFF;
 }
 
@@ -430,11 +433,21 @@ a:hover {
     border: 1px solid var(--bs-blue);
 }
 
+.login__items-container .login__list {
+    border-color: var(--lm-blue);
+}
+
 .mega-main-menu__actions-login--wrapper label, 
 .mega-main-menu__actions-search--wrapper label, 
 .mega-main-menu__actions a label, 
 .mega-main-menu__toggle-mobile label {
     color: var(--bs-blue);
+}
+
+.login__items-container .login__list-item a:hover {
+    background-color: transparent;
+    border-color: transparent;
+    color: var(--lm-blue-md);
 }
 
 @media (min-width: 1200px) {
