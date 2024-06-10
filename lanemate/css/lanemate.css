@@ -1,6 +1,20 @@
+/* LaneMate colors */
+
+:root {
+    --lm-blue: #092C5C;
+    --lm-blue-md: #246aa4;
+    --lm-blue-lt: #8FBCE6;
+    --bs-blue: var(--lm-blue);
+    --bs-primary: var(--lm-blue);
+    --bs-primary-rgb: 9, 44, 92;
+    --bs-link-color: var(--lm-blue);
+    /* --bs-link-hover-color: #8FBCE6; */
+    --bs-link-hover-color: var(--md-blue);
+}
+
 .btn-primary {
     /* background-color: #8FBCE6; */
-    background-color: #092C5C;
+    background-color: var(--lm-blue);
 }
 
 /* Update all input labels sitewide, check for scoped classes */
@@ -50,7 +64,7 @@ label.checkbox-label {
 
 .breadcrumb {
     /* background-color: #8FBCE6; */
-    background-color: #092C5C;
+    background-color: var(--lm-blue);;
 }
 
 .breadcrumb__container {
@@ -65,7 +79,7 @@ label.checkbox-label {
     display: block;
     cursor: pointer;
     white-space: nowrap;
-    color: #092C5C;
+    color: var(--lm-blue);;
     margin-right: 15px;
     padding: 25px 0;
     font-size: 16px;
@@ -73,16 +87,16 @@ label.checkbox-label {
 }
 
 .mega-main-menu__items>li:last-of-type > a {
-    background-color: #092C5C;
-    border: 1px solid #092C5C;
+    background-color: var(--lm-blue);;
+    border: 1px solid var(--lm-blue);;
 }
 
 .mega-main-menu__items > li:hover {
-  color: #246aa4;
+  color: var(--lm-blue-md);
 }
 
 main h1, main h2, main h3, main h4, main h5, main h6 {
-    color: #092C5C;
+    color: var(--lm-blue);;
 }
 .confirmation-benefits-wrapper {
     background-color: #d6ebff;
@@ -262,60 +276,49 @@ main h1, main h2, main h3, main h4, main h5, main h6 {
 }
 
 
-/* LaneMate colors */
-
-:root {
-    --bs-blue: #092C5C;
-    --bs-primary: #092C5C;
-    --bs-primary-rgb: 9, 44, 92;
-    --bs-link-color: #092C5C;
-    /* --bs-link-hover-color: #8FBCE6; */
-    --bs-link-hover-color: #246aa4;
-}
-
 .form-check-input:checked {
-  background-color: #092C5C;
-  border-color: #092C5C;
+  background-color: var(--bs-blue);
+  border-color: var(--bs-blue);
 }
 
 .form-check-input[type=checkbox]:indeterminate {
-  background-color: #092C5C;
-  border-color: #092C5C;
+  background-color: var(--bs-blue);
+  border-color: var(--bs-blue);
 }
 
 .form-range::-webkit-slider-thumb {
-  background-color: #092C5C;
+  background-color: var(--bs-blue);
 }
 
 .form-range::-moz-range-thumb {
-  background-color: #092C5C;
+  background-color: var(--bs-blue);
 }
 
 a {
-    color: #092C5C;
+    color: var(--bs-blue);
 }
 
 .btn-primary {
   --bs-btn-color: #fff;
-  --bs-btn-bg: #092C5C;
-  --bs-btn-border-color: #092C5C;
+  --bs-btn-bg: var(--bs-blue);
+  --bs-btn-border-color: var(--bs-blue);
   --bs-btn-hover-color: #fff;
   /* --bs-btn-hover-bg: #8FBCE6; */
   /* --bs-btn-hover-border-color: #8FBCE6; */
-  --bs-btn-hover-bg: #246aa4;
-  --bs-btn-hover-border-color: #246aa4;
+  --bs-btn-hover-bg: var(--md-blue);
+  --bs-btn-hover-border-color: var(--md-blue);
   --bs-btn-focus-shadow-rgb: 49, 132, 253;
   --bs-btn-active-color: #fff;
   /* --bs-btn-active-bg: #8FBCE6; */
   /* --bs-btn-active-border-color: #8FBCE6; */
 
-  --bs-btn-active-bg: #246aa4;
-  --bs-btn-active-border-color: #246aa4;
+  --bs-btn-active-bg: var(--md-blue);
+  --bs-btn-active-border-color: var(--md-blue);
 
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   --bs-btn-disabled-color: #fff;
-  --bs-btn-disabled-bg: #092C5C;
-  --bs-btn-disabled-border-color: #092C5C;
+  --bs-btn-disabled-bg: var(--bs-blue);
+  --bs-btn-disabled-border-color: var(--bs-blue);
 }
 
 .btn-primary:focus, 
@@ -330,66 +333,73 @@ a {
 }
 a:hover {
     color: var(--bs-link-hover-color);
+    background-color: var(--lm-blue-md);
+    border-color: var(--lm-blue-md);
+}
+
+.btn-primary:focus, 
+.btn-primary:hover {
+    color: #FFF;
 }
 
 .btn-outline-primary {
-  --bs-btn-color: #092C5C;
-  --bs-btn-border-color: #092C5C;
+  --bs-btn-color: var(--bs-blue);
+  --bs-btn-border-color: var(--bs-blue);
   --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: #092C5C;
-  --bs-btn-hover-border-color: #092C5C;
+  --bs-btn-hover-bg: var(--bs-blue);
+  --bs-btn-hover-border-color: var(--bs-blue);
   --bs-btn-focus-shadow-rgb: 13, 110, 253;
   --bs-btn-active-color: #fff;
-  --bs-btn-active-bg: #092C5C;
-  --bs-btn-active-border-color: #092C5C;
+  --bs-btn-active-bg: var(--bs-blue);
+  --bs-btn-active-border-color: var(--bs-blue);
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: #092C5C;
+  --bs-btn-disabled-color: var(--bs-blue);
   --bs-btn-disabled-bg: transparent;
-  --bs-btn-disabled-border-color: #092C5C;
+  --bs-btn-disabled-border-color: var(--bs-blue);
   --bs-gradient: none;
 }
 
 .dropdown-menu {
-  --bs-dropdown-link-active-bg: #092C5C;
+  --bs-dropdown-link-active-bg: var(--bs-blue);
 }
 
 .dropdown-menu-dark {
---bs-dropdown-link-active-bg: #092C5C;
+--bs-dropdown-link-active-bg: var(--bs-blue);
 }
 
 .nav-pills {
-  --bs-nav-pills-link-active-bg: #092C5C;
+  --bs-nav-pills-link-active-bg: var(--bs-blue);
 }
 
 .pagination {
-  --bs-pagination-active-bg: #092C5C;
-  --bs-pagination-active-border-color: #092C5C;
+  --bs-pagination-active-bg: var(--bs-blue);
+  --bs-pagination-active-border-color: var(--bs-blue);
 }
 
 .progress {
-  --bs-progress-bar-bg: #092C5C;
+  --bs-progress-bar-bg: var(--bs-blue);
 }
 
 .list-group {
-    --bs-list-group-active-bg: #092C5C;
-    --bs-list-group-active-border-color: #092C5C;
+    --bs-list-group-active-bg: var(--bs-blue);
+    --bs-list-group-active-border-color: var(--bs-blue);
 }
 
 .text-primary {
-  color:#092C5C;
+  color:var(--bs-blue);
 }
 
 #footerOverlay {
-    background: #092C5C;
+    background: var(--bs-blue);
 }
 
 .footer-left, .footer-right {
-    background-color: #092C5C;
+    background-color: var(--bs-blue);
 }
 
 .footer-right .btn-primary {
     background-color: #8FBCE6;
-    color: #092C5C;
+    color: var(--bs-blue);
 }
 
 .footer-right .nav.nav-service.navbar-nav.nav-pills > li a {
@@ -415,11 +425,16 @@ a:hover {
     cursor: pointer;
 }
 
+.input-group-addon:last-child {
+    background-color: var(--bs-blue);
+    border: 1px solid var(--bs-blue);
+}
+
 .mega-main-menu__actions-login--wrapper label, 
 .mega-main-menu__actions-search--wrapper label, 
 .mega-main-menu__actions a label, 
 .mega-main-menu__toggle-mobile label {
-    color: #092C5C;
+    color: var(--bs-blue);
 }
 
 @media (min-width: 1200px) {
