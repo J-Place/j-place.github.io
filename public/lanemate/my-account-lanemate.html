@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--[if IE 9]>
 <html lang="en" class="ie9 no-js">
-   <![endif]-->
+<![endif]-->
 <!--[if !IE]><!-->
 <html lang="en">
     <!--<![endif]-->
@@ -44,9 +44,15 @@
     <link rel="stylesheet" href="/css/common-updates.css">
         <link rel="stylesheet" href="/lanemate/css/lanemate.css">
         <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
-        <link rel="stylesheet" href="/lanemate/css/login-lanemate.css">
+        <link rel="stylesheet" href="https://myusmstest.usms.org/cfs-filesystemfile/__key/uifiles/h-00000000075343cb-3fc3f82483d14ec485ef92e206116d49-s-00000000000000000000000000000000-0-pmyusms_5F00_1000-2399-f-3-638339481662600000-https-myusmstestusmsorg-443/MyUsmsStyles.less">
+        <link rel="stylesheet" href="/lanemate/css/my-account-lanemate.css">
+        <link rel="stylesheet" href="/lanemate/css/footer-from-telligent.css">
+        <link rel="stylesheet" href="/lanemate/css/usms-overrides-local-copy-of-telligent.css">
     </head>
-    <body class="">
+    <body>
+        <div class="loading" style="display: none;">
+            <img src="../img/loader.gif" alt="loading">
+        </div>
         <div id="main-container">
             <header class="header-static">
     <div id="">
@@ -262,127 +268,186 @@
     </div>
  </header>
             <main role="main">
-                <div class="section section-full bg-gray p-tb-10    ">
-                    <div class="usms-container form__container p-t-200">
-   <div class="row">
-      <div class="col-xs-12">
-         <div class="html-container">
-            <div class="form-row__header">
-               <h3>My Account <span style="font-size: 1.6rem; font-weight:400;color: #000;"> is subscribers only content. To continue, please log in or subscribe to LaneMate.</span></h3>
-            </div>
-         </div>
-      </div>
-   </div>
-   <div class="row row-border-2">
-      <div class="col-xs-12 col-md-6">
-         <div class="html-container">
-            <div class="form-col__header">
-               <h3>Log in to My Account</h3>
-               <style>
-                  .login-form a { display: block; font-size: 13px;}
-                  .form-row__header { margin-bottom: 5rem; }
-                  @media (min-width: 1200px) { .form-row__header { margin-bottom: 6rem; }}
-                  .form-col__header h3 { font-size: 21px !important; }
-                  .form-col__header h3 + p { font-size: 14px !important; }
-                  .login-form__submit,
-                  .register-form__submit { width: 100px !important; }
-                  .form__container { flex-direction: column; }
-               </style>
-            </div>
-         </div>
-          <form action="" class="login-form" method="post" data-bitwarden-watching="1">
-            <input type="hidden" name="fhController" value="MembershipController">
-            <input type="hidden" name="fhAction" value="MemberLogin">
-            <input name="__RequestVerificationToken" type="hidden" value="Iq-4M0JRP320hs4QxcNBCsCuel1bZIeXpOLvYwyK_Q7oLXAW6hgluVh1vj8QzvaSQc5veVBtnjkSG1219mIYXk95Z9ixkvYGjnhqQ2D3Rbk1"><input id="ReturnUrl" name="ReturnUrl" type="hidden" value=""><input id="uid" name="uid" type="hidden" value="cb981420-da7e-4e73-a261-e4f76068b8e8">        
-            <div class="form-group">
-               <input class="form-control" id="loginEmail" name="Email" placeholder="Email Address" type="text" value="">
-            </div>
-            <div class="form-group">
-               <input class="form-control" id="loginPassword" name="Password" placeholder="Password" type="password">
-            </div>
-            <div class="form-group">
-               <input id="rememberMe" name="RememberMe" type="checkbox" value="true"><input name="RememberMe" type="hidden" value="false">
-               <label class="label--rememberme" for="RememberMe">Remember Me</label>
-            </div>
-            <div class="form-group">
-               <input type="submit" onclick="loadSpinner()" class="btn btn-primary text-uppercase login-form__submit" value="GO!">
-               <div class="button-spinner" style="display: none;">
-                  <img src="-/media/usms/developers/images/loader.gif" alt="loading">
-               </div>
-            </div>
-            <div class="form-group">
-               <a href="/account/forgotpassword">
-               Forgot/Reset Password
-               </a>
-            </div>
-            <style>
-               .form__container .btn:focus, .form__container .btn:hover {
-               outline: none;
-               }
-               .button-spinner {
-               display: none;
-               /* background: #0068ad; */
-               background: transparent;
-               height: 4.6rem;
-               padding-right: 27px;
-               border-radius: 0 4px 4px 0;
-               /* margin-left: -31px; */
-               margin-left: 5px;
-               vertical-align: bottom;
-               }
-               .button-spinner img {
-               height: 23px;
-               margin-top: 11px;
-               }
-               .button-spinner:hover, .button-spinner:focus, .login-form__submit:hover + .button-spinner, .login-form__submit:focus + .button-spinner {
-               /* background-color: #4097cc; */
-               background-color: transparent;
-               }
-            </style>
-            <script>
-               function loadSpinner() {
-                   const spinner = document.querySelector(".button-spinner");
-                   spinner.style.display = 'inline-block';
-                   return true;
-               }
-            </script>
-         </form>
-      </div>
-      <div class="col-xs-12 col-md-6  ">
-         <div class="html-container  ">
-            <h3 style="margin-top: 0; font-size: 21px;">Subscribe to LaneMate</h3>
-            <p style="font-size: 14px; line-height: 18px; margin-bottom: 10px;">Become a subscriber and enjoy all of the benefits, including:</p>
-            <ul style="padding-left: 15px;">
-               <li>
-                  <strong>Workout Library</strong>
-                  <div style="line-height: 17px; margin-top: -1px; margin-bottom: 8px; font-size: 13px;">Search through our 5,000 workouts designed for all skill levels and a variety of distances and themes</div>
-               </li>
-               <li>
-                  <strong>Exclusive Content</strong>
-                  <div style="line-height: 17px; margin-top: -1px; margin-bottom: 8px; font-size: 13px;">Don't miss our articles and videos to help you improve your swimming</div>
-               </li>
-               <li>
-                  <strong>Video Stroke Analysis</strong>
-                  <div style="line-height: 17px; margin-top: -1px; margin-bottom: 8px; font-size: 13px;">Industry-leading analysis leaving you with actionable ways to swim stronger</div>
-               </li>
-               <li>
-                  <strong>Fitness Challenges</strong>
-                  <div style="line-height: 17px; margin-top: -1px; margin-bottom: 8px; font-size: 13px;">We offer numerous online challenges to keep you motivated through the Swim.com partnership</div>
-               </li>
-               <li>
-                  <strong>Discounted Products</strong>
-                  <div style="line-height: 17px; margin-top: -1px; margin-bottom: 8px; font-size: 13px;">Get exclusive access to discounts from our partners</div>
-               </li>
-               <li>
-                  <strong>Online Community</strong>
-                  <div style="line-height: 17px; margin-top: -1px; margin-bottom: 8px; font-size: 13px;">Our vibrant forums provide an opportunity to connect and learn with other swimmers</div>
-               </li>
-            </ul>
-            <a class="btn btn-primary btn-large" style="margin-top: 35px; margin-bottom: 20px;" href="/#">FREE Trial</a>
-         </div>
-      </div>
-   </div>
+                <div class="breadcrumb-container" style="position: relative; padding-bottom: 40px;">
+                    <div class="breadcrumb">
+                        <div class="usms-container">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="breadcrumb__container">
+                                        <ul class="breadcrumb__items list--nostyle">
+                                            <li class="text-capitalize breadcrumb__item ">
+                                                <a class="breadcrumb__link" href="/public">Home<i class="fa fa-chevron-right"></i></a>
+                                            </li>
+                                            <li class="text-capitalize breadcrumb__item ">
+                                                <a class="breadcrumb__link" href="/public">My Account<i class="fa fa-chevron-right"></i></a>
+                                            </li>
+                                        </ul>
+                                        <span class="breadcrumb__title text-capitalize">Add-On</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section section-full p-tb-10 p-mh-500 ">
+                    <div class="usms-container p-tb-10">                        
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <header>
+                                    <h1>My Account</h1>
+                                    <div class="lead">
+                                        <p style="font-size: 15px; line-height: 25px;font-weight: normal;">RTE text ...</p>
+                                    </div>
+                                </header>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="my-usms--wrapper usms">
+                        <div class="container-fluid">
+                            <div class="usms-container my-usms--wrapper">
+                                <link rel="stylesheet" href="/lanemate/css/my-account.css">
+<link rel="stylesheet" href="/lanemate/css/my-account-dashboard.css">
+
+<div class="row">
+    <!-- <div id="tempNav">
+        <button class="btn-small btn-link" style="margin-top: -2px; display: none;" id="showValidation">Toggle Validation</button>
+        <button class="btn-small btn-link btn-link-selected" style="margin-right: .7rem;" id="showUsmsView">USMS</button>
+        <button class="btn-small btn-link" id="showLanemateView">LaneMate</button>
+    </div>     -->
+    <div class="col-xs-12">
+        <h3 class="myusms__section-header">Account</h3>
+        <div class="myusms__section-header--details">
+            <span class="first-name">Jay Place</span>
+            <span class="member-email lanemate-only">jplace@usmastersswimming.org</span>
+            <span class="member-id usms-only">1443-KT2JH</span>
+        </div>
+    </div>
 </div>
+
+<div class="row">
+    <div class="col-sm-4">
+        <div class="myusms--tile myusms--tile--same">
+            <a class="myusms__link myusms__link--app" href="https://community.usms.org/members/KT2JH"></a>
+            <img alt="My Information" src="https://www.usms.org/-/media/usms/developers/images/myaccount/icon-edit-my-information.png">
+            <h4>My Information</h4>
+            <span class="my-usms__tile--edit">(Edit My Information)</span>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="myusms--tile">
+            <a class="myusms__link myusms__link--app" href="https://www.usms.org/emailpreferences"></a>
+            <img alt="Email Preferences" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-email-preferences.png">
+            <h4>Email Preferences</h4>
+        </div>
+    </div>
+    <!-- Blank -->
+    <!-- <div class="col-sm-4"></div> -->
+    <!-- End Blank -->
+    <div class="col-sm-4">
+        <div class="myusms--tile myusms--tile--same">
+            <a class="myusms__link myusms__link--app" href="https://community.usms.org/user/settings"></a>
+            <img alt="Community Settings" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-community-settings.png">
+            <h4>Community Settings</h4>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="myusms--tile myusms--tile--same">
+            <a class="myusms__link myusms__link--app" href="https://j-place.github.io/public/lanemate/plans-payment.html"></a>
+            <img alt="Plans and Payment" src="https://www.usms.org/-/media/usms/developers/images/myaccount/icon-plans-payment.png">
+            <h4>Plans and Payment</h4>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="myusms--tile myusms--tile--same">
+            <a class="myusms__link myusms__link--app" href="https://j-place.github.io/public/lanemate/add-on.html"></a>
+            <img alt="Add-Ons and Upgrades" src="https://www.usms.org/-/media/usms/developers/images/myaccount/icon-add-ons-upgrades.png">
+            <h4>Add-Ons and Upgrades</h4>
+        </div>
+    </div>
+</div>
+
+<h3 class="myusms__section-header">Swimming</h3>
+<div class="row">
+    <div class="col-sm-4">
+        <div class="myusms--tile myusms--tile--same" id="workout-library">
+            <a class="myusms__link myusms__link--app" href="https://www.usms.org/workout-library"></a> 
+            <img alt="Workout Library" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-workout-library.png">
+            <h4>Workout Library</h4>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="myusms--tile myusms--tile--same" id="swim-com">
+            <a class="myusms__link myusms__link--app" href="https://community.usms.org/p/swim-feed"></a>
+            <img alt="Swim.com/My SwimFeed" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-swim.png">
+            <h4>Swim.com/My SwimFeed</h4>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="myusms--tile">
+            <a class="myusms__link myusms__link--app" href="https://www.swim.com/pools"></a>
+            <img alt="Places to Swim" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-places.png">
+            <h4>Places to Swim</h4>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="myusms--tile">
+            <a class="myusms__link myusms__link--app" href="https://www.usms.org/myusms/flog/"></a>
+            <img alt="Fitness Log" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-flog.png">
+            <h4>Fitness Log</h4>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="myusms--tile">
+            <a class="myusms__link myusms__link--app" href="https://www.usms.org/events/fitness-events/fitness-series/fitness-series-training-plans"></a>
+            <img alt="Fitness Series Training Plans" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-fitness-series.png">
+            <h4>Training Plans</h4>
+        </div>
+    </div>
+</div>
+
+<h3 class="myusms__section-header">Resources</h3>
+<div class="row">
+
+    <div class="col-sm-4">
+        <div class="myusms--tile myusms--tile--same" id="community">
+            <a class="myusms__link myusms__link--app" href="https://community.usms.org/"></a>
+            <img alt="Community/Forums" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-forums.png">
+            <h4>Community/Forums</h4>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="myusms--tile myusms--tile--same" id="swimmer-mag">
+            <a class="myusms__link myusms__link--app" href="https://www.usms.org/swimmer-magazine"></a>
+            <img alt="SWIMMER Magazine" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-swimmer-mag.png">
+            <h4>SWIMMER Magazine</h4>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="myusms--tile myusms--tile--same" id="member-discounts">
+            <a class="myusms__link myusms__link--app" href="https://www.usms.org/join-usms/membership-discounts"></a>
+            <img alt="Member Discounts" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-discounts.png">
+            <h4>Discounts</h4>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="myusms--tile myusms--tile--same" id="online-learning">
+            <a class="myusms__link myusms__link--app" href="https://www.usms.org/about-usms/online-learning"></a>
+            <img alt="Webinars and E-books" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-online-learning.png">
+            <h4>Webinars and E-books</h4>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="myusms--tile myusms--tile--same">
+            <a class="myusms__link myusms__link--app" href="https://www.youtube.com/@USMastersSwimming"></a>
+            <img alt="Instructional Videos" src="https://www.usms.org/-/media/usms/developers/images/myaccount/icon-instructional-videos.png">
+            <h4>Instructional Videos</h4>
+        </div>
+    </div>
+</div>
+<!-- <script src="/lanemate/js/my-account.js"></script> -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </main>
             <footer>
