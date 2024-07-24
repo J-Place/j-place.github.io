@@ -1,12 +1,45 @@
+const mobile = window.matchMedia("screen and (max-width:1199px)").matches;
+if (mobile) {
+    document.querySelector('.article-nav').classList.add('mobile');
+}
+
+function toggleMobileNav() {
+    const mobileNavList = document.getElementById('navList');
+    if (mobile && mobileNavList.classList.contains('show')) {
+        mobileNavList.classList.remove('show');
+        document.querySelector('.article-nav-title').classList.remove('open');
+        document.querySelector('body').style.overflow = "scroll";
+    } else if (mobile && !mobileNavList.classList.contains('show')) {
+        mobileNavList.classList.add('show');
+        document.querySelector('.article-nav-title').classList.add('open');
+        var mobileWindowHeight = window.screen.height;
+        document.querySelector('body').style.overflow = "hidden";
+    } else {
+        return false
+    }
+    document.querySelector('#navList').style.maxHeight = mobileWindowHeight - 50 + "px";    
+}
+
 document.addEventListener("DOMContentLoaded", function () {
-    const mobile = window.matchMedia("screen and (max-width:1199px)").matches;
-    if (mobile) {
-        document.querySelector('.article-nav').classList.add('mobile');
+    const articleNav = document.querySelector('.article-nav');
+    const articleNavHeight = articleNav.offsetHeight;
+    const articleStart = document.querySelector('.article-body').offsetTop;
+    const articleEnd = document.querySelector('.article-end').offsetTop;
+
+    if (window.scrollY >= articleStart && window.scrollY <= articleEnd) {
+        // Set nav position on initial page load
+        articleNav.classList.add('sticky-start');
+        articleNav.classList.remove('sticky-end');
+    } else { 
+        // Set nav position on page reload or loading page from hash links
+        if (mobile) {
+            articleNav.style.top = 30 + 'px';
+        }
     }
 
     function setArticleIds() {
-        const contentHeadings = document.querySelectorAll('.include-in-nav h2, .include-in-nav h3');
-        for (i = 0; i < contentHeadings.length; i++) {
+        const contentHeadings = document.querySelectorAll('.article-body div + div h2, .article-body div + div h3');
+        for (i = 0; i < contentHeadings.length; i++) {  
             var contentHeadingHtml = contentHeadings[i].innerHTML;
             var contentHeadingHtmlClean = contentHeadingHtml = contentHeadingHtml.replace(/\s/g, '').replace(/[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/g, '');
             contentHeadings[i].id = contentHeadingHtmlClean;
@@ -15,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
     setArticleIds();
 
     function renderNavList() {
-        const contentHeadings = document.querySelectorAll('.include-in-nav h2, .include-in-nav h3');
+        const contentHeadings = document.querySelectorAll('.article-body div + div h2, .article-body div + div h3');
         var str = '';
         for (i = 0; i < contentHeadings.length; i++) {
             var id = contentHeadings[i];
@@ -38,84 +71,80 @@ document.addEventListener("DOMContentLoaded", function () {
     window.addEventListener('scroll', renderNavList);
     renderNavList(); // Draw nav on page load
 
-    function toggleMobileNav() {
-        const mobileNavList = document.getElementById('navList');
-        if (mobile && mobileNavList.classList.contains('show')) {
-            mobileNavList.classList.remove('show');
-            document.querySelector('.article-nav-title').classList.remove('open');
-            document.querySelector('body').style.overflow = "scroll";
-        } else if (mobile && !mobileNavList.classList.contains('show')) {
-            mobileNavList.classList.add('show');
-            document.querySelector('.article-nav-title').classList.add('open');
-            var mobileWindowHeight = window.screen.height;
-            document.querySelector('body').style.overflow = "hidden";
+
+    let mobileNavList = document.querySelector('#navList');
+    let mobileNavButton = document.querySelector('.article-nav-title');
+    document.body.addEventListener('click', function(event){
+        if (mobile && window.scrollY < articleStart - 70) {
+            document.querySelector('.article-body').scrollIntoView();
+        }
+        if (mobile && window.scrollY < articleStart && mobileNavButton.contains(event.target)) {
+            articleNav.style.top = 0 + 'px';
+        }
+        if (mobile && mobileNavList.contains(event.target)){
+            toggleMobileNav();
         } else {
             return false
         }
-        document.querySelector('#navList').style.maxHeight = mobileWindowHeight - 50 + "px";    
-    }
+    });
 
-    const stickyNav = document.querySelector('.article-nav');
-    const stickyNavHeight = stickyNav.clientHeight;
-    const footerTop = document.getElementById('footerOverlay').offsetTop;
-    const articleStepper = document.querySelector('.article-stepper');
-    const articleAuthor = document.querySelector('.article-author');
-    const emailSignup = document.querySelectorAll('.sign-up:not(.sign-up--inline)');
-    const relatedArticles = document.querySelector('.related-content');
-    const offsetX = 50;
-    let stickyNavBottom = 0;
-    if (articleStepper) {
-        const articleStepperTop = document.querySelector('.article-stepper').parentElement.offsetTop;
-        stickyNavBottom = articleStepperTop - stickyNavHeight - offsetX;
-    } else if (articleAuthor){
-        const articleAuthorTop = document.querySelector('.article-author').parentElement.offsetTop;
-        stickyNavBottom = articleAuthorTop - stickyNavHeight - offsetX;
-    } else if (emailSignup){
-        const emailSignupTop = document.querySelector('.sign-up:not(.sign-up--inline').parentElement.offsetTop;
-        stickyNavBottom = emailSignupTop - stickyNavHeight - offsetX;
-    } else if (relatedArticles){
-        const relatedArticlesTop = document.querySelector('.related-content').parentElement.offsetTop;
-        stickyNavBottom = relatedArticlesTop - stickyNavHeight - offsetX;
-    } else {
-        stickyNavBottom = footerTop - stickyNavHeight - offsetX;
-    }
-
-    function handleNavPosition() {
-        stickyNav.style.left = 0;
-        const stickyNavTop = stickyNav.parentElement.offsetTop -20;
-        var scrollTop = window.scrollY;
+    // Set position on scroll
+    function setNavPosition() {
         if (mobile) {
-            return;
-        }
-        if (mobile == false && window.scrollY > stickyNavTop ) {
-            stickyNav.classList.add('sticky-start');
-        } else {
-            stickyNav.classList.remove('sticky-start');
-        }
-        if (mobile == false && scrollTop === 0) {
-            stickyNav.style.display = 'block';
-            stickyNav.style.top = stickyNavTop + 'px';
-        }
-        if (mobile == false && scrollTop <= stickyNavTop) {
-            stickyNav.style.display = 'block';
-            stickyNav.style.top = stickyNavTop - window.scrollY + 'px';
-        }
-        if (mobile == false && scrollTop > stickyNavTop) {
-            stickyNav.style.display = 'block';
-            stickyNav.style.top = 0 + 'px';
-        }
-        if (mobile == false && scrollTop >= stickyNavBottom) {
-            stickyNav.style.display = 'none';
+            if (window.scrollY < articleStart) {
+                articleNav.style.top = 0 + 'px';
+                articleNav.classList.remove('sticky-start');
+                articleNav.classList.remove('sticky-end');
+            }
+            if (window.scrollY >= articleStart) {
+                articleNav.style.top = 0 + 'px';
+                articleNav.classList.add('sticky-start');
+                articleNav.classList.remove('sticky-end');
+            }
+            if (!articleNav.classList.contains('sticky-start') && !articleNav.classList.contains('sticky-end') && window.scrollY >= articleStart && window.scrollY <= articleEnd) {    
+                articleNav.classList.add('sticky-start');
+                articleNav.style.top = 0 + 'px';
+            }
+            if (!articleNav.classList.contains('sticky-start') && articleNav.classList.contains('sticky-end') && window.scrollY >= articleStart && window.scrollY <= articleEnd + articleNavHeight) {
+                articleNav.classList.add('sticky-start');
+                articleNav.classList.remove('sticky-end');
+                articleNav.style.top = 0 + 'px';
+            }
+            if (articleNav.classList.contains('sticky-start') && window.scrollY >= articleStart && window.scrollY >= articleEnd - articleNavHeight - articleNavHeight) {
+                articleNav.classList.remove('sticky-start');
+                articleNav.classList.add('sticky-end');
+                articleNav.style.top = 0 + 'px';
+            }
+        } else if (!mobile) {
+            if (window.scrollY < articleStart && !articleNav.classList.contains('sticky-start')) {
+                // console.log("1");
+                articleNav.style.top = 0 + 'px';
+            }
+            if (window.scrollY < articleStart && articleNav.classList.contains('sticky-start')) {
+                // console.log("2");
+                articleNav.classList.remove('sticky-start');
+                articleNav.style.top = 0 + 'px';
+            }
+            if (window.scrollY >= articleStart && window.scrollY <= articleEnd && !articleNav.classList.contains('sticky-start') && !articleNav.classList.contains('sticky-end')) {
+                // console.log("3");
+                articleNav.classList.add('sticky-start');
+                articleNav.style.top = 0 + 'px';
+            }
+            if (window.scrollY >= articleStart && window.scrollY <= articleEnd - articleNavHeight && !articleNav.classList.contains('sticky-start') && articleNav.classList.contains('sticky-end')) {
+                // console.log("4");
+                articleNav.classList.add('sticky-start');
+                articleNav.classList.remove('sticky-end');
+                articleNav.style.top = 0 + 'px';
+            }
+            if (window.scrollY >= articleEnd - articleNavHeight - 140 && articleNav.classList.contains('sticky-start')) {
+                // console.log("5");
+                articleNav.classList.remove('sticky-start');
+                articleNav.classList.add('sticky-end');
+                articleNav.style.top = 0 + 'px';
+            }    
         }
     }
+    window.addEventListener('scroll', setNavPosition);
+    setNavPosition();
 
-    handleNavPosition();
-    function scroll() {
-        handleNavPosition();
-    }
-    function resize() {
-        handleNavPosition();
-    }
-    window.addEventListener('scroll', scroll);
-    window.addEventListener('resize', resize);
 });
