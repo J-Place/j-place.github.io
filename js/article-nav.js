@@ -23,7 +23,7 @@ function toggleMobileNav() {
 document.addEventListener("DOMContentLoaded", function () {
     const articleNav = document.querySelector('.article-nav');
     const articleNavHeight = articleNav.offsetHeight;
-    const articleStart = document.querySelector('.article-body').offsetTop;
+    const articleStart = document.querySelector('.include-in-nav h2').offsetTop;
     const articleEnd = document.querySelector('.article-end').offsetTop;
 
     if (window.scrollY >= articleStart && window.scrollY <= articleEnd) {

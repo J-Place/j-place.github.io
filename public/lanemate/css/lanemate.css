@@ -2,6 +2,7 @@
 
 :root {
     --lm-blue: #092C5C;
+    --lm-blue-hover: #0f3770;
     --lm-blue-md: #246aa4;
     --lm-blue-lt: #8FBCE6;
     --bs-blue: var(--lm-blue);
@@ -9,10 +10,6 @@
     --bs-primary-rgb: 9, 44, 92;
     --bs-link-color: var(--lm-blue);
     --bs-link-hover-color: var(--md-blue);
-}
-
-.btn-primary {
-    background-color: var(--lm-blue);
 }
 
 /* Update all input labels sitewide, check for scoped classes */
@@ -60,6 +57,10 @@ label.checkbox-label {
     }
 }
 
+.navbar-default .navbar-nav>li>a {
+    color: var(--lm-blue);
+  }
+
 .breadcrumb {*/
     background-color: var(--lm-blue);;
 }
@@ -84,8 +85,8 @@ label.checkbox-label {
 }
 
 .mega-main-menu__items>li:last-of-type > a {
-    background-color: var(--lm-blue);;
-    border: 1px solid var(--lm-blue);;
+    background-color: var(--lm-blue);
+    border: 1px solid var(--lm-blue);
 }
 
 .mega-main-menu__items > li:hover {
@@ -170,9 +171,6 @@ main h1, main h2, main h3, main h4, main h5, main h6 {
     font-size: 1.2rem;
 }
 
-.form__container .btn {
-    margin-bottom: 1rem;
-}
 
 .renew__form-body .card:first-of-type,
 .cart-item:last-of-type {
@@ -181,8 +179,36 @@ main h1, main h2, main h3, main h4, main h5, main h6 {
 
 
 
+.btn-primary:focus, 
+.btn-primary:hover {
+    background-color: var(--lm-blue-md);
+}
+.form__container .btn {
+    margin-bottom: 1rem;
+    background-color: var(--lm-blue);
+}
+.form__container .btn:focus, 
+.form__container .btn:hover {
+    background-color: var(--lm-blue-md);
+}
 
-
+.btn-outline,
+.form__container .btn-outline {
+    color: var(--lm-blue);
+    background-color: #FFF;
+    border-color: var(--lm-blue);
+}
+.btn-outline:hover,
+.form__container .btn-outline:hover {
+    background-color: #fff;
+    color: var(--lm-blue-md);
+    border-color: var(--lm-blue-md);
+}
+.btn.btn-outline:hover {
+    color: var(--lm-blue-md);
+    border-color: var(--lm-blue-md);
+    opacity: 0.7;
+}
 .date,
 .product,
 .amount {
@@ -274,44 +300,38 @@ main h1, main h2, main h3, main h4, main h5, main h6 {
 
 
 .form-check-input:checked {
-  background-color: var(--bs-blue);
-  border-color: var(--bs-blue);
+  background-color: var(--lm-blue);
+  border-color: var(--lm-blue);
 }
 
 .form-check-input[type=checkbox]:indeterminate {
-  background-color: var(--bs-blue);
-  border-color: var(--bs-blue);
+  background-color: var(--lm-blue);
+  border-color: var(--lm-blue);
 }
 
 .form-range::-webkit-slider-thumb {
-  background-color: var(--bs-blue);
+  background-color: var(--lm-blue);
 }
 
 .form-range::-moz-range-thumb {
-  background-color: var(--bs-blue);
+  background-color: var(--lm-blue);
 }
 
 a {
-    color: var(--bs-blue);
+    color: var(--lm-blue);
 }
 
 .btn-primary {
   --bs-btn-color: #fff;
-  --bs-btn-bg: var(--bs-blue);
-  --bs-btn-border-color: var(--bs-blue);
-  --bs-btn-hover-color: #fff;*/*/
-  --bs-btn-hover-bg: var(--md-blue);
-  --bs-btn-hover-border-color: var(--md-blue);
-  --bs-btn-focus-shadow-rgb: 49, 132, 253;
-  --bs-btn-active-color: #fff;*/*/
-
-  --bs-btn-active-bg: var(--md-blue);
-  --bs-btn-active-border-color: var(--md-blue);
-
+  --bs-btn-bg: var(--lm-blue);
+  --bs-btn-border-color: var(--lm-blue);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-active-bg: var(--lm-blue-md);
+  --bs-btn-active-border-color: var(--lm-blue-md);
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   --bs-btn-disabled-color: #fff;
-  --bs-btn-disabled-bg: var(--bs-blue);
-  --bs-btn-disabled-border-color: var(--bs-blue);
+  --bs-btn-disabled-bg: var(--lm-blue);
+  --bs-btn-disabled-border-color: var(--lm-blue);
 }
 
 .btn-lt-blue {
@@ -341,62 +361,79 @@ footer a:hover {
 }
 
 .btn-outline-primary {
-  --bs-btn-color: var(--bs-blue);
-  --bs-btn-border-color: var(--bs-blue);
+  --bs-btn-color: var(--lm-blue);
+  --bs-btn-border-color: var(--lm-blue);
   --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: var(--bs-blue);
-  --bs-btn-hover-border-color: var(--bs-blue);
+  --bs-btn-hover-bg: var(--lm-blue);
+  --bs-btn-hover-border-color: var(--lm-blue);
   --bs-btn-focus-shadow-rgb: 13, 110, 253;
   --bs-btn-active-color: #fff;
-  --bs-btn-active-bg: var(--bs-blue);
-  --bs-btn-active-border-color: var(--bs-blue);
+  --bs-btn-active-bg: var(--lm-blue);
+  --bs-btn-active-border-color: var(--lm-blue);
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-  --bs-btn-disabled-color: var(--bs-blue);
+  --bs-btn-disabled-color: var(--lm-blue);
   --bs-btn-disabled-bg: transparent;
-  --bs-btn-disabled-border-color: var(--bs-blue);
+  --bs-btn-disabled-border-color: var(--lm-blue);
   --bs-gradient: none;
 }
 
+.btn-primary.btn-primary-ko {
+    color: var(--lm-blue);
+    border: 1px solid var(--lm-blue);
+}
+
+.btn-primary.btn-sm.btn-primary-ko:hover,
+.btn-primary.btn-md.btn-primary-ko:hover,
+.btn-primary.btn-lg.btn-primary-ko:hover,
+.btn-primary.btn-xl.btn-primary-ko:hover,
+.rte-btn-blue-xl-ko:hover {
+  color: var(--lm-blue) !important;
+}
+
+.rte-btn-blue-xl:hover {
+    background-color: var(--lm-blue) !important;
+}
+
 .dropdown-menu {
-  --bs-dropdown-link-active-bg: var(--bs-blue);
+  --bs-dropdown-link-active-bg: var(--lm-blue);
 }
 
 .dropdown-menu-dark {
---bs-dropdown-link-active-bg: var(--bs-blue);
+--bs-dropdown-link-active-bg: var(--lm-blue);
 }
 
 .nav-pills {
-  --bs-nav-pills-link-active-bg: var(--bs-blue);
+  --bs-nav-pills-link-active-bg: var(--lm-blue);
 }
 
 .pagination {
-  --bs-pagination-active-bg: var(--bs-blue);
-  --bs-pagination-active-border-color: var(--bs-blue);
+  --bs-pagination-active-bg: var(--lm-blue);
+  --bs-pagination-active-border-color: var(--lm-blue);
 }
 
 .progress {
-  --bs-progress-bar-bg: var(--bs-blue);
+  --bs-progress-bar-bg: var(--lm-blue);
 }
 
 .list-group {
-    --bs-list-group-active-bg: var(--bs-blue);
-    --bs-list-group-active-border-color: var(--bs-blue);
+    --bs-list-group-active-bg: var(--lm-blue);
+    --bs-list-group-active-border-color: var(--lm-blue);
 }
 
 .text-primary {
-  color:var(--bs-blue);
+  color:var(--lm-blue);
 }
 
 #footerOverlay {
-    background: var(--bs-blue);
+    background: var(--lm-blue);
 }
 
 .footer-left, .footer-right {
-    background-color: var(--bs-blue);
+    background-color: var(--lm-blue);
 }
 
 .footer-right .btn-primary {
-    color: var(--bs-blue);
+    color: var(--lm-blue);
 }
 
 .footer-right .nav.nav-service.navbar-nav.nav-pills > li a {
@@ -423,8 +460,8 @@ footer a:hover {
 }
 
 .input-group-addon:last-child {
-    background-color: var(--bs-blue);
-    border: 1px solid var(--bs-blue);
+    background-color: var(--lm-blue);
+    border: 1px solid var(--lm-blue);
 }
 
 .login__items-container .login__list {
@@ -440,7 +477,7 @@ footer a:hover {
 .mega-main-menu__actions-search--wrapper label, 
 .mega-main-menu__actions a label, 
 .mega-main-menu__toggle-mobile label {
-    color: var(--bs-blue);
+    color: var(--lm-blue);
 }
 
 .mega-menu-overlay {
@@ -511,3 +548,87 @@ footer a:hover {
 i.mobile-menu__close {
     background: url('https://www.usms.org/-/media/usms/developers/images/myusms/icon-close-lanemate.svg');
 }
+
+
+
+
+
+/* Overrides for MegamainMenu.css */
+.mega-main-menu__toggle-mobile label,
+.mega-main-menu__actions-search--wrapper label,
+.mega-main-menu__actions a label,
+.mega-main-menu__actions-login--wrapper label {
+  color: var(--lm-blue);
+}
+.mega-main-menu__items>li:last-of-type>a {
+    background-color: var(--lm-blue);
+    border: 1px solid var(--lm-blue);
+}
+
+
+
+/* Overrides for MainLayout.css */
+.confirmation-notes ul li a {
+  color: var(--lm-blue);
+}
+.form__container .btn {
+    background-color: var(--lm-blue);
+}
+.form__container .btn:hover,
+.form__container .btn:focus {
+  background-color: var(--lm-blue-md);
+}
+.form__container .btn-outline {
+    color: var(--lm-blue);
+    border: 1px solid var(--lm-blue);
+  }
+  
+  .form__container .btn-outline:hover {
+    color: var(--lm-blue-md);
+    border-color: var(--lm-blue-md);
+  }
+  
+.usms-container .btn-ko,
+.usms-container button.btn-ko {
+    color: var(--lm-blue);
+}
+
+
+
+/* Overrides for results.css */
+.filter-form__go-button {
+    background-color: var(--lm-blue);
+}
+.filter-form__go-button:hover,
+.filter-form__go-button:visited,
+.filter-form__go-button:focus {
+  background-color: var(--lm-blue);
+}
+.results-list__pagination button {
+    background-color: var(--lm-blue);
+}
+.results-list__pagination button.btn-active {
+    border: 2px solid var(--lm-blue);
+    color: var(--lm-blue);
+}
+.results-list__pagination .btn-chevron-left,
+.results-list__pagination .btn-chevron-right {
+    color: var(--lm-blue);
+}
+.results-list__item-title a {
+    color: var(--lm-blue);
+}
+.results-list__item-footer a {
+    color: var(--lm-blue);
+}
+
+
+
+/* Overrides for MobileMenuOverlayItem.css */
+.mobile-menu-overlay__item:last-of-type a {
+    border: 1px solid var(--lm-blue);
+    background-color: var(--lm-blue);
+  }
+  .mobile-menu-overlay__item-content > a {
+    color: var(--lm-blue);
+  }
