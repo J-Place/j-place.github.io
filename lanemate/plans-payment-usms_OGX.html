@@ -11,9 +11,10 @@
         <sergey-import src="site/head_js" />
         <sergey-import src="site/head_css" />
         <link rel="stylesheet" href="https://www.usms.org/styles/login.min.css">
-        <!-- <link rel="stylesheet" href="/lanemate/css/login-lanemate.css"> -->
+        <link rel="stylesheet" href="/lanemate/css/login-lanemate.css">
         <link rel="stylesheet" href="/lanemate/css/plans-payment.css">
-        <link rel="stylesheet" href="lanemate/css-components/product-group.css">
+        <!-- Using product-group.css here in place of it being in the component. There is no component (yet) for the Plans and Payment product tiles -->
+        <link rel="stylesheet" href="/lanemate/css/product-group.css">
     </head>
     <body>
         <div class="loading" style="display: none;">
@@ -44,7 +45,10 @@
                     </div>
                 </div>
                 <div class="section section-full bg-gray p-tb-10 p-mh-500 ">
-                    <div class="usms-container p-tb-10">                        
+
+                    <div class="usms-container p-tb-10">
+
+                        
                         <div class="row">
                             <div class="col-xs-12">
                                 <header>
@@ -55,70 +59,71 @@
                                 </header>
                             </div>
                         </div>
+
                     </div>
                     <div class="usms-container form__container">
-                        <div class="row is-flex">
+                        <div class="row row-border-1-over-2">
                             <div class="col-xs-12">
-                                <div class="flex-row">
+                                <!-- <div class="flex-row"> -->
                                     <h3>My Current Membership</h3>
                                     <div class="current-product__renewal-date current-product__renewal-date__lanemate-yearly current-product--selected">Renews on 11/01/2024</div>
                                     <div class="current-product__summary current-product_lanemate-yearly current-product--selected">
                                         <p class="product-name">Standard Membership</p>
                                         <p class="product-price">$70.00</p>
                                     </div>
-                                </div>
+                                <!-- </div> -->
                             </div>
+                        <!-- </div>
+                        <div class="row row-border-2"> -->
                             <div class="col-xs-12 col-lg-5">
                                 <div class="payment-information--summary">
                                     <h3>Manage Payment Method</h3>
-                                    <p class="card-number" style="display: none;">************7744</p>
-                                    <p class="card-expiration" style="display: none;">exp. 06/28</p>
-                                    <!-- <a href="#/" id="btnEnrollAutoRenew">Enroll in Auto Renew</a>
-                                    <a href="#/" id="btnEditCreditCard" style="display: none;">Update Debit or Credit Card</a>
-                                    <a href="#/" id="btnCancelAutoRenew" style="display: none;">Cancel Auto Renew</a> -->
-                                    <button href="#/" id="btnEnrollAutoRenew" disabled="false">Enroll in Auto Renew</button>
-                                    <button href="#/" id="btnEditCreditCard" disabled="false" style="display: none;">Update Debit or Credit Card</button>
-                                    <button href="#/" id="btnCancelAutoRenew" disabled="false" style="display: none;">Cancel Auto Renew</button>
+                                    <!-- <p class="card-number">************7744</p> -->
+                                    <!-- <p class="card-expiration">exp. 06/28</p> -->
+                                    <!-- <a href="#/" id="btnEditCreditCard">Update Debit or Credit Card</a> -->
+                                    <!-- <a href="#/" id="btnCancelAutoRenew">Cancel Auto Renew</a> -->
+                                    <a href="#/" id="btnEnrollAutoRenew">Enroll in Auto Renew</a>
                                 </div>
                             </div>
                             <div class="col-xs-12 col-lg-7">
                                 <div class="row payment-information--form" id="paymentInformationForm">
                                     <sergey-import src="foundation/credit-card-inputs" />
                                     <div class="payment-information--submit">
-                                        <sergey-import src="lanemate/disclaimers/usms-plans-payment-standard" />
-                                        <sergey-import src="lanemate/disclaimers/usms-plans-payment-auto-renew" />
                                         <div class="col-xs-12">
-                                            <button class="btn btn-primary btn-large text-uppercase payment-information__submit" id="btnEnrollAutoRenewSubmit">Submit</button>
-                                            <button class="btn btn-primary btn-large text-uppercase payment-information__submit" id="btnEditCreditCardSubmit" style="display: none;">Submit</button>
-                                            <button class="btn btn-outline btn-large text-uppercase payment-information__cancel" id="btnEditCreditCardCancel">Cancel</button>
+                                            <div class="form-group agree-terms">
+                                                <div class="col-xs-12">
+                                                   <span class="help-block help-block--agree-terms">You need to agree to the terms to update your payment method</span>
+                                                   <label id="agreeTerms__label" class="checkbox-label " for="agreeTerms">
+                                                        <div class="checkbox-container">
+                                                            <input type="checkbox" name="agree-terms" id="agreeTerms" value="" class="has-success" data-gtm-form-interact-field-id="7">
+                                                            <span class="checkbox__placeholder"></span>
+                                                        </div>
+                                                   </label>
+                                                   <span>I understand my payment information will be stored in My Account.</span>
+                                                </div>
+                                             </div>
                                         </div>
-                                        <a style="
-                                            text-decoration: underline;
-                                            padding-top: 2rem;
-                                            display: block;
-                                            position: absolute;
-                                            margin-top: 6rem;" 
-                                            href="#/" id="showValidation">Toggle Validation
-                                        </a>
+                                        <div class="col-xs-12" data-reactid="">
+                                            <button class="btn btn-primary btn-large text-uppercase payment-information__submit" id="btnEditCreditCardSubmit" data-reactid="">Submit</button>
+                                            <button class="btn btn-outline btn-large text-uppercase payment-information__cancel" id="btnEditCreditCardCancel" data-reactid="">Cancel</button>
+                                        </div>
+                                        <a style="text-decoration:underline;" href="#/" id="showValidation">Toggle Validation</a>
                                     </div>
-                                </div>
-                                <div class="row enroll-auto-renew--confirmation">
-                                    <p>Thank you! You are enrolled in auto renew.</p>
                                 </div>
                                 <div class="row payment-information--confirmation">
                                     <p>Your payment method has been successfully updated to your My Account</p>
                                 </div>
                                 <div class="row form-group cancel-auto-renew--form">
                                     <div class="col-xs-12 cancel-auto-renew-message">
-                                        <p>I want to cancel my plan's auto renewal. By cancelling, I will no longer receive benefits after MM/DD/YYYY.</p>
+                                        <p>I want to cancel my plan's auto renewal. By cancelling, I will no longer receive benefits after XX/XX/XXXX.</p>
                                     </div>
-                                    <div class="col-xs-12 cancel-auto-renew--submit">
-                                        <button class="btn btn-primary text-uppercaseX cancel-auto-renew__cancel" id="btnYesCancelAutoRenew">Yes, Cancel Auto Renew</button>
-                                        <button class="btn btn-outline text-uppercaseX cancel-auto-renew__submit" id="btnNoKeepAutoRenew">Keep Auto Renew</button>
+                                    <div class="col-xs-12 cancel-auto-renew--submit" data-reactid="">
+                                        <button class="btn btn-primary text-uppercaseX cancel-auto-renew__cancel" id="btnYesCancelAutoRenew" data-reactid="">Yes, Cancel Auto Renew</button>
+                                        <button class="btn btn-outline text-uppercaseX cancel-auto-renew__submit" id="btnNoKeepAutoRenew" data-reactid="">Keep Auto Renew</button>
                                     </div>
                                 </div>
                                 <div class="row cancel-auto-renew--confirmation">
-                                    <p>Auto renew has been turned off. You will no longer receive benefits after MM/DD/YYYY.</p>
+                                    <p>Auto renew has been turned off. You will no longer receive benefits after XX/XX/XXXX.</p>
                                 </div>
                             </div>
                         </div>
@@ -128,6 +133,11 @@
             <sergey-import src="foundation/footer" />
         </div>
         <sergey-import src="site/footer_scripts" />
-        <script src="/lanemate/js/plans-payment-usms.js"></script>
+        <script src="/lanemate/js/lanemate.js"></script>
+        <script>
+            $(document).ready(function() {
+                // alert("Go!");
+            });
+        </script>
     </body>
 </html>
