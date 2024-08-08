@@ -1,18 +1,19 @@
 main h1, main h2, main h3, main h4, main h5, main h6 {
     color: var(--lm-blue);
 }
-
 input[type=checkbox]:checked ~ .checkbox__placeholder {
     background-color: var(--lm-blue);
     -webkit-text-stroke: 1px var(--lm-blue);
 }
+/* The classes above override duplicates in source. Source has this definition in both the common and registration style sheets, so we need it in the lanemate common and lanemate registration. */
+
 
 .renew__form-body .form-group.agree-terms, 
 .renew__form-body .form-group.agree-usmsplus-terms {
     margin-bottom: 0;
 }
 
-/* For some reason my new/added select inputs are not picking up the css that hides the default carat, so I'm doing it here. Probably does not need to be in source */
+/* select inputs are not picking up the css that hides the default carat, so I'm doing it here. Probably does not need to be in source */
 #strokeFocus,
 #marketingFeedback {
     width: 223px;
@@ -39,7 +40,8 @@ input[type=checkbox]:checked ~ .checkbox__placeholder {
     margin: 0 0 0rem -2.5rem;
 }
 
-.payment-bullets {
+.payment-bullets,
+.membership-length--note ul {
     padding-left: 1.5rem;
 }
 
@@ -83,8 +85,6 @@ input[type=checkbox]:checked ~ .checkbox__placeholder {
 
 .payment-info__form-summary {
     margin-top: 2rem;
-    /* padding-top: 2rem; */
-    /* border-top: 1px solid #CCC; */
 }
 
 .video-stroke-analysis--total {
@@ -97,7 +97,6 @@ input[type=checkbox]:checked ~ .checkbox__placeholder {
     white-space: nowrap;
 }
 
-/* .membership-length--total, */
 .card__total--amount-monthly,
 .card__total--amount-yearly {
     display: none;
@@ -109,11 +108,6 @@ input[type=checkbox]:checked ~ .checkbox__placeholder {
     opacity: 0;
     border: 0 none;
 }
-
-/* .card.payment-info {
-    height: 0;
-    opacity: 0;
-} */
 
 .membership-length--total.total-lanemate-blank,
 .video-stroke-analysis--total.card__total--amount-blank {
@@ -138,12 +132,12 @@ input[type=checkbox]:checked ~ .checkbox__placeholder {
 }
 
 .membership-length--option.selected {
-    border-color: #0068ad;
-    border: 2px solid #0068ad;
+    border-color: var(--lm-blue);
+    border: 2px solid var(--lm-blue);
 }
 
 .membership-length--option.selected .promo {
-    background-color: #0068ad;
+    background-color: var(--lm-blue);
 }
 
 .membership-length--currentYear .promo,
@@ -154,7 +148,7 @@ input[type=checkbox]:checked ~ .checkbox__placeholder {
 
 .membership-length--usmsPlus.selected .promo, 
 .membership-length--usmsPlusYearPlus.selected .promo {
-    background-color: #0068ad;
+    background-color: var(--lm-blue);
 }
 
 .membership-length--currentYear.selected {

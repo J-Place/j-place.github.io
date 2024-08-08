@@ -2,7 +2,8 @@
 
 :root {
     --lm-blue: #092C5C;
-    --lm-blue-hover: #0f3770;
+    /* --lm-blue-hover: #0f3770; */
+    --lm-blue-hover: var(--lm-blue-md);
     --lm-blue-md: #246aa4;
     --lm-blue-lt: #8FBCE6;
     --bs-blue: var(--lm-blue);
@@ -38,7 +39,7 @@ label.checkbox-label {
 
 .navbar-default .navbar-nav>li>a {
     color: var(--lm-blue);
-  }
+}
 
 .breadcrumb {
     background-color: var(--lm-blue);
@@ -48,8 +49,6 @@ label.checkbox-label {
     height: 40px;
 }
 
-
-/* Override USMS colors with LaneMate */
 .mega-main-menu__items > li.has--children, 
 .mega-main-menu__items > li > a {
     border-bottom: 3px solid transparent;
@@ -63,82 +62,22 @@ label.checkbox-label {
     font-weight: 600;
 }
 
-.mega-main-menu__items>li:last-of-type > a {
+.mega-main-menu__items > li:last-of-type > a {
     background-color: var(--lm-blue);
     border: 1px solid var(--lm-blue);
 }
 
 .mega-main-menu__items > li:hover {
-  color: var(--lm-blue-md);
+  color: var(--lm-blue-hover);
 }
 
 main h1, main h2, main h3, main h4, main h5, main h6 {
     color: var(--lm-blue);
 }
+
 .confirmation-benefits-wrapper {
     background-color: #d6ebff;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 .form__container .help-block.has-error {
@@ -190,7 +129,6 @@ main h1, main h2, main h3, main h4, main h5, main h6 {
     font-size: 1.2rem;
 }
 
-/* .renew__form-body .card:first-of-type, */
 .cart-item:last-of-type {
     border-top: 0 none;
 }
@@ -200,7 +138,7 @@ main h1, main h2, main h3, main h4, main h5, main h6 {
 }
 .btn-primary:focus, 
 .btn-primary:hover {
-    background-color: var(--lm-blue-md);
+    background-color: var(--lm-blue-hover);
 }
 .form__container .btn {
     margin-bottom: 1rem;
@@ -208,7 +146,7 @@ main h1, main h2, main h3, main h4, main h5, main h6 {
 }
 .form__container .btn:focus, 
 .form__container .btn:hover {
-    background-color: var(--lm-blue-md);
+    background-color: var(--lm-blue-hover);
 }
 
 .btn-outline,
@@ -220,41 +158,24 @@ main h1, main h2, main h3, main h4, main h5, main h6 {
 .btn-outline:hover,
 .form__container .btn-outline:hover {
     background-color: #fff;
-    color: var(--lm-blue-md);
-    border-color: var(--lm-blue-md);
+    color: var(--lm-blue-hover);
+    border-color: var(--lm-blue-hover);
 }
 .btn.btn-outline:hover {
-    color: var(--lm-blue-md);
-    border-color: var(--lm-blue-md);
+    color: var(--lm-blue-hover);
+    border-color: var(--lm-blue-hover);
     background-color: #FFF;
     opacity: 0.7;
 }
-
-
-
 
 .btn-blue {
     background-color: var(--lm-blue);
 }
 .btn-blue:focus, .btn-blue:hover, .btn-blue a:focus, .btn-blue a:hover {
-    background-color: var(--lm-blue-md);
+    background-color: var(--lm-blue-hover);
     background-position: 0 -15px;
     text-decoration: none;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .date,
 .product,
@@ -318,7 +239,6 @@ main h1, main h2, main h3, main h4, main h5, main h6 {
     }
 }
 
-
 .mega-main-menu__logo-container .mega-main-menu__logo img {
     width: auto;
     height: 35px;
@@ -377,12 +297,12 @@ a {
 
 .btn:hover {
     color: #FFF;
-    background-color: var(--lm-blue-md);
-    border-color: var(--lm-blue-md);
+    background-color: var(--lm-blue-hover);
+    border-color: var(--lm-blue-hover);
 }
 
 a:hover {
-    color: var(--lm-blue-md);
+    color: var(--lm-blue-hover);
 }
 
 footer a:hover {
@@ -393,21 +313,21 @@ footer a:hover {
 
 .btn-primary:focus, 
 .btn-primary:hover {
-    background-color: var(--lm-blue-md);
+    background-color: var(--lm-blue-hover);
     color: #FFF;
 }
 
 .btn-outline-primary {
   --bs-btn-color: var(--lm-blue);
   --bs-btn-border-color: var(--lm-blue);
-  --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: var(--lm-blue);
+  --bs-btn-hover-color: var(--lm-blue-hover);
+  --bs-btn-hover-bg: #FFF;
   --bs-btn-hover-border-color: var(--lm-blue);
   --bs-btn-focus-shadow-rgb: 13, 110, 253;
-  --bs-btn-active-color: #fff;
-  --bs-btn-active-bg: var(--lm-blue);
-  --bs-btn-active-border-color: var(--lm-blue);
-  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-active-color: var(--lm-blue-hover);
+  --bs-btn-active-bg: #FFF;
+  --bs-btn-active-border-color: var(--lm-blue-hover);
+  --bs-btn-active-shadow: inset 0 0px 0px rgba(0, 0, 0, 0);
   --bs-btn-disabled-color: var(--lm-blue);
   --bs-btn-disabled-bg: transparent;
   --bs-btn-disabled-border-color: var(--lm-blue);
@@ -424,11 +344,11 @@ footer a:hover {
 .btn-primary.btn-lg.btn-primary-ko:hover,
 .btn-primary.btn-xl.btn-primary-ko:hover,
 .rte-btn-blue-xl-ko:hover {
-  color: var(--lm-blue) !important;
+  color: var(--lm-blue-hover) !important;
 }
 
 .rte-btn-blue-xl:hover {
-    background-color: var(--lm-blue) !important;
+    background-color: var(--lm-blue-hover) !important;
 }
 
 .dropdown-menu {
@@ -477,7 +397,6 @@ footer a:hover {
     text-decoration: none;
 }
 
-
 .search--icon {
     background: url(https://www.usms.org/-/media/usms/developers/images/myusms/icon-search-lanemate.svg);
     height: 23px;
@@ -505,6 +424,11 @@ footer a:hover {
     border-color: var(--lm-blue);
 }
 
+.mega-menu-overlay__image-container,
+.mega-menu-overlay__title {
+    display: none;
+}
+
 .mega-menu-overlay__content, 
 .mega-menu-overlay__menu-container {
     padding-left: 5rem;
@@ -519,15 +443,17 @@ footer a:hover {
 
 .mega-menu-overlay {
     height: 170px;
-    background: rgba(255, 255, 255, 0.7);
-    border-bottom: none;
     border-radius: 0 0 10px 10px;
+    right: 0;
+    background-color: #fff;
+    border-bottom: 12px solid #0060a7;
+    opacity: 1;
 }
 
 .login__items-container .login__list-item a:hover {
     background-color: transparent;
     border-color: transparent;
-    color: var(--lm-blue-md);
+    color: var(--lm-blue-hover);
 }
 
 .mega-menu-overlay__items {
@@ -537,7 +463,6 @@ footer a:hover {
 
 .mega-menu-overlay__items > li:hover {
     border: 0 none;
-    /* padding-left: initial; */
     padding: 0 0 0 1rem;
 }
 
@@ -545,13 +470,12 @@ footer a:hover {
     font-size: 1.62rem;
     font-weight: 400;
     letter-spacing: .5px;
-    /* color: #333; */
     color: var(--lm-blue);
 }
 
 .mega-menu-overlay__items > li > a:hover {
     padding-left: unset;
-    color: var(--lm-blue-md);
+    color: var(--lm-blue-hover);
 }
 
 @media (min-width: 1200px) {
@@ -586,10 +510,6 @@ i.mobile-menu__close {
     background: url('https://www.usms.org/-/media/usms/developers/images/myusms/icon-close-lanemate.svg');
 }
 
-
-
-
-
 /* Overrides for MegamainMenu.css */
 .mega-main-menu__toggle-mobile label,
 .mega-main-menu__actions-search--wrapper label,
@@ -602,8 +522,6 @@ i.mobile-menu__close {
     border: 1px solid var(--lm-blue);
 }
  
-
-
 /* Overrides for MainLayout.css */
 .confirmation-notes ul li a {
   color: var(--lm-blue);
@@ -613,26 +531,25 @@ i.mobile-menu__close {
 }
 .form__container .btn:hover,
 .form__container .btn:focus {
-  background-color: var(--lm-blue-md);
+  background-color: var(--lm-blue-hover);
 }
 .form__container .btn-outline {
     color: var(--lm-blue);
     border: 1px solid var(--lm-blue);
     background-color: #FFF;
-  }
-  
-  .form__container .btn-outline:hover {
-    color: var(--lm-blue-md);
-    border-color: var(--lm-blue-md);
+} 
+.form__container .btn-outline:hover {
+    color: var(--lm-blue-hover);
+    border-color: var(--lm-blue-hover);
     background-color: #FFF;
-  }
-  
+} 
 .usms-container .btn-ko,
 .usms-container button.btn-ko {
     color: var(--lm-blue);
 }
-
-
+.page-header {
+    background-color: var(--lm-blue-md);
+}
 
 /* Overrides for results.css */
 .filter-form__go-button {
@@ -641,7 +558,7 @@ i.mobile-menu__close {
 .filter-form__go-button:hover,
 .filter-form__go-button:visited,
 .filter-form__go-button:focus {
-  background-color: var(--lm-blue);
+  background-color: var(--lm-blue-hover);
 }
 .results-list__pagination button {
     background-color: var(--lm-blue);
@@ -661,16 +578,103 @@ i.mobile-menu__close {
     color: var(--lm-blue);
 }
 
-
-
 /* Overrides for MobileMenuOverlayItem.css */
 .mobile-menu-overlay__item:last-of-type a {
     border: 1px solid var(--lm-blue);
     background-color: var(--lm-blue);
-  }
-  .mobile-menu-overlay__item-content > a {
+}
+.mobile-menu-overlay__item-content > a {
     color: var(--lm-blue);
-  }
+}
+
+/* Overrides for Swimmer */
+.swimmer-magazine__header-image img {
+    background-color: var(--lm-blue-md);
+}
+.article-stepper .articleStepper .carousel-text-container p {
+    color: var(--lm-blue);
+}
+.article-stepper h3.article-stepper__title {
+    color: var(--lm-blue);
+}
+.slick-slide-container .slick-slide-text p {
+    color: var(--lm-blue);
+}
+@media (min-width: 768px) {
+    .slick-slide-container .slick-slide-text p {
+        color: var(--lm-blue);
+    }
+}
+
+/* Overrides for Login */
+.btn-gender,
+.form__container .btn-gender {
+    background-color: #eee;
+    color: #666;
+}
+
+.btn.btn-gender:focus,
+.btn.btn-gender:hover,
+.form__container .btn.btn-gender:focus,
+.form__container .btn.btn-gender:hover {
+    background-color: #ddd;
+    color: #555
+}
+
+.btn.btn-gender:disabled,
+.btn.btn-gender:disabled:hover,
+.form__container .btn.btn-gender:disabled,
+.form__container .btn.btn-gender:disabled:hover {
+    background-color: #eee;
+    color: #ccc
+}
+
+.btn-gender.active,
+.btn.btn-gender.active:focus,
+.btn.btn-gender.active:hover,
+.form__container .btn-gender.active,
+.form__container .btn.btn-gender.active:focus,
+.form__container .btn.btn-gender.active:hover {
+    background-color: #aaa;
+    color: #555
+}
+
+.btn.btn-gender.active:disabled,
+.btn.btn-gender.active:hover:disabled,
+.form__container .btn.btn-gender.active:disabled,
+.form__container .btn.btn-gender.active:hover:disabled {
+    background-color: #aaa;
+    color: #ccc
+}
+
+.renew__form-container .form-control[disabled],
+.renew__form-container .form-control[readonly],
+.renew__form-container fieldset[disabled] .form-control {
+    border-color: #eee;
+    color: #ccc
+}
+
+.renew__form-container .contact-information__dob-column .form-control[disabled] {
+    color: #555
+}
+
+/* Overrides for My USMS */
+
+.myusms__container h1 {
+    margin: 23px auto 10px;
+    color: var(--lm-blue);
+}
+
+.myusms__link {
+    color: var(--lm-blue);
+    margin: 0;
+    font-weight: bold
+}
+
+.myusms__link:visited,
+.myusms__link:hover {
+    color: var(--lm-blue-hover);
+}
 
 
-  @import url("lanemate-compiled.css");
+@import url("lanemate-compiled.css");
