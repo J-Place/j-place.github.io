@@ -1,5 +1,6 @@
-/* LaneMate colors */
+/* START lanemate.css */
 
+/* LaneMate colors */
 :root {
     --lm-blue: #092C5C;
     /* --lm-blue-hover: #0f3770; */
@@ -278,13 +279,23 @@ a {
     color: var(--lm-blue);
 }
 
+a:hover {
+    color: var(--lm-blue-hover);
+}
+
+.btn:hover {
+    color: #FFF;
+    background-color: var(--lm-blue-hover);
+    border-color: var(--lm-blue-hover);
+}
+
 .btn-primary {
   --bs-btn-color: #fff;
   --bs-btn-bg: var(--lm-blue);
   --bs-btn-border-color: var(--lm-blue);
   --bs-btn-hover-color: #fff;
-  --bs-btn-active-bg: var(--lm-blue-md);
-  --bs-btn-active-border-color: var(--lm-blue-md);
+  --bs-btn-active-bg: var(--lm-blue-hover);
+  --bs-btn-active-border-color: var(--lm-blue-hover);
   --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   --bs-btn-disabled-color: #fff;
   --bs-btn-disabled-bg: var(--lm-blue);
@@ -294,22 +305,6 @@ a {
 .btn-lt-blue {
     background-color: var(--lm-blue-lt);
 }
-
-.btn:hover {
-    color: #FFF;
-    background-color: var(--lm-blue-hover);
-    border-color: var(--lm-blue-hover);
-}
-
-a:hover {
-    color: var(--lm-blue-hover);
-}
-
-footer a:hover {
-    background-color: transparent;
-    border-color: transparent;
-}
-
 
 .btn-primary:focus, 
 .btn-primary:hover {
@@ -345,6 +340,13 @@ footer a:hover {
 .btn-primary.btn-xl.btn-primary-ko:hover,
 .rte-btn-blue-xl-ko:hover {
   color: var(--lm-blue-hover) !important;
+}
+
+.form__container .btn.btn-link,
+.btn-link {
+    background-color: transparent;
+    color: var(--bs-link-color);
+    text-decoration: underline;
 }
 
 .rte-btn-blue-xl:hover {
@@ -387,6 +389,11 @@ footer a:hover {
 
 .footer-left, .footer-right {
     background-color: var(--lm-blue);
+}
+
+footer a:hover {
+    background-color: transparent;
+    border-color: transparent;
 }
 
 .footer-right .btn-primary {
@@ -446,7 +453,7 @@ footer a:hover {
     border-radius: 0 0 10px 10px;
     right: 0;
     background-color: #fff;
-    border-bottom: 12px solid #0060a7;
+    border-bottom: 12px solid var(--lm-blue);
     opacity: 1;
 }
 
@@ -457,13 +464,15 @@ footer a:hover {
 }
 
 .mega-menu-overlay__items {
-    width: 60%;
+    width: 90%;
     padding-top: 3rem;
+    padding-left: 20rem;
 }
 
 .mega-menu-overlay__items > li:hover {
     border: 0 none;
     padding: 0 0 0 1rem;
+    color: var(--lm-blue-hover);
 }
 
 .mega-menu-overlay__items > li > a {
@@ -471,6 +480,10 @@ footer a:hover {
     font-weight: 400;
     letter-spacing: .5px;
     color: var(--lm-blue);
+}
+
+.mega-main-menu__items > li > a:hover {
+    color: var(--lm-blue-hover);
 }
 
 .mega-menu-overlay__items > li > a:hover {
@@ -517,9 +530,16 @@ i.mobile-menu__close {
 .mega-main-menu__actions-login--wrapper label {
   color: var(--lm-blue);
 }
-.mega-main-menu__items>li:last-of-type>a {
+
+.mega-main-menu__items>li:last-of-type > a {
     background-color: var(--lm-blue);
     border: 1px solid var(--lm-blue);
+}
+
+.mega-main-menu__items > li:last-of-type > a:hover {
+    background-color: var(--lm-blue-hover);
+    border: 1px solid var(--lm-blue-hover);
+    color: #FFF;
 }
  
 /* Overrides for MainLayout.css */
@@ -549,6 +569,20 @@ i.mobile-menu__close {
 }
 .page-header {
     background-color: var(--lm-blue-md);
+}
+
+/* Donate button hover */
+.btn-donate--1, .btn-donate--1:hover {
+    background-color: #64a032 !important;
+}
+.btn-donate--2, .btn-donate--2:hover {
+    background-color: #43831e !important;
+}
+.btn-donate--3, .btn-donate--3:hover {
+    background-color: #246200 !important;
+}
+.btn-donate--4, .btn-donate--4:hover {
+    background-color: #16510f !important;
 }
 
 /* Overrides for results.css */
@@ -677,4 +711,4 @@ i.mobile-menu__close {
 }
 
 
-@import url("lanemate-compiled.css");
+/* END lanemate.css */
