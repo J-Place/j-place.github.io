@@ -4,6 +4,7 @@ if (mobile) {
 }
 
 function toggleMobileNav() {
+    console.log("Toggle fucntion runs");
     const mobileNavList = document.getElementById('navList');
     if (mobile && mobileNavList.classList.contains('show')) {
         mobileNavList.classList.remove('show');
@@ -20,11 +21,14 @@ function toggleMobileNav() {
     document.querySelector('#navList').style.maxHeight = mobileWindowHeight - 50 + "px";    
 }
 
+
 document.addEventListener("DOMContentLoaded", function () {
+    
     const articleNav = document.querySelector('.article-nav');
     var articleNavHeight = articleNav.offsetHeight;
     const articleStart = document.querySelector('.include-in-nav h2').offsetTop;
     const articleEnd = document.querySelector('.article-end').offsetTop;
+    const mobileNav = document.getElementsByClassName('article-nav-title')[0];
 
     if (window.scrollY >= articleStart && window.scrollY <= articleEnd) {
         // Set nav position on initial page load
@@ -73,19 +77,36 @@ document.addEventListener("DOMContentLoaded", function () {
     renderNavList(); // Draw nav on page load
 
     let mobileNavList = document.querySelector('#navList');
+    let mobileNavListOpen = mobileNavList.classList.contains('open');
     let mobileNavButton = document.querySelector('.article-nav-title');
     document.body.addEventListener('click', function(event){
         if (mobile && window.scrollY < articleStart - 70) {
+            console.log("A");
             document.querySelector('.article-body').scrollIntoView();
         }
+        if (mobileNavButton.contains(event.target)) {
+            console.log("Click button, toggle nav");
+            toggleMobileNav();
+        }
+        if (mobileNavList.contains(event.target)) {
+            console.log("Click link, toggle nav");
+            toggleMobileNav();
+        }
         if (mobile && window.scrollY < articleStart && mobileNavButton.contains(event.target)) {
+            console.log("B");
             articleNav.style.top = 0 + 'px';
         }
-        if (mobile && mobileNavList.contains(event.target)){
-            toggleMobileNav();
-        } else {
-            return false
-        }
+        // if (mobile && !mobileNavListOpen){
+        //     console.log("Ca");
+        // } 
+        // else if (mobile && !mobileNavListOpen && mobileNavButton.contains(event.target)) {
+        //     console.log("Cb");
+        //     toggleMobileNav();
+        // } 
+        // else {
+        //     console.log("Cd");
+        //     return false;
+        // }
     });
 
     // Set position on scroll
