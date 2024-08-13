@@ -426,6 +426,16 @@ footer a:hover {
     cursor: pointer;
 }
 
+.search__button {
+    background-color: var(--lm-blue);
+    border-color: var(--lm-blue);
+}
+  
+.btn.search__button:hover {
+    background-color: var(--lm-blue-hover);
+    border-color: var(--lm-blue-hover);
+}
+
 .input-group-addon:last-child {
     background-color: var(--lm-blue);
     border: 1px solid var(--lm-blue);
@@ -727,19 +737,32 @@ i.mobile-menu__close {
 .current-product__summary {
     background-color: var(--lm-blue);
 }
-.product-option.product-option-selected {
-    border-color: var(--lm-blue);
+.product-option.selected {
+    border: 3px solid var(--lm-blue);
+    border-top-width: 1px;
 }
-.product-option.product-option-selected .product-name, 
-.product-option.product-option-selected .product-type {
+.product-option.selected .product-name, 
+.product-option.selected .product-type {
     background-color: var(--lm-blue);
 }
 .product-option.selected .product-name {
     background-color: var(--lm-blue);
 }
 
+.product-summary ul {
+    text-align: left;
+    margin: 0 2px 2rem;
+    padding: 0 3rem 0 3.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: auto;
+}
 
-/* Pland and Payment */
+.selected .product-summary ul {
+    margin: 0 0 1.6rem;
+}
+
+/* Plans and Payment */
 .current-plan__summary {
     background-color: var(--lm-blue);
 }
