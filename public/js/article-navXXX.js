@@ -4,7 +4,6 @@ if (mobile) {
 }
 
 function toggleMobileNav() {
-    console.log("Toggle fucntion runs");
     const mobileNavList = document.getElementById('navList');
     if (mobile && mobileNavList.classList.contains('show')) {
         mobileNavList.classList.remove('show');
@@ -21,9 +20,7 @@ function toggleMobileNav() {
     document.querySelector('#navList').style.maxHeight = mobileWindowHeight - 50 + "px";    
 }
 
-
-document.addEventListener("DOMContentLoaded", function () {
-    
+document.addEventListener("DOMContentLoaded", function () {    
     const articleNav = document.querySelector('.article-nav');
     var articleNavHeight = articleNav.offsetHeight;
     const articleStart = document.querySelector('.include-in-nav h2').offsetTop;
@@ -89,24 +86,11 @@ document.addEventListener("DOMContentLoaded", function () {
             toggleMobileNav();
         }
         if (mobileNavList.contains(event.target)) {
-            console.log("Click link, toggle nav");
             toggleMobileNav();
         }
         if (mobile && window.scrollY < articleStart && mobileNavButton.contains(event.target)) {
-            console.log("B");
             articleNav.style.top = 0 + 'px';
         }
-        // if (mobile && !mobileNavListOpen){
-        //     console.log("Ca");
-        // } 
-        // else if (mobile && !mobileNavListOpen && mobileNavButton.contains(event.target)) {
-        //     console.log("Cb");
-        //     toggleMobileNav();
-        // } 
-        // else {
-        //     console.log("Cd");
-        //     return false;
-        // }
     });
 
     // Set position on scroll
@@ -138,27 +122,22 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         } else if (!mobile) {
             if (window.scrollY < articleStart && !articleNav.classList.contains('sticky-start')) {
-                console.log("1");
                 articleNav.style.top = 0 + 'px';
             }
             if (window.scrollY < articleStart && articleNav.classList.contains('sticky-start')) {
-                console.log("666");
                 articleNav.classList.remove('sticky-start');
                 articleNav.style.top = 0 + 'px';
             }
             if (window.scrollY >= articleStart && window.scrollY <= articleEnd && !articleNav.classList.contains('sticky-start') && !articleNav.classList.contains('sticky-end')) {
-                console.log("2");
                 articleNav.classList.add('sticky-start');
                 articleNav.style.top = 0 + 'px';
             }
             if (window.scrollY >= articleStart && window.scrollY <= articleEnd - articleNavHeight && !articleNav.classList.contains('sticky-start') && articleNav.classList.contains('sticky-end')) {
-                console.log("3");
                 articleNav.classList.add('sticky-start');
                 articleNav.classList.remove('sticky-end');
                 articleNav.style.top = 0 + 'px';
             }
             if (window.scrollY >= articleEnd - articleNavHeight - 200 && articleNav.classList.contains('sticky-start')) {
-                console.log("4");
                 articleNav.classList.remove('sticky-start');
                 articleNav.classList.add('sticky-end');
                 articleNav.style.top = 0 + 'px';
