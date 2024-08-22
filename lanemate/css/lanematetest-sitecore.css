@@ -2,16 +2,29 @@
 
 /* LaneMate colors */
 :root {
-    --lm-blue: #092C5C;
-    /* --lm-blue-hover: #0f3770; */
-    --lm-blue-hover: var(--lm-blue-md);
+    --lm-blue: #092c5c;
+    --lm-blue-rgb: rgb(9, 44, 92);
     --lm-blue-md: #246aa4;
     --lm-blue-lt: #8FBCE6;
+    --lm-blue-xlt: #eaf4ff;
+    --lm-blue-hover: var(--lm-blue-hover);
     --bs-blue: var(--lm-blue);
     --bs-primary: var(--lm-blue);
-    --bs-primary-rgb: 9, 44, 92;
+    --bs-primary-rgb: var(--lm-blue-rgb);
     --bs-link-color: var(--lm-blue);
-    --bs-link-hover-color: var(--md-blue);
+    --bs-link-hover-color: var(--lm-blue-hover);
+}
+
+.bg-blue {
+    background-color: var(--lm-blue);
+}
+
+.bg-ltblue {
+    background-color: var(--lm-blue-xlt) !important;
+}
+
+.bg-ltblue {
+    background-color: var(--lm-blue-lt) !important;
 }
 
 /* Update all input labels sitewide, check for scoped classes */
@@ -77,9 +90,8 @@ main h1, main h2, main h3, main h4, main h5, main h6 {
 }
 
 .confirmation-benefits-wrapper {
-    background-color: #d6ebff;
+    background-color: var(--lm-blue-xlt) !important;
 }
-
 
 .form__container .help-block.has-error {
     display: block;
@@ -256,11 +268,6 @@ main h1, main h2, main h3, main h4, main h5, main h6 {
     }    
 }
 
-input[type=checkbox]:checked ~ .checkbox__placeholder {
-    background-color: var(--lm-blue);
-    -webkit-text-stroke: 1px var(--lm-blue);
-}
-
 .form-check-input:checked {
   background-color: var(--lm-blue);
   border-color: var(--lm-blue);
@@ -346,11 +353,26 @@ a:hover {
   color: var(--lm-blue-hover) !important;
 }
 
+.btn-primary.btn-primary-ko:hover,
+.btn-primary.btn-sm.btn-primary-ko:hover,
+.btn-primary.btn-md.btn-primary-ko:hover,
+.btn-primary.btn-lg.btn-primary-ko:hover,
+.btn-primary.btn-xl.btn-primary-ko:hover,
+.rte-btn-blue-xl-ko:hover {
+  color: var(--lm-blue-hover) !important;
+  border-color: var(--lm-blue-hover) !important;
+  background-color: #FFF !important;
+}
+
 .form__container .btn.btn-link,
 .btn-link {
     background-color: transparent;
     color: var(--bs-link-color);
     text-decoration: underline;
+}
+
+.rte-btn-blue-md, .rte-btn-blue-sm {
+    background-color: var(--lm-blue-md);
 }
 
 .rte-btn-blue-xl:hover {
@@ -387,6 +409,10 @@ a:hover {
   color:var(--lm-blue);
 }
 
+h2.text-primary.page-title {
+    color:var(--lm-blue) !important;  
+}
+
 #footerOverlay {
     background: var(--lm-blue);
 }
@@ -414,6 +440,10 @@ footer a:hover {
     width: 23px;
     margin: 3px 4px 5px;
     display: block;
+}
+
+.search--active .search--icon {
+    background: url(https://www.usms.org/-/media/usms/developers/images/myusms/icon-close-lanemate.svg);
 }
 
 .login--icon {
@@ -608,22 +638,23 @@ i.mobile-menu__close {
 .filter-form__go-button:focus {
   background-color: var(--lm-blue-hover);
 }
+
 .results-list__pagination button {
-    background-color: var(--lm-blue);
+    background-color: var(--lm-blue) !important;
 }
 .results-list__pagination button.btn-active {
-    border: 2px solid var(--lm-blue);
-    color: var(--lm-blue);
+    border: 2px solid var(--lm-blue) !important;
+    color: var(--lm-blue) !important;
 }
 .results-list__pagination .btn-chevron-left,
 .results-list__pagination .btn-chevron-right {
-    color: var(--lm-blue);
+    color: var(--lm-blue) !important;
 }
 .results-list__item-title a {
-    color: var(--lm-blue);
+    color: var(--lm-blue) !important;
 }
 .results-list__item-footer a {
-    color: var(--lm-blue);
+    color: var(--lm-blue) !important;
 }
 
 /* Overrides for MobileMenuOverlayItem.css */
@@ -635,9 +666,15 @@ i.mobile-menu__close {
     color: var(--lm-blue);
 }
 
+
+
+
+
+
+
 /* Overrides for Swimmer */
 .swimmer-magazine__header-image img {
-    background-color: var(--lm-blue-md);
+    background-color: var(--lm-blue-md) !important;
 }
 .article-stepper .articleStepper .carousel-text-container p {
     color: var(--lm-blue);
@@ -648,11 +685,32 @@ i.mobile-menu__close {
 .slick-slide-container .slick-slide-text p {
     color: var(--lm-blue);
 }
+.article-nav ul li.active a {
+    color: var(--lm-blue) !important;
+}
 @media (min-width: 768px) {
     .slick-slide-container .slick-slide-text p {
         color: var(--lm-blue);
     }
 }
+@media (min-width: 992px) {
+    .article-nav h3.article-nav-title {
+        color: var(--lm-blue) !important;
+    }
+}
+
+.tags__container .tags__list .tags__item {
+    background-color: #d6ebff !important;
+}
+
+.categories__container .categories__list .categories__item {
+    background-color: var(--lm-blue-lt) !important;
+}
+
+
+
+
+
 
 /* Overrides for Login */
 .btn-gender,
@@ -706,6 +764,20 @@ i.mobile-menu__close {
     color: #555
 }
 
+/* Overides for myProfile.min.css */
+input[type=checkbox]:checked ~ .checkbox__placeholder {
+    background-color: var(--lm-blue) !important;
+    -webkit-text-stroke: 1px var(--lm-blue) !important;
+}
+
+input[type=checkbox]:disabled:checked ~ .checkbox__placeholder {
+    background-color: #666;
+    -webkit-text-stroke: 1px #666;
+}
+.usms-container.form__container .form-header h3 {
+    color: var(--lm-blue) !important;
+}
+
 /* Overrides for My USMS */
 
 .myusms__container h1 {
@@ -729,59 +801,61 @@ i.mobile-menu__close {
     background-color: var(--lm-blue-lt);
 }
 
+.sign-up {
+    background-color: var(--lm-blue-md);
+}
+
 /* END lanemate.css */
+
+
+
+
+
+
 
 /* START product-group-lanemate.css */
 
 /* Add Ons */
 .current-product__summary {
-    background-color: var(--lm-blue);
+    background-color: var(--lm-blue) !important;
 }
 .product-option.selected {
-    border: 3px solid var(--lm-blue);
+    border: 3px solid var(--lm-blue) !important;
     border-top-width: 1px;
 }
 .product-option.selected .product-name, 
 .product-option.selected .product-type {
-    background-color: var(--lm-blue);
+    background-color: var(--lm-blue) !important;
 }
 .product-option.selected .product-name {
-    background-color: var(--lm-blue);
-}
-
-.product-summary ul {
-    text-align: left;
-    margin: 0 2px 2rem;
-    padding: 0 3rem 0 3.5rem;
-    display: flex;
-    flex-direction: column;
-    flex: auto;
-}
-
-.selected .product-summary ul {
-    margin: 0 0 1.6rem;
+    background-color: var(--lm-blue) !important;
 }
 
 /* Plans and Payment */
 .current-plan__summary {
-    background-color: var(--lm-blue);
+    background-color: var(--lm-blue) !important;
 }
 .plan-option.plan-option-selected {
-    border-color: var(--lm-blue);
+    border-color: var(--lm-blue) !important;
 }
 .plan-option.plan-option-selected .plan-name, 
 .plan-option.plan-option-selected .plan-type {
-    background-color: var(--lm-blue);
+    background-color: var(--lm-blue) !important;
 }
 .plan-option.selected .plan-name {
-    background-color: var(--lm-blue);
+    background-color: var(--lm-blue) !important;
 }
-
 .plan-option a {
     color: var(--lm-blue-md);
 }
 
 /* END product-group-lanemate.css */
+
+
+
+
+
+
 
 /* START ResultsPagination.css */
 
@@ -919,54 +993,58 @@ i.mobile-menu__close {
 /* START algoliaStylesLanemate.css */
 
 .content-nav-list li {
-    border: 1px solid var(--lm-blue);
+    border: 1px solid var(--lm-blue) !important;
 }
 .content-nav-list li:hover {
-    background-color: var(--lm-blue)
+    background-color: var(--lm-blue) !important;
 }
 .content-nav-list li a {
-    color: var(--lm-blue);
+    color: var(--lm-blue) !important;
 }
 .filter-form__go-button,
 .filter-form__go-button:focus,
 .filter-form__go-button:hover,
 .filter-form__go-button:visited {
-    background-color: var(--lm-blue)
+    background-color: var(--lm-blue) !important;
 }
 .results-list__pagination button {
     background-color: var(--lm-blue);
 }
 .results-list__pagination button.btn-active {
-    border: 2px solid var(--lm-blue);
-    color: var(--lm-blue)
+    border: 2px solid var(--lm-blue) !important;
+    color: var(--lm-blue) !important;
 }
 .results-list__pagination .btn-chevron-left,
 .results-list__pagination .btn-chevron-right {
     color: var(--lm-blue);
 }
 .results-list__item-title a {
-    color: var(--lm-blue)
+    color: var(--lm-blue) !important;
 }
 .results-list__item-footer a {
-    color: var(--lm-blue);
+    color: var(--lm-blue) !important;
 }
 .filter-additional-links a {
-    color: var(--lm-blue-md)
+    color: var(--lm-blue-md) !important;
 }
 .btn-sort {
     color: var(--lm-blue-md);
 }
 .btn-sort.selected {
-    background-color: var(--lm-blue-md);
+    background-color: var(--lm-blue-md) !important;
 }
 .list-control-search--summary-loading {
-    color: var(--lm-blue-md)
+    color: var(--lm-blue-md) !important;
 }
 .toggle-filters {
-    background-color: var(--lm-blue-md);
+    background-color: var(--lm-blue-md) !important;
 }
 .results-list__item-footer a:after {
-    background-image: url(/img/arrow-read-more.svg);
+    background-color: var(--lm-blue) !important;
+    border-radius: 15px;
+    width: 15px;
+    height: 15px;
+    margin-left: 4px;
 }
 
 /* END algoliaStylesLanemate.css */
