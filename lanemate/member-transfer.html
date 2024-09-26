@@ -19,6 +19,7 @@
         <div id="main-container">
             <sergey-import src="foundation/site-header" />
             <main role="main">
+
                 <div class="breadcrumb-container" style="position: relative; padding-bottom: 40px;">
                     <div class="breadcrumb">
                         <div class="usms-container">
@@ -27,27 +28,57 @@
                                     <div class="breadcrumb__container">
                                         <ul class="breadcrumb__items list--nostyle">
                                             <li class="text-capitalize breadcrumb__item ">
-                                                <a class="breadcrumb__link" href="/public">Home<i class="fa fa-chevron-right"></i></a>
+                                                <a class="breadcrumb__link" href="/">Home<i class="fa fa-chevron-right"></i></a>
                                             </li>
                                             <li class="text-capitalize breadcrumb__item ">
-                                                <a class="breadcrumb__link" href="/public">My Account<i class="fa fa-chevron-right"></i></a>
+                                                <a class="breadcrumb__link" href="/lanemate/my-account-usms.html">My Account<i class="fa fa-chevron-right"></i></a>
                                             </li>
-                                        </ul>x
-                                        <span class="breadcrumb__title text-capitalize">Transfer a Member</span>
+                                        </ul>
+                                        <span class="breadcrumb__title text-capitalize">Transfer My Membership</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="section section-full p-tb-10 p-mh-500 ">
+
+                <style>
+                    #toggleEligible {
+                        position: absolute;
+                        right: 50px;
+                        top: 50px;
+                    }
+                    .input-group.member-transfer-notes label.label-large {
+                        font-size: 1.4rem;
+                        line-height: 2rem;
+                        /* font-weight: 600; */
+                    }
+                </style>
+                <script>
+                    $(document).ready(function() {
+                        $("#toggleEligible").click(function() {
+                            $(".transfer-eligible").toggle();
+                            $(".transfer-ineligible").toggle();
+                        });
+                    });
+                </script>
+                <button id="toggleEligible">Toggle Eligibile</button>                
+                
+                <div class="section section-full p-t-10 p-mh-500 p-b-50">
                     <div class="usms-container p-tb-10">                        
                         <div class="row">
                             <div class="col-xs-12">
                                 <header>
-                                    <h1>Transfer a Member</h1>
+                                    <h1>Transfer My Membership</h1>
                                     <div class="lead">
-                                        <p style="font-size: 15px; line-height: 25px;font-weight: normal;">RTE text if needed...</p>
+                                        <p>A swimmer may change club affiliation at the time of annual membership registration and up to three additional times during the membership year.</p>
+                                        <ul>
+                                            <li>Changing a swimmer's status to unattached does not count against the allowable club changes per year.</li>
+                                            <li>A swimmer may compete for only one club during a meet. A transfer submitted during a meet, including at the time of annual registration, may take immediate effect only if the swimmer has not yet competed in the meet.</li>
+                                            <li>Swimmers may declare unattached status at any time except during a meet in which they have already competed. Swimmers who intend to compete as unattached should change their registration status prior to the meet.</li>
+                                        </ul>
+                                        <br />
+                                        <p>More details can be found in the <a href="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/pdfs/volunteer%20central/rule%20book/part%202.pdf">USMS rulebook</a>, under 201.3 Representation/Club Affiliation.</p>
                                     </div>
                                 </header>
                             </div>

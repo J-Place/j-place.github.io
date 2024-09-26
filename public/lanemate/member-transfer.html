@@ -277,6 +277,7 @@
     </div>
  </header>
             <main role="main">
+
                 <div class="breadcrumb-container" style="position: relative; padding-bottom: 40px;">
                     <div class="breadcrumb">
                         <div class="usms-container">
@@ -285,27 +286,57 @@
                                     <div class="breadcrumb__container">
                                         <ul class="breadcrumb__items list--nostyle">
                                             <li class="text-capitalize breadcrumb__item ">
-                                                <a class="breadcrumb__link" href="/public">Home<i class="fa fa-chevron-right"></i></a>
+                                                <a class="breadcrumb__link" href="/">Home<i class="fa fa-chevron-right"></i></a>
                                             </li>
                                             <li class="text-capitalize breadcrumb__item ">
-                                                <a class="breadcrumb__link" href="/public">My Account<i class="fa fa-chevron-right"></i></a>
+                                                <a class="breadcrumb__link" href="/lanemate/my-account-usms.html">My Account<i class="fa fa-chevron-right"></i></a>
                                             </li>
-                                        </ul>x
-                                        <span class="breadcrumb__title text-capitalize">Transfer a Member</span>
+                                        </ul>
+                                        <span class="breadcrumb__title text-capitalize">Transfer My Membership</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="section section-full p-tb-10 p-mh-500 ">
+
+                <style>
+                    #toggleEligible {
+                        position: absolute;
+                        right: 50px;
+                        top: 50px;
+                    }
+                    .input-group.member-transfer-notes label.label-large {
+                        font-size: 1.4rem;
+                        line-height: 2rem;
+                        /* font-weight: 600; */
+                    }
+                </style>
+                <script>
+                    $(document).ready(function() {
+                        $("#toggleEligible").click(function() {
+                            $(".transfer-eligible").toggle();
+                            $(".transfer-ineligible").toggle();
+                        });
+                    });
+                </script>
+                <button id="toggleEligible">Toggle Eligibile</button>                
+                
+                <div class="section section-full p-t-10 p-mh-500 p-b-50">
                     <div class="usms-container p-tb-10">                        
                         <div class="row">
                             <div class="col-xs-12">
                                 <header>
-                                    <h1>Transfer a Member</h1>
+                                    <h1>Transfer My Membership</h1>
                                     <div class="lead">
-                                        <p style="font-size: 15px; line-height: 25px;font-weight: normal;">RTE text if needed...</p>
+                                        <p>A swimmer may change club affiliation at the time of annual membership registration and up to three additional times during the membership year.</p>
+                                        <ul>
+                                            <li>Changing a swimmer's status to unattached does not count against the allowable club changes per year.</li>
+                                            <li>A swimmer may compete for only one club during a meet. A transfer submitted during a meet, including at the time of annual registration, may take immediate effect only if the swimmer has not yet competed in the meet.</li>
+                                            <li>Swimmers may declare unattached status at any time except during a meet in which they have already competed. Swimmers who intend to compete as unattached should change their registration status prior to the meet.</li>
+                                        </ul>
+                                        <br />
+                                        <p>More details can be found in the <a href="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/pdfs/volunteer%20central/rule%20book/part%202.pdf">USMS rulebook</a>, under 201.3 Representation/Club Affiliation.</p>
                                     </div>
                                 </header>
                             </div>
@@ -314,7 +345,212 @@
                     <div class="my-usms--wrapper usms">
                         <div class="container-fluid">
                             <div class="usms-container my-usms--wrapper">
-                                <h1>Transfer a Member</h1>
+                                <link href="https://www.usms.org/styles/registration.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="/lanemate/css-components/my-information-lanemate.css">
+
+
+
+<style>
+
+.form-group {
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+    margin-left: 0;
+}
+
+.form-group.agree-terms {
+    margin-top: 0;
+    margin-left: 3rem;
+}
+
+/* @media (min-width: 768px) {
+    .form-group {
+        margin: 0 0 15px;
+    }
+} */
+
+#btnSubmitMemberTransfer {
+    width: 123px;
+}
+
+.help-block.has-error {
+    color: #c62030;
+    background-color: transparent;
+    padding: 0;
+    width: 100%;
+    display: block;
+    position: relative;
+    top: 0;
+    /* margin: 5px 0;
+    position: absolute;
+    top: -25px;
+    font-size: 1.05rem;
+    line-height: 18px; */
+}
+.transfer-ineligible {
+    display: none;
+}
+
+</style>
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $("#btnSubmitMemberTransfer").click(function() {
+        $(this).css("z-index", "9999");
+        $(this).css("opacity", "1");
+    });
+</script>
+
+<div class="modal-container" style="transition: 250ms ease-in-out; transform: translateY(-10px); opacity: 0; z-index: -1;">
+<div class="modal" id="submitMemberTransferModal" tabindex="-1" role="dialog" aria-modal="true">
+    <div class="modal-close" data-reactid="12"><button data-reactid="13"><i class="fa fa-times" data-reactid="14"></i></button></div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="margin: 0 auto;">
+            <div class="modal-body">
+                <p>I agree that the information I am providing is factual, and understand all changes will take immediate effect to my membership once I save changes.</p>
+            </div>
+            <div class="modal-footer">                                     
+                <button class="btn btn-lg btn-primary" data-bs-dismiss="modal" id="confirmMemberTransfer">Save</button>
+                <button class="btn btn-lg btn-primary" data-bs-dismiss="modal" id="submitMemberTransfer">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div> -->
+
+
+
+<div class="">
+
+    <div class="form-header">
+        <h3>Current Information</h3>
+        <p class="transfer-eligible">You're eligible to transfer your membership 2 more times.</p>
+        <p class="transfer-ineligible">You're not eligible to transfer your membership at this time. Please contact Membership Services with any questions.</p>
+        <!-- <p style="font-size:14px; margin: -1rem auto 2rem;">(Only you can see these fields. They can be updated by clicking the "Edit Profile" button above. NOTE: This information updates your USMS membership record.)</p>     -->
+    </div>
+    
+    <div class="row form-group clearfix first-last">
+        <div class="col-xs-12 col-sm-5">
+            <label class="font-weight-bold" for="FirstName">First Name</label>
+            <span class="form-group-display-value">Firstname</span>
+        </div>
+        <!-- <div class="col-xs-12 col-sm-1">
+            <label for="MiddleInitial">MI</label>
+            <span class="form-group-display-value">M</span>
+        </div> -->
+        <div class="col-xs-12 col-sm-6">
+            <label class="font-weight-bold" for="LastName">Last Name</label>
+            <span class="form-group-display-value">Lastname</span>
+        </div>
+    </div>
+
+    <div class="row form-group clearfix lmsc-club-wog">
+        <div class="col-xs-12 col-sm-4">
+            <label class="font-weight-bold" for="Lmsc">LMSC</label>
+            <span class="form-group-display-value">Florida</span>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+            <label for="Club">Club</label>
+            <span class="form-group-display-value">Sarasota Sharks</span>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+            <label class="font-weight-bold" for="WorkoutGroup">Workout Group</label>
+            <span class="form-group-display-value">Meet At Blue</span>
+        </div>
+    </div>
+    <!-- <div class="row">
+        <div class="col-xs-12">
+            <p>You're eligible to transfer your membership 2 more times.</p>
+        </div>
+    </div> -->
+
+    <hr style="border-color:#333; margin: 2rem 0 4rem;" class="transfer-eligible">
+
+
+    <div class="form-header transfer-eligible">
+        <h6>Select the LMSC, club and/or workout group to which you would like to transfer</h6>
+    </div>
+
+    <form class="form-club-information form-horizontal transfer-eligible" data-reactid="13">
+        <div class="form-group" data-reactid="15">
+            <div class="row">
+                <div class="col-xs-12 col-sm-4" data-reactid="16"><label for="selectedLmsc" class="font-weight-bold" data-reactid="17">New LMSC</label>
+                    <div data-reactid="18">
+                        <span class="help-block help-block--selectedLmsc has-errorXXX" data-reactid="19">Please select an LMSC</span>
+                        <select name="selectedLmsc" class="form-control has-errorXXX" data-reactid="20">
+                            <option value="-1" data-reactid="21">Select your LMSC</option>
+                            <option value="a0x3h000001SQWpAAO">Adirondack</option>
+                            <option value="a0x3h000001SQWqAAO">Alaska</option>
+                            <option value="a0x3h000001SQWrAAO">Allegheny Mountain</option>
+                            <option value="a0x3h000001SQWsAAO">Arizona</option>
+                            <option value="a0x3h000001SQWtAAO">Arkansas</option>
+                            <option value="a0x3h000001SQWuAAO">Colorado</option>
+                            <option value="a0x3h000001SQWvAAO">Connecticut</option>
+                            <option value="a0x3h000001SQWwAAO">Delaware Valley</option>
+                            <option value="a0x3h000001SQWxAAO">Florida</option>
+                            <option value="a0x3h000001SQWyAAO">Florida Gold Coast</option>
+                        </select></div><span class="help-block" data-reactid="22"></span>
+                </div>
+                <div class="col-xs-12 col-sm-4" data-reactid="23">
+                    <label for="selectedClub" class="font-weight-bold" data-reactid="24">New Club</label>
+                    <div data-reactid="25">
+                        <span class="help-block help-block--selectedClub has-errorXXX" data-reactid="26">Please select a club</span>
+                        <select name="selectedClub" class="form-control has-errorXXX" data-reactid="27">
+                            <option value="-1" data-reactid="28">Select a club</option>
+                            <option value="a0w3h000001KFKKAA4">Unattached - Will appear as (UC14)</option>
+                            <option value="a0w3h000001KEaWAAW">All Day Endurance Masters (ADEM)</option>
+                            <option value="a0wPO0000004lZpYAI">Ask4pierre (A4P)</option>
+                            <option value="a0w3h000001KEakAAG">ATAC Masters (ATAC)</option>
+                        </select>
+                    </div>
+                    <span class="help-block" data-reactid="29"></span>
+                </div>
+                <div class="club-information__column club-information__column--fade-out col-xs-12 col-sm-4" data-reactid="30">
+                    <label for="selectedWorkoutgroup" data-reactid="31">Workout Group (if applicable)</label>
+                    <select name="selectedWorkoutgroup" class="form-control" data-reactid="32">
+                        <option selected="" value="-1" data-reactid="33">Select a workout group</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-8">
+                    <div class="input-group member-transfer-notes" style="margin-top: 3rem;">
+                        <label for="MemberTransferNotes" class="label-large control-label">Notes</label>
+                        <textarea class="form-control" rows="3" cols="50" name="MemberTransferNotes" id="memberTransferNotes" required="" maxlength="32768"></textarea>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+    <div class="section__content transfer-eligible">
+        <div class="form-group">
+            <div class="row">
+                <div class="form-group agree-terms">
+                    <div class="col-xs-12">
+                        <span class="help-block help-block--agree-terms">You need to agree to the terms to complete your registration.</span>
+                        <label id="agreeTerms__label" class="checkbox-label " for="agreeTerms">
+                            <div class="checkbox-container">
+                                <input type="checkbox" name="agree-terms" id="agreeTerms" value="" class="has-success" disabled="">
+                                <span class="checkbox__placeholder"></span>
+                            </div>
+                        </label>
+                        <span class="font-weight-bold">I agree that the information I am providing is factual, and understand all changes will take immediate effect to my membership once I save changes.</span>
+                    </div>
+                </div>
+                <button id="btnSubmitMemberTransfer" class="btn btn-primary btn-large text-uppercase pull-left">Submit</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script src="https://www.usms.org/scripts/registration.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="/lanemate/js/my-information.js"></script>
                             </div>
                         </div>
                     </div>
