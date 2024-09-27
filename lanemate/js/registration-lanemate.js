@@ -40,7 +40,7 @@ $(document.body).on('change','#strokeFocus',function(){
     }
 });
 
-$("#videoStrokeAnalysisNo").on( "click", function () {    
+$("#videoStrokeAnalysisNo").on( "click", function () {
     if ($(".membership-length--option.selected")[0]) {
         $(".select-stroke-focus").hide();
         $("#videoStrokeAnalysisYesInput").prop( "checked", false );
