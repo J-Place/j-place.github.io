@@ -56,3 +56,22 @@ $("#videoStrokeAnalysisYes").on( "click", function () {
         $("#videoStrokeAnalysisNoInput").prop( "checked", false );
     } else return;
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
