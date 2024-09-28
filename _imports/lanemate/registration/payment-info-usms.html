@@ -48,35 +48,3 @@
 
 	<button id="register-button" class="btn btn-primary btn-large text-uppercase pull-left membership-length__submit--lanemate">Register</button>
  </div>
-
- <script>
-	var updateTotalPayment = function() {
-    var inputDonation = $("input[name='swimming-saves-lives']");
-    var donationVal = inputDonation.val();
-    var donationNum = parseInt(donationVal);
-	var videoTotal = $(".video-stroke-analysis--total").text();
-	var videoVal = parseInt(videoTotal);
-	// var videoNum = parseInt(videoVal);
-
-
-	alert(videoVal);
-	
-    var totalPaymentVal = productCardTotal + donationNum;
-    var totalPaymentNum = Number(totalPaymentVal);
-    $(".payment-info__line-item--total .payment-info__line-item--price").text('$ ' + totalPaymentNum + '.00');
-
-	if (totalPaymentNum > 0) {
-        console.log("A");
-        showPaymentInfo();
-        enableSubmit();
-    } else if (totalPaymentNum == 0 && isVideoEligible == true) {
-        console.log("B");
-        hidePaymentInfo();
-        enableSubmit();
-    } else { 
-        console.log("C");
-        hidePaymentInfo();
-        disableSubmit();
-    }
-};
- </script>

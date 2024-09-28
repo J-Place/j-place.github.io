@@ -12,6 +12,9 @@ $(".membership-length--option").on( "click", function() {
     // Add-On cost is dependent upon plan selection; enable inputs after a selection is made.
     $(".video-stroke-analysis input").attr( "disabled", false);
     $(".agree-coach-alts-certification input").attr( "disabled", false);
+
+    // updateTotalPayment();
+    
 });
 
 $(".membership-length--currentYear").on( "click", function() {
@@ -27,6 +30,8 @@ $(".membership-length--currentYear").on( "click", function() {
     $('.form-group.card-name').addClass('un-selected');
     $('.form-group.card-number').addClass('un-selected');
     $('.form-group.card-zip').addClass('un-selected');
+    
+    updateTotalPayment();
 });
 
 $(".membership-length--usmsPlus").on( "click", function() {
@@ -42,4 +47,6 @@ $(".membership-length--usmsPlus").on( "click", function() {
     $('.form-group.card-name').removeClass('un-selected');
     $('.form-group.card-number').removeClass('un-selected');
     $('.form-group.card-zip').removeClass('un-selected');
+
+    updateTotalPayment();
 });

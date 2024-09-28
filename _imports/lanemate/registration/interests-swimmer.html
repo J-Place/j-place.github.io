@@ -87,10 +87,12 @@
 $("#print__label input").on( "click", function () {
     $(".swimmer-magazine--total").text("$10.00");
     $(".payment-info__line-item--usms").after('<p class="payment-info__line-item payment-info__line-item--swimmer-magazine-print">SWIMMER Magazine Print: <span class="payment-info__line-item--price">$10.00</span></p>');
+	updateTotalPayment();
 });
 
 $("#online__label input").on( "click", function () {
     $(".swimmer-magazine--total").text("$__.__");
     $(".payment-info__line-item--swimmer-magazine-print").remove();
+	updateTotalPayment();
 });
 </script>
