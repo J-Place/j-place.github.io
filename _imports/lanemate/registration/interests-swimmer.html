@@ -33,6 +33,9 @@
 				.usms-container p {
 					color: #333 !important;
 				}
+				.card.interests .card__total {
+					display: none;
+				}
 			</style>
 			<div id="tempNav">
 				<a href="#tempNav" id="tempNavNew">New</a>
@@ -159,6 +162,10 @@ $("#checkbox-interests-self-identified-coach--true").click( function() {
 });
 
 $("#tempNavNew").click( function() {
+	$(".card.interests .card__total").hide();
+	$(".swimmer-magazine--total").text("$__.__");
+	$("#online__label input").prop('checked', true);
+	$("#print__label input").prop('checked', false);
 	$(".swimmer-print").hide();
 	$(".welcome-packet").show();
 	$(".coach-interest").hide();
@@ -171,6 +178,10 @@ $("#tempNavNew").click( function() {
 });
 
 $("#tempNavReturning").click( function() {
+	$(".card.interests .card__total").hide();
+	$(".swimmer-magazine--total").text("$__.__");
+	$("#online__label input").prop('checked', true);
+	$("#print__label input").prop('checked', false);
 	$(".swimmer-print").hide();
 	$(".welcome-packet").hide();
 	$(".coach-interest").hide();
@@ -183,6 +194,7 @@ $("#tempNavReturning").click( function() {
 });
 
 $("#tempNavRenewing").click( function() {
+	$(".card.interests .card__total").show();
 	$(".swimmer-print").show();
 	$(".welcome-packet").hide();
 	$(".coach-interest").hide();
