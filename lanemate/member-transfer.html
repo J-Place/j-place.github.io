@@ -76,16 +76,6 @@
                         }
                     }
                 </style>
-                <script>
-                    $(document).ready(function() {
-                        $("#toggleEligible").click(function() {
-                            $(".transfer-eligible").toggle();
-                            $(".transfer-ineligible").toggle();
-                        });
-                    });
-                </script>
-                <button id="toggleEligible">Toggle Eligibile</button>                
-                
                 <div class="section section-full p-t-10 p-mh-500 p-b-50">
                     <div class="usms-container renew__form-container p-tb-10">                        
                         <div class="row">
@@ -106,9 +96,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="my-usms--wrapper usms">
+                    <div class="my-usms--wrapper usms">                        
                         <div class="container-fluid">
                             <div class="usms-container my-usms--wrapper">
+                                <button id="toggleEligible" style="color:red;">Toggle Eligibility</button>
                                 <sergey-import src="lanemate/content/member-transfer-form" />
                             </div>
                         </div>
@@ -118,5 +109,19 @@
             <sergey-import src="foundation/footer" />
         </div>
         <sergey-import src="site/footer_scripts" />
+        <script>
+            $(document).ready(function() {
+                $("#toggleEligible").click(function() {
+                    $(".transfer-eligible").toggle();
+                    $(".transfer-ineligible").toggle();
+                    $('.club-information__column').removeClass('club-information__column--fade-in');
+                    $('.club-information__column').addClass('club-information__column--fade-out');
+                });
+            });
+            $('select[name="selectedClub"]').on("change", function() {
+                $('.club-information__column').removeClass('club-information__column--fade-out');
+                $('.club-information__column').addClass('club-information__column--fade-in');
+            });
+        </script>
     </body>
 </html>

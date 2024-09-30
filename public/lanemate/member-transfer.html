@@ -334,16 +334,6 @@
                         }
                     }
                 </style>
-                <script>
-                    $(document).ready(function() {
-                        $("#toggleEligible").click(function() {
-                            $(".transfer-eligible").toggle();
-                            $(".transfer-ineligible").toggle();
-                        });
-                    });
-                </script>
-                <button id="toggleEligible">Toggle Eligibile</button>                
-                
                 <div class="section section-full p-t-10 p-mh-500 p-b-50">
                     <div class="usms-container renew__form-container p-tb-10">                        
                         <div class="row">
@@ -364,9 +354,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="my-usms--wrapper usms">
+                    <div class="my-usms--wrapper usms">                        
                         <div class="container-fluid">
                             <div class="usms-container my-usms--wrapper">
+                                <button id="toggleEligible" style="color:red;">Toggle Eligibility</button>
                                 <link href="https://www.usms.org/styles/registration.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="/lanemate/css-components/my-information-lanemate.css">
 
@@ -409,6 +400,9 @@
     font-size: 1.05rem;
     line-height: 18px; */
 }
+.transfer-eligible {
+    display: block;
+}
 .transfer-ineligible {
     display: none;
 }
@@ -446,7 +440,7 @@
     <div class="form-header">
         <h3>Current Information</h3>
         <p class="transfer-eligible">You're eligible to transfer your membership 2 more times.</p>
-        <p class="transfer-ineligible">You're not eligible to transfer your membership at this time. Please contact Membership Services with any questions.</p>
+        <p class="transfer-ineligible">You're not eligible to transfer your membership at this time. Please contact <a href="mailto:membership@usmastersswimming.org">Membership Services</a> with any questions.</p>
         <!-- <p style="font-size:14px; margin: -1rem auto 2rem;">(Only you can see these fields. They can be updated by clicking the "Edit Profile" button above. NOTE: This information updates your USMS membership record.)</p>     -->
     </div>
     
@@ -1059,5 +1053,19 @@
 <!-- Local Fallbacks -->
 <!-- <script src="/js/src/jquery-3.6.0.min.js"></script> -->
 <!-- <script src="/js/src/bootstrap.bundle.min.js"></script> -->
+        <script>
+            $(document).ready(function() {
+                $("#toggleEligible").click(function() {
+                    $(".transfer-eligible").toggle();
+                    $(".transfer-ineligible").toggle();
+                    $('.club-information__column').removeClass('club-information__column--fade-in');
+                    $('.club-information__column').addClass('club-information__column--fade-out');
+                });
+            });
+            $('select[name="selectedClub"]').on("change", function() {
+                $('.club-information__column').removeClass('club-information__column--fade-out');
+                $('.club-information__column').addClass('club-information__column--fade-in');
+            });
+        </script>
     </body>
 </html>
