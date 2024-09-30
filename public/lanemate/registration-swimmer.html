@@ -1367,57 +1367,106 @@
 		</div>
 
 		<div class="card interests">
+			<style>
+				#tempNav {
+					position: absolute;
+				}
+				#tempNav a {
+					margin-right: 1.5rem;
+				}
+				.coach-interest {
+					display: none;
+				}
+				.welcome-packet {
+					/* display: none; */
+				}
+				.swimmer-print {
+					display: none;
+				}
+			</style>
+			<div id="tempNav">
+				<a href="#tempNav" id="tempNavNew">New</a>
+				<a href="#tempNav" id="tempNavReturning">Returning</a>
+				<a href="#tempNav" id="tempNavRenewing">Renewing</a>
+			</div>
 			<h3 class="interests___form-header m-b-30">Tell Us More About You</h3>
 			<div class="row ">
-				<div class="order-1 order-sm-2 col-xs-12 col-sm-6">
-					<label class="control-label font-weight-bold col-xs-12">Are you currently a coach?</label>
-					<div class="col-xs-12"><span class="help-block help-block--checkbox-interests-self-identified-coach">Please select are you currently a coach</span></div>
-					<div class="col-xs-12">
-						<label id="checkbox-interests-self-identified-coach--true__label" class="radio-label" for="checkbox-interests-self-identified-coach--true" style="cursor:pointer;">
-							<div class="radio-container"><input type="radio" name="checkbox-interests-self-identified-coach" id="checkbox-interests-self-identified-coach--true" value="checkbox-interests-self-identified-coach--true"><span class="radio__placeholder"></span></div>
-							Yes
-						</label>
-						<label id="checkbox-interests-self-identified-coach--false__label" class="radio-label" for="checkbox-interests-self-identified-coach--false" style="cursor:pointer;">
-							<div class="radio-container"><input type="radio" name="checkbox-interests-self-identified-coach" id="checkbox-interests-self-identified-coach--false" value="checkbox-interests-self-identified-coach--false"><span class="radio__placeholder"></span></div>
-							No
-						</label>
-					</div>
-				</div>
-				<div class="order-3 col-xs-12 col-sm-6">
-					<label class="control-label font-weight-bold col-xs-12">
-						Would you like to purchase the print version of SWIMMER Magazine or a free digital version.
-						<!-- <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Our digital edition now works great on all screens and is part of the USMS website so all of our content is more easily accessible, interactive, and readable."></span> -->
-					</label>
-					<div class="col-xs-12">
-						<span class="help-block help-block--MagazineSubscriptionType">Please select a subscription type</span>
-						<label id="online__label" class="radio-label" for="online" style="cursor:pointer;">
-							<div class="radio-container">
-								<input type="radio" name="MagazineSubscriptionType" id="online" value="online" checked><span class="radio__placeholder"></span>
+				<div class="order-1 col-xs-12 col-sm-6">
+					<div class="row">
+						<div class="order-1 order-sm-2 col-xs-12 col-sm-6 coach-current">
+							<label class="control-label font-weight-bold col-xs-12">Are you currently a coach?</label>
+							<div class="col-xs-12">
+								<span class="help-block help-block--checkbox-interests-self-identified-coach">Please select are you currently a coach</span>
 							</div>
-							Digital
-						</label>
-						<label id="print__label" class="radio-label" for="print" style="cursor:pointer;">
-							<div class="radio-container"><input type="radio" name="MagazineSubscriptionType" id="print" value="print"><span class="radio__placeholder"></span></div>
-							$10 Print
-						</label>
+							<div class="col-xs-12">
+								<label id="checkbox-interests-self-identified-coach--true__label" class="radio-label" for="checkbox-interests-self-identified-coach--true" style="cursor:pointer;">
+									<div class="radio-container"><input type="radio" name="checkbox-interests-self-identified-coach" id="checkbox-interests-self-identified-coach--true" value="checkbox-interests-self-identified-coach--true"><span class="radio__placeholder"></span></div>
+									Yes
+								</label>
+								<label id="checkbox-interests-self-identified-coach--false__label" class="radio-label" for="checkbox-interests-self-identified-coach--false" style="cursor:pointer;">
+									<div class="radio-container"><input type="radio" name="checkbox-interests-self-identified-coach" id="checkbox-interests-self-identified-coach--false" value="checkbox-interests-self-identified-coach--false"><span class="radio__placeholder"></span></div>
+									No
+								</label>
+							</div>
+						</div>
+						<div class="order-4 col-xs-12 coach-interest">
+							<label class="control-label font-weight-bold col-xs-12">Do you have an interest in coaching?</label>
+							<div class="col-xs-12">
+								<span class="help-block help-block--checkbox-interests-coach">Please select coach interest</span>
+							</div>
+							<div class="col-xs-12">
+								<label id="checkbox-interests-coach--true__label" class="radio-label" for="checkbox-interests-coach--true" style="cursor: pointer;">
+									<div class="radio-container"><input type="radio" name="checkbox-interests-coach" id="checkbox-interests-coach--true" value="checkbox-interests-coach--true" /><span class="radio__placeholder"></span></div>
+									Yes
+								</label>
+								<label id="checkbox-interests-coach--false__label" class="radio-label" for="checkbox-interests-coach--false" style="cursor: pointer;">
+									<div class="radio-container"><input type="radio" name="checkbox-interests-coach" id="checkbox-interests-coach--false" value="checkbox-interests-coach--false" /><span class="radio__placeholder"></span></div>
+									No
+								</label>
+							</div>
+						</div>		
 					</div>
 				</div>
-				<div class="order-2 order-sm-3 col-xs-12 col-sm-6">
-					<label class="control-label font-weight-bold col-xs-12">
-						Would you like to receive a mailed membership welcome packet?<span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="New members receive a mailed envelope containing a plastic membership card, a USMS cap, USMS stickers, and a folder containing membership information."></span>
-					</label>
-					<div class="col-xs-12">
-						<span class="help-block help-block--welcomePacket">Please select your welcome packet preference.</span>
-						<label id="welcomePacket--yes__label" class="radio-label" for="welcomePacket--yes" style="cursor:pointer;">
-							<div class="radio-container"><input type="radio" name="welcomePacket" id="welcomePacket--yes" value="welcomePacket--yes"><span class="radio__placeholder"></span></div>
-							Yes
-						</label>
-						<label id="welcomePacket--no__label" class="radio-label" for="welcomePacket--no" style="cursor:pointer;">
-							<div class="radio-container"><input type="radio" name="welcomePacket" id="welcomePacket--no" value="welcomePacket--no"><span class="radio__placeholder"></span></div>
-							No
-						</label>
+				<div class="order-1 col-xs-12 col-sm-6">
+					<div class="row">
+						<div class="order-3 col-xs-12 swimmer-print">
+							<label class="control-label font-weight-bold col-xs-12">
+								Would you like to purchase the print version of SWIMMER Magazine or a free digital version.
+								<!-- <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Our digital edition now works great on all screens and is part of the USMS website so all of our content is more easily accessible, interactive, and readable."></span> -->
+							</label>
+							<div class="col-xs-12">
+								<span class="help-block help-block--MagazineSubscriptionType">Please select a subscription type</span>
+								<label id="online__label" class="radio-label" for="online" style="cursor:pointer;">
+									<div class="radio-container">
+										<input type="radio" name="MagazineSubscriptionType" id="online" value="online" checked><span class="radio__placeholder"></span>
+									</div>
+									Digital
+								</label>
+								<label id="print__label" class="radio-label" for="print" style="cursor:pointer;">
+									<div class="radio-container"><input type="radio" name="MagazineSubscriptionType" id="print" value="print"><span class="radio__placeholder"></span></div>
+									$10 Print
+								</label>
+							</div>
+						</div>
+						<div class="order-2 order-sm-3 col-xs-12 welcome-packet">
+							<label class="control-label font-weight-bold col-xs-12">
+								Would you like to receive a mailed membership welcome packet?<span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="New members receive a mailed envelope containing a plastic membership card, a USMS cap, USMS stickers, and a folder containing membership information."></span>
+							</label>
+							<div class="col-xs-12">
+								<span class="help-block help-block--welcomePacket">Please select your welcome packet preference.</span>
+								<label id="welcomePacket--yes__label" class="radio-label" for="welcomePacket--yes" style="cursor:pointer;">
+									<div class="radio-container"><input type="radio" name="welcomePacket" id="welcomePacket--yes" value="welcomePacket--yes"><span class="radio__placeholder"></span></div>
+									Yes
+								</label>
+								<label id="welcomePacket--no__label" class="radio-label" for="welcomePacket--no" style="cursor:pointer;">
+									<div class="radio-container"><input type="radio" name="welcomePacket" id="welcomePacket--no" value="welcomePacket--no"><span class="radio__placeholder"></span></div>
+									No
+								</label>
+							</div>
+						</div>		
 					</div>
 				</div>
+				
                 <div class="m-t-30 col-xs-12" style="visibility:hidden;opacity:0;height:0;">
 					<label id="checkbox-card__label" class="checkbox-label " for="checkbox-card">
 						<div class="checkbox-container"><input type="checkbox" name="checkbox-card" id="checkbox-card" value=""><span class="checkbox__placeholder"></span></div>
@@ -1450,6 +1499,51 @@ $("#online__label input").on( "click", function () {
     $(".payment-info__line-item--swimmer-magazine-print").remove();
 	updateTotalPayment();
 });
+
+$("#checkbox-interests-self-identified-coach--false").click( function() {
+	$(".coach-interest").toggle();
+});
+
+$("#checkbox-interests-self-identified-coach--true").click( function() {
+	$(".coach-interest").hide();
+});
+
+$("#tempNavNew").click( function() {
+	$(".swimmer-print").hide();
+	$(".welcome-packet").show();
+	$(".coach-interest").hide();
+	$("#checkbox-interests-coach--true").prop('checked', false);
+	$("#checkbox-interests-coach--false").prop('checked', false);
+	$("#welcomePacket--yes").prop('checked', false);
+	$("#welcomePacket--no").prop('checked', false); 
+	$("#checkbox-interests-self-identified-coach--true").prop('checked', false);
+	$("#checkbox-interests-self-identified-coach--false").prop('checked', false);
+});
+
+$("#tempNavReturning").click( function() {
+	$(".swimmer-print").hide();
+	$(".welcome-packet").hide();
+	$(".coach-interest").hide();
+	$("#checkbox-interests-coach--true").prop('checked', false);
+	$("#checkbox-interests-coach--false").prop('checked', false);
+	$("#welcomePacket--yes").prop('checked', false); 
+	$("#welcomePacket--no").prop('checked', false); 
+	$("#checkbox-interests-self-identified-coach--true").prop('checked', false);
+	$("#checkbox-interests-self-identified-coach--false").prop('checked', false);
+});
+
+$("#tempNavRenewing").click( function() {
+	$(".swimmer-print").show();
+	$(".welcome-packet").hide();
+	$(".coach-interest").hide();
+	$("#checkbox-interests-coach--true").prop('checked', false);
+	$("#checkbox-interests-coach--false").prop('checked', false);
+	$("#welcomePacket--yes").prop('checked', false); 
+	$("#welcomePacket--no").prop('checked', false);
+	$("#checkbox-interests-self-identified-coach--true").prop('checked', false);
+	$("#checkbox-interests-self-identified-coach--false").prop('checked', false);
+});
+
 </script>
                                                             <!-- <link rel="stylesheet" href="/lanemate/css/donations.css"> -->
 <style>
@@ -1475,6 +1569,9 @@ $("#online__label input").on( "click", function () {
         .donation .control-label {
             margin-top: -3.6rem;
         }
+    }
+    .video-stroke-analysis .form-group label { 
+        white-space: unset; 
     }
 </style>
 <div class="card donations">
