@@ -17,10 +17,11 @@
             <img src="../img/loader.gif" alt="loading">
         </div>
         <div id="main-container">
-            <sergey-import src="foundation/site-header" />
-            <main role="main">
 
-                <div class="breadcrumb-container" style="position: relative; padding-bottom: 40px;">
+            <sergey-import src="foundation/site-header" />
+
+            <main role="main">
+                <!-- <div class="breadcrumb-container" style="position: relative; padding-bottom: 40px;">
                     <div class="breadcrumb">
                         <div class="usms-container">
                             <div class="row">
@@ -40,8 +41,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
+                </div> -->
                 <style>
                     #toggleEligible {
                         position: absolute;
@@ -81,8 +81,9 @@
                         }
                     }
                 </style>
+
                 <div class="section section-full p-t-10 p-mh-500 p-b-50">
-                    <div class="usms-container renew__form-container p-tb-10">                        
+                    <div class="usms-container p-tb-10">                        
                         <div class="row">
                             <div class="col-xs-12">
                                 <header>
@@ -98,10 +99,13 @@
                                         <p>More details can be found in the <a href="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/pdfs/volunteer%20central/rule%20book/part%202.pdf">USMS rulebook</a>, under 201.3 Representation/Club Affiliation.</p>
                                     </div>
                                 </header>
+                                <div class="renew__form-container">
+
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="my-usms--wrapper usms">                        
+                    <div class="my-usms--wrapper usmsXXX">
                         <div class="container-fluid">
                             <div class="usms-container my-usms--wrapper">
                                 <button id="toggleEligible" style="color:red;">Toggle Eligibility</button>
@@ -109,11 +113,15 @@
                             </div>
                         </div>
                     </div>
+                    
                 </div>
+
             </main>
             <sergey-import src="foundation/footer" />
         </div>
+
         <sergey-import src="site/footer_scripts" />
+        
         <script>
             $(document).ready(function() {
                 $("#toggleEligible").click(function() {
