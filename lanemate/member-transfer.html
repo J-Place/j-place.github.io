@@ -12,10 +12,7 @@
         <sergey-import src="site/head_css" />
         <link rel="stylesheet" href="/lanemate/css-components/my-account.css">
     </head>
-    <body>
-        <div class="loading" style="display: none;">
-            <img src="../img/loader.gif" alt="loading">
-        </div>
+    <body class="">
         <div id="main-container">
 
             <sergey-import src="foundation/site-header" />
@@ -48,7 +45,8 @@
                     #toggleEligible {
                         position: absolute;
                         left: 5px;
-                        top: -35px;
+                        top: 0;
+                        z-index: 99999;
                     }
                     .input-group.member-transfer-notes label.label-large {
                         font-size: 1.4rem;
@@ -64,7 +62,11 @@
                         }
                     }
                     @media (min-width: 576px) {
-                        .my-usms--wrapper .col-sm-4 {
+                        #toggleEligible {
+                            top: -35px;
+                        }
+
+                        /* .my-usms--wrapper .col-sm-4 {
                             flex: 0 0 auto;
                             width: 33.33333333%;
                         }
@@ -75,17 +77,18 @@
                         .my-usms--wrapper .col-sm-6 {
                             flex: 0 0 auto;
                             width: 50%;
-                        }
+                        } */
                         #toggleEligible {
                             top: 30px;
                             left: unset;
                             right: 50px;
+                            z-index: 99999;
                         }
                     }
                 </style>
 
-                <div class="section section-full p-t-10 p-mh-500 p-b-50">
-                    <div class="usms-container p-tb-10">                        
+                <div class="section section-full bg-gray p-b-50">
+                    <div class="usms-container">                        
                         <div class="row">
                             <div class="col-xs-12">
                                 <header>
@@ -102,16 +105,16 @@
                                     </div>
                                 </header>
                                 <div class="renew__form-container">
-
+                                    <!-- <div class="my-usms--wrapper usmsXXX">
+                                        <div class="container-fluid">
+                                            <div class="usms-container my-usms--wrapper"> -->
+                                                <button id="toggleEligible" style="color:red;">Toggle Eligibility</button>
+                                                <sergey-import src="lanemate/content/member-transfer-form" />
+                                            <!-- </div>
+                                        </div>
+                                    </div>                 
+                                    -->
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="my-usms--wrapper usmsXXX">
-                        <div class="container-fluid">
-                            <div class="usms-container my-usms--wrapper">
-                                <button id="toggleEligible" style="color:red;">Toggle Eligibility</button>
-                                <sergey-import src="lanemate/content/member-transfer-form" />
                             </div>
                         </div>
                     </div>
