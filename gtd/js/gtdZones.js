@@ -5,7 +5,9 @@ function hideLoadingSpinner() {
 hideLoadingSpinner();  
 
 var getParticipants = $.ajax({
-    url: "https://j-place.github.io/zones.json",
+    // url: "https://j-place.github.io/zones.json",
+    // url: "/apis/v1/gtd/zlc-participation?zone=' + zone + '&lmsc=' + lmsc + '&club=' + club + '&year=' + pageYear",
+    url: "https://www.usms.org/apis/v1/gtd/zlc-participation?zone=2&lmsc=14&club=SHARK&year=2022",
     type: "GET",
     success: function(response) {
       var data = JSON.parse(getParticipants.responseText);
