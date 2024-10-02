@@ -8,7 +8,7 @@ function hideLoadingSpinner() {
 }
 
 var getData = $.ajax({
-  url: "https://j-place.github.io/milestones.json",
+  url: "https://j-place.github.io/public/gtd/milestones.json",
   type: "GET",
   success: function (response) {
     var data = JSON.parse(getData.responseText);

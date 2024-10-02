@@ -29,7 +29,8 @@ function hideLoadingSpinner() {
 }
 
 var getData = $.ajax({
-  url: "https://j-place.github.io/participants.json",
+  // url: "https://j-place.github.io/participants.json",
+  url: "https://www.usms.org/apis/v1/gtd/participants?year=2021",
   type: "GET",
   success: function (response) {
     var data = JSON.parse(getData.responseText);
