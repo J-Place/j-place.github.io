@@ -1,0 +1,295 @@
+#loadingWrapper.hide {
+    display: none;
+}
+#loadingOverlay {
+    background-color: rgba(1, 1, 1, .25);
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 999999;
+}
+#loadingSpinner {
+    top: 50%;
+    position: absolute;
+    left: 50%;
+    vertical-align: top;
+}
+.gtd-participants,
+.gtd-milestones,
+.gtd-zones {
+    width: 100%;
+    margin: 3rem auto;
+    position: relative;
+}
+.usms-container .gtd-participants .pagination {
+    display: block;
+    margin: 4rem auto 1rem;
+}
+.usms-container .gtd-participants .pagination li {
+    margin: 0 0.5rem;
+    padding: 0;
+    background-color: #0068AD;
+    border: 2px solid #0068ad;
+    color: #FFF;
+    line-height: 3rem;
+    height: 3.4rem;
+    min-width: 3.4rem;
+    border-radius: 4px;
+    font-size: 1.4rem;
+}
+.usms-container .gtd-participants .pagination li.active {
+    background-color: #fff;
+    border: 2px solid #0068ad;
+    color: #0068ad;
+}
+.usms-container .gtd-participants .pagination li a {
+    color: #FFF;
+    text-decoration: none;
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 100%;
+}
+.usms-container .gtd-participants .pagination li.active a {
+    color: #0068AD;
+}
+#paginationInfo {
+    display: inline-block;
+}
+/* #paginationInfo {
+    position: absolute;
+    left: 250px;
+    bottom: -48px;
+} */
+/* .summary-container, */
+/* .search__summary, */
+/* .filters__summary, */
+.summary-container > div {
+    margin: 0;
+    font-weight: normal;
+    display: inline-block;
+}
+.summary-container .filters__summary--wrapper {
+    display: block;
+}
+.summary-container .search__summary,
+.summary-container .filters__summary {
+    display: inline;
+}
+.summary-container .search__summary--item,
+.summary-container .filters__summary--item {
+    font-size: 19px;
+    margin: 0 15px 5px 0;
+    display: inline-block;
+    cursor: pointer;
+    /* height: 25px; */
+}
+.summary-container .filters__count {
+    font-size: 13px;
+    font-weight: normal;
+    /* height: 15px; */
+    margin: 0 15px 5px 0;
+}
+.filters__summary--item--key {
+    font-size: 11px;
+    font-weight: normal;
+}
+/* #filterCount {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 0;
+} */
+.filters__summary--item--value {
+    font-size: 12px;
+    font-weight: bold;
+    border-bottom: 1px solid #CCC;
+    cursor: pointer;
+}
+.filters ul,
+.filters li {
+    display: inline-block;
+    font-size: 16px;
+    line-height: 20px;
+    margin: 0;
+    padding: 0;}
+.filters th {
+    padding: 15px 10px 25px;
+}
+thead.filters,
+div.filters {
+    padding: 15px 20px 20px;
+    background-color: #DDD;
+}
+.filters label {
+    display: block;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: normal;
+    margin: 10px 0 0;
+    height: 18px;
+    padding: 0;
+    overflow: hidden;
+}
+.filters ul {
+    list-style-type: none;
+    font-weight: normal;
+    padding: 0;
+}
+.filters li {
+    padding-left: 10px;
+}
+.filters .sorting th {
+    padding: 10px 10px 0;
+    background-color: #FFF;
+    position: relative;
+}
+.list tr {
+    vertical-align: middle;
+    height: 50px;
+    border-bottom: 1px solid #EEE;
+}
+.list td {
+    font-size: 16px;
+    padding: 0 10px;
+    line-height: 19px;
+}
+input.search {
+    width: 100%;
+    position: initial;
+    display: block;
+    height: 25px;
+    font-size: 12px;
+    font-weight: normal;
+    margin: 0;
+    padding: 0 0 0 5px;
+    border: 0 none;
+}
+.filters select {
+    width: 100%;
+    height: 25px;
+    font-size: 12px;
+    font-weight: normal;
+    margin: 0;
+    padding: 0 0 0 1rem;
+    background-color: #FFF;
+    border: 0 none;
+}
+.sorting {
+    vertical-align: bottom;
+}
+.controls tr {
+    vertical-align: middle;
+    height: 30px;
+}
+.controls th,
+.list td {
+    font-size: 16px;
+    line-height: 19px;
+    padding: 5px 10px;
+}
+.controls .sort-disabled,
+.controls .sort {
+    color: #1e3666;
+    font-size: 14px;
+    line-height: 14px;
+    text-decoration: none;
+    display: block;
+    margin: 5px 0;
+}
+.controls .sort:after {
+    opacity: 0.35;
+    content: 'arrow_drop_down';
+    margin: 0 0 0 -3px;
+    font-family: 'Material Icons';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 2.5rem;
+    position: relative;
+    top: 4px;
+    display: inline;
+    vertical-align: sub;
+    line-height: inherit;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'liga';
+}
+.controls .sort.asc:after {
+    opacity: 1;
+    content: 'arrow_drop_up';
+    top: 5px;
+}
+.controls .sort.desc:after {
+    opacity: 1;
+    content: 'arrow_drop_down';
+}
+tfoot li {
+    display: inline-block;
+    padding: 5px 0;
+}
+.sorting .miles,
+.list .miles {
+    text-align: right;
+    /* font-size: 18px; */
+}
+.sorting .miles {
+    padding-right: 0;
+}
+@media only screen and (min-width: 768px) {
+    .list tr {
+        height: 40px;
+    }
+    .list td {
+        font-size: 15px;
+    }
+    .summary-container {
+        position: relative;
+        top: initial;
+    }
+    .summary-container .filters__summary--wrapper {
+        display: inline-block;
+    }
+    .summary-container .search__summary--item,
+    .summary-container .filters__summary--item {
+        font-size: 15px;
+        margin-right: 14px;
+        display: inline-block;
+    }    
+    .summary-container .filters__count {
+        margin-bottom: 17px;
+    }
+    .filters .title {
+        display: block;
+        font-size: 18px;
+        font-weight: bold;
+        padding: 5px 0;
+        margin-bottom: 0;
+    }
+    .filters .title a {
+        font-size: 13px;
+        font-weight: normal;
+        margin-left: 4px;
+        padding-left: 8px;
+        text-decoration: underline;
+        border-left: 1px solid #BBB;
+    }
+    .filters label {
+        font-size: 12px;
+        line-height: 15px;
+        margin: 0 auto;
+    }
+    input.search {
+        margin-top: 2px;
+    }
+    select {
+        background-color: #F3F3F3;
+    }
+    .filters th {
+        padding: 15px 20px 0px;
+    }
+}
