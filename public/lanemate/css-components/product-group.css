@@ -41,6 +41,16 @@ body {
     position: relative;
 }
 
+.product-option > * {
+    padding-left: 3px !important;
+    padding-right: 3px !important;
+}
+
+.product-option.selected > * {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
 .product-option-select-btn {
     padding-bottom: 13rem;
 }
@@ -52,13 +62,15 @@ body {
 
 .product-option.selected {
     border: 3px solid #0068ad;
-    margin-top: -2px;
-    padding-bottom: 12.4rem;
-    margin-bottom: 1.8rem;
+    border-top: 0;
+    margin-top: 1px;
+    padding: 0 0 12.4rem;
 }
-.product-option.selected ul {
+
+/* .product-option.selected ul {
     padding: 0 2.7rem 0.75rem 3.3rem;
-}
+} */
+
 .product-option.selected .product-name {
     background-color: #0068ad;
 }
