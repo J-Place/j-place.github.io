@@ -4,25 +4,6 @@ function hideLoadingSpinner() {
 }
 hideLoadingSpinner();
 
-
-// function getEventResults() {
-//   // showLoadingOverlay();
-//   const xhr = new XMLHttpRequest();
-//   xhr.open('GET', 'https://test.usms.org/apis/v1/gtd/participants', true);
-//   xhr.setRequestHeader('Content-type', 'application/json;charset=UTF-8');
-//   xhr.onload = function () {
-//     if (xhr.status === 200) {
-//       const checkApi = JSON.parse(xhr.response);
-//       return;
-//     }
-//     console.log(checkApi);
-//     return null;
-//   };
-//   xhr.send();
-// }
-// getEventResults();
-
-
 function hideLoadingSpinner() {
   const loadingSpinner = document.getElementById('loadingWrapper');
   loadingSpinner.classList.add('hide');
@@ -59,27 +40,14 @@ var options = {
   page: 50,
   pagination: true,
   pagination: {
-    left: 1,
-    right: 1,
-    innerWindow: 2,
-    outerWindow: 2,
+    left: 3,
+    right: 0,
+    innerWindow: 0,
+    outerWindow: 0,
     paginationClass: "pagination",
   },
   valueNames: [ 'first', 'last', 'miles', 'sex', 'ageGroup', 'age', 'clubAbbr', 'lmsc', 'zone' ],
 };
-
-// function formatMiles(miles) {  
-//   miles = miles.toFixed(2);
-//   return miles;
-// }
-
-// function cleanData(dataLocal) {
-//   for (var i = 0; i < newData.length; i++) {
-//     newData[i].miles = formatMiles(dataLocal[i].miles);
-//   }
-// };
-// let newData = dataLocal; // Use local data object until api access is fixed
-// cleanData(dataLocal);
 
 let searchNameInput = document.getElementById('searchName');
 let searchAgeInput = document.getElementById('searchAge');
