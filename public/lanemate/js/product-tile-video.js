@@ -1,4 +1,5 @@
 console.log("load product-tile-video.js");
+
 $(document).ready(function() {
     $("#addVideoStrokeAnalysis").on('click', function(updateProductCardTotal) {
         addVideo(updateProductCardTotal);
@@ -6,6 +7,18 @@ $(document).ready(function() {
     $("#removeVideoStrokeAnalysis").on('click', function(updateProductCardTotal) {
         removeVideo(updateProductCardTotal);
     });
+
+
+
+
+
+
+
+
+
+
+
+
 });
 
 // var videoVal = 120;
@@ -26,7 +39,18 @@ var removeVideo = function() {
     $("#addVideoStrokeAnalysis").prop("disabled",true);
     $("#addVideoStrokeAnalysis").show();
     $("#removeVideoStrokeAnalysis").hide();
-    videoVal = 120;
+
+    
+    if (usmsPlusSelected.length === 1 ) {
+        videoVal = 0;
+        productCardTotal = productCardTotal - videoVal;
+    } else {
+        videoVal = 120;
+        productCardTotal = productCardTotal - videoVal;
+    }
+
+
+
     productCardTotal = productCardTotal - videoVal;
     removeLineItemVideo();
     updateProductCardTotal();
@@ -35,7 +59,8 @@ var removeVideo = function() {
 var renderLineItemVideo = function() {
     removeLineItemVideo();
     // videoVal = 120;
-    console.log("render Video line item");
+    // console.log("render Video line item");
+
     // var inputDonation = $("input[name='swimming-saves-lives']");
     // var lineItemCoachAlts = $('.payment-info__line-item--coach-alts');
     // var donationVal = inputDonation.val();

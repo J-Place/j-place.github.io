@@ -14,17 +14,17 @@ var updateTotalPayment = function() {
     var totalPaymentVal = productCardTotal + donationNum;
     var totalPaymentNum = Number(totalPaymentVal);
     $(".payment-info__line-item--total .payment-info__line-item--price").text('$ ' + totalPaymentNum + '.00')    
-    console.log(isVideoEligible);
+    // console.log(isVideoEligible);
     if (totalPaymentNum > 0) {
-        console.log("A");
+        // console.log("A");
         showPaymentInfo();
         enableSubmit();
     } else if (totalPaymentNum == 0 && isVideoEligible == true) {
-        console.log("B");
+        // console.log("B");
         hidePaymentInfo();
         enableSubmit();
     } else { 
-        console.log("C");
+        // console.log("C");
         hidePaymentInfo();
         disableSubmit();
     }

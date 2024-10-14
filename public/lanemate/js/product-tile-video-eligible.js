@@ -1,4 +1,5 @@
 console.log("load product-tile-video-eligible.js");
+
 $(document).ready(function() {
     $("#addVideoStrokeAnalysisEligible").on('click', function(updateProductCardTotal) {
         addVideoEligible(updateProductCardTotal);
@@ -6,7 +7,7 @@ $(document).ready(function() {
     $("#removeVideoStrokeAnalysisEligible").on('click', function(updateProductCardTotal) {
         removeVideoEligible(updateProductCardTotal);
     });
-
+    
     $("#addUsmsPlus").on('click', function() {
         $(".product-option_video-stroke-analysis").hide();
         $(".product-option_video-stroke-analysis-eligible").show();
@@ -56,8 +57,14 @@ var removeVideoEligible = function() {
     $("#addVideoStrokeAnalysisEligible").prop("disabled",true);
     $("#addVideoStrokeAnalysisEligible").show();
     $("#removeVideoStrokeAnalysisEligible").hide();
+    // if (videoEligibleVal === 120) {
+    //     console.log("TWETWE");
+    //     videoEligibleVal = 120;
+    // } else {
+    //     console.log("VDFVDFV");
+    //     videoEligibleVal = 0;
+    // }
     isVideoEligible = false;
-    videoEligibleVal = 0;
     productCardTotal = productCardTotal - videoEligibleVal;
     removeLineItemVideoEligible();
     updateProductCardTotal();

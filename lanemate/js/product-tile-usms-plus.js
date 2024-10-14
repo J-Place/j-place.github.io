@@ -1,4 +1,3 @@
-console.log("load product-tile-usms-plus.js");
 $(document).ready(function() {
     $("#addUsmsPlus").on('click', function(updateProductCardTotal) {
         addUsmsPlus(updateProductCardTotal);
@@ -10,14 +9,23 @@ $(document).ready(function() {
     });
 });
 
-// var usmsPlusVal = 179;
+// var usmsPlusSelected = $(".product-option.product-option_usms-plus.selected");
 
 var addUsmsPlus = function() {
     $(".product-option.product-option_usms-plus").toggleClass('selected');
     $("#addUsmsPlus").hide();
     $("#removeUsmsPlus").show();
     usmsPlusVal = 179;
-    productCardTotal = productCardTotal + usmsPlusVal;
+    if (videoSelected.length === 1) {
+        videoVal = 0;
+    } else {
+        videoVal = 120;
+        $("#addVideoStrokeAnalysis").show();
+        $("#removeVideoStrokeAnalysis").hide();
+        removeLineItemVideo();
+        removeLineItemVideoEligible();
+    }
+    productCardTotal = productCardTotal + usmsPlusVal - videoVal;
     renderLineItemUsmsPlus();
     updateProductCardTotal();
 }
