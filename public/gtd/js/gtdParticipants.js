@@ -40,10 +40,10 @@ var options = {
   page: 50,
   pagination: true,
   pagination: {
-    left: 3,
+    left: 0,
     right: 0,
-    innerWindow: 0,
-    outerWindow: 0,
+    innerWindow: 1,
+    outerWindow: 1,
     paginationClass: "pagination",
   },
   valueNames: [ 'first', 'last', 'miles', 'sex', 'ageGroup', 'age', 'clubAbbr', 'lmsc', 'zone' ],
