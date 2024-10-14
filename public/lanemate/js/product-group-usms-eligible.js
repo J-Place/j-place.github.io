@@ -23,11 +23,17 @@ var renderProductCardTotal = function() {
 var resetProductCardTotal = function() {
     $(".add-on-products .card__total--amount").text("$__.__");
 }
+
+var usmsPlusSelected = $(".product-option_usms-plus.selected");
+var videoSelected = $(".product-option_video-stroke-analysis.selected");
+var videoEligibleSelected = $(".product-option_video-stroke-analysis-eligible.selected");
+var coachAltsSelected = $(".product-option_coach-alts.selected");
+
 var updateProductCardTotal = function() {
-    var usmsPlusSelected = $(".product-option_usms-plus.selected");
-    var videoSelected = $(".product-option_video-stroke-analysis.selected");
-    var videoEligibleSelected = $(".product-option_video-stroke-analysis-eligible.selected");
-    var coachAltsSelected = $(".product-option_coach-alts.selected");
+    // var usmsPlusSelected = $(".product-option_usms-plus.selected");
+    // var videoSelected = $(".product-option_video-stroke-analysis.selected");
+    // var videoEligibleSelected = $(".product-option_video-stroke-analysis-eligible.selected");
+    // var coachAltsSelected = $(".product-option_coach-alts.selected");
 
     if (coachAltsSelected.length !== 1 && videoEligibleSelected.length !== 1) {
         console.log("if 1.0");

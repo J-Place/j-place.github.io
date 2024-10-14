@@ -41,7 +41,7 @@ var options = {
   left: 0,
   right: 0,
   pagination: {
-    innerWindow: 3,
+    innerWindow: 1,
     outerWindow: 1,
     paginationClass: "pagination",
   },

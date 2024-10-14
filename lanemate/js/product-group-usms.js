@@ -37,6 +37,11 @@ var lineItemVideoEligible = $('.payment-info__line-item--video-stroke-analysis-e
 var lineItemCoachAlts = $('.payment-info__line-item--coach-alts');
 var lineItemDonation = $('.payment-info__line-item--donation .payment-info__line-item--price');
 
+var usmsPlusSelected = $(".product-option_usms-plus.selected");
+var videoSelected = $(".product-option_video-stroke-analysis.selected");
+var videoEligibleSelected = $(".product-option_video-stroke-analysis-eligible.selected");
+var coachAltsSelected = $(".product-option_coach-alts.selected");
+
 var inputDonation = $("input[name='swimming-saves-lives']");
 var donationVal = inputDonation.val();
 var donationNum = parseInt(donationVal);

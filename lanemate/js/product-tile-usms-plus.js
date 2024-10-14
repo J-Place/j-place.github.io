@@ -9,21 +9,23 @@ $(document).ready(function() {
     });
 });
 
-// var usmsPlusSelected = $(".product-option.product-option_usms-plus.selected");
-
 var addUsmsPlus = function() {
     $(".product-option.product-option_usms-plus").toggleClass('selected');
     $("#addUsmsPlus").hide();
     $("#removeUsmsPlus").show();
     usmsPlusVal = 179;
-    if (videoSelected.length === 1) {
+    if (videoEligibleSelected.length === 0) {
         videoVal = 0;
+        // strokeSelectVal = 'Select a stroke';
+        alert('WDFWE');
     } else {
         videoVal = 120;
         $("#addVideoStrokeAnalysis").show();
         $("#removeVideoStrokeAnalysis").hide();
         removeLineItemVideo();
         removeLineItemVideoEligible();
+        // strokeSelectVal = 'Select a stroke';
+        alert('PPPPPPP');
     }
     productCardTotal = productCardTotal + usmsPlusVal - videoVal;
     renderLineItemUsmsPlus();
