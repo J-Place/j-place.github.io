@@ -1,7 +1,6 @@
 
 var gtdMilestones = null;
 
-
 function hideLoadingSpinner() {
   const loadingSpinner = document.getElementById('loadingWrapper');
   loadingSpinner.classList.add('hide');

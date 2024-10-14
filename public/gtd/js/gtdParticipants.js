@@ -105,7 +105,6 @@ function updateFilterSummary() {
   var filterCount = document.getElementById('filterCount');
   var filterSummary = document.getElementById('filterSummary');
   var paginationCount = document.getElementById('paginationCount');
-  // var paginationMilestone = document.getElementById('paginationMilestone');
 
   filterCount.innerHTML = '';
   filterSummary.innerHTML = '';
