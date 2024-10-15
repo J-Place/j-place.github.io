@@ -1,3 +1,5 @@
+console.log("load product-tile-usms-plus.js");
+
 $(document).ready(function() {
     $("#addUsmsPlus").on('click', function(updateProductCardTotal) {
         addUsmsPlus(updateProductCardTotal);
@@ -10,24 +12,17 @@ $(document).ready(function() {
 });
 
 var addUsmsPlus = function() {
+    // var usmsPlusSelected = $(".product-option_usms-plus.selected");
+    var videoSelected = $(".product-option_video-stroke-analysis.selected");
     $(".product-option.product-option_usms-plus").toggleClass('selected');
     $("#addUsmsPlus").hide();
     $("#removeUsmsPlus").show();
     usmsPlusVal = 179;
-    if (videoEligibleSelected.length === 0) {
-        videoVal = 0;
-        // strokeSelectVal = 'Select a stroke';
-        alert('WDFWE');
-    } else {
-        videoVal = 120;
-        $("#addVideoStrokeAnalysis").show();
-        $("#removeVideoStrokeAnalysis").hide();
-        removeLineItemVideo();
-        removeLineItemVideoEligible();
-        // strokeSelectVal = 'Select a stroke';
-        alert('PPPPPPP');
+    productCardTotal = productCardTotal + usmsPlusVal;
+    if (videoSelected.length === 1) {
+        productCardTotal = productCardTotal - videoVal;
     }
-    productCardTotal = productCardTotal + usmsPlusVal - videoVal;
+    isVideoEligible = true;
     renderLineItemUsmsPlus();
     updateProductCardTotal();
 }
@@ -37,6 +32,7 @@ var removeUsmsPlus = function() {
     $("#removeUsmsPlus").hide();
     usmsPlusVal = 179;
     productCardTotal = productCardTotal - usmsPlusVal;
+    isVideoEligible = false;
     removeLineItemUsmsPlus();
     updateProductCardTotal();
 }

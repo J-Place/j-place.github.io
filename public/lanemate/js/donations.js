@@ -1,3 +1,5 @@
+console.log("load donations.js");
+
 $(document).ready(function() {
 
     // Handle Button Values //////////////////////////////////////////////////////////////

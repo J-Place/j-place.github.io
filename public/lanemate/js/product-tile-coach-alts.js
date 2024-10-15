@@ -1,3 +1,5 @@
+console.log("load product-tile-coach-alts.js");
+
 $(document).ready(function() {
     $("#addCoachAlts").on('click', function(updateProductCardTotal) {
         addCoachAlts(updateProductCardTotal);

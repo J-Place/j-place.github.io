@@ -16,6 +16,7 @@ $(document).ready(function() {
         // Set the height
         $('.product-option').height(tallestHeight);
     }
+    updateProductCardTotal();
 });
 
 var usmsPlusVal = 0;

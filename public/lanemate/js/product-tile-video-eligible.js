@@ -15,7 +15,7 @@ $(document).ready(function() {
         $("#addVideoStrokeAnalysisEligible").prop("disabled",true);
         $("#removeVideoStrokeAnalysisEligible").prop("disabled",true);
         $(".product-option.product-option_video-stroke-analysis").removeClass('selected');
-        removeVideoEligible();
+        // removeVideoEligible();
     });
     $("#removeUsmsPlus").on('click', function() {
         $(".product-option_video-stroke-analysis-eligible").hide();
@@ -26,8 +26,7 @@ $(document).ready(function() {
         if (coachAltsSelected.length === 1 ) {
             coachAltsVal = 30;
             productCardTotal = productCardTotal - coachAltsVal;
-        } else {
-        }
+        } 
         removeVideoEligible();
         removeLineItemVideoEligible();
     });
@@ -37,14 +36,13 @@ var videoEligibleVal = 0;
 // var videoEligibleSelected =  $(".product-option_video-stroke-analysis-eligible.selected");
 // var videoEligible = false;
 // var videoEligibleVal = 0;
-var isVideoEligible = false;
+// var isVideoEligible = false;
 
 var addVideoEligible = function() {
     $(".product-option.product-option_video-stroke-analysis-eligible").addClass('selected');
     $("#addVideoStrokeAnalysisEligible").prop("disabled",true);
     $("#addVideoStrokeAnalysisEligible").hide();
     $("#removeVideoStrokeAnalysisEligible").show();
-    isVideoEligible = true;
     videoEligibleVal = 0;
     productCardTotal = productCardTotal + videoEligibleVal;
     renderLineItemVideoEligible();
@@ -57,14 +55,7 @@ var removeVideoEligible = function() {
     $("#addVideoStrokeAnalysisEligible").prop("disabled",true);
     $("#addVideoStrokeAnalysisEligible").show();
     $("#removeVideoStrokeAnalysisEligible").hide();
-    // if (videoEligibleVal === 120) {
-    //     console.log("TWETWE");
-    //     videoEligibleVal = 120;
-    // } else {
-    //     console.log("VDFVDFV");
-    //     videoEligibleVal = 0;
-    // }
-    isVideoEligible = false;
+    videoEligibleVal = 0;
     productCardTotal = productCardTotal - videoEligibleVal;
     removeLineItemVideoEligible();
     updateProductCardTotal();

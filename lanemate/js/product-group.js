@@ -1,3 +1,5 @@
+console.log("load product-group.js");
+
 $(document).ready(function() {
     console.log("load product-group.js");
     const mobile = window.matchMedia("screen and (max-width:1199px)").matches;

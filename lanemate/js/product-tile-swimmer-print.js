@@ -1,3 +1,5 @@
+console.log("load product-tile-swimmer-print.js");
+
 $(document).ready(function() {
     $("#addSwimmerMagPrint").on('click', function(updateProductCardTotal) {
         addSwimmerMagPrint(updateProductCardTotal);

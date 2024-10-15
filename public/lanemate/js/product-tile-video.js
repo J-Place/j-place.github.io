@@ -8,71 +8,62 @@ $(document).ready(function() {
         removeVideo(updateProductCardTotal);
     });
 
+    // $("#addUsmsPlus").on('click', function() {
+    //     $(".product-option_video-stroke-analysis").hide();
+    //     $(".product-option_video-stroke-analysis-eligible").show();
+    //     $("#strokeSelectEligible").val('Select a stroke').change();
+    //     $("#addVideoStrokeAnalysisEligible").prop("disabled",true);
+    //     $("#removeVideoStrokeAnalysisEligible").prop("disabled",true);
+    //     $(".product-option.product-option_video-stroke-analysis").removeClass('selected');
+    //     // removeVideo();
+    // });
 
-
-
-
-
-
-
-
-
-
+    $("#removeUsmsPlus").on('click', function() {
+        $(".product-option_video-stroke-analysis-eligible").hide();
+        $(".product-option_video-stroke-analysis").show();
+        $("#addVideoStrokeAnalysisEligible").prop("disabled",false);
+        $("#removeVideoStrokeAnalysisEligible").prop("disabled",false);
+        $("#addVideoStrokeAnalysis").show();
+        $("#removeVideoStrokeAnalysis").hide();
+        $("#strokeSelect").val('Select a stroke').change();
+        // removeVideo();
+        removeLineItemVideo();
+    });
 
 });
-
-// var videoVal = 120;
 
 var addVideo = function() {
     $(".product-option.product-option_video-stroke-analysis").addClass('selected');
     $("#addVideoStrokeAnalysis").hide();
     $("#removeVideoStrokeAnalysis").show();
-    videoVal = 120;
+    if (usmsPlusSelected.length === 0 && videoSelected.length === 0 ) {
+        videoVal = 120;
+    } 
+    else if (usmsPlusSelected.length === 0 && videoSelected.length === 1) {
+        videoVal = 0;
+    }
     productCardTotal = productCardTotal + videoVal;
     renderLineItemVideo();
     updateProductCardTotal();
 }
 
 var removeVideo = function() {
+    var usmsPlusSelected = $(".product-option_usms-plus.selected");
     $(".product-option.product-option_video-stroke-analysis").removeClass('selected');
     $("#strokeSelect").val('Select a stroke').change();
     $("#addVideoStrokeAnalysis").prop("disabled",true);
     $("#addVideoStrokeAnalysis").show();
     $("#removeVideoStrokeAnalysis").hide();
-
-    
-    if (usmsPlusSelected.length === 1 ) {
-        videoVal = 0;
-        productCardTotal = productCardTotal - videoVal;
-    } else {
-        videoVal = 120;
-        productCardTotal = productCardTotal - videoVal;
-    }
-
-
-
     productCardTotal = productCardTotal - videoVal;
+    if (usmsPlusSelected.length === 1) {
+        videoVal = 120;
+    } 
     removeLineItemVideo();
     updateProductCardTotal();
 }
 
 var renderLineItemVideo = function() {
     removeLineItemVideo();
-    // videoVal = 120;
-    // console.log("render Video line item");
-
-    // var inputDonation = $("input[name='swimming-saves-lives']");
-    // var lineItemCoachAlts = $('.payment-info__line-item--coach-alts');
-    // var donationVal = inputDonation.val();
-    // var donationNum = parseInt(donationVal);
-    // if (lineItemCoachAlts.length === 1 ) {
-    //     $(".payment-info__line-item--summary").find('.payment-info__line-item--coach-alts').prepend('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
-    // } else if (donationNum == 0 ) {
-    //     $(".payment-info__line-item--summary").first().append('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
-    // } else {
-    //     $(".payment-info__line-item--summary").find('.payment-info__line-item--donation').prepend('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
-    // }
-    // $(".payment-info__line-item--summary").first().append('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
     $(".payment-info__line-item--summary").last().append('<p class="payment-info__line-item payment-info__line-item--video-stroke-analysis">Video Stroke Analysis: <span class="payment-info__line-item--price"></span></p>');
     $(".payment-info__line-item--video-stroke-analysis .payment-info__line-item--price").text('$ ' + videoVal + '.00');
 }
