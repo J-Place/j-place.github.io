@@ -28,7 +28,6 @@ $("#confirmPrivateInfoModal").on( "click", function() {
 });
 
 var inputTextArea = $(".my-account__container .input-group textarea");
-// var inputCheckbox = $(".my-account__container .checkbox-group:not('mail-text') .checkbox-label");
 var labelSwimmer = $(".my-account__container .swimmer label");
 var inputSwimmer = $(".my-account__container .swimmer select");
 var inputSelect = $(".my-account__container .form-group select");
