@@ -8,7 +8,7 @@ $(document).ready(function() {
         removeVideo(updateProductCardTotal);
     });
 
-    // $("#addUsmsPlus").on('click', function() {
+    $("#addUsmsPlus").on('click', function() {
     //     $(".product-option_video-stroke-analysis").hide();
     //     $(".product-option_video-stroke-analysis-eligible").show();
     //     $("#strokeSelectEligible").val('Select a stroke').change();
@@ -16,7 +16,8 @@ $(document).ready(function() {
     //     $("#removeVideoStrokeAnalysisEligible").prop("disabled",true);
     //     $(".product-option.product-option_video-stroke-analysis").removeClass('selected');
     //     // removeVideo();
-    // });
+        removeLineItemVideo();
+    });
 
     $("#removeUsmsPlus").on('click', function() {
         $(".product-option_video-stroke-analysis-eligible").hide();
@@ -26,8 +27,9 @@ $(document).ready(function() {
         $("#addVideoStrokeAnalysis").show();
         $("#removeVideoStrokeAnalysis").hide();
         $("#strokeSelect").val('Select a stroke').change();
-        // removeVideo();
+        removeVideoEligible();
         removeLineItemVideo();
+        removeLineItemVideoEligible();
     });
 
 });
