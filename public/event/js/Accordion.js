@@ -10,7 +10,7 @@ $('#accordion .collapse').on('show.bs.collapse', (e) => {
   console.log("On collapse ...");
   const currentSection = e.target;
   setTimeout(() => {
-    window.scroll(0, FindPos(e.target.parentNode));
+    // window.scroll(0, FindPos(e.target.parentNode));
   }, 450);
 
   setSectionInputStatus(currentSection, false);
@@ -22,10 +22,10 @@ $('#accordion .collapse').on('show.bs.collapse', (e) => {
     case "location-information__content":
     case "entry-information__content":
     case "accept-submit__content":
-      currentSectionState = saveSectionState(currentSection);
-      break;
+    currentSectionState = saveSectionState(currentSection);
+    break;
     default:
-      break;
+    break;
   }
   const actives = $('#accordion').find('.in, .collapsing');
   actives.each((index, element) => {

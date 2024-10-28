@@ -1,6 +1,25 @@
+:root {
+    --bs-btn-active-color: #FFF;
+    /* --bs-btn-active-bg: inherit; */
+    /* --bs-btn-active-border-color: inherit; */
+}
+
+.form__container select.form-control {
+    background-image: url(https://usms-cdn.azureedge.net/-/media/usms/developers/Images/MyUSMS/icon-arrow-down);
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+    border-radius: 5px 5px 5px 5px !important;
+    height: 4.6rem;
+    padding: 0;
+    color: #656565;
+    background-color: #f4f4f4;
+}
+
+
 .add-new-inputs {
     padding: 2rem;
-    background-color: #f4f4f4;
+    /* background-color: #f4f4f4; */
 }
 
 .form__container .club-edit .help-block.has-error {
@@ -12,11 +31,15 @@
 }
 
 .input-group select {
-    color: #CCC !important;
+    color: #CCC;
 }
 
 .input-group select.has-success {
     color: #626262 !important;
+}
+
+.club-edit .event-info-image.input-group {
+    display: table;
 }
 
 .event-info-classification label,
@@ -24,7 +47,8 @@
 .event-info-lmsc label,
 .input-group label,
 .form-group label {
-    font-size: 12.5px;
+    /* font-size: 12.5px; */
+    font-size: 1.4rem;
     font-weight: bold;
 }
 
@@ -54,9 +78,9 @@ label.radio-label {
     margin-bottom: 1.5rem;
 }
 
-.event-info-image > label {
+/* .event-info-image > label {
     font-weight: bold;
-}
+} */
 
 .event-info-image .upload-box label {
     max-width: 170px;
@@ -74,7 +98,7 @@ label.radio-label {
     resize: none;
 }
 
-/* Section 3 - Contact Info Event Director */
+/********************************************************************** Section 3 - Contact Info Event Director */
 #contact-info .radio-label {
     margin-bottom: 0;
     padding-left: 30px;
@@ -102,8 +126,42 @@ label.radio-label {
     padding: 0;
 }
 
+.row.contact-info__host-type {
+    margin-top: 2rem;
+    padding-top: 4rem;
+    border-top: 1px solid #CCC;
+    max-width: 100%;
+}
+
+.contact-information__event-director--list .list-item {
+    display: none;
+}
+
 .usms-container .event-list__container .button-row__footer {
     margin: 2rem auto;
+}
+
+.form-group.contact-info__event-director-other--add-new {
+    margin-bottom: 3rem;
+}
+.list-item {
+    /* margin-top: 2rem; */
+}
+
+.contact-info__event-director-type-form {
+    margin-bottom: 3rem;
+}
+
+.add-new-inputs {
+    background-color: #f4f4f4;
+    transition: all 0.25s ease;
+    max-width: 500px;
+    margin-bottom: 4rem;
+}
+
+.contact-info__host-type-lmsc--container,
+.contact-info__host-type-club--container {
+    display: none;
 }
 
 .event-list__container h3 {

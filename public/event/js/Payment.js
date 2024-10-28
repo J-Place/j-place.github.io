@@ -115,7 +115,7 @@ function getClubPricing() {
   const xhr = new XMLHttpRequest();
   const formData = new FormData();
 
-  const lmsc = document.querySelector('select[name="SelectLmsc"]').value;
+  const lmsc = document.querySelector('select[name="SelectEventLmsc"]').value;
   if (!lmsc) {
     return;
   }
@@ -126,24 +126,24 @@ function getClubPricing() {
     formData.append('IsWog', false);
   }
 
-  xhr.open('POST', '/apis/v1/clubweb/getpricing', true);
-  xhr.withCredentials = true;
-  xhr.onload = function () {
-    if (xhr.status === 200) {
-      const response = JSON.parse(xhr.response);
-      if (!response.error) {
-        const usmsCost = Number(response.data.UsmsCost);
-        const lmscCost = Number(response.data.LmscCost);
-        const total = usmsCost + lmscCost;
-        document.querySelector('.section-payment .section-payment__usms-cost').innerHTML = `$${total.toFixed(2)}`;
-      } else {
-        showPaymentError(response.error);
-      }
-    } else {
-      showPaymentError('Error updating pricing');
-    }
-  };
-  xhr.send(formData);
+  // xhr.open('POST', '/apis/v1/clubweb/getpricing', true);
+  // xhr.withCredentials = true;
+  // xhr.onload = function () {
+  //   if (xhr.status === 200) {
+  //     const response = JSON.parse(xhr.response);
+  //     if (!response.error) {
+  //       const usmsCost = Number(response.data.UsmsCost);
+  //       const lmscCost = Number(response.data.LmscCost);
+  //       const total = usmsCost + lmscCost;
+  //       document.querySelector('.section-payment .section-payment__usms-cost').innerHTML = `$${total.toFixed(2)}`;
+  //     } else {
+  //       showPaymentError(response.error);
+  //     }
+  //   } else {
+  //     showPaymentError('Error updating pricing ...');
+  //   }
+  // };
+  // xhr.send(formData);
 }
 
 function responseHandler(response) {
@@ -316,7 +316,7 @@ function submitCreditCard(e) {
 
 (function () {
   // $('[data-toggle="tooltip"]').tooltip();
-  $('input[name="expiration"]').mask('09/09');
+  // $('input[name="expiration"]').mask('09/09');
   setClubExpYear();
   if (document.querySelector('input[name="isWog"]')) {
     getClubPricing();

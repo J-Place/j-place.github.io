@@ -32,15 +32,15 @@ function getContact() {
     if (listContainer) {
         const contactItems = listContainer.querySelectorAll('.list-item');
         if (contactItems) {
-        for (let i = 0; i < contactItems.length; i += 1) {
-            contact = {
-            firstName: contactItems[i].querySelector('.contact-name').innerHTML.split(' ')[0].trim(),
-            lastName: contactItems[i].querySelector('.contact-name').innerHTML.split(' ')[1].trim(),
-            email: contactItems[i].querySelector('.contact-email').innerHTML,
-            phone: contactItems[i].querySelector('.contact-phone').innerHTML,
-            city: contactItems[i].querySelector('.contact-location') ? contactItems[i].querySelector('.contact-location').innerHTML.split(',')[0] : '',
-            state: contactItems[i].querySelector('.contact-location') ? contactItems[i].querySelector('.contact-location').innerHTML.split(',')[1].trim() : '',
-            swimmerId: contactItems[i].querySelector('.contact-id__value') ? contactItems[i].querySelector('.contact-id__value').innerHTML : '',
+          for (let i = 0; i < contactItems.length; i += 1) {
+              contact = {
+              firstName: contactItems[i].querySelector('.contact-name').innerHTML.split(' ')[0].trim(),
+              lastName: contactItems[i].querySelector('.contact-name').innerHTML.split(' ')[1].trim(),
+              email: contactItems[i].querySelector('.contact-email').innerHTML,
+              phone: contactItems[i].querySelector('.contact-phone').innerHTML,
+              city: contactItems[i].querySelector('.contact-location') ? contactItems[i].querySelector('.contact-location').innerHTML.split(',')[0] : '',
+              state: contactItems[i].querySelector('.contact-location') ? contactItems[i].querySelector('.contact-location').innerHTML.split(',')[1].trim() : '',
+              swimmerId: contactItems[i].querySelector('.contact-id__value') ? contactItems[i].querySelector('.contact-id__value').innerHTML : '',
             };
         }
     } else {
