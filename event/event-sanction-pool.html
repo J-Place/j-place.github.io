@@ -11,9 +11,13 @@
          <sergey-import src="site/head_js" />
          <sergey-import src="site/head_css" />
 
+         <link rel="stylesheet" href="https://test.usms.org/styles/registration.min.css">
+         <link rel="stylesheet" href="https://www.usms.org/styles/Club/club2.min.css">
+
          <link rel="stylesheet" href="./css/date-picker.css">
          <link rel="stylesheet" href="./css/convert-this-from-club.css">
          <link rel="stylesheet" href="./css/event-sanction.css">
+         <link rel="stylesheet" href="./css/event-mockup-ignore.css">
       </head>
       <body>
          <div id="main-container">
@@ -57,7 +61,7 @@
                               <div class="loading" style="display: none;">
                                  <img src="../img/loader.gif" alt="loading">
                              </div>
-                              <div class="club-edit" id="accordion">
+                              <div class="club-edit event-edit" id="accordion">
 
 
 
@@ -79,8 +83,8 @@
                                        <h3 class="section__header" data-target="#event-type__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-type__content">
                                           <span class="section__number">1</span>Event Type
                                        </h3>
-                                       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button" onclick=""></button></span>
-                                       <div class="section__content collapse in" id="event-type__content" data-parent="#accordion">
+                                       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
+                                       <div class="section__content collapse" id="event-type__content" data-parent="#accordion">
                                           <div class="row">
                                              <div class="col-sm-9">
                                                 <div class="input-group event-type">
@@ -125,8 +129,8 @@
                                        <h3 class="section__header" data-target="#event-info__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-info__content">
                                           <span class="section__number">2</span>Event Information
                                        </h3>
-                                       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button" onclick=""></button></span>
-                                       <div class="section__content collapse in" id="event-info__content" data-parent="#accordion">
+                                       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
+                                       <div class="section__content collapse" id="event-info__content" data-parent="#accordion">
                                           <div class="row">
                                              <div class="col-xs-12 col-sm-8 col-md-5">
                                                 <div class="input-group event-info-classification required">
@@ -134,7 +138,7 @@
                                                       Event Classification
                                                       <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="A USMS Sanction requires that every participant is a USMS member. A USMS Recognition allows for some participants to not be a USMS member, but still allows for a USMS member's results to count as an official time."></span>
                                                    </label>
-                                                   <select name="SelectEventClass" class="form-control" id="selectEventClass" onchange="validateField(this)" required="True">                                                            
+                                                   <select name="SelectEventClass" class="form-control" id="selectEventClass" required="True">                                                            
                                                       <option value="{Sitecore ID}" disabled selected>Choose an Event Classification</option>
                                                       <option value="{Sitecore ID}">Sanctioned</option>
                                                       <option value="{Sitecore ID}">Recognized</option>
@@ -171,7 +175,7 @@
                                                    <label for="SelectEventCourse">
                                                       Event Course
                                                    </label>
-                                                   <select name="SelectEventCourse" class="form-control" id="selectEventCourse" onchange="validateField(this)" required="True">                                                            
+                                                   <select name="SelectEventCourse" class="form-control" id="selectEventCourse" required="True">                                                            
                                                       <option value="{Sitecore ID}" disabled selected>Select an Event Course</option>
                                                       <option value="{Sitecore ID}">Short Course Yards</option>
                                                       <option value="{Sitecore ID}">Short Course Meters</option>
@@ -231,7 +235,7 @@
                                                       LMSC
                                                       <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Select the LMSC where the event is taking place."></span>
                                                    </label>
-                                                   <select name="SelectEventLmsc" class="form-control" id="selectEventLmsc" onchange="validateField(this)" required="True">                                                            
+                                                   <select name="SelectEventLmsc" class="form-control" id="selectEventLmsc" required="True">                                                            
                                                       <option value="{Sitecore ID}" disabled selected>Select an LMSC</option>
                                                       <option value="{Sitecore ID}">LMSC Name</option>
                                                       <option value="{Sitecore ID}">LMSC Name</option>
@@ -281,7 +285,7 @@
                                                          <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="If it is an annual event, use the same name each year. Make sure you have selected the event year as well. Your application will not be approved if you use the word Olympic and/or Paralympic."></span>
                                                          <span class="caption"></span>
                                                       </label>
-                                                      <input type="email" class="form-control" onblur="handleInputBlur(this)" name="eventInfoName" id="eventInfoName" value="">
+                                                      <input type="email" class="form-control" name="eventInfoName" id="eventInfoName" value="">
                                                       <span class="help-block help-block--eventInfoName">Please enter the event name</span>
                                                    </div>
                                              </div>
@@ -294,7 +298,7 @@
                                                          <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="This will be displayed to the public and help sell someone on participating in the event. Be thorough and be sure to include…. Your application will not be approved if you use the word Olympic and/or Paralympic."></span>
                                                          <span class="caption"></span>
                                                       </label>
-                                                      <textarea class="form-control" onblur="handleInputBlur(this)" rows="3" cols="50" name="eventInfoDetails" id="eventInfoDetails" required=""></textarea>
+                                                      <textarea class="form-control" rows="3" cols="50" name="eventInfoDetails" id="eventInfoDetails" required=""></textarea>
                                                       <span class="help-block help-block--eventInfoDetails">Please enter the event details</span>
                                                    </div>
                                              </div>
@@ -328,7 +332,7 @@
                                           </div>
                                           <div class="row">
                                                 <div class="section__controls">
-                                                   <button class="btn save-section" id="saveEventInfo" type="button" onclick="">Save &amp; Continue</button>
+                                                   <button class="btn save-section" id="saveEventInfo" type="button">Save &amp; Continue</button>
                                                 </div>
                                           </div>
                                        </div>
@@ -343,6 +347,7 @@
                                     const awaitingContactText = 'Awaiting Contact';
                                     const currentContactText = 'Current Contact';
                                 </script>
+
 
                                  <form id="form-contact-info">
                                        <div class="section section-contact-info" id="contact-info">
@@ -360,14 +365,15 @@
                                                      </div>
                                                      <div class="modal-footer">
                                                          <!-- <button type="button" class="btn btn-default" onclick="handleContactConfirmation(this)">@Model.Labels.OkButton</button> -->
-                                                         <button type="button" class="btn btn-default" onclick="handleContactConfirmation(this)">Okay</button>
+                                                         <button type="button" class="btn btn-default">Okay</button>
                                                      </div>
                                                  </div>
                                              </div>
-                                         </div>                                     
+                                         </div>
                                           <h3 class="section__header" data-target="#contact-info__content" data-toggle="collapse" aria-expanded="false" aria-controls="contact-info__content">
                                              <span class="section__number">3</span>Contact Information
                                           </h3>
+
 
                                           <!-- <input type="hidden" id="currentEventDirectorFirstName" value="">
                                           <input type="hidden" id="currentEventDirectorLastName" value="">
@@ -389,15 +395,6 @@
                                           <input type="hidden" id="currentEventDirectorValidated" value="true">
                                           <input type="hidden" id="currentEventDirectorIsMember" value="true">
 
-                                          <input type="hidden" id="newEventDirectorFirstName" value="Jay">
-                                          <input type="hidden" id="newEventDirectorLastName" value="Place">
-                                          <input type="hidden" id="newEventDirectorEmail" value="jplace@usmastersswimming.org">
-                                          <input type="hidden" id="newEventDirectorPhone" value="941-266-1909">
-                                          <input type="hidden" id="newEventDirectorSwimmerId" value="KT2JH">
-                                          <input type="hidden" id="newEventDirectorCity" value="Sarasota">
-                                          <input type="hidden" id="newEventDirectorState" value="FL">
-                                          <input type="hidden" id="newEventDirectorValidated" value="true">
-                                          <input type="hidden" id="newEventDirectorIsMember" value="true">
 
                                           <!-- <input type="hidden" id="newEventDirectorFirstName" value="">
                                           <input type="hidden" id="newEventDirectorLastName" value="">
@@ -408,6 +405,16 @@
                                           <input type="hidden" id="newEventDirectorState" value="">
                                           <input type="hidden" id="newEventDirectorValidated" value="">
                                           <input type="hidden" id="newEventDirectorIsMember" value=""> -->
+
+                                          <input type="hidden" id="newEventDirectorFirstName" value="Kyle">
+                                          <input type="hidden" id="newEventDirectorLastName" value="Deery">
+                                          <input type="hidden" id="newEventDirectorEmail" value="kdeery@usmastersswimming.org">
+                                          <input type="hidden" id="newEventDirectorPhone" value="941-123-1234">
+                                          <input type="hidden" id="newEventDirectorSwimmerId" value="GAT0R">
+                                          <input type="hidden" id="newEventDirectorCity" value="Sarasota">
+                                          <input type="hidden" id="newEventDirectorState" value="FL">
+                                          <input type="hidden" id="newEventDirectorValidated" value="true">
+                                          <input type="hidden" id="newEventDirectorIsMember" value="true">
 
 
                                           <!-- <input type="hidden" id="currentFirstName" value="">
@@ -428,9 +435,11 @@
                                           <input type="hidden" id="contactCity" value="">
                                           <input type="hidden" id="contactState" value="">
                                           <input type="hidden" id="contactIsMember" value="">
-                                          <input type="hidden" id="contactValidated" value=""> -->
+                                          <input type="hidden" id="contactValidated" value="">
+                                          -->
 
-                                          <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button" onclick=""></button></span>
+
+                                          <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
                                           
 
                                     <!-- Event Director -->
@@ -464,7 +473,8 @@
                                                    </div>
                                                 </div>
                                              </div>
-                                             <div class="form-group contact-info__event-director-other--container" style="display: block; visibility: visible;">
+                                             <div class="form-group contact-info__event-director-other--container">
+                                             <!-- <div class="form-group contact-info__event-director-other--container" style="display: none; visibility: none;"> -->
                                                 <div class="section__header--summary"><p>The event director must have a My USMS account. If they are not in the dropdown list, they will need to create an account. You can get the account creation started by clicking 'Add New' below. Once the form is completed, the new event director will receive an email to finish the process and you will see them listed here as 'Account Pending'. <em>You will not be able to register/update your event until the new contact has completed the account set up</em>. After you have registered/updated your event and then it is approved by USMS, you will receive an email notifying you the new contact is done and your permissions are removed. </p></div>
                                                 <div class="row">
                                                       <div class="col-sm-4">
@@ -478,37 +488,40 @@
                                                 <div class="row">
                                                       <div class="col-sm-12 col-md-8">
                                                          <div class="input-group lookup-confirm">
-                                                            <button class="btn btn-small save-as-contact" type="button" id="addAsEventDirector" onclick="setEventDirectorTitle(event)"><span class="lookup-confirm--name">First Last</span></button>
+                                                            <button class="btn btn-small save-as-contact" type="button" id="addAsEventDirector">
+                                                               <span class="lookup-confirm--name">Kyle Deery</span>
+                                                            </button>
                                                          </div>
                                                       </div>
                                                 </div>
                                              </div>
-                                             <div class="form-group contact-info__event-director-other--add-new" style="display: block;">
+                                             <div class="form-group contact-info__event-director-other--add-new">
                                                 <div class="row">
                                                    <div class="col-sm-12 col-md-8">
                                                       <p>Or Add a New Event Director</p>
                                                       <div>
-                                                         <input class="btn btn-small btn-outline" id="addNewEventDirector" name="addNewEventDirector" type="button" value="Add New" onclick="showNewEventDirectorInputs()">
+                                                         <input class="btn btn-small btn-outline" id="addNewEventDirector" name="addNewEventDirector" type="button" value="Add New">
                                                       </div>
                                                    </div>
                                                 </div>
                                              </div>
-                                             <div class="form-group contact-info__event-director-current--container" style="display: none; visibility: hidden;">
+                                             <div class="form-group contact-info__event-director-current--container">
                                                 <div class="row">
                                                     <div class="col-sm-4">
+                                                      Current Event Director Container
                                                     </div>
                                                 </div>
                                             </div>
-                                             <div class="form-group contact-info-event-director__current-message" style="display: block; visibility: visible;">
+                                             <div class="form-group contact-info-event-director__current-message">
                                                 <div class="row">
                                                    <div class="col-sm-12">
-                                                      <p id="contact__recentlyadded" style="display: block; visibility: visible;">
+                                                      <p id="contact__recentlyadded">
                                                          The current contact has been added and an email has been sent for them to validate their email. Once validated, they will be able to edit this club.
                                                       </p>
-                                                      <p id="contact__recentlyadded-valid" style="display: block; visibility: visible;">
+                                                      <p id="contact__recentlyadded-valid">
                                                          The current contact has validated their email and has the ability to edit his club.
                                                       </p>
-                                                      <p id="contact__recentlyadded-invalid" style="display: block; visibility: visible;">
+                                                      <p id="contact__recentlyadded-invalid">
                                                          The current contact has NOT validated their email and does NOT have the ability to edit his club.
                                                       </p>
                                                    </div>
@@ -517,19 +530,20 @@
 
 
                                              <!-- list__event-director-current -->
-                                             <div class="form-group contact-info__event-director--add-new-container add-new-inputs" style="display: block;">
+                                             <div class="form-group contact-info__event-director--add-new-container add-new-inputs show">
+                                             <!-- <div class="form-group contact-info__event-director--add-new-container add-new-inputs" style="display: initial;"> -->
                                                 <div class="row">
                                                    <div class="col-sm-6">
                                                       <div class="input-group contact-first-name required">
                                                             <label for="newEventDirectorFirstName">First Name</label>
-                                                            <input type="text" maxlength="30" onblur="handleInputBlur(this)" class="form-control" name="NewEventDirectorFirstName" id="newEventDirectorFirstName" value="">
+                                                            <input type="text" maxlength="30" class="form-control" name="NewEventDirectorFirstName" id="newEventDirectorFirstName" value="">
                                                             <span class="help-block help-block--NewEventDirectorFirstName">Please enter the event director's first name.</span>
                                                       </div>
                                                    </div>
                                                    <div class="col-sm-6">
                                                       <div class="input-group contact-last-name required">
                                                             <label for="newEventDirectorLastName" class="">Last Name</label>
-                                                            <input type="text" maxlength="30" onblur="handleInputBlur(this)" class="form-control" name="NewEventDirectorLastName" id="newEventDirectorLastName" value="">
+                                                            <input type="text" maxlength="30" class="form-control" name="NewEventDirectorLastName" id="newEventDirectorLastName" value="">
                                                             <span class="help-block help-block--NewEventDirectorLastName">Please enter the event director's last name. </span>
                                                       </div>
                                                    </div>
@@ -539,12 +553,12 @@
                                                       <div class="input-group contact-primary-email required">
                                                             <label for="newEventDirectorEmailPrimary">Primary Email Address<span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Enter the event director's primary email address."></span>
                                                             </label>
-                                                            <input type="email" class="form-control" onblur="handleInputBlur(this)" name="NewEventDirectorEmailPrimary" id="newEventDirectorEmailPrimary" maxlength="50" value="">
+                                                            <input type="email" class="form-control" name="NewEventDirectorEmailPrimary" id="newEventDirectorEmailPrimary" maxlength="50" value="">
                                                             <span class="help-block help-block--NewEventDirectorEmailPrimary">Please enter the event director's primary email address.</span>
                                                       </div>
                                                       <div class="input-group contact-primary-phone required">
                                                             <label for="newEventDirectorPhonePrimary">Primary Phone Number</label>
-                                                            <input type="text" class="form-control" onblur="handleInputBlur(this)" pattern="[0-9]{3}[-][0-9]{3}[-][0-9]{4}" name="NewEventDirectorPhonePrimary" id="newEventDirectorPhonePrimary" value="" maxlength="12">
+                                                            <input type="text" class="form-control" pattern="[0-9]{3}[-][0-9]{3}[-][0-9]{4}" name="NewEventDirectorPhonePrimary" id="newEventDirectorPhonePrimary" value="" maxlength="12">
                                                             <span class="help-block help-block--NewEventDirectorPhonePrimary">Please enter the event director's primary phone number.</span>
                                                       </div>
                                                    </div>
@@ -553,14 +567,14 @@
                                                    <div class="col-sm-7">
                                                       <div class="input-group contact-city required">
                                                          <label for="newEventDirectorCity">City</label>
-                                                         <input type="text" maxlength="30" onblur="handleInputBlur(this)" class="form-control" name="NewEventDirectorCity" id="newEventDirectorCity" value="">
+                                                         <input type="text" maxlength="30" class="form-control" name="NewEventDirectorCity" id="newEventDirectorCity" value="">
                                                          <span class="help-block help-block--NewEventDirectorCity">Please enter the event director's city.</span>
                                                       </div>
                                                    </div>
                                                    <div class="col-sm-5">
                                                       <div class="input-group contact-state required">
                                                             <label for="newEventDirectorState" class="">State</label>
-                                                            <select name="newEventDirectorState" class="form-control" id="newEventDirectorState" onchange="validateField(this)">
+                                                            <select name="newEventDirectorState" class="form-control" id="newEventDirectorState">
                                                                <option value="">Select State</option>
                                                                <option value="AL">Alabama</option>
                                                                <option value="AK">Alaska</option>
@@ -573,27 +587,22 @@
                                                 <div class="row">
                                                    <div class="col-sm-5 col-md-6">
                                                       <div class="form-group lookup person">
-                                                            <button class="btn btn-small" type="button" id="addEventDirectorBtn" onclick="handleAddEventDirectorButton()">Accept</button>
-                                                            <!-- <button class="btn btn-small" type="button" id="addEventDirectorBtn">Accept</button> -->
-                                                            <button class="btn btn-small btn-outline" type="button" id="cancelAddEventDirectorBtn" onclick="handleCancelAddEventDirector()">Cancel</button>
-                                                            <!-- <button class="btn btn-small btn-outline" type="button" id="cancelAddEventDirectorBtn">Cancel</button> -->
+                                                            <button class="btn btn-small" type="button" id="addEventDirectorBtn">Accept</button>
+                                                            <button class="btn btn-small btn-outline" type="button" id="cancelAddEventDirectorBtn">Cancel</button>
                                                       </div>
                                                    </div>
                                                 </div>
                                              </div>
 
-                                             <div class="form-group">
+                                             <div class="form-group contact-information__event-director--list">
                                                 <div class="list list--lookup people">
                                                    <div class="list__header contact-list__event-director--header">
                                                       <span class="lookup-results--event-director">Event Director </span>
                                                       <div class="list__controls contact-list__controls">
-                                                         <button class="list__controls--settings" id="listContactSettings" onclick="editContactList()"></button>
-                                                         <!-- <button class="list__controls--settings" id="listContactSettings"></button> -->
-                                                         <button class="btn btn-link" id="editContactList" onclick="editContactList()">Edit</button>
-                                                         <!-- <button class="btn btn-link" id="saveContactList">Done Editing</button> -->
-                                                         <button class="btn btn-link" id="saveContactList" onclick="saveContactList(event)">Done Editing</button>
-                                                         <!-- <button class="btn btn-link" id="cancelContactList" onclick="cancelContactList()">Cancel</button> -->
-                                                         <button class="btn btn-link" id="cancelContactList">Cancel</button>
+                                                         <a class="list__controls--settings" id="listContactSettings"></a>
+                                                         <a class="btn btn-link" id="editContactList">Edit</a>
+                                                         <a class="btn btn-link" id="saveContactList">Done Editing</a>
+                                                         <a class="btn btn-link" id="cancelContactList">Cancel</a>
                                                       </div>
                                                    </div>
                                                    <div class="contact-list__event-director--awaiting-message" style="display: none;">
@@ -601,8 +610,8 @@
                                                    </div>
                                                    <div class="list__container">
                                                       <div class="row is-flex">
-                                                        <div class="col-xs-12 col-sm-6 col-md-4 contact-column">
-                                                            <div class="list-item list-item--new">
+                                                        <div class="col-xs-12 col-sm-6 col-md-4xxx contact-column">
+                                                            <div class="list-item list-item--current">
                                                                 <input type="hidden" class="contact-isMember" value="true">
                                                                 <button class="list-item__delete">Remove</button>
                                                                 <div class="contact-name">Jay Place</div>
@@ -611,14 +620,32 @@
                                                                 <div class="contact-email">jplace@usmastersswimming.org</div>
                                                                 <div class="contact-id">Member ID: <span class="contact-id__value">KT2JH</span></div>
                                                             </div>
+                                                            <div class="list-item list-item--lookup">
+                                                               <input type="hidden" class="contact-isMember" value="true">
+                                                               <button class="list-item__delete">Remove</button>
+                                                               <div class="contact-name">Kyle Deery</div>
+                                                               <div class="contact-location">Sarasota, FL</div>
+                                                               <div class="contact-phone"></div>
+                                                               <div class="contact-email">kdeery@usmastersswimming.org</div>
+                                                               <div class="contact-id">Member ID: <span class="contact-id__value">GAT0R</span></div>
+                                                           </div>
+                                                           <div class="list-item list-item--new">
+                                                            <input type="hidden" class="contact-isMember" value="true">
+                                                            <button class="list-item__delete">Account Pending</button>
+                                                            <div class="contact-name">Jess Riley</div>
+                                                            <div class="contact-location">Sarasota, FL</div>
+                                                            <div class="contact-phone"></div>
+                                                            <div class="contact-email">jreilly@usmastersswimming.org</div>
+                                                            <div class="contact-id">Member ID: <span class="contact-id__value">AB123</span></div>
                                                         </div>
+                                                   </div>
                                                       </div>
                                                    </div>
-                                                   <button class="btn btn-small btn-success" id="confirmCurrentEventDirector" onclick="confirmCurrentEventDirector(event)">Confirm</button>
+                                                   <button class="btn btn-small btn-success" id="confirmCurrentEventDirector">Confirm</button>
                                                 </div>
                                              </div>
 
-                                             <div class="form-group">
+                                             <div class="form-group contact-info__event-director--website-display-preferences">
                                                 <div class="row">
                                                     <div class="col-sm-12">
                                                         <div class="club-privacy" style="display: block;">
@@ -658,28 +685,35 @@
                                             </div>
 
                                     <!-- Host Type -->
-                                             <div class="row">
-                                                <hr />
-                                                <div class="col-xs-12 col-sm-8 col-md-5">
+                                    <div class="row contact-info__host-type">
+                                       <div class="col-xs-12 col-sm-6 col-md-4">
+                                          <div class="form-groupXXX contact-info__host-type--container">
+                                             <div class="rowXXX">
+                                                
                                                    <div class="input-group contact-info__host-type required">
                                                       <label for="selectHostType">
-                                                         Host Type<a tabindex="0" class="popover-link" role="button" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="top" data-content="Do we need a tooltip here?" data-original-title="" title=""><span class="icon-help"></span></a>
+                                                         Host Type
+                                                         <a tabindex="0" class="popover-link" role="button" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="top" data-content="Do we need a tooltip here?" data-original-title="" title="">
+                                                            <span class="icon-help"></span>
+                                                         </a>
                                                       </label>
-                                                      <select name="SelectHostType" class="form-control" id="selectHostType" onchange="validateField(this)" required="True">                                                            
-                                                         <option value="{Sitecore ID}" disabled selected>Select a Host Type</option>
-                                                         <option value="{Sitecore ID}">LMSC</option>
-                                                         <option value="{Sitecore ID}">USMS Club</option>
-                                                         <option value="{Sitecore ID}">Event Director/One person</option>
-                                                         <option value="{Sitecore ID}">Other Organization</option>
+                                                      <select name="SelectHostType" class="form-control" id="selectHostType" required="True">                                                            
+                                                         <option value="" disabled selected>Select a Host Type</option>
+                                                         <option value="LMSC">LMSC</option>
+                                                         <option value="USMS Club">USMS Club</option>
+                                                         <option value="Event Director/Single Person">Event Director/One person</option>
+                                                         <option value="Other Organization">Other Organization</option>
                                                       </select>
                                                       <span class="help-block help-block--SelectHostType">Host type is required.</span>
                                                    </div>
                                                 </div>
                                              </div>
+                                          </div>
 
-                                             <div class="form-group contact-info__host-type-lmsc--container" style="display: none; visibility: hidden;">
-                                                <div class="row">
-                                                   <div class="col-xs-12 col-sm-8 col-md-5">
+                                          <div class="col-xs-12 col-sm-6 col-md-4">
+                                             <div class="form-groupXXX contact-info__host-type-lmsc--container">
+                                                <div class="rowXXX">
+                                                   
                                                       <div class="input-group event-info-host-type-lmsc required">
                                                          <label for="selectHostTypeLmsc">
                                                             LMSC<a tabindex="0" class="popover-link" role="button" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="top" 
@@ -687,10 +721,10 @@
                                                             <span class="icon-help"></span>
                                                             </a>
                                                          </label>
-                                                         <select name="SelectHostTypeLmsc" class="form-control" id="selectHostTypeLmsc" onchange="validateField(this)" required="True">                                                            
-                                                            <option value="{Sitecore ID}" disabled selected>Select an LMSC</option>
-                                                            <option value="{Sitecore ID}">LMSC Name</option>
-                                                            <option value="{Sitecore ID}">LMSC Name</option>
+                                                         <select name="SelectHostTypeLmsc" class="form-control" id="selectHostTypeLmsc" required="True">                                                            
+                                                            <option value="" disabled selected>Select an LMSC</option>
+                                                            <option value="Florida LMSC">Florida LMSC</option>
+                                                            <option value="Georgia LMSC">Georgia LMSC</option>
                                                          </select>
                                                          <span class="help-block help-block--SelectHostTypeLmsc">Host type is required.</span>
                                                       </div>
@@ -698,18 +732,20 @@
                                                 </div>
                                              </div>
 
-                                             <div class="form-group contact-info__host-type-club--container" style="display: none; visibility: hidden;">
-                                                <div class="row">
-                                                   <div class="col-sm-4">
+                                             <div class="col-xs-12 col-sm-4">
+                                             <div class="form-groupXXX contact-info__host-type-club--container">
+                                                <div class="rowXXX">
+                                                   
                                                       <div class="input-group lookup-host-type-usms-club">
                                                          <label for="lookupHostTypeUsmsClub">USMS Club</label>
-                                                         <input tabindex="0" type="text" class="form-control lookup__input lookup-primary__input" min="3" max="30" name="LookupHostTypeUsmsClub" id="lookupHostTypeUsmsClub" autocomplete="off">
+                                                         <input tabindex="0" type="text" class="form-control lookup__input lookup-primary__input" min="3" max="30" name="LookupHostTypeUsmsClub" id="lookupHostTypeUsmsClub" autocomplete="off" placeholder="Sarasota Sharks">
                                                          <span class="help-block help-block--LookupHostTypeUsmsClub">Please enter USMS Club</span>
                                                       </div>
                                                    </div>
                                                 </div>
                                              </div>
 
+                                          </div>
                                              <!-- <div class="row">
                                                 <div class="col-sm-4">
                                                       <div class="input-group lookup-host-type-usms-club">
@@ -733,7 +769,7 @@
                                                 <div class="row">
                                                     <div class="col-sm-12 col-md-8">
                                                         <div class="input-group lookup-confirm">
-                                                            <button class="btn btn-small save-as-contact" type="button" id="addHostTypeOtherOrganization" onclick="setHostTypeOtherOrganzation(event)"><span class="lookup-confirm--name"></span></button>
+                                                            <button class="btn btn-small save-as-contact" type="button" id="addHostTypeOtherOrganization" onclick="setHostTypeOtherOrganzation(event)"><span class="lookup-confirm--name">Add Kyle Deery</span></button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -767,12 +803,12 @@
                                              </div>
                                           </div> -->
 
-                                            <div class="form-group contact-info-host-type__other-organization--container add-new-inputs" style="display: none; visibility: hidden;">
+                                            <div class="form-group contact-info-host-type__other-organization--container add-new-inputs">
                                                 <div class="row">
                                                     <div class="col-sm-6">
                                                     <div class="input-group organization-name required">
                                                             <label for="hostTypeOtherName">Organization Name</label>
-                                                            <input type="text" maxlength="30" onblur="handleInputBlur(this)" class="form-control" name="HostTypeOtherName" id="hostTypeOtherName" value="">
+                                                            <input type="text" maxlength="30" class="form-control" name="HostTypeOtherName" id="hostTypeOtherName" value="">
                                                             <span class="help-block help-block--HostTypeOtherName">Please enter the organization name.</span>
                                                     </div>
                                                     </div>
@@ -783,7 +819,7 @@
                                                             <label for="hostTypeOtherStreetAddress">
                                                                 Street Address<span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Enter the organization's street address."></span>
                                                             </label>
-                                                            <input type="email" class="form-control" onblur="handleInputBlur(this)" name="HostTypeOtherStreetAddress" id="hostTypeOtherStreetAddress" maxlength="50" value="">
+                                                            <input type="email" class="form-control" name="HostTypeOtherStreetAddress" id="hostTypeOtherStreetAddress" maxlength="50" value="">
                                                             <span class="help-block help-block--HostTypeOtherStreetAddress">Please enter the organization street address.</span>
                                                     </div>                                    
                                                     </div>
@@ -792,14 +828,14 @@
                                                     <div class="col-sm-5">
                                                     <div class="input-group contact-info-host-type__other-organization--city required">
                                                             <label for="hostTypeOtherCity">City</label>
-                                                            <input type="text" maxlength="30" onblur="handleInputBlur(this)" class="form-control" name="HostTypeOtherCity" id="hostTypeOtherCity" value="">
+                                                            <input type="text" maxlength="30" class="form-control" name="HostTypeOtherCity" id="hostTypeOtherCity" value="">
                                                             <span class="help-block help-block--HostTypeOtherCity">Please enter the organization city.</span>
                                                     </div>
                                                     </div>
                                                     <div class="col-sm-3">
                                                     <div class="input-group contact-info-host-type__other-organization--state required">
                                                             <label for="hostTypeOtherState" class="">State</label>
-                                                            <select name="HostTypeOtherState" class="form-control" id="hostTypeOtherState" onchange="validateField(this)"><option value="">Select State</option>
+                                                            <select name="HostTypeOtherState" class="form-control" id="hostTypeOtherState"><option value="">Select State</option>
                                                                 <option value="AL">Alabama</option>
                                                                 <option value="AK">Alaska</option>
                                                                 <option value="AZ">Arizona</option>
@@ -810,7 +846,7 @@
                                                     <div class="col-sm-4">
                                                     <div class="input-group contact-info-host-type__other-organization--zip required">
                                                         <label for="hostTypeOtherZip">Zip Code</label>
-                                                        <input type="text" maxlength="30" onblur="handleInputBlur(this)" class="form-control" name="HostTypeOtherZip" id="hostTypeOtherZip" value="">
+                                                        <input type="text" maxlength="30" class="form-control" name="HostTypeOtherZip" id="hostTypeOtherZip" value="">
                                                         <span class="help-block help-block--HostTypeOtherZip">Please enter the organization zip code.</span>
                                                     </div>
                                                     </div>
@@ -827,13 +863,13 @@
 
                                             <div class="row">
                                                 <div class="section__controls">
-                                                   <button class="btn save-section" id="saveContactInfoSection" type="button" onclick="">Save &amp; Continue</button>
+                                                   <button class="btn save-section" id="saveContactInfoSection" type="button">Save &amp; Continue</button>
                                                 </div>
                                             </div>
                                             
                                         </div>
                                     </div>
-                                </form>
+                                 </form>
 
 
                                  <form id="form-location-info">
@@ -841,8 +877,8 @@
                                        <h3 class="section__header" data-target="#location-information__content" data-toggle="collapse" aria-expanded="false" aria-controls="location-information__content">
                                           <span class="section__number">4</span>Location Information
                                        </h3>
-                                       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button" onclick=""></button></span>
-                                       <div class="section__content collapse in" id="location-information__content" data-parent="#accordion">
+                                       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
+                                       <div class="section__content collapse" id="location-information__content" data-parent="#accordion">
 
                                             <div class="form-group location-info__lookup-location--container" style="display: block; visibility: visible;">
                                                 
@@ -868,8 +904,7 @@
                                                     <div class="col-xs-12 col-md-3">
                                                         <div class="input-group lookup__location--range">
                                                             <label for="location-filter__range">Select a Range</label>
-                                                            <select name="Location-filter__range" class="form-control" id="location-filter__range" onchange="">                                                            
-                                                                <option value="10" data-reactid="39">10 Miles</option>
+                                                            <select name="Location-filter__range" class="form-control" id="location-filter__range"                                                               <option value="10" data-reactid="39">10 Miles</option>
                                                                 <option selected="" value="25" data-reactid="40">25 Miles</option>
                                                                 <option value="50" data-reactid="41">50 Miles</option>
                                                                 <option value="100" data-reactid="42">100 Miles</option>
@@ -882,7 +917,9 @@
                                                 <div class="row">
                                                    <div class="col-sm-12 col-md-8">
                                                       <div class="input-group lookup-confirm">
-                                                         <button class="btn btn-small save-as-contact" type="button" id="addAsEventDirector" onclick="setEventDirectorTitle(event)"><span class="lookup-confirm--name"></span></button>
+                                                         <button class="btn btn-small save-as-contact" type="button" id="addAsEventDirector" onclick="setEventDirectorTitle(event)">
+                                                            <span class="lookup-confirm--name"></span>
+                                                         </button>
                                                       </div>
                                                    </div>
                                                 </div>
@@ -938,7 +975,7 @@
                                                             <div class="col-xs-12">
                                                                 <div class="input-group location-name required">
                                                                     <label for="locationName">Enter Your Location Name<span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Enter the facility or open water venue name. "></span></label>
-                                                                    <input type="text" onblur="handleInputBlur(this)" class="form-control entry__input entry-primary__input" name="LocationName" id="locationName" maxlength="80">
+                                                                    <input type="text" class="form-control entry__input entry-primary__input" name="LocationName" id="locationName" maxlength="80">
                                                                     <span class="help-block help-block--LocationName">Name required</span>
                                                                 </div>
                                                             </div>
@@ -949,7 +986,7 @@
                                                             <div class="col-xs-12">
                                                                 <div class="input-group location-address--street required">
                                                                     <label for="locationAddressStreet">Street Address (must select from the dropdown, do not copy and paste!)<span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="You must select an address from the dropdown."></span></label>
-                                                                    <input type="text" onblur="handleInputBlur(this)" class="form-control pac-target-input" name="LocationAddressStreet" id="locationAddressStreet" autocomplete="off" onfocus="this.setAttribute('autocomplete', 'none');" maxlength="255" placeholder="Enter a location">
+                                                                    <input type="text" class="form-control pac-target-input" name="LocationAddressStreet" id="locationAddressStreet" autocomplete="off" onfocus="this.setAttribute('autocomplete', 'none');" maxlength="255" placeholder="Enter a location">
                                                                     <span class="help-block help-block--LocationAddressStreet">Must select address from the Google dropdown list</span>
                                                                     <input type="hidden" class="form-control" name="LocationAddressStreetGoogle" id="locationAddressStreet--google">
                                                                     <input type="hidden" class="form-control" name="LocationAddressLat" id="locationAddressLat">
@@ -966,7 +1003,7 @@
                                                             <div class="col-xs-12">
                                                                 <div class="input-group location-type required">
                                                                     <label for="locationType">Facility Type</label>
-                                                                    <select name="locationType" class="form-control" id="locationType" onchange="handleTypeClick(event)" required=""><option value="">Location Type</option>
+                                                                    <select name="locationType" class="form-control" id="locationType" required=""><option value="">Location Type</option>
                                                                         <option value="{2885D386-2ECB-4679-9749-2FBCA6186839}">High School</option>
                                                                         <option value="{BC8C7999-EE54-48A5-8142-FED4384FC236}">JCC</option>
                                                                         <option value="{DAF4C83A-02D2-4851-BDF0-8A9B080B9509}">Municipal Pool</option>
@@ -1013,7 +1050,7 @@
 
                                              <div class="form-group">
                                                 <div class="list locations edit-list">
-                                                   <div class="list__header locations-list__header" style="display: none;">
+                                                   <div class="list__header locations-list__header" style="display: block;">
                                                       <div class="list__controls locations-list__controls" style="display: inline-block;">
                                                             <button class="list__controls--settings" id="listLocationsSettings" onclick="editLocationList()"></button>
                                                             <button class="btn btn-link" id="editLocationsList" onclick="editLocationList()">Edit</button>
@@ -1094,7 +1131,7 @@
                                                               <div class="input-group checkbox-group input-group--venueCableCourse fade">
                                                                   <label class="checkbox-label" for="venueCableCourse">
                                                                       <div class="checkbox-container">
-                                                                          <input type="checkbox" name="venueCableCourse" id="venueCableCourse" onchange="handleCableCourseChange(event)">
+                                                                          <input type="checkbox" name="venueCableCourse" id="venueCableCourse">
                                                                           <span class="checkbox__placeholder"></span>
                                                                       </div>
                                                                       Cable Course
@@ -1176,7 +1213,7 @@
                                                                   <div class="input-group">
                                                                       <label class="checkbox-label">
                                                                           <div class="checkbox-container">
-                                                                              <input type="checkbox" name="usmsVerified" id="usmsVerified" onchange="handleUsmsVerifiedChange(event)">
+                                                                              <input type="checkbox" name="usmsVerified" id="usmsVerified">
                                                                               <span class="checkbox__placeholder"></span>
                                                                           </div>
                                                                           USMS Verified
@@ -1205,7 +1242,7 @@
 
                                             <div class="row">
                                                 <div class="section__controls">
-                                                    <button class="btn save-section" id="saveLocationInfo" type="button" onclick="">Save &amp; Continue</button>
+                                                    <button class="btn save-section" id="saveLocationInfo" type="button">Save &amp; Continue</button>
                                                 </div>
                                             </div>
 
@@ -1222,8 +1259,8 @@
                                        <h3 class="section__header" data-target="#entry-information__content" data-toggle="collapse" aria-expanded="false" aria-controls="entry-information__content">
                                           <span class="section__number">5</span>Entry Information
                                        </h3>
-                                       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button" onclick=""></button></span>
-                                       <div class="section__content collapse in" id="entry-information__content" data-parent="#accordion">
+                                       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
+                                       <div class="section__content collapse" id="entry-information__content" data-parent="#accordion">
                                           <div class="form-group location-information--container" style="display: block; visibility: visible;">
                                              <div class="row">
                                                 <div class="col-xs-12 col-sm-8 col-md-5">
@@ -1231,7 +1268,7 @@
                                                       <label for="selectMeetFormat">
                                                          Meet Format<span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Do we need a tooltip here?"></span>
                                                       </label>
-                                                      <select name="SelectMeetFormat" class="form-control" id="selectMeetFormat" onchange="validateField(this)" required="True">                                                            
+                                                      <select name="SelectMeetFormat" class="form-control" id="selectMeetFormat" required="True">                                                            
                                                          <option value="{Sitecore ID}" disabled selected>Select a Meet Format</option>
                                                          <option value="{Sitecore ID}">Prelims/Finals</option>
                                                          <option value="{Sitecore ID}">Timed Finals</option>
@@ -1311,18 +1348,12 @@
                                           </div>
                                           <div class="row">
                                                 <div class="section__controls">
-                                                   <button class="btn save-section" id="buttonId" type="button" onclick="">Save &amp; Continue</button>
+                                                   <button class="btn save-section" id="buttonId" type="button">Save &amp; Continue</button>
                                                 </div>
                                           </div>
                                        </div>
                                     </div>
                                  </form>
-
-
-
-
-
-
 
 
                                  <form id="form-accept-submit">
@@ -1331,9 +1362,9 @@
                                           <span class="section__number">6</span>Accept Terms
                                        </h3>
                                        <span class="section__edit">
-                                          <button class="section__edit-btn section__edit-btn--name" type="button" onclick=""></button>
+                                          <button class="section__edit-btn section__edit-btn--name" type="button"></button>
                                        </span>
-                                       <div class="section__content collapse in" id="accept-submit__content" data-parent="#accordion">
+                                       <div class="section__content collapse" id="accept-submit__content" data-parent="#accordion">
                                              <div class="row">
                                                 <div class="col-xs-12">
                                                    <div class="card liability" data-reactid="1">
@@ -1426,7 +1457,7 @@
                                              </div>
                                              <div class="row">
                                                    <div class="section__controls">
-                                                      <button class="btn save-section" id="buttonId" type="button" onclick="">Save & Continue</button>
+                                                      <button class="btn save-section" id="buttonId" type="button">Save & Continue</button>
                                                    </div>
                                              </div>
                                           </div>
@@ -1434,8 +1465,6 @@
                                        </div>
                                     <!-- </div> -->
                                  </form>
-
-
 
 
                                  <form action="">
@@ -1478,7 +1507,7 @@
                                                          <div class="row">
                                                                <label class="col-xs-12">Cardholder Name</label>
                                                                <div class="col-xs-12">
-                                                                  <input type="text" onblur="handleInputBlur(this)" class="form-control" id="cardName" name="cardName">
+                                                                  <input type="text" class="form-control" id="cardName" name="cardName">
                                                                   <span class="help-block help-block--cardName">Card holder name is required</span>
                                                                </div>
                                                          </div>
@@ -1491,7 +1520,7 @@
                                                          <div class="row">
                                                                <label class="col-xs-12">Credit Card Number</label>
                                                                <div class="col-xs-12">
-                                                                  <input type="text" class="form-control" onblur="handleInputBlur(this)" id="cardNumber" name="cardNumber">
+                                                                  <input type="text" class="form-control" id="cardNumber" name="cardNumber">
                                                                   <span class="help-block help-block--cardNumber">Card number is required</span>
                                                                </div>
                                                          </div>
@@ -1502,7 +1531,7 @@
                                                          <div class="row">
                                                                <label class="col-xs-12">CVV</label>
                                                                <div class="col-xs-12">
-                                                                  <input type="text" class="form-control" onblur="handleInputBlur(this)" id="cardCode" name="cardCode">
+                                                                  <input type="text" class="form-control" id="cardCode" name="cardCode">
                                                                   <span class="help-block help-block--cardCode">Card CVV is required</span>
                                                                </div>
                                                          </div>
@@ -1513,7 +1542,7 @@
                                                          <div class="row">
                                                                <label class="col-xs-12">Expiration</label>
                                                                <div class="col-xs-12">
-                                                                  <input type="text" class="form-control" onblur="handleInputBlur(this)" id="expiration" pattern="\d{1,2}/\d{1,2}" name="expiration" maxlength="5">
+                                                                  <input type="text" class="form-control" id="expiration" pattern="\d{1,2}/\d{1,2}" name="expiration" maxlength="5">
                                                                   <span class="help-block help-block--expiration">Invalid expiration date</span>
                                                                </div>
                                                          </div>
@@ -1526,7 +1555,7 @@
                                                          <div class="row">
                                                                <label class="control-label col-xs-12">Zip</label>
                                                                <div class="col-xs-12">
-                                                                  <input type="text" class="form-control" onblur="handleInputBlur(this)" id="cardZip" name="cardZip">
+                                                                  <input type="text" class="form-control" id="cardZip" name="cardZip">
                                                                   <span class="help-block help-block--cardZip">Zip is required</span>
                                                                </div>
                                                          </div>
@@ -1539,8 +1568,7 @@
                                                          <div class="input-group checkbox-group payment-agreement">
                                                                <label class="checkbox-label" for="agreeTerms">
                                                                   <div class="checkbox-container">
-                                                                     <input name="agree-terms" type="checkbox" id="agreeTerms" onchange="handleAgreementChange()">
-                                                                     <span class="checkbox__placeholder"></span>
+                                                                     <input name="agree-terms" type="checkbox" id="agreeTerms"                                                                    <span class="checkbox__placeholder"></span>
                                                                   </div>
                                                                   I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming <a href="/content/privacy" target="_blank">Privacy Policy</a>. I understand that this membership is non-refundable, non-transferable, and expires on December 31, <span class="agree-terms--year">2023</span>.
                                                                </label>
@@ -1565,7 +1593,7 @@
                                                       </div>
                                                    </div>
                                              </div>
-                                             <p class="section-payment__contact-pending" style="display: none;">You cannot submit your club until your new club contact has approved their My USMS account.</p>
+                                             <p class="section-payment__contact-pending" style="display: initial;">You cannot submit your club until your new club contact has approved their My USMS account.</p>
                                              <button onclick="submitCreditCard(event)" id="submit-button" class="btn btn-pay btn-large text-uppercase pull-left membership-length__submit">
                                                    Submit Payment
                                              </button>
@@ -1573,19 +1601,6 @@
                                        </div>
                                     </div>
                                  </form>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
                               </div>
@@ -1601,14 +1616,22 @@
 
          <sergey-import src="site/footer_scripts" />
 
-         <script src="js/Validation.js"></script>
-         <script src="js/Util.js"></script>
+         <!-- <script src="js/Validation.js"></script> -->
+         <!-- <script src="js/Util.js"></script> -->
          <script src="js/Accordion.js"></script>
-         <script src="js/Autocomplete.js"></script>
+         <!-- <script src="js/Autocomplete.js"></script> -->
 
-         <script src="js/1-event-type.js"></script>
+         <!-- <script src="js/1-event-type.js"></script>
          <script src="js/2-event-info.js"></script>
          <script src="js/3-contact-info.js"></script>
-         <script src="js/Payment.js"></script>
+         <script src="js/Payment.js"></script> -->
+         <script src="js/3-contact-info-mockup.js"></script>
       </body>
    </html>
+
+
+
+   .events-summary-content .filter-form button.btn-danger {
+      height: 34px;
+      font-sinze: 1.4rem;
+   }
