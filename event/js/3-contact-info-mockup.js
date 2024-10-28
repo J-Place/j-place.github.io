@@ -114,7 +114,7 @@ $(document).ready(function() {
         }
     });
     $("#selectHostTypeLmsc").on('change', function() {
-        if ($(this).val() === 'Florida LMSC') {
+        if ($(this).val() === 'Florida LMSC' || ($this.val() === 'Georgia LMSC')) {
             $(".contact-info__host-type-club--container").show();
         }
     });
