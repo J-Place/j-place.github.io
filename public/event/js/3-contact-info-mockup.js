@@ -8,7 +8,6 @@ $(document).ready(function() {
         $("#saveContactInfoSection").prop("disabled", true);
         $(".contact-information__event-director--list").show();
         $(".contact-information__event-director--list .list-item--current").parent().show();
-        // Hide the other inputs in case they're open
         $(".input-group.lookup-confirm").hide();
         $(".input-group.lookup-confirm").css("height","0");
         $(".input-group.lookup-confirm").css("opacity","0");
@@ -60,107 +59,93 @@ $(document).ready(function() {
         $(".contact-list__event-director--message").show();
     });
 
-    // Search Event Directors
-        $("#lookupEventDirectorName").click(function(e) {
-            e.preventDefault();
-            $(".input-group.lookup-confirm").show();
-            $(".input-group.lookup-confirm").css("height","70px");
-            $(".input-group.lookup-confirm").css("opacity","1");
-            $(".contact-info__event-director--add-new-container.add-new-inputs").hide();
-            $("#addAsEventDirector").show();
-            $("#addNewEventDirector").show();
-            // $("#lookupEventDirectorName").show();
-            $(this).attr("placeholder", "Kyle Deery");
-            // $(".contact-list__event-director-add-new--awaiting-message").hide();
-            // $(".contact-list__event-director--message").hide();
-        });
+// Search Event Directors
+    $("#lookupEventDirectorName").click(function(e) {
+        e.preventDefault();
+        $(".input-group.lookup-confirm").show();
+        $(".input-group.lookup-confirm").css("height","70px");
+        $(".input-group.lookup-confirm").css("opacity","1");
+        $(".contact-info__event-director--add-new-container.add-new-inputs").hide();
+        $("#addAsEventDirector").show();
+        $("#addNewEventDirector").show();
+        $(this).attr("placeholder", "Kyle Deery");
+    });
 
-        // Confirm Event Director
-        $("#addAsEventDirector").click(function(e) {
-            e.preventDefault();
-            $(".input-group.lookup-confirm").hide();
-            $(".input-group.lookup-confirm").css("height","0");
-            $(".input-group.lookup-confirm").css("opacity","0");
-            $("#selectHostType").prop("disabled", false);
-            $(".contact-info__event-director-type-form").hide();
-            $(".contact-info__event-director-other--container").hide();
-            $(".contact-info__event-director-other--add-new").hide();
-            $(".contact-list__event-director--message").hide();
-            $("#contactTypeEventDirectorCurrent").prop('disabled', false);
-            $("#contactTypeEventDirectorOther").prop('disabled', false);
-            $(".contact-info__event-director--add-new-container.add-new-inputs").hide();
-            $("#confirmCurrentEventDirector").hide();
-            // Show Saved Event Director
-            $(".list__header.contact-list__event-director--header").show();
-            $(".contact-information__event-director--list").show();
-            $(".contact-information__event-director--list .list-item").parent().hide();
-            $(".contact-information__event-director--list .list-item--lookup").parent().show();
-            // $(".contact-information__event-director--list .list-item--lookup").show();
-            $("#contactTypeEventDirectorCurrent").prop('checked', false);
-            $("#contactTypeEventDirectorOther").prop('checked', false);
-            $("#lookupEventDirectorName").attr("placeholder", "");
-            $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
-            // $(".contact-list__event-director-add-new--awaiting-message").hide();
-        });
+// Confirm Event Director
+    $("#addAsEventDirector").click(function(e) {
+        e.preventDefault();
+        $(".input-group.lookup-confirm").hide();
+        $(".input-group.lookup-confirm").css("height","0");
+        $(".input-group.lookup-confirm").css("opacity","0");
+        $("#selectHostType").prop("disabled", false);
+        $(".contact-info__event-director-type-form").hide();
+        $(".contact-info__event-director-other--container").hide();
+        $(".contact-info__event-director-other--add-new").hide();
+        $(".contact-list__event-director--message").hide();
+        $("#contactTypeEventDirectorCurrent").prop('disabled', false);
+        $("#contactTypeEventDirectorOther").prop('disabled', false);
+        $(".contact-info__event-director--add-new-container.add-new-inputs").hide();
+        $("#confirmCurrentEventDirector").hide();
+        $(".list__header.contact-list__event-director--header").show();
+        $(".contact-information__event-director--list").show();
+        $(".contact-information__event-director--list .list-item").parent().hide();
+        $(".contact-information__event-director--list .list-item--lookup").parent().show();
+        $("#contactTypeEventDirectorCurrent").prop('checked', false);
+        $("#contactTypeEventDirectorOther").prop('checked', false);
+        $("#lookupEventDirectorName").attr("placeholder", "");
+        $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
+    });
 
-    // Add New Event Director
-        $("#addNewEventDirector").click(function(e) {
-            e.preventDefault();
-            $(this).hide();
-            $("#addAsEventDirector").hide();
-            $(".contact-info__event-director--add-new-container.add-new-inputs").show();
-            $(".input-group.lookup-confirm").hide();
-            $(".input-group.lookup-confirm").css("height","0");
-            $(".input-group.lookup-confirm").css("opacity","0");
-            $("#lookupEventDirectorName").attr("placeholder", "");
-            $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
-            // $(".contact-list__event-director--message").hide();
-        });
+// Add New Event Director
+    $("#addNewEventDirector").click(function(e) {
+        e.preventDefault();
+        $(this).hide();
+        $("#addAsEventDirector").hide();
+        $(".contact-info__event-director--add-new-container.add-new-inputs").show();
+        $(".input-group.lookup-confirm").hide();
+        $(".input-group.lookup-confirm").css("height","0");
+        $(".input-group.lookup-confirm").css("opacity","0");
+        $("#lookupEventDirectorName").attr("placeholder", "");
+        $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
+    });
 
-        // Confirm Event Director
-        $("#addNewEventDirectorBtn").click(function(e) {
-            e.preventDefault();
-            $(".input-group.lookup-confirm").hide();
-            $(".input-group.lookup-confirm").css("height","0");
-            $(".input-group.lookup-confirm").css("opacity","0");
-            $("#contactTypeEventDirectorCurrent").prop('disabled', false);
-            $("#contactTypeEventDirectorOther").prop('disabled', false);
-            $("#contactTypeEventDirectorCurrent").prop('checked', false);
-            $("#contactTypeEventDirectorOther").prop('checked', false);
-            $("#selectHostType").prop("disabled", false);
-            $(".section__header--summary.contact-list__event-director--message").hide();
-            $(".contact-info__event-director-type-form").hide();
-            $(".contact-info__event-director-other--container").hide();
-            $(".contact-info__event-director-other--add-new").hide();
-            $(".contact-list__event-director--message").hide();
-            $(".contact-info__event-director--add-new-container.add-new-inputs").hide();
-            $("#confirmCurrentEventDirector").hide();
-            $(".list__header.contact-list__event-director--header").show();
-            $(".contact-information__event-director--list").show();
-            $(".contact-information__event-director--list .list-item").parent().hide();
-            $(".contact-information__event-director--list .list-item--new").parent().show();
-            // $(".contact-info-event-director__current-message").show();
-            // $(".contact-info-event-director__new-message").show();
-            $("#addNewEventDirector").show();
-            $("#contact__recentlyadded").show();
-            $(".contact-list__event-director-add-new--awaiting-message").show();
-        });
+// Confirm Event Director
+    $("#addNewEventDirectorBtn").click(function(e) {
+        e.preventDefault();
+        $(".input-group.lookup-confirm").hide();
+        $(".input-group.lookup-confirm").css("height","0");
+        $(".input-group.lookup-confirm").css("opacity","0");
+        $("#contactTypeEventDirectorCurrent").prop('disabled', false);
+        $("#contactTypeEventDirectorOther").prop('disabled', false);
+        $("#contactTypeEventDirectorCurrent").prop('checked', false);
+        $("#contactTypeEventDirectorOther").prop('checked', false);
+        $("#selectHostType").prop("disabled", false);
+        $(".section__header--summary.contact-list__event-director--message").hide();
+        $(".contact-info__event-director-type-form").hide();
+        $(".contact-info__event-director-other--container").hide();
+        $(".contact-info__event-director-other--add-new").hide();
+        $(".contact-list__event-director--message").hide();
+        $(".contact-info__event-director--add-new-container.add-new-inputs").hide();
+        $("#confirmCurrentEventDirector").hide();
+        $(".list__header.contact-list__event-director--header").show();
+        $(".contact-information__event-director--list").show();
+        $(".contact-information__event-director--list .list-item").parent().hide();
+        $(".contact-information__event-director--list .list-item--new").parent().show();
+        $("#addNewEventDirector").show();
+        $("#contact__recentlyadded").show();
+        $(".contact-list__event-director-add-new--awaiting-message").show();
+    });
 
-        $("#cancelAddNewEventDirectorBtn").click(function(e) {
-            e.preventDefault();
-            // $(".contact-info-host-type__other-organization--container.add-new-inputs").hide();
-            // $(".contact-info__event-director--add-new-container.add-new-inputs").hide();
-            $(".contact-info__event-director-type-form").show();
-            $(".contact-info__event-director-other--container").show();
-            // $('.contact-info__event-director-other--container').hide();
-            $(".contact-info__event-director-other--add-new").hide();
-            $(".contact-info__event-director--add-new-container").hide();
-            $("#addNewEventDirector").show();
-            $(".contact-list__event-director--message").show();
-        });
-
-
-
+    $("#cancelAddNewEventDirectorBtn").click(function(e) {
+        e.preventDefault();
+        $(".contact-info__event-director-type-form").show();
+        $(".contact-info__event-director-other--container").show();
+        $(".contact-info__event-director-other--add-new").hide();
+        $(".contact-info__event-director--add-new-container").hide();
+        $("#addNewEventDirector").show();
+        $(".contact-list__event-director--message").show();
+    });
+    
 
     // Hide the bootstrap columns that contain the list elements. 
     // This will be handled with React, where the list items 
@@ -172,11 +157,8 @@ $(document).ready(function() {
         $(".contact-info-host-type__other-organization--container").hide();
         $("#contactTypeEventDirectorCurrent").prop('checked', false);
         $("#contactTypeEventDirectorOther").prop('checked', false);
-
         $("#contactTypeEventDirectorCurrent").prop('disabled', true);
         $("#contactTypeEventDirectorOther").prop('disabled', true);
-
-        // $("#addNewOrganization").show();
         
         if ($(this).val() != 'LMSC') {
             $("#confirmLmscSelect").hide();
@@ -234,7 +216,6 @@ $(document).ready(function() {
     });
 
 
-
     $("#confirmLmscSelect").click(function(e) {
         e.preventDefault();
         $(this).hide();
@@ -254,7 +235,6 @@ $(document).ready(function() {
         e.preventDefault();
         $(".contact-info__host-type--container").show();
         $(".contact-list__event-host--header").hide();
-        // $(".contact-information__event-host--list .list-item--current").parent().hide();
         $(".contact-information__event-host--list .list-item").parent().hide();
         $(".input-group.lookup-confirm").css("height","0");
         $(".input-group.lookup-confirm").css("opacity","0");
@@ -273,7 +253,6 @@ $(document).ready(function() {
         $(".contact-info-host-type__other-organization--container.add-new-inputs").hide();
         $("#addNewOrganization").show();
         $(this).attr("placeholder", "Rainbow River Swim Club");
-        // $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
     });
     
     $("#lookupHostTypeUsmsClub").click(function(e) {
@@ -293,12 +272,9 @@ $(document).ready(function() {
         $("#contactTypeEventDirectorOther").prop('disabled', false);
         $("#selectHostType").prop('selectedIndex',0);
         $("#selectHostTypeLmsc").prop('selectedIndex',0);
-        // $(".list-item").parent().hide();
-        // $(".list-item").hide();
         $(".contact-list__event-host--header").show();
         $(".contact-information__event-host--list .list-item").parent().hide();
         $(".contact-information__event-host--list .list-item--club").parent().show();
-        // $(".contact-information__event-host--list .list-item--club").show();
     });
     
     $("#confirmCurrentHost").click(function(e) {
@@ -366,85 +342,5 @@ $(document).ready(function() {
         $("#addNewOrganization").show();
     });
 
-
-let resetHost = function() {
-    alert("test");
-}
-
-
 });
-
-
-
-
-
-
-
-
-
-
-
-
-// function disableAllInputsExceptCurrentGroup() {
-
-//     // Get all input elements on the page
-//     const inputs = document.querySelectorAll("input");
-  
-//     // Loop through each input
-//     inputs.forEach((input) => {
-//       // Check if the input is inside the current form group
-//     //   if (!input.closest(".current-group")) {
-//     if (thisEl) {
-//         input.disabled = true; // Disable inputs outside the current form group
-//       } else {
-//         input.disabled = false; // Ensure inputs in the current form group remain enabled
-//       }
-//     });
-//   }
-  
-// Run the function
-// document.addEventListener("click", disableAllInputsExceptCurrentGroup);
-    // disableAllInputsExceptCurrentGroup();
-//   });
-
-
-
-
-// function disableAllInputsExceptCurrentGroup() {
-//     $("input").each(function() {
-//       // Check if the input is inside the current form group
-//       if (!$(this).closest(".current-group").length) {
-//         $(this).prop("disabled", true); // Disable inputs outside the current form group
-//       } else {
-//         $(this).prop("disabled", false); // Enable inputs in the current form group
-//       }
-//     });
-//   }
-  
-  // Add click event listener to the button
-//   $("#disable-button").on("click", disableAllInputsExceptCurrentGroup);
-// document.addEventListener("click", disableAllInputsExceptCurrentGroup);
-
-
-
-
-
-// function disableAllInputsExceptTarget(targetSelector) {
-//     // Select all input elements on the page
-//     $("input").each(function() {
-//       // Disable inputs that do not match the target selector
-//       if (!$(this).is(targetSelector)) {
-//         $(this).prop("disabled", true);
-//       } else {
-//         $(this).prop("disabled", false); // Ensure the target input remains enabled
-//       }
-//     });
-//   }
-  
-//   // Add click event listener to the button
-//   document.addEventListener("click", function() {
-//     disableAllInputsExceptTarget($this); // Pass the target input selector
-//   });
-
-
 
