@@ -2,13 +2,16 @@ $(document).ready(function() {
 
     $('#selectHostType').on('change', function() {
         
-        disableHeadRefBtn();
-        disableListControlEditing();
+        // Disable the other inputs until a host is saved
         disableEventDirectorRadios();
+        disableHeadRefBtn();
+        disableSafetyCoordinatorBtn();
+        disableListControlEditing();
         hideLookupConfirmtBtn();
         
-        $("#selectHostTypeLmsc").prop('selectedIndex',0); // Reset LMSC dropdown if Host Type dropdown changes
+        $("#selectHostTypeLmsc").prop('selectedIndex',0); // Reset LMSC dropdown if Host dropdown changes
         
+
         $(".contact-information__event-host--list .list-item").parent().hide();
         $(".contact-info-host-type__other-organization--container").hide();
         
@@ -83,6 +86,7 @@ $(document).ready(function() {
         enableListControlEditing();
         enableEventDirectorRadios();
         enableHeadRefBtn();
+        enableSafetyCoordinatorBtn();
         $(".contact-list__event-host--header").show();
         $(".contact-info__host-type--container").hide();
         $(".contact-information__event-host--list .list-item").parent().hide();
@@ -91,11 +95,11 @@ $(document).ready(function() {
     
     $("#editHostList").click(function(e) {
         e.preventDefault();
+        hideLookupConfirmtBtn();
+        resetHostSelects();
         $(".contact-info__host-type--container").show();
         $(".contact-list__event-host--header").hide();
         $(".contact-information__event-host--list .list-item").parent().hide();
-        hideLookupConfirmtBtn();
-        resetHostSelects();
         $(".contact-list__event-director-add-new--awaiting-message").hide();
     });
     
@@ -107,7 +111,7 @@ $(document).ready(function() {
         $(".input-group.lookup-confirm").css("opacity","1");
         $(".contact-info-host-type__other-organization--container.add-new-inputs").hide();
         $("#addNewOrganization").show();
-        $(this).attr("placeholder", "Rainbow River Swim Club");
+        $("#lookupHostTypeOtherOrganization").attr("placeholder", "Rainbow River Swim Club");
     });
     
     $("#lookupHostTypeUsmsClub").click(function(e) {
@@ -118,31 +122,29 @@ $(document).ready(function() {
     $("#confirmClubLookup").click(function(e) {
         e.preventDefault();
         $(this).hide();
+        enableEventDirectorRadios();
+        enableHeadRefBtn();
+        enableSafetyCoordinatorBtn();
+        resetHostSelects();
+        enableListControlEditing();
+        hideLookupConfirmtBtn();
         $(".contact-info__host-type--container").hide();
         $("#lookupHostTypeUsmsClub").hide();
         $("label[for='lookupHostTypeUsmsClub']").hide();
-        hideLookupConfirmtBtn();
-        enableEventDirectorRadios();
-        enableHeadRefBtn();
-        resetHostSelects();
-        enableListControlEditing();
-        $(".contact-list__event-host--header").show();
-        
+        $(".contact-list__event-host--header").show();        
         $(".contact-information__event-host--list").show();
-
         $(".contact-information__event-host--list .list-item").parent().hide();
         $(".contact-information__event-host--list .list-item--club").parent().show();
-
-        
     });
     
     $("#confirmCurrentHost").click(function(e) {
         e.preventDefault();
         $(this).hide();
+        enableEventDirectorRadios();
         enableHeadRefBtn();
+        enableSafetyCoordinatorBtn();
         resetHostSelects();
         enableListControlEditing();
-        enableEventDirectorRadios();
         $(".contact-info__host-type--container").hide();
         $(".contact-list__event-host--header").show();
     });
@@ -160,11 +162,12 @@ $(document).ready(function() {
 
     $("#addHostTypeOtherBtn").click(function(e) {
         e.preventDefault();
+        enableEventDirectorRadios();
         enableHeadRefBtn();
+        enableSafetyCoordinatorBtn();
+        resetHostSelects();
         enableListControlEditing();
         hideLookupConfirmtBtn();
-        enableEventDirectorRadios();
-        resetHostSelects();
         $(".contact-info-host-type__other-organization--container.add-new-inputs").hide();
         $(".contact-info__host-type--container").hide();
         $(".contact-info-host-type__other--container").hide();
@@ -178,11 +181,12 @@ $(document).ready(function() {
     $("#addHostTypeOtherOrganizationLookup").click(function(e) {
         e.preventDefault();
         $(this).hide();
-        enableHeadRefBtn();
-        enableListControlEditing();
-        hideLookupConfirmtBtn();
-        resetHostSelects();
         enableEventDirectorRadios();
+        enableHeadRefBtn();
+        enableSafetyCoordinatorBtn();
+        enableListControlEditing();
+        resetHostSelects();
+        hideLookupConfirmtBtn();
         $(".contact-info-organization__add-new").hide();
         $(".contact-info-host-type__other--container").hide();
         $(".contact-info__host-type--container").hide();        
