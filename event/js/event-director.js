@@ -6,12 +6,13 @@ $(document).ready(function() {
         // e.preventDefault();
         $("#selectHostType").prop("disabled", true);
         $("#saveContactInfoSection").prop("disabled", true);
-        disableHeadRef();
+        disableHeadRefBtn();
         $(".contact-information__event-director--list").show();
         $(".contact-information__event-director--list .list-item--current").parent().show();
         $(".input-group.lookup-confirm").hide();
-        $(".input-group.lookup-confirm").css("height","0");
-        $(".input-group.lookup-confirm").css("opacity","0");
+        // $(".input-group.lookup-confirm").css("height","0");
+        // $(".input-group.lookup-confirm").css("opacity","0");
+        closeLookupConfirmtBtn();
         $(".contact-list__event-director--message").hide();
         $(".contact-info__event-director-other--container").hide();
         $(".contact-info__event-director-other--add-new").hide();    
@@ -28,14 +29,13 @@ $(document).ready(function() {
         $(".contact-info__event-director-type-form").hide();
         $(this).hide();
         $(".list__header.contact-list__event-director--header").show();
-        $("#contactTypeEventDirectorCurrent").prop('checked', false);
-        $("#contactTypeEventDirectorOther").prop('checked', false);
-        enableHeadRef();
+        uncheckEventDirectorRadios();
+        enableHeadRefBtn();
         $("#selectHostType").prop("disabled", false);
     });
     
 // Edit Event Director List
-    $(".contact-list__event-director--header #editContactList").click(function(e) {
+    $(" #editContactList").click(function(e) {
         // e.preventDefault();
         $(".contact-info__event-director-type-form").show();
         $(".list__header.contact-list__event-director--header").hide();
@@ -43,6 +43,9 @@ $(document).ready(function() {
         $(".contact-information__event-director--list .list-item").parent().hide();
         $("#confirmCurrentEventDirector").show();
         $(".contact-list__event-director-add-new--awaiting-message").hide();
+        enableHeadRefBtn();
+        enableHostTypeSelect();
+        enableEventDirectorRadios();
     });
 
 
@@ -52,7 +55,7 @@ $(document).ready(function() {
     $("#contactTypeEventDirectorOther").click(function(e) {
         // e.preventDefault();
         $("#selectHostType").prop("disabled", true);
-        disableHeadRef();
+        disableHeadRefBtn();
         $(".contact-info__event-director-other--container").show();
         $(".contact-info__event-director-other--add-new").show();
         $(".contact-information__event-director--list").hide();
@@ -62,7 +65,7 @@ $(document).ready(function() {
         $(".contact-list__event-director--message").show();
     });
 
-// Search Event Directors
+// Search Existing Event Directors
     $("#lookupEventDirectorName").click(function(e) {
         e.preventDefault();
         $(".input-group.lookup-confirm").show();
@@ -74,57 +77,58 @@ $(document).ready(function() {
         $(this).attr("placeholder", "Kyle Deery");
     });
 
-// Confirm Event Director
+// Save Existing Event Director Search Result
     $("#addAsEventDirector").click(function(e) {
         e.preventDefault();
+        enableHeadRefBtn();
+        enableHostTypeSelect();
         $(".input-group.lookup-confirm").hide();
-        $(".input-group.lookup-confirm").css("height","0");
-        $(".input-group.lookup-confirm").css("opacity","0");
-        $("#selectHostType").prop("disabled", false);
+        // $(".input-group.lookup-confirm").css("height","0");
+        // $(".input-group.lookup-confirm").css("opacity","0");
+        closeLookupConfirmtBtn();
+        // $("#selectHostType").prop("disabled", false);
         $(".contact-info__event-director-type-form").hide();
         $(".contact-info__event-director-other--container").hide();
         $(".contact-info__event-director-other--add-new").hide();
         $(".contact-list__event-director--message").hide();
-        $("#contactTypeEventDirectorCurrent").prop('disabled', false);
-        $("#contactTypeEventDirectorOther").prop('disabled', false);
+        disableEventDirectorRadios();
         $(".contact-info__event-director--add-new-container.add-new-inputs").hide();
         $("#confirmCurrentEventDirector").hide();
         $(".list__header.contact-list__event-director--header").show();
         $(".contact-information__event-director--list").show();
         $(".contact-information__event-director--list .list-item").parent().hide();
         $(".contact-information__event-director--list .list-item--lookup").parent().show();
-        $("#contactTypeEventDirectorCurrent").prop('checked', false);
-        $("#contactTypeEventDirectorOther").prop('checked', false);
-        enableHeadRef();
+        uncheckEventDirectorRadios();
+        enableHeadRefBtn();
         $("#lookupEventDirectorName").attr("placeholder", "");
         $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
     });
 
-// Add New Event Director
+// Open Form to Add New Event Director
     $("#addNewEventDirector").click(function(e) {
         e.preventDefault();
         $(this).hide();
         $("#addAsEventDirector").hide();
         $(".contact-info__event-director--add-new-container.add-new-inputs").show();
         $(".input-group.lookup-confirm").hide();
-        $(".input-group.lookup-confirm").css("height","0");
-        $(".input-group.lookup-confirm").css("opacity","0");
+        // $(".input-group.lookup-confirm").css("height","0");
+        // $(".input-group.lookup-confirm").css("opacity","0");
+        closeLookupConfirmtBtn();
         $("#lookupEventDirectorName").attr("placeholder", "");
         $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
     });
 
-// Confirm Event Director
+// Save New Event Director from Form
     $("#addNewEventDirectorBtn").click(function(e) {
         e.preventDefault();
         $(".input-group.lookup-confirm").hide();
-        $(".input-group.lookup-confirm").css("height","0");
-        $(".input-group.lookup-confirm").css("opacity","0");
-        $("#contactTypeEventDirectorCurrent").prop('disabled', false);
-        $("#contactTypeEventDirectorOther").prop('disabled', false);
-        $("#contactTypeEventDirectorCurrent").prop('checked', false);
-        $("#contactTypeEventDirectorOther").prop('checked', false);
+        // $(".input-group.lookup-confirm").css("height","0");
+        // $(".input-group.lookup-confirm").css("opacity","0");
+        closeLookupConfirmtBtn();
+        enableEventDirectorRadios();
+        uncheckEventDirectorRadios()
         $("#selectHostType").prop("disabled", false);
-        enableHeadRef();
+        enableHeadRefBtn();
         $(".section__header--summary.contact-list__event-director--message").hide();
         $(".contact-info__event-director-type-form").hide();
         $(".contact-info__event-director-other--container").hide();
@@ -153,3 +157,23 @@ $(document).ready(function() {
     
 });
 
+
+function disableEventDirectorRadios() {
+    $("#contactTypeEventDirectorCurrent").prop('disabled', true);
+    $("#contactTypeEventDirectorOther").prop('disabled', true);
+}
+
+function enableEventDirectorRadios() {
+    $("#contactTypeEventDirectorCurrent").prop('disabled', false);
+    $("#contactTypeEventDirectorOther").prop('disabled', false);
+}
+
+function uncheckEventDirectorRadios() {
+    $("#contactTypeEventDirectorCurrent").prop('checked', false);
+    $("#contactTypeEventDirectorOther").prop('checked', false);
+}
+
+function closeLookupConfirmtBtn() {
+    $(".input-group.lookup-confirm").css("height","0");
+    $(".input-group.lookup-confirm").css("opacity","0");
+}

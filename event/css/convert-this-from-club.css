@@ -280,7 +280,8 @@ input[disabled] + span {
 
 .club-edit .input-group-header.radio-group-header.required:before {
   /* top: 20px; */
-  top: 1px;
+  /* top: 1px; */
+  top: 5px;
   left: -8px;
 }
 
@@ -1458,8 +1459,7 @@ input[disabled] + span {
   height: 2.0rem;
   margin: 2rem auto;
   padding: 0;
-  /* display: none; */
-  /* display: block; */
+  display: none;
 }
 .club-edit .list__header.show {
   display: block !important;
@@ -1502,19 +1502,25 @@ input[disabled] + span {
 .club-edit #editLocationsList,
 .club-edit #editContactList,
 .club-edit #editNonMemberCoachList,
-.club-edit #editCoachList {
+.club-edit #editCoachList,
+.club-edit #editRefList,
+.club-edit #editHostList {
   display: inline-flex;
 }
 .club-edit #saveLocationsList,
 .club-edit #saveContactList,
 .club-edit #saveNonMemberCoachList,
-.club-edit #saveCoachList {
+.club-edit #saveCoachList,
+.club-edit #saveRefList,
+.club-edit #saveHostList {
   display: none;
 }
 .club-edit #cancelLocationsList,
 .club-edit #cancelContactList,
 .club-edit #cancelNonMemberCoachList,
-.club-edit #cancelCoachList {
+.club-edit #cancelCoachList,
+.club-edit #cancelRefList,
+.club-edit #cancelHostList {
   display: none;
   margin-left: 0;
   padding-left: 8px;
@@ -2164,7 +2170,7 @@ input[disabled] + span {
 }
 @media (min-width: 768px) {
   .form__container .club-edit .section__content {
-    padding: 0 3.5rem;
+    padding: 0 3.5rem 3rem;
   }
   .form__container .club-edit .section__header--summary {
     margin: -1rem auto 3.5rem;

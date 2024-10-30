@@ -1,0 +1,102 @@
+<!-- Messaging -->
+<div class="section__header--summary contact-list__event-director--message" style="display: none;">
+    <p>The event director must have a My USMS account. If they are not in the dropdown list, they will need to create an account. You can get the account creation started by clicking 'Add New' below. Once the form is completed, the new event director will receive an email to finish the process and you will see them listed here as 'Account Pending'. <em>You will not be able to register/update your event until the new contact has completed the account set up</em>. After you have registered/updated your event and then it is approved by USMS, you will receive an email notifying you the new contact is done and your permissions are removed.</p>
+</div>
+<div class="section__header--summary contact-list__event-director-add-new--awaiting-message" style="display: none;">
+    <p>You will remain the event director until the new contact has finished creating their account. Once the event has been approved, they will be the event director and your permissions will be removed.</p>
+</div>
+
+<div class="row contact-info__event-director-list">
+    <div class="form-group contact-information__event-director--list">
+        <div class="list list--event-director list--lookup people">
+            <div class="list__header contact-list__event-director--header">
+                <span class="lookup-results--event-director">Event Director </span>
+                <div class="list__controls contact-list__controls">
+                    <button class="list__controls--settings" id="listContactSettings"></button>
+                    <button class="btn btn-link" id="editContactList">Edit</button>
+                    <button class="btn btn-link" id="saveContactList">Done Editing</button>
+                    <button class="btn btn-link" id="cancelContactList">Cancel</button>
+                </div>
+            </div>
+        
+            <div class="list__container">
+                <div class="row is-flex">
+                    <div class="col-xs-12 col-sm-6 col-md-4 contact-column">
+                    <div class="list-item list-item--current">
+                            <input type="hidden" class="contact-isMember" value="true">
+                            <button class="list-item__delete">Remove</button>
+                            <div class="contact-name">Jay Place</div>
+                            <div class="contact-location">Sarasota, FL</div>
+                            <div class="contact-phone"></div>
+                            <div class="contact-email">jplace@usmastersswimming.org</div>
+                            <div class="contact-id">Member ID: <span class="contact-id__value">KT2JH</span></div>
+                    </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4 contact-column">
+                    <div class="list-item list-item--lookup">
+                        <input type="hidden" class="contact-isMember" value="true">
+                        <!-- <button class="list-item__delete">Remove</button> -->
+                        <div class="list-item__pending">Account Pending</div>
+                        <div class="contact-name">Kyle Deery</div>
+                        <div class="contact-location">Sarasota, FL</div>
+                        <div class="contact-phone"></div>
+                        <div class="contact-email">kdeery@usmastersswimming.org</div>
+                        <div class="contact-id">Member ID: <span class="contact-id__value">GAT0R</span></div>
+                    </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4 contact-column">
+                    <div class="list-item list-item--new">
+                        <input type="hidden" class="contact-isMember" value="true">
+                        <div class="list-item__pending">Account Pending</div>
+                        <div class="contact-name">Jess Riley</div>
+                        <div class="contact-location">Sarasota, FL</div>
+                        <div class="contact-phone"></div>
+                        <div class="contact-email">jreilly@usmastersswimming.org</div>
+                        <div class="contact-id">Member ID: <span class="contact-id__value">AB123</span></div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-small btn-success" id="confirmCurrentEventDirector">Confirm</button>
+        </div>
+    </div>
+    <div class="form-group contact-info__event-director--website-display-preferences">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="club-privacy" style="display: block;">
+                <div class="club-privacy__header">
+                    Display the Event Director's information on the USMS website event page.
+                </div>
+                <div class="input-group checkbox-group contact-privacy-name">
+                    <label class="checkbox-label" for="privacyName">
+                        <div class="checkbox-container">
+                            <input type="checkbox" name="privacyName" id="privacyName" />
+                            <span class="checkbox__placeholder"></span>
+                        </div>
+                        Name
+                    </label>
+                </div>
+                <div class="input-group checkbox-group contact-privacy-email">
+                    <label class="checkbox-label" for="privacyEmail">
+                        <div class="checkbox-container">
+                            <input type="checkbox" name="privacyEmail" id="privacyEmail" />
+                            <span class="checkbox__placeholder"></span>
+                        </div>
+                        Email
+                    </label>
+                </div>
+                <div class="input-group checkbox-group contact-privacy-phone">
+                    <label class="checkbox-label" for="privacyPhone">
+                        <div class="checkbox-container">
+                            <input type="checkbox" name="privacyPhone" id="privacyPhone" />
+                            <span class="checkbox__placeholder"></span>
+                        </div>
+                        Phone
+                    </label>
+                </div>   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="./js/event-director.js"></script>
