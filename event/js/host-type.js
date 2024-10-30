@@ -1,20 +1,22 @@
-
 $(document).ready(function() {
 
-    // Hide the bootstrap columns that contain the list elements. 
-    // This will be handled with React, where the list items 
-    // will be rendered conditionally.
-    $(".list-item").parent().hide();
-
     $('#selectHostType').on('change', function() {
+        
         disableHeadRefBtn();
+        disableListControlEditing();
+        disableEventDirectorRadios();
+        hideLookupConfirmtBtn();
+        
+        $("#selectHostTypeLmsc").prop('selectedIndex',0); // Reset LMSC dropdown if Host Type dropdown changes
+        
         $(".contact-information__event-host--list .list-item").parent().hide();
         $(".contact-info-host-type__other-organization--container").hide();
+        
         $("#contactTypeEventDirectorCurrent").prop('checked', false);
         $("#contactTypeEventDirectorOther").prop('checked', false);
-        $("#contactTypeEventDirectorCurrent").prop('disabled', true);
-        $("#contactTypeEventDirectorOther").prop('disabled', true);
+
         
+    
         if ($(this).val() != 'LMSC') {
             $("#confirmLmscSelect").hide();
         }
@@ -36,10 +38,13 @@ $(document).ready(function() {
             $(".contact-info__host-type-club--container").hide();
             $(".contact-info-host-type__other--container").hide();
             $(".contact-info-safety-coordinator__add-new").hide();
+            $("#confirmClubLookup").hide();
             $(".contact-info__host-type-club--container").show();
             $(".lookup-host-type-usms-club").show();
         }
         if ($(this).val() === 'Other Organization') {
+            $("#addHostTypeOtherOrganizationLookup").hide();
+            $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
             $(".contact-info__host-type-lmsc--container").hide();
             $(".contact-info__host-type-club--container").hide();
             $(".contact-info-host-type__other--container").show();
@@ -63,9 +68,7 @@ $(document).ready(function() {
 
     $("#selectHostTypeLmsc").on('change', function() {
         if ($(this).val() === 'Florida LMSC' || $(this).val() === 'Georgia LMSC') {
-            $(".input-group.lookup-confirm").hide();
-            $(".input-group.lookup-confirm").css("height","0");
-            $(".input-group.lookup-confirm").css("opacity","0");
+            hideLookupConfirmtBtn();
         }
         $("#confirmLmscSelect").show();
     });
@@ -75,13 +78,12 @@ $(document).ready(function() {
         e.preventDefault();
         $(this).hide();
         $(".contact-info__host-type-lmsc--container").hide();
-        $("#selectHostType").prop('selectedIndex',0);
-        $("#selectHostTypeLmsc").prop('selectedIndex',0);
-        $("#contactTypeEventDirectorCurrent").prop('disabled', false);
-        $("#contactTypeEventDirectorOther").prop('disabled', false);
+        resetHostSelects();
+        enableHostTypeSelect();
+        enableListControlEditing();
+        enableEventDirectorRadios();
         enableHeadRefBtn();
         $(".contact-list__event-host--header").show();
-        // $(".list-item--lmsc").show();
         $(".contact-info__host-type--container").hide();
         $(".contact-information__event-host--list .list-item").parent().hide();
         $(".contact-information__event-host--list .list-item--lmsc").parent().show();
@@ -92,11 +94,8 @@ $(document).ready(function() {
         $(".contact-info__host-type--container").show();
         $(".contact-list__event-host--header").hide();
         $(".contact-information__event-host--list .list-item").parent().hide();
-        $(".input-group.lookup-confirm").css("height","0");
-        $(".input-group.lookup-confirm").css("opacity","0");
-        $("#selectHostType").prop('selectedIndex',0);
-        $("#selectHostTypeLmsc").prop('selectedIndex',0);
-        $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
+        hideLookupConfirmtBtn();
+        resetHostSelects();
         $(".contact-list__event-director-add-new--awaiting-message").hide();
     });
     
@@ -122,13 +121,11 @@ $(document).ready(function() {
         $(".contact-info__host-type--container").hide();
         $("#lookupHostTypeUsmsClub").hide();
         $("label[for='lookupHostTypeUsmsClub']").hide();
-        $(".input-group.lookup-confirm").css("height","0");
-        $(".input-group.lookup-confirm").css("opacity","0");
-        $("#contactTypeEventDirectorCurrent").prop('disabled', false);
-        $("#contactTypeEventDirectorOther").prop('disabled', false);
+        hideLookupConfirmtBtn();
+        enableEventDirectorRadios();
         enableHeadRefBtn();
-        $("#selectHostType").prop('selectedIndex',0);
-        $("#selectHostTypeLmsc").prop('selectedIndex',0);
+        resetHostSelects();
+        enableListControlEditing();
         $(".contact-list__event-host--header").show();
         
         $(".contact-information__event-host--list").show();
@@ -143,58 +140,49 @@ $(document).ready(function() {
         e.preventDefault();
         $(this).hide();
         enableHeadRefBtn();
-        $("#selectHostType").prop('selectedIndex',0);
-        $("#selectHostTypeLmsc").prop('selectedIndex',0);
-        $("#contactTypeEventDirectorCurrent").prop('disabled', false);
-        $("#contactTypeEventDirectorOther").prop('disabled', false);
+        resetHostSelects();
+        enableListControlEditing();
+        enableEventDirectorRadios();
         $(".contact-info__host-type--container").hide();
         $(".contact-list__event-host--header").show();
     });
     
-     
     $("#addNewOrganization").click(function(e) {
         e.preventDefault();
         $(this).hide();
-        enableHeadRefBtn();
-        $(".input-group.lookup-confirm").css("height","0");
-        $(".input-group.lookup-confirm").css("opacity","0");
-        $(".contact-info-host-type__other-organization--container").show();
+        hideLookupConfirmtBtn();
         $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
         $("#addHostTypeOtherOrganizationLookup").hide();
+        $(".contact-info-host-type__other-organization--container").show();
+        $("#addHostTypeOtherOrganizationLookup").hide();
+        $("#addNewHeadRef").hide();
     });
 
     $("#addHostTypeOtherBtn").click(function(e) {
         e.preventDefault();
-        $(this).hide();
         enableHeadRefBtn();
-        $(".input-group.lookup-confirm").css("height","0");
-        $(".input-group.lookup-confirm").css("opacity","0");
-        $("#contactTypeEventDirectorCurrent").prop('disabled', false);
-        $("#contactTypeEventDirectorOther").prop('disabled', false);
-        $("#selectHostType").prop('selectedIndex',0);
-        $("#selectHostTypeLmsc").prop('selectedIndex',0);
-        $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
+        enableListControlEditing();
+        hideLookupConfirmtBtn();
+        enableEventDirectorRadios();
+        resetHostSelects();
         $(".contact-info-host-type__other-organization--container.add-new-inputs").hide();
         $(".contact-info__host-type--container").hide();
         $(".contact-info-host-type__other--container").hide();
         $(".contact-info-organization__add-new").hide();
         $("#addHostTypeOtherOrganizationLookup").hide();
-        $(".contact-list__event-host--header").show();
-        $(".contact-information__event-host--list .list-item").parent().hide();
-        $(".contact-information__event-host--list .list-item--organization-new").parent().show();
+        $(".contact-list__event-host--header").show(); // Show list header and controls
+        $(".contact-information__event-host--list .list-item").parent().hide(); // Hide any existing list items
+        $(".contact-information__event-host--list .list-item--organization-new").parent().show(); // Show this list item
     });
 
     $("#addHostTypeOtherOrganizationLookup").click(function(e) {
         e.preventDefault();
         $(this).hide();
         enableHeadRefBtn();
-        $(".input-group.lookup-confirm").css("height","0");
-        $(".input-group.lookup-confirm").css("opacity","0");
-        $("#selectHostType").prop('selectedIndex',0);
-        $("#selectHostTypeLmsc").prop('selectedIndex',0);
-        $("#contactTypeEventDirectorCurrent").prop('disabled', false);
-        $("#contactTypeEventDirectorOther").prop('disabled', false);
-        $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
+        enableListControlEditing();
+        hideLookupConfirmtBtn();
+        resetHostSelects();
+        enableEventDirectorRadios();
         $(".contact-info-organization__add-new").hide();
         $(".contact-info-host-type__other--container").hide();
         $(".contact-info__host-type--container").hide();        
@@ -210,10 +198,32 @@ $(document).ready(function() {
 
 });
 
+
+// Functions //////////////////////////////////////////////////////////////////////////////////////////////
+
 function disableHostTypeSelect() {
     $("#selectHostType").prop("disabled", true);
 }
 
 function enableHostTypeSelect() {
     $("#selectHostType").prop("disabled", false);
+}
+
+function disableListControlEditing() {
+    $(".contact-list__controls .list__controls--settings").prop('disabled', true);
+    $(".contact-list__controls .btn-link").prop('disabled', true);
+}
+
+function enableListControlEditing() {
+    $(".contact-list__controls .list__controls--settings").prop('disabled', false);
+    $(".contact-list__controls .btn-link").prop('disabled', false);
+}
+
+function resetHostSelects() {
+    $("#selectHostType").prop('selectedIndex',0);
+    $("#selectHostTypeLmsc").prop('selectedIndex',0);
+}
+
+function disableEventDirectorRadios() {
+    $(".contact-info__event-director-type-form .radio-container input").prop('disabled', true);
 }

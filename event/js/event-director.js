@@ -1,32 +1,38 @@
 
 $(document).ready(function() {
 
+// Disable Save & Continue Button
+    $("#saveContactInfoSection").prop("disabled", true);
+
 // Select I'm the Event Director
     $("#contactTypeEventDirectorCurrent").click(function(e) {
         // e.preventDefault();
-        $("#selectHostType").prop("disabled", true);
-        $("#saveContactInfoSection").prop("disabled", true);
         disableHeadRefBtn();
+        disableHostTypeSelect();
+        disableListControlEditing();
+
+        // Show selected Event Director in list
         $(".contact-information__event-director--list").show();
+        $(".contact-information__event-director--list .list-item").parent().hide();
         $(".contact-information__event-director--list .list-item--current").parent().show();
-        $(".input-group.lookup-confirm").hide();
-        // $(".input-group.lookup-confirm").css("height","0");
-        // $(".input-group.lookup-confirm").css("opacity","0");
-        closeLookupConfirmtBtn();
+
+        hideLookupConfirmtBtn();
+
         $(".contact-list__event-director--message").hide();
         $(".contact-info__event-director-other--container").hide();
         $(".contact-info__event-director-other--add-new").hide();    
         $(".contact-info__event-director--add-new-container.add-new-inputs").hide();
+
         $("#confirmCurrentEventDirector").show();
         $("#lookupEventDirectorName").attr("placeholder", "");
-        $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
         $("#addNewEventDirector").show();
     });
 
 // Confirm I'm the Event Director
     $("#confirmCurrentEventDirector").click(function(e) {
         e.preventDefault();
-        $(".contact-info__event-director-type-form").hide();
+        enableListControlEditing();
+        $(".contact-info__event-director-type-form").hide();  // Hide the Event Dorector inputs
         $(this).hide();
         $(".list__header.contact-list__event-director--header").show();
         uncheckEventDirectorRadios();
@@ -35,7 +41,7 @@ $(document).ready(function() {
     });
     
 // Edit Event Director List
-    $(" #editContactList").click(function(e) {
+    $("#editContactList").click(function(e) {
         // e.preventDefault();
         $(".contact-info__event-director-type-form").show();
         $(".list__header.contact-list__event-director--header").hide();
@@ -56,21 +62,19 @@ $(document).ready(function() {
         // e.preventDefault();
         $("#selectHostType").prop("disabled", true);
         disableHeadRefBtn();
+        disableListControlEditing();
         $(".contact-info__event-director-other--container").show();
         $(".contact-info__event-director-other--add-new").show();
         $(".contact-information__event-director--list").hide();
         $("#confirmCurrentEventDirector").hide();
         $("#lookupEventDirectorName").attr("placeholder", "");
-        $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
         $(".contact-list__event-director--message").show();
     });
 
 // Search Existing Event Directors
     $("#lookupEventDirectorName").click(function(e) {
         e.preventDefault();
-        $(".input-group.lookup-confirm").show();
-        $(".input-group.lookup-confirm").css("height","70px");
-        $(".input-group.lookup-confirm").css("opacity","1");
+        showLookupConfirmtBtn();
         $(".contact-info__event-director--add-new-container.add-new-inputs").hide();
         $("#addAsEventDirector").show();
         $("#addNewEventDirector").show();
@@ -82,16 +86,13 @@ $(document).ready(function() {
         e.preventDefault();
         enableHeadRefBtn();
         enableHostTypeSelect();
-        $(".input-group.lookup-confirm").hide();
-        // $(".input-group.lookup-confirm").css("height","0");
-        // $(".input-group.lookup-confirm").css("opacity","0");
-        closeLookupConfirmtBtn();
-        // $("#selectHostType").prop("disabled", false);
-        $(".contact-info__event-director-type-form").hide();
+        enableListControlEditing();
+        hideLookupConfirmtBtn();
+        disableEventDirectorRadios();
+        $(".contact-info__event-director-type-form").hide();  // Hide the Event Dorector inputs
         $(".contact-info__event-director-other--container").hide();
         $(".contact-info__event-director-other--add-new").hide();
         $(".contact-list__event-director--message").hide();
-        disableEventDirectorRadios();
         $(".contact-info__event-director--add-new-container.add-new-inputs").hide();
         $("#confirmCurrentEventDirector").hide();
         $(".list__header.contact-list__event-director--header").show();
@@ -101,7 +102,6 @@ $(document).ready(function() {
         uncheckEventDirectorRadios();
         enableHeadRefBtn();
         $("#lookupEventDirectorName").attr("placeholder", "");
-        $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
     });
 
 // Open Form to Add New Event Director
@@ -110,27 +110,20 @@ $(document).ready(function() {
         $(this).hide();
         $("#addAsEventDirector").hide();
         $(".contact-info__event-director--add-new-container.add-new-inputs").show();
-        $(".input-group.lookup-confirm").hide();
-        // $(".input-group.lookup-confirm").css("height","0");
-        // $(".input-group.lookup-confirm").css("opacity","0");
-        closeLookupConfirmtBtn();
+        hideLookupConfirmtBtn();
         $("#lookupEventDirectorName").attr("placeholder", "");
-        $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
     });
 
 // Save New Event Director from Form
     $("#addNewEventDirectorBtn").click(function(e) {
         e.preventDefault();
-        $(".input-group.lookup-confirm").hide();
-        // $(".input-group.lookup-confirm").css("height","0");
-        // $(".input-group.lookup-confirm").css("opacity","0");
-        closeLookupConfirmtBtn();
+        hideLookupConfirmtBtn();
         enableEventDirectorRadios();
         uncheckEventDirectorRadios()
         $("#selectHostType").prop("disabled", false);
         enableHeadRefBtn();
         $(".section__header--summary.contact-list__event-director--message").hide();
-        $(".contact-info__event-director-type-form").hide();
+        $(".contact-info__event-director-type-form").hide();  // Hide the Event Dorector inputs
         $(".contact-info__event-director-other--container").hide();
         $(".contact-info__event-director-other--add-new").hide();
         $(".contact-list__event-director--message").hide();
@@ -149,7 +142,7 @@ $(document).ready(function() {
         e.preventDefault();
         $(".contact-info__event-director-type-form").show();
         $(".contact-info__event-director-other--container").show();
-        $(".contact-info__event-director-other--add-new").hide();
+        $(".contact-info__event-director-other--add-new").show();
         $(".contact-info__event-director--add-new-container").hide();
         $("#addNewEventDirector").show();
         $(".contact-list__event-director--message").show();
@@ -157,6 +150,8 @@ $(document).ready(function() {
     
 });
 
+
+// Functions //////////////////////////////////////////////////////////////////////////////////////////////
 
 function disableEventDirectorRadios() {
     $("#contactTypeEventDirectorCurrent").prop('disabled', true);
@@ -173,7 +168,15 @@ function uncheckEventDirectorRadios() {
     $("#contactTypeEventDirectorOther").prop('checked', false);
 }
 
-function closeLookupConfirmtBtn() {
+function hideLookupConfirmtBtn() {
+    $(".input-group.lookup-confirm").hide();
     $(".input-group.lookup-confirm").css("height","0");
     $(".input-group.lookup-confirm").css("opacity","0");
+    $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
+}
+
+function showLookupConfirmtBtn() {
+    $(".input-group.lookup-confirm").show();
+    $(".input-group.lookup-confirm").css("height","70px");
+    $(".input-group.lookup-confirm").css("opacity","1");
 }

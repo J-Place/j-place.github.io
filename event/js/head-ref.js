@@ -1,10 +1,12 @@
-
 // Choose to Add Head Ref - Open Inputs
 $("#addHeadRef").click(function(e) {
     e.preventDefault();
     disableEventDirectorRadios();
     disableHostTypeSelect();
     openHeadRefSection();
+    disableListControlEditing();
+    $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
+    $(".contact-info__head-ref-new--add-new").show();
 });
 
 // Lookup Head Ref in Search
@@ -20,44 +22,46 @@ $("#addExistingRefBtn").click(function(e) {
     e.preventDefault();
     closeHeadRefSection(); // Close the head ref inputs
     showRefList(); // Show the list container
+    enableListControlEditing(); // Enable list editing
     $(".contact-list__head-ref--header").show(); // Show the list header    
     $(".contact-info__head-ref-list .list-item--lookup").parent().show(); // Show this list item
+    // .attr("placeholder", "");
 });
 
-// Select Add New Ref - Open Form
+// Select Add New Ref -> Open Form
 $("#addNewHeadRef").click(function(e) {
     e.preventDefault();
+    $("#addNewHeadRef").hide();
     closeLookupRef();
     openAddRefForm();
+    $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
 });
-// Save Add New Ref Form
 
-// Remove Ref from List and Add New
+// Edit Ref List -> Clears the list for demo purposes
 $("#editRefList").click(function(e) {
     e.preventDefault();
     hideRefList();
     hideRefListItems();
     resetHeadRef();
-    // openHeadRefSection();
-    // $(".contact-info__host-type--container").show();
-    // $(".contact-list__event-host--header").hide();
-    // $(".contact-information__event-host--list .list-item").parent().hide();
-    // $(".input-group.lookup-confirm").css("height","0");
-    // $(".input-group.lookup-confirm").css("opacity","0");
-    // $("#selectHostType").prop('selectedIndex',0);
-    // $("#selectHostTypeLmsc").prop('selectedIndex',0);
-    // $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
-    // $(".contact-list__event-director-add-new--awaiting-message").hide();
 });
 
 $("#confirmNewHeadRefBtn").click(function(e) {
     e.preventDefault();
     closeHeadRefSection(); // Close the head ref inputs
     showRefList(); // Show the list container
+    enableListControlEditing(); // Enable list editing
     $(".contact-list__head-ref--header").show(); // Show the list header    
     $(".contact-info__head-ref-list .list-item--new").parent().show(); // Show this list item
 });
 
+$("#cancelNewHeadRefBtn").click(function(e) {
+    e.preventDefault();
+    closeAddRefForm();
+    $("#addNewHeadRef").show();
+});
+
+
+// Functions //////////////////////////////////////////////////////////////////////////////////////////////
 
 function resetHeadRef() {
     $(".form-group.contact-info__head-ref--container").show();
@@ -92,9 +96,7 @@ function openLookupRef() {
 }
 
 function closeLookupRef() {
-    $(".input-group.lookup-confirm").hide();
-    $(".input-group.lookup-confirm").css("height","0");
-    $(".input-group.lookup-confirm").css("opacity","0");
+    hideLookupConfirmtBtn();
     $("#addExistingRefBtn").hide();
     $("#lookupRefName").attr("placeholder", "");
 }
