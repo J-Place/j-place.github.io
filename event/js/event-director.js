@@ -8,6 +8,7 @@ $(document).ready(function() {
     $("#contactTypeEventDirectorCurrent").click(function(e) {
         // e.preventDefault();
         disableHeadRefBtn();
+        disableSafetyCoordinatorBtn();
         disableHostTypeSelect();
         disableListControlEditing();
 
@@ -30,13 +31,14 @@ $(document).ready(function() {
 
 // Confirm I'm the Event Director
     $("#confirmCurrentEventDirector").click(function(e) {
-        e.preventDefault();
-        enableListControlEditing();
+        e.preventDefault();        
         $(".contact-info__event-director-type-form").hide();  // Hide the Event Dorector inputs
         $(this).hide();
         $(".list__header.contact-list__event-director--header").show();
         uncheckEventDirectorRadios();
         enableHeadRefBtn();
+        enableSafetyCoordinatorBtn();
+        enableListControlEditing();
         $("#selectHostType").prop("disabled", false);
     });
     
@@ -50,6 +52,7 @@ $(document).ready(function() {
         $("#confirmCurrentEventDirector").show();
         $(".contact-list__event-director-add-new--awaiting-message").hide();
         enableHeadRefBtn();
+        enableSafetyCoordinatorBtn();
         enableHostTypeSelect();
         enableEventDirectorRadios();
     });
@@ -62,6 +65,7 @@ $(document).ready(function() {
         // e.preventDefault();
         $("#selectHostType").prop("disabled", true);
         disableHeadRefBtn();
+        disableSafetyCoordinatorBtn();
         disableListControlEditing();
         $(".contact-info__event-director-other--container").show();
         $(".contact-info__event-director-other--add-new").show();
@@ -84,11 +88,13 @@ $(document).ready(function() {
 // Save Existing Event Director Search Result
     $("#addAsEventDirector").click(function(e) {
         e.preventDefault();
+        disableEventDirectorRadios();
         enableHeadRefBtn();
+        enableSafetyCoordinatorBtn();
         enableHostTypeSelect();
         enableListControlEditing();
         hideLookupConfirmtBtn();
-        disableEventDirectorRadios();
+        uncheckEventDirectorRadios();
         $(".contact-info__event-director-type-form").hide();  // Hide the Event Dorector inputs
         $(".contact-info__event-director-other--container").hide();
         $(".contact-info__event-director-other--add-new").hide();
@@ -99,8 +105,6 @@ $(document).ready(function() {
         $(".contact-information__event-director--list").show();
         $(".contact-information__event-director--list .list-item").parent().hide();
         $(".contact-information__event-director--list .list-item--lookup").parent().show();
-        uncheckEventDirectorRadios();
-        enableHeadRefBtn();
         $("#lookupEventDirectorName").attr("placeholder", "");
     });
 
@@ -108,9 +112,9 @@ $(document).ready(function() {
     $("#addNewEventDirector").click(function(e) {
         e.preventDefault();
         $(this).hide();
+        hideLookupConfirmtBtn();
         $("#addAsEventDirector").hide();
         $(".contact-info__event-director--add-new-container.add-new-inputs").show();
-        hideLookupConfirmtBtn();
         $("#lookupEventDirectorName").attr("placeholder", "");
     });
 
@@ -122,6 +126,7 @@ $(document).ready(function() {
         uncheckEventDirectorRadios()
         $("#selectHostType").prop("disabled", false);
         enableHeadRefBtn();
+        enableSafetyCoordinatorBtn();
         $(".section__header--summary.contact-list__event-director--message").hide();
         $(".contact-info__event-director-type-form").hide();  // Hide the Event Dorector inputs
         $(".contact-info__event-director-other--container").hide();

@@ -3,6 +3,7 @@ $("#addHeadRef").click(function(e) {
     e.preventDefault();
     disableEventDirectorRadios();
     disableHostTypeSelect();
+    disableSafetyCoordinatorBtn();
     openHeadRefSection();
     disableListControlEditing();
     $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
@@ -23,6 +24,7 @@ $("#addExistingRefBtn").click(function(e) {
     closeHeadRefSection(); // Close the head ref inputs
     showRefList(); // Show the list container
     enableListControlEditing(); // Enable list editing
+    enableSafetyCoordinatorBtn(); // Show Safety Coordinator button
     $(".contact-list__head-ref--header").show(); // Show the list header    
     $(".contact-info__head-ref-list .list-item--lookup").parent().show(); // Show this list item
     // .attr("placeholder", "");
@@ -50,6 +52,7 @@ $("#confirmNewHeadRefBtn").click(function(e) {
     closeHeadRefSection(); // Close the head ref inputs
     showRefList(); // Show the list container
     enableListControlEditing(); // Enable list editing
+    enableSafetyCoordinatorBtn(); // Show Safety Coordinator button
     $(".contact-list__head-ref--header").show(); // Show the list header    
     $(".contact-info__head-ref-list .list-item--new").parent().show(); // Show this list item
 });
