@@ -6,7 +6,7 @@ $("#addHeadRef").click(function(e) {
     disableSafetyCoordinatorBtn();
     openHeadRefSection();
     disableListControlEditing();
-    $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
+    $("#lookupRefName").attr("placeholder", "");
     $(".contact-info__head-ref-new--add-new").show();
 });
 
@@ -36,7 +36,7 @@ $("#addNewHeadRef").click(function(e) {
     $("#addNewHeadRef").hide();
     closeLookupRef();
     openAddRefForm();
-    $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
+    $("#lookupRefName").attr("placeholder", "");
 });
 
 // Edit Ref List -> Clears the list for demo purposes

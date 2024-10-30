@@ -6,7 +6,7 @@ $("#addSafetyCoordinator").click(function(e) {
     disableHeadRefBtn();
     openSafetyCoordinatorSection();
     disableListControlEditing();
-    $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
+    $("#lookupSafetyCoordinatorName").attr("placeholder", "");
     $(".contact-info__safety-coordinator-new--add-new").show();
 });
 
@@ -36,7 +36,7 @@ $("#addNewSafetyCoordinator").click(function(e) {
     $("#addNewSafetyCoordinator").hide();
     closeLookupSafetyCoordinator();
     openAddSafetyCoordinatorForm();
-    $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
+    $("#lookupSafetyCoordinatorName").attr("placeholder", "");
 });
 
 // Edit Safety List -> Clears the list for demo purposes
