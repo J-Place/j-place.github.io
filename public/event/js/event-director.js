@@ -123,7 +123,8 @@ $(document).ready(function() {
         e.preventDefault();
         hideLookupConfirmtBtn();
         enableEventDirectorRadios();
-        uncheckEventDirectorRadios()
+        uncheckEventDirectorRadios();
+        enableListControlEditing();
         $("#selectHostType").prop("disabled", false);
         enableHeadRefBtn();
         enableSafetyCoordinatorBtn();

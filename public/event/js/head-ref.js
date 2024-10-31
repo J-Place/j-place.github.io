@@ -6,7 +6,9 @@ $("#addHeadRef").click(function(e) {
     disableSafetyCoordinatorBtn();
     openHeadRefSection();
     disableListControlEditing();
+    closeLookupRef();
     $("#addHeadRef").hide();
+    $("#addExistingRefBtn").hide();
     $("#addNewHeadRef").show();
     $("#cancelAddHeadRef").show();
     $("#lookupRefName").attr("placeholder", "");
@@ -29,6 +31,7 @@ $("#lookupRefName").click(function(e) {
     openLookupRef();
     closeAddRefForm();
     $(this).attr("placeholder", "Mark Usher");
+    $("#addNewHeadRef").show();
 });
 
 // Save Head Ref from Search
@@ -39,6 +42,8 @@ $("#addExistingRefBtn").click(function(e) {
     enableListControlEditing();
     enableSafetyCoordinatorBtn();
     $("#lookupRefName").attr("placeholder", "");
+    $("#addHeadRef").show();
+    $("#cancelAddHeadRef").hide();
     $(".contact-list__head-ref--header").show();
     $(".contact-info__head-ref-list .list-item--lookup").parent().show();
 });
@@ -66,6 +71,8 @@ $("#confirmNewHeadRefBtn").click(function(e) {
     showRefList();
     enableListControlEditing();
     enableSafetyCoordinatorBtn();
+    $("#addHeadRef").hide();
+    $("#cancelAddHeadRef").show();
     $(".contact-list__head-ref--header").show();
     $(".contact-info__head-ref-list .list-item--new").parent().show();
 });
@@ -73,7 +80,9 @@ $("#confirmNewHeadRefBtn").click(function(e) {
 $("#cancelNewHeadRefBtn").click(function(e) {
     e.preventDefault();
     closeAddRefForm();
-    $("#addNewHeadRef").show();
+    $("#addHeadRef").show();
+    // $("#cancelAddHeadRef").hide();
+    // $("#addNewHeadRef").show();
 });
 
 
@@ -119,6 +128,10 @@ function openLookupRef() {
 function closeLookupRef() {
     hideLookupConfirmtBtn();
     $("#addExistingRefBtn").hide();
+
+    $(".input-group.lookup-confirm").hide();
+    $(".input-group.lookup-confirm").css("height","0");
+    $(".input-group.lookup-confirm").css("opacity","0");
 }
 
 function openAddRefForm() {

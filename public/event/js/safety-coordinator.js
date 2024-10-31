@@ -28,6 +28,7 @@ $("#lookupSafetyCoordinatorName").click(function(e) {
     openLookupSafetyCoordinator();
     closeAddSafetyCoordinatorForm();
     $(this).attr("placeholder", "Jay Place");
+    $("#addNewSafetyCoordinator").show();
 });
 
 // Save Safety Coordinator from Search
@@ -37,6 +38,8 @@ $("#addExistingSafetyCoordinatorBtn").click(function(e) {
     showSafetyCoordinatorList();
     enableListControlEditing();
     enableHeadRefBtn();
+    $("#cancelAddSafetyCoordinator").hide();
+    $("#addSafetyCoordinator").show();
     $("#lookupSafetyCoordinatorName").attr("placeholder", "");
     $(".contact-list__safety-coordinator--header").show();
     $(".contact-info__safety-coordinator-list .list-item--lookup").parent().show();
@@ -65,6 +68,8 @@ $("#confirmNewSafetyCoordinatorBtn").click(function(e) {
     showSafetyCoordinatorList();
     enableListControlEditing();
     enableHeadRefBtn();
+    $("#cancelAddSafetyCoordinator").hide();
+    $("#addSafetyCoordinator").show();
     $(".contact-list__safety-coordinator--header").show();
     $(".contact-info__safety-coordinator-list .list-item--new").parent().show();
 });
@@ -72,6 +77,8 @@ $("#confirmNewSafetyCoordinatorBtn").click(function(e) {
 $("#cancelNewSafetyCoordinatorBtn").click(function(e) {
     e.preventDefault();
     closeAddSafetyCoordinatorForm();
+    // $("#cancelAddSafetyCoordinator").hide();
+    // $("#addSafetyCoordinator").show();
     $("#addNewSafetyCoordinator").show();
 });
 
@@ -119,6 +126,10 @@ function closeLookupSafetyCoordinator() {
     hideLookupConfirmtBtn();
     $("#addExistingSafetyCoordinatorBtn").hide();
     $("#lookupSafetyCoordinatorName").attr("placeholder", "");
+
+    // $(".input-group.lookup-confirm").hide();
+    // $(".input-group.lookup-confirm").css("height","0");
+    // $(".input-group.lookup-confirm").css("opacity","0");
 }
 
 function openAddSafetyCoordinatorForm() {

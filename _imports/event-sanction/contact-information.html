@@ -24,31 +24,35 @@
         <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
         
         <!-- Event Director -->
-        <div class="section__content collapse in" id="contact-info__content" data-parent="#accordion">
+        <div class="section__content collapse" id="contact-info__content" data-parent="#accordion">
 
             <div class="form-group contact-info__event-director-type-form">
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="input-group-header radio-group-header required">Event Director</div>
-                        <div class="input-group checkbox-group">
-                            <label class="radio-label" for="contactTypeEventDirectorCurrent">
-                                I'm the event director
-                                <span class="radio-container">
-                                    <input type="radio" id="contactTypeEventDirectorCurrent" name="ContactTypeEventDirector" value="contactTypeEventDirectorCurrent">
-                                    <span class="radio__placeholder"></span>
-                                </span>
-                            </label>
+                        <div class="input-group radio-group event-director">
+                            <div class="input-group-header radio-group-header required">
+                                Event Director
+                            </div>
+                            <div class="input-group checkbox-group">
+                                <label class="radio-label" for="contactTypeEventDirectorCurrent">
+                                    I'm the event director
+                                    <span class="radio-container">
+                                        <input type="radio" id="contactTypeEventDirectorCurrent" name="ContactTypeEventDirector" value="contactTypeEventDirectorCurrent">
+                                        <span class="radio__placeholder"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="input-group checkbox-group">
+                                <label class="radio-label" for="contactTypeEventDirectorOther">
+                                    Someone else is the event director
+                                    <span class="radio-container">
+                                        <input type="radio" id="contactTypeEventDirectorOther" name="ContactTypeEventDirector" value="contactTypeEventDirectorOther">
+                                        <span class="radio__placeholder"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <span class="help-block help-block--EventDirector">Please select an event director</span>
                         </div>
-                        <div class="input-group checkbox-group">
-                            <label class="radio-label" for="contactTypeEventDirectorOther">
-                                Someone else is the event director
-                                <span class="radio-container">
-                                    <input type="radio" id="contactTypeEventDirectorOther" name="ContactTypeEventDirector" value="contactTypeEventDirectorOther">
-                                    <span class="radio__placeholder"></span>
-                                </span>
-                            </label>
-                        </div>
-                        <span class="help-block help-block--EventDirector">Please select an event director</span>
                     </div>
                 </div>
             </div>
@@ -67,7 +71,7 @@
                     <div class="col-sm-12 col-md-8">
                         <div class="input-group lookup-confirm">
                             <button class="btn btn-small save-as-contact" type="button" id="addAsEventDirector">
-                                <span class="lookup-confirm--name">Add Kyle Deery</span>
+                                <span class="lookup-confirm--name">Confirm Kyle Deery</span>
                             </button>
                         </div>
                     </div>
@@ -79,7 +83,8 @@
                     <div class="col-sm-12 col-md-8">
                         <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">Or Add a New Event Director</p>
                         <div>
-                            <input class="btn btn-small btn-outline" id="addNewEventDirector" name="addNewEventDirector" type="button" value="Add New">
+                            <!-- <input class="btn btn-small btn-outline" id="addNewEventDirector" name="addNewEventDirector" type="button" value="Add New"> -->
+                            <button class="btn btn-small btn-outline" id="addNewEventDirector" name="addNewEventDirector" type="button" value="Add New">Add New</button>
                         </div>
                     </div>
                 </div>
@@ -165,7 +170,7 @@
                     <div class="col-sm-5 col-md-6">
                         <div class="form-group lookup person">
                             <button class="btn btn-small" type="button" id="addNewEventDirectorBtn">Confirm</button>
-                            <button class="btn btn-small btn-outline" type="button" id="cancelAddNewEventDirectorBtn">Cancel</button>
+                            <!-- <button class="btn btn-small btn-outline" type="button" id="cancelAddNewEventDirectorBtn">Cancel</button> -->
                         </div>
                     </div>
                 </div>
@@ -179,12 +184,14 @@
             <sergey-import src="event-sanction/safety-coordinator" />
 
         </div>
-        <sergey-import src="event-sanction/host-type" />
-    </div>
-        
-        
-        
 
+        <sergey-import src="event-sanction/host-type" />
+        
     </div>
+        
+        
+        
+    </div>
+</div>
 </form>
 <!-- <script src="./js/3-contact-info-mockup.js"></script> -->

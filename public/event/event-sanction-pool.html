@@ -487,28 +487,28 @@
                                              <div class="input-group-header radio-group-header">Event Year</div>
                                              <span class="help-block help-block--eventType">Please make a selection</span>
                                              <!-- CP: Can the label/id pair values be set dynamically = current year -->
-                                             <label class="radio-label radio-label--inline" for="eventYear2023">
-                                                <span class="radio-container">
-                                                   <input type="radio" name="eventType" id="eventYear2023" value="true">
-                                                   <span class="radio__placeholder"></span>
-                                                </span>
-                                                2023
-                                             </label>
-                                             <!-- CP: Can the label/id pair values be set dynamically = current year plus one -->
                                              <label class="radio-label radio-label--inline" for="eventYear2024">
                                                 <span class="radio-container">
-                                                         <input type="radio" name="eventType" id="eventYear2024" value="false">
+                                                   <input type="radio" name="eventType" id="eventYear2024" value="true">
                                                    <span class="radio__placeholder"></span>
                                                 </span>
                                                 2024
                                              </label>
-                                             <!-- CP: Can the label/id pair values be set dynamically = current year plus two -->
-                                             <label class="radio-label radio-label--inline" for="eventYear2025"> 
+                                             <!-- CP: Can the label/id pair values be set dynamically = current year plus one -->
+                                             <label class="radio-label radio-label--inline" for="eventYear2025">
                                                 <span class="radio-container">
                                                          <input type="radio" name="eventType" id="eventYear2025" value="false">
                                                    <span class="radio__placeholder"></span>
                                                 </span>
                                                 2025
+                                             </label>
+                                             <!-- CP: Can the label/id pair values be set dynamically = current year plus two -->
+                                             <label class="radio-label radio-label--inline" for="eventYear2026"> 
+                                                <span class="radio-container">
+                                                         <input type="radio" name="eventType" id="eventYear2026" value="false">
+                                                   <span class="radio__placeholder"></span>
+                                                </span>
+                                                2026
                                              </label>
                                           </div>
                                        </div>
@@ -601,31 +601,35 @@
         <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
         
         <!-- Event Director -->
-        <div class="section__content collapse in" id="contact-info__content" data-parent="#accordion">
+        <div class="section__content collapse" id="contact-info__content" data-parent="#accordion">
 
             <div class="form-group contact-info__event-director-type-form">
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="input-group-header radio-group-header required">Event Director</div>
-                        <div class="input-group checkbox-group">
-                            <label class="radio-label" for="contactTypeEventDirectorCurrent">
-                                I'm the event director
-                                <span class="radio-container">
-                                    <input type="radio" id="contactTypeEventDirectorCurrent" name="ContactTypeEventDirector" value="contactTypeEventDirectorCurrent">
-                                    <span class="radio__placeholder"></span>
-                                </span>
-                            </label>
+                        <div class="input-group radio-group event-director">
+                            <div class="input-group-header radio-group-header required">
+                                Event Director
+                            </div>
+                            <div class="input-group checkbox-group">
+                                <label class="radio-label" for="contactTypeEventDirectorCurrent">
+                                    I'm the event director
+                                    <span class="radio-container">
+                                        <input type="radio" id="contactTypeEventDirectorCurrent" name="ContactTypeEventDirector" value="contactTypeEventDirectorCurrent">
+                                        <span class="radio__placeholder"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="input-group checkbox-group">
+                                <label class="radio-label" for="contactTypeEventDirectorOther">
+                                    Someone else is the event director
+                                    <span class="radio-container">
+                                        <input type="radio" id="contactTypeEventDirectorOther" name="ContactTypeEventDirector" value="contactTypeEventDirectorOther">
+                                        <span class="radio__placeholder"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <span class="help-block help-block--EventDirector">Please select an event director</span>
                         </div>
-                        <div class="input-group checkbox-group">
-                            <label class="radio-label" for="contactTypeEventDirectorOther">
-                                Someone else is the event director
-                                <span class="radio-container">
-                                    <input type="radio" id="contactTypeEventDirectorOther" name="ContactTypeEventDirector" value="contactTypeEventDirectorOther">
-                                    <span class="radio__placeholder"></span>
-                                </span>
-                            </label>
-                        </div>
-                        <span class="help-block help-block--EventDirector">Please select an event director</span>
                     </div>
                 </div>
             </div>
@@ -644,7 +648,7 @@
                     <div class="col-sm-12 col-md-8">
                         <div class="input-group lookup-confirm">
                             <button class="btn btn-small save-as-contact" type="button" id="addAsEventDirector">
-                                <span class="lookup-confirm--name">Add Kyle Deery</span>
+                                <span class="lookup-confirm--name">Confirm Kyle Deery</span>
                             </button>
                         </div>
                     </div>
@@ -656,7 +660,8 @@
                     <div class="col-sm-12 col-md-8">
                         <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">Or Add a New Event Director</p>
                         <div>
-                            <input class="btn btn-small btn-outline" id="addNewEventDirector" name="addNewEventDirector" type="button" value="Add New">
+                            <!-- <input class="btn btn-small btn-outline" id="addNewEventDirector" name="addNewEventDirector" type="button" value="Add New"> -->
+                            <button class="btn btn-small btn-outline" id="addNewEventDirector" name="addNewEventDirector" type="button" value="Add New">Add New</button>
                         </div>
                     </div>
                 </div>
@@ -742,7 +747,7 @@
                     <div class="col-sm-5 col-md-6">
                         <div class="form-group lookup person">
                             <button class="btn btn-small" type="button" id="addNewEventDirectorBtn">Confirm</button>
-                            <button class="btn btn-small btn-outline" type="button" id="cancelAddNewEventDirectorBtn">Cancel</button>
+                            <!-- <button class="btn btn-small btn-outline" type="button" id="cancelAddNewEventDirectorBtn">Cancel</button> -->
                         </div>
                     </div>
                 </div>
@@ -894,7 +899,7 @@
         <div class="col-sm-12 col-md-8">
             <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">Or Add a New Head Referee</p>
             <div>
-                <input class="btn btn-small btn-outline" id="addNewHeadRef" name="addNewHeadRef" type="button" value="Add New">
+                <button class="btn btn-small btn-outline" id="addNewHeadRef" name="addNewHeadRef" type="button" value="Add New">Add New</button>
             </div>
         </div>
     </div>
@@ -958,7 +963,7 @@
         <div class="col-sm-5 col-md-6">
             <div class="form-group lookup person">
                 <button class="btn btn-small" type="button" id="confirmNewHeadRefBtn">Confirm</button>
-                <button class="btn btn-small btn-outline" type="button" id="cancelNewHeadRefBtn">Cancel</button>
+                <!-- <button class="btn btn-small btn-outline" type="button" id="cancelNewHeadRefBtn">Cancel</button> -->
             </div>
         </div>
     </div>
@@ -1085,13 +1090,13 @@
     </div>
 </div>
 
-<!-- Add New Safety Coordinta Button -->
+<!-- Add New Safety Coordinator Button -->
 <div class="form-group contact-info__safety-coordinator-new--add-new">
     <div class="row">
         <div class="col-sm-12 col-md-8">
             <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">Or Add a New Safety Coordinator</p>
             <div>
-                <input class="btn btn-small btn-outline" id="addNewSafetyCoordinator" name="addNewSafetyCoordinator" type="button" value="Add New">
+                <button class="btn btn-small btn-outline" id="addNewSafetyCoordinator" name="addNewSafetyCoordinator" type="button" value="Add New">Add New</button>
             </div>
         </div>
     </div>
@@ -1155,7 +1160,7 @@
         <div class="col-sm-5 col-md-6">
             <div class="form-group lookup person">
                 <button class="btn btn-small" type="button" id="confirmNewSafetyCoordinatorBtn">Confirm</button>
-                <button class="btn btn-small btn-outline" type="button" id="cancelNewSafetyCoordinatorBtn">Cancel</button>
+                <!-- <button class="btn btn-small btn-outline" type="button" id="cancelNewSafetyCoordinatorBtn">Cancel</button> -->
             </div>
         </div>
     </div>
@@ -1183,9 +1188,9 @@
                             <button class="list-item__delete">Remove</button>
                             <div class="contact-name">Jay Place</div>
                             <div class="contact-location">Sarasota, FL</div>
-                            <div class="contact-phone"></div>
-                            <div class="contact-email"></div>
-                            <div class="contact-id"></div>
+                            <!-- <div class="contact-phone"></div> -->
+                            <!-- <div class="contact-email"></div> -->
+                            <!-- <div class="contact-id"></div> -->
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
@@ -1195,9 +1200,9 @@
                             <button class="list-item__delete">Remove</button>
                             <div class="contact-name">Daniel Pauling</div>
                             <div class="contact-location">Sarasota, FL</div>
-                            <div class="contact-phone"></div>
-                            <div class="contact-email"></div>
-                            <div class="contact-id"></div>
+                            <!-- <div class="contact-phone"></div> -->
+                            <!-- <div class="contact-email"></div> -->
+                            <!-- <div class="contact-id"></div> -->
                         </div>
                     </div>
                 </div>
@@ -1247,6 +1252,7 @@
 <script src="./js/safety-coordinator.js"></script>
 
         </div>
+
         <div class="row contact-info__host-type">
     <div class="form-group contact-info__host-type--container">
         <div class="row">
@@ -1332,7 +1338,7 @@
             <div class="col-sm-12 col-md-8">
                 <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">Or Add a New Organization</p>
                 <div>
-                    <input class="btn btn-small btn-outline" id="addNewOrganization" name="addNewOrganization" type="button" value="Add New">
+                    <button class="btn btn-small btn-outline" id="addNewOrganization" name="addNewOrganization" type="button" value="Add New">Add New</button>
                 </div>
             </div>
         </div>
@@ -1390,7 +1396,7 @@
             <div class="col-sm-5 col-md-6">
                 <div class="form-group lookup person">
                     <button class="btn btn-small" type="button" id="addHostTypeOtherBtn">Confirm</button>
-                    <button class="btn btn-small btn-outline" type="button" id="cancelAddHostTypeOtherBtn">Cancel</button>
+                    <!-- <button class="btn btn-small btn-outline" type="button" id="cancelAddHostTypeOtherBtn">Cancel</button> -->
                 </div>
             </div>
         </div>
@@ -1478,12 +1484,13 @@
     </div>
 </div>
 <script src="./js/host-type.js"></script>
+        
     </div>
         
         
         
-
     </div>
+</div>
 </form>
 <!-- <script src="./js/3-contact-info-mockup.js"></script> -->
                            
