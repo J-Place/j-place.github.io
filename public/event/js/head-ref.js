@@ -6,8 +6,20 @@ $("#addHeadRef").click(function(e) {
     disableSafetyCoordinatorBtn();
     openHeadRefSection();
     disableListControlEditing();
-    $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
+    $("#addHeadRef").hide();
+    $("#cancelAddHeadRef").show();
+    $("#lookupRefName").attr("placeholder", "");
     $(".contact-info__head-ref-new--add-new").show();
+});
+
+$("#cancelAddHeadRef").click(function(e) {
+    e.preventDefault();
+    closeHeadRefSection();
+    $("#addHeadRef").show();
+    $("#cancelAddHeadRef").hide();
+    hideLookupConfirmtBtn()
+    enableSafetyCoordinatorBtn();
+    enableListControlEditing();
 });
 
 // Lookup Head Ref in Search
@@ -21,13 +33,13 @@ $("#lookupRefName").click(function(e) {
 // Save Head Ref from Search
 $("#addExistingRefBtn").click(function(e) {
     e.preventDefault();
-    closeHeadRefSection(); // Close the head ref inputs
-    showRefList(); // Show the list container
-    enableListControlEditing(); // Enable list editing
-    enableSafetyCoordinatorBtn(); // Show Safety Coordinator button
-    $(".contact-list__head-ref--header").show(); // Show the list header    
-    $(".contact-info__head-ref-list .list-item--lookup").parent().show(); // Show this list item
-    // .attr("placeholder", "");
+    closeHeadRefSection();
+    showRefList();
+    enableListControlEditing();
+    enableSafetyCoordinatorBtn();
+    $("#lookupRefName").attr("placeholder", "");
+    $(".contact-list__head-ref--header").show();
+    $(".contact-info__head-ref-list .list-item--lookup").parent().show();
 });
 
 // Select Add New Ref -> Open Form
@@ -36,7 +48,7 @@ $("#addNewHeadRef").click(function(e) {
     $("#addNewHeadRef").hide();
     closeLookupRef();
     openAddRefForm();
-    $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
+    $("#lookupRefName").attr("placeholder", "");
 });
 
 // Edit Ref List -> Clears the list for demo purposes
@@ -49,12 +61,12 @@ $("#editRefList").click(function(e) {
 
 $("#confirmNewHeadRefBtn").click(function(e) {
     e.preventDefault();
-    closeHeadRefSection(); // Close the head ref inputs
-    showRefList(); // Show the list container
-    enableListControlEditing(); // Enable list editing
-    enableSafetyCoordinatorBtn(); // Show Safety Coordinator button
-    $(".contact-list__head-ref--header").show(); // Show the list header    
-    $(".contact-info__head-ref-list .list-item--new").parent().show(); // Show this list item
+    closeHeadRefSection();
+    showRefList();
+    enableListControlEditing();
+    enableSafetyCoordinatorBtn();
+    $(".contact-list__head-ref--header").show();
+    $(".contact-info__head-ref-list .list-item--new").parent().show();
 });
 
 $("#cancelNewHeadRefBtn").click(function(e) {
@@ -62,6 +74,8 @@ $("#cancelNewHeadRefBtn").click(function(e) {
     closeAddRefForm();
     $("#addNewHeadRef").show();
 });
+
+
 
 
 // Functions //////////////////////////////////////////////////////////////////////////////////////////////
@@ -104,7 +118,6 @@ function openLookupRef() {
 function closeLookupRef() {
     hideLookupConfirmtBtn();
     $("#addExistingRefBtn").hide();
-    $("#lookupRefName").attr("placeholder", "");
 }
 
 function openAddRefForm() {
@@ -123,7 +136,6 @@ function showRefList() {
 
 function hideRefList() {
     $(".contact-info__head-ref-list").hide();
-    // $(".contact-info__head-ref--container").show();
 }
 
 function hideRefListItems() {

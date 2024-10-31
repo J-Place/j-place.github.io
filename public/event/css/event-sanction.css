@@ -16,6 +16,10 @@
     background-color: #f4f4f4;
 }
 
+#contact-info__content {
+    max-width: 800px;
+    margin-left: 0;
+}
 
 .add-new-inputs {
     padding: 2rem;
@@ -54,6 +58,11 @@
 
 label.radio-label {
     font-size: 14px;
+}
+
+.lookup-ref-name label,
+.lookup-safety-coordinator-name label {
+    margin: 2rem 0;
 }
 
 .lookup-name label {
@@ -134,14 +143,30 @@ label.radio-label {
     margin-bottom: 3rem;
 }
 
+#addHeadRef,
+#cancelAddHeadRef,
+#addSafetyCoordinator,
+#cancelAddSafetyCoordinator {
+    height: 2.3rem !important;
+    line-height: 100% !important;
+    padding: 0 0.7rem !important;
+    font-size: 1.1rem !important;
+}
+
 /* .contact-information__event-host--list, */
 .contact-info__head-ref-container,
 .row.contact-info__safety-coordinator,
 .row.contact-info__host-type {
-    border-top: 1px solid #CCC;
+    border-top: 1px dashed #DDD;
     max-width: 100%;
-    /* margin-top: 2rem; */
+    /* margin-bottom: 2rem; */
     padding-top: 2rem;
+}
+
+.row.contact-info__host-type {
+    border-bottom: 1px dashed #DDD;
+    margin-bottom: 2rem;
+    padding-bottom: 0rem;
 }
 
 /* .input-group.contact-info__safety-coordinator,
@@ -167,7 +192,56 @@ label.radio-label {
 /* .contact-information__event-director--list .list, */
 #addNewEventDirector,
 .form-group.contact-info__event-director--add-new-container.add-new-inputs {
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
+}
+
+/* .form-group.contact-info__head-ref--container, */
+.input-group.lookup-ref-name,
+.form-group.contact-info-organization__add-new,
+.form-group.contact-info__event-director-other--add-new,
+.form-group.contact-info-host-type__other--container,
+.form-group.contact-info__event-director-other--container,
+.input-group.contact-info__head-ref,
+.input-group.contact-info__safety-coordinator {
+    margin-bottom: 0;
+}
+
+
+@media (min-width: 1200px) {
+    /* .form__container .club-edit .section__header--summary, */
+    .form-group.contact-information__event-director--list,
+    .form__container .club-edit .section__header--summary.contact-list__event-director--message,
+    .form-group.contact-info__event-director--add-new-container,
+    .form-group.contact-info__event-director-other--container,
+    .form-group.contact-info__event-director-other--add-new,
+    .section__header--summary.contact-list__event-director--message,
+    .form-group.contact-info__safety-coordinator-lookup--container,
+    .form-group.contact-info__safety-coordinator-new--add-new,
+    .form-group.contact-info__safety-coordinator--add-new-container,
+    .form-group.contact-information__head-ref--list,
+    .form-group.contact-information__safety-coordinator--list,
+    .form-group.contact-info__head-ref-new--add-new,
+    .form-group.contact-info__head-ref-lookup--container,
+    .form-group.contact-information__event-host--list,
+    .form-group.contact-info__host-type-club--container,
+    .form-group.contact-info__host-type-lmsc--container,
+    .form-group.contact-info-host-type__other--container,
+    .form-group.contact-info-organization__add-new,
+    .form-group.contact-info-host-type__other-organization--container {
+        margin-left: 3rem;
+    }
+    .list__header {
+        margin-left: -3rem !important;
+    }
+}
+
+.contact-info__host-type label {
+    margin-top: 0.7rem;
+    margin-bottom: 1.5rem;
+}
+
+.list__header.contact-list__event-host--header {
+    margin-top: 0;
 }
 
 .usms-container .event-list__container .button-row__footer {
@@ -204,7 +278,7 @@ label.radio-label {
 .add-new-inputs {
     background-color: #f4f4f4;
     transition: all 0.25s ease;
-    max-width: 500px;
+    max-width: 800px;
     margin-bottom: 4rem;
 }
 
@@ -277,6 +351,10 @@ label.radio-label {
     /* margin-top: 0.5rem; */
     /* margin-right: 2rem; */
     margin: 1rem 0 4rem;
+}
+
+.list .btn {
+    margin-top: 2rem;
 }
 
 .event-card__title {
@@ -422,13 +500,10 @@ label.radio-label {
 .form__container .btn.btn-small,
 .form__container a.btn-small,
 .form__container button.btn-small {
-    font-size: 21.6px!important;
     font-size: 1.35rem!important;
-    padding: 8px 20.8px 11.2px;
+    margin-bottom: 2rem;
     padding: .5rem 1.3rem .7rem;
-    height: 48px!important;
     height: 3rem!important;
-    line-height: 32px!important;
     line-height: 2rem!important;
     text-transform: none;
     border-radius: 4px

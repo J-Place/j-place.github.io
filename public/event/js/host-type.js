@@ -8,6 +8,8 @@ $(document).ready(function() {
         disableSafetyCoordinatorBtn();
         disableListControlEditing();
         hideLookupConfirmtBtn();
+
+        $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
         
         $("#selectHostTypeLmsc").prop('selectedIndex',0); // Reset LMSC dropdown if Host dropdown changes
         
@@ -47,7 +49,7 @@ $(document).ready(function() {
         }
         if ($(this).val() === 'Other Organization') {
             $("#addHostTypeOtherOrganizationLookup").hide();
-            $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
+            // $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
             $(".contact-info__host-type-lmsc--container").hide();
             $(".contact-info__host-type-club--container").hide();
             $(".contact-info-host-type__other--container").show();
@@ -128,6 +130,7 @@ $(document).ready(function() {
         resetHostSelects();
         enableListControlEditing();
         hideLookupConfirmtBtn();
+        $(".contact-info__host-type-club--container").hide();
         $(".contact-info__host-type--container").hide();
         $("#lookupHostTypeUsmsClub").hide();
         $("label[for='lookupHostTypeUsmsClub']").hide();
@@ -187,6 +190,7 @@ $(document).ready(function() {
         enableListControlEditing();
         resetHostSelects();
         hideLookupConfirmtBtn();
+        $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
         $(".contact-info-organization__add-new").hide();
         $(".contact-info-host-type__other--container").hide();
         $(".contact-info__host-type--container").hide();        
@@ -201,6 +205,8 @@ $(document).ready(function() {
     });
 
 });
+
+
 
 
 // Functions //////////////////////////////////////////////////////////////////////////////////////////////
