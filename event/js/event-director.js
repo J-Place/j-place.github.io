@@ -182,7 +182,6 @@ function hideLookupConfirmtBtn() {
     $(".input-group.lookup-confirm").hide();
     $(".input-group.lookup-confirm").css("height","0");
     $(".input-group.lookup-confirm").css("opacity","0");
-    $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
 }
 
 function showLookupConfirmtBtn() {

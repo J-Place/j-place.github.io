@@ -6,8 +6,20 @@ $("#addSafetyCoordinator").click(function(e) {
     disableHeadRefBtn();
     openSafetyCoordinatorSection();
     disableListControlEditing();
+    hideLookupConfirmtBtn()
+    $("#addSafetyCoordinator").hide();
+    $("#cancelAddSafetyCoordinator").show();
     $("#lookupSafetyCoordinatorName").attr("placeholder", "");
     $(".contact-info__safety-coordinator-new--add-new").show();
+});
+
+$("#cancelAddSafetyCoordinator").click(function(e) {
+    e.preventDefault();
+    closeSafetyCoordinatorSection();
+    $("#addSafetyCoordinator").show();
+    $("#cancelAddSafetyCoordinator").hide();
+    enableListControlEditing();
+    enableHeadRefBtn();
 });
 
 // Lookup Safety Coordinator in Search
@@ -21,13 +33,13 @@ $("#lookupSafetyCoordinatorName").click(function(e) {
 // Save Safety Coordinator from Search
 $("#addExistingSafetyCoordinatorBtn").click(function(e) {
     e.preventDefault();
-    closeSafetyCoordinatorSection(); // Close the safety coordinator inputs
-    showSafetyCoordinatorList(); // Show the list container
-    enableListControlEditing(); // Enable list editing
-    enableHeadRefBtn();  // Show Head Ref button
-    $(".contact-list__safety-coordinator--header").show(); // Show the list header    
-    $(".contact-info__safety-coordinator-list .list-item--lookup").parent().show(); // Show this list item
-    // .attr("placeholder", "");
+    closeSafetyCoordinatorSection();
+    showSafetyCoordinatorList();
+    enableListControlEditing();
+    enableHeadRefBtn();
+    $("#lookupSafetyCoordinatorName").attr("placeholder", "");
+    $(".contact-list__safety-coordinator--header").show();
+    $(".contact-info__safety-coordinator-list .list-item--lookup").parent().show();
 });
 
 // Select Add New Safety -> Open Form
@@ -49,12 +61,12 @@ $("#editSafetyCoordinatorList").click(function(e) {
 
 $("#confirmNewSafetyCoordinatorBtn").click(function(e) {
     e.preventDefault();
-    closeSafetyCoordinatorSection(); // Close the safety coordinator inputs
-    showSafetyCoordinatorList(); // Show the list container
-    enableListControlEditing(); // Enable list editing
-    enableHeadRefBtn(); // Show Head Ref button
-    $(".contact-list__safety-coordinator--header").show(); // Show the list header    
-    $(".contact-info__safety-coordinator-list .list-item--new").parent().show(); // Show this list item
+    closeSafetyCoordinatorSection();
+    showSafetyCoordinatorList();
+    enableListControlEditing();
+    enableHeadRefBtn();
+    $(".contact-list__safety-coordinator--header").show();
+    $(".contact-info__safety-coordinator-list .list-item--new").parent().show();
 });
 
 $("#cancelNewSafetyCoordinatorBtn").click(function(e) {
@@ -125,7 +137,6 @@ function showSafetyCoordinatorList() {
 
 function hideSafetyCoordinatorList() {
     $(".contact-info__safety-coordinator-list").hide();
-    // $(".contact-info__safety-coordinator--container").show();
 }
 
 function hideSafetyCoordinatorListItems() {
