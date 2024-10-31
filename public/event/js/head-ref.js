@@ -7,6 +7,7 @@ $("#addHeadRef").click(function(e) {
     openHeadRefSection();
     disableListControlEditing();
     $("#addHeadRef").hide();
+    $("#addNewHeadRef").show();
     $("#cancelAddHeadRef").show();
     $("#lookupRefName").attr("placeholder", "");
     $(".contact-info__head-ref-new--add-new").show();
