@@ -185,6 +185,9 @@ function hideLookupConfirmtBtn() {
     $(".input-group.lookup-confirm").css("opacity","0");
 }
 
+// var thisLookup = $(this).parent().parent().parent().next().children().children();
+// var thisLookup = $(this).parent().parent().parent().next().children().children();
+
 function showLookupConfirmtBtn() {
     $(".input-group.lookup-confirm").show();
     $(".input-group.lookup-confirm").css("height","70px");

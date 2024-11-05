@@ -142,7 +142,8 @@ label.radio-label {
 /* .contact-information__event-host--list, */
 .contact-info__head-ref-container,
 .row.contact-info__safety-coordinator,
-.row.contact-info__host-type {
+.row.contact-info__host-type,
+.location-info__add-new-location--container {
     border-top: 1px dashed #DDD;
     max-width: 100%;
     /* margin-bottom: 2rem; */
@@ -307,6 +308,13 @@ label.radio-label {
 .contact-info__safety-coordinator--add-new-container,
 .contact-info__safety-coordinator--website-display-preferences {
     display:none;
+}
+
+.list--lookup.locations,
+.event-location-details,
+.location-information__locations-list,
+.locations-list__header {
+    display: none;
 }
 
 .event-list__container h3 {
@@ -521,7 +529,8 @@ label.radio-label {
 #addNewEventDirector:before,
 #addNewHeadRef:before,
 #addNewHeadRef:before,
-#addNewSafetyCoordinator:before {
+#addNewSafetyCoordinator:before,
+#addLocationBtn:before {
     content: "+";
     position: relative;
     top: -1px;
@@ -533,6 +542,13 @@ label.radio-label {
 }
 
 
+.form__container .locations .list-item button {
+    height: 2.3rem !important;
+    line-height: 2.3rem !important;
+    padding: 0 0.7rem !important;
+    font-size: 1.1rem !important;
+}
+
 
 
 /* Locations */
@@ -540,6 +556,15 @@ label.radio-label {
     font-size: 1.4rem;
     font-weight: 600;
     line-height: 1.6rem;
+}
+
+.form__container .locations button.btn.btn-small {
+    margin-bottom: 9px !important;
+}
+
+/* .location-column .list-item:last-of-type */
+.location-column {
+    margin: 0 0 5rem !important;
 }
 
 .location-column {
@@ -564,8 +589,39 @@ label.radio-label {
     line-height: 120%;
 }
 
+
 .event-location-details {
-    margin: 2.5rem 0 1rem;
+    /* margin: 2.5rem 0 1rem; */
+    margin: 0 auto 1rem;
+}
+
+p.lookup__location--or {
+    font-size: 1.6rem;
+    margin: 0;
+    font-weight: bold;
+}
+
+@media (min-width: 768px) {
+    p.lookup__location--or {
+        /* position: absolute;
+        right: 10px;
+        top: 26px; */
+
+        font-size: 1.6rem;
+        margin: 0 auto;
+        /* text-align: right; */
+        /* line-height: 100%; */
+        /* padding: 0; */
+        padding-left: 20%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        width: 100%;
+    }
+}
+
+.club-edit .location-header {
+    margin-bottom: 0;
 }
 
 .add-new__label {
@@ -580,4 +636,15 @@ label.radio-label {
 } */
 .club-edit .list__container {
     margin: 0 auto;
+}
+
+
+
+
+.liability span.checkbox {
+    display: block;
+    margin-left: 1.75rem;
+}
+.liability .checkbox input {
+    margin-left: -1.75rem;
 }
