@@ -6,7 +6,7 @@ $(document).ready(function() {
     let lookupByLocationInput = $("#lookupLocationCityState");
     let lookupByLocationList = $(".list--lookup.locations");
     // location-information__locations-list
-    let savedLocations = $(".location-information__locations-list");
+    let savedLocationsList = $(".location-information__locations-list");
     let lookupByLocationConfirm = $(".location-column button");
     let addNewLocationBtn = $("#addLocationBtn");
     let cancelAddNewLocationBtn = $("#cancelAddLocationBtn");
@@ -57,17 +57,25 @@ $(document).ready(function() {
     $(confirmAddNewLocation).click(function(e) {
         e.preventDefault();
         resetLocationInputs();
-        $(savedLocations).show();
+        hideAddNewLocationSection();
+        $(savedLocationsList).show();
     });
    
     $("#location-filter__range").on('change', function() {
+        if ($(this).val() === '10') {
+            // alert("10");
+            hideLocationInputs();
+            showAddNewLocationSection();
+        }
         $(".ui-lookup-filter-zip").show();
     });
 
     function hideLocationInputs() {
-        
+        $('.location-info__lookup-location-name--container').hide();
+        $(".location-info__lookup-location-city-state--container").hide();
     }
     function resetLocationInputs() {
+        hideLocationInputs();
         hideLocationNameBtn();
         $(lookupByLocationList).hide();
         resetAddNewLocation();
@@ -84,6 +92,12 @@ $(document).ready(function() {
         $(addNewLocationForm).hide();
         $(addNewLocationBtn).show();
         $(cancelAddNewLocationBtn).hide();
+    }
+    function showAddNewLocationSection() {
+        $(".location-info__add-new-location--container").show();
+    }
+    function hideAddNewLocationSection() {
+        $(".location-info__add-new-location--container").hide();
     }
 
 });

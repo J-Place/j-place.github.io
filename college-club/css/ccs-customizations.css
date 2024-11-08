@@ -30,9 +30,17 @@
     overflow-y: scroll;
 }
 
+.mega-menu-overlay__image-container {
+    display: none !important;
+    height: 0 !important;
+    width: 0 !important;
+    visibility: hidden !important;
+}
+
 @media (min-width: 1200px) {
     .mega-main-menu__nav-search-container {
         height: 80px;
+        z-index: 999;
     }
 }
 
@@ -41,19 +49,19 @@
         width: auto;
     }
     
-    .mega-menu-overlay {
+    /* .mega-menu-overlay {
         display: none;
-    }
+    } */
     .mega-menu-overlay {
         flex-direction: row-reverse;
         height: 360px;
         width: 100%;
-        /* width: auto; */
         padding-top: 2rem;
         padding-bottom: 4rem;
-        /* padding-left: calc(1200px - 50%); */
         padding-left: calc(1200px - 540px);
-        /* padding-right: calc(1200px - 50%); */
+        top: 100px !important;
+        background: rgba(0, 0, 0, 0.5);
+        border: 0 none;
     }
 
     .mega-menu-overlay > div {
@@ -130,6 +138,14 @@
     background: none;
 }
 
+.search--icon {
+    background: url('https://www.usms.org/-/media/usms/developers/images/myusms/icon-search-ko.svg');
+}
+
+.login--icon {
+    background: url('https://www.usms.org/-/media/usms/developers/images/myusms/icon-profile-login-ko.svg');
+}
+
 .mega-main-menu__items>li:last-of-type>a {
     border-color: #fff;
     background-color: transparent;
@@ -147,6 +163,11 @@
     .carousel__slide-image--desktop .carousel__slide-image {
         padding-bottom: 55%;
     }
+}
+
+.carousel-previous-button,
+.carousel-next-button {
+    display: block !important;
 }
 
 .carousel__slide-content,
@@ -188,7 +209,8 @@
 
 @media (min-width: 1200px) {
 
-    #mega-main-menu__container {
+    #mega-main-menu__container,
+    .header-static > div {
         background-color: transparent;
         background-color: rgba(0,0,0,0.5);
         position: relative;
@@ -197,9 +219,7 @@
     
     /* TEST THIS - Position Sticky !!!!!!! */
     .header-static {
-        /* position: sticky; */
         position: relative;
-        /* z-index: 101; */
     }
     
     .mega-main-menu__logo img {
