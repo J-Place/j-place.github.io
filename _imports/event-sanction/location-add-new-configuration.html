@@ -1,0 +1,64 @@
+<div class="input-group list-configuration-form">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="input-group required">
+                <label>Configuration Name</label>
+                <input class="form-control" type="text" id="configurationName" name="configurationName" maxlength="80" />
+                <span class="help-block help-block--configurationName">Please enter a configuration name</span>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="input-group required">
+                <label>Lanes (1-50)</label>
+                <input class="form-control" type="number" min="1" max="50" id="configurationLanes" name="configurationLanes" />
+                <span class="help-block help-block--configurationLanes">Please enter number of lanes</span>
+            </div>
+        </div>
+        <div class="col-xs-8">
+            <div class="input-group required">
+                <label>Length</label>
+                <select name="configurationLength" class="form-control" id="configurationLength" required="">
+                    <option value="">Select Length</option>
+                    <option value="25 Meters">25 Meters</option>
+                    <option value="25 Yards">25 Yards</option>
+                    <option value="50 Meters">50 Meters</option>
+                    <option value="Other">Other</option>
+                </select>
+                <span class="help-block help-block--configurationLength">You must select a length</span>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="input-group required input-group--configurationLengthOther fade">
+                <label>Other Length</label>
+                <input class="form-control" type="text" maxlength="50" id="configurationOtherLength" name="configurationLengthOther" />
+                <span class="help-block help-block--configurationLengthOther">Please enter length value</span>
+            </div>
+        </div>
+        <div class="input-group">
+            <label class="checkbox-label">
+                <div class="checkbox-container">
+                    <input type="checkbox" name="usmsVerified" id="usmsVerified" />
+                    <span class="checkbox__placeholder"></span>
+                </div>
+                USMS Verified
+                <span
+                    class="icon-help"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title=""
+                    data-container="body"
+                    data-original-title="The distance for the listed pool configuration has been measured then submitted to and verified by USMS so it can host sanctioned meets and be used to break records. If you are not sure of the date, enter 1111-01-01."
+                ></span>
+            </label>
+        </div>
+        <div class="input-group usms-verified-form usms-verified-form--fade required">
+            <input type="text" name="usmsVerifiedDate" id="usmsVerifiedDate" placeholder="YYYY-MM-DD" maxlength="10" />
+            <span class="help-block help-block--usmsVerifiedDate">Please enter a valid date</span>
+        </div>
+        <div class="input-group">
+            <label>After you've entered a pool configuration, click the button below to save and continue.</label>
+            <button class="btn btn-small" id="saveConfiguration">Confirm</button>
+            <button class="btn btn-small btn-outline" id="cancelSaveConfiguration">Cancel</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,82 @@
+<div class="list-venue-form">
+    <div class="input-group required">
+        <label for="venueName">Pool or Open Water Venue Name</label>
+        <input type="text" class="form-control" name="venueName" id="venueName" maxlength="80" />
+        <span class="help-block help-block--venueName">Please enter a venue name</span>
+    </div>
+    <div class="input-group input-group--poolType">
+        <label for="poolType">Body of Water</label>
+        <select name="poolType" class="form-control" id="poolType" required="">
+            <option value="">Select Pool Type</option>
+            <option value="Indoor">Indoor</option>
+            <option value="Outdoor">Outdoor</option>
+        </select>
+        <span class="help-block help-block--poolType">Please enter a pool type</span>
+    </div>
+    <div class="input-group required input-group--openWaterType fade">
+        <label for="openWaterType">Body of Water</label>
+        <select name="openWaterType" class="form-control" id="openWaterType" required="">
+            <option value="">Select Open Water Type</option>
+            <option value="Lake">Lake</option>
+            <option value="Ocean">Ocean</option>a
+            <option value="Reservoir">Reservoir</option>
+            <option value="River">River</option>
+        </select>
+        <span class="help-block help-block--openWaterType">Please enter a type</span>
+    </div>
+    <div class="input-group checkbox-group input-group--bulkhead">
+        <label class="checkbox-label" for="bulkhead">
+            <div class="checkbox-container">
+                <input type="checkbox" name="bulkhead" id="bulkhead" />
+                <span class="checkbox__placeholder"></span>
+            </div>
+            Bulkhead
+        </label>
+    </div>
+    <div class="input-group checkbox-group input-group--adaCompliant">
+        <label class="checkbox-label" for="adaCompliant">
+            <div class="checkbox-container">
+                <input type="checkbox" name="adaCompliant" id="adaCompliant" />
+                <span class="checkbox__placeholder"></span>
+            </div>
+            ADA Compliant
+            <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Only check if this pool mets the ADA compliance requirements found on ada.gov"></span>
+        </label>
+    </div>
+    <div class="input-group checkbox-group input-group--venueCableCourse fade">
+        <label class="checkbox-label" for="venueCableCourse">
+            <div class="checkbox-container">
+                <input type="checkbox" name="venueCableCourse" id="venueCableCourse" />
+                <span class="checkbox__placeholder"></span>
+            </div>
+            Cable Course
+        </label>
+    </div>
+    <div class="input-group list-venue-form__cable-course-form list-venue-form__cable-course-form--fade">
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="input-group required">
+                    <label>Distance</label>
+                    <input class="form-control" type="number" id="venueCableCourseValue" name="venueCableCourseValue" />
+                    <span class="help-block help-block--venueCableCourseValue">Please enter a distance</span>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="input-group required">
+                    <label>Unit</label>
+                    <select name="venueCableCourseUnit" class="form-control" id="venueCableCourseUnit" required="">
+                        <option value="Unit">Unit</option>
+                        <option value="Meters">Meters</option>
+                        <option value="Miles">Miles</option>
+                    </select>
+                    <span class="help-block help-block--venueCableCourseUnit">Please enter a unit</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="input-group">
+        <label>After you've entered your pool information, click the button below to save and continue</label>
+        <button class="btn btn-small" id="saveVenue" >Confirm</button>
+        <button class="btn btn-small btn-outline" id="cancelSaveVenue">Cancel</button>
+    </div>
+</div>

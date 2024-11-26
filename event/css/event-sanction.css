@@ -13,7 +13,7 @@
     height: 4.6rem;
     padding: 0;
     color: #656565;
-    background-color: #f4f4f4;
+    background-color: #fff;
 }
 
 #contact-info__content {
@@ -50,7 +50,8 @@
 .event-info-course label,
 .event-info-lmsc label,
 .input-group label,
-.form-group label {
+.form-group label,
+.entry-info__paper-meet-announcement {
     /* font-size: 12.5px; */
     font-size: 1.4rem;
     font-weight: bold;
@@ -140,10 +141,10 @@ label.radio-label {
 }
 
 /* .contact-information__event-host--list, */
-.contact-info__head-ref-container,
-.row.contact-info__safety-coordinator,
+/* .location-info__add-new-location--container */
 .row.contact-info__host-type,
-.location-info__add-new-location--container {
+.contact-info__head-ref-container,
+.row.contact-info__safety-coordinator {
     border-top: 1px dashed #DDD;
     max-width: 100%;
     /* margin-bottom: 2rem; */
@@ -151,7 +152,7 @@ label.radio-label {
 }
 
 .row.contact-info__host-type {
-    border-bottom: 1px dashed #DDD;
+    /* border-bottom: 1px dashed #DDD; */
     margin-bottom: 2rem;
     padding-bottom: 0rem;
 }
@@ -227,8 +228,8 @@ label.radio-label {
 }
 
 .contact-info__host-type label {
-    margin-top: 0.7rem;
-    margin-bottom: 1.5rem;
+    /* margin-top: 0.7rem; */
+    /* margin-bottom: 1.5rem; */
 }
 
 /* .contact-list__safety-coordinator--header,
@@ -310,11 +311,14 @@ label.radio-label {
     display:none;
 }
 
+/* .location-info__add-new-location--container */
 .list--lookup.locations,
 .event-location-details,
-.location-info__add-new-location--container,
 .location-information__locations-list,
-.locations-list__header {
+.locations-list__header,
+.location-add-configuration,
+.list-venue-form,
+.input-group.list-configuration-form {
     display: none;
 }
 
@@ -531,7 +535,8 @@ label.radio-label {
 #addNewHeadRef:before,
 #addNewHeadRef:before,
 #addNewSafetyCoordinator:before,
-#addLocationBtn:before {
+#addLocationBtn:before,
+#addConfigurationBtn:before {
     content: "+";
     position: relative;
     top: -1px;
@@ -543,7 +548,7 @@ label.radio-label {
 }
 
 
-.form__container .locations .list-item button {
+.form__container .list--lookup.locations .list-item--lookup button {
     height: 2.3rem !important;
     line-height: 2.3rem !important;
     padding: 0 0.7rem !important;
@@ -564,9 +569,9 @@ label.radio-label {
 }
 
 /* .location-column .list-item:last-of-type */
-.location-column {
-    margin: 0 0 5rem !important;
-}
+/* .location-column {
+    margin: 0 0 3rem !important;
+} */
 
 .location-column {
     padding: 1rem 0;
@@ -583,13 +588,22 @@ label.radio-label {
     display: inline-flex !important;
 }
 
-.event-location__address--name {
-    padding: 0 0.5rem 0 1rem;
-    margin: 0 0.3rem 0 0;
+.club-edit .list-item p.event-location__address--name {
+    /* margin: 0 0.8rem 0 0; */
+    /* padding: 0; */
+    margin: 0 0 0 1rem;
+    padding: 0 1rem 0 0rem;
     border-right: 1px solid #CCC;
     line-height: 120%;
 }
 
+.club-edit .list-item p.event-location__address--street {
+    padding: 0 1.2rem 0 0;
+    margin: 0 1rem 0 0.8rem;
+    border-right: 1px solid #CCC;
+    line-height: 120%;
+    font-size: 1.6rem;
+}
 
 .event-location-details {
     /* margin: 2.5rem 0 1rem; */
@@ -635,6 +649,7 @@ p.lookup__location--or {
 /* .club-edit .form-group {
     margin-bottom: 0;
 } */
+
 .club-edit .list__container {
     margin: 0 auto;
 }
@@ -646,6 +661,7 @@ p.lookup__location--or {
     display: block;
     margin-left: 1.75rem;
 }
+
 .liability .checkbox input {
     margin-left: -1.75rem;
 }

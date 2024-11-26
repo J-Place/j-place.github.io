@@ -247,11 +247,6 @@ input[disabled] + span {
   opacity: 0.4;
 }
 
-.input-group {
-  margin-bottom: 1.5rem;
-  width: 100%;
-}
-
 .input-group.required label {
   padding-left: 0rem;
 }
@@ -268,6 +263,10 @@ input[disabled] + span {
   font-size: 18px;
   font-weight: 300;
   position: absolute;
+  /* left: -8px; */
+}
+
+.add-new-inputs .input-group.required label:before {
   left: -8px;
 }
 
@@ -276,13 +275,10 @@ input[disabled] + span {
   top: -4px;
 }
 
-
-.club-edit .input-group-header.radio-group-header.required:before {
-  /* top: 20px; */
-  /* top: 1px; */
+/* .club-edit .input-group-header.radio-group-header.required:before {
   top: 18px;
   left: -8px;
-}
+} */
 
 .form-group-header {
   font-size: 1.4rem;
@@ -857,7 +853,10 @@ input[disabled] + span {
   border-bottom-color: #000;
 }
 
-@import "../../assets/styles/variables.css";
+
+
+
+
 .club-edit .form-control.has-success {
   border: 1px solid #ccc;
 }
@@ -979,6 +978,7 @@ input[disabled] + span {
   font-weight: bold;
   font-size: 1.5rem;
   line-height: 1.75rem;
+  display: inline-flex;
 }
 .club-edit .edit-list .list-item p.location-name {
   margin-top: 0;
@@ -1449,7 +1449,8 @@ input[disabled] + span {
 .club-edit .list__header.show {
   display: block !important;
 }
-.club-edit button.list__controls--settings {
+
+.club-edit button.list-item__edit:before {
   position: relative;
   background-image: url("../../img/icon-pencil.png");
   background-position: center;
@@ -1461,8 +1462,9 @@ input[disabled] + span {
   top: 4px;
   left: 5px;
 }
-.club-edit .edit-list button.list__controls--settings {
+.club-edit .edit-list button.list-item__edit:before {
   background-image: url("../../img/icon-pencil-active.png");
+  width: 0;
 }
 .club-edit .list__controls .btn-link {
   font-size: 1.0rem;
@@ -1548,8 +1550,7 @@ input[disabled] + span {
   vertical-align: baseline;
 }
 .club-edit .edit-list button.venue-edit-button:before,
-.club-edit .edit-list button.configuration-edit-button:before,
-.club-edit .edit-list button.list-item__edit:before {
+.club-edit .edit-list button.configuration-edit-button:before {
   content: "";
   background-image: url("../../img/icon-pencil.png");
   background-position: center;
@@ -2006,7 +2007,7 @@ input[disabled] + span {
 .club-edit .club-coach__not-member-container__fade,
 .club-edit .list-configuration-form__fade,
 .club-edit .location-details.show__fade {
-  display: none;
+  /* display: none; */
   visibility: hidden;
   opacity: 0;
 }
@@ -2066,7 +2067,9 @@ input[disabled] + span {
 .club-edit .configuration__list p.venue-type {
   display: inline-block;
 }
-.club-edit .venue__list p.venue-name,
+/* .club-edit .venue__list p.venue-name {
+  margin: 2rem 0 0.5rem;
+} */
 .club-edit .configuration__list p.venue-name {
   margin: 0.75rem 0 0.5rem;
 }
@@ -2192,8 +2195,8 @@ input[disabled] + span {
 
 
 
-
-
+.club-edit .location-list .list-item,
+.club-edit .list-item.ui-lookup-filter-50mile,
 .club-edit .list-item.ui-lookup-filter-zip {
   display: none;
 }
