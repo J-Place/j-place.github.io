@@ -150,6 +150,7 @@ $(document).ready(function() {
         $(".list-item-existing").show();
         scrollTopSection();
         $(this).prop('disabled', true);
+        
     });
 
     $("#confirmConfigurationHealthfit").click( function() {
@@ -195,6 +196,7 @@ $(document).ready(function() {
         hideListControlChildren();
         $(lookupByLocationList).hide();
         $(".list-item-existing").hide();
+        $(".list-item-duplicate").hide();
         $(".list-item-new").hide();
         showLocationLookup();
         showLookupLocationList();
@@ -222,11 +224,25 @@ $(document).ready(function() {
         $(".location-column .list-item:not(.ui-lookup-filter-length-other").hide();
     });
 
-    $("input[name='option']").click( function() {
+    $("input[name='configuration-selby']").click( function() {
         $("#confirmConfigurationSelby").prop('disabled', false);
+        // $("#confirmConfigurationHealthfit").prop('disabled', false);
+        // $("#confirmConfigurationJensen").prop('disabled', false);
+        $(".modal input[type=radio]").prop('selected', false);
+    });
+
+    $("input[name='configuration-healthfit']").click( function() {
+        // $("#confirmConfigurationSelby").prop('disabled', false);
         $("#confirmConfigurationHealthfit").prop('disabled', false);
+        // $("#confirmConfigurationJensen").prop('disabled', false);
+        $(".modal input[type=radio]").prop('selected', false);
+    });
+
+    $("input[name='configuration-jensen']").click( function() {
+        // $("#confirmConfigurationSelby").prop('disabled', false);
+        // $("#confirmConfigurationHealthfit").prop('disabled', false);
         $("#confirmConfigurationJensen").prop('disabled', false);
-        // return $(this).prop('disabled', true);
+        $(".modal input[type=radio]").prop('selected', false);
     });
 
     $("#cancelSaveVenue").click( function() {
