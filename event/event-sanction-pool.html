@@ -71,55 +71,59 @@
                                  <!-- <hr> -->
                            </div>
 
-                           <form id="form-event-type">
-                              <div class="section hasData section-event-type" id="event-type">
-                                 <h3 class="section__header" data-target="#event-type__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-type__content">
-                                    <span class="section__number">1</span>Event Type
-                                 </h3>
-                                 <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
-                                 <div class="section__content collapse" id="event-type__content" data-parent="#accordion">
-                                    <div class="row">
-                                       <div class="col-sm-9">
-                                          <div class="input-group event-type">
-                                                <div class="input-group-header radio-group-header required">Depending on your choice, you will be given slightly different sanction process flows.</div>
-                                                <span class="help-block help-block--eventType">Please make a selection</span>
-                                                <label class="radio-label radio-label--inline" for="eventTypeAnsweredPool">
-                                                   <span class="radio-container">
-                                                      <input type="radio" name="EventType" id="eventTypeAnsweredPool" value="pool">
-                                                      <span class="radio__placeholder"></span>
-                                                   </span>
-                                                   Pool
-                                                </label>
-                                                <label class="radio-label radio-label--inline" for="eventTypeAnsweredOpenWater">
-                                                   <span class="radio-container">
-                                                            <input type="radio" name="EventType" id="eventTypeAnsweredOpenWater" value="open-water">
-                                                      <span class="radio__placeholder"></span>
-                                                   </span>
-                                                   Open Water
-                                                </label>
+                           <div class="accordion-group">
+
+                              <form id="form-event-type">
+                                 <div class="section hasData section-event-type" id="event-type">
+                                    <h3 class="section__header" data-target="#event-type__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-type__content">
+                                       <span class="section__number">1</span>Event Type
+                                    </h3>
+                                    <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
+                                    <div class="section__content collapse" id="event-type__content" data-parent="#accordion">
+                                       <div class="row">
+                                          <div class="col-sm-9">
+                                             <div class="input-group event-type">
+                                                   <div class="input-group-header radio-group-header required">Depending on your choice, you will be given slightly different sanction process flows.</div>
+                                                   <span class="help-block help-block--eventType">Please make a selection</span>
+                                                   <label class="radio-label radio-label--inline" for="eventTypeAnsweredPool">
+                                                      <span class="radio-container">
+                                                         <input type="radio" name="EventType" id="eventTypeAnsweredPool" value="pool">
+                                                         <span class="radio__placeholder"></span>
+                                                      </span>
+                                                      Pool
+                                                   </label>
+                                                   <label class="radio-label radio-label--inline" for="eventTypeAnsweredOpenWater">
+                                                      <span class="radio-container">
+                                                               <input type="radio" name="EventType" id="eventTypeAnsweredOpenWater" value="open-water">
+                                                         <span class="radio__placeholder"></span>
+                                                      </span>
+                                                      Open Water
+                                                   </label>
+                                             </div>
                                           </div>
                                        </div>
-                                    </div>
-                                    <div class="row">
-                                          <div class="section__controls">
-                                             <button class="btn save-section" id="saveEventType" type="button" >Save &amp; Continue</button>
-                                          </div>
+                                       <div class="row">
+                                             <div class="section__controls">
+                                                <button class="btn save-section" id="saveEventType" type="button" >Save &amp; Continue</button>
+                                             </div>
+                                       </div>
                                     </div>
                                  </div>
-                              </div>
-                           </form>
+                              </form>
 
-                           <sergey-import src="event-sanction/02-event-information" />
+                              <sergey-import src="event-sanction/02-event-information" />
 
-                           <sergey-import src="event-sanction/03-contact-information" />
-                           
-                           <sergey-import src="event-sanction/04-location-information" />
+                              <sergey-import src="event-sanction/03-contact-information" />
+                              
+                              <sergey-import src="event-sanction/04-location-information" />
 
-                           <sergey-import src="event-sanction/05-entry-information" />
+                              <sergey-import src="event-sanction/05-entry-information" />
 
-                           <sergey-import src="event-sanction/06-meet-announcement" />
+                              <sergey-import src="event-sanction/06-meet-announcement" />
 
-                           <sergey-import src="event-sanction/accept-submit" />
+                              <sergey-import src="event-sanction/accept-submit" />
+
+                           </div>
 
                         </div>
                      </div>
@@ -130,6 +134,18 @@
          <sergey-import src="foundation/footer" />
       </div>
       <sergey-import src="site/footer_scripts" />
+      <script>
+         var accordion = $('#accordion');
+         accordion.on('show.bs.collapse','.collapse', function() {
+            let section = $(this).parent();
+            console.log(section);
+            // accordion.find('.collapse.in').collapse('hide');
+            accordion.find('.collapse.in').removeClass('in');
+            accordion.find('.collapse.in').removeClass('isEdit');
+            accordion.find('.collapse.in').addClass('hasData');
+            $(section).addClass('isEdit');
+         });
+      </script>
       <!-- <script src="js/Validation.js"></script> -->
       <!-- <script src="js/Util.js"></script> -->
       <!-- <script src="js/Accordion.js"></script> -->
