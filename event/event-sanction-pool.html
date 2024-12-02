@@ -136,10 +136,30 @@
                                  $("#entry-information").on('change', function() {
                                     $("#saveEntryInfo").prop('disabled', false);
                                  });
+                                 $("#saveEntryInfo").click( function() {
+                                    $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+                                    $("#meetAnnouncement h3").click();
+                                    $(document.documentElement).animate({
+                                       scrollTop: $("#meetAnnouncement").offset().top - 45
+                                    }, 100);
+                                 });
+
                               </script>
 
 
                               <sergey-import src="event-sanction/06-meet-announcement" />
+                              <script>
+                                 $("#meetAnnouncement").on('change', function() {
+                                    $("#saveMeetAnnouncement").prop('disabled', false);
+                                 });
+                                 $("#saveMeetAnnouncement").click( function() {
+                                    $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+                                    $("#meetAnnouncement h3").click();
+                                    $(document.documentElement).animate({
+                                       scrollTop: $("#meetAnnouncement").offset().top - 45
+                                    }, 100);
+                                 });
+                              </script>
 
                               <sergey-import src="event-sanction/accept-submit" />
 
