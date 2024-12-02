@@ -170,9 +170,7 @@ $(document).ready(function() {
     function confirmConfiguration() {
         hideLocationLookup();
         hideAddNewLocationContainer();
-        // .list__controls').hide();
         $(lookupByLocationList).hide();
-        // $(".list-item-existing").show();
         showSavedLocationList();
         $("#saveLocation").prop('disabled', false);
         $(".venue__list--item:first-of-type .configuration-title:last-of-type").addClass('selected');
@@ -226,21 +224,15 @@ $(document).ready(function() {
 
     $("input[name='configuration-selby']").click( function() {
         $("#confirmConfigurationSelby").prop('disabled', false);
-        // $("#confirmConfigurationHealthfit").prop('disabled', false);
-        // $("#confirmConfigurationJensen").prop('disabled', false);
         $(".modal input[type=radio]").prop('selected', false);
     });
 
     $("input[name='configuration-healthfit']").click( function() {
-        // $("#confirmConfigurationSelby").prop('disabled', false);
         $("#confirmConfigurationHealthfit").prop('disabled', false);
-        // $("#confirmConfigurationJensen").prop('disabled', false);
         $(".modal input[type=radio]").prop('selected', false);
     });
 
     $("input[name='configuration-jensen']").click( function() {
-        // $("#confirmConfigurationSelby").prop('disabled', false);
-        // $("#confirmConfigurationHealthfit").prop('disabled', false);
         $("#confirmConfigurationJensen").prop('disabled', false);
         $(".modal input[type=radio]").prop('selected', false);
     });
@@ -253,7 +245,6 @@ $(document).ready(function() {
     });
 
     $("#saveListEventLocationExisting").click( function() {
-        // confirmConfigurationSelby();
         confirmConfiguration();
         $(".list-item-existing").show();
         scrollTopSection();
@@ -265,7 +256,6 @@ $(document).ready(function() {
     }); 
 
     $("#saveListEventLocationNew").click( function() {
-        // confirmConfigurationSelby();
         confirmConfiguration();
         $(".list-item-new").show();
         scrollTopSection();
@@ -277,7 +267,6 @@ $(document).ready(function() {
     });
 
     $("#saveListEventLocationDuplicate").click( function() {
-        // confirmConfigurationSelby();
         confirmConfiguration();
         $(".list-item-duplicate").show();
         scrollTopSection();
@@ -309,7 +298,7 @@ $(document).ready(function() {
         var windowScrollTop = $(window).scrollTop();
         if (elementTop < windowScrollTop) {
             $(document.documentElement).animate({
-                scrollTop: $("#location-information").offset().top
+                scrollTop: $("#location-information").offset().top - 400
             }, 500);
         }
     }
@@ -403,7 +392,7 @@ $(document).ready(function() {
         // If all are checked *************************
         } else if ( $("#length25Yards input").is(':checked') && $("#length25Meters input").is(':checked') && $("#length50Meters input").is(':checked')  &&  $("#lengthOther input").is(':checked') ) {
             $(".location-column .list-item:not(.ui-lookup-filter-length-scy):not(.ui-lookup-filter-length-scm):not(.ui-lookup-filter-length-lcm):not(.ui-lookup-filter-length-other)").hide();
-        } 
+        }
         // else if ( $("#length25Yards input").is(':checked') && !$("#length25Meters input").is(':checked') && $("#length50Meters input").is(':checked') &&  $("#lengthOther input").is(':checked') ) {
         //     alert("Yo!");
         //     $(".location-column .list-item:not(.ui-lookup-filter-length-scm)").hide();
@@ -456,7 +445,21 @@ $(document).ready(function() {
     filterByRange();
     filterByCourse();
 
+
+
+
+    function saveSection() {
+        var sectionId = $(this).closest('.section').attr('id');
+        console.log(sectionId);
+    }
+
+
 });
+
+
+
+
+
 
 
 

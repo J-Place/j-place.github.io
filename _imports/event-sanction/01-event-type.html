@@ -1,0 +1,45 @@
+<form id="form-event-type">
+   <div class="section hasData section-event-type" id="event-type">
+      <h3 class="section__header" data-target="#event-type__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-type__content">
+         <span class="section__number">1</span>Event Type
+      </h3>
+      <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
+      <div class="section__content collapse" id="event-type__content" data-parent="#accordion">
+         <div class="row">
+            <div class="col-sm-9">
+               <div class="input-group event-type">
+                     <div class="input-group-header radio-group-header required">Depending on your choice, you will be given slightly different sanction process flows.</div>
+                     <span class="help-block help-block--eventType">Please make a selection</span>
+                     <label class="radio-label radio-label--inline" for="eventTypeAnsweredPool">
+                        <span class="radio-container">
+                           <input type="radio" name="EventType" id="eventTypeAnsweredPool" value="pool">
+                           <span class="radio__placeholder"></span>
+                        </span>
+                        Pool
+                     </label>
+                     <label class="radio-label radio-label--inline" for="eventTypeAnsweredOpenWater">
+                        <span class="radio-container">
+                                 <input type="radio" name="EventType" id="eventTypeAnsweredOpenWater" value="open-water">
+                           <span class="radio__placeholder"></span>
+                        </span>
+                        Open Water
+                     </label>
+               </div>
+            </div>
+         </div>
+         <div class="row">
+               <div class="section__controls">
+                  <button class="btn save-section" id="saveEventType" type="button" onclick="saveSection()" disabled>Save &amp; Continue</button>
+               </div>
+         </div>
+      </div>
+   </div>
+</form>
+
+<script>
+   function saveSection(e) {
+      // var target = e.target;
+      // var sectionId = $(target).closest('.section').attr('id');
+      console.log(e.target);
+   }
+</script>
