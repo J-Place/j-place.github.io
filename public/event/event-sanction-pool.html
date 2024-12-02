@@ -3457,12 +3457,17 @@
          var accordion = $('#accordion');
          accordion.on('show.bs.collapse','.collapse', function() {
             let section = $(this).parent();
-            // accordion.find('.collapse.in').removeClass('in').addClass('hasData');
-            // accordion.find('.collapse.in').addClass('hasData');
+            // let sectionOpen = $(section).hasClass('in');
+            // if (sectionOpen != true) {
+            //    $('.section').removeClass('isEdit');
+            // }
+            accordion.find('.collapse.in').removeClass('in');
+            accordion.find('.collapse').parent().removeClass('isEdit');
+            accordion.find('.collapse.in').addClass('hasData');
             $(section).addClass('isEdit');
          });
          accordion.on('hidden.bs.collapse', function () {
-            $('.section').removeClass('isEdit');
+            $('.section.isEdit').removeClass('isEdit');
          });
       </script>
       <!-- <script src="js/Validation.js"></script> -->
