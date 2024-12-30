@@ -326,13 +326,17 @@ label.radio-label {
     margin: 1rem 0 0.5rem;
 }
 
+.event-card__link {
+    width: 180px;
+}
+
 .event-card__title {
     font-size: 1.7rem;
 }
 
-.event-card.pending-changes {
+/* .event-card.pending {
     opacity: 0.5;
-}
+} */
 
 .event-card {
     display: flex;
@@ -357,11 +361,12 @@ label.radio-label {
 
 .event-card__title {
     margin: 0 1rem 0.5rem 0;
-    max-width: 400px;
+    /* max-width: 400px; */
     margin-left: 0 !important;
 }
 
-.event-card p.event-card__date {
+.event-card p.event-card__date,
+.event-card p.event-card__id {
     margin: 0 1rem 0.5rem 0;
 }
 
@@ -469,7 +474,8 @@ label.radio-label {
     h3.event-card__title {
         margin: 1rem 1rem 1rem 0;
     }
-    .event-card p.event-card__date {
+    .event-card p.event-card__date,
+    .event-card p.event-card__id {
         margin: 1rem 1rem 1rem 0;
         padding-left: 1rem;
         border-left: 1px solid #CCC;
@@ -484,7 +490,9 @@ label.radio-label {
     }
     .usms-container.form__container .event-list__container h3.event-card__title {
         font-size: 2rem;
+        max-width: 360px;
     }
+    .event-card p,
     .event-list__container p.event-card__date {
         font-size: 1.6rem;
     }
@@ -667,3 +675,31 @@ p.lookup__location--or {
 #form-accept-submit {
     margin-top: 6rem;
 }
+
+.contact-info__event-director-privacy--container {
+    display: none;
+}
+
+.event-director-privacy__header {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 2.0rem;
+    height: 2.0rem;
+    margin: 0 auto 2.0rem;
+    padding: 0;
+}
+
+.event-card.pending-approval .btn {
+    background-color: #aacee4;
+}
+
+.event-card.edits-needed .btn {
+    background-color: #d2202e;
+}
+/* .form__container .btn.btn-danger {
+    background-color: #d2202e;
+} */
+
+
+
+.html-container p, .usms-container p { margin: 0; }
