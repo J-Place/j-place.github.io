@@ -389,6 +389,8 @@
                               </script>
 
 
+
+
                               <form id="form-event-info">
    <div class="section hasData section-event-info" id="event-info">
       <h3 class="section__header" data-target="#event-info__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-info__content">
@@ -510,12 +512,11 @@
                </div>
             </div>
          </div>
-         <div class="row">
+         <!-- <div class="row">
             <div class="col-xs-12 col-sm-8 col-md-5">
                <div class="input-group radio-group event-info-year">
                   <div class="input-group-header radio-group-header">Event Year</div>
                   <span class="help-block help-block--eventType">Please make a selection</span>
-                  <!-- CP: Can the label/id pair values be set dynamically = current year -->
                   <label class="radio-label radio-label--inline" for="eventYear2025">
                      <span class="radio-container">
                         <input type="radio" name="eventType" id="eventYear2025" value="true">
@@ -523,7 +524,6 @@
                      </span>
                      2025
                   </label>
-                  <!-- CP: Can the label/id pair values be set dynamically = current year plus one -->
                   <label class="radio-label radio-label--inline" for="eventYear2026">
                      <span class="radio-container">
                               <input type="radio" name="eventType" id="eventYear2026" value="false">
@@ -531,7 +531,6 @@
                      </span>
                      2026
                   </label>
-                  <!-- CP: Can the label/id pair values be set dynamically = current year plus two -->
                   <label class="radio-label radio-label--inline" for="eventYear2027"> 
                      <span class="radio-container">
                               <input type="radio" name="eventType" id="eventYear2027" value="false">
@@ -541,7 +540,7 @@
                   </label>
                </div>
             </div>
-         </div>
+         </div> -->
          <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-5">
                   <div class="input-group event-info-name required">
@@ -618,6 +617,8 @@
                               </script>
 
 
+
+
                               <form id="form-contact-info">
     <div class="section hasData section-contact-info" id="contact-info">
         <div class="modal fade" id="modalContactInfoConfirmation" tabindex="-1" role="dialog">
@@ -676,7 +677,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="form-group contact-info__event-director-other--container">
                 <div class="row">
                     <div class="col-sm-4 col-md-8">
@@ -822,13 +823,13 @@
                 <div class="row is-flex">
                     <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
                     <div class="list-item list-item--current">
-                            <input type="hidden" class="contact-isMember" value="true">
-                            <button class="list-item__delete">Remove</button>
-                            <div class="contact-name">Jay Place</div>
-                            <div class="contact-location">Sarasota, FL</div>
-                            <div class="contact-phone"></div>
-                            <div class="contact-email">jplace@usmastersswimming.org</div>
-                            <div class="contact-id">Member ID: <span class="contact-id__value">KT2JH</span></div>
+                        <input type="hidden" class="contact-isMember" value="true">
+                        <button class="list-item__delete">Remove</button>
+                        <div class="contact-name">Jay Place</div>
+                        <div class="contact-location">Sarasota, FL</div>
+                        <div class="contact-phone"></div>
+                        <div class="contact-email">jplace@usmastersswimming.org</div>
+                        <div class="contact-id">Member ID: <span class="contact-id__value">KT2JH</span></div>
                     </div>
                     </div>
                     <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
@@ -859,7 +860,7 @@
             <button class="btn btn-small btn-success" id="confirmCurrentEventDirector">Confirm</button>
         </div>
     </div>
-    <div class="form-group contact-info__event-director--website-display-preferences">
+    <!-- <div class="form-group contact-info__event-director--website-display-preferences">
         <div class="row">
             <div class="col-sm-12">
                 <div class="club-privacy" style="display: block;">
@@ -896,7 +897,48 @@
                 </div>
             </div>
         </div>
+    </div> -->
+
+
+    <div class="form-group contact-info__event-director-privacy--container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="event-director-privacy">
+                    <div class="event-director-privacy__header">USMS website event page privacy preferences</div>
+                    <div class="input-group checkbox-group event-director-privacy-name">
+                        <label class="checkbox-label" for="eventDirectorPrivacyName">
+                            <div class="checkbox-container">
+                                <input type="checkbox" name="EventDirectorPrivacyName" id="eventDirectorPrivacyName">
+                                <span class="checkbox__placeholder"></span>
+                            </div>
+                            Display the event director's name on the USMS website event page
+                        </label>
+                    </div>
+                    <div class="input-group checkbox-group event-director-privacy-email">
+                        <label class="checkbox-label" for="eventDirectorPrivacyEmail">
+                            <div class="checkbox-container">
+                                <input type="checkbox" name="eventDirectorPrivacyEmail" id="eventDirectorPrivacyEmail">
+                                <span class="checkbox__placeholder"></span>
+                            </div>
+                            Display the event director's email address on the USMS website event page
+                        </label>
+                    </div>
+                    <div class="input-group checkbox-group event-director-privacy-phone">
+                        <label class="checkbox-label" for="eventDirectorPrivacyPhone">
+                            <div class="checkbox-container">
+                                <input type="checkbox" name="eventDirectorPrivacyPhone" id="eventDirectorPrivacyPhone">
+                                <span class="checkbox__placeholder"></span>
+                            </div>
+                            Display the event director's phone number on the USMS website event page
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+
+
 </div>
 <script src="./js/event-director.js"></script>
 
@@ -1549,6 +1591,8 @@
                                  });
                               </script>
 
+
+
                               
                               <form id="form-location-info">
    <div class="section hasData section-location-information" id="location-information">
@@ -1724,34 +1768,34 @@
         </div>
     </div>
  </div>
- <div class="modal" id="modalChosePoolConfigurationSelby" tabindex="-1">
+ <div class="modal pool-configuration" id="modalChosePoolConfigurationSelby" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Select a Pool Configuration</h5>
             </div>
             <div class="modal-body">
-                <p>Now that you have selected a location, please select the configuration of the pool that the event will take place. The configurations that are have been certified in our database are highlighted. If a configuration is not certified, the meet’s times will not count. Learn more here.</p>
+                <p>Now that you have selected a location, please select the configuration of the pool that the event will take place. The configurations that are have been certified in our database are indicated below. If a configuration is not certified, the meet's times will not count. Learn more here.</p>
                 <p class="location-name"><strong>Selby Aquatic Center</strong></p>
                 <div class="input-group chose-pool-configuration">
                     <span class="help-block help-block--chosePoolConfiguration">Please select a configuration</span>
                     <label class="radio-label" for="option1Selby">
                         <span class="radio-container">
-                            <input type="radio" name="configuration-selby" id="option1Selby" value="1" />
+                            <input type="radio" name="configuration-selby" id="option1Selby" value="0" />
                             <span class="radio__placeholder"></span>
                         </span>
-                        Competition Pool - 25 Yards - certified 08/2022
-                    </label>
-                    <label class="radio-label" for="option1Selby">
-                        <span class="radio-container">
-                            <input type="radio" name="configuration-selby" id="option1Selby" value="1" />
-                            <span class="radio__placeholder"></span>
-                        </span>
-                        Competition Pool - 50 Meters - certified 09/2024
+                        Competition Pool - 25 Yards<br />Certified 08/2022 - 1 Touchpad, No Touchpads
                     </label>
                     <label class="radio-label" for="option2Selby">
                         <span class="radio-container">
-                            <input type="radio" name="configuration-selby" id="option2Selby" value="2" />
+                            <input type="radio" name="configuration-selby" id="option2Selby" value="1" />
+                            <span class="radio__placeholder"></span>
+                        </span>
+                        Competition Pool - 50 Meters<br />Certified 09/2024 - 1 Touchpad, 2 Touchpads, No Touchpads
+                    </label>
+                    <label class="radio-label" for="option3Selby">
+                        <span class="radio-container">
+                            <input type="radio" name="configuration-selby" id="option3Selby" value="2" />
                             <span class="radio__placeholder"></span>
                         </span>
                         Warmup Pool - 25 Yards
@@ -1767,7 +1811,7 @@
     </div>
 </div>
 
-<div class="modal" id="modalChosePoolConfigurationHealthfit" tabindex="-1">
+<div class="modal pool-configuration" id="modalChosePoolConfigurationHealthfit" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -1797,7 +1841,7 @@
 </div>
 
 
-<div class="modal" id="modalChosePoolConfigurationJensen" tabindex="-1">
+<div class="modal pool-configuration" id="modalChosePoolConfigurationJensen" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -2573,6 +2617,9 @@
                                  });
                               </script>
 
+
+
+
                               <form id="form-entry-info">
    <div class="section hasData section-entry-information" id="entry-information">
       <h3 class="section__header" data-target="#entry-information__content" data-toggle="collapse" aria-expanded="false" aria-controls="entry-information__content">
@@ -2698,8 +2745,9 @@
                                        scrollTop: $("#meetAnnouncement").offset().top - 45
                                     }, 100);
                                  });
-
                               </script>
+
+
 
 
                               <form id="form-meet-announcement">
@@ -2847,6 +2895,9 @@
                                     }, 100);
                                  });
                               </script>
+
+
+
 
                               <form id="form-accept-submit">
    <div class="section section-accept-submit" id="accept-submit">
