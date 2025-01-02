@@ -436,7 +436,6 @@
         <div class="form-header">
             <h6>Select the LMSC, club and/or workout group to which you would like to transfer</h6>
         </div>
-
         <form class="form-club-information form-horizontal transfer-eligibleXXX">
             <div class="form-group">
                 <div class="row">
@@ -538,15 +537,18 @@
             </div>
         </form>
 
+        </div>
+        <div class="card border-top">
+
         <div class="section__content">
             <div class="form-group">
                 <div class="row">
                     <div class="form-group agree-terms">
                         <div class="col-xs-12">
                             <span class="help-block help-block--agree-terms">You need to agree to the terms to complete your registration.</span>
-                            <label id="agreeTerms__label" class="checkbox-label " for="agreeTerms">
+                            <label id="agreeTerms__label" class="checkbox-label" for="agreeTerms">
                                 <div class="checkbox-container">
-                                    <input type="checkbox" name="agree-terms" id="agreeTerms" value="" class="has-success" disabled="">
+                                    <input type="checkbox" name="agree-terms" id="agreeTerms" value="">
                                     <span class="checkbox__placeholder"></span>
                                 </div>
                             </label>
@@ -557,22 +559,38 @@
                 </div>
             </div>
         </div>
-
     </div>
 
 </div>
 
+<style>
+#memberTransferNotes:focus::-webkit-input-placeholder,
+#memberTransferNotes:focus::-moz-placeholder,
+#memberTransferNotes:-moz-placeholder {
+	color : transparent;
+}
+#memberTransferNotes:focus::-webkit-input-placeholder {
+	opacity : 0;
+}
+#memberTransferNotes:focus::-moz-placeholder,
+#memberTransferNotes:-moz-placeholder {
+	opacity : 0;
+}
+</style>
+
 <script>
-    $("#btnSubmitMemberTransfer").click( function(){
-        $('.help-block--selectedLmsc').toggleClass('has-error');
-        $('.help-block--selectedLmsc + select').toggleClass('has-error');
-        $('.help-block--selectedClub').toggleClass('has-error');
-        $('.help-block--selectedClub + select').toggleClass('has-error');
-        $('.help-block--agree-terms').toggleClass('has-error');
-        $('.help-block--agree-terms + select').toggleClass('has-error');
-    });
-    $("#other").click( function() {
-        $("#other__label + textarea").toggle();
+    $(document).ready(function() {
+        $("#btnSubmitMemberTransfer").click( function(){
+            $('.help-block--selectedLmsc').toggleClass('has-error');
+            $('.help-block--selectedLmsc + select').toggleClass('has-error');
+            $('.help-block--selectedClub').toggleClass('has-error');
+            $('.help-block--selectedClub + select').toggleClass('has-error');
+            $('.help-block--agree-terms').toggleClass('has-error');
+            $('.help-block--agree-terms + select').toggleClass('has-error');
+        });
+        $("#other").click( function() {
+            $("#other__label + textarea").toggle();
+        });
     });
 </script>
 
