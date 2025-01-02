@@ -398,10 +398,18 @@
 .transfer-ineligible {
     display: none;
 }
+.card .form-header {
+    margin: 6rem 0 3rem;
+}
+
+.card .form-header + .help-block {
+    margin: -2rem 0 2rem;
+}
+
 .card .form-header h6 {
     color: #434343;
     font-size: 1.8rem;
-    margin: 2rem auto 4rem;
+    margin: 2rem 0;
 }
 .card.no-border {
     border: 0 none;
@@ -414,15 +422,19 @@
     border: 0 none;
     border-bottom: 1px solid #ccc;
 }
+#other__label + textarea {
+    margin-top: 1.5rem;
+    display: none;
+}
 </style>
 
-<!-- <div class=""> -->
 
 
 <div class="renew__form-body">
 
     <div class="card no-border">
-        <div class="form-headerXXX">
+        <!-- <div class="form-header"> -->
+        <div>
             <h3>Current Information</h3>
             <p class="transfer-eligible">You're eligible to transfer your membership 2 more times.</p>
             <p class="transfer-ineligible">You're not eligible to transfer your membership at this time. Please contact <a href="mailto:membership@usmastersswimming.org">Membership Services</a> with any questions.</p>
@@ -460,15 +472,15 @@
             <h6>Select the LMSC, club and/or workout group to which you would like to transfer</h6>
         </div>
 
-        <form class="form-club-information form-horizontal transfer-eligibleXXX" data-reactid="13">
-            <div class="form-group" data-reactid="15">
+        <form class="form-club-information form-horizontal transfer-eligibleXXX">
+            <div class="form-group">
                 <div class="row">
-                    <div class="col-xs-12 col-sm-4" data-reactid="16">
-                        <label for="selectedLmsc" class="font-weight-bold" data-reactid="17">New LMSC</label>
-                        <div data-reactid="18">
-                            <span class="help-block help-block--selectedLmsc" data-reactid="19">Please select an LMSC</span>
-                            <select name="selectedLmsc" class="form-control" data-reactid="20">
-                                <option value="-1" data-reactid="21">Select your LMSC</option>
+                    <div class="col-xs-12 col-sm-4">
+                        <label for="selectedLmsc" class="font-weight-bold">New LMSC</label>
+                        <div>
+                            <span class="help-block help-block--selectedLmsc">Please select an LMSC</span>
+                            <select name="selectedLmsc" class="form-control">
+                                <option value="-1">Select your LMSC</option>
                                 <option value="a0x3h000001SQWpAAO">Adirondack</option>
                                 <option value="a0x3h000001SQWqAAO">Alaska</option>
                                 <option value="a0x3h000001SQWrAAO">Allegheny Mountain</option>
@@ -481,44 +493,87 @@
                                 <option value="a0x3h000001SQWyAAO">Florida Gold Coast</option>
                             </select>
                         </div>
-                        <span class="help-block" data-reactid="22"></span>
+                        <span class="help-block"></span>
                     </div>
-                    <div class="col-xs-12 col-sm-4" data-reactid="23">
-                        <label for="selectedClub" class="font-weight-bold" data-reactid="24">New Club</label>
-                        <div data-reactid="25">
-                            <span class="help-block help-block--selectedClub" data-reactid="26">Please select a club</span>
-                            <select name="selectedClub" class="form-control" data-reactid="27">
-                                <option value="-1" data-reactid="28">Select a club</option>
+                    <div class="col-xs-12 col-sm-4">
+                        <label for="selectedClub" class="font-weight-bold">New Club</label>
+                        <div>
+                            <span class="help-block help-block--selectedClub">Please select a club</span>
+                            <select name="selectedClub" class="form-control">
+                                <option value="-1">Select a club</option>
                                 <option value="a0w3h000001KFKKAA4">Unattached - Will appear as (UC14)</option>
                                 <option value="a0w3h000001KEaWAAW">All Day Endurance Masters (ADEM)</option>
                                 <option value="a0wPO0000004lZpYAI">Ask4pierre (A4P)</option>
                                 <option value="a0w3h000001KEakAAG">ATAC Masters (ATAC)</option>
                             </select>
                         </div>
-                        <span class="help-block" data-reactid="29"></span>
+                        <span class="help-block"></span>
                     </div>
-                    <div class="club-information__column club-information__column--fade-out col-xs-12 col-sm-4" data-reactid="30">
-                        <label for="selectedWorkoutgroup" data-reactid="31">Workout Group (if applicable)</label>
-                        <select name="selectedWorkoutgroup" class="form-control" data-reactid="32">
-                            <option selected="" value="-1" data-reactid="33">Select a workout group</option>
-                            <option value="meet-me-at-blue" data-reactid="33">Meet Me at Blue</option>
+                    <div class="club-information__column club-information__column--fade-out col-xs-12 col-sm-4">
+                        <label for="selectedWorkoutgroup">Workout Group (if applicable)</label>
+                        <select name="selectedWorkoutgroup" class="form-control">
+                            <option selected="" value="-1">Select a workout group</option>
+                            <option value="meet-me-at-blue">Meet Me at Blue</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-xs-12 col-sm-8">
-                        <div class="input-group member-transfer-notes" style="margin-top: 3rem;">
-                            <label for="MemberTransferNotes" class="label-large control-label">Notes</label>
-                            <textarea class="form-control" rows="3" cols="50" name="MemberTransferNotes" id="memberTransferNotes" required="" maxlength="32768"></textarea>
+                        <!-- <div class="input-group member-transfer-reason" style="margin-top: 3rem;"> -->
+                            <!-- <label for="MemberTransferNotes" class="label-large control-label">Notes</label>
+                            <textarea class="form-control" rows="3" cols="50" name="MemberTransferNotes" id="memberTransferNotes" required="" maxlength="32768"></textarea> -->
+                        <div class="form-header">
+                            <h6>Why are you transferring?</h6>
                         </div>
+                        <span class="help-block help-block--agree-terms">Please select a reason for transferring.</span>
+                        <div class="check-list check-list--transfer-reason required"> 
+                                                            
+                            <div class="input-group check-list-item">
+                                <label id="upcomingCompetition__label" class="checkbox-label " for="upcomingCompetition">
+                                    <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-transfer-reason-0" id="upcomingCompetition" value=""><span class="checkbox__placeholder"></span></div>
+                                    For an upcoming competition
+                                </label>
+                            </div>
+
+                            <div class="input-group check-list-item">
+                                <label id="newLocation__label" class="checkbox-label " for="newLocation">
+                                    <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-transfer-reason-1" id="newLocation" value=""><span class="checkbox__placeholder"></span></div>
+                                    Moved to a new location
+                                </label>
+                            </div>
+                            
+                            <div class="input-group check-list-item">
+                                <label id="multipleLocation__label" class="checkbox-label " for="multipleLocation">
+                                    <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-transfer-reason-1" id="multipleLocation" value=""><span class="checkbox__placeholder"></span></div>
+                                    Live in different parts of the country at different times of the year
+                                </label>
+                            </div>
+
+                            <div class="input-group check-list-item">
+                                <label id="changedClub__label" class="checkbox-label " for="changedClub">
+                                    <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-transfer-reason-1" id="changedClub" value=""><span class="checkbox__placeholder"></span></div>
+                                    Found another club
+                                </label>
+                            </div>
+
+                            <div class="input-group check-list-item">
+                                <label id="other__label" class="checkbox-label " for="other">
+                                    <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-transfer-reason-1" id="other" value=""><span class="checkbox__placeholder"></span></div>
+                                    Other
+                                </label>
+                                <textarea class="form-control" rows="3" cols="50" name="MemberTransferNotes" id="memberTransferNotes" required="true" maxlength="32768" placeholder="Please enter a reason for transferring"></textarea>
+                            </div>
+
+                        </div>
+                        <!-- </div> -->
                     </div>
                 </div>
 
             </div>
         </form>
 
-        <div class="section__content transfer-eligibleXXX">
+        <div class="section__content">
             <div class="form-group">
                 <div class="row">
                     <div class="form-group agree-terms">
@@ -551,6 +606,13 @@
         $('.help-block--agree-terms').toggleClass('has-error');
         $('.help-block--agree-terms + select').toggleClass('has-error');
     });
+    $("#other").click( function() {
+        $("#other__label + textarea").toggle();
+    });
+    // $('input[type="checkbox"]').not('#other').on('change', function() {
+    // $(".checklist-item input").not('#other').click( function() {
+        // $("#other__label + textarea").hide();
+    // });
 </script>
 
 
