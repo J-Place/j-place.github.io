@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<!--[if IE 9]>
+<html lang="en" class="ie9 no-js">
+<![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+    <!--<![endif]-->
+    <head>
+        <title>Transfer My Membership - U.S. Masters Swimming</title>
+        <sergey-import src="site/head_meta" />
+        <sergey-import src="site/head_js" />
+        <sergey-import src="site/head_css" />
+        <link href="/css/registration.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="/lanemate/css-components/my-account.css">
+    </head>
+    <body class="">
+        <div id="main-container">
+
+            <sergey-import src="foundation/site-header" />
+
+            <main role="main">
+
+                <style>
+                    #toggleEligible {
+                        position: absolute;
+                        left: 5px;
+                        top: 0;
+                        z-index: 99999;
+                    }
+                    .input-group.member-transfer-notes label.label-large {
+                        font-size: 1.4rem;
+                        line-height: 2rem;
+                        /* font-weight: 600; */
+                    }
+                    @media (max-width: 575px) {
+                        .form-group label:not(.checkbox-label) {
+                            margin-top: 2rem;
+                        }
+                        .row.form-group, .row.input-group {
+                            margin-top: 0;
+                        }
+                    }
+                    @media (min-width: 576px) {
+                        #toggleEligible {
+                            top: -35px;
+                        }
+                        #toggleEligible {
+                            top: 30px;
+                            left: unset;
+                            right: 50px;
+                            z-index: 99999;
+                        }
+                    }
+                </style>
+
+                <div class="section section-full bg-gray p-b-50">
+                    <div class="usms-container">                        
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <header>
+                                    <h1>Transfer My Membership</h1>
+                                    <div class="lead">
+                                        <p>A swimmer may change club affiliation at the time of annual membership registration and up to three additional times during the membership year.</p>
+                                        <ul>
+                                            <li>Changing a swimmer's status to unattached does not count against the allowable club changes per year.</li>
+                                            <li>A swimmer may compete for only one club during a meet. A transfer submitted during a meet, including at the time of annual registration, may take immediate effect only if the swimmer has not yet competed in the meet.</li>
+                                            <li>Swimmers may declare unattached status at any time except during a meet in which they have already competed. Swimmers who intend to compete as unattached should change their registration status prior to the meet.</li>
+                                        </ul>
+                                        <br />
+                                        <p>More details can be found in the <a href="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/pdfs/volunteer%20central/rule%20book/part%202.pdf">USMS rulebook</a>, under 201.3 Representation/Club Affiliation.</p>
+                                    </div>
+                                </header>
+                                <div class="renew__form-container">
+                                    <button id="toggleEligible" style="color:red;">Toggle Eligibility</button>
+                                    <sergey-import src="lanemate/content/member-transfer-form-success" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+
+            </main>
+            <sergey-import src="foundation/footer" />
+        </div>
+
+        <sergey-import src="site/footer_scripts" />
+        
+        <script>
+            $(document).ready(function() {
+                $("#toggleEligible").click(function() {
+                    $(".transfer-eligible").toggle();
+                    $(".transfer-ineligible").toggle();
+                    $('.club-information__column').removeClass('club-information__column--fade-in');
+                    $('.club-information__column').addClass('club-information__column--fade-out');
+                });
+            });
+            $('select[name="selectedClub"]').on("change", function() {
+                $('.club-information__column').removeClass('club-information__column--fade-out');
+                $('.club-information__column').addClass('club-information__column--fade-in');
+            });
+        </script>
+
+        <script>
+            let className = 'renew__form-container';
+        </script>
+        <script src="/js/find-class.js"></script>
+
+    </body>
+</html>
