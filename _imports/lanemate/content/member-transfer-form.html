@@ -211,6 +211,16 @@
                                 </label>
                             </div>
 
+                            <div class="input-group checkbox-group">
+                                <label class="radio-label" for="transferOther">
+                                    Other
+                                    <span class="radio-container">
+                                        <input type="radio" id="transferOther" name="TransferReason" value="transferOther">
+                                        <span class="radio__placeholder"></span>
+                                    </span>
+                                </label>
+                            </div>
+
                             <textarea class="form-control" rows="3" cols="50" name="MemberTransferNotes" id="memberTransferNotes" required="true" maxlength="32768" placeholder="Please enter a reason for transferring"></textarea>
 
                         </div>
@@ -270,16 +280,10 @@
             $('.help-block--selectedClub').toggleClass('has-error');
             $('.help-block--selectedClub + select').toggleClass('has-error');
             $('.help-block--transfer-reason').toggleClass('has-error');
-            // $('.help-block--transferReason + select').toggleClass('has-error');
             $('.help-block--agree-terms').toggleClass('has-error');
-            // $('.help-block--agree-terms + select').toggleClass('has-error');
         });
-        // $("#transferFoundAnotherClub").click( function() {
-        //     $("#memberTransferNotes").toggle();
-        // });
         $('.radio-group.transfer-reason input').click( function() {
-            console.log(this.id);
-            if (this.id === 'transferFoundAnotherClub') {
+            if (this.id === 'transferOther') {
                 $("#memberTransferNotes").toggle();
             } else {
                 $("#memberTransferNotes").hide();
