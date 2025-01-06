@@ -2,66 +2,67 @@
 
 <style>
     :root {
-    --rte-blue: #0068ad;
-}
-.form-group {
-    margin-top: 2rem;
-    margin-bottom: 3rem;
-    margin-left: 0;
-}
-.form-club-information .row {
-    width: 100%;
-}
-.form-group.agree-terms {
-    margin-top: 0;
-    margin-left: 3rem;
-}
-#btnSubmitMemberTransfer {
-    width: 123px;
-}
-.help-block.has-error {
-    color: #c62030;
-    background-color: transparent;
-    padding: 0;
-    width: 100%;
-    display: block;
-    position: relative;
-    top: 0;
-}
-.transfer-eligible {
-    display: block;
-}
-.transfer-ineligible {
-    display: none;
-}
-.card .form-header {
-    margin: 6rem 0 3rem;
-}
+        --rte-blue: #0068ad;
+    }
+    .form-group {
+        margin-top: 2rem;
+        margin-bottom: 3rem;
+        margin-left: 0;
+    }
+    .form-club-information .row {
+        width: 100%;
+    }
+    .form-group.agree-terms {
+        margin-top: 0;
+        margin-left: 3rem;
+    }
+    #btnSubmitMemberTransfer {
+        width: 123px;
+    }
+    .help-block.has-error {
+        color: #c62030;
+        background-color: transparent;
+        padding: 0;
+        width: 100%;
+        display: block;
+        position: relative;
+        top: 0;
+    }
+    .transfer-eligible {
+        display: block;
+    }
+    .transfer-ineligible {
+        display: none;
+    }
+    .card .form-header {
+        margin: 6rem 0 3rem;
+    }
 
-.card .form-header + .help-block {
-    margin: -2rem 0 2rem;
-}
+    .card .form-header + .help-block {
+        margin: -2rem 0 2rem;
+    }
 
-.card .form-header h6 {
-    color: #434343;
-    font-size: 1.8rem;
-    margin: 2rem 0;
-}
-.card.no-border {
-    border: 0 none;
-}
-.card.border-top {
-    border: 0 none;
-    border-top: 1px solid #ccc;
-}
-.card.border-bottom {
-    border: 0 none;
-    border-bottom: 1px solid #ccc;
-}
-#other__label + textarea {
-    margin-top: 1.5rem;
-    display: none;
-}
+    .card .form-header h6 {
+        color: #434343;
+        font-size: 1.8rem;
+        margin: 2rem 0;
+    }
+    .card.no-border {
+        border: 0 none;
+    }
+    .card.border-top {
+        border: 0 none;
+        border-top: 1px solid #ccc;
+    }
+    .card.border-bottom {
+        border: 0 none;
+        border-bottom: 1px solid #ccc;
+    }
+    /* #other__label + textarea, */
+    #memberTransferNotes {
+        margin-top: 1.5rem;
+        display: none;
+    }
 </style>
 
 
@@ -69,7 +70,6 @@
 <div class="renew__form-body">
 
     <div class="card no-border">
-        <!-- <div class="form-header"> -->
         <div>
             <h3>Current Information</h3>
             <p class="transfer-eligible">You're eligible to transfer your membership 2 more times.</p>
@@ -103,9 +103,11 @@
 
     <div class="card border-top transfer-eligible">
         <div class="form-header">
-            <h6>Select the LMSC, club and/or workout group to which you would like to transfer.</h6>
+            <p>Select the LMSC, club and/or workout group to which you would like to transfer.</p>
         </div>
-        <form class="form-club-information form-horizontal transfer-eligibleXXX">
+
+        <form class="form-club-information form-horizontal">
+
             <div class="form-group">
                 <div class="row">
                     <div class="col-xs-12 col-sm-4">
@@ -150,65 +152,77 @@
                         </select>
                     </div>
                 </div>
+            </div>
 
+            <style>
+                .transfer-reason {
+                    margin-top: 3rem;
+                }
+                .transfer-reason label.radio-label {
+                    padding-left: 3rem;
+                    font-weight: 400;
+                }
+            </style>
+
+            <div class="form-group">
                 <div class="row">
                     <div class="col-xs-12 col-sm-8">
-                        <!-- <div class="input-group member-transfer-reason" style="margin-top: 3rem;"> -->
-                            <!-- <label for="MemberTransferNotes" class="label-large control-label">Notes</label>
-                            <textarea class="form-control" rows="3" cols="50" name="MemberTransferNotes" id="memberTransferNotes" required="" maxlength="32768"></textarea> -->
-                        <div class="form-header">
-                            <h6>Why are you transferring?</h6>
-                        </div>
-                        <span class="help-block help-block--agree-terms">Please select a reason for transferring.</span>
-                        <div class="check-list check-list--transfer-reason required"> 
-                                                            
-                            <div class="input-group check-list-item">
-                                <label id="upcomingCompetition__label" class="checkbox-label " for="upcomingCompetition">
-                                    <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-transfer-reason-0" id="upcomingCompetition" value=""><span class="checkbox__placeholder"></span></div>
+                        <div class="input-group radio-group transfer-reason">
+                            <div class="input-group-header radio-group-header required">
+                                Why are you transferring?
+                            </div>
+                            <span class="help-block help-block--transfer-reason">Please select a reason for transferring.</span>
+                            <div class="input-group checkbox-group">
+                                <label class="radio-label" for="transferUpcomingCompetition">
                                     For an upcoming competition
+                                    <span class="radio-container">
+                                        <input type="radio" id="transferUpcomingCompetition" name="TransferReason" value="transferUpcomingCompetition">
+                                        <span class="radio__placeholder"></span>
+                                    </span>
                                 </label>
                             </div>
-
-                            <div class="input-group check-list-item">
-                                <label id="newLocation__label" class="checkbox-label " for="newLocation">
-                                    <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-transfer-reason-1" id="newLocation" value=""><span class="checkbox__placeholder"></span></div>
+                            <div class="input-group checkbox-group">
+                                <label class="radio-label" for="transferMovedToNewLocation">
                                     Moved to a new location
+                                    <span class="radio-container">
+                                        <input type="radio" id="transferMovedToNewLocation" name="TransferReason" value="transferMovedToNewLocation">
+                                        <span class="radio__placeholder"></span>
+                                    </span>
                                 </label>
                             </div>
-                            
-                            <div class="input-group check-list-item">
-                                <label id="multipleLocation__label" class="checkbox-label " for="multipleLocation">
-                                    <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-transfer-reason-1" id="multipleLocation" value=""><span class="checkbox__placeholder"></span></div>
+
+                            <div class="input-group checkbox-group">
+                                <label class="radio-label" for="transferSeasonalResident">
                                     Live in different parts of the country at different times of the year
+                                    <span class="radio-container">
+                                        <input type="radio" id="transferSeasonalResident" name="TransferReason" value="transferSeasonalResident">
+                                        <span class="radio__placeholder"></span>
+                                    </span>
                                 </label>
                             </div>
 
-                            <div class="input-group check-list-item">
-                                <label id="changedClub__label" class="checkbox-label " for="changedClub">
-                                    <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-transfer-reason-1" id="changedClub" value=""><span class="checkbox__placeholder"></span></div>
+                            <div class="input-group checkbox-group">
+                                <label class="radio-label" for="transferFoundAnotherClub">
                                     Found another club
+                                    <span class="radio-container">
+                                        <input type="radio" id="transferFoundAnotherClub" name="TransferReason" value="transferFoundAnotherClub">
+                                        <span class="radio__placeholder"></span>
+                                    </span>
                                 </label>
                             </div>
 
-                            <div class="input-group check-list-item">
-                                <label id="other__label" class="checkbox-label " for="other">
-                                    <div class="checkbox-container"><input type="checkbox" name="checkbox-filter-transfer-reason-1" id="other" value=""><span class="checkbox__placeholder"></span></div>
-                                    Other
-                                </label>
-                                <textarea class="form-control" rows="3" cols="50" name="MemberTransferNotes" id="memberTransferNotes" required="true" maxlength="32768" placeholder="Please enter a reason for transferring"></textarea>
-                            </div>
+                            <textarea class="form-control" rows="3" cols="50" name="MemberTransferNotes" id="memberTransferNotes" required="true" maxlength="32768" placeholder="Please enter a reason for transferring"></textarea>
 
                         </div>
-                        <!-- </div> -->
                     </div>
                 </div>
-
             </div>
+
         </form>
 
-        </div>
-        <div class="card border-top agree-terms">
+    </div>
 
+    <div class="card border-top agree-terms">
         <div class="section__content">
             <div class="form-group">
                 <div class="row">
@@ -229,6 +243,7 @@
             </div>
         </div>
     </div>
+
 
 </div>
 
@@ -254,11 +269,21 @@
             $('.help-block--selectedLmsc + select').toggleClass('has-error');
             $('.help-block--selectedClub').toggleClass('has-error');
             $('.help-block--selectedClub + select').toggleClass('has-error');
+            $('.help-block--transfer-reason').toggleClass('has-error');
+            // $('.help-block--transferReason + select').toggleClass('has-error');
             $('.help-block--agree-terms').toggleClass('has-error');
-            $('.help-block--agree-terms + select').toggleClass('has-error');
+            // $('.help-block--agree-terms + select').toggleClass('has-error');
         });
-        $("#other").click( function() {
-            $("#other__label + textarea").toggle();
+        // $("#transferFoundAnotherClub").click( function() {
+        //     $("#memberTransferNotes").toggle();
+        // });
+        $('.radio-group.transfer-reason input').click( function() {
+            console.log(this.id);
+            if (this.id === 'transferFoundAnotherClub') {
+                $("#memberTransferNotes").toggle();
+            } else {
+                $("#memberTransferNotes").hide();
+            }
         });
     });
 </script>
