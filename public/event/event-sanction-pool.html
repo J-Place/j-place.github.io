@@ -39,6 +39,24 @@
 <!-- Local Dev Files -->
     <link rel="stylesheet" href="/css/rte-updates.css">
     <link rel="stylesheet" href="/css/common-updates.css">
+    <style>
+        :root {
+            --color-primary: #0068AD;
+            --color-primary-hover: #267fb9;
+            --color-dark-blue: #071C31;
+            --color-lt-blue: #DBE7F1;
+            --color-red: #D2202E;
+            --color-gray: #F4F4F4;
+            --rte-blue: #0068AD;
+            --rte-blue-hover: #267fb9;
+            --lm-blue: #092c5c;
+            --lm-blue-rgb: rgb(9, 44, 92);
+            --lm-blue-md: #084c89;
+            --lm-blue-lt: #8FBCE6;
+            --lm-blue-xlt: #eaf4ff;
+            --lm-blue-hover: var(--lm-blue-md);
+        }
+    </style>
       <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
       <link rel="stylesheet" href="https://www.usms.org/styles/Club/club2.min.css">
       <!-- <link rel="stylesheet" href="https://www.usms.org/styles/clubs.min.css"> -->
@@ -1600,7 +1618,7 @@
          <span class="section__number">4</span>Location Information
       </h3>
       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
-      <div class="section__content collapse inXXX" id="location-information__content" data-parent="#accordion">
+      <div class="section__content collapse" id="location-information__content" data-parent="#accordion">
          
 <link rel="stylesheet" href="/search/css/ListControl.css">
 <link rel="stylesheet" href="/event/css/list-control-event.css">
@@ -2597,6 +2615,110 @@
         </div>
     </div>
 </div>
+         <style>
+    #tempNavCourseDescription {
+        display: inline;
+        position: relative;
+        /* margin-left: 3rem; */
+        float: right;
+        margin-top: -2rem;
+    }
+    #tempNavCourseDescription span {
+        color: red;
+        font-size: 1.4rem;
+        line-height: 50%;
+        padding: 0;
+        margin: 0;
+        height: 1.5rem;
+    }
+    #tempNavCourseDescription span:hover {
+        cursor: pointer;
+    }
+</style>
+<div class="row course-description">
+    <div class="col-xs-12">
+        <h5 style="display:inline;">Course Description</h5>
+        <p id="tempNavCourseDescription"><span id="default">Default</span>&nbsp;&nbsp;<span id="standard">Standard</span>&nbsp;&nbsp;<span id="optionA">Option A</span>&nbsp;&nbsp;<span id="optionB">Option B</span>&nbsp;&nbsp;<span id="optionC">Option C</span></p>        
+        <div class="list list--result">
+            <div class="list__container">
+                <div class="row is-flex">
+                   <div class="col-xs-12">
+                    <div class="list-item list-item-default">
+                        <p>Once a pool configuration is selected, a course description will be shown. After selection, if you feel this description is not accurate, please contact <a href="mailto:events@usmastersswimming.org">events@usmastersswimming.org</a>.</p>
+                    </div>
+                      <div class="list-item list-item-standard">
+                        <p>The length of the competition course without a bulkhead is in compliance and on file with USMS in accordance with articles 105.1.7 and 106.2.1.</p>
+                      </div>
+                      <div class="list-item list-item-option-a">
+                        <p>The length of the competition course has been measured and is NOT in compliance with USMS articles 105.1.7 and 106.2.1: Times achieved in the meet will NOT be eligible for USMS Top 10 and records.</p>
+                      </div>
+                      <div class="list-item list-item-option-b">
+                        <p>The length of the competition course is not on file with USMS. Eligibility of times achieved in this meet will be contingent upon pool length measurement and approval with USMS; if bulkheads are present, their placement must also be confirmed by measurements at the meet (USMS articles 105.1.7 and 106.2.1).</p>
+                      </div>
+                      <div class="list-item list-item-option-c">
+                        <p>The length of the competition course is in compliance and on file with USMS in accordance with articles 105.1.7 and 106.2.1, but as a bulkhead course, is subject to length confirmation. Eligibility of times for USMS top 10 records will be contingent on verification of bulkhead placement.</p>
+                      </div>
+                   </div>
+                </div>
+             </div>
+
+
+
+             
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $("#default").click( function() {
+        $(".course-description .list-item").hide();
+        $(".list-item-default").toggle();
+    });
+    $("#standard").click( function() {
+        $(".course-description .list-item").hide();
+        $(".list-item-standard").toggle();
+    });
+    $("#optionA").click( function() {
+        $(".course-description .list-item").hide();
+        $(".list-item-option-a").toggle();
+    });
+    $("#optionB").click( function() {
+        $(".course-description .list-item").hide();
+        $(".list-item-option-b").toggle();
+    });
+    $("#optionC").click( function() {
+        $(".course-description .list-item").hide();
+        $(".list-item-option-c").toggle();
+    });
+
+</script>
+
+<!-- <ul>
+<li>The length of the competition course without a bulkhead is in compliance and on file with USMS in accordance with articles 105.1.7 and 106.2.1.</li>
+<li>The length of the competition course has been measured and is NOT in compliance with USMS articles 105.1.7 and 106.2.1: Times achieved in the meet will NOT be eligible for USMS Top 10 and records</li>
+<li>The length of the competition course is not on file with USMS. Eligibility of times achieved in this meet will be contingent upon pool length measurement and approval with USMS; if bulkheads are present, their placement must also be confirmed by measurements at the meet (USMS articles 105.1.7 and 106.2.1).</li>
+<li>The length of the competition course is in compliance and on file with USMS in accordance with articles 105.1.7 and 106.2.1, but as a bulkhead course, is subject to length confirmation. Eligibility of times for USMS top 10 records will be contingent on verification of bulkhead placement.</li>
+</ul> -->
+
+
+
+
+<!-- (3) Contact Information
+(4) Location Information
+Search by Facility Name
+Facility Name
+Select a Range
+10 Miles
+25 Yards
+25 Meters
+50 Meters
+If your location is not listed, you can add a new one.
++ Add New
+Search by City, State or Zip
+Sarasota, FL, USA
+SUBMIT
+Other -->
          <div class="section__controls">
             <button class="btn save-section" type="button" id="saveLocation" disabled>Save &amp; Continue</button>
          </div>
@@ -2626,7 +2748,7 @@
          <span class="section__number">5</span>Entry Information
       </h3>
       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
-      <div class="section__content collapse inXXX" id="entry-information__content" data-parent="#accordion">
+      <div class="section__content collapse" id="entry-information__content" data-parent="#accordion">
          <div class="form-group location-information--container" style="display: block; visibility: visible;">
             <div class="row">
                <div class="col-xs-12 col-sm-8 col-md-5">
@@ -2704,7 +2826,7 @@
             <div class="row">
                <div class="col-xs-12 col-sm-8">
                      <div class="input-group entry-info__comments">
-                        <label for="entryInfoComments" class="label-large">
+                        <label for="entryInfoComments">
                            Comments to the Sanctions Chair
                            <!-- <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="This will be displayed to the public and help sell someone on participating in the event. Be thorough and be sure to include…. Your application will not be approved if you use the word Olympic and/or Paralympic."></span> -->
                            <!-- <span class="caption"></span> -->
@@ -2791,78 +2913,15 @@
           <span class="section__number">6</span>
           Meet Announcement
        </h3>
-       <!-- <span class="section__edit">
-          <button class="section__edit-btn section__edit-btn--name" type="button"></button> 
-       </span> -->
-
-        <div class="section__content collapse inXXX" id="meet-announcement__content" data-parent="#accordion">
+        <div class="section__content collapse in" id="meet-announcement__content" data-parent="#accordion">
              <div class="row">
 
                 <div class="col-xs-12">
-                   <div class="card liability meet-announcement-container">
-                      <!-- <h3 class="liability___form-header text-primary m-b-30">Liability Waiver</h3> -->
-                      <div class="html-container">
-                         <div>
-                            <p class="Paragraph SCXW179116405 BCX9" paraid="922674543" paraeid="{6155d6ea-d227-4a52-bdc4-fd56a026c5b4}{231}" style="color: windowtext; background-color: transparent; margin-right: 0px; margin-left: 0px; padding: 0px; text-align: justify;">
-                               <span data-contrast="auto" class="TextRun SCXW179116405 BCX9" style="margin: 0px; padding: 0px;">
-
-                                  <p>This checklist covers items that are required (R) or recommended to be included in a meet announcement:</p>
-                                  <span class="checkbox"><input type="checkbox">  the current USMS waiver and release of liability form (for sanctioned events) (202.1.1A) (R)</span>
-                                  <span class="checkbox"><input type="checkbox">  the "sanctioned by" or “recognized by” statement (202.1.1A(2)) (R)</span>
-                                  <span class="checkbox"><input type="checkbox">  the appropriate pool measurement statement provided in the rulebook listing whether or not the pool meets standards for official times to count (one statement from 201.1A(3) (a) – (d)) (R)</span>
-                                  <span class="checkbox"><input type="checkbox">  if the timing system requirements of 103.18.5-103.18.7 cannot be met, a statement that official times cannot be submitted for world records, USMS records, and/or Top 10. (103.18.9, 202.1.1A(4)) (R)</span>
-                                  <span class="checkbox"><input type="checkbox">  if mandatory facilities standards [M] cannot be met, a statement that events conducted in the facility are noncompliant and times will not count for USMS records and Top 10 (106.1.3, 202.1.1G(4)) (R)</span>
-                                  <span class="checkbox"><input type="checkbox">  each USMS member has provided their current USMS membership number (202.1.1G(5) (R)</span>
-                                  <span class="checkbox"><input type="checkbox">  the starting time of the meet and entry deadline (see 102.11 for information about changing a program or postponement) (R)</span>
-                                  <span class="checkbox"><input type="checkbox">  the warm-up and warm-down space and procedures (standard meets: 102.4.1) dual-sanctioned meets: 102.4.2) (R)</span>
-                                  <span class="checkbox"><input type="checkbox">  the order of events and format (any events labeled “choice” or “open” are not eligible for USMS official purposes) (102.5.1-.2, 102.5.5, 102.5.7, Guide to Local Operations, Sanction/Recognition: Meet Procedures) (R)</span>
-                                  <span class="checkbox"><input type="checkbox">  if the events are conducted in a format other than timed finals (short course yards meets only), the process for seeding, contesting the event and determining the final places are included in the meet announcement (102.5.5, 102.10.1A) (R)</span>
-                                  <span class="checkbox"><input type="checkbox">  if time trials are offered, the list of events and the format (yards competitions only) (102.5.6) (R)</span>
-                                  <span class="checkbox"><input type="checkbox">  the entry fee, entry deadline(s) and the entry procedure for individuals (102.7, 102.11.3) (R)</span>
-                                  <span class="checkbox"><input type="checkbox">  the entry fee, entry deadlines(s) and entry procedure for relays and relay only swimmers (102.9.4, 102.11.3) (R)</span>
-                                  <span class="checkbox"><input type="checkbox">  the check-in and scratch procedures for individual and relay events (102.8) (R)</span>
-                                  <span class="checkbox"><input type="checkbox">  the seeding method for all events (102.10.1D) (R)</span>
-                                  <span class="checkbox"><input type="checkbox">  if used, the criteria under which freestyle events over 200 meters will be swum 2 to a lane (102.10.4A(1)(a)) (R)</span>
-                                  <span class="checkbox"><input type="checkbox">  the location of the pool and other useful information such as parking provisions, driving directions, a description of the facility and racing course(s), information about any social events, information about nearby hotels and accommodations, information about any facility rules, concessions and merchandise that might be sold</span>
-                                  <span class="checkbox"><input type="checkbox">  the entry limit (maximum 6 individual events per day for a sanctioned timed finals competition) (102.6.1), maximum 3 individual events per day for a prelim/finals competition (102.6.4) and no limit for a recognized meet)</span>
-                                  <span class="checkbox"><input type="checkbox">  if possible, the virtual and/or physical location of the meet programs and heat sheets before and during the meet (102.10.1E)</span>
-                                  <span class="checkbox"><input type="checkbox">  if possible, the virtual and/or physical location of the results during and after the completion of the meet</span>
-                                  <span class="checkbox"><input type="checkbox">  the age determining date for the competition (yards: last day of meet) (meters: age as of Dec. 31) (102.2)</span>
-                                  <span class="checkbox"><input type="checkbox">  the age groups for individuals (18-24, 25-29, 30-34, … 5-year groups) (102.3.1) (see 102.3.3 for outside organization’s meets)</span>
-                                  <span class="checkbox"><input type="checkbox">  the age groups for relays (yds: 18+, 25+, 35+…10-yr groups) (meters: 72-99, 100-119, 120-159…40-year groups) (102.3.2-102.3.3)</span>
-                                  <span class="checkbox"><input type="checkbox">  if applicable, any facility or LMSC restrictions on the use of cameras, video equipment and drones (102.16)</span>
-                                  <span class="checkbox"><input type="checkbox">  if applicable, a description of the scoring system (103.19.1 – 103.19.3))</span>
-                                  <span class="checkbox"><input type="checkbox">  if applicable, a description of any awards (103.20)”</span>
-                                  
-                               </span>
-                            </p>
-                         </div>
-                      </div>
-                    </div>
+                    <p>This information can be organized by your event registration company or created manually and uploaded. A PDF is preferred.</p>
+                    <br />
+                    <br />
                 </div>
-
-                <div class="col-xs-12">
-                    <p>This information can be organized by your event registration company or created manually and uploaded. A PDF is preferred</p>
-                </div>
-
                 <div class="col-xs-12 col-sm-4">
-                    <!-- <label for="">Upload File</label>
-                    <div class="input-group entry-info__paper-meet-announcement">
-                        <div class="upload-box upload-box--file">
-                            <input type="file" data-file-size="3584000" name="file-3[]" id="file-3" class="inputfile inputfile-3" data-multiple-caption="{count} files selected" accept="image/*" multiple="">
-                            <label for="file-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path fill="#FFF" d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
-                                <span>Choose a file…</span>
-                            </label>
-                        </div>
-                    </div> -->
-
-                    
-
-
-
-
-
                   <div class="input-group meet-announcement">
                      <label for="MeetAnnouncement">Upload Meet Announcement (PDF)</label>
                      <span class="help-block">Invalid file type</span>
@@ -2873,24 +2932,91 @@
                              <span>Choose a file…</span>
                          </label>
                      </div>
-                     <!-- <div class="upload-instructions">
-                         <span>Dimensions: 1200 x 480 pixels</span>
-                         <span>Format: JPG, PNG, GIF</span>
-                         <span>Max file size: 3.5mb</span>
-                     </div> -->
                   </div>
-                 
-
-
-
-
-
-
-
-
-
-
                 </div>
+
+                <div class="col-xs-12">
+                  <div class="card meet-announcement">
+                     <!-- <div class="html-container">
+                        <div>
+                           <p class="Paragraph" style="color: windowtext; background-color: transparent; margin-right: 0px; margin-left: 0px; padding: 0px; text-align: justify;">
+                              <span data-contrast="auto" class="TextRun" style="margin: 0px; padding: 0px;">
+                                 <p>This checklist covers items that are required (R) or recommended to be included in a meet announcement:</p>
+                                 <span class="checkbox"><input type="checkbox">  the current USMS waiver and release of liability form (for sanctioned events) (202.1.1A) (R)</span>
+                                 <span class="checkbox"><input type="checkbox">  the "sanctioned by" or “recognized by” statement (202.1.1A(2)) (R)</span>
+                                 <span class="checkbox"><input type="checkbox">  the appropriate pool measurement statement provided in the rulebook listing whether or not the pool meets standards for official times to count (one statement from 201.1A(3) (a) – (d)) (R)</span>
+                                 <span class="checkbox"><input type="checkbox">  if the timing system requirements of 103.18.5-103.18.7 cannot be met, a statement that official times cannot be submitted for world records, USMS records, and/or Top 10. (103.18.9, 202.1.1A(4)) (R)</span>
+                                 <span class="checkbox"><input type="checkbox">  if mandatory facilities standards [M] cannot be met, a statement that events conducted in the facility are noncompliant and times will not count for USMS records and Top 10 (106.1.3, 202.1.1G(4)) (R)</span>
+                                 <span class="checkbox"><input type="checkbox">  each USMS member has provided their current USMS membership number (202.1.1G(5) (R)</span>
+                                 <span class="checkbox"><input type="checkbox">  the starting time of the meet and entry deadline (see 102.11 for information about changing a program or postponement) (R)</span>
+                                 <span class="checkbox"><input type="checkbox">  the warm-up and warm-down space and procedures (standard meets: 102.4.1) dual-sanctioned meets: 102.4.2) (R)</span>
+                                 <span class="checkbox"><input type="checkbox">  the order of events and format (any events labeled “choice” or “open” are not eligible for USMS official purposes) (102.5.1-.2, 102.5.5, 102.5.7, Guide to Local Operations, Sanction/Recognition: Meet Procedures) (R)</span>
+                                 <span class="checkbox"><input type="checkbox">  if the events are conducted in a format other than timed finals (short course yards meets only), the process for seeding, contesting the event and determining the final places are included in the meet announcement (102.5.5, 102.10.1A) (R)</span>
+                                 <span class="checkbox"><input type="checkbox">  if time trials are offered, the list of events and the format (yards competitions only) (102.5.6) (R)</span>
+                                 <span class="checkbox"><input type="checkbox">  the entry fee, entry deadline(s) and the entry procedure for individuals (102.7, 102.11.3) (R)</span>
+                                 <span class="checkbox"><input type="checkbox">  the entry fee, entry deadlines(s) and entry procedure for relays and relay only swimmers (102.9.4, 102.11.3) (R)</span>
+                                 <span class="checkbox"><input type="checkbox">  the check-in and scratch procedures for individual and relay events (102.8) (R)</span>
+                                 <span class="checkbox"><input type="checkbox">  the seeding method for all events (102.10.1D) (R)</span>
+                                 <span class="checkbox"><input type="checkbox">  if used, the criteria under which freestyle events over 200 meters will be swum 2 to a lane (102.10.4A(1)(a)) (R)</span>
+                                 <span class="checkbox"><input type="checkbox">  the location of the pool and other useful information such as parking provisions, driving directions, a description of the facility and racing course(s), information about any social events, information about nearby hotels and accommodations, information about any facility rules, concessions and merchandise that might be sold</span>
+                                 <span class="checkbox"><input type="checkbox">  the entry limit (maximum 6 individual events per day for a sanctioned timed finals competition) (102.6.1), maximum 3 individual events per day for a prelim/finals competition (102.6.4) and no limit for a recognized meet)</span>
+                                 <span class="checkbox"><input type="checkbox">  if possible, the virtual and/or physical location of the meet programs and heat sheets before and during the meet (102.10.1E)</span>
+                                 <span class="checkbox"><input type="checkbox">  if possible, the virtual and/or physical location of the results during and after the completion of the meet</span>
+                                 <span class="checkbox"><input type="checkbox">  the age determining date for the competition (yards: last day of meet) (meters: age as of Dec. 31) (102.2)</span>
+                                 <span class="checkbox"><input type="checkbox">  the age groups for individuals (18-24, 25-29, 30-34, … 5-year groups) (102.3.1) (see 102.3.3 for outside organization’s meets)</span>
+                                 <span class="checkbox"><input type="checkbox">  the age groups for relays (yds: 18+, 25+, 35+…10-yr groups) (meters: 72-99, 100-119, 120-159…40-year groups) (102.3.2-102.3.3)</span>
+                                 <span class="checkbox"><input type="checkbox">  if applicable, any facility or LMSC restrictions on the use of cameras, video equipment and drones (102.16)</span>
+                                 <span class="checkbox"><input type="checkbox">  if applicable, a description of the scoring system (103.19.1 – 103.19.3))</span>
+                                 <span class="checkbox"><input type="checkbox">  if applicable, a description of any awards (103.20)”</span>
+                              </span>
+                           </p>
+                        </div>
+                     </div> -->
+                     <style>
+                        .manual-checklist {
+
+                        }
+                        .manual-checklist li {
+                           list-style: none;
+                        }
+                        .manual-checklist li:before {
+                           content: "__ ";
+                           margin-left: -2rem;
+                           width: 2rem;
+                           display: inline-block;
+                        }
+                     </style>
+                     <ul class="manual-checklist">
+                        <li>the current USMS waiver and release of liability form (for sanctioned events) (202.1.1A) (R)</li>
+                        <li>the "sanctioned by" or “recognized by” statement (202.1.1A(2)) (R)</li>
+                        <li>the appropriate pool measurement statement provided in the rulebook listing whether or not the pool meets standards for official times to count (one statement from 201.1A(3) (a) – (d)) (R)</li>
+                        <li>if the timing system requirements of 103.18.5-103.18.7 cannot be met, a statement that official times cannot be submitted for world records, USMS records, and/or Top 10. (103.18.9, 202.1.1A(4)) (R)</li>
+                        <li>if mandatory facilities standards [M] cannot be met, a statement that events conducted in the facility are noncompliant and times will not count for USMS records and Top 10 (106.1.3, 202.1.1G(4)) (R)</li>
+                        <li>each USMS member has provided their current USMS membership number (202.1.1G(5) (R)</li>
+                        <li>the starting time of the meet and entry deadline (see 102.11 for information about changing a program or postponement) (R)</li>
+                        <li>the warm-up and warm-down space and procedures (standard meets: 102.4.1) dual-sanctioned meets: 102.4.2) (R)</li>
+                        <li>the order of events and format (any events labeled “choice” or “open” are not eligible for USMS official purposes) (102.5.1-.2, 102.5.5, 102.5.7, Guide to Local Operations, Sanction/Recognition: Meet Procedures) (R)</li>
+                        <li>if the events are conducted in a format other than timed finals (short course yards meets only), the process for seeding, contesting the event and determining the final places are included in the meet announcement (102.5.5, 102.10.1A) (R)</li>
+                        <li>if time trials are offered, the list of events and the format (yards competitions only) (102.5.6) (R)</li>
+                        <li>the entry fee, entry deadline(s) and the entry procedure for individuals (102.7, 102.11.3) (R)</li>
+                        <li>the entry fee, entry deadlines(s) and entry procedure for relays and relay only swimmers (102.9.4, 102.11.3) (R)</li>
+                        <li>the check-in and scratch procedures for individual and relay events (102.8) (R)</li>
+                        <li>the seeding method for all events (102.10.1D) (R)</li>
+                        <li>if used, the criteria under which freestyle events over 200 meters will be swum 2 to a lane (102.10.4A(1)(a)) (R)</li>
+                        <li>the location of the pool and other useful information such as parking provisions, driving directions, a description of the facility and racing course(s), information about any social events, information about nearby hotels and accommodations, information about any facility rules, concessions and merchandise that might be sold<</li>
+                        <li>the entry limit (maximum 6 individual events per day for a sanctioned timed finals competition) (102.6.1), maximum 3 individual events per day for a prelim/finals competition (102.6.4) and no limit for a recognized meet)</li>
+                        <li>if possible, the virtual and/or physical location of the meet programs and heat sheets before and during the meet (102.10.1E)</li>
+                        <li>if possible, the virtual and/or physical location of the results during and after the completion of the meet<</li>
+                        <li>the age determining date for the competition (yards: last day of meet) (meters: age as of Dec. 31) (102.2)</li>
+                        <li>the age groups for individuals (18-24, 25-29, 30-34, … 5-year groups) (102.3.1) (see 102.3.3 for outside organization’s meets)</li>
+                        <li>the age groups for relays (yds: 18+, 25+, 35+…10-yr groups) (meters: 72-99, 100-119, 120-159…40-year groups) (102.3.2-102.3.3)</li>
+                        <li>if applicable, any facility or LMSC restrictions on the use of cameras, video equipment and drones (102.16)</li>
+                        <li>if applicable, a description of the scoring system (103.19.1 – 103.19.3)</li>
+                        <li>if applicable, a description of any awards (103.20)”<</li>
+                     </ul>
+                  </div>
+               </div>
+
 
             </div>
 
@@ -3010,7 +3136,7 @@
                         </div>
 
                         <div class="col-xs-12">
-                           <div class="form-group">
+                           <div class="form-group" style="padding-left: 1rem;">
                               <label id="agree__label" class="radio-label" for="agree" style="cursor:pointer;">
                                  <div class="radio-container" data-reactid="19">
                                     <input type="radio" name="WaiverTerms" id="agree" value="agree" data-reactid="20">
@@ -3576,5 +3702,15 @@
             $('.section.isEdit').removeClass('isEdit');
          });
       </script>
+      <script type="text/javascript">
+         $(function () {
+            //  $("[rel='tooltip']").tooltip();
+            //  $('.icon-help').tooltip();
+            $('[data-toggle="tooltip"]').tooltip();
+         });
+     </script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
    </body>
 </html>
