@@ -648,12 +648,17 @@ label.radio-label {
     line-height: 120%;
 }
 
-.club-edit .list-item p.event-location__address--street {
+.club-edit .list-item p.event-location__address--name {
     padding: 0 1.2rem 0 0;
     margin: 0 1rem 0 0.8rem;
-    border-right: 1px solid #CCC;
+    border-right: none;
     line-height: 120%;
     font-size: 1.6rem;
+}
+@media (min-width: 768px) {
+    .club-edit .list-item p.event-location__address--name {
+        border-right: 1px solid #CCC;   
+    }
 }
 
 .event-location-details {
@@ -748,26 +753,34 @@ p.lookup__location--or {
 
 
 .radio-label {
-    margin-left: 3rem;
+    margin-left: 2rem;
     max-width: 85%;
     line-height: 130% !important;
 }
 .radio-label--inline .radio-container {
     margin-right: 8px;
 }
-
 .radio-container {
     margin-left: -1.8rem;
 }
 .radio__placeholder {
-    left: -1.5rem;
+    left: -2.5rem;
+}
+.radio-label--inline .radio__placeholder {
+    left: -2rem;
 }
 
 @media (min-width: 1200px) {
+    .radio-label {
+        margin-left: 2.5rem;
+    }
     .radio-container {
         margin-left: -3.3rem;
     }
     .radio__placeholder {
+        left: -3rem;
+    }
+    .radio-label--inline .radio__placeholder {
         left: -3rem;
     }
 }
@@ -814,4 +827,27 @@ p.lookup__location--or {
 
 .list__container .row {
     width: 100%;
+}
+
+
+.event-edit .event-type .input-group-header {
+    margin-top: -1rem;
+}
+.liability.submit .form-group {
+    padding-left: 2rem;
+}
+.liability.submit .radio-container {
+    margin-left: -3rem;
+}
+
+@media (min-width: 1200px) {
+    .event-edit .event-type .input-group-header {
+        margin-top: -1rem;
+    }
+    .liability.submit .form-group {
+        padding-left: 1rem;
+    }
+    .liability.submit .radio-container {
+        margin-left: -3rem;
+    }    
 }
