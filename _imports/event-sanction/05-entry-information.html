@@ -6,7 +6,7 @@
       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
       <div class="section__content collapse" id="entry-information__content" data-parent="#accordion">
          <div class="form-group location-information--container" style="display: block; visibility: visible;">
-            <div class="row">
+            <!-- <div class="row">
                <div class="col-xs-12 col-sm-8 col-md-5">
                   <div class="input-group entry-info__meet-format">
                      <label for="selectMeetFormat">
@@ -20,7 +20,7 @@
                         <span class="help-block help-block--SelectMeetFormat">Host type is required.</span>
                   </div>
                </div>
-            </div>
+            </div> -->
             <div class="row">
                <div class="col-xs-12 col-md-6">
                   <div class="input-group entry-info__website-url required">
@@ -41,7 +41,7 @@
             </div>
             <div class="row">
                <div class="col-xs-12 col-lg-4">
-                  <div class="form-group has-feedback entry-info__close-date--date-container">
+                  <div class="form-group has-feedback entry-info__close-date--date-container required">
                   
                      <label for="">Date Entries Close</label>
                      <div class="SingleDatePicker SingleDatePicker_1">
@@ -62,14 +62,20 @@
             </div>
             <div class="row">
                <div class="col-xs-12 col-sm-4">
-                  <div class="input-group entry-info__attendance-previous">
-                     <label for="entryInfoAttendancePrevious">Number of Entries Last Year</label>
+                  <div class="input-group entry-info__attendance-previous required">
+                     <label for="entryInfoAttendancePrevious">
+                        Number of Entries Last Year
+                        <a tabindex="0" class="popover-link" role="button" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="top" data-content="If this is a new event enter zero '0'." data-original-title="" title="">
+                           <span class="icon-help"></span>
+                        </a>
+                        <!-- <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="If this is a new event enter zero '0'."></span> -->
+                     </label>
                      <input tabindex="0" type="number" class="form-control" name="EntryInfoAttendancePrevious" id="entryInfoAttendancePrevious">
                      <span class="help-block help-block--EntryInfoAttendancePrevious">Please enter number of entries</span>
                   </div>
                </div>
                <div class="col-xs-12 col-sm-4">
-                  <div class="input-group entry-info__attendance-expected">
+                  <div class="input-group entry-info__attendance-expected required">
                      <label for="entryInfoAttendanceExpected">Number of Entries Expected</label>
                      <input tabindex="0" type="number" class="form-control" name="EntryInfoAttendanceExpected" id="entryInfoAttendanceExpected">
                      <span class="help-block help-block--EntryInfoAttendanceExpected">Please enter number of entries expected</span>
