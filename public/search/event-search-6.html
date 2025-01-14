@@ -86,6 +86,7 @@
         }
     </style>
         <link rel="stylesheet" href="/search/css/ResultList.css">
+        <link rel="stylesheet" href="/search/css/ResultListCondensed.css">
         <link rel="stylesheet" href="/search/css/ListControl.css">
         <link rel="stylesheet" href="/search/css/ResultsFilterForm.css">
         <link rel="stylesheet" href="/search/css/ResultsPagination.css">
@@ -545,7 +546,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="list-control-display">
-                                                    <a href="">List View</a>
+                                                    <span id="listViewSmall">List View</span>
+                                                    <span id="listViewLarge">Grid View</span>
                                                 </div>
                                                 <div class="list-control-search--summary">
                                                     Showing <strong>72 Events</strong> within <strong>500 Miles</strong>
@@ -557,7 +559,7 @@
                                 </div>
                             </div>
                             <div class="results-content">
-                                <div class="results-list">
+                                <div class="results-list results-list-large">
                                     <div class="results-list__item">
                                         <div class="results-list__item-detail" role="main">
                                             <div class="results-list__item-type--container">
@@ -1212,6 +1214,24 @@
 </footer>
 
         </div>
+
+        <script>
+            // results-list results-list-small
+            $("#listViewSmall").click(function() {
+                $(this).toggle();
+                $("#listViewLarge").toggle();
+                $(".results-list").toggleClass('results-list-large');
+                $(".results-list").toggleClass('results-list-small');
+            });
+
+            $("#listViewLarge").click(function() {
+                $(this).toggle();
+                $("#listViewSmall").toggle();
+                $(".results-list").toggleClass('results-list-small');
+                $(".results-list").toggleClass('results-list-large');
+            });
+        </script>
+
         <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
