@@ -243,7 +243,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="list-control-display">
-                                                    <span id="listViewLarge" class="active">Grid</span> | <span id="listViewSmall">List</span>
+                                                    <span id="listViewLarge">Grid</span><span id="listViewSmall">List</span>
                                                 </div>
                                                 <div class="list-control-search--summary">
                                                     Showing <strong>72 Events</strong> within <strong>500 Miles</strong>
@@ -717,12 +717,9 @@
         </div>
 
         <script>
-            // results-list results-list-small
-
             // $('.results-list__item-location br').each(function() {
             //     $(this).replaceWith('<p>');
             // });
-
             // $('.results-list__item-location').find('br').remove();
 
             $("#listViewSmall").click(function() {
@@ -730,11 +727,6 @@
                 $('.results-list-small').show();
                 $('.list-control-display span').css("font-weight", "normal");
                 $(this).css("font-weight", "bold");
-                // $('.results-list__item-location').find('br').replaceWith(' | ');
-                // $(".list-control-display span").toggleClass('active');
-                // $(".results-list").toggleClass('results-list-large');
-                // $(".results-list").toggleClass('results-list-small');
-                // $('.results-list__item-footer').toggle();
             });
 
             $("#listViewLarge").click(function() {
@@ -742,15 +734,6 @@
                 $('.results-list-small').hide();
                 $('.list-control-display span').css("font-weight", "normal");
                 $(this).css("font-weight", "bold");
-                // $('.results-list__item-location').each(function() {
-                //     var content = $(this).html();
-                //     var updatedContent = content.replace(/ \| /g, '<br>');
-                //     $(this).html(updatedContent);
-                // });
-                // $(".list-control-display span").toggleClass('active');
-                // $(".results-list").toggleClass('results-list-small');
-                // $(".results-list").toggleClass('results-list-large');
-                // $('.results-list__item-footer').toggle();
             });
         </script>
 

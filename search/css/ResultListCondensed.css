@@ -1,8 +1,22 @@
+.usms-container {
+    padding-left: 15px;
+}
+
 .list-control-display {
     position: absolute;
-    top: 15rem;
-    right: 2rem;
+    top: 6.3rem;
+    right: 1rem;
     z-index: 1;
+}
+
+#listViewLarge {
+    font-weight: bold
+}
+
+#listViewSmall {
+    border-left: 1px solid #CCC;
+    margin-left: 0.8rem;
+    padding-left: 0.8rem;
 }
 
 .list-control-display span {
@@ -21,6 +35,7 @@
 
 .results-list.results-list-small {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    border: 0 none;
     margin-top: 1rem;
     padding: 2rem 0 3rem 1rem;
 }
@@ -28,24 +43,29 @@
 .results-list__item.results-list__item--small {
     box-shadow: none;
     margin: 0;
+    padding: 0;
+    border: 0 none;
 }
 
 .results-list-small .results-list__item-detail {
     max-width: 100%;
-    flex-direction: row;
+    display: block;
     padding: 1rem 2rem;
 }
 
 .results-list-small .results-list__item--small p,
 .results-list-small .results-list__item--small h3 {
-    border-left: 1px solid #CCC;
-    margin: 0 0 0 1rem;
-    padding: 0 0 0 1rem;
-    display: flex;
-    flex-direction: row;
+    border-left: 0 none;
+    margin: 0;
+    padding: 0;
+    display: inline;
     width: auto;
     font-size: 1.6rem;
     line-height: 130%;
+}
+
+.results-list-small h3.results-list__item-title {
+    display: block;
 }
 
 .results-list-small p.results-list__item-date {
@@ -54,6 +74,42 @@
     padding-left: 0;
 }
 
-.results-list-small .results-list__item-type {
+.results-list-small p.results-list__item-type {
     background: none;
+    top: 0;
+    border-left: 1px solid #CCC;
+    margin: 0 0 0 1rem;
+    padding: 0 0 0 1rem;
+}
+
+.results-list-small p.results-list__item-status {
+    border-left: 1px solid #CCC;
+    margin: 0 0 0 1rem;
+    padding: 0 0 0 1rem;
+}
+
+@media(min-width:768px) {
+    .list-control-display {
+        top: 15rem;
+    }
+    .results-list-small .results-list__item-detail {
+        display: flex;
+        flex-direction: row;
+    }
+    .results-list-small .results-list__item--small p,
+    .results-list-small .results-list__item--small h3 {
+        border-left: 1px solid #CCC;
+        margin: 0 0 0 1rem;
+        padding: 0 0 0 1rem;
+        display: flex;
+        flex-direction: row;    
+    }
+    .results-list-small h3.results-list__item-title {
+        display: flex;
+    }
+    .results-list-small p.results-list__item-date {
+        border: 0 none;
+        margin-left: 0;
+        padding-left: 0;
+    }
 }
