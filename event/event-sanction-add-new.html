@@ -225,6 +225,10 @@
                 $('input[name=meetAnnouncement]').on('change', function() {
                    $("#confirmMeetAnnouncement").prop('disabled', false);
                 });
+                $('#confirmMeetAnnouncement').click( function() {
+                    $('input[name=meetAnnouncement]').prop('checked', false);
+                    $("#confirmMeetAnnouncement").prop('disabled', true);
+                });
         </script>
 
     </body>
