@@ -25,10 +25,6 @@ function checkForClassInCSS(className) {
   return styles;
 }
 
-// Example usage
-
-// let className = '';
-// set classname in individual views or components
 const rulesContainingClass = checkForClassInCSS(className);
 
 if (rulesContainingClass.length > 0) {
@@ -37,3 +33,10 @@ if (rulesContainingClass.length > 0) {
 } else {
   console.log(`No CSS rules found containing the class '${className}'`);
 }
+
+// Add this in the view and set classname as variable
+
+// <script>
+//  let className = 'renew__form-container';
+// </script>
+// <script src="/js/find-class.js"></script>

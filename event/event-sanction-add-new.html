@@ -6,7 +6,7 @@
 <html lang="en">
     <!--<![endif]-->
     <head>
-        <title>U.S. Masters Swimming</title>
+        <title>Add New Event - U.S. Masters Swimming</title>
         <sergey-import src="site/head_meta" />
         <sergey-import src="site/head_js" />
         <sergey-import src="site/head_css" />
@@ -52,65 +52,180 @@
                             <div class="col-xs-12">
                                 <header>
                                     <h1>Add a New Event</h1>
-                                    <!-- <div class="lead">
-                                        <p style="font-size: 15px; line-height: 25px;font-weight: normal;">Lorem ipsum.</p>
-                                    </div> -->
                                 </header>
                             </div>
                         </div>
                     </div>
-                    <div class="usms-container form__container p-tb-10">
-                        <div class="row">
-                            <!-- <div class="col-xs-12">
-                                <h3>Are you creating a sanctioned/recognized event or a calendar listing?</h3>
-                                <br />
-                                <br />
+                    <style>
+                        .usms-container.message__container li {
+                            font-size: 1.5rem;
+                            line-height: 150%;
+                            font-weight: 400;
+                        }
+                        @media (min-width: 768px) {
+                            .usms-container.message__container {
+                                margin: 0 auto 6rem;
+                                padding: 6rem 3rem;
+                                max-width: 1200px;
+                            }
+                        }
+                        .message__container {
+                            display: -webkit-box;
+                            display: -ms-flexbox;
+                            display: flex;
+                            background-color: #fff;
+                            margin: 0 auto 6rem;
+                            padding: 6rem 3rem;
+                            -webkit-box-pack: center;
+                            -ms-flex-pack: center;
+                            justify-content: center;
+                            -webkit-box-shadow: 0 0 20px #ccc;
+                            box-shadow: 0 0 20px #ccc;
+                            max-width: 1200px
+                        }
+                        .meet-announcement-status .modal-header {
+                            /* padding: 15px 0; */
+                            border-bottom: 1px solid #e5e5e5;
+                            margin: 0 2rem 2rem;
+                        }
+                        .meet-announcement-status .radio-group label {
+                            font-weight: 400;
+                            font-size: 1.6rem;
+                        }
+                        .meet-announcement-status .input-group .radio-group {
+                            padding-left: 4rem;
+                        }
+                        .meet-announcement-status .input-group {
+                            margin-bottom: 0;
+                        }
+                            
+                        .event-status-options .col-sm-4 {
+                            padding: 2rem 1rem 1rem;
+                            border-bottom: 1px solid #CCC;
+                        }
+                        .event-status-options .col-sm-4:last-of-type {
+                            border: 0 none;
+                        }
+                        .event-status-options h3.add-club-choice__title {
+                            margin: 0 auto 1rem;
+                            text-align: center;
+                        }
+                        @media (min-width: 1200px) {
+                            .message__container {
+                                padding: 6rem 3rem;
+                            }
+                            .event-status-options .col-sm-4 {
+                                padding: 0 2rem;
+                                border-bottom: 0 none;
+                                border-right: 1px solid #CCC;
+                            }
+                            .event-status-options h3.add-club-choice__title {
+                                margin: 0 auto 5rem;
+                            }
+                        }
+                    </style>
+                    <div class="usms-container message__container p-tb-10">
+                        <div class="row event-status-options">
+                            <div class="col-xs-12">
+                                <h3 class="add-club-choice__title">
+                                    Are you adding a Sanctioned/Recognized Event, Calendar Listing or a Non-Sanctioned/Recognized Event?
+                                    <span class="icon-help" data-toggle="tooltip" data-html="true" data-placement="top" title="A USMS Sanction requires that every participant is a USMS member.A USMS Recognition allows for some participants to not be a USMS member, but still allows for a USMS member's results to count as an official time. A Calendar Listing is any event that is not applying for a USMS Sanction or Recognition. Examples of Calendar Listings: a kick for time event at your pool, a fun relay event using props, an event sanctioned by another World Aquatics Governing Body." data-container="body"></span>
+                                </h3>    
                             </div>
-                            <div class="col-xs-6" style="border-right: 1px solid #CCC;">
+                            <div class="col-xs-12 col-sm-4">
                                 <div style="text-align: center; margin: 1rem auto 2rem;">
-                                    <a href="event-sanction-pool.html" class="btn btn-default btn-outline">+ Sanctioned/Recognized Event</a>
+                                    <a href="#" class="btn btn-md btn-outline" id="btnSanctionedRecognized">+ Sanctioned/Recognized</a>
                                     <br />
                                     <br />
-                                    <ul style="list-style: none;">
+                                    <ul style="list-style: none; padding-left: 0;">
                                         <li>A USMS Sanction requires that every participant is a USMS member.</li>
                                         <li>A USMS Recognition allows for some participants to not be a USMS member, but still allows for a USMS member's results to count as an official time.</li>
                                     </ul>
                                 </div>
                             </div>
-                            <div class="col-xs-6">
+                            <div class="col-xs-12 col-sm-4">
                                 <div style="text-align: center; margin: 1rem auto 2rem;">
-                                    <a href="event-sanction-pool.html" class="btn btn-default btn-outline">+ Calendar Listing</a>
+                                    <a href="#" class="btn btn-md btn-outline" id="btnCalendarListing">+ Calendar Listing</a>
                                     <br />
                                     <br />
-                                    <ul style="list-style: none;">
+                                    <ul style="list-style: none; padding-left: 0;">
                                         <li>A Calendar Listing is any event that is not applying for a USMS Sanction or Recognition. Examples of Calendar Listings: a kick for time event at your pool, a fun relay event using props, an event sanctioned by another World Aquatics Governing Body.</li>
                                     </ul>
                                 </div>
-                            </div> -->
-                            <div class="col-xs-12">
-                                <div class="row button-row__content align-center">
-                                    <h3 class="add-club-choice__title">
-                                        Are you adding a Sanctioned/Recognized Event <br />or an Event Calendar Listing?
-                                        <span class="icon-help" data-toggle="tooltip" data-html="true" data-placement="top" title="A USMS Sanction requires that every participant is a USMS member.A USMS Recognition allows for some participants to not be a USMS member, but still allows for a USMS member's results to count as an official time. A Calendar Listing is any event that is not applying for a USMS Sanction or Recognition. Examples of Calendar Listings: a kick for time event at your pool, a fun relay event using props, an event sanctioned by another World Aquatics Governing Body." data-container="body"></span>
-                                    </h3>
-                                    <div class="col-xs-12">
-                                
-                                        <a class="btn btn-outline" href="event-sanction-pool.html">
-                                            + Sanctioned/Recognized Event
-                                        </a>
-                                        <a class="btn btn-outline" href="/">
-                                            + Calendar Listing
-                                        </a>
-                                
-                                    </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-4">
+                                <div style="text-align: center; margin: 1rem auto 2rem;">
+                                    <a href="#" class="btn btn-md btn-outline" id="btnNonSanctionedRecognized">+ Non-Sanctioned/Recognized</a>
+                                    <br />
+                                    <br />
+                                    <ul style="list-style: none; padding-left: 0;">
+                                        <li>A Calendar Listing is any event that is not applying for a USMS Sanction or Recognition. Examples of Calendar Listings: a kick for time event at your pool, a fun relay event using props, an event sanctioned by another World Aquatics Governing Body.</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="modal meet-announcement-status" id="modalSanctionedRecognized" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Meet Announcement</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="input-group radio-group">
+                                    <!-- <div class="input-group-header radio-group-header">
+                                        Meet Announcement
+                                    </div> -->
+                                    <div class="input-group radio-group">
+                                        <label class="radio-label" for="meetAnnouncementYes">
+                                            I have my meet announcement done. I have spoken with an LMSC representative about the event date. I am ready to apply for my sanction/recognition.<br/>
+                                            <span class="radio-container">
+                                                <input type="radio" id="meetAnnouncementYes" name="meetAnnouncement" value="meetAnnouncementYes">
+                                                <span class="radio__placeholder"></span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div class="input-group radio-group">
+                                        <label class="radio-label" for="meetAnnouncementNo">
+                                            I do not have my meet announcement complete or all of my event details yet. I want to create a Calendar Listing and will apply for a sanction/recognition once I have all my information.<br/>
+                                            <span class="radio-container">
+                                                <input type="radio" id="meetAnnouncementNo" name="meetAnnouncement" value="meetAnnouncementNo">
+                                                <span class="radio__placeholder"></span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <span class="help-block help-block--MeetAnnoucnement">Please indicate meet announcement status</span>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="confirmMeetAnnouncement" disabled>Continue</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
             </main>
             <sergey-import src="foundation/footer" />
         </div>
         <sergey-import src="site/footer_scripts" />
+
+        <!-- <script>
+            let className = 'form__container';
+        </script>
+        <script src="/js/find-class.js"></script> -->
+
+        <script>
+                var modalSanctionedRecognized = new bootstrap.Modal(document.getElementById('modalSanctionedRecognized'));
+                $("#btnSanctionedRecognized").click( function() {
+                    modalSanctionedRecognized.show();
+                });
+                $('input[name=meetAnnouncement]').on('change', function() {
+                   $("#confirmMeetAnnouncement").prop('disabled', false);
+                });
+        </script>
+
     </body>
 </html>
