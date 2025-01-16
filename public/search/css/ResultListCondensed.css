@@ -11,13 +11,15 @@
 }
 
 #listViewLarge {
-    font-weight: bold
+    font-weight: bold;
+    padding-right: 0.8rem;
+    padding-left: 1.3rem;
 }
 
 #listViewSmall {
     border-left: 1px solid #CCC;
     margin-left: 0.8rem;
-    padding-left: 0.8rem;
+    padding-left: 1.3rem;
 }
 
 .events-summary-content .list-control-search--summary {
@@ -100,7 +102,16 @@
     padding: 0 0 0 1rem;
 }
 
+.list-control-filter.is-flex, 
+.list-control-search__content.is-flex, 
+.is-flex {
+    z-index: 9;
+}
+
 @media(min-width:768px) {
+    .list-control-display {
+        z-index: 1;
+    }
     .list-control-display {
         top: 15rem;
     }
