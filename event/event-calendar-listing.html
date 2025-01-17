@@ -4,147 +4,120 @@
 <![endif]-->
 <!--[if !IE]><!-->
 <html lang="en">
-<!--<![endif]-->
-    <head>
-        <title>Event Calendar Listing - U.S. Masters Swimming</title>
-        <sergey-import src="site/head_meta" />
-        <sergey-import src="site/head_js" />
-        <sergey-import src="site/head_css" />
-    </head>
-    <body class="">
-        <div id="main-container">
-        <sergey-import src="foundation/site-header" />
-        <main role="main">
-            <sergey-import src="foundation/breadcrumb" />
-            <div class="event-header image">
-                <div class="hero-image hero-image--event-detail" style="background-image: url('https://www.usms.org/-/media/usms/lightroom/2016%20usms%20spring%20nats-426.jpg'); height: 350px;"></div>
-            </div>
-            <!-- <header class="page-header">
-                <h1>Event Detail</h1>
-            </header> -->
-            <div class="section section-full p-mh-500">
-                <div class="usms-container p-tb-10">
-                    <div class="row is-flex">
-                        <div class="col-xs-12 col-md-8">
-                            <div class="event--title">
-                                <h1 class="text-capitalize">Event Calendar Listing Title</h1>
-                            </div>
-                            <div class="event__registration">
-                                <div class="row">
-                                    <div class="col-xs-12">
-                                        <div class="event__registration--links">
-                                            <a href="http://tammasters.org/" class="event__registration-button btn btn-danger btn-lg text-uppercase" target="_blank">Event Website</a>
-                                            <!-- <a href="https://www.clubassistant.com/club/meet_information.cfm?c=2430&amp;amp;smid=19260" class="event__registration-button btn btn-danger btn-lg text-uppercase" target="_blank">Event Registration</a> -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>                        
-                        </div>
-                        <div class="col-xs-12 col-md-4">
-                            <div class="social-share">
-                                <iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen="true" class="twitter-share-button twitter-share-button-rendered twitter-tweet-button" style="position: static; visibility: visible; width: 73px; height: 28px;" title="X Post Button" src="https://platform.twitter.com/widgets/tweet_button.2f70fb173b9000da126c79afe2098f02.en.html#dnt=false&amp;id=twitter-widget-0&amp;lang=en&amp;original_referer=https%3A%2F%2Ftest.usms.org%2Fevents%2Fevents%2F2025-postal-mile-to-fight-lung-cancer%3FID%3D10837&amp;size=l&amp;text=2025%20Postal%20Mile%20to%20Fight%20Lung%20Cancer%20%7C%20U.S.%20Masters%20Swimming&amp;time=1736825857020&amp;type=share&amp;url=https%3A%2F%2Ftest.usms.org%2Fevents%2Fevents%2F2025-postal-mile-to-fight-lung-cancer%3FID%3D10837"></iframe>
-                                <div class="fb-like fb_iframe_widget" data-href="/events/events/2025-postal-mile-to-fight-lung-cancer?ID=10837" data-layout="button_count" data-action="like" data-size="large" data-show-faces="true" data-share="true" fb-xfbml-state="rendered" fb-iframe-plugin-query="action=like&amp;app_id=&amp;container_width=0&amp;href=https%3A%2F%2Ftest.usms.org%2Fevents%2Fevents%2F2025-postal-mile-to-fight-lung-cancer%3FID%3D10837&amp;layout=button_count&amp;locale=en_GB&amp;sdk=joey&amp;share=true&amp;show_faces=true&amp;size=large"><span style="vertical-align: bottom; width: 174px; height: 28px;"><iframe name="fc2403d6c623ba7fe" width="1000px" height="1000px" data-testid="fb:like Facebook Social Plugin" title="fb:like Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="https://www.facebook.com/v2.10/plugins/like.php?action=like&amp;app_id=&amp;channel=https%3A%2F%2Fstaticxx.facebook.com%2Fx%2Fconnect%2Fxd_arbiter%2F%3Fversion%3D46%23cb%3Dfe47ff3f5c05e65fb%26domain%3Dtest.usms.org%26is_canvas%3Dfalse%26origin%3Dhttps%253A%252F%252Ftest.usms.org%252Ffa2a93dd46a2277ba%26relation%3Dparent.parent&amp;container_width=0&amp;href=https%3A%2F%2Ftest.usms.org%2Fevents%2Fevents%2F2025-postal-mile-to-fight-lung-cancer%3FID%3D10837&amp;layout=button_count&amp;locale=en_GB&amp;sdk=joey&amp;share=true&amp;show_faces=true&amp;size=large" style="border: none; visibility: visible; width: 174px; height: 28px;" class=""></iframe></span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="usms-container p-tb-10">
-                    <div class="row">
+   <!--<![endif]-->
+   <head>
+      <title>Event Calendar Listing - U.S. Masters Swimming</title>
+      <sergey-import src="site/head_meta" />
+      <sergey-import src="site/head_js" />
+      <sergey-import src="site/head_css" />
+      <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
+      <link rel="stylesheet" href="https://www.usms.org/styles/Club/club2.min.css">
+      <!-- <link rel="stylesheet" href="https://www.usms.org/styles/clubs.min.css"> -->
+      <link rel="stylesheet" href="./css/date-picker.css">
+      <link rel="stylesheet" href="./css/convert-this-from-club.css">
+      <link rel="stylesheet" href="./css/event-sanction.css">
+      <link rel="stylesheet" href="./css/event-mockup-ignore.css">
+   </head>
+   <body>
+      <div id="main-container">
+         <sergey-import src="foundation/site-header" />
+         <main role="main">
+            <div class="breadcrumb-container" style="position: relative; padding-bottom: 50px;">
+               <div class="breadcrumb">
+                  <div class="usms-container">
+                     <div class="row">
                         <div class="col-xs-12">
-                            <div class="event__overview">
-                                <div class="row event--date">
-                                    <div class="col-xs-12">
-                                        <label>Date</label>
-                                        <p>
-                                            <span>Wednesday, January 01, 2025</span>
-                                            <span>through</span> <span>Friday, February 28, 2025</span>
-                                        </p>
-                                    </div>
-                                </div>                  
-                                <div class="row event--contact">
-                                    <div class="col-xs-12">
-                                        <label>Contact Information:</label>
-                                        <p class="event--contact__name">Lynn Sondag</p>
-                                        <p class="event-contact__email">
-                                            <a href="mailto:lynn.sondag@dominican.edu">lynn.sondag@dominican.edu</a>
-                                        </p>
-                                        <p class="event-contact__phone">(415) 254-5080</p>
-                                    </div>
-                                </div>
-                                <div class="row event--course">
-                                    <div class="col-xs-12">
-                                        <label>Course:</label>
-                                        <p>Short Course Yards</p>
-                                    </div>
-                                </div>                  
-                                <div class="row event--description">
-                                    <div class="col-xs-12">
-                                        <label>Description:</label>
-                                        <p>Jon Steiner was a long- time member of Tamalpais Aquatic Masters and active with local and national Masters Swimming committees. Jon lost his battle with lung cancer in 2006. He originated the TAM 1650 “Don’t Waste Your Base” swim in 1996. Today the event, renamed the Miracle Mile, attracts close to 200 swimmers each year</p>
-                                    </div>
-                                </div>
-                                <div class="row sanction-status">
-                                    <div class="col-xs-12">
-                                        <label>Sanction Status:</label>
-                                        <p>Will be applying for a sanction or recognition</p>
-                                        <br>
-                                        <br>
-                                        <br>
-                                    </div>
-                                </div>
-                            </div>                  
+                           <div class="breadcrumb__container">
+                              <ul class="breadcrumb__items list--nostyle">
+                                 <li class="text-capitalize breadcrumb__item ">
+                                    <a class="breadcrumb__link" href="/public">Home<i class="fa fa-chevron-right"></i></a>
+                                 </li>
+                                 <li class="text-capitalize breadcrumb__item ">
+                                    <a class="breadcrumb__link" href="/public/event/event-sanction-dashboard.html">Event Central<i class="fa fa-chevron-right"></i></a>
+                                 </li>
+                              </ul>
+                              <span class="breadcrumb__title text-capitalize">Manage Event</span>
+                           </div>
                         </div>
-                        <!-- <div class="col-xs-12 col-md-3">
-                            <div class="row event__detail">                  
-                                <div class="col-xs-12 event--lmsc">
-                                    <label>LMSC:</label>
-                                    <p>Pacific</p>
-                                </div>
-                                <div class="col-xs-12 event--sanction-number">
-                                    <label>Sanction Number:</label>
-                                    <p>385-S005</p>
-                                </div>
-                                <div class="col-xs-12 event--sanction-status">
-                                    <label>Sanction Status:</label>
-                                    <p>Sanctioned by the <a href="/lmsc/lmscinfoform.php?LMSCID=38">Pacific LMSC</a></p>
-                                </div>
-                                <div class="col-xs-12 event--postal">
-                                    <label>Postal Swim:</label>
-                                    <p>Yes</p>
-                                </div>
-                                <div class="col-xs-12 event--competition-or-clinic">
-                                    <label>Competition or Clinic:</label>
-                                    <p>competition</p>
-                                </div>
-                            </div>
-                        </div> -->
-                    </div>
-                </div>
-                <!-- <div class="usms-container  p-tb-10">
-                    <div class="row">
-                        <div class="col-xs-12 col-md-9">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="event__director">
-                                        <h3>Event Directors Only:</h3>
-                                        <p><a href="http://www.usms.org/comp/edit_event.php?e=20250101TAMMMY" target="_blank">Submit a change to this event's listing</a></p>
-                                        <p><a href="http://www.usms.org/comp/edit_event.php?request=delete&amp;e=20250101TAMMMY" target="_blank">Request that this event be removed from a calendar</a></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-md-3">
-                            <div class="advertising-dc" style="padding-top: 10px; padding-bottom: 10px;">
-                                <div id="B22DFE0FA10A40499514640BC2C67412" class="ad__space" data-google-query-id="CPOOp8Kk9IoDFZqPWgUdHxo4ag">
-                                <div id="google_ads_iframe_/11414105/USMS_Rec_2:3_9-3_0__container__" style="border: 0pt none;"><iframe id="google_ads_iframe_/11414105/USMS_Rec_2:3_9-3_0" name="google_ads_iframe_/11414105/USMS_Rec_2:3_9-3_0" title="3rd party ad content" width="210" height="315" scrolling="no" marginwidth="0" marginheight="0" frameborder="0" aria-label="Advertisement" tabindex="0" allow="private-state-token-redemption;attribution-reporting" data-load-complete="true" data-google-container-id="2" style="border: 0px; vertical-align: bottom;"></iframe></div></div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
+                     </div>
+                  </div>
+               </div>
             </div>
-        </main>
-        <sergey-import src="foundation/footer" />
-        </div>
-        <sergey-import src="site/footer_scripts" />
-    </body>
+            <div class="section section-full bg-gray p-tb-10 p-mh-500">
+               <div class="usms-container p-tb-10">
+                     <div class="row">
+                        <div class="col-xs-12">
+                           <header>
+                              <h1>Manage Event</h1>
+                           </header>
+                        </div>
+                     </div>
+               </div>
+               <div class="usms-container form__container  p-tb-10 club-edit__container">
+                  <div class="row ">
+                     <div class="col-xs-12 ">
+                        <div class="loading" style="display: none;">
+                           <img src="https://www.usms.org/img/loader.gif" alt="loading">
+                        </div>
+                        <div class="club-edit event-edit" id="accordion">
+
+                           <div class="accordion-group">
+
+
+                              <!-- <sergey-import src="event-sanction/01-event-type" /> -->
+                              <sergey-import src="event-sanction/01-calendar-event-info" />
+                              <!-- <script>
+                                 $("input[name='EventType']").click( function() {
+                                    $("#saveEventType").prop('disabled', false);
+                                 });
+                                 $("#saveEventType").click( function() {                                                                        
+                                    $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+                                    $("#event-info h3").click();
+                                    $(document.documentElement).animate({
+                                       scrollTop: $("#event-info").offset().top - 45
+                                    }, 100);
+                                 });
+                              </script> -->
+
+
+
+
+
+
+                              <sergey-import src="event-sanction/accept-submit" />
+
+                           </div>
+
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </main>
+         <sergey-import src="foundation/footer" />
+      </div>
+      <sergey-import src="site/footer_scripts" />
+      <script>
+         var accordion = $('#accordion');
+         accordion.on('show.bs.collapse','.collapse', function() {
+            let section = $(this).parent();
+            accordion.find('.collapse.in').removeClass('in');
+            accordion.find('.collapse').parent().removeClass('isEdit');
+            accordion.find('.collapse.in').addClass('hasData');
+            $(section).addClass('isEdit');
+         });
+         accordion.on('hidden.bs.collapse', function () {
+            $('.section.isEdit').removeClass('isEdit');
+         });
+      </script>
+      <script type="text/javascript">
+         $(function () {
+            $("[data-toggle='tooltip']").tooltip();
+            $("[data-toggle='popover']").tooltip();
+         });
+     </script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+   </body>
 </html>

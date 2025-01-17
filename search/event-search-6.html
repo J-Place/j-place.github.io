@@ -39,7 +39,7 @@
                                                 <div class="list-control-search">
                                                     <div class="list-control-search__header">
                                                     <span class="tag-list--title">Filters:</span>
-                                                        <div class="list-control-search--tags" data-reactid="16"><span class="tag-list--item">Filter Name</span></div>
+                                                        <div class="list-control-search--tags"><span class="tag-list--item">Filter Name</span></div>
                                                     </div>
                                                     <div class="list-control-search-mobile__toggle" onclick="handleMobileToggle()">Update Your Results</div>
                                                     <div class="list-control-search__content form-group">
@@ -242,9 +242,96 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="list-control-display">
-                                                    <span id="listViewLarge">Grid</span><span id="listViewSmall">List</span>
+                                                <!-- <div class="list-control-display">
+                                                    <span id="listViewLarge">Grid</span>
+                                                    <span id="listViewSmall">List</span>
+                                                </div> -->
+
+                                                <div class="list-control-view">
+                                                    <div class="list-control-view__header">
+                                                        <span class="toggle-grid active">
+                                                            <button>Grid</button>
+                                                        </span>
+                                                        <span class="toggle-list">
+                                                            <button>List</button>       
+                                                        </span>
+                                                    </div>
                                                 </div>
+
+                                                <style>
+                                                    /* .list-control-display span {
+                                                        cursor: pointer;
+                                                    } */
+                                                    .events-summary-content .list-control-view,
+                                                    .events-summary-content .list-control-display {
+                                                        padding: 0 !important;
+                                                        position: absolute;
+                                                        z-index: 1;
+                                                        right: 10px;
+                                                        top: -4px;
+                                                        text-align: right;
+                                                        padding-left: 20px !important;
+                                                        border-left: 1px solid #ccc;
+                                                        margin-top: 10px;
+                                                        margin-bottom: 10px;
+                                                        height: 40px;
+                                                    }
+                                                    .events-summary-content .toggle-grid {
+                                                        background-image: url('https://www.usms.org/-/media/usms/developers/images/event/icon-grid-large.png');
+                                                        background-repeat: no-repeat;
+                                                        display: inline-block;
+                                                        background-size: 20px;
+                                                        background-position: 50%;
+                                                        height: 30px;
+                                                    }
+                                                    .events-summary-content .toggle-grid.active {
+                                                        background-image: url('https://www.usms.org/-/media/usms/developers/images/event/icon-grid-large-active.png');
+                                                    }
+                                                    .events-summary-content .toggle-list {
+                                                        background-image: url('https://www.usms.org/-/media/usms/developers/images/event/icon-list-small.png');
+                                                        background-repeat: no-repeat;
+                                                        display: inline-block;
+                                                        background-size: 20px;
+                                                        background-position: 50%;
+                                                        height: 30px;
+                                                    }
+                                                    .events-summary-content .toggle-list.active {
+                                                        background-image: url('https://www.usms.org/-/media/usms/developers/images/event/icon-list-small-active.png');
+                                                    }
+                                                    .events-summary-content .btn {
+                                                        line-height: 100%;
+                                                        height: 44px;
+                                                        padding-left: 20px;
+                                                        padding-right: 20px
+                                                    }
+                                                    .events-summary-content .btn,
+                                                    .events-summary-content .list-control-view button {
+                                                        font-size: 20.8px;
+                                                        font-size: 1.3rem;
+                                                        font-weight: 400;
+                                                        border-radius: 5px;
+                                                        letter-spacing: .2px
+                                                    }
+                                                    .events-summary-content .list-control-view span.active button {
+                                                        color: #333;
+                                                    }
+                                                    .events-summary-content .list-control-view button {
+                                                        padding-top: 20px !important;
+                                                        color: #ababab;
+                                                    }
+                                                    .events-summary-content .list-control-view button {
+                                                        line-height: 30px;
+                                                        padding-left: 15px;
+                                                        padding-right: 15px
+                                                    }
+                                                    @media only screen and (min-width: 1200px) {
+                                                        .events-summary-content .list-control-view,
+                                                        .events-summary-content .list-control-display {
+                                                            top: 118px;
+                                                        }
+                                                    }   
+                                                </style>
+
                                                 <div class="list-control-search--summary">
                                                     Showing <strong>72 Events</strong> within <strong>500 Miles</strong>
                                                     <span class="list-control-search--summary-detail">of <strong>City, State</strong></span>
@@ -717,22 +804,22 @@
         </div>
 
         <script>
-            $("#listViewSmall").click(function() {
-                $('.results-list-large').hide();
-                $('.results-list-small').show();
-                $('.list-control-display span').css("font-weight", "normal");
-                $(this).css("font-weight", "bold");
-            });
-
             $('.show-search').click(function () {
                 $('.list-control-display').css("z-index", "-1");
             });
-
-            $("#listViewLarge").click(function() {
+            $(".toggle-list").click(function() {
+                $('.results-list-large').hide();
+                $('.results-list-small').show();
+                $('.list-control-view__header span').toggleClass('active');
+                // $('.list-control-display span').css("font-weight", "normal");
+                // $(this).css("font-weight", "bold");
+            });
+            $(".toggle-grid").click(function() {
                 $('.results-list-large').show();
                 $('.results-list-small').hide();
-                $('.list-control-display span').css("font-weight", "normal");
-                $(this).css("font-weight", "bold");
+                $('.list-control-view__header span').toggleClass('active');
+                // $('.list-control-display span').css("font-weight", "normal");
+                // $(this).css("font-weight", "bold");
             });
         </script>
 
