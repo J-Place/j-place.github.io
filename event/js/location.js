@@ -127,6 +127,42 @@ $(document).ready(function() {
         filterByCourse();
     });
 
+    $("#confirmCalendarSelby").click( function() {
+        // alert("Becky");
+        $("#saveLocation").prop('disabled', false);
+        $(".list-item-existing").show();
+        scrollTopSection();
+        // $(this).prop('disabled', true);        
+        hideLocationLookup();
+        hideAddNewLocationContainer();
+        $(lookupByLocationList).hide();
+        showSavedLocationList();
+        // $(".venue__list--item:first-of-type .configuration-title:last-of-type").addClass('selected');
+     });
+
+     $("#editListEventLocationExisting").click( function() {
+        // alert("Becky");
+        hideSavedLocationList();
+        showLocationLookup();
+        // showAddNewLocationContainer();
+     });
+
+     $("#editListEventLocationNew").click( function() {
+        // alert("Becky");
+        hideSavedLocationList();
+        showLocationLookup();
+        // showAddNewLocationContainer();
+     });
+
+     $("#confirmNewFacilityCalendar").click( function() {
+        hideLocationLookup();
+        hideAddNewLocationContainer();
+        $(lookupByLocationList).hide();
+        showSavedLocationList();
+        $(".list-item-new").show();
+     });
+
+
     var modalChosePoolConfigurationSelby = new bootstrap.Modal(document.getElementById('modalChosePoolConfigurationSelby'));
 
     $("#confirmLocationSelby").click( function() {

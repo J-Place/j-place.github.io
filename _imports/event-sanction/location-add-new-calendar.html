@@ -1,0 +1,183 @@
+<!-- Add New Location -->
+<div class="form-group entry location-info__add-new-location--container">
+
+    <div class="location-header">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-12">
+                    <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">If your location is not found above, you can add a new one.</p>
+                </div>
+            </div>
+            <div>
+                <button class="btn btn-small btn-outline" id="addLocationBtn" name="addLocationBtn" type="button" value="Add New">Add New</button>
+                <button class="btn btn-small btn-outline" id="cancelAddLocationBtn" name="cancelAddLocationBtn" type="button" value="Cancel" style="display:none;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            
+            <!-- <div class="list-venue-form list-venue-form__fade">
+                <div class="input-group required">
+                    <label for="venueName">Pool or Open Water Venue Name</label>
+                    <input type="text" class="form-controlXXX" name="venueName" id="venueName" maxlength="80" />
+                    <span class="help-block help-block--venueName">Please enter a venue name</span>
+                </div>
+                <div class="input-group input-group--poolType fade">
+                    <label for="poolType">Body of Water</label>
+                    <select name="poolType" class="form-controlXXX" id="poolType">
+                        <option value="">Select Pool Type</option>
+                        <option value="Indoor">Indoor</option>
+                        <option value="Outdoor">Outdoor</option>
+                    </select>
+                    <span class="help-block help-block--poolType">Please enter a pool type</span>
+                </div>
+                <div class="input-group required input-group--openWaterType fade">
+                    <label for="openWaterType">Body of Water</label>
+                    <select name="openWaterType" class="form-controlXXX" id="openWaterType">
+                        <option value="">Select Open Water Type</option>
+                        <option value="Lake">Lake</option>
+                        <option value="Ocean">Ocean</option>
+                        <option value="Reservoir">Reservoir</option>
+                        <option value="River">River</option>
+                    </select>
+                    <span class="help-block help-block--openWaterType">Please enter a type</span>
+                </div>
+                <div class="input-group checkbox-group input-group--bulkhead">
+                    <label class="checkbox-label" for="bulkhead">
+                        <div class="checkbox-container">
+                            <input type="checkbox" name="bulkhead" id="bulkhead" />
+                            <span class="checkbox__placeholder"></span>
+                        </div>
+                        Bulkhead
+                    </label>
+                </div>
+                <div class="input-group checkbox-group input-group--adaCompliant">
+                    <label class="checkbox-label" for="adaCompliant">
+                        <div class="checkbox-container">
+                            <input type="checkbox" name="adaCompliant" id="adaCompliant" />
+                            <span class="checkbox__placeholder"></span>
+                        </div>
+                        ADA Compliant
+                        <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Only check if this pool mets the ADA compliance requirements found on ada.gov"></span>
+                    </label>
+                </div>
+                <div class="input-group checkbox-group input-group--venueCableCourse fade">
+                    <label class="checkbox-label" for="venueCableCourse">
+                        <div class="checkbox-container">
+                            <input type="checkbox" name="venueCableCourse" id="venueCableCourse" />
+                            <span class="checkbox__placeholder"></span>
+                        </div>
+                        Cable Course
+                    </label>
+                </div>
+                <div class="input-group list-venue-form__cable-course-form list-venue-form__cable-course-form--fade">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="input-group required">
+                                <label>Distance</label>
+                                <input class="form-controlXXX" type="number" id="venueCableCourseValue" name="venueCableCourseValue" />
+                                <span class="help-block help-block--venueCableCourseValue">Please enter a distance</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="input-group required">
+                                <label>Unit</label>
+                                <select name="venueCableCourseUnit" class="form-controlXXX" id="venueCableCourseUnit">
+                                    <option value="">Unit</option>
+                                    <option value="Meters">Meters</option>
+                                    <option value="Miles">Miles</option>
+                                </select>
+                                <span class="help-block help-block--venueCableCourseUnit">Please enter a unit</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>After you've entered your pool information, click the button below to save and continue</label>
+                    <button class="btn btn-small" id="saveVenue">Confirm</button>
+                    <button class="btn btn-small btn-outline" id="cancelSaveVenue">Cancel</button>
+                </div>
+            </div> -->
+
+            <sergey-import src="event-sanction/location-add-new-facility-calendar" />
+
+        </div>
+    </div>
+    <!-- <div class="row">
+        <div class="col-xs-12 col-sm-6">
+
+            <sergey-import src="event-sanction/location-add-new-poolXXX" />
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-8">
+
+            <sergey-import src="event-sanction/location-add-new-configurationXXX" />
+
+        </div>
+    </div> -->
+
+
+
+
+
+
+    <div class="form-group location-information__locations-list">
+        <div class="list locations-list">
+            <div class="list__header locations-list__header">
+                <div class="list__controls locations-list__controls" style="display: none;">
+                    <button class="list__controls--settings" id="listLocationsSettings"></button>
+                    <button class="btn btn-link" id="editLocationsList">Edit</button>
+                    <button class="btn btn-link" id="saveLocationsList">Done Editing</button>
+                    <button class="btn btn-link" id="cancelLocationsList">Cancel</button>
+                </div>
+            </div>
+            <div class="list__container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="list-item">
+                            <div class="list__controls">
+                                <button class="btn btn-link list-item__edit">Edit</button>
+                                <button class="btn btn-link list-item__delete">Remove</button>
+                            </div>
+                            <p class="location-name text-bold">LA Fitness</p>
+                            <p class="location-address-street">8502 Cooper Creek Blvd | Sarasota, FL 34201</p>
+                            <span class="help-block">Venue or Pool missing</span>
+                            <button class="location-add-venue btn btn-small btn-outline">
+                                <span><i class="fa fa-plus"></i></span>Add Pool
+                            </button>
+                            <div class="venue__list">
+                                <div class="venue__list--item">
+                                    <div class="list__controls"><button class="btn btn-link venue-edit-button">Edit</button><button class="btn btn-link venue-remove-button">Remove</button></div>
+                                    <p class="venue-name">Pool</p>
+                                    <p class="venue-type">(Indoor)</p>
+                                    <span class="help-block">Missing Configuration</span>
+                                    <div class="configuration__list">
+                                        <div class="configuration__list--item">
+                                            <div class="list__controls"><button class="btn btn-link configuration-edit-button">Edit</button><button class="btn btn-link configuration-remove-button">Remove</button></div>
+                                            <p class="configuration-title">Pool - 25 Yards, 8 Lanes</p>
+                                            <!-- <input class="configuration-name" type="hidden" value="Pool" /><input class="configuration-lanes" type="hidden" value="8" />
+                                            <input class="configuration-pool-id" type="hidden" value="a1CPO0000008xvl2AA" /><input class="configuration-poolConfiguration-id" type="hidden" value="a1DPO0000007YZd2AM" />
+                                            <input class="configuration-length" type="hidden" value="{62FF80B0-908C-4C71-9059-399BE1C72531}" /><input class="configuration-otherLength" type="hidden" />
+                                            <input class="configuration-usmsVerified" type="hidden" value="false" /><input class="configuration-usmsVerifiedDate" type="hidden" /> -->
+                                        </div>
+                                    </div>
+                                    <button class="location-add-configuration btn btn-small btn-outline">
+                                        <span><i class="fa fa-plus"></i></span>Add Configuration
+                                    </button>
+                                    <!-- <input class="venue-cableCourse" type="hidden" value="false" /><input class="venue-cableCourseValue" type="hidden" value="0" /><input class="venue-cableCourseUnit" type="hidden" />
+                                    <input class="pool-id" type="hidden" value="a1CPO0000008xvl2AA" /><input class="location-id" type="hidden" value="a17PO00000MCiVqYAL" /><input class="venue-bulkhead" type="hidden" value="false" />
+                                    <input class="venue-adaCompliant" type="hidden" value="false" /><input class="venue-isOpenWater" type="hidden" value="false" />
+                                    <input class="venue-subType" type="hidden" value="{BC937DC4-82A6-4DEE-94C8-5CD97856D9D3}" /> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

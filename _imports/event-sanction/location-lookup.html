@@ -1,0 +1,112 @@
+
+<link rel="stylesheet" href="/search/css/ListControl.css">
+<link rel="stylesheet" href="/event/css/list-control-event.css">
+<link rel="stylesheet" href="/event/css/location-overrides.css">
+<div class="list-control">
+    <div class="list-control-search">
+        <div class="list-control-search__content form-group is-flex">
+            <div class="list-control-search__input list-control-search__input--club-name">
+                <label for="search-filter__club-name">Search by Facility Name</label>
+                <div class="input-group">
+                    <span class="help-block help-block--ClubName">Please Enter a Facility Name</span><input type="text" class="form-control" name="search-filter__club-name" placeholder="Facility Name" />
+                </div>
+            </div>
+            <div class="list-control-search__input list-control-search__input--range">
+                <label for="search-filter__range">Select a Range</label>
+                <div class="input-group">
+                    <select id="search-filter__range" name="search-filter__range">
+                        <option value="1">1 Mile</option>
+                        <option value="5">5 Miles</option>
+                        <option selected="" value="10">10 Miles</option>
+                        <option value="25">25 Miles</option>
+                        <option value="50">50 Miles</option>
+                    </select>
+                </div>
+            </div>
+            <div class="list-control-search__input list-control-search__input--location">
+                <label for="search-filter__location">Search by City, State or Zip</label>
+                <div class="input-group">
+                    <span class="help-block help-block--CityStateZip">Please enter a City, State or Zip</span>
+                    <div>
+                        <div class="map" style="display: none;"></div>
+                        <input type="text" class="google-places-input form-control pac-target-input" placeholder="Select city &amp; state or zip" name="location" value="Sarasota, FL, USA" autocomplete="off" />
+                        <input type="hidden" class="google-places-input--zip" name="google-places-input--zip" value="" />
+                        <input type="hidden" class="google-places-input--lat" name="google-places-input--lat" value="" />
+                        <input type="hidden" class="google-places-input--lng" name="google-places-input--lng" value="" />
+                    </div>
+                </div>
+            </div>
+            <div class="list-control-search__input list-control-search__input--button align-self-end">
+                <div class="input-group"><button type="button" class="btn btn-primary" id="listSearchSubmit">Submit</button></div>
+            </div>
+        </div>
+    </div>
+    <div class="list-control-filter">
+        <div class="list-control-filter__content">
+            <div class="form-group is-flex">
+                <div class="check-list check-list--pool-length">
+                    <div class="input-group check-list-item">
+                        <label id="length25Yards" class="checkbox-label">
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="input25y" name="25 Yards" value="25y" />
+                                <span class="checkbox__placeholder"></span>
+                            </div>
+                            25 Yards
+                        </label>
+                    </div>
+                    <div class="input-group check-list-item">
+                        <label id="length25Meters" class="checkbox-label">
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="input25m" name="25 Meters" value="25m" />
+                                <span class="checkbox__placeholder"></span>
+                            </div>
+                            25 Meters
+                        </label>
+                    </div>
+                    <div class="input-group check-list-item">
+                        <label id="length50Meters" class="checkbox-label">
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="input50m" name="50 Meters" value="50m" />
+                                <span class="checkbox__placeholder"></span>
+                            </div>
+                            50 Meters
+                        </label>
+                    </div>
+                    <div class="input-group check-list-item">
+                        <label id="lengthOther" class="checkbox-label">
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="lengthOtherInput" name="Other" value="other" />
+                                <span class="checkbox__placeholder"></span>
+                            </div>
+                            Other
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+       <div class="list list--lookup locations">
+
+            <!-- <div class="list__header location-list">
+                <span class="lookup-results--locations">Locations within 25 mi. of Sarasota, FL</span>
+            </div> -->
+            
+            <div class="list-control-search__header">
+                <!-- <i class="fa fa-refresh fa-spin list-control-search--summary-loading" style="display:inline-block;"></i> -->
+                <div class="list-control-search--summary">
+                    Showing <strong>4 Facilities</strong> within <strong>10 Miles</strong> <span class="list-control-search--summary-detail">of <strong>Sarasota, FL, USA</strong></span>
+                </div>
+            </div>
+
+            <sergey-import src="event-sanction/location-list" />
+
+
+
+        </div>
+    </div>
+ </div>
+ <sergey-import src="event-sanction/modal-chose-pool-configuration" />

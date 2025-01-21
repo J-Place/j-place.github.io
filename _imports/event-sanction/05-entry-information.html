@@ -153,3 +153,15 @@
       </div>
    </div>
 </form>
+<script>
+   $("#entry-information").on('change', function() {
+      $("#saveEntryInfo").prop('disabled', false);
+   });
+   $("#saveEntryInfo").click( function() {
+      $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+      $("#meetAnnouncement h3").click();
+      $(document.documentElement).animate({
+         scrollTop: $("#meetAnnouncement").offset().top - 45
+      }, 100);
+   });
+</script>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<!--[if IE 9]>
+<html lang="en" class="ie9 no-js">
+<![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+    <!--<![endif]-->
+    <head>
+        <title>Add an Event - U.S. Masters Swimming</title>
+        <sergey-import src="site/head_meta" />
+        <sergey-import src="site/head_js" />
+        <sergey-import src="site/head_css" />
+
+        <link rel="stylesheet" href="./css/date-picker.css">
+        <link rel="stylesheet" href="./css/convert-this-from-club.css">
+        <link rel="stylesheet" href="./css/event-sanction.css">
+    </head>
+    <body>
+        <div class="loading" style="display: none;">
+            <img src="../img/loader.gif" alt="loading">
+        </div>
+        <div id="main-container">
+            <sergey-import src="foundation/site-header" />
+            <main role="main">
+
+                <div class="breadcrumb-container" style="position: relative; padding-bottom: 50px;">
+                    <div class="breadcrumb">
+                        <div class="usms-container">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="breadcrumb__container">
+                                        <ul class="breadcrumb__items list--nostyle">
+                                            <li class="text-capitalize breadcrumb__item ">
+                                                <a class="breadcrumb__link" href="../index.html">Home<i class="fa fa-chevron-right"></i></a>
+                                            </li>
+                                            <li class="text-capitalize breadcrumb__item ">
+                                                <a class="breadcrumb__link" href="event-sanction-dashboard.html">Event Central<i class="fa fa-chevron-right"></i></a>
+                                            </li>
+                                        </ul>
+                                        <span class="breadcrumb__title text-capitalize">Add an Event</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section section-full bg-gray p-tb-10 p-mh-500 ">
+
+                    <div class="usms-container p-tb-10">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <header>
+                                    <h1>Add an Event</h1>
+                                </header>
+                            </div>
+                        </div>
+                    </div>
+                    <style>
+                        .usms-container.message__container li {
+                            font-size: 1.5rem;
+                            line-height: 150%;
+                            font-weight: 400;
+                        }
+                        @media (min-width: 768px) {
+                            .usms-container.message__container {
+                                margin: 0 auto 6rem;
+                                padding: 6rem 3rem;
+                                max-width: 1200px;
+                            }
+                        }
+                        .message__container {
+                            display: -webkit-box;
+                            display: -ms-flexbox;
+                            display: flex;
+                            background-color: #fff;
+                            margin: 0 auto 6rem;
+                            padding: 6rem 3rem;
+                            -webkit-box-pack: center;
+                            -ms-flex-pack: center;
+                            justify-content: center;
+                            -webkit-box-shadow: 0 0 20px #ccc;
+                            box-shadow: 0 0 20px #ccc;
+                            max-width: 1200px
+                        }
+                        .meet-announcement-status .modal-header {
+                            /* padding: 15px 0; */
+                            border-bottom: 1px solid #e5e5e5;
+                            margin: 0 2rem 2rem;
+                        }
+                        .meet-announcement-status .radio-group label {
+                            font-weight: 400;
+                            font-size: 1.6rem;
+                        }
+                        .meet-announcement-status .input-group .radio-group {
+                            padding-left: 4rem;
+                        }
+                        .meet-announcement-status .input-group {
+                            margin-bottom: 0;
+                        }
+                            
+                        .event-status-options .col-sm-4 {
+                            padding: 2rem 1rem 1rem;
+                            border-bottom: 1px solid #CCC;
+                        }
+                        .event-status-options .col-sm-4:last-of-type {
+                            border: 0 none;
+                        }
+                        .event-status-options h3.add-club-choice__title {
+                            margin: 0 auto 1rem;
+                            text-align: center;
+                        }
+                        .event-status-options {
+                            margin: 1rem auto 2rem;
+                            text-align: center;
+                        }
+                        .event-status-options p {
+                            font-size: 1.6rem;
+                            text-align: center;
+                        }
+                        #btnSanctionedRecognized,
+                        #btnCalendarListing,
+                        #btnNonSanctionedRecognized {
+                            margin-top: 3rem;
+                        }
+                        @media (min-width: 1200px) {
+                            .message__container {
+                                padding: 6rem 3rem;
+                            }
+                            .event-status-options .col-sm-4 {
+                                padding: 0 2rem;
+                                border-bottom: 0 none;
+                                border-right: 1px solid #CCC;
+                            }
+                            .event-status-options h3.add-club-choice__title {
+                                margin: 0 auto 5rem;
+                            }
+                            #btnSanctionedRecognized,
+                            #btnCalendarListing,
+                            #btnNonSanctionedRecognized {
+                                margin-top: 1rem;
+                            }
+                        }
+                    </style>
+                    <div class="usms-container message__container p-tb-10">
+                        <div class="row event-status-options">
+                            <div class="col-xs-12">
+                                <h3 class="add-club-choice__title">Below, you can apply for an event sanction/recognition, add a future event to the calendar, or request a listing for other types of events.</h3>
+                            </div>
+                            <div class="col-xs-12 col-sm-4">
+                                <div>
+                                    <a href="#" class="btn btn-md btn-outline" id="btnSanctionedRecognized">+ Sanction/Recognition</a>
+                                    <h6>Sanction/Recognition</h6>
+                                    <p>USMS sanctions require all participants to be current USMS members (or one-event members, if applicable). USMS recognition allows USMS member’s results to count as official times, even if not all participants are members. USMS insurance covers sanctioned events, but not recognized.<br/><br/><a href="#">More details here ></a></p>
+                                </div>  
+                            </div>
+                            <div class="col-xs-12 col-sm-4">
+                                <div>
+                                    <a href="#" class="btn btn-md btn-outline" id="btnCalendarListing">+ Calendar Listing</a>
+                                    <h6>Calendar Listing</h6>
+                                    <p>Any event that will apply for a USMS sanction/recognition in the future but wants to be on the USMS Calendar of Events now to raise awareness.</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-4">
+                                <div>
+                                    <a href="#" class="btn btn-md btn-outline" id="btnNonSanctionedRecognized">+ Other</a>
+                                    <h6>Other Event</h6>
+                                    <p>Any event that is not applying for a USMS sanction/recognition. Examples of these events: a kick for time event at your pool, a fun relay event using equipment, an event sanctioned by another governing body.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal meet-announcement-status" id="modalSanctionedRecognized" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Meet Announcement</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="input-group radio-group">
+                                    <!-- <div class="input-group-header radio-group-header">
+                                        Meet Announcement
+                                    </div> -->
+                                    <div class="input-group radio-group">
+                                        <label class="radio-label" for="meetAnnouncementYes">
+                                            I have my meet announcement done. I have spoken with an LMSC representative about the event date. I am ready to apply for my sanction/recognition.<br/>
+                                            <span class="radio-container">
+                                                <input type="radio" id="meetAnnouncementYes" name="meetAnnouncement" value="meetAnnouncementYes">
+                                                <span class="radio__placeholder"></span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <div class="input-group radio-group">
+                                        <label class="radio-label" for="meetAnnouncementNo">
+                                            I do not have my meet announcement complete or all of my event details yet. I want to create a Calendar Listing and will apply for a sanction/recognition once I have all my information.<br/>
+                                            <span class="radio-container">
+                                                <input type="radio" id="meetAnnouncementNo" name="meetAnnouncement" value="meetAnnouncementNo">
+                                                <span class="radio__placeholder"></span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <span class="help-block help-block--MeetAnnoucnement">Please indicate meet announcement status</span>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="confirmMeetAnnouncement" disabled>Continue</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </main>
+            <sergey-import src="foundation/footer" />
+        </div>
+        <sergey-import src="site/footer_scripts" />
+        <script>
+                var modalSanctionedRecognized = new bootstrap.Modal(document.getElementById('modalSanctionedRecognized'),
+                    {
+                        backdrop: 'static',
+                        keyboard: false
+                    }
+                );
+                $("#btnSanctionedRecognized").click( function() {
+                    modalSanctionedRecognized.show();
+                });
+                $('input[name=meetAnnouncement]').on('change', function() {
+                   $("#confirmMeetAnnouncement").prop('disabled', false);
+                });
+                $('#confirmMeetAnnouncement').click( function() {
+                    $('input[name=meetAnnouncement]').prop('checked', false);
+                    $("#confirmMeetAnnouncement").prop('disabled', true);
+                });
+        </script>
+    </body>
+</html>
