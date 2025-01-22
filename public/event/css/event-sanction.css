@@ -5,7 +5,14 @@
 }
 
 .event-edit .row {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+@media (min-width: 1200px) {
+    .event-edit .row {
+        margin-bottom: 2.0rem;
+    }  
 }
 
 .form__container select.form-control {
@@ -42,10 +49,14 @@
     min-width: 270px;
 }
 
+.event-edit .input-group-header.required:before {
+    font-size: 1.4rem;
+}
+
 .input-group-header.required,
 .radio-group-header.required {
-    display: flex;
-    white-space: nowrap;
+    /* display: flex; */
+    /* white-space: nowrap; */
 }
 
 .event-edit .input-group-header.required:before,
@@ -275,6 +286,10 @@ label.radio-label {
     .form-group.contact-info-host-type__other-organization--container {
         margin-left: 3rem;
     }
+
+    .contact-info__event-director-type-form .row {
+        margin-bottom: 0;
+    }
     
     /* .form-group.contact-info__head-ref-new--add-new,
     .form-group.contact-info__safety-coordinator-new--add-new {
@@ -362,6 +377,10 @@ label.radio-label {
     display: none;
 }
 
+/* .contact-information__safety-coordinator--list, */
+.contact-info__head-ref-list,
+.contact-info__safety-coordinator-list,
+.contact-information__event-host--list,
 .contact-info__safety-coordinator-lookup--container,
 .contact-info__safety-coordinator-new--add-new,
 .contact-info__safety-coordinator-lookup--add-new,
@@ -371,6 +390,8 @@ label.radio-label {
 }
 
 /* .location-info__add-new-location--container */
+/* .locations-row, */
+.event-edit .row.locations,
 .list--lookup.locations,
 .event-location-details,
 .location-information__locations-list,

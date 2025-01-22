@@ -58,11 +58,13 @@ $(document).ready(function() {
     $(confirmAddNewFacility).click(function(e) {
         e.preventDefault();
         // resetLocationInputs();
+        // $(".row.locations").show();
         $(addNewLocationForm).hide();
         $(addNewConfigurationForm).hide();
         $(cancelAddNewLocationBtn).hide()
         // hideLocationLookup();
         // hideAddNewLocationContainer();
+        showAddNewLocationContainer();
         showSavedLocationList();
         $(".list-item-new").show();
         $(".venue__list").hide();
@@ -87,6 +89,7 @@ $(document).ready(function() {
     $("#saveConfiguration").click( function() {
         // $(addNewPoolForm).hide();
         hideLocationLookup();
+        hideAddNewLocationContainer();
         $(addNewConfigurationForm).hide();
         $(".venue__list").show();
         $(".configuration__list").show();
@@ -127,43 +130,43 @@ $(document).ready(function() {
         filterByCourse();
     });
 
-    $("#confirmCalendarSelby").click( function() {
-        // alert("Becky");
-        $("#saveLocation").prop('disabled', false);
-        $(".list-item-existing").show();
-        scrollTopSection();
-        // $(this).prop('disabled', true);        
-        hideLocationLookup();
-        hideAddNewLocationContainer();
-        $(lookupByLocationList).hide();
-        showSavedLocationList();
-        // $(".venue__list--item:first-of-type .configuration-title:last-of-type").addClass('selected');
-     });
+    // $("#confirmCalendarSelby").click( function() {
+    //     // alert("Becky");
+    //     $("#saveLocation").prop('disabled', false);
+    //     $(".list-item-existing").show();
+    //     scrollTopSection();
+    //     // $(this).prop('disabled', true);        
+    //     hideLocationLookup();
+    //     hideAddNewLocationContainer();
+    //     $(lookupByLocationList).hide();
+    //     showSavedLocationList();
+    //     // $(".venue__list--item:first-of-type .configuration-title:last-of-type").addClass('selected');
+    //  });
 
-     $("#editListEventLocationExisting").click( function() {
-        // alert("Becky");
-        hideSavedLocationList();
-        showLocationLookup();
-        // showAddNewLocationContainer();
-        showLookupLocationList();
-        resetAddNewLocation();
-     });
+    //  $("#editListEventLocationExisting").click( function() {
+    //     console.log("Becky");
+    //     hideSavedLocationList();
+    //     showLocationLookup();
+    //     // showAddNewLocationContainer();
+    //     showLookupLocationList();
+    //     resetAddNewLocation();
+    //  });
 
-     $("#editListEventLocationNew").click( function() {
-        // alert("Becky");
-        hideSavedLocationList();
-        showLocationLookup();
-        // showAddNewLocationContainer();
-        resetAddNewLocation();
-     });
+    //  $("#editListEventLocationNew").click( function() {
+    //     // alert("Becky");
+    //     hideSavedLocationList();
+    //     showLocationLookup();
+    //     // showAddNewLocationContainer();
+    //     resetAddNewLocation();
+    //  });
 
-     $("#confirmNewFacilityCalendar").click( function() {
-        hideLocationLookup();
-        hideAddNewLocationContainer();
-        $(lookupByLocationList).hide();
-        showSavedLocationList();
-        $(".list-item-new").show();
-     });
+    //  $("#confirmNewFacilityCalendar").click( function() {
+    //     hideLocationLookup();
+    //     hideAddNewLocationContainer();
+    //     $(lookupByLocationList).hide();
+    //     showSavedLocationList();
+    //     $(".list-item-new").show();
+    //  });
 
 
     var modalChosePoolConfigurationSelby = new bootstrap.Modal(document.getElementById('modalChosePoolConfigurationSelby'));
@@ -189,7 +192,7 @@ $(document).ready(function() {
         $(".list-item-existing").show();
         scrollTopSection();
         $(this).prop('disabled', true);
-        
+        $('input[name="configuration-selby').prop("checked", false);
     });
 
     $("#confirmConfigurationHealthfit").click( function() {
@@ -197,6 +200,7 @@ $(document).ready(function() {
         $(".list-item-duplicate").show();
         scrollTopSection();
         $(this).prop('disabled', true);
+        $('input[name="configuration-healthfit').prop("checked", false);
     });
 
     $("#confirmConfigurationJensen").click( function() {
@@ -204,6 +208,7 @@ $(document).ready(function() {
         $(".list-item-new").show();
         scrollTopSection();
         $(this).prop('disabled', true);
+        $('input[name="configuration-jensen').prop("checked", false);
     });
 
     function confirmConfiguration() {
@@ -216,6 +221,7 @@ $(document).ready(function() {
     }
 
     $(".location-name .list-item__edit").click( function() { 
+        console.log("Clicked EDIT");
         $(".list.locations").addClass("edit-list");
         $(".location-name .list-item__edit").hide();
         $(".location-name .list-item__save").show();
@@ -343,11 +349,11 @@ $(document).ready(function() {
     }
 
     function showSavedLocationList() {
-        $(".list.list--result.locations").show();
+        $("#location-information .row.locations").show();
     }
 
     function hideSavedLocationList() {
-        $(".list.list--result.locations").hide();
+        $("#location-information .row.locations").hide();
     }
 
     function showLookupLocationList() {

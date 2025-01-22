@@ -6,7 +6,7 @@
        <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
        <div class="section__content collapse" id="calendar-event-info__content" data-parent="#accordion">
             <!-- Event Name     -->
-            <div class="row">
+            <div class="row form-group">
                 <div class="col-xs-12 col-sm-6 col-md-5">
                     <div class="input-group event-info-name required">
                         <label for="eventInfoName" class="label-large">
@@ -20,7 +20,7 @@
                 </div>
             </div>
             <!-- Decription -->
-            <div class="row">
+            <div class="row form-group">
                 <div class="col-xs-12 col-sm-8">
                     <div class="input-group event-info-details required">
                         <label for="eventInfoDetails" class="label-large">
@@ -34,7 +34,7 @@
                 </div>
             </div>
             <!-- Event Image -->
-            <div class="row">
+            <div class="row form-group">
                 <div class="col-xs-12 col-sm-8">
                     <div class="input-group event-info-image">
                         <label for="EventInfoImage">Upload an image - to appear on the event detail page</label>
@@ -62,9 +62,9 @@
                 </div>
             </div>
             <!-- Course -->
-            <div class="row">
+            <div class="row form-group">
                 <div class="col-xs-12 col-sm-8 col-md-5">
-                    <div class="input-group event-info-course required">
+                    <div class="input-group select-group event-info-course required">
                         <label for="SelectEventCourse">
                             Event Course
                         </label>
@@ -82,7 +82,7 @@
             <!-- Start and End Dates -->
             <div class="row">
                 <div class="col-xs-12 col-lg-4">
-                    <div class="form-group has-feedback event-info__start-date--dropdown-start-date-container required">
+                    <div class="form-group date-select-group has-feedback event-info__start-date--dropdown-start-date-container required">
                         <label for="">Start Date</label>
                         <div class="SingleDatePicker SingleDatePicker_1">
                             <div>
@@ -100,7 +100,7 @@
                     </div>
                 </div>
                 <div class="col-xs-12 col-lg-4">
-                    <div class="form-group has-feedback event-info__start-date--dropdown-end-date-container required">
+                    <div class="form-group date-select-group has-feedback event-info__start-date--dropdown-end-date-container required">
                         <label for="">End Date</label>
                         <div class="SingleDatePicker SingleDatePicker_1">
                             <div>
@@ -119,15 +119,12 @@
                 </div>    
             </div>
             <!-- Is Virtual? -->
-            <div class="row">
-                <div class="col-xs-12 col-sm-8 col-md-5">
-                    <div class="input-group radio-group event-info-is-virtual required">
-                        <!-- <label class="icon-help-label" for="tooltip">
-                            <span class="icon-help" data-toggle="tooltip" data-placement="top" title="tooltip" data-container="body" data-original-title="Tooltip text."></span>
-                        </label> -->
-                        <div class="input-group-header radio-group-header">
-                            Is this a virtual event?
+            <div class="row form-group">
+                <div class="col-xs-12">
+                    <div class="input-group radio-group event-info-is-virtual">
+                        <div class="input-group-header radio-group-header required">
                             <label class="icon-help-label" for="tooltip">
+                                Is this a virtual event?
                                 <span class="icon-help" data-toggle="tooltip" data-placement="top" title="A Virtual Event is a swimming competition conducted in multiple locations with results compiled in a central location." data-container="body" data-original-title=""></span>
                             </label>
                         </div>
@@ -141,7 +138,7 @@
                         </label>
                         <label class="radio-label radio-label--inline" for="isVirtualNo">
                             <span class="radio-container">
-                                <input type="radio" name="isVirtual" id="isVirtualNo" value="false">
+                                <input type="radio" name="isVirtual" id="isVirtualNo" value="false" checked>
                                 <span class="radio__placeholder"></span>
                             </span>
                             No
@@ -150,7 +147,7 @@
                 </div>
             </div>
             <!-- Save Section -->
-            <div class="row">
+            <div class="row form-group">
                 <div class="section__controls">
                     <button class="btn save-section" id="saveEventType" type="button" onclick="saveSection()" disabled>Save &amp; Continue</button>
                 </div>
@@ -162,6 +159,24 @@
  <script>
     $("#calendar-event-info").on('change', function() {
       $("#saveEventInfo").prop('disabled', false);
+    });
+    $("#isVirtualYes").click( function() {
+      if ($('.timing-system-group').length) {
+         $('.timing-system-group').hide();
+      }
+   });
+   $("#isVirtualNo").click( function() {
+      $('.timing-system-group').show();
+      $("#saveEventInfo").prop('disabled', false);
+   });
+   $("input[name='isChampionship']").on('change', function() {
+      $("#saveEventInfo").prop('disabled', false);
+   });
+   $("input[name='eventListOnCalendar']").on('change', function() {
+      $("#saveEventInfo").prop('disabled', false);
+   });
+   $("#event-info").on('change', function() {
+      $("#saveEventInfo").prop('disabled', false);
    });
    $("#saveEventInfo").click( function() {
       $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
@@ -170,7 +185,7 @@
          scrollTop: $("#contact-info").offset().top - 45
       }, 100);
    });
-    function saveSection(e) {
+   function saveSection(e) {
        var target = e.target;
        var sectionId = $(target).closest('.section').attr('id');
     //    console.log(e.target);

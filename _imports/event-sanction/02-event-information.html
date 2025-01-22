@@ -6,7 +6,7 @@
       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
       <div class="section__content collapse" id="event-info__content" data-parent="#accordion">
          <!-- Event Name -->
-         <div class="row">
+         <div class="row form-group">
             <div class="col-xs-12 col-sm-6 col-md-5">
                   <div class="input-group event-info-name required">
                      <label for="eventInfoName" class="label-large">
@@ -20,7 +20,7 @@
             </div>
          </div>
          <!-- Description -->
-         <div class="row">
+         <div class="row form-group">
             <div class="col-xs-12 col-sm-8">
                   <div class="input-group event-info-details required">
                      <label for="eventInfoDetails" class="label-large">
@@ -34,7 +34,7 @@
             </div>
          </div>
          <!-- Event Image -->
-         <div class="row">
+         <div class="row form-group">
             <div class="col-xs-12 col-sm-8">
                <div class="input-group event-info-image">
                   <label for="EventInfoImage">Upload an image - to appear on the event detail page</label>
@@ -62,9 +62,9 @@
             </div>
          </div>
          <!-- Course -->
-         <div class="row">
+         <div class="row form-group">
             <div class="col-xs-12 col-sm-8 col-md-5">
-               <div class="input-group event-info-course required">
+               <div class="input-group select-group event-info-course required">
                   <label for="SelectEventCourse">
                      Event Course
                   </label>
@@ -82,7 +82,7 @@
          <!-- Start and End Dates -->
          <div class="row">
             <div class="col-xs-12 col-lg-4">
-               <div class="form-group has-feedback event-info__start-date--dropdown-start-date-container required">
+               <div class="form-group date-select-group has-feedback event-info__start-date--dropdown-start-date-container required">
                
                   <label for="">Start Date</label>
                   <div class="SingleDatePicker SingleDatePicker_1">
@@ -101,7 +101,7 @@
                </div>
             </div>
             <div class="col-xs-12 col-lg-4">
-               <div class="form-group has-feedback event-info__start-date--dropdown-end-date-container required">
+               <div class="form-group date-select-group has-feedback event-info__start-date--dropdown-end-date-container required">
                
                   <label for="">End Date</label>
                   <div class="SingleDatePicker SingleDatePicker_1">
@@ -121,16 +121,16 @@
             </div>
          </div>
          <!-- Is Virtual? -->
-         <div class="row">
-            <div class="col-xs-12 col-sm-8 col-md-5">
+         <div class="row form-group">
+            <div class="col-xs-12">
                   <div class="input-group radio-group event-info-is-virtual">
                      <!-- <label class="icon-help-label" for="tooltip">
                         <span class="icon-help" data-toggle="tooltip" data-placement="top" title="tooltip" data-container="body" data-original-title="Tooltip text."></span>
                      </label> -->
                      <div class="input-group-header radio-group-header required">
-                        Is this a virtual event?
                         <label class="icon-help-label" for="tooltip">
-                              <span class="icon-help" data-toggle="tooltip" data-placement="top" title="A Virtual Event is a swimming competition conducted in multiple locations with results compiled in a central location." data-container="body" data-original-title=""></span>
+                           Is this a virtual event?
+                           <span class="icon-help" data-toggle="tooltip" data-placement="top" title="A Virtual Event is a swimming competition conducted in multiple locations with results compiled in a central location." data-container="body" data-original-title=""></span>
                         </label>
                      </div>
                      <span class="help-block help-block--isVirtual">Please make a selection</span>
@@ -143,7 +143,7 @@
                      </label>
                      <label class="radio-label radio-label--inline" for="isVirtualNo">
                         <span class="radio-container">
-                              <input type="radio" name="isVirtual" id="isVirtualNo" value="false">
+                              <input type="radio" name="isVirtual" id="isVirtualNo" value="false" checked>
                               <span class="radio__placeholder"></span>
                         </span>
                         No
@@ -152,9 +152,9 @@
             </div>
          </div>
          <!-- Classification -->
-         <div class="row">
+         <div class="row form-group">
             <div class="col-xs-12 col-sm-8 col-md-5">
-               <div class="input-group event-info-classification required">
+               <div class="input-group select-group event-info-classification required">
                   <label for="selectEventClass">
                      Event Classification
                      <span class="icon-help" data-toggle="tooltip" data-placement="top" title="A USMS Sanction requires that every participant is a USMS member. A USMS Recognition allows for some participants to not be a USMS member, but still allows for a USMS member's results to count as an official time." data-container="body" data-original-title=""></span>
@@ -169,7 +169,7 @@
             </div>
          </div>
          <!-- LMSC -->
-         <div class="row">
+         <div class="row form-group">
             <div class="col-xs-12 col-sm-8 col-md-5">
                <div class="input-group event-info-lmsc required">
                   <label for="SelectEventLmsc">
@@ -187,13 +187,8 @@
             </div>
          </div>
          <!-- Timing System -->
-         <div class="row">
+         <div class="row form-group timing-system-group">
             <div class="col-xs-12 col-sm-8 col-md-5">
-               <!-- <div class="input-group timing-system">
-                  <label for="TimingSystem">
-                     Timing system
-                  </label>
-               </div> -->
                <div class="input-group radio-group timing-system">
                   <div class="input-group-header radio-group-header required">
                      Timing System
@@ -230,7 +225,7 @@
             </div>
             <div class="col-xs-12">
                <div class="timing-system-note">
-                  <div class="input-group-header radio-group-header">
+                  <div class="input-group-header radio-group-headerx">
                      Timing System Statement
                   </div>
                   <p>Please review 103.18.5-103. 18.9 in the USMS Rule Book for more information on these statements. They are based on your timing system set up and usage.</p>
@@ -238,21 +233,21 @@
             </div>
          </div>
          <!-- List on Calendar -->
-         <div class="row">
+         <div class="row form-group">
             <div class="col-xs-12 col-sm-8 col-md-5">
                <div class="input-group radio-group event-info-list-on-calendar">
                   <div class="input-group-header radio-group-header required">List on the public calendar of events?</div>
-                  <span class="help-block help-block--eventType">Please make a selection</span>
+                  <span class="help-block help-block--eventListOnCalendar">Please make a selection</span>
                   <label class="radio-label radio-label--inline" for="eventListOnCalendarYes">
                      <span class="radio-container">
-                        <input type="radio" name="eventType" id="eventListOnCalendarYes" value="true">
+                        <input type="radio" name="eventListOnCalendar" id="eventListOnCalendarYes" value="true">
                         <span class="radio__placeholder"></span>
                      </span>
                      Yes
                   </label>
                   <label class="radio-label radio-label--inline" for="eventListOnCalendarNo">
                      <span class="radio-container">
-                              <input type="radio" name="eventType" id="eventListOnCalendarNo" value="false">
+                              <input type="radio" name="eventListOnCalendar" id="eventListOnCalendarNo" value="false">
                         <span class="radio__placeholder"></span>
                      </span>
                      No
@@ -261,7 +256,7 @@
             </div>
          </div>
          <!-- Is Championship? -->
-         <div class="row">
+         <div class="row form-group">
             <div class="col-xs-12 col-sm-8 col-md-5">
                   <div class="input-group radio-group event-info-is-championship">
                      <!-- <label class="icon-help-label" for="tooltip">
@@ -270,17 +265,17 @@
                      <div class="input-group-header radio-group-header required">
                         Is this event a championship?
                      </div>
-                     <span class="help-block help-block--ischampionship">Please make a selection</span>
-                     <label class="radio-label radio-label--inline" for="ischampionshipYes">
+                     <span class="help-block help-block--is-championship">Please make a selection</span>
+                     <label class="radio-label radio-label--inline" for="isChampionshipYes">
                         <span class="radio-container">
-                              <input type="radio" name="ischampionship" id="ischampionshipYes" value="true">
+                              <input type="radio" name="isChampionship" id="isChampionshipYes" value="true">
                               <span class="radio__placeholder"></span>
                         </span>
                         Yes
                      </label>
-                     <label class="radio-label radio-label--inline" for="ischampionshipNo">
+                     <label class="radio-label radio-label--inline" for="isChampionshipNo">
                         <span class="radio-container">
-                              <input type="radio" name="ischampionship" id="ischampionshipNo" value="false">
+                              <input type="radio" name="isChampionship" id="isChampionshipNo" value="false" checked>
                               <span class="radio__placeholder"></span>
                         </span>
                         No
@@ -289,7 +284,7 @@
             </div>
          </div>
          <!-- Save Section -->
-         <div class="row">
+         <div class="row form-group">
                <div class="section__controls">
                   <button class="btn save-section" id="saveEventInfo" type="button" disabled>Save &amp; Continue</button>
                </div>
@@ -299,6 +294,21 @@
 </form>
 
 <script>
+   $("#isVirtualYes").click( function() {
+      if ($('.timing-system-group').length) {
+         $('.timing-system-group').hide();
+      }
+   });
+   $("#isVirtualNo").click( function() {
+      $('.timing-system-group').show();
+      $("#saveEventInfo").prop('disabled', false);
+   });
+   $("input[name='isChampionship']").on('change', function() {
+      $("#saveEventInfo").prop('disabled', false);
+   });
+   $("input[name='eventListOnCalendar']").on('change', function() {
+      $("#saveEventInfo").prop('disabled', false);
+   });
    $("#event-info").on('change', function() {
       $("#saveEventInfo").prop('disabled', false);
    });
