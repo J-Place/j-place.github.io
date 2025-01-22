@@ -57,21 +57,15 @@ $(document).ready(function() {
 
     $(confirmAddNewFacility).click(function(e) {
         e.preventDefault();
-        // resetLocationInputs();
-        // $(".row.locations").show();
         $(addNewLocationForm).hide();
         $(addNewConfigurationForm).hide();
         $(cancelAddNewLocationBtn).hide()
-        // hideLocationLookup();
-        // hideAddNewLocationContainer();
         showAddNewLocationContainer();
         showSavedLocationList();
         $(".list-item-new").show();
         $(".venue__list").hide();
         $(".configuration__list").hide();
         $(".location-add-configuration").hide();
-        // $("#saveLocation").prop('disabled', false);
-        // scrollTopSection();
         $(addNewPoolForm).show();
         $('.location-name .list__controls').hide();
     });
@@ -87,7 +81,6 @@ $(document).ready(function() {
     });
 
     $("#saveConfiguration").click( function() {
-        // $(addNewPoolForm).hide();
         hideLocationLookup();
         hideAddNewLocationContainer();
         $(addNewConfigurationForm).hide();
@@ -129,45 +122,6 @@ $(document).ready(function() {
         filterByRange();
         filterByCourse();
     });
-
-    // $("#confirmCalendarSelby").click( function() {
-    //     // alert("Becky");
-    //     $("#saveLocation").prop('disabled', false);
-    //     $(".list-item-existing").show();
-    //     scrollTopSection();
-    //     // $(this).prop('disabled', true);        
-    //     hideLocationLookup();
-    //     hideAddNewLocationContainer();
-    //     $(lookupByLocationList).hide();
-    //     showSavedLocationList();
-    //     // $(".venue__list--item:first-of-type .configuration-title:last-of-type").addClass('selected');
-    //  });
-
-    //  $("#editListEventLocationExisting").click( function() {
-    //     console.log("Becky");
-    //     hideSavedLocationList();
-    //     showLocationLookup();
-    //     // showAddNewLocationContainer();
-    //     showLookupLocationList();
-    //     resetAddNewLocation();
-    //  });
-
-    //  $("#editListEventLocationNew").click( function() {
-    //     // alert("Becky");
-    //     hideSavedLocationList();
-    //     showLocationLookup();
-    //     // showAddNewLocationContainer();
-    //     resetAddNewLocation();
-    //  });
-
-    //  $("#confirmNewFacilityCalendar").click( function() {
-    //     hideLocationLookup();
-    //     hideAddNewLocationContainer();
-    //     $(lookupByLocationList).hide();
-    //     showSavedLocationList();
-    //     $(".list-item-new").show();
-    //  });
-
 
     var modalChosePoolConfigurationSelby = new bootstrap.Modal(document.getElementById('modalChosePoolConfigurationSelby'));
 
