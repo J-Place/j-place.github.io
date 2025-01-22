@@ -120,6 +120,37 @@
                </div>
             </div>
          </div>
+         <!-- Is Virtual? -->
+         <div class="row">
+            <div class="col-xs-12 col-sm-8 col-md-5">
+                  <div class="input-group radio-group event-info-is-virtual">
+                     <!-- <label class="icon-help-label" for="tooltip">
+                        <span class="icon-help" data-toggle="tooltip" data-placement="top" title="tooltip" data-container="body" data-original-title="Tooltip text."></span>
+                     </label> -->
+                     <div class="input-group-header radio-group-header required">
+                        Is this a virtual event?
+                        <label class="icon-help-label" for="tooltip">
+                              <span class="icon-help" data-toggle="tooltip" data-placement="top" title="A Virtual Event is a swimming competition conducted in multiple locations with results compiled in a central location." data-container="body" data-original-title=""></span>
+                        </label>
+                     </div>
+                     <span class="help-block help-block--isVirtual">Please make a selection</span>
+                     <label class="radio-label radio-label--inline" for="isVirtualYes">
+                        <span class="radio-container">
+                              <input type="radio" name="isVirtual" id="isVirtualYes" value="true">
+                              <span class="radio__placeholder"></span>
+                        </span>
+                        Yes
+                     </label>
+                     <label class="radio-label radio-label--inline" for="isVirtualNo">
+                        <span class="radio-container">
+                              <input type="radio" name="isVirtual" id="isVirtualNo" value="false">
+                              <span class="radio__placeholder"></span>
+                        </span>
+                        No
+                     </label>
+                  </div>
+            </div>
+         </div>
          <!-- Classification -->
          <div class="row">
             <div class="col-xs-12 col-sm-8 col-md-5">
@@ -199,42 +230,11 @@
             </div>
             <div class="col-xs-12">
                <div class="timing-system-note">
-                  <div class="input-group-header radio-group-header required">
+                  <div class="input-group-header radio-group-header">
                      Timing System Statement
                   </div>
                   <p>Please review 103.18.5-103. 18.9 in the USMS Rule Book for more information on these statements. They are based on your timing system set up and usage.</p>
                </div>   
-            </div>
-         </div>
-         <!-- Is Virtual? -->
-         <div class="row">
-            <div class="col-xs-12 col-sm-8 col-md-5">
-                  <div class="input-group radio-group event-info-is-virtual">
-                     <!-- <label class="icon-help-label" for="tooltip">
-                        <span class="icon-help" data-toggle="tooltip" data-placement="top" title="tooltip" data-container="body" data-original-title="Tooltip text."></span>
-                     </label> -->
-                     <div class="input-group-header radio-group-header required">
-                        Is this a virtual event?
-                        <label class="icon-help-label" for="tooltip">
-                              <span class="icon-help" data-toggle="tooltip" data-placement="top" title="A Virtual Event is a swimming competition conducted in multiple locations with results compiled in a central location." data-container="body" data-original-title=""></span>
-                        </label>
-                     </div>
-                     <span class="help-block help-block--isVirtual">Please make a selection</span>
-                     <label class="radio-label radio-label--inline" for="isVirtualYes">
-                        <span class="radio-container">
-                              <input type="radio" name="isVirtual" id="isVirtualYes" value="true">
-                              <span class="radio__placeholder"></span>
-                        </span>
-                        Yes
-                     </label>
-                     <label class="radio-label radio-label--inline" for="isVirtualNo">
-                        <span class="radio-container">
-                              <input type="radio" name="isVirtual" id="isVirtualNo" value="false">
-                              <span class="radio__placeholder"></span>
-                        </span>
-                        No
-                     </label>
-                  </div>
             </div>
          </div>
          <!-- List on Calendar -->
@@ -310,3 +310,8 @@
       }, 100);
    });
 </script>
+
+<script>
+   let className = 'required';
+</script>
+<script src="/js/find-class.js"></script>

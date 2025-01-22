@@ -526,6 +526,37 @@
                </div>
             </div>
          </div>
+         <!-- Is Virtual? -->
+         <div class="row">
+            <div class="col-xs-12 col-sm-8 col-md-5">
+                  <div class="input-group radio-group event-info-is-virtual">
+                     <!-- <label class="icon-help-label" for="tooltip">
+                        <span class="icon-help" data-toggle="tooltip" data-placement="top" title="tooltip" data-container="body" data-original-title="Tooltip text."></span>
+                     </label> -->
+                     <div class="input-group-header radio-group-header required">
+                        Is this a virtual event?
+                        <label class="icon-help-label" for="tooltip">
+                              <span class="icon-help" data-toggle="tooltip" data-placement="top" title="A Virtual Event is a swimming competition conducted in multiple locations with results compiled in a central location." data-container="body" data-original-title=""></span>
+                        </label>
+                     </div>
+                     <span class="help-block help-block--isVirtual">Please make a selection</span>
+                     <label class="radio-label radio-label--inline" for="isVirtualYes">
+                        <span class="radio-container">
+                              <input type="radio" name="isVirtual" id="isVirtualYes" value="true">
+                              <span class="radio__placeholder"></span>
+                        </span>
+                        Yes
+                     </label>
+                     <label class="radio-label radio-label--inline" for="isVirtualNo">
+                        <span class="radio-container">
+                              <input type="radio" name="isVirtual" id="isVirtualNo" value="false">
+                              <span class="radio__placeholder"></span>
+                        </span>
+                        No
+                     </label>
+                  </div>
+            </div>
+         </div>
          <!-- Classification -->
          <div class="row">
             <div class="col-xs-12 col-sm-8 col-md-5">
@@ -605,42 +636,11 @@
             </div>
             <div class="col-xs-12">
                <div class="timing-system-note">
-                  <div class="input-group-header radio-group-header required">
+                  <div class="input-group-header radio-group-header">
                      Timing System Statement
                   </div>
                   <p>Please review 103.18.5-103. 18.9 in the USMS Rule Book for more information on these statements. They are based on your timing system set up and usage.</p>
                </div>   
-            </div>
-         </div>
-         <!-- Is Virtual? -->
-         <div class="row">
-            <div class="col-xs-12 col-sm-8 col-md-5">
-                  <div class="input-group radio-group event-info-is-virtual">
-                     <!-- <label class="icon-help-label" for="tooltip">
-                        <span class="icon-help" data-toggle="tooltip" data-placement="top" title="tooltip" data-container="body" data-original-title="Tooltip text."></span>
-                     </label> -->
-                     <div class="input-group-header radio-group-header required">
-                        Is this a virtual event?
-                        <label class="icon-help-label" for="tooltip">
-                              <span class="icon-help" data-toggle="tooltip" data-placement="top" title="A Virtual Event is a swimming competition conducted in multiple locations with results compiled in a central location." data-container="body" data-original-title=""></span>
-                        </label>
-                     </div>
-                     <span class="help-block help-block--isVirtual">Please make a selection</span>
-                     <label class="radio-label radio-label--inline" for="isVirtualYes">
-                        <span class="radio-container">
-                              <input type="radio" name="isVirtual" id="isVirtualYes" value="true">
-                              <span class="radio__placeholder"></span>
-                        </span>
-                        Yes
-                     </label>
-                     <label class="radio-label radio-label--inline" for="isVirtualNo">
-                        <span class="radio-container">
-                              <input type="radio" name="isVirtual" id="isVirtualNo" value="false">
-                              <span class="radio__placeholder"></span>
-                        </span>
-                        No
-                     </label>
-                  </div>
             </div>
          </div>
          <!-- List on Calendar -->
@@ -716,6 +716,11 @@
       }, 100);
    });
 </script>
+
+<script>
+   let className = 'required';
+</script>
+<script src="/js/find-class.js"></script>
 
 
                               <form id="form-contact-info">
@@ -1405,7 +1410,7 @@
                 <div class="input-group contact-info__host-type required">
                     <label for="selectHostType">
                         Event Host
-                        <a tabindex="0" class="popover-link" role="button" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="top" data-content="Do we need a tooltip here?" data-original-title="" title="">
+                        <a tabindex="0" class="popover-link" role="button" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="top" data-content="" data-original-title="" title="Event host tooltip.">
                             <span class="icon-help"></span>
                         </a>
                     </label>
@@ -2287,13 +2292,13 @@
 
 
 
-<div class="location-detailsXXX event-location-details add-new-inputs showXXX">
+<div class="location-detailsXXX event-location-details add-new-inputs">
     <div class="form-group location-inputs show" id="locationInputs">
         <div class="row">
             <div class="col-xs-12">
                 <div class="input-group location-name required">
                     <label for="locationName">
-                        Enter Your facility Name<span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Enter the facility or open water venue name. "></span>
+                        Enter Your facility Name<span class="icon-help" data-toggle="tooltip" data-placement="top" title="Enter the facility or open water venue name." data-container="body" data-original-title=""></span>
                     </label>
                     <input type="text" class="form-control entry__input entry-primary__input" name="LocationName" id="locationName" maxlength="80" />
                     <span class="help-block help-block--LocationName">Name required</span>
@@ -2307,7 +2312,7 @@
                 <div class="input-group location-address--street required">
                     <label for="locationAddressStreet">
                         Street Address (must select from the dropdown, do not copy and paste!)
-                        <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="You must select an address from the dropdown."></span>
+                        <span class="icon-help" data-toggle="tooltip" data-placement="top" title="You must select an address from the dropdown." data-container="body" data-original-title=""></span>
                     </label>
                     <input
                         type="text"
@@ -2851,7 +2856,7 @@ Other -->
                   <div class="input-group entry-info__attendance-previous required">
                      <label for="entryInfoAttendancePrevious">
                         Number of Entries Last Year
-                        <a tabindex="0" class="popover-link" role="button" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="top" data-content="If this is a new event enter zero '0'." data-original-title="" title="">
+                        <a tabindex="0" class="popover-link" role="button" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="top" data-content="" data-original-title="" title="If this is a new event enter zero '0'.">
                            <span class="icon-help"></span>
                         </a>
                         <!-- <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="If this is a new event enter zero '0'."></span> -->
@@ -2955,8 +2960,7 @@ Other -->
                               <form id="form-meet-announcement">
     <div class="section hasData section-meet-announcement" id="meetAnnouncement">
        <h3 class="section__header" data-target="#meet-announcement__content" data-toggle="collapse" aria-expanded="false" aria-controls="meet-announcement__content">
-          <span class="section__number">6</span>
-          Meet Announcement
+         <span class="section__number">6</span>Meet Announcement
        </h3>
         <div class="section__content collapse" id="meet-announcement__content" data-parent="#accordion">
              <div class="row">

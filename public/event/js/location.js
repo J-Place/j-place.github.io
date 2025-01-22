@@ -145,6 +145,8 @@ $(document).ready(function() {
         hideSavedLocationList();
         showLocationLookup();
         // showAddNewLocationContainer();
+        showLookupLocationList();
+        resetAddNewLocation();
      });
 
      $("#editListEventLocationNew").click( function() {
@@ -152,6 +154,7 @@ $(document).ready(function() {
         hideSavedLocationList();
         showLocationLookup();
         // showAddNewLocationContainer();
+        resetAddNewLocation();
      });
 
      $("#confirmNewFacilityCalendar").click( function() {
