@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<!--[if IE 9]>
+<html lang="en" class="ie9 no-js">
+<![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+   <!--<![endif]-->
+   <head>
+      <title>Convert to Sanctioned/Recognized Event - U.S. Masters Swimming</title>
+      <sergey-import src="site/head_meta" />
+      <sergey-import src="site/head_js" />
+      <sergey-import src="site/head_css" />
+      <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
+      <link rel="stylesheet" href="https://www.usms.org/styles/Club/club2.min.css">
+      <!-- <link rel="stylesheet" href="https://www.usms.org/styles/clubs.min.css"> -->
+      <link rel="stylesheet" href="./css/date-picker.css">
+      <link rel="stylesheet" href="./css/convert-this-from-club.css">
+      <link rel="stylesheet" href="./css/event-sanction.css">
+      <link rel="stylesheet" href="./css/event-mockup-ignore.css">
+   </head>
+   <body>
+      <div id="main-container">
+         <sergey-import src="foundation/site-header" />
+         <main role="main">
+            <div class="breadcrumb-container" style="position: relative; padding-bottom: 50px;">
+               <div class="breadcrumb">
+                  <div class="usms-container">
+                     <div class="row">
+                        <div class="col-xs-12">
+                           <div class="breadcrumb__container">
+                              <ul class="breadcrumb__items list--nostyle">
+                                 <li class="text-capitalize breadcrumb__item ">
+                                    <a class="breadcrumb__link" href="/public">Home<i class="fa fa-chevron-right"></i></a>
+                                 </li>
+                                 <li class="text-capitalize breadcrumb__item ">
+                                    <a class="breadcrumb__link" href="/public/event/event-sanction-dashboard.html">Event Central<i class="fa fa-chevron-right"></i></a>
+                                 </li>
+                              </ul>
+                              <span class="breadcrumb__title text-capitalize">Convert Event</span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="section section-full bg-gray p-tb-10 p-mh-500">
+               <div class="usms-container p-tb-10">
+                     <div class="row">
+                        <div class="col-xs-12">
+                           <header>
+                              <h1>Convert to Sanctioned/Recognized Event</h1>
+                           </header>
+                        </div>
+                     </div>
+               </div>
+               <div class="usms-container form__container  p-tb-10 club-edit__container">
+                  <div class="row ">
+                     <div class="col-xs-12 ">
+                        <div class="loading" style="display: none;">
+                           <img src="https://www.usms.org/img/loader.gif" alt="loading">
+                        </div>
+                        <div class="club-edit event-edit" id="accordion">
+
+                           <div class="form-header duplicate-event">
+                                 <p>Your calendar event information is included in the form below, but you can make changes if needed. Please complete the additional sanction/recognition specific information in each section</p>
+                                 <br>
+                                 <!-- <a href="" class="btn btn-default">Continue</a> -->
+                                 <!-- <a href="event-sanction-dashboard.html" class="btn btn-link">Go Back</a> -->
+                           </div>
+
+                           <div class="accordion-group">
+
+
+                              <sergey-import src="event-sanction/01-event-type" />
+
+                              <sergey-import src="event-sanction/02-event-information" />
+
+                              <sergey-import src="event-sanction/03-contact-information" />
+                              
+                              <sergey-import src="event-sanction/04-location-information" />
+
+                              <sergey-import src="event-sanction/05-entry-information" />
+
+                              <sergey-import src="event-sanction/06-meet-announcement" />
+
+                              <sergey-import src="event-sanction/accept-submit" />
+
+                           </div>
+
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </main>
+         <sergey-import src="foundation/footer" />
+      </div>
+      <sergey-import src="site/footer_scripts" />
+      <script>
+         var accordion = $('#accordion');
+            accordion.on('show.bs.collapse','.collapse', function() {
+            let section = $(this).parent();
+            accordion.find('.collapse.in').removeClass('in');
+            accordion.find('.collapse').parent().removeClass('isEdit');
+            accordion.find('.collapse.in').addClass('hasData');
+            $(section).addClass('isEdit');
+         });
+         accordion.on('hidden.bs.collapse', function () {
+            $('.section.isEdit').removeClass('isEdit');
+         });
+      </script>
+      <script type="text/javascript">
+         $(function () {
+            $("[data-toggle='tooltip']").tooltip();
+            $("[data-toggle='popover']").tooltip();
+         });
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <script type="text/javascript" src="/event/js/convert-to-sanction.js"></script>
+   </body>
+</html>
