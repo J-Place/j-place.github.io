@@ -40,17 +40,24 @@
    $("input[name='EventType']").click( function() {
       $("#saveEventType").prop('disabled', false);
    });
-   $("#saveEventType").click( function() {                                                                        
-      // console.log($(this).closest('.section').attr('id'));
-      $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
-      $("#event-info h3").click();
-      $(document.documentElement).animate({
-         scrollTop: $("#event-info").offset().top - 45
-      }, 100);
-   });
+   // $("#saveEventType").click( function() {                                                                        
+   //    // console.log($(this).closest('.section').attr('id'));
+   //    $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+   //    $("#event-info h3").click();
+   //    // $(document.documentElement).animate({
+   //    //    scrollTop: $("#event-info").offset().top - 45,
+   //    // }, 100);
+   // });
    // function saveSection(e) {
    //    // var target = e.target;
    //    // var sectionId = $(target).closest('.section').attr('id');
    //    console.log(e.target);
    // }
+   $("#saveEventType").click( function() {
+      $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+      $("#calendar-eventinfo h3").click();
+      $(document.documentElement).animate({
+         scrollTop: $("#calendar-eventinfo").offset().top - 45
+      }, 100);
+   });
 </script>

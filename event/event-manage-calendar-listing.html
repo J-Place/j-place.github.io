@@ -6,7 +6,7 @@
 <html lang="en">
    <!--<![endif]-->
    <head>
-      <title>Convert to Sanctioned/Recognized Event - U.S. Masters Swimming</title>
+      <title>Manage Event Calendar Listing - U.S. Masters Swimming</title>
       <sergey-import src="site/head_meta" />
       <sergey-import src="site/head_js" />
       <sergey-import src="site/head_css" />
@@ -61,21 +61,26 @@
                         </div>
                         <div class="club-edit event-edit" id="accordion">
 
+                           <div class="form-header manage-event">
+                              <p>You can edit or view your calendar listing details or you can upgrade to a sanction or recognition. If you choose to upgrade, you can edit any of your existing information and will need to add additional information to complete the sanction process.</p>
+                              <div class="manage-event-options">
+                                 <a href="#" class="btn btn-large btn-outline">Upgrade to a Sanction or Recognition</a>
+                                 <span></span>
+                                 <a href="#" class="btn btn-large btn-outline">Edit Calendar Listing Details</a>
+                              </div>
+                           </div>
+
                            <div class="accordion-group">
 
                               <sergey-import src="event-sanction/01-event-type" />
 
-                              <sergey-import src="event-sanction/02-event-information" />
+                              <sergey-import src="event-sanction/02-event-information-calendar" />
 
-                              <sergey-import src="event-sanction/03-contact-information" />
-                              
+                              <sergey-import src="event-sanction/03-contact-information-calendar" />
+
                               <sergey-import src="event-sanction/04-location-information" />
 
-                              <sergey-import src="event-sanction/05-entry-information" />
-
-                              <sergey-import src="event-sanction/06-meet-announcement" />
-
-                              <sergey-import src="event-sanction/accept-submit" />
+                              <sergey-import src="event-sanction/accept-submit-calendar" />
 
                            </div>
 
@@ -87,10 +92,10 @@
          </main>
          <sergey-import src="foundation/footer" />
       </div>
-      <sergey-import src="site/footer_scripts" />
+      
       <script>
          var accordion = $('#accordion');
-            accordion.on('show.bs.collapse','.collapse', function() {
+         accordion.on('show.bs.collapse','.collapse', function() {
             let section = $(this).parent();
             accordion.find('.collapse.in').removeClass('in');
             accordion.find('.collapse').parent().removeClass('isEdit');
@@ -100,15 +105,18 @@
          accordion.on('hidden.bs.collapse', function () {
             $('.section.isEdit').removeClass('isEdit');
          });
-      </script>
-      <script type="text/javascript">
          $(function () {
             $("[data-toggle='tooltip']").tooltip();
             // $("[data-toggle='popover']").tooltip();
          });
-      </script>
+         // function saveSection() {
+         //    var sectionId = $(this).closest('.section').attr('id');
+         //    // console.log(sectionId);
+         // }
+     </script>
       <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-      <script type="text/javascript" src="/event/js/convert-to-sanction.js"></script>
+      <sergey-import src="site/footer_scripts" />
    </body>
 </html>
+<script type="text/javascript" src="/event/js/convert-to-sanction.js"></script>

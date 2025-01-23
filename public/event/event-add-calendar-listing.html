@@ -6,7 +6,7 @@
 <html lang="en">
    <!--<![endif]-->
    <head>
-      <title>Event Calendar Listing - U.S. Masters Swimming</title>
+      <title>Add Event Calendar Listing - U.S. Masters Swimming</title>
       <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -309,10 +309,10 @@
                                     <a class="breadcrumb__link" href="/public">Home<i class="fa fa-chevron-right"></i></a>
                                  </li>
                                  <li class="text-capitalize breadcrumb__item ">
-                                    <a class="breadcrumb__link" href="/public/event/event-sanction-dashboard.html">Event Central<i class="fa fa-chevron-right"></i></a>
+                                    <a class="breadcrumb__link" href="/public/event/event-dashboard.html">Event Central<i class="fa fa-chevron-right"></i></a>
                                  </li>
                               </ul>
-                              <span class="breadcrumb__title text-capitalize">Manage Event</span>
+                              <span class="breadcrumb__title text-capitalize">Add Event</span>
                            </div>
                         </div>
                      </div>
@@ -324,7 +324,7 @@
                      <div class="row">
                         <div class="col-xs-12">
                            <header>
-                              <h1>Manage Event</h1>
+                              <h1>Add Event</h1>
                            </header>
                         </div>
                      </div>
@@ -336,6 +336,15 @@
                            <img src="https://www.usms.org/img/loader.gif" alt="loading">
                         </div>
                         <div class="club-edit event-edit" id="accordion">
+
+                           <!-- <div class="form-header manage-event">
+                              <p>You can edit or view your calendar listing details or you can upgrade to a sanction or recognition. If you choose to upgrade, you can edit any of your existing information and will need to add additional information to complete the sanction process.</p>
+                              <div class="manage-event-options">
+                                 <a href="#" class="btn btn-large btn-outline">Upgrade to a Sanction or Recognition</a>
+                                 <span></span>
+                                 <a href="#" class="btn btn-large btn-outline">Edit Calendar Listing Details</a>
+                              </div>
+                           </div> -->
 
                            <div class="accordion-group">
 
@@ -381,19 +390,26 @@
    $("input[name='EventType']").click( function() {
       $("#saveEventType").prop('disabled', false);
    });
-   $("#saveEventType").click( function() {                                                                        
-      // console.log($(this).closest('.section').attr('id'));
-      $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
-      $("#event-info h3").click();
-      $(document.documentElement).animate({
-         scrollTop: $("#event-info").offset().top - 45
-      }, 100);
-   });
+   // $("#saveEventType").click( function() {                                                                        
+   //    // console.log($(this).closest('.section').attr('id'));
+   //    $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+   //    $("#event-info h3").click();
+   //    // $(document.documentElement).animate({
+   //    //    scrollTop: $("#event-info").offset().top - 45,
+   //    // }, 100);
+   // });
    // function saveSection(e) {
    //    // var target = e.target;
    //    // var sectionId = $(target).closest('.section').attr('id');
    //    console.log(e.target);
    // }
+   $("#saveEventType").click( function() {
+      $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+      $("#calendar-eventinfo h3").click();
+      $(document.documentElement).animate({
+         scrollTop: $("#calendar-eventinfo").offset().top - 45
+      }, 100);
+   });
 </script>
 
                               <form id="form-calendar-event-info">
@@ -2634,14 +2650,15 @@ Other -->
          accordion.on('hidden.bs.collapse', function () {
             $('.section.isEdit').removeClass('isEdit');
          });
+         $("#event-type h3").click();
          $(function () {
             $("[data-toggle='tooltip']").tooltip();
-            $("[data-toggle='popover']").tooltip();
+            // $("[data-toggle='popover']").tooltip();
          });
-         function saveSection() {
-            var sectionId = $(this).closest('.section').attr('id');
-            // console.log(sectionId);
-         }
+         // function saveSection() {
+         //    var sectionId = $(this).closest('.section').attr('id');
+         //    // console.log(sectionId);
+         // }
      </script>
       <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

@@ -1,5 +1,11 @@
 $(".section-event-info h3").click();
 
+
+// $("#eventTypeAnsweredPool").prop('checked', true);
+
+$('input[name="EventType"][value="pool"]').prop('checked', true);
+$('input[name="EventType"]').prop('disabled', true);
+
 function setInputValues(elements, values) {
     if (elements.length !== values.length) {
       console.error('The number of elements does not match the number of values.');

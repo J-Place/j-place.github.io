@@ -14,3 +14,5 @@ saveEventInfoButton.addEventListener('click', function(e) {
     $('#contact-info .section__content').collapse('show');
   }
 });
+$("#dateStart input").on('change', function () {
+});
