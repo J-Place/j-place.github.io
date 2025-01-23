@@ -404,7 +404,12 @@
    // }
    $("#saveEventType").click( function() {
       $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
-      $("#calendar-eventinfo h3").click();
+      $("#event-info h3").click();
+      if ($("#form-event-info").length) {
+         $("#event-info h3").click();
+      } else if ($("#form-calendar-event-info").length) {
+         $("#calendar-eventinfo h3").click();
+      }
       $(document.documentElement).animate({
          scrollTop: $("#calendar-eventinfo").offset().top - 45
       }, 100);
