@@ -1,5 +1,4 @@
 $(".section-event-info h3").click();
-
 $('input[name="EventType"][value="pool"]').prop('checked', true);
 $('input[name="EventType"]').prop('disabled', true);
 
@@ -42,52 +41,33 @@ $(document).ready(function() {
     ];
     setInputValues(inputs, inputValues);
 
-
     ///////////////////////////////////////////////////// Dropdowns
     const selects = [
         '#selectEventCourse',
         '#selectEventClass',
         '#selectEventLmsc'
-        // '#selectHostType'
     ];
     const selectValues = [
         'LCM',
         'sanctioned',
         'FL'
-        // 'Event Director/Single Person'
     ];
     setSelectValues(selects, selectValues);
-
 
     ///////////////////////////////////////////////////// Click Elements
     $("#contactTypeEventDirectorCurrent").click();
     $("#confirmCurrentEventDirector").click();
     $("#eventDirectorPrivacyName").prop('checked', true);
-
-    // $("#location-information__content").prop('display', block);
-    // hideLocationLookup();
     $("#location-information__content .list-control").hide();
-    // hideAddNewLocationContainer();
     $(".location-info__add-new-location--container").hide();
-    // $(lookupByLocationList).hide();
     $(".list--lookup.locations").hide();
-    // showSavedLocationList();
     $("#location-information .row.locations").show();
     $(".list-item-existing").show();
-
     $("#timingAutomatic").prop('checked', true);
     $("#eventListOnCalendarYes").prop('checked', true);
-
-    // $("#selectHostType").change();
-    // $("#selectHostType").submit();
-
     $(".contact-info__host-type--container").hide();
     $(".contact-information__event-host--list").show();
     $(".contact-list__event-host--header").show();
     $(".list-item--organization-new").parent().show();
     $(".list-item--organization-new").show();
-
-    
-    // $("#confirmCurrentHost").click();
-
 });
