@@ -45,10 +45,16 @@ $(document).ready(function() {
 
     ///////////////////////////////////////////////////// Dropdowns
     const selects = [
-        '#selectEventCourse' 
+        '#selectEventCourse',
+        '#selectEventClass',
+        '#selectEventLmsc'
+        // '#selectHostType'
     ];
     const selectValues = [
-        'LCM'
+        'LCM',
+        'sanctioned',
+        'FL'
+        // 'Event Director/Single Person'
     ];
     setSelectValues(selects, selectValues);
 
@@ -69,5 +75,19 @@ $(document).ready(function() {
     $("#location-information .row.locations").show();
     $(".list-item-existing").show();
 
+    $("#timingAutomatic").prop('checked', true);
+    $("#eventListOnCalendarYes").prop('checked', true);
+
+    // $("#selectHostType").change();
+    // $("#selectHostType").submit();
+
+    $(".contact-info__host-type--container").hide();
+    $(".contact-information__event-host--list").show();
+    $(".contact-list__event-host--header").show();
+    $(".list-item--organization-new").parent().show();
+    $(".list-item--organization-new").show();
+
+    
+    // $("#confirmCurrentHost").click();
 
 });

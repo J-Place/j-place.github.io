@@ -70,6 +70,8 @@ $(document).ready(function() {
             $("#confirmCurrentHost").show();
             $(".contact-information__event-host--list .list-item").parent().hide();
             $(".contact-information__event-host--list .list-item--current").parent().show();
+            $(".contact-information__event-host--list").show();
+            // $(".list__header.contact-list__event-host--header").show();
         }
     });
 
