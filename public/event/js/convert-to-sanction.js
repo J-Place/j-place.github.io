@@ -57,17 +57,6 @@ $(document).ready(function() {
     $("#contactTypeEventDirectorCurrent").click();
     $("#confirmCurrentEventDirector").click();
     $("#eventDirectorPrivacyName").prop('checked', true);
-    // $("#location-information h3").click();
-    // $("#confirmLocationSelby").click();
-    // $("#option1Selby").click();
-    // setTimeout(function() {
-    //     $("#confirmConfigurationSelby").click();
-    //     $("#modalChosePoolConfigurationSelby").modal('hide');
-    //     $("#location-information h3").click();
-    // }, 300);
-    // scrollTopSection();
-    // $(this).prop('disabled', true);
-    // $('input[name="configuration-selby').prop("checked", false);
 
     // $("#location-information__content").prop('display', block);
     // hideLocationLookup();
