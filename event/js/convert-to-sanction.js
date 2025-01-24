@@ -1,8 +1,5 @@
 $(".section-event-info h3").click();
 
-
-// $("#eventTypeAnsweredPool").prop('checked', true);
-
 $('input[name="EventType"][value="pool"]').prop('checked', true);
 $('input[name="EventType"]').prop('disabled', true);
 
@@ -88,5 +85,17 @@ $(document).ready(function() {
 
 
 
+$(".help-block--SelectEventClass").addClass('has-error');
+$("#selectEventClass").addClass('has-error');
 
-$(".event-info-classification .help-block").addClass('has-error');
+$(".help-block--SelectEventLmsc").addClass('has-error');
+$("#selectEventLmsc").addClass('has-error');
+
+$(".help-block--timing-system").addClass('has-error');
+$("input[name='TransferReason']").addClass('has-error');
+
+$(".help-block--eventListOnCalendar").addClass('has-error');
+$("input[name='eventListOnCalendar']").addClass('has-error');
+
+$(".help-block--is-championship").addClass('has-error');
+$("input[name='isChampionship']").addClass('has-error');
