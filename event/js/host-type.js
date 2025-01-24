@@ -37,8 +37,6 @@ $(document).ready(function() {
             $(".contact-info-safety-coordinator__add-new").hide();
             $(".contact-info__host-type-club--container").hide();
             $(".contact-info__host-type-lmsc--container").show();
-            // $(".contact-information__event-host--list .list-item").parent().hide();
-            // $(".contact-information__event-host--list .list-item--lmsc").parent().show();
         }
         if ($(this).val() === 'USMS Club') {
             $(".contact-info__host-type-lmsc--container").hide();
@@ -51,7 +49,6 @@ $(document).ready(function() {
         }
         if ($(this).val() === 'Other Organization') {
             $("#addHostTypeOtherOrganizationLookup").hide();
-            // $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
             $(".contact-info__host-type-lmsc--container").hide();
             $(".contact-info__host-type-club--container").hide();
             $(".contact-info-host-type__other--container").show();
@@ -71,7 +68,6 @@ $(document).ready(function() {
             $(".contact-information__event-host--list .list-item").parent().hide();
             $(".contact-information__event-host--list .list-item--current").parent().show();
             $(".contact-information__event-host--list").show();
-            // $(".list__header.contact-list__event-host--header").show();
         }
     });
 

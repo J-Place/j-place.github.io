@@ -2967,6 +2967,18 @@ Other -->
          scrollTop: $("#meetAnnouncement").offset().top - 45
       }, 100);
    });
+   $("entryInfoAttendancePrevious").focus( function () {
+      $("#saveEntryInfo").prop('disabled', false);
+   });
+   $("dateEntriesClose").focus( function () {
+      $("#saveEntryInfo").prop('disabled', false);
+   });
+   $("entryInfoComments").focus( function () {
+      $("#saveEntryInfo").prop('disabled', false);
+   });
+   $("entryInfoComments").click( function () {
+      $("#saveEntryInfo").prop('disabled', false);
+   });
 </script>
 
                               <form id="form-meet-announcement">
@@ -3111,6 +3123,7 @@ Other -->
    $("#meetAnnouncement").on('change', function() {
       $("#saveMeetAnnouncement").prop('disabled', false);
    });
+   $("#saveMeetAnnouncement").prop('disabled', false);
    $("#saveMeetAnnouncement").click( function() {
       $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
       $("#meetAnnouncement h3").click();
