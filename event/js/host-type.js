@@ -37,6 +37,8 @@ $(document).ready(function() {
             $(".contact-info-safety-coordinator__add-new").hide();
             $(".contact-info__host-type-club--container").hide();
             $(".contact-info__host-type-lmsc--container").show();
+            // $(".contact-information__event-host--list .list-item").parent().hide();
+            // $(".contact-information__event-host--list .list-item--lmsc").parent().show();
         }
         if ($(this).val() === 'USMS Club') {
             $(".contact-info__host-type-lmsc--container").hide();
@@ -89,8 +91,9 @@ $(document).ready(function() {
         enableEventDirectorRadios();
         enableHeadRefBtn();
         enableSafetyCoordinatorBtn();
-        $(".contact-list__event-host--header").show();
         $(".contact-info__host-type--container").hide();
+        $(".contact-list__event-host--header").show();
+        $(".contact-information__event-host--list").show();
         $(".contact-information__event-host--list .list-item").parent().hide();
         $(".contact-information__event-host--list .list-item--lmsc").parent().show();
     });
