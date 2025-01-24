@@ -883,6 +883,234 @@
 
 <script src="/event/js/event-director.js"></script>
 
+            <div class="row contact-info__host-type">
+    <div class="form-group contact-info__host-type--container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-md-6">
+                <div class="input-group contact-info__host-type required">
+                    <label for="selectHostType">
+                        Event Host
+                        <a tabindex="0" class="popover-link" role="button" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="top" data-content="" data-original-title="" title="Event host tooltip.">
+                            <span class="icon-help"></span>
+                        </a>
+                    </label>
+                    <select name="SelectHostType" class="form-control" id="selectHostType" required="True">                                                            
+                        <option value="" disabled selected>Select a Host Type</option>
+                        <option value="LMSC">LMSC</option>
+                        <option value="USMS Club">USMS Club</option>
+                        <option value="Event Director/Single Person">Event Director/One person</option>
+                        <option value="Other Organization">Other Organization</option>
+                    </select>
+                    <span class="help-block help-block--SelectHostType">Host type is required.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group contact-info__host-type-lmsc--container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-8 col-md-6">
+                <div class="input-group event-info-host-type-lmsc required">
+                    <label for="selectHostTypeLmsc">
+                        LMSC<a tabindex="0" class="popover-link" role="button" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="top" 
+                        data-content="Do we need a tooltip here?" data-original-title="" title="">
+                        <span class="icon-help"></span>
+                        </a>
+                    </label>
+                    <select name="SelectHostTypeLmsc" class="form-control" id="selectHostTypeLmsc" required="True">                                                            
+                        <option value="" disabled selected>Select an LMSC</option>
+                        <option value="Florida LMSC">Florida LMSC</option>
+                        <option value="Georgia LMSC">Georgia LMSC</option>
+                    </select>
+                    <span class="help-block help-block--SelectHostTypeLmsc">Host type is required.</span>
+                </div>
+                </div>      
+            </div>
+            <a class="btn btn-small btn-success" id="confirmLmscSelect" style="display: none;">Confirm Florida LMSC</a>
+    </div>
+
+    <div class="form-group contact-info__host-type-club--container">
+        <div class="row">
+            <div class="col-xs-12 col-md-6">         
+                <div class="input-group lookup-host-type-usms-club">
+                <label for="lookupHostTypeUsmsClub">Search Clubs</label>
+                <input tabindex="0" type="text" class="form-control lookup__input lookup-primary__input" min="3" max="30" name="LookupHostTypeUsmsClub" id="lookupHostTypeUsmsClub" autocomplete="off" placeholder="">
+                <span class="help-block help-block--LookupHostTypeUsmsClub">Please enter USMS Club</span>
+                </div>
+                <a class="btn btn-small btn-success" id="confirmClubLookup" style="display:none;">Confirm Sarasota Sharks</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group contact-info-host-type__other--container">
+        <div class="row">
+                <div class="col-sm-6">
+                <div class="input-group lookup-name">
+                    <label for="lookupHostTypeOtherOrganization">Search Organizations:</label>
+                    <input tabindex="0" type="text" class="form-control lookup__input lookup-primary__input" min="3" max="30" name="LookupHostTypeOtherOrganization" id="lookupHostTypeOtherOrganization" autocomplete="off">
+                    <span class="help-block help-block--LookupHostTypeOtherOrganization">Please enter safety coordinator name</span>
+                </div>
+                </div>
+        </div>
+        <div class="row">
+                <div class="col-sm-12 col-md-8">
+                <div class="input-group lookup-confirm">
+                    <button class="btn btn-small save-as-contact" type="button" id="addHostTypeOtherOrganizationLookup">
+                        <span class="lookup-confirm--name">Add Rainbow River Swim Club</span>
+                    </button>
+                </div>
+                </div>
+        </div>
+    </div>
+
+    <div class="form-group contact-info-organization__add-new">
+        <div class="row">
+            <div class="col-sm-12 col-md-8">
+                <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">Or Add a New Organization</p>
+                <div>
+                    <button class="btn btn-small btn-outline" id="addNewOrganization" name="addNewOrganization" type="button" value="Add New">Add New</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group contact-info-host-type__other-organization--container add-new-inputs">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="input-group organization-name required">
+                    <label for="hostTypeOtherName">Organization Name</label>
+                    <input type="text" maxlength="30" class="form-control" name="HostTypeOtherName" id="hostTypeOtherName" value="" placeholder="Cape Coral Yach Club">
+                    <span class="help-block help-block--HostTypeOtherName">Please enter the organization name.</span>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="rowXXX"> -->
+            <div class="col-sm-12">
+                <div class="input-group contact-info-host-type__other-organization--address required">
+                    <label for="hostTypeOtherStreetAddress">
+                            Street Address<span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Enter the organization's street address."></span>
+                    </label>
+                    <input type="email" class="form-control" name="HostTypeOtherStreetAddress" id="hostTypeOtherStreetAddress" maxlength="50" value="">
+                    <span class="help-block help-block--HostTypeOtherStreetAddress">Please enter the organization street address.</span>
+                </div>                                    
+            </div>
+        <!-- </div> -->
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="input-group contact-info-host-type__other-organization--city required">
+                    <label for="hostTypeOtherCity">City</label>
+                    <input type="text" maxlength="30" class="form-control" name="HostTypeOtherCity" id="hostTypeOtherCity" value="">
+                    <span class="help-block help-block--HostTypeOtherCity">Please enter the organization city.</span>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="input-group contact-info-host-type__other-organization--state required">
+                    <label for="hostTypeOtherState" class="">State</label>
+                    <select name="HostTypeOtherState" class="form-control" id="hostTypeOtherState"><option value="">Select State</option>
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <option value="AZ">Arizona</option>
+                    </select>
+                    <span class="help-block help-block--HostTypeOtherState">Please enter the organization state.</span>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="input-group contact-info-host-type__other-organization--zip required">
+                    <label for="hostTypeOtherZip">Zip Code</label>
+                    <input type="text" maxlength="30" class="form-control" name="HostTypeOtherZip" id="hostTypeOtherZip" value="">
+                    <span class="help-block help-block--HostTypeOtherZip">Please enter the organization zip code.</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-5 col-md-6">
+                <div class="form-group lookup person">
+                    <button class="btn btn-small" type="button" id="addHostTypeOtherBtn">Confirm</button>
+                    <!-- <button class="btn btn-small btn-outline" type="button" id="cancelAddHostTypeOtherBtn">Cancel</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group contact-information__event-host--list">
+        <div class="list list--event-host list--lookup people">
+            <div class="list__header contact-list__event-host--header">
+                <span class="lookup-results--event-host">Event Host</span>
+                <div class="list__controls contact-list__controls">
+                    <button class="list__controls--settings" id="listHostSettings"></button>
+                    <button class="btn btn-link" id="editHostList">Edit</button>
+                    <button class="btn btn-link" id="saveHostList">Done Editing</button>
+                    <button class="btn btn-link" id="cancelHostList">Cancel</button>
+                </div>
+            </div>
+            <div class="list__container">
+                <div class="row is-flex">
+                <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
+                    <div class="list-item list-item--lmsc">
+                        <input type="hidden" class="contact-isMember" value="true">
+                        <button class="list-item__delete">Remove</button>
+                        <div class="list-item__pending">Host Pending</div>
+                        <div class="contact-name">Florida LMSC</div>
+                        <!-- <div class="contact-location"></div> -->
+                        <!-- <div class="contact-phone"></div> -->
+                        <!-- <div class="contact-email"></div> -->
+                        <!-- <div class="contact-id"></div> -->
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
+                    <div class="list-item list-item--club">
+                        <input type="hidden" class="contact-isMember" value="true">
+                        <button class="list-item__delete">Remove</button>
+                        <div class="contact-name">Sarasota Sharks</div>
+                        <div class="contact-location">Sarasota, FL</div>
+                        <!-- <div class="contact-phone"></div> -->
+                        <!-- <div class="contact-email"></div> -->
+                        <!-- <div class="contact-id"></div> -->
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
+                    <div class="list-item list-item--current">
+                        <input type="hidden" class="contact-isMember" value="true">
+                        <button class="list-item__delete">Remove</button>
+                        <div class="contact-name">Jay Place</div>
+                        <div class="contact-location">Sarasota, FL</div>
+                        <!-- <div class="contact-phone"></div> -->
+                        <!-- <div class="contact-email"></div> -->
+                        <!-- <div class="contact-id"></div> -->
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
+                    <div class="list-item list-item--organization-lookup">
+                        <input type="hidden" class="contact-isMember" value="true">
+                        <div class="list-item__pending">Host Pending</div>
+                        <div class="contact-name">Rainbow River Swim Club</div>
+                        <div class="contact-location">Dunnedin, FL</div>
+                        <!-- <div class="contact-phone"></div> -->
+                        <!-- <div class="contact-email"></div> -->
+                        <!-- <div class="contact-id"></div> -->
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
+                    <div class="list-item list-item--organization-new">
+                        <input type="hidden" class="contact-isMember" value="true">
+                        <!-- <button class="list-item__delete">Remove</button> -->
+                        <div class="list-item__pending">Host Pending</div>
+                        <div class="contact-name">Cape Coral Yach Club</div>
+                        <div class="contact-location">Cape Coral, FL</div>
+                        <!-- <div class="contact-phone"></div> -->
+                        <!-- <div class="contact-email"></div> -->
+                        <!-- <div class="contact-id"></div> -->
+                    </div>
+                </div>
+                </div>
+            </div>
+            <button class="btn btn-small btn-success" id="confirmCurrentHost">Confirm</button>
+        </div>
+    </div>
+</div>
+
+<script src="./js/host-type.js"></script>
+
             <div class="row">
                 <div class="section__controls">
                     <button class="btn save-section" id="saveContactInfoSection" type="button" disabled="true">Save &amp; Continue</button>
