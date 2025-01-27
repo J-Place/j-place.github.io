@@ -70,4 +70,11 @@ $(document).ready(function() {
     $(".contact-list__event-host--header").show();
     $(".list-item--organization-new").parent().show();
     $(".list-item--organization-new").show();
+
+    // Show only the selected pool configuration
+    $(".venue__list--item").hide();
+    $(".venue__list--item:first-of-type").show();
+    $(".venue__list--item:first-of-type .configuration-title").hide();
+    $(".venue__list--item:first-of-type .configuration-title:last-of-type").show();
+
 });

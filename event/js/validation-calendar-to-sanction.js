@@ -1,6 +1,8 @@
 $(".help-block--SelectEventClass").addClass('has-error');
 $("#selectEventClass").addClass('has-error');
 
+$(".help-block--eventClassification").addClass('has-error');
+
 $(".help-block--SelectEventLmsc").addClass('has-error');
 $("#selectEventLmsc").addClass('has-error');
 

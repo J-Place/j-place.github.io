@@ -171,12 +171,16 @@ $(document).ready(function() {
         $(lookupByLocationList).hide();
         showSavedLocationList();
         $("#saveLocation").prop('disabled', false);
-        $(".venue__list--item:first-of-type .configuration-title:last-of-type").addClass('selected');
+        $(".venue__list--item").hide();
+        $(".venue__list--item:first-of-type").show();
+        $(".venue__list--item:first-of-type .configuration-title").hide();
+        $(".venue__list--item:first-of-type .configuration-title:last-of-type").show();
     }
 
-    $(".location-name .list-item__edit").click( function() { 
-        console.log("Clicked EDIT");
+    $(".location-name .list-item__edit").click( function() {
         $(".list.locations").addClass("edit-list");
+        $(".venue__list--item").show();
+        $(".venue__list--item:first-of-type .configuration-title").show();
         $(".location-name .list-item__edit").hide();
         $(".location-name .list-item__save").show();
         $(".location-name .list-item__delete").show();
@@ -291,7 +295,6 @@ $(document).ready(function() {
     }
 
     function scrollTopSection() {
-        console.log("scrolling ...");
         var element = $("#location-information");
         var elementTop = element.offset().top;
         var windowScrollTop = $(window).scrollTop();

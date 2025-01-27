@@ -68,4 +68,11 @@ $(document).ready(function() {
     // showSavedLocationList();
     $("#location-information .row.locations").show();
     $(".list-item-existing").show();
+
+    // Show only the selected pool configuration
+    $(".venue__list--item").hide();
+    $(".venue__list--item:first-of-type").show();
+    $(".venue__list--item:first-of-type .configuration-title").hide();
+    $(".venue__list--item:first-of-type .configuration-title:last-of-type").show();
+    
 });
