@@ -52,27 +52,17 @@ $(document).ready(function() {
     ];
     setSelectValues(selects, selectValues);
 
-
     ///////////////////////////////////////////////////// Click Elements
     $("#contactTypeEventDirectorCurrent").click();
     $("#confirmCurrentEventDirector").click();
     $("#eventDirectorPrivacyName").prop('checked', true);
-
-    // $("#location-information__content").prop('display', block);
-    // hideLocationLookup();
     $("#location-information__content .list-control").hide();
-    // hideAddNewLocationContainer();
     $(".location-info__add-new-location--container").hide();
-    // $(lookupByLocationList).hide();
     $(".list--lookup.locations").hide();
-    // showSavedLocationList();
     $("#location-information .row.locations").show();
     $(".list-item-existing").show();
-
-    // Show only the selected pool configuration
     $(".venue__list--item").hide();
     $(".venue__list--item:first-of-type").show();
     $(".venue__list--item:first-of-type .configuration-title").hide();
-    $(".venue__list--item:first-of-type .configuration-title:last-of-type").show();
-    
+    $(".venue__list--item:first-of-type .configuration-title:last-of-type").show(); 
 });
