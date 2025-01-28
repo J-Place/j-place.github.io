@@ -18,6 +18,24 @@ $("input[name='isChampionship']").addClass('has-error');
 $(".help-block--SelectHostType").addClass('has-error');
 $("#selectHostType").addClass('has-error');
 
+$("#entryInfoWebsiteUrl").addClass('has-error');
+$(".help-block--EntryInfoWebsiteUrl").addClass('has-error');
+
+$("#entryInfoOnlineEntriesUrl").addClass('has-error');
+$(".help-block--EntryInfoOnlineEntriesUrl").addClass('has-error');
+
+$("#entryInfoAttendancePrevious").addClass('has-error');
+$(".help-block--EntryInfoAttendancePrevious").addClass('has-error');
+
+$("#entryInfoAttendanceExpected").addClass('has-error');
+$(".help-block--EntryInfoAttendanceExpected").addClass('has-error');
+
+$(".help-block--DateEntriesClose").addClass('has-error');
+$(".entry-info__close-date--date-container").addClass('has-error');
+
+$(".meet-announcement .help-block.no-data").addClass('has-error');
+// $(".meet-announcement input").addClass('has-error');
+
 // $(".help-block--addSafetyCoordinator").addClass('has-error');
 // $(".input-group.contact-info__safety-coordinator").addClass('has-error');
 

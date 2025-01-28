@@ -2874,8 +2874,7 @@ Other -->
             </div>
             <div class="row">
                <div class="col-xs-12 col-lg-4">
-                  <div class="form-group has-feedback entry-info__close-date--date-container required">
-                  
+                  <div class="form-group date-select-group has-feedback entry-info__close-date--date-container required">
                      <label for="">Date Entries Close</label>
                      <div class="SingleDatePicker SingleDatePicker_1">
                         <div>
@@ -2890,6 +2889,7 @@ Other -->
                            </div>
                         </div>
                      </div>
+                     <span class="help-block help-block--DateEntriesClose">Please select a date entries close</span>
                   </div>
                </div>
             </div>
@@ -2904,12 +2904,13 @@ Other -->
                         <!-- <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="If this is a new event enter zero '0'."></span> -->
                      </label>
                      <input tabindex="0" type="number" class="form-control" name="EntryInfoAttendancePrevious" id="entryInfoAttendancePrevious">
-                     <span class="help-block help-block--EntryInfoAttendancePrevious">Please enter number of entries</span>
+                     <span class="help-block help-block--EntryInfoAttendancePrevious">Please enter number of entries last year</span>
                   </div>
                </div>
                <div class="col-xs-12 col-sm-4">
                   <div class="input-group entry-info__attendance-expected required">
-                     <label for="entryInfoAttendanceExpected">Number of Entries Expected</label>
+                     <label for="entryInfoAttendanceExpected">
+                        Number of Entries Expected</label>
                      <input tabindex="0" type="number" class="form-control" name="EntryInfoAttendanceExpected" id="entryInfoAttendanceExpected">
                      <span class="help-block help-block--EntryInfoAttendanceExpected">Please enter number of entries expected</span>
                   </div>
@@ -3030,7 +3031,8 @@ Other -->
                 <div class="col-xs-12 col-sm-4">
                   <div class="input-group meet-announcement required">
                      <label for="MeetAnnouncement">Upload Meet Announcement (PDF)</label>
-                     <span class="help-block">Invalid file type</span>
+                     <span class="help-block file-type">Invalid file type</span>
+                     <span class="help-block no-data">Please upload a meet announcement</span>
                      <div class="upload-box upload-box--file">
                          <input type="file" data-file-size="3584000" name="file-2[]" id="file-2" class="inputfile inputfile-meet-announcement" data-multiple-caption="{count} files selected" accept="image/*" multiple="" />
                          <label for="file-2">
