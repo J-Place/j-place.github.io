@@ -625,34 +625,45 @@
                      Timing System
                   </div>
                   <span class="help-block help-block--timing-system">Please select a timing system.</span>
-                  <div class="input-group checkbox-group">
+                  <div class="input-group radio-group">
                       <label class="radio-label" for="timingAutomatic">
                           Automatic
                           <span class="radio-container">
-                              <input type="radio" id="timingAutomatic" name="TransferReason" value="timingAutomatic">
+                              <input type="radio" id="timingAutomatic" name="TimingSystem" value="timingAutomatic">
                               <span class="radio__placeholder"></span>
                           </span>
                       </label>
                   </div>
-                  <div class="input-group checkbox-group">
-                      <label class="radio-label" for="timingSemiAutomatic">
-                          Semi-Automatic
-                          <span class="radio-container">
-                              <input type="radio" id="timingSemiAutomatic" name="TransferReason" value="timingSemiAutomatic">
-                              <span class="radio__placeholder"></span>
-                          </span>
-                      </label>
+                  <div class="input-group radio-group">
+                     <label class="radio-label" for="timingSemiAutomatic">
+                        Semi-Automatic
+                        <span class="radio-container">
+                           <input type="radio" id="timingSemiAutomatic" name="TimingSystem" value="timingSemiAutomatic">
+                           <span class="radio__placeholder"></span>
+                        </span>
+                     </label>
                   </div>
-                  <div class="input-group checkbox-group">
+                  <div class="input-group radio-group">
                       <label class="radio-label" for="timingManual">
-                          Manual
-                          <span class="radio-container">
-                              <input type="radio" id="timingManual" name="TransferReason" value="timingManual">
-                              <span class="radio__placeholder"></span>
-                          </span>
+                        Manual w/ More Than 2 Stopwatches
+                        <span class="radio-container">
+                           <input type="radio" id="timingManual" name="TimingSystem" value="timingManual">
+                           <span class="radio__placeholder"></span>
+                        </span>
                       </label>
                   </div>
-              </div>
+
+                  <div class="input-group radio-group">
+                     <label class="radio-label" for="timingManualMinimum">
+                        Manual w/ Less Than 2 Stopwatches
+                        <span class="radio-container">
+                           <input type="radio" id="timingManualMinimum" name="TimingSystem" value="timingManualMinimum">
+                           <span class="radio__placeholder"></span>
+                        </span>
+                     </label>
+                 </div>
+
+               </div>
             </div>
             <div class="col-xs-12">
                <div class="timing-system-note">
@@ -660,9 +671,10 @@
                      Timing System Statement
                   </div>
                   <p class="default">Please review 103.18.5-103. 18.9 in the USMS Rule Book for more information on these statements. They are based on your timing system set up and usage.</p>
-                  <p class="automatic">Automatic text</p>
-                  <p class="semi-automatic">Semi-automatic text</p>
-                  <p class="manual">Manual text</p>
+                  <p class="automatic">Automatic is selected then display “Times from this competition will be eligible for world record, USMS record, and Top 10 consideration. For more information, see 103.18.9 in the USMS Rule Book.</p>
+                  <p class="semi-automatic">Times from this competition will be eligible for USMS records and Top 10 consideration, but not for world records. For more information, see 103.18.9 in the USMS Rule Book.</p>
+                  <p class="manual">Times from this competition will be eligible for USMS Top 10 consideration, but not for world or USMS records. For more information, see 103.18.9 in the USMS Rule Book.</p>
+                  <p class="manual-min">Times from this competition will not be eligible for world record, USMS record, or Top 10 consideration. For more information, see 103.18.9 in the USMS Rule Book.</p>
                </div>   
             </div>
          </div>
@@ -758,6 +770,11 @@
       $(".timing-system-note p.manual").show();
    });
 
+   $("#timingManualMinimum").click( function() {
+      $(".timing-system-note p").hide();
+      $(".timing-system-note p.manual-min").show();
+   });
+
 </script>
 
 <!-- <script>
@@ -801,7 +818,7 @@
                             <div class="input-group-header radio-group-header required">
                                 Event Director
                             </div>
-                            <div class="input-group">
+                            <div class="input-group radio-group">
                                 <label class="radio-label" for="contactTypeEventDirectorCurrent">
                                     I'm the event director
                                     <span class="radio-container">
@@ -810,7 +827,7 @@
                                     </span>
                                 </label>
                             </div>
-                            <div class="input-group">
+                            <div class="input-group radio-group">
                                 <label class="radio-label" for="contactTypeEventDirectorOther">
                                     Someone else is the event director
                                     <span class="radio-container">
