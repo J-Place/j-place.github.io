@@ -1,5 +1,5 @@
 <form id="form-entry-info">
-   <div class="section hasData section-entry-information" id="entry-information">
+   <div class="section section-entry-information" id="entry-information">
       <h3 class="section__header" data-target="#entry-information__content" data-toggle="collapse" aria-expanded="false" aria-controls="entry-information__content">
          <span class="section__number">5</span>Entry Information
       </h3>
@@ -166,4 +166,36 @@
    var sectionId = "#entry-information";
    var btnId = "#saveEntryInfo";
    var nextSection = "#meetAnnouncement";
+
+   var sectionInputs = sectionId + " input";
+    var sectionSelects = sectionId + " select";
+    var sectionTextarea = sectionId + " textarea";
+
+    $(sectionInputs).click( function() {
+        $("#saveEntryInfo").prop('disabled', false);
+    });
+    $(sectionSelects).on("change", function() {
+        console.log("select");
+        $("#saveEntryInfo").prop('disabled', false);
+    });
+    $(sectionTextarea).focus( function() {
+        console.log("textarea");
+        $("#saveEntryInfo").prop('disabled', false);
+    });
+
+    $("#saveEntryInfo").click( function() {
+        $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+        $("#meetAnnouncement" + " h3").click();
+        $(document.documentElement).animate({
+            scrollTop: $("#meetAnnouncement").offset().top - 45
+        }, 100);
+        $(".upload-summary").show();
+    });
+
+    $("#entryForm").click( function() {
+      $("#saveEntryInfo").prop('disabled', false);
+      $(".upload-summary").show();
+    });
+
+
 </script>

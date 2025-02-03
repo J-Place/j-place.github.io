@@ -348,12 +348,12 @@
                            <div class="accordion-group">
 
                               <form id="form-event-type">
-   <div class="section hasData section-event-type" id="event-type">
+   <div class="section isEdit section-event-type" id="event-type">
       <h3 class="section__header" data-target="#event-type__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-type__content">
          <span class="section__number">1</span>Event Type
       </h3>
       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
-      <div class="section__content collapse" id="event-type__content" data-parent="#accordion">
+      <div class="section__content collapse in" id="event-type__content" data-parent="#accordion">
          <div class="row">
             <div class="col-sm-9">
                <div class="input-group event-type">
@@ -390,6 +390,8 @@
       $("#saveEventType").prop('disabled', false);
    });
    $("#saveEventType").click( function() {
+      // $("#event-type").addClass("hasData");
+      $('#accordion').find('.collapse.in').parent().addClass('hasData');
       $("#event-info h3").click();
       if ( $("#calendar-eventinfo").length == 1 ) {
          $(document.documentElement).animate({
@@ -404,7 +406,7 @@
 </script>
 
                               <form id="form-calendar-event-info">
-    <div class="section hasData section-calendar-event-info" id="calendar-eventinfo">
+    <div class="section section-calendar-event-info" id="calendar-eventinfo">
        <h3 class="section__header" data-target="#calendar-event-info__content" data-toggle="collapse" aria-expanded="false" aria-controls="calendar-event-info__content">
           <span class="section__number">2</span>Event Information
        </h3>
@@ -605,7 +607,7 @@
  </script>
 
                               <form id="form-contact-info">
-    <div class="section hasData section-contact-info" id="contact-info">
+    <div class="section  section-contact-info" id="contact-info">
         <div class="modal fade" id="modalContactInfoConfirmation" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -1156,7 +1158,7 @@
 </script>
 
                               <form id="form-location-info">
-   <div class="section hasData section-location-information" id="location-information">
+   <div class="section section-location-information" id="location-information">
       <h3 class="section__header" data-target="#location-information__content" data-toggle="collapse" aria-expanded="false" aria-controls="location-information__content">
          <span class="section__number">4</span>Location Information
       </h3>
@@ -2276,6 +2278,26 @@ Other -->
    var sectionId = "#location-information";
    var btnId = "#saveLocation";
    var nextSection = "#entry-information";
+   
+   var sectionInputs = sectionId + " input";
+    var sectionSelects = sectionId + " select";
+    var sectionTextarea = sectionId + " textarea";
+
+    $(sectionInputs).click( function() {
+        $("#saveLocation").prop('disabled', false);
+    });
+    $(sectionSelects).on("change", function() {
+        $("#saveLocation").prop('disabled', false);
+    });
+
+    $("#saveLocation").click( function() {
+      //   $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+        $('#accordion').find('.collapse.in').parent().addClass('hasData');
+        $("#entry-information" + " h3").click();
+        $(document.documentElement).animate({
+            scrollTop: $("#entry-information").offset().top - 45
+        }, 100);
+    });
 </script>
 
                               <form id="form-accept-submit">
@@ -2937,43 +2959,14 @@ Other -->
 
 
 
-    var sectionInputs = sectionId + " input";
-    var sectionSelects = sectionId + " select";
-    var sectionTextarea = sectionId + " textarea";
-
-    $(sectionInputs).click( function() {
-        console.log("input");
-        $(btnId).prop('disabled', false);
-    });
-    $(sectionSelects).on("change", function() {
-        console.log("select");
-        $(btnId).prop('disabled', false);
-    });
-    // $(sectionTextarea).focus( function() {
-    //     console.log("textarea");
-    //     $(btnId).prop('disabled', false);
-    // });
-
-    $(btnId).click( function() {
-        $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
-        $(nextSection + " h3").click();
-        $(document.documentElement).animate({
-            scrollTop: $(nextSection).offset().top - 45
-        }, 100);
-    });
-
-
-
-
-
 
 
     var accordion = $('#accordion');
     accordion.on('show.bs.collapse','.collapse', function() {
         let section = $(this).parent();
         accordion.find('.collapse.in').removeClass('in');
-        accordion.find('.collapse').parent().removeClass('isEdit');
-        accordion.find('.collapse.in').addClass('hasData');
+        accordion.find('.collapse').parent().removeClass('isEditXXX');
+        accordion.find('.collapse.in').addClass('hasDataXXX');
         $(section).addClass('isEdit');
     });
     accordion.on('hidden.bs.collapse', function () {

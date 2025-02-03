@@ -62,7 +62,7 @@ $(document).ready(function() {
     ];
     setSelectValues(selects, selectValues);
 
-    ///////////////////////////////////////////////////// Click Elements
+    ///////////////////////////////////////////////////// Click/Select Elements
     $("#contactTypeEventDirectorCurrent").click();
     $("#confirmCurrentEventDirector").click();
     $("#eventDirectorPrivacyName").prop('checked', true);
@@ -73,6 +73,8 @@ $(document).ready(function() {
     $(".list-item-existing").show();
     $("#timingAutomatic").prop('checked', true);
     $("#eventListOnCalendarYes").prop('checked', true);
+    $("#eventClassificationSanctioned").prop('checked', true);
+    $("#agree").prop('checked', true);
     $(".contact-info__host-type--container").hide();
     $(".contact-information__event-host--list").show();
     $(".contact-list__event-host--header").show();
@@ -89,6 +91,8 @@ $(document).ready(function() {
     $(".section-contact-info").addClass('isEdit');
     $(".section-entry-information").addClass('isEdit');
     $(".section-meet-announcement").addClass('isEdit');
+
+    $("#submitSanction").prop('disabled', true);
 
 });
 

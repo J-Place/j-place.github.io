@@ -1,5 +1,5 @@
 <form id="form-location-info">
-   <div class="section hasData section-location-information" id="location-information">
+   <div class="section section-location-information" id="location-information">
       <h3 class="section__header" data-target="#location-information__content" data-toggle="collapse" aria-expanded="false" aria-controls="location-information__content">
          <span class="section__number">4</span>Location Information
       </h3>
@@ -22,4 +22,24 @@
    var sectionId = "#location-information";
    var btnId = "#saveLocation";
    var nextSection = "#entry-information";
+   
+   var sectionInputs = sectionId + " input";
+    var sectionSelects = sectionId + " select";
+    var sectionTextarea = sectionId + " textarea";
+
+    $(sectionInputs).click( function() {
+        $("#saveLocation").prop('disabled', false);
+    });
+    $(sectionSelects).on("change", function() {
+        $("#saveLocation").prop('disabled', false);
+    });
+
+    $("#saveLocation").click( function() {
+      //   $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+        $('#accordion').find('.collapse.in').parent().addClass('hasData');
+        $("#entry-information" + " h3").click();
+        $(document.documentElement).animate({
+            scrollTop: $("#entry-information").offset().top - 45
+        }, 100);
+    });
 </script>

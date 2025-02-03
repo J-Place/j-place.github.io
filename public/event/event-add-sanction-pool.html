@@ -348,12 +348,12 @@
 
 
                               <form id="form-event-type">
-   <div class="section hasData section-event-type" id="event-type">
+   <div class="section isEdit section-event-type" id="event-type">
       <h3 class="section__header" data-target="#event-type__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-type__content">
          <span class="section__number">1</span>Event Type
       </h3>
       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
-      <div class="section__content collapse" id="event-type__content" data-parent="#accordion">
+      <div class="section__content collapse in" id="event-type__content" data-parent="#accordion">
          <div class="row">
             <div class="col-sm-9">
                <div class="input-group event-type">
@@ -390,6 +390,8 @@
       $("#saveEventType").prop('disabled', false);
    });
    $("#saveEventType").click( function() {
+      // $("#event-type").addClass("hasData");
+      $('#accordion').find('.collapse.in').parent().addClass('hasData');
       $("#event-info h3").click();
       if ( $("#calendar-eventinfo").length == 1 ) {
          $(document.documentElement).animate({
@@ -404,7 +406,7 @@
 </script>
 
                               <form id="form-event-info">
-   <div class="section hasData section-event-info" id="event-info">
+   <div class="section section-event-info" id="event-info">
       <h3 class="section__header" data-target="#event-info__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-info__content">
          <span class="section__number">2</span>Event Information
       </h3>
@@ -754,37 +756,50 @@
    var btnId = "#saveEventInfo";
    var nextSection = "#contact-info";
 
+   var sectionInputs = sectionId + " input";
+   var sectionSelects = sectionId + " select";
+   var sectionTextarea = sectionId + " textarea";
+
+   $(sectionInputs).click( function() {
+      $("#saveEventInfo").prop('disabled', false);
+   });
+   $(sectionSelects).on("change", function() {
+      $("#saveEventInfo").prop('disabled', false);
+   });
+   $(sectionTextarea).focus( function() {
+       $("#saveEventInfo").prop('disabled', false);
+   });
+
+   $("#saveEventInfo").click( function() {
+      // $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+      $('#accordion').find('.collapse.in').parent().addClass('hasData');
+      $("#contact-info" + " h3").click();
+      $(document.documentElement).animate({
+         scrollTop: $("#contact-info").offset().top - 45
+      }, 100);
+   });
+
+   //  Show variations of timing system statement
    $("#timingAutomatic").click( function() {
-      // alert("Becky");
       $(".timing-system-note p").hide();
       $(".timing-system-note p.automatic").show();
    });
-
    $("#timingSemiAutomatic").click( function() {
       $(".timing-system-note p").hide();
       $(".timing-system-note p.semi-automatic").show();
    });
-
    $("#timingManual").click( function() {
       $(".timing-system-note p").hide();
       $(".timing-system-note p.manual").show();
    });
-
    $("#timingManualMinimum").click( function() {
       $(".timing-system-note p").hide();
       $(".timing-system-note p.manual-min").show();
    });
-
 </script>
-
-<!-- <script>
-   let className = 'required';
-</script>
-<script src="/js/find-class.js"></script> -->
-
 
                               <form id="form-contact-info">
-    <div class="section hasData section-contact-info" id="contact-info">
+    <div class="section section-contact-info" id="contact-info">
         <div class="modal fade" id="modalContactInfoConfirmation" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -1714,10 +1729,31 @@
     var sectionId = "#contact-info";
     var btnId = "#saveContactInfoSection";
     var nextSection = "#location-information";
+
+    var sectionInputs = sectionId + " input";
+    var sectionSelects = sectionId + " select";
+    var sectionTextarea = sectionId + " textarea";
+
+    $(sectionInputs).click( function() {
+        $("#saveContactInfoSection").prop('disabled', false);
+    });
+    $(sectionSelects).on("change", function() {
+        console.log("select");
+        $("#saveContactInfoSection").prop('disabled', false);
+    });
+
+    $("#saveContactInfoSection").click( function() {
+        // $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+        $('#accordion').find('.collapse.in').parent().addClass('hasData');
+        $("#location-information" + " h3").click();
+        $(document.documentElement).animate({
+            scrollTop: $("#location-information").offset().top - 45
+        }, 100);
+    });
 </script>
                               
                               <form id="form-location-info">
-   <div class="section hasData section-location-information" id="location-information">
+   <div class="section section-location-information" id="location-information">
       <h3 class="section__header" data-target="#location-information__content" data-toggle="collapse" aria-expanded="false" aria-controls="location-information__content">
          <span class="section__number">4</span>Location Information
       </h3>
@@ -2837,10 +2873,30 @@ Other -->
    var sectionId = "#location-information";
    var btnId = "#saveLocation";
    var nextSection = "#entry-information";
+   
+   var sectionInputs = sectionId + " input";
+    var sectionSelects = sectionId + " select";
+    var sectionTextarea = sectionId + " textarea";
+
+    $(sectionInputs).click( function() {
+        $("#saveLocation").prop('disabled', false);
+    });
+    $(sectionSelects).on("change", function() {
+        $("#saveLocation").prop('disabled', false);
+    });
+
+    $("#saveLocation").click( function() {
+      //   $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+        $('#accordion').find('.collapse.in').parent().addClass('hasData');
+        $("#entry-information" + " h3").click();
+        $(document.documentElement).animate({
+            scrollTop: $("#entry-information").offset().top - 45
+        }, 100);
+    });
 </script>
 
                               <form id="form-entry-info">
-   <div class="section hasData section-entry-information" id="entry-information">
+   <div class="section section-entry-information" id="entry-information">
       <h3 class="section__header" data-target="#entry-information__content" data-toggle="collapse" aria-expanded="false" aria-controls="entry-information__content">
          <span class="section__number">5</span>Entry Information
       </h3>
@@ -3007,10 +3063,42 @@ Other -->
    var sectionId = "#entry-information";
    var btnId = "#saveEntryInfo";
    var nextSection = "#meetAnnouncement";
+
+   var sectionInputs = sectionId + " input";
+    var sectionSelects = sectionId + " select";
+    var sectionTextarea = sectionId + " textarea";
+
+    $(sectionInputs).click( function() {
+        $("#saveEntryInfo").prop('disabled', false);
+    });
+    $(sectionSelects).on("change", function() {
+        console.log("select");
+        $("#saveEntryInfo").prop('disabled', false);
+    });
+    $(sectionTextarea).focus( function() {
+        console.log("textarea");
+        $("#saveEntryInfo").prop('disabled', false);
+    });
+
+    $("#saveEntryInfo").click( function() {
+        $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+        $("#meetAnnouncement" + " h3").click();
+        $(document.documentElement).animate({
+            scrollTop: $("#meetAnnouncement").offset().top - 45
+        }, 100);
+        $(".upload-summary").show();
+    });
+
+    $("#entryForm").click( function() {
+      $("#saveEntryInfo").prop('disabled', false);
+      $(".upload-summary").show();
+    });
+
+
 </script>
 
                               <form id="form-meet-announcement">
-   <div class="section hasData section-meet-announcement" id="meetAnnouncement">
+   <div class="section section-meet-announcement" id="meetAnnouncement">
       <h3 class="section__header" data-target="#meet-announcement__content" data-toggle="collapse" aria-expanded="false" aria-controls="meet-announcement__content">
          <span class="section__number">6</span>Meet Announcement
       </h3>
@@ -3036,7 +3124,7 @@ Other -->
                      Storedfilename.pdf
                   </div>
                   <div class="upload-box upload-box--file">
-                     <input type="file" data-file-size="3584000" name="file-2[]" id="file-2" class="inputfile inputfile-meet-announcement" data-multiple-caption="{count} files selected" accept="image/*" multiple="" />
+                     <input type="file" data-file-size="3584000" name="file-2[]" id="storeMeetAnnouncement" class="inputfile inputfile-meet-announcement" data-multiple-caption="{count} files selected" accept="application/msword, text/plain, application/pdf" multiple="" />
                      <label for="file-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path fill="#FFF" d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
                         <span>Choose a file…</span>
@@ -3067,17 +3155,47 @@ Other -->
    </div>
  </form>
  <script>
-   $("#meetAnnouncement").on('change', function() {
-      $("#saveMeetAnnouncement").prop('disabled', false);
-   });
-   $("#saveMeetAnnouncement").prop('disabled', false);
-   $("#saveMeetAnnouncement").click( function() {
-      $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
-      $("#meetAnnouncement h3").click();
-      $(document.documentElement).animate({
-         scrollTop: $("#meetAnnouncement").offset().top - 45
-      }, 100);
-   });
+   // $("#meetAnnouncement").on('change', function() {
+   //    $("#saveMeetAnnouncement").prop('disabled', false);
+   // });
+   // $("#saveMeetAnnouncement").prop('disabled', false);
+   // $("#saveMeetAnnouncement").click( function() {
+   //    $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+   //    $("#meetAnnouncement h3").click();
+   //    $(document.documentElement).animate({
+   //       scrollTop: $("#meetAnnouncement").offset().top - 45
+   //    }, 100);
+   // });
+   var sectionId = "#meetAnnouncement";
+   var btnId = "#saveEntryInfo";
+   var nextSection = "#meetAnnouncement";
+
+   var sectionInputs = sectionId + " input";
+    var sectionSelects = sectionId + " select";
+    var sectionTextarea = sectionId + " textarea";
+
+    $(sectionInputs).click( function() {
+        $("#saveEntryInfo").prop('disabled', false);
+    });
+    $(sectionSelects).on("change", function() {
+        console.log("select");
+        $("#saveEntryInfo").prop('disabled', false);
+    });
+
+    $("#saveEntryInfo").click( function() {
+        $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+        $("#meetAnnouncement" + " h3").click();
+        $(document.documentElement).animate({
+            scrollTop: $("#meetAnnouncement").offset().top - 45
+        }, 100);
+        $(".upload-summary").show();
+    });
+
+    $("#storeMeetAnnouncement").click( function() {
+      $("#saveEntryInfo").prop('disabled', false);
+      $(".upload-summary").show();
+    });
+
 </script>
 
                               <form id="form-accept-submit">
@@ -3194,7 +3312,7 @@ Other -->
 
             <div class="row">
                   <div class="section__controls">
-                     <button class="btn save-section" id="buttonId" type="button">Save & Finish</button>
+                     <button class="btn save-section" id="submitSanction" type="button">Save & Finish</button>
                   </div>
             </div>
          </div>
@@ -3751,43 +3869,14 @@ Other -->
 
 
 
-    var sectionInputs = sectionId + " input";
-    var sectionSelects = sectionId + " select";
-    var sectionTextarea = sectionId + " textarea";
-
-    $(sectionInputs).click( function() {
-        console.log("input");
-        $(btnId).prop('disabled', false);
-    });
-    $(sectionSelects).on("change", function() {
-        console.log("select");
-        $(btnId).prop('disabled', false);
-    });
-    // $(sectionTextarea).focus( function() {
-    //     console.log("textarea");
-    //     $(btnId).prop('disabled', false);
-    // });
-
-    $(btnId).click( function() {
-        $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
-        $(nextSection + " h3").click();
-        $(document.documentElement).animate({
-            scrollTop: $(nextSection).offset().top - 45
-        }, 100);
-    });
-
-
-
-
-
 
 
     var accordion = $('#accordion');
     accordion.on('show.bs.collapse','.collapse', function() {
         let section = $(this).parent();
         accordion.find('.collapse.in').removeClass('in');
-        accordion.find('.collapse').parent().removeClass('isEdit');
-        accordion.find('.collapse.in').addClass('hasData');
+        accordion.find('.collapse').parent().removeClass('isEditXXX');
+        accordion.find('.collapse.in').addClass('hasDataXXX');
         $(section).addClass('isEdit');
     });
     accordion.on('hidden.bs.collapse', function () {

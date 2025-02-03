@@ -1,5 +1,5 @@
 <form id="form-event-info">
-   <div class="section hasData section-event-info" id="event-info">
+   <div class="section section-event-info" id="event-info">
       <h3 class="section__header" data-target="#event-info__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-info__content">
          <span class="section__number">2</span>Event Information
       </h3>
@@ -349,30 +349,44 @@
    var btnId = "#saveEventInfo";
    var nextSection = "#contact-info";
 
+   var sectionInputs = sectionId + " input";
+   var sectionSelects = sectionId + " select";
+   var sectionTextarea = sectionId + " textarea";
+
+   $(sectionInputs).click( function() {
+      $("#saveEventInfo").prop('disabled', false);
+   });
+   $(sectionSelects).on("change", function() {
+      $("#saveEventInfo").prop('disabled', false);
+   });
+   $(sectionTextarea).focus( function() {
+       $("#saveEventInfo").prop('disabled', false);
+   });
+
+   $("#saveEventInfo").click( function() {
+      // $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+      $('#accordion').find('.collapse.in').parent().addClass('hasData');
+      $("#contact-info" + " h3").click();
+      $(document.documentElement).animate({
+         scrollTop: $("#contact-info").offset().top - 45
+      }, 100);
+   });
+
+   //  Show variations of timing system statement
    $("#timingAutomatic").click( function() {
-      // alert("Becky");
       $(".timing-system-note p").hide();
       $(".timing-system-note p.automatic").show();
    });
-
    $("#timingSemiAutomatic").click( function() {
       $(".timing-system-note p").hide();
       $(".timing-system-note p.semi-automatic").show();
    });
-
    $("#timingManual").click( function() {
       $(".timing-system-note p").hide();
       $(".timing-system-note p.manual").show();
    });
-
    $("#timingManualMinimum").click( function() {
       $(".timing-system-note p").hide();
       $(".timing-system-note p.manual-min").show();
    });
-
 </script>
-
-<!-- <script>
-   let className = 'required';
-</script>
-<script src="/js/find-class.js"></script> -->
