@@ -29,7 +29,7 @@
          </div>
          <div class="row">
                <div class="section__controls">
-                  <button class="btn save-section" id="saveEventType" type="button" onclick="saveSection()" disabled>Save &amp; Continue</button>
+                  <button class="btn save-section" id="saveEventType" type="button" onclick="" disabled>Save &amp; Continue</button>
                </div>
          </div>
       </div>
@@ -41,15 +41,15 @@
       $("#saveEventType").prop('disabled', false);
    });
    $("#saveEventType").click( function() {
-      $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
       $("#event-info h3").click();
-      if ($("#form-event-info").length) {
-         $("#event-info h3").click();
-      } else if ($("#form-calendar-event-info").length) {
-         $("#calendar-eventinfo h3").click();
-      }
-      $(document.documentElement).animate({
-         scrollTop: $("#calendar-eventinfo").offset().top - 45
-      }, 100);
+      if ( $("#calendar-eventinfo").length == 1 ) {
+         $(document.documentElement).animate({
+            scrollTop: $("#calendar-eventinfo").offset().top - 45
+         }, 100);
+      } else {
+         $(document.documentElement).animate({
+            scrollTop: $("#event-info").offset().top - 45
+         }, 100);
+      }      
    });
 </script>

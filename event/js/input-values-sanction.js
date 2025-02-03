@@ -30,14 +30,22 @@ $(document).ready(function() {
         '#eventInfoDetails',
         '#dateEntriesClose',
         '#dateStart',
-        '#dateEnd'
+        '#dateEnd',
+        '#entryInfoWebsiteUrl',
+        '#entryInfoOnlineEntriesUrl',
+        '#entryInfoAttendancePrevious',
+        '#entryInfoAttendanceExpected'
     ];
     const inputValues = [
         '2024 Bumpy Jones Classic Long Course Meet', 
         'Join us at the site of the 2023 USMS Summer Nationals for this annual Long Course meet! The beautiful Selby Aquatic Center features a new shade structure and a perfect water temperature. In addition to the individual events, we offer ALL relays (200s, 400s, and the 800 Free relay).',
         '06/06/24',
         '06/08/24',
-        '06/10/24'
+        '06/10/24',
+        'www.sarasotasharks.com',
+        'www.sarasotasharks.com/signup',
+        '217',
+        '250'
     ];
     setInputValues(inputs, inputValues);
 
@@ -83,3 +91,5 @@ $(document).ready(function() {
     $(".section-meet-announcement").addClass('isEdit');
 
 });
+
+$(".upload-summary").show();

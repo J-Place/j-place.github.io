@@ -377,7 +377,7 @@
          </div>
          <div class="row">
                <div class="section__controls">
-                  <button class="btn save-section" id="saveEventType" type="button" onclick="saveSection()" disabled>Save &amp; Continue</button>
+                  <button class="btn save-section" id="saveEventType" type="button" onclick="" disabled>Save &amp; Continue</button>
                </div>
          </div>
       </div>
@@ -389,16 +389,16 @@
       $("#saveEventType").prop('disabled', false);
    });
    $("#saveEventType").click( function() {
-      $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
       $("#event-info h3").click();
-      if ($("#form-event-info").length) {
-         $("#event-info h3").click();
-      } else if ($("#form-calendar-event-info").length) {
-         $("#calendar-eventinfo h3").click();
-      }
-      $(document.documentElement).animate({
-         scrollTop: $("#calendar-eventinfo").offset().top - 45
-      }, 100);
+      if ( $("#calendar-eventinfo").length == 1 ) {
+         $(document.documentElement).animate({
+            scrollTop: $("#calendar-eventinfo").offset().top - 45
+         }, 100);
+      } else {
+         $(document.documentElement).animate({
+            scrollTop: $("#event-info").offset().top - 45
+         }, 100);
+      }      
    });
 </script>
 
@@ -655,10 +655,13 @@
             </div>
             <div class="col-xs-12">
                <div class="timing-system-note">
-                  <div class="input-group-header radio-group-headerx">
+                  <div class="input-group-header">
                      Timing System Statement
                   </div>
-                  <p>Please review 103.18.5-103. 18.9 in the USMS Rule Book for more information on these statements. They are based on your timing system set up and usage.</p>
+                  <p class="default">Please review 103.18.5-103. 18.9 in the USMS Rule Book for more information on these statements. They are based on your timing system set up and usage.</p>
+                  <p class="automatic">Automatic text</p>
+                  <p class="semi-automatic">Semi-automatic text</p>
+                  <p class="manual">Manual text</p>
                </div>   
             </div>
          </div>
@@ -670,7 +673,7 @@
                   <span class="help-block help-block--eventListOnCalendar">Please make a selection</span>
                   <label class="radio-label radio-label--inline" for="eventListOnCalendarYes">
                      <span class="radio-container">
-                        <input type="radio" name="eventListOnCalendar" id="eventListOnCalendarYes" value="true">
+                        <input type="radio" name="eventListOnCalendar" id="eventListOnCalendarYes" value="true" checked>
                         <span class="radio__placeholder"></span>
                      </span>
                      Yes
@@ -724,6 +727,7 @@
 </form>
 
 <script>
+
    $("#isVirtualYes").click( function() {
       if ($('.timing-system-group').length) {
          $('.timing-system-group').hide();
@@ -731,24 +735,28 @@
    });
    $("#isVirtualNo").click( function() {
       $('.timing-system-group').show();
-      $("#saveEventInfo").prop('disabled', false);
    });
-   $("input[name='isChampionship']").on('change', function() {
-      $("#saveEventInfo").prop('disabled', false);
+
+   var sectionId = "#event-info";
+   var btnId = "#saveEventInfo";
+   var nextSection = "#contact-info";
+
+   $("#timingAutomatic").click( function() {
+      // alert("Becky");
+      $(".timing-system-note p").hide();
+      $(".timing-system-note p.automatic").show();
    });
-   $("input[name='eventListOnCalendar']").on('change', function() {
-      $("#saveEventInfo").prop('disabled', false);
+
+   $("#timingSemiAutomatic").click( function() {
+      $(".timing-system-note p").hide();
+      $(".timing-system-note p.semi-automatic").show();
    });
-   $("#event-info").on('change', function() {
-      $("#saveEventInfo").prop('disabled', false);
+
+   $("#timingManual").click( function() {
+      $(".timing-system-note p").hide();
+      $(".timing-system-note p.manual").show();
    });
-   $("#saveEventInfo").click( function() {
-      $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
-      $("#contact-info h3").click();
-      $(document.documentElement).animate({
-         scrollTop: $("#contact-info").offset().top - 45
-      }, 100);
-   });
+
 </script>
 
 <!-- <script>
@@ -1685,22 +1693,10 @@
 </form>
 
 <script>
-    $("#confirmCurrentEventDirector").click( function() {
-       $("#saveContactInfoSection").prop('disabled', false);
-    });
-    $("#saveContactInfoSection").click( function() {
-       $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
-       $("#location-information h3").click();
-       $(document.documentElement).animate({
-          scrollTop: $("#location-information").offset().top - 45
-       }, 100);
-    });
- </script>
-
-<!-- <script src="/event/js/event-director.js"></script> -->
-<!-- <script src="/event/js/head-ref.js"></script> -->
-<!-- <script src="/event/js/safety-coordinator.js"></script> -->
-<!-- <script src="./js/3-contact-info-mockup.js"></script> -->
+    var sectionId = "#contact-info";
+    var btnId = "#saveContactInfoSection";
+    var nextSection = "#location-information";
+</script>
                               
                               <form id="form-location-info">
    <div class="section hasData section-location-information" id="location-information">
@@ -2816,19 +2812,14 @@ Other -->
       </div>
    </div>
 </form>
-<script>
-   // $("#confirmCalendarSelby").click( function() {
-   //    $("#saveLocation").prop('disabled', false);
-   // });
-   $("#saveLocation").click( function() {
-      $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
-      $("#entry-information h3").click();
-      $(document.documentElement).animate({
-         scrollTop: $("#entry-information").offset().top - 45
-      }, 100);
-   });
-</script>
+
 <script src="./js/location.js"></script>
+
+<script>
+   var sectionId = "#location-information";
+   var btnId = "#saveLocation";
+   var nextSection = "#entry-information";
+</script>
 
                               <form id="form-entry-info">
    <div class="section hasData section-entry-information" id="entry-information">
@@ -2897,10 +2888,10 @@ Other -->
                   <div class="input-group entry-info__attendance-previous required">
                      <label for="entryInfoAttendancePrevious">
                         Number of Entries Last Year
-                        <a tabindex="0" class="popover-link" role="button" data-toggle="tooltip" data-trigger="focus" data-html="true" data-placement="top" data-content="" data-original-title="" title="If this is a new event enter zero '0'.">
+                        <!-- <a tabindex="0" class="popover-link" role="button" data-toggle="tooltip" data-trigger="focus" data-html="true" data-placement="top" data-content="" data-original-title="" title="If this is a new event enter zero '0'.">
                            <span class="icon-help"></span>
-                        </a>
-                        <!-- <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="If this is a new event enter zero '0'."></span> -->
+                        </a> -->
+                        <span class="icon-help" data-toggle="tooltip" data-placement="top" title="If this is a new event enter zero '0'." data-container="body" data-original-title=""></span>
                      </label>
                      <input tabindex="0" type="number" class="form-control" name="EntryInfoAttendancePrevious" id="entryInfoAttendancePrevious">
                      <span class="help-block help-block--EntryInfoAttendancePrevious">Please enter number of entries last year</span>
@@ -2936,11 +2927,18 @@ Other -->
 
             <div class="row">
                <div class="col-xs-12 col-sm-4">
-                  <label for="">Upload Paper Entry Form</label>
+                  <label for="">Upload Paper Entry Form (PDF)</label>
                   <div class="input-group entry-info__paper-entry-form">
+                     <div class="upload-summary">
+                        <button type="button" class="event-document__remove-file" data-toggle="tooltip" title="" data-original-title="Remove document">
+                           <i class="fa fa-times"></i>
+                        </button>
+                        Storedfilename.pdf
+                     </div>
                      <div class="upload-box">
-                        <input type="file" data-file-size="3584000" name="file-3[]" id="file-3" class="inputfile inputfile-3" data-multiple-caption="{count} files selected" accept="image/*" multiple="">
-                        <label for="file-3">
+                        <input type="file" data-file-size="3584000" name="entryform[]" id="entryForm" class="inputfile input-entryform" data-multiple-caption="{count} files selected" accept="application/msword, text/plain, application/pdf" multiple="">
+                        
+                        <label for="entry-form">
                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
                               <path fill="#FFF" d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
                            </svg>
@@ -2986,169 +2984,69 @@ Other -->
       </div>
    </div>
 </form>
+
 <script>
-   $("#entry-information").on('change', function() {
-      $("#saveEntryInfo").prop('disabled', false);
-   });
-   $("#saveEntryInfo").click( function() {
-      $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
-      $("#meetAnnouncement h3").click();
-      $(document.documentElement).animate({
-         scrollTop: $("#meetAnnouncement").offset().top - 45
-      }, 100);
-   });
-   $("entryInfoAttendancePrevious").focus( function () {
-      $("#saveEntryInfo").prop('disabled', false);
-   });
-   $("dateEntriesClose").focus( function () {
-      $("#saveEntryInfo").prop('disabled', false);
-   });
-   $("entryInfoComments").focus( function () {
-      $("#saveEntryInfo").prop('disabled', false);
-   });
-   $("entryInfoComments").click( function () {
-      $("#saveEntryInfo").prop('disabled', false);
-   });
+   var sectionId = "#entry-information";
+   var btnId = "#saveEntryInfo";
+   var nextSection = "#meetAnnouncement";
 </script>
 
                               <form id="form-meet-announcement">
-    <div class="section hasData section-meet-announcement" id="meetAnnouncement">
-       <h3 class="section__header" data-target="#meet-announcement__content" data-toggle="collapse" aria-expanded="false" aria-controls="meet-announcement__content">
+   <div class="section hasData section-meet-announcement" id="meetAnnouncement">
+      <h3 class="section__header" data-target="#meet-announcement__content" data-toggle="collapse" aria-expanded="false" aria-controls="meet-announcement__content">
          <span class="section__number">6</span>Meet Announcement
-       </h3>
-        <div class="section__content collapse" id="meet-announcement__content" data-parent="#accordion">
-             <div class="row">
-
-                <div class="col-xs-12">
-                    <p>This information can be organized by your event registration company or created manually and uploaded. A PDF is preferred. We've included links below to a checklist of all required items, and a formatted Mirosoft Word template to help get you started.</p>
-                    <br />
-                    <a href="" class="btn-link">Download Checklist</a> | <a href="" class="btn-link">Download Template</a>
-                    <br />
-                    <br />
-                    <br />
-                </div>
-                <div class="col-xs-12 col-sm-4">
-                  <div class="input-group meet-announcement required">
-                     <label for="MeetAnnouncement">Upload Meet Announcement (PDF)</label>
-                     <span class="help-block file-type">Invalid file type</span>
-                     <span class="help-block no-data">Please upload a meet announcement</span>
-                     <div class="upload-box upload-box--file">
-                         <input type="file" data-file-size="3584000" name="file-2[]" id="file-2" class="inputfile inputfile-meet-announcement" data-multiple-caption="{count} files selected" accept="image/*" multiple="" />
-                         <label for="file-2">
-                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path fill="#FFF" d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
-                             <span>Choose a file…</span>
-                         </label>
-                     </div>
-                  </div>
-                </div>
-
-                <!-- <div class="col-xs-12"> -->
-                  <!-- <div class="card meet-announcement"> -->
-                     <!-- <div class="html-container">
-                        <div>
-                           <p class="Paragraph" style="color: windowtext; background-color: transparent; margin-right: 0px; margin-left: 0px; padding: 0px; text-align: justify;">
-                              <span data-contrast="auto" class="TextRun" style="margin: 0px; padding: 0px;">
-                                 <p>This checklist covers items that are required (R) or recommended to be included in a meet announcement:</p>
-                                 <span class="checkbox"><input type="checkbox">  the current USMS waiver and release of liability form (for sanctioned events) (202.1.1A) (R)</span>
-                                 <span class="checkbox"><input type="checkbox">  the "sanctioned by" or “recognized by” statement (202.1.1A(2)) (R)</span>
-                                 <span class="checkbox"><input type="checkbox">  the appropriate pool measurement statement provided in the rulebook listing whether or not the pool meets standards for official times to count (one statement from 201.1A(3) (a) – (d)) (R)</span>
-                                 <span class="checkbox"><input type="checkbox">  if the timing system requirements of 103.18.5-103.18.7 cannot be met, a statement that official times cannot be submitted for world records, USMS records, and/or Top 10. (103.18.9, 202.1.1A(4)) (R)</span>
-                                 <span class="checkbox"><input type="checkbox">  if mandatory facilities standards [M] cannot be met, a statement that events conducted in the facility are noncompliant and times will not count for USMS records and Top 10 (106.1.3, 202.1.1G(4)) (R)</span>
-                                 <span class="checkbox"><input type="checkbox">  each USMS member has provided their current USMS membership number (202.1.1G(5) (R)</span>
-                                 <span class="checkbox"><input type="checkbox">  the starting time of the meet and entry deadline (see 102.11 for information about changing a program or postponement) (R)</span>
-                                 <span class="checkbox"><input type="checkbox">  the warm-up and warm-down space and procedures (standard meets: 102.4.1) dual-sanctioned meets: 102.4.2) (R)</span>
-                                 <span class="checkbox"><input type="checkbox">  the order of events and format (any events labeled “choice” or “open” are not eligible for USMS official purposes) (102.5.1-.2, 102.5.5, 102.5.7, Guide to Local Operations, Sanction/Recognition: Meet Procedures) (R)</span>
-                                 <span class="checkbox"><input type="checkbox">  if the events are conducted in a format other than timed finals (short course yards meets only), the process for seeding, contesting the event and determining the final places are included in the meet announcement (102.5.5, 102.10.1A) (R)</span>
-                                 <span class="checkbox"><input type="checkbox">  if time trials are offered, the list of events and the format (yards competitions only) (102.5.6) (R)</span>
-                                 <span class="checkbox"><input type="checkbox">  the entry fee, entry deadline(s) and the entry procedure for individuals (102.7, 102.11.3) (R)</span>
-                                 <span class="checkbox"><input type="checkbox">  the entry fee, entry deadlines(s) and entry procedure for relays and relay only swimmers (102.9.4, 102.11.3) (R)</span>
-                                 <span class="checkbox"><input type="checkbox">  the check-in and scratch procedures for individual and relay events (102.8) (R)</span>
-                                 <span class="checkbox"><input type="checkbox">  the seeding method for all events (102.10.1D) (R)</span>
-                                 <span class="checkbox"><input type="checkbox">  if used, the criteria under which freestyle events over 200 meters will be swum 2 to a lane (102.10.4A(1)(a)) (R)</span>
-                                 <span class="checkbox"><input type="checkbox">  the location of the pool and other useful information such as parking provisions, driving directions, a description of the facility and racing course(s), information about any social events, information about nearby hotels and accommodations, information about any facility rules, concessions and merchandise that might be sold</span>
-                                 <span class="checkbox"><input type="checkbox">  the entry limit (maximum 6 individual events per day for a sanctioned timed finals competition) (102.6.1), maximum 3 individual events per day for a prelim/finals competition (102.6.4) and no limit for a recognized meet)</span>
-                                 <span class="checkbox"><input type="checkbox">  if possible, the virtual and/or physical location of the meet programs and heat sheets before and during the meet (102.10.1E)</span>
-                                 <span class="checkbox"><input type="checkbox">  if possible, the virtual and/or physical location of the results during and after the completion of the meet</span>
-                                 <span class="checkbox"><input type="checkbox">  the age determining date for the competition (yards: last day of meet) (meters: age as of Dec. 31) (102.2)</span>
-                                 <span class="checkbox"><input type="checkbox">  the age groups for individuals (18-24, 25-29, 30-34, … 5-year groups) (102.3.1) (see 102.3.3 for outside organization’s meets)</span>
-                                 <span class="checkbox"><input type="checkbox">  the age groups for relays (yds: 18+, 25+, 35+…10-yr groups) (meters: 72-99, 100-119, 120-159…40-year groups) (102.3.2-102.3.3)</span>
-                                 <span class="checkbox"><input type="checkbox">  if applicable, any facility or LMSC restrictions on the use of cameras, video equipment and drones (102.16)</span>
-                                 <span class="checkbox"><input type="checkbox">  if applicable, a description of the scoring system (103.19.1 – 103.19.3))</span>
-                                 <span class="checkbox"><input type="checkbox">  if applicable, a description of any awards (103.20)”</span>
-                              </span>
-                           </p>
-                        </div>
-                     </div> -->
-                     <!-- <style>
-                        .manual-checklist {
-
-                        }
-                        .manual-checklist li {
-                           list-style: none;
-                        }
-                        .manual-checklist li:before {
-                           content: "__ ";
-                           margin-left: -2rem;
-                           width: 2rem;
-                           display: inline-block;
-                        }
-                     </style>
-                     <ul class="manual-checklist">
-                        <li>the current USMS waiver and release of liability form (for sanctioned events) (202.1.1A) (R)</li>
-                        <li>the "sanctioned by" or “recognized by” statement (202.1.1A(2)) (R)</li>
-                        <li>the appropriate pool measurement statement provided in the rulebook listing whether or not the pool meets standards for official times to count (one statement from 201.1A(3) (a) – (d)) (R)</li>
-                        <li>if the timing system requirements of 103.18.5-103.18.7 cannot be met, a statement that official times cannot be submitted for world records, USMS records, and/or Top 10. (103.18.9, 202.1.1A(4)) (R)</li>
-                        <li>if mandatory facilities standards [M] cannot be met, a statement that events conducted in the facility are noncompliant and times will not count for USMS records and Top 10 (106.1.3, 202.1.1G(4)) (R)</li>
-                        <li>each USMS member has provided their current USMS membership number (202.1.1G(5) (R)</li>
-                        <li>the starting time of the meet and entry deadline (see 102.11 for information about changing a program or postponement) (R)</li>
-                        <li>the warm-up and warm-down space and procedures (standard meets: 102.4.1) dual-sanctioned meets: 102.4.2) (R)</li>
-                        <li>the order of events and format (any events labeled “choice” or “open” are not eligible for USMS official purposes) (102.5.1-.2, 102.5.5, 102.5.7, Guide to Local Operations, Sanction/Recognition: Meet Procedures) (R)</li>
-                        <li>if the events are conducted in a format other than timed finals (short course yards meets only), the process for seeding, contesting the event and determining the final places are included in the meet announcement (102.5.5, 102.10.1A) (R)</li>
-                        <li>if time trials are offered, the list of events and the format (yards competitions only) (102.5.6) (R)</li>
-                        <li>the entry fee, entry deadline(s) and the entry procedure for individuals (102.7, 102.11.3) (R)</li>
-                        <li>the entry fee, entry deadlines(s) and entry procedure for relays and relay only swimmers (102.9.4, 102.11.3) (R)</li>
-                        <li>the check-in and scratch procedures for individual and relay events (102.8) (R)</li>
-                        <li>the seeding method for all events (102.10.1D) (R)</li>
-                        <li>if used, the criteria under which freestyle events over 200 meters will be swum 2 to a lane (102.10.4A(1)(a)) (R)</li>
-                        <li>the location of the pool and other useful information such as parking provisions, driving directions, a description of the facility and racing course(s), information about any social events, information about nearby hotels and accommodations, information about any facility rules, concessions and merchandise that might be sold<</li>
-                        <li>the entry limit (maximum 6 individual events per day for a sanctioned timed finals competition) (102.6.1), maximum 3 individual events per day for a prelim/finals competition (102.6.4) and no limit for a recognized meet)</li>
-                        <li>if possible, the virtual and/or physical location of the meet programs and heat sheets before and during the meet (102.10.1E)</li>
-                        <li>if possible, the virtual and/or physical location of the results during and after the completion of the meet<</li>
-                        <li>the age determining date for the competition (yards: last day of meet) (meters: age as of Dec. 31) (102.2)</li>
-                        <li>the age groups for individuals (18-24, 25-29, 30-34, … 5-year groups) (102.3.1) (see 102.3.3 for outside organization’s meets)</li>
-                        <li>the age groups for relays (yds: 18+, 25+, 35+…10-yr groups) (meters: 72-99, 100-119, 120-159…40-year groups) (102.3.2-102.3.3)</li>
-                        <li>if applicable, any facility or LMSC restrictions on the use of cameras, video equipment and drones (102.16)</li>
-                        <li>if applicable, a description of the scoring system (103.19.1 – 103.19.3)</li>
-                        <li>if applicable, a description of any awards (103.20)”<</li>
-                     </ul> -->
-                  <!-- </div> -->
-               <!-- </div> -->
-
-
+      </h3>
+      <div class="section__content collapse" id="meet-announcement__content" data-parent="#accordion">
+         <div class="row">
+            <div class="col-xs-12">
+               <p>This information can be organized by your event registration company or created manually and uploaded. A PDF is preferred. We've included links below to a checklist of all required items, and a formatted Mirosoft Word template to help get you started.</p>
+               <br />
+               <a href="" class="btn-link">Download Checklist</a> | <a href="" class="btn-link">Download Template</a>
+               <br />
+               <br />
+               <br />
             </div>
-
-             <div class="modal fade" id="modalID" tabindex="-1" role="dialog">
-                   <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                         <div class="modal-header">
-                               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                               <h4 class="modal-title"></h4>
-                         </div>
-                         <div class="modal-body">
-                               <p>The abbreviation you have selected is already in use by another club. Please pick another one.</p>
-                         </div>
-                      </div>
-                   </div>
-             </div>
-             <div class="row">
-                   <div class="section__controls">
-                      <button class="btn save-section" id="saveMeetAnnouncement" type="button" disabled>Save & Continue</button>
-                   </div>
-             </div>
-          </div>
-    
-       </div>
-    <!-- </div> -->
+            <div class="col-xs-12 col-sm-4">
+               <div class="input-group meet-announcement required">
+                  <label for="MeetAnnouncement">Upload Meet Announcement (PDF)</label>
+                  <span class="help-block file-type">Invalid file type</span>
+                  <span class="help-block no-data">Please upload a meet announcement</span>
+                  <div class="upload-summary">
+                     <button type="button" class="event-document__remove-file" data-toggle="tooltip" title="" data-original-title="Remove document">
+                        <i class="fa fa-times"></i>
+                     </button>
+                     Storedfilename.pdf
+                  </div>
+                  <div class="upload-box upload-box--file">
+                     <input type="file" data-file-size="3584000" name="file-2[]" id="file-2" class="inputfile inputfile-meet-announcement" data-multiple-caption="{count} files selected" accept="image/*" multiple="" />
+                     <label for="file-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path fill="#FFF" d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
+                        <span>Choose a file…</span>
+                     </label>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="modal fade" id="modalID" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                     <h4 class="modal-title"></h4>
+                  </div>
+                  <div class="modal-body">
+                     <p>The abbreviation you have selected is already in use by another club. Please pick another one.</p>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="section__controls">
+               <button class="btn save-section" id="saveMeetAnnouncement" type="button" disabled>Save & Continue</button>
+            </div>
+         </div>
+      </div>    
+   </div>
  </form>
  <script>
    $("#meetAnnouncement").on('change', function() {
@@ -3789,7 +3687,99 @@ Other -->
 <!-- Local Fallbacks -->
 <!-- <script src="/js/src/jquery-3.6.0.min.js"></script> -->
 <!-- <script src="/js/src/bootstrap.bundle.min.js"></script> -->
-      <script>
+
+<script>
+    var accordion = $('#accordion');
+    accordion.on('show.bs.collapse','.collapse', function() {
+        let section = $(this).parent();
+        accordion.find('.collapse.in').removeClass('in');
+        accordion.find('.collapse').parent().removeClass('isEdit');
+        accordion.find('.collapse.in').addClass('hasData');
+        $(section).addClass('isEdit');
+    });
+    accordion.on('hidden.bs.collapse', function () {
+        $('.section.isEdit').removeClass('isEdit');
+    });
+
+    $("[data-toggle='tooltip']").tooltip();
+
+    // function FindPos(obj) {
+    //     if (!obj) return 0;
+    //     let curtop = 0;
+    //     if (obj.offsetParent) {
+    //         do {
+    //         curtop += obj.offsetTop;
+    //         } while (obj = obj.offsetParent);
+    //     }
+    //     return curtop;
+    // }
+
+    // $('#accordion .collapse').on('show.bs.collapse', (e) => {
+    // const currentSection = e.target;
+    // setTimeout(() => {
+    //     window.scroll(0, FindPos(e.target.parentNode));
+    // }, 450);
+
+    // });
+
+    // $('#accordion .collapse').on('hide.bs.collapse', (e) => {
+    // const currentSection = e.target;
+    // setSectionInputStatus(currentSection, true);
+    // currentSection.parentElement.classList.remove('isEdit');
+    // });
+
+
+
+
+
+    var sectionInputs = sectionId + " input";
+    var sectionSelects = sectionId + " select";
+    var sectionTextarea = sectionId + " textarea";
+
+    $(sectionInputs).click( function() {
+        console.log("input");
+        $(btnId).prop('disabled', false);
+    });
+    $(sectionSelects).on("change", function() {
+        console.log("select");
+        $(btnId).prop('disabled', false);
+    });
+    // $(sectionTextarea).focus( function() {
+    //     console.log("textarea");
+    //     $(btnId).prop('disabled', false);
+    // });
+
+    $(btnId).click( function() {
+        $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+        $(nextSection + " h3").click();
+        $(document.documentElement).animate({
+            scrollTop: $(nextSection).offset().top - 45
+        }, 100);
+    });
+
+
+
+
+
+
+
+    var accordion = $('#accordion');
+    accordion.on('show.bs.collapse','.collapse', function() {
+        let section = $(this).parent();
+        accordion.find('.collapse.in').removeClass('in');
+        accordion.find('.collapse').parent().removeClass('isEdit');
+        accordion.find('.collapse.in').addClass('hasData');
+        $(section).addClass('isEdit');
+    });
+    accordion.on('hidden.bs.collapse', function () {
+        $('.section.isEdit').removeClass('isEdit');
+    });
+
+
+
+
+</script>
+      <!-- <script>
          var accordion = $('#accordion');
          accordion.on('show.bs.collapse','.collapse', function() {
             let section = $(this).parent();
@@ -3801,12 +3791,7 @@ Other -->
          accordion.on('hidden.bs.collapse', function () {
             $('.section.isEdit').removeClass('isEdit');
          });
-      </script>
-      <script type="text/javascript">
-         $(function () {
-            $("[data-toggle='tooltip']").tooltip();
-         });
-     </script>
+      </script> -->
       <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
       <script type="text/javascript" src="/event/js/input-values-sanction.js"></script>

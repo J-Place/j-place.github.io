@@ -6,13 +6,6 @@ const sectionEventType = document.querySelector('#event-type');
   const eventTypeAnsweredPool = document.querySelector('#eventTypeAnsweredPool');
   const eventTypeAnsweredOpenWater = document.querySelector('#eventTypeAnsweredOpenWater');
 
-  // const lmsc = document.querySelector('#selectLmsc');
-  // const club = document.querySelector('#selectClub');
-  // const name = document.querySelector('#clubName');
-  // const abbr = document.querySelector('#clubAbbr');
-
-  // lmsc.addEventListener('change', handleLmscChange);
-
   if (eventTypeAnsweredPool) {
     eventTypeAnsweredPool.addEventListener('click',
       function () {
@@ -27,9 +20,7 @@ const sectionEventType = document.querySelector('#event-type');
         // validateField(eventTypeAnsweredOpenWater);
       });
   }
-  
-  currentSectionState = saveSectionState(sectionEventType);
-  // console.log(currentSectionState);
+    currentSectionState = saveSectionState(sectionEventType);
 })();
 
 // function saveEventType(e) {

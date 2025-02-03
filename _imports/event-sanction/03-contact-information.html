@@ -202,19 +202,7 @@
 </form>
 
 <script>
-    $("#confirmCurrentEventDirector").click( function() {
-       $("#saveContactInfoSection").prop('disabled', false);
-    });
-    $("#saveContactInfoSection").click( function() {
-       $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
-       $("#location-information h3").click();
-       $(document.documentElement).animate({
-          scrollTop: $("#location-information").offset().top - 45
-       }, 100);
-    });
- </script>
-
-<!-- <script src="/event/js/event-director.js"></script> -->
-<!-- <script src="/event/js/head-ref.js"></script> -->
-<!-- <script src="/event/js/safety-coordinator.js"></script> -->
-<!-- <script src="./js/3-contact-info-mockup.js"></script> -->
+    var sectionId = "#contact-info";
+    var btnId = "#saveContactInfoSection";
+    var nextSection = "#location-information";
+</script>

@@ -251,10 +251,13 @@
             </div>
             <div class="col-xs-12">
                <div class="timing-system-note">
-                  <div class="input-group-header radio-group-headerx">
+                  <div class="input-group-header">
                      Timing System Statement
                   </div>
-                  <p>Please review 103.18.5-103. 18.9 in the USMS Rule Book for more information on these statements. They are based on your timing system set up and usage.</p>
+                  <p class="default">Please review 103.18.5-103. 18.9 in the USMS Rule Book for more information on these statements. They are based on your timing system set up and usage.</p>
+                  <p class="automatic">Automatic text</p>
+                  <p class="semi-automatic">Semi-automatic text</p>
+                  <p class="manual">Manual text</p>
                </div>   
             </div>
          </div>
@@ -266,7 +269,7 @@
                   <span class="help-block help-block--eventListOnCalendar">Please make a selection</span>
                   <label class="radio-label radio-label--inline" for="eventListOnCalendarYes">
                      <span class="radio-container">
-                        <input type="radio" name="eventListOnCalendar" id="eventListOnCalendarYes" value="true">
+                        <input type="radio" name="eventListOnCalendar" id="eventListOnCalendarYes" value="true" checked>
                         <span class="radio__placeholder"></span>
                      </span>
                      Yes
@@ -320,6 +323,7 @@
 </form>
 
 <script>
+
    $("#isVirtualYes").click( function() {
       if ($('.timing-system-group').length) {
          $('.timing-system-group').hide();
@@ -327,24 +331,28 @@
    });
    $("#isVirtualNo").click( function() {
       $('.timing-system-group').show();
-      $("#saveEventInfo").prop('disabled', false);
    });
-   $("input[name='isChampionship']").on('change', function() {
-      $("#saveEventInfo").prop('disabled', false);
+
+   var sectionId = "#event-info";
+   var btnId = "#saveEventInfo";
+   var nextSection = "#contact-info";
+
+   $("#timingAutomatic").click( function() {
+      // alert("Becky");
+      $(".timing-system-note p").hide();
+      $(".timing-system-note p.automatic").show();
    });
-   $("input[name='eventListOnCalendar']").on('change', function() {
-      $("#saveEventInfo").prop('disabled', false);
+
+   $("#timingSemiAutomatic").click( function() {
+      $(".timing-system-note p").hide();
+      $(".timing-system-note p.semi-automatic").show();
    });
-   $("#event-info").on('change', function() {
-      $("#saveEventInfo").prop('disabled', false);
+
+   $("#timingManual").click( function() {
+      $(".timing-system-note p").hide();
+      $(".timing-system-note p.manual").show();
    });
-   $("#saveEventInfo").click( function() {
-      $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
-      $("#contact-info h3").click();
-      $(document.documentElement).animate({
-         scrollTop: $("#contact-info").offset().top - 45
-      }, 100);
-   });
+
 </script>
 
 <!-- <script>

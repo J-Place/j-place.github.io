@@ -339,6 +339,7 @@
 
                            <div class="form-header manage-event">
                               <p>You can edit or view your calendar listing details or you can upgrade to a sanction or recognition. If you choose to upgrade, you can edit any of your existing information and will need to add additional information to complete the sanction process.</p>
+                              <p style="font-size: 1.95rem;"><i class="fa fa-exclamation-circle" style="padding-right: 5px;"></i><strong>You must have your Meet Announcement.</strong><br /><br /></p>
                               <div class="manage-event-options">
                                  <a href="event-convert-calendar-listing.html" class="btn btn-large btn-outline">Upgrade to a Sanction or Recognition</a>
                               </div>
@@ -377,7 +378,7 @@
          </div>
          <div class="row">
                <div class="section__controls">
-                  <button class="btn save-section" id="saveEventType" type="button" onclick="saveSection()" disabled>Save &amp; Continue</button>
+                  <button class="btn save-section" id="saveEventType" type="button" onclick="" disabled>Save &amp; Continue</button>
                </div>
          </div>
       </div>
@@ -389,16 +390,16 @@
       $("#saveEventType").prop('disabled', false);
    });
    $("#saveEventType").click( function() {
-      $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
       $("#event-info h3").click();
-      if ($("#form-event-info").length) {
-         $("#event-info h3").click();
-      } else if ($("#form-calendar-event-info").length) {
-         $("#calendar-eventinfo h3").click();
-      }
-      $(document.documentElement).animate({
-         scrollTop: $("#calendar-eventinfo").offset().top - 45
-      }, 100);
+      if ( $("#calendar-eventinfo").length == 1 ) {
+         $(document.documentElement).animate({
+            scrollTop: $("#calendar-eventinfo").offset().top - 45
+         }, 100);
+      } else {
+         $(document.documentElement).animate({
+            scrollTop: $("#event-info").offset().top - 45
+         }, 100);
+      }      
    });
 </script>
 
@@ -560,7 +561,7 @@
     </div>
  </form>
  
- <script>
+ <!-- <script>
     $("#calendar-event-info").on('change', function() {
       $("#saveEventInfo").prop('disabled', false);
     });
@@ -582,18 +583,25 @@
    $("#event-info").on('change', function() {
       $("#saveEventInfo").prop('disabled', false);
    });
-   $("#saveEventInfo").click( function() {
-      $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
-      $("#contact-info h3").click();
-      $(document.documentElement).animate({
-         scrollTop: $("#contact-info").offset().top - 45
-      }, 100);
-   });
+//    $("#saveEventInfo").click( function() {
+//       $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+//       $("#contact-info h3").click();
+//       $(document.documentElement).animate({
+//          scrollTop: $("#contact-info").offset().top - 45
+//       }, 100);
+//    });
    function saveSection(e) {
        var target = e.target;
        var sectionId = $(target).closest('.section').attr('id');
     //    console.log(e.target);
     }
+ </script> -->
+
+
+ <script> 
+    var sectionId = "#event-info";
+    var btnId = "#saveEventInfo";
+    var nextSection = "#contact-info"; 
  </script>
 
                               <form id="form-contact-info">
@@ -1120,7 +1128,7 @@
         </div>        
     </div>
 </form>
-<script>
+<!-- <script>
     $("#confirmCurrentEventDirector").click( function() {
         $("#saveContactInfoSection").prop('disabled', false);
     });
@@ -1130,17 +1138,22 @@
     $("#addNewEventDirectorBtn").click(function() {
         $("#saveContactInfoSection").prop('disabled', false);
     });
-    $("#saveContactInfoSection").click( function() {
-        $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
-        $("#location-information h3").click();
-        $(document.documentElement).animate({
-            scrollTop: $("#location-information").offset().top - 45
-        }, 100);
-    });
-</script>
+    // $("#saveContactInfoSection").click( function() {
+    //     $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+    //     $("#location-information h3").click();
+    //     $(document.documentElement).animate({
+    //         scrollTop: $("#location-information").offset().top - 45
+    //     }, 100);
+    // });
+</script> -->
 <script src="/event/js/head-ref.js"></script>
 <script src="/event/js/safety-coordinator.js"></script>
 <script src="/event/js/host-type.js"></script>
+<script>
+    var sectionId = "#event-info";
+    var btnId = "#saveContactInfoSection";
+    var nextSection = "#location-information";
+</script>
 
                               <form id="form-location-info">
    <div class="section hasData section-location-information" id="location-information">
@@ -2256,19 +2269,14 @@ Other -->
       </div>
    </div>
 </form>
-<script>
-   // $("#confirmCalendarSelby").click( function() {
-   //    $("#saveLocation").prop('disabled', false);
-   // });
-   $("#saveLocation").click( function() {
-      $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
-      $("#entry-information h3").click();
-      $(document.documentElement).animate({
-         scrollTop: $("#entry-information").offset().top - 45
-      }, 100);
-   });
-</script>
+
 <script src="./js/location.js"></script>
+
+<script>
+   var sectionId = "#location-information";
+   var btnId = "#saveLocation";
+   var nextSection = "#entry-information";
+</script>
 
                               <form id="form-accept-submit">
    <div class="section section-accept-submit" id="accept-submit">
@@ -2857,7 +2865,9 @@ Other -->
       </div>
       
       <script>
-         $("#calendar-eventinfo h3").click();
+         // $("#calendar-eventinfo h3").click();
+      </script>
+      <!-- <script>
          var accordion = $('#accordion');
          accordion.on('show.bs.collapse','.collapse', function() {
             let section = $(this).parent();
@@ -2869,14 +2879,11 @@ Other -->
          accordion.on('hidden.bs.collapse', function () {
             $('.section.isEdit').removeClass('isEdit');
          });
-         $(function () {
-            $("[data-toggle='tooltip']").tooltip();
-         });
-         // function saveSection() {
-         //    var sectionId = $(this).closest('.section').attr('id');
-         //    // console.log(sectionId);
-         // }
-     </script>
+         function saveSection() {
+            var sectionId = $(this).closest('.section').attr('id');
+            // console.log(sectionId);
+         }
+     </script> -->
       <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
       <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
@@ -2885,6 +2892,98 @@ Other -->
 <!-- Local Fallbacks -->
 <!-- <script src="/js/src/jquery-3.6.0.min.js"></script> -->
 <!-- <script src="/js/src/bootstrap.bundle.min.js"></script> -->
+
+<script>
+    var accordion = $('#accordion');
+    accordion.on('show.bs.collapse','.collapse', function() {
+        let section = $(this).parent();
+        accordion.find('.collapse.in').removeClass('in');
+        accordion.find('.collapse').parent().removeClass('isEdit');
+        accordion.find('.collapse.in').addClass('hasData');
+        $(section).addClass('isEdit');
+    });
+    accordion.on('hidden.bs.collapse', function () {
+        $('.section.isEdit').removeClass('isEdit');
+    });
+
+    $("[data-toggle='tooltip']").tooltip();
+
+    // function FindPos(obj) {
+    //     if (!obj) return 0;
+    //     let curtop = 0;
+    //     if (obj.offsetParent) {
+    //         do {
+    //         curtop += obj.offsetTop;
+    //         } while (obj = obj.offsetParent);
+    //     }
+    //     return curtop;
+    // }
+
+    // $('#accordion .collapse').on('show.bs.collapse', (e) => {
+    // const currentSection = e.target;
+    // setTimeout(() => {
+    //     window.scroll(0, FindPos(e.target.parentNode));
+    // }, 450);
+
+    // });
+
+    // $('#accordion .collapse').on('hide.bs.collapse', (e) => {
+    // const currentSection = e.target;
+    // setSectionInputStatus(currentSection, true);
+    // currentSection.parentElement.classList.remove('isEdit');
+    // });
+
+
+
+
+
+    var sectionInputs = sectionId + " input";
+    var sectionSelects = sectionId + " select";
+    var sectionTextarea = sectionId + " textarea";
+
+    $(sectionInputs).click( function() {
+        console.log("input");
+        $(btnId).prop('disabled', false);
+    });
+    $(sectionSelects).on("change", function() {
+        console.log("select");
+        $(btnId).prop('disabled', false);
+    });
+    // $(sectionTextarea).focus( function() {
+    //     console.log("textarea");
+    //     $(btnId).prop('disabled', false);
+    // });
+
+    $(btnId).click( function() {
+        $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+        $(nextSection + " h3").click();
+        $(document.documentElement).animate({
+            scrollTop: $(nextSection).offset().top - 45
+        }, 100);
+    });
+
+
+
+
+
+
+
+    var accordion = $('#accordion');
+    accordion.on('show.bs.collapse','.collapse', function() {
+        let section = $(this).parent();
+        accordion.find('.collapse.in').removeClass('in');
+        accordion.find('.collapse').parent().removeClass('isEdit');
+        accordion.find('.collapse.in').addClass('hasData');
+        $(section).addClass('isEdit');
+    });
+    accordion.on('hidden.bs.collapse', function () {
+        $('.section.isEdit').removeClass('isEdit');
+    });
+
+
+
+
+</script>
    </body>
 </html>
 <script type="text/javascript" src="/event/js/input-values-sanction.js"></script>

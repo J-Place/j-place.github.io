@@ -896,5 +896,97 @@
 <!-- Local Fallbacks -->
 <!-- <script src="/js/src/jquery-3.6.0.min.js"></script> -->
 <!-- <script src="/js/src/bootstrap.bundle.min.js"></script> -->
+
+<script>
+    var accordion = $('#accordion');
+    accordion.on('show.bs.collapse','.collapse', function() {
+        let section = $(this).parent();
+        accordion.find('.collapse.in').removeClass('in');
+        accordion.find('.collapse').parent().removeClass('isEdit');
+        accordion.find('.collapse.in').addClass('hasData');
+        $(section).addClass('isEdit');
+    });
+    accordion.on('hidden.bs.collapse', function () {
+        $('.section.isEdit').removeClass('isEdit');
+    });
+
+    $("[data-toggle='tooltip']").tooltip();
+
+    // function FindPos(obj) {
+    //     if (!obj) return 0;
+    //     let curtop = 0;
+    //     if (obj.offsetParent) {
+    //         do {
+    //         curtop += obj.offsetTop;
+    //         } while (obj = obj.offsetParent);
+    //     }
+    //     return curtop;
+    // }
+
+    // $('#accordion .collapse').on('show.bs.collapse', (e) => {
+    // const currentSection = e.target;
+    // setTimeout(() => {
+    //     window.scroll(0, FindPos(e.target.parentNode));
+    // }, 450);
+
+    // });
+
+    // $('#accordion .collapse').on('hide.bs.collapse', (e) => {
+    // const currentSection = e.target;
+    // setSectionInputStatus(currentSection, true);
+    // currentSection.parentElement.classList.remove('isEdit');
+    // });
+
+
+
+
+
+    var sectionInputs = sectionId + " input";
+    var sectionSelects = sectionId + " select";
+    var sectionTextarea = sectionId + " textarea";
+
+    $(sectionInputs).click( function() {
+        console.log("input");
+        $(btnId).prop('disabled', false);
+    });
+    $(sectionSelects).on("change", function() {
+        console.log("select");
+        $(btnId).prop('disabled', false);
+    });
+    // $(sectionTextarea).focus( function() {
+    //     console.log("textarea");
+    //     $(btnId).prop('disabled', false);
+    // });
+
+    $(btnId).click( function() {
+        $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+        $(nextSection + " h3").click();
+        $(document.documentElement).animate({
+            scrollTop: $(nextSection).offset().top - 45
+        }, 100);
+    });
+
+
+
+
+
+
+
+    var accordion = $('#accordion');
+    accordion.on('show.bs.collapse','.collapse', function() {
+        let section = $(this).parent();
+        accordion.find('.collapse.in').removeClass('in');
+        accordion.find('.collapse').parent().removeClass('isEdit');
+        accordion.find('.collapse.in').addClass('hasData');
+        $(section).addClass('isEdit');
+    });
+    accordion.on('hidden.bs.collapse', function () {
+        $('.section.isEdit').removeClass('isEdit');
+    });
+
+
+
+
+</script>
     </body>
 </html>

@@ -156,7 +156,7 @@
     </div>
  </form>
  
- <script>
+ <!-- <script>
     $("#calendar-event-info").on('change', function() {
       $("#saveEventInfo").prop('disabled', false);
     });
@@ -178,16 +178,23 @@
    $("#event-info").on('change', function() {
       $("#saveEventInfo").prop('disabled', false);
    });
-   $("#saveEventInfo").click( function() {
-      $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
-      $("#contact-info h3").click();
-      $(document.documentElement).animate({
-         scrollTop: $("#contact-info").offset().top - 45
-      }, 100);
-   });
+//    $("#saveEventInfo").click( function() {
+//       $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+//       $("#contact-info h3").click();
+//       $(document.documentElement).animate({
+//          scrollTop: $("#contact-info").offset().top - 45
+//       }, 100);
+//    });
    function saveSection(e) {
        var target = e.target;
        var sectionId = $(target).closest('.section').attr('id');
     //    console.log(e.target);
     }
+ </script> -->
+
+
+ <script> 
+    var sectionId = "#event-info";
+    var btnId = "#saveEventInfo";
+    var nextSection = "#contact-info"; 
  </script>
