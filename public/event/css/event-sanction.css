@@ -657,13 +657,12 @@ label.radio-label {
 }
 
 
-.form__container .list--lookup.locations .list-item--lookup button {
+.form__container .list--lookup.locations .list-item--location button {
     height: 2.3rem !important;
     line-height: 2.3rem !important;
     padding: 0 0.7rem !important;
     font-size: 1.1rem !important;
 }
-
 
 
 /* Locations */
@@ -673,8 +672,10 @@ label.radio-label {
     line-height: 1.6rem;
 }
 
-.form__container .locations button.btn.btn-small {
-    margin-bottom: 9px !important;
+.form__container .locations .list-item--location button.btn.btn-small {
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    display: flex
 }
 
 .location-column {
@@ -689,7 +690,7 @@ label.radio-label {
 }
 
 .location-column .list-item > * {
-    display: inline-flex !important;
+    display: inline-flex;
 }
 
 /* .club-edit .list-item p.event-location__address--name {
@@ -701,21 +702,43 @@ label.radio-label {
 
 .club-edit .list-item p.event-location__address--name {
     padding: 0 1.2rem 0 0;
-    margin: 0 1rem 0 0.8rem;
+    margin: 0 1rem 0 0rem;
     border-right: none;
     line-height: 120%;
     font-size: 2rem;
+    display: flex;
+}
+
+.club-edit .list-item .event-location--course-tags {
+    display: flex;
+}
+
+.club-edit .list-item p.event-location__address--street,
+.club-edit .list-item p.event-location__city-state {
+    padding: 0 1.2rem 0 0;
+    margin: 0.5rem 1rem 1.2rem 0;
+    font-size: 1.7rem;
+    line-height: 100%;;
 }
 
 .club-edit .list-item p.event-location__address--street {
-    padding: 0 1.2rem 0 0;
-    margin: 0 1rem 0 0;
-    font-size: 1.7rem;
+    border-right: 1px solid #CCC;   
 }
 
 @media (min-width: 768px) {
-    .club-edit .list-item p.event-location__address--name {
+    .club-edit .list-item p.event-location__address--street {
         border-right: 1px solid #CCC;   
+    }
+    /* .club-edit .list-item p.event-location__address--name, */
+    .form__container .locations .list-item--location button.btn.btn-small,
+    .club-edit .list-item .event-location--course-tags {
+        display: inline-flex;
+    }
+    .club-edit .list-item p.event-location__address--name {
+        margin-left: 6rem;
+    }
+    .form__container .locations .list-item--location button.btn.btn-small {
+        margin-bottom: -2.2rem;
     }
 }
 
