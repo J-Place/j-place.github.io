@@ -1,10 +1,10 @@
 <form id="form-event-type">
-   <div class="section isEdit section-event-type" id="event-type">
+   <div class="section section-event-type" id="event-type">
       <h3 class="section__header" data-target="#event-type__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-type__content">
          <span class="section__number">1</span>Event Type
       </h3>
       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
-      <div class="section__content collapse in" id="event-type__content" data-parent="#accordion">
+      <div class="section__content collapse" id="event-type__content" data-parent="#accordion">
          <div class="row">
             <div class="col-sm-9">
                <div class="input-group event-type">
@@ -41,8 +41,10 @@
       $("#saveEventType").prop('disabled', false);
    });
    $("#saveEventType").click( function() {
-      // $("#event-type").addClass("hasData");
-      $('#accordion').find('.collapse.in').parent().addClass('hasData');
+      // $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+      // $('#accordion').find('.collapse.in').parent().addClass('hasData');
+      // $("#event-type").removeClass('isEdit');
+      $("#event-type").addClass('hasData');
       $("#event-info h3").click();
       if ( $("#calendar-eventinfo").length == 1 ) {
          $(document.documentElement).animate({

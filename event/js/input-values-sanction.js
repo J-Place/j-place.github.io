@@ -1,4 +1,4 @@
-$(".section-event-info h3").click();
+// $(".section-event-info h3").click();
 $('input[name="EventType"][value="pool"]').prop('checked', true);
 $('input[name="EventType"]').prop('disabled', true);
 
@@ -87,12 +87,14 @@ $(document).ready(function() {
     $(".venue__list--item:first-of-type .configuration-title").hide();
     $(".venue__list--item:first-of-type .configuration-title:last-of-type").show();
 
-    $(".section-event-info").addClass('isEdit');
-    $(".section-contact-info").addClass('isEdit');
-    $(".section-entry-information").addClass('isEdit');
-    $(".section-meet-announcement").addClass('isEdit');
+    // $(".section-event-info").addClass('isEdit');
+    // $(".section-contact-info").addClass('isEdit');
+    // $(".section-entry-information").addClass('isEdit');
+    // $(".section-meet-announcement").addClass('isEdit');
 
-    $("#submitSanction").prop('disabled', true);
+    // $("#submitSanction").prop('disabled', true);
+
+    $("#agreeTerms").prop('checked', true);
 
 });
 

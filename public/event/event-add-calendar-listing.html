@@ -324,7 +324,7 @@
                      <div class="row">
                         <div class="col-xs-12">
                            <header>
-                              <h1>Add Event</h1>
+                              <h1>Add a Calendar Listing Event</h1>
                            </header>
                         </div>
                      </div>
@@ -340,12 +340,12 @@
                            <div class="accordion-group">
 
                               <form id="form-event-type">
-   <div class="section isEdit section-event-type" id="event-type">
+   <div class="section section-event-type" id="event-type">
       <h3 class="section__header" data-target="#event-type__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-type__content">
          <span class="section__number">1</span>Event Type
       </h3>
       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
-      <div class="section__content collapse in" id="event-type__content" data-parent="#accordion">
+      <div class="section__content collapse" id="event-type__content" data-parent="#accordion">
          <div class="row">
             <div class="col-sm-9">
                <div class="input-group event-type">
@@ -382,8 +382,10 @@
       $("#saveEventType").prop('disabled', false);
    });
    $("#saveEventType").click( function() {
-      // $("#event-type").addClass("hasData");
-      $('#accordion').find('.collapse.in').parent().addClass('hasData');
+      // $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+      // $('#accordion').find('.collapse.in').parent().addClass('hasData');
+      // $("#event-type").removeClass('isEdit');
+      $("#event-type").addClass('hasData');
       $("#event-info h3").click();
       if ( $("#calendar-eventinfo").length == 1 ) {
          $(document.documentElement).animate({
@@ -2283,9 +2285,8 @@ Other -->
     });
 
     $("#saveLocation").click( function() {
-      //   $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
         $('#accordion').find('.collapse.in').parent().addClass('hasData');
-        $("#entry-information" + " h3").click();
+        $("#entry-information h3").click();
         $(document.documentElement).animate({
             scrollTop: $("#entry-information").offset().top - 45
         }, 100);
@@ -2307,17 +2308,26 @@ Other -->
                   <div class="card liability submit">
                      <!-- <h3 class="liability___form-header text-primary m-b-30">Liability Waiver</h3> -->
                      <div class="html-container">
-                        <div class="terms-calendar">
-    <!-- <h3 class="liability___form-header text-primary m-b-30">Liability Waiver</h3> -->
-    <p>The information on this page is accurate. Lorem Ipsum.</p>
-    <ol>
-        <!-- <li></li> -->
-    </ol>
-</div>
                         
-                        <sergey-import src="event-sanction/terms-recognizedXXX" />
+                        <sergey-import src="event-sanction/terms-sanctionedXXX" />
+                        
                      </div>
-                     <form class="form-liability form-horizontal">
+
+                     <div class="form-group agree-terms">
+                        <div class="input-group checkbox-group payment-agreement">
+                            <label class="checkbox-label" for="agreeTerms">
+                                <div class="checkbox-container">
+                                    <input name="agree-terms" type="checkbox" id="agreeTerms" onchange="">
+                                    <span class="checkbox__placeholder"></span>
+                                </div>
+                                <!-- I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming <a href="/content/privacy" target="_blank">Privacy Policy</a>. I understand that this membership is non-refundable, non-transferable, and expires on December 31, <span class="agree-terms--year">2025</span>. -->
+                                I agree that all information I am providing is factual. I have read the <a href="https://www.usms.org/events/event-sanction/event-sanction-criteria">sanction criteria</a>.
+                            </label>
+                            <span class="help-block help-block--agreeTerms">Please agree to the terms in order to continue</span>
+                        </div>
+                     </div>
+
+                     <!-- <form class="form-liability form-horizontal">
                         <div class="modal-container" style="transition:all 250ms ease-in-out;transform:translateY(-10px);opacity:0;z-index:-1;">
                            <div class="modal">
                               <div class="modal-close"><button><i class="fa fa-times"></i></button></div>
@@ -2351,12 +2361,13 @@ Other -->
                               </label>
                            </div>
                         </div>
-                     </form>
+                     </form> -->
+                  
                   </div>
                </div>
             </div>
             
-            <div class="modal fade" id="modalID" tabindex="-1" role="dialog">
+            <!-- <div class="modal fade" id="modalID" tabindex="-1" role="dialog">
                   <div class="modal-dialog" role="document">
                      <div class="modal-content">
                         <div class="modal-header">
@@ -2368,7 +2379,7 @@ Other -->
                         </div>
                      </div>
                   </div>
-            </div>
+            </div> -->
 
             <div class="row">
                   <div class="section__controls">
@@ -2889,65 +2900,30 @@ Other -->
 
 <script>
     var accordion = $('#accordion');
-    accordion.on('show.bs.collapse','.collapse', function() {
-        let section = $(this).parent();
-        accordion.find('.collapse.in').removeClass('in');
-        accordion.find('.collapse').parent().removeClass('isEdit');
-        accordion.find('.collapse.in').addClass('hasData');
-        $(section).addClass('isEdit');
+    var section = $(this).parent();
+    accordion.on('hide.bs.collapse', function () {
+        console.log("hide");
     });
     accordion.on('hidden.bs.collapse', function () {
-        $('.section.isEdit').removeClass('isEdit');
+        console.log("hidden");
+    });
+    accordion.on('show.bs.collapse','.collapse', function() {
+        accordion.find('.collapse.in').parent().removeClass('isEdit');
+        accordion.find('.collapse.in').removeClass('in');
+        let section = $(this).parent();
+        $(section).addClass('isEdit');
+        console.log("show")
+    });
+
+    accordion.on('shown.bs.collapse', function () {
+        console.log("shown");
     });
 
     $("[data-toggle='tooltip']").tooltip();
 
-    // function FindPos(obj) {
-    //     if (!obj) return 0;
-    //     let curtop = 0;
-    //     if (obj.offsetParent) {
-    //         do {
-    //         curtop += obj.offsetTop;
-    //         } while (obj = obj.offsetParent);
-    //     }
-    //     return curtop;
-    // }
-
-    // $('#accordion .collapse').on('show.bs.collapse', (e) => {
-    // const currentSection = e.target;
-    // setTimeout(() => {
-    //     window.scroll(0, FindPos(e.target.parentNode));
-    // }, 450);
-
-    // });
-
-    // $('#accordion .collapse').on('hide.bs.collapse', (e) => {
-    // const currentSection = e.target;
-    // setSectionInputStatus(currentSection, true);
-    // currentSection.parentElement.classList.remove('isEdit');
-    // });
-
-
-
-
-
-
-
-    var accordion = $('#accordion');
-    accordion.on('show.bs.collapse','.collapse', function() {
-        let section = $(this).parent();
-        accordion.find('.collapse.in').removeClass('in');
-        accordion.find('.collapse').parent().removeClass('isEditXXX');
-        accordion.find('.collapse.in').addClass('hasDataXXX');
-        $(section).addClass('isEdit');
-    });
-    accordion.on('hidden.bs.collapse', function () {
-        $('.section.isEdit').removeClass('isEdit');
-    });
-
-
-
-
 </script>
+      <script>
+         $("#event-type h3").click();
+      </script>
    </body>
 </html>

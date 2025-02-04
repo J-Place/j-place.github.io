@@ -1531,64 +1531,26 @@
 
 <script>
     var accordion = $('#accordion');
-    accordion.on('show.bs.collapse','.collapse', function() {
-        let section = $(this).parent();
-        accordion.find('.collapse.in').removeClass('in');
-        accordion.find('.collapse').parent().removeClass('isEdit');
-        accordion.find('.collapse.in').addClass('hasData');
-        $(section).addClass('isEdit');
+    var section = $(this).parent();
+    accordion.on('hide.bs.collapse', function () {
+        console.log("hide");
     });
     accordion.on('hidden.bs.collapse', function () {
-        $('.section.isEdit').removeClass('isEdit');
+        console.log("hidden");
+    });
+    accordion.on('show.bs.collapse','.collapse', function() {
+        accordion.find('.collapse.in').parent().removeClass('isEdit');
+        accordion.find('.collapse.in').removeClass('in');
+        let section = $(this).parent();
+        $(section).addClass('isEdit');
+        console.log("show")
+    });
+
+    accordion.on('shown.bs.collapse', function () {
+        console.log("shown");
     });
 
     $("[data-toggle='tooltip']").tooltip();
-
-    // function FindPos(obj) {
-    //     if (!obj) return 0;
-    //     let curtop = 0;
-    //     if (obj.offsetParent) {
-    //         do {
-    //         curtop += obj.offsetTop;
-    //         } while (obj = obj.offsetParent);
-    //     }
-    //     return curtop;
-    // }
-
-    // $('#accordion .collapse').on('show.bs.collapse', (e) => {
-    // const currentSection = e.target;
-    // setTimeout(() => {
-    //     window.scroll(0, FindPos(e.target.parentNode));
-    // }, 450);
-
-    // });
-
-    // $('#accordion .collapse').on('hide.bs.collapse', (e) => {
-    // const currentSection = e.target;
-    // setSectionInputStatus(currentSection, true);
-    // currentSection.parentElement.classList.remove('isEdit');
-    // });
-
-
-
-
-
-
-
-    var accordion = $('#accordion');
-    accordion.on('show.bs.collapse','.collapse', function() {
-        let section = $(this).parent();
-        accordion.find('.collapse.in').removeClass('in');
-        accordion.find('.collapse').parent().removeClass('isEditXXX');
-        accordion.find('.collapse.in').addClass('hasDataXXX');
-        $(section).addClass('isEdit');
-    });
-    accordion.on('hidden.bs.collapse', function () {
-        $('.section.isEdit').removeClass('isEdit');
-    });
-
-
-
 
 </script>
     </body>
