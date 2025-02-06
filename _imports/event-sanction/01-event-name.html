@@ -1,0 +1,52 @@
+<form id="form-event-name">
+    <div class="section section-event-name" id="event-name">
+        <h3 class="section__header" data-target="#event-name__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-name__content">
+            <span class="section__number">1</span>Event Name
+        </h3>
+        <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
+        <div class="section__content collapse" id="event-name__content" data-parent="#accordion">
+
+            <sergey-import src="event-sanction/form-group-event-name" />
+            <sergey-import src="event-sanction/form-group-event-description" />
+            <sergey-import src="event-sanction/form-group-event-image" />
+            <sergey-import src="event-sanction/form-group-event-type" />
+
+            <div class="row">
+                <div class="section__controls">
+                    <button class="btn save-section" id="saveEventName" type="button" onclick="" disabled>Save &amp; Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    var sectionId = "#event-name";
+    var sectionInputs = sectionId + " input";
+    var sectionSelects = sectionId + " select";
+    var sectionTextarea = sectionId + " textarea";    
+    $(sectionInputs).click( function() {
+        console.log("Becky");
+        $("#saveEventName").prop('disabled', false);
+    });
+    $(sectionSelects).on("change", function() {
+        $("#saveEventName").prop('disabled', false);
+    });
+    $(sectionTextarea).focus( function() {
+        $("#saveEventName").prop('disabled', false);
+    });
+
+    $("#saveEventName").click( function() {
+        $("#event-type").addClass('hasData');
+        $("#event-info h3").click();
+        if ( $("#calendar-eventinfo").length == 1 ) {
+            $(document.documentElement).animate({
+                scrollTop: $("#calendar-eventinfo").offset().top - 45
+            }, 100);
+        } else {
+            $(document.documentElement).animate({
+                scrollTop: $("#event-info").offset().top - 45
+            }, 100);
+        }      
+    });
+</script>
