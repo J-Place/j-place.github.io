@@ -357,8 +357,9 @@
                                           <p>Please make sure your Meet Announcement has been reviewed by your sanctions chair before applying for event sanction or recognition.</p>
                                       </div>
                                       <div class="modal-footer">
-                                          <button type="button" class="btn btn-default" id="noMeetAnnouncementReady">Cancel</button>
-                                          <button type="button" class="btn btn-default" id="yesMeetAnnouncementReady">Continue</button>
+                                          <button type="button" class="btn btn-default btn-outline" data-bs-dismiss="modal" id="noMeetAnnouncementReady">Cancel</button>
+                                          <!-- <button type="button" class="btn btn-default" id="yesMeetAnnouncementReady">Continue</button> -->
+                                           <a href="event-convert-calendar-listing.html" id="yesMeetAnnouncementReady" class="btn btn-default">Continue</a>
                                       </div>
                                   </div>
                               </div>
@@ -2980,6 +2981,7 @@ Other -->
          );
          $("#upgradeToSanction").click( function() {
             console.log("Click");
+            $("#modalConfirmMeetAnnouncement").removeClass('fade');
             modalConfirmMeetAnnouncement.show();
          });
       </script>
