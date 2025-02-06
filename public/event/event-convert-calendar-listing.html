@@ -599,6 +599,26 @@
         </div>   
     </div>
 </div>
+
+<script>
+    //  Show variations of timing system statement
+    $("#timingAutomatic").click( function() {
+        $(".timing-system-note p").hide();
+        $(".timing-system-note p.automatic").show();
+    });
+    $("#timingSemiAutomatic").click( function() {
+        $(".timing-system-note p").hide();
+        $(".timing-system-note p.semi-automatic").show();
+    });
+    $("#timingManual").click( function() {
+        $(".timing-system-note p").hide();
+        $(".timing-system-note p.manual").show();
+    });
+    $("#timingManualMinimum").click( function() {
+        $(".timing-system-note p").hide();
+        $(".timing-system-note p.manual-min").show();
+    });
+</script>
          <!-- List on Calendar -->
 <div class="row form-group">
    <div class="col-xs-12 col-sm-8 col-md-5">
@@ -684,19 +704,7 @@
 </form>
 
 <script>
-
-   // $("#isVirtualYes").click( function() {
-   //    if ($('.timing-system-group').length) {
-   //       $('.timing-system-group').hide();
-   //    }
-   // });
-   // $("#isVirtualNo").click( function() {
-   //    $('.timing-system-group').show();
-   // });
-
    var sectionId = "#event-info";
-   // var btnId = "#saveEventInfo";
-   // var nextSection = "#contact-info";
    var sectionInputs = sectionId + " input";
    var sectionSelects = sectionId + " select";
    var sectionTextarea = sectionId + " textarea";
@@ -710,28 +718,9 @@
        $("#saveEventInfo").prop('disabled', false);
    });
 
-   //  Show variations of timing system statement
-   $("#timingAutomatic").click( function() {
-      $(".timing-system-note p").hide();
-      $(".timing-system-note p.automatic").show();
-   });
-   $("#timingSemiAutomatic").click( function() {
-      $(".timing-system-note p").hide();
-      $(".timing-system-note p.semi-automatic").show();
-   });
-   $("#timingManual").click( function() {
-      $(".timing-system-note p").hide();
-      $(".timing-system-note p.manual").show();
-   });
-   $("#timingManualMinimum").click( function() {
-      $(".timing-system-note p").hide();
-      $(".timing-system-note p.manual-min").show();
-   });
+
 
    $("#saveEventInfo").click( function() {
-      // $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
-      // $('#accordion').find('.collapse.in').parent().addClass('hasData');
-      // $("#event-info").removeClass('isEdit');
       $("#event-info").addClass('hasData');
       $("#contact-info h3").click();
       $(document.documentElement).animate({
