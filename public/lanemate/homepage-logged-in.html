@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<!--[if IE 9]>
+<html lang="en" class="ie9 no-js">
+<![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+    <!--<![endif]-->
+    <head>
+        <title>U.S. Masters Swimming</title>
+        <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta name="twitter:card" content="" />
+<meta property="og:title" content="" />
+<meta property="og:image" content="" />
+<meta property="og:description" content="" />
+<meta property="og:url" content="" />
+<meta name="robots" content="noindex">
+        <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.12/jquery.mask.min.js"></script> -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://usms-cdn.azureedge.net/scripts/common.min.js"></script>
+<script src="https://usms-cdn.azureedge.net/scripts/home.min.js"></script>
+
+<!-- Local Fallbacks -->
+<!-- <script src="/js/src/jquery-3.6.0.min.js"></script> -->
+<!-- <script src="/js/src/bootstrap.min.js"></script> -->
+<!-- <script src="/js/src/common.min.js"></script> -->
+<!-- <script src="/js/src/home.min.js"></script> -->
+        <!-- Bonfire Source Files -->
+    <link rel="stylesheet" href="https://www.usms.org/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="https://www.usms.org/styles/bootstrap-3-usms-patch.css">
+    <link rel="stylesheet" href="https://www.usms.org/styles/font-awesome.min.css">
+    <link rel="stylesheet" href="https://www.usms.org/styles/common.min.css">
+    <link rel="stylesheet" href="https://www.usms.org/styles/print.min.css">
+    <link rel="stylesheet" href="https://www.usms.org/styles/rte.min.css">
+<!-- Local Dev Files -->
+    <link rel="stylesheet" href="/css/rte-updates.css">
+    <link rel="stylesheet" href="/css/common-updates.css">
+    <style>
+        :root {
+            --color-primary: #0068AD;
+            --color-primary-hover: #267fb9;
+            --color-dark-blue: #071C31;
+            --color-lt-blue: #DBE7F1;
+            --color-red: #D2202E;
+            --color-gray: #F4F4F4;
+            --rte-blue: #0068AD;
+            --rte-blue-hover: #267fb9;
+            --lm-blue: #092c5c;
+            --lm-blue-rgb: rgb(9, 44, 92);
+            --lm-blue-md: #084c89;
+            --lm-blue-lt: #8FBCE6;
+            --lm-blue-xlt: #eaf4ff;
+            --lm-blue-hover: var(--lm-blue-md);
+        }
+    </style>
+        <link rel="stylesheet" href="/lanemate/css/lanemate.css">
+        <link rel="stylesheet" href="https://www.usms.org/styles/home.min.css">
+        <link rel="stylesheet" href="/lanemate/css/home.css">
+    </head>
+    <body class="bg-gradient-lanemate">
+        <div class="loading" style="display: none;">
+            <img src="../img/loader.gif" alt="loading">
+        </div>
+        <div id="main-container">
+            <link rel="stylesheet" href="/lanemate/css/lanemate-logged-in.css">
+<header class="header-static">
+    <div id="">
+       <nav class="mega-main-menu">
+          <button class="mega-main-menu__toggle-mobile btn btn-default" aria-label="toggle mobile">
+          <i class="fa fa-bars text-primary">
+          </i>
+          <label>Menu</label>
+          </button>
+          <div class="mega-main-menu__logo-container">
+             <a class="mega-main-menu__logo" href="/public">
+               <img src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/logo/LaneMate_Logo_Horizontal_FullColor.svg" alt="LaneMate">
+             </a>
+          </div>
+          <div class="mega-main-menu__nav-search-container">
+             <div class="login__items-container">
+                <ul class="login__list login--shownXXX">
+                   <li class="login__list-item">
+                      <a href="/myusmslogin">My Account</a>
+                   </li>
+                   <li class="login__list-item">
+                      <a href="https://community.usms.org/">Community/Forums</a>
+                   </li>
+                   <li class="login__list-item">
+                      <a href="/">LaneMate Website</a>
+                   </li>
+                   <li class="login__list-item">
+                      <a href="/account/single-sign-out">Logout</a>
+                   </li>
+                </ul>
+             </div>
+             <form method="GET" action="/search" class="search" style="transition:all 0ms ease-in-out;transform:translateX(0px);opacity:0;z-index:-1;">
+                <div class="input-group">
+                   <input type="text" name="filter" class="form-control search__input" placeholder="Search LaneMate" aria-describedby="basic-addon">
+                   <input type="hidden" name="page" value="1">
+                   <input type="hidden" name="perPage" value="10">
+                   <span class="input-group-addon btn search__button text-uppercase" id="basic-addon">Search</span>
+                </div>
+             </form>
+             <div class="mega-main-menu__items-container">
+                <ul class="mega-main-menu__items list--nostyle" style="width:auto;">
+                   <li class="has--children" id="menu-item-0" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                      <span class="fa fa-chevron-right">
+                      </span>
+                      Training
+                   </li>
+                   <li class="has--children" id="menu-item-2" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                     <span class="fa fa-chevron-right">
+                     </span>
+                     Workout Library
+                  </li>
+                  <li class="has--children" id="menu-item-3" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                      <span class="fa fa-chevron-right">
+                      </span>
+                      Articles and Videos
+                   </li>
+                   <li class="has--children" id="menu-item-4" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                      <span class="fa fa-chevron-right">
+                      </span>
+                      About
+                   </li>
+                   <li id="menu-item-5" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                      <a href="/join-usms/join-or-renew">FREE Trial</a>
+                   </li>
+                   <div class="mega-menu-overlay d-none" style="top: 78px;">
+    <div class="mega-menu-overlay__menu-container">
+       <!-- <h4 class="mega-menu-overlay__title text-primary"><strong>Training</strong></h4> -->
+       <div class="mega-menu-overlay__content">
+          <ul class="mega-menu-overlay__items list--nostyle">
+             <li class=""><a href="/workout-library">Workout Library</a></li>
+             <li class=""><a href="/fitness-and-training/articles-and-videos">Articles and Videos</a></li>
+             <li class=""><a href="/clubs">Club Finder</a></li>
+             <li class=""><a href="/fitness-and-training/guides/freestyle">Freestyle Guide</a></li>
+             <li class=""><a href="/fitness-and-training/guides/swimming-101">Swimming 101</a></li>
+             <li class=""><a href="/fitness-and-training/workout-tracking">Workout Tracking</a></li>
+             <li class=""><a href="/about-usms/swimmer-magazine">SWIMMER Magazine</a></li>
+          </ul>
+       </div>
+    </div>
+    <!-- <div class="mega-menu-overlay__image-container">
+       <a href="/workout-library">
+          <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/megamenu/fittraincta-200x150.png?rev=dc95a7fc0d8348648260d6495466eb1e" alt="" class="mega-menu-overlay__image">
+          <div class="mega-menu-overlay__image-title text-center">Workout Library</div>
+       </a>
+    </div> -->
+ </div>
+                </ul>
+             </div>
+             <div class="mega-main-menu__actions">
+                <div class="mega-main-menu__actions-search--wrapper">
+                   <i class="search--icon">
+                   </i>
+                   <label>Search</label>
+                </div>
+                <div class="mega-main-menu__actions-login--wrapper">
+                   <a href="/myusmslogin">
+                   <i class="login--icon">
+                   </i>
+                   <label>Kyle</label>
+                   </a>
+                </div>
+             </div>
+          </div>
+          <div class="mobile-menu" style="transition:all 0ms ease-in-out;transform:translateY(0);opacity:0;z-index:-1;">
+             <div class="mobile-menu__container">
+                <button class="mobile-menu__toggle" aria-label="toggle menu">
+                <i class="mobile-menu__close">
+                </i>
+                <label>Close</label>
+                </button>
+                <form class="mobile-menu__form" action="/search">
+                   <div class="mobile-menu__input">
+                      <input type="text" name="filter" placeholder="Search">
+                      <button class="mobile-menu__search-button" type="submit" aria-label="search button">
+                      <i class="fa fa-search text-primary">
+                      </i>
+                      </button>
+                   </div>
+                </form>
+             </div>
+             <div class="mobile-menu-overlay">
+                <ul class="mobile-menu-overlay__items list--nostyle">
+                   <li class="mobile-menu-overlay__item text-capitalize">
+                      <div class="mobile-menu-overlay__item-content">
+                         <i class="fa fa-chevron-right "></i>Training
+                      </div>
+                      <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+                         <ul class="mobile-menu-overlay__submenu list--nostyle">
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/workout-library">Workout Library</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/fitness-and-training/articles-and-videos">Articles and Videos</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/clubs">Club Finder</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/search?filter=swimming+101&amp;page=1&amp;perPage=10">Swimming 101</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/fitness-and-training/workout-tracking">Workout Tracking</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/about-usms/swimmer-magazine">SWIMMER Magazine</a>
+                            </li>
+                         </ul>
+                      </div>
+                   </li>
+                   <li class="mobile-menu-overlay__item text-capitalize">
+                      <div class="mobile-menu-overlay__item-content">
+                         <i class="fa fa-chevron-right "></i>Workout Library
+                      </div>
+                      <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+                         <ul class="mobile-menu-overlay__submenu list--nostyle">
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/events">Calendar of Events</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/events/fitness-events">Virtual and Fitness Events</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/events/national-championships/pool-national-championships/2023-pool-national-championships/2023-spring-national-championship">2023 Spring Nationals</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/events/national-championships">National Championships</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/events/event-results-database">Results and Rankings</a>
+                            </li>
+                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                               <a href="/events/usms-records">Records</a>
+                            </li>
+                         </ul>
+                      </div>
+                   </li>
+                   <li class="mobile-menu-overlay__item text-capitalize">
+                      <div class="mobile-menu-overlay__item-content">
+                         <i class=" ">
+                         </i>
+                         <a href="/clubs" style="text-decoration:none;">Articles and Videos</a>
+                      </div>
+                      <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+                         <ul class="mobile-menu-overlay__submenu list--nostyle">
+                         </ul>
+                      </div>
+                   </li>
+                   <li class="mobile-menu-overlay__item text-capitalize">
+                      <div class="mobile-menu-overlay__item-content">
+                         <i class=" ">
+                         </i>
+                         <a href="/workout-library" style="text-decoration:none;">About</a>
+                      </div>
+                      <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+                         <ul class="mobile-menu-overlay__submenu list--nostyle">
+                         </ul>
+                      </div>
+                   </li>
+                   <li class="mobile-menu-overlay__item text-capitalize">
+                      <div class="mobile-menu-overlay__item-content">
+                         <i class=""></i>
+                         <a href="/join-usms/join-or-renew" style="text-decoration:none;">FREE Trial</a>
+                      </div>
+                      <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+                         <ul class="mobile-menu-overlay__submenu list--nostyle">
+                         </ul>
+                      </div>
+                   </li>
+                </ul>
+             </div>
+          </div>
+       </nav>
+    </div>
+ </header>
+            <main role="main">
+
+                <header class="page-header bg-media page-header__image" data-background="background-image: url('
+                https://www.usms.org/-/media/usms/lightroom/d7m_6243%20copy.jpg'); background-position: center;" style="background-image: url('https://www.usms.org/-/media/usms/lightroom/d7m_6243%20copy.jpg'); background-position: center center;">
+                    <div class="page-header__tint-placeholder "></div>
+                    <img class="gradient-left" src="https://www.usms.org/-/media/usms/Non-Lightroom Images/House Art/Video Stroke Analysis/corner-grid-gradient-3a.png" alt="background graphic" style="">
+                    <img class="gradient-right" src="https://www.usms.org/-/media/usms/Non-Lightroom Images/House Art/Video Stroke Analysis/corner-grid-gradient-3b.png" alt="background graphic" style="">
+                    <h1>Your ultimate <span class="highlight">swim training companion</span></h1>
+                    <a href="/#" class="btn btn-primary btn-xl">FREE Trial</a>
+                </header>
+
+                <div class="section section-tiles">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="tile">
+                                    <img alt="Swimming Is the Best Exercise for You" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-freestyle.svg" style="height: 80px; width: 80px;">
+                                    <h3>Workout Library</h3>
+                                    <p>1,000's of workouts in seven different training styles to search from. 24 new workouts posted each week to keep you motivated and engaged.</p>
+                                    <a href="/#" class="btn btn-primary btn-large">Find a Workout</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="tile">
+                                    <img alt="Swimming Is the Best Exercise for You" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-online-learning.svg" style="height: 75px; width: 75px;">
+                                    <h3>Articles and Videos</h3>
+                                    <p>Our content offers step-by-step written and video instruction on how to improve your stroke as well as dryland exercises, nutrition advice, and more.</p>
+                                    <a href="/#" class="btn btn-primary btn-large">Learn Something New</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="tile">
+                                    <img alt="Swimming Is the Best Exercise for You" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-volunteer-central.svg" style="height: 70px; width: 70px;">
+                                    <h3>Online Community</h3>
+                                    <p>A vibrant forum that connects swimmers from all over. Learn, share, and engage while growing your swimming knowledge and your swim-friend circle.</p>
+                                    <a href="/#" class="btn btn-primary btn-large">See the Discussions</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section section-cta p-t-10">
+                    <div class="container-fluid">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-lg-12">
+                                <img class="d-block d-md-none" src="https://www.usms.org/-/media/usms/Non-Lightroom Images/House Art/Video Stroke Analysis/infographic-video-stroke-analysis-vrt.png" alt="Video Stroke Analysis" style="width: 300px; margin:2rem auto;">
+                                <img class="d-none d-md-block" src="https://www.usms.org/-/media/usms/Non-Lightroom Images/House Art/Video Stroke Analysis/infographic-video-stroke-analysis-hrz.png" alt="Video Stroke Analysis" style="max-width: 750px; margin:4rem auto 5rem;">
+                                <h2>Video Stroke Analysis <br /><span class="highlight">for&nbsp;all&nbsp;levels</span></h2>
+                                <p class="cta-text-lg">We provide both a visual analysis and written feedback containing drills, dryland exercises, and other tips. The process is all online and we will cater the analysis to your capabilities and goals.</p>
+                                <hr style="margin: 6rem auto 6rem; width: 80%; max-width: 768px; border-top: 1px solid #666;">
+                                <a href="/#" style="margin: 1rem auto 6rem;" class="btn btn-primary btn-xl">Get Started</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section section-testimonials p-t-10">
+                    <div class="container-fluid">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-xs-12 col-lg-6 col-xl-3">
+                                <div class="tile">
+                                    <h6>Must Have For an Independent Swimmer</h6>
+                                    <p>"I can't make it to the club practices near me and LaneMate gives me the workouts and articles I need to stay motivated."</p>
+                                    <p class="testimonial-name">Scott D.</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-lg-6 col-xl-3">
+                                <div class="tile">
+                                    <h6>Everything I Need at a Low Cost</h6>
+                                    <p>I'm just looking for new workouts without breaking the bank. This gives me what I need and is much cheaper than the other options.</p>
+                                    <p class="testimonial-name">Jenn C.</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-lg-6 col-xl-3">
+                                <div class="tile">
+                                    <h6>Stroke Analysis Feedback Was Amazing</h6>
+                                    <p>The stroke analysis was easy to do and the best part was that it includes two rounds of analysis! The coach told me where I made improvements from the first round.</p>
+                                    <p class="testimonial-name">Fletcher R.</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-lg-6 col-xl-3">
+                                <div class="tile">
+                                    <h6>Great For a Triathlete</h6>
+                                    <p>I needed swimming help for my triathlon so the 21-day freestyle training plan was a great tool to get me started. I felt like they wrote it for me.</p>
+                                    <p class="testimonial-name">Larissa M.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section section-cta p-t-10">
+                    <div class="container-fluid">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-lg-12">
+                                <h3>Everything you need to<br /><span class="highlight">swim&nbsp;your&nbsp;best</span></h3>
+                                <div class="container-fluid cta-checkbox-items">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-xl-6 col-xxl-4">
+                                            <div class="check-label">
+                                                <img src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png" alt="">
+                                                <h6>Workout Library <span>1,000's of workouts to search and filter through</span></h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-xl-6 col-xxl-4">
+                                            <div class="check-label">
+                                                <img src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png" alt="">
+                                                <h6>Articles and Videos <span>Information specific for the adult swimmer</span></h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-xl-6 col-xxl-4">
+                                            <div class="check-label">
+                                                <img src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png" alt="">
+                                                <h6>Online Community <span>A place to connect and learn from other swimmers</span></h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-xl-6 col-xxl-4">
+                                            <div class="check-label">
+                                                <img src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png" alt="">
+                                                <h6>Training Plans <span>A series of workouts to help you achieve a goal</span> </h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-xl-6 col-xxl-4">
+                                            <div class="check-label">
+                                                <img src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png" alt="">
+                                                <h6>Video Stroke Analysis <span>Ability to purchase ~10 minutes of video feedback</span></h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-xl-6 col-xxl-4">
+                                            <div class="check-label">
+                                                <img src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png" alt="">
+                                                <h6>Swim.com Integration <span>Free access to this incredible workout tracking app</span></h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-xl-6 col-xxl-4">
+                                            <div class="check-label">
+                                                <img src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png" alt="">
+                                                <h6>Virtual Events <span>Monthly challenges to motivate and inspire</span></h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-xl-6 col-xxl-4">
+                                            <div class="check-label">
+                                                <img src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png" alt="">
+                                                <h6>Product Discounts <span>Up to 50% off on a variety of products</span></h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr style="margin: 0 auto 5rem; width: 80%; max-width: 768px; border-top: 1px solid #666;">
+                                <a href="/#" class="btn btn-xl btn-primary" style="margin: 2rem auto 6rem;">FREE Trial</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+            </main>
+            <style>
+   #footerOverlay {
+      background-color: none;
+   }
+</style>
+<footer>
+   <div id="footerOverlay">
+      <div class="container-fluid">
+         <div class="row">
+            <div class="footer-content">
+               <div class="footer-left">
+                  <div class="footer-left__menu">
+                     <div class="row">
+                        <div class="col-xs-6 col-md-3">
+                            <div class="footer-menu">
+                                <h3 class="footer-menu__header">
+                                   Subscribe
+                                </h3>
+                                <ul class="footer-menu__list list--nostyle">
+                                   <li class="footer-menu__list-item">
+                                      <a href="/events" target="" title="Subscribe">
+                                      Subscribe
+                                      </a>
+                                   </li>
+                                   <li class="footer-menu__list-item">
+                                      <a href="https://www.trianglesportscommission.com/usms-hpc/" target="_blank" title="Membership Comparison">
+                                      Membership Comparison
+                                      </a>
+                                   </li>
+                                </ul>
+                             </div>  
+                            <div class="footer-menu">
+                              <h3 class="footer-menu__header">
+                                 About
+                              </h3>
+                              <ul class="footer-menu__list list--nostyle">
+                                 <li class="footer-menu__list-item">
+                                    <a href="/about/what-is-lanemate" target="" title="What is LaneMate?">
+                                    What is LaneMate?
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="" target="" title="Subscription Benefits">
+                                    Subscription Benefits
+                                    </a>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <div class="footer-menu">
+                                <h3 class="footer-menu__header">
+                                   Training
+                                </h3>
+                                <ul class="footer-menu__list list--nostyle">
+                                   <li class="footer-menu__list-item">
+                                      <a href="/workout-library" target="" title="Workout Library">
+                                      Workout Library
+                                      </a>
+                                   </li>
+                                   <li class="footer-menu__list-item">
+                                      <a href="/swimming-guides" target="" title="Swimming Guides">
+                                      Swimming Guides
+                                      </a>
+                                   </li>
+                                   <li class="footer-menu__list-item">
+                                      <a href="/workout-tracking" target="" title="Workout Tracking">
+                                      Workout Tracking
+                                      </a>
+                                   </li>
+                                   <li class="footer-menu__list-item">
+                                      <a href="/swim-com" target="" title="Swim.com Integration">
+                                      Swim.com Integration
+                                      </a>
+                                   </li>
+                                   <li class="footer-menu__list-item">
+                                      <a href="/articles-and-videos" target="" title="Articles and Videos">
+                                      Articles and Videos
+                                      </a>
+                                   </li>
+                                </ul>
+                             </div>
+                          </div>
+                        <div class="col-xs-6 col-md-3">
+                           <div class="footer-menu">
+                              <h3 class="footer-menu__header">
+                                 Workout Library
+                              </h3>
+                              <ul class="footer-menu__list list--nostyle">
+                                 <li class="footer-menu__list-item">
+                                    <a href="/" target="" title="Basic Training">
+                                    Basic Training
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/" target="" title="High Intensity">
+                                    High Intensity
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/" target="" title="Stroke and IM">
+                                    Stroke and IM
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/" target="" title="Open Water">
+                                    Open Water
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/" target="" title="High-Volume">
+                                    High-Volume
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/" target="" title="Triathlon">
+                                    Triathlon
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/" target="" title="Low-Volume">
+                                    Low-Volume
+                                    </a>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                           <div class="footer-menu">
+                              <h3 class="footer-menu__header">
+                                 Articles and Videos
+                              </h3>
+                              <ul class="footer-menu__list list--nostyle">
+                                 <li class="footer-menu__list-item">
+                                    <a href="/articles" target="" title="Articles">
+                                    Articles
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/articles" target="" title="Articles with Videos">
+                                    Articles with Videos
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/swimmer-magazine" target="" title="SWIMMER Magazine">
+                                    SWIMMER Magazine
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/content/alts_cert" target="" title="YouTube Videos">
+                                    YouTube Videos
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/swimming-guides" target="" title="Swimming Guides">
+                                    Swimming Guides
+                                    </a>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="footer-right">
+                  <div class="subscribe">
+                     <div>
+                        <h4 class="subscribe__header m-b-30"></h4>
+                        <p class="m-b-30"></p>
+                        <a class="btn btn-primary btn-lt-blue btn-lg text-uppercase" href="/sUbscribe">Subscribe</a>
+                     </div>
+                  </div>
+                  <nav>
+                     <ul class="social-share-icons list--nostyle p-tb-30">
+                        <!-- <li class="social-share-icons__item">
+                           <a href="http://facebook.com/USMastersSwimmingFanPage/" target="_blank" title="Facebook">
+                           <i class="fa fa-facebook"></i>
+                           </a>
+                        </li> -->
+                        <li class="social-share-icons__item">
+                           <a href="https://www.instagram.com/mastersswimming" target="_blank" title="Instagram">
+                           <i class="fa fa-instagram"></i>
+                           </a>
+                        </li>
+                        <!-- <li class="social-share-icons__item">
+                           <a href="https://twitter.com/MastersSwimming" target="_blank" title="Twitter">
+                           <i class="fa fa-twitter"></i>
+                           </a>
+                        </li>
+                        <li class="social-share-icons__item">
+                           <a href="https://www.youtube.com/user/USMastersSwimming" target="_blank" title="YouTube">
+                           <i class="fa fa-youtube"></i>
+                           </a>
+                        </li> -->
+                     </ul>
+                  </nav>
+                  <small class="copyright">
+                  &copy; 2024 LaneMate
+                  </small>
+                  <nav>
+                     <ul class="nav nav-service navbar-nav nav-pills">
+                        <li class="">
+                           <a href="/about/contact-usms" target="" title="Contact Us" class="">
+                           Contact Us        </a>
+                        </li>
+                        <li class="">
+                           <a href="/content/privacy" target="" title="USMS Privacy Policy" class="">
+                           LaneMate Privacy Policy
+                           </a>
+                        </li>
+                     </ul>
+                  </nav>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</footer>
+
+        </div>
+        <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Local Fallbacks -->
+<!-- <script src="/js/src/jquery-3.6.0.min.js"></script> -->
+<!-- <script src="/js/src/bootstrap.bundle.min.js"></script> -->
+
+<script>
+    var accordion = $('#accordion');
+    var section = $(this).parent();
+    accordion.on('hide.bs.collapse', function () {
+        console.log("hide");
+    });
+    accordion.on('hidden.bs.collapse', function () {
+        console.log("hidden");
+    });
+    accordion.on('show.bs.collapse','.collapse', function() {
+        accordion.find('.collapse.in').parent().removeClass('isEdit');
+        accordion.find('.collapse.in').removeClass('in');
+        let section = $(this).parent();
+        $(section).addClass('isEdit');
+        console.log("show")
+    });
+
+    accordion.on('shown.bs.collapse', function () {
+        console.log("shown");
+    });
+
+    $("[data-toggle='tooltip']").tooltip();
+
+</script>
+    </body>
+</html>
