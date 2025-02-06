@@ -456,9 +456,6 @@
                             </div>
                             <div class="modal-body">
                                 <div class="input-group radio-group">
-                                    <!-- <div class="input-group-header radio-group-header">
-                                        Meet Announcement
-                                    </div> -->
                                     <div class="input-group radio-group">
                                         <label class="radio-label" for="meetAnnouncementYes">
                                             I have my meet announcement done. I have spoken with an LMSC representative about the event date. I am ready to apply for my sanction/recognition.<br/>
@@ -997,22 +994,22 @@
 
 </script>
         <script>
-                var modalSanctionedRecognized = new bootstrap.Modal(document.getElementById('modalSanctionedRecognized'),
-                    {
-                        backdrop: 'static',
-                        keyboard: false
-                    }
-                );
-                $("#btnSanctionedRecognized").click( function() {
-                    modalSanctionedRecognized.show();
-                });
-                $('input[name=meetAnnouncement]').on('change', function() {
-                   $("#confirmMeetAnnouncement").prop('disabled', false);
-                });
-                $('#confirmMeetAnnouncement').click( function() {
-                    $('input[name=meetAnnouncement]').prop('checked', false);
-                    $("#confirmMeetAnnouncement").prop('disabled', true);
-                });
+            var modalSanctionedRecognized = new bootstrap.Modal(document.getElementById('modalSanctionedRecognized'),
+                {
+                    backdrop: 'static',
+                    keyboard: false
+                }
+            );
+            $("#btnSanctionedRecognized").click( function() {
+                modalSanctionedRecognized.show();
+            });
+            $('input[name=meetAnnouncement]').on('change', function() {
+                $("#confirmMeetAnnouncement").prop('disabled', false);
+            });
+            $('#confirmMeetAnnouncement').click( function() {
+                $('input[name=meetAnnouncement]').prop('checked', false);
+                $("#confirmMeetAnnouncement").prop('disabled', true);
+            });
         </script>
     </body>
 </html>
