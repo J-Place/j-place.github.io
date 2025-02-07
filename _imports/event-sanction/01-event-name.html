@@ -12,7 +12,7 @@
 
             <div class="row">
                 <div class="section__controls">
-                    <button class="btn save-section" id="saveEventName" type="button" onclick="" disabled>Save &amp; Continue</button>
+                    <button class="btn save-section" id="saveEventName" type="button" disabled>Save &amp; Continue</button>
                 </div>
             </div>
         </div>
@@ -25,31 +25,22 @@
     var sectionInputs = sectionId + " input";
     var sectionSelects = sectionId + " select";
     var sectionTextarea = sectionId + " textarea";   
-    var sectionBtn = "#saveEventName"; 
+    var sectionBtn = "#saveEventName";
+
+
     $(sectionInputs).click( function() {
-        console.log("Becky input");
         $("#saveEventName").prop('disabled', false);
     });
     $(sectionSelects).on("change", function() {
-        console.log("Becky select")
         $("#saveEventName").prop('disabled', false);
     });
     $(sectionTextarea).focus( function() {
-        $("#saveEventName text").prop('disabled', false);
+        $("#saveEventName").prop('disabled', false);
     });
 
     $(sectionBtn).click( function() {
         $(sectionId).addClass('hasData');
         $(nextSectionId + " h3").click();
-        // if ( $("#calendar-eventinfo").length == 1 ) {
-        //     $(document.documentElement).animate({
-        //         scrollTop: $("#calendar-eventinfo").offset().top - 45
-        //     }, 100);
-        // } else {
-        //     $(document.documentElement).animate({
-        //         scrollTop: $("#event-info").offset().top - 45
-        //     }, 100);
-        // }
         $(document.documentElement).animate({
             scrollTop: $("#event-info").offset().top - 45
         }, 100);

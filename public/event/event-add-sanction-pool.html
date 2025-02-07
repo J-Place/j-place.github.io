@@ -382,7 +382,7 @@
 
             <div class="row">
                 <div class="section__controls">
-                    <button class="btn save-section" id="saveEventName" type="button" onclick="" disabled>Save &amp; Continue</button>
+                    <button class="btn save-section" id="saveEventName" type="button" disabled>Save &amp; Continue</button>
                 </div>
             </div>
         </div>
@@ -395,31 +395,22 @@
     var sectionInputs = sectionId + " input";
     var sectionSelects = sectionId + " select";
     var sectionTextarea = sectionId + " textarea";   
-    var sectionBtn = "#saveEventName"; 
+    var sectionBtn = "#saveEventName";
+
+
     $(sectionInputs).click( function() {
-        console.log("Becky input");
         $("#saveEventName").prop('disabled', false);
     });
     $(sectionSelects).on("change", function() {
-        console.log("Becky select")
         $("#saveEventName").prop('disabled', false);
     });
     $(sectionTextarea).focus( function() {
-        $("#saveEventName text").prop('disabled', false);
+        $("#saveEventName").prop('disabled', false);
     });
 
     $(sectionBtn).click( function() {
         $(sectionId).addClass('hasData');
         $(nextSectionId + " h3").click();
-        // if ( $("#calendar-eventinfo").length == 1 ) {
-        //     $(document.documentElement).animate({
-        //         scrollTop: $("#calendar-eventinfo").offset().top - 45
-        //     }, 100);
-        // } else {
-        //     $(document.documentElement).animate({
-        //         scrollTop: $("#event-info").offset().top - 45
-        //     }, 100);
-        // }
         $(document.documentElement).animate({
             scrollTop: $("#event-info").offset().top - 45
         }, 100);
@@ -478,7 +469,6 @@
       </div>
    </div>
 </div>
-
          <!-- Course -->
 <div class="row form-group">
    <div class="col-xs-12 col-sm-8 col-md-5">
@@ -578,11 +568,7 @@
             </div>
          </div>
       </div>
-   </div>
-
-
-         
-         
+   </div>         
          <!-- List on Calendar -->
 <div class="row form-group">
    <div class="col-xs-12 col-sm-8 col-md-5">
@@ -672,9 +658,7 @@
         $('.timing-system-group').show();
     });
 </script>
-         
-
-
+            
          <!-- Save Section -->
          <div class="row form-group">
                <div class="section__controls">
@@ -691,6 +675,7 @@
    var sectionSelects = sectionId + " select";
    var sectionTextarea = sectionId + " textarea";
    var sectionBtn = "#saveEventInfo";
+   
    $(sectionInputs).click( function() {
       $(sectionBtn).prop('disabled', false);
    });
