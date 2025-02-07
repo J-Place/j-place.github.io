@@ -345,49 +345,84 @@
                            </div> -->
 
                            <div class="accordion-group">
+                              <form id="form-event-name">
+    <div class="section section-event-name" id="event-name">
+        <h3 class="section__header" data-target="#event-name__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-name__content">
+            <span class="section__number">1</span>Event Name
+        </h3>
+        <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
+        <div class="section__content collapse" id="event-name__content" data-parent="#accordion">
 
-                              <form id="form-event-type">
-   <div class="section section-event-type" id="event-type">
-      <h3 class="section__header" data-target="#event-type__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-type__content">
-         <span class="section__number">1</span>Event Type
-      </h3>
-      <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
-      <div class="section__content collapse" id="event-type__content" data-parent="#accordion">
-         <div class="row">
-            <div class="col-sm-9">
+            <!-- Event Name -->
+<div class="row form-group">
+    <div class="col-xs-12 col-sm-6 col-md-5">
+        <div class="input-group event-info-name required">
+            <label for="eventInfoName" class="label-large">
+                Event Name
+                <span class="icon-help" data-toggle="tooltip" data-placement="top" title="If it is an annual event, use the same name each year. Make sure you have selected the event year as well. Your application will not be approved if you use the word Olympic and/or Paralympic." data-container="body" data-original-title=""></span>
+            </label>
+            <input type="email" class="form-control" name="eventInfoName" id="eventInfoName" value="">
+            <span class="help-block help-block--eventInfoName">Please enter the event name</span>
+        </div>
+    </div>
+</div>
+            <br />
+            <div class="input-group radio-group event-type">
+    <div class="input-group-header radio-group-header required">Event Type</div>
+    <!-- Depending on your choice, you will be given slightly different sanction process flows. -->
+    <span class="help-block help-block--eventType">Please make a selection</span>
+    <label class="radio-label radio-label--inline" for="eventTypeAnsweredPool">
+        <span class="radio-container">
+        <input type="radio" name="EventType" id="eventTypeAnsweredPool" value="pool">
+        <span class="radio__placeholder"></span>
+        </span>
+        Pool
+    </label>
+    <label class="radio-label radio-label--inline" for="eventTypeAnsweredOpenWater">
+        <span class="radio-container">
+                <input type="radio" name="EventType" id="eventTypeAnsweredOpenWater" value="open-water">
+        <span class="radio__placeholder"></span>
+        </span>
+        Open Water
+    </label>
+</div>
+
+            <div class="row">
+                <div class="section__controls">
+                    <button class="btn save-section" id="saveEventName" type="button" disabled>Save &amp; Continue</button>
+                </div>
             </div>
-         </div>
-         <div class="row">
-               <div class="section__controls">
-                  <button class="btn save-section" id="saveEventType" type="button" onclick="" disabled>Save &amp; Continue</button>
-               </div>
-         </div>
-      </div>
-   </div>
+        </div>
+    </div>
 </form>
 
 <script>
-   $("input[name='EventType']").click( function() {
-      $("#saveEventType").prop('disabled', false);
-   });
-   $("#saveEventType").click( function() {
-      // $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
-      // $('#accordion').find('.collapse.in').parent().addClass('hasData');
-      // $("#event-type").removeClass('isEdit');
-      $("#event-type").addClass('hasData');
-      $("#event-info h3").click();
-      if ( $("#calendar-eventinfo").length == 1 ) {
-         $(document.documentElement).animate({
-            scrollTop: $("#calendar-eventinfo").offset().top - 45
-         }, 100);
-      } else {
-         $(document.documentElement).animate({
-            scrollTop: $("#event-info").offset().top - 45
-         }, 100);
-      }      
-   });
-</script>
+    var sectionId = "#event-name";
+    var nextSectionId = "#event-info";
+    var sectionInputs = sectionId + " input";
+    var sectionSelects = sectionId + " select";
+    var sectionTextarea = sectionId + " textarea";   
+    var sectionBtn = "#saveEventName";
 
+
+    $(sectionInputs).click( function() {
+        $("#saveEventName").prop('disabled', false);
+    });
+    $(sectionSelects).on("change", function() {
+        $("#saveEventName").prop('disabled', false);
+    });
+    $(sectionTextarea).focus( function() {
+        $("#saveEventName").prop('disabled', false);
+    });
+
+    $(sectionBtn).click( function() {
+        $(sectionId).addClass('hasData');
+        $(nextSectionId + " h3").click();
+        $(document.documentElement).animate({
+            scrollTop: $("#event-info").offset().top - 45
+        }, 100);
+    });
+</script>
                               <form id="form-event-info">
    <div class="section section-event-info" id="event-info">
       <h3 class="section__header" data-target="#event-info__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-info__content">
@@ -666,7 +701,6 @@
       }, 100);
    });
 </script>
-
                               <form id="form-contact-info">
     <div class="section section-contact-info" id="contact-info">
         <div class="modal fade" id="modalContactInfoConfirmation" tabindex="-1" role="dialog">
@@ -1586,7 +1620,6 @@
     var sectionId = "#contact-info";
     var sectionInputs = sectionId + " input";
     var sectionSelects = sectionId + " select";
-    var sectionTextarea = sectionId + " textarea";
     $(sectionInputs).click( function() {
         $("#saveContactInfoSection").prop('disabled', false);
     });
@@ -1596,15 +1629,14 @@
     });
 
     $("#saveContactInfoSection").click( function() {
-        // $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+        $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
         $('#accordion').find('.collapse.in').parent().addClass('hasData');
         $("#location-information h3").click();
         $(document.documentElement).animate({
             scrollTop: $("#location-information").offset().top - 45
         }, 100);
     });
-</script>
-                              
+</script>                              
                               <form id="form-location-info">
    <div class="section section-location-information" id="location-information">
       <h3 class="section__header" data-target="#location-information__content" data-toggle="collapse" aria-expanded="false" aria-controls="location-information__content">
@@ -2869,7 +2901,6 @@ Other -->
       }, 100);
    });
 </script>
-
                               <form id="form-entry-info">
    <div class="section  section-entry-information" id="entry-information">
       <h3 class="section__header" data-target="#entry-information__content" data-toggle="collapse" aria-expanded="false" aria-controls="entry-information__content">
@@ -3066,7 +3097,6 @@ Other -->
    });
 
 </script>
-
                               <form id="form-meet-announcement">
    <div class="section section-meet-announcement" id="meetAnnouncement">
       <h3 class="section__header" data-target="#meet-announcement__content" data-toggle="collapse" aria-expanded="false" aria-controls="meet-announcement__content">
@@ -3157,7 +3187,6 @@ Other -->
    });
 
 </script>
-
                               <form id="form-accept-submit">
    <div class="section section-accept-submit" id="accept-submit">
       <h3 class="section__header" data-target="#accept-submit__content" data-toggle="collapseXXX" aria-expanded="false" aria-controls="accept-submit__content">
@@ -3271,7 +3300,6 @@ Other -->
       }
    });
 </script>
-
                            </div>
 
                         </div>

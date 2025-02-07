@@ -1613,7 +1613,6 @@
     var sectionId = "#contact-info";
     var sectionInputs = sectionId + " input";
     var sectionSelects = sectionId + " select";
-    var sectionTextarea = sectionId + " textarea";
     $(sectionInputs).click( function() {
         $("#saveContactInfoSection").prop('disabled', false);
     });
@@ -1623,7 +1622,7 @@
     });
 
     $("#saveContactInfoSection").click( function() {
-        // $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+        $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
         $('#accordion').find('.collapse.in').parent().addClass('hasData');
         $("#location-information h3").click();
         $(document.documentElement).animate({
