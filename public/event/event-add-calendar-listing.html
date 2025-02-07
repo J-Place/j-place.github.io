@@ -2153,14 +2153,17 @@
     }
     @media (min-width: 1200px) {
         #tempNavCourseDescription {
-            margin-top: -2rem;
+            margin-top: -6rem;
             float: right;
         }
     }
 </style>
 <div class="row course-description">
     <div class="col-xs-12">
-        <h5 style="display:inline;">Course Description</h5>
+        <!-- <h5 style="display:inline; font-size: 1.4rem;">Course Description</h5> -->
+        <div class="input-group input-footnote">
+            <label>Course Description</label>    
+        </div>
         <p id="tempNavCourseDescription"><span id="default">Default</span>&nbsp;&nbsp;<span id="standard">Standard</span>&nbsp;&nbsp;<span id="optionA">Option A</span>&nbsp;&nbsp;<span id="optionB">Option B</span>&nbsp;&nbsp;<span id="optionC">Option C</span></p>        
         <div class="list list--result">
             <div class="list__container">
@@ -2245,7 +2248,24 @@ Other -->
          <!-- Timing System -->
 <div class="row form-group timing-system-group">
     <div class="col-xs-12 col-sm-8 col-md-5">
-        <div class="input-group radio-group timing-system">
+
+        <div class="input-group event-info-lmsc required">
+            <label for="SelectTimingSystem">
+                Timing System
+               <!-- <span class="icon-help" data-toggle="tooltip" data-placement="top" title="Select the timing system that will be used." data-container="body" data-original-title=""></span> -->
+            </label>
+            <select name="SelectTimingSystem" class="form-control" id="selectTimingSystem" required="True">                                                            
+               <option value="" disabled selected>Select an LMSC</option>
+               <option value="automatic">Automatic</option>
+               <option value="semiautomatic">Semi-Automatic</option>
+               <option value="manual2">Manual w/ More Than 2 Stopwatches</option>
+               <option value="manual1">Manual w/ Less Than 2 Stopwatches</option>
+            </select>
+            <span class="help-block help-block--SelectTimingSystem">Please select a timing system.</span>
+         </div>
+
+         
+        <!-- <div class="input-group radio-group timing-system">
             <div class="input-group-header radio-group-header required">
                 Timing System
             </div>
@@ -2286,9 +2306,9 @@ Other -->
                     <span class="radio__placeholder"></span>
                 </span>
                 </label>
-            </div>
+            </div> 
 
-        </div>
+        </div>-->
     </div>
     <div class="col-xs-12">
         <div class="timing-system-note">
