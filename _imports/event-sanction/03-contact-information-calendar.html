@@ -181,9 +181,9 @@
                 </div>
             </div>
 
-            <sergey-import src="event-sanction/event-director" />
+            <sergey-import src="event-sanction/form-group-event-director" />
 
-            <sergey-import src="event-sanction/host-type" />
+            <sergey-import src="event-sanction/form-group-host-type" />
 
             <div class="row">
                 <div class="section__controls">
@@ -194,29 +194,28 @@
         </div>        
     </div>
 </form>
-<!-- <script>
-    $("#confirmCurrentEventDirector").click( function() {
-        $("#saveContactInfoSection").prop('disabled', false);
-    });
-    $("#addAsEventDirector").click(function() {
-        $("#saveContactInfoSection").prop('disabled', false);
-    });
-    $("#addNewEventDirectorBtn").click(function() {
-        $("#saveContactInfoSection").prop('disabled', false);
-    });
-    // $("#saveContactInfoSection").click( function() {
-    //     $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
-    //     $("#location-information h3").click();
-    //     $(document.documentElement).animate({
-    //         scrollTop: $("#location-information").offset().top - 45
-    //     }, 100);
-    // });
-</script> -->
 <script src="/event/js/head-ref.js"></script>
 <script src="/event/js/safety-coordinator.js"></script>
 <script src="/event/js/host-type.js"></script>
 <script>
-    var sectionId = "#event-info";
-    var btnId = "#saveContactInfoSection";
-    var nextSection = "#location-information";
+    var sectionId = "#contact-info";
+    var sectionInputs = sectionId + " input";
+    var sectionSelects = sectionId + " select";
+    var sectionTextarea = sectionId + " textarea";
+    $(sectionInputs).click( function() {
+        $("#saveContactInfoSection").prop('disabled', false);
+    });
+    $(sectionSelects).on("change", function() {
+        console.log("select");
+        $("#saveContactInfoSection").prop('disabled', false);
+    });
+    
+    $("#saveContactInfoSection").click( function() {
+        // $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+        $('#accordion').find('.collapse.in').parent().addClass('hasData');
+        $("#location-information h3").click();
+        $(document.documentElement).animate({
+            scrollTop: $("#location-information").offset().top - 45
+        }, 100);
+    });
 </script>

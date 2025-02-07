@@ -396,6 +396,52 @@
       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
       <div class="section__content collapse" id="event-info__content" data-parent="#accordion">
 
+         <!-- Event Classification Radios -->
+<div class="row form-group">
+   <div class="col-xs-12">
+         <div class="input-group radio-group event-info-classification">
+            <div class="input-group-header radio-group-header required">
+               <label class="icon-help-label" for="tooltip">
+                  Event Classification
+                  <span class="icon-help" data-toggle="tooltip" data-placement="top" title="A USMS Sanction requires that every participant is a USMS member. A USMS Recognition allows for some participants to not be a USMS member, but still allows for a USMS member's results to count as an official time." data-container="body" data-original-title=""></span>
+               </label>
+            </div>
+            <span class="help-block help-block--eventClassification">Please chose an event classification</span>
+            <label class="radio-label radio-label--inline" for="eventClassificationSanctioned">
+               <span class="radio-container">
+                     <input type="radio" name="eventClassification" id="eventClassificationSanctioned" value="sanctioned">
+                     <span class="radio__placeholder"></span>
+               </span>
+               Sanctioned
+            </label>
+            <label class="radio-label radio-label--inline" for="eventClassificationRecognized">
+               <span class="radio-container">
+                     <input type="radio" name="eventClassification" id="eventClassificationRecognized" value="recognized">
+                     <span class="radio__placeholder"></span>
+               </span>
+               Recognized
+            </label>
+         </div>
+   </div>
+</div>
+         <!-- LMSC -->
+<div class="row form-group">
+   <div class="col-xs-12 col-sm-8 col-md-5">
+      <div class="input-group event-info-lmsc required">
+         <label for="SelectEventLmsc">
+            LMSC
+            <span class="icon-help" data-toggle="tooltip" data-placement="top" title="Select the LMSC where the event is taking place." data-container="body" data-original-title=""></span>
+         </label>
+         <select name="SelectEventLmsc" class="form-control" id="selectEventLmsc" required="True">                                                            
+            <option value="" disabled selected>Select an LMSC</option>
+            <option value="FL">Florida</option>
+            <option value="GA">Georgia</option>
+         </select>
+            <span class="help-block help-block--SelectEventLmsc">LMSC information is required.</span>
+      </div>
+   </div>
+</div>
+
          <!-- Course -->
 <div class="row form-group">
    <div class="col-xs-12 col-sm-8 col-md-5">
@@ -455,170 +501,51 @@
       </div>
    </div>
 </div>
-         <!-- Is Virtual? -->
+         <!-- Description -->
 <div class="row form-group">
-    <div class="col-xs-12">
-        <div class="input-group radio-group event-info-is-virtual">
-            <div class="input-group-header radio-group-header required">
-                <label class="icon-help-label" for="tooltip">
-                    Is this a virtual event?
-                    <span class="icon-help" data-toggle="tooltip" data-placement="top" title="A Virtual Event is a swimming competition conducted in multiple locations with results compiled in a central location." data-container="body" data-original-title=""></span>
-                </label>
-            </div>
-            <span class="help-block help-block--isVirtual">Please make a selection</span>
-            <label class="radio-label radio-label--inline" for="isVirtualYes">
-                <span class="radio-container">
-                    <input type="radio" name="isVirtual" id="isVirtualYes" value="true">
-                    <span class="radio__placeholder"></span>
-                </span>
-                Yes
+    <div class="col-xs-12 col-sm-8">
+        <div class="input-group event-info-details required">
+            <label for="eventInfoDetails" class="label-large">
+                Event Description
+                <span class="icon-help" data-toggle="tooltip" data-placement="top" title="This will be displayed to the public and help sell someone on participating in the event. Be thorough and be sure to include…. Your application will not be approved if you use the word Olympic and/or Paralympic." data-container="body" data-original-title=""></span>
             </label>
-            <label class="radio-label radio-label--inline" for="isVirtualNo">
-                <span class="radio-container">
-                    <input type="radio" name="isVirtual" id="isVirtualNo" value="false" checked>
-                    <span class="radio__placeholder"></span>
-                </span>
-                No
-            </label>
+            <textarea class="form-control" rows="3" cols="50" name="eventInfoDetails" id="eventInfoDetails" required=""></textarea>
+            <span class="help-block help-block--eventInfoDetails">Please enter the event details</span>
         </div>
     </div>
 </div>
-<script>
-    $("#isVirtualYes").click( function() {
-        if ($('.timing-system-group').length) {
-            $('.timing-system-group').hide();
-        }
-    });
-    $("#isVirtualNo").click( function() {
-        $('.timing-system-group').show();
-    });
-</script>
-         <!-- Event Classification Radios -->
-<div class="row form-group">
-   <div class="col-xs-12">
-         <div class="input-group radio-group event-info-classification">
-            <div class="input-group-header radio-group-header required">
-               <label class="icon-help-label" for="tooltip">
-                  Event Classification
-                  <span class="icon-help" data-toggle="tooltip" data-placement="top" title="A USMS Sanction requires that every participant is a USMS member. A USMS Recognition allows for some participants to not be a USMS member, but still allows for a USMS member's results to count as an official time." data-container="body" data-original-title=""></span>
+            <!-- Event Image -->
+   <div class="row form-group">
+      <div class="col-xs-12 col-sm-8">
+         <div class="input-group event-info-image">
+            <label for="EventInfoImage">Upload an image - to appear on the event detail page</label>
+            <span class="help-block">Invalid image type</span>
+            <div class="upload-thumbnail" style="background-image: url('')">
+               <button type="button" class="club-logo__remove-image" data-toggle="tooltip" title="" data-original-title="Remove event photo">
+                  <i class="fa fa-times"></i>
+               </button>
+            </div>
+            <div class="upload-box">
+               <input type="file" data-file-size="3584000" name="EventImage[]" id="EventImage" class="inputfile inputEventImage" data-multiple-caption="{count} files selected" accept="image/*" multiple="">
+               <label for="EventImage">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                     <path fill="#FFF" d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                  </svg>
+                  <span>Choose a file…</span>
                </label>
             </div>
-            <span class="help-block help-block--eventClassification">Please chose an event classification</span>
-            <label class="radio-label radio-label--inline" for="eventClassificationSanctioned">
-               <span class="radio-container">
-                     <input type="radio" name="eventClassification" id="eventClassificationSanctioned" value="sanctioned">
-                     <span class="radio__placeholder"></span>
-               </span>
-               Sanctioned
-            </label>
-            <label class="radio-label radio-label--inline" for="eventClassificationRecognized">
-               <span class="radio-container">
-                     <input type="radio" name="eventClassification" id="eventClassificationRecognized" value="recognized">
-                     <span class="radio__placeholder"></span>
-               </span>
-               Recognized
-            </label>
+            <div class="upload-instructions">
+               <span>Dimensions: 1200 x 480 pixels</span>
+               <span>Format: JPG, PNG, GIF</span>
+               <span>Max file size: 3.5mb</span>
+            </div>
          </div>
-   </div>
-</div>
-         <!-- LMSC -->
-<div class="row form-group">
-   <div class="col-xs-12 col-sm-8 col-md-5">
-      <div class="input-group event-info-lmsc required">
-         <label for="SelectEventLmsc">
-            LMSC
-            <span class="icon-help" data-toggle="tooltip" data-placement="top" title="Select the LMSC where the event is taking place." data-container="body" data-original-title=""></span>
-         </label>
-         <select name="SelectEventLmsc" class="form-control" id="selectEventLmsc" required="True">                                                            
-            <option value="" disabled selected>Select an LMSC</option>
-            <option value="FL">Florida</option>
-            <option value="GA">Georgia</option>
-         </select>
-            <span class="help-block help-block--SelectEventLmsc">LMSC information is required.</span>
       </div>
    </div>
-</div>
-         <!-- Timing System -->
-<div class="row form-group timing-system-group">
-    <div class="col-xs-12 col-sm-8 col-md-5">
-        <div class="input-group radio-group timing-system">
-            <div class="input-group-header radio-group-header required">
-                Timing System
-            </div>
-            <span class="help-block help-block--timing-system">Please select a timing system.</span>
-            <div class="input-group radio-group">
-                <label class="radio-label" for="timingAutomatic">
-                    Automatic
-                    <span class="radio-container">
-                        <input type="radio" id="timingAutomatic" name="TimingSystem" value="timingAutomatic">
-                        <span class="radio__placeholder"></span>
-                    </span>
-                </label>
-            </div>
-            <div class="input-group radio-group">
-                <label class="radio-label" for="timingSemiAutomatic">
-                Semi-Automatic
-                <span class="radio-container">
-                    <input type="radio" id="timingSemiAutomatic" name="TimingSystem" value="timingSemiAutomatic">
-                    <span class="radio__placeholder"></span>
-                </span>
-                </label>
-            </div>
-            <div class="input-group radio-group">
-                <label class="radio-label" for="timingManual">
-                Manual w/ More Than 2 Stopwatches
-                <span class="radio-container">
-                    <input type="radio" id="timingManual" name="TimingSystem" value="timingManual">
-                    <span class="radio__placeholder"></span>
-                </span>
-                </label>
-            </div>
 
-            <div class="input-group radio-group">
-                <label class="radio-label" for="timingManualMinimum">
-                Manual w/ Less Than 2 Stopwatches
-                <span class="radio-container">
-                    <input type="radio" id="timingManualMinimum" name="TimingSystem" value="timingManualMinimum">
-                    <span class="radio__placeholder"></span>
-                </span>
-                </label>
-            </div>
 
-        </div>
-    </div>
-    <div class="col-xs-12">
-        <div class="timing-system-note">
-            <div class="input-group-header">
-                Timing System Statement
-            </div>
-            <p class="default">Please review 103.18.5—103.18.9 in the USMS Rule Book for more information on these statements. They are based on your timing system set up and usage.</p>
-            <p class="automatic">Times from this competition will be eligible for world record, USMS record, and Top 10 consideration. For more information, see 103.18.9 in the USMS Rule Book.</p>
-            <p class="semi-automatic">Times from this competition will be eligible for USMS records and Top 10 consideration, but not for world records. For more information, see 103.18.9 in the USMS Rule Book.</p>
-            <p class="manual">Times from this competition will be eligible for USMS Top 10 consideration, but not for world or USMS records. For more information, see 103.18.9 in the USMS Rule Book.</p>
-            <p class="manual-min">Times from this competition will not be eligible for world record, USMS record, or Top 10 consideration. For more information, see 103.18.9 in the USMS Rule Book.</p>
-        </div>   
-    </div>
-</div>
-
-<script>
-    //  Show variations of timing system statement
-    $("#timingAutomatic").click( function() {
-        $(".timing-system-note p").hide();
-        $(".timing-system-note p.automatic").show();
-    });
-    $("#timingSemiAutomatic").click( function() {
-        $(".timing-system-note p").hide();
-        $(".timing-system-note p.semi-automatic").show();
-    });
-    $("#timingManual").click( function() {
-        $(".timing-system-note p").hide();
-        $(".timing-system-note p.manual").show();
-    });
-    $("#timingManualMinimum").click( function() {
-        $(".timing-system-note p").hide();
-        $(".timing-system-note p.manual-min").show();
-    });
-</script>
+         
+         
          <!-- List on Calendar -->
 <div class="row form-group">
    <div class="col-xs-12 col-sm-8 col-md-5">
@@ -670,6 +597,46 @@
          </div>
    </div>
 </div>
+         <!-- Is Virtual? -->
+<div class="row form-group">
+    <div class="col-xs-12">
+        <div class="input-group radio-group event-info-is-virtual">
+            <div class="input-group-header radio-group-header required">
+                <label class="icon-help-label" for="tooltip">
+                    Is this a virtual event?
+                    <span class="icon-help" data-toggle="tooltip" data-placement="top" title="A Virtual Event is a swimming competition conducted in multiple locations with results compiled in a central location." data-container="body" data-original-title=""></span>
+                </label>
+            </div>
+            <span class="help-block help-block--isVirtual">Please make a selection</span>
+            <label class="radio-label radio-label--inline" for="isVirtualYes">
+                <span class="radio-container">
+                    <input type="radio" name="isVirtual" id="isVirtualYes" value="true">
+                    <span class="radio__placeholder"></span>
+                </span>
+                Yes
+            </label>
+            <label class="radio-label radio-label--inline" for="isVirtualNo">
+                <span class="radio-container">
+                    <input type="radio" name="isVirtual" id="isVirtualNo" value="false" checked>
+                    <span class="radio__placeholder"></span>
+                </span>
+                No
+            </label>
+        </div>
+    </div>
+</div>
+<script>
+    $("#isVirtualYes").click( function() {
+        if ($('.timing-system-group').length) {
+            $('.timing-system-group').hide();
+        }
+    });
+    $("#isVirtualNo").click( function() {
+        $('.timing-system-group').show();
+    });
+</script>
+         
+
 
          <!-- Save Section -->
          <div class="row form-group">
@@ -686,19 +653,18 @@
    var sectionInputs = sectionId + " input";
    var sectionSelects = sectionId + " select";
    var sectionTextarea = sectionId + " textarea";
+   var sectionBtn = "#saveEventInfo";
    $(sectionInputs).click( function() {
-      $("#saveEventInfo").prop('disabled', false);
+      $(sectionBtn).prop('disabled', false);
    });
    $(sectionSelects).on("change", function() {
-      $("#saveEventInfo").prop('disabled', false);
+      $(sectionBtn).prop('disabled', false);
    });
    $(sectionTextarea).focus( function() {
-       $("#saveEventInfo").prop('disabled', false);
+       $(sectionBtn).prop('disabled', false);
    });
 
-
-
-   $("#saveEventInfo").click( function() {
+   $(sectionBtn).click( function() {
       $("#event-info").addClass('hasData');
       $("#contact-info h3").click();
       $(document.documentElement).animate({
@@ -781,15 +747,6 @@
                         </button>
                     </div>
                 </div>
-                <!-- <div class="row">
-                    <div class="col-sm-12 col-md-8">
-                        <div class="input-group lookup-confirm">
-                            <button class="btn btn-small save-as-contact" type="button" id="addAsEventDirector">
-                                <span class="lookup-confirm--name">Confirm Kyle Deery</span>
-                            </button>
-                        </div>
-                    </div>
-                </div> -->
             </div>
 
             <div class="form-group contact-info__event-director-other--add-new">
@@ -993,7 +950,6 @@
 </div>
 
 <script src="/event/js/event-director.js"></script>
-
             
 <div class="row contact-info__head-ref-container">
     <div class="form-group contact-info__head-ref--container">
@@ -1194,7 +1150,6 @@
     </div>
 </div>
 <script src="./js/head-ref.js"></script>
-
             
 <div class="row contact-info__safety-coordinator">
     <div class="form-group contact-info__safety-coordinator--container">
@@ -1393,7 +1348,6 @@
     </div>
 </div>
 <script src="./js/safety-coordinator.js"></script>
-
             <div class="row contact-info__host-type">
     <div class="form-group contact-info__host-type--container">
         <div class="row">
@@ -1636,13 +1590,9 @@
 
 <script>
     var sectionId = "#contact-info";
-    var btnId = "#saveContactInfoSection";
-    var nextSection = "#location-information";
-
     var sectionInputs = sectionId + " input";
     var sectionSelects = sectionId + " select";
     var sectionTextarea = sectionId + " textarea";
-
     $(sectionInputs).click( function() {
         $("#saveContactInfoSection").prop('disabled', false);
     });
@@ -1664,10 +1614,11 @@
                               <form id="form-location-info">
    <div class="section section-location-information" id="location-information">
       <h3 class="section__header" data-target="#location-information__content" data-toggle="collapse" aria-expanded="false" aria-controls="location-information__content">
-         <span class="section__number">4</span>Location Information
+         <span class="section__number">4</span>Location & Pool Information
       </h3>
       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
       <div class="section__content collapse" id="location-information__content" data-parent="#accordion">
+
          
 <link rel="stylesheet" href="/search/css/ListControl.css">
 <link rel="stylesheet" href="/event/css/list-control-event.css">
@@ -2793,6 +2744,88 @@ Search by City, State or Zip
 Sarasota, FL, USA
 SUBMIT
 Other -->
+         <!-- Timing System -->
+<div class="row form-group timing-system-group">
+    <div class="col-xs-12 col-sm-8 col-md-5">
+        <div class="input-group radio-group timing-system">
+            <div class="input-group-header radio-group-header required">
+                Timing System
+            </div>
+            <span class="help-block help-block--timing-system">Please select a timing system.</span>
+            <div class="input-group radio-group">
+                <label class="radio-label" for="timingAutomatic">
+                    Automatic
+                    <span class="radio-container">
+                        <input type="radio" id="timingAutomatic" name="TimingSystem" value="timingAutomatic">
+                        <span class="radio__placeholder"></span>
+                    </span>
+                </label>
+            </div>
+            <div class="input-group radio-group">
+                <label class="radio-label" for="timingSemiAutomatic">
+                Semi-Automatic
+                <span class="radio-container">
+                    <input type="radio" id="timingSemiAutomatic" name="TimingSystem" value="timingSemiAutomatic">
+                    <span class="radio__placeholder"></span>
+                </span>
+                </label>
+            </div>
+            <div class="input-group radio-group">
+                <label class="radio-label" for="timingManual">
+                Manual w/ More Than 2 Stopwatches
+                <span class="radio-container">
+                    <input type="radio" id="timingManual" name="TimingSystem" value="timingManual">
+                    <span class="radio__placeholder"></span>
+                </span>
+                </label>
+            </div>
+
+            <div class="input-group radio-group">
+                <label class="radio-label" for="timingManualMinimum">
+                Manual w/ Less Than 2 Stopwatches
+                <span class="radio-container">
+                    <input type="radio" id="timingManualMinimum" name="TimingSystem" value="timingManualMinimum">
+                    <span class="radio__placeholder"></span>
+                </span>
+                </label>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="timing-system-note">
+            <div class="input-group-header">
+                Timing System Statement
+            </div>
+            <p class="default">Please review 103.18.5—103.18.9 in the USMS Rule Book for more information on these statements. They are based on your timing system set up and usage.</p>
+            <p class="automatic">Times from this competition will be eligible for world record, USMS record, and Top 10 consideration. For more information, see 103.18.9 in the USMS Rule Book.</p>
+            <p class="semi-automatic">Times from this competition will be eligible for USMS records and Top 10 consideration, but not for world records. For more information, see 103.18.9 in the USMS Rule Book.</p>
+            <p class="manual">Times from this competition will be eligible for USMS Top 10 consideration, but not for world or USMS records. For more information, see 103.18.9 in the USMS Rule Book.</p>
+            <p class="manual-min">Times from this competition will not be eligible for world record, USMS record, or Top 10 consideration. For more information, see 103.18.9 in the USMS Rule Book.</p>
+        </div>   
+    </div>
+</div>
+
+<script>
+    //  Show variations of timing system statement
+    $("#timingAutomatic").click( function() {
+        $(".timing-system-note p").hide();
+        $(".timing-system-note p.automatic").show();
+    });
+    $("#timingSemiAutomatic").click( function() {
+        $(".timing-system-note p").hide();
+        $(".timing-system-note p.semi-automatic").show();
+    });
+    $("#timingManual").click( function() {
+        $(".timing-system-note p").hide();
+        $(".timing-system-note p.manual").show();
+    });
+    $("#timingManualMinimum").click( function() {
+        $(".timing-system-note p").hide();
+        $(".timing-system-note p.manual-min").show();
+    });
+</script>
+
          <div class="section__controls">
             <button class="btn save-section" type="button" id="saveLocation" disabled>Save &amp; Continue</button>
          </div>
@@ -2804,27 +2837,23 @@ Other -->
 
 <script>
    var sectionId = "#location-information";
-   var btnId = "#saveLocation";
-   var nextSection = "#entry-information";
-   
    var sectionInputs = sectionId + " input";
-    var sectionSelects = sectionId + " select";
-    var sectionTextarea = sectionId + " textarea";
+   var sectionSelects = sectionId + " select";
+   var sectionTextarea = sectionId + " textarea";
+   $(sectionInputs).click( function() {
+      $("#saveLocation").prop('disabled', false);
+   });
+   $(sectionSelects).on("change", function() {
+      $("#saveLocation").prop('disabled', false);
+   });
 
-    $(sectionInputs).click( function() {
-        $("#saveLocation").prop('disabled', false);
-    });
-    $(sectionSelects).on("change", function() {
-        $("#saveLocation").prop('disabled', false);
-    });
-
-    $("#saveLocation").click( function() {
-        $('#accordion').find('.collapse.in').parent().addClass('hasData');
-        $("#entry-information h3").click();
-        $(document.documentElement).animate({
-            scrollTop: $("#entry-information").offset().top - 45
-        }, 100);
-    });
+   $("#saveLocation").click( function() {
+      $('#accordion').find('.collapse.in').parent().addClass('hasData');
+      $("#entry-information h3").click();
+      $(document.documentElement).animate({
+         scrollTop: $("#entry-information").offset().top - 45
+      }, 100);
+   });
 </script>
 
                               <form id="form-entry-info">
@@ -2992,13 +3021,9 @@ Other -->
 
 <script>
    var sectionId = "#entry-information";
-   var btnId = "#saveEntryInfo";
-   var nextSection = "#meetAnnouncement";
-
    var sectionInputs = sectionId + " input";
    var sectionSelects = sectionId + " select";
    var sectionTextarea = sectionId + " textarea";
-
    $(sectionInputs).click( function() {
       $("#saveEntryInfo").prop('disabled', false);
    });
@@ -3093,7 +3118,6 @@ Other -->
    var sectionInputs = sectionId + " input";
    var sectionSelects = sectionId + " select";
    var sectionTextarea = sectionId + " textarea";
-
    $(sectionInputs).click( function() {
       $("#saveMeetAnnouncement").prop('disabled', false);
    });
@@ -3117,11 +3141,6 @@ Other -->
       $("#meetAnnouncement .upload-summary").show();
       $("#meetAnnouncement .file-stored").text('Replace File');
    });
-
-   // $("#saveMeetAnnouncement").click( function() {
-   //    $('#accordion').find('.collapse.in').removeClass('in');
-   //    $('#accordion').find('.collapse.in').parent().addClass('hasData');
-   // });
 
 </script>
 

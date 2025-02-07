@@ -21,7 +21,26 @@
  </form>
 
  <script> 
-    var sectionId = "#event-info";
-    var btnId = "#saveEventInfo";
-    var nextSection = "#contact-info"; 
+   var sectionId = "#event-info";
+   var sectionInputs = sectionId + " input";
+   var sectionSelects = sectionId + " select";
+   var sectionTextarea = sectionId + " textarea";
+   var sectionBtn = "#saveEventInfo";
+   $(sectionInputs).click( function() {
+      $(sectionBtn).prop('disabled', false);
+   });
+   $(sectionSelects).on("change", function() {
+      $(sectionBtn).prop('disabled', false);
+   });
+   $(sectionTextarea).focus( function() {
+       $(sectionBtn).prop('disabled', false);
+   });
+
+   $(sectionBtn).click( function() {
+      $("#event-info").addClass('hasData');
+      $("#contact-info h3").click();
+      $(document.documentElement).animate({
+         scrollTop: $("#contact-info").offset().top - 45
+      }, 100);
+   });
  </script>

@@ -1,14 +1,13 @@
 <form id="form-event-name">
     <div class="section section-event-name" id="event-name">
         <h3 class="section__header" data-target="#event-name__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-name__content">
-            <span class="section__number">1</span>Basic Information
+            <span class="section__number">1</span>Event Name
         </h3>
         <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
         <div class="section__content collapse" id="event-name__content" data-parent="#accordion">
 
             <sergey-import src="event-sanction/form-group-event-name" />
-            <sergey-import src="event-sanction/form-group-event-description" />
-            <sergey-import src="event-sanction/form-group-event-image" />
+            <br />
             <sergey-import src="event-sanction/form-group-event-type" />
 
             <div class="row">
@@ -22,31 +21,37 @@
 
 <script>
     var sectionId = "#event-name";
+    var nextSectionId = "#event-info";
     var sectionInputs = sectionId + " input";
     var sectionSelects = sectionId + " select";
-    var sectionTextarea = sectionId + " textarea";    
+    var sectionTextarea = sectionId + " textarea";   
+    var sectionBtn = "#saveEventName"; 
     $(sectionInputs).click( function() {
-        console.log("Becky");
+        console.log("Becky input");
         $("#saveEventName").prop('disabled', false);
     });
     $(sectionSelects).on("change", function() {
+        console.log("Becky select")
         $("#saveEventName").prop('disabled', false);
     });
     $(sectionTextarea).focus( function() {
-        $("#saveEventName").prop('disabled', false);
+        $("#saveEventName text").prop('disabled', false);
     });
 
-    $("#saveEventName").click( function() {
-        $("#event-type").addClass('hasData');
-        $("#event-info h3").click();
-        if ( $("#calendar-eventinfo").length == 1 ) {
-            $(document.documentElement).animate({
-                scrollTop: $("#calendar-eventinfo").offset().top - 45
-            }, 100);
-        } else {
-            $(document.documentElement).animate({
-                scrollTop: $("#event-info").offset().top - 45
-            }, 100);
-        }      
+    $(sectionBtn).click( function() {
+        $(sectionId).addClass('hasData');
+        $(nextSectionId + " h3").click();
+        // if ( $("#calendar-eventinfo").length == 1 ) {
+        //     $(document.documentElement).animate({
+        //         scrollTop: $("#calendar-eventinfo").offset().top - 45
+        //     }, 100);
+        // } else {
+        //     $(document.documentElement).animate({
+        //         scrollTop: $("#event-info").offset().top - 45
+        //     }, 100);
+        // }
+        $(document.documentElement).animate({
+            scrollTop: $("#event-info").offset().top - 45
+        }, 100);
     });
 </script>

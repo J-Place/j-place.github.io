@@ -72,15 +72,6 @@
                         </button>
                     </div>
                 </div>
-                <!-- <div class="row">
-                    <div class="col-sm-12 col-md-8">
-                        <div class="input-group lookup-confirm">
-                            <button class="btn btn-small save-as-contact" type="button" id="addAsEventDirector">
-                                <span class="lookup-confirm--name">Confirm Kyle Deery</span>
-                            </button>
-                        </div>
-                    </div>
-                </div> -->
             </div>
 
             <div class="form-group contact-info__event-director-other--add-new">
@@ -181,13 +172,10 @@
                 </div>
             </div>
 
-            <sergey-import src="event-sanction/event-director" />
-
-            <sergey-import src="event-sanction/head-ref" />
-
-            <sergey-import src="event-sanction/safety-coordinator" />
-
-            <sergey-import src="event-sanction/host-type" />
+            <sergey-import src="event-sanction/form-group-event-director" />
+            <sergey-import src="event-sanction/form-group-head-ref" />
+            <sergey-import src="event-sanction/form-group-safety-coordinator" />
+            <sergey-import src="event-sanction/form-group-host-type" />
 
             <div class="row">
                 <div class="section__controls">
@@ -203,13 +191,9 @@
 
 <script>
     var sectionId = "#contact-info";
-    var btnId = "#saveContactInfoSection";
-    var nextSection = "#location-information";
-
     var sectionInputs = sectionId + " input";
     var sectionSelects = sectionId + " select";
     var sectionTextarea = sectionId + " textarea";
-
     $(sectionInputs).click( function() {
         $("#saveContactInfoSection").prop('disabled', false);
     });
