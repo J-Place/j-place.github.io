@@ -2310,13 +2310,52 @@ Other -->
             <p class="default">Please review 103.18.5—103.18.9 in the USMS Rule Book for more information on these statements. They are based on your timing system set up and usage.</p>
             <p class="automatic">Times from this competition will be eligible for world record, USMS record, and Top 10 consideration. For more information, see 103.18.9 in the USMS Rule Book.</p>
             <p class="semi-automatic">Times from this competition will be eligible for USMS records and Top 10 consideration, but not for world records. For more information, see 103.18.9 in the USMS Rule Book.</p>
-            <p class="manual">Times from this competition will be eligible for USMS Top 10 consideration, but not for world or USMS records. For more information, see 103.18.9 in the USMS Rule Book.</p>
-            <p class="manual-min">Times from this competition will not be eligible for world record, USMS record, or Top 10 consideration. For more information, see 103.18.9 in the USMS Rule Book.</p>
+            <p class="manual2">Times from this competition will be eligible for USMS Top 10 consideration, but not for world or USMS records. For more information, see 103.18.9 in the USMS Rule Book.</p>
+            <p class="manual1">Times from this competition will not be eligible for world record, USMS record, or Top 10 consideration. For more information, see 103.18.9 in the USMS Rule Book.</p>
         </div>   
     </div>
 </div>
 
 <script>
+    $(document).ready(function() {
+      $('#selectTimingSystem').change(function() {
+        var selectedValue = $(this).val();
+        console.log(selectedValue);
+        showTimingStatement(selectedValue);
+        console.log(selectedValue);
+      });
+
+      // Function to be called based on selected value
+      function showTimingStatement(value) {
+        switch(value) {
+          case 'automatic':
+            console.log('You selected Option 1');
+            $(".timing-system-note p").hide();
+            $(".timing-system-note p.automatic").show();
+            break;
+          case 'semiautomatic':
+            console.log('You selected Option 2');
+            $(".timing-system-note p").hide();
+            $(".timing-system-note p.semi-automatic").show();
+            break;
+          case 'manual1':
+            console.log('You selected Option 3');
+            $(".timing-system-note p").hide();
+            $(".timing-system-note p.manual1").show();
+            break;
+        case 'manual2':
+            console.log('You selected Option 4');
+            $(".timing-system-note p").hide();
+            $(".timing-system-note p.manual2").show();
+            break;
+        default:
+            console.log('Please select an option');
+        }
+      }
+    });
+  </script>
+
+  <!-- <script>
     //  Show variations of timing system statement
     $("#timingAutomatic").click( function() {
         $(".timing-system-note p").hide();
@@ -2334,7 +2373,7 @@ Other -->
         $(".timing-system-note p").hide();
         $(".timing-system-note p.manual-min").show();
     });
-</script>
+</script> -->
 
          <div class="section__controls">
             <button class="btn save-section" type="button" id="saveLocation" disabled>Save &amp; Continue</button>
