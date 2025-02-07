@@ -341,7 +341,7 @@
                               <form id="form-event-name">
     <div class="section section-event-name" id="event-name">
         <h3 class="section__header" data-target="#event-name__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-name__content">
-            <span class="section__number">1</span>Event Name
+            <span class="section__number">1</span>Basic Information
         </h3>
         <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
         <div class="section__content collapse" id="event-name__content" data-parent="#accordion">
@@ -662,7 +662,7 @@
             <div class="input-group-header">
                 Timing System Statement
             </div>
-            <p class="default">Please review 103.18.5-103. 18.9 in the USMS Rule Book for more information on these statements. They are based on your timing system set up and usage.</p>
+            <p class="default">Please review 103.18.5—103.18.9 in the USMS Rule Book for more information on these statements. They are based on your timing system set up and usage.</p>
             <p class="automatic">Times from this competition will be eligible for world record, USMS record, and Top 10 consideration. For more information, see 103.18.9 in the USMS Rule Book.</p>
             <p class="semi-automatic">Times from this competition will be eligible for USMS records and Top 10 consideration, but not for world records. For more information, see 103.18.9 in the USMS Rule Book.</p>
             <p class="manual">Times from this competition will be eligible for USMS Top 10 consideration, but not for world or USMS records. For more information, see 103.18.9 in the USMS Rule Book.</p>
@@ -3105,7 +3105,10 @@ Other -->
             <div class="col-xs-12">
                <p>This information can be organized by your event registration company or created manually and uploaded. A PDF is preferred. We've included links below to a checklist of all required items, and a formatted Mirosoft Word template to help get you started.</p>
                <br />
-               <a href="" class="btn-link">Download Checklist</a> | <a href="" class="btn-link">Download Template</a>
+               <a href="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/pdfs/guide%20to%20operations %20-%20gto/ sanctions/gto_meet_announcement_guide.docx" class="btn-link">Download Checklist</a>
+               <br />
+               <br />
+               <a href="" class="btn-link">Download Template</a>
                <br />
                <br />
                <br />
@@ -3122,8 +3125,8 @@ Other -->
                      Storedfilename.pdf
                   </div>
                   <div class="upload-box upload-box--file">
-                     <input type="file" data-file-size="3584000" name="meet-announcement[]" id="MeetAnnouncement" class="inputfile inputfile-meet-announcement" data-multiple-caption="{count} files selected" accept="application/msword, text/plain, application/pdf" />
-                     <label for="MeetAnnouncement">
+                     <input type="file" data-file-size="3584000" name="meet-announcement[]" id="uploadMeetAnnouncement" class="inputfile inputfile-meet-announcement" data-multiple-caption="{count} files selected" accept="application/msword, text/plain, application/pdf" />
+                     <label for="uploadMeetAnnouncement">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path fill="#FFF" d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
                         <span class="file-stored">Choose File</span>
                      </label>
@@ -3154,22 +3157,20 @@ Other -->
  </form>
  <script>
    var sectionId = "#meetAnnouncement";
-   var btnId = "#saveEntryInfo";
-   var nextSection = "#meetAnnouncement";
-
    var sectionInputs = sectionId + " input";
    var sectionSelects = sectionId + " select";
    var sectionTextarea = sectionId + " textarea";
 
    $(sectionInputs).click( function() {
-      $("#saveEntryInfo").prop('disabled', false);
+      $("#saveMeetAnnouncement").prop('disabled', false);
    });
    $(sectionSelects).on("change", function() {
       console.log("select");
-      $("#saveEntryInfo").prop('disabled', false);
+      $("#saveMeetAnnouncement").prop('disabled', false);
    });
 
-   $("#saveEntryInfo").click( function() {
+   $("#saveMeetAnnouncement").click( function() {
+      $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
       $('#accordion').find('.collapse.in').parent().addClass('hasData');
       $("#meetAnnouncement h3").click();
       $(document.documentElement).animate({
@@ -3178,11 +3179,16 @@ Other -->
       $(".upload-summary").show();
    });
 
-   $("#MeetAnnouncement").click( function() {
-      $("#saveEntryInfo").prop('disabled', false);
+   $("#uploadMeetAnnouncement").click( function() {
+      $("#saveMeetAnnouncement").prop('disabled', false);
       $("#meetAnnouncement .upload-summary").show();
       $("#meetAnnouncement .file-stored").text('Replace File');
    });
+
+   // $("#saveMeetAnnouncement").click( function() {
+   //    $('#accordion').find('.collapse.in').removeClass('in');
+   //    $('#accordion').find('.collapse.in').parent().addClass('hasData');
+   // });
 
 </script>
                               <form id="form-accept-submit">
