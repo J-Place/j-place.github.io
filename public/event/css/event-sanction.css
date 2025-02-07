@@ -712,10 +712,15 @@ label.radio-label {
     line-height: 1.6rem;
 }
 
-.form__container .locations .list-item--location button.btn.btn-small {
-    margin-top: -1rem;
-    margin-bottom: 0.5rem;
+.form__container .locations .list-item--location button.btn {
     display: flex
+}
+
+.form__container .locations .list-item--location button.btn.btn-small {
+    /* margin-top: -1rem;
+    margin-bottom: 0.5rem; */
+    margin-top: 3rem;
+    margin-bottom: 0.5rem;
 }
 
 .location-column {
@@ -740,28 +745,30 @@ label.radio-label {
 }
 
 .club-edit .list-item p.event-location__address--name {
-    margin: 0 0.8rem 0 1rem;
+    margin: 0 0.8rem 0.5rem 0;
     padding: 0 1.2rem 0 0rem;
-    border-right: 1px solid #CCC;
+    /* border-right: 1px solid #CCC; */
     font-size: 2rem;
     line-height: 120%;
 }
 
 .club-edit .list-item .event-location--course-tags {
     display: flex;
+    margin-top: 0.8rem;
 }
 
 .club-edit .list-item p.event-location__address--street,
 .club-edit .list-item p.event-location__city-state {
     padding: 0 1.2rem 0 0;
-    margin: 0.5rem 1rem 2.2rem 0;
+    margin: 0.5 0 0;
     font-size: 1.7rem;
     line-height: 100%;;
 }
 
 .club-edit .list-item p.event-location__address--street {
-    border-right: 1px solid #CCC;   
-}
+    /* border-right: 1px solid #CCC; */
+    display: flex;
+} 
 
 @media (min-width: 768px) {
     .club-edit .list-item p.event-location__address--street {
@@ -774,9 +781,18 @@ label.radio-label {
     }
     .club-edit .list-item p.event-location__address--name {
         /* margin-left: 6rem; */
-    }
+        margin: 0 0.8rem 0 1rem;
+  }
     .form__container .locations .list-item--location button.btn.btn-small {
         /* margin-bottom: -2.2rem; */
+        margin-bottom: 0;
+    }
+    .club-edit .list-item p.event-location__address--street,
+    .club-edit .list-item p.event-location__city-state {
+        padding: 0 1.2rem 0 0;
+        margin: 0.5rem 1rem 2.2rem 0;
+        font-size: 1.7rem;
+        line-height: 100%;;
     }
 }
 
@@ -881,7 +897,7 @@ p.lookup__location--or {
     margin-right: 8px;
 }
 .radio-container {
-    margin-left: -3.2rem;
+    margin-left: -2.2rem;
 }
 .radio__placeholder {
     left: -2.8rem;
@@ -896,7 +912,7 @@ p.lookup__location--or {
         margin-left: 2.5rem;
     }
     .radio-container {
-        margin-left: -3.3rem;
+        margin-left: -3rem;
     }
     .radio__placeholder {
         left: -3rem;
