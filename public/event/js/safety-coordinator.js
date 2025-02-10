@@ -27,7 +27,7 @@ $("#lookupSafetyCoordinatorName").click(function(e) {
     e.preventDefault();
     openLookupSafetyCoordinator();
     closeAddSafetyCoordinatorForm();
-    $(this).attr("placeholder", "Jay Place");
+    $(this).attr("placeholder", "Jay Place, Sarasota, FL");
     $("#addNewSafetyCoordinator").show();
 });
 

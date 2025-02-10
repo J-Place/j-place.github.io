@@ -30,7 +30,7 @@ $("#lookupRefName").click(function(e) {
     e.preventDefault();
     openLookupRef();
     closeAddRefForm();
-    $(this).attr("placeholder", "Mark Usher");
+    $(this).attr("placeholder", "Mark Usher, Sarasota, FL");
     $("#addNewHeadRef").show();
 });
 

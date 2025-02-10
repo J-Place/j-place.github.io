@@ -114,7 +114,7 @@ $(document).ready(function() {
         $(".input-group.lookup-confirm").css("opacity","1");
         $(".contact-info-host-type__other-organization--container.add-new-inputs").hide();
         $("#addNewOrganization").show();
-        $("#lookupHostTypeOtherOrganization").attr("placeholder", "Rainbow River Swim Club");
+        $("#lookupHostTypeOtherOrganization").attr("placeholder", "Rainbow River Swim Club, Dunedin, FL");
     });
     
     $("#lookupHostTypeUsmsClub").click(function(e) {

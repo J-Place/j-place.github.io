@@ -71,7 +71,7 @@ $(document).ready(function() {
         $(".contact-info__event-director--add-new-container.add-new-inputs").hide();
         $("#addAsEventDirector").show();
         $("#addNewEventDirector").show();
-        $(this).attr("placeholder", "Kyle Deery");
+        $(this).attr("placeholder", "Kyle Deery, Sarasota, FL");
     });
 
 // Confirm Event Director
