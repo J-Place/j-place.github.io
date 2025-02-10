@@ -172,12 +172,14 @@ $(document).ready(function() {
         resetHostSelects();
         enableListControlEditing();
         hideLookupConfirmtBtn();
+        // contact-information__event-host--list
         $(".contact-info-host-type__other-organization--container.add-new-inputs").hide();
         $(".contact-info__host-type--container").hide();
         $(".contact-info-host-type__other--container").hide();
         $(".contact-info-organization__add-new").hide();
         $("#addHostTypeOtherOrganizationLookup").hide();
-        $(".contact-list__event-host--header").show(); // Show list header and controls
+        $(".contact-list__event-host--header").show();        
+        $(".contact-information__event-host--list").show();
         $(".contact-information__event-host--list .list-item").parent().hide(); // Hide any existing list items
         $(".contact-information__event-host--list .list-item--organization-new").parent().show(); // Show this list item
     });
