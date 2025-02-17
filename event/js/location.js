@@ -7,9 +7,9 @@ $(document).ready(function() {
     let lookupByLocationList = $(".list--lookup.locations");
     let savedLocationsList = $(".location-information__locations-list");
     let lookupByLocationConfirm = $(".location-column button");
-    let addNewLocationBtn = $("#addLocationBtn");
-    let cancelAddNewLocationBtn = $("#cancelAddLocationBtn");
-    let confirmAddNewFacility = $("#confirmNewFacility");
+    let addLocationBtn = $("#addLocationBtn");
+    let cancelAddLocationBtn = $("#cancelAddLocationBtn");
+    let confirmNewFacility = $("#confirmNewFacility");
     let addNewLocationForm = $(".event-location-details");
     let addNewPoolForm = $(".list-venue-form");
     let addNewConfigurationForm = $(".list-configuration-form");
@@ -39,27 +39,26 @@ $(document).ready(function() {
         // resetLocationInputs();
     });
 
-    $(addNewLocationBtn).click(function(e) {
+    $(addLocationBtn).click(function(e) {
         e.preventDefault();
-        // $(addNewLocationBtn).hide();
         $(".location-header").hide();
         $(addNewLocationForm).show();
         hideLookupLocationList();
         $("input[type='checkbox']").prop('checked', false);
     });
 
-    $(cancelAddNewLocationBtn).click(function(e) {
+    $(cancelAddLocationBtn).click(function(e) {
         e.preventDefault();
         $(addNewLocationForm).hide();
-        $(addNewLocationBtn).show();
-        $(cancelAddNewLocationBtn).hide();
+        $(addLocationBtn).show();
+        $(cancelAddLocationBtn).hide();
     });
 
-    $(confirmAddNewFacility).click(function(e) {
+    $(confirmNewFacility).click(function(e) {
         e.preventDefault();
         $(addNewLocationForm).hide();
         $(addNewConfigurationForm).hide();
-        $(cancelAddNewLocationBtn).hide()
+        $(cancelAddLocationBtn).hide();
         showAddNewLocationContainer();
         showSavedLocationList();
         $(".list-item-new").show();
@@ -74,20 +73,28 @@ $(document).ready(function() {
         $(addNewPoolForm).show();
     });
 
-    $("#saveVenue").click( function() {
+    $("#saveFormPool").click( function() {
         $(addNewPoolForm).hide();
         $(addNewConfigurationForm).show();
         $(".venue__list").show();
+        $(".venue__list--item-added").show();
+        $(".venue__list--item:first-of-type").show();
     });
 
-    $("#saveConfiguration").click( function() {
+    $("#saveFormConfiguration").click( function() {
         hideLocationLookup();
         hideAddNewLocationContainer();
         $(addNewConfigurationForm).hide();
         $(".venue__list").show();
         $(".configuration__list").show();
         $("#saveLocation").prop('disabled', false);
-        $('.location-name .list__controls').show();
+        $(".configuration__list--item.added .configuration-title").show();
+        if ($('.list-item-existing-new-config').css('display') === 'block') {
+            console.log("Becky doesn't");
+        } else {
+            console.log("Becky does.");
+            $('.location-name .list__controls').show();
+        }
     });
 
     $("#cancelSaveConfiguration").click( function() {
@@ -123,33 +130,34 @@ $(document).ready(function() {
         filterByCourse();
     });
 
-    var modalChosePoolConfigurationSelby = new bootstrap.Modal(document.getElementById('modalChosePoolConfigurationSelby'));
-
     $("#confirmLocationSelby").click( function() {
-        modalChosePoolConfigurationSelby.show();
+        $("#modalChosePoolConfigurationSelby").modal('show');
     });
 
     var modalChosePoolConfigurationHealthfit = new bootstrap.Modal(document.getElementById('modalChosePoolConfigurationHealthfit'));
 
     $("#confirmLocationHealthfit").click( function() {
-        modalChosePoolConfigurationHealthfit.show();
+        modalChosePoolConfigurationHealthfit.modal('show');
     });
 
     var modalChosePoolConfigurationJensen = new bootstrap.Modal(document.getElementById('modalChosePoolConfigurationJensen'));
 
     $("#confirmLocationJensen").click( function() {
-        modalChosePoolConfigurationJensen.show();
+        modalChosePoolConfigurationJensen.modal('show');
     });
 
-    $("#confirmConfigurationSelby").click( function() {
+    $("#modalConfirmSelby").click( function() {
         confirmConfiguration();
         $(".list-item-existing").show();
+        $(".venue__list").show();
+        $(".configuration__list").show();
+        $(".configuration__list--item.selected").show();
         scrollTopSection();
         $(this).prop('disabled', true);
         $('input[name="configuration-selby').prop("checked", false);
     });
 
-    $("#confirmConfigurationHealthfit").click( function() {
+    $("#modalConfirmHealthfit").click( function() {
         confirmConfiguration();
         $(".list-item-duplicate").show();
         scrollTopSection();
@@ -157,7 +165,7 @@ $(document).ready(function() {
         $('input[name="configuration-healthfit').prop("checked", false);
     });
 
-    $("#confirmConfigurationJensen").click( function() {
+    $("#modalConfirmJensen").click( function() {
         confirmConfiguration();
         $(".list-item-new").show();
         scrollTopSection();
@@ -175,6 +183,25 @@ $(document).ready(function() {
         $(".venue__list--item:first-of-type").show();
         $(".venue__list--item:first-of-type .configuration-title").hide();
         $(".venue__list--item:first-of-type .configuration-title:last-of-type").show();
+    }
+
+    $("#addConfigurationBtnSelby").click( function() {
+        $("#modalChosePoolConfigurationSelby").modal('hide');
+        addNewConfigurationSelby();
+    });
+
+    function addNewConfigurationSelby() {
+        hideLocationLookup();
+        $(lookupByLocationList).hide();
+        $("#saveLocation").prop('disabled', false);
+        $(".list-item.list-item-existing .list__controls").hide();
+        $(".venue__list--item:first-of-type .configuration-title").hide();
+        $(".venue__list--item").hide();
+        $(".list-item-existing").show();
+        $(".configuration__list--item.added").show();
+        showSavedLocationList();
+        $(".location-header").hide();
+        $(addNewPoolForm).show();
     }
 
     $(".location-name .list-item__edit").click( function() {
@@ -226,17 +253,17 @@ $(document).ready(function() {
     });
 
     $("input[name='configuration-selby']").click( function() {
-        $("#confirmConfigurationSelby").prop('disabled', false);
+        $("#modalConfirmSelby").prop('disabled', false);
         $(".modal input[type=radio]").prop('selected', false);
     });
 
     $("input[name='configuration-healthfit']").click( function() {
-        $("#confirmConfigurationHealthfit").prop('disabled', false);
+        $("#modalConfirmHealthfit").prop('disabled', false);
         $(".modal input[type=radio]").prop('selected', false);
     });
 
     $("input[name='configuration-jensen']").click( function() {
-        $("#confirmConfigurationJensen").prop('disabled', false);
+        $("#modalConfirmJensen").prop('disabled', false);
         $(".modal input[type=radio]").prop('selected', false);
     });
 
@@ -430,10 +457,10 @@ $(document).ready(function() {
         $(addNewLocationForm).hide();
         $(addNewPoolForm).hide();
         $(addNewConfigurationForm).hide();
-        $(cancelAddNewLocationBtn).hide();
+        $(cancelAddLocationBtn).hide();
         showAddNewLocationContainer();
         $(".location-header").show();
-        $(addNewLocationBtn).show();
+        $(addLocationBtn).show();
     }
 
     function showAddNewLocationContainer() {
@@ -452,7 +479,6 @@ $(document).ready(function() {
 
     function saveSection() {
         var sectionId = $(this).closest('.section').attr('id');
-        console.log(sectionId);
     }
 
 

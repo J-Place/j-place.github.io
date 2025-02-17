@@ -35,6 +35,7 @@ $(document).ready(function() {
         $(".contact-info__event-director-type-form").hide();  // Hide the Event Dorector inputs
         $(this).hide();
         $(".list__header.contact-list__event-director--header").show();
+        $(".event-director-privacy").show();
         uncheckEventDirectorRadios();
         enableHeadRefBtn();
         enableSafetyCoordinatorBtn();

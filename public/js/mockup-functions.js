@@ -3,10 +3,10 @@ function handleShowFilters() {
     var toggleContainer = document.querySelector('div.list-control-filter');
 
     if (toggleContainer.classList.contains('show-filters')) {
-        console.log("Open");
+        console.log("Open Filters");
         toggleContainer.classList.remove('show-filters');
     } else {
-        console.log("Closed");
+        console.log("Close Filters");
         toggleContainer.classList.add('show-filters');
     }
 }

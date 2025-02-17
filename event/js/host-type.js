@@ -11,7 +11,7 @@ $(document).ready(function() {
 
         $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
         
-        $("#selectHostTypeLmsc").prop('selectedIndex',0); // Reset LMSC dropdown if Host dropdown changes
+        // $("#selectHostTypeLmsc").prop('selectedIndex', 0);
         
 
         $(".contact-information__event-host--list .list-item").parent().hide();
@@ -114,7 +114,7 @@ $(document).ready(function() {
         $(".input-group.lookup-confirm").css("opacity","1");
         $(".contact-info-host-type__other-organization--container.add-new-inputs").hide();
         $("#addNewOrganization").show();
-        $("#lookupHostTypeOtherOrganization").attr("placeholder", "Rainbow River Swim Club, Dunedin, FL");
+        $("#lookupHostTypeOtherOrganization").attr("placeholder", "Rainbow River Swim Club, Dunnedin, FL");
     });
     
     $("#lookupHostTypeUsmsClub").click(function(e) {
@@ -198,7 +198,8 @@ $(document).ready(function() {
         $(".contact-info-host-type__other--container").hide();
         $(".contact-info__host-type--container").hide();        
         $(".contact-list__event-host--header").show();
-        $(".list-item--organization-lookup").parent().show();        
+        $(".contact-information__event-host--list").show();
+        $(".list-item--organization-lookup").parent().show();
     });
     
     $("#cancelAddHostTypeOtherBtn").click(function(e) {
@@ -228,8 +229,8 @@ function enableListControlEditing() {
 }
 
 function resetHostSelects() {
-    $("#selectHostType").prop('selectedIndex',0);
-    $("#selectHostTypeLmsc").prop('selectedIndex',0);
+    // $("#selectHostType").prop('selectedIndex',0);
+    // $("#selectHostTypeLmsc").prop('selectedIndex',0);
 }
 
 function disableEventDirectorRadios() {

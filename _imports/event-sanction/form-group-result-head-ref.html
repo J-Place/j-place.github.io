@@ -1,0 +1,204 @@
+
+<div class="row contact-group">
+    <div class="contact-list contact-info__head-ref-container">
+        <div class="form-group form-group-default contact-info__head-ref--container">
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <div class="input-group contact-info__head-ref">
+                    <label for="addHeadRef">
+                        Head Referee
+                    </label>
+                    <span class="help-block help-block--addHeadRef">Please choose a head referee</span>
+                    <button class="btn btn-sm btn-outline" id="addHeadRef">Add Head Referee</button>
+                    <button class="btn btn-sm btn-outline" id="cancelAddHeadRef" style="display: none;">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lookup Head Ref -->
+        <div class="form-group contact-info__head-ref-lookup--container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="input-group lookup-ref-name">
+                        <label for="lookupRefName">Search Referees</label>
+                        <input tabindex="0" type="text" class="form-control lookup__input lookup-primary__input" min="3" max="30" name="LookupRefName" id="lookupRefName" autocomplete="off" placeholder="">
+                        <span class="help-block help-block--LookupRefName">Please enter head referee name</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-8">
+                    <div class="input-group lookup-confirm">
+                        <button class="btn btn-small save-as-contact" type="button" id="addExistingRefBtn">
+                            <span class="lookup-confirm--name">Confirm Mark Usher</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add New Ref Button -->
+        <div class="form-group contact-info__head-ref-new--add-new">
+            <div class="row">
+                <div class="col-sm-12 col-md-8">
+                    <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">Or Add a New Head Referee</p>
+                    <div>
+                        <button class="btn btn-small btn-outline btn-add" id="addNewHeadRef" name="addNewHeadRef" type="button" value="Add New">Add New</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    <!-- Add New Ref Form -->
+    <div class="form-group contact-info__head-ref--add-new-container add-new-inputs">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="input-group contact-first-name required">
+                    <label for="newHeadRefFirstName">First Name</label>
+                    <input type="text" maxlength="30" class="form-control" name="NewHeadRefFirstName" id="newHeadRefFirstName" value="" placeholder="Steve">
+                    <span class="help-block help-block--NewHeadRefFirstName">Please enter the event director's first name.</span>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="input-group contact-last-name required">
+                    <label for="newHeadRefLastName" class="">Last Name</label>
+                    <input type="text" maxlength="30" class="form-control" name="NewHeadRefLastName" id="newHeadRefLastName" value="" placeholder="Hall">
+                    <span class="help-block help-block--NewHeadRefLastName">Please enter the event director's last name. </span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="input-group contact-primary-email required">
+                    <label for="newHeadRefEmailPrimary">Primary Email Address<span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Enter the event director's primary email address."></span>
+                    </label>
+                    <input type="email" class="form-control" name="NewHeadRefEmailPrimary" id="newHeadRefEmailPrimary" maxlength="50" value="">
+                    <span class="help-block help-block--NewHeadRefEmailPrimary">Please enter the event director's primary email address.</span>
+                </div>
+                <div class="input-group contact-primary-phone required">
+                    <label for="newHeadRefPhonePrimary">Primary Phone Number</label>
+                    <input type="text" class="form-control" pattern="[0-9]{3}[-][0-9]{3}[-][0-9]{4}" name="NewHeadRefPhonePrimary" id="newHeadRefPhonePrimary" value="" maxlength="12">
+                    <span class="help-block help-block--NewHeadRefPhonePrimary">Please enter the event director's primary phone number.</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-7">
+                <div class="input-group contact-city required">
+                    <label for="newHeadRefCity">City</label>
+                    <input type="text" maxlength="30" class="form-control" name="NewHeadRefCity" id="newHeadRefCity" value="">
+                    <span class="help-block help-block--NewHeadRefCity">Please enter the event director's city.</span>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <div class="input-group contact-state required">
+                    <label for="newHeadRefState" class="">State</label>
+                    <select name="newHeadRefState" class="form-control" id="newHeadRefState">
+                        <option value="">Select State</option>
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <option value="AZ">Arizona</option>
+                    </select>
+                    <span class="help-block help-block--newHeadRefState">Please select your event director's state.</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-5 col-md-6">
+                <div class="form-group lookup person">
+                    <button class="btn btn-small" type="button" id="confirmNewHeadRefBtn">Confirm</button>
+                    <!-- <button class="btn btn-small btn-outline" type="button" id="cancelNewHeadRefBtn">Cancel</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+    <!-- Head Ref List -->
+    <div class="row contact-list contact-info__head-ref-list">
+        <div class="form-group contact-information__head-ref--list">
+            <div class="list list--head-ref list--lookup people">
+                <div class="list__header contact-list__head-ref--header">
+                    <span class="lookup-results--head-ref">Head Referee</span>
+                    <div class="list__controls contact-list__controls">
+                        <button class="list__controls--settings" id="listRefSettings"></button>
+                        <!-- <button class="btn btn-link" id="editRefList">Edit</button>
+                        <button class="btn btn-link" id="saveRefList">Done Editing</button>
+                        <button class="btn btn-link" id="cancelRefList">Cancel</button> -->
+                        <button class="btn btn-link contact-edit-button">Edit</button>
+                        <a href="#" class="btn btn-link contact-remove-button">Remove</a>
+                    </div>
+                </div>
+            
+                <div class="list__container">
+                    <div class="row is-flex">
+                        <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
+                            <div class="list-item list-item--lookup">
+                                <input type="hidden" class="contact-isMember" value="true">
+                                <!-- <button class="list-item__delete">Remove</button> -->
+                                <div class="contact-name">Mark Usher</div>
+                                <div class="contact-location">Sarasota, FL</div>
+                                <!-- <div class="contact-phone"></div> -->
+                                <div class="contact-email">musher@usmastersswimming.org</div>
+                                <!-- <div class="contact-id"></div> -->
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
+                            <div class="list-item list-item--new">
+                                <input type="hidden" class="contact-isMember" value="true">
+                                <!-- <div class="list-item__pending">Account Pending</div> -->
+                                <!-- <button class="list-item__delete">Remove</button> -->
+                                <div class="contact-name">Steve Hall</div>
+                                <div class="contact-location">Sarasota, FL</div>
+                                <!-- <div class="contact-phone"></div> -->
+                                <div class="contact-email">email@email.com</div>
+                                <!-- <div class="contact-id"></div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-small btn-success" id="confirmHeadRef" style="display: none;">Confirm</button>
+            </div>
+        </div>
+        <div class="form-group contact-info__head-ref--website-display-preferences">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="club-privacy" style="display: block;">
+                        <div class="club-privacy__header">
+                            Display the Head Referee's information on the USMS website event page.
+                        </div>
+                        <div class="input-group checkbox-group contact-privacy-name">
+                            <label class="checkbox-label" for="privacyName">
+                                <div class="checkbox-container">
+                                    <input type="checkbox" name="privacyName" id="privacyName">
+                                    <span class="checkbox__placeholder"></span>
+                                </div>
+                                Name
+                            </label>
+                        </div>
+                        <div class="input-group checkbox-group contact-privacy-email">
+                            <label class="checkbox-label" for="privacyEmail">
+                                <div class="checkbox-container">
+                                    <input type="checkbox" name="privacyEmail" id="privacyEmail">
+                                    <span class="checkbox__placeholder"></span>
+                                </div>
+                                Email
+                            </label>
+                        </div>
+                        <div class="input-group checkbox-group contact-privacy-phone">
+                            <label class="checkbox-label" for="privacyPhone">
+                                <div class="checkbox-container">
+                                    <input type="checkbox" name="privacyPhone" id="privacyPhone">
+                                    <span class="checkbox__placeholder"></span>
+                                </div>
+                                Phone
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="./js/head-ref.js"></script>
