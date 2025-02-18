@@ -1,0 +1,248 @@
+<div class="section-group section-group--event-director">
+
+    <div class="form-group form-group-default contact-info__event-director-type-form">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="input-group radio-group event-director">
+                    <div class="input-group-header radio-group-header required">
+                        Event Director
+                    </div>
+                    <div class="input-group radio-group">
+                        <label class="radio-label" for="contactTypeEventDirectorCurrent">
+                            I'm the event director
+                            <span class="radio-container">
+                                <input type="radio" id="contactTypeEventDirectorCurrent" name="ContactTypeEventDirector" value="contactTypeEventDirectorCurrent">
+                                <span class="radio__placeholder"></span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="input-group radio-group">
+                        <label class="radio-label" for="contactTypeEventDirectorOther">
+                            Someone else is the event director
+                            <span class="radio-container">
+                                <input type="radio" id="contactTypeEventDirectorOther" name="ContactTypeEventDirector" value="contactTypeEventDirectorOther">
+                                <span class="radio__placeholder"></span>
+                            </span>
+                        </label>
+                    </div>
+                    <span class="help-block help-block--EventDirector">Please select an event director</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group contact-info__event-director-other--container">
+        <div class="row">
+            <div class="col-sm-4 col-md-8">
+                <div class="input-group lookup-name">
+                    <label for="lookupEventDirectorName">Search Event Directors</label>
+                    <input tabindex="0" type="text" class="form-control lookup__input lookup-primary__input" min="3" max="30" name="LookupEventDirectorName" id="lookupEventDirectorName" autocomplete="off" placeholder="">
+                    <span class="help-block help-block--LookupEventDirectorName">Please enter event director name</span>
+                </div>
+            </div>
+            <div class="input-group lookup-confirm">
+                <button class="btn btn-small save-as-contact" type="button" id="addAsEventDirector">
+                    <span class="lookup-confirm--name">Confirm Kyle Deery</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group contact-info__event-director-other--add-new">
+        <div class="row">
+            <div class="col-sm-12 col-md-8">
+                <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">Or Add a New Event Director</p>
+                <div>
+                    <!-- <input class="btn btn-small btn-outline" id="addNewEventDirector" name="addNewEventDirector" type="button" value="Add New"> -->
+                    <button class="btn btn-small btn-outline btn-add" id="addNewEventDirector" name="addNewEventDirector" type="button" value="Add New">Add New</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group contact-info__event-director-current--container">
+        <div class="row">
+            <div class="col-sm-4">
+                Current Event Director Container
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group contact-info-event-director__current-message">
+        <div class="row">
+            <div class="col-sm-12">
+                <p id="contact__recentlyadded">
+                    The current contact has been added and an email has been sent for them to validate their email. Once validated, they will be able to edit this club.
+                </p>
+                <p id="contact__recentlyadded-valid">
+                    The current contact has validated their email and has the ability to edit his club.
+                </p>
+                <p id="contact__recentlyadded-invalid">
+                    The current contact has NOT validated their email and does NOT have the ability to edit his club.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group contact-info__event-director--add-new-container add-new-inputs">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="input-group contact-first-name required">
+                    <label for="newEventDirectorFirstName">First Name</label>
+                    <input type="text" maxlength="30" class="form-control" name="NewEventDirectorFirstName" id="newEventDirectorFirstName" value="" placeholder="Jess">
+                    <span class="help-block help-block--NewEventDirectorFirstName">Please enter the event director's first name.</span>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="input-group contact-last-name required">
+                    <label for="newEventDirectorLastName" class="">Last Name</label>
+                    <input type="text" maxlength="30" class="form-control" name="NewEventDirectorLastName" id="newEventDirectorLastName" value="" placeholder="Riley">
+                    <span class="help-block help-block--NewEventDirectorLastName">Please enter the event director's last name. </span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="input-group contact-primary-email required">
+                    <label for="newEventDirectorEmailPrimary">Primary Email Address<span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Enter the event director's primary email address."></span></label>
+                    <input type="email" class="form-control" name="NewEventDirectorEmailPrimary" id="newEventDirectorEmailPrimary" maxlength="50" value="">
+                    <span class="help-block help-block--NewEventDirectorEmailPrimary">Please enter the event director's primary email address.</span>
+                </div>
+                <div class="input-group contact-primary-phone required">
+                    <label for="newEventDirectorPhonePrimary">Primary Phone Number</label>
+                    <input type="text" class="form-control" pattern="[0-9]{3}[-][0-9]{3}[-][0-9]{4}" name="NewEventDirectorPhonePrimary" id="newEventDirectorPhonePrimary" value="" maxlength="12">
+                    <span class="help-block help-block--NewEventDirectorPhonePrimary">Please enter the event director's primary phone number.</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-7">
+                <div class="input-group contact-city required">
+                    <label for="newEventDirectorCity">City</label>
+                    <input type="text" maxlength="30" class="form-control" name="NewEventDirectorCity" id="newEventDirectorCity" value="">
+                    <span class="help-block help-block--NewEventDirectorCity">Please enter the event director's city.</span>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <div class="input-group contact-state required">
+                    <label for="newEventDirectorState" class="">State</label>
+                    <select name="newEventDirectorState" class="form-control" id="newEventDirectorState">
+                        <option value="">Select State</option>
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <option value="AZ">Arizona</option>
+                    </select>
+                    <span class="help-block help-block--newEventDirectorState">Please select your event director's state.</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-5 col-md-6">
+                <div class="form-group lookup person">
+                    <button class="btn btn-small" type="button" id="addNewEventDirectorBtn">Confirm</button>
+                    <!-- <button class="btn btn-small btn-outline" type="button" id="cancelAddNewEventDirectorBtn">Cancel</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Messaging -->
+    <div class="section__header--summary contact-list__event-director--message" style="display: none;">
+        <p>The event director must have a USMS My Account. If they are not in the dropdown list, they will need to create an account. You can get the account creation started by clicking 'Add New' below. Once the form is completed, the new event director will receive an email to finish the process and you will see them listed here as 'Account Pending'. <em>You will not be able to register/update your event until the new contact has completed the account set up</em>. After you have registered/updated your event and then it is approved by USMS, you will receive an email notifying you the new contact is done and your permissions are removed.</p>
+    </div>
+    <div class="section__header--summary contact-list__event-director-add-new--awaiting-message" style="display: none;">
+        <p>You will remain the event director until the new contact has finished creating their account. Once the event has been approved, they will be the event director and your permissions will be removed.</p>
+    </div>
+
+    <div class="form-group form-group-result contact-info__event-director-list">
+        <div class="row contact-information__event-director--list">
+            <div class="list list--event-director list--lookup people">
+                <div class="list__header contact-list__event-director--header">
+                    <span class="lookup-results--event-director">Event Director </span>
+                    <div class="list__controls contact-list__controls">
+                        <button class="list__controls--settings" id="listContactSettings"></button>
+                        <!-- <button class="btn btn-link" id="editContactList">Edit</button> -->
+                        <!-- <button class="btn btn-link" id="saveContactList">Done Editing</button> -->
+                        <!-- <button class="btn btn-link list-item__delete" id="cancelContactList">Cancel</button> -->
+                        <button class="btn btn-link contact-edit-button">Edit</button>
+                        <a href="#" class="btn btn-link contact-remove-button">Remove</a>
+                    </div>
+                </div>
+            
+                <div class="list__container">
+                    <div class="row is-flex">
+                        <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
+                        <div class="list-item list-item--current">
+                            <input type="hidden" class="contact-isMember" value="true">
+                            <!-- <button class="list-item__delete">Remove</button> -->
+                            <div class="contact-name">Jay Place</div>
+                            <div class="contact-location">Sarasota, FL</div>
+                            <div class="contact-phone"></div>
+                            <div class="contact-email">jplace@usmastersswimming.org</div>
+                            <div class="contact-id">Member ID: <span class="contact-id__value">KT2JH</span></div>
+                        </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
+                        <div class="list-item list-item--lookup">
+                            <input type="hidden" class="contact-isMember" value="true">
+                            <!-- <button class="list-item__delete">Remove</button> -->
+                            <div class="list-item__pending">Account Pending</div>
+                            <div class="contact-name">Kyle Deery</div>
+                            <div class="contact-location">Sarasota, FL</div>
+                            <div class="contact-phone"></div>
+                            <div class="contact-email">kdeery@usmastersswimming.org</div>
+                            <div class="contact-id">Member ID: <span class="contact-id__value">GAT0R</span></div>
+                        </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
+                        <div class="list-item list-item--new">
+                            <input type="hidden" class="contact-isMember" value="true">
+                            <div class="list-item__pending">Account Pending</div>
+                            <div class="contact-name">Jess Riley</div>
+                            <div class="contact-location">Sarasota, FL</div>
+                            <div class="contact-phone"></div>
+                            <div class="contact-email">jreilly@usmastersswimming.org</div>
+                            <div class="contact-id">Member ID: <span class="contact-id__value">AB123</span></div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-small btn-success" id="confirmCurrentEventDirector">Confirm</button>
+            </div>
+            <div class="contact-info__event-director-privacy--container">
+                <div class="event-director-privacy">
+                    <div class="event-director-privacy__header">USMS website event page privacy preferences</div>
+                    <div class="input-group checkbox-group event-director-privacy-name">
+                        <label class="checkbox-label" for="eventDirectorPrivacyName">
+                            <div class="checkbox-container">
+                                <input type="checkbox" name="EventDirectorPrivacyName" id="eventDirectorPrivacyName">
+                                <span class="checkbox__placeholder"></span>
+                            </div>
+                            Display the event director's name on the USMS website event page
+                        </label>
+                    </div>
+                    <div class="input-group checkbox-group event-director-privacy-email">
+                        <label class="checkbox-label" for="eventDirectorPrivacyEmail">
+                            <div class="checkbox-container">
+                                <input type="checkbox" name="eventDirectorPrivacyEmail" id="eventDirectorPrivacyEmail">
+                                <span class="checkbox__placeholder"></span>
+                            </div>
+                            Display the event director's email address on the USMS website event page
+                        </label>
+                    </div>
+                    <div class="input-group checkbox-group event-director-privacy-phone">
+                        <label class="checkbox-label" for="eventDirectorPrivacyPhone">
+                            <div class="checkbox-container">
+                                <input type="checkbox" name="eventDirectorPrivacyPhone" id="eventDirectorPrivacyPhone">
+                                <span class="checkbox__placeholder"></span>
+                            </div>
+                            Display the event director's phone number on the USMS website event page
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/event/js/event-director.js"></script>
+
+</div>

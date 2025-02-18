@@ -17,13 +17,14 @@ $(document).ready(function() {
         $(".contact-info__event-director-other--add-new").hide();    
         $(".contact-info__event-director--add-new-container.add-new-inputs").hide();
         $("#confirmCurrentEventDirector").show();
-        $("#lookupEventDirectorName").attr("placeholder", "");
+        $("#lookupEventDirectorName").attar("placeholder", "");
         $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
         $("#addNewEventDirector").show();
     });
 
 // Confirm I'm the Event Director
     $("#confirmCurrentEventDirector").click(function(e) {
+        alert("1");
         e.preventDefault();
         $(".contact-info__event-director-type-form").hide();
         $(this).hide();
@@ -64,6 +65,7 @@ $(document).ready(function() {
 
 // Search Event Directors
     $("#lookupEventDirectorName").click(function(e) {
+        alert("Boo");
         e.preventDefault();
         $(".input-group.lookup-confirm").show();
         $(".input-group.lookup-confirm").css("height","70px");
@@ -76,6 +78,7 @@ $(document).ready(function() {
 
 // Confirm Event Director
     $("#addAsEventDirector").click(function(e) {
+        alert("Boo");
         e.preventDefault();
         $(".input-group.lookup-confirm").hide();
         $(".input-group.lookup-confirm").css("height","0");

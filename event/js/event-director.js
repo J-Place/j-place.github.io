@@ -31,10 +31,12 @@ $(document).ready(function() {
 
 // Confirm I'm the Event Director
     $("#confirmCurrentEventDirector").click(function(e) {
-        e.preventDefault();        
+        e.preventDefault();
+        alert("2");
         $(".contact-info__event-director-type-form").hide();  // Hide the Event Dorector inputs
         $(this).hide();
         $(".list__header.contact-list__event-director--header").show();
+
         $(".event-director-privacy").show();
         uncheckEventDirectorRadios();
         enableHeadRefBtn();
@@ -44,6 +46,20 @@ $(document).ready(function() {
         $(".contact-info__event-director-privacy--container").show();
     });
     
+    // Confirm I'm the Event Director
+    $("#confirmCurrentEventDirector").click(function(e) {
+        e.preventDefault();
+        alert("3");
+        $(".contact-info__event-director-type-form").hide();
+        $(this).hide();
+        $(".list__header.contact-list__event-director--header").show();
+
+        $("#contactTypeEventDirectorCurrent").prop('checked', false);
+        $("#contactTypeEventDirectorOther").prop('checked', false);
+        enableHeadRef();
+        $("#selectHostType").prop("disabled", false);
+    });
+
 // Edit Event Director List
     $("#editContactList").click(function(e) {
         // e.preventDefault();
