@@ -120,7 +120,6 @@ $(document).ready(function() {
     });
 
 // Save New Event Director from Form
-    // $("#addNewEventDirectorBtn").click(function(e) {
     $(".contact-info__event-director--add-new-container .confirm-form-add-new-person").click( function() {
         hideLookupConfirmtBtn();
         enableEventDirectorRadios();
