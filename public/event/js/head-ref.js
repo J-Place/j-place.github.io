@@ -79,28 +79,12 @@ $(".section-group--head-ref #cancelContactList").click(function(allHidden) {
     
     if (allHidden) {
         console.log('All head ref list items are removed.');
-        // $(".list-item.removed").removeClass('removed').parent().hide();
-        // $(".list-item").removeClass('removed');
-        // resetHeadRefSection();
     } else {
         console.log('Not all head ref list items are removed.');
-        // $(".list-item").removeClass('removed');
         $(".list-item.removed").parent().hide();
         $(".list-item").removeClass('removed')
     }
 });
-
-// $(".section-group--head-ref #saveContactList").click(function(allHidden) {
-    
-//     if (allHidden) {
-//         console.log('All head ref list items are hidden.');
-//         $(".list-item").removeClass('removed');
-//         resetHeadRefSection();
-//     } else {
-//         console.log('Not all head ref list items are hidden.');
-//         $(".list-item").removeClass('removed');
-//     }
-// });
 
 $("#confirmNewHeadRefBtn").click(function(e) {
     e.preventDefault();
