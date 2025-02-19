@@ -108,7 +108,7 @@ $("#cancelNewHeadRefBtn").click(function(e) {
 
 // Confirm Add New Person Form for Head Referee
 $(".contact-info__head-ref--add-new-container .confirm-form-add-new-person").click( function() {
-    alert("Add new head ref");
+    console.log("Add new head ref");
     closeHeadRefSection();
     showRefList();
     enableListControlEditing();
@@ -117,6 +117,31 @@ $(".contact-info__head-ref--add-new-container .confirm-form-add-new-person").cli
     $("#cancelAddHeadRef").show();
     $(".contact-list__head-ref--header").show();
     $(".contact-info__head-ref-list .list-item--new").parent().show();
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+$(".list--head-ref #saveContactList").click(function() {
+    var numModified = $('.list__container--modified').length;
+    if (numModified > 0) {
+        $(".list").removeClass("edit-list");
+        $(".list-item").removeClass('list-item--fade-out');
+        resetHeadRefSection();
+    } else {
+        $(".list").removeClass("edit-list");
+        $(".list-item").removeClass('list-item--fade-out');
+    }
+    $('.list__container').removeClass('list__container--modified');
 });
 
 

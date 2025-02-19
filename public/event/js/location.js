@@ -99,7 +99,6 @@ $(document).ready(function() {
             $(".configuration__list--item.added .configuration-title").show();
             $('.location-name .list__controls').show();
         } else if ($('.list-item-duplicate').css('display') === 'block') {
-            alert("3");
             $(".configuration__list--item").show();
             $(".configuration__list--item.added").hide();
             $(".configuration__list--item.added .configuration-title").hide();
@@ -108,7 +107,6 @@ $(document).ready(function() {
             // $(".configuration__list--item.duplicate").show();
             // $(".configuration__list--item.duplicate .configuration-title").show();    
         } else {
-            alert("none");
             $('.location-name .list__controls').show();
         }
     });
@@ -439,7 +437,6 @@ $(document).ready(function() {
             $(".location-column .list-item:not(.ui-lookup-filter-length-scy):not(.ui-lookup-filter-length-scm):not(.ui-lookup-filter-length-lcm):not(.ui-lookup-filter-length-other)").hide();
         }
         // else if ( $("#length25Yards input").is(':checked') && !$("#length25Meters input").is(':checked') && $("#length50Meters input").is(':checked') &&  $("#lengthOther input").is(':checked') ) {
-        //     alert("Yo!");
         //     $(".location-column .list-item:not(.ui-lookup-filter-length-scm)").hide();
         // }
     }

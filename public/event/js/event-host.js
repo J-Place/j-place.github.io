@@ -205,6 +205,36 @@ $(document).ready(function() {
         $("#addNewOrganization").show();
     });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    $(".list--event-host #saveContactList").click(function() {
+        var numModified = $('.list__container--modified').length;
+        if (numModified > 0) {
+            $(".list").removeClass("edit-list");
+            $(".list-item").removeClass('list-item--fade-out');
+            resetEventHost();
+        } else {
+            $(".list").removeClass("edit-list");
+            $(".list-item").removeClass('list-item--fade-out');
+        }
+        $('.list__container').removeClass('list__container--modified');
+    });
+
+
+
 });
 
 function resetEventHost() {

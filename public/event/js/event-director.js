@@ -156,11 +156,46 @@ $(document).ready(function() {
         $(".contact-list__event-director--message").show();
         $(".contact-info__event-director-privacy--container").hide();
     });
+
+
+
+
+
+
+
+
+
+
+
     
+    $(".list--event-director #saveContactList").click(function() {
+        var numModified = $('.list__container--modified').length;
+        if (numModified > 0) {
+            $(".list").removeClass("edit-list");
+            $(".list-item").removeClass('list-item--fade-out');
+            resetEventDirector();
+        } else {
+            $(".list").removeClass("edit-list");
+            $(".list-item").removeClass('list-item--fade-out');
+            $(".contact-info__event-director-privacy--container").show();
+        }
+        $('.list__container').removeClass('list__container--modified');
+    });
+    
+    $(".list--event-director #cancelContactList").click(function() {
+        $(".contact-info__event-director-privacy--container").show();
+        var numModified = $('.list__container--modified').length;
+        if (numModified > 0) {
+            return
+        } else {
+            $(".contact-info__event-director-privacy--container").show();
+        }
+    });
+
     $(".list--event-director .list-item__delete").click(function() {
-    //     resetEventDirector();
         $(".contact-info__event-director-privacy--container").hide();
     });
+
 
 });
 
