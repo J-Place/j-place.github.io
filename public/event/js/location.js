@@ -88,11 +88,27 @@ $(document).ready(function() {
         $(".venue__list").show();
         $(".configuration__list").show();
         $("#saveLocation").prop('disabled', false);
-        $(".configuration__list--item.added .configuration-title").show();
-        if ($('.list-item-existing-new-config').css('display') === 'block') {
-            console.log("Becky doesn't");
+        if ($('.list-item-existing').css('display') === 'block') {
+            $(".configuration__list--item").hide();
+            $(".configuration__list--item.selected").show();
+            $(".configuration__list--item.selected .configuration-title").show();   
+            $('.location-name .list__controls').show(); 
+        } else if ($('.list-item-new').css('display') === 'block') {
+            $(".configuration__list--item").hide();
+            $(".configuration__list--item.added").show();
+            $(".configuration__list--item.added .configuration-title").show();
+            $('.location-name .list__controls').show();
+        } else if ($('.list-item-duplicate').css('display') === 'block') {
+            alert("3");
+            $(".configuration__list--item").show();
+            $(".configuration__list--item.added").hide();
+            $(".configuration__list--item.added .configuration-title").hide();
+            $(".configuration__list--item.selected").hide();
+            $(".configuration__list--item.selected .configuration-title").hide();
+            // $(".configuration__list--item.duplicate").show();
+            // $(".configuration__list--item.duplicate .configuration-title").show();    
         } else {
-            console.log("Becky does.");
+            alert("none");
             $('.location-name .list__controls').show();
         }
     });

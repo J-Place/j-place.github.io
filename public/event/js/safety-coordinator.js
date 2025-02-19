@@ -1,4 +1,4 @@
-// Choose to Add Safety Coordinator - Open Inputs
+// Open Add Safety Coordinator Form
 $("#addSafetyCoordinator").click(function(e) {
     e.preventDefault();
     disableEventDirectorRadios();
@@ -54,15 +54,17 @@ $("#addNewSafetyCoordinator").click(function(e) {
     $("#lookupSafetyCoordinatorName").attr("placeholder", "");
 });
 
-// Edit Safety List -> Clears the list for demo purposes
-$("#editSafetyCoordinatorList").click(function(e) {
+// // Edit Safety List -> Clears the list for demo purposes
+// $("#editSafetyCoordinatorList").click(function(e) {
+$(".section-group--safety-coordinator .list-item__delete").click(function(e) {
     e.preventDefault();
-    hideSafetyCoordinatorList();
-    hideSafetyCoordinatorListItems();
-    resetSafetyCoordinator();
+    // hideSafetyCoordinatorList();
+    // hideSafetyCoordinatorListItems();
+    // resetSafetyCoordinator();
 });
 
-$("#confirmNewSafetyCoordinatorBtn").click(function(e) {
+// $("#confirmNewSafetyCoordinatorBtn").click(function(e) {
+$(".contact-info__safety-coordinator--add-new-container .confirm-form-add-new-person").click( function(e) {
     e.preventDefault();
     closeSafetyCoordinatorSection();
     showSafetyCoordinatorList();
@@ -77,21 +79,18 @@ $("#confirmNewSafetyCoordinatorBtn").click(function(e) {
 $("#cancelNewSafetyCoordinatorBtn").click(function(e) {
     e.preventDefault();
     closeAddSafetyCoordinatorForm();
-    // $("#cancelAddSafetyCoordinator").hide();
-    // $("#addSafetyCoordinator").show();
     $("#addNewSafetyCoordinator").show();
 });
 
 
 
-
-// Functions //////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////// Functions ///////////////////////////////////////////////////////////////
 
 
 function resetSafetyCoordinator() {
     $(".form-group.contact-info__safety-coordinator--container").show();
+    hideSafetyCoordinatorList();
+    hideSafetyCoordinatorListItems();
 }
 
 function openSafetyCoordinatorSection() {
@@ -126,10 +125,6 @@ function closeLookupSafetyCoordinator() {
     hideLookupConfirmtBtn();
     $("#addExistingSafetyCoordinatorBtn").hide();
     $("#lookupSafetyCoordinatorName").attr("placeholder", "");
-
-    // $(".input-group.lookup-confirm").hide();
-    // $(".input-group.lookup-confirm").css("height","0");
-    // $(".input-group.lookup-confirm").css("opacity","0");
 }
 
 function openAddSafetyCoordinatorForm() {

@@ -52,10 +52,6 @@
     $(sectionInputs).click( function() {
         $("#saveContactInfoSection").prop('disabled', false);
     });
-    // $(sectionSelects).on("change", function() {
-    //     console.log("select");
-    //     $("#saveContactInfoSection").prop('disabled', false);
-    // });
 
     $("#saveContactInfoSection").click( function() {
         $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
@@ -70,30 +66,46 @@
         alert("Becky");
     });
 
-    $(".contact-remove-button").click(function() {
-        // var thisGroup = $(this).closest(".form-group").closest('.section__content');
-        // var thisGroup = $(this).text();
-        // .closest('.section-group');
-        // alert(thisGroup);
-        // $(thisGroup).find('.contact-list > .form-group').hide();
-        // $(thisGroup).find('.form-group-default').show();
-
-        // console.log(thisGroup);
-
-        var sectionGroup = $(this).closest('.section-group');
-        var formGroup = $(this).closest('.form-group');
-        console.log(sectionGroup);
-        console.log(formGroup);
-        sectionGroup.find('.form-group-default').show();
-        sectionGroup.find('.form-group-result .contact-column').hide();
-        sectionGroup.find('.form-group-result .contact-column .row .list').hide();
-        sectionGroup.find('.form-group-result .contact-column .row .list + div').hide();
+    // Edit List Controls
+    $("[class^='list list--'] #editContactList").click(function() {
+        $(this).closest(".list").addClass("edit-list");
     });
-    // function removeContactListItem(e) {
-    //     // var contactTypeContainer = $(this).closest(".form-group .list");        
-    //     // $(contactTypeContainer).find('.list').hide();
-    //     $(".contact-information__event-host--list").hide();
-    //     $(".contact-information__event-host--list .list-item").parent().hide();
-    // }
+    
+    // Checks if list item parent has been hidden
+    $("[class^='list list--'] #saveContactList").click(function(allHidden) {
+        if (allHidden) {
+            console.log('All contact list items are hidden.');
+            $(".list").removeClass("edit-list");
+            $(".list-item").removeClass('removed');
+            resetHeadRefSection();
+            resetSafetyCoordinator();
+            resetEventHost();
+        } else {
+            console.log('Not all contact list items are hidden.');
+            $(".list-item").removeClass('removed');
+        }
+    });
+    $("[class^='list list--'] #cancelContactList").click(function() {
+        console.log("Cancel edits to list");
+        $(".list").removeClass("edit-list");
+        $(".list-item").removeClass("removed");
+    });
+
+    $(".list-item__delete").click(function() {
+        $(this).parent().addClass('removed');
+        console.log("Remove/hide item until done editing");
+    });
+    
+    function listItemRemoved() {
+        console.log("Check if list item removed");
+        let allHidden = true;
+        $('.contact-column').each(function() {
+        if ($(this).css('display') !== 'none') {
+            allHidden = false;
+            return false; // Exit the loop early if one is not hidden
+        }
+        });
+        return allHidden;
+    }
 
 </script>

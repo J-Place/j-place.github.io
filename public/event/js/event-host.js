@@ -12,15 +12,12 @@ $(document).ready(function() {
         $("#lookupHostTypeOtherOrganization").attr("placeholder", "");
         
         // $("#selectHostTypeLmsc").prop('selectedIndex', 0);
-        
 
         $(".contact-information__event-host--list .list-item").parent().hide();
         $(".contact-info-host-type__other-organization--container").hide();
         
         $("#contactTypeEventDirectorCurrent").prop('checked', false);
         $("#contactTypeEventDirectorOther").prop('checked', false);
-
-        
     
         if ($(this).val() != 'LMSC') {
             $("#confirmLmscSelect").hide();
@@ -78,7 +75,6 @@ $(document).ready(function() {
         $("#confirmLmscSelect").show();
     });
 
-
     $("#confirmLmscSelect").click(function(e) {
         e.preventDefault();
         $(this).hide();
@@ -96,7 +92,8 @@ $(document).ready(function() {
         $(".contact-information__event-host--list .list-item--lmsc").parent().show();
     });
     
-    $("#editHostList").click(function(e) {
+    // $("#editHostList").click(function(e) {
+    $(".section-group--host-type .contact-remove-button").click(function(e) {
         e.preventDefault();
         hideLookupConfirmtBtn();
         resetHostSelects();
@@ -210,6 +207,13 @@ $(document).ready(function() {
 
 });
 
+function resetEventHost() {
+    $(".contact-information__event-host--list").hide();
+    $(".contact-info__host-type--container").show();
+    $(".contact-list__event-host--header").show();
+    resetHostSelects();
+}
+
 function disableHostTypeSelect() {
     $("#selectHostType").prop("disabled", true);
 }
@@ -229,8 +233,8 @@ function enableListControlEditing() {
 }
 
 function resetHostSelects() {
-    // $("#selectHostType").prop('selectedIndex',0);
-    // $("#selectHostTypeLmsc").prop('selectedIndex',0);
+    $("#selectHostType").prop('selectedIndex',0);
+    $("#selectHostTypeLmsc").prop('selectedIndex',0);
 }
 
 function disableEventDirectorRadios() {

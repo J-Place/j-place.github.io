@@ -748,6 +748,7 @@
 
             <div class="section-group section-group--event-director">
 
+    <!-- Contact Forms -->
     <div class="form-group form-group-default contact-info__event-director-type-form">
         <div class="row">
             <div class="col-xs-12">
@@ -834,73 +835,66 @@
 
     <div class="form-group contact-info__event-director--add-new-container add-new-inputs">
         <div class="row">
-            <div class="col-sm-6">
-                <div class="input-group contact-first-name required">
-                    <label for="newEventDirectorFirstName">First Name</label>
-                    <input type="text" maxlength="30" class="form-control" name="NewEventDirectorFirstName" id="newEventDirectorFirstName" value="" placeholder="Jess">
-                    <span class="help-block help-block--NewEventDirectorFirstName">Please enter the event director's first name.</span>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="input-group contact-last-name required">
-                    <label for="newEventDirectorLastName" class="">Last Name</label>
-                    <input type="text" maxlength="30" class="form-control" name="NewEventDirectorLastName" id="newEventDirectorLastName" value="" placeholder="Riley">
-                    <span class="help-block help-block--NewEventDirectorLastName">Please enter the event director's last name. </span>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="input-group contact-primary-email required">
-                    <label for="newEventDirectorEmailPrimary">Primary Email Address<span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Enter the event director's primary email address."></span></label>
-                    <input type="email" class="form-control" name="NewEventDirectorEmailPrimary" id="newEventDirectorEmailPrimary" maxlength="50" value="">
-                    <span class="help-block help-block--NewEventDirectorEmailPrimary">Please enter the event director's primary email address.</span>
-                </div>
-                <div class="input-group contact-primary-phone required">
-                    <label for="newEventDirectorPhonePrimary">Primary Phone Number</label>
-                    <input type="text" class="form-control" pattern="[0-9]{3}[-][0-9]{3}[-][0-9]{4}" name="NewEventDirectorPhonePrimary" id="newEventDirectorPhonePrimary" value="" maxlength="12">
-                    <span class="help-block help-block--NewEventDirectorPhonePrimary">Please enter the event director's primary phone number.</span>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-7">
-                <div class="input-group contact-city required">
-                    <label for="newEventDirectorCity">City</label>
-                    <input type="text" maxlength="30" class="form-control" name="NewEventDirectorCity" id="newEventDirectorCity" value="">
-                    <span class="help-block help-block--NewEventDirectorCity">Please enter the event director's city.</span>
-                </div>
-            </div>
-            <div class="col-sm-5">
-                <div class="input-group contact-state required">
-                    <label for="newEventDirectorState" class="">State</label>
-                    <select name="newEventDirectorState" class="form-control" id="newEventDirectorState">
-                        <option value="">Select State</option>
-                        <option value="AL">Alabama</option>
-                        <option value="AK">Alaska</option>
-                        <option value="AZ">Arizona</option>
-                    </select>
-                    <span class="help-block help-block--newEventDirectorState">Please select your event director's state.</span>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-5 col-md-6">
-                <div class="form-group lookup person">
-                    <button class="btn btn-small" type="button" id="addNewEventDirectorBtn">Confirm</button>
-                    <!-- <button class="btn btn-small btn-outline" type="button" id="cancelAddNewEventDirectorBtn">Cancel</button> -->
-                </div>
-            </div>
+    <div class="col-sm-6">
+        <div class="input-group contact-first-name required">
+            <label for="newEventDirectorFirstName">First Name</label>
+            <input type="text" maxlength="30" class="form-control" name="NewEventDirectorFirstName" id="newEventDirectorFirstName" value="" placeholder="">
+            <span class="help-block help-block--NewEventDirectorFirstName">Please enter a first name.</span>
         </div>
     </div>
-    <!-- Messaging -->
-    <div class="section__header--summary contact-list__event-director--message" style="display: none;">
-        <p>The event director must have a USMS My Account. If they are not in the dropdown list, they will need to create an account. You can get the account creation started by clicking 'Add New' below. Once the form is completed, the new event director will receive an email to finish the process and you will see them listed here as 'Account Pending'. <em>You will not be able to register/update your event until the new contact has completed the account set up</em>. After you have registered/updated your event and then it is approved by USMS, you will receive an email notifying you the new contact is done and your permissions are removed.</p>
+    <div class="col-sm-6">
+        <div class="input-group contact-last-name required">
+            <label for="newPersonLastName" class="">Last Name</label>
+            <input type="text" maxlength="30" class="form-control" name="NewPersonLastName" id="newPersonLastName" value="" placeholder="">
+            <span class="help-block help-block--NewPersonLastName">Please enter a last name. </span>
+        </div>
     </div>
-    <div class="section__header--summary contact-list__event-director-add-new--awaiting-message" style="display: none;">
-        <p>You will remain the event director until the new contact has finished creating their account. Once the event has been approved, they will be the event director and your permissions will be removed.</p>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="input-group contact-primary-email required">
+            <label for="newPersonEmailPrimary">Primary Email Address<span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Enter a primary email address."></span></label>
+            <input type="email" class="form-control" name="NewPersonEmailPrimary" id="newPersonEmailPrimary" maxlength="50" value="">
+            <span class="help-block help-block--NewPersonEmailPrimary">Please enter a primary email address.</span>
+        </div>
+        <div class="input-group contact-primary-phone required">
+            <label for="newPersonPhonePrimary">Primary Phone Number</label>
+            <input type="text" class="form-control" pattern="[0-9]{3}[-][0-9]{3}[-][0-9]{4}" name="NewPersonPhonePrimary" id="newPersonPhonePrimary" value="" maxlength="12">
+            <span class="help-block help-block--NewPersonPhonePrimary">Please enter a primary phone number.</span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-7">
+        <div class="input-group contact-city required">
+            <label for="newPersonCity">City</label>
+            <input type="text" maxlength="30" class="form-control" name="NewPersonCity" id="newPersonCity" value="">
+            <span class="help-block help-block--NewPersonCity">Please enter a city.</span>
+        </div>
+    </div>
+    <div class="col-sm-5">
+        <div class="input-group contact-state required">
+            <label for="newEventDirectorState" class="">State</label>
+            <select name="newEventDirectorState" class="form-control" id="newEventDirectorState">
+                <option value="">Select State</option>
+                <option value="AL">Alabama</option>
+                <option value="AK">Alaska</option>
+                <option value="AZ">Arizona</option>
+            </select>
+            <span class="help-block help-block--newEventDirectorState">Please select a state.</span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-5 col-md-6">
+        <div class="form-group lookup person">
+            <button class="btn btn-small confirm-form-add-new-person" type="button" id="">Confirm</button>
+        </div>
+    </div>
+</div>
     </div>
 
+    <!-- Contact List -->
     <div class="form-group form-group-result contact-info__event-director-list">
         <div class="row contact-information__event-director--list">
             <div class="list list--event-director list--lookup people">
@@ -908,11 +902,11 @@
                     <span class="lookup-results--event-director">Event Director </span>
                     <div class="list__controls contact-list__controls">
                         <button class="list__controls--settings" id="listContactSettings"></button>
-                        <!-- <button class="btn btn-link" id="editContactList">Edit</button> -->
-                        <!-- <button class="btn btn-link" id="saveContactList">Done Editing</button> -->
-                        <!-- <button class="btn btn-link list-item__delete" id="cancelContactList">Cancel</button> -->
-                        <button class="btn btn-link contact-edit-button">Edit</button>
-                        <a href="#" class="btn btn-link contact-remove-button">Remove</a>
+                        <button class="btn btn-link" id="editContactList">Edit</button>
+                        <button class="btn btn-link" id="saveContactList">Done Editing</button>
+                        <button class="btn btn-link" id="cancelContactList">Cancel</button>
+                        <!-- <button class="btn btn-link contact-edit-button">Edit</button> -->
+                        <!-- <a href="#" class="btn btn-link contact-remove-button">Remove</a> -->
                     </div>
                 </div>
             
@@ -921,7 +915,7 @@
                         <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
                         <div class="list-item list-item--current">
                             <input type="hidden" class="contact-isMember" value="true">
-                            <!-- <button class="list-item__delete">Remove</button> -->
+                            <button class="list-item__delete">Remove</button>
                             <div class="contact-name">Jay Place</div>
                             <div class="contact-location">Sarasota, FL</div>
                             <div class="contact-phone"></div>
@@ -932,7 +926,7 @@
                         <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
                         <div class="list-item list-item--lookup">
                             <input type="hidden" class="contact-isMember" value="true">
-                            <!-- <button class="list-item__delete">Remove</button> -->
+                            <button class="list-item__delete">Remove</button>
                             <div class="list-item__pending">Account Pending</div>
                             <div class="contact-name">Kyle Deery</div>
                             <div class="contact-location">Sarasota, FL</div>
@@ -944,6 +938,7 @@
                         <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
                         <div class="list-item list-item--new">
                             <input type="hidden" class="contact-isMember" value="true">
+                            <button class="list-item__delete">Remove</button>
                             <div class="list-item__pending">Account Pending</div>
                             <div class="contact-name">Jess Riley</div>
                             <div class="contact-location">Sarasota, FL</div>
@@ -991,120 +986,127 @@
         </div>
     </div>
 
+    <!-- Messaging -->
+    <div class="section__header--summary contact-list__event-director--message" style="display: none;">
+        <p>The event director must have a USMS My Account. If they are not in the dropdown list, they will need to create an account. You can get the account creation started by clicking 'Add New' below. Once the form is completed, the new event director will receive an email to finish the process and you will see them listed here as 'Account Pending'. <em>You will not be able to register/update your event until the new contact has completed the account set up</em>. After you have registered/updated your event and then it is approved by USMS, you will receive an email notifying you the new contact is done and your permissions are removed.</p>
+    </div>
+
+    <div class="section__header--summary contact-list__event-director-add-new--awaiting-message" style="display: none;">
+        <p>You will remain the event director until the new contact has finished creating their account. Once the event has been approved, they will be the event director and your permissions will be removed.</p>
+    </div>
+
     <script src="/event/js/event-director.js"></script>
 
 </div>
             <div class="section-group section-group--head-ref">
 
-        <div class="form-group form-group-default contact-info__head-ref--container">
-            <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-4">
-                    <div class="input-group contact-info__head-ref">
-                        <label for="addHeadRef">
-                            Head Referee
-                        </label>
-                        <span class="help-block help-block--addHeadRef">Please choose a head referee</span>
-                        <button class="btn btn-sm btn-outline" id="addHeadRef">Add Head Referee</button>
-                        <button class="btn btn-sm btn-outline" id="cancelAddHeadRef" style="display: none;">Cancel</button>
-                    </div>
+    <div class="form-group form-group-default contact-info__head-ref--container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                <div class="input-group contact-info__head-ref">
+                    <label for="addHeadRef">
+                        Head Referee
+                    </label>
+                    <span class="help-block help-block--addHeadRef">Please choose a head referee</span>
+                    <button class="btn btn-sm btn-outline" id="addHeadRef">Add Head Referee</button>
+                    <button class="btn btn-sm btn-outline" id="cancelAddHeadRef" style="display: none;">Cancel</button>
                 </div>
             </div>
         </div>
-        <!-- Lookup Head Ref -->
-        <div class="form-group contact-info__head-ref-lookup--container">
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="input-group lookup-ref-name">
-                        <label for="lookupRefName">Search Referees</label>
-                        <input tabindex="0" type="text" class="form-control lookup__input lookup-primary__input" min="3" max="30" name="LookupRefName" id="lookupRefName" autocomplete="off" placeholder="">
-                        <span class="help-block help-block--LookupRefName">Please enter head referee name</span>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12 col-md-8">
-                    <div class="input-group lookup-confirm">
-                        <button class="btn btn-small save-as-contact" type="button" id="addExistingRefBtn">
-                            <span class="lookup-confirm--name">Confirm Mark Usher</span>
-                        </button>
-                    </div>
+    </div>
+    <!-- Lookup Head Ref -->
+    <div class="form-group contact-info__head-ref-lookup--container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="input-group lookup-ref-name">
+                    <label for="lookupRefName">Search Referees</label>
+                    <input tabindex="0" type="text" class="form-control lookup__input lookup-primary__input" min="3" max="30" name="LookupRefName" id="lookupRefName" autocomplete="off" placeholder="">
+                    <span class="help-block help-block--LookupRefName">Please enter head referee name</span>
                 </div>
             </div>
         </div>
-        <!-- Add New Ref Button -->
-        <div class="form-group contact-info__head-ref-new--add-new">
-            <div class="row">
-                <div class="col-sm-12 col-md-8">
-                    <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">Or Add a New Head Referee</p>
-                    <div>
-                        <button class="btn btn-small btn-outline btn-add" id="addNewHeadRef" name="addNewHeadRef" type="button" value="Add New">Add New</button>
-                    </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-8">
+                <div class="input-group lookup-confirm">
+                    <button class="btn btn-small save-as-contact" type="button" id="addExistingRefBtn">
+                        <span class="lookup-confirm--name">Confirm Mark Usher</span>
+                    </button>
                 </div>
             </div>
         </div>
-        <!-- Add New Ref Form -->
-        <div class="form-group contact-info__head-ref--add-new-container add-new-inputs">
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="input-group contact-first-name required">
-                        <label for="newHeadRefFirstName">First Name</label>
-                        <input type="text" maxlength="30" class="form-control" name="NewHeadRefFirstName" id="newHeadRefFirstName" value="" placeholder="Steve">
-                        <span class="help-block help-block--NewHeadRefFirstName">Please enter the event director's first name.</span>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="input-group contact-last-name required">
-                        <label for="newHeadRefLastName" class="">Last Name</label>
-                        <input type="text" maxlength="30" class="form-control" name="NewHeadRefLastName" id="newHeadRefLastName" value="" placeholder="Hall">
-                        <span class="help-block help-block--NewHeadRefLastName">Please enter the event director's last name. </span>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="input-group contact-primary-email required">
-                        <label for="newHeadRefEmailPrimary">Primary Email Address<span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Enter the event director's primary email address."></span>
-                        </label>
-                        <input type="email" class="form-control" name="NewHeadRefEmailPrimary" id="newHeadRefEmailPrimary" maxlength="50" value="">
-                        <span class="help-block help-block--NewHeadRefEmailPrimary">Please enter the event director's primary email address.</span>
-                    </div>
-                    <div class="input-group contact-primary-phone required">
-                        <label for="newHeadRefPhonePrimary">Primary Phone Number</label>
-                        <input type="text" class="form-control" pattern="[0-9]{3}[-][0-9]{3}[-][0-9]{4}" name="NewHeadRefPhonePrimary" id="newHeadRefPhonePrimary" value="" maxlength="12">
-                        <span class="help-block help-block--NewHeadRefPhonePrimary">Please enter the event director's primary phone number.</span>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-7">
-                    <div class="input-group contact-city required">
-                        <label for="newHeadRefCity">City</label>
-                        <input type="text" maxlength="30" class="form-control" name="NewHeadRefCity" id="newHeadRefCity" value="">
-                        <span class="help-block help-block--NewHeadRefCity">Please enter the event director's city.</span>
-                    </div>
-                </div>
-                <div class="col-sm-5">
-                    <div class="input-group contact-state required">
-                        <label for="newHeadRefState" class="">State</label>
-                        <select name="newHeadRefState" class="form-control" id="newHeadRefState">
-                            <option value="">Select State</option>
-                            <option value="AL">Alabama</option>
-                            <option value="AK">Alaska</option>
-                            <option value="AZ">Arizona</option>
-                        </select>
-                        <span class="help-block help-block--newHeadRefState">Please select your event director's state.</span>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-5 col-md-6">
-                    <div class="form-group lookup person">
-                        <button class="btn btn-small" type="button" id="confirmNewHeadRefBtn">Confirm</button>
-                        <!-- <button class="btn btn-small btn-outline" type="button" id="cancelNewHeadRefBtn">Cancel</button> -->
-                    </div>
+    </div>
+    <!-- Add New Ref Button -->
+    <div class="form-group contact-info__head-ref-new--add-new">
+        <div class="row">
+            <div class="col-sm-12 col-md-8">
+                <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">Or Add a New Head Referee</p>
+                <div>
+                    <button class="btn btn-small btn-outline btn-add" id="addNewHeadRef" name="addNewHeadRef" type="button" value="Add New">Add New</button>
                 </div>
             </div>
         </div>
+    </div>
+    <!-- Add New Ref Form -->
+    <div class="form-group contact-info__head-ref--add-new-container add-new-inputs">
+        <div class="row">
+    <div class="col-sm-6">
+        <div class="input-group contact-first-name required">
+            <label for="newEventDirectorFirstName">First Name</label>
+            <input type="text" maxlength="30" class="form-control" name="NewEventDirectorFirstName" id="newEventDirectorFirstName" value="" placeholder="">
+            <span class="help-block help-block--NewEventDirectorFirstName">Please enter a first name.</span>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="input-group contact-last-name required">
+            <label for="newPersonLastName" class="">Last Name</label>
+            <input type="text" maxlength="30" class="form-control" name="NewPersonLastName" id="newPersonLastName" value="" placeholder="">
+            <span class="help-block help-block--NewPersonLastName">Please enter a last name. </span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="input-group contact-primary-email required">
+            <label for="newPersonEmailPrimary">Primary Email Address<span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Enter a primary email address."></span></label>
+            <input type="email" class="form-control" name="NewPersonEmailPrimary" id="newPersonEmailPrimary" maxlength="50" value="">
+            <span class="help-block help-block--NewPersonEmailPrimary">Please enter a primary email address.</span>
+        </div>
+        <div class="input-group contact-primary-phone required">
+            <label for="newPersonPhonePrimary">Primary Phone Number</label>
+            <input type="text" class="form-control" pattern="[0-9]{3}[-][0-9]{3}[-][0-9]{4}" name="NewPersonPhonePrimary" id="newPersonPhonePrimary" value="" maxlength="12">
+            <span class="help-block help-block--NewPersonPhonePrimary">Please enter a primary phone number.</span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-7">
+        <div class="input-group contact-city required">
+            <label for="newPersonCity">City</label>
+            <input type="text" maxlength="30" class="form-control" name="NewPersonCity" id="newPersonCity" value="">
+            <span class="help-block help-block--NewPersonCity">Please enter a city.</span>
+        </div>
+    </div>
+    <div class="col-sm-5">
+        <div class="input-group contact-state required">
+            <label for="newEventDirectorState" class="">State</label>
+            <select name="newEventDirectorState" class="form-control" id="newEventDirectorState">
+                <option value="">Select State</option>
+                <option value="AL">Alabama</option>
+                <option value="AK">Alaska</option>
+                <option value="AZ">Arizona</option>
+            </select>
+            <span class="help-block help-block--newEventDirectorState">Please select a state.</span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-5 col-md-6">
+        <div class="form-group lookup person">
+            <button class="btn btn-small confirm-form-add-new-person" type="button" id="">Confirm</button>
+        </div>
+    </div>
+</div>
+    </div>
 
     <!-- Head Ref List -->
     <div class="row contact-list contact-info__head-ref-list">
@@ -1113,12 +1115,12 @@
                 <div class="list__header contact-list__head-ref--header">
                     <span class="lookup-results--head-ref">Head Referee</span>
                     <div class="list__controls contact-list__controls">
-                        <button class="list__controls--settings" id="listRefSettings"></button>
-                        <!-- <button class="btn btn-link" id="editRefList">Edit</button>
-                        <button class="btn btn-link" id="saveRefList">Done Editing</button>
-                        <button class="btn btn-link" id="cancelRefList">Cancel</button> -->
-                        <button class="btn btn-link contact-edit-button">Edit</button>
-                        <a href="#" class="btn btn-link contact-remove-button">Remove</a>
+                        <button class="list__controls--settings" id="listContactSettings"></button>
+                        <button class="btn btn-link" id="editContactList">Edit</button>
+                        <button class="btn btn-link" id="saveContactList">Done Editing</button>
+                        <button class="btn btn-link" id="cancelContactList">Cancel</button>
+                        <!-- <button class="btn btn-link contact-edit-button">Edit</button> -->
+                        <!-- <a href="#" class="btn btn-link contact-remove-button">Remove</a> -->
                     </div>
                 </div>
             
@@ -1127,7 +1129,7 @@
                         <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
                             <div class="list-item list-item--lookup">
                                 <input type="hidden" class="contact-isMember" value="true">
-                                <!-- <button class="list-item__delete">Remove</button> -->
+                                <button class="list-item__delete">Remove</button>
                                 <div class="contact-name">Mark Usher</div>
                                 <div class="contact-location">Sarasota, FL</div>
                                 <!-- <div class="contact-phone"></div> -->
@@ -1139,7 +1141,7 @@
                             <div class="list-item list-item--new">
                                 <input type="hidden" class="contact-isMember" value="true">
                                 <!-- <div class="list-item__pending">Account Pending</div> -->
-                                <!-- <button class="list-item__delete">Remove</button> -->
+                                <button class="list-item__delete">Remove</button>
                                 <div class="contact-name">Steve Hall</div>
                                 <div class="contact-location">Sarasota, FL</div>
                                 <!-- <div class="contact-phone"></div> -->
@@ -1196,8 +1198,8 @@
 
 </div>
             <div class="section-group section-group--safety-coordinator">
-    <div class="row contact-list contact-info__safety-coordinator">
-        <div class="form-group form-group-default contact-info__safety-coordinator--container">
+    <div class="form-group form-group-default contact-info__safety-coordinator--container">
+        <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-4">
                 <div class="input-group contact-info__safety-coordinator">
                     <label for="addSafetyCoordinator">
@@ -1209,104 +1211,102 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Lookup Safety Coordinator -->
-        <div class="form-group contact-info__safety-coordinator-lookup--container">
-            <div class="row">
-                <div class="col-sm-8">
-                    <div class="input-group lookup-safety-coordinator-name">
-                        <label for="lookupSafetyCoordinatorName">Search Safety Coordinators</label>
-                        <input tabindex="0" type="text" class="form-control lookup__input lookup-primary__input" min="3" max="30" name="LookupSafetyCoordinatorName" id="lookupSafetyCoordinatorName" autocomplete="off" placeholder="">
-                        <span class="help-block help-block--lookup-safety-coordinator-name">Please enter safety coordinator name</span>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12 col-md-8">
-                    <div class="input-group lookup-confirm">
-                        <button class="btn btn-small save-as-contact" type="button" id="addExistingSafetyCoordinatorBtn">
-                            <span class="lookup-confirm--name">Confirm Jay Place</span>
-                        </button>
-                    </div>
+    <!-- Lookup an existing Safety Coordinator -->
+    <div class="form-group contact-info__safety-coordinator-lookup--container">
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="input-group lookup-safety-coordinator-name">
+                    <label for="lookupSafetyCoordinatorName">Search Safety Coordinators</label>
+                    <input tabindex="0" type="text" class="form-control lookup__input lookup-primary__input" min="3" max="30" name="LookupSafetyCoordinatorName" id="lookupSafetyCoordinatorName" autocomplete="off" placeholder="">
+                    <span class="help-block help-block--lookup-safety-coordinator-name">Please enter safety coordinator name</span>
                 </div>
             </div>
         </div>
-
-        <!-- Add New Safety Coordinator Button -->
-        <div class="form-group contact-info__safety-coordinator-new--add-new">
-            <div class="row">
-                <div class="col-sm-12 col-md-8">
-                    <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">Or Add a New Safety Coordinator</p>
-                    <div>
-                        <button class="btn btn-small btn-outline btn-add" id="addNewSafetyCoordinator" name="addNewSafetyCoordinator" type="button" value="Add New">Add New</button>
-                    </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-8">
+                <div class="input-group lookup-confirm">
+                    <button class="btn btn-small save-as-contact" type="button" id="addExistingSafetyCoordinatorBtn">
+                        <span class="lookup-confirm--name">Confirm Jay Place</span>
+                    </button>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Add New Safety Coordinator Form -->
-        <div class="form-group contact-info__safety-coordinator--add-new-container add-new-inputs">
-            <div class="row">
-                <div class="col-sm-6">
-                    <div class="input-group contact-first-name required">
-                        <label for="newSafetyCoordinatorFirstName">First Name</label>
-                        <input type="text" maxlength="30" class="form-control" name="NewSafetyCoordinatorFirstName" id="newSafetyCoordinatorFirstName" value="" placeholder="Daniel">
-                        <span class="help-block help-block--NewSafetyCoordinatorFirstName">Please enter the event director's first name.</span>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="input-group contact-last-name required">
-                        <label for="newSafetyCoordinatorLastName" class="">Last Name</label>
-                        <input type="text" maxlength="30" class="form-control" name="NewSafetyCoordinatorLastName" id="newSafetyCoordinatorLastName" value="" placeholder="Pauling">
-                        <span class="help-block help-block--NewSafetyCoordinatorLastName">Please enter the event director's last name. </span>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="input-group contact-primary-email required">
-                        <label for="newSafetyCoordinatorEmailPrimary">Primary Email Address<span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Enter the event director's primary email address."></span>
-                        </label>
-                        <input type="email" class="form-control" name="NewSafetyCoordinatorEmailPrimary" id="newSafetyCoordinatorEmailPrimary" maxlength="50" value="">
-                        <span class="help-block help-block--NewSafetyCoordinatorEmailPrimary">Please enter the event director's primary email address.</span>
-                    </div>
-                    <div class="input-group contact-primary-phone required">
-                        <label for="newSafetyCoordinatorPhonePrimary">Primary Phone Number</label>
-                        <input type="text" class="form-control" pattern="[0-9]{3}[-][0-9]{3}[-][0-9]{4}" name="NewSafetyCoordinatorPhonePrimary" id="newSafetyCoordinatorPhonePrimary" value="" maxlength="12">
-                        <span class="help-block help-block--NewSafetyCoordinatorPhonePrimary">Please enter the event director's primary phone number.</span>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-7">
-                    <div class="input-group contact-city required">
-                        <label for="newSafetyCoordinatorCity">City</label>
-                        <input type="text" maxlength="30" class="form-control" name="NewSafetyCoordinatorCity" id="newSafetyCoordinatorCity" value="">
-                        <span class="help-block help-block--NewSafetyCoordinatorCity">Please enter the event director's city.</span>
-                    </div>
-                </div>
-                <div class="col-sm-5">
-                    <div class="input-group contact-state required">
-                        <label for="newSafetyCoordinatorState" class="">State</label>
-                        <select name="newSafetyCoordinatorState" class="form-control" id="newSafetyCoordinatorState">
-                            <option value="">Select State</option>
-                            <option value="AL">Alabama</option>
-                            <option value="AK">Alaska</option>
-                            <option value="AZ">Arizona</option>
-                        </select>
-                        <span class="help-block help-block--newSafetyCoordinatorState">Please select your event director's state.</span>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-5 col-md-6">
-                    <div class="form-group lookup person">
-                        <button class="btn btn-small" type="button" id="confirmNewSafetyCoordinatorBtn">Confirm</button>
-                        <!-- <button class="btn btn-small btn-outline" type="button" id="cancelNewSafetyCoordinatorBtn">Cancel</button> -->
-                    </div>
+    <!-- Or add a new Safety Coordinator -->
+    <div class="form-group contact-info__safety-coordinator-new--add-new">
+        <div class="row">
+            <div class="col-sm-12 col-md-8">
+                <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">Or Add a New Safety Coordinator</p>
+                <div>
+                    <button class="btn btn-small btn-outline btn-add" id="addNewSafetyCoordinator" name="addNewSafetyCoordinator" type="button" value="Add New">Add New</button>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Add New Safety Coordinator Form -->
+    <div class="form-group contact-info__safety-coordinator--add-new-container add-new-inputs">
+        <div class="row">
+    <div class="col-sm-6">
+        <div class="input-group contact-first-name required">
+            <label for="newEventDirectorFirstName">First Name</label>
+            <input type="text" maxlength="30" class="form-control" name="NewEventDirectorFirstName" id="newEventDirectorFirstName" value="" placeholder="">
+            <span class="help-block help-block--NewEventDirectorFirstName">Please enter a first name.</span>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="input-group contact-last-name required">
+            <label for="newPersonLastName" class="">Last Name</label>
+            <input type="text" maxlength="30" class="form-control" name="NewPersonLastName" id="newPersonLastName" value="" placeholder="">
+            <span class="help-block help-block--NewPersonLastName">Please enter a last name. </span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="input-group contact-primary-email required">
+            <label for="newPersonEmailPrimary">Primary Email Address<span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Enter a primary email address."></span></label>
+            <input type="email" class="form-control" name="NewPersonEmailPrimary" id="newPersonEmailPrimary" maxlength="50" value="">
+            <span class="help-block help-block--NewPersonEmailPrimary">Please enter a primary email address.</span>
+        </div>
+        <div class="input-group contact-primary-phone required">
+            <label for="newPersonPhonePrimary">Primary Phone Number</label>
+            <input type="text" class="form-control" pattern="[0-9]{3}[-][0-9]{3}[-][0-9]{4}" name="NewPersonPhonePrimary" id="newPersonPhonePrimary" value="" maxlength="12">
+            <span class="help-block help-block--NewPersonPhonePrimary">Please enter a primary phone number.</span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-7">
+        <div class="input-group contact-city required">
+            <label for="newPersonCity">City</label>
+            <input type="text" maxlength="30" class="form-control" name="NewPersonCity" id="newPersonCity" value="">
+            <span class="help-block help-block--NewPersonCity">Please enter a city.</span>
+        </div>
+    </div>
+    <div class="col-sm-5">
+        <div class="input-group contact-state required">
+            <label for="newEventDirectorState" class="">State</label>
+            <select name="newEventDirectorState" class="form-control" id="newEventDirectorState">
+                <option value="">Select State</option>
+                <option value="AL">Alabama</option>
+                <option value="AK">Alaska</option>
+                <option value="AZ">Arizona</option>
+            </select>
+            <span class="help-block help-block--newEventDirectorState">Please select a state.</span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-5 col-md-6">
+        <div class="form-group lookup person">
+            <button class="btn btn-small confirm-form-add-new-person" type="button" id="">Confirm</button>
+        </div>
+    </div>
+</div>
     </div>
 
     <!-- Safety Coordinator List -->
@@ -1316,12 +1316,12 @@
                 <div class="list__header contact-list__safety-coordinator--header">
                     <span class="lookup-results--safety-coordinator">Safety Coordinator</span>
                     <div class="list__controls contact-list__controls">
-                        <button class="list__controls--settings" id="listSafetySettings"></button>
-                        <!-- <button class="btn btn-link" id="editSafetyCoordinatorList">Edit</button> -->
-                        <!-- <button class="btn btn-link" id="saveSafetyCoordinatorList">Done Editing</button> -->
-                        <!-- <button class="btn btn-link" id="cancelSafetyCoordinatorList">Cancel</button> -->
-                        <button class="btn btn-link contact-edit-button">Edit</button>
-                        <a href="#" class="btn btn-link contact-remove-button">Remove</a>
+                        <a href="#/" class="list__controls--settings" id="listContactSettings"></a>
+                        <a href="#/" class="btn btn-link" id="editContactList">Edit</a>
+                        <a href="#/" class="btn btn-link" id="saveContactList">Done Editing</a>
+                        <a href="#/" class="btn btn-link" id="cancelContactList">Cancel</a>
+                        <!-- <button class="btn btn-link contact-edit-button">Edit</button> -->
+                        <!-- <a href="#" class="btn btn-link contact-remove-button">Remove</a> -->
                     </div>
                 </div>
             
@@ -1408,7 +1408,7 @@
                                 <span class="icon-help"></span>
                             </a>
                         </label>
-                        <select name="SelectHostType" class="form-control" id="selectHostType" required="True">                                                            
+                        <select name="SelectHostType" class="form-control" id="selectHostType">
                             <option value="" disabled selected>Select a Host Type</option>
                             <option value="LMSC">LMSC</option>
                             <option value="USMS Club">USMS Club</option>
@@ -1426,12 +1426,13 @@
                     <div class="col-xs-12 col-sm-8 col-md-6">
                     <div class="input-group event-info-host-type-lmsc required">
                         <label for="selectHostTypeLmsc">
-                            LMSC<a tabindex="0" class="popover-link" role="button" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="top" 
-                            data-content="Do we need a tooltip here?" data-original-title="" title="">
-                            <span class="icon-help"></span>
+                            LMSC
+                            <a tabindex="0" class="popover-link" role="button" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="top" 
+                            data-content="" data-original-title="" title="Event Host tooltip.">
+                                <span class="icon-help"></span>
                             </a>
                         </label>
-                        <select name="SelectHostTypeLmsc" class="form-control" id="selectHostTypeLmsc" required="True">                                                            
+                        <select name="SelectHostTypeLmsc" class="form-control" id="selectHostTypeLmsc">                                                            
                             <option value="" disabled selected>Select an LMSC</option>
                             <option value="Florida LMSC">Florida LMSC</option>
                             <option value="Georgia LMSC">Georgia LMSC</option>
@@ -1551,12 +1552,12 @@
                 <div class="list__header contact-list__event-host--header">
                     <span class="lookup-results--event-host">Event Host</span>
                     <div class="list__controls contact-list__controls">
-                        <button class="list__controls--settings" id="listHostSettings"></button>
-                        <!-- <button class="btn btn-link" id="editHostList">Edit</button> -->
-                        <!-- <button class="btn btn-link" id="saveHostList">Done Editing</button> -->
-                        <!-- <button class="btn btn-link" id="cancelHostList">Cancel</button> -->
-                        <button class="btn btn-link contact-edit-button">Edit</button>
-                        <a href="#" class="btn btn-link contact-remove-button">Remove</a>
+                        <button class="list__controls--settings" id="listContactSettings"></button>
+                        <button class="btn btn-link" id="editContactList">Edit</button>
+                        <button class="btn btn-link" id="saveContactList">Done Editing</button>
+                        <button class="btn btn-link" id="cancelContactList">Cancel</button>
+                        <!-- <button class="btn btn-link contact-edit-button">Edit</button> -->
+                        <!-- <a href="#" class="btn btn-link contact-remove-button">Remove</a> -->
                     </div>
                 </div>
                 <div class="list__container">
@@ -1624,7 +1625,7 @@
             </div>
         </div>
     </div>
-    <script src="./js/host-type.js"></script>
+    <script src="./js/event-host.js"></script>
 </div>
 
             <div class="row">
@@ -1648,10 +1649,6 @@
     $(sectionInputs).click( function() {
         $("#saveContactInfoSection").prop('disabled', false);
     });
-    // $(sectionSelects).on("change", function() {
-    //     console.log("select");
-    //     $("#saveContactInfoSection").prop('disabled', false);
-    // });
 
     $("#saveContactInfoSection").click( function() {
         $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
@@ -1666,31 +1663,47 @@
         alert("Becky");
     });
 
-    $(".contact-remove-button").click(function() {
-        // var thisGroup = $(this).closest(".form-group").closest('.section__content');
-        // var thisGroup = $(this).text();
-        // .closest('.section-group');
-        // alert(thisGroup);
-        // $(thisGroup).find('.contact-list > .form-group').hide();
-        // $(thisGroup).find('.form-group-default').show();
-
-        // console.log(thisGroup);
-
-        var sectionGroup = $(this).closest('.section-group');
-        var formGroup = $(this).closest('.form-group');
-        console.log(sectionGroup);
-        console.log(formGroup);
-        sectionGroup.find('.form-group-default').show();
-        sectionGroup.find('.form-group-result .contact-column').hide();
-        sectionGroup.find('.form-group-result .contact-column .row .list').hide();
-        sectionGroup.find('.form-group-result .contact-column .row .list + div').hide();
+    // Edit List Controls
+    $("[class^='list list--'] #editContactList").click(function() {
+        $(this).closest(".list").addClass("edit-list");
     });
-    // function removeContactListItem(e) {
-    //     // var contactTypeContainer = $(this).closest(".form-group .list");        
-    //     // $(contactTypeContainer).find('.list').hide();
-    //     $(".contact-information__event-host--list").hide();
-    //     $(".contact-information__event-host--list .list-item").parent().hide();
-    // }
+    
+    // Checks if list item parent has been hidden
+    $("[class^='list list--'] #saveContactList").click(function(allHidden) {
+        if (allHidden) {
+            console.log('All contact list items are hidden.');
+            $(".list").removeClass("edit-list");
+            $(".list-item").removeClass('removed');
+            resetHeadRefSection();
+            resetSafetyCoordinator();
+            resetEventHost();
+        } else {
+            console.log('Not all contact list items are hidden.');
+            $(".list-item").removeClass('removed');
+        }
+    });
+    $("[class^='list list--'] #cancelContactList").click(function() {
+        console.log("Cancel edits to list");
+        $(".list").removeClass("edit-list");
+        $(".list-item").removeClass("removed");
+    });
+
+    $(".list-item__delete").click(function() {
+        $(this).parent().addClass('removed');
+        console.log("Remove/hide item until done editing");
+    });
+    
+    function listItemRemoved() {
+        console.log("Check if list item removed");
+        let allHidden = true;
+        $('.contact-column').each(function() {
+        if ($(this).css('display') !== 'none') {
+            allHidden = false;
+            return false; // Exit the loop early if one is not hidden
+        }
+        });
+        return allHidden;
+    }
 
 </script>                              
                               <form id="form-location-info">
@@ -2091,7 +2104,7 @@
                            <p class="venue-type">(Outdoor)</p>
                            <span class="help-block">Missing Configuration</span>
                            <div class="configuration__list">
-                                 <div class="configuration__list--item">
+                                 <div class="configuration__list--item added">
                                     <div class="list__controls">
                                        <a class="btn btn-link configuration-edit-button">Edit</a>
                                        <a class="btn btn-link configuration-remove-button">Remove</a>

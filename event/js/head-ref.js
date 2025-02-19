@@ -58,12 +58,49 @@ $("#addNewHeadRef").click(function(e) {
 });
 
 // Edit Ref List -> Clears the list for demo purposes
-$("#editRefList").click(function(e) {
-    e.preventDefault();
-    hideRefList();
-    hideRefListItems();
-    resetHeadRef();
+$(".section-group--head-ref .list-item__delete").click(function() {
+    // resetHeadRefSection();
+    // hideRefList();
+    // hideRefListItems();
 });
+
+function listItemRemoved() {
+    let allHidden = true;
+    $('.contact-column').each(function() {
+        if ($(this).css('display') !== 'none') {
+            allHidden = false;
+            return false; // Exit the loop early if one is not hidden
+        }
+    });
+    return allHidden;
+}
+
+$(".section-group--head-ref #cancelContactList").click(function(allHidden) {
+    
+    if (allHidden) {
+        console.log('All head ref list items are removed.');
+        // $(".list-item.removed").removeClass('removed').parent().hide();
+        // $(".list-item").removeClass('removed');
+        // resetHeadRefSection();
+    } else {
+        console.log('Not all head ref list items are removed.');
+        // $(".list-item").removeClass('removed');
+        $(".list-item.removed").parent().hide();
+        $(".list-item").removeClass('removed')
+    }
+});
+
+// $(".section-group--head-ref #saveContactList").click(function(allHidden) {
+    
+//     if (allHidden) {
+//         console.log('All head ref list items are hidden.');
+//         $(".list-item").removeClass('removed');
+//         resetHeadRefSection();
+//     } else {
+//         console.log('Not all head ref list items are hidden.');
+//         $(".list-item").removeClass('removed');
+//     }
+// });
 
 $("#confirmNewHeadRefBtn").click(function(e) {
     e.preventDefault();
@@ -85,6 +122,19 @@ $("#cancelNewHeadRefBtn").click(function(e) {
     // $("#addNewHeadRef").show();
 });
 
+// Confirm Add New Person Form for Head Referee
+$(".contact-info__head-ref--add-new-container .confirm-form-add-new-person").click( function() {
+    alert("Add new head ref");
+    closeHeadRefSection();
+    showRefList();
+    enableListControlEditing();
+    enableSafetyCoordinatorBtn();
+    $("#addHeadRef").hide();
+    $("#cancelAddHeadRef").show();
+    $(".contact-list__head-ref--header").show();
+    $(".contact-info__head-ref-list .list-item--new").parent().show();
+});
+
 
 
 
@@ -93,8 +143,10 @@ $("#cancelNewHeadRefBtn").click(function(e) {
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 
-function resetHeadRef() {
+function resetHeadRefSection() {
     $(".form-group.contact-info__head-ref--container").show();
+    hideRefList();
+    hideRefListItems();
 }
 
 function openHeadRefSection() {
@@ -150,6 +202,10 @@ function showRefList() {
 
 function hideRefList() {
     $(".contact-info__head-ref-list").hide();
+    console.log("Hide ref list");
+    $("#addHeadRef").show();
+    $("#cancelAddHeadRef").hide();
+    // $(".list").removeClass("edit-list");
 }
 
 function hideRefListItems() {
