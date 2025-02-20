@@ -26,7 +26,7 @@
         <!-- Event Director -->
         <div class="section__content collapse" id="contact-info__content" data-parent="#accordion">
 
-            <div class="form-group contact-info__event-director-type-form">
+            <!-- <div class="form-group contact-info__event-director-type-form">
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="input-group radio-group event-director">
@@ -55,9 +55,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
-            <div class="form-group contact-info__event-director-other--container">
+            <!-- <div class="form-group contact-info__event-director-other--container">
                 <div class="row">
                     <div class="col-sm-4 col-md-8">
                         <div class="input-group lookup-name">
@@ -72,38 +72,28 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="row">
-                    <div class="col-sm-12 col-md-8">
-                        <div class="input-group lookup-confirm">
-                            <button class="btn btn-small save-as-contact" type="button" id="addAsEventDirector">
-                                <span class="lookup-confirm--name">Confirm Kyle Deery</span>
-                            </button>
-                        </div>
-                    </div>
-                </div> -->
-            </div>
+            </div> -->
 
-            <div class="form-group contact-info__event-director-other--add-new">
+            <!-- <div class="form-group contact-info__event-director-other--add-new">
                 <div class="row">
                     <div class="col-sm-12 col-md-8">
                         <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">Or Add a New Event Director</p>
                         <div>
-                            <!-- <input class="btn btn-small btn-outline" id="addNewEventDirector" name="addNewEventDirector" type="button" value="Add New"> -->
                             <button class="btn btn-small btn-outline btn-add" id="addNewEventDirector" name="addNewEventDirector" type="button" value="Add New">Add New</button>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
-            <div class="form-group contact-info__event-director-current--container">
+            <!-- <div class="form-group contact-info__event-director-current--container">
                 <div class="row">
                     <div class="col-sm-4">
                         Current Event Director Container
                     </div>
                 </div>
-            </div>
+            </div> -->
 
-            <div class="form-group contact-info-event-director__current-message">
+            <!-- <div class="form-group contact-info-event-director__current-message">
                 <div class="row">
                     <div class="col-sm-12">
                         <p id="contact__recentlyadded">
@@ -117,9 +107,9 @@
                         </p>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
-            <div class="form-group contact-info__event-director--add-new-container add-new-inputs">
+            <!-- <div class="form-group contact-info__event-director--add-new-container add-new-inputs">
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="input-group contact-first-name required">
@@ -175,15 +165,14 @@
                     <div class="col-sm-5 col-md-6">
                         <div class="form-group lookup person">
                             <button class="btn btn-small" type="button" id="addNewEventDirectorBtn">Confirm</button>
-                            <!-- <button class="btn btn-small btn-outline" type="button" id="cancelAddNewEventDirectorBtn">Cancel</button> -->
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
-            <sergey-import src="event-sanction/form-group-event-director" />
+            <sergey-import src="event-sanction/section-group-event-director" />
 
-            <sergey-import src="event-sanction/form-group-event-host" />
+            <sergey-import src="event-sanction/section-group-event-host" />
 
             <div class="row">
                 <div class="section__controls">
@@ -198,24 +187,37 @@
 <script src="/event/js/safety-coordinator.js"></script>
 <script src="/event/js/event-host.js"></script>
 <script>
+
+    // $(sectionSelects).on("change", function() {
+    //     console.log("select");
+    //     $("#saveContactInfoSection").prop('disabled', false);
+    // });
+
+    // Enable save button on input focus
     var sectionId = "#contact-info";
     var sectionInputs = sectionId + " input";
     var sectionSelects = sectionId + " select";
-    var sectionTextarea = sectionId + " textarea";
     $(sectionInputs).click( function() {
         $("#saveContactInfoSection").prop('disabled', false);
     });
-    $(sectionSelects).on("change", function() {
-        console.log("select");
-        $("#saveContactInfoSection").prop('disabled', false);
-    });
-    
+    // Save section
     $("#saveContactInfoSection").click( function() {
-        // $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+        $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
         $('#accordion').find('.collapse.in').parent().addClass('hasData');
         $("#location-information h3").click();
         $(document.documentElement).animate({
             scrollTop: $("#location-information").offset().top - 45
         }, 100);
+    });
+    // List Control Edit
+    $("[class^='list list--'] #editContactList").click(function() {
+        alert("What?");
+        $(this).closest(".list").addClass("edit-list");
+    });
+    // List Control Cancel
+    $("[class^='list list--'] #cancelContactList").click(function() {
+        $(".list").removeClass("edit-list");
+        $(".list-item").removeClass("list-item--fade-out");
+        $('.list__container').removeClass('list__container--modified');
     });
 </script>

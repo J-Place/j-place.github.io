@@ -894,10 +894,10 @@
                 <div class="list__header contact-list__event-director--header">
                     <span class="lookup-results--event-director">Event Director </span>
                     <div class="list__controls contact-list__controls">
-                        <button class="list__controls--settings" id="listContactSettings"></button>
-                        <button class="btn btn-link" id="editContactList">Edit</button>
-                        <button class="btn btn-link" id="saveContactList">Done Editing</button>
-                        <button class="btn btn-link" id="cancelContactList">Cancel</button>
+                        <button type="button" class="list__controls--settings" id="listContactSettings"></button>
+                        <button type="button" class="btn btn-link" id="editContactList">Edit</button>
+                        <button type="button" class="btn btn-link" id="saveContactList">Done Editing</button>
+                        <button type="button" class="btn btn-link" id="cancelContactList">Cancel</button>
                         <!-- <button class="btn btn-link contact-edit-button">Edit</button> -->
                         <!-- <a href="#" class="btn btn-link contact-remove-button">Remove</a> -->
                     </div>
@@ -1108,10 +1108,10 @@
                 <div class="list__header contact-list__head-ref--header">
                     <span class="lookup-results--head-ref">Head Referee</span>
                     <div class="list__controls contact-list__controls">
-                        <button class="list__controls--settings" id="listContactSettings"></button>
-                        <button class="btn btn-link" id="editContactList">Edit</button>
-                        <button class="btn btn-link" id="saveContactList">Done Editing</button>
-                        <button class="btn btn-link" id="cancelContactList">Cancel</button>
+                        <button type="button" class="list__controls--settings" id="listContactSettings"></button>
+                        <button type="button" class="btn btn-link" id="editContactList">Edit</button>
+                        <button type="button" class="btn btn-link" id="saveContactList">Done Editing</button>
+                        <button type="button" class="btn btn-link" id="cancelContactList">Cancel</button>
                         <!-- <button class="btn btn-link contact-edit-button">Edit</button> -->
                         <!-- <a href="#" class="btn btn-link contact-remove-button">Remove</a> -->
                     </div>
@@ -1391,6 +1391,7 @@
 </div>
             <div class="section-group section-group--host-type">
     <div class="row contact-list contact-info__host-type">
+
         <div class="form-group form-group-default contact-info__host-type--container">
             <div class="row">
                 <div class="col-xs-12 col-sm-8 col-md-6">
@@ -1484,7 +1485,7 @@
 
         <div class="form-group contact-info-host-type__other-organization--container add-new-inputs">
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-xs-12 col-lg-12">
                     <div class="input-group organization-name required">
                         <label for="hostTypeOtherName">Organization Name</label>
                         <input type="text" maxlength="30" class="form-control" name="HostTypeOtherName" id="hostTypeOtherName" value="" placeholder="Cape Coral Yach Club">
@@ -1493,7 +1494,7 @@
                 </div>
             </div>
             <!-- <div class="rowXXX"> -->
-                <div class="col-sm-12">
+                <div class="col-xs-12">
                     <div class="input-group contact-info-host-type__other-organization--address required">
                         <label for="hostTypeOtherStreetAddress">
                                 Street Address<span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Enter the organization's street address."></span>
@@ -1531,6 +1532,24 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    <div class="input-group contact-info-host-type__other-organization--email">
+                        <label for="hostTypeOtherEmail">Email Address</label>
+                        <input type="text" maxlength="30" class="form-control" name="HostTypeOtherEmail" id="hostTypeOtherEmail" value="">
+                        <span class="help-block help-block--HostTypeOtherEmail">Please enter the organization email address.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-lg-8">
+                    <div class="input-group contact-info-host-type__other-organization--phone">
+                        <label for="hostTypeOtherPhone">Phone Number</label>
+                        <input type="text" maxlength="30" class="form-control" name="HostTypeOtherPhone" id="hostTypeOtherPhone" value="">
+                        <span class="help-block help-block--HostTypeOtherPhone">Please enter the organization phone number.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-sm-5 col-md-6">
                     <div class="form-group lookup person">
                         <button class="btn btn-small" type="button" id="addHostTypeOtherBtn">Confirm</button>
@@ -1545,10 +1564,10 @@
                 <div class="list__header contact-list__event-host--header">
                     <span class="lookup-results--event-host">Event Host</span>
                     <div class="list__controls contact-list__controls">
-                        <button class="list__controls--settings" id="listContactSettings"></button>
-                        <button class="btn btn-link" id="editContactList">Edit</button>
-                        <button class="btn btn-link" id="saveContactList">Done Editing</button>
-                        <button class="btn btn-link" id="cancelContactList">Cancel</button>
+                        <button type="button" class="list__controls--settings" id="listContactSettings"></button>
+                        <button type="button" class="btn btn-link" id="editContactList">Edit</button>
+                        <button type="button" class="btn btn-link" id="saveContactList">Done Editing</button>
+                        <button type="button" class="btn btn-link" id="cancelContactList">Cancel</button>
                         <!-- <button class="btn btn-link contact-edit-button">Edit</button> -->
                         <!-- <a href="#" class="btn btn-link contact-remove-button">Remove</a> -->
                     </div>
@@ -1618,6 +1637,7 @@
                 <button class="btn btn-small btn-success" id="confirmCurrentHost">Confirm</button>
             </div>
         </div>
+
     </div>
     <script src="./js/event-host.js"></script>
 </div>
@@ -1635,14 +1655,14 @@
 </form>
 
 <script>
-    var isEdit = $(".isEdit");
+    // Enable save button on input focus
     var sectionId = "#contact-info";
     var sectionInputs = sectionId + " input";
     var sectionSelects = sectionId + " select";
     $(sectionInputs).click( function() {
         $("#saveContactInfoSection").prop('disabled', false);
     });
-
+    // Save section
     $("#saveContactInfoSection").click( function() {
         $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
         $('#accordion').find('.collapse.in').parent().addClass('hasData');
@@ -1651,55 +1671,16 @@
             scrollTop: $("#location-information").offset().top - 45
         }, 100);
     });
-
-
-    // Edit Contact List
-
+    // List Control Edit
     $("[class^='list list--'] #editContactList").click(function() {
         $(this).closest(".list").addClass("edit-list");
     });
-    
-    // $("[class^='list list--'] #saveContactList").click(function() {
-    // });
-
+    // List Control Cancel
     $("[class^='list list--'] #cancelContactList").click(function() {
         $(".list").removeClass("edit-list");
         $(".list-item").removeClass("list-item--fade-out");
         $('.list__container').removeClass('list__container--modified');
     });
-
-    // $("contact-info .list-item__delete").click(function() {
-    //     $(this).parent().addClass('list-item--fade-out');
-    //     $(this).closest('.list__container').addClass('list__container--modified');
-    // });
-
-
-
-    // if (allHidden) {
-    //     console.log('All contact list items are hidden.');
-    //     $(".list").removeClass("edit-list");
-    //     $(".list-item").removeClass('remove');
-    //     resetHeadRefSection();
-    //     resetSafetyCoordinator();
-    //     resetEventHost();
-    // } else {
-    //     console.log('Not all contact list items are hidden.');
-    //     $(".list").removeClass("edit-list");
-    //     $(".list-item").removeClass('remove');
-    // }
-
-    // function listItemRemove() {
-    //     console.log("Run list item remove function");
-    //     let allHidden = true;
-    //     $('.contact-column').each(function() {
-    //         if ($(this).css('display') !== 'none') {
-    //             allHidden = false;
-    //             return false; // Exit the loop early if one is not hidden
-    //         }
-    //     });
-    //     return allHidden;
-    // }
-
 </script>                              
                               <form id="form-location-info">
    <div class="section section-location-information" id="location-information">

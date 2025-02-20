@@ -44,14 +44,14 @@
 </form>
 
 <script>
-    var isEdit = $(".isEdit");
+    // Enable save button on input focus
     var sectionId = "#contact-info";
     var sectionInputs = sectionId + " input";
     var sectionSelects = sectionId + " select";
     $(sectionInputs).click( function() {
         $("#saveContactInfoSection").prop('disabled', false);
     });
-
+    // Save section
     $("#saveContactInfoSection").click( function() {
         $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
         $('#accordion').find('.collapse.in').parent().addClass('hasData');
@@ -60,53 +60,14 @@
             scrollTop: $("#location-information").offset().top - 45
         }, 100);
     });
-
-
-    // Edit Contact List
-
+    // List Control Edit
     $("[class^='list list--'] #editContactList").click(function() {
         $(this).closest(".list").addClass("edit-list");
     });
-    
-    // $("[class^='list list--'] #saveContactList").click(function() {
-    // });
-
+    // List Control Cancel
     $("[class^='list list--'] #cancelContactList").click(function() {
         $(".list").removeClass("edit-list");
         $(".list-item").removeClass("list-item--fade-out");
         $('.list__container').removeClass('list__container--modified');
     });
-
-    // $("contact-info .list-item__delete").click(function() {
-    //     $(this).parent().addClass('list-item--fade-out');
-    //     $(this).closest('.list__container').addClass('list__container--modified');
-    // });
-
-
-
-    // if (allHidden) {
-    //     console.log('All contact list items are hidden.');
-    //     $(".list").removeClass("edit-list");
-    //     $(".list-item").removeClass('remove');
-    //     resetHeadRefSection();
-    //     resetSafetyCoordinator();
-    //     resetEventHost();
-    // } else {
-    //     console.log('Not all contact list items are hidden.');
-    //     $(".list").removeClass("edit-list");
-    //     $(".list-item").removeClass('remove');
-    // }
-
-    // function listItemRemove() {
-    //     console.log("Run list item remove function");
-    //     let allHidden = true;
-    //     $('.contact-column').each(function() {
-    //         if ($(this).css('display') !== 'none') {
-    //             allHidden = false;
-    //             return false; // Exit the loop early if one is not hidden
-    //         }
-    //     });
-    //     return allHidden;
-    // }
-
 </script>
