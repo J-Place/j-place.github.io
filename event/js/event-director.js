@@ -5,7 +5,7 @@ $(document).ready(function() {
 
 // Select I'm the Event Director
     $("#contactTypeEventDirectorCurrent").click(function(e) {
-        // e.preventDefault();
+        e.preventDefault();
         disableHeadRefBtn();
         disableSafetyCoordinatorBtn();
         disableHostTypeSelect();
@@ -45,7 +45,7 @@ $(document).ready(function() {
 
 // Someone Else is the Event Director
     $("#contactTypeEventDirectorOther").click(function(e) {
-        // e.preventDefault();
+        e.preventDefault();
         $("#selectHostType").prop("disabled", true);
         disableHeadRefBtn();
         disableSafetyCoordinatorBtn();
