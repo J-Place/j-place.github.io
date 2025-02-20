@@ -1,150 +1,149 @@
-// Choose to Add Head Ref - Open Inputs
-$("#addHeadRef").click(function(e) {
-    e.preventDefault();
-    disableEventDirectorRadios();
-    disableHostTypeSelect();
-    disableSafetyCoordinatorBtn();
-    openHeadRefSection();
-    disableListControlEditing();
-    closeLookupRef();
-    $("#addHeadRef").hide();
-    $("#addExistingRefBtn").hide();
-    $("#addNewHeadRef").show();
-    $("#cancelAddHeadRef").show();
-    $("#lookupRefName").attr("placeholder", "");
-    $(".contact-info__head-ref-new--add-new").show();
-});
+$(document).ready(function() {
 
-$("#cancelAddHeadRef").click(function(e) {
-    e.preventDefault();
-    closeHeadRefSection();
-    $("#addHeadRef").show();
-    $("#cancelAddHeadRef").hide();
-    hideLookupConfirmtBtn()
-    enableSafetyCoordinatorBtn();
-    enableListControlEditing();
-});
+    // Choose to Add Head Ref - Open Inputs
+    $("#addHeadRef").click(function(e) {
+        e.preventDefault();
+        disableEventDirectorRadios();
+        disableHostTypeSelect();
+        disableSafetyCoordinatorBtn();
+        openHeadRefSection();
+        disableListControlEditing();
+        closeLookupRef();
+        $("#addHeadRef").hide();
+        $("#addExistingRefBtn").hide();
+        $("#addNewHeadRef").show();
+        $("#cancelAddHeadRef").show();
+        $("#lookupRefName").attr("placeholder", "");
+        $(".contact-info__head-ref-new--add-new").show();
+    });
 
-// Lookup Head Ref in Search
-$("#lookupRefName").click(function(e) {
-    e.preventDefault();
-    openLookupRef();
-    closeAddRefForm();
-    $(this).attr("placeholder", "Mark Usher, Sarasota, FL");
-    $("#addNewHeadRef").show();
-});
+    $("#cancelAddHeadRef").click(function(e) {
+        e.preventDefault();
+        closeHeadRefSection();
+        $("#addHeadRef").show();
+        $("#cancelAddHeadRef").hide();
+        hideLookupConfirmtBtn()
+        enableSafetyCoordinatorBtn();
+        enableListControlEditing();
+    });
 
-// Save Head Ref from Search
-$("#addExistingRefBtn").click(function(e) {
-    e.preventDefault();
-    closeHeadRefSection();
-    showRefList();
-    enableListControlEditing();
-    enableSafetyCoordinatorBtn();
-    $("#lookupRefName").attr("placeholder", "");
-    $("#addHeadRef").show();
-    $("#cancelAddHeadRef").hide();
-    $(".contact-list__head-ref--header").show();
-    $(".contact-info__head-ref-list .list-item--lookup").parent().show();
-});
+    // Lookup Head Ref in Search
+    $("#lookupRefName").click(function(e) {
+        e.preventDefault();
+        openLookupRef();
+        closeAddRefForm();
+        $(this).attr("placeholder", "Mark Usher, Sarasota, FL");
+        $("#addNewHeadRef").show();
+    });
 
-// Select Add New Ref -> Open Form
-$("#addNewHeadRef").click(function(e) {
-    e.preventDefault();
-    $("#addNewHeadRef").hide();
-    closeLookupRef();
-    openAddRefForm();
-    $("#lookupRefName").attr("placeholder", "");
-});
+    // Save Head Ref from Search
+    $("#addExistingRefBtn").click(function(e) {
+        e.preventDefault();
+        closeHeadRefSection();
+        showRefList();
+        enableListControlEditing();
+        enableSafetyCoordinatorBtn();
+        $("#lookupRefName").attr("placeholder", "");
+        $("#addHeadRef").show();
+        $("#cancelAddHeadRef").hide();
+        $(".contact-list__head-ref--header").show();
+        $(".contact-info__head-ref-list .list-item--lookup").parent().show();
+    });
 
-// Edit Ref List -> Clears the list for demo purposes
-$(".section-group--head-ref .list-item__delete").click(function() {
-    // resetHeadRefSection();
-    // hideRefList();
-    // hideRefListItems();
-});
+    // Select Add New Ref -> Open Form
+    $("#addNewHeadRef").click(function(e) {
+        e.preventDefault();
+        $("#addNewHeadRef").hide();
+        closeLookupRef();
+        openAddRefForm();
+        $("#lookupRefName").attr("placeholder", "");
+    });
 
-function listItemRemoved() {
-    let allHidden = true;
-    $('.contact-column').each(function() {
-        if ($(this).css('display') !== 'none') {
-            allHidden = false;
-            return false; // Exit the loop early if one is not hidden
+    $("#confirmNewHeadRefBtn").click(function(e) {
+        e.preventDefault();
+        closeHeadRefSection();
+        showRefList();
+        enableListControlEditing();
+        enableSafetyCoordinatorBtn();
+        $("#addHeadRef").hide();
+        $("#cancelAddHeadRef").show();
+        $(".contact-list__head-ref--header").show();
+        $(".contact-info__head-ref-list .list-item--new").parent().show();
+    });
+
+    $("#cancelNewHeadRefBtn").click(function(e) {
+        e.preventDefault();
+        closeAddRefForm();
+        $("#addHeadRef").show();
+        // $("#cancelAddHeadRef").hide();
+        // $("#addNewHeadRef").show();
+    });
+
+    // Confirm Add New Person Form for Head Referee
+    $(".contact-info__head-ref--add-new-container .confirm-form-add-new-person").click( function() {
+        console.log("Add new head ref");
+        closeHeadRefSection();
+        showRefList();
+        enableListControlEditing();
+        enableSafetyCoordinatorBtn();
+        $("#addHeadRef").hide();
+        $("#cancelAddHeadRef").show();
+        $(".contact-list__head-ref--header").show();
+        $(".contact-info__head-ref-list .list-item--new").parent().show();
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+    $(".list--head-ref #saveContactList").click(function() {
+        var numModified = $('.list__container--modified').length;
+        if (numModified > 0) {
+            $(".list").removeClass("edit-list");
+            $(".list-item").removeClass('list-item--fade-out');
+            resetHeadRefSection();
+        } else {
+            $(".list").removeClass("edit-list");
+            $(".list-item").removeClass('list-item--fade-out');
+        }
+        $('.list__container').removeClass('list__container--modified');
+    });
+
+    $(".section-group--head-ref .list-item__delete").click(function() {
+        $(this).parent().addClass('list-item--fade-out');
+        $(this).closest('.list__container').addClass('list__container--modified');
+    });
+
+    function listItemRemoved() {
+        let allHidden = true;
+        $('.contact-column').each(function() {
+            if ($(this).css('display') !== 'none') {
+                allHidden = false;
+                return false; // Exit the loop early if one is not hidden
+            }
+        });
+        return allHidden;
+    }
+
+    $(".section-group--head-ref #cancelContactList").click(function(allHidden) {
+        
+        if (allHidden) {
+            console.log('All head ref list items are removed.');
+        } else {
+            console.log('Not all head ref list items are removed.');
+            $(".list-item.removed").parent().hide();
+            $(".list-item").removeClass('removed')
         }
     });
-    return allHidden;
-}
-
-$(".section-group--head-ref #cancelContactList").click(function(allHidden) {
-    
-    if (allHidden) {
-        console.log('All head ref list items are removed.');
-    } else {
-        console.log('Not all head ref list items are removed.');
-        $(".list-item.removed").parent().hide();
-        $(".list-item").removeClass('removed')
-    }
 });
-
-$("#confirmNewHeadRefBtn").click(function(e) {
-    e.preventDefault();
-    closeHeadRefSection();
-    showRefList();
-    enableListControlEditing();
-    enableSafetyCoordinatorBtn();
-    $("#addHeadRef").hide();
-    $("#cancelAddHeadRef").show();
-    $(".contact-list__head-ref--header").show();
-    $(".contact-info__head-ref-list .list-item--new").parent().show();
-});
-
-$("#cancelNewHeadRefBtn").click(function(e) {
-    e.preventDefault();
-    closeAddRefForm();
-    $("#addHeadRef").show();
-    // $("#cancelAddHeadRef").hide();
-    // $("#addNewHeadRef").show();
-});
-
-// Confirm Add New Person Form for Head Referee
-$(".contact-info__head-ref--add-new-container .confirm-form-add-new-person").click( function() {
-    console.log("Add new head ref");
-    closeHeadRefSection();
-    showRefList();
-    enableListControlEditing();
-    enableSafetyCoordinatorBtn();
-    $("#addHeadRef").hide();
-    $("#cancelAddHeadRef").show();
-    $(".contact-list__head-ref--header").show();
-    $(".contact-info__head-ref-list .list-item--new").parent().show();
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-$(".list--head-ref #saveContactList").click(function() {
-    var numModified = $('.list__container--modified').length;
-    if (numModified > 0) {
-        $(".list").removeClass("edit-list");
-        $(".list-item").removeClass('list-item--fade-out');
-        resetHeadRefSection();
-    } else {
-        $(".list").removeClass("edit-list");
-        $(".list-item").removeClass('list-item--fade-out');
-    }
-    $('.list__container').removeClass('list__container--modified');
-});
-
-
 
 
 // Functions //////////////////////////////////////////////////////////////////////////////////////////////

@@ -148,27 +148,29 @@ $(document).ready(function() {
         $("#modalChosePoolConfigurationSelby").modal('show');
     });
 
-    var modalChosePoolConfigurationHealthfit = new bootstrap.Modal(document.getElementById('modalChosePoolConfigurationHealthfit'));
+    // var modalChosePoolConfigurationHealthfit = new bootstrap.Modal(document.getElementById('modalChosePoolConfigurationHealthfit'));
 
     $("#confirmLocationHealthfit").click( function() {
-        modalChosePoolConfigurationHealthfit.modal('show');
+        $("#modalChosePoolConfigurationHealthfit").modal('show');
     });
 
-    var modalChosePoolConfigurationJensen = new bootstrap.Modal(document.getElementById('modalChosePoolConfigurationJensen'));
+    // var modalChosePoolConfigurationJensen = new bootstrap.Modal(document.getElementById('modalChosePoolConfigurationJensen'));
 
     $("#confirmLocationJensen").click( function() {
-        modalChosePoolConfigurationJensen.modal('show');
+        $("#modalChosePoolConfigurationJensen").modal('show');
     });
 
     $("#modalConfirmSelby").click( function() {
         confirmConfiguration();
         $(".list-item-existing").show();
-        $(".venue__list").show();
-        $(".configuration__list").show();
-        $(".configuration__list--item.selected").show();
         scrollTopSection();
         $(this).prop('disabled', true);
         $('input[name="configuration-selby').prop("checked", false);
+        $(".list-item-existing .venue__list").show();
+        $(".list-item-existing .venue__list--item.selected").show();
+        $(".list-item-existing .configuration__list").show();
+        $(".list-item-existing .configuration__list--item.selected").show();
+        $(".list-item-existing .configuration__list--item.selected .configuration-title").show();
     });
 
     $("#modalConfirmHealthfit").click( function() {
@@ -177,6 +179,11 @@ $(document).ready(function() {
         scrollTopSection();
         $(this).prop('disabled', true);
         $('input[name="configuration-healthfit').prop("checked", false);
+        $(".list-item-duplicate .venue__list").show();
+        $(".list-item-duplicate .venue__list--item.selected").show();
+        $(".list-item-duplicate .configuration__list").show();
+        $(".list-item-duplicate .configuration__list--item.selected").show();
+        $(".list-item-duplicate .configuration__list--item.selected .configuration-title").show();
     });
 
     $("#modalConfirmJensen").click( function() {
@@ -185,6 +192,11 @@ $(document).ready(function() {
         scrollTopSection();
         $(this).prop('disabled', true);
         $('input[name="configuration-jensen').prop("checked", false);
+        $(".list-item-new .venue__list").show();
+        $(".list-item-new .venue__list--item.selected").show();
+        $(".list-item-new .configuration__list").show();
+        $(".list-item-new .configuration__list--item.selected").show();
+        $(".list-item-new .configuration__list--item.selected .configuration-title").show();
     });
 
     function confirmConfiguration() {
@@ -218,16 +230,23 @@ $(document).ready(function() {
         $(addNewPoolForm).show();
     }
 
+
+
+
+
     $(".location-name .list-item__edit").click( function() {
         $(".list.locations").addClass("edit-list");
-        $(".venue__list--item").show();
-        $(".venue__list--item:first-of-type .configuration-title").show();
+        $(".venue__list--item.selected").show();
+        $(".venue__list--item.selected .configuration-title").show();
         $(".location-name .list-item__edit").hide();
         $(".location-name .list-item__save").show();
         $(".location-name .list-item__delete").show();
         showListControlChildren();
-        $(".venue__list--item:first-of-type .configuration-title:last-of-type").removeClass('selected');
+        // $(".venue__list--item:first-of-type .configuration-title:last-of-type").removeClass('selected');
     });
+
+
+
 
     $(".location-name .list-item__delete").click( function() {
         $(".list.locations").removeClass("edit-list");

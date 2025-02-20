@@ -1,99 +1,106 @@
-// Open Add Safety Coordinator Form
-$("#addSafetyCoordinator").click(function(e) {
-    e.preventDefault();
-    disableEventDirectorRadios();
-    disableHostTypeSelect();
-    disableHeadRefBtn();
-    openSafetyCoordinatorSection();
-    disableListControlEditing();
-    hideLookupConfirmtBtn()
-    $("#addSafetyCoordinator").hide();
-    $("#cancelAddSafetyCoordinator").show();
-    $("#lookupSafetyCoordinatorName").attr("placeholder", "");
-    $(".contact-info__safety-coordinator-new--add-new").show();
+$(document).ready(function() {
+
+    // Open Add Safety Coordinator Form
+    $("#addSafetyCoordinator").click(function(e) {
+        e.preventDefault();
+        disableEventDirectorRadios();
+        disableHostTypeSelect();
+        disableHeadRefBtn();
+        openSafetyCoordinatorSection();
+        disableListControlEditing();
+        hideLookupConfirmtBtn()
+        $("#addSafetyCoordinator").hide();
+        $("#cancelAddSafetyCoordinator").show();
+        $("#lookupSafetyCoordinatorName").attr("placeholder", "");
+        $(".contact-info__safety-coordinator-new--add-new").show();
+    });
+
+    $("#cancelAddSafetyCoordinator").click(function(e) {
+        e.preventDefault();
+        closeSafetyCoordinatorSection();
+        $("#addSafetyCoordinator").show();
+        $("#cancelAddSafetyCoordinator").hide();
+        enableListControlEditing();
+        enableHeadRefBtn();
+    });
+
+    // Lookup Safety Coordinator in Search
+    $("#lookupSafetyCoordinatorName").click(function(e) {
+        e.preventDefault();
+        openLookupSafetyCoordinator();
+        closeAddSafetyCoordinatorForm();
+        $(this).attr("placeholder", "Jay Place, Sarasota, FL");
+        $("#addNewSafetyCoordinator").show();
+    });
+
+    // Save Safety Coordinator from Search
+    $("#addExistingSafetyCoordinatorBtn").click(function(e) {
+        e.preventDefault();
+        closeSafetyCoordinatorSection();
+        showSafetyCoordinatorList();
+        enableListControlEditing();
+        enableHeadRefBtn();
+        $("#cancelAddSafetyCoordinator").hide();
+        $("#addSafetyCoordinator").show();
+        $("#lookupSafetyCoordinatorName").attr("placeholder", "");
+        $(".contact-list__safety-coordinator--header").show();
+        $(".contact-info__safety-coordinator-list .list-item--lookup").parent().show();
+    });
+
+    // Select Add New Safety -> Open Form
+    $("#addNewSafetyCoordinator").click(function(e) {
+        e.preventDefault();
+        $("#addNewSafetyCoordinator").hide();
+        closeLookupSafetyCoordinator();
+        openAddSafetyCoordinatorForm();
+        $("#lookupSafetyCoordinatorName").attr("placeholder", "");
+    });
+
+    $(".contact-info__safety-coordinator--add-new-container .confirm-form-add-new-person").click( function(e) {
+        e.preventDefault();
+        closeSafetyCoordinatorSection();
+        showSafetyCoordinatorList();
+        enableListControlEditing();
+        enableHeadRefBtn();
+        $("#cancelAddSafetyCoordinator").hide();
+        $("#addSafetyCoordinator").show();
+        $(".contact-list__safety-coordinator--header").show();
+        $(".contact-info__safety-coordinator-list .list-item--new").parent().show();
+    });
+
+    $("#cancelNewSafetyCoordinatorBtn").click(function(e) {
+        e.preventDefault();
+        closeAddSafetyCoordinatorForm();
+        $("#addNewSafetyCoordinator").show();
+    });
+
+
+
+
+
+
+
+
+
+    $(".list--safety-coordinator #saveContactList").click(function() {
+        var numModified = $('.list__container--modified').length;
+        if (numModified > 0) {
+            $(".list").removeClass("edit-list");
+            $(".list-item").removeClass('list-item--fade-out');
+            resetSafetyCoordinator();
+        } else {
+            $(".list").removeClass("edit-list");
+            $(".list-item").removeClass('list-item--fade-out');
+        }
+        $('.list__container').removeClass('list__container--modified');
+    });
+
+
+    $(".section-group--safety-coordinator .list-item__delete").click(function() {
+        $(this).parent().addClass('list-item--fade-out');
+        $(this).closest('.list__container').addClass('list__container--modified');
+    });
 });
-
-$("#cancelAddSafetyCoordinator").click(function(e) {
-    e.preventDefault();
-    closeSafetyCoordinatorSection();
-    $("#addSafetyCoordinator").show();
-    $("#cancelAddSafetyCoordinator").hide();
-    enableListControlEditing();
-    enableHeadRefBtn();
-});
-
-// Lookup Safety Coordinator in Search
-$("#lookupSafetyCoordinatorName").click(function(e) {
-    e.preventDefault();
-    openLookupSafetyCoordinator();
-    closeAddSafetyCoordinatorForm();
-    $(this).attr("placeholder", "Jay Place, Sarasota, FL");
-    $("#addNewSafetyCoordinator").show();
-});
-
-// Save Safety Coordinator from Search
-$("#addExistingSafetyCoordinatorBtn").click(function(e) {
-    e.preventDefault();
-    closeSafetyCoordinatorSection();
-    showSafetyCoordinatorList();
-    enableListControlEditing();
-    enableHeadRefBtn();
-    $("#cancelAddSafetyCoordinator").hide();
-    $("#addSafetyCoordinator").show();
-    $("#lookupSafetyCoordinatorName").attr("placeholder", "");
-    $(".contact-list__safety-coordinator--header").show();
-    $(".contact-info__safety-coordinator-list .list-item--lookup").parent().show();
-});
-
-// Select Add New Safety -> Open Form
-$("#addNewSafetyCoordinator").click(function(e) {
-    e.preventDefault();
-    $("#addNewSafetyCoordinator").hide();
-    closeLookupSafetyCoordinator();
-    openAddSafetyCoordinatorForm();
-    $("#lookupSafetyCoordinatorName").attr("placeholder", "");
-});
-
-$(".contact-info__safety-coordinator--add-new-container .confirm-form-add-new-person").click( function(e) {
-    e.preventDefault();
-    closeSafetyCoordinatorSection();
-    showSafetyCoordinatorList();
-    enableListControlEditing();
-    enableHeadRefBtn();
-    $("#cancelAddSafetyCoordinator").hide();
-    $("#addSafetyCoordinator").show();
-    $(".contact-list__safety-coordinator--header").show();
-    $(".contact-info__safety-coordinator-list .list-item--new").parent().show();
-});
-
-$("#cancelNewSafetyCoordinatorBtn").click(function(e) {
-    e.preventDefault();
-    closeAddSafetyCoordinatorForm();
-    $("#addNewSafetyCoordinator").show();
-});
-
-
-
-
-
-
-
-
-
-$(".list--safety-coordinator #saveContactList").click(function() {
-    var numModified = $('.list__container--modified').length;
-    if (numModified > 0) {
-        $(".list").removeClass("edit-list");
-        $(".list-item").removeClass('list-item--fade-out');
-        resetSafetyCoordinator();
-    } else {
-        $(".list").removeClass("edit-list");
-        $(".list-item").removeClass('list-item--fade-out');
-    }
-    $('.list__container').removeClass('list__container--modified');
-});
-
-
 
 
 /////////////////////////////////////////////////////////////// Functions ///////////////////////////////////////////////////////////////

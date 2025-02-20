@@ -1152,12 +1152,12 @@
                         <span><i class="fa fa-plus"></i></span>Add Pool
                      </button>
                      <div class="venue__list">
-                        <div class="venue__list--item">
+                        <div class="venue__list--item selected">
                            <div class="list__controls">
                               <a class="btn btn-link venue-edit-button">Edit</a>
                               <a class="btn btn-link venue-remove-button">Remove</a>
                            </div>
-                           <p class="venue-name">Competition Pool</p>
+                           <p class="venue-name selected">Competition Pool</p>
                            <p class="venue-type">(Outdoor)</p>
                            <span class="help-block">Missing Configuration</span>
                            <div class="configuration__list">
@@ -1264,16 +1264,16 @@
                         <span><i class="fa fa-plus"></i></span>Add Pool
                      </button>
                      <div class="venue__list">
-                        <div class="venue__list--item">
+                        <div class="venue__list--item selected">
                            <div class="list__controls">
                               <a class="btn btn-link venue-edit-button">Edit</a>
                               <a class="btn btn-link venue-remove-button">Remove</a>
                            </div>
-                           <p class="venue-name">Main Pool</p>
+                           <p class="venue-name selected">Main Pool</p>
                            <p class="venue-type">(Outdoor)</p>
                            <span class="help-block">Missing Configuration</span>
                            <div class="configuration__list">
-                                 <div class="configuration__list--item">
+                                 <div class="configuration__list--item selected">
                                     <div class="list__controls">
                                        <a class="btn btn-link configuration-edit-button">Edit</a>
                                        <a class="btn btn-link configuration-remove-button">Remove</a>
@@ -2419,23 +2419,22 @@
 <script>
     var accordion = $('#accordion');
     var section = $(this).parent();
-    accordion.on('hide.bs.collapse', function () {
-        console.log("hide");
-    });
-    accordion.on('hidden.bs.collapse', function () {
-        console.log("hidden");
-    });
+    // accordion.on('hide.bs.collapse', function () {
+    //     console.log("hide");
+    // });
+    // accordion.on('hidden.bs.collapse', function () {
+    //     console.log("hidden");
+    // });
     accordion.on('show.bs.collapse','.collapse', function() {
         accordion.find('.collapse.in').parent().removeClass('isEdit');
         accordion.find('.collapse.in').removeClass('in');
         let section = $(this).parent();
         $(section).addClass('isEdit');
-        console.log("show")
+        // console.log("show")
     });
-
-    accordion.on('shown.bs.collapse', function () {
-        console.log("shown");
-    });
+    // accordion.on('shown.bs.collapse', function () {
+    //     console.log("shown");
+    // });
 
     $("[data-toggle='tooltip']").tooltip();
 

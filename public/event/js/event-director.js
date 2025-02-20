@@ -1,4 +1,3 @@
-
 $(document).ready(function() {
 
 // Disable Save & Continue Button
@@ -192,6 +191,8 @@ $(document).ready(function() {
     });
 
     $(".list--event-director .list-item__delete").click(function() {
+        $(this).parent().addClass('list-item--fade-out');
+        $(this).closest('.list__container').addClass('list__container--modified');
         $(".contact-info__event-director-privacy--container").hide();
     });
 

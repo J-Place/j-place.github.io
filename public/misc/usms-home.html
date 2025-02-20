@@ -807,23 +807,22 @@
 <script>
     var accordion = $('#accordion');
     var section = $(this).parent();
-    accordion.on('hide.bs.collapse', function () {
-        console.log("hide");
-    });
-    accordion.on('hidden.bs.collapse', function () {
-        console.log("hidden");
-    });
+    // accordion.on('hide.bs.collapse', function () {
+    //     console.log("hide");
+    // });
+    // accordion.on('hidden.bs.collapse', function () {
+    //     console.log("hidden");
+    // });
     accordion.on('show.bs.collapse','.collapse', function() {
         accordion.find('.collapse.in').parent().removeClass('isEdit');
         accordion.find('.collapse.in').removeClass('in');
         let section = $(this).parent();
         $(section).addClass('isEdit');
-        console.log("show")
+        // console.log("show")
     });
-
-    accordion.on('shown.bs.collapse', function () {
-        console.log("shown");
-    });
+    // accordion.on('shown.bs.collapse', function () {
+    //     console.log("shown");
+    // });
 
     $("[data-toggle='tooltip']").tooltip();
 

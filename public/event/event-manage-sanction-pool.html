@@ -1599,6 +1599,7 @@
                     <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
                         <div class="list-item list-item--organization-lookup">
                             <input type="hidden" class="contact-isMember" value="true">
+                            <button class="list-item__delete">Remove</button>
                             <!-- <div class="list-item__pending">Host Pending</div> -->
                             <div class="contact-name">Rainbow River Swim Club</div>
                             <div class="contact-location">Dunnedin, FL</div>
@@ -1610,7 +1611,7 @@
                     <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
                         <div class="list-item list-item--organization-new">
                             <input type="hidden" class="contact-isMember" value="true">
-                            <!-- <button class="list-item__delete">Remove</button> -->
+                            <button class="list-item__delete">Remove</button>
                             <!-- <div class="list-item__pending">Host Pending</div> -->
                             <div class="contact-name">Cape Coral Yach Club</div>
                             <div class="contact-location">Cape Coral, FL</div>
@@ -1642,7 +1643,6 @@
 
 <script>
     var isEdit = $(".isEdit");
-
     var sectionId = "#contact-info";
     var sectionInputs = sectionId + " input";
     var sectionSelects = sectionId + " select";
@@ -1675,10 +1675,12 @@
         $('.list__container').removeClass('list__container--modified');
     });
 
-    $(".list-item__delete").click(function() {
-        $(this).parent().addClass('list-item--fade-out');
-        $(this).closest('.list__container').addClass('list__container--modified');
-    });
+    // $("contact-info .list-item__delete").click(function() {
+    //     $(this).parent().addClass('list-item--fade-out');
+    //     $(this).closest('.list__container').addClass('list__container--modified');
+    // });
+
+
 
     // if (allHidden) {
     //     console.log('All contact list items are hidden.');
@@ -2021,12 +2023,12 @@
                         <span><i class="fa fa-plus"></i></span>Add Pool
                      </button>
                      <div class="venue__list">
-                        <div class="venue__list--item">
+                        <div class="venue__list--item selected">
                            <div class="list__controls">
                               <a class="btn btn-link venue-edit-button">Edit</a>
                               <a class="btn btn-link venue-remove-button">Remove</a>
                            </div>
-                           <p class="venue-name">Competition Pool</p>
+                           <p class="venue-name selected">Competition Pool</p>
                            <p class="venue-type">(Outdoor)</p>
                            <span class="help-block">Missing Configuration</span>
                            <div class="configuration__list">
@@ -2133,16 +2135,16 @@
                         <span><i class="fa fa-plus"></i></span>Add Pool
                      </button>
                      <div class="venue__list">
-                        <div class="venue__list--item">
+                        <div class="venue__list--item selected">
                            <div class="list__controls">
                               <a class="btn btn-link venue-edit-button">Edit</a>
                               <a class="btn btn-link venue-remove-button">Remove</a>
                            </div>
-                           <p class="venue-name">Main Pool</p>
+                           <p class="venue-name selected">Main Pool</p>
                            <p class="venue-type">(Outdoor)</p>
                            <span class="help-block">Missing Configuration</span>
                            <div class="configuration__list">
-                                 <div class="configuration__list--item">
+                                 <div class="configuration__list--item selected">
                                     <div class="list__controls">
                                        <a class="btn btn-link configuration-edit-button">Edit</a>
                                        <a class="btn btn-link configuration-remove-button">Remove</a>
@@ -3572,23 +3574,22 @@
 <script>
     var accordion = $('#accordion');
     var section = $(this).parent();
-    accordion.on('hide.bs.collapse', function () {
-        console.log("hide");
-    });
-    accordion.on('hidden.bs.collapse', function () {
-        console.log("hidden");
-    });
+    // accordion.on('hide.bs.collapse', function () {
+    //     console.log("hide");
+    // });
+    // accordion.on('hidden.bs.collapse', function () {
+    //     console.log("hidden");
+    // });
     accordion.on('show.bs.collapse','.collapse', function() {
         accordion.find('.collapse.in').parent().removeClass('isEdit');
         accordion.find('.collapse.in').removeClass('in');
         let section = $(this).parent();
         $(section).addClass('isEdit');
-        console.log("show")
+        // console.log("show")
     });
-
-    accordion.on('shown.bs.collapse', function () {
-        console.log("shown");
-    });
+    // accordion.on('shown.bs.collapse', function () {
+    //     console.log("shown");
+    // });
 
     $("[data-toggle='tooltip']").tooltip();
 
