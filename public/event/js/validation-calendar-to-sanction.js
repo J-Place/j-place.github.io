@@ -1,6 +1,6 @@
-$(".section").addClass('isEdit');
-$("#event-type").removeClass('isEdit');
-$("#event-type").addClass('hasData');
+// $(".section").addClass('isEdit');
+// $("#event-type").removeClass('isEdit');
+// $("#event-type").addClass('hasData');
 
 $(".help-block--SelectEventClass").addClass('has-error');
 $("#selectEventClass").addClass('has-error');

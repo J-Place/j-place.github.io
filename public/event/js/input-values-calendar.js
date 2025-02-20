@@ -1,5 +1,3 @@
-$(".section-event-info h3").click();
-
 $('input[name="EventType"][value="pool"]').prop('checked', true);
 $('input[name="EventType"]').prop('disabled', true);
 

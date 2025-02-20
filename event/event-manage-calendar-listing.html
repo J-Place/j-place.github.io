@@ -108,19 +108,21 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
       <sergey-import src="site/footer_scripts" />
       <script type="text/javascript">
-         var modalConfirmMeetAnnouncement = new bootstrap.Modal(document.getElementById('modalConfirmMeetAnnouncement'), 
-            {
-               backdrop: 'static', 
-               keyboard: false
-            }
+         // Open first section on this page
+         $("#event-name h3").click();
+         // Set has data state on all sections
+         $('#accordion').find('.collapse').parent().removeClass('isEdit');
+         $('#accordion').find('.collapse').parent().addClass('hasData');
+
+         // Upgrade to sanction button and meet announcement modal
+         var modalConfirmMeetAnnouncement = new bootstrap.Modal(
+            document.getElementById('modalConfirmMeetAnnouncement'), 
+            { backdrop: 'static', keyboard: false }
          );
          $("#upgradeToSanction").click( function() {
-            console.log("Click");
             $("#modalConfirmMeetAnnouncement").removeClass('fade');
             modalConfirmMeetAnnouncement.show();
          });
-         // Open first editable section
-         $("#calendar-eventinfo h3").click();   
       </script>
       
    </body>
