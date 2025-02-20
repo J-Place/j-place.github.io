@@ -42,22 +42,6 @@ $(document).ready(function() {
         $("#selectHostType").prop("disabled", false);
         $(".contact-info__event-director-privacy--container").show();
     });
-    
-// Edit Event Director List
-    // $("#editContactList").click(function(e) {
-    //     // e.preventDefault();
-    //     $(".contact-info__event-director-type-form").show();
-    //     $(".list__header.contact-list__event-director--header").hide();
-    //     $(".contact-information__event-director--list").hide();
-    //     $(".contact-information__event-director--list .list-item").parent().hide();
-    //     $("#confirmCurrentEventDirector").show();
-    //     $(".contact-list__event-director-add-new--awaiting-message").hide();
-    //     $(".contact-info__event-director-privacy--container").hide();
-    //     enableHeadRefBtn();
-    //     enableSafetyCoordinatorBtn();
-    //     enableHostTypeSelect();
-    //     enableEventDirectorRadios();
-    // });
 
 // Someone Else is the Event Director
     $("#contactTypeEventDirectorOther").click(function(e) {
