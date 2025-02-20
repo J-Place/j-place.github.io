@@ -187,6 +187,7 @@ $(document).ready(function() {
             return
         } else {
             $(".contact-info__event-director-privacy--container").show();
+            $(".contact-list__event-director-add-new--awaiting-message").show();
         }
     });
 
@@ -194,6 +195,7 @@ $(document).ready(function() {
         $(this).parent().addClass('list-item--fade-out');
         $(this).closest('.list__container').addClass('list__container--modified');
         $(".contact-info__event-director-privacy--container").hide();
+        $(".contact-list__event-director-add-new--awaiting-message").hide();
     });
 
 
