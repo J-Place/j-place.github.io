@@ -117,7 +117,7 @@ $(document).ready(function() {
         $('.list__container').removeClass('list__container--modified');
     });
 
-    $(".section-group--head-ref .list-item__delete").click(function() {
+    $(".contact-group--head-ref .list-item__delete").click(function() {
         $(this).parent().addClass('list-item--fade-out');
         $(this).closest('.list__container').addClass('list__container--modified');
     });
@@ -133,7 +133,7 @@ $(document).ready(function() {
         return allHidden;
     }
 
-    $(".section-group--head-ref #cancelContactList").click(function(allHidden) {
+    $(".contact-group--head-ref #cancelContactList").click(function(allHidden) {
         
         if (allHidden) {
             console.log('All head ref list items are removed.');

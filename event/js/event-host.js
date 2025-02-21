@@ -93,7 +93,7 @@ $(document).ready(function() {
     });
     
     // $("#editHostList").click(function(e) {
-    $(".section-group--host-type .contact-remove-button").click(function(e) {
+    $(".contact-group--host-type .contact-remove-button").click(function(e) {
         e.preventDefault();
         hideLookupConfirmtBtn();
         resetHostSelects();
@@ -233,7 +233,7 @@ $(document).ready(function() {
         $('.list__container').removeClass('list__container--modified');
     });
 
-    $(".section-group--host-type .list-item__delete").click(function() {
+    $(".contact-group--host-type .list-item__delete").click(function() {
         $(this).parent().addClass('list-item--fade-out');
         $(this).closest('.list__container').addClass('list__container--modified');
     });

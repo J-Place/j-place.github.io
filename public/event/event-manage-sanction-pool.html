@@ -405,7 +405,7 @@
 
 <script>
     var sectionId = "#event-name";
-    var nextSectionId = "#event-info";
+    var nextSectionId = "#event-information";
     var sectionInputs = sectionId + " input";
     var sectionSelects = sectionId + " select";
     var sectionTextarea = sectionId + " textarea";   
@@ -426,13 +426,13 @@
         $(sectionId).addClass('hasData');
         $(nextSectionId + " h3").click();
         $(document.documentElement).animate({
-            scrollTop: $("#event-info").offset().top - 45
+            scrollTop: $("#event-information").offset().top - 45
         }, 100);
     });
 </script>
                               <form id="form-event-info">
-   <div class="section section-event-info" id="event-info">
-      <h3 class="section__header" data-target="#event-info__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-info__content">
+   <div class="section section-event-info" id="event-information">
+      <h3 class="section__header" data-target="#event-information__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-info__content">
          <span class="section__number">2</span>Event Details
       </h3>
       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
@@ -690,7 +690,7 @@
 </form>
 
 <script>
-   var sectionId = "#event-info";
+   var sectionId = "#event-information";
    var sectionInputs = sectionId + " input";
    var sectionSelects = sectionId + " select";
    var sectionTextarea = sectionId + " textarea";
@@ -707,19 +707,19 @@
    });
 
    $("#EventImage").click( function() {
-      $("#event-info .file-stored").text('Replace File');
+      $("#event-information .file-stored").text('Replace File');
    });
 
    $(sectionBtn).click( function() {
-      $("#event-info").addClass('hasData');
-      $("#contact-info h3").click();
+      $("#event-information").addClass('hasData');
+      $("#contact-information h3").click();
       $(document.documentElement).animate({
-         scrollTop: $("#contact-info").offset().top - 45
+         scrollTop: $("#contact-information").offset().top - 45
       }, 100);
    });
 </script>
                               <form id="form-contact-info">
-    <div class="section section-contact-info" id="contact-info">
+    <div class="section section-contact-info" id="contact-information">
         <div class="modal fade" id="modalContactInfoConfirmation" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -746,7 +746,7 @@
         <!-- Event Director -->
         <div class="section__content collapse" id="contact-info__content" data-parent="#accordion">
 
-            <div class="section-group section-group--event-director">
+            <div class="contact-group--event-director">
 
     <!-- Contact Forms -->
     <div class="form-group form-group-default contact-info__event-director-type-form">
@@ -998,7 +998,7 @@
     <script src="/event/js/event-director.js"></script>
 
 </div>
-            <div class="section-group section-group--head-ref">
+            <div class="contact-group--head-ref">
 
     <div class="form-group form-group-default contact-info__head-ref--container">
         <div class="row">
@@ -1197,7 +1197,7 @@
     <script src="./js/head-ref.js"></script>
 
 </div>
-            <div class="section-group section-group--safety-coordinator">
+            <div class="contact-group--safety-coordinator">
     <div class="form-group form-group-default contact-info__safety-coordinator--container">
         <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-4">
@@ -1396,7 +1396,7 @@
     </div>
     <script src="./js/safety-coordinator.js"></script>
 </div>
-            <div class="section-group section-group--host-type">
+            <div class="contact-group--host-type">
     <div class="row contact-list contact-info__host-type">
 
         <div class="form-group form-group-default contact-info__host-type--container">
@@ -1663,7 +1663,7 @@
 
 <script>
     // Enable save button on input focus
-    var sectionId = "#contact-info";
+    var sectionId = "#contact-information";
     var sectionInputs = sectionId + " input";
     var sectionSelects = sectionId + " select";
     $(sectionInputs).click( function() {
@@ -1674,9 +1674,7 @@
         $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
         $('#accordion').find('.collapse.in').parent().addClass('hasData');
         $("#location-information h3").click();
-        $(document.documentElement).animate({
-            scrollTop: $("#location-information").offset().top - 45
-        }, 100);
+        scrollToLocation();
     });
     // List Control Edit
     $("[class^='list list--'] #editContactList").click(function() {
@@ -1688,6 +1686,36 @@
         $(".list-item").removeClass("list-item--fade-out");
         $('.list__container').removeClass('list__container--modified');
     });
+    function scrollToName() {
+        $(document.documentElement).animate({
+            scrollTop: $("#event-name").offset().top - 45
+        }, 100);
+    }
+    function scrollToDetails() {
+        $(document.documentElement).animate({
+            scrollTop: $("#event-details").offset().top - 45
+        }, 100);
+    }
+    function scrollToContact() {
+        $(document.documentElement).animate({
+            scrollTop: $("#contact-information").offset().top - 45
+        }, 100);
+    }
+    function scrollToLocation() {
+        $(document.documentElement).animate({
+            scrollTop: $("#location-information").offset().top - 45
+        }, 100);
+    }
+    function scrollToEntryInformation() {
+        $(document.documentElement).animate({
+            scrollTop: $("#entry-information").offset().top - 45
+        }, 100);
+    }
+    function scrollToMeetAnnouncement() {
+        $(document.documentElement).animate({
+            scrollTop: $("#location-information").offset().top - 45
+        }, 100);
+    }
 </script>                              
                               <form id="form-location-info">
    <div class="section section-location-information" id="location-information">
@@ -2769,15 +2797,17 @@
 
             <div class="row">
                <div class="col-xs-12 col-sm-4">
-                  <label for="">Upload Paper Entry Form (PDF)</label>
-                  <div class="input-group entry-info__paper-entry-form">
+                  <div class="input-group upload-file entry-info__paper-entry-form">
+                     <label for="">Upload Paper Entry Form (PDF)</label>
+                     <span class="help-block file-type">Invalid file type</span>
+                     <span class="help-block no-data">Please upload an entry form</span>   
                      <div class="upload-summary">
                         <button type="button" class="event-document__remove-file" data-toggle="tooltip" title="" data-original-title="Remove document">
                            <i class="fa fa-times"></i>
                         </button>
                         Storedfilename.pdf
                      </div>
-                     <div class="upload-box">
+                     <div class="upload-box upload-box--file">
                         <input type="file" data-file-size="3584000" name="entryform[]" id="entryForm" class="inputfile input-entryform" data-multiple-caption="{count} files selected" accept="application/msword, text/plain, application/pdf" multiple="">
                         <label for="entryForm">
                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
@@ -2788,20 +2818,6 @@
                      </div>
                   </div>
                </div>
-               <!-- <div class="col-xs-12 col-sm-4">
-                  <label for="">Upload Other Document(s)</label>
-                  <div class="input-group entry-info__paper-entry-form">
-                     <div class="upload-box">
-                        <input type="file" data-file-size="3584000" name="file-3[]" id="file-3" class="inputfile inputfile-3" data-multiple-caption="{count} files selected" accept="image/*" multiple="">
-                        <label for="file-3">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
-                              <path fill="#FFF" d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
-                           </svg>
-                           <span>Choose a file…</span>
-                        </label>
-                     </div>
-                  </div>
-               </div> -->
             </div>
          </div>
          <div class="modal fade" id="modalID" tabindex="-1" role="dialog">
@@ -2878,7 +2894,7 @@
                <br />
             </div>
             <div class="col-xs-12 col-sm-4">
-               <div class="input-group meet-announcement required">
+               <div class="input-group upload-file meet-announcement required">
                   <label for="">Upload Meet Announcement (PDF)</label>
                   <span class="help-block file-type">Invalid file type</span>
                   <span class="help-block no-data">Please upload a meet announcement</span>

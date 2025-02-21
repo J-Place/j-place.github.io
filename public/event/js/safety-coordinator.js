@@ -96,7 +96,7 @@ $(document).ready(function() {
     });
 
 
-    $(".section-group--safety-coordinator .list-item__delete").click(function() {
+    $(".contact-group--safety-coordinator .list-item__delete").click(function() {
         $(this).parent().addClass('list-item--fade-out');
         $(this).closest('.list__container').addClass('list__container--modified');
     });
