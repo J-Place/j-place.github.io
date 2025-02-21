@@ -1,6 +1,6 @@
 <form id="form-event-info">
-   <div class="section section-event-info" id="event-info">
-      <h3 class="section__header" data-target="#event-info__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-info__content">
+   <div class="section section-event-info" id="event-information">
+      <h3 class="section__header" data-target="#event-information__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-info__content">
          <span class="section__number">2</span>Event Details
       </h3>
       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
@@ -27,7 +27,7 @@
 </form>
 
 <script>
-   var sectionId = "#event-info";
+   var sectionId = "#event-information";
    var sectionInputs = sectionId + " input";
    var sectionSelects = sectionId + " select";
    var sectionTextarea = sectionId + " textarea";
@@ -44,14 +44,14 @@
    });
 
    $("#EventImage").click( function() {
-      $("#event-info .file-stored").text('Replace File');
+      $("#event-information .file-stored").text('Replace File');
    });
 
    $(sectionBtn).click( function() {
-      $("#event-info").addClass('hasData');
-      $("#contact-info h3").click();
+      $("#event-information").addClass('hasData');
+      $("#contact-information h3").click();
       $(document.documentElement).animate({
-         scrollTop: $("#contact-info").offset().top - 45
+         scrollTop: $("#contact-information").offset().top - 45
       }, 100);
    });
 </script>

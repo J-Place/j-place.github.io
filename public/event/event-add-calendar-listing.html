@@ -399,7 +399,7 @@
 
 <script>
     var sectionId = "#event-name";
-    var nextSectionId = "#event-info";
+    var nextSectionId = "#event-information";
     var sectionInputs = sectionId + " input";
     var sectionSelects = sectionId + " select";
     var sectionTextarea = sectionId + " textarea";   
@@ -420,7 +420,7 @@
         $(sectionId).addClass('hasData');
         $(nextSectionId + " h3").click();
         $(document.documentElement).animate({
-            scrollTop: $("#event-info").offset().top - 45
+            scrollTop: $("#event-information").offset().top - 45
         }, 100);
     });
 </script>
@@ -588,7 +588,7 @@
  </form>
 
  <script> 
-   var sectionId = "#event-info";
+   var sectionId = "#event-information";
    var sectionInputs = sectionId + " input";
    var sectionSelects = sectionId + " select";
    var sectionTextarea = sectionId + " textarea";
@@ -608,16 +608,16 @@
    });
 
    $(sectionBtn).click( function() {
-      $("#event-info").addClass('hasData');
-      $("#contact-info h3").click();
+      $("#event-information").addClass('hasData');
+      $("#contact-information h3").click();
       $(document.documentElement).animate({
-         scrollTop: $("#contact-info").offset().top - 45
+         scrollTop: $("#contact-information").offset().top - 45
       }, 100);
    });
    
  </script>
                               <form id="form-contact-info">
-    <div class="section  section-contact-info" id="contact-info">
+    <div class="section  section-contact-info" id="contact-information">
         <div class="modal fade" id="modalContactInfoConfirmation" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -644,151 +644,7 @@
         <!-- Event Director -->
         <div class="section__content collapse" id="contact-info__content" data-parent="#accordion">
 
-            <!-- <div class="form-group contact-info__event-director-type-form">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="input-group radio-group event-director">
-                            <div class="input-group-header radio-group-header required">
-                                Event Director
-                            </div>
-                            <div class="input-group radio-group">
-                                <label class="radio-label" for="contactTypeEventDirectorCurrent">
-                                    I'm the event director
-                                    <span class="radio-container">
-                                        <input type="radio" id="contactTypeEventDirectorCurrent" name="ContactTypeEventDirector" value="contactTypeEventDirectorCurrent">
-                                        <span class="radio__placeholder"></span>
-                                    </span>
-                                </label>
-                            </div>
-                            <div class="input-group radio-group">
-                                <label class="radio-label" for="contactTypeEventDirectorOther">
-                                    Someone else is the event director
-                                    <span class="radio-container">
-                                        <input type="radio" id="contactTypeEventDirectorOther" name="ContactTypeEventDirector" value="contactTypeEventDirectorOther">
-                                        <span class="radio__placeholder"></span>
-                                    </span>
-                                </label>
-                            </div>
-                            <span class="help-block help-block--EventDirector">Please select an event director</span>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-
-            <!-- <div class="form-group contact-info__event-director-other--container">
-                <div class="row">
-                    <div class="col-sm-4 col-md-8">
-                        <div class="input-group lookup-name">
-                            <label for="lookupEventDirectorName">Search Event Directors</label>
-                            <input tabindex="0" type="text" class="form-control lookup__input lookup-primary__input" min="3" max="30" name="LookupEventDirectorName" id="lookupEventDirectorName" autocomplete="off" placeholder="">
-                            <span class="help-block help-block--LookupEventDirectorName">Please enter event director name</span>
-                        </div>
-                        <div class="input-group lookup-confirm">
-                            <button class="btn btn-small save-as-contact" type="button" id="addAsEventDirector">
-                                <span class="lookup-confirm--name">Confirm Kyle Deery</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-
-            <!-- <div class="form-group contact-info__event-director-other--add-new">
-                <div class="row">
-                    <div class="col-sm-12 col-md-8">
-                        <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">Or Add a New Event Director</p>
-                        <div>
-                            <button class="btn btn-small btn-outline btn-add" id="addNewEventDirector" name="addNewEventDirector" type="button" value="Add New">Add New</button>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-
-            <!-- <div class="form-group contact-info__event-director-current--container">
-                <div class="row">
-                    <div class="col-sm-4">
-                        Current Event Director Container
-                    </div>
-                </div>
-            </div> -->
-
-            <!-- <div class="form-group contact-info-event-director__current-message">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <p id="contact__recentlyadded">
-                            The current contact has been added and an email has been sent for them to validate their email. Once validated, they will be able to edit this club.
-                        </p>
-                        <p id="contact__recentlyadded-valid">
-                            The current contact has validated their email and has the ability to edit his club.
-                        </p>
-                        <p id="contact__recentlyadded-invalid">
-                            The current contact has NOT validated their email and does NOT have the ability to edit his club.
-                        </p>
-                    </div>
-                </div>
-            </div> -->
-
-            <!-- <div class="form-group contact-info__event-director--add-new-container add-new-inputs">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="input-group contact-first-name required">
-                            <label for="newEventDirectorFirstName">First Name</label>
-                            <input type="text" maxlength="30" class="form-control" name="NewEventDirectorFirstName" id="newEventDirectorFirstName" value="" placeholder="Jess">
-                            <span class="help-block help-block--NewEventDirectorFirstName">Please enter the event director's first name.</span>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="input-group contact-last-name required">
-                            <label for="newEventDirectorLastName" class="">Last Name</label>
-                            <input type="text" maxlength="30" class="form-control" name="NewEventDirectorLastName" id="newEventDirectorLastName" value="" placeholder="Riley">
-                            <span class="help-block help-block--NewEventDirectorLastName">Please enter the event director's last name. </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="input-group contact-primary-email required">
-                            <label for="newEventDirectorEmailPrimary">Primary Email Address<span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Enter the event director's primary email address."></span></label>
-                            <input type="email" class="form-control" name="NewEventDirectorEmailPrimary" id="newEventDirectorEmailPrimary" maxlength="50" value="">
-                            <span class="help-block help-block--NewEventDirectorEmailPrimary">Please enter the event director's primary email address.</span>
-                        </div>
-                        <div class="input-group contact-primary-phone required">
-                            <label for="newEventDirectorPhonePrimary">Primary Phone Number</label>
-                            <input type="text" class="form-control" pattern="[0-9]{3}[-][0-9]{3}[-][0-9]{4}" name="NewEventDirectorPhonePrimary" id="newEventDirectorPhonePrimary" value="" maxlength="12">
-                            <span class="help-block help-block--NewEventDirectorPhonePrimary">Please enter the event director's primary phone number.</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-7">
-                        <div class="input-group contact-city required">
-                            <label for="newEventDirectorCity">City</label>
-                            <input type="text" maxlength="30" class="form-control" name="NewEventDirectorCity" id="newEventDirectorCity" value="">
-                            <span class="help-block help-block--NewEventDirectorCity">Please enter the event director's city.</span>
-                        </div>
-                    </div>
-                    <div class="col-sm-5">
-                        <div class="input-group contact-state required">
-                            <label for="newEventDirectorState" class="">State</label>
-                            <select name="newEventDirectorState" class="form-control" id="newEventDirectorState">
-                                <option value="">Select State</option>
-                                <option value="AL">Alabama</option>
-                                <option value="AK">Alaska</option>
-                                <option value="AZ">Arizona</option>
-                            </select>
-                            <span class="help-block help-block--newEventDirectorState">Please select your event director's state.</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-5 col-md-6">
-                        <div class="form-group lookup person">
-                            <button class="btn btn-small" type="button" id="addNewEventDirectorBtn">Confirm</button>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-
-            <div class="section-group section-group--event-director">
+            <div class="contact-group--event-director">
 
     <!-- Contact Forms -->
     <div class="form-group form-group-default contact-info__event-director-type-form">
@@ -1040,8 +896,7 @@
     <script src="/event/js/event-director.js"></script>
 
 </div>
-
-            <div class="section-group section-group--host-type">
+            <div class="contact-group--host-type">
     <div class="row contact-list contact-info__host-type">
 
         <div class="form-group form-group-default contact-info__host-type--container">
@@ -1307,14 +1162,8 @@
 <script src="/event/js/safety-coordinator.js"></script>
 <script src="/event/js/event-host.js"></script>
 <script>
-
-    // $(sectionSelects).on("change", function() {
-    //     console.log("select");
-    //     $("#saveContactInfoSection").prop('disabled', false);
-    // });
-
     // Enable save button on input focus
-    var sectionId = "#contact-info";
+    var sectionId = "#contact-information";
     var sectionInputs = sectionId + " input";
     var sectionSelects = sectionId + " select";
     $(sectionInputs).click( function() {
