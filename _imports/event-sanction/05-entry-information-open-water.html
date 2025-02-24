@@ -6,21 +6,6 @@
       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
       <div class="section__content collapse" id="entry-information__content" data-parent="#accordion">
          <div class="form-group location-information--container" style="display: block; visibility: visible;">
-            <!-- <div class="row">
-               <div class="col-xs-12 col-sm-8 col-md-5">
-                  <div class="input-group entry-info__meet-format">
-                     <label for="selectMeetFormat">
-                        Meet Format<span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Do we need a tooltip here?"></span>
-                     </label>
-                     <select name="SelectMeetFormat" class="form-control" id="selectMeetFormat" required="True">                                                            
-                        <option value="{Sitecore ID}" disabled selected>Select a Meet Format</option>
-                        <option value="{Sitecore ID}">Prelims/Finals</option>
-                        <option value="{Sitecore ID}">Timed Finals</option>
-                     </select>
-                        <span class="help-block help-block--SelectMeetFormat">Host type is required.</span>
-                  </div>
-               </div>
-            </div> -->
             <div class="row">
                <div class="col-xs-12 col-md-6">
                   <div class="input-group entry-info__website-url required">
@@ -60,6 +45,12 @@
                   </div>
                </div>
             </div>
+
+            <sergey-import src="event-sanction/form-group-one-event-registration" />
+
+            <sergey-import src="event-sanction/form-group-water-temperature" />
+
+
             <div class="row">
                <div class="col-xs-12 col-sm-4">
                   <div class="input-group entry-info__attendance-previous required">
@@ -91,11 +82,8 @@
                      <div class="input-group entry-info__comments">
                         <label for="entryInfoComments">
                            Comments to the Sanctions Chair
-                           <!-- <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="This will be displayed to the public and help sell someone on participating in the event. Be thorough and be sure to include…. Your application will not be approved if you use the word Olympic and/or Paralympic."></span> -->
-                           <!-- <span class="caption"></span> -->
                         </label>
                         <textarea class="form-control" rows="3" cols="50" name="EntryInfoComments" id="entryInfoComments"></textarea>
-                        <!-- <span class="help-block help-block--entryInfoComments">Please enter the event details</span> -->
                      </div>
                </div>
             </div>
@@ -170,7 +158,7 @@
 
    $("#saveEntryInfo").click( function() {
       $('#accordion').find('.collapse.in').parent().addClass('hasData');
-      $("#meetAnnouncement h3").click();
+      $("#safetyPlan h3").click();
       $(document.documentElement).animate({
          scrollTop: $("#meetAnnouncement").offset().top - 45
       }, 100);
