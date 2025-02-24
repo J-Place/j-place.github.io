@@ -1,0 +1,833 @@
+/* START lanemate.css */
+
+/* LaneMate colors */
+:root {
+    --lm-blue: #092c5c;
+    --lm-blue-rgb: rgb(9, 44, 92);
+    --lm-blue-md: #084c89;
+    --lm-blue-lt: #8FBCE6;
+    --lm-blue-xlt: #eaf4ff;
+    --lm-blue-hover: var(--lm-blue-md);
+    --bs-blue: var(--lm-blue);
+    --bs-primary: var(--lm-blue);
+    --bs-primary-rgb: var(--lm-blue-rgb);
+    --bs-link-color: var(--lm-blue);
+    --bs-link-hover-color: var(--lm-blue-hover);
+    --rte-blue: var(--lm-blue);
+    --rte-blue-hover: var(--lm-blue-hover);
+}
+
+.bg-blue {
+    background-color: var(--lm-blue);
+}
+
+.bg-ltblue {
+    background-color: var(--lm-blue-xlt) !important;
+}
+
+.header-bar--blue {
+    background-color: var(--lm-blue) !important;
+}
+
+.form-group {
+    margin-bottom: 6rem;
+}
+
+@media (min-width: 768px) {
+    .form-group {
+        margin-bottom: 15px;
+    }
+}
+
+/* Update all input labels sitewide, check for scoped classes */
+.input-group label,
+.form-group label {
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 110%;
+}
+
+label.checkbox-label {
+    font-size: 15px;
+}
+
+@media (min-width: 1200px) {
+    .mega-main-menu__items-container {
+        padding-left: 36px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .mega-main-menu__items-container {
+        padding-left: 126px;
+    }
+}
+
+.mega-menu-overlay__content {
+    justify-content: end !important;
+}
+
+.mega-menu-overlay__items {
+    padding-left: 2rem !important;
+}
+
+.mega-menu-overlay__items > li {
+    width: 25% !important;
+}
+
+.navbar-default .navbar-nav>li>a {
+    color: var(--lm-blue);
+}
+
+.breadcrumb {
+    background-color: var(--lm-blue);
+}
+
+.breadcrumb-container {
+    position: relative;
+    padding-bottom: 40px !important;
+}
+
+.breadcrumb__container {
+    height: 40px;
+}
+
+.mega-main-menu__items > li.has--children, 
+.mega-main-menu__items > li > a {
+    border-bottom: 3px solid transparent;
+    display: block;
+    cursor: pointer;
+    white-space: nowrap;
+    color: var(--lm-blue);
+    margin-right: 15px;
+    padding: 25px 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.mega-main-menu__items > li:last-of-type > a {
+    background-color: var(--lm-blue);
+    border: 1px solid var(--lm-blue);
+}
+
+.mega-main-menu__items > li:hover {
+  color: var(--lm-blue-hover);
+}
+
+main h1, main h2, main h3, main h4, main h5, main h6 {
+    color: var(--lm-blue);
+}
+
+.confirmation-benefits-wrapper {
+    background-color: var(--lm-blue-xlt) !important;
+}
+
+.form__container .help-block.has-error {
+    display: block;
+    margin: 5px 0;
+    height: 16px;
+    height: 1rem;
+    line-height: 1em;
+    position: relative;
+    top: 0;
+    background: transparent;
+}
+
+.required label:before {
+    content: "*";
+    font-size: 16px;
+    font-weight: normal;
+    position: absolute;
+    top: 5px;
+    left: 0;
+}
+
+.required label {
+    padding-left: 0.2rem;
+}
+
+.un-selected {
+    height: 0;
+    opacity: 0;
+}
+
+.contact-modal__identity--details p {
+    word-wrap: break-word;
+}
+
+.modal input[type=checkbox] + label {
+    padding: 0 0 0 2rem;
+    margin: -2.5rem 0 0;
+}
+
+@media (min-width: 1200px) {
+    .modal input[type=checkbox] + label {
+        padding: 0 0 0 0.5rem;
+        margin: -2.5rem 0 0;
+    }    
+}
+
+.modal-footer .btn+.btn:hover {
+    background-color: #FFF;    
+}
+
+.form-notes {
+    font-size: 1.2rem;
+}
+
+.cart-item:last-of-type {
+    border-top: 0 none;
+}
+
+.btn-primary{
+    background-color: var(--lm-blue);
+}
+.btn-primary:focus, 
+.btn-primary:hover {
+    background-color: var(--lm-blue-hover);
+}
+.form__container .btn {
+    margin-bottom: 1rem;
+    background-color: var(--lm-blue);
+}
+.form__container .btn:focus, 
+.form__container .btn:hover {
+    background-color: var(--lm-blue-hover);
+}
+
+.btn-outline,
+.form__container .btn-outline {
+    color: var(--lm-blue);
+    background-color: #FFF;
+    border-color: var(--lm-blue);
+}
+.btn-outline:hover,
+.form__container .btn-outline:hover {
+    background-color: #fff;
+    color: var(--lm-blue-hover);
+    border-color: var(--lm-blue-hover);
+}
+.btn.btn-outline:hover {
+    color: var(--lm-blue-hover);
+    border-color: var(--lm-blue-hover);
+    background-color: #FFF;
+    opacity: 0.7;
+}
+
+.btn-blue {
+    background-color: var(--lm-blue);
+}
+.btn-blue:focus, .btn-blue:hover, .btn-blue a:focus, .btn-blue a:hover {
+    background-color: var(--lm-blue-hover);
+    background-position: 0 -15px;
+    text-decoration: none;
+}
+
+.date,
+.product,
+.amount {
+    display: inline-flex;
+}
+
+.current-product__renewal-date {
+    display: none;
+}
+
+.current-product,
+.billing-information {
+    margin-bottom: 6rem;
+}
+
+.payment-information {
+    padding: 0 0 5rem;
+}
+
+.payment-information a,
+.billing-information a {
+    display: inline-flex;
+    text-align: center;
+}
+
+.billing-information {
+    width: 100%;
+}
+
+.billing-invoice {
+    display: flex;
+}
+
+.billing-invoice {
+    border-bottom: 1px solid #EEE;
+    margin: 0;
+    padding: 1.5rem 0;
+}
+.billing-invoice > p {
+    margin: 0;
+    line-height: 100%;
+}
+.billing-invoice .date {
+    flex: 0 0 20%;
+    font-size: 1.6rem;
+    padding-top: .2rem;
+}
+.billing-invoice .product {
+    flex: 0 0 50%;
+    margin: 0 2rem;
+}
+.billing-invoice .amount {
+    text-align: right;
+    flex: 0 0 30%;
+}
+
+@media (min-width: 992px) {
+    .cancel-auto-renew--form, .cancel-auto-renew--confirmation {
+        padding-top: 2rem;
+    }
+}
+
+.mega-main-menu__logo-container .mega-main-menu__logo img {
+    width: auto;
+    height: 35px;
+    margin-top: 0px;
+}
+
+@media (min-width: 992px) {
+    .mega-main-menu__logo-container .mega-main-menu__logo img {
+        height: 65px;
+    }    
+}
+
+.form-check-input:checked {
+  background-color: var(--lm-blue);
+  border-color: var(--lm-blue);
+}
+
+.form-check-input[type=checkbox]:indeterminate {
+  background-color: var(--lm-blue);
+  border-color: var(--lm-blue);
+}
+
+.form-range::-webkit-slider-thumb {
+  background-color: var(--lm-blue);
+}
+
+.form-range::-moz-range-thumb {
+  background-color: var(--lm-blue);
+}
+
+a {
+    color: var(--lm-blue);
+}
+
+a:hover {
+    color: var(--lm-blue-hover);
+}
+
+.btn:hover {
+    color: #FFF;
+    background-color: var(--lm-blue-hover);
+    border-color: var(--lm-blue-hover);
+}
+
+.btn-primary {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--lm-blue);
+  --bs-btn-border-color: var(--lm-blue);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-active-bg: var(--lm-blue-hover);
+  --bs-btn-active-border-color: var(--lm-blue-hover);
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #fff;
+  --bs-btn-disabled-bg: var(--lm-blue);
+  --bs-btn-disabled-border-color: var(--lm-blue);
+}
+
+.btn-lt-blue {
+    background-color: var(--lm-blue-lt);
+}
+
+.btn-primary:focus, 
+.btn-primary:hover {
+    background-color: var(--lm-blue-hover);
+    color: #FFF;
+}
+
+.btn-outline-primary {
+  --bs-btn-color: var(--lm-blue);
+  --bs-btn-border-color: var(--lm-blue);
+  --bs-btn-hover-color: var(--lm-blue-hover);
+  --bs-btn-hover-bg: #FFF;
+  --bs-btn-hover-border-color: var(--lm-blue);
+  --bs-btn-focus-shadow-rgb: 13, 110, 253;
+  --bs-btn-active-color: var(--lm-blue-hover);
+  --bs-btn-active-bg: #FFF;
+  --bs-btn-active-border-color: var(--lm-blue-hover);
+  --bs-btn-active-shadow: inset 0 0px 0px rgba(0, 0, 0, 0);
+  --bs-btn-disabled-color: var(--lm-blue);
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: var(--lm-blue);
+  --bs-gradient: none;
+}
+
+.btn-primary.btn-primary-ko {
+    color: var(--lm-blue);
+    border: 1px solid var(--lm-blue);
+}
+
+.rte-btn-blue-sm,
+.rte-btn-blue-md,
+.rte-btn-blue-lg,
+.rte-btn-blue-xl {
+    background-color: var(--lm-blue) !important;
+    color: #FFF !important;
+}
+
+.rte-btn-blue-sm:hover,
+.rte-btn-blue-md:hover,
+.rte-btn-blue-lg:hover,
+.rte-btn-blue-xl:hover {
+    background-color: var(--lm-blue-hover) !important;
+    color: #FFF !important;
+}
+
+.rte-btn-blue-sm-ko,
+.rte-btn-blue-md-ko,
+.rte-btn-blue-lg-ko,
+.rte-btn-blue-xl-ko,
+.btn-primary.btn-primary-ko,
+.btn-primary.btn-sm.btn-primary-ko,
+.btn-primary.btn-md.btn-primary-ko,
+.btn-primary.btn-lg.btn-primary-ko,
+.btn-primary.btn-xl.btn-primary-ko {
+  color: var(--lm-blue) !important;
+  border-color: var(--lm-blue) !important;
+  background-color: #FFF !important;
+}
+
+.rte-btn-blue-sm-ko:hover,
+.rte-btn-blue-md-ko:hover,
+.rte-btn-blue-lg-ko:hover,
+.rte-btn-blue-xl-ko:hover,
+.btn-primary.btn-primary-ko:hover,
+.btn-primary.btn-sm.btn-primary-ko:hover,
+.btn-primary.btn-md.btn-primary-ko:hover,
+.btn-primary.btn-lg.btn-primary-ko:hover,
+.btn-primary.btn-xl.btn-primary-ko:hover {
+  color: var(--lm-blue-hover) !important;
+  border-color: var(--lm-blue-hover) !important;
+  background-color: #FFF !important;
+}
+
+.form__container .btn.btn-link,
+.btn-link {
+    background-color: transparent;
+    color: var(--bs-link-color);
+    text-decoration: underline;
+}
+
+.dropdown-menu {
+  --bs-dropdown-link-active-bg: var(--lm-blue);
+}
+
+.dropdown-menu-dark {
+--bs-dropdown-link-active-bg: var(--lm-blue);
+}
+
+.nav-pills {
+  --bs-nav-pills-link-active-bg: var(--lm-blue);
+}
+
+.pagination {
+  --bs-pagination-active-bg: var(--lm-blue);
+  --bs-pagination-active-border-color: var(--lm-blue);
+}
+
+.progress {
+  --bs-progress-bar-bg: var(--lm-blue);
+}
+
+.list-group {
+    --bs-list-group-active-bg: var(--lm-blue);
+    --bs-list-group-active-border-color: var(--lm-blue);
+}
+
+.text-primary {
+  color:var(--lm-blue) !important;
+}
+
+h2.text-primary.page-title {
+    color:var(--lm-blue) !important;  
+}
+
+#footerOverlay {
+    background: var(--lm-blue);
+}
+
+.footer-left, .footer-right {
+    background-color: var(--lm-blue);
+}
+
+footer a:hover {
+    background-color: transparent;
+    border-color: transparent;
+    color: var(--lm-blue-lt);
+}
+
+.footer-right .btn-primary {
+    color: #FFF;
+    background-color: var(--lm-blue-md);
+}
+
+.footer-right .nav.nav-service.navbar-nav.nav-pills > li a {
+    text-decoration: none;
+}
+
+.footer-right .subscribe .btn-primary {
+    background-color: var(--lm-blue-md) !important;   
+}
+
+.search--icon {
+    background: url(https://www.usms.org/-/media/usms/developers/images/myusms/icon-search-lanemate.svg);
+    height: 23px;
+    width: 23px;
+    margin: 3px 4px 5px;
+    display: block;
+}
+
+.search--active .search--icon {
+    background: url(https://www.usms.org/-/media/usms/developers/images/myusms/icon-close-lanemate.svg);
+}
+
+.login--icon {
+    background: url(https://www.usms.org/-/media/usms/developers/images/myusms/icon-profile-login-lanemate.svg);
+    height: 23px;
+    width: 23px;
+    margin: 3px auto 4px;
+    padding: 0;
+    display: block;
+    cursor: pointer;
+}
+
+@media (min-width: 992px) {
+    .login--active .login--icon {
+        background: url(https://www.usms.org/-/media/usms/developers/images/myusms/icon-close-lanemate.svg);
+    }
+}
+
+.button-spinner img {
+    margin-top: 3px;
+}
+
+.search__button {
+    background-color: var(--lm-blue);
+    border-color: var(--lm-blue);
+}
+  
+.btn.search__button:hover {
+    background-color: var(--lm-blue-hover);
+    border-color: var(--lm-blue-hover);
+}
+
+.input-group-addon:last-child {
+    background-color: var(--lm-blue);
+    border: 1px solid var(--lm-blue);
+}
+
+.login__items-container .login__list {
+    border-color: var(--lm-blue);
+}
+
+.mega-menu-overlay__image-container,
+.mega-menu-overlay__title {
+    display: none;
+}
+
+.mega-menu-overlay__content, 
+.mega-menu-overlay__menu-container {
+    padding-left: 5rem;
+}
+
+.mega-main-menu__actions-login--wrapper label, 
+.mega-main-menu__actions-search--wrapper label, 
+.mega-main-menu__actions a label, 
+.mega-main-menu__toggle-mobile label {
+    color: var(--lm-blue);
+}
+
+.mega-menu-overlay {
+    height: 170px;
+    border-radius: 0 0 10px 10px;
+    right: 0;
+    background-color: #fff;
+    border-bottom: 12px solid var(--lm-blue);
+    opacity: 1;
+}
+
+.login__items-container .login__list-item a:hover {
+    background-color: transparent;
+    border-color: transparent;
+    color: var(--lm-blue-hover);
+}
+
+.mega-menu-overlay__items {
+    width: 90%;
+    padding-top: 3rem;
+    padding-left: 20rem;
+}
+
+.mega-menu-overlay__items > li:hover {
+    border: 0 none;
+    padding: 0 0 0 1rem;
+    color: var(--lm-blue-hover);
+}
+
+.mega-menu-overlay__items > li > a {
+    font-size: 1.62rem;
+    font-weight: 400;
+    letter-spacing: .5px;
+    color: var(--lm-blue);
+}
+
+.mega-main-menu__items > li > a:hover {
+    color: var(--lm-blue-hover);
+}
+
+.mega-menu-overlay__items > li > a:hover {
+    padding-left: unset;
+    color: var(--lm-blue-hover);
+}
+
+@media (min-width: 1200px) {
+    .mega-main-menu__actions-search--wrapper:hover label,
+    .mega-main-menu__actions-login--wrapper:hover label {
+        text-decoration: none;
+    }
+}
+
+.mobile-menu-overlay {
+    border-bottom: 12px solid var(--lm-blue);
+}
+
+.mobile-menu-overlay__item {
+    color: var(--lm-blue);
+}
+
+.mobile-menu-overlay__item-content > a {
+    color: var(--lm-blue);
+}
+
+.mobile-menu-overlay__item:last-of-type a {
+    border: 1px solid var(--lm-blue);
+    background-color: var(--lm-blue);
+}
+
+.mobile-menu__toggle label {
+    color: var(--lm-blue);
+}
+
+i.mobile-menu__close {
+    background: url('https://www.usms.org/-/media/usms/developers/images/myusms/icon-close-lanemate.svg');
+}
+
+/* Overrides for MegamainMenu.css */
+.mega-main-menu__toggle-mobile label,
+.mega-main-menu__actions-search--wrapper label,
+.mega-main-menu__actions a label,
+.mega-main-menu__actions-login--wrapper label {
+  color: var(--lm-blue);
+}
+
+.mega-main-menu__items>li:last-of-type > a {
+    background-color: var(--lm-blue);
+    border: 1px solid var(--lm-blue);
+}
+
+.mega-main-menu__items > li:last-of-type > a:hover {
+    background-color: var(--lm-blue-hover);
+    border: 1px solid var(--lm-blue-hover);
+    color: #FFF;
+}
+ 
+/* Overrides for MainLayout.css */
+.confirmation-notes ul li a {
+  color: var(--lm-blue) !important;
+}
+.form__container .btn {
+    background-color: var(--lm-blue);
+}
+.form__container .btn:hover,
+.form__container .btn:focus {
+  background-color: var(--lm-blue-hover);
+}
+.form__container .btn-outline {
+    color: var(--lm-blue);
+    border: 1px solid var(--lm-blue);
+    background-color: #FFF;
+} 
+.form__container .btn-outline:hover {
+    color: var(--lm-blue-hover);
+    border-color: var(--lm-blue-hover);
+    background-color: #FFF;
+} 
+.usms-container .btn-ko,
+.usms-container button.btn-ko {
+    color: var(--lm-blue);
+}
+.page-header {
+    background-color: var(--lm-blue-md);
+}
+
+/* Donate button hover */
+.btn-donate--1, .btn-donate--1:hover {
+    background-color: #64a032 !important;
+}
+.btn-donate--2, .btn-donate--2:hover {
+    background-color: #43831e !important;
+}
+.btn-donate--3, .btn-donate--3:hover {
+    background-color: #246200 !important;
+}
+.btn-donate--4, .btn-donate--4:hover {
+    background-color: #16510f !important;
+}
+
+/* Overrides for results.css */
+.filter-form__go-button {
+    background-color: var(--lm-blue);
+}
+.filter-form__go-button:hover,
+.filter-form__go-button:visited,
+.filter-form__go-button:focus {
+  background-color: var(--lm-blue-hover);
+}
+
+.results-list__pagination button {
+    background-color: var(--lm-blue) !important;
+}
+.results-list__pagination button.btn-active {
+    border: 2px solid var(--lm-blue) !important;
+    color: var(--lm-blue) !important;
+    background-color: transparent !important;
+}
+.results-list__pagination .btn-chevron-left,
+.results-list__pagination .btn-chevron-right {
+    color: var(--lm-blue) !important;
+    background-color: #FFF !important;
+}
+.results-list__item-title a {
+    color: var(--lm-blue) !important;
+}
+.results-list__item-footer a {
+    color: var(--lm-blue) !important;
+}
+
+/* Overrides for MobileMenuOverlayItem.css */
+.mobile-menu-overlay__item:last-of-type a {
+    border: 1px solid var(--lm-blue);
+    background-color: var(--lm-blue);
+}
+.mobile-menu-overlay__item-content > a {
+    color: var(--lm-blue);
+}
+
+/* Overrides for Swimmer */
+.swimmer-magazine__header-image img {
+    background-color: var(--lm-blue-md) !important;
+}
+.article-stepper .articleStepper .carousel-text-container p {
+    color: var(--lm-blue) !important;
+}
+.article-stepper h3.article-stepper__title {
+    color: var(--lm-blue) !important;
+}
+.slick-slide-container .slick-slide-text p {
+    color: var(--lm-blue) !important;
+}
+.article-nav ul li.active a {
+    color: var(--lm-blue) !important;
+}
+@media (min-width: 768px) {
+    .slick-slide-container .slick-slide-text p {
+        color: var(--lm-blue) !important;
+    }
+}
+@media (min-width: 992px) {
+    .article-nav h3.article-nav-title {
+        color: var(--lm-blue) !important;
+    }
+}
+
+.tags__container .tags__list .tags__item {
+    background-color: #d6ebff !important;
+}
+
+.categories__container .categories__list .categories__item {
+    background-color: var(--lm-blue-lt) !important;
+}
+
+/* Overides for myProfile.min.css */
+input[type=checkbox]:checked ~ .checkbox__placeholder {
+    background-color: var(--lm-blue) !important;
+    -webkit-text-stroke: 1px var(--lm-blue) !important;
+}
+
+input[type=checkbox]:disabled:checked ~ .checkbox__placeholder {
+    background-color: #666;
+    -webkit-text-stroke: 1px #666;
+}
+.usms-container.form__container .form-header h3 {
+    color: var(--lm-blue) !important;
+}
+
+/* Overrides for My USMS */
+
+.myusms__container h1 {
+    margin: 23px auto 10px;
+    color: var(--lm-blue);
+}
+
+.myusms__section-header {
+    color: var(--lm-blue);
+}
+
+.myusms__link {
+    color: var(--lm-blue);
+    margin: 0;
+    font-weight: bold
+}
+
+.myusms__link:visited,
+.myusms__link:hover {
+    color: var(--lm-blue-hover);
+}
+
+.myusms--tile {
+    border-color: var(--lm-blue);
+    background-color: transparent;
+}
+
+.myusms--tile:hover {
+    border-color: var(--lm-blue-lt);
+    background-color: var(--lm-blue-lt);
+}
+
+.myusms--tile h4 {
+    color: var(--lm-blue);
+}
+
+.sign-up {
+    background-color: var(--lm-blue-md);
+}
+
+/* Overrides for CTA */
+
+.cta__image {
+    background-color: var(--lm-blue) !important;
+}
+
+.cta__button:hover {
+    color: var(--lm-blue);
+    background-color: #fff;
+}
+
+/* END lanemate.css */
