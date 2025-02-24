@@ -398,27 +398,27 @@
 </form>
 
 <script>
-    var sectionId = "#event-name";
-    var nextSectionId = "#event-information";
-    var sectionInputs = sectionId + " input";
-    var sectionSelects = sectionId + " select";
-    var sectionTextarea = sectionId + " textarea";   
-    var sectionBtn = "#saveEventName";
+    // var sectionId = "#event-name";
+    // var nextSectionId = "#event-information";
+    // var sectionInputs = sectionId + " input";
+    // var sectionSelects = sectionId + " select";
+    // var sectionTextarea = sectionId + " textarea";   
+    // var sectionBtn = "#saveEventName";
 
 
-    $(sectionInputs).click( function() {
+    $("#event-name input").click( function() {
         $("#saveEventName").prop('disabled', false);
     });
-    $(sectionSelects).on("change", function() {
-        $("#saveEventName").prop('disabled', false);
-    });
-    $(sectionTextarea).focus( function() {
-        $("#saveEventName").prop('disabled', false);
-    });
+    // $(sectionSelects).on("change", function() {
+    //     $("#saveEventName").prop('disabled', false);
+    // });
+    // $(sectionTextarea).focus( function() {
+    //     $("#saveEventName").prop('disabled', false);
+    // });
 
-    $(sectionBtn).click( function() {
-        $(sectionId).addClass('hasData');
-        $(nextSectionId + " h3").click();
+    $("#saveEventName").click( function() {
+        $("#event-name").addClass('hasData');
+        $("#event-information h3").click();
         $(document.documentElement).animate({
             scrollTop: $("#event-information").offset().top - 45
         }, 100);
@@ -604,7 +604,7 @@
    });
 
    $("#EventImage").click( function() {
-      $("event-info .file-stored").text('Replace File');
+      $("event-information .file-stored").text('Replace File');
    });
 
    $(sectionBtn).click( function() {

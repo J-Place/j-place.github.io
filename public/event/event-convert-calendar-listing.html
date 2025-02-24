@@ -404,27 +404,27 @@
 </form>
 
 <script>
-    var sectionId = "#event-name";
-    var nextSectionId = "#event-information";
-    var sectionInputs = sectionId + " input";
-    var sectionSelects = sectionId + " select";
-    var sectionTextarea = sectionId + " textarea";   
-    var sectionBtn = "#saveEventName";
+    // var sectionId = "#event-name";
+    // var nextSectionId = "#event-information";
+    // var sectionInputs = sectionId + " input";
+    // var sectionSelects = sectionId + " select";
+    // var sectionTextarea = sectionId + " textarea";   
+    // var sectionBtn = "#saveEventName";
 
 
-    $(sectionInputs).click( function() {
+    $("#event-name input").click( function() {
         $("#saveEventName").prop('disabled', false);
     });
-    $(sectionSelects).on("change", function() {
-        $("#saveEventName").prop('disabled', false);
-    });
-    $(sectionTextarea).focus( function() {
-        $("#saveEventName").prop('disabled', false);
-    });
+    // $(sectionSelects).on("change", function() {
+    //     $("#saveEventName").prop('disabled', false);
+    // });
+    // $(sectionTextarea).focus( function() {
+    //     $("#saveEventName").prop('disabled', false);
+    // });
 
-    $(sectionBtn).click( function() {
-        $(sectionId).addClass('hasData');
-        $(nextSectionId + " h3").click();
+    $("#saveEventName").click( function() {
+        $("#event-name").addClass('hasData');
+        $("#event-information h3").click();
         $(document.documentElement).animate({
             scrollTop: $("#event-information").offset().top - 45
         }, 100);
@@ -432,7 +432,7 @@
 </script>
                               <form id="form-event-info">
    <div class="section section-event-info" id="event-information">
-      <h3 class="section__header" data-target="#event-information__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-info__content">
+      <h3 class="section__header" data-target="#event-info__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-info__content">
          <span class="section__number">2</span>Event Details
       </h3>
       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
@@ -690,27 +690,27 @@
 </form>
 
 <script>
-   var sectionId = "#event-information";
-   var sectionInputs = sectionId + " input";
-   var sectionSelects = sectionId + " select";
-   var sectionTextarea = sectionId + " textarea";
-   var sectionBtn = "#saveEventInfo";
+   // var sectionId = "#event-information";
+   // var sectionInputs = sectionId + " input";
+   // var sectionSelects = sectionId + " select";
+   // var sectionTextarea = sectionId + " textarea";
+   // var sectionBtn = "#saveEventInfo";
    
-   $(sectionInputs).click( function() {
-      $(sectionBtn).prop('disabled', false);
+   $("#event-information input").click( function() {
+      $("#saveEventInfo").prop('disabled', false);
    });
-   $(sectionSelects).on("change", function() {
-      $(sectionBtn).prop('disabled', false);
-   });
-   $(sectionTextarea).focus( function() {
-       $(sectionBtn).prop('disabled', false);
-   });
+   // $(sectionSelects).on("change", function() {
+   //    $(sectionBtn).prop('disabled', false);
+   // });
+   // $(sectionTextarea).focus( function() {
+   //     $(sectionBtn).prop('disabled', false);
+   // });
 
    $("#EventImage").click( function() {
       $("#event-information .file-stored").text('Replace File');
    });
 
-   $(sectionBtn).click( function() {
+   $("#saveEventInfo").click( function() {
       $("#event-information").addClass('hasData');
       $("#contact-information h3").click();
       $(document.documentElement).animate({
@@ -1663,10 +1663,10 @@
 
 <script>
     // Enable save button on input focus
-    var sectionId = "#contact-information";
-    var sectionInputs = sectionId + " input";
-    var sectionSelects = sectionId + " select";
-    $(sectionInputs).click( function() {
+    // var sectionId = "#contact-information";
+    // var sectionInputs = sectionId + " input";
+    // var sectionSelects = sectionId + " select";
+    $("#contact-information input").click( function() {
         $("#saveContactInfoSection").prop('disabled', false);
     });
     // Save section
@@ -1686,36 +1686,36 @@
         $(".list-item").removeClass("list-item--fade-out");
         $('.list__container').removeClass('list__container--modified');
     });
-    function scrollToName() {
-        $(document.documentElement).animate({
-            scrollTop: $("#event-name").offset().top - 45
-        }, 100);
-    }
-    function scrollToDetails() {
-        $(document.documentElement).animate({
-            scrollTop: $("#event-details").offset().top - 45
-        }, 100);
-    }
-    function scrollToContact() {
-        $(document.documentElement).animate({
-            scrollTop: $("#contact-information").offset().top - 45
-        }, 100);
-    }
-    function scrollToLocation() {
-        $(document.documentElement).animate({
-            scrollTop: $("#location-information").offset().top - 45
-        }, 100);
-    }
-    function scrollToEntryInformation() {
-        $(document.documentElement).animate({
-            scrollTop: $("#entry-information").offset().top - 45
-        }, 100);
-    }
-    function scrollToMeetAnnouncement() {
-        $(document.documentElement).animate({
-            scrollTop: $("#location-information").offset().top - 45
-        }, 100);
-    }
+    // function scrollToName() {
+    //     $(document.documentElement).animate({
+    //         scrollTop: $("#event-name").offset().top - 45
+    //     }, 100);
+    // }
+    // function scrollToDetails() {
+    //     $(document.documentElement).animate({
+    //         scrollTop: $("#event-details").offset().top - 45
+    //     }, 100);
+    // }
+    // function scrollToContact() {
+    //     $(document.documentElement).animate({
+    //         scrollTop: $("#contact-information").offset().top - 45
+    //     }, 100);
+    // }
+    // function scrollToLocation() {
+    //     $(document.documentElement).animate({
+    //         scrollTop: $("#location-information").offset().top - 45
+    //     }, 100);
+    // }
+    // function scrollToEntryInformation() {
+    //     $(document.documentElement).animate({
+    //         scrollTop: $("#entry-information").offset().top - 45
+    //     }, 100);
+    // }
+    // function scrollToMeetAnnouncement() {
+    //     $(document.documentElement).animate({
+    //         scrollTop: $("#location-information").offset().top - 45
+    //     }, 100);
+    // }
 </script>                              
                               <form id="form-location-info">
    <div class="section section-location-information" id="location-information">
