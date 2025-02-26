@@ -86,6 +86,7 @@ $(document).ready(function() {
             $('.location-name .list__controls').show();
             hideLocationLookup();
             hideAddNewLocationContainer();
+            // $(".input-group.input-group--bulkhead").hide();
             $("#saveLocation").prop('disabled', false);
         } else {
             $(addNewPoolForm).hide();
@@ -94,6 +95,8 @@ $(document).ready(function() {
             $(".venue__list--item-added").show();
             $(".venue__list--item:first-of-type").show();  
         }
+        $(".form-group.form-group-hidden").removeClass("show");
+        $("#locationType").prop('selectedIndex',0);
     });
     
     $("#saveFormConfiguration").click( function() {
@@ -255,6 +258,10 @@ $(document).ready(function() {
     });
 
     $(".location-name .list-item__delete").click( function() {
+        $("#modalDeleteLocation").modal('show');
+    });
+
+    $("#confirmDeleteLocation").click( function() {
         $(".list.locations").removeClass("edit-list");
         $(".location-name .list-item__edit").show();
         $(".location-name .list-item__save").hide();
@@ -281,7 +288,7 @@ $(document).ready(function() {
     $("#locationAddressStreet").click( function() {
         $("#modalDuplicateAddress").modal('show');
     });
-
+    
     $("#closeDuplicateAddress").click( function() {
         hideSavedLocationList();
         showLookupLocationList();
@@ -321,7 +328,7 @@ $(document).ready(function() {
         $(".location-name .list-item__edit").show();
         $(".location-name .list-item__save").hide();
         $(".location-name .list-item__delete").hide();
-    }); 
+    });
 
     $("#saveListEventLocationNew").click( function() {
         confirmConfiguration();
@@ -345,6 +352,17 @@ $(document).ready(function() {
         $(".location-name .list-item__delete").hide();
     });
 
+    $("#saveListEventLocationOpenWater").click( function() {
+        confirmConfiguration();
+        $(".list-item-open-water").show();
+        scrollTopSection();
+        hideListControlChildren();
+        $(".list.locations").removeClass("edit-list");
+        $(".location-name .list-item__edit").show();
+        $(".location-name .list-item__save").hide();
+        $(".location-name .list-item__delete").hide();
+    });
+
     $("#locationType").change(function() {
         if ($(this).val() === 'Other') {
           $(".form-group.form-group-hidden").addClass("show");
@@ -354,6 +372,9 @@ $(document).ready(function() {
         if ($(this).val() === 'Open Water') {
             $(".input-group--poolType").addClass("fade");
             $(".input-group--openWaterType").removeClass("fade");
+            $(".input-group.input-group--bulkhead").hide();
+        } else {
+            $(".input-group.input-group--bulkhead").show();
         }
     });
 
@@ -563,7 +584,6 @@ $(document).ready(function() {
             filterByRange();
             filterByCourse();
         } else {
-            alert("None");
         }
         // console.log(currentPageName);
     });
