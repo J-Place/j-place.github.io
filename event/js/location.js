@@ -80,9 +80,7 @@ $(document).ready(function() {
 
     $("#saveFormPool").click( function(e) {
         e.preventDefault();
-        // if (currentPageName === "Open Water") {
         if ($("#locationType").val() === 'Open Water') {
-            // alert("Open Water Venue selected, show saved list item");
             $(".venue__list").show();
             $(".list-item-open-water .venue__list--item").show();
             $('.location-name .list__controls').show();
@@ -90,7 +88,6 @@ $(document).ready(function() {
             hideAddNewLocationContainer();
             $("#saveLocation").prop('disabled', false);
         } else {
-            // alert("Not open water, show config");
             $(addNewPoolForm).hide();
             $(addNewConfigurationForm).show();
             $(".venue__list").show();
