@@ -83,7 +83,13 @@
       <sergey-import src="site/footer_scripts" />
 
       <script type="text/javascript">
-         $("#safetyPlan h3").click();
-     </script>
+         $("#location-information h3").click();
+         
+         function setPageName() {
+            const pageName = "Open Water";
+            $(document).trigger("settingPageName", { data: pageName });
+         }
+     
+      </script>
    </body>
 </html>

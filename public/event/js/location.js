@@ -13,7 +13,7 @@ $(document).ready(function() {
     let addNewLocationForm = $(".event-location-details");
     let addNewPoolForm = $(".list-venue-form");
     let addNewConfigurationForm = $(".list-configuration-form");
-
+    
     $(lookupByNameInput).click(function(e) {
         e.preventDefault();
         resetLocationInputs();
@@ -61,26 +61,44 @@ $(document).ready(function() {
         $(cancelAddLocationBtn).hide();
         showAddNewLocationContainer();
         showSavedLocationList();
-        $(".list-item-new").show();
+        // $(".list-item-new").show();
         $(".venue__list").hide();
         $(".configuration__list").hide();
         $(".location-add-configuration").hide();
         $(addNewPoolForm).show();
         $('.location-name .list__controls').hide();
+        if ($("#locationType").val() === 'Open Water') {
+            $(".list-item-open-water").show();
+        } else {
+            $(".list-item-new").show();
+        }   
     });
 
     $(".venue-edit-button").click( function() {
         $(addNewPoolForm).show();
     });
 
-    $("#saveFormPool").click( function() {
-        $(addNewPoolForm).hide();
-        $(addNewConfigurationForm).show();
-        $(".venue__list").show();
-        $(".venue__list--item-added").show();
-        $(".venue__list--item:first-of-type").show();
+    $("#saveFormPool").click( function(e) {
+        e.preventDefault();
+        // if (currentPageName === "Open Water") {
+        if ($("#locationType").val() === 'Open Water') {
+            // alert("Open Water Venue selected, show saved list item");
+            $(".venue__list").show();
+            $(".list-item-open-water .venue__list--item").show();
+            $('.location-name .list__controls').show();
+            hideLocationLookup();
+            hideAddNewLocationContainer();
+            $("#saveLocation").prop('disabled', false);
+        } else {
+            // alert("Not open water, show config");
+            $(addNewPoolForm).hide();
+            $(addNewConfigurationForm).show();
+            $(".venue__list").show();
+            $(".venue__list--item-added").show();
+            $(".venue__list--item:first-of-type").show();  
+        }
     });
-
+    
     $("#saveFormConfiguration").click( function() {
         hideLocationLookup();
         hideAddNewLocationContainer();
@@ -92,7 +110,7 @@ $(document).ready(function() {
             $(".configuration__list--item").hide();
             $(".configuration__list--item.selected").show();
             $(".configuration__list--item.selected .configuration-title").show();   
-            $('.location-name .list__controls').show(); 
+            $('.location-name .list__controls').show();
         } else if ($('.list-item-new').css('display') === 'block') {
             $(".configuration__list--item").hide();
             $(".configuration__list--item.added").show();
@@ -149,13 +167,11 @@ $(document).ready(function() {
     });
 
     // var modalChosePoolConfigurationHealthfit = new bootstrap.Modal(document.getElementById('modalChosePoolConfigurationHealthfit'));
-
     $("#confirmLocationHealthfit").click( function() {
         $("#modalChosePoolConfigurationHealthfit").modal('show');
     });
 
     // var modalChosePoolConfigurationJensen = new bootstrap.Modal(document.getElementById('modalChosePoolConfigurationJensen'));
-
     $("#confirmLocationJensen").click( function() {
         $("#modalChosePoolConfigurationJensen").modal('show');
     });
@@ -230,10 +246,6 @@ $(document).ready(function() {
         $(addNewPoolForm).show();
     }
 
-
-
-
-
     $(".location-name .list-item__edit").click( function() {
         $(".list.locations").addClass("edit-list");
         $(".venue__list--item.selected").show();
@@ -244,9 +256,6 @@ $(document).ready(function() {
         showListControlChildren();
         // $(".venue__list--item:first-of-type .configuration-title:last-of-type").removeClass('selected');
     });
-
-
-
 
     $(".location-name .list-item__delete").click( function() {
         $(".list.locations").removeClass("edit-list");
@@ -271,10 +280,9 @@ $(document).ready(function() {
         resetAddNewLocation();
     });
 
-    var modalDuplicateAddress = new bootstrap.Modal(document.getElementById('modalDuplicateAddress'));
-
+    // var modalDuplicateAddress = new bootstrap.Modal(document.getElementById('modalDuplicateAddress'));
     $("#locationAddressStreet").click( function() {
-        modalDuplicateAddress.show();
+        $("#modalDuplicateAddress").modal('show');
     });
 
     $("#closeDuplicateAddress").click( function() {
@@ -338,6 +346,26 @@ $(document).ready(function() {
         $(".location-name .list-item__edit").show();
         $(".location-name .list-item__save").hide();
         $(".location-name .list-item__delete").hide();
+    });
+
+    $("#locationType").change(function() {
+        if ($(this).val() === 'Other') {
+          $(".form-group.form-group-hidden").addClass("show");
+        } else {
+            $(".form-group.form-group-hidden").removeClass("show");
+        }
+        if ($(this).val() === 'Open Water') {
+            $(".input-group--poolType").addClass("fade");
+            $(".input-group--openWaterType").removeClass("fade");
+        }
+    });
+
+    $("#openWaterType").change(function() {
+        if ($(this).val() === 'Other') {
+          $(".form-group.form-group-hidden").addClass("show");
+        } else {
+            $(".form-group.form-group-hidden").removeClass("show");
+        }
     });
 
     function showListControlChildren() {
@@ -503,25 +531,86 @@ $(document).ready(function() {
         $(".location-info__add-new-location--container").hide();
     }
 
-    filterByRange();
-    filterByCourse();
 
 
+    $("#confirmWaterFrontPark").click( function() {
+        confirmConfiguration();
+        $(".list-item-open-water").show();
+        $(".venue__list").show();
+        $(".venue__list--item.selected").show();
+        $(".venue__list--item.selected .venue-name").show();
+        $(".venue__list--item.selected .venue-type").show();
+        scrollTopSection();
+        hideListControlChildren();
+        $(".list.locations").removeClass("edit-list");
+        $(".location-name .list-item__edit").show();
+        $(".location-name .list-item__save").hide();
+        $(".location-name .list-item__delete").hide();
+    });
 
-
-    function saveSection() {
-        var sectionId = $(this).closest('.section').attr('id');
+    function filterByOpenWater() {
+        $(".list--lookup.locations").show();
+        $(".list--lookup.locations .list-item").hide();
+        $(".list--lookup.locations .list-item.list-item--open-water").show();
     }
+
+    // Get page name to filter location lookup results
+    $(document).on("settingPageName", function(event, data) {
+        const currentPageName = data.data;
+        if (currentPageName == "Open Water") {
+            filterByOpenWater();
+         } else if (currentPageName == "Pool") {
+            filterByRange();
+            filterByCourse();
+        } else if (currentPageName === "Calendar") {
+            filterByRange();
+            filterByCourse();
+        } else {
+            alert("None");
+        }
+        // console.log(currentPageName);
+    });
+    setPageName();
+
+
+
+
+
+
+
+
+    function scrollToName() {
+        $(document.documentElement).animate({
+              scrollTop: $("#event-name").offset().top - 45
+        }, 100);
+     }
+     function scrollToDetails() {
+        $(document.documentElement).animate({
+              scrollTop: $("#event-information").offset().top - 45
+        }, 100);
+     }
+     function scrollToContact() {
+        $(document.documentElement).animate({
+              scrollTop: $("#contact-information").offset().top - 45
+        }, 100);
+     }
+     function scrollToLocation() {
+        $(document.documentElement).animate({
+              scrollTop: $("#location-information").offset().top - 45
+        }, 100);
+     }
+     function scrollToEntryInformation() {
+        $(document.documentElement).animate({
+              scrollTop: $("#entry-information").offset().top - 45
+        }, 100);
+     }
+     function scrollToMeetAnnouncement() {
+        $(document.documentElement).animate({
+              scrollTop: $("#location-information").offset().top - 45
+        }, 100);
+     }
+
+
 
 
 });
-
-
-
-
-
-
-
-
-
-

@@ -44,25 +44,22 @@
 </form>
 
 <script>
-    // Enable save button on input focus
-    // var sectionId = "#contact-information";
-    // var sectionInputs = sectionId + " input";
-    // var sectionSelects = sectionId + " select";
+    // Enable Contact Section Save & Continue
     $("#contact-information input").click( function() {
         $("#saveContactInfoSection").prop('disabled', false);
     });
-    // Save section
+    // Save Contact Section
     $("#saveContactInfoSection").click( function() {
         $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
         $('#accordion').find('.collapse.in').parent().addClass('hasData');
         $("#location-information h3").click();
         scrollToLocation();
     });
-    // List Control Edit
+    // Contact List Edit
     $("[class^='list list--'] #editContactList").click(function() {
         $(this).closest(".list").addClass("edit-list");
     });
-    // List Control Cancel
+    // Contact List Cancel
     $("[class^='list list--'] #cancelContactList").click(function() {
         $(".list").removeClass("edit-list");
         $(".list-item").removeClass("list-item--fade-out");
