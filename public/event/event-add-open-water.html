@@ -461,31 +461,31 @@
                 <div class="checkbox-container">
                     <input type="checkbox" name="lessThan1" id="lessThan1" value="true"><span class="checkbox__placeholder"></span>
                 </div>
-                Under 1 Mile
+                1 Mile and Under
             </label>
             <label class="checkbox-label" for="1-3Miles">
                 <div class="checkbox-container">
                     <input type="checkbox" name="1-3Miles" id="1-3Miles" value="true"><span class="checkbox__placeholder"></span>
                 </div>
-                1 Mile and Over
+                Over 1 Mile to 3 Miles
             </label>
             <label class="checkbox-label" for="3-6Miles">
                 <div class="checkbox-container">
                     <input type="checkbox" name="3-6Miles" id="3-6Miles" value="true"><span class="checkbox__placeholder"></span>
                 </div>
-                3 Miles and Over
+                Over 3 Miles to 6 Miles
             </label>
             <label class="checkbox-label" for="6-10Miles">
                 <div class="checkbox-container">
                     <input type="checkbox" name="6-10Miles" id="6-10Miles" value="true"><span class="checkbox__placeholder"></span>
                 </div>
-                6 Miles and Over
+                Over 6 Miles to 9 Miles
             </label>
             <label class="checkbox-label" for="moreThan10">
                 <div class="checkbox-container">
                     <input type="checkbox" name="moreThan10" id="moreThan10" value="true"><span class="checkbox__placeholder"></span>
                 </div>
-                10 Miles and Over
+                Over 9 Miles
             </label>
         </div>
     </div>
@@ -503,7 +503,7 @@
 
 10+ miles  -->
          <!-- Start and End Dates -->
-<div class="row">
+<div class="row start-end-dates-group">
    <div class="col-xs-12 col-lg-4">
       <div class="form-group date-select-group has-feedback event-info__start-date--dropdown-start-date-container required">
       
@@ -965,10 +965,10 @@
             <div class="col-xs-12 col-sm-6 col-md-4">
                 <div class="input-group contact-info__head-ref">
                     <label for="addHeadRef">
-                        Head Referee
+                        Open Water Referee
                     </label>
-                    <span class="help-block help-block--addHeadRef">Please choose a head referee</span>
-                    <button class="btn btn-sm btn-outline" id="addHeadRef">Add Head Referee</button>
+                    <span class="help-block help-block--addHeadRef">Please choose a referee</span>
+                    <button class="btn btn-sm btn-outline" id="addHeadRef">Add Open Water Referee</button>
                     <button class="btn btn-sm btn-outline" id="cancelAddHeadRef" style="display: none;">Cancel</button>
                 </div>
             </div>
@@ -981,7 +981,7 @@
                 <div class="input-group lookup-ref-name">
                     <label for="lookupRefName">Search Referees</label>
                     <input tabindex="0" type="text" class="form-control lookup__input lookup-primary__input" min="3" max="30" name="LookupRefName" id="lookupRefName" autocomplete="off" placeholder="">
-                    <span class="help-block help-block--LookupRefName">Please enter head referee name</span>
+                    <span class="help-block help-block--LookupRefName">Please enter referee name</span>
                 </div>
             </div>
         </div>
@@ -999,7 +999,7 @@
     <div class="form-group contact-info__head-ref-new--add-new">
         <div class="row">
             <div class="col-sm-12 col-md-8">
-                <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">Or Add a New Head Referee</p>
+                <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">Or Add a New Open Water Referee</p>
                 <div>
                     <button class="btn btn-small btn-outline btn-add" id="addNewHeadRef" name="addNewHeadRef" type="button" value="Add New">Add New</button>
                 </div>
@@ -1073,7 +1073,7 @@
         <div class="form-group contact-information__head-ref--list">
             <div class="list list--head-ref list--lookup people">
                 <div class="list__header contact-list__head-ref--header">
-                    <span class="lookup-results--head-ref">Head Referee</span>
+                    <span class="lookup-results--head-ref">Open Water Referee</span>
                     <div class="list__controls contact-list__controls">
                         <button type="button" class="list__controls--settings" id="listContactSettings"></button>
                         <button type="button" class="btn btn-link" id="editContactList">Edit</button>
@@ -1119,7 +1119,7 @@
                 <div class="col-sm-12">
                     <div class="club-privacy" style="display: block;">
                         <div class="club-privacy__header">
-                            Display the Head Referee's information on the USMS website event page.
+                            Display the Open Water Referee's information on the USMS website event page.
                         </div>
                         <div class="input-group checkbox-group contact-privacy-name">
                             <label class="checkbox-label" for="privacyName">
@@ -2414,6 +2414,7 @@
       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
       <div class="section__content collapse" id="entry-information__content" data-parent="#accordion">
          <div class="form-group location-information--container" style="display: block; visibility: visible;">
+
             <div class="row">
                <div class="col-xs-12 col-md-6">
                   <div class="input-group entry-info__website-url required">
@@ -2432,7 +2433,8 @@
                   </div>
                </div>
             </div>
-            <div class="row">
+
+                        <div class="row date-entries-close">
                <div class="col-xs-12 col-lg-4">
                   <div class="form-group date-select-group has-feedback entry-info__close-date--date-container required">
                      <label for="">Date Entries Close</label>
@@ -2455,20 +2457,20 @@
             </div>
 
             <!-- Event Classification Radios -->
-<div class="row form-group">
+<div class="row one-event-registration">
    <div class="col-xs-12">
-         <div class="input-group radio-group event-info-classification">
+         <div class="input-group radio-group">
             <div class="input-group-header radio-group-header required">
                <label class="icon-help-label" for="tooltip">
                   One-Event Registrtation
-                    <span 
+                    <!-- <span 
                         class="icon-help" 
                         data-toggle="tooltip" 
                         data-placement="top" 
-                        title="one-event registration provides USMS insurance coverage to a participant in &quot;one event&quot; (open water race or pool meet). An event that spans consecutive days, such as a two-day swim meet, counts as one event. One-event participants pay a one-time fee. One-event registration is strictly for insurance coverage for the event.  One-event participants are not eligible for Event Rankings, Top 10, USMS records, or other honors (either individual or relay) achieved in that event. Per Article 306.4 of the USMS Rule Book, one-event registrations are not allowed for postal events. Learn more here." 
+                        title="" 
                         data-container="body" 
                         data-original-title="">
-                    </span>
+                    </span> -->
                </label>
             </div>
             <span class="help-block help-block--eventClassification">Please chose an event classification</span>
@@ -2487,61 +2489,65 @@
                No
             </label>
          </div>
+         <p class="summary">One-event registration provides USMS insurance coverage to a participant in &quot;one event&quot; (open water race or pool meet). An event that spans consecutive days, such as a two-day swim meet, counts as one event. One-event participants pay a one-time fee. One-event registration is strictly for insurance coverage for the event.  One-event participants are not eligible for Event Rankings, Top 10, USMS records, or other honors (either individual or relay) achieved in that event. Per Article 306.4 of the USMS Rule Book, one-event registrations are not allowed for postal events. Learn more here.</p>
    </div>
 </div>
-
-            <div class="row">
+            <div class="row number-of-entries-group">
+   <div class="col-xs-12 col-sm-12">
+      <div class="input-group entry-info__attendance-previous required">
+         <label for="entryInfoAttendancePrevious">
+            Number of Entries Last Year
+            <!-- <a tabindex="0" class="popover-link" role="button" data-toggle="tooltip" data-trigger="focus" data-html="true" data-placement="top" data-content="" data-original-title="" title="If this is a new event enter zero '0'.">
+               <span class="icon-help"></span>
+            </a> -->
+            <span class="icon-help" data-toggle="tooltip" data-placement="top" title="If this is a new event enter zero '0'." data-container="body" data-original-title=""></span>
+         </label>
+         <input tabindex="0" type="number" class="form-control" name="EntryInfoAttendancePrevious" id="entryInfoAttendancePrevious">
+         <span class="help-block help-block--EntryInfoAttendancePrevious">Please enter number of entries last year</span>
+      </div>
+   </div>
+</div>
+<div class="row">
+   <div class="col-xs-12 col-sm-12">
+      <div class="input-group entry-info__attendance-expected required">
+         <label for="entryInfoAttendanceExpected">
+            Number of Entries Expected</label>
+         <input tabindex="0" type="number" class="form-control" name="EntryInfoAttendanceExpected" id="entryInfoAttendanceExpected">
+         <span class="help-block help-block--EntryInfoAttendanceExpected">Please enter number of entries expected</span>
+      </div>
+   </div>
+</div>
+            <div class="row temp-range-group">
    <div class="col-xs-12 col-sm-4">
       <!-- <div class="input-group-header required">
          Estimated Water Temperature Range
       </div> -->
       <div class="input-group entry-info__temp-range--min required">
          <label for="estimatedTempMin">
-            Estimated Low Temp (Farenheit)
+            Estimated Low Water Temperature
          </label>
-         <input tabindex="0" min="32" max="99" type="number" class="form-control" name="EstimatedTempMin" id="estimatedTempMin">
+         <input dir="rtl" tabindex="0" min="32" max="99" value="32" type="number" placeholder="32" class="form-control" name="EstimatedTempMin" id="estimatedTempMin">
+         <span class="temp-unit">F</span>
          <span class="help-block help-block--EstimatedTempMin">Please enter estimtaed mimimum temperature</span>
       </div>
    </div>
    <div class="col-xs-12 col-sm-4">
       <div class="input-group entry-info__temp-range--max required">
          <label for="estimatedTempMax">
-            Estimated High Temp (Farenheit)
+            Estimated High Water Temperature
          </label>
-         <input tabindex="0" min="32" max="99" type="number" class="form-control" name="EstimatedTempMax" id="estimatedTempMax">
+         <input dir="rtl" tabindex="0" min="32" max="99" value="99" type="number" placeholder="99" class="form-control" name="EstimatedTempMax" id="estimatedTempMax">
+         <span class="temp-unit">F</span>
          <span class="help-block help-block--EstimatedTempMax">Please enter estimtaed maximum temperature</span>
       </div>
    </div>
 </div>
-
-
-            <div class="row">
-               <div class="col-xs-12 col-sm-4">
-                  <div class="input-group entry-info__attendance-previous required">
-                     <label for="entryInfoAttendancePrevious">
-                        Number of Entries Last Year
-                        <!-- <a tabindex="0" class="popover-link" role="button" data-toggle="tooltip" data-trigger="focus" data-html="true" data-placement="top" data-content="" data-original-title="" title="If this is a new event enter zero '0'.">
-                           <span class="icon-help"></span>
-                        </a> -->
-                        <span class="icon-help" data-toggle="tooltip" data-placement="top" title="If this is a new event enter zero '0'." data-container="body" data-original-title=""></span>
-                     </label>
-                     <input tabindex="0" type="number" class="form-control" name="EntryInfoAttendancePrevious" id="entryInfoAttendancePrevious">
-                     <span class="help-block help-block--EntryInfoAttendancePrevious">Please enter number of entries last year</span>
-                  </div>
-               </div>
-               <div class="col-xs-12 col-sm-4">
-                  <div class="input-group entry-info__attendance-expected required">
-                     <label for="entryInfoAttendanceExpected">
-                        Number of Entries Expected</label>
-                     <input tabindex="0" type="number" class="form-control" name="EntryInfoAttendanceExpected" id="entryInfoAttendanceExpected">
-                     <span class="help-block help-block--EntryInfoAttendanceExpected">Please enter number of entries expected</span>
-                  </div>
-               </div>
-            </div>
-
-
-
-            <div class="row">
+<script>
+   $("#estimatedTempMax").spinner({
+      step: -1,
+   });
+</script>
+                        <div class="row comments-to-chair">
                <div class="col-xs-12 col-sm-8">
                      <div class="input-group entry-info__comments">
                         <label for="entryInfoComments">
@@ -2552,9 +2558,7 @@
                </div>
             </div>
 
-
-
-            <div class="row">
+                        <div class="row paper-entry">
                <div class="col-xs-12 col-sm-4">
                   <div class="input-group upload-file entry-info__paper-entry-form">
                      <label for="">Upload Paper Entry Form (PDF only)</label>
@@ -2578,6 +2582,7 @@
                   </div>
                </div>
             </div>
+
          </div>
          <div class="modal fade" id="modalID" tabindex="-1" role="dialog">
                <div class="modal-dialog" role="document">
@@ -2646,17 +2651,19 @@
             <div class="col-xs-12">
                <p>Safety plan summary text ...</p>
                <br />
-               <a href="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/pdfs/guide%20to%20operations %20-%20gto/ sanctions/gto_meet_announcement_guide.docx" class="btn-link">Download Safety Plan Form</a>
+               <a href="https://www.usms.org/admin/lmschb/owgto_safety_plan_application.docx" class="btn-link">Download the USMS Safety Plan Application Fillable Doc</a>
                <br />
                <br />
-               <a href="" class="btn-link">Open Water Information</a>
+               <a href="https://www.usms.org/volunteer-central/guide-to-local-operations/event-management/open-water-event-management/open-water-guide-to-event-operations" class="btn-link">Open Water Information</a>
                <br />
                <br />
                <br />
             </div>
+         </div>
+         <div class="row">
             <div class="col-xs-12 col-sm-4">
                <div class="input-group upload-file safety-plan required">
-                  <label for="">Safety Plan (PDF only)</label>
+                  <label for="">USMS Safety Plan Application (PDF only)</label>
                   <span class="help-block file-type">Invalid file type</span>
                   <span class="help-block no-data">Please upload a meet announcement</span>
                   <div class="upload-summary">
@@ -2674,8 +2681,8 @@
                   </div>
                </div>
             </div>
-
-
+         </div>
+         <div class="row">
             <div class="col-xs-12 col-sm-4">
                 <div class="input-group upload-file course-map required">
                    <label for="">Course Map (PDF only)</label>
@@ -3380,7 +3387,7 @@
 </script>
 
       <script type="text/javascript">
-         $("#location-information h3").click();
+         // $("#location-information h3").click();
          
          function setPageName() {
             const pageName = "Open Water";

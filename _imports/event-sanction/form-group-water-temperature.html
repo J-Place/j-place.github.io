@@ -1,23 +1,30 @@
-<div class="row">
+<div class="row temp-range-group">
    <div class="col-xs-12 col-sm-4">
       <!-- <div class="input-group-header required">
          Estimated Water Temperature Range
       </div> -->
       <div class="input-group entry-info__temp-range--min required">
          <label for="estimatedTempMin">
-            Estimated Low Temp (Farenheit)
+            Estimated Low Water Temperature
          </label>
-         <input tabindex="0" min="32" max="99" type="number" class="form-control" name="EstimatedTempMin" id="estimatedTempMin">
+         <input dir="rtl" tabindex="0" min="32" max="99" value="32" type="number" placeholder="32" class="form-control" name="EstimatedTempMin" id="estimatedTempMin">
+         <span class="temp-unit">F</span>
          <span class="help-block help-block--EstimatedTempMin">Please enter estimtaed mimimum temperature</span>
       </div>
    </div>
    <div class="col-xs-12 col-sm-4">
       <div class="input-group entry-info__temp-range--max required">
          <label for="estimatedTempMax">
-            Estimated High Temp (Farenheit)
+            Estimated High Water Temperature
          </label>
-         <input tabindex="0" min="32" max="99" type="number" class="form-control" name="EstimatedTempMax" id="estimatedTempMax">
+         <input dir="rtl" tabindex="0" min="32" max="99" value="99" type="number" placeholder="99" class="form-control" name="EstimatedTempMax" id="estimatedTempMax">
+         <span class="temp-unit">F</span>
          <span class="help-block help-block--EstimatedTempMax">Please enter estimtaed maximum temperature</span>
       </div>
    </div>
 </div>
+<script>
+   $("#estimatedTempMax").spinner({
+      step: -1,
+   });
+</script>

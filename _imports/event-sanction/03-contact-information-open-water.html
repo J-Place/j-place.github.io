@@ -1,0 +1,68 @@
+<form id="form-contact-info">
+    <div class="section section-contact-info" id="contact-information">
+        <div class="modal fade" id="modalContactInfoConfirmation" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Email Address Is Already In Use</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>The email you have entered belongs to an existing USMS member. Please search for that member using option 2 from the dropdown or to use a different email address.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default">Okay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <h3 class="section__header" data-target="#contact-info__content" data-toggle="collapse" aria-expanded="false" aria-controls="contact-info__content">
+        <span class="section__number">3</span>Contact Information
+        </h3>
+
+        <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
+        
+        <!-- Event Director -->
+        <div class="section__content collapse" id="contact-info__content" data-parent="#accordion">
+
+            <sergey-import src="event-sanction/contact-event-director" />
+            <sergey-import src="event-sanction/contact-open-water-ref" />
+            <sergey-import src="event-sanction/contact-safety-coordinator" />
+            <sergey-import src="event-sanction/contact-event-host" />
+
+            <div class="row">
+                <div class="section__controls">
+                    <button class="btn save-section" id="saveContactInfoSection" type="button" disabled="true">Save &amp; Continue</button>
+                </div>
+            </div>
+
+        </div>
+        
+    </div>
+                
+</form>
+
+<script>
+    // Enable Contact Section Save & Continue
+    $("#contact-information input").click( function() {
+        $("#saveContactInfoSection").prop('disabled', false);
+    });
+    // Save Contact Section
+    $("#saveContactInfoSection").click( function() {
+        $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+        $('#accordion').find('.collapse.in').parent().addClass('hasData');
+        $("#location-information h3").click();
+        scrollToLocation();
+    });
+    // Contact List Edit
+    $("[class^='list list--'] #editContactList").click(function() {
+        $(this).closest(".list").addClass("edit-list");
+    });
+    // Contact List Cancel
+    $("[class^='list list--'] #cancelContactList").click(function() {
+        $(".list").removeClass("edit-list");
+        $(".list-item").removeClass("list-item--fade-out");
+        $('.list__container').removeClass('list__container--modified');
+    });
+</script>
