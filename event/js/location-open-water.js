@@ -16,5 +16,11 @@ $(document).ready(function() {
     // $(".list-venue-form .input-group.input-group--bulkhead").addClass("test");
 
     $('#locationType').val('Open Water').prop('disabled', true);
+    $('#locationType').val('Open Water');
+
+    $(".input-group--poolType").addClass("fade");
+    $(".input-group--openWaterType").removeClass("fade");
+    $(".input-group.input-group--bulkhead").hide();
+
 
 });
