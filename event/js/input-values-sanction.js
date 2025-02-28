@@ -87,13 +87,6 @@ $(document).ready(function() {
     $(".venue__list--item:first-of-type .configuration-title").hide();
     $(".venue__list--item:first-of-type .configuration-title:last-of-type").show();
 
-    // $(".section-event-info").addClass('isEdit');
-    // $(".section-contact-info").addClass('isEdit');
-    // $(".section-entry-information").addClass('isEdit');
-    // $(".section-meet-announcement").addClass('isEdit');
-
-    // $("#submitSanction").prop('disabled', true);
-
     $("#agreeTerms").prop('checked', true);
 
 });
