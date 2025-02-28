@@ -1163,10 +1163,10 @@
             <div class="col-xs-12 col-sm-6 col-md-4">
                 <div class="input-group contact-info__safety-coordinator">
                     <label for="addSafetyCoordinator">
-                        Safety Coordinator
+                        Safety Director
                     </label>
-                    <span class="help-block help-block--addSafetyCoordinator">Please choose a safety coordinator</span>
-                    <button class="btn btn-sm btn-outline" id="addSafetyCoordinator">Add Safety Coordinator</button>
+                    <span class="help-block help-block--addSafetyCoordinator">Please choose a safety director</span>
+                    <button class="btn btn-sm btn-outline" id="addSafetyCoordinator">Add Safety Director</button>
                     <button class="btn btn-sm btn-outline" id="cancelAddSafetyCoordinator" style="display: none;">Cancel</button>
                 </div>
             </div>
@@ -1178,9 +1178,9 @@
         <div class="row">
             <div class="col-sm-8">
                 <div class="input-group lookup-safety-coordinator-name">
-                    <label for="lookupSafetyCoordinatorName">Search Safety Coordinators</label>
+                    <label for="lookupSafetyCoordinatorName">Search Safety Directors</label>
                     <input tabindex="0" type="text" class="form-control lookup__input lookup-primary__input" min="3" max="30" name="LookupSafetyCoordinatorName" id="lookupSafetyCoordinatorName" autocomplete="off" placeholder="">
-                    <span class="help-block help-block--lookup-safety-coordinator-name">Please enter safety coordinator name</span>
+                    <span class="help-block help-block--lookup-safety-coordinator-name">Please enter safety director name</span>
                 </div>
             </div>
         </div>
@@ -1199,7 +1199,7 @@
     <div class="form-group contact-info__safety-coordinator-new--add-new">
         <div class="row">
             <div class="col-sm-12 col-md-8">
-                <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">Or Add a New Safety Coordinator</p>
+                <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">Or Add a New Safety Director</p>
                 <div>
                     <button class="btn btn-small btn-outline btn-add" id="addNewSafetyCoordinator" name="addNewSafetyCoordinator" type="button" value="Add New">Add New</button>
                 </div>
@@ -1274,7 +1274,7 @@
         <div class="form-group contact-information__safety-coordinator--list">
             <div class="list list--safety-coordinator list--lookup people">
                 <div class="list__header contact-list__safety-coordinator--header">
-                    <span class="lookup-results--safety-coordinator">Safety Coordinator</span>
+                    <span class="lookup-results--safety-coordinator">Safety Director</span>
                     <div class="list__controls contact-list__controls">
                         <a href="#/" class="list__controls--settings" id="listContactSettings"></a>
                         <a href="#/" class="btn btn-link" id="editContactList">Edit</a>
@@ -1320,7 +1320,7 @@
                 <div class="col-sm-12">
                     <div class="club-privacy" style="display: block;">
                         <div class="club-privacy__header">
-                            Display the Safety Coordinator's information on the USMS website event page.
+                            Display the Safety Director's information on the USMS website event page.
                         </div>
                         <div class="input-group checkbox-group contact-privacy-name">
                             <label class="checkbox-label" for="privacyName">
@@ -2497,9 +2497,6 @@
       <div class="input-group entry-info__attendance-previous required">
          <label for="entryInfoAttendancePrevious">
             Number of Entries Last Year
-            <!-- <a tabindex="0" class="popover-link" role="button" data-toggle="tooltip" data-trigger="focus" data-html="true" data-placement="top" data-content="" data-original-title="" title="If this is a new event enter zero '0'.">
-               <span class="icon-help"></span>
-            </a> -->
             <span class="icon-help" data-toggle="tooltip" data-placement="top" title="If this is a new event enter zero '0'." data-container="body" data-original-title=""></span>
          </label>
          <input tabindex="0" type="number" class="form-control" name="EntryInfoAttendancePrevious" id="entryInfoAttendancePrevious">
@@ -2519,9 +2516,6 @@
 </div>
             <div class="row temp-range-group">
    <div class="col-xs-12 col-sm-4">
-      <!-- <div class="input-group-header required">
-         Estimated Water Temperature Range
-      </div> -->
       <div class="input-group entry-info__temp-range--min required">
          <label for="estimatedTempMin">
             Estimated Low Water Temperature
@@ -3387,7 +3381,7 @@
 </script>
 
       <script type="text/javascript">
-         // $("#location-information h3").click();
+         $("#event-name h3").click();
          
          function setPageName() {
             const pageName = "Open Water";
