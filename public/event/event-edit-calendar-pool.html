@@ -6,7 +6,7 @@
 <html lang="en">
    <!--<![endif]-->
    <head>
-      <title>Manage Event Sanction Pool - U.S. Masters Swimming</title>
+      <title>View or Edit Calendar Pool</title>
       <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -57,6 +57,7 @@
             --lm-blue-hover: var(--lm-blue-md);
         }
     </style>
+
       <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
       <link rel="stylesheet" href="https://www.usms.org/styles/Club/club2.min.css">
       <!-- <link rel="stylesheet" href="https://www.usms.org/styles/clubs.min.css"> -->
@@ -324,7 +325,7 @@
                      <div class="row">
                         <div class="col-xs-12">
                            <header>
-                              <h1>Upgrade Calendar Listing Event</h1>
+                              <h1>View, Edit or Upgrade Calendar Listing Event</h1>
                            </header>
                         </div>
                      </div>
@@ -337,13 +338,31 @@
                         </div>
                         <div class="club-edit event-edit" id="accordion">
 
-                           <!-- <div class="form-header duplicate-event">
-                                 <p>Duplicating a past event will pull all event information except for dates and attachments (images and PDFs). You will be able to update all information in the next step.</p>
-                                 <br>
-                                 <a href="" class="btn btn-default">Continue</a>
-                                 <a href="event-dashboard.html" class="btn btn-link">Go Back</a>
-                           </div> -->
+                           <div class="form-header manage-event">
+                              <p>You can edit or view your calendar listing details or you can upgrade to a sanction or recognition. If you choose to upgrade, you can edit any of your existing information and will need to add additional information to complete the sanction process.</p>
+                              <div class="manage-event-options">
+                                 <a href="#" class="btn btn-large btn-outline" id="upgradeToSanction">Upgrade to a Sanction or Recognition</a>
+                              </div>
+                           </div>
 
+                           <div class="modal fade" id="modalConfirmMeetAnnouncement" tabindex="-1" role="dialog">
+                              <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                          <h4 class="modal-title">Meet Announcement Ready?</h4>
+                                      </div>
+                                      <div class="modal-body">
+                                          <p>Please make sure your Meet Announcement has been reviewed by your sanctions chair before applying for event sanction or recognition.</p>
+                                      </div>
+                                      <div class="modal-footer">
+                                          <button type="button" class="btn btn-default btn-outline" data-bs-dismiss="modal" id="noMeetAnnouncementReady">Cancel</button>
+                                          <!-- <button type="button" class="btn btn-default" id="yesMeetAnnouncementReady">Continue</button> -->
+                                           <a href="event-convert-calendar-listing.html" id="yesMeetAnnouncementReady" class="btn btn-default">Continue</a>
+                                      </div>
+                                  </div>
+                              </div>
+                           </div>
                            <div class="accordion-group">
                               <form id="form-event-name">
     <div class="section section-event-name" id="event-name">
@@ -430,60 +449,15 @@
         }, 100);
     });
 </script>
-                              <form id="form-event-info">
-   <div class="section section-event-info" id="event-information">
-      <h3 class="section__header" data-target="#event-info__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-info__content">
-         <span class="section__number">2</span>Event Details
-      </h3>
-      <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
-      <div class="section__content collapse" id="event-info__content" data-parent="#accordion">
+                              <form id="form-calendar-event-info">
+    <div class="section section-calendar-event-info" id="calendar-eventinfo">
+       <h3 class="section__header" data-target="#calendar-event-info__content" data-toggle="collapse" aria-expanded="false" aria-controls="calendar-event-info__content">
+          <span class="section__number">2</span>Event Details
+       </h3>
+       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
+       <div class="section__content collapse" id="calendar-event-info__content" data-parent="#accordion">
 
-         <!-- Event Classification Radios -->
-<div class="row form-group">
-   <div class="col-xs-12">
-         <div class="input-group radio-group event-info-classification">
-            <div class="input-group-header radio-group-header required">
-               <label class="icon-help-label" for="tooltip">
-                  Event Classification
-                  <span class="icon-help" data-toggle="tooltip" data-placement="top" title="A USMS Sanction requires that every participant is a USMS member. A USMS Recognition allows for some participants to not be a USMS member, but still allows for a USMS member's results to count as an official time." data-container="body" data-original-title=""></span>
-               </label>
-            </div>
-            <span class="help-block help-block--eventClassification">Please chose an event classification</span>
-            <label class="radio-label radio-label--inline" for="eventClassificationSanctioned">
-               <span class="radio-container">
-                     <input type="radio" name="eventClassification" id="eventClassificationSanctioned" value="sanctioned">
-                     <span class="radio__placeholder"></span>
-               </span>
-               Sanctioned
-            </label>
-            <label class="radio-label radio-label--inline" for="eventClassificationRecognized">
-               <span class="radio-container">
-                     <input type="radio" name="eventClassification" id="eventClassificationRecognized" value="recognized">
-                     <span class="radio__placeholder"></span>
-               </span>
-               Recognized
-            </label>
-         </div>
-   </div>
-</div>
-         <!-- LMSC -->
-<div class="row form-group">
-   <div class="col-xs-12 col-sm-8 col-md-5">
-      <div class="input-group event-info-lmsc required">
-         <label for="SelectEventLmsc">
-            LMSC
-            <span class="icon-help" data-toggle="tooltip" data-placement="top" title="Select the LMSC where the event is taking place." data-container="body" data-original-title=""></span>
-         </label>
-         <select name="SelectEventLmsc" class="form-control" id="selectEventLmsc" required="True">                                                            
-            <option value="" disabled selected>Select an LMSC</option>
-            <option value="FL">Florida</option>
-            <option value="GA">Georgia</option>
-         </select>
-            <span class="help-block help-block--SelectEventLmsc">LMSC information is required.</span>
-      </div>
-   </div>
-</div>
-         <!-- Course -->
+            <!-- Course -->
 <div class="row form-group">
    <div class="col-xs-12 col-sm-8 col-md-5">
       <div class="input-group select-group event-info-course required">
@@ -501,7 +475,7 @@
       </div>
    </div>
 </div>
-         <!-- Start and End Dates -->
+            <!-- Start and End Dates -->
 <div class="row start-end-dates-group">
    <div class="col-xs-12 col-lg-4">
       <div class="form-group date-select-group has-feedback event-info__start-date--dropdown-start-date-container required">
@@ -542,7 +516,7 @@
       </div>
    </div>
 </div>
-         <!-- Description -->
+            <!-- Description -->
 <div class="row form-group">
     <div class="col-xs-12 col-sm-8">
         <div class="input-group event-info-details required">
@@ -561,7 +535,7 @@
         </div>
     </div>
 </div>
-            <!-- Event Image -->
+               <!-- Event Image -->
    <div class="row form-group">
       <div class="col-xs-12 col-sm-8">
          <div class="input-group event-info-image">
@@ -588,59 +562,11 @@
             </div>
          </div>
       </div>
-   </div>
-         <!-- List on Calendar -->
-<div class="row form-group">
-   <div class="col-xs-12 col-sm-8 col-md-5">
-      <div class="input-group radio-group event-info-list-on-calendar">
-         <div class="input-group-header radio-group-header required">List on the public calendar of events?</div>
-         <span class="help-block help-block--eventListOnCalendar">Please make a selection</span>
-         <label class="radio-label radio-label--inline" for="eventListOnCalendarYes">
-            <span class="radio-container">
-               <input type="radio" name="eventListOnCalendar" id="eventListOnCalendarYes" value="true" checked>
-               <span class="radio__placeholder"></span>
-            </span>
-            Yes
-         </label>
-         <label class="radio-label radio-label--inline" for="eventListOnCalendarNo">
-            <span class="radio-container">
-                     <input type="radio" name="eventListOnCalendar" id="eventListOnCalendarNo" value="false">
-               <span class="radio__placeholder"></span>
-            </span>
-            No
-         </label>
-      </div>
-   </div>
-</div>
-         <!-- Is Championship? -->
-<div class="row form-group">
-   <div class="col-xs-12 col-sm-8 col-md-5">
-         <div class="input-group radio-group event-info-is-championship">
-            <div class="input-group-header radio-group-header required">
-               Is this event a championship?
-            </div>
-            <span class="help-block help-block--is-championship">Please make a selection</span>
-            <label class="radio-label radio-label--inline" for="isChampionshipYes">
-               <span class="radio-container">
-                     <input type="radio" name="isChampionship" id="isChampionshipYes" value="true">
-                     <span class="radio__placeholder"></span>
-               </span>
-               Yes
-            </label>
-            <label class="radio-label radio-label--inline" for="isChampionshipNo">
-               <span class="radio-container">
-                     <input type="radio" name="isChampionship" id="isChampionshipNo" value="false" checked>
-                     <span class="radio__placeholder"></span>
-               </span>
-               No
-            </label>
-         </div>
-   </div>
-</div>
-         <!-- Is Virtual? -->
-<div class="row form-group">
+   </div>   
+            <!-- Is Virtual? -->
+<div class="row form-group event-info-is-virtual">
     <div class="col-xs-12">
-        <div class="input-group radio-group event-info-is-virtual">
+        <div class="input-group radio-group event-info-is-virtualXXX">
             <div class="input-group-header radio-group-header required">
                 <label class="icon-help-label" for="tooltip">
                     Is this a virtual event?
@@ -675,48 +601,48 @@
         $('.timing-system-group').show();
     });
 </script>
-            
-         <!-- Save Section -->
-         <div class="row form-group">
-               <div class="section__controls">
-                  <button class="btn save-section" id="saveEventInfo" type="button" disabled>Save &amp; Continue</button>
-               </div>
-         </div>
-      </div>
-   </div>
-</form>
 
-<script>
-   // var sectionId = "#event-information";
-   // var sectionInputs = sectionId + " input";
-   // var sectionSelects = sectionId + " select";
-   // var sectionTextarea = sectionId + " textarea";
-   // var sectionBtn = "#saveEventInfo";
-   
-   $("#event-information input").click( function() {
-      $("#saveEventInfo").prop('disabled', false);
+            <!-- Save Section -->
+            <div class="row form-group">
+                <div class="section__controls">
+                    <button class="btn save-section" id="saveEventType" type="button" onclick="saveSection()" disabled>Save &amp; Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+ </form>
+
+ <script> 
+   var sectionId = "#event-information";
+   var sectionInputs = sectionId + " input";
+   var sectionSelects = sectionId + " select";
+   var sectionTextarea = sectionId + " textarea";
+   var sectionBtn = "#saveEventInfo";
+   $(sectionInputs).click( function() {
+      $(sectionBtn).prop('disabled', false);
    });
-   // $(sectionSelects).on("change", function() {
-   //    $(sectionBtn).prop('disabled', false);
-   // });
-   // $(sectionTextarea).focus( function() {
-   //     $(sectionBtn).prop('disabled', false);
-   // });
+   $(sectionSelects).on("change", function() {
+      $(sectionBtn).prop('disabled', false);
+   });
+   $(sectionTextarea).focus( function() {
+       $(sectionBtn).prop('disabled', false);
+   });
 
    $("#EventImage").click( function() {
-      $("#event-information .file-stored").text('Replace File');
+      $("event-information .file-stored").text('Replace File');
    });
 
-   $("#saveEventInfo").click( function() {
+   $(sectionBtn).click( function() {
       $("#event-information").addClass('hasData');
       $("#contact-information h3").click();
       $(document.documentElement).animate({
          scrollTop: $("#contact-information").offset().top - 45
       }, 100);
    });
-</script>
+   
+ </script>
                               <form id="form-contact-info">
-    <div class="section section-contact-info" id="contact-information">
+    <div class="section  section-contact-info" id="contact-information">
         <div class="modal fade" id="modalContactInfoConfirmation" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -735,7 +661,7 @@
         </div>
         
         <h3 class="section__header" data-target="#contact-info__content" data-toggle="collapse" aria-expanded="false" aria-controls="contact-info__content">
-        <span class="section__number">3</span>Contact Information
+            <span class="section__number">3</span>Contact Information
         </h3>
 
         <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
@@ -994,404 +920,6 @@
 
     <script src="/event/js/event-director.js"></script>
 
-</div>
-            <div class="contact-group--head-ref">
-
-    <div class="form-group form-group-default contact-info__head-ref--container">
-        <div class="row">
-            <div class="col-xs-12 col-sm-6 col-md-4">
-                <div class="input-group contact-info__head-ref">
-                    <label for="addHeadRef">
-                        Head Referee
-                    </label>
-                    <span class="help-block help-block--addHeadRef">Please choose a head referee</span>
-                    <button class="btn btn-sm btn-outline" id="addHeadRef">Add Head Referee</button>
-                    <button class="btn btn-sm btn-outline" id="cancelAddHeadRef" style="display: none;">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Lookup Head Ref -->
-    <div class="form-group contact-info__head-ref-lookup--container">
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="input-group lookup-ref-name">
-                    <label for="lookupRefName">Search Referees</label>
-                    <input tabindex="0" type="text" class="form-control lookup__input lookup-primary__input" min="3" max="30" name="LookupRefName" id="lookupRefName" autocomplete="off" placeholder="">
-                    <span class="help-block help-block--LookupRefName">Please enter head referee name</span>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12 col-md-8">
-                <div class="input-group lookup-confirm">
-                    <button class="btn btn-small save-as-contact" type="button" id="addExistingRefBtn">
-                        <span class="lookup-confirm--name">Confirm Mark Usher</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Add New Ref Button -->
-    <div class="form-group contact-info__head-ref-new--add-new">
-        <div class="row">
-            <div class="col-sm-12 col-md-8">
-                <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">Or Add a New Head Referee</p>
-                <div>
-                    <button class="btn btn-small btn-outline btn-add" id="addNewHeadRef" name="addNewHeadRef" type="button" value="Add New">Add New</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Add New Ref Form -->
-    <div class="form-group contact-info__head-ref--add-new-container add-new-inputs">
-        <div class="row">
-    <div class="col-sm-6">
-        <div class="input-group contact-first-name required">
-            <label for="newEventDirectorFirstName">First Name</label>
-            <input type="text" maxlength="30" class="form-control" name="NewEventDirectorFirstName" id="newEventDirectorFirstName" value="" placeholder="">
-            <span class="help-block help-block--NewEventDirectorFirstName">Please enter a first name.</span>
-        </div>
-    </div>
-    <div class="col-sm-6">
-        <div class="input-group contact-last-name required">
-            <label for="newPersonLastName" class="">Last Name</label>
-            <input type="text" maxlength="30" class="form-control" name="NewPersonLastName" id="newPersonLastName" value="" placeholder="">
-            <span class="help-block help-block--NewPersonLastName">Please enter a last name. </span>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-12">
-        <div class="input-group contact-primary-email required">
-            <label for="newPersonEmailPrimary">Primary Email Address<span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Enter a primary email address."></span></label>
-            <input type="email" class="form-control" name="NewPersonEmailPrimary" id="newPersonEmailPrimary" maxlength="50" value="">
-            <span class="help-block help-block--NewPersonEmailPrimary">Please enter a primary email address.</span>
-        </div>
-        <div class="input-group contact-primary-phone required">
-            <label for="newPersonPhonePrimary">Primary Phone Number</label>
-            <input type="text" class="form-control" pattern="[0-9]{3}[-][0-9]{3}[-][0-9]{4}" name="NewPersonPhonePrimary" id="newPersonPhonePrimary" value="" maxlength="12">
-            <span class="help-block help-block--NewPersonPhonePrimary">Please enter a primary phone number.</span>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-7">
-        <div class="input-group contact-city required">
-            <label for="newPersonCity">City</label>
-            <input type="text" maxlength="30" class="form-control" name="NewPersonCity" id="newPersonCity" value="">
-            <span class="help-block help-block--NewPersonCity">Please enter a city.</span>
-        </div>
-    </div>
-    <div class="col-sm-5">
-        <div class="input-group contact-state required">
-            <label for="newEventDirectorState" class="">State</label>
-            <select name="newEventDirectorState" class="form-control" id="newEventDirectorState">
-                <option value="">Select State</option>
-                <option value="AL">Alabama</option>
-                <option value="AK">Alaska</option>
-                <option value="AZ">Arizona</option>
-            </select>
-            <span class="help-block help-block--newEventDirectorState">Please select a state.</span>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-5 col-md-6">
-        <div class="form-group lookup person">
-            <button class="btn btn-small confirm-form-add-new-person" type="button" id="">Confirm</button>
-        </div>
-    </div>
-</div>
-    </div>
-
-    <!-- Head Ref List -->
-    <div class="row contact-list contact-info__head-ref-list">
-        <div class="form-group contact-information__head-ref--list">
-            <div class="list list--head-ref list--lookup people">
-                <div class="list__header contact-list__head-ref--header">
-                    <span class="lookup-results--head-ref">Head Referee</span>
-                    <div class="list__controls contact-list__controls">
-                        <button type="button" class="list__controls--settings" id="listContactSettings"></button>
-                        <button type="button" class="btn btn-link" id="editContactList">Edit</button>
-                        <button type="button" class="btn btn-link" id="saveContactList">Done Editing</button>
-                        <button type="button" class="btn btn-link" id="cancelContactList">Cancel</button>
-                        <!-- <button class="btn btn-link contact-edit-button">Edit</button> -->
-                        <!-- <a href="#" class="btn btn-link contact-remove-button">Remove</a> -->
-                    </div>
-                </div>
-            
-                <div class="list__container">
-                    <div class="row is-flex">
-                        <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
-                            <div class="list-item list-item--lookup">
-                                <input type="hidden" class="contact-isMember" value="true">
-                                <button type="button" class="list-item__delete">Remove</button>
-                                <div class="contact-name">Mark Usher</div>
-                                <div class="contact-location">Sarasota, FL</div>
-                                <!-- <div class="contact-phone"></div> -->
-                                <div class="contact-email">musher@usmastersswimming.org</div>
-                                <!-- <div class="contact-id"></div> -->
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
-                            <div class="list-item list-item--new">
-                                <input type="hidden" class="contact-isMember" value="true">
-                                <!-- <div class="list-item__pending">Account Pending</div> -->
-                                <button type="button" class="list-item__delete">Remove</button>
-                                <div class="contact-name">Steve Hall</div>
-                                <div class="contact-location">Sarasota, FL</div>
-                                <!-- <div class="contact-phone"></div> -->
-                                <div class="contact-email">email@email.com</div>
-                                <!-- <div class="contact-id"></div> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <button class="btn btn-small btn-success" id="confirmHeadRef" style="display: none;">Confirm</button>
-            </div>
-        </div>
-        <div class="form-group contact-info__head-ref--website-display-preferences">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="club-privacy" style="display: block;">
-                        <div class="club-privacy__header">
-                            Display the Head Referee's information on the USMS website event page.
-                        </div>
-                        <div class="input-group checkbox-group contact-privacy-name">
-                            <label class="checkbox-label" for="privacyName">
-                                <div class="checkbox-container">
-                                    <input type="checkbox" name="privacyName" id="privacyName">
-                                    <span class="checkbox__placeholder"></span>
-                                </div>
-                                Name
-                            </label>
-                        </div>
-                        <div class="input-group checkbox-group contact-privacy-email">
-                            <label class="checkbox-label" for="privacyEmail">
-                                <div class="checkbox-container">
-                                    <input type="checkbox" name="privacyEmail" id="privacyEmail">
-                                    <span class="checkbox__placeholder"></span>
-                                </div>
-                                Email
-                            </label>
-                        </div>
-                        <div class="input-group checkbox-group contact-privacy-phone">
-                            <label class="checkbox-label" for="privacyPhone">
-                                <div class="checkbox-container">
-                                    <input type="checkbox" name="privacyPhone" id="privacyPhone">
-                                    <span class="checkbox__placeholder"></span>
-                                </div>
-                                Phone
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="./js/head-ref.js"></script>
-
-</div>
-            <div class="contact-group--safety-coordinator">
-    <div class="form-group form-group-default contact-info__safety-coordinator--container">
-        <div class="row">
-            <div class="col-xs-12 col-sm-6 col-md-4">
-                <div class="input-group contact-info__safety-coordinator">
-                    <label for="addSafetyCoordinator">
-                        Safety Coordinator
-                    </label>
-                    <span class="help-block help-block--addSafetyCoordinator">Please choose a safety coordinator</span>
-                    <button class="btn btn-sm btn-outline" id="addSafetyCoordinator">Add Safety Coordinator</button>
-                    <button class="btn btn-sm btn-outline" id="cancelAddSafetyCoordinator" style="display: none;">Cancel</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Lookup an existing Safety Coordinator -->
-    <div class="form-group contact-info__safety-coordinator-lookup--container">
-        <div class="row">
-            <div class="col-sm-8">
-                <div class="input-group lookup-safety-coordinator-name">
-                    <label for="lookupSafetyCoordinatorName">Search Safety Coordinators</label>
-                    <input tabindex="0" type="text" class="form-control lookup__input lookup-primary__input" min="3" max="30" name="LookupSafetyCoordinatorName" id="lookupSafetyCoordinatorName" autocomplete="off" placeholder="">
-                    <span class="help-block help-block--lookup-safety-coordinator-name">Please enter safety coordinator name</span>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12 col-md-8">
-                <div class="input-group lookup-confirm">
-                    <button class="btn btn-small save-as-contact" type="button" id="addExistingSafetyCoordinatorBtn">
-                        <span class="lookup-confirm--name">Confirm Jay Place</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Or add a new Safety Coordinator -->
-    <div class="form-group contact-info__safety-coordinator-new--add-new">
-        <div class="row">
-            <div class="col-sm-12 col-md-8">
-                <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">Or Add a New Safety Coordinator</p>
-                <div>
-                    <button class="btn btn-small btn-outline btn-add" id="addNewSafetyCoordinator" name="addNewSafetyCoordinator" type="button" value="Add New">Add New</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Add New Safety Coordinator Form -->
-    <div class="form-group contact-info__safety-coordinator--add-new-container add-new-inputs">
-        <div class="row">
-    <div class="col-sm-6">
-        <div class="input-group contact-first-name required">
-            <label for="newEventDirectorFirstName">First Name</label>
-            <input type="text" maxlength="30" class="form-control" name="NewEventDirectorFirstName" id="newEventDirectorFirstName" value="" placeholder="">
-            <span class="help-block help-block--NewEventDirectorFirstName">Please enter a first name.</span>
-        </div>
-    </div>
-    <div class="col-sm-6">
-        <div class="input-group contact-last-name required">
-            <label for="newPersonLastName" class="">Last Name</label>
-            <input type="text" maxlength="30" class="form-control" name="NewPersonLastName" id="newPersonLastName" value="" placeholder="">
-            <span class="help-block help-block--NewPersonLastName">Please enter a last name. </span>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-12">
-        <div class="input-group contact-primary-email required">
-            <label for="newPersonEmailPrimary">Primary Email Address<span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Enter a primary email address."></span></label>
-            <input type="email" class="form-control" name="NewPersonEmailPrimary" id="newPersonEmailPrimary" maxlength="50" value="">
-            <span class="help-block help-block--NewPersonEmailPrimary">Please enter a primary email address.</span>
-        </div>
-        <div class="input-group contact-primary-phone required">
-            <label for="newPersonPhonePrimary">Primary Phone Number</label>
-            <input type="text" class="form-control" pattern="[0-9]{3}[-][0-9]{3}[-][0-9]{4}" name="NewPersonPhonePrimary" id="newPersonPhonePrimary" value="" maxlength="12">
-            <span class="help-block help-block--NewPersonPhonePrimary">Please enter a primary phone number.</span>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-7">
-        <div class="input-group contact-city required">
-            <label for="newPersonCity">City</label>
-            <input type="text" maxlength="30" class="form-control" name="NewPersonCity" id="newPersonCity" value="">
-            <span class="help-block help-block--NewPersonCity">Please enter a city.</span>
-        </div>
-    </div>
-    <div class="col-sm-5">
-        <div class="input-group contact-state required">
-            <label for="newEventDirectorState" class="">State</label>
-            <select name="newEventDirectorState" class="form-control" id="newEventDirectorState">
-                <option value="">Select State</option>
-                <option value="AL">Alabama</option>
-                <option value="AK">Alaska</option>
-                <option value="AZ">Arizona</option>
-            </select>
-            <span class="help-block help-block--newEventDirectorState">Please select a state.</span>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-5 col-md-6">
-        <div class="form-group lookup person">
-            <button class="btn btn-small confirm-form-add-new-person" type="button" id="">Confirm</button>
-        </div>
-    </div>
-</div>
-    </div>
-
-    <!-- Safety Coordinator List -->
-    <div class="row contact-list contact-info__safety-coordinator-list">
-        <div class="form-group contact-information__safety-coordinator--list">
-            <div class="list list--safety-coordinator list--lookup people">
-                <div class="list__header contact-list__safety-coordinator--header">
-                    <span class="lookup-results--safety-coordinator">Safety Coordinator</span>
-                    <div class="list__controls contact-list__controls">
-                        <a href="#/" class="list__controls--settings" id="listContactSettings"></a>
-                        <a href="#/" class="btn btn-link" id="editContactList">Edit</a>
-                        <a href="#/" class="btn btn-link" id="saveContactList">Done Editing</a>
-                        <a href="#/" class="btn btn-link" id="cancelContactList">Cancel</a>
-                        <!-- <button class="btn btn-link contact-edit-button">Edit</button> -->
-                        <!-- <a href="#" class="btn btn-link contact-remove-button">Remove</a> -->
-                    </div>
-                </div>
-            
-                <div class="list__container">
-                    <div class="row is-flex">
-                        <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
-                            <div class="list-item list-item--lookup">
-                                <input type="hidden" class="contact-isMember" value="true">
-                                <button type="button" class="list-item__delete">Remove</button>
-                                <div class="contact-name">Jay Place</div>
-                                <div class="contact-location">Sarasota, FL</div>
-                                <!-- <div class="contact-phone"></div> -->
-                                <div class="contact-email">jplace@usmastersswimming.org</div>
-                                <!-- <div class="contact-id"></div> -->
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
-                            <div class="list-item list-item--new">
-                                <input type="hidden" class="contact-isMember" value="true">
-                                <!-- <div class="list-item__pending">Account Pending</div> -->
-                                <button type="button" class="list-item__delete">Remove</button>
-                                <div class="contact-name">Daniel Pauling</div>
-                                <div class="contact-location">Sarasota, FL</div>
-                                <!-- <div class="contact-phone"></div> -->
-                                <div class="contact-email">dpaulling@usmastersswimming.org</div>
-                                <!-- <div class="contact-id"></div> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <button class="btn btn-small btn-success" id="confirmSafetyCoordinator" style="display: none;">Confirm</button>
-            </div>
-        </div>
-        <div class="form-group contact-info__safety-coordinator--website-display-preferences">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="club-privacy" style="display: block;">
-                        <div class="club-privacy__header">
-                            Display the Safety Coordinator's information on the USMS website event page.
-                        </div>
-                        <div class="input-group checkbox-group contact-privacy-name">
-                            <label class="checkbox-label" for="privacyName">
-                                <div class="checkbox-container">
-                                    <input type="checkbox" name="privacyName" id="privacyName">
-                                    <span class="checkbox__placeholder"></span>
-                                </div>
-                                Name
-                            </label>
-                        </div>
-                        <div class="input-group checkbox-group contact-privacy-email">
-                            <label class="checkbox-label" for="privacyEmail">
-                                <div class="checkbox-container">
-                                    <input type="checkbox" name="privacyEmail" id="privacyEmail">
-                                    <span class="checkbox__placeholder"></span>
-                                </div>
-                                Email
-                            </label>
-                        </div>
-                        <div class="input-group checkbox-group contact-privacy-phone">
-                            <label class="checkbox-label" for="privacyPhone">
-                                <div class="checkbox-container">
-                                    <input type="checkbox" name="privacyPhone" id="privacyPhone">
-                                    <span class="checkbox__placeholder"></span>
-                                </div>
-                                Phone
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="./js/safety-coordinator.js"></script>
 </div>
             <div class="contact-group--host-type">
     <div class="row contact-list contact-info__host-type">
@@ -1653,35 +1181,41 @@
                 </div>
             </div>
 
-        </div>
-        
+        </div>        
     </div>
-                
 </form>
-
+<script src="/event/js/head-ref.js"></script>
+<script src="/event/js/safety-coordinator.js"></script>
+<script src="/event/js/event-host.js"></script>
 <script>
-    // Enable Contact Section Save & Continue
-    $("#contact-information input").click( function() {
+    // Enable save button on input focus
+    var sectionId = "#contact-information";
+    var sectionInputs = sectionId + " input";
+    var sectionSelects = sectionId + " select";
+    $(sectionInputs).click( function() {
         $("#saveContactInfoSection").prop('disabled', false);
     });
-    // Save Contact Section
+    // Save section
     $("#saveContactInfoSection").click( function() {
         $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
         $('#accordion').find('.collapse.in').parent().addClass('hasData');
         $("#location-information h3").click();
-        scrollToLocation();
+        $(document.documentElement).animate({
+            scrollTop: $("#location-information").offset().top - 45
+        }, 100);
     });
-    // Contact List Edit
+    // List Control Edit
     $("[class^='list list--'] #editContactList").click(function() {
+        alert("What?");
         $(this).closest(".list").addClass("edit-list");
     });
-    // Contact List Cancel
+    // List Control Cancel
     $("[class^='list list--'] #cancelContactList").click(function() {
         $(".list").removeClass("edit-list");
         $(".list-item").removeClass("list-item--fade-out");
         $('.list__container').removeClass('list__container--modified');
     });
-</script>                              
+</script>
                               <form id="form-location-info">
    <div class="section section-location-information" id="location-information">
       <h3 class="section__header" data-target="#location-information__content" data-toggle="collapse" aria-expanded="false" aria-controls="location-information__content">
@@ -2716,354 +2250,6 @@
       }, 100);
    });
 </script>
-                              <form id="form-entry-info">
-   <div class="section  section-entry-information" id="entry-information">
-      <h3 class="section__header" data-target="#entry-information__content" data-toggle="collapse" aria-expanded="false" aria-controls="entry-information__content">
-         <span class="section__number">5</span>Entry Information
-      </h3>
-      <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
-      <div class="section__content collapse" id="entry-information__content" data-parent="#accordion">
-         <div class="form-group location-information--container" style="display: block; visibility: visible;">
-            <!-- <div class="row">
-               <div class="col-xs-12 col-sm-8 col-md-5">
-                  <div class="input-group entry-info__meet-format">
-                     <label for="selectMeetFormat">
-                        Meet Format<span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Do we need a tooltip here?"></span>
-                     </label>
-                     <select name="SelectMeetFormat" class="form-control" id="selectMeetFormat" required="True">                                                            
-                        <option value="{Sitecore ID}" disabled selected>Select a Meet Format</option>
-                        <option value="{Sitecore ID}">Prelims/Finals</option>
-                        <option value="{Sitecore ID}">Timed Finals</option>
-                     </select>
-                        <span class="help-block help-block--SelectMeetFormat">Host type is required.</span>
-                  </div>
-               </div>
-            </div> -->
-            <div class="row">
-               <div class="col-xs-12 col-md-6">
-                  <div class="input-group entry-info__website-url required">
-                     <label for="entryInfoWebsiteUrl">Event Website URL</label>
-                     <input tabindex="0" type="text" class="form-control" min="3" max="30" name="EntryInfoWebsiteUrl" id="entryInfoWebsiteUrl" autocomplete="off">
-                     <span class="help-block help-block--EntryInfoWebsiteUrl">Please enter an event website URL</span>
-                  </div>
-               </div>
-            </div>
-            <div class="row">
-               <div class="col-xs-12 col-md-6">
-                  <div class="input-group entry-info__entries-url required">
-                     <label for="entryInfoOnlineEntriesUrl">Online Entries URL</label>
-                     <input tabindex="0" type="text" class="form-control" min="3" max="30" name="EntryInfoOnlineEntriesUrl" id="entryInfoOnlineEntriesUrl" autocomplete="off">
-                     <span class="help-block help-block--EntryInfoOnlineEntriesUrl">Please enter an online entries URL</span>
-                  </div>
-               </div>
-            </div>
-            
-                        <div class="row date-entries-close">
-               <div class="col-xs-12 col-lg-4">
-                  <div class="form-group date-select-group has-feedback entry-info__close-date--date-container required">
-                     <label for="">Date Entries Close</label>
-                     <div class="SingleDatePicker SingleDatePicker_1">
-                        <div>
-                           <div class="SingleDatePickerInput SingleDatePickerInput_1 SingleDatePickerInput__withBorder SingleDatePickerInput__withBorder_2">
-                              <button class="SingleDatePickerInput_calendarIcon SingleDatePickerInput_calendarIcon_1" type="button">
-                                 <svg class="SingleDatePickerInput_calendarIcon_svg SingleDatePickerInput_calendarIcon_svg_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1393.1 1500"><path d="M107.2 1392.9h241.1v-241.1H107.2v241.1zm294.7 0h267.9v-241.1H401.9v241.1zm-294.7-294.7h241.1V830.4H107.2v267.8zm294.7 0h267.9V830.4H401.9v267.8zM107.2 776.8h241.1V535.7H107.2v241.1zm616.2 616.1h267.9v-241.1H723.4v241.1zM401.9 776.8h267.9V535.7H401.9v241.1zm642.9 616.1H1286v-241.1h-241.1v241.1zm-321.4-294.7h267.9V830.4H723.4v267.8zM428.7 375V133.9c0-7.3-2.7-13.5-8-18.8-5.3-5.3-11.6-8-18.8-8h-53.6c-7.3 0-13.5 2.7-18.8 8-5.3 5.3-8 11.6-8 18.8V375c0 7.3 2.7 13.5 8 18.8 5.3 5.3 11.6 8 18.8 8h53.6c7.3 0 13.5-2.7 18.8-8 5.3-5.3 8-11.5 8-18.8zm616.1 723.2H1286V830.4h-241.1v267.8zM723.4 776.8h267.9V535.7H723.4v241.1zm321.4 0H1286V535.7h-241.1v241.1zm26.8-401.8V133.9c0-7.3-2.7-13.5-8-18.8-5.3-5.3-11.6-8-18.8-8h-53.6c-7.3 0-13.5 2.7-18.8 8-5.3 5.3-8 11.6-8 18.8V375c0 7.3 2.7 13.5 8 18.8 5.3 5.3 11.6 8 18.8 8h53.6c7.3 0 13.5-2.7 18.8-8 5.4-5.3 8-11.5 8-18.8zm321.5-53.6v1071.4c0 29-10.6 54.1-31.8 75.3-21.2 21.2-46.3 31.8-75.3 31.8H107.2c-29 0-54.1-10.6-75.3-31.8C10.6 1447 0 1421.9 0 1392.9V321.4c0-29 10.6-54.1 31.8-75.3s46.3-31.8 75.3-31.8h107.2v-80.4c0-36.8 13.1-68.4 39.3-94.6S311.4 0 348.3 0h53.6c36.8 0 68.4 13.1 94.6 39.3 26.2 26.2 39.3 57.8 39.3 94.6v80.4h321.5v-80.4c0-36.8 13.1-68.4 39.3-94.6C922.9 13.1 954.4 0 991.3 0h53.6c36.8 0 68.4 13.1 94.6 39.3s39.3 57.8 39.3 94.6v80.4H1286c29 0 54.1 10.6 75.3 31.8 21.2 21.2 31.8 46.3 31.8 75.3z"></path></svg>
-                              </button>
-                              <div class="DateInput DateInput_1">
-                                    <input type="text" class="DateInput_input DateInput_input_1" aria-label="MM/DD/YYYY" id="dateEntriesClose" name="date" value="" placeholder="MM/DD/YYYY" autocomplete="off" aria-describedby="DateInput__screen-reader-message-date">
-                                    <p class="DateInput_screenReaderMessage DateInput_screenReaderMessage_1" id="DateInput__screen-reader-message-date">Press the down arrow key to interact with the calendar and select a date. Press the question mark key to get the keyboard shortcuts for changing dates.</p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <span class="help-block help-block--DateEntriesClose">Please select a date entries close</span>
-                  </div>
-               </div>
-            </div>
-
-            <!-- <div class="row">
-               <div class="col-xs-12 col-lg-4">
-                  <div class="form-group date-select-group has-feedback entry-info__close-date--date-container required">
-                     <label for="">Date Entries Close</label>
-                     <div class="SingleDatePicker SingleDatePicker_1">
-                        <div>
-                           <div class="SingleDatePickerInput SingleDatePickerInput_1 SingleDatePickerInput__withBorder SingleDatePickerInput__withBorder_2">
-                              <button class="SingleDatePickerInput_calendarIcon SingleDatePickerInput_calendarIcon_1" type="button">
-                                 <svg class="SingleDatePickerInput_calendarIcon_svg SingleDatePickerInput_calendarIcon_svg_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1393.1 1500"><path d="M107.2 1392.9h241.1v-241.1H107.2v241.1zm294.7 0h267.9v-241.1H401.9v241.1zm-294.7-294.7h241.1V830.4H107.2v267.8zm294.7 0h267.9V830.4H401.9v267.8zM107.2 776.8h241.1V535.7H107.2v241.1zm616.2 616.1h267.9v-241.1H723.4v241.1zM401.9 776.8h267.9V535.7H401.9v241.1zm642.9 616.1H1286v-241.1h-241.1v241.1zm-321.4-294.7h267.9V830.4H723.4v267.8zM428.7 375V133.9c0-7.3-2.7-13.5-8-18.8-5.3-5.3-11.6-8-18.8-8h-53.6c-7.3 0-13.5 2.7-18.8 8-5.3 5.3-8 11.6-8 18.8V375c0 7.3 2.7 13.5 8 18.8 5.3 5.3 11.6 8 18.8 8h53.6c7.3 0 13.5-2.7 18.8-8 5.3-5.3 8-11.5 8-18.8zm616.1 723.2H1286V830.4h-241.1v267.8zM723.4 776.8h267.9V535.7H723.4v241.1zm321.4 0H1286V535.7h-241.1v241.1zm26.8-401.8V133.9c0-7.3-2.7-13.5-8-18.8-5.3-5.3-11.6-8-18.8-8h-53.6c-7.3 0-13.5 2.7-18.8 8-5.3 5.3-8 11.6-8 18.8V375c0 7.3 2.7 13.5 8 18.8 5.3 5.3 11.6 8 18.8 8h53.6c7.3 0 13.5-2.7 18.8-8 5.4-5.3 8-11.5 8-18.8zm321.5-53.6v1071.4c0 29-10.6 54.1-31.8 75.3-21.2 21.2-46.3 31.8-75.3 31.8H107.2c-29 0-54.1-10.6-75.3-31.8C10.6 1447 0 1421.9 0 1392.9V321.4c0-29 10.6-54.1 31.8-75.3s46.3-31.8 75.3-31.8h107.2v-80.4c0-36.8 13.1-68.4 39.3-94.6S311.4 0 348.3 0h53.6c36.8 0 68.4 13.1 94.6 39.3 26.2 26.2 39.3 57.8 39.3 94.6v80.4h321.5v-80.4c0-36.8 13.1-68.4 39.3-94.6C922.9 13.1 954.4 0 991.3 0h53.6c36.8 0 68.4 13.1 94.6 39.3s39.3 57.8 39.3 94.6v80.4H1286c29 0 54.1 10.6 75.3 31.8 21.2 21.2 31.8 46.3 31.8 75.3z"></path></svg>
-                              </button>
-                              <div class="DateInput DateInput_1">
-                                    <input type="text" class="DateInput_input DateInput_input_1" aria-label="MM/DD/YYYY" id="dateEntriesClose" name="date" value="" placeholder="MM/DD/YYYY" autocomplete="off" aria-describedby="DateInput__screen-reader-message-date">
-                                    <p class="DateInput_screenReaderMessage DateInput_screenReaderMessage_1" id="DateInput__screen-reader-message-date">Press the down arrow key to interact with the calendar and select a date. Press the question mark key to get the keyboard shortcuts for changing dates.</p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <span class="help-block help-block--DateEntriesClose">Please select a date entries close</span>
-                  </div>
-               </div>
-            </div> -->
-
-            <div class="row number-of-entries-group">
-   <div class="col-xs-12 col-sm-12">
-      <div class="input-group entry-info__attendance-previous required">
-         <label for="entryInfoAttendancePrevious">
-            Number of Entries Last Year
-            <span class="icon-help" data-toggle="tooltip" data-placement="top" title="If this is a new event enter zero '0'." data-container="body" data-original-title=""></span>
-         </label>
-         <input tabindex="0" type="number" class="form-control" name="EntryInfoAttendancePrevious" id="entryInfoAttendancePrevious">
-         <span class="help-block help-block--EntryInfoAttendancePrevious">Please enter number of entries last year</span>
-      </div>
-   </div>
-</div>
-<div class="row">
-   <div class="col-xs-12 col-sm-12">
-      <div class="input-group entry-info__attendance-expected required">
-         <label for="entryInfoAttendanceExpected">
-            Number of Entries Expected</label>
-         <input tabindex="0" type="number" class="form-control" name="EntryInfoAttendanceExpected" id="entryInfoAttendanceExpected">
-         <span class="help-block help-block--EntryInfoAttendanceExpected">Please enter number of entries expected</span>
-      </div>
-   </div>
-</div>
-            <!-- <div class="row number-of-entries-group">
-               <div class="col-xs-12 col-sm-4">
-                  <div class="input-group entry-info__attendance-previous required">
-                     <label for="entryInfoAttendancePrevious">
-                        Number of Entries Last Year
-                        <span class="icon-help" data-toggle="tooltip" data-placement="top" title="If this is a new event enter zero '0'." data-container="body" data-original-title=""></span>
-                     </label>
-                     <input tabindex="0" type="number" class="form-control" name="EntryInfoAttendancePrevious" id="entryInfoAttendancePrevious">
-                     <span class="help-block help-block--EntryInfoAttendancePrevious">Please enter number of entries last year</span>
-                  </div>
-               </div>
-               <div class="col-xs-12 col-sm-4">
-                  <div class="input-group entry-info__attendance-expected required">
-                     <label for="entryInfoAttendanceExpected">
-                        Number of Entries Expected</label>
-                     <input tabindex="0" type="number" class="form-control" name="EntryInfoAttendanceExpected" id="entryInfoAttendanceExpected">
-                     <span class="help-block help-block--EntryInfoAttendanceExpected">Please enter number of entries expected</span>
-                  </div>
-               </div>
-            </div> -->
-
-                        <div class="row comments-to-chair">
-               <div class="col-xs-12 col-sm-8">
-                     <div class="input-group entry-info__comments">
-                        <label for="entryInfoComments">
-                           Comments to the Sanctions Chair
-                        </label>
-                        <textarea class="form-control" rows="3" cols="50" name="EntryInfoComments" id="entryInfoComments"></textarea>
-                     </div>
-               </div>
-            </div>
-
-            <!-- <div class="row">
-               <div class="col-xs-12 col-sm-8">
-                     <div class="input-group entry-info__comments">
-                        <label for="entryInfoComments">
-                           Comments to the Sanctions Chair
-                        </label>
-                        <textarea class="form-control" rows="3" cols="50" name="EntryInfoComments" id="entryInfoComments"></textarea>
-                     </div>
-               </div>
-            </div> -->
-
-                        <div class="row paper-entry">
-               <div class="col-xs-12 col-sm-4">
-                  <div class="input-group upload-file entry-info__paper-entry-form">
-                     <label for="">Upload Paper Entry Form (PDF only)</label>
-                     <span class="help-block file-type">Invalid file type</span>
-                     <span class="help-block no-data">Please upload an entry form</span>   
-                     <div class="upload-summary">
-                        <button type="button" class="event-document__remove-file" data-toggle="tooltip" title="" data-original-title="Remove document">
-                           <i class="fa fa-times"></i>
-                        </button>
-                        Storedfilename.pdf
-                     </div>
-                     <div class="upload-box upload-box--file">
-                        <input type="file" data-file-size="3584000" name="entryform[]" id="entryForm" class="inputfile input-entryform" data-multiple-caption="{count} files selected" accept="application/pdf" multiple="">
-                        <label for="entryForm">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
-                              <path fill="#FFF" d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
-                           </svg>
-                           <span class="file-stored">Choose File</span>
-                        </label>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <!-- <div class="row">
-               <div class="col-xs-12 col-sm-4">
-                  <div class="input-group upload-file entry-info__paper-entry-form">
-                     <label for="">Upload Paper Entry Form (PDF only)</label>
-                     <span class="help-block file-type">Invalid file type</span>
-                     <span class="help-block no-data">Please upload an entry form</span>   
-                     <div class="upload-summary">
-                        <button type="button" class="event-document__remove-file" data-toggle="tooltip" title="" data-original-title="Remove document">
-                           <i class="fa fa-times"></i>
-                        </button>
-                        Storedfilename.pdf
-                     </div>
-                     <div class="upload-box upload-box--file">
-                        <input type="file" data-file-size="3584000" name="entryform[]" id="entryForm" class="inputfile input-entryform" data-multiple-caption="{count} files selected" accept="application/pdf" multiple="">
-                        <label for="entryForm">
-                           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
-                              <path fill="#FFF" d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
-                           </svg>
-                           <span class="file-stored">Choose File</span>
-                        </label>
-                     </div>
-                  </div>
-               </div>
-            </div> -->
-
-         </div>
-         <div class="modal fade" id="modalID" tabindex="-1" role="dialog">
-               <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                     <div class="modal-header">
-                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                           <h4 class="modal-title"></h4>
-                     </div>
-                     <div class="modal-body">
-                           <p>The abbreviation you have selected is already in use by another club. Please pick another one.</p>
-                     </div>
-                  </div>
-               </div>
-         </div>
-         <div class="row">
-               <div class="section__controls">
-                  <button class="btn save-section" id="saveEntryInfo" type="button" disabled>Save &amp; Continue</button>
-               </div>
-         </div>
-      </div>
-   </div>
-</form>
-
-<script>
-   // var sectionId = "#entry-information";
-   // var sectionInputs = sectionId + " input";
-   // var sectionSelects = sectionId + " select";
-   // var sectionTextarea = sectionId + " textarea";
-
-   $("#entry-information input").click( function() {
-      $("#saveEntryInfo").prop('disabled', false);
-   });
-
-   // $(sectionSelects).on("change", function() {
-   //    console.log("select");
-   //    $("#saveEntryInfo").prop('disabled', false);
-   // });
-   // $(sectionTextarea).focus( function() {
-   //    console.log("textarea");
-   //    $("#saveEntryInfo").prop('disabled', false);
-   // });
-
-   $("#saveEntryInfo").click( function() {
-      $('#accordion').find('.collapse.in').parent().addClass('hasData');
-      $("#meetAnnouncement h3").click();
-      $(document.documentElement).animate({
-         scrollTop: $("#meetAnnouncement").offset().top - 45
-      }, 100);
-      $(".upload-summary").show();
-   });
-
-   $("#entryForm").click( function() {
-      $("#saveEntryInfo").prop('disabled', false);
-      $("#entry-information .upload-summary").show();
-      $("#entry-information .file-stored").text('Replace File');
-   });
-
-</script>
-                              <form id="form-meet-announcement">
-   <div class="section section-meet-announcement" id="meetAnnouncement">
-      <h3 class="section__header" data-target="#meet-announcement__content" data-toggle="collapse" aria-expanded="false" aria-controls="meet-announcement__content">
-         <span class="section__number">6</span>Meet Announcement
-      </h3>
-      <div class="section__content collapse" id="meet-announcement__content" data-parent="#accordion">
-         <div class="row">
-            <div class="col-xs-12">
-               <p>This information can be organized by your event registration company or created manually and uploaded. A PDF is required. We've included links below to a checklist of all required items, and a formatted Mirosoft Word template to help get you started.</p>
-               <br />
-               <a href="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/pdfs/guide%20to%20operations %20-%20gto/ sanctions/gto_meet_announcement_guide.docx" class="btn-link">Download Checklist</a>
-               <br />
-               <br />
-               <a href="" class="btn-link">Download Template</a>
-               <br />
-               <br />
-               <br />
-            </div>
-            <div class="col-xs-12 col-sm-4">
-               <div class="input-group upload-file meet-announcement required">
-                  <label for="">Upload Meet Announcement (PDF only)</label>
-                  <span class="help-block file-type">Invalid file type</span>
-                  <span class="help-block no-data">Please upload a meet announcement</span>
-                  <div class="upload-summary">
-                     <button type="button" class="event-document__remove-file" data-toggle="tooltip" title="" data-original-title="Remove document">
-                        <i class="fa fa-times"></i>
-                     </button>
-                     Storedfilename.pdf
-                  </div>
-                  <div class="upload-box upload-box--file">
-                     <input type="file" data-file-size="3584000" name="meet-announcement[]" id="uploadMeetAnnouncement" class="inputfile inputfile-meet-announcement" data-multiple-caption="{count} files selected" accept="application/pdf" />
-                     <label for="uploadMeetAnnouncement">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path fill="#FFF" d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
-                        <span class="file-stored">Choose File</span>
-                     </label>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div class="modal fade" id="modalID" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-               <div class="modal-content">
-                  <div class="modal-header">
-                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                     <h4 class="modal-title"></h4>
-                  </div>
-                  <div class="modal-body">
-                     <p>The abbreviation you have selected is already in use by another club. Please pick another one.</p>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div class="row">
-            <div class="section__controls">
-               <button class="btn save-section" id="saveMeetAnnouncement" type="button" disabled>Save & Continue</button>
-            </div>
-         </div>
-      </div>    
-   </div>
- </form>
- <script>
-   var sectionId = ".isEdit #meetAnnouncement";
-   var sectionInputs = sectionId + " input";
-   var sectionSelects = sectionId + " select";
-   var sectionTextarea = sectionId + " textarea";
-   $(sectionInputs).click( function() {
-      $("#saveMeetAnnouncement").prop('disabled', false);
-   });
-   $(sectionSelects).on("change", function() {
-      console.log("select");
-      $("#saveMeetAnnouncement").prop('disabled', false);
-   });
-
-   $("#saveMeetAnnouncement").click( function() {
-      $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
-      $('#accordion').find('.collapse.in').parent().addClass('hasData');
-      $("#meetAnnouncement h3").click();
-      $(document.documentElement).animate({
-         scrollTop: $("#meetAnnouncement").offset().top - 45
-      }, 100);
-      $(".upload-summary").show();
-   });
-
-   $("#uploadMeetAnnouncement").click( function() {
-      $("#saveMeetAnnouncement").prop('disabled', false);
-      $("#meetAnnouncement .upload-summary").show();
-      $("#meetAnnouncement .file-stored").text('Replace File');
-   });
-
-</script>
                               <form id="form-accept-submit">
    <div class="section section-accept-submit" id="accept-submit">
       <h3 class="section__header" data-target="#accept-submit__content" data-toggle="collapseXXX" aria-expanded="false" aria-controls="accept-submit__content">
@@ -3080,8 +2266,8 @@
                      <!-- <h3 class="liability___form-header text-primary m-b-30">Liability Waiver</h3> -->
                      <div class="html-container">
                         
-                        <sergey-import src="event-sanction/terms-recognizedXXX" />
-                        <!-- <p>I agree that all information I am providing is factual. I have read the <a href="https://www.usms.org/events/event-sanction/event-sanction-criteria">sanction criteria</a>.</p> -->
+                        <sergey-import src="event-sanction/terms-sanctionedXXX" />
+                        
                      </div>
 
                      <div class="form-group agree-terms">
@@ -3092,12 +2278,11 @@
                                     <span class="checkbox__placeholder"></span>
                                 </div>
                                 <!-- I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming <a href="/content/privacy" target="_blank">Privacy Policy</a>. I understand that this membership is non-refundable, non-transferable, and expires on December 31, <span class="agree-terms--year">2025</span>. -->
-                                I agree that all information I am providing is factual. I have read the <a href="https://www.usms.org/events/event-sanction/event-sanction-criteria">sanction criteria</a>.
+                                I agree that all information I am providing is factual.
                             </label>
                             <span class="help-block help-block--agreeTerms">Please agree to the terms in order to continue</span>
                         </div>
                      </div>
-
 
                      <!-- <form class="form-liability form-horizontal">
                         <div class="modal-container" style="transition:all 250ms ease-in-out;transform:translateY(-10px);opacity:0;z-index:-1;">
@@ -3114,6 +2299,7 @@
                         <div class="col-xs-12">
                            <span class="help-block help-block--WaiverTerms">You need to agree to the terms above</span>
                         </div>
+
                         <div class="col-xs-12">
                            <div class="form-group">
                               <label id="agree__label" class="radio-label" for="agree" style="cursor:pointer;">
@@ -3132,15 +2318,13 @@
                               </label>
                            </div>
                         </div>
-
-
                      </form> -->
-
+                  
                   </div>
                </div>
             </div>
             
-            <div class="modal fade" id="modalID" tabindex="-1" role="dialog">
+            <!-- <div class="modal fade" id="modalID" tabindex="-1" role="dialog">
                   <div class="modal-dialog" role="document">
                      <div class="modal-content">
                         <div class="modal-header">
@@ -3152,11 +2336,11 @@
                         </div>
                      </div>
                   </div>
-            </div>
+            </div> -->
 
             <div class="row">
                   <div class="section__controls">
-                     <button class="btn save-section" id="submitSanction" type="button">Save & Finish</button>
+                     <button class="btn save-section" id="buttonId" type="button">Save & Finish</button>
                   </div>
             </div>
          </div>
@@ -3660,6 +2844,8 @@
 </footer>
 
       </div>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
       <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -3690,20 +2876,25 @@
     $("[data-toggle='tooltip']").tooltip();
 
 </script>
-
-      <script>
+      <script type="text/javascript">
+         // Open first section on this page
+         $("#event-name h3").click();
          // Set has data state on all sections
          $('#accordion').find('.collapse').parent().removeClass('isEdit');
          $('#accordion').find('.collapse').parent().addClass('hasData');
-         // Open second section on this page
-         $("#event-information h3").click();
-         // Set first section to hasData - green check
-         $("#event-name").removeClass("isEdit").addClass("hasData");
-      </script>
 
-      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-      <script type="text/javascript" src="/event/js/input-values-calendar.js"></script>
-      <script type="text/javascript" src="/event/js/validation-calendar-to-sanction.js"></script>
+         // Upgrade to sanction button and meet announcement modal
+         var modalConfirmMeetAnnouncement = new bootstrap.Modal(
+            document.getElementById('modalConfirmMeetAnnouncement'), 
+            { backdrop: 'static', keyboard: false }
+         );
+         $("#upgradeToSanction").click( function() {
+            $("#modalConfirmMeetAnnouncement").removeClass('fade');
+            modalConfirmMeetAnnouncement.show();
+         });
+      </script>
+      
    </body>
 </html>
+
+<script type="text/javascript" src="/event/js/input-values-sanction.js"></script>

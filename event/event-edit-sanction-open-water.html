@@ -6,7 +6,7 @@
 <html lang="en">
    <!--<![endif]-->
    <head>
-      <title>Add Sanction Pool</title>
+      <title>View or Edit Sanction Open Water</title>
       <sergey-import src="site/head_meta" />
       <sergey-import src="site/head_js" />
       <sergey-import src="site/head_css" />
@@ -48,7 +48,7 @@
                      <div class="row">
                         <div class="col-xs-12">
                            <header>
-                              <h1>Add a Sanctioned or Recognized Event</h1>
+                              <h1>View or Edit an Open Water Event</h1>
                            </header>
                         </div>
                      </div>
@@ -63,12 +63,12 @@
 
                            <div class="accordion-group">
                               <sergey-import src="event-sanction/01-event-name" />
-                              <sergey-import src="event-sanction/02-event-information" />
-                              <sergey-import src="event-sanction/03-contact-information" />                              
-                              <sergey-import src="event-sanction/04-location-information" />
-                              <sergey-import src="event-sanction/05-entry-information" />
-                              <sergey-import src="event-sanction/06-meet-announcement" />
-                              <sergey-import src="event-sanction/accept-submit" />
+                              <sergey-import src="event-sanction/02-event-information-open-water" />
+                              <sergey-import src="event-sanction/03-contact-information-open-water" />                              
+                              <sergey-import src="event-sanction/04-location-information-open-water" />
+                              <sergey-import src="event-sanction/05-entry-information-open-water" />
+                              <sergey-import src="event-sanction/06-safety-plan" />
+                              <sergey-import src="event-sanction/accept-submit-open-water" />
                            </div>
 
                         </div>
@@ -83,45 +83,14 @@
       <sergey-import src="site/footer_scripts" />
 
       <script type="text/javascript">
+         $("#event-name h3").click();
          
-         $("#location-information h3").click();
-
-         // function scrollToName() {
-         //    $(document.documentElement).animate({
-         //          scrollTop: $("#event-name").offset().top - 45
-         //    }, 100);
-         // }
-         // function scrollToDetails() {
-         //    $(document.documentElement).animate({
-         //          scrollTop: $("#event-information").offset().top - 45
-         //    }, 100);
-         // }
-         // function scrollToContact() {
-         //    $(document.documentElement).animate({
-         //          scrollTop: $("#contact-information").offset().top - 45
-         //    }, 100);
-         // }
-         // function scrollToLocation() {
-         //    $(document.documentElement).animate({
-         //          scrollTop: $("#location-information").offset().top - 45
-         //    }, 100);
-         // }
-         // function scrollToEntryInformation() {
-         //    $(document.documentElement).animate({
-         //          scrollTop: $("#entry-information").offset().top - 45
-         //    }, 100);
-         // }
-         // function scrollToMeetAnnouncement() {
-         //    $(document.documentElement).animate({
-         //          scrollTop: $("#location-information").offset().top - 45
-         //    }, 100);
-         // }
-
          function setPageName() {
-            const pageName = "Pool";
+            const pageName = "Open Water";
             $(document).trigger("settingPageName", { data: pageName });
          }
-         
+     
       </script>
+      <script type="text/javascript" src="/event/js/input-values-open-water.js"></script>
    </body>
 </html>

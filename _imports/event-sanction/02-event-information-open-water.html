@@ -14,6 +14,7 @@
          <sergey-import src="event-sanction/form-group-event-image" />
          <sergey-import src="event-sanction/form-group-list-on-calendar" />
          <sergey-import src="event-sanction/form-group-championship" />
+         <sergey-import src="event-sanction/form-group-virtual" />
             
          <!-- Save Section -->
          <div class="row form-group">
@@ -26,25 +27,17 @@
 </form>
 
 <script>
-   // var sectionId = "#event-information";
-   // var sectionInputs = sectionId + " input";
-   // var sectionSelects = sectionId + " select";
-   // var sectionTextarea = sectionId + " textarea";
-   // var sectionBtn = "#saveEventInfo";
-   
    $("#event-information input").click( function() {
       $("#saveEventInfo").prop('disabled', false);
    });
-   // $(sectionSelects).on("change", function() {
-   //    $(sectionBtn).prop('disabled', false);
-   // });
-   // $(sectionTextarea).focus( function() {
-   //     $(sectionBtn).prop('disabled', false);
-   // });
 
    $("#EventImage").click( function() {
       $("#event-information .file-stored").text('Replace File');
    });
+
+   // Hide isVirtual radio on Open Water Sanction page
+   // Show on the Open Water Calendar Listing page
+   $(".event-info-is-virtual").hide();
 
    $("#saveEventInfo").click( function() {
       $("#event-information").addClass('hasData');

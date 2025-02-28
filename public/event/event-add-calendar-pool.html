@@ -6,7 +6,7 @@
 <html lang="en">
    <!--<![endif]-->
    <head>
-      <title>Manage Event Calendar Listing - U.S. Masters Swimming</title>
+      <title>Add Calendar Pool</title>
       <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -57,7 +57,6 @@
             --lm-blue-hover: var(--lm-blue-md);
         }
     </style>
-
       <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
       <link rel="stylesheet" href="https://www.usms.org/styles/Club/club2.min.css">
       <!-- <link rel="stylesheet" href="https://www.usms.org/styles/clubs.min.css"> -->
@@ -313,7 +312,7 @@
                                     <a class="breadcrumb__link" href="/public/event/event-dashboard.html">Event Central<i class="fa fa-chevron-right"></i></a>
                                  </li>
                               </ul>
-                              <span class="breadcrumb__title text-capitalize">Manage Event</span>
+                              <span class="breadcrumb__title text-capitalize">Add Event</span>
                            </div>
                         </div>
                      </div>
@@ -325,7 +324,7 @@
                      <div class="row">
                         <div class="col-xs-12">
                            <header>
-                              <h1>View, Edit or Upgrade Calendar Listing Event</h1>
+                              <h1>Add a Calendar Listing Event</h1>
                            </header>
                         </div>
                      </div>
@@ -338,33 +337,8 @@
                         </div>
                         <div class="club-edit event-edit" id="accordion">
 
-                           <div class="form-header manage-event">
-                              <p>You can edit or view your calendar listing details or you can upgrade to a sanction or recognition. If you choose to upgrade, you can edit any of your existing information and will need to add additional information to complete the sanction process.</p>
-                              <div class="manage-event-options">
-                                 <a href="#" class="btn btn-large btn-outline" id="upgradeToSanction">Upgrade to a Sanction or Recognition</a>
-                              </div>
-                              <!-- <p style="margin: -4rem 0 6rem; padding-top: 0; font-size: 1.5rem; font-weight: 400;">*Requires Meet Announcement</p> -->
-                           </div>
-
-                           <div class="modal fade" id="modalConfirmMeetAnnouncement" tabindex="-1" role="dialog">
-                              <div class="modal-dialog" role="document">
-                                  <div class="modal-content">
-                                      <div class="modal-header">
-                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                          <h4 class="modal-title">Meet Announcement Ready?</h4>
-                                      </div>
-                                      <div class="modal-body">
-                                          <p>Please make sure your Meet Announcement has been reviewed by your sanctions chair before applying for event sanction or recognition.</p>
-                                      </div>
-                                      <div class="modal-footer">
-                                          <button type="button" class="btn btn-default btn-outline" data-bs-dismiss="modal" id="noMeetAnnouncementReady">Cancel</button>
-                                          <!-- <button type="button" class="btn btn-default" id="yesMeetAnnouncementReady">Continue</button> -->
-                                           <a href="event-convert-calendar-listing.html" id="yesMeetAnnouncementReady" class="btn btn-default">Continue</a>
-                                      </div>
-                                  </div>
-                              </div>
-                           </div>
                            <div class="accordion-group">
+
                               <form id="form-event-name">
     <div class="section section-event-name" id="event-name">
         <h3 class="section__header" data-target="#event-name__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-name__content">
@@ -565,9 +539,9 @@
       </div>
    </div>   
             <!-- Is Virtual? -->
-<div class="row form-group">
+<div class="row form-group event-info-is-virtual">
     <div class="col-xs-12">
-        <div class="input-group radio-group event-info-is-virtual">
+        <div class="input-group radio-group event-info-is-virtualXXX">
             <div class="input-group-header radio-group-header required">
                 <label class="icon-help-label" for="tooltip">
                     Is this a virtual event?
@@ -2362,6 +2336,7 @@
       }
    });
 </script>
+
                            </div>
 
                         </div>
@@ -2845,8 +2820,7 @@
 </footer>
 
       </div>
-      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
       <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -2877,25 +2851,15 @@
     $("[data-toggle='tooltip']").tooltip();
 
 </script>
-      <script type="text/javascript">
-         // Open first section on this page
-         $("#event-name h3").click();
-         // Set has data state on all sections
-         $('#accordion').find('.collapse').parent().removeClass('isEdit');
-         $('#accordion').find('.collapse').parent().addClass('hasData');
 
-         // Upgrade to sanction button and meet announcement modal
-         var modalConfirmMeetAnnouncement = new bootstrap.Modal(
-            document.getElementById('modalConfirmMeetAnnouncement'), 
-            { backdrop: 'static', keyboard: false }
-         );
-         $("#upgradeToSanction").click( function() {
-            $("#modalConfirmMeetAnnouncement").removeClass('fade');
-            modalConfirmMeetAnnouncement.show();
-         });
+      <script>
+         $("#event-name h3").click();
+
+         function setPageName() {
+            const pageName = "Calendar";
+            $(document).trigger("settingPageName", { data: pageName });
+         }
+
       </script>
-      
    </body>
 </html>
-
-<script type="text/javascript" src="/event/js/input-values-sanction.js"></script>

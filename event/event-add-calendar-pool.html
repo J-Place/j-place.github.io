@@ -6,7 +6,7 @@
 <html lang="en">
    <!--<![endif]-->
    <head>
-      <title>Add Event Open Water</title>
+      <title>Add Calendar Pool</title>
       <sergey-import src="site/head_meta" />
       <sergey-import src="site/head_js" />
       <sergey-import src="site/head_css" />
@@ -48,7 +48,7 @@
                      <div class="row">
                         <div class="col-xs-12">
                            <header>
-                              <h1>Add an Open Water Event</h1>
+                              <h1>Add a Calendar Listing Event</h1>
                            </header>
                         </div>
                      </div>
@@ -62,13 +62,13 @@
                         <div class="club-edit event-edit" id="accordion">
 
                            <div class="accordion-group">
+
                               <sergey-import src="event-sanction/01-event-name" />
-                              <sergey-import src="event-sanction/02-event-information-open-water" />
-                              <sergey-import src="event-sanction/03-contact-information-open-water" />                              
-                              <sergey-import src="event-sanction/04-location-information-open-water" />
-                              <sergey-import src="event-sanction/05-entry-information-open-water" />
-                              <sergey-import src="event-sanction/06-safety-plan" />
-                              <sergey-import src="event-sanction/accept-submit" />
+                              <sergey-import src="event-sanction/02-event-information-calendar" />
+                              <sergey-import src="event-sanction/03-contact-information-calendar" />
+                              <sergey-import src="event-sanction/04-location-information" />
+                              <sergey-import src="event-sanction/accept-submit-calendar" />
+
                            </div>
 
                         </div>
@@ -82,14 +82,14 @@
 
       <sergey-import src="site/footer_scripts" />
 
-      <script type="text/javascript">
+      <script>
          $("#event-name h3").click();
-         
+
          function setPageName() {
-            const pageName = "Open Water";
+            const pageName = "Calendar";
             $(document).trigger("settingPageName", { data: pageName });
          }
-     
+
       </script>
    </body>
 </html>
