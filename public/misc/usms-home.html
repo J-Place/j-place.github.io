@@ -306,12 +306,13 @@
                    <p>Image: William Kolb</p> 
                 </div>
              </div>    
-            <div class="carousel__slide-video" data-reactid="10">
+            <div class="carousel__slide-video" data-reactid="10" style="margin-bottom: -5px;">
                 <video autoplay="" loop="" muted="" class="video--only" preload="none" data-reactid="11">
                     <source src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/videos/homepage%20hero%20videos/overview%20of%20a%20practice%20with%20coach%20on%20deck%20-%20drone.mp4" type="video/mp4" data-reactid="12">
                 </video>
             </div>
-            <div class="carousel__slide-image--mobile" data-reactid="13"><div class="carousel__slide-image" style="background-image:url('https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/_mzb3270.jpg?rev=d176cb5fdd7f44b78ef9ea15f9a4b0f3');" data-reactid="14"></div>
+            <div class="carousel__slide-image--mobile" data-reactid="13">
+                <div class="carousel__slide-image" style="background-image:url('https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/_mzb3270.jpg?rev=d176cb5fdd7f44b78ef9ea15f9a4b0f3');" data-reactid="14"></div>
             </div>
         </li>
       <!-- <li class="carousel__slide" data-reactid="5">
@@ -1124,5 +1125,17 @@
 </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://test.usms.org/scripts/home.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                var maxHeight = 0;
+                $('.cta-col').each(function () {
+                    var thisHeight = $(this).outerHeight();
+                    if (thisHeight > maxHeight) {
+                        maxHeight = thisHeight - 50;
+                    }
+                });
+                $('.cta-col > div').height(maxHeight);
+            });
+        </script>
     </body>
 </html>
