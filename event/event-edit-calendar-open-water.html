@@ -64,7 +64,7 @@
                            <div class="form-header manage-event">
                               <p>You can edit or view your calendar listing details or you can upgrade to a sanction. If you choose to upgrade, you can edit any of your existing information and will need to add additional information to complete the sanction process.</p>
                               <div class="manage-event-options">
-                                 <a href="#" class="btn btn-large btn-outline" id="upgradeToSanctionOpenWater">Upgrade to a Sanction</a>
+                                 <a href="event-upgrade-open-water.html" class="btn btn-large btn-outline" id="upgradeToSanctionOpenWater">Upgrade to a Sanction</a>
                               </div>
                            </div>
 
@@ -91,6 +91,10 @@
 
       <script type="text/javascript">
          $("#event-name h3").click();
+
+         $(".row .event-info-list-on-calendar").hide();
+         $(".row .event-info-is-championship").hide();
+         $(".row .event-info-is-virtual").show();
          
          function setPageName() {
             const pageName = "Open Water";
