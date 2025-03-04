@@ -3350,7 +3350,12 @@
       <script type="text/javascript" src="/event/js/validation-calendar-to-sanction-open-water.js"></script>
 
       <script type="text/javascript">
-        //  $("#event-name h3").click();
+         function setPageName() {
+            const pageName = "Open Water";
+            $(document).trigger("settingPageName", { data: pageName });
+         }
+
+         //  $("#event-name h3").click();
          // $("#event-information h3").click();
          $("#safetyPlan h3").click();
 
@@ -3362,14 +3367,7 @@
          $(".row .event-info-is-virtual").hide();
         //  $(".contact-group--head-ref").hide();
         //  $(".contact-group--safety-coordinator").hide();
-        //  $(".contact-group--host-type").hide();
-
-         
-         function setPageName() {
-            const pageName = "Open Water";
-            $(document).trigger("settingPageName", { data: pageName });
-         }
-     
+        //  $(".contact-group--host-type").hide();     
       </script>
    </body>
 </html>

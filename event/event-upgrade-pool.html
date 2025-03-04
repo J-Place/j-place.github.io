@@ -89,6 +89,12 @@
       <sergey-import src="site/footer_scripts" />
 
       <script>
+
+         function setPageName() {
+            const pageName = "Pool";
+            $(document).trigger("settingPageName", { data: pageName });
+         }
+
          // Set has data state on all sections
          $('#accordion').find('.collapse').parent().removeClass('isEdit');
          $('#accordion').find('.collapse').parent().addClass('hasData');

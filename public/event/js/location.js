@@ -593,9 +593,6 @@ $(document).ready(function() {
 
 
 
-
-
-
     function scrollToName() {
         $(document.documentElement).animate({
               scrollTop: $("#event-name").offset().top - 45

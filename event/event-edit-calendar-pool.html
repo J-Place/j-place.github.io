@@ -107,6 +107,12 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
       <sergey-import src="site/footer_scripts" />
       <script type="text/javascript">
+
+         function setPageName() {
+            const pageName = "Pool";
+            $(document).trigger("settingPageName", { data: pageName });
+         }
+
          // Open first section on this page
          $("#event-name h3").click();
          // Set has data state on all sections

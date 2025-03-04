@@ -3656,6 +3656,12 @@
          // Set has data state on all sections
          $('#accordion').find('.collapse').parent().removeClass('isEdit');
          $('#accordion').find('.collapse').parent().addClass('hasData');
+
+         function setPageName() {
+            const pageName = "Pool";
+            $(document).trigger("settingPageName", { data: pageName });
+         }
+
       </script>
 
       <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>

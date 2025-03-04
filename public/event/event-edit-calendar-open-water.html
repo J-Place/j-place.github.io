@@ -2782,23 +2782,6 @@
          $(termsSanctioned).hide();  
       }
    });
-
-   // Get page name to filter location lookup results
-   $(document).on("settingPageName", function(event, data) {
-      const currentPageName = data.data;
-      if (currentPageName == "Open Water") {
-         filterByOpenWater();
-      } else if (currentPageName == "Pool") {
-         filterByRange();
-         filterByCourse();
-      } else if (currentPageName === "Calendar") {
-         filterByRange();
-         filterByCourse();
-      } else {
-      }
-      alert("TEst");
-   });
-   setPageName();
 </script>
                            </div>
 
@@ -3315,22 +3298,21 @@
 
 </script>
 
+      <script type="text/javascript">
+         function setPageName() {
+            const pageName = "Open Water";
+            $(document).trigger("settingPageName", { data: pageName });
+         }     
+      </script>
+
       <script type="text/javascript" src="/event/js/input-values-open-water.js"></script>
 
       <script type="text/javascript">
          $("#event-name h3").click();
-
          $(".row .event-info-list-on-calendar").hide();
          $(".row .event-info-is-championship").hide();
          $(".row .event-info-is-virtual").show();
-
-         $("#agreeTerms").prop('checked', true);
-         
-         function setPageName() {
-            const pageName = "Open Water";
-            $(document).trigger("settingPageName", { data: pageName });
-         }
-     
+         $("#agreeTerms").prop('checked', true);     
       </script>
       
    </body>

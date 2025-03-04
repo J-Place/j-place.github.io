@@ -2360,23 +2360,6 @@
          $(termsSanctioned).hide();  
       }
    });
-
-   // Get page name to filter location lookup results
-   $(document).on("settingPageName", function(event, data) {
-      const currentPageName = data.data;
-      if (currentPageName == "Open Water") {
-         filterByOpenWater();
-      } else if (currentPageName == "Pool") {
-         filterByRange();
-         filterByCourse();
-      } else if (currentPageName === "Calendar") {
-         filterByRange();
-         filterByCourse();
-      } else {
-      }
-      alert("TEst");
-   });
-   setPageName();
 </script>
                            </div>
 
@@ -2894,6 +2877,12 @@
 
 </script>
       <script type="text/javascript">
+
+         function setPageName() {
+            const pageName = "Pool";
+            $(document).trigger("settingPageName", { data: pageName });
+         }
+
          // Open first section on this page
          $("#event-name h3").click();
          // Set has data state on all sections
