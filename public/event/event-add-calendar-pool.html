@@ -2253,9 +2253,9 @@
                                     <span class="checkbox__placeholder"></span>
                                 </div>
                                 <!-- I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming <a href="/content/privacy" target="_blank">Privacy Policy</a>. I understand that this membership is non-refundable, non-transferable, and expires on December 31, <span class="agree-terms--year">2025</span>. -->
-                                I agree that all information I am providing is factual.
+                                I agree that all information I'm providing is factual.
                             </label>
-                            <span class="help-block help-block--agreeTerms">Please agree to the terms in order to continue</span>
+                            <span class="help-block help-block--agreeTerms">Please agree to the terms</span>
                         </div>
                      </div>
 
@@ -2335,6 +2335,23 @@
          $(termsSanctioned).hide();  
       }
    });
+
+   // Get page name to filter location lookup results
+   $(document).on("settingPageName", function(event, data) {
+      const currentPageName = data.data;
+      if (currentPageName == "Open Water") {
+         filterByOpenWater();
+      } else if (currentPageName == "Pool") {
+         filterByRange();
+         filterByCourse();
+      } else if (currentPageName === "Calendar") {
+         filterByRange();
+         filterByCourse();
+      } else {
+      }
+      alert("TEst");
+   });
+   setPageName();
 </script>
 
                            </div>

@@ -67,7 +67,7 @@
                               <sergey-import src="event-sanction/03-contact-information-open-water" />                              
                               <sergey-import src="event-sanction/04-location-information-open-water" />
                               <sergey-import src="event-sanction/05-entry-information-open-water" />
-                              <sergey-import src="event-sanction/accept-submit" />
+                              <sergey-import src="event-sanction/accept-submit-calendar" />
                            </div>
 
                         </div>
@@ -90,12 +90,13 @@
          $(".contact-group--head-ref").hide();
          $(".contact-group--safety-coordinator").hide();
          $(".contact-group--host-type").hide();
-         
+
          function setPageName() {
             const pageName = "Open Water";
             $(document).trigger("settingPageName", { data: pageName });
          }
-     
+         setPageName();
+         
       </script>
    </body>
 </html>

@@ -6,7 +6,7 @@
 <html lang="en">
    <!--<![endif]-->
    <head>
-      <title>Upgrade Open Water Event</title>
+      <title>Upgrade Calendar Open Water</title>
       <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -2687,9 +2687,11 @@
          <div class="row">
             <div class="col-xs-12 col-sm-4">
                <div class="input-group upload-file safety-plan required">
+                  <!-- <span class="help-block file-type">Invalid file type</span> -->
+                  <!-- <span class="help-block no-data">Please upload a safety plan</span> -->
                   <label for="">USMS Safety Plan Application (PDF only)</label>
                   <span class="help-block file-type">Invalid file type</span>
-                  <span class="help-block no-data">Please upload a meet announcement</span>
+                  <span class="help-block no-data">Please upload a safety plan</span>
                   <div class="upload-summary">
                      <button type="button" class="event-document__remove-file" data-toggle="tooltip" title="" data-original-title="Remove document">
                         <i class="fa fa-times"></i>
@@ -2796,12 +2798,13 @@
                             <div class="input-group checkbox-group payment-agreement">
                                 <label class="checkbox-label" for="agreeTerms">
                                     <div class="checkbox-container">
-                                        <input name="agree-terms" type="checkbox" id="agreeTerms" onchange="">
+                                        <input name="agree-terms" type="checkbox" id="agreeTerms">
                                         <span class="checkbox__placeholder"></span>
                                     </div>
-                                    I agree that all information I am providing is factual.
+                                    <!-- I agree that all information I am providing is factual. -->
+                                    I agree that all information I am providing is factual. I have read the <a href="https://www.usms.org/events/event-sanction/event-sanction-criteria">sanction criteria</a>.
                                 </label>
-                                <span class="help-block help-block--agreeTerms">Please agree to the terms in order to continue</span>
+                                <span class="help-block help-block--agreeTerms">Please agree to the terms</span>
                             </div>
                         </div>
                     </div>
@@ -3343,13 +3346,20 @@
 
 </script>
 
+      <script type="text/javascript" src="/event/js/input-values-open-water.js"></script>
+      <script type="text/javascript" src="/event/js/validation-calendar-to-sanction-open-water.js"></script>
+
       <script type="text/javascript">
         //  $("#event-name h3").click();
-         $("#event-information h3").click();
+         // $("#event-information h3").click();
+         $("#safetyPlan h3").click();
 
+         $("#agreeTerms").prop('checked', false);
+
+         $(".upload-summary").hide();
          $(".row .event-info-list-on-calendar").show();
          $(".row .event-info-is-championship").show();
-         $(".row .event-info-is-virtual").show();
+         $(".row .event-info-is-virtual").hide();
         //  $(".contact-group--head-ref").hide();
         //  $(".contact-group--safety-coordinator").hide();
         //  $(".contact-group--host-type").hide();
@@ -3361,7 +3371,5 @@
          }
      
       </script>
-      <script type="text/javascript" src="/event/js/input-values-open-water.js"></script>
-      <script type="text/javascript" src="/event/js/validation-calendar-to-sanction-open-water.js"></script>
    </body>
 </html>

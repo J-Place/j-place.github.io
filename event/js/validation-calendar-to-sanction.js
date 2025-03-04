@@ -13,11 +13,11 @@ $("#selectEventLmsc").addClass('has-error');
 $(".help-block--timing-system").addClass('has-error');
 $("input[name='TransferReason']").addClass('has-error');
 
-$(".help-block--eventListOnCalendar").addClass('has-error');
-$("input[name='eventListOnCalendar']").addClass('has-error');
+// $(".help-block--eventListOnCalendar").addClass('has-error');
+// $("input[name='eventListOnCalendar']").addClass('has-error');
 
-$(".help-block--is-championship").addClass('has-error');
-$("input[name='isChampionship']").addClass('has-error');
+// $(".help-block--is-championship").addClass('has-error');
+// $("input[name='isChampionship']").addClass('has-error');
 
 $(".help-block--SelectHostType").addClass('has-error');
 $("#selectHostType").addClass('has-error');

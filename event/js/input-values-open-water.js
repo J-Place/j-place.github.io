@@ -111,7 +111,7 @@ $(document).ready(function() {
 
     // $("#submitSanction").prop('disabled', true);
 
-    $("#agreeTerms").prop('checked', true);
+    // $("#agreeTerms").prop('checked', true);
 
 });
 
