@@ -34,7 +34,9 @@ $(document).ready(function() {
         '#entryInfoWebsiteUrl',
         '#entryInfoOnlineEntriesUrl',
         '#entryInfoAttendancePrevious',
-        '#entryInfoAttendanceExpected'
+        '#entryInfoAttendanceExpected',
+        '#estimatedTempMin',
+        '#estimatedTempMax'
     ];
     const inputValues = [
         '2025 USMS Open Water National Championships', 
@@ -45,7 +47,9 @@ $(document).ready(function() {
         'https://www.usms.org/events/events/2025-usms-open-water-national-championships',
         'https://www.usms.org/events/events/2025-usms-open-water-national-championships',
         '217',
-        '250'
+        '250',
+        '72',
+        '77'
     ];
     setInputValues(inputs, inputValues);
 
@@ -85,7 +89,7 @@ $(document).ready(function() {
     $(".venue__list").show();
     $(".venue__list--item").show();
     // $("#timingAutomatic").prop('checked', true);
-    $("#eventListOnCalendarYes").prop('checked', true);
+    // $("#eventListOnCalendarYes").prop('checked', true);
     $("#eventClassificationSanctioned").prop('checked', true);
     $("#agree").prop('checked', true);
     $(".contact-info__host-type--container").hide();

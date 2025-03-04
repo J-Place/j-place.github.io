@@ -6,7 +6,7 @@
 <html lang="en">
    <!--<![endif]-->
    <head>
-      <title>Add Calendar Open Water</title>
+      <title>Upgrade Open Water Event</title>
       <sergey-import src="site/head_meta" />
       <sergey-import src="site/head_js" />
       <sergey-import src="site/head_css" />
@@ -48,7 +48,7 @@
                      <div class="row">
                         <div class="col-xs-12">
                            <header>
-                              <h1>Add an Open Water Event Calendar Listing</h1>
+                              <h1>View or Edit an Open Water Event</h1>
                            </header>
                         </div>
                      </div>
@@ -67,7 +67,8 @@
                               <sergey-import src="event-sanction/03-contact-information-open-water" />                              
                               <sergey-import src="event-sanction/04-location-information-open-water" />
                               <sergey-import src="event-sanction/05-entry-information-open-water" />
-                              <sergey-import src="event-sanction/accept-submit" />
+                              <sergey-import src="event-sanction/06-safety-plan" />
+                              <sergey-import src="event-sanction/accept-submit-open-water" />
                            </div>
 
                         </div>
@@ -75,21 +76,23 @@
                   </div>
                </div>
             </div>
-         </main>
+         </main> 
          <sergey-import src="foundation/footer" />
       </div>
 
       <sergey-import src="site/footer_scripts" />
 
       <script type="text/javascript">
-         $("#event-name h3").click();
+        //  $("#event-name h3").click();
+         $("#event-information h3").click();
 
-         $(".row .event-info-list-on-calendar").hide();
-         $(".row .event-info-is-championship").hide();
+        //  $(".row .event-info-list-on-calendar").hide();
+        //  $(".row .event-info-is-championship").hide();
          $(".row .event-info-is-virtual").show();
-         $(".contact-group--head-ref").hide();
-         $(".contact-group--safety-coordinator").hide();
-         $(".contact-group--host-type").hide();
+        //  $(".contact-group--head-ref").hide();
+        //  $(".contact-group--safety-coordinator").hide();
+        //  $(".contact-group--host-type").hide();
+
          
          function setPageName() {
             const pageName = "Open Water";
@@ -97,5 +100,7 @@
          }
      
       </script>
+      <script type="text/javascript" src="/event/js/input-values-open-water.js"></script>
+      <script type="text/javascript" src="/event/js/validation-calendar-to-sanction-open-water.js"></script>
    </body>
 </html>

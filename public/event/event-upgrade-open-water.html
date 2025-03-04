@@ -6,7 +6,7 @@
 <html lang="en">
    <!--<![endif]-->
    <head>
-      <title>Add Calendar Open Water</title>
+      <title>Upgrade Open Water Event</title>
       <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -324,7 +324,7 @@
                      <div class="row">
                         <div class="col-xs-12">
                            <header>
-                              <h1>Add an Open Water Event Calendar Listing</h1>
+                              <h1>View or Edit an Open Water Event</h1>
                            </header>
                         </div>
                      </div>
@@ -2665,64 +2665,155 @@
    });
 
 </script>
-                              <form id="form-accept-submit">
-   <div class="section section-accept-submit" id="accept-submit">
-      <h3 class="section__header" data-target="#accept-submit__content" data-toggle="collapseXXX" aria-expanded="false" aria-controls="accept-submit__content">
-         <!-- <span class="section__number"></span> -->
-         Accept Terms
+                              <form id="form-meet-announcement">
+   <div class="section section-meet-announcement" id="safetyPlan">
+      <h3 class="section__header" data-target="#meet-announcement__content" data-toggle="collapse" aria-expanded="false" aria-controls="meet-announcement__content">
+         <span class="section__number">6</span>Safety Plan
       </h3>
-      <!-- <span class="section__edit">
-         <button class="section__edit-btn section__edit-btn--name" type="button"></button>
-      </span> -->
-      <div class="section__content collapseXXX in" id="accept-submit__content" data-parent="#accordion">
-            <div class="row">
-               <div class="col-xs-12">
-                  <div class="card liability submit">
-                     <!-- <h3 class="liability___form-header text-primary m-b-30">Liability Waiver</h3> -->
-                     <div class="html-container">
-                        
-                        <sergey-import src="event-sanction/terms-recognizedXXX" />
-                     </div>
-
-                     <div class="form-group agree-terms">
-                        <div class="input-group checkbox-group payment-agreement">
-                            <label class="checkbox-label" for="agreeTerms">
-                                <div class="checkbox-container">
-                                    <input name="agree-terms" type="checkbox" id="agreeTerms" onchange="">
-                                    <span class="checkbox__placeholder"></span>
-                                </div>
-                                I agree that all information I am providing is factual. I have read the <a href="https://www.usms.org/events/event-sanction/event-sanction-criteria">sanction criteria</a>.
-                            </label>
-                            <span class="help-block help-block--agreeTerms">Please agree to the terms in order to continue</span>
-                        </div>
-                     </div>
+      <div class="section__content collapse" id="meet-announcement__content" data-parent="#accordion">
+         <div class="row">
+            <div class="col-xs-12">
+               <p>Safety plan summary text ...</p>
+               <br />
+               <a href="https://www.usms.org/admin/lmschb/owgto_safety_plan_application.docx" class="btn-link">Download the USMS Safety Plan Application Fillable Doc</a>
+               <br />
+               <br />
+               <a href="https://www.usms.org/volunteer-central/guide-to-local-operations/event-management/open-water-event-management/open-water-guide-to-event-operations" class="btn-link">Open Water Information</a>
+               <br />
+               <br />
+               <br />
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-xs-12 col-sm-4">
+               <div class="input-group upload-file safety-plan required">
+                  <label for="">USMS Safety Plan Application (PDF only)</label>
+                  <span class="help-block file-type">Invalid file type</span>
+                  <span class="help-block no-data">Please upload a meet announcement</span>
+                  <div class="upload-summary">
+                     <button type="button" class="event-document__remove-file" data-toggle="tooltip" title="" data-original-title="Remove document">
+                        <i class="fa fa-times"></i>
+                     </button>
+                     Storedfilename.pdf
+                  </div>
+                  <div class="upload-box upload-box--file">
+                     <input type="file" data-file-size="3584000" name="safety-plan[]" id="uploadMeetAnnouncement" class="inputfile inputfile-safety-plan" data-multiple-caption="{count} files selected" accept="application/pdf" />
+                     <label for="uploadMeetAnnouncement">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path fill="#FFF" d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
+                        <span class="file-stored">Choose File</span>
+                     </label>
                   </div>
                </div>
             </div>
-            
-            <div class="modal fade" id="modalID" tabindex="-1" role="dialog">
-                  <div class="modal-dialog" role="document">
-                     <div class="modal-content">
-                        <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                              <h4 class="modal-title"></h4>
-                        </div>
-                        <div class="modal-body">
-                              <p>The abbreviation you have selected is already in use by another club. Please pick another one.</p>
-                        </div>
-                     </div>
-                  </div>
-            </div>
+         </div>
+         <div class="row">
+            <div class="col-xs-12 col-sm-4">
+                <div class="input-group upload-file course-map required">
+                   <label for="">Course Map (PDF only)</label>
+                   <span class="help-block file-type">Invalid file type</span>
+                   <span class="help-block no-data">Please upload a course map</span>
+                   <div class="upload-summary">
+                      <button type="button" class="event-document__remove-file" data-toggle="tooltip" title="" data-original-title="Remove document">
+                         <i class="fa fa-times"></i>
+                      </button>
+                      Storedfilename.pdf
+                   </div>
+                   <div class="upload-box upload-box--file">
+                      <input type="file" data-file-size="3584000" name="course-map[]" id="uploadMeetAnnouncement" class="inputfile inputfile-course-map" data-multiple-caption="{count} files selected" accept="application/pdf" />
+                      <label for="uploadMeetAnnouncement">
+                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path fill="#FFF" d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
+                         <span class="file-stored">Choose File</span>
+                      </label>
+                   </div>
+                </div>
+             </div>
+ 
 
-            <div class="row">
-                  <div class="section__controls">
-                     <button class="btn save-section" id="submitSanction" type="button">Save & Finish</button>
+
+        </div>
+         <!-- <div class="modal fade" id="modalID" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                     <h4 class="modal-title"></h4>
                   </div>
+                  <div class="modal-body">
+                     <p>The abbreviation you have selected is already in use by another club. Please pick another one.</p>
+                  </div>
+               </div>
+            </div>
+         </div> -->
+         <div class="row">
+            <div class="section__controls">
+               <button class="btn save-section" id="saveSafetyPlan" type="button" disabled>Save & Continue</button>
             </div>
          </div>
-   
-      </div>
-   <!-- </div> -->
+      </div>    
+   </div>
+ </form>
+ <script>
+   var sectionId = ".isEdit #safetyPlane";
+   var sectionInputs = sectionId + " input";
+//    var sectionSelects = sectionId + " select";
+//    var sectionTextarea = sectionId + " textarea";
+   $(sectionInputs).click( function() {
+      $("#saveSafetyPlan").prop('disabled', false);
+   });
+//    $(sectionSelects).on("change", function() {
+//       console.log("select");
+//       $("#saveSafetyPlan").prop('disabled', false);
+//    });
+
+   $("#saveSafetyPlan").click( function() {
+      $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+      $('#accordion').find('.collapse.in').parent().addClass('hasData');
+      $("#meetAnnouncement h3").click();
+      $(document.documentElement).animate({
+         scrollTop: $("#meetAnnouncement").offset().top - 45
+      }, 100);
+      $(".upload-summary").show();
+   });
+
+   $("#uploadMeetAnnouncement").click( function() {
+      $("#saveSafetyPlan").prop('disabled', false);
+      $("#meetAnnouncement .upload-summary").show();
+      $("#meetAnnouncement .file-stored").text('Replace File');
+   });
+
+</script>
+                              <form id="form-accept-submit">
+   <div class="section section-accept-submit" id="accept-submit">
+        <h3 class="section__header" data-target="#accept-submit__content" data-toggle="collapseXXX" aria-expanded="false" aria-controls="accept-submit__content">
+            <!-- <span class="section__number"></span> -->
+            Accept Terms
+        </h3>
+        <div class="section__content collapseXXX in" id="accept-submit__content" data-parent="#accordion">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="card liability submit">
+                        <div class="form-group agree-terms">
+                            <div class="input-group checkbox-group payment-agreement">
+                                <label class="checkbox-label" for="agreeTerms">
+                                    <div class="checkbox-container">
+                                        <input name="agree-terms" type="checkbox" id="agreeTerms" onchange="">
+                                        <span class="checkbox__placeholder"></span>
+                                    </div>
+                                    I agree that all information I am providing is factual.
+                                </label>
+                                <span class="help-block help-block--agreeTerms">Please agree to the terms in order to continue</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+            <div class="row">
+                <div class="section__controls">
+                    <button class="btn save-section" id="submitSanction" type="button">Save & Finish</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </form>
 <script>
    let termsSanctioned = $(".terms-sanctioned");
@@ -2744,7 +2835,7 @@
                   </div>
                </div>
             </div>
-         </main>
+         </main> 
          <footer>
    <div id="footerOverlay">
       <div class="container-fluid">
@@ -3253,14 +3344,16 @@
 </script>
 
       <script type="text/javascript">
-         $("#event-name h3").click();
+        //  $("#event-name h3").click();
+         $("#event-information h3").click();
 
-         $(".row .event-info-list-on-calendar").hide();
-         $(".row .event-info-is-championship").hide();
+        //  $(".row .event-info-list-on-calendar").hide();
+        //  $(".row .event-info-is-championship").hide();
          $(".row .event-info-is-virtual").show();
-         $(".contact-group--head-ref").hide();
-         $(".contact-group--safety-coordinator").hide();
-         $(".contact-group--host-type").hide();
+        //  $(".contact-group--head-ref").hide();
+        //  $(".contact-group--safety-coordinator").hide();
+        //  $(".contact-group--host-type").hide();
+
          
          function setPageName() {
             const pageName = "Open Water";
@@ -3268,5 +3361,7 @@
          }
      
       </script>
+      <script type="text/javascript" src="/event/js/input-values-open-water.js"></script>
+      <script type="text/javascript" src="/event/js/validation-calendar-to-sanction-open-water.js"></script>
    </body>
 </html>
