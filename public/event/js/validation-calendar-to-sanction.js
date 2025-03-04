@@ -2,6 +2,8 @@
 // $("#event-type").removeClass('isEdit');
 // $("#event-type").addClass('hasData');
 
+$(".help-block--agreeTerms").addClass("has-error");
+
 $(".help-block--SelectEventClass").addClass('has-error');
 $("#selectEventClass").addClass('has-error');
 
