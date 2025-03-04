@@ -1,10 +1,3 @@
-/* global showLoadingOverlay, validateField, setSectionInputStatus,
-   hideLoadingOverlay, FormData, getUrlParams, showErrorModal,
-   setInputStatus, compareSections, showSaveModal,
-   validateSectionName, validateGoldClubs, validateSectionDetails, validateSectionContact,
-   getLocations, regionalClub, showLocationInputs, handleAddLocation
-   Accept, FindPos */
-/* eslint wrap-iife:0 */
 function hideAgreementError() {
   document.querySelector('.help-block--agreeTerms').classList.remove('has-error');
 }
