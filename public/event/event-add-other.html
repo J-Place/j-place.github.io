@@ -431,69 +431,62 @@
       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
       <div class="section__content collapse" id="event-info__content" data-parent="#accordion">
 
-         <!-- Event Classification Radios -->
-<div class="row form-group">
-   <div class="col-xs-12">
-         <div class="input-group radio-group event-info-classification">
-            <div class="input-group-header radio-group-header required">
-               <label class="icon-help-label" for="tooltip">
-                  Event Classification
-                  <span class="icon-help" data-toggle="tooltip" data-placement="top" title="A USMS Sanction requires that every participant is a USMS member. A USMS Recognition allows for some participants to not be a USMS member, but still allows for a USMS member's results to count as an official time." data-container="body" data-original-title=""></span>
-               </label>
+        <!-- Course -->
+<div class="row form-group required">
+    <div class="col-xs-12 col-sm-8 col-md-5">
+        <div class="input-group checkbox-group event-distance">
+            <div class="input-group-header">
+                Event Distance
+                <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="If you have more than one race in your event, please select all of the race distances that apply"></span>
             </div>
-            <span class="help-block help-block--eventClassification">Please chose an event classification</span>
-            <label class="radio-label radio-label--inline" for="eventClassificationSanctioned">
-               <span class="radio-container">
-                     <input type="radio" name="eventClassification" id="eventClassificationSanctioned" value="sanctioned">
-                     <span class="radio__placeholder"></span>
-               </span>
-               Sanctioned
+            <label class="checkbox-label" for="lessThan1">
+                <div class="checkbox-container">
+                    <input type="checkbox" name="lessThan1" id="lessThan1" value="true"><span class="checkbox__placeholder"></span>
+                </div>
+                1 Mile and Under
             </label>
-            <label class="radio-label radio-label--inline" for="eventClassificationRecognized">
-               <span class="radio-container">
-                     <input type="radio" name="eventClassification" id="eventClassificationRecognized" value="recognized">
-                     <span class="radio__placeholder"></span>
-               </span>
-               Recognized
+            <label class="checkbox-label" for="1-3Miles">
+                <div class="checkbox-container">
+                    <input type="checkbox" name="1-3Miles" id="1-3Miles" value="true"><span class="checkbox__placeholder"></span>
+                </div>
+                Over 1 Mile to 3 Miles
             </label>
-         </div>
-   </div>
+            <label class="checkbox-label" for="3-6Miles">
+                <div class="checkbox-container">
+                    <input type="checkbox" name="3-6Miles" id="3-6Miles" value="true"><span class="checkbox__placeholder"></span>
+                </div>
+                Over 3 Miles to 6 Miles
+            </label>
+            <label class="checkbox-label" for="6-10Miles">
+                <div class="checkbox-container">
+                    <input type="checkbox" name="6-10Miles" id="6-10Miles" value="true"><span class="checkbox__placeholder"></span>
+                </div>
+                Over 6 Miles to 9 Miles
+            </label>
+            <label class="checkbox-label" for="moreThan10">
+                <div class="checkbox-container">
+                    <input type="checkbox" name="moreThan10" id="moreThan10" value="true"><span class="checkbox__placeholder"></span>
+                </div>
+                Over 9 Miles
+            </label>
+        </div>
+    </div>
 </div>
-         <!-- LMSC -->
-<div class="row form-group">
-   <div class="col-xs-12 col-sm-8 col-md-5">
-      <div class="input-group event-info-lmsc required">
-         <label for="SelectEventLmsc">
-            LMSC
-            <span class="icon-help" data-toggle="tooltip" data-placement="top" title="Select the LMSC where the event is taking place." data-container="body" data-original-title=""></span>
-         </label>
-         <select name="SelectEventLmsc" class="form-control" id="selectEventLmsc" required="True">                                                            
-            <option value="" disabled selected>Select an LMSC</option>
-            <option value="FL">Florida</option>
-            <option value="GA">Georgia</option>
-         </select>
-            <span class="help-block help-block--SelectEventLmsc">LMSC information is required.</span>
-      </div>
-   </div>
-</div>
-         <!-- Course -->
-<div class="row form-group">
-   <div class="col-xs-12 col-sm-8 col-md-5">
-      <div class="input-group select-group event-info-course required">
-         <label for="SelectEventCourse">
-            Event Course
-         </label>
-         <select name="SelectEventCourse" class="form-control" id="selectEventCourse" required="True">                                                            
-            <option value="{Sitecore ID}" disabled selected>Select an Event Course</option>
-            <option value="SCY">Short Course Yards</option>
-            <option value="SCM">Short Course Meters</option>
-            <option value="LCM">Long Course Meters</option>
-            <option value="Other">Other</option>
-         </select>
-         <span class="help-block help-block--SelectEventCourse">Event course is required.</span>
-      </div>
-   </div>
-</div>
+
+
+
+<!-- Under 1 mile 
+
+1 – 3 miles 
+
+3 – 6 miles 
+
+6 – 10 miles 
+
+10+ miles  -->
+         
+         
+         
          <!-- Start and End Dates -->
 <div class="row start-end-dates-group">
    <div class="col-xs-12 col-lg-4">

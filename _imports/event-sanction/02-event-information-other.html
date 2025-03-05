@@ -1,0 +1,58 @@
+<form id="form-event-info">
+   <div class="section section-event-info" id="event-information">
+      <h3 class="section__header" data-target="#event-info__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-info__content">
+         <span class="section__number">2</span>Event Details
+      </h3>
+      <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
+      <div class="section__content collapse" id="event-info__content" data-parent="#accordion">
+
+        <sergey-import src="event-sanction/form-group-event-distance" />
+         <sergey-import src="event-sanction/form-group-event-classificationXXX" />
+         <sergey-import src="event-sanction/form-group-lmscXXX" />
+         <sergey-import src="event-sanction/form-group-event-courseXXX" />
+         <sergey-import src="event-sanction/form-group-start-end-dates" />
+         <sergey-import src="event-sanction/form-group-event-description" />
+         <sergey-import src="event-sanction/form-group-event-image" />
+         <sergey-import src="event-sanction/form-group-list-on-calendar" />
+         <sergey-import src="event-sanction/form-group-championship" />
+         <sergey-import src="event-sanction/form-group-virtual" />
+            
+         <!-- Save Section -->
+         <div class="row form-group">
+               <div class="section__controls">
+                  <button class="btn save-section" id="saveEventInfo" type="button" disabled>Save &amp; Continue</button>
+               </div>
+         </div>
+      </div>
+   </div>
+</form>
+
+<script>
+   // var sectionId = "#event-information";
+   // var sectionInputs = sectionId + " input";
+   // var sectionSelects = sectionId + " select";
+   // var sectionTextarea = sectionId + " textarea";
+   // var sectionBtn = "#saveEventInfo";
+   
+   $("#event-information input").click( function() {
+      $("#saveEventInfo").prop('disabled', false);
+   });
+   // $(sectionSelects).on("change", function() {
+   //    $(sectionBtn).prop('disabled', false);
+   // });
+   // $(sectionTextarea).focus( function() {
+   //     $(sectionBtn).prop('disabled', false);
+   // });
+
+   $("#EventImage").click( function() {
+      $("#event-information .file-stored").text('Replace File');
+   });
+
+   $("#saveEventInfo").click( function() {
+      $("#event-information").addClass('hasData');
+      $("#contact-information h3").click();
+      $(document.documentElement).animate({
+         scrollTop: $("#contact-information").offset().top - 45
+      }, 100);
+   });
+</script>
