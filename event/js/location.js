@@ -427,6 +427,67 @@ $(document).ready(function() {
         $(".list.list--lookup.locations").hide();
     }
 
+    function showLocationLookup() {
+        $("#location-information__content .list-control").show();
+    }
+
+    function hideLocationLookup() {
+        $("#location-information__content .list-control").hide();
+    }
+
+    function resetLocationInputs() {
+        hideLocationLookup();
+        hideLocationNameBtn();
+        $(lookupByLocationList).hide();
+        resetAddNewLocation();
+    }
+
+    function showLocationNameBtn() {
+        $(lookupByNameConfirm).css("height","70px");
+        $(lookupByNameConfirm).css("opacity","1");
+    }
+
+    function hideLocationNameBtn() {
+        $(lookupByNameConfirm).css("height","0");
+        $(lookupByNameConfirm).css("opacity","0");
+    }
+
+    function resetAddNewLocation() {
+        $(addNewLocationForm).hide();
+        $(addNewPoolForm).hide();
+        $(addNewConfigurationForm).hide();
+        $(cancelAddLocationBtn).hide();
+        showAddNewLocationContainer();
+        $(".location-header").show();
+        $(addLocationBtn).show();
+    }
+
+    function showAddNewLocationContainer() {
+        $(".location-info__add-new-location--container").show();
+    }
+
+    function hideAddNewLocationContainer() {
+        $(".location-info__add-new-location--container").hide();
+    }
+
+
+
+    $("#confirmWaterFrontPark").click( function() {
+        confirmConfiguration();
+        $(".list-item-open-water").show();
+        $(".venue__list").show();
+        $(".venue__list--item.selected").show();
+        $(".venue__list--item.selected .venue-name").show();
+        $(".venue__list--item.selected .venue-type").show();
+        scrollTopSection();
+        hideListControlChildren();
+        $(".list.locations").removeClass("edit-list");
+        $(".location-name .list-item__edit").show();
+        $(".location-name .list-item__save").hide();
+        $(".location-name .list-item__delete").hide();
+    });
+
+
     function filterByRange() {
         $(".location-column .list-item").hide();
         if ($($("#search-filter__range")).val() === '1') {
@@ -506,66 +567,6 @@ $(document).ready(function() {
         // }
     }
 
-    function showLocationLookup() {
-        $("#location-information__content .list-control").show();
-    }
-
-    function hideLocationLookup() {
-        $("#location-information__content .list-control").hide();
-    }
-
-    function resetLocationInputs() {
-        hideLocationLookup();
-        hideLocationNameBtn();
-        $(lookupByLocationList).hide();
-        resetAddNewLocation();
-    }
-
-    function showLocationNameBtn() {
-        $(lookupByNameConfirm).css("height","70px");
-        $(lookupByNameConfirm).css("opacity","1");
-    }
-
-    function hideLocationNameBtn() {
-        $(lookupByNameConfirm).css("height","0");
-        $(lookupByNameConfirm).css("opacity","0");
-    }
-
-    function resetAddNewLocation() {
-        $(addNewLocationForm).hide();
-        $(addNewPoolForm).hide();
-        $(addNewConfigurationForm).hide();
-        $(cancelAddLocationBtn).hide();
-        showAddNewLocationContainer();
-        $(".location-header").show();
-        $(addLocationBtn).show();
-    }
-
-    function showAddNewLocationContainer() {
-        $(".location-info__add-new-location--container").show();
-    }
-
-    function hideAddNewLocationContainer() {
-        $(".location-info__add-new-location--container").hide();
-    }
-
-
-
-    $("#confirmWaterFrontPark").click( function() {
-        confirmConfiguration();
-        $(".list-item-open-water").show();
-        $(".venue__list").show();
-        $(".venue__list--item.selected").show();
-        $(".venue__list--item.selected .venue-name").show();
-        $(".venue__list--item.selected .venue-type").show();
-        scrollTopSection();
-        hideListControlChildren();
-        $(".list.locations").removeClass("edit-list");
-        $(".location-name .list-item__edit").show();
-        $(".location-name .list-item__save").hide();
-        $(".location-name .list-item__delete").hide();
-    });
-
     function filterByOpenWater() {
         $(".list--lookup.locations").show();
         $(".list--lookup.locations .list-item").hide();
@@ -575,6 +576,7 @@ $(document).ready(function() {
     // Get page name to filter location lookup results
     $(document).on("settingPageName", function(event, data) {
         const currentPageName = data.data;
+        // alert(currentPageName);
         if (currentPageName == "Open Water") {
             filterByOpenWater();
          } else if (currentPageName == "Pool") {
@@ -583,6 +585,10 @@ $(document).ready(function() {
         } else if (currentPageName === "Calendar") {
             filterByRange();
             filterByCourse();
+        } else if (currentPageName === "Other") {
+            filterByOpenWater();
+            // filterByRange();
+            // filterByCourse();
         } else {
         }
         // console.log(currentPageName);
