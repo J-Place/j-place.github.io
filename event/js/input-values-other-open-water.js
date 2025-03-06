@@ -26,6 +26,11 @@ function setSelectValues(selects, values) {
 
 $(document).ready(function() {
 
+        ///////////////////////////////////////////////////// Checkboxes
+    // $("#lessThan1").prop("checked", true);
+    $("#1-3Miles").prop("checked", true);
+    $("#3-6Miles").prop("checked", true);
+
     ///////////////////////////////////////////////////// Text Inputs
     const inputs = [
         '#eventInfoName', 
@@ -40,7 +45,7 @@ $(document).ready(function() {
     ];
     const inputValues = [
         "Lucky's Lake Swim", 
-        'The 22nd edition of the World Aquatics Championships will take place from 11 July – 3 August 2025 in Singapore. Over 2,500 athletes are expected to participate at these World Aquatics Championships, representing World Aquatics’ 210 national member federations across the six aquatic sports: Swimming, Water Polo, Diving, Artistic Swimming, Open Water Swimming and High Diving',
+        "Founded in 1989, Lucky's Lake Swim is a daily 1 kilometer open water swim hosted started by Lucky Meisenheimer at his home in Orlando, Florida.",
         '07/04/25',
         '07/11/25',
         '08/03/25',
