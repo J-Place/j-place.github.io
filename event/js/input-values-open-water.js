@@ -1,7 +1,3 @@
-// $(".section-event-info h3").click();
-$('input[name="EventType"][value="open-water"]').prop('checked', true);
-$('input[name="EventType"]').prop('disabled', true);
-
 function setInputValues(elements, values) {
     if (elements.length !== values.length) {
       console.error('The number of elements does not match the number of values.');
@@ -23,6 +19,10 @@ function setSelectValues(selects, values) {
 }
 
 $(document).ready(function() {
+
+    // $(".section-event-info h3").click();
+    $('input[name="EventType"][value="open-water"]').prop('checked', true);
+    $('input[name="EventType"]').prop('disabled', true);
 
     ///////////////////////////////////////////////////// Text Inputs
     const inputs = [

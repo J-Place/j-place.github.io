@@ -3,6 +3,7 @@ $('input[name="EventType"][value="open-water"]').prop('checked', true);
 $('input[name="EventType"]').prop('disabled', true);
 $("#isVirtualNo").prop('checked', true);
 $("#isClinicNo").prop('checked', true);
+$("#agreeTerms").prop('checked', true);
 
 function setInputValues(elements, values) {
     if (elements.length !== values.length) {
@@ -91,8 +92,6 @@ $(document).ready(function() {
     $(".venue__list--item:first-of-type").show();
     $(".venue__list--item:first-of-type .configuration-title").hide();
     $(".venue__list--item:first-of-type .configuration-title:last-of-type").show();
-
-    $("#agreeTerms").prop('checked', true);
 
 });
 
