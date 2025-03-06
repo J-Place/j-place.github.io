@@ -585,7 +585,7 @@ $(document).ready(function() {
         } else if (currentPageName === "Calendar") {
             filterByRange();
             filterByCourse();
-        } else if (currentPageName === "Other") {
+        } else if (currentPageName === "Other Open Water") {
             filterByOpenWater();
             // filterByRange();
             // filterByCourse();

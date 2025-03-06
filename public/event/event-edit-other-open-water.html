@@ -6,7 +6,7 @@
 <html lang="en">
    <!--<![endif]-->
    <head>
-      <title>Add Other Pool</title>
+      <title>Edit Other Open Water</title>
       <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -484,9 +484,6 @@
 6 – 10 miles 
 
 10+ miles  -->
-         
-         
-         
          <!-- Start and End Dates -->
 <div class="row start-end-dates-group">
    <div class="col-xs-12 col-lg-4">
@@ -671,17 +668,17 @@
                     <span class="icon-help" data-toggle="tooltip" data-placement="top" title="A clinic does not have a competition involved with it. It is a gathering where demonstration or instruction is provided." data-container="body" data-original-title=""></span>
                 </label>
             </div>
-            <span class="help-block help-block--isVirtual">Please make a selection</span>
-            <label class="radio-label radio-label--inline" for="isVirtualYes">
+            <span class="help-block help-block--isClinic">Please make a selection</span>
+            <label class="radio-label radio-label--inline" for="isClinicYes">
                 <span class="radio-container">
-                    <input type="radio" name="isVirtual" id="isVirtualYes" value="true">
+                    <input type="radio" name="isClinic" id="isClinicYes" value="true">
                     <span class="radio__placeholder"></span>
                 </span>
                 Yes
             </label>
-            <label class="radio-label radio-label--inline" for="isVirtualNo">
+            <label class="radio-label radio-label--inline" for="isClinicNo">
                 <span class="radio-container">
-                    <input type="radio" name="isVirtual" id="isVirtualNo" value="false" checked>
+                    <input type="radio" name="isClinic" id="isClinicNo" value="false" checked>
                     <span class="radio__placeholder"></span>
                 </span>
                 No
@@ -690,12 +687,12 @@
     </div>
 </div>
 <script>
-    $("#isVirtualYes").click( function() {
+    $("#isClinicYes").click( function() {
         if ($('.timing-system-group').length) {
             $('.timing-system-group').hide();
         }
     });
-    $("#isVirtualNo").click( function() {
+    $("#isClinicNo").click( function() {
         $('.timing-system-group').show();
     });
 </script>
@@ -1309,6 +1306,18 @@
         $(".list-item").removeClass("list-item--fade-out");
         $('.list__container').removeClass('list__container--modified');
     });
+
+    // Get page name to filter location lookup results
+    // $(document).on("settingPageName", function(event, data) {
+    //     const currentPageName = data.data;
+    //     if (currentPageName == "Open Water") {
+    //         // do something if page is open water
+    //     } else {
+    //     }
+    //     // console.log(currentPageName);
+    // });
+    // setPageName();
+
 </script>                              
                               <form id="form-location-info">
    <div class="section section-location-information" id="location-information">
@@ -2859,10 +2868,11 @@
          $("#event-name h3").click();
 
          function setPageName() {
-            const pageName = "Other";
+            const pageName = "Other Open Water";
             $(document).trigger("settingPageName", { data: pageName });
          }
          
       </script>
+      <script type="text/javascript" src="/event/js/input-values-other-open-water.js"></script>
    </body>
 </html>
