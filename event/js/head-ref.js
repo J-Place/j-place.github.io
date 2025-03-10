@@ -171,11 +171,15 @@ function closeHeadRefSection() {
 }
 
 function disableHeadRefBtn() {
-    $("#addHeadRef").prop('disabled', true);
+    if ($("#addHeadRef").length) {
+        $("#addHeadRef").prop('disabled', true);
+    }
 }
 
 function enableHeadRefBtn() {
-    $("#addHeadRef").prop('disabled', false);
+    if ($("#addHeadRef").length) {
+        $("#addHeadRef").prop('disabled', false);
+    }
 }
 
 function openLookupRef() {

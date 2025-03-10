@@ -67,20 +67,27 @@ $(document).ready(function() {
     $("#contactTypeEventDirectorCurrent").click();
     $("#confirmCurrentEventDirector").click();
     $("#eventDirectorPrivacyName").prop('checked', true);
+
     $("#location-information__content .list-control").hide();
     $(".location-info__add-new-location--container").hide();
+
+    $(".contact-info__event-director-type-form").hide();  // Hide the Event Director inputs
+
     $(".list--lookup.locations").hide();
     $("#location-information .row.locations").show();
     $(".list-item-existing").show();
-    $("#timingAutomatic").prop('checked', true);
+
+    // $("#timingAutomatic").prop('checked', true);
     $("#eventListOnCalendarYes").prop('checked', true);
-    $("#eventClassificationSanctioned").prop('checked', true);
+    // $("#eventClassificationSanctioned").prop('checked', true);
     $("#agree").prop('checked', true);
+
     $(".contact-info__host-type--container").hide();
     $(".contact-information__event-host--list").show();
     $(".contact-list__event-host--header").show();
-    $(".list-item--organization-new").parent().show();
-    $(".list-item--organization-new").show();
+
+    // $(".list-item--organization-new").parent().show();
+    // $(".list-item--organization-new").show();
 
     // Show only the selected pool configuration
     $(".venue__list--item").hide();

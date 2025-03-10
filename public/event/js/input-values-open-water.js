@@ -81,9 +81,11 @@ $(document).ready(function() {
     $("#contactTypeEventDirectorCurrent").click();
     $("#confirmCurrentEventDirector").click();
     $("#eventDirectorPrivacyName").prop('checked', true);
+
     $("#location-information__content .list-control").hide();
     $(".location-info__add-new-location--container").hide();
     $(".list--lookup.locations").hide();
+
     $("#location-information .row.locations").show();
     $(".list-item-open-water").show();
     $(".venue__list").show();
@@ -112,6 +114,8 @@ $(document).ready(function() {
     // $("#submitSanction").prop('disabled', true);
 
     // $("#agreeTerms").prop('checked', true);
+
+    
 
 });
 

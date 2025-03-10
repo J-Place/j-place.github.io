@@ -36,7 +36,7 @@
                                     <a class="breadcrumb__link" href="/public/event/event-dashboard.html">Event Central<i class="fa fa-chevron-right"></i></a>
                                  </li>
                               </ul>
-                              <span class="breadcrumb__title text-capitalize">Add Event</span>
+                              <span class="breadcrumb__title text-capitalize">Edit Event</span>
                            </div>
                         </div>
                      </div>
@@ -48,7 +48,7 @@
                      <div class="row">
                         <div class="col-xs-12">
                            <header>
-                              <h1>Add Other Event</h1>
+                              <h1>Edit Other Pool Event</h1>
                            </header>
                         </div>
                      </div>
@@ -64,7 +64,7 @@
                            <div class="accordion-group">
                               <sergey-import src="event-sanction/01-event-name" />
                               <sergey-import src="event-sanction/02-event-information-other-pool" />
-                              <sergey-import src="event-sanction/03-contact-information-other" />                              
+                              <sergey-import src="event-sanction/03-contact-information-other" />
                               <sergey-import src="event-sanction/04-location-information-open-water" />
                               <sergey-import src="event-sanction/05-entry-information-other" />
                               <sergey-import src="event-sanction/accept-submit-calendar" />
@@ -86,8 +86,13 @@
          function setPageName() {
             const pageName = "Other Pool";
             $(document).trigger("settingPageName", { data: pageName });
-         }         
+         }
+         $(".list-item--club").parent().show();
       </script>
+      <script type="text/javascript" src="/event/js/event-director.js"></script>
+      <script type="text/javascript" src="/event/js/head-ref.js"></script>
+      <script type="text/javascript" src="/event/js/safety-coordinator.js"></script>
+      <script type="text/javascript" src="/event/js/event-host.js"></script>
       <script type="text/javascript" src="/event/js/input-values-other-pool.js"></script>
    </body>
 </html>

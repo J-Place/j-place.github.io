@@ -53,12 +53,14 @@ $(document).ready(function() {
     const selects = [
         '#selectEventCourse',
         '#selectEventClass',
-        '#selectEventLmsc'
+        '#selectEventLmsc',
+        '#selectTimingSystem'
     ];
     const selectValues = [
         'LCM',
         'sanctioned',
-        'FL'
+        'FL',
+        'automatic'
     ];
     setSelectValues(selects, selectValues);
 

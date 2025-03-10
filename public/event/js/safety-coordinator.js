@@ -126,11 +126,15 @@ function closeSafetyCoordinatorSection() {
 }
 
 function disableSafetyCoordinatorBtn() {
-    $("#addSafetyCoordinator").prop('disabled', true);
+    if ($("#addSafetyCoordinator").length) {
+        $("#addSafetyCoordinator").prop('disabled', true);
+    }
 }
 
 function enableSafetyCoordinatorBtn() {
-    $("#addSafetyCoordinator").prop('disabled', false);
+    if ($("#addSafetyCoordinator").length) {
+        $("#addSafetyCoordinator").prop('disabled', false);
+    }
 }
 
 function openLookupSafetyCoordinator() {
