@@ -1066,7 +1066,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-12 col-lg-12">
-                    <div class="input-group contact-info-host-type__other-organization--email">
+                    <div class="input-group contact-info-host-type__other-organization--email required">
                         <label for="hostTypeOtherEmail">Email Address</label>
                         <input type="text" maxlength="30" class="form-control" name="HostTypeOtherEmail" id="hostTypeOtherEmail" value="">
                         <span class="help-block help-block--HostTypeOtherEmail">Please enter the organization email address.</span>
@@ -1075,7 +1075,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-12 col-lg-8">
-                    <div class="input-group contact-info-host-type__other-organization--phone">
+                    <div class="input-group contact-info-host-type__other-organization--phone required">
                         <label for="hostTypeOtherPhone">Phone Number</label>
                         <input type="text" maxlength="30" class="form-control" name="HostTypeOtherPhone" id="hostTypeOtherPhone" value="">
                         <span class="help-block help-block--HostTypeOtherPhone">Please enter the organization phone number.</span>
@@ -1520,8 +1520,8 @@
                         The comp pool - 25 Yards, 5 Lanes
                     </label>
                 </div>
-                <br />
-                <button class="btn btn-small btn-outline btn-add" id="addConfigurationBtn" type="button">Add New</button>
+                <!-- <br /> -->
+                <!-- <button class="btn btn-small btn-outline btn-add" id="addConfigurationBtn" type="button">Add New</button> -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-md btn-default" data-bs-dismiss="modal" id="modalConfirmJensen" disabled>Confirm</button>
@@ -1755,12 +1755,13 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-12">
-                    <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">If your location is not listed, you can add a new one.</p>
+                    <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">If your location is not listed, contact USMS to have it added.</p>
                 </div>
             </div>
             <div>
-                <button class="btn btn-small btn-outline btn-add" id="addLocationBtn" name="addLocationBtn" type="button" value="Add New">Add New</button>
-                <button class="btn btn-small btn-outline" id="cancelAddLocationBtn" name="cancelAddLocationBtn" type="button" value="Cancel" style="display:none;">Cancel</button>
+                <a href="mailto:membership@usmastersswimming.org" class="text-link">Contact USMS</a>
+                <!-- <button class="btn btn-small btn-outline btn-add" id="addLocationBtn" name="addLocationBtn" type="button" value="Add New">Add New</button> -->
+                <!-- <button class="btn btn-small btn-outline" id="cancelAddLocationBtn" name="cancelAddLocationBtn" type="button" value="Cancel" style="display:none;">Cancel</button> -->
             </div>
         </div>
     </div>
@@ -2140,10 +2141,12 @@
             </label>
             <select name="SelectTimingSystem" class="form-control" id="selectTimingSystem" required="True">                                                            
                <option value="" disabled selected>Select a Timing System</option>
-               <option value="automatic">Automatic</option>
-               <option value="semiautomatic">Semi-Automatic</option>
-               <option value="manual2">Manual w/ More Than 2 Stopwatches</option>
-               <option value="manual1">Manual w/ Less Than 2 Stopwatches</option>
+               <option value="automatic-semiautomatic">Automatic with semi-automatic backup</option>
+               <option value="semiautomatic2">Semi-automatic with manual backup of at least 2 valid watches</option>
+               <option value="semiautomatic1">Semi-automatic with manual backup of 1 valid watch</option>
+               <option value="manual2">Manual with at least 2 valid watches</option>
+               <option value="manual1">Manual with 1 valid watch</option>
+               <option value="manual2only">Automatic with manual backup of at least 2 valid watches only</option>
             </select>
             <span class="help-block help-block--SelectTimingSystem">Please select a timing system.</span>
          </div>
@@ -2154,10 +2157,12 @@
                 Timing System Statement
             </div>
             <p class="default">Please review 103.18.5—103.18.9 in the USMS Rule Book for more information on these statements. They are based on your timing system set up and usage.</p>
-            <p class="automatic">Times from this competition will be eligible for world record, USMS record, and Top 10 consideration. For more information, see 103.18.9 in the USMS Rule Book.</p>
-            <p class="semi-automatic">Times from this competition will be eligible for USMS records and Top 10 consideration, but not for world records. For more information, see 103.18.9 in the USMS Rule Book.</p>
+            <p class="automatic-semiautomatic">Times from this competition will be eligible for world record, USMS record, and Top 10 consideration. For more information, see 103.18.9 in the USMS Rule Book.</p>
+            <p class="semiautomatic2">Auto w semi auto </p>
+            <p class="semiautomatic1">Times from this competition will be eligible for USMS records and Top 10 consideration, but not for world records. For more information, see 103.18.9 in the USMS Rule Book.</p>
             <p class="manual2">Times from this competition will be eligible for USMS Top 10 consideration, but not for world or USMS records. For more information, see 103.18.9 in the USMS Rule Book.</p>
             <p class="manual1">Times from this competition will not be eligible for world record, USMS record, or Top 10 consideration. For more information, see 103.18.9 in the USMS Rule Book.</p>
+            <p class="manual2only">Auto with 2 manual</p>
         </div>   
     </div>
 </div>
