@@ -55,6 +55,11 @@
 .radio-group-header.required {
     /* display: flex; */
     /* white-space: nowrap; */
+    margin-top: 0 !important;
+}
+
+.input-group-header.radio-group-header {
+    margin-bottom: 1.5rem;
 }
 
 .event-edit .input-group-header.required:before,
@@ -68,8 +73,23 @@
     /* left: -1rem; */
 }
 
-.input-group select {
+.form-group .input-group input[type=text] {
+    margin-top: 1.5rem;
+}
+
+.form-group.contact-info__host-type--container .input-group select {
     color: #CCC;
+    margin-top: 0.5rem !important;
+}
+
+@media (min-width: 1200px) {
+    .form-group .input-group input[type=text] {
+        margin-top: 0 !important;
+    }
+
+    .form-group.contact-info__host-type--container .input-group select {
+        margin-top: 1.5rem !important;
+    }    
 }
 
 .form__container .event-edit .help-block.has-error {
@@ -1224,7 +1244,13 @@ input.inputfile.has-error {
 }
 
 .input-group.radio-group {
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+@media (min-width: 1200px) {
+    .input-group.radio-group {
+        margin-bottom: 1rem;
+    }
 }
 
 .radio-group.event-director {
@@ -1261,7 +1287,7 @@ input.inputfile.has-error {
         padding-top: 0;
     }
     .usms-container.form__container {
-        padding: 1rem 1rem 2rem;
+        padding: 4rem 1rem 2rem;
     }
 }
 
