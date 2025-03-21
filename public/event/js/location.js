@@ -265,7 +265,7 @@ $(document).ready(function() {
         $(".list.locations").removeClass("edit-list");
         $(".location-name .list-item__edit").show();
         $(".location-name .list-item__save").hide();
-        $(".location-name .list-item__delete").hide();
+        // $(".location-name .list-item__delete").hide();
         hideSavedLocationList();
         hideListControlChildren();
         $(lookupByLocationList).hide();
@@ -327,7 +327,7 @@ $(document).ready(function() {
         $(".list.locations").removeClass("edit-list");
         $(".location-name .list-item__edit").show();
         $(".location-name .list-item__save").hide();
-        $(".location-name .list-item__delete").hide();
+        // $(".location-name .list-item__delete").hide();
     });
 
     $("#saveListEventLocationNew").click( function() {
@@ -338,7 +338,7 @@ $(document).ready(function() {
         $(".list.locations").removeClass("edit-list");
         $(".location-name .list-item__edit").show();
         $(".location-name .list-item__save").hide();
-        $(".location-name .list-item__delete").hide();
+        // $(".location-name .list-item__delete").hide();
     });
 
     $("#saveListEventLocationDuplicate").click( function() {
@@ -349,7 +349,7 @@ $(document).ready(function() {
         $(".list.locations").removeClass("edit-list");
         $(".location-name .list-item__edit").show();
         $(".location-name .list-item__save").hide();
-        $(".location-name .list-item__delete").hide();
+        // $(".location-name .list-item__delete").hide();
     });
 
     $("#saveListEventLocationOpenWater").click( function() {
@@ -360,7 +360,7 @@ $(document).ready(function() {
         $(".list.locations").removeClass("edit-list");
         $(".location-name .list-item__edit").show();
         $(".location-name .list-item__save").hide();
-        $(".location-name .list-item__delete").hide();
+        // $(".location-name .list-item__delete").hide();
     });
 
     $("#locationType").change(function() {
@@ -484,7 +484,7 @@ $(document).ready(function() {
         $(".list.locations").removeClass("edit-list");
         $(".location-name .list-item__edit").show();
         $(".location-name .list-item__save").hide();
-        $(".location-name .list-item__delete").hide();
+        // $(".location-name .list-item__delete").hide();
     });
 
 
