@@ -28,11 +28,11 @@ $(document).ready(function() {
     const inputs = [
         '#eventInfoName', 
         '#eventInfoDetails',
-        '#dateEntriesClose',
+        // '#dateEntriesClose',
         '#dateStart',
-        '#dateEnd',
-        '#entryInfoWebsiteUrl',
-        '#entryInfoOnlineEntriesUrl'
+        '#dateEnd'
+        // '#entryInfoWebsiteUrl',
+        // '#entryInfoOnlineEntriesUrl'
         // '#entryInfoAttendancePrevious',
         // '#entryInfoAttendanceExpected',
         // '#estimatedTempMin',
@@ -41,11 +41,11 @@ $(document).ready(function() {
     const inputValues = [
         '2025 USMS Open Water National Championships', 
         'The 2025 USMS Sprint-Distance and Long-Distance Open Water National Championships will be April 4 and April 5, respectively, at Nathan Benderson Park in Sarasota, Florida. These events will run alongside USA Swimming’s Open Water National and Junior Championships.',
-        '04/02/25',
+        // '04/02/25',
         '04/04/24',
-        '04/05/24',
-        'https://www.usms.org/events/events/2025-usms-open-water-national-championships',
-        'https://www.usms.org/events/events/2025-usms-open-water-national-championships'
+        '04/05/24'
+        // 'https://www.usms.org/events/events/2025-usms-open-water-national-championships',
+        // 'https://www.usms.org/events/events/2025-usms-open-water-national-championships'
         // '217',
         // '250',
         // '72',
@@ -92,7 +92,7 @@ $(document).ready(function() {
     $(".venue__list--item").show();
     // $("#timingAutomatic").prop('checked', true);
     // $("#eventListOnCalendarYes").prop('checked', true);
-    $("#eventClassificationSanctioned").prop('checked', true);
+    // $("#eventClassificationSanctioned").prop('checked', true);
     $("#agree").prop('checked', true);
     // $(".contact-info__host-type--container").hide();
     // $(".contact-information__event-host--list").show();
@@ -120,7 +120,14 @@ $(document).ready(function() {
     $(".help-block--addHeadRef").addClass("has-error");
     $(".help-block--addSafetyCoordinator").addClass("has-error");
     $(".help-block--SelectHostType").addClass("has-error");
-    
+    $(".help-block--EntryInfoWebsiteUrl").addClass("has-error");
+    $(".help-block--EntryInfoOnlineEntriesUrl").addClass("has-error");
+    $(".help-block--DateEntriesClose").addClass("has-error");
+    $(".help-block--eventClassification").addClass("has-error");
+    $(".help-block--EntryInfoAttendancePrevious").addClass("has-error");
+    $(".help-block--EntryInfoAttendanceExpected").addClass("has-error");
+    $(".help-block--EstimatedTempMin").addClass("has-error");
+    $(".help-block--EstimatedTempMax").addClass("has-error");
 
 });
 
