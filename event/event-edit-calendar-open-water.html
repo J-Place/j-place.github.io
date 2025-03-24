@@ -73,7 +73,6 @@
                               <sergey-import src="event-sanction/02-event-information-open-water" />
                               <sergey-import src="event-sanction/03-contact-information-open-water" />                              
                               <sergey-import src="event-sanction/04-location-information-open-water" />
-                              <sergey-import src="event-sanction/05-entry-information-open-water" />
                               <sergey-import src="event-sanction/accept-submit-calendar" />
                            </div>
 
@@ -99,10 +98,18 @@
 
       <script type="text/javascript">
          $("#event-name h3").click();
+
+         $("#agreeTerms").prop('checked', true);     
+
+         $(".input-group.event-info-lmsc").parent().hide();
          $(".row .event-info-list-on-calendar").hide();
          $(".row .event-info-is-championship").hide();
          $(".row .event-info-is-virtual").show();
-         $("#agreeTerms").prop('checked', true);     
+         $(".contact-group--head-ref").hide();
+         $(".contact-group--safety-coordinator").hide();
+         $(".contact-group--host-type").hide();
+
+
       </script>
       
    </body>
