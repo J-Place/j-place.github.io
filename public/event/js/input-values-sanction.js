@@ -72,7 +72,32 @@ $(document).ready(function() {
     $(".location-info__add-new-location--container").hide();
     $(".list--lookup.locations").hide();
     $("#location-information .row.locations").show();
-    $(".list-item-existing").show();
+    
+    
+    
+    
+    
+
+    
+    
+    
+    $(".list-item-existing").show();    
+    $(".list-item-existing .venue__list").show();
+    $(".venue__list--item.selected").show();
+    $(".venue__list--item.selected .configuration__list").show();
+    $(".configuration__list--item").hide();
+    $(".configuration__list--item.selected").show();
+    $(".configuration__list--item.selected .configuration-title").show();   
+    $('.location-name .list__controls').show();
+
+
+
+
+
+
+
+
+    
     $("#timingAutomatic").prop('checked', true);
     $("#eventListOnCalendarYes").prop('checked', true);
     $("#eventClassificationSanctioned").prop('checked', true);

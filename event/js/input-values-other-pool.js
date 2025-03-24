@@ -95,6 +95,21 @@ $(document).ready(function() {
     $(".venue__list--item:first-of-type .configuration-title").hide();
     $(".venue__list--item:first-of-type .configuration-title:last-of-type").show();
 
+
+
+
+
+    $(".list-item-existing").show();    
+    $(".list-item-existing .venue__list").show();
+    $(".venue__list--item.selected").show();
+    $(".venue__list--item.selected .configuration__list").show();
+    $(".configuration__list--item").hide();
+    $(".configuration__list--item.selected").show();
+    $(".configuration__list--item.selected .configuration-title").show();   
+    $('.location-name .list__controls').show();
+
+    
+
 });
 
 $(".upload-summary").show();
