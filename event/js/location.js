@@ -280,7 +280,7 @@ $(document).ready(function() {
         showLocationLookup();
         showLookupLocationList();
         resetAddNewLocation();
-        $("#saveLocation").prop('disabled', true);
+        // $("#saveLocation").prop('disabled', true);
     });
 
     $(".google-places-input").click( function() {
