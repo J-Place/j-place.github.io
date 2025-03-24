@@ -239,6 +239,10 @@ $(document).ready(function() {
         $(".list-item.list-item-existing .list__controls").hide();
         $(".venue__list--item:first-of-type .configuration-title").hide();
         $(".venue__list--item").hide();
+
+        // $(".venue__list--item.selected").show();
+        // $(".list-item-existing .venue__list").show();
+        
         $(".list-item-existing").show();
         $(".configuration__list--item.added").show();
         showSavedLocationList();
