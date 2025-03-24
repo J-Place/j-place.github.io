@@ -3,9 +3,9 @@ $(document).ready(function() {
     $('#selectHostType').on('change', function() {
         
         // Disable the other inputs until a host is saved
-        disableEventDirectorRadios();
-        disableHeadRefBtn();
-        disableSafetyCoordinatorBtn();
+        if ($(".contact-group--event-director").length) { disableEventDirectorRadios(); }
+        if ($(".contact-group--head-ref").length) { disableHeadRefBtn(); }
+        if ($(".contact-group--safety-coordinator").length) { disableSafetyCoordinatorBtn(); }
         disableListControlEditing();
         hideLookupConfirmtBtn();
 
@@ -82,9 +82,9 @@ $(document).ready(function() {
         resetHostSelects();
         enableHostTypeSelect();
         enableListControlEditing();
-        enableEventDirectorRadios();
-        enableHeadRefBtn();
-        enableSafetyCoordinatorBtn();
+        if ($(".contact-group--event-director").length) { enableEventDirectorRadios(); }
+        if ($(".contact-group--head-ref").length) { enableHeadRefBtn(); }
+        if ($(".contact-group--safety-coordinator").length) { enableSafetyCoordinatorBtn(); }
         $(".contact-info__host-type--container").hide();
         $(".contact-list__event-host--header").show();
         $(".contact-information__event-host--list").show();
@@ -122,9 +122,9 @@ $(document).ready(function() {
     $("#confirmClubLookup").click(function(e) {
         e.preventDefault();
         $(this).hide();
-        enableEventDirectorRadios();
-        enableHeadRefBtn();
-        enableSafetyCoordinatorBtn();
+        if ($(".contact-group--event-director").length) { enableEventDirectorRadios(); }
+        if ($(".contact-group--head-ref").length) { enableHeadRefBtn(); }
+        if ($(".contact-group--safety-coordinator").length) { enableSafetyCoordinatorBtn(); }
         resetHostSelects();
         enableListControlEditing();
         hideLookupConfirmtBtn();
@@ -141,9 +141,9 @@ $(document).ready(function() {
     $("#confirmCurrentHost").click(function(e) {
         e.preventDefault();
         $(this).hide();
-        enableEventDirectorRadios();
-        enableHeadRefBtn();
-        enableSafetyCoordinatorBtn();
+        if ($(".contact-group--event-director").length) { enableEventDirectorRadios(); }
+        if ($(".contact-group--head-ref").length) { enableHeadRefBtn(); }
+        if ($(".contact-group--safety-coordinator").length) { enableSafetyCoordinatorBtn(); }
         resetHostSelects();
         enableListControlEditing();
         $(".contact-info__host-type--container").hide();
@@ -163,9 +163,9 @@ $(document).ready(function() {
 
     $("#addHostTypeOtherBtn").click(function(e) {
         e.preventDefault();
-        enableEventDirectorRadios();
-        enableHeadRefBtn();
-        enableSafetyCoordinatorBtn();
+        if ($(".contact-group--event-director").length) { enableEventDirectorRadios(); }
+        if ($(".contact-group--head-ref").length) { enableHeadRefBtn(); }
+        if ($(".contact-group--safety-coordinator").length) { enableSafetyCoordinatorBtn(); }
         resetHostSelects();
         enableListControlEditing();
         hideLookupConfirmtBtn();
@@ -184,9 +184,9 @@ $(document).ready(function() {
     $("#addHostTypeOtherOrganizationLookup").click(function(e) {
         e.preventDefault();
         $(this).hide();
-        enableEventDirectorRadios();
-        enableHeadRefBtn();
-        enableSafetyCoordinatorBtn();
+        if ($(".contact-group--event-director").length) { enableEventDirectorRadios(); }
+        if ($(".contact-group--head-ref").length) { enableHeadRefBtn(); }
+        if ($(".contact-group--safety-coordinator").length) { enableSafetyCoordinatorBtn(); }
         enableListControlEditing();
         resetHostSelects();
         hideLookupConfirmtBtn();

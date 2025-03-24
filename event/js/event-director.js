@@ -1,14 +1,14 @@
 $(document).ready(function() {
 
 // Disable Save & Continue Button
-    $("#saveContactInfoSection").prop("disabled", true);
+    // $("#saveContactInfoSection").prop("disabled", true);
 
 // Select I'm the Event Director
     $("#contactTypeEventDirectorCurrent").click(function(e) {
         e.preventDefault();
-        disableHeadRefBtn();
-        disableSafetyCoordinatorBtn();
-        disableHostTypeSelect();
+        if ($(".contact-group--head-ref").length) { disableHeadRefBtn(); }
+        if ($(".contact-group--safety-coordinator").length) { disableSafetyCoordinatorBtn(); }
+        if ($(".contact-group--host-type").length) { disableHostTypeSelect(); }
         disableListControlEditing();
 
         // Show selected Event Director in list
@@ -36,8 +36,8 @@ $(document).ready(function() {
         $(".list__header.contact-list__event-director--header").show();
         $(".event-director-privacy").show();
         uncheckEventDirectorRadios();
-        enableHeadRefBtn();
-        enableSafetyCoordinatorBtn();
+        if ($(".contact-group--head-ref").length) { enableHeadRefBtn(); }
+        if ($(".contact-group--safety-coordinator").length) { enableSafetyCoordinatorBtn(); }
         enableListControlEditing();
         $("#selectHostType").prop("disabled", false);
         $(".contact-info__event-director-privacy--container").show();
@@ -47,8 +47,8 @@ $(document).ready(function() {
     $("#contactTypeEventDirectorOther").click(function(e) {
         e.preventDefault();
         $("#selectHostType").prop("disabled", true);
-        disableHeadRefBtn();
-        disableSafetyCoordinatorBtn();
+        if ($(".contact-group--head-ref").length) { disableHeadRefBtn(); }
+        if ($(".contact-group--safety-coordinator").length) { disableSafetyCoordinatorBtn(); }
         disableListControlEditing();
         $(".contact-info__event-director-other--container").show();
         $(".contact-info__event-director-other--add-new").show();
@@ -72,9 +72,9 @@ $(document).ready(function() {
     $("#addAsEventDirector").click(function(e) {
         e.preventDefault();
         disableEventDirectorRadios();
-        enableHeadRefBtn();
-        enableSafetyCoordinatorBtn();
-        enableHostTypeSelect();
+        if ($(".contact-group--head-ref").length) { enableHeadRefBtn(); }
+        if ($(".contact-group--safety-coordinator").length) { enableSafetyCoordinatorBtn(); }
+        if ($(".contact-group--host-type").length) { enableHostTypeSelect(); }
         enableListControlEditing();
         hideLookupConfirmtBtn();
         uncheckEventDirectorRadios();
@@ -109,8 +109,8 @@ $(document).ready(function() {
         uncheckEventDirectorRadios();
         enableListControlEditing();
         $("#selectHostType").prop("disabled", false);
-        enableHeadRefBtn();
-        enableSafetyCoordinatorBtn();
+        if ($(".contact-group--head-ref").length) { enableHeadRefBtn(); }
+        if ($(".contact-group--safety-coordinator").length) { enableSafetyCoordinatorBtn(); }
         $(".section__header--summary.contact-list__event-director--message").hide();
         $(".contact-info__event-director-type-form").hide();  // Hide the Event Director inputs
         $(".contact-info__event-director-other--container").hide();
@@ -200,9 +200,9 @@ function resetEventDirector() {
     $(".contact-list__event-director-add-new--awaiting-message").hide();
     $(".contact-info__event-director-privacy--container").hide();
     $(".list").removeClass("edit-list");
-    enableHeadRefBtn();
-    enableSafetyCoordinatorBtn();
-    enableHostTypeSelect();
+    if ($(".contact-group--head-ref").length) { enableHeadRefBtn(); }
+    if ($(".contact-group--safety-coordinator").length) { enableSafetyCoordinatorBtn(); }
+    if ($(".contact-group--host-type").length) { enableHostTypeSelect(); }
     enableEventDirectorRadios();
 }
 

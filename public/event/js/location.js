@@ -88,6 +88,7 @@ $(document).ready(function() {
             hideAddNewLocationContainer();
             // $(".input-group.input-group--bulkhead").hide();
             $("#saveLocation").prop('disabled', false);
+            $(".location-name .list-item__delete").hide();
         } else {
             $(addNewPoolForm).hide();
             $(addNewConfigurationForm).show();
