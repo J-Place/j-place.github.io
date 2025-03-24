@@ -82,16 +82,18 @@
 
       <sergey-import src="site/footer_scripts" />
 
-      <script type="text/javascript" src="/event/js/input-values-open-water.js"></script>
+      <script type="text/javascript" src="/event/js/input-values-upgrade-open-water.js"></script>
       <script type="text/javascript" src="/event/js/validation-calendar-to-sanction-open-water.js"></script>
       <script type="text/javascript">
          function setPageName() {
             const pageName = "Open Water";
             $(document).trigger("settingPageName", { data: pageName });
          }
-         $("#safetyPlan h3").click();
+         $("#event-information h3").click();
          $("#agreeTerms").prop('checked', false);
          $(".upload-summary").hide();
+
+         $(".row .contact-information__event-host--list").hide();
          $(".row .event-info-list-on-calendar").show();
          $(".row .event-info-is-championship").show();
          $(".row .event-info-is-virtual").hide();
