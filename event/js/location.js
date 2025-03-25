@@ -54,7 +54,7 @@ $(document).ready(function() {
         $(cancelAddLocationBtn).hide();
     });
 
-    $(confirmNewFacility).click(function(e) {
+    $("#confirmNewFacility").click(function(e) {
         e.preventDefault();
         $(addNewLocationForm).hide();
         $(addNewConfigurationForm).hide();
@@ -62,16 +62,23 @@ $(document).ready(function() {
         showAddNewLocationContainer();
         showSavedLocationList();
         // $(".list-item-new").show();
-        $(".venue__list").hide();
-        $(".configuration__list").hide();
-        $(".location-add-configuration").hide();
+
+        // $(".venue__list").hide();
+        // $(".configuration__list").hide();
+        // $(".location-add-configuration").hide();
+
         $(addNewPoolForm).show();
+
         $('.location-name .list__controls').hide();
+
         if ($("#locationType").val() === 'Open Water') {
+            // alert("Open Water Inputs");
             $(".list-item-open-water").show();
+            $(".input-group--add-new-course").hide();
         } else {
+            // alert("Yes");
             $(".list-item-new").show();
-        }   
+        }
     });
 
     $(".venue-edit-button").click( function() {
@@ -80,21 +87,29 @@ $(document).ready(function() {
 
     $("#saveFormPool").click( function(e) {
         e.preventDefault();
+        $(".location-info__add-new-location--container").hide();
         if ($("#locationType").val() === 'Open Water') {
+            // alert("XXX");
             $(".venue__list").show();
             $(".list-item-open-water .venue__list--item").show();
             $('.location-name .list__controls').show();
             hideLocationLookup();
-            hideAddNewLocationContainer();
+            // hideAddNewLocationContainer();
+            
+            $(".list-venue-form").hide();
+            // $(".location-info__add-new-location--container").hide();
+            // $(addNewConfigurationForm).hide();
+
             // $(".input-group.input-group--bulkhead").hide();
             $("#saveLocation").prop('disabled', false);
             $(".location-name .list-item__delete").hide();
         } else {
             $(addNewPoolForm).hide();
-            $(addNewConfigurationForm).show();
+            // $(addNewConfigurationForm).show();
             $(".venue__list").show();
             $(".venue__list--item-added").show();
-            $(".venue__list--item:first-of-type").show();  
+            $(".venue__list--item:first-of-type").show();
+            $('.location-name .list__controls').show();
         }
         $(".form-group.form-group-hidden").removeClass("show");
         $("#locationType").prop('selectedIndex',0);
@@ -592,11 +607,11 @@ $(document).ready(function() {
             filterByCourse();
         } else if (currentPageName === "Other Open Water") {
             filterByOpenWater();
-            // filterByRange();
-            // filterByCourse();
-        } else {
+        } else if (currentPageName === "Other Pool") {
+            filterByRange();
+            filterByCourse();
         }
-        // console.log(currentPageName);
+        // alert(currentPageName);
     });
     setPageName();
 
