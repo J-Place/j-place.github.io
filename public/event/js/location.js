@@ -277,9 +277,7 @@ $(document).ready(function() {
         $(".location-name .list-item__edit").show();
         $(".location-name .list-item__save").hide();
         // $(".location-name .list-item__delete").hide();
-        if (currentPageName == "Pool") {
-            $(".location-name .list-item__delete").hide();
-        }
+
         hideSavedLocationList();
         hideListControlChildren();
         $(lookupByLocationList).hide();
@@ -342,6 +340,9 @@ $(document).ready(function() {
         $(".location-name .list-item__edit").show();
         $(".location-name .list-item__save").hide();
         // $(".location-name .list-item__delete").hide();
+        if (currentPageName == "Pool") {
+            $(".location-name .list-item__delete").hide();
+        }
     });
 
     $("#saveListEventLocationNew").click( function() {
@@ -353,6 +354,9 @@ $(document).ready(function() {
         $(".location-name .list-item__edit").show();
         $(".location-name .list-item__save").hide();
         // $(".location-name .list-item__delete").hide();
+        if (currentPageName == "Pool") {
+            $(".location-name .list-item__delete").hide();
+        }
     });
 
     $("#saveListEventLocationDuplicate").click( function() {
@@ -364,6 +368,9 @@ $(document).ready(function() {
         $(".location-name .list-item__edit").show();
         $(".location-name .list-item__save").hide();
         // $(".location-name .list-item__delete").hide();
+        if (currentPageName == "Pool") {
+            $(".location-name .list-item__delete").hide();
+        }
     });
 
     $("#saveListEventLocationOpenWater").click( function() {
@@ -375,6 +382,9 @@ $(document).ready(function() {
         $(".location-name .list-item__edit").show();
         $(".location-name .list-item__save").hide();
         // $(".location-name .list-item__delete").hide();
+        if (currentPageName == "Pool") {
+            $(".location-name .list-item__delete").hide();
+        }
     });
 
     $("#locationType").change(function() {
