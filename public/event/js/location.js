@@ -96,13 +96,14 @@ $(document).ready(function() {
             $(".list-venue-form").hide();
 
             $("#saveLocation").prop('disabled', false);
-            $(".location-name .list-item__delete").hide();
+            // $(".location-name .list-item__delete").hide();
         } else {
             $(addNewPoolForm).hide();
             $(".venue__list").show();
             $(".venue__list--item-added").show();
             $(".venue__list--item:first-of-type").show();
             $('.location-name .list__controls').show();
+            $(".location-name .list-item__delete").hide();
         }
         $(".form-group.form-group-hidden").removeClass("show");
         $("#locationType").prop('selectedIndex',0);
@@ -194,6 +195,10 @@ $(document).ready(function() {
         $(".list-item-existing .configuration__list").show();
         $(".list-item-existing .configuration__list--item.selected").show();
         $(".list-item-existing .configuration__list--item.selected .configuration-title").show();
+        alert(currentPageName);
+        // if (currentPageName == "Pool") {
+        //     $(".location-name .list-item__delete").hide();
+        // }
     });
 
     $("#modalConfirmHealthfit").click( function() {
@@ -353,10 +358,10 @@ $(document).ready(function() {
         $(".list.locations").removeClass("edit-list");
         $(".location-name .list-item__edit").show();
         $(".location-name .list-item__save").hide();
-        // $(".location-name .list-item__delete").hide();
-        if (currentPageName == "Pool") {
-            $(".location-name .list-item__delete").hide();
-        }
+        $(".location-name .list-item__delete").hide();
+        // if (currentPageName == "Pool") {
+        //     $(".location-name .list-item__delete").hide();
+        // }
     });
 
     $("#saveListEventLocationDuplicate").click( function() {
