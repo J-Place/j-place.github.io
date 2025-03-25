@@ -497,7 +497,7 @@ $(document).ready(function() {
         $(".list.locations").removeClass("edit-list");
         $(".location-name .list-item__edit").show();
         $(".location-name .list-item__save").hide();
-        // $(".location-name .list-item__delete").hide();
+        $(".location-name .list-item__delete").hide();
     });
 
 
