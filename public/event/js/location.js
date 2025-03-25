@@ -88,6 +88,9 @@ $(document).ready(function() {
     $("#saveFormPool").click( function(e) {
         e.preventDefault();
         $(".location-info__add-new-location--container").hide();
+        if ($("#locationType").val() === 'Pool') {
+            $(".location-name .list-item__delete").hide();
+        }
         if ($("#locationType").val() === 'Open Water') {
             $(".venue__list").show();
             $(".list-item-open-water .venue__list--item").show();
@@ -195,10 +198,6 @@ $(document).ready(function() {
         $(".list-item-existing .configuration__list").show();
         $(".list-item-existing .configuration__list--item.selected").show();
         $(".list-item-existing .configuration__list--item.selected .configuration-title").show();
-        alert(currentPageName);
-        // if (currentPageName == "Pool") {
-        //     $(".location-name .list-item__delete").hide();
-        // }
     });
 
     $("#modalConfirmHealthfit").click( function() {
@@ -372,10 +371,10 @@ $(document).ready(function() {
         $(".list.locations").removeClass("edit-list");
         $(".location-name .list-item__edit").show();
         $(".location-name .list-item__save").hide();
-        // $(".location-name .list-item__delete").hide();
-        if (currentPageName == "Pool") {
-            $(".location-name .list-item__delete").hide();
-        }
+        $(".location-name .list-item__delete").hide();
+        // if (currentPageName == "Pool") {
+        //     $(".location-name .list-item__delete").hide();
+        // }
     });
 
     $("#saveListEventLocationOpenWater").click( function() {
