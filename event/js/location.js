@@ -175,12 +175,10 @@ $(document).ready(function() {
         $("#modalChosePoolConfigurationSelby").modal('show');
     });
 
-    // var modalChosePoolConfigurationHealthfit = new bootstrap.Modal(document.getElementById('modalChosePoolConfigurationHealthfit'));
     $("#confirmLocationHealthfit").click( function() {
         $("#modalChosePoolConfigurationHealthfit").modal('show');
     });
 
-    // var modalChosePoolConfigurationJensen = new bootstrap.Modal(document.getElementById('modalChosePoolConfigurationJensen'));
     $("#confirmLocationJensen").click( function() {
         $("#modalChosePoolConfigurationJensen").modal('show');
     });
