@@ -89,23 +89,16 @@ $(document).ready(function() {
         e.preventDefault();
         $(".location-info__add-new-location--container").hide();
         if ($("#locationType").val() === 'Open Water') {
-            // alert("XXX");
             $(".venue__list").show();
             $(".list-item-open-water .venue__list--item").show();
             $('.location-name .list__controls').show();
             hideLocationLookup();
-            // hideAddNewLocationContainer();
-            
             $(".list-venue-form").hide();
-            // $(".location-info__add-new-location--container").hide();
-            // $(addNewConfigurationForm).hide();
 
-            // $(".input-group.input-group--bulkhead").hide();
             $("#saveLocation").prop('disabled', false);
             $(".location-name .list-item__delete").hide();
         } else {
             $(addNewPoolForm).hide();
-            // $(addNewConfigurationForm).show();
             $(".venue__list").show();
             $(".venue__list--item-added").show();
             $(".venue__list--item:first-of-type").show();
