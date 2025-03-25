@@ -103,7 +103,7 @@ $(document).ready(function() {
             $(".venue__list--item-added").show();
             $(".venue__list--item:first-of-type").show();
             $('.location-name .list__controls').show();
-            $(".location-name .list-item__delete").hide();
+            // $(".location-name .list-item__delete").hide();
         }
         $(".form-group.form-group-hidden").removeClass("show");
         $("#locationType").prop('selectedIndex',0);
@@ -195,10 +195,10 @@ $(document).ready(function() {
         $(".list-item-existing .configuration__list").show();
         $(".list-item-existing .configuration__list--item.selected").show();
         $(".list-item-existing .configuration__list--item.selected .configuration-title").show();
-        if (currentPageName == "Pool") {
-            // alert(currentPageName);
-            $(".location-name .list-item__delete").hide();
-        }
+        // if (currentPageName == "Pool") {
+        //     // alert(currentPageName);
+        //     $(".location-name .list-item__delete").hide();
+        // }
     });
 
     $("#modalConfirmHealthfit").click( function() {
@@ -212,10 +212,10 @@ $(document).ready(function() {
         $(".list-item-duplicate .configuration__list").show();
         $(".list-item-duplicate .configuration__list--item.selected").show();
         $(".list-item-duplicate .configuration__list--item.selected .configuration-title").show();
-        if (currentPageName == "Pool") {
-            // alert(currentPageName);
-            $(".location-name .list-item__delete").hide();
-        }
+        // if (currentPageName == "Pool") {
+        //     // alert(currentPageName);
+        //     $(".location-name .list-item__delete").hide();
+        // }
     });
 
     $("#modalConfirmJensen").click( function() {
@@ -281,11 +281,15 @@ $(document).ready(function() {
         $("#modalDeleteLocation").modal('show');
     });
 
+    $(".location-name .list-item__save").click( function() {
+        $(".location-name .list-item__delete").hide();
+    });
+
     $("#confirmDeleteLocation").click( function() {
         $(".list.locations").removeClass("edit-list");
         $(".location-name .list-item__edit").show();
         $(".location-name .list-item__save").hide();
-        // $(".location-name .list-item__delete").hide();
+        $(".location-name .list-item__delete").hide();
 
         hideSavedLocationList();
         hideListControlChildren();
@@ -348,10 +352,10 @@ $(document).ready(function() {
         $(".list.locations").removeClass("edit-list");
         $(".location-name .list-item__edit").show();
         $(".location-name .list-item__save").hide();
-        // $(".location-name .list-item__delete").hide();
-        if (currentPageName == "Pool") {
-            $(".location-name .list-item__delete").hide();
-        }
+        $(".location-name .list-item__delete").hide();
+        // if (currentPageName == "Pool") {
+        //     $(".location-name .list-item__delete").hide();
+        // }
     });
 
     $("#saveListEventLocationNew").click( function() {
@@ -390,10 +394,10 @@ $(document).ready(function() {
         $(".list.locations").removeClass("edit-list");
         $(".location-name .list-item__edit").show();
         $(".location-name .list-item__save").hide();
-        // $(".location-name .list-item__delete").hide();
-        if (currentPageName == "Pool") {
-            $(".location-name .list-item__delete").hide();
-        }
+        $(".location-name .list-item__delete").hide();
+        // if (currentPageName == "Pool") {
+        //     $(".location-name .list-item__delete").hide();
+        // }
     });
 
     $("#locationType").change(function() {
