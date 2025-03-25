@@ -277,6 +277,9 @@ $(document).ready(function() {
         $(".location-name .list-item__edit").show();
         $(".location-name .list-item__save").hide();
         // $(".location-name .list-item__delete").hide();
+        if (currentPageName == "Pool") {
+            $(".location-name .list-item__delete").hide();
+        }
         hideSavedLocationList();
         hideListControlChildren();
         $(lookupByLocationList).hide();
