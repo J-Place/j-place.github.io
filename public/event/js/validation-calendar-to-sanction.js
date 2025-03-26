@@ -39,7 +39,7 @@ $(".help-block--EntryInfoAttendanceExpected").addClass('has-error');
 $(".help-block--DateEntriesClose").addClass('has-error');
 $(".entry-info__close-date--date-container").addClass('has-error');
 
-$(".meet-announcement .help-block.no-data").addClass('has-error');
+// $(".meet-announcement .help-block.no-data").addClass('has-error');
 // $(".meet-announcement input").addClass('has-error');
 
 // $(".help-block--addSafetyCoordinator").addClass('has-error');
