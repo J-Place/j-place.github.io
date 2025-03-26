@@ -5,7 +5,8 @@
 // $(".help-block--SelectHostType").addClass('has-error');
 
 $(".help-block--agreeTerms").addClass("has-error");
-$(".help-block.no-data").addClass("has-error");
+$(".help-block--safety-plan").addClass("has-error");
+$(".help-block--course-map").addClass("has-error");
 // $(".").addClass("has-error");
 // $(".").addClass("has-error");
 
