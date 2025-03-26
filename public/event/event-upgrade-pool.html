@@ -894,7 +894,7 @@
     <div class="form-group form-group-result contact-info__event-director-list">
         <div class="row contact-information__event-director--list">
             <div class="list list--event-director list--lookup people">
-                <div class="list__header contact-list__event-director--header">
+                <div class="list__header contact-list__event-director--header required">
                     <span class="lookup-results--event-director">Event Director </span>
                     <div class="list__controls contact-list__controls">
                         <button type="button" class="list__controls--settings" id="listContactSettings"></button>
@@ -1105,8 +1105,9 @@
     </div>
 
     <!-- Head Ref List -->
-    <div class="row contact-list contact-info__head-ref-list">
-        <div class="form-group contact-information__head-ref--list">
+    <div class="form-group contact-information__head-ref--list">
+        <div class="row contact-list contact-info__head-ref-list">
+        
             <div class="list list--head-ref list--lookup people">
                 <div class="list__header contact-list__head-ref--header">
                     <span class="lookup-results--head-ref">Head Referee</span>
@@ -1309,7 +1310,7 @@
     <div class="row contact-list contact-info__safety-coordinator-list">
         <div class="form-group contact-information__safety-coordinator--list">
             <div class="list list--safety-coordinator list--lookup people">
-                <div class="list__header contact-list__safety-coordinator--header">
+                <div class="list__header contact-list__safety-coordinator--header required">
                     <span class="lookup-results--safety-coordinator">Safety Coordinator</span>
                     <div class="list__controls contact-list__controls">
                         <a href="#/" class="list__controls--settings" id="listContactSettings"></a>
@@ -1559,83 +1560,84 @@
                 </div>
             </div>
         </div>
-
         <div class="form-group contact-list contact-information__event-host--list">
-            <div class="list list--event-host list--lookup people">
-                <div class="list__header contact-list__event-host--header">
-                    <span class="lookup-results--event-host">Event Host</span>
-                    <div class="list__controls contact-list__controls">
-                        <button type="button" class="list__controls--settings" id="listContactSettings"></button>
-                        <button type="button" class="btn btn-link" id="editContactList">Edit</button>
-                        <button type="button" class="btn btn-link" id="saveContactList">Done Editing</button>
-                        <button type="button" class="btn btn-link" id="cancelContactList">Cancel</button>
-                        <!-- <button class="btn btn-link contact-edit-button">Edit</button> -->
-                        <!-- <a href="#" class="btn btn-link contact-remove-button">Remove</a> -->
+            <div class="row contact-information__event-host--list">
+                <div class="list list--event-host list--lookup">
+                    <div class="list__header contact-list__event-host--header required">
+                        <span class="lookup-results--event-host">Event Host</span>
+                        <div class="list__controls contact-list__controls">
+                            <button type="button" class="list__controls--settings" id="listContactSettings"></button>
+                            <button type="button" class="btn btn-link" id="editContactList">Edit</button>
+                            <button type="button" class="btn btn-link" id="saveContactList">Done Editing</button>
+                            <button type="button" class="btn btn-link" id="cancelContactList">Cancel</button>
+                            <!-- <button class="btn btn-link contact-edit-button">Edit</button> -->
+                            <!-- <a href="#" class="btn btn-link contact-remove-button">Remove</a> -->
+                        </div>
                     </div>
+                    <div class="list__container">
+                        <div class="row is-flex">
+                        <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
+                            <div class="list-item list-item--lmsc">
+                                <input type="hidden" class="contact-isMember" value="true">
+                                <button type="button" class="list-item__delete">Remove</button>
+                                <!-- <div class="list-item__pending">Host Pending</div> -->
+                                <div class="contact-name">Florida LMSC</div>
+                                <!-- <div class="contact-location"></div> -->
+                                <!-- <div class="contact-phone"></div> -->
+                                <!-- <div class="contact-email"></div> -->
+                                <!-- <div class="contact-id"></div> -->
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
+                            <div class="list-item list-item--club">
+                                <input type="hidden" class="contact-isMember" value="true">
+                                <button type="button" class="list-item__delete">Remove</button>
+                                <div class="contact-name">Sarasota Sharks</div>
+                                <div class="contact-location">Sarasota, FL</div>
+                                <!-- <div class="contact-phone"></div> -->
+                                <!-- <div class="contact-email"></div> -->
+                                <!-- <div class="contact-id"></div> -->
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
+                            <div class="list-item list-item--current">
+                                <input type="hidden" class="contact-isMember" value="true">
+                                <button type="button" class="list-item__delete">Remove</button>
+                                <div class="contact-name">Jay Place</div>
+                                <div class="contact-location">Sarasota, FL</div>
+                                <!-- <div class="contact-phone"></div> -->
+                                <!-- <div class="contact-email"></div> -->
+                                <!-- <div class="contact-id"></div> -->
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
+                            <div class="list-item list-item--organization-lookup">
+                                <input type="hidden" class="contact-isMember" value="true">
+                                <button type="button" class="list-item__delete">Remove</button>
+                                <!-- <div class="list-item__pending">Host Pending</div> -->
+                                <div class="contact-name">Rainbow River Swim Club</div>
+                                <div class="contact-location">Dunnedin, FL</div>
+                                <!-- <div class="contact-phone"></div> -->
+                                <!-- <div class="contact-email"></div> -->
+                                <!-- <div class="contact-id"></div> -->
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
+                            <div class="list-item list-item--organization-new">
+                                <input type="hidden" class="contact-isMember" value="true">
+                                <button type="button" class="list-item__delete">Remove</button>
+                                <!-- <div class="list-item__pending">Host Pending</div> -->
+                                <div class="contact-name">Cape Coral Yach Club</div>
+                                <div class="contact-location">Cape Coral, FL</div>
+                                <!-- <div class="contact-phone"></div> -->
+                                <!-- <div class="contact-email"></div> -->
+                                <!-- <div class="contact-id"></div> -->
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-small btn-success" id="confirmCurrentHost">Confirm</button>
                 </div>
-                <div class="list__container">
-                    <div class="row is-flex">
-                    <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
-                        <div class="list-item list-item--lmsc">
-                            <input type="hidden" class="contact-isMember" value="true">
-                            <button type="button" class="list-item__delete">Remove</button>
-                            <!-- <div class="list-item__pending">Host Pending</div> -->
-                            <div class="contact-name">Florida LMSC</div>
-                            <!-- <div class="contact-location"></div> -->
-                            <!-- <div class="contact-phone"></div> -->
-                            <!-- <div class="contact-email"></div> -->
-                            <!-- <div class="contact-id"></div> -->
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
-                        <div class="list-item list-item--club">
-                            <input type="hidden" class="contact-isMember" value="true">
-                            <button type="button" class="list-item__delete">Remove</button>
-                            <div class="contact-name">Sarasota Sharks</div>
-                            <div class="contact-location">Sarasota, FL</div>
-                            <!-- <div class="contact-phone"></div> -->
-                            <!-- <div class="contact-email"></div> -->
-                            <!-- <div class="contact-id"></div> -->
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
-                        <div class="list-item list-item--current">
-                            <input type="hidden" class="contact-isMember" value="true">
-                            <button type="button" class="list-item__delete">Remove</button>
-                            <div class="contact-name">Jay Place</div>
-                            <div class="contact-location">Sarasota, FL</div>
-                            <!-- <div class="contact-phone"></div> -->
-                            <!-- <div class="contact-email"></div> -->
-                            <!-- <div class="contact-id"></div> -->
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
-                        <div class="list-item list-item--organization-lookup">
-                            <input type="hidden" class="contact-isMember" value="true">
-                            <button type="button" class="list-item__delete">Remove</button>
-                            <!-- <div class="list-item__pending">Host Pending</div> -->
-                            <div class="contact-name">Rainbow River Swim Club</div>
-                            <div class="contact-location">Dunnedin, FL</div>
-                            <!-- <div class="contact-phone"></div> -->
-                            <!-- <div class="contact-email"></div> -->
-                            <!-- <div class="contact-id"></div> -->
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
-                        <div class="list-item list-item--organization-new">
-                            <input type="hidden" class="contact-isMember" value="true">
-                            <button type="button" class="list-item__delete">Remove</button>
-                            <!-- <div class="list-item__pending">Host Pending</div> -->
-                            <div class="contact-name">Cape Coral Yach Club</div>
-                            <div class="contact-location">Cape Coral, FL</div>
-                            <!-- <div class="contact-phone"></div> -->
-                            <!-- <div class="contact-email"></div> -->
-                            <!-- <div class="contact-id"></div> -->
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                <button class="btn btn-small btn-success" id="confirmCurrentHost">Confirm</button>
             </div>
         </div>
 
