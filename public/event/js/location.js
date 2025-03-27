@@ -688,7 +688,6 @@ $(document).ready(function() {
             });
             $("#confirmLocationHealthfit").click( function() {
                 confirmConfiguration();
-                // handleListControls();
                 showControlsExisting();
                 $(".list-item-duplicate").show();
                 // scrollTopSection();
@@ -702,7 +701,6 @@ $(document).ready(function() {
             });
             $("#confirmLocationJensen").click( function() {
                 confirmConfiguration();
-                // handleListControls();
                 showControlsNew();
                 $(".list-item-new").show();
                 // scrollTopSection();
