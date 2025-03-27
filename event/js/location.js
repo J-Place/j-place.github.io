@@ -330,7 +330,6 @@ $(document).ready(function() {
         resetAddNewLocation();
     });
 
-    // var modalDuplicateAddress = new bootstrap.Modal(document.getElementById('modalDuplicateAddress'));
     $("#locationAddressStreet").click( function() {
         $("#modalDuplicateAddress").modal('show');
     });
@@ -689,12 +688,8 @@ $(document).ready(function() {
             });
             $("#confirmLocationHealthfit").click( function() {
                 confirmConfiguration();
-                // handleListControls();
                 showControlsExisting();
                 $(".list-item-duplicate").show();
-                // scrollTopSection();
-                // $(this).prop('disabled', true);
-                // $('input[name="configuration-healthfit').prop("checked", false);
                 $(".list-item-duplicate .venue__list").show();
                 $(".list-item-duplicate .venue__list--item.selected").show();
                 $(".list-item-duplicate .configuration__list").show();
@@ -703,12 +698,8 @@ $(document).ready(function() {
             });
             $("#confirmLocationJensen").click( function() {
                 confirmConfiguration();
-                // handleListControls();
                 showControlsNew();
                 $(".list-item-new").show();
-                // scrollTopSection();
-                // $(this).prop('disabled', true);
-                // $('input[name="configuration-jensen').prop("checked", false);
                 $(".list-item-new .venue__list").show();
                 $(".list-item-new .venue__list--item.selected").show();
                 $(".list-item-new .configuration__list").show();
