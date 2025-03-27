@@ -171,13 +171,21 @@ $(document).ready(function() {
         filterByCourse();
     });
 
-    $("#confirmLocationSelby").click( function() {
-        $("#modalChosePoolConfigurationSelby").modal('show');
+    $("#confirmWaterFrontPark").click( function() {
+        confirmConfiguration();
+        $(".list-item-open-water").show();
+        $(".venue__list").show();
+        $(".venue__list--item.selected").show();
+        $(".venue__list--item.selected .venue-name").show();
+        $(".venue__list--item.selected .venue-type").show();
+        scrollTopSection();
+        hideListControlChildren();
+        showControlsNew();
     });
 
-    $("#confirmLocationHealthfit").click( function() {
-        $("#modalChosePoolConfigurationHealthfit").modal('show');
-    });
+    // $("#confirmLocationHealthfit").click( function() {
+    //     $("#modalChosePoolConfigurationHealthfit").modal('show');
+    // });
 
     $("#confirmLocationJensen").click( function() {
         $("#modalChosePoolConfigurationJensen").modal('show');
@@ -516,25 +524,6 @@ $(document).ready(function() {
         $(".location-info__add-new-location--container").hide();
     }
 
-
-
-    $("#confirmWaterFrontPark").click( function() {
-        confirmConfiguration();
-        $(".list-item-open-water").show();
-        $(".venue__list").show();
-        $(".venue__list--item.selected").show();
-        $(".venue__list--item.selected .venue-name").show();
-        $(".venue__list--item.selected .venue-type").show();
-        scrollTopSection();
-        hideListControlChildren();
-        // $(".list.locations").removeClass("edit-list");
-        // $(".location-name .list-item__edit").show();
-        // $(".location-name .list-item__save").hide();
-        // $(".location-name .list-item__delete").hide();
-        // handleListControls();
-        showControlsNew();
-    });
-
     function handleListControls() {
         // if ($('.list-item').hasClass('list-item-new')) {
         $(".location-name > .list__controls").show();
@@ -567,21 +556,13 @@ $(document).ready(function() {
         $(".list__controls--settings").css('display', 'inline-flex');
     }
 
-
     function showControlsExisting() {
         $(".location-name > .list__controls").show();
         $(".list.locations").removeClass("edit-list");
         $(".location-name .list-item__edit").hide();
         $(".location-name .list-item__save").hide();
         $(".location-name .list-item__delete").show();
-}
-
-    // handleListControls();
-    
-    
-
-    // function disableListEdit() {
-    // }
+    }
 
     function filterByRange() {
         $(".location-column .list-item").hide();
@@ -668,37 +649,6 @@ $(document).ready(function() {
         $(".list--lookup.locations .list-item.list-item--open-water").show();
     }
 
-    function scrollToName() {
-        $(document.documentElement).animate({
-              scrollTop: $("#event-name").offset().top - 45
-        }, 100);
-     }
-     function scrollToDetails() {
-        $(document.documentElement).animate({
-              scrollTop: $("#event-information").offset().top - 45
-        }, 100);
-     }
-     function scrollToContact() {
-        $(document.documentElement).animate({
-              scrollTop: $("#contact-information").offset().top - 45
-        }, 100);
-     }
-     function scrollToLocation() {
-        $(document.documentElement).animate({
-              scrollTop: $("#location-information").offset().top - 45
-        }, 100);
-     }
-     function scrollToEntryInformation() {
-        $(document.documentElement).animate({
-              scrollTop: $("#entry-information").offset().top - 45
-        }, 100);
-     }
-     function scrollToMeetAnnouncement() {
-        $(document.documentElement).animate({
-              scrollTop: $("#location-information").offset().top - 45
-        }, 100);
-     }
-
     // Get page name to filter location lookup results
     $(document).on("settingPageName", function(event, data) {
         const currentPageName = data.data;
@@ -707,6 +657,15 @@ $(document).ready(function() {
          } else if (currentPageName == "Pool") {
             filterByRange();
             filterByCourse();
+            $("#confirmLocationSelby").click( function() {
+                $("#modalChosePoolConfigurationSelby").modal('show');
+            });
+            $("#confirmLocationHealthfit").click( function() {
+                $("#modalChosePoolConfigurationHealthfit").modal('show');
+            });
+            $("#confirmLocationJensen").click( function() {
+                $("#modalChosePoolConfigurationJensen").modal('show');
+            });
         } else if (currentPageName === "Calendar") {
             filterByRange();
             filterByCourse();
@@ -715,8 +674,49 @@ $(document).ready(function() {
         } else if (currentPageName === "Other Pool") {
             filterByRange();
             filterByCourse();
+            $("#confirmLocationSelby").click( function() {
+                confirmConfiguration();
+                showControlsExisting();
+                $(".list-item-existing").show();
+                // scrollTopSection();
+                // $(this).prop('disabled', true);
+                // $('input[name="configuration-selby').prop("checked", false);
+                $(".list-item-existing .venue__list").show();
+                $(".list-item-existing .venue__list--item.selected").show();
+                $(".list-item-existing .configuration__list").show();
+                $(".list-item-existing .configuration__list--item.selected").show();
+                $(".list-item-existing .configuration__list--item.selected .configuration-title").show();
+            });
+            $("#confirmLocationHealthfit").click( function() {
+                confirmConfiguration();
+                // handleListControls();
+                showControlsExisting();
+                $(".list-item-duplicate").show();
+                // scrollTopSection();
+                // $(this).prop('disabled', true);
+                // $('input[name="configuration-healthfit').prop("checked", false);
+                $(".list-item-duplicate .venue__list").show();
+                $(".list-item-duplicate .venue__list--item.selected").show();
+                $(".list-item-duplicate .configuration__list").show();
+                $(".list-item-duplicate .configuration__list--item.selected").show();
+                $(".list-item-duplicate .configuration__list--item.selected .configuration-title").show();
+            });
+            $("#confirmLocationJensen").click( function() {
+                confirmConfiguration();
+                // handleListControls();
+                showControlsNew();
+                $(".list-item-new").show();
+                // scrollTopSection();
+                // $(this).prop('disabled', true);
+                // $('input[name="configuration-jensen').prop("checked", false);
+                $(".list-item-new .venue__list").show();
+                $(".list-item-new .venue__list--item.selected").show();
+                $(".list-item-new .configuration__list").show();
+                $(".list-item-new .configuration__list--item.selected").show();
+                $(".list-item-new .configuration__list--item.selected .configuration-title").show();
+            });
         }
+        console.log(currentPageName);
     });
     setPageName();
-
 });
