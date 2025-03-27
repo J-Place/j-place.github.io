@@ -677,7 +677,6 @@ $(document).ready(function() {
                 confirmConfiguration();
                 showControlsExisting();
                 $(".list-item-existing").show();
-                // scrollTopSection();
                 // $(this).prop('disabled', true);
                 // $('input[name="configuration-selby').prop("checked", false);
                 // $(".list-item-existing .venue__list").show();
@@ -690,7 +689,6 @@ $(document).ready(function() {
                 confirmConfiguration();
                 showControlsExisting();
                 $(".list-item-duplicate").show();
-                // scrollTopSection();
                 // $(this).prop('disabled', true);
                 // $('input[name="configuration-healthfit').prop("checked", false);
                 // $(".list-item-duplicate .venue__list").show();
@@ -703,7 +701,6 @@ $(document).ready(function() {
                 confirmConfiguration();
                 showControlsNew();
                 $(".list-item-new").show();
-                // scrollTopSection();
                 // $(this).prop('disabled', true);
                 // $('input[name="configuration-jensen').prop("checked", false);
                 // $(".list-item-new .venue__list").show();
