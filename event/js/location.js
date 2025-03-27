@@ -74,11 +74,9 @@ $(document).ready(function() {
         $('.location-name .list__controls').hide();
 
         if ($("#locationType").val() === 'Open Water') {
-            // alert("Open Water Inputs");
             $(".list-item-open-water").show();
             $(".input-group--add-new-course").hide();
         } else {
-            // alert("Yes");
             $(".list-item-new").show();
         }
     });
@@ -199,7 +197,7 @@ $(document).ready(function() {
         $(".list-item-existing .configuration__list--item.selected").show();
         $(".list-item-existing .configuration__list--item.selected .configuration-title").show();
         // if (currentPageName == "Pool") {
-        //     // alert(currentPageName);
+    
         //     $(".location-name .list-item__delete").hide();
         // }
     });
@@ -218,7 +216,7 @@ $(document).ready(function() {
         $(".list-item-duplicate .configuration__list--item.selected").show();
         $(".list-item-duplicate .configuration__list--item.selected .configuration-title").show();
         // if (currentPageName == "Pool") {
-        //     // alert(currentPageName);
+    
         //     $(".location-name .list-item__delete").hide();
         // }
     });
@@ -295,7 +293,6 @@ $(document).ready(function() {
     });
 
     $(".location-name .list-item__save").click( function() {
-        alert("Save");
         $(".location-name .list-item__delete").hide();
     });
 
@@ -543,14 +540,12 @@ $(document).ready(function() {
         $(".location-name > .list__controls").show();
         $(".list.locations").removeClass("edit-list");
         if ($(".list-item-new").css('display') === 'block') {
-            alert("Block");
             $(".location-name .list-item__edit").show();
             $(".location-name .list-item__save").show();
             $(".location-name .list-item__delete").hide();
             $(".list__controls--settings").css('display', 'inline');
         }
         else if ($(".list-item-new").css('display') === 'none') {
-            alert("None");
             $(".location-name .list-item__edit").hide();
             $(".location-name .list-item__save").hide();
             $(".location-name .list-item__delete").show();
@@ -564,7 +559,6 @@ $(document).ready(function() {
     }
 
     function showControlsNew() {
-        alert("show new");
         $(".location-name > .list__controls").show();
         $(".list.locations").removeClass("edit-list");
         $(".location-name .list-item__edit").show();
@@ -575,7 +569,6 @@ $(document).ready(function() {
 
 
     function showControlsExisting() {
-        alert("show existing");
         $(".location-name > .list__controls").show();
         $(".list.locations").removeClass("edit-list");
         $(".location-name .list-item__edit").hide();
@@ -709,7 +702,6 @@ $(document).ready(function() {
     // Get page name to filter location lookup results
     $(document).on("settingPageName", function(event, data) {
         const currentPageName = data.data;
-        // alert(currentPageName);
         if (currentPageName == "Open Water") {
             filterByOpenWater();
          } else if (currentPageName == "Pool") {
@@ -724,7 +716,6 @@ $(document).ready(function() {
             filterByRange();
             filterByCourse();
         }
-        // alert(currentPageName);
     });
     setPageName();
 
