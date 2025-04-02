@@ -88,6 +88,9 @@ $(document).ready(function() {
     $("#saveFormPool").click( function(e) {
         e.preventDefault();
         showControlsNew();
+        setPageName();
+
+        console.log("And this is " + currentPageName);
 
         $(".location-info__add-new-location--container").hide();
         if ($("#locationType").val() === 'Open Water') {
@@ -710,7 +713,7 @@ $(document).ready(function() {
                 $(".list-item-new .configuration__list--item.selected .configuration-title").show();
             });
         }
-        console.log(currentPageName);
+        console.log("This is " + currentPageName);
     });
     setPageName();
 });
