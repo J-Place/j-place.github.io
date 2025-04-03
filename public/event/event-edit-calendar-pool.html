@@ -2058,7 +2058,7 @@
    <div class="section section-accept-submit" id="accept-submit">
       <h3 class="section__header" data-target="#accept-submit__content" data-toggle="collapse in" aria-expanded="false" aria-controls="accept-submit__content">
          <!-- <span class="section__number"></span> -->
-         Accept Terms
+         Accept Terms and Submit Request
       </h3>
       <div class="section__content collapseXXX in" id="accept-submit__content" data-parent="#accordion">
          <div class="row">
@@ -2083,12 +2083,48 @@
          </div>
          <div class="row">
                <div class="section__controls">
-                  <button class="btn save-section" id="buttonId" type="button">Save & Finish</button>
+                  <button class="btn save-section" id="submitEdit" type="button">Save & Submit</button>
                </div>
          </div>
       </div>
    </div>
 </form>
+
+<div class="modal" id="modalSaveEdits" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <p>Thank you for editing your event information. Your event has been sent to the sanctions chair for approval. You should hear back in no more than 14 days.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-md btn-default" id="confirmSaveEditsModal" data-bs-dismiss="modal">Okay</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+<script>
+  let termsSanctioned = $(".terms-sanctioned");
+  let termsRecognized = $(".terms-recognized");
+  $("#selectEventClass").on('change', function() {
+     if ($(this).val() === 'sanctioned') {
+        $(termsRecognized).hide();
+        $(termsSanctioned).show();
+     } else if ($(this).val() === 'recognized') {
+        $(termsRecognized).show();
+        $(termsSanctioned).hide();  
+     }
+  });
+  $("#submitEdit").click( function() {
+     console.log("Y");
+       $("#modalSaveEdits").modal('show');
+   });
+</script>
+
 <script>
    let termsSanctioned = $(".terms-sanctioned");
    let termsRecognized = $(".terms-recognized");
