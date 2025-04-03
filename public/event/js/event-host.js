@@ -220,11 +220,6 @@ $(document).ready(function() {
 
     $("#deleteHostListItem").click(function(e) {
         e.preventDefault();
-        // console.log("This is it and modal should show");
-        // $(this).parent().addClass('list-item--fade-out');
-        // $(this).closest('.list__container').addClass('list__container--modified');
-        // $("#modalDeleteHost").modal('show');
-
         hideLookupConfirmtBtn();
         resetHostSelects();
         $(".contact-info__host-type--container").show();
