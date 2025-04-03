@@ -235,6 +235,13 @@ $(document).ready(function() {
     });
 
 
+    $("#hostTypeOtherStreetAddress").click( function() {
+        console.log("Becky doesn't");
+        $("#modalDuplicateOrganization").modal('show');
+    });
+
+
+
 
 
 });
