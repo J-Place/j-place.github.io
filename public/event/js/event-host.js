@@ -226,7 +226,6 @@ $(document).ready(function() {
         $(".contact-list__event-host--header").hide();
         $(".contact-information__event-host--list .list-item").parent().hide();
         $(".contact-list__event-director-add-new--awaiting-message").hide();
-
     });
 
 

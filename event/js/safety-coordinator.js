@@ -75,13 +75,6 @@ $(document).ready(function() {
     });
 
 
-
-
-
-
-
-
-
     $(".list--safety-coordinator #saveContactList").click(function() {
         var numModified = $('.list__container--modified').length;
         if (numModified > 0) {
@@ -100,6 +93,18 @@ $(document).ready(function() {
         $(this).parent().addClass('list-item--fade-out');
         $(this).closest('.list__container').addClass('list__container--modified');
     });
+
+    $("#deleteSafetyCoordinatorListItem").click(function(e) {
+        e.preventDefault();
+        // hideLookupConfirmtBtn();
+        // resetHostSelects();
+        resetSafetyCoordinator();
+        $(".contact-info__safety-coordinator--container").show();
+        $(".contact-list__safety-coordinator--header").hide();
+        $(".contact-information__safety-coordinator--list .list-item").parent().hide();
+        // $(".contact-list__event-director-add-new--awaiting-message").hide();
+    });
+
 });
 
 

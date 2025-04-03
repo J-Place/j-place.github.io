@@ -1109,12 +1109,10 @@
                 <div class="list__header contact-list__head-ref--header">
                     <span class="lookup-results--head-ref">Head Referee</span>
                     <div class="list__controls contact-list__controls">
-                        <button type="button" class="list__controls--settings" id="listContactSettings"></button>
-                        <button type="button" class="btn btn-link" id="editContactList">Edit</button>
-                        <button type="button" class="btn btn-link" id="saveContactList">Done Editing</button>
-                        <button type="button" class="btn btn-link" id="cancelContactList">Cancel</button>
-                        <!-- <button class="btn btn-link contact-edit-button">Edit</button> -->
-                        <!-- <a href="#" class="btn btn-link contact-remove-button">Remove</a> -->
+                        <button class="list__controls--settings" id="settingsHeadRefListItem"></button>
+                        <!-- <button class="btn btn-link list-item__edit" id="editHeadRefListItem">Edit</button> -->
+                        <!-- <button class="btn btn-link list-item__save" id="saveHeadRefListItem">Done Editing</button> -->
+                        <button class="btn btn-link list-item__delete" id="deleteHeadRefListItem">Remove</button>
                     </div>
                 </div>
             
@@ -1123,7 +1121,7 @@
                         <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
                             <div class="list-item list-item--lookup">
                                 <input type="hidden" class="contact-isMember" value="true">
-                                <button type="button" class="list-item__delete">Remove</button>
+                                <!-- <button type="button" class="list-item__delete">Remove</button> -->
                                 <div class="contact-name">Mark Usher</div>
                                 <div class="contact-location">Sarasota, FL</div>
                                 <!-- <div class="contact-phone"></div> -->
@@ -1135,7 +1133,7 @@
                             <div class="list-item list-item--new">
                                 <input type="hidden" class="contact-isMember" value="true">
                                 <!-- <div class="list-item__pending">Account Pending</div> -->
-                                <button type="button" class="list-item__delete">Remove</button>
+                                <!-- <button type="button" class="list-item__delete">Remove</button> -->
                                 <div class="contact-name">Steve Hall</div>
                                 <div class="contact-location">Sarasota, FL</div>
                                 <!-- <div class="contact-phone"></div> -->
@@ -1312,12 +1310,10 @@
                 <div class="list__header contact-list__safety-coordinator--header">
                     <span class="lookup-results--safety-coordinator">Safety Coordinator</span>
                     <div class="list__controls contact-list__controls">
-                        <a href="#/" class="list__controls--settings" id="listContactSettings"></a>
-                        <a href="#/" class="btn btn-link" id="editContactList">Edit</a>
-                        <a href="#/" class="btn btn-link" id="saveContactList">Done Editing</a>
-                        <a href="#/" class="btn btn-link" id="cancelContactList">Cancel</a>
-                        <!-- <button class="btn btn-link contact-edit-button">Edit</button> -->
-                        <!-- <a href="#" class="btn btn-link contact-remove-button">Remove</a> -->
+                        <button class="list__controls--settings" id="settingsSafetyCoordinatorListItem"></button>
+                        <!-- <button class="btn btn-link list-item__edit" id="editSafetyCoordinatorListItem">Edit</button> -->
+                        <!-- <button class="btn btn-link list-item__save" id="saveSafetyCoordinatorListItem">Done Editing</button> -->
+                        <button class="btn btn-link list-item__delete" id="deleteSafetyCoordinatorListItem">Remove</button>
                     </div>
                 </div>
             
@@ -1326,7 +1322,7 @@
                         <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
                             <div class="list-item list-item--lookup">
                                 <input type="hidden" class="contact-isMember" value="true">
-                                <button type="button" class="list-item__delete">Remove</button>
+                                <!-- <button type="button" class="list-item__delete">Remove</button> -->
                                 <div class="contact-name">Jay Place</div>
                                 <div class="contact-location">Sarasota, FL</div>
                                 <!-- <div class="contact-phone"></div> -->
@@ -1338,7 +1334,7 @@
                             <div class="list-item list-item--new">
                                 <input type="hidden" class="contact-isMember" value="true">
                                 <!-- <div class="list-item__pending">Account Pending</div> -->
-                                <button type="button" class="list-item__delete">Remove</button>
+                                <!-- <button type="button" class="list-item__delete">Remove</button> -->
                                 <div class="contact-name">Daniel Pauling</div>
                                 <div class="contact-location">Sarasota, FL</div>
                                 <!-- <div class="contact-phone"></div> -->
@@ -1688,7 +1684,8 @@
 
 <script>
 
-    $(".list--event-host .list-item__delete").show();
+    $(".contact-list .list-item__delete").show();
+    // $(".list--event-host .list-item__delete").show(); 
 
     // // Enable Contact Section Save & Continue
     // $("#contact-information input").click( function() {
@@ -3152,7 +3149,7 @@
    <div class="section section-accept-submit" id="accept-submit">
       <h3 class="section__header" data-target="#accept-submit__content" data-toggle="collapse in" aria-expanded="false" aria-controls="accept-submit__content">
          <!-- <span class="section__number"></span> -->
-         Accept Terms
+         Accept Terms and Submit Request
       </h3>
       <div class="section__content collapseXXX in" id="accept-submit__content" data-parent="#accordion">
             <div class="row">
@@ -3191,7 +3188,7 @@
 
             <div class="row">
                   <div class="section__controls">
-                     <button class="btn save-section" id="submitEdit" type="button">Save & Finish</button>
+                     <button class="btn save-section" id="submitEdit" type="button">Save & Submit</button>
                   </div>
             </div>
          </div>
