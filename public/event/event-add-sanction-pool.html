@@ -1027,7 +1027,7 @@
         </div>
     </div>
     <!-- Add New Ref Button -->
-    <div class="form-group contact-info__head-ref-new--add-new">
+    <!-- <div class="form-group contact-info__head-ref-new--add-new">
         <div class="row">
             <div class="col-sm-12 col-md-8">
                 <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">Or Add a New Head Referee</p>
@@ -1036,7 +1036,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- Add New Ref Form -->
     <div class="form-group contact-info__head-ref--add-new-container add-new-inputs">
         <div class="row">
@@ -1565,10 +1565,18 @@
                     <div class="list__header contact-list__event-host--header required">
                         <span class="lookup-results--event-host">Event Host</span>
                         <div class="list__controls contact-list__controls">
+                            <!-- 
                             <button type="button" class="list__controls--settings" id="listContactSettings"></button>
                             <button type="button" class="btn btn-link" id="editContactList">Edit</button>
                             <button type="button" class="btn btn-link" id="saveContactList">Done Editing</button>
-                            <button type="button" class="btn btn-link" id="cancelContactList">Cancel</button>
+                            <button type="button" class="btn btn-link" id="cancelContactList">Cancel</button> 
+                            -->
+                            
+                            <button class="list__controls--settings" id="settingsListEventLocationExisting"></button>
+                            <button class="btn btn-link list-item__edit" id="editListEventLocationExisting">Edit</button>
+                            <button class="btn btn-link list-item__save" id="saveContactList">Done Editing</button>
+                            <button class="btn btn-link list-item__delete" id="deleteContactList">Remove</button>
+
                             <!-- <button class="btn btn-link contact-edit-button">Edit</button> -->
                             <!-- <a href="#" class="btn btn-link contact-remove-button">Remove</a> -->
                         </div>
@@ -1578,7 +1586,7 @@
                         <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
                             <div class="list-item list-item--lmsc">
                                 <input type="hidden" class="contact-isMember" value="true">
-                                <button type="button" class="list-item__delete">Remove</button>
+                                <!-- <button type="button" class="list-item__delete">Remove</button> -->
                                 <!-- <div class="list-item__pending">Host Pending</div> -->
                                 <div class="contact-name">Florida LMSC</div>
                                 <!-- <div class="contact-location"></div> -->
@@ -1590,7 +1598,7 @@
                         <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
                             <div class="list-item list-item--club">
                                 <input type="hidden" class="contact-isMember" value="true">
-                                <button type="button" class="list-item__delete">Remove</button>
+                                <!-- <button type="button" class="list-item__delete">Remove</button> -->
                                 <div class="contact-name">Sarasota Sharks</div>
                                 <div class="contact-location">Sarasota, FL</div>
                                 <!-- <div class="contact-phone"></div> -->
@@ -1601,7 +1609,7 @@
                         <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
                             <div class="list-item list-item--current">
                                 <input type="hidden" class="contact-isMember" value="true">
-                                <button type="button" class="list-item__delete">Remove</button>
+                                <!-- <button type="button" class="list-item__delete">Remove</button> -->
                                 <div class="contact-name">Jay Place</div>
                                 <div class="contact-location">Sarasota, FL</div>
                                 <!-- <div class="contact-phone"></div> -->
@@ -1612,7 +1620,7 @@
                         <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
                             <div class="list-item list-item--organization-lookup">
                                 <input type="hidden" class="contact-isMember" value="true">
-                                <button type="button" class="list-item__delete">Remove</button>
+                                <!-- <button type="button" class="list-item__delete">Remove</button> -->
                                 <!-- <div class="list-item__pending">Host Pending</div> -->
                                 <div class="contact-name">Rainbow River Swim Club</div>
                                 <div class="contact-location">Dunnedin, FL</div>
@@ -1624,7 +1632,7 @@
                         <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
                             <div class="list-item list-item--organization-new">
                                 <input type="hidden" class="contact-isMember" value="true">
-                                <button type="button" class="list-item__delete">Remove</button>
+                                <!-- <button type="button" class="list-item__delete">Remove</button> -->
                                 <!-- <div class="list-item__pending">Host Pending</div> -->
                                 <div class="contact-name">Cape Coral Yach Club</div>
                                 <div class="contact-location">Cape Coral, FL</div>
@@ -1641,6 +1649,7 @@
         </div>
 
     </div>
+    
     <script src="./js/event-host.js"></script>
 </div>
 
@@ -1657,27 +1666,30 @@
 </form>
 
 <script>
-    // Enable Contact Section Save & Continue
-    $("#contact-information input").click( function() {
-        $("#saveContactInfoSection").prop('disabled', false);
-    });
-    // Save Contact Section
-    $("#saveContactInfoSection").click( function() {
-        $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
-        $('#accordion').find('.collapse.in').parent().addClass('hasData');
-        $("#location-information h3").click();
-        scrollToLocation();
-    });
-    // Contact List Edit
-    $("[class^='list list--'] #editContactList").click(function() {
-        $(this).closest(".list").addClass("edit-list");
-    });
-    // Contact List Cancel
-    $("[class^='list list--'] #cancelContactList").click(function() {
-        $(".list").removeClass("edit-list");
-        $(".list-item").removeClass("list-item--fade-out");
-        $('.list__container').removeClass('list__container--modified');
-    });
+
+    $(".list--event-host .list-item__delete").show();
+
+    // // Enable Contact Section Save & Continue
+    // $("#contact-information input").click( function() {
+    //     $("#saveContactInfoSection").prop('disabled', false);
+    // });
+    // // Save Contact Section
+    // $("#saveContactInfoSection").click( function() {
+    //     $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+    //     $('#accordion').find('.collapse.in').parent().addClass('hasData');
+    //     $("#location-information h3").click();
+    //     scrollToLocation();
+    // });
+    // // Contact List Edit
+    // $("[class^='list list--'] #editContactList").click(function() {
+    //     $(this).closest(".list").addClass("edit-list");
+    // });
+    // // Contact List Cancel
+    // $("[class^='list list--'] #cancelContactList").click(function() {
+    //     $(".list").removeClass("edit-list");
+    //     $(".list-item").removeClass("list-item--fade-out");
+    //     $('.list__container').removeClass('list__container--modified');
+    // });
 </script>                              
                               <form id="form-location-info">
    <div class="section section-location-information" id="location-information">

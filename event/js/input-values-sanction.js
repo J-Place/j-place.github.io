@@ -89,6 +89,7 @@ $(document).ready(function() {
     $(".configuration__list--item.selected").show();
     $(".configuration__list--item.selected .configuration-title").show();   
     $('.location-name .list__controls').show();
+    $(".location-name .list-item__delete").show();
 
 
 

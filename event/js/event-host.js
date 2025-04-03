@@ -205,21 +205,6 @@ $(document).ready(function() {
         $("#addNewOrganization").show();
     });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     $(".list--event-host #saveContactList").click(function() {
         var numModified = $('.list__container--modified').length;
         if (numModified > 0) {
@@ -233,12 +218,20 @@ $(document).ready(function() {
         $('.list__container').removeClass('list__container--modified');
     });
 
-    $(".contact-group--host-type .list-item__delete").click(function() {
-        $(this).parent().addClass('list-item--fade-out');
-        $(this).closest('.list__container').addClass('list__container--modified');
+    $("#deleteContactList").click(function(e) {
+        e.preventDefault();
+        console.log("This is it and modal should show");
+        // $(this).parent().addClass('list-item--fade-out');
+        // $(this).closest('.list__container').addClass('list__container--modified');
+        $("#modalDeleteHost").modal('show');
     });
 
+
+
+
 });
+
+
 
 function resetEventHost() {
     $(".contact-information__event-host--list").hide();

@@ -44,25 +44,28 @@
 </form>
 
 <script>
-    // Enable Contact Section Save & Continue
-    $("#contact-information input").click( function() {
-        $("#saveContactInfoSection").prop('disabled', false);
-    });
-    // Save Contact Section
-    $("#saveContactInfoSection").click( function() {
-        $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
-        $('#accordion').find('.collapse.in').parent().addClass('hasData');
-        $("#location-information h3").click();
-        scrollToLocation();
-    });
-    // Contact List Edit
-    $("[class^='list list--'] #editContactList").click(function() {
-        $(this).closest(".list").addClass("edit-list");
-    });
-    // Contact List Cancel
-    $("[class^='list list--'] #cancelContactList").click(function() {
-        $(".list").removeClass("edit-list");
-        $(".list-item").removeClass("list-item--fade-out");
-        $('.list__container').removeClass('list__container--modified');
-    });
+
+    $(".list--event-host .list-item__delete").show();
+
+    // // Enable Contact Section Save & Continue
+    // $("#contact-information input").click( function() {
+    //     $("#saveContactInfoSection").prop('disabled', false);
+    // });
+    // // Save Contact Section
+    // $("#saveContactInfoSection").click( function() {
+    //     $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+    //     $('#accordion').find('.collapse.in').parent().addClass('hasData');
+    //     $("#location-information h3").click();
+    //     scrollToLocation();
+    // });
+    // // Contact List Edit
+    // $("[class^='list list--'] #editContactList").click(function() {
+    //     $(this).closest(".list").addClass("edit-list");
+    // });
+    // // Contact List Cancel
+    // $("[class^='list list--'] #cancelContactList").click(function() {
+    //     $(".list").removeClass("edit-list");
+    //     $(".list-item").removeClass("list-item--fade-out");
+    //     $('.list__container').removeClass('list__container--modified');
+    // });
 </script>
