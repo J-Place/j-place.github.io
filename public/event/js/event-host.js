@@ -218,12 +218,20 @@ $(document).ready(function() {
         $('.list__container').removeClass('list__container--modified');
     });
 
-    $("#deleteContactList").click(function(e) {
+    $("#deleteHostListItem").click(function(e) {
         e.preventDefault();
-        console.log("This is it and modal should show");
+        // console.log("This is it and modal should show");
         // $(this).parent().addClass('list-item--fade-out');
         // $(this).closest('.list__container').addClass('list__container--modified');
-        $("#modalDeleteHost").modal('show');
+        // $("#modalDeleteHost").modal('show');
+
+        hideLookupConfirmtBtn();
+        resetHostSelects();
+        $(".contact-info__host-type--container").show();
+        $(".contact-list__event-host--header").hide();
+        $(".contact-information__event-host--list .list-item").parent().hide();
+        $(".contact-list__event-director-add-new--awaiting-message").hide();
+
     });
 
 
