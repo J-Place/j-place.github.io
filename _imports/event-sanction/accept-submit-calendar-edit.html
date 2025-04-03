@@ -1,0 +1,51 @@
+<form id="form-accept-submit">
+   <div class="section section-accept-submit" id="accept-submit">
+      <h3 class="section__header" data-target="#accept-submit__content" data-toggle="collapse in" aria-expanded="false" aria-controls="accept-submit__content">
+         <!-- <span class="section__number"></span> -->
+         Accept Terms and Submit Request
+      </h3>
+      <div class="section__content collapseXXX in" id="accept-submit__content" data-parent="#accordion">
+         <div class="row">
+            <div class="col-xs-12">
+               <div class="card liability submit">
+
+                  <div class="form-group agree-terms">
+                     <div class="input-group checkbox-group payment-agreement">
+                           <label class="checkbox-label" for="agreeTerms">
+                              <div class="checkbox-container">
+                                 <input name="agree-terms" type="checkbox" id="agreeTerms" onchange="">
+                                 <span class="checkbox__placeholder"></span>
+                              </div>
+                              I agree that all information I'm providing is factual.
+                           </label>
+                           <span class="help-block help-block--agreeTerms">Please agree to the terms</span>
+                     </div>
+                  </div>
+
+               </div>
+            </div>
+         </div>
+         <div class="row">
+               <div class="section__controls">
+                  <button class="btn save-section" id="submitEdit" type="button">Save & Submit</button>
+               </div>
+         </div>
+      </div>
+   </div>
+</form>
+
+<sergey-import src="event-sanction/modal-save-edits" />
+
+<script>
+   let termsSanctioned = $(".terms-sanctioned");
+   let termsRecognized = $(".terms-recognized");
+   $("#selectEventClass").on('change', function() {
+      if ($(this).val() === 'sanctioned') {
+         $(termsRecognized).hide();
+         $(termsSanctioned).show();
+      } else if ($(this).val() === 'recognized') {
+         $(termsRecognized).show();
+         $(termsSanctioned).hide();  
+      }
+   });
+</script>

@@ -344,6 +344,11 @@
                                  <a href="event-dashboard.html" class="btn btn-link">Go Back</a>
                            </div> -->
 
+                           <div class="form-header manage-event">
+                              <p>Please view or edit your event information below. Except for Event Type, you can make edits to any section. If you make an edit, you must click 'Save & Continue' to proceed to the next section. Once you have finished editing, click 'Save & Submit'.</p>
+                              <br />
+                           </div>
+
                            <div class="accordion-group">
                               <form id="form-event-name">
     <div class="section section-event-name" id="event-name">
@@ -1316,7 +1321,7 @@
     <div class="row contact-list contact-info__safety-coordinator-list">
         <div class="form-group contact-information__safety-coordinator--list">
             <div class="list list--safety-coordinator list--lookup people">
-                <div class="list__header contact-list__safety-coordinator--header required">
+                <div class="list__header contact-list__safety-coordinator--header">
                     <span class="lookup-results--safety-coordinator">Safety Coordinator</span>
                     <div class="list__controls contact-list__controls">
                         <a href="#/" class="list__controls--settings" id="listContactSettings"></a>
@@ -3122,7 +3127,7 @@
    <div class="section section-accept-submit" id="accept-submit">
       <h3 class="section__header" data-target="#accept-submit__content" data-toggle="collapse in" aria-expanded="false" aria-controls="accept-submit__content">
          <!-- <span class="section__number"></span> -->
-         Accept Terms
+         Accept Terms and Submit Request
       </h3>
       <div class="section__content collapseXXX in" id="accept-submit__content" data-parent="#accordion">
             <div class="row">
@@ -3144,24 +3149,10 @@
                   </div>
                </div>
             </div>
-            
-            <!-- <div class="modal fade" id="modalID" tabindex="-1" role="dialog">
-                  <div class="modal-dialog" role="document">
-                     <div class="modal-content">
-                        <div class="modal-header">
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                              <h4 class="modal-title"></h4>
-                        </div>
-                        <div class="modal-body">
-                              <p>The abbreviation you have selected is already in use by another club. Please pick another one.</p>
-                        </div>
-                     </div>
-                  </div>
-            </div> -->
 
             <div class="row">
                   <div class="section__controls">
-                     <button class="btn save-section" id="submitSanction" type="button">Save & Finish</button>
+                     <button class="btn save-section" id="submitEdit" type="button">Save & Submit</button>
                   </div>
             </div>
          </div>
@@ -3169,19 +3160,43 @@
       </div>
    <!-- </div> -->
 </form>
+
+<div class="modal" id="modalSaveEdits" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <p>Thank you for editing your event information. Your event has been sent to the sanctions chair for approval. You should hear back in no more than 14 days.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-md btn-default" id="confirmSaveEditsModal" data-bs-dismiss="modal">Okay</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+
 <script>
-   let termsSanctioned = $(".terms-sanctioned");
-   let termsRecognized = $(".terms-recognized");
-   $("#selectEventClass").on('change', function() {
-      if ($(this).val() === 'sanctioned') {
-         $(termsRecognized).hide();
-         $(termsSanctioned).show();
-      } else if ($(this).val() === 'recognized') {
-         $(termsRecognized).show();
-         $(termsSanctioned).hide();  
-      }
+  let termsSanctioned = $(".terms-sanctioned");
+  let termsRecognized = $(".terms-recognized");
+  $("#selectEventClass").on('change', function() {
+     if ($(this).val() === 'sanctioned') {
+        $(termsRecognized).hide();
+        $(termsSanctioned).show();
+     } else if ($(this).val() === 'recognized') {
+        $(termsRecognized).show();
+        $(termsSanctioned).hide();  
+     }
+  });
+  $("#submitEdit").click( function() {
+     console.log("Y");
+       $("#modalSaveEdits").modal('show');
    });
 </script>
+
+
                            </div>
 
                         </div>

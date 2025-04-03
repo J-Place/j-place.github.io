@@ -363,6 +363,7 @@
                                   </div>
                               </div>
                            </div>
+
                            <div class="accordion-group">
                               <form id="form-event-name">
     <div class="section section-event-name" id="event-name">
@@ -2614,14 +2615,12 @@
          $('#accordion').find('.collapse').parent().addClass('hasData');
 
          // Upgrade to sanction button and meet announcement modal
-         var modalConfirmMeetAnnouncement = new bootstrap.Modal(
-            document.getElementById('modalConfirmMeetAnnouncement'), 
-            { backdrop: 'static', keyboard: false }
-         );
+         var modalConfirmMeetAnnouncement = new bootstrap.Modal(document.getElementById('modalConfirmMeetAnnouncement'));
          $("#upgradeToSanction").click( function() {
             $("#modalConfirmMeetAnnouncement").removeClass('fade');
             modalConfirmMeetAnnouncement.show();
          });
+
       </script>
       
    </body>

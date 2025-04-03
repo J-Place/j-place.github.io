@@ -87,6 +87,7 @@
                                   </div>
                               </div>
                            </div>
+
                            <div class="accordion-group">
                               <sergey-import src="event-sanction/01-event-name" />
                               <sergey-import src="event-sanction/02-event-information-calendar" />
@@ -120,14 +121,12 @@
          $('#accordion').find('.collapse').parent().addClass('hasData');
 
          // Upgrade to sanction button and meet announcement modal
-         var modalConfirmMeetAnnouncement = new bootstrap.Modal(
-            document.getElementById('modalConfirmMeetAnnouncement'), 
-            { backdrop: 'static', keyboard: false }
-         );
+         var modalConfirmMeetAnnouncement = new bootstrap.Modal(document.getElementById('modalConfirmMeetAnnouncement'));
          $("#upgradeToSanction").click( function() {
             $("#modalConfirmMeetAnnouncement").removeClass('fade');
             modalConfirmMeetAnnouncement.show();
          });
+
       </script>
       
    </body>
