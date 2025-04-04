@@ -84,6 +84,7 @@ $(document).ready(function() {
 
     $(".contact-info__host-type--container").hide();
     $(".contact-information__event-host--list").show();
+    $(".list--event-host .list-item__delete").show();
     $(".contact-list__event-host--header").show();
 
     // $(".list-item--organization-new").parent().show();

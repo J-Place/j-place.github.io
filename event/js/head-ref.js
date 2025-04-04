@@ -48,6 +48,7 @@ $(document).ready(function() {
         $("#cancelAddHeadRef").hide();
         $(".contact-list__head-ref--header").show();
         $(".contact-info__head-ref-list .list-item--lookup").parent().show();
+        $(".list--head-ref .list-item__delete").show();
     });
 
     // Select Add New Ref -> Open Form
@@ -69,6 +70,7 @@ $(document).ready(function() {
         $("#cancelAddHeadRef").show();
         $(".contact-list__head-ref--header").show();
         $(".contact-info__head-ref-list .list-item--new").parent().show();
+        $(".list--head-ref .list-item__delete").show();
     });
 
     $("#cancelNewHeadRefBtn").click(function(e) {
@@ -90,6 +92,7 @@ $(document).ready(function() {
         $("#cancelAddHeadRef").show();
         $(".contact-list__head-ref--header").show();
         $(".contact-info__head-ref-list .list-item--new").parent().show();
+        $(".list--head-ref .list-item__delete").show();
     });
 
 

@@ -45,6 +45,7 @@ $(document).ready(function() {
         $("#lookupSafetyCoordinatorName").attr("placeholder", "");
         $(".contact-list__safety-coordinator--header").show();
         $(".contact-info__safety-coordinator-list .list-item--lookup").parent().show();
+        $(".list--safety-coordinator .list-item__delete").show();
     });
 
     // Select Add New Safety -> Open Form
@@ -66,6 +67,7 @@ $(document).ready(function() {
         $("#addSafetyCoordinator").show();
         $(".contact-list__safety-coordinator--header").show();
         $(".contact-info__safety-coordinator-list .list-item--new").parent().show();
+        $(".list--safety-coordinator .list-item__delete").show();
     });
 
     $("#cancelNewSafetyCoordinatorBtn").click(function(e) {
@@ -105,7 +107,7 @@ $(document).ready(function() {
         $(".contact-list__safety-coordinator--header").hide();
         $(".contact-information__safety-coordinator--list .list-item").parent().hide();
         // $(".contact-list__event-director-add-new--awaiting-message").hide();
-
+        $(".list--safety-coordinator .list-item__delete").show();
         $(".list-item").removeClass('list-item--fade-out');
     });
 

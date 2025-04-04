@@ -54,6 +54,8 @@ $(document).ready(function() {
             $("#addNewOrganization").show();
             $(".contact-information__event-host--list .list-item").parent().hide();
             $(".contact-information__event-host--list .list-item--organization").parent().show();
+            $(".contact-information__event-host--list").show();
+            $(".list--event-host .list-item__delete").show();
         }
         if ($(this).val() === 'Event Director/Single Person') {
             $(".contact-info__host-type-lmsc--container").hide();
@@ -65,6 +67,7 @@ $(document).ready(function() {
             $(".contact-information__event-host--list .list-item").parent().hide();
             $(".contact-information__event-host--list .list-item--current").parent().show();
             $(".contact-information__event-host--list").show();
+            $(".list--event-host .list-item__delete").show();
         }
     });
 
@@ -90,6 +93,7 @@ $(document).ready(function() {
         $(".contact-information__event-host--list").show();
         $(".contact-information__event-host--list .list-item").parent().hide();
         $(".contact-information__event-host--list .list-item--lmsc").parent().show();
+        $(".list--event-host .list-item__delete").show();
     });
     
     // $("#editHostList").click(function(e) {
@@ -136,6 +140,7 @@ $(document).ready(function() {
         $(".contact-information__event-host--list").show();
         $(".contact-information__event-host--list .list-item").parent().hide();
         $(".contact-information__event-host--list .list-item--club").parent().show();
+        $(".list--event-host .list-item__delete").show();
     });
     
     $("#confirmCurrentHost").click(function(e) {
@@ -148,6 +153,7 @@ $(document).ready(function() {
         enableListControlEditing();
         $(".contact-info__host-type--container").hide();
         $(".contact-list__event-host--header").show();
+        $(".list--event-host .list-item__delete").show();
     });
     
     $("#addNewOrganization").click(function(e) {
@@ -159,6 +165,7 @@ $(document).ready(function() {
         $(".contact-info-host-type__other-organization--container").show();
         $("#addHostTypeOtherOrganizationLookup").hide();
         $("#addNewHeadRef").hide();
+        $(".list--event-host .list-item__delete").show();
     });
 
     $("#addHostTypeOtherBtn").click(function(e) {
@@ -179,6 +186,7 @@ $(document).ready(function() {
         $(".contact-information__event-host--list").show();
         $(".contact-information__event-host--list .list-item").parent().hide(); // Hide any existing list items
         $(".contact-information__event-host--list .list-item--organization-new").parent().show(); // Show this list item
+        $(".list--event-host .list-item__delete").show();
     });
 
     $("#addHostTypeOtherOrganizationLookup").click(function(e) {
@@ -195,8 +203,9 @@ $(document).ready(function() {
         $(".contact-info-host-type__other--container").hide();
         $(".contact-info__host-type--container").hide();        
         $(".contact-list__event-host--header").show();
-        $(".contact-information__event-host--list").show();
         $(".list-item--organization-lookup").parent().show();
+        $(".contact-information__event-host--list").show();
+        $(".list--event-host .list-item__delete").show();
     });
     
     $("#cancelAddHostTypeOtherBtn").click(function(e) {
@@ -230,7 +239,6 @@ $(document).ready(function() {
 
 
     $("#hostTypeOtherStreetAddress").click( function() {
-        console.log("Becky doesn't");
         $("#modalDuplicateOrganization").modal('show');
     });
 
@@ -239,7 +247,6 @@ $(document).ready(function() {
 
 
 });
-
 
 
 function resetEventHost() {

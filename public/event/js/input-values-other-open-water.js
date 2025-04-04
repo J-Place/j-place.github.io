@@ -25,9 +25,10 @@ function setSelectValues(selects, values) {
     });
 }
 
+
 $(document).ready(function() {
 
-        ///////////////////////////////////////////////////// Checkboxes
+    ///////////////////////////////////////////////////// Checkboxes
     // $("#lessThan1").prop("checked", true);
     $("#1-3Miles").prop("checked", true);
     $("#3-6Miles").prop("checked", true);
@@ -88,10 +89,14 @@ $(document).ready(function() {
     $(".list-item-existing").show();    
     $(".contact-information__event-host--list").show();
     $(".contact-list__event-host--header").show();
+    
+    $(".list--event-host .list-item__delete").show();
+    
     $(".list-item--organization-new").parent().show();
     $(".list-item--organization-new").show();
     $(".venue__list--item:first-of-type").show();
     $(".venue__list--item:first-of-type .configuration-title:last-of-type").show();
+
 
 });
 

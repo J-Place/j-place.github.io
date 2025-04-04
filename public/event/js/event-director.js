@@ -41,7 +41,7 @@ $(document).ready(function() {
         enableListControlEditing();
         $("#selectHostType").prop("disabled", false);
         $(".contact-info__event-director-privacy--container").show();
-        // $(".list--event-director .list-item__delete").show();
+        $(".list--event-director .list-item__delete").show();
     });
 
 // Someone Else is the Event Director
@@ -91,6 +91,7 @@ $(document).ready(function() {
         $(".contact-information__event-director--list .list-item--lookup").parent().show();
         $("#lookupEventDirectorName").attr("placeholder", "");
         $(".contact-info__event-director-privacy--container").show();
+        $(".list--event-director .list-item__delete").show();
     });
 
 // Open Form to Add New Event Director
@@ -101,6 +102,7 @@ $(document).ready(function() {
         $("#addAsEventDirector").hide();
         $(".contact-info__event-director--add-new-container.add-new-inputs").show();
         $("#lookupEventDirectorName").attr("placeholder", "");
+        $(".list--event-director .list-item__delete").show();
     });
 
 // Save New Event Director from Form
@@ -195,7 +197,6 @@ $(document).ready(function() {
         $(".contact-list__event-host--header").hide();
         $(".contact-information__event-host--list .list-item").parent().hide();
         $(".contact-list__event-director-add-new--awaiting-message").hide();
-        $(".list--event-director .list-item__delete").show();
     });
 
 });

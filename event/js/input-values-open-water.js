@@ -115,7 +115,7 @@ $(document).ready(function() {
 
     // $("#agreeTerms").prop('checked', true);
 
-    
+    $(".list--event-host .list-item__delete").show();    
 
 });
 
