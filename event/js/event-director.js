@@ -41,6 +41,7 @@ $(document).ready(function() {
         enableListControlEditing();
         $("#selectHostType").prop("disabled", false);
         $(".contact-info__event-director-privacy--container").show();
+        // $(".list--event-director .list-item__delete").show();
     });
 
 // Someone Else is the Event Director
@@ -175,13 +176,27 @@ $(document).ready(function() {
         }
     });
 
-    $(".list--event-director .list-item__delete").click(function() {
-        $(this).parent().addClass('list-item--fade-out');
-        $(this).closest('.list__container').addClass('list__container--modified');
-        $(".contact-info__event-director-privacy--container").hide();
-        $(".contact-list__event-director-add-new--awaiting-message").hide();
-    });
+    // $(".list--event-director .list-item__delete").click(function(e) {
+    //     e.preventDefault();
+    //     $(this).parent().addClass('list-item--fade-out');
+    //     resetEventDirector();
+    //     // $(this).closest('.list__container').addClass('list__container--modified');
+    //     // $(".contact-info__event-director-privacy--container").hide();
+    //     // $(".contact-list__event-director-add-new--awaiting-message").hide();
+    // });
 
+
+    $("#deleteEventDirectorListItem").click(function(e) {
+        e.preventDefault();
+        hideLookupConfirmtBtn();
+        // resetHostSelects();
+        resetEventDirector();
+        $(".contact-info__host-type--container").show();
+        $(".contact-list__event-host--header").hide();
+        $(".contact-information__event-host--list .list-item").parent().hide();
+        $(".contact-list__event-director-add-new--awaiting-message").hide();
+        $(".list--event-director .list-item__delete").show();
+    });
 
 });
 

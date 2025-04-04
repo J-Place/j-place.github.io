@@ -50,7 +50,7 @@ $(document).ready(function() {
     // Select Add New Safety -> Open Form
     $("#addNewSafetyCoordinator").click(function(e) {
         e.preventDefault();
-        $("#addNewSafetyCoordinator").hide();
+        // $("#addNewSafetyCoordinator").hide();
         closeLookupSafetyCoordinator();
         openAddSafetyCoordinatorForm();
         $("#lookupSafetyCoordinatorName").attr("placeholder", "");
@@ -89,9 +89,11 @@ $(document).ready(function() {
     });
 
 
-    $(".contact-group--safety-coordinator .list-item__delete").click(function() {
-        $(this).parent().addClass('list-item--fade-out');
-        $(this).closest('.list__container').addClass('list__container--modified');
+    $(".contact-group--safety-coordinator .list-item__delete").click(function(e) {
+        e.preventDefault();
+        // $(this).parent().addClass('list-item--fade-out');
+        // $(this).closest('.list__container').addClass('list__container--modified');
+        resetSafetyCoordinator();
     });
 
     $("#deleteSafetyCoordinatorListItem").click(function(e) {
@@ -103,6 +105,8 @@ $(document).ready(function() {
         $(".contact-list__safety-coordinator--header").hide();
         $(".contact-information__safety-coordinator--list .list-item").parent().hide();
         // $(".contact-list__event-director-add-new--awaiting-message").hide();
+
+        $(".list-item").removeClass('list-item--fade-out');
     });
 
 });

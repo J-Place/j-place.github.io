@@ -304,7 +304,7 @@ $(document).ready(function() {
     });
 
     $(".location-name .list-item__save").click( function() {
-        $(".location-name .list-item__delete").hide();
+        // $(".location-name .list-item__delete").hide();
     });
 
     $("#confirmDeleteLocation").click( function() {
@@ -533,7 +533,7 @@ $(document).ready(function() {
         if ($(".list-item-new").css('display') === 'block') {
             $(".location-name .list-item__edit").show();
             $(".location-name .list-item__save").show();
-            $(".location-name .list-item__delete").hide();
+            // $(".location-name .list-item__delete").hide();
             $(".list__controls--settings").css('display', 'inline');
         }
         else if ($(".list-item-new").css('display') === 'none') {

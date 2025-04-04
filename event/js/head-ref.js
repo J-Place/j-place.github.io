@@ -117,9 +117,11 @@ $(document).ready(function() {
         $('.list__container').removeClass('list__container--modified');
     });
 
-    $(".contact-group--head-ref .list-item__delete").click(function() {
-        $(this).parent().addClass('list-item--fade-out');
-        $(this).closest('.list__container').addClass('list__container--modified');
+    $(".contact-group--head-ref .list-item__delete").click(function(e) {
+        e.preventDefault();
+        // $(this).parent().addClass('list-item--fade-out');
+        resetHeadRefSection();
+        // $(this).closest('.list__container').addClass('list__container--modified');
     });
 
     function listItemRemoved() {
