@@ -671,6 +671,30 @@ $(document).ready(function() {
         } else if (currentPageName === "Calendar") {
             filterByRange();
             filterByCourse();
+            $("#confirmLocationSelby").click( function() {
+                confirmConfiguration();
+                showControlsExisting();
+                $(".list-item-existing").show();
+                $(".list-item-existing .configuration__list").show();
+                $(".list-item-existing .configuration__list--item.selected").show();
+                $(".list-item-existing .configuration__list--item.selected .configuration-title").show();
+            });
+            $("#confirmLocationHealthfit").click( function() {
+                confirmConfiguration();
+                showControlsExisting();
+                $(".list-item-duplicate").show();
+                $(".list-item-duplicate .configuration__list").show();
+                $(".list-item-duplicate .configuration__list--item.selected").show();
+                $(".list-item-duplicate .configuration__list--item.selected .configuration-title").show();
+            });
+            $("#confirmLocationJensen").click( function() {
+                confirmConfiguration();
+                showControlsNew();
+                $(".list-item-new").show();
+                $(".list-item-new .configuration__list").show();
+                $(".list-item-new .configuration__list--item.selected").show();
+                $(".list-item-new .configuration__list--item.selected .configuration-title").show();
+            });
         } else if (currentPageName === "Other Open Water") {
             filterByOpenWater();
         } else if (currentPageName === "Other Pool") {
@@ -680,10 +704,6 @@ $(document).ready(function() {
                 confirmConfiguration();
                 showControlsExisting();
                 $(".list-item-existing").show();
-                // $(this).prop('disabled', true);
-                // $('input[name="configuration-selby').prop("checked", false);
-                // $(".list-item-existing .venue__list").show();
-                // $(".list-item-existing .venue__list--item.selected").show();
                 $(".list-item-existing .configuration__list").show();
                 $(".list-item-existing .configuration__list--item.selected").show();
                 $(".list-item-existing .configuration__list--item.selected .configuration-title").show();
@@ -692,10 +712,6 @@ $(document).ready(function() {
                 confirmConfiguration();
                 showControlsExisting();
                 $(".list-item-duplicate").show();
-                // $(this).prop('disabled', true);
-                // $('input[name="configuration-healthfit').prop("checked", false);
-                // $(".list-item-duplicate .venue__list").show();
-                // $(".list-item-duplicate .venue__list--item.selected").show();
                 $(".list-item-duplicate .configuration__list").show();
                 $(".list-item-duplicate .configuration__list--item.selected").show();
                 $(".list-item-duplicate .configuration__list--item.selected .configuration-title").show();
@@ -704,10 +720,6 @@ $(document).ready(function() {
                 confirmConfiguration();
                 showControlsNew();
                 $(".list-item-new").show();
-                // $(this).prop('disabled', true);
-                // $('input[name="configuration-jensen').prop("checked", false);
-                // $(".list-item-new .venue__list").show();
-                // $(".list-item-new .venue__list--item.selected").show();
                 $(".list-item-new .configuration__list").show();
                 $(".list-item-new .configuration__list--item.selected").show();
                 $(".list-item-new .configuration__list--item.selected .configuration-title").show();
