@@ -644,7 +644,7 @@ $(document).ready(function() {
                 scrollTopSection();
                 $(".list-item:not(.list-item--open-water.list-item--duplicate").hide();
             });
-         } else if (currentPageName == "Pool") {
+        } else if (currentPageName == "Pool") {
             filterByRange();
             filterByCourse();
             $("#confirmLocationSelby").click( function() {
@@ -684,7 +684,14 @@ $(document).ready(function() {
                 $(".list-item-new .configuration__list--item.selected .configuration-title").show();
             });
         } else if (currentPageName === "Other Open Water") {
-            filterByOpenWater();
+            // filterByOpenWater();
+            $("#closeDuplicateAddress").click( function() {
+                showSavedLocationList();
+                showLookupLocationList();
+                resetAddNewLocation();
+                scrollTopSection();
+                $(".list-item:not(.list-item--open-water.list-item--duplicate").hide();
+            });            
         } else if (currentPageName === "Other Pool") {
             filterByRange();
             filterByCourse();
