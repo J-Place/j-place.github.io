@@ -692,7 +692,10 @@ $(document).ready(function() {
                 resetAddNewLocation();
                 scrollTopSection();
                 $(".list-item:not(.list-item--open-water.list-item--duplicate").hide();
-            });            
+            });
+            $("#confirmDeleteLocation").click( function() {
+                filterByOpenWater();
+            });
         } else if (currentPageName === "Other Pool") {
             filterByRange();
             filterByCourse();
