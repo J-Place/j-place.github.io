@@ -91,7 +91,7 @@ $(document).ready(function() {
 
 
 
-    
+
     $(".list-item-open-water").show();
     $(".location-name > .list__controls").show();
     $(".list__controls--settings").css('display', 'inline-flex');
@@ -105,8 +105,6 @@ $(document).ready(function() {
 
     $(".venue__list").show();
     $(".venue__list--item").show();
-    // $("#timingAutomatic").prop('checked', true);
-    // $("#eventListOnCalendarYes").prop('checked', true);
     $("#eventClassificationSanctioned").prop('checked', true);
     $("#agree").prop('checked', true);
     $(".contact-info__host-type--container").hide();
@@ -120,15 +118,6 @@ $(document).ready(function() {
     $(".venue__list--item:first-of-type").show();
     $(".venue__list--item:first-of-type .configuration-title").hide();
     $(".venue__list--item:first-of-type .configuration-title:last-of-type").show();
-
-    // $(".section-event-info").addClass('isEdit');
-    // $(".section-contact-info").addClass('isEdit');
-    // $(".section-entry-information").addClass('isEdit');
-    // $(".section-meet-announcement").addClass('isEdit');
-
-    // $("#submitSanction").prop('disabled', true);
-
-    // $("#agreeTerms").prop('checked', true);
 
     $(".list--event-host .list-item__delete").show();    
 
