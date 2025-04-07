@@ -283,11 +283,7 @@ function disableEventDirectorRadios() {
     $(".contact-info__event-director-type-form .radio-container input").prop('disabled', true);
 }
 
-
-
-
 $("#closeDuplicateOrganization").click( function() {
-    // resetEventHost();
     $("#addNewOrganization").show();
     $(".contact-info-host-type__other-organization--container.add-new-inputs").hide();
 });
