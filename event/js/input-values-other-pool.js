@@ -75,7 +75,13 @@ $(document).ready(function() {
 
     $(".list--lookup.locations").hide();
     $("#location-information .row.locations").show();
-    $(".list-item-existing").show();
+
+    
+
+
+    // $(".list-item-open-water").show();
+    $(".location-name > .list__controls").show();
+
 
     // $("#timingAutomatic").prop('checked', true);
     $("#eventListOnCalendarYes").prop('checked', true);
@@ -100,7 +106,8 @@ $(document).ready(function() {
 
 
 
-    $(".list-item-existing").show();    
+    $(".list-item-pool.list-item-existing").show();
+    $(".list-item__delete").show();
     $(".list-item-existing .venue__list").show();
     $(".venue__list--item.selected").show();
     $(".venue__list--item.selected .configuration__list").show();
