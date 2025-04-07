@@ -310,10 +310,6 @@ $(document).ready(function() {
     });
 
     $("#confirmDeleteLocation").click( function() {
-        // $(".list.locations").removeClass("edit-list");
-        // $(".location-name .list-item__edit").show();
-        // $(".location-name .list-item__save").hide();
-        // $(".location-name .list-item__delete").hide();
 
         hideControls();
 
@@ -328,7 +324,6 @@ $(document).ready(function() {
         showLocationLookup();
         showLookupLocationList();
         resetAddNewLocation();
-        // $("#saveLocation").prop('disabled', true);
     });
 
     $(".google-places-input").click( function() {
@@ -342,15 +337,11 @@ $(document).ready(function() {
     });
     
     $("#closeDuplicateAddress").click( function() {
-        // hideSavedLocationList();
         showSavedLocationList();
         showLookupLocationList();
         resetAddNewLocation();
         scrollTopSection();
         $(".location-column .list-item:not(.ui-lookup-filter-length-other").hide();
-        // filterByRange();
-        // $(".row.locations").show();
-        // $(".list.list--lookup.locations").show();
         $(".list-item.list-item--location.list-item--open-water.list--item-duplicate").show();
     });
     
