@@ -309,23 +309,19 @@ $(document).ready(function() {
         $(".location-name .list-item__delete").hide();
     });
 
-    $("#confirmDeleteLocation").click( function() {
-
-        hideControls();
-        filterByRange();
-
-        // handleListControls();
-
-        hideSavedLocationList();
-        hideListControlChildren();
-        $(lookupByLocationList).hide();
-        $(".list-item-existing").hide();
-        $(".list-item-duplicate").hide();
-        $(".list-item-new").hide();
-        showLocationLookup();
-        showLookupLocationList();
-        resetAddNewLocation();
-    });
+    // $("#confirmDeleteLocation").click( function() {
+    //     hideControls();
+    //     // filterByRange();
+    //     hideSavedLocationList();
+    //     hideListControlChildren();
+    //     $(lookupByLocationList).hide();
+    //     $(".list-item-existing").hide();
+    //     $(".list-item-duplicate").hide();
+    //     $(".list-item-new").hide();
+    //     showLocationLookup();
+    //     showLookupLocationList();
+    //     resetAddNewLocation();
+    // });
 
     $(".google-places-input").click( function() {
         hideSavedLocationList();
@@ -645,6 +641,10 @@ $(document).ready(function() {
                 scrollTopSection();
                 $(".list-item:not(.list-item--open-water.list-item--duplicate").hide();
             });
+            $("#confirmDeleteLocation").click( function() {
+                // alert("ACAS");
+                filterByOpenWater();
+            });
         } else if (currentPageName == "Pool") {
             filterByRange();
             filterByCourse();
@@ -685,7 +685,7 @@ $(document).ready(function() {
                 $(".list-item-new .configuration__list--item.selected .configuration-title").show();
             });
         } else if (currentPageName === "Other Open Water") {
-            // filterByOpenWater();
+            filterByOpenWater();
             $("#closeDuplicateAddress").click( function() {
                 showSavedLocationList();
                 showLookupLocationList();
@@ -726,6 +726,19 @@ $(document).ready(function() {
                 resetAddNewLocation();
                 scrollTopSection();
                 $(".list-item:not(.list-item--pool.list-item--duplicate").hide();
+            });
+            $("#confirmDeleteLocation").click( function() {
+            //     hideControls();
+                filterByRange();
+            //     hideSavedLocationList();
+            //     hideListControlChildren();
+            //     $(lookupByLocationList).hide();
+            //     $(".list-item-existing").hide();
+            //     $(".list-item-duplicate").hide();
+            //     $(".list-item-new").hide();
+            //     showLocationLookup();
+            //     showLookupLocationList();
+            //     resetAddNewLocation();
             });
         }
         console.log("This is " + currentPageName);
