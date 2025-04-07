@@ -80,7 +80,7 @@ $(document).ready(function() {
             $(".list-item-open-water").show();
             $(".input-group--add-new-course").hide();
         } else {
-            alert("B");
+            // alert("B");
             $(".list-item-new").show();
         }
     });
@@ -279,7 +279,7 @@ $(document).ready(function() {
         // $(".venue__list--item.selected").show();
         // $(".list-item-existing .venue__list").show();
         
-        $(".list-item-existing").show();
+        $(".list-item-pool.list-item-existing").show();
         $(".configuration__list--item.added").show();
         showSavedLocationList();
         $(".location-header").hide();
@@ -538,7 +538,7 @@ $(document).ready(function() {
         $(".list.locations").removeClass("edit-list");
         $(".location-name .list-item__edit").show();
         $(".location-name .list-item__save").hide();
-        $(".list__controls--settings").css('display', 'inline-flex');
+        // $(".list__controls--settings").css('display', 'inline-flex');
     }
 
     function showControlsExisting() {
@@ -665,7 +665,7 @@ $(document).ready(function() {
             $("#confirmLocationSelby").click( function() {
                 confirmConfiguration();
                 showControlsExisting();
-                $(".list-item-existing").show();
+                $(".list-item-pool.list-item-existing").show();
                 $(".list-item-existing .configuration__list").show();
                 $(".list-item-existing .configuration__list--item.selected").show();
                 $(".list-item-existing .configuration__list--item.selected .configuration-title").show();
