@@ -1602,22 +1602,7 @@
         </div>
 
     </div>
-    <div class="modal" id="modalDuplicateAddress" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Potential Duplicate Location</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p>The address you selected is already in our database. Please select that location from the location search box above.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-md btn-default" data-bs-dismiss="modal" id="closeDuplicateAddress">Continue</button>
-        </div>
-      </div>
-    </div>
-</div>
+    
     <div class="modal" id="modalDuplicateOrganization" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -1859,7 +1844,7 @@
                 </div>
             </div>
 
-            <div class="list-item list-item--location list-item--open-water">
+            <div class="list-item list-item--location list-item--open-water list--item-duplicate">
                 <button class="btn btn-small" id="confirmWaterFrontPark">Select</button>
                 <p class="event-location__address--name">Waterfront Park</p>
                 <p class="event-location__address--street">2650 Waldemere Street</p>
@@ -1891,7 +1876,7 @@
          <div class="list__container">
             <div class="row is-flex">
                <div class="col-xs-12">
-                  <div class="list-item list-item-existing">
+                  <div class="list-item list-item-pool list-item-existing">
                      <p class="location-name text-bold">Selby Aquatic Center
                         <span class="list__controls">
                            <a class="list__controls--settings" id="settingsListEventLocationExisting"></a>
@@ -1964,7 +1949,7 @@
                         </div>
                      </div>
                   </div>
-                  <div class="list-item list-item-new">
+                  <div class="list-item list-item-pool list-item-new">
                      <p class="location-name text-bold">Jensen Beach Pool
                         <span class="list__controls">
                            <a class="list__controls--settings" id="settingsListEventLocationNew"></a>
@@ -2002,7 +1987,7 @@
                         </div>
                      </div>
                   </div>
-                  <div class="list-item list-item-duplicate">
+                  <div class="list-item list-item-pool list-item-duplicate">
                      <p class="location-name text-bold">HealthFit powered by SMH
                         <span class="list__controls">
                            <a class="list__controls--settings" id="settingsListEventLocationDuplicate"></a>
@@ -2040,7 +2025,7 @@
                         </div>
                      </div>
                   </div>
-                  <div class="list-item list-item-open-water">
+                  <div class="list-item list-item-open-water list-item-existing">
                      <p class="location-name text-bold">Waterfront Park
                         <span class="list__controls">
                            <a class="list__controls--settings" id="settingsListEventLocationOpenWater"></a>
@@ -2473,12 +2458,6 @@
          scrollTop: $("#entry-information").offset().top - 45
       }, 100);
    });
-   // $(".location-name .list-item__delete").hide();
-   // $(".location-name .list-item__delete").show();
-   // setPageName();
-   // if (currentPageName == "Pool") {
-   //    $(".location-name .list-item__delete").show();
-   // }
 </script>
 
                               <form id="form-accept-submit">

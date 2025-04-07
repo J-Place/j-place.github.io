@@ -72,11 +72,15 @@ $(document).ready(function() {
         $(addNewPoolForm).show();
 
         $('.location-name .list__controls').hide();
+        
+        // alert($("#locationType").val());
 
         if ($("#locationType").val() === 'Open Water') {
+            // alert("A");
             $(".list-item-open-water").show();
             $(".input-group--add-new-course").hide();
         } else {
+            alert("B");
             $(".list-item-new").show();
         }
     });
@@ -87,26 +91,34 @@ $(document).ready(function() {
 
     $("#saveFormPool").click( function(e) {
         e.preventDefault();
+        // $(".list-item").hide();
         showControlsNew();
         setPageName();
 
-        console.log("And this is " + currentPageName);
-
         $(".location-info__add-new-location--container").hide();
-        if ($("#locationType").val() === 'Open Water') {
-            $(".venue__list").show();
-            $(".list-item-open-water .venue__list--item").show();
-            $('.location-name .list__controls').show();
-            hideLocationLookup();
-            $(".list-venue-form").hide();
-            $("#saveLocation").prop('disabled', false);
-        } else {
-            $(addNewPoolForm).hide();
-            $(".venue__list").show();
-            $(".venue__list--item-added").show();
-            $(".venue__list--item:first-of-type").show();
-            $('.location-name .list__controls').show();
-        }
+
+        $(".venue__list").show();
+        $(".list-item-open-water .venue__list--item").show();
+        $('.location-name .list__controls').show();
+        hideLocationLookup();
+
+        $(".list-venue-form").hide();
+        hideLookupLocationList();
+
+        // if ($("#locationType").val() === 'Open Water') {
+        //     $(".venue__list").show();
+        //     $(".list-item-open-water .venue__list--item").show();
+        //     $('.location-name .list__controls').show();
+        //     hideLocationLookup();
+        //     $(".list-venue-form").hide();
+        //     $("#saveLocation").prop('disabled', false);
+        // } else {
+        //     $(addNewPoolForm).hide();
+        //     $(".venue__list").show();
+        //     $(".venue__list--item-added").show();
+        //     $(".venue__list--item:first-of-type").show();
+        //     $('.location-name .list__controls').show();
+        // }
         $(".form-group.form-group-hidden").removeClass("show");
         $("#locationType").prop('selectedIndex',0);
     });
@@ -198,53 +210,45 @@ $(document).ready(function() {
         confirmConfiguration();
         // handleListControls();
         showControlsExisting();
-        $(".list-item-existing").show();
+        $(".list-item-existing.list-item-pool").show();
         scrollTopSection();
         $(this).prop('disabled', true);
         $('input[name="configuration-selby').prop("checked", false);
-        $(".list-item-existing .venue__list").show();
-        $(".list-item-existing .venue__list--item.selected").show();
-        $(".list-item-existing .configuration__list").show();
-        $(".list-item-existing .configuration__list--item.selected").show();
-        $(".list-item-existing .configuration__list--item.selected .configuration-title").show();
-        // if (currentPageName == "Pool") {
-    
-        //     $(".location-name .list-item__delete").hide();
-        // }
+        $(".list-item-existing.list-item-pool .venue__list").show();
+        $(".list-item-existing.list-item-pool .venue__list--item.selected").show();
+        $(".list-item-existing.list-item-pool .configuration__list").show();
+        $(".list-item-existing.list-item-pool .configuration__list--item.selected").show();
+        $(".list-item-existing.list-item-pool .configuration__list--item.selected .configuration-title").show();
     });
 
     $("#modalConfirmHealthfit").click( function() {
         confirmConfiguration();
         // handleListControls();
         showControlsExisting();
-        $(".list-item-duplicate").show();
+        $(".list-item-duplicate.list-item-pool").show();
         scrollTopSection();
         $(this).prop('disabled', true);
         $('input[name="configuration-healthfit').prop("checked", false);
-        $(".list-item-duplicate .venue__list").show();
-        $(".list-item-duplicate .venue__list--item.selected").show();
-        $(".list-item-duplicate .configuration__list").show();
-        $(".list-item-duplicate .configuration__list--item.selected").show();
-        $(".list-item-duplicate .configuration__list--item.selected .configuration-title").show();
-        // if (currentPageName == "Pool") {
-    
-        //     $(".location-name .list-item__delete").hide();
-        // }
+        $(".list-item-duplicate.list-item-pool .venue__list").show();
+        $(".list-item-duplicate.list-item-pool .venue__list--item.selected").show();
+        $(".list-item-duplicate.list-item-pool .configuration__list").show();
+        $(".list-item-duplicate.list-item-pool .configuration__list--item.selected").show();
+        $(".list-item-duplicate.list-item-pool .configuration__list--item.selected .configuration-title").show();
     });
 
     $("#modalConfirmJensen").click( function() {
         confirmConfiguration();
         // handleListControls();
-        showControlsNew();
-        $(".list-item-new").show();
+        showControlsExisting();
+        $(".list-item-new.list-item-pool").show();
         scrollTopSection();
         $(this).prop('disabled', true);
         $('input[name="configuration-jensen').prop("checked", false);
-        $(".list-item-new .venue__list").show();
-        $(".list-item-new .venue__list--item.selected").show();
-        $(".list-item-new .configuration__list").show();
-        $(".list-item-new .configuration__list--item.selected").show();
-        $(".list-item-new .configuration__list--item.selected .configuration-title").show();
+        $(".list-item-new.list-item-pool .venue__list").show();
+        $(".list-item-new.list-item-pool .venue__list--item.selected").show();
+        $(".list-item-new.list-item-pool .configuration__list").show();
+        $(".list-item-new.list-item-pool .configuration__list--item.selected").show();
+        $(".list-item-new.list-item-pool .configuration__list--item.selected .configuration-title").show();
     });
 
     function confirmConfiguration() {
@@ -286,17 +290,11 @@ $(document).ready(function() {
         $(".list.locations").addClass("edit-list");
         $(".venue__list--item.selected").show();
         $(".venue__list--item.selected .configuration-title").show();
-
-        // $(".list-item:not(.list-item-new) .location-name .list-item__edit").hide();
-        // $(".list-item:not(.list-item-new) .location-name .list-item__save").show();
-        // $(".list-item:not(.list-item-new) .location-name .list-item__delete").show();
-
-        $(".list-item .location-name .list-item__edit").hide();
-        $(".list-item .location-name .list-item__save").show();
-        $(".list-item .location-name .list-item__delete").show();
-
+        // showControlsExisting();
+        $(".location-name .list-item__edit").hide();
+        $(".location-name .list-item__save").show();
+        $(".location-name .list-item__delete").show();
         showListControlChildren();
-        // $(".venue__list--item:first-of-type .configuration-title:last-of-type").removeClass('selected');
     });
 
     $(".location-name .list-item__delete").click( function() {
@@ -305,6 +303,10 @@ $(document).ready(function() {
 
     $(".location-name .list-item__save").click( function() {
         // $(".location-name .list-item__delete").hide();
+        $(".list.locations").removeClass("edit-list");
+        $(".location-name .list-item__edit").show();
+        $(".location-name .list-item__save").hide();
+        $(".location-name .list-item__delete").hide();
     });
 
     $("#confirmDeleteLocation").click( function() {
@@ -313,7 +315,9 @@ $(document).ready(function() {
         // $(".location-name .list-item__save").hide();
         // $(".location-name .list-item__delete").hide();
 
-        handleListControls();
+        hideControls();
+
+        // handleListControls();
 
         hideSavedLocationList();
         hideListControlChildren();
@@ -338,12 +342,18 @@ $(document).ready(function() {
     });
     
     $("#closeDuplicateAddress").click( function() {
-        hideSavedLocationList();
+        // hideSavedLocationList();
+        showSavedLocationList();
         showLookupLocationList();
         resetAddNewLocation();
         scrollTopSection();
         $(".location-column .list-item:not(.ui-lookup-filter-length-other").hide();
+        // filterByRange();
+        // $(".row.locations").show();
+        // $(".list.list--lookup.locations").show();
+        $(".list-item.list-item--location.list-item--open-water.list--item-duplicate").show();
     });
+    
 
     $("input[name='configuration-selby']").click( function() {
         $("#modalConfirmSelby").prop('disabled', false);
@@ -372,10 +382,6 @@ $(document).ready(function() {
         $(".list-item-existing").show();
         scrollTopSection();
         hideListControlChildren();
-        // $(".list.locations").removeClass("edit-list");
-        // $(".location-name .list-item__edit").show();
-        // $(".location-name .list-item__save").hide();
-        // $(".location-name .list-item__delete").hide();
         // handleListControls();
         showControlsExisting();
     });
@@ -385,10 +391,6 @@ $(document).ready(function() {
         $(".list-item-new").show();
         scrollTopSection();
         hideListControlChildren();
-        // $(".list.locations").removeClass("edit-list");
-        // $(".location-name .list-item__edit").show();
-        // $(".location-name .list-item__save").hide();
-        // $(".location-name .list-item__delete").hide();
         // handleListControls();
         showControlsNew();
     });
@@ -398,12 +400,7 @@ $(document).ready(function() {
         $(".list-item-duplicate").show();
         scrollTopSection();
         hideListControlChildren();
-        // $(".list.locations").removeClass("edit-list");
-        // $(".location-name .list-item__edit").show();
-        // $(".location-name .list-item__save").hide();
-        // $(".location-name .list-item__delete").hide();
         // handleListControls();
-        showControlsExisting();
     });
 
     $("#saveListEventLocationOpenWater").click( function() {
@@ -411,12 +408,7 @@ $(document).ready(function() {
         $(".list-item-open-water").show();
         scrollTopSection();
         hideListControlChildren();
-        // $(".list.locations").removeClass("edit-list");
-        // $(".location-name .list-item__edit").show();
-        // $(".location-name .list-item__save").hide();
-        // $(".location-name .list-item__delete").hide();
         // handleListControls();
-        showControlsExisting();
     });
 
     $("#locationType").change(function() {
@@ -527,23 +519,30 @@ $(document).ready(function() {
     }
 
     function handleListControls() {
-        // if ($('.list-item').hasClass('list-item-new')) {
+        console.log("fx handle list controls");
         $(".location-name > .list__controls").show();
         $(".list.locations").removeClass("edit-list");
-        if ($(".list-item-new").css('display') === 'block') {
-            $(".location-name .list-item__edit").show();
-            $(".location-name .list-item__save").show();
-            // $(".location-name .list-item__delete").hide();
-            $(".list__controls--settings").css('display', 'inline');
+
+        if ($(".list-item-existing").css('display') === 'block') {
+            showControlsExisting();
         }
-        else if ($(".list-item-new").css('display') === 'none') {
-            $(".location-name .list-item__edit").hide();
-            $(".location-name .list-item__save").hide();
-            $(".location-name .list-item__delete").show();
-        } 
+
+        if ($(".list-item-new").css('display') === 'block') {
+            // $(".location-name .list-item__edit").show();
+            // $(".location-name .list-item__save").show();
+            // $(".list__controls--settings").css('display', 'inline');
+            showControlsNew();
+        }
+
+        // else if ($(".list-item-new").css('display') === 'none') {
+        //     $(".location-name .list-item__edit").hide();
+        //     $(".location-name .list-item__save").hide();
+        //     $(".location-name .list-item__delete").show();
+        // } 
     }
 
     function showControlsNew() {
+        console.log("fx show controls new");
         $(".location-name > .list__controls").show();
         $(".list.locations").removeClass("edit-list");
         $(".location-name .list-item__edit").show();
@@ -552,11 +551,19 @@ $(document).ready(function() {
     }
 
     function showControlsExisting() {
+        console.log("fx show controls existing");
         $(".location-name > .list__controls").show();
         $(".list.locations").removeClass("edit-list");
         $(".location-name .list-item__edit").hide();
         $(".location-name .list-item__save").hide();
         $(".location-name .list-item__delete").show();
+    }
+
+    function hideControls() {
+        $(".list.locations").removeClass("edit-list");
+        $(".location-name .list-item__edit").show();
+        $(".location-name .list-item__save").hide();
+        $(".location-name .list-item__delete").hide();
     }
 
     function filterByRange() {

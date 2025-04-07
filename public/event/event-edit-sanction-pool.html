@@ -1645,22 +1645,7 @@
         </div>
 
     </div>
-    <div class="modal" id="modalDuplicateAddress" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Potential Duplicate Location</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p>The address you selected is already in our database. Please select that location from the location search box above.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-md btn-default" data-bs-dismiss="modal" id="closeDuplicateAddress">Continue</button>
-        </div>
-      </div>
-    </div>
-</div>
+    
     <div class="modal" id="modalDuplicateOrganization" tabindex="-1">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -1693,11 +1678,7 @@
 </form>
 
 <script>
-    // $(".contact-info__event-director-list .list-item__delete").show();
-    // list--safety-coordinator
-    // $(".contact-list .list-item__delete").show();
-    // $(".list--event-host .list-item__delete").show();
-    // $(".list--event-director .list-item__delete").show();
+
 
     
     // // Enable Contact Section Save & Continue
@@ -1909,7 +1890,7 @@
                 </div>
             </div>
 
-            <div class="list-item list-item--location list-item--open-water">
+            <div class="list-item list-item--location list-item--open-water list--item-duplicate">
                 <button class="btn btn-small" id="confirmWaterFrontPark">Select</button>
                 <p class="event-location__address--name">Waterfront Park</p>
                 <p class="event-location__address--street">2650 Waldemere Street</p>
@@ -2194,7 +2175,7 @@
                         </div>
                      </div>
                   </div>
-                  <div class="list-item list-item-open-water">
+                  <div class="list-item list-item-existing list-item-open-water">
                      <p class="location-name text-bold">Waterfront Park
                         <span class="list__controls">
                            <a class="list__controls--settings" id="settingsListEventLocationOpenWater"></a>
@@ -2799,8 +2780,6 @@
    $(sectionSelects).on("change", function() {
       $("#saveLocation").prop('disabled', false);
    });
-
-   $(".location-name .list-item__delete").show();
    
    $("#saveLocation").click( function() {
       $('#accordion').find('.collapse.in').parent().addClass('hasData');
