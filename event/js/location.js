@@ -312,6 +312,7 @@ $(document).ready(function() {
     $("#confirmDeleteLocation").click( function() {
 
         hideControls();
+        filterByRange();
 
         // handleListControls();
 
