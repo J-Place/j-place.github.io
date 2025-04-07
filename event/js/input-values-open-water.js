@@ -85,9 +85,12 @@ $(document).ready(function() {
     $("#location-information__content .list-control").hide();
     $(".location-info__add-new-location--container").hide();
     $(".list--lookup.locations").hide();
-
+    $(".list-item__delete").show();
     $("#location-information .row.locations").show();
+    
     $(".list-item-open-water").show();
+    $(".location-name > .list__controls").show();
+
     $(".venue__list").show();
     $(".venue__list--item").show();
     // $("#timingAutomatic").prop('checked', true);

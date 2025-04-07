@@ -81,7 +81,7 @@ $(document).ready(function() {
     
     
     
-    $(".list-item-existing").show();    
+    $(".list-item-existing.list-item-pool").show();    
     $(".list-item-existing .venue__list").show();
     $(".venue__list--item.selected").show();
     $(".venue__list--item.selected .configuration__list").show();
