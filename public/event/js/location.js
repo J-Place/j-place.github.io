@@ -202,9 +202,9 @@ $(document).ready(function() {
     //     $("#modalChosePoolConfigurationHealthfit").modal('show');
     // });
 
-    $("#confirmLocationJensen").click( function() {
-        $("#modalChosePoolConfigurationJensen").modal('show');
-    });
+    // $("#confirmLocationJensen").click( function() {
+    //     $("#modalChosePoolConfigurationJensen").modal('show');
+    // });
 
     $("#modalConfirmSelby").click( function() {
         confirmConfiguration();
@@ -334,17 +334,7 @@ $(document).ready(function() {
 
     $("#locationAddressStreet").click( function() {
         $("#modalDuplicateAddress").modal('show');
-    });
-    
-    $("#closeDuplicateAddress").click( function() {
-        showSavedLocationList();
-        showLookupLocationList();
-        resetAddNewLocation();
-        scrollTopSection();
-        $(".location-column .list-item:not(.ui-lookup-filter-length-other").hide();
-        $(".list-item.list-item--location.list-item--open-water.list--item-duplicate").show();
-    });
-    
+    });    
 
     $("input[name='configuration-selby']").click( function() {
         $("#modalConfirmSelby").prop('disabled', false);
@@ -538,7 +528,7 @@ $(document).ready(function() {
         $(".list.locations").removeClass("edit-list");
         $(".location-name .list-item__edit").show();
         $(".location-name .list-item__save").hide();
-        // $(".list__controls--settings").css('display', 'inline-flex');
+        $(".list__controls--settings").css('display', 'inline-flex');
     }
 
     function showControlsExisting() {
@@ -647,6 +637,13 @@ $(document).ready(function() {
         const currentPageName = data.data;
         if (currentPageName == "Open Water") {
             filterByOpenWater();
+            $("#closeDuplicateAddress").click( function() {
+                showSavedLocationList();
+                showLookupLocationList();
+                resetAddNewLocation();
+                scrollTopSection();
+                $(".list-item:not(.list-item--open-water.list-item--duplicate").hide();
+            });
          } else if (currentPageName == "Pool") {
             filterByRange();
             filterByCourse();
@@ -694,7 +691,7 @@ $(document).ready(function() {
             $("#confirmLocationSelby").click( function() {
                 confirmConfiguration();
                 showControlsExisting();
-                $(".list-item-existing").show();
+                $(".list-item-pool.list-item-existing").show();
                 $(".list-item-existing .configuration__list").show();
                 $(".list-item-existing .configuration__list--item.selected").show();
                 $(".list-item-existing .configuration__list--item.selected .configuration-title").show();
@@ -714,6 +711,13 @@ $(document).ready(function() {
                 $(".list-item-new .configuration__list").show();
                 $(".list-item-new .configuration__list--item.selected").show();
                 $(".list-item-new .configuration__list--item.selected .configuration-title").show();
+            });                
+            $("#closeDuplicateAddress").click( function() {
+                showSavedLocationList();
+                showLookupLocationList();
+                resetAddNewLocation();
+                scrollTopSection();
+                $(".list-item:not(.list-item--pool.list-item--duplicate").hide();
             });
         }
         console.log("This is " + currentPageName);
