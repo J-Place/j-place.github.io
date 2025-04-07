@@ -81,30 +81,18 @@ $(document).ready(function() {
 
     // $(".list-item-open-water").show();
     $(".location-name > .list__controls").show();
-
-
-    // $("#timingAutomatic").prop('checked', true);
     $("#eventListOnCalendarYes").prop('checked', true);
-    // $("#eventClassificationSanctioned").prop('checked', true);
     $("#agree").prop('checked', true);
-
     $(".contact-info__host-type--container").hide();
     $(".contact-information__event-host--list").show();
     $(".list--event-host .list-item__delete").show();
     $(".contact-list__event-host--header").show();
-
-    // $(".list-item--organization-new").parent().show();
-    // $(".list-item--organization-new").show();
 
     // Show only the selected pool configuration
     $(".venue__list--item").hide();
     $(".venue__list--item:first-of-type").show();
     $(".venue__list--item:first-of-type .configuration-title").hide();
     $(".venue__list--item:first-of-type .configuration-title:last-of-type").show();
-
-
-
-
 
     $(".list-item-pool.list-item-existing").show();
     $(".list-item__delete").show();
@@ -115,8 +103,6 @@ $(document).ready(function() {
     $(".configuration__list--item.selected").show();
     $(".configuration__list--item.selected .configuration-title").show();   
     $('.location-name .list__controls').show();
-
-    
 
 });
 
