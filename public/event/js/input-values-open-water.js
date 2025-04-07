@@ -88,9 +88,20 @@ $(document).ready(function() {
     $(".list-item__delete").show();
     $("#location-information .row.locations").show();
     
+
+
+
+    
     $(".list-item-open-water").show();
     $(".location-name > .list__controls").show();
-    $(".club-edit .list-item__delete").show();
+    $(".list__controls--settings").css('display', 'inline-flex');
+    $(".club-edit .list-item__edit").show();
+    $(".club-edit .list-item__delete").hide();
+
+
+
+
+    
 
     $(".venue__list").show();
     $(".venue__list--item").show();
