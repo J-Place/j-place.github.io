@@ -10,6 +10,5 @@ $(".help-block--course-map").addClass("has-error");
 // $(".").addClass("has-error");
 // $(".").addClass("has-error");
 
-$(".contact-info__host-type--container").addClass("TESTJP");
 $(".contact-info__host-type--container").show();
 $(".contact-information__event-host--list").hide();

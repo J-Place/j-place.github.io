@@ -85,6 +85,10 @@ $(document).ready(function() {
     $(".venue__list--item").hide();
     $(".venue__list--item:first-of-type .configuration-title").hide();
 
+    $(".location-name > .list__controls").show();
+    $(".club-edit .list-item__delete").show();
+
+
     $("#location-information .row.locations").show();
     $(".list-item-existing").show();    
     $(".contact-information__event-host--list").show();

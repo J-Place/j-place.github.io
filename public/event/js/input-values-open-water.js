@@ -90,6 +90,7 @@ $(document).ready(function() {
     
     $(".list-item-open-water").show();
     $(".location-name > .list__controls").show();
+    $(".club-edit .list-item__delete").show();
 
     $(".venue__list").show();
     $(".venue__list--item").show();

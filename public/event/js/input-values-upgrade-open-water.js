@@ -88,6 +88,11 @@ $(document).ready(function() {
 
     $("#location-information .row.locations").show();
     $(".list-item-open-water").show();
+    $(".location-name .list-item__delete").show();
+
+    $(".location-name > .list__controls").show();
+    $(".club-edit .list-item__delete").show();
+
     $(".venue__list").show();
     $(".venue__list--item").show();
     // $("#timingAutomatic").prop('checked', true);

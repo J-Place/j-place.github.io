@@ -77,15 +77,13 @@ $(document).ready(function() {
     $("#location-information .row.locations").show();
 
     
-
-
-    // $(".list-item-open-water").show();
-    $(".location-name > .list__controls").show();
     $("#eventListOnCalendarYes").prop('checked', true);
     $("#agree").prop('checked', true);
     $(".contact-info__host-type--container").hide();
     $(".contact-information__event-host--list").show();
-    $(".list--event-host .list-item__delete").show();
+
+    // $(".list--event-host .list-item__delete").show();
+    $(".club-edit .list-item__delete").show();
     $(".contact-list__event-host--header").show();
 
     // Show only the selected pool configuration
@@ -95,7 +93,11 @@ $(document).ready(function() {
     $(".venue__list--item:first-of-type .configuration-title:last-of-type").show();
 
     $(".list-item-pool.list-item-existing").show();
-    $(".list-item__delete").show();
+    $(".location-name > .list__controls").show();
+    $(".club-edit .btn.list-item__delete").show();
+
+
+
     $(".list-item-existing .venue__list").show();
     $(".venue__list--item.selected").show();
     $(".venue__list--item.selected .configuration__list").show();

@@ -60,7 +60,11 @@ $(document).ready(function() {
     $(".location-info__add-new-location--container").hide();
     $(".list--lookup.locations").hide();
     $("#location-information .row.locations").show();
-    $(".list-item-existing").show();
+
+    $(".list-item-pool.list-item-existing").show();
+    $(".location-name > .list__controls").show();
+    $(".club-edit .list-item__delete").show();
+
     $(".venue__list--item").hide();
     $(".venue__list--item:first-of-type").show();
     $(".venue__list--item:first-of-type .configuration-title").hide();
