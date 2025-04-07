@@ -95,15 +95,7 @@ $(document).ready(function() {
 
     $(".venue__list").show();
     $(".venue__list--item").show();
-    // $("#timingAutomatic").prop('checked', true);
-    // $("#eventListOnCalendarYes").prop('checked', true);
-    // $("#eventClassificationSanctioned").prop('checked', true);
     $("#agree").prop('checked', true);
-    // $(".contact-info__host-type--container").hide();
-    // $(".contact-information__event-host--list").show();
-    // $(".contact-list__event-host--header").show();
-    // $(".list-item--organization-new").parent().show();
-    // $(".list-item--organization-new").show();
 
     // Show only the selected pool configuration
     $(".venue__list--item").hide();
