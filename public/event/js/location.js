@@ -793,4 +793,10 @@ $(document).ready(function() {
         console.log("This is " + currentPageName);
     });
     setPageName();
+    $('#submitEdit').click( function() {
+        $(".help-block").toggleClass("has-error");
+        $(".form-control").toggleClass("has-error");
+        // $('. help-block--SelectHostType').toggleClass("has-error");
+        $('#lookupHostTypeOtherOrganization').toggleClass("has-error");    
+    })
 });
