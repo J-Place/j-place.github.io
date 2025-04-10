@@ -1,0 +1,68 @@
+<!------ Club Name ------------------------------------>
+<form id="form-name">
+    <div class="section section-name .isEdit" id="club-name">
+        <h3 class="section__header collapsed" data-target="#club-name__content" data-toggle="collapse" aria-expanded="false" aria-controls="club-name__content">
+            <span class="section__number">1</span>Club Name
+        </h3>
+        <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button" onclick="editClubName(event)"></button></span>
+        
+        <div class="section__content collapse" id="club-name__content" data-parent="#accordion" aria-expanded="false" style="height: 0px;">
+            <div class="row">
+                <div class="col-xs-12 col-sm-8 col-md-5">
+                    <div class="input-group select-lmsc required">
+                        <label for="SelectLmsc">
+                            Select Your Local Chapter (LMSC)
+                            <a tabindex="0" class="popover-link" role="button" data-toggle="popover" data-trigger="focus" data-html="true" data-placement="top" data-content="Your LMSC is a regional governing body that provides certain benefits to USMS members, a map of USMS LMSC's can be found <a href=&quot;https://www.usms.org/lmsc/&quot;>here</a>" data-original-title="" title="">
+                                <span class="icon-help"></span>
+                            </a>
+                        </label>
+                        <sergey-import src="site/select-lmsc" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-8 col-md-5">
+                    <div class="input-group club-name required">
+                        <label for="ClubName">
+                            Club Name
+                            <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title=""></span>
+                        </label>
+                        <input class="form-control club-name__input" id="clubName" maxlength="80" minlength="3" name="ClubName" required="True" type="text" value="">
+                        <span class="help-block help-block--ClubName">Club name is required.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-8 col-md-5">
+                    <div class="input-group club-abbr required">
+                        <label for="ClubAbbr">
+                            Club Abbreviation
+                            <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Select a club abbreviation that is 2 to 5 characters. The abbreviation must be unique. If the abbreviation you selected is not available, you will be prompted to select another one. "></span>
+                        </label>
+                        <input class="form-control club-name__input text-uppercase" id="clubAbbr" maxlength="5" minlength="2" name="ClubAbbr" pattern="[A-Za-z]{5}" required="True" type="text" value="">
+                        <span class="help-block help-block--ClubAbbr">Club abbreviation is required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modalClubName" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeClubNameModal()"><span aria-hidden="true">×</span></button>
+                            <h4 class="modal-title">Club Abbreviation</h4>
+                        </div>
+                        <div class="modal-body">
+                            <p>The abbreviation you have selected is already in use by another club. Please pick another one.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="section__controls">
+                    <button class="btn save-section" id="saveClubName" type="button" onclick="saveName(event)">Save &amp; Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- End Club Name -->

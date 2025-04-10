@@ -1,0 +1,187 @@
+<!------ Gold Club ------------------------------------>
+
+<form id="form-gold">
+    <div class="section" id="gold-club">
+        <h3 class="section__header" data-target="#gold-club__content" data-toggle="collapse" aria-expanded="false" aria-controls="gold-club__content">
+            <span class="section__number">6</span>Gold Club
+        </h3>
+        
+        <div class="section__content collapse" id="gold-club__content" data-parent="#accordion">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <div class="input-group radio-group club-more-info">
+
+                            <div class="input-group-header radio-group-header">Answer the following questions to see if you qualify for the Gold Club Designation.</div>
+
+                            <div class="row">
+                                <div class="col-xs-4 col-sm-2 col-flex">
+                                    <div class="radio-label--yes">Yes</div>
+                                    <div class="radio-label--no">No</div>
+                                </div>
+                                <div class="col-xs-8 col-sm-10"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4 col-sm-2 col-flex">
+                                    <label class="radio-label" for="certifiedCoachYes">
+                                        <span class="radio-container">
+                                            <input type="radio" name="certifiedCoach" id="certifiedCoachYes" value="True">
+                                            <span class="radio__placeholder"></span>
+                                        </span>
+                                    </label>
+                                    <label class="radio-label" for="certifiedCoachNo">
+                                        <span class="radio-container">
+                                            <input type="radio" name="certifiedCoach" id="certifiedCoachNo" value="False">
+                                            <span class="radio__placeholder"></span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-xs-8 col-sm-10">
+                                    <span class="radio-label--inline">We have a USMS Certified Coach or ALTS Instructor</span>
+                                    <span class="help-block help-block--certifiedCoach">Please make a selection</span>
+                                    <div class="help-block help-block--addCoach">
+                                        <span class="help-block--addCoachMessage">You do not have a coach on record</span>
+                                        <button class="btn btn-small help-block--btn" id="goldClubAddCoach" onclick="showCoachSection()">Add a Coach</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-4 col-sm-2 col-flex">
+                                    <label class="radio-label" for="freeTrialMembershipYes">
+                                        <span class="radio-container">
+                                            <input type="radio" name="freeTrialMembership" id="freeTrialMembershipYes" value="True">
+                                            <span class="radio__placeholder"></span>
+                                        </span>
+                                    </label>
+                                    <label class="radio-label" for="freeTrialMembershipNo">
+                                        <span class="radio-container">
+                                                <input type="radio" name="freeTrialMembership" id="freeTrialMembershipNo" value="False" disabled="">
+                                            <span class="radio__placeholder"></span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-xs-8 col-sm-10">
+                                    <span class="radio-label--inline">We offer a free USMS trial membership for new members</span>
+                                    <span class="help-block help-block--freeTrialMembership">Please make a selection</span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-4 col-sm-2 col-flex">
+                                    <label class="radio-label" for="requireMembershipYes">
+                                        <span class="radio-container">
+                                            <input type="radio" name="requireMembership" value="True" id="requireMembershipYes" disabled="">
+                                            <span class="radio__placeholder"></span>
+                                        </span>
+                                    </label>
+                                    <label class="radio-label" for="requireMembershipNo">
+                                        <span class="radio-container">
+                                                <input type="radio" name="requireMembership" id="requireMembershipNo" value="False" disabled="">
+                                            <span class="radio__placeholder"></span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-xs-8 col-sm-10">
+                                    <span class="radio-label--inline">We require USMS membership</span>
+                                    <span class="help-block help-block--requireMembership">Please make a selection</span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-4 col-sm-2 col-flex">
+                                    <label class="radio-label" for="tryMastersSwimmingWeekYes">
+                                        <span class="radio-container">
+                                            <input type="radio" name="tryMastersSwimmingWeek" value="True" id="tryMastersSwimmingWeekYes" disabled="">
+                                            <span class="radio__placeholder"></span>
+                                        </span>
+                                    </label>
+                                    <label class="radio-label" for="tryMastersSwimmingWeekNo">
+                                        <span class="radio-container">
+                                                <input type="radio" name="tryMastersSwimmingWeek" id="tryMastersSwimmingWeekNo" value="False" disabled="">
+                                            <span class="radio__placeholder"></span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="col-xs-8 col-sm-10">
+                                    <span class="radio-label--inline">We are planning to participate in Try Masters Swimming for 2024 (January 1-31 and August 1-31)</span>
+                                    <span class="help-block help-block--tryMastersSwimmingWeek">Please make a selection</span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-4 col-sm-2 col-flex">
+                                    <label class="radio-label" for="usmsRegistrationOnWebsiteYes">
+                                        <div class="radio-container">
+                                            <input type="radio" name="usmsRegistrationOnWebsite" value="True" id="usmsRegistrationOnWebsiteYes" disabled="">
+                                            <span class="radio__placeholder"></span>
+                                        </div>
+                                    </label>
+                                    <label class="radio-label" for="usmsRegistrationOnWebsiteNo">
+                                        <div class="radio-container">
+                                                <input type="radio" name="usmsRegistrationOnWebsite" id="usmsRegistrationOnWebsiteNo" value="False" disabled="">
+                                            <span class="radio__placeholder"></span>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="col-xs-8 col-sm-10">
+                                    <span class="radio-label--inline">We have a link to USMS registration on our website or Facebook page</span>
+                                    <span class="help-block help-block--usmsRegistrationOnWebsite">Please make a selection</span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-4 col-sm-2 col-flex">
+                                    <label class="radio-label" for="usmsLogoOnWebsiteYes">
+                                        <div class="radio-container">
+                                            <input type="radio" name="usmsLogoOnWebsite" value="True" id="usmsLogoOnWebsiteYes" disabled="">
+                                            <span class="radio__placeholder"></span>
+                                        </div>
+                                    </label>
+                                    <label class="radio-label" for="usmsLogoOnWebsiteNo">
+                                        <div class="radio-container">
+                                                <input type="radio" name="usmsLogoOnWebsite" id="usmsLogoOnWebsiteNo" value="False" disabled="">
+                                            <span class="radio__placeholder"></span>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="col-xs-8 col-sm-10">
+                                    <span class="radio-label--inline">We have a USMS logo on our website or Facebook page</span>
+                                    <span class="help-block help-block--usmsLogoOnWebsite">Please make a selection</span>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-4 col-sm-2 col-flex">
+                                    <label class="radio-label" for="fitnessSeriesEventsYes">
+                                        <div class="radio-container">
+                                            <input type="radio" name="fitnessSeriesEvents" value="True" id="fitnessSeriesEventsYes" disabled="">
+                                            <span class="radio__placeholder"></span>
+                                        </div>
+                                    </label>
+                                    <label class="radio-label" for="fitnessSeriesEventsNo">
+                                        <div class="radio-container">
+                                                <input type="radio" name="fitnessSeriesEvents" id="fitnessSeriesEventsNo" value="False" disabled="">
+                                            <span class="radio__placeholder"></span>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div class="col-xs-8 col-sm-10">
+                                    <span class="radio-label--inline">We are planning to participate in at least one virtual or fitness event.</span>
+                                    <span class="help-block help-block--fitnessSeriesEvents">Please make a selection</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section__controls">
+                    <button class="btn save-section" id="saveGoldClub" onclick="saveGold(event)">Save &amp; Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- End Gold Club -->

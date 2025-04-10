@@ -1,0 +1,214 @@
+<!------ Coach ------------------------------------>
+            
+<script type="text/javascript">
+    const coachCertText = 'USMS-Coach Certification Level:';
+    const altsCertInstructorText = 'USMS-Certified ALTS Instructor';
+    const headCoachText = 'Head Coach';
+</script>
+<style>
+    .coach-validated {
+        color:red;
+    }
+</style>
+        
+<div class="section section-coach" id="coach">
+    <h3 class="section__header" data-target="#club-coach__content" data-toggle="collapse" aria-expanded="false" aria-controls="coach__content">
+        <span class="section__number">4</span>Coach/Instructor
+    </h3>
+
+    <div class="section__content collapse" id="club-coach__content" data-parent="#accordion">
+        <div class="section__header--summary">When you enter a coach who is a USMS member, it will display their USMS-Certified Coach or ALTS Instructor credentials below and render those badges on the club detail page, which help you achieve the Gold Club designation. If your coach is a non-member, they must have a My USMS login to appear in the dropdown. If they don't appear in the dropdown, you can help them create a My USMS login using the "Add a Coach" button below and an account creation email will be sent to them. You can enter as many coaches as you want. If you have multiple coaches who are USMS members, we recommend you select a Head Coach.</div>
+        
+        <div class="coach-details show">
+            <div class="row lookup-inputs show" id="coachLookupFields">
+                <div class="col-sm-5 col-md-6">
+                    <div class="input-group lookup-name">
+                        <label for="lookupCoachName">Lookup by First and/or Last Name</label>
+                        <input tabindex="0" type="text" class="form-control lookup__input lookup-primary__input" min="3" max="30" name="LookupCoachName" id="lookupCoachName" disabled="">
+                        <span class="help-block help-block--LookupCoachName">Coach Name Required</span>
+                        <div class="lookup__input-spinner lookup__input-spinner--hide">
+                            <img src="https://www.usms.org/-/media/usms/developers/images/loader.gif" alt="loading">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-group lookup-id" style="display: none;">
+                        <label for="lookupCoachId">Lookup by Member ID<span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Enter your coach's USMS Member ID. It is a 5-digit sequence of numbers and letters. If you don't know it, use the &quot;Lookup by First and/or Last Name&quot; field. "></span></label>
+                        <input tabindex="-1" type="text" class="form-control lookup-secondary__input" min="5" max="5" name="LookupCoachId" id="lookupCoachId" disabled="">
+                        <span class="help-block help-block--LookupCoachId">ID required</span>
+                        <div class="lookup__input-spinner lookup__input-spinner--hide">
+                            <img src="https://www.usms.org/-/media/usms/developers/images/loader.gif" alt="loading">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="coach-error">
+                        <span class="help-block">Head coach already assigned</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-8">
+                    <div class="input-group lookup-confirm">
+
+                        
+                        <button class="btn btn-small save-as-coach" type="button" id="addAsCoach" onclick="setTitle(event, 'coach')" disabled="">Add <span class="lookup-confirm--name"></span></button>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group club-coach__add-new">
+            <div class="row">
+                <div class="col-sm-12 col-md-8">
+                    <div>
+                        Or Add a New Coach
+                    </div>
+                    <div>
+                        <input id="addNewCoach" name="addNewCoach" class="btn btn-small btn-outline" type="button" value="Add a Coach" onclick="showNewCoachInputs()">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group club-coach__not-member-container" style="display: none; visibility: hidden;">
+            
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="input-group coach-first-name required">
+                        <label for="coachFirstName">First Name</label>
+                        <input type="text" maxlength="30" onblur="handleInputBlur(this)" class="form-control" name="newCoachFirstName" id="newCoachFirstName" value="">
+                        <span class="help-block help-block--NewcoachFirstName">Enter your club contact's first name.</span>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="input-group coach-last-name required">
+                        <label for="coachLastName" class="">Last Name</label>
+                        <input type="text" maxlength="40" onblur="handleInputBlur(this)" class="form-control " name="newCoachLastName" id="newCoachLastName" value="">
+                        <span class="help-block help-block--NewcoachLastName">Enter your club contact's last name. </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="input-group coach-primary-email required">
+                        <label for="coachEmailPrimary">
+                            Primary Email Address
+                            <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Enter your club contact's primary email address. This can be the same as your club notification email."></span>
+                        </label>
+                        <input type="email" class="form-control" onblur="handleInputBlur(this)" name="newCoachEmailPrimary" id="newCoachEmailPrimary" maxlength="50" value="">
+                        <span class="help-block help-block--newCoachEmailPrimary">Enter your club contact's primary email address. This can be the same as your club notification email.</span>
+                    </div>
+                    <div class="input-group coach-primary-phone required">
+                        <label for="coachPhonePrimary">Primary Phone Number</label>
+                        <input type="text" class="form-control" onblur="handleInputBlur(this)" pattern="[0-9]{3}[-][0-9]{3}[-][0-9]{4}" name="newCoachPhonePrimary" id="newCoachPhonePrimary" value="" maxlength="12">
+                        <span class="help-block help-block--newCoachPhonePrimary">Enter your club contact's primary phone number.</span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-7">
+                    <div class="input-group coach-city required">
+                        <label for="newcoachCity">City</label>
+                        <input type="text" maxlength="80" onblur="handleInputBlur(this)" class="form-control" name="newCoachCity" id="newCoachCity" value="">
+                        <span class="help-block help-block--NewcoachCity">Please enter your city.</span>
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <div class="input-group coach-state required">
+                        <label for="newCoachState" class="">State</label>
+                        <select name="newCoachState" class="form-control" id="newCoachState" onchange="validateField(this)" required="True"><option value="">Select State</option>
+<option value="AL">Alabama</option>
+<option value="AK">Alaska</option>
+<option value="AZ">Arizona</option>
+<option value="AR">Arkansas</option>
+<option value="CA">California</option>
+<option value="CO">Colorado</option>
+<option value="CT">Connecticut</option>
+<option value="DE">Delaware</option>
+<option value="DC">District Of Columbia</option>
+<option value="FL">Florida</option>
+<option value="GA">Georgia</option>
+<option value="HI">Hawaii</option>
+<option value="ID">Idaho</option>
+<option value="IL">Illinois</option>
+<option value="IN">Indiana</option>
+<option value="IA">Iowa</option>
+<option value="KS">Kansas</option>
+<option value="KY">Kentucky</option>
+<option value="LA">Louisiana</option>
+<option value="ME">Maine</option>
+<option value="MD">Maryland</option>
+<option value="MA">Massachusetts</option>
+<option value="MI">Michigan</option>
+<option value="MN">Minnesota</option>
+<option value="MS">Mississippi</option>
+<option value="MO">Missouri</option>
+<option value="MT">Montana</option>
+<option value="NE">Nebraska</option>
+<option value="NV">Nevada</option>
+<option value="NH">New Hampshire</option>
+<option value="NJ">New Jersey</option>
+<option value="NM">New Mexico</option>
+<option value="NY">New York</option>
+<option value="NC">North Carolina</option>
+<option value="ND">North Dakota</option>
+<option value="OH">Ohio</option>
+<option value="OK">Oklahoma</option>
+<option value="OR">Oregon</option>
+<option value="PA">Pennsylvania</option>
+<option value="RI">Rhode Island</option>
+<option value="SC">South Carolina</option>
+<option value="SD">South Dakota</option>
+<option value="TN">Tennessee</option>
+<option value="TX">Texas</option>
+<option value="UT">Utah</option>
+<option value="VT">Vermont</option>
+<option value="VA">Virginia</option>
+<option value="WA">Washington</option>
+<option value="WV">West Virginia</option>
+<option value="WI">Wisconsin</option>
+<option value="WY">Wyoming</option>
+</select>
+                        <span class="help-block help-block--newCoachState">Please select your state.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-5 col-md-6">
+                    <div class="form-group lookup person">
+                        <button class="btn btn-small" type="button" id="addcoachBtn" onclick="handleAddCoachButton()">Accept</button>
+                        <button class="btn btn-small btn-outline" type="button" id="cancelAddcoachBtn" onclick="hideCoachLookupInputs()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group coach-list">
+            <div class="list list--lookup people">
+                <div class="list__header coach-list__header">
+                    <span class="lookup-results--club-abbr"> </span> Coaches and Instructors
+                    <div class="list__controls coach-list__controls">
+                        <button class="list__controls--settings" id="listCoachSettings" onclick="editCoachList()" disabled=""></button>
+                        <button class="btn btn-link" id="editCoachList" onclick="editCoachList()" disabled="">Edit</button>
+                        <button class="btn btn-link" id="saveCoachList" onclick="saveCoachList(event)">Done Editing</button>
+                        <button class="btn btn-link" id="cancelCoachList" onclick="cancelCoachList()">Cancel</button>
+                    </div>
+                </div>
+                <div class="list__container">
+                    <div class="row is-flex">
+                    </div>
+                </div>
+            </div>
+        </div>        
+
+        <div class="section__controls">
+            <button class="btn save-section" type="button" id="saveCoach" onclick="saveCoach()" disabled="">Save &amp; Continue</button>
+        </div>
+    </div>
+</div>
+<!-- End Coach -->
