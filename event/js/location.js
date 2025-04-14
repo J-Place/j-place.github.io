@@ -793,10 +793,34 @@ $(document).ready(function() {
         console.log("This is " + currentPageName);
     });
     setPageName();
+    
     $('#submitEdit').click( function() {
-        $(".help-block").toggleClass("has-error");
-        $(".form-control").toggleClass("has-error");
-        // $('. help-block--SelectHostType').toggleClass("has-error");
-        $('#lookupHostTypeOtherOrganization').toggleClass("has-error");    
-    })
+        $('.help-block').each(function() {
+            var $inputGroup = $(this).closest('.input-group').find('.form-control');
+            var $formGroup = $(this).closest('.form-group').find('.form-control');
+            if ($(this).hasClass('has-error')) {
+                $(this).removeClass('has-error');
+                $inputGroup.removeClass('has-error');
+                $formGroup.removeClass('has-error');
+            } else {
+                $(this).addClass('has-error');
+                $inputGroup.addClass('has-error');
+                $formGroup.addClass('has-error');
+            }
+        });
+        $("#entryInfoComments").removeClass('has-error');
+        $('.website-url-icon > i').removeClass('fa-check').addClass('fa-times');
+    });
+
+    $('#testShowGreenCheck').click( function() {
+        if ($('#entryInfoUrl.has-error')) {
+            $('#entryInfoUrl').removeClass('has-error');
+            $('.help-block--entryInfoWebsiteUrl').removeClass('has-error');
+        }
+        $('#entryInfoUrl').toggleClass('has-success');
+        // $('#entryInfoUrl').removeClass('has-error').addClass('has-success');
+        $('.website-url-icon > i').removeClass('fa-times').addClass('fa-check');
+    });
+
+
 });

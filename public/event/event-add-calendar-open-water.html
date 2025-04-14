@@ -371,7 +371,7 @@
             <div class="input-group radio-group event-type">
     <div class="input-group-header radio-group-header required">Event Type</div>
     <!-- Depending on your choice, you will be given slightly different sanction process flows. -->
-    <span class="help-block help-block--eventType">Please make a selection</span>
+    <span class="help-block help-block--eventType">Please select an event type</span>
     <label class="radio-label radio-label--inline" for="eventTypeAnsweredPool">
         <span class="radio-container">
         <input type="radio" name="EventType" id="eventTypeAnsweredPool" value="pool">
@@ -446,7 +446,7 @@
             <option value="FL">Florida</option>
             <option value="GA">Georgia</option>
          </select>
-            <span class="help-block help-block--SelectEventLmsc">LMSC information is required.</span>
+            <span class="help-block help-block--SelectEventLmsc">Please select an LMSC</span>
       </div>
    </div>
 </div>
@@ -458,6 +458,7 @@
                 Event Distance
                 <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="If you have more than one race in your event, please select all of the race distances that apply"></span>
             </div>
+            <span class="help-block help-block--SelectOpenWaterDistance">Please select a distance</span>
             <label class="checkbox-label" for="lessThan1">
                 <div class="checkbox-container">
                     <input type="checkbox" name="lessThan1" id="lessThan1" value="true"><span class="checkbox__placeholder"></span>
@@ -488,7 +489,7 @@
                 </div>
                 Over 9 Miles
             </label>
-        </div>
+        </div>        
     </div>
 </div>
 
@@ -504,8 +505,8 @@
 
 10+ miles  -->
          <!-- Start and End Dates -->
-<div class="row start-end-dates-group">
-   <div class="col-xs-12 col-lg-4">
+<div class="row">
+   <div class="col-xs-12 col-lg-12">
       <div class="form-group date-select-group has-feedback event-info__start-date--dropdown-start-date-container required">
       
          <label for="">Start Date</label>
@@ -522,9 +523,12 @@
                </div>
             </div>
          </div>
+         <span class="help-block help-block--StartDate">Please select a start date. For one day events, select the same date.</span>
       </div>
    </div>
-   <div class="col-xs-12 col-lg-4">
+</div>
+<div class="row">
+   <div class="col-xs-12 col-lg-12">
       <div class="form-group date-select-group has-feedback event-info__start-date--dropdown-end-date-container required">
       
          <label for="">End Date</label>
@@ -541,6 +545,7 @@
                </div>
             </div>
          </div>
+         <span class="help-block help-block--EndDate">Please select an end date. For one day events, select the same date.</span>
       </div>
    </div>
 </div>
@@ -1368,7 +1373,7 @@
                             <option value="Event Director/Single Person">Event Director/One person</option>
                             <option value="Other Organization">Other Organization</option>
                         </select>
-                        <span class="help-block help-block--SelectHostType">Host type is required.</span>
+                        <span class="help-block help-block--SelectHostType">Please select a host type</span>
                     </div>
                 </div>
             </div>
@@ -1390,7 +1395,7 @@
                             <option value="Florida LMSC">Florida LMSC</option>
                             <option value="Georgia LMSC">Georgia LMSC</option>
                         </select>
-                        <span class="help-block help-block--SelectHostTypeLmsc">Host type is required.</span>
+                        <!-- <span class="help-block help-block--SelectHostTypeLmsc">Please select a host type</span> -->
                     </div>
                     </div>      
                 </div>
@@ -1403,7 +1408,7 @@
                     <div class="input-group lookup-host-type-usms-club">
                     <label for="lookupHostTypeUsmsClub">Search Clubs</label>
                     <input tabindex="0" type="text" class="form-control lookup__input lookup-primary__input" min="3" max="30" name="LookupHostTypeUsmsClub" id="lookupHostTypeUsmsClub" autocomplete="off" placeholder="">
-                    <span class="help-block help-block--LookupHostTypeUsmsClub">Please enter USMS Club</span>
+                    <!-- <span class="help-block help-block--LookupHostTypeUsmsClub">Please enter USMS Club</span> -->
                     </div>
                     <a class="btn btn-small btn-success" id="confirmClubLookup" style="display:none;">Confirm Sarasota Sharks</a>
                 </div>
@@ -1448,7 +1453,7 @@
                     <div class="input-group organization-name required">
                         <label for="hostTypeOtherName">Organization Name</label>
                         <input type="text" maxlength="30" class="form-control" name="HostTypeOtherName" id="hostTypeOtherName" value="" placeholder="Cape Coral Yach Club">
-                        <span class="help-block help-block--HostTypeOtherName">Please enter the organization name.</span>
+                        <span class="help-block help-block--HostTypeOtherName">Please enter an organization name</span>
                     </div>
                 </div>
             </div>
@@ -1459,7 +1464,7 @@
                                 Street Address<span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Enter the organization's street address."></span>
                         </label>
                         <input type="email" class="form-control" name="HostTypeOtherStreetAddress" id="hostTypeOtherStreetAddress" maxlength="50" value="">
-                        <span class="help-block help-block--HostTypeOtherStreetAddress">Please enter the organization street address.</span>
+                        <span class="help-block help-block--HostTypeOtherStreetAddress">Please enter a street address.</span>
                     </div>                                    
                 </div>
             <!-- </div> -->
@@ -1468,7 +1473,7 @@
                     <div class="input-group contact-info-host-type__other-organization--city required">
                         <label for="hostTypeOtherCity">City</label>
                         <input type="text" maxlength="30" class="form-control" name="HostTypeOtherCity" id="hostTypeOtherCity" value="">
-                        <span class="help-block help-block--HostTypeOtherCity">Please enter the organization city.</span>
+                        <span class="help-block help-block--HostTypeOtherCity">Please enter a city</span>
                     </div>
                 </div>
                 <div class="col-sm-3">
@@ -1479,14 +1484,14 @@
                             <option value="AK">Alaska</option>
                             <option value="AZ">Arizona</option>
                         </select>
-                        <span class="help-block help-block--HostTypeOtherState">Please enter the organization state.</span>
+                        <span class="help-block help-block--HostTypeOtherState">Please enter a state</span>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="input-group contact-info-host-type__other-organization--zip required">
                         <label for="hostTypeOtherZip">Zip Code</label>
                         <input type="text" maxlength="30" class="form-control" name="HostTypeOtherZip" id="hostTypeOtherZip" value="">
-                        <span class="help-block help-block--HostTypeOtherZip">Please enter the organization zip code.</span>
+                        <span class="help-block help-block--HostTypeOtherZip">Please enter a zip code</span>
                     </div>
                 </div>
             </div>
@@ -1495,7 +1500,7 @@
                     <div class="input-group contact-info-host-type__other-organization--email required">
                         <label for="hostTypeOtherEmail">Email Address</label>
                         <input type="text" maxlength="30" class="form-control" name="HostTypeOtherEmail" id="hostTypeOtherEmail" value="">
-                        <span class="help-block help-block--HostTypeOtherEmail">Please enter the organization email address.</span>
+                        <span class="help-block help-block--HostTypeOtherEmail">Please enter an email address</span>
                     </div>
                 </div>
             </div>
@@ -1504,7 +1509,7 @@
                     <div class="input-group contact-info-host-type__other-organization--phone required">
                         <label for="hostTypeOtherPhone">Phone Number</label>
                         <input type="text" maxlength="30" class="form-control" name="HostTypeOtherPhone" id="hostTypeOtherPhone" value="">
-                        <span class="help-block help-block--HostTypeOtherPhone">Please enter the organization phone number.</span>
+                        <span class="help-block help-block--HostTypeOtherPhone">Please enter a phone number</span>
                     </div>
                 </div>
             </div>
@@ -1747,6 +1752,12 @@
             </div>
         </div>
     </div> -->
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <span class="help-block help-block--selectLocation">Please select a location, or add a new location</span>
+    </div>
 </div>
 
 <div class="row">
@@ -2484,7 +2495,7 @@
          </div>
          <div class="row">
                <div class="section__controls">
-                  <button class="btn save-section" id="buttonId" type="button">Save & Submit</button>
+                  <button class="btn save-section" id="submitEdit" type="button">Save & Submit</button>
                </div>
          </div>
       </div>
