@@ -712,7 +712,10 @@ p.location__add-new-btn a {
     /* margin: 0 0 4rem; */
 }
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
+    .list-control-search--summary {
+        display: inline-block;
+    }
     .event-list__container {
         margin: 0 4rem;
         padding: 5rem 2rem;
@@ -876,7 +879,7 @@ p.location__add-new-btn a {
     flex-direction: row;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
     .location-column .list-item {
         margin: 0.3rem 0 -0.5rem;
     }
@@ -912,7 +915,7 @@ p.location__add-new-btn a {
     display: flex;
 } 
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
     .club-edit .list-item p.event-location__address--street {
         display: inline-flex;
         border-right: 1px solid #CCC;   
@@ -953,7 +956,7 @@ p.lookup__location--or {
     font-weight: bold;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
     p.lookup__location--or {
         /* position: absolute;
         right: 10px;
@@ -1292,9 +1295,16 @@ input.inputfile.has-error {
 
 .form__container .event-edit .add-new-inputs .help-block.has-error {
     position: absolute;
-    top: -20px;
-    background: transparent;
+    top: 0;
+    height: 1.5rem;
+    background: #f4f4f4;
 }
+
+
+/* .form__container .event-edit .add-new-inputs .help-block {
+    height: 1.5rem;
+    top: -1rem;
+} */
 
 .form__container .event-edit .help-block.help-block--selectLocation.has-error {
     position: relative;
@@ -1318,8 +1328,8 @@ input.inputfile.has-error {
 }
 @media (min-width: 768px) {
     .form__container .event-edit .help-block.help-block--CityStateZip.has-error {
-        top: -3.25rem;
-        height: 3rem;
+        /* top: -3.25rem;
+        height: 3rem; */
     }    
 }
 
@@ -1328,4 +1338,8 @@ input.inputfile.has-error {
         top: -2.5rem;
         height: 2.25rem;
     }
+}
+
+select#hostTypeOtherState.has-error {
+    margin-top: 0;
 }
