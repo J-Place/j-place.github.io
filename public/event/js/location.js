@@ -809,18 +809,7 @@ $(document).ready(function() {
             }
         });
         $("#entryInfoComments").removeClass('has-error');
-        $('.website-url-icon > i').removeClass('fa-check').addClass('fa-times');
+        // $('.website-url-icon > i').removeClass('fa-check').addClass('fa-times');
     });
-
-    $('#testShowGreenCheck').click( function() {
-        if ($('#entryInfoUrl.has-error')) {
-            $('#entryInfoUrl').removeClass('has-error');
-            $('.help-block--entryInfoWebsiteUrl').removeClass('has-error');
-        }
-        $('#entryInfoUrl').toggleClass('has-success');
-        // $('#entryInfoUrl').removeClass('has-error').addClass('has-success');
-        $('.website-url-icon > i').removeClass('fa-times').addClass('fa-check');
-    });
-
 
 });

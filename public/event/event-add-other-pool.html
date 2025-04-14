@@ -2292,7 +2292,6 @@
                      <label for="entryInfoOnlineUrl">Online Entries URL</label>
                      <div class="row" style="width: 100%;">
                          <div class="col-xs-8">
-                             <!-- <input type="url" class="form-control has-success" onblur="validateWebsiteUrl()" name="clubWebsite" id="clubWebsite" placeholder="https://www.yourclub.com" value="" maxlength="255" data-gtm-form-interact-field-id="0" /> -->
                              <input type="url" class="form-control" name="entryInfoOnlineUrl" id="entryInfoOnlineUrl" placeholder="" value="" maxlength="255" data-gtm-form-interact-field-id="0" />
                              <span class="website-url-icon">
                                  <i class="fa fa-times"></i>
@@ -2300,7 +2299,7 @@
                          </div>
                          <div class="col-xs-2">
                              <span class="website-url-icon__check">
-                                 <i class="fa fa-search btn" id="testShowGreenCheck"></i>
+                                 <i class="fa fa-search btn"></i>
                              </span>
                          </div>
                      </div>
@@ -2420,6 +2419,15 @@
       $("#saveEntryInfo").prop('disabled', false);
       $("#entry-information .upload-summary").show();
       $("#entry-information .file-stored").text('Replace File');
+   });
+
+   $('#testShowGreenCheck').click( function() {
+      if ($('#entryInfoWebsiteUrl.has-error')) {
+         $('.help-block--entryInfoWebsiteUrl').removeClass('has-error');
+         $('#entryInfoWebsiteUrl').removeClass('has-error');
+         $('#entryInfoWebsiteUrl').addClass('has-success');
+         $('#entryInfoWebsiteUrl + .website-url-icon > i').removeClass('fa-times').addClass('fa-check');
+      }
    });
 
 </script>
