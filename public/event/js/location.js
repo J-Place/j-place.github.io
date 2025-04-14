@@ -812,4 +812,18 @@ $(document).ready(function() {
         // $('.website-url-icon > i').removeClass('fa-check').addClass('fa-times');
     });
 
+    var x = $('.list-control-search__input > label');
+    console.log(x[0]);
+    // console.log(x);
+    // $(document).ready(function() {
+    //     var maxHeight = 0;
+    //     $('.list-control-search__input > label').each(function() {
+    //         var thisHeight = $(this).outerHeight();
+    //         if (thisHeight > maxHeight) {
+    //             maxHeight = thisHeight;
+    //         }
+    //     });
+    //     $('.list-control-search__input > label').height(maxHeight);
+    // });
+
 });
