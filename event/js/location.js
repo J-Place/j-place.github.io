@@ -809,6 +809,7 @@ $(document).ready(function() {
             }
         });
         $("#entryInfoComments").removeClass('has-error');
+        $('.help-block--addSafetyCoordinator.has-error').removeClass('has-error');
         // $('.website-url-icon > i').removeClass('fa-check').addClass('fa-times');
     });
 
