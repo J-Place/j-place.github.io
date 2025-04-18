@@ -70,7 +70,7 @@ $(document).ready(function() {
             $(".list-item-new.list-item-open-water").show();
             $(".input-group--add-new-course").hide();
         } else {
-            $(".list-item-new.list-item-open-water").show();
+            $(".list-item-new.list-item-pool").show();
         }
     });
 
@@ -703,9 +703,11 @@ $(document).ready(function() {
                 confirmConfiguration();
                 showControlsExisting();
                 $(".list-item-existing.list-item-pool").show();
-                $(".list-item-existing .configuration__list").show();
-                $(".list-item-existing .configuration__list--item.selected").show();
-                $(".list-item-existing .configuration__list--item.selected .configuration-title").show();
+                // $(".list-item-existing .configuration__list").show();
+                // $(".list-item-existing .configuration__list--item.selected").show();
+                // $(".list-item-existing .configuration__list--item.selected .configuration-title").show();
+                $(".venue__list").show();
+                $(".configuration-title").hide();
             });
             $("#confirmLocationHealthfit").click( function() {
                 confirmConfiguration();
@@ -768,9 +770,10 @@ $(document).ready(function() {
                 confirmConfiguration();
                 showControlsExisting();
                 $(".list-item-pool.list-item-existing").show();
-                $(".list-item-existing .configuration__list").show();
-                $(".list-item-existing .configuration__list--item.selected").show();
-                $(".list-item-existing .configuration__list--item.selected .configuration-title").show();
+                $(".venue__list").show();
+                $(".configuration-title").hide();
+                // $(".list-item-existing .configuration__list--item.selected").show();
+                // $(".list-item-existing .configuration__list--item.selected .configuration-title").show();
             });
             $("#confirmLocationHealthfit").click( function() {
                 confirmConfiguration();
