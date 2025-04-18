@@ -102,7 +102,7 @@ $(document).ready(function() {
 
 
     $("#location-information .row.locations").show();
-    $(".list-item-existing").show();    
+    $(".list-item-open-water.list-item-existing").show();    
     $(".contact-information__event-host--list").show();
     $(".contact-list__event-host--header").show();
     

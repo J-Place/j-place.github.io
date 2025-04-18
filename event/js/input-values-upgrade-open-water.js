@@ -88,7 +88,7 @@ $(document).ready(function() {
     $(".list--lookup.locations").hide();
 
     $("#location-information .row.locations").show();
-    $(".list-item-open-water").show();
+    $(".list-item-open-water.list-item-existing").show();
     // $(".location-name .list-item__delete").show();
 
     $(".location-name > .list__controls").show();
