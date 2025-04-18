@@ -646,23 +646,12 @@ $(document).ready(function() {
                 showLocationLookup();
                 showLookupLocationList();
                 resetAddNewLocation();
-                // scrollTopSection();
                 $(".list.locations .list-item--open-water.list-item--duplicate").show();
             });
             $("#confirmDeleteLocation").click( function() {
                 hideEditListControls();
-                // hideControls();
                 hideSavedLocationList();
                 hideListControlChildren();
-                
-                // $(lookupByLocationList).hide();
-
-                // $(".list-item-existing").hide();
-                // $(".list-item-duplicate").hide();
-                // $(".list-item-new").hide();
-
-                // $(".locations .list-item").hide();
-
                 showLocationLookup();
                 showLookupLocationList();
                 resetAddNewLocation();
@@ -737,13 +726,6 @@ $(document).ready(function() {
                 $(".list.locations .list-item--open-water.list-item--duplicate").show();
             });
             $("#confirmDeleteLocation").click( function() {
-                // hideEditListControls();
-                // hideSavedLocationList();
-                // hideListControlChildren();
-                // $(lookupByLocationList).hide();
-                // $(".locations .list-item").hide();
-                // resetAddNewLocation();
-                // filterByOpenWater();
                 showLocationLookup();
                 showLookupLocationList();
                 resetAddNewLocation();
@@ -758,8 +740,6 @@ $(document).ready(function() {
                 $(".list-item-pool.list-item-existing").show();
                 $(".venue__list").show();
                 $(".configuration-title").hide();
-                // $(".list-item-existing .configuration__list--item.selected").show();
-                // $(".list-item-existing .configuration__list--item.selected .configuration-title").show();
             });
             $("#confirmLocationHealthfit").click( function() {
                 confirmConfiguration();
@@ -767,10 +747,6 @@ $(document).ready(function() {
                 $(".list-item-pool.list-item-duplicate").show();
                 $(".venue__list").show();
                 $(".configuration-title").hide();
-
-                // $(".list-item-duplicate .configuration__list").show();
-                // $(".list-item-duplicate .configuration__list--item.selected").show();
-                // $(".list-item-duplicate .configuration__list--item.selected .configuration-title").show();
             });
             $("#confirmLocationJensen").click( function() {
                 confirmConfiguration();
