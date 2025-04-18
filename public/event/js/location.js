@@ -91,7 +91,8 @@ $(document).ready(function() {
         $(".list-venue-form").hide();
         $(".form-group.form-group-hidden").removeClass("show");
         $("#locationType").prop('selectedIndex',0);
-        // $('.location-header__edit').show();
+        $('.location-header__edit').show();
+        // showEditListControlsEditable();
         $(".venue__list").show();
     });
     
