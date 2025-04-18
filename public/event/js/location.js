@@ -705,9 +705,11 @@ $(document).ready(function() {
                 confirmConfiguration();
                 showControlsExisting();
                 $(".list-item-duplicate").show();
-                $(".list-item-duplicate .configuration__list").show();
-                $(".list-item-duplicate .configuration__list--item.selected").show();
-                $(".list-item-duplicate .configuration__list--item.selected .configuration-title").show();
+                $(".venue__list").show();
+                $(".configuration-title").hide();
+                // $(".list-item-duplicate .configuration__list").show();
+                // $(".list-item-duplicate .configuration__list--item.selected").show();
+                // $(".list-item-duplicate .configuration__list--item.selected .configuration-title").show();
             });
             $("#confirmLocationJensen").click( function() {
                 confirmConfiguration();
