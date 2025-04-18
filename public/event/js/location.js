@@ -62,10 +62,8 @@ $(document).ready(function() {
         showAddNewLocationContainer();
         showSavedLocationList();
         // showControlsNew();
-        // $(".list-item-new").show();
         $(".venue__list").hide();
         $(".configuration__list").hide();
-        // $(".location-add-configuration").hide();
         $(addNewPoolForm).show();
         $('.location-name .list__controls').hide();
         if ($("#locationType").val() === 'Open Water') {
@@ -96,8 +94,6 @@ $(document).ready(function() {
         $("#locationType").prop('selectedIndex',0);
         $('.location-header__edit').show();
         $(".venue__list").show();
-        // $(".configuration__list").show();
-
     });
     
     $("#saveFormConfiguration").click( function() {
