@@ -166,7 +166,7 @@ $(document).ready(function() {
         $(".venue__list--item.selected").show();
         $(".venue__list--item.selected .venue-name").show();
         $(".venue__list--item.selected .venue-type").show();
-        scrollTopSection();
+        // scrollTopSection();
         hideListControlChildren();
         showControlsNew();
     });
@@ -182,7 +182,7 @@ $(document).ready(function() {
     $("#modalConfirmSelby").click( function() {
         confirmConfiguration();
         showControlsExisting();        
-        scrollTopSection();
+        // scrollTopSection();
         $(this).prop('disabled', true);
         $('input[name="configuration-selby').prop("checked", false);
         $(".list-item-existing.list-item-pool").show();
@@ -197,7 +197,7 @@ $(document).ready(function() {
         confirmConfiguration();
         showControlsExisting();
         $(".list-item-duplicate.list-item-pool").show();
-        scrollTopSection();
+        // scrollTopSection();
         $(this).prop('disabled', true);
         $('input[name="configuration-healthfit').prop("checked", false);
         $(".list-item-duplicate.list-item-pool .venue__list").show();
@@ -211,7 +211,7 @@ $(document).ready(function() {
         confirmConfiguration();
         showControlsExisting();
         $(".list-item-new.list-item-pool").show();
-        scrollTopSection();
+        // scrollTopSection();
         $(this).prop('disabled', true);
         $('input[name="configuration-jensen').prop("checked", false);
         $(".list-item-new.list-item-pool .venue__list").show();
@@ -347,7 +347,7 @@ $(document).ready(function() {
     $("#saveListEventLocationExisting").click( function() {
         confirmConfiguration();
         $(".list-item-existing").show();
-        scrollTopSection();
+        // scrollTopSection();
         hideListControlChildren();
         showControlsExisting();
     });
@@ -355,7 +355,7 @@ $(document).ready(function() {
     $("#saveListEventLocationNew").click( function() {
         confirmConfiguration();
         $(".list-item-new").show();
-        scrollTopSection();
+        // scrollTopSection();
         hideListControlChildren();
         // handleListControls();
         showControlsNew();
@@ -364,7 +364,7 @@ $(document).ready(function() {
     $("#saveListEventLocationDuplicate").click( function() {
         confirmConfiguration();
         $(".list-item-duplicate").show();
-        scrollTopSection();
+        // scrollTopSection();
         hideListControlChildren();
         // handleListControls();
     });
@@ -372,7 +372,7 @@ $(document).ready(function() {
     $("#saveListEventLocationOpenWater").click( function() {
         confirmConfiguration();
         $(".list-item-open-water").show();
-        scrollTopSection();
+        // scrollTopSection();
         hideListControlChildren();
         // handleListControls();
     });
@@ -638,7 +638,7 @@ $(document).ready(function() {
                 showLocationLookup();
                 showLookupLocationList();
                 resetAddNewLocation();
-                scrollTopSection();
+                // scrollTopSection();
                 $(".list.locations .list-item--open-water.list-item--duplicate").show();
             });
             $("#confirmDeleteLocation").click( function() {
@@ -736,7 +736,7 @@ $(document).ready(function() {
                 showLocationLookup();
                 showLookupLocationList();
                 resetAddNewLocation();
-                scrollTopSection();
+                // scrollTopSection();
                 $(".list.locations .list-item--open-water.list-item--duplicate").show();
             });
             $("#confirmDeleteLocation").click( function() {
@@ -787,7 +787,6 @@ $(document).ready(function() {
                 // scrollTopSection();
                 showLocationLookup();
                 showLookupLocationList();
-                // $(".list-item:not(.list-item--pool.list-item--duplicate").hide();
                 $(".list.locations .list-item--pool.list-item--duplicate").show();
             });
             $("#confirmDeleteLocation").click( function() {
@@ -797,9 +796,6 @@ $(document).ready(function() {
                 hideSavedLocationList();
                 hideListControlChildren();
                 $(lookupByLocationList).hide();
-                // $(".list-item-existing").hide();
-                // $(".list-item-duplicate").hide();
-                // $(".list-item-new").hide();
                 $(".locations .list-item").hide();
                 showLocationLookup();
                 showLookupLocationList();
