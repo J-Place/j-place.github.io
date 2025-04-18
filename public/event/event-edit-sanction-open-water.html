@@ -2013,6 +2013,30 @@
                               </div>
                            </div>
                         </div>
+                        <div class="list-item list-item-open-water list-item-new">
+                           <div class="list__controls">
+                              <!-- <a class="list__controls--settings" id="settingsListEventLocationOpenWater"></a> -->
+                              <a class="btn btn-link list-item__edit" id="editListEventLocationOpenWater">Edit</a>
+                              <!-- <a class="btn btn-link list-item__save" id="saveListEventLocationOpenWater">Done Editing</a> -->
+                              <a class="btn btn-link list-item__delete" id="deleteListEventLocationOpenWater">Remove</a>
+                           </div>
+                           <p class="location-name text-bold">Loggerhead Park</p>
+                           <p class="location-address-street">14200 U.S. Highway 1 | Juno Beach, FL 33408</p>
+                           <span class="help-block">Venue or Pool missing</span>
+                           <button class="location-add-venue btn btn-small btn-outline">
+                              <span><i class="fa fa-plus"></i></span>Add Venue
+                           </button>
+                           <div class="venue__list">
+                              <div class="venue__list--item selected">
+                                 <div class="list__controls">
+                                    <a class="btn btn-link venue-edit-button">Edit</a>
+                                    <a class="btn btn-link venue-remove-button">Remove</a>
+                                 </div>
+                                 <p class="venue-name">Boardwalk</p>
+                                 <p class="venue-type">(Ocean)</p>
+                              </div>
+                           </div>
+                        </div>
                      </div>
                   </div>
                </div>
@@ -2871,15 +2895,13 @@
 
 
 <script>
-  let termsSanctioned = $(".terms-sanctioned");
-  let termsRecognized = $(".terms-recognized");
   $("#selectEventClass").on('change', function() {
      if ($(this).val() === 'sanctioned') {
-        $(termsRecognized).hide();
-        $(termsSanctioned).show();
+        $(".terms-recognized").hide();
+        $(".terms-sanctioned").show();
      } else if ($(this).val() === 'recognized') {
-        $(termsRecognized).show();
-        $(termsSanctioned).hide();  
+        $(".terms-recognized").show();
+        $(".terms-sanctioned").hide();  
      }
   });
   $("#submitEdit").click( function() {
@@ -2889,15 +2911,13 @@
 </script>
 
 <script>
-   let termsSanctioned = $(".terms-sanctioned");
-   let termsRecognized = $(".terms-recognized");
     $("#selectEventClass").on('change', function() {
         if ($(this).val() === 'sanctioned') {
-            $(termsRecognized).hide();
-            $(termsSanctioned).show();
+            $(".terms-recognized").hide();
+            $(".terms-sanctioned").show();
         } else if ($(this).val() === 'recognized') {
-            $(termsRecognized).show();
-            $(termsSanctioned).hide();  
+            $(".terms-recognized").show();
+            $(".terms-sanctioned").hide();  
         }
     });
 </script>

@@ -61,13 +61,12 @@ $(document).ready(function() {
         $(cancelAddLocationBtn).hide();
         showAddNewLocationContainer();
         showSavedLocationList();
-        // showControlsNew();
         $(".venue__list").hide();
         $(".configuration__list").hide();
         $(addNewPoolForm).show();
         $('.location-name .list__controls').hide();
         if ($("#locationType").val() === 'Open Water') {
-            $(".list-item-open-water").show();
+            $(".list-item-new.list-item-open-water").show();
             $(".input-group--add-new-course").hide();
         } else {
             $(".list-item-new").show();
@@ -161,7 +160,7 @@ $(document).ready(function() {
 
     $("#confirmWaterFrontPark").click( function() {
         confirmConfiguration();
-        $(".list-item-open-water").show();
+        $(".list-item-open-water.list-item-existing").show();
         $(".venue__list").show();
         $(".venue__list--item.selected").show();
         $(".venue__list--item.selected .venue-name").show();
@@ -181,12 +180,11 @@ $(document).ready(function() {
 
     $("#modalConfirmSelby").click( function() {
         confirmConfiguration();
-        // handleListControls();
-        showControlsExisting();
-        $(".list-item-existing.list-item-pool").show();
+        showControlsExisting();        
         scrollTopSection();
         $(this).prop('disabled', true);
         $('input[name="configuration-selby').prop("checked", false);
+        $(".list-item-existing.list-item-pool").show();
         $(".list-item-existing.list-item-pool .venue__list").show();
         $(".list-item-existing.list-item-pool .venue__list--item.selected").show();
         $(".list-item-existing.list-item-pool .configuration__list").show();
@@ -196,7 +194,6 @@ $(document).ready(function() {
 
     $("#modalConfirmHealthfit").click( function() {
         confirmConfiguration();
-        // handleListControls();
         showControlsExisting();
         $(".list-item-duplicate.list-item-pool").show();
         scrollTopSection();
@@ -211,7 +208,6 @@ $(document).ready(function() {
 
     $("#modalConfirmJensen").click( function() {
         confirmConfiguration();
-        // handleListControls();
         showControlsExisting();
         $(".list-item-new.list-item-pool").show();
         scrollTopSection();
@@ -258,17 +254,6 @@ $(document).ready(function() {
         $(".location-header").hide();
         $(addNewPoolForm).show();
     }
-
-    // $(".locations .list-item__edit").click( function() {
-    //     $(".list.locations").addClass("edit-list");
-    //     $(".venue__list--item.selected").show();
-    //     $(".venue__list--item.selected .configuration-title").show();
-    //     // showControlsExisting();
-    //     $(".locations .list-item__edit").hide();
-    //     $(".locations .list-item__save").show();
-    //     $(".locations .list-item__delete").show();
-    //     showListControlChildren();
-    // });
 
     $('#doneEditLocationBtn').click( function(e) {
         e.preventDefault();
@@ -321,21 +306,6 @@ $(document).ready(function() {
         $(".locations .list-item__delete").hide();
     });
 
-    // $("#confirmDeleteLocation").click( function() {
-        // alert("primary fx");
-    //     hideControls();
-    //     // filterByRange();
-    //     hideSavedLocationList();
-    //     hideListControlChildren();
-    //     $(lookupByLocationList).hide();
-    //     $(".list-item-existing").hide();
-    //     $(".list-item-duplicate").hide();
-    //     $(".list-item-new").hide();
-    //     showLocationLookup();
-    //     showLookupLocationList();
-    //     resetAddNewLocation();
-    // });
-
     $(".google-places-input").click( function() {
         hideSavedLocationList();
         showLookupLocationList();
@@ -373,7 +343,6 @@ $(document).ready(function() {
         $(".list-item-existing").show();
         scrollTopSection();
         hideListControlChildren();
-        // handleListControls();
         showControlsExisting();
     });
 
@@ -512,7 +481,7 @@ $(document).ready(function() {
     }
 
     function handleListControls() {
-        console.log("fx handle list controls");
+        console.log("fx handleListControls");
         $(".location-name > .list__controls").show();
         $(".list.locations").removeClass("edit-list");
 
@@ -664,14 +633,15 @@ $(document).ready(function() {
                 hideSavedLocationList();
                 hideListControlChildren();
                 $(lookupByLocationList).hide();
-                $(".list-item-existing").hide();
-                $(".list-item-duplicate").hide();
-                $(".list-item-new").hide();
+                // $(".list-item-existing").hide();
+                // $(".list-item-duplicate").hide();
+                // $(".list-item-new").hide();
+                $(".locations .list-item").hide();
                 showLocationLookup();
                 showLookupLocationList();
                 resetAddNewLocation();
                 filterByOpenWater();
-            });
+            }); 
         } else if (currentPageName === "Pool") {
             filterByRange();
             filterByCourse();
@@ -690,9 +660,10 @@ $(document).ready(function() {
                 hideSavedLocationList();
                 hideListControlChildren();
                 $(lookupByLocationList).hide();
-                $(".list-item-existing").hide();
-                $(".list-item-duplicate").hide();
-                $(".list-item-new").hide();
+                // $(".list-item-existing").hide();
+                // $(".list-item-duplicate").hide();
+                // $(".list-item-new").hide();
+                $(".locations .list-item").hide();
                 showLocationLookup();
                 showLookupLocationList();
                 resetAddNewLocation();
@@ -731,9 +702,10 @@ $(document).ready(function() {
                 hideSavedLocationList();
                 hideListControlChildren();
                 $(lookupByLocationList).hide();
-                $(".list-item-existing").hide();
-                $(".list-item-duplicate").hide();
-                $(".list-item-new").hide();
+                // $(".list-item-existing").hide();
+                // $(".list-item-duplicate").hide();
+                // $(".list-item-new").hide();
+                $(".locations .list-item").hide();
                 showLocationLookup();
                 showLookupLocationList();
                 resetAddNewLocation();
@@ -754,9 +726,10 @@ $(document).ready(function() {
                 hideSavedLocationList();
                 hideListControlChildren();
                 $(lookupByLocationList).hide();
-                $(".list-item-existing").hide();
-                $(".list-item-duplicate").hide();
-                $(".list-item-new").hide();
+                // $(".list-item-existing").hide();
+                // $(".list-item-duplicate").hide();
+                // $(".list-item-new").hide();
+                $(".locations .list-item").hide();
                 showLocationLookup();
                 showLookupLocationList();
                 resetAddNewLocation();
@@ -802,9 +775,10 @@ $(document).ready(function() {
                 hideSavedLocationList();
                 hideListControlChildren();
                 $(lookupByLocationList).hide();
-                $(".list-item-existing").hide();
-                $(".list-item-duplicate").hide();
-                $(".list-item-new").hide();
+                // $(".list-item-existing").hide();
+                // $(".list-item-duplicate").hide();
+                // $(".list-item-new").hide();
+                $(".locations .list-item").hide();
                 showLocationLookup();
                 showLookupLocationList();
                 resetAddNewLocation();
@@ -813,12 +787,22 @@ $(document).ready(function() {
         }
         $('#editLocationBtn').click( function(e) {
             e.preventDefault();
-            if (($('.list-item-open-water').css('display') === 'block') || $('.list-item-new').css('display') === 'block') {
-                showEditListControlsEditable();
-            } else {
+            
+            var visibleLi = $('.locations .list-item:visible').first(); // adjust .first() if needed
+
+            if (visibleLi.hasClass('list-item-existing')) {
+                console.log("Existing location");
                 showEditListControlsReadOnly();
+            } else {
+                console.log("New location");
+                showEditListControlsEditable();
             }
-        });
+            
+
+
+
+            
+        });   
         console.log("This is " + currentPageName);
     });
     setPageName();

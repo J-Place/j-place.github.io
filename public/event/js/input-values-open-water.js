@@ -91,9 +91,7 @@ $(document).ready(function() {
     
 
 
-
-
-    $(".list-item-open-water").show();
+    $(".list-item-open-water.list-item-existing").show();
     $(".location-name > .list__controls").show();
     $(".list__controls--settings").css('display', 'inline-flex');
     $(".club-edit .list-item__edit").show();

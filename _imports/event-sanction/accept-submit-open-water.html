@@ -32,15 +32,13 @@
     </div>
 </form>
 <script>
-   let termsSanctioned = $(".terms-sanctioned");
-   let termsRecognized = $(".terms-recognized");
     $("#selectEventClass").on('change', function() {
         if ($(this).val() === 'sanctioned') {
-            $(termsRecognized).hide();
-            $(termsSanctioned).show();
+            $(".terms-sanctioned").hide();
+            $(".terms-recognized").show();
         } else if ($(this).val() === 'recognized') {
-            $(termsRecognized).show();
-            $(termsSanctioned).hide();  
+            $(".terms-sanctioned").show();
+            $(".terms-recognized").hide();  
         }
     });
 </script>

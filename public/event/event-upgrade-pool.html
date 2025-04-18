@@ -3154,15 +3154,13 @@
    <!-- </div> -->
 </form>
 <script>
-   let termsSanctioned = $(".terms-sanctioned");
-   let termsRecognized = $(".terms-recognized");
    $("#selectEventClass").on('change', function() {
       if ($(this).val() === 'sanctioned') {
-         $(termsRecognized).hide();
-         $(termsSanctioned).show();
+         $(".terms-recognized").hide();
+         $(".terms-sanctioned").show();
       } else if ($(this).val() === 'recognized') {
-         $(termsRecognized).show();
-         $(termsSanctioned).hide();  
+         $(".terms-recognized").show();
+         $(".terms-sanctioned").hide();  
       }
    });
 
