@@ -84,8 +84,9 @@ $(document).ready(function() {
 
     $("#location-information__content .list-control").hide();
     $(".location-info__add-new-location--container").hide();
+    // $(".list--lookup.locations").parent().parent().hide();
     $(".list--lookup.locations").hide();
-    $(".list-item__delete").show();
+    // $(".list-item__delete").show();
     $("#location-information .row.locations").show();
     
 

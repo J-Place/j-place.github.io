@@ -61,26 +61,17 @@ $(document).ready(function() {
         $(cancelAddLocationBtn).hide();
         showAddNewLocationContainer();
         showSavedLocationList();
-
         // showControlsNew();
         // $(".list-item-new").show();
-
-        // $(".venue__list").hide();
-        // $(".configuration__list").hide();
+        $(".venue__list").hide();
+        $(".configuration__list").hide();
         // $(".location-add-configuration").hide();
-
         $(addNewPoolForm).show();
-
         $('.location-name .list__controls').hide();
-        
-        // alert($("#locationType").val());
-
         if ($("#locationType").val() === 'Open Water') {
-            // alert("A");
             $(".list-item-open-water").show();
             $(".input-group--add-new-course").hide();
         } else {
-            // alert("B");
             $(".list-item-new").show();
         }
     });
@@ -94,33 +85,19 @@ $(document).ready(function() {
         // $(".list-item").hide();
         showControlsNew();
         setPageName();
-
         $(".location-info__add-new-location--container").hide();
-
         $(".venue__list").show();
         $(".list-item-open-water .venue__list--item").show();
         $('.location-name .list__controls').show();
         hideLocationLookup();
-
         $(".list-venue-form").hide();
         hideLookupLocationList();
-
-        // if ($("#locationType").val() === 'Open Water') {
-        //     $(".venue__list").show();
-        //     $(".list-item-open-water .venue__list--item").show();
-        //     $('.location-name .list__controls').show();
-        //     hideLocationLookup();
-        //     $(".list-venue-form").hide();
-        //     $("#saveLocation").prop('disabled', false);
-        // } else {
-        //     $(addNewPoolForm).hide();
-        //     $(".venue__list").show();
-        //     $(".venue__list--item-added").show();
-        //     $(".venue__list--item:first-of-type").show();
-        //     $('.location-name .list__controls').show();
-        // }
         $(".form-group.form-group-hidden").removeClass("show");
         $("#locationType").prop('selectedIndex',0);
+        $('.location-header__edit').show();
+        $(".venue__list").show();
+        // $(".configuration__list").show();
+
     });
     
     $("#saveFormConfiguration").click( function() {
@@ -286,27 +263,66 @@ $(document).ready(function() {
         $(addNewPoolForm).show();
     }
 
-    $(".location-name .list-item__edit").click( function() {
-        $(".list.locations").addClass("edit-list");
-        $(".venue__list--item.selected").show();
-        $(".venue__list--item.selected .configuration-title").show();
-        // showControlsExisting();
-        $(".location-name .list-item__edit").hide();
-        $(".location-name .list-item__save").show();
-        $(".location-name .list-item__delete").show();
-        showListControlChildren();
+    // $(".locations .list-item__edit").click( function() {
+    //     $(".list.locations").addClass("edit-list");
+    //     $(".venue__list--item.selected").show();
+    //     $(".venue__list--item.selected .configuration-title").show();
+    //     // showControlsExisting();
+    //     $(".locations .list-item__edit").hide();
+    //     $(".locations .list-item__save").show();
+    //     $(".locations .list-item__delete").show();
+    //     showListControlChildren();
+    // });
+
+    $('#doneEditLocationBtn').click( function(e) {
+        e.preventDefault();
+        hideEditListControls();
     });
 
-    $(".location-name .list-item__delete").click( function() {
+    function showEditListControlsReadOnly() {
+        $('#editLocationBtn').hide();
+        $('#doneEditLocationBtn').show();
+        $('.list.locations').addClass('edit-list');
+        $('.locations .list-item > .list__controls').show();
+        $(".locations .list-item__edit").hide();
+        $(".locations .list-item__delete").show();
+    }
+    
+    function showEditListControlsEditable() {
+        $('#editLocationBtn').hide();
+        $('#doneEditLocationBtn').show();
+        $('.list.locations').addClass('edit-list');
+        $('.locations .list-item > .list__controls').show();
+        $(".locations .list-item__edit").show();
+        $(".locations .list-item__delete").show();
+        $('.venue__list .list__controls').show();
+        $('.configuration__list .list__controls').show();
+    }
+
+    function hideEditListControls() {
+        $('#editLocationBtn').show();
+        $('#doneEditLocationBtn').hide();
+        $('.list.locations').removeClass('edit-list');
+        $(".locations .list-item__edit").hide();
+        $(".locations .list-item__delete").hide();
+        $('.list__controls').hide();
+        // $(".location-header__edit").hide();
+
+        // $('.locations .list-item > .list__controls').hide();
+        // $('.venue__list .list__controls').hide();
+        // $('.configuration__list .list__controls').hide();
+    }
+
+    $(".locations .list-item__delete").click( function() {
         $("#modalDeleteLocation").modal('show');
     });
 
-    $(".location-name .list-item__save").click( function() {
-        // $(".location-name .list-item__delete").hide();
+    $(".locations .list-item__save").click( function() {
+        // $(".locations .list-item__delete").hide();
         $(".list.locations").removeClass("edit-list");
-        $(".location-name .list-item__edit").show();
-        $(".location-name .list-item__save").hide();
-        $(".location-name .list-item__delete").hide();
+        $(".locations .list-item__edit").show();
+        $(".locations .list-item__save").hide();
+        $(".locations .list-item__delete").hide();
     });
 
     // $("#confirmDeleteLocation").click( function() {
@@ -447,10 +463,12 @@ $(document).ready(function() {
     }
 
     function showLookupLocationList() {
+        // (".list--lookup.locations").parent().parent().show();
         $(".list.list--lookup.locations").show();
     }
 
     function hideLookupLocationList() {
+        // (".list--lookup.locations").parent().parent().hide();
         $(".list.list--lookup.locations").hide();
     }
 
@@ -507,16 +525,16 @@ $(document).ready(function() {
         }
 
         if ($(".list-item-new").css('display') === 'block') {
-            // $(".location-name .list-item__edit").show();
-            // $(".location-name .list-item__save").show();
+            // $(".locations .list-item__edit").show();
+            // $(".locations .list-item__save").show();
             // $(".list__controls--settings").css('display', 'inline');
             showControlsNew();
         }
 
         // else if ($(".list-item-new").css('display') === 'none') {
-        //     $(".location-name .list-item__edit").hide();
-        //     $(".location-name .list-item__save").hide();
-        //     $(".location-name .list-item__delete").show();
+        //     $(".locations .list-item__edit").hide();
+        //     $(".locations .list-item__save").hide();
+        //     $(".locations .list-item__delete").show();
         // } 
     }
 
@@ -524,8 +542,8 @@ $(document).ready(function() {
         console.log("fx show controls new");
         $(".location-name > .list__controls").show();
         $(".list.locations").removeClass("edit-list");
-        $(".location-name .list-item__edit").show();
-        $(".location-name .list-item__save").hide();
+        $(".locations .list-item__edit").show();
+        $(".locations .list-item__save").hide();
         $(".list__controls--settings").css('display', 'inline-flex');
     }
 
@@ -533,16 +551,17 @@ $(document).ready(function() {
         console.log("fx show controls existing");
         $(".location-name > .list__controls").show();
         $(".list.locations").removeClass("edit-list");
-        $(".location-name .list-item__edit").hide();
-        $(".location-name .list-item__save").hide();
-        $(".location-name .list-item__delete").show();
+        $(".locations .list-item__edit").hide();
+        $(".locations .list-item__save").hide();
+        $(".location-header__edit").show();
+        // $(".locations .list-item__delete").show();
     }
 
     function hideControls() {
         $(".list.locations").removeClass("edit-list");
-        $(".location-name .list-item__edit").show();
-        $(".location-name .list-item__save").hide();
-        $(".location-name .list-item__delete").hide();
+        $(".locations .list-item__edit").show();
+        $(".locations .list-item__save").hide();
+        $(".locations .list-item__delete").hide();
     }
 
     function filterByRange() {
@@ -625,6 +644,7 @@ $(document).ready(function() {
     }
 
     function filterByOpenWater() {
+        // (".list--lookup.locations").parent().parent().show();
         $(".list--lookup.locations").show();
         $(".list--lookup.locations .list-item").hide();
         $(".list--lookup.locations .list-item.list-item--open-water").show();
@@ -643,7 +663,8 @@ $(document).ready(function() {
                 $(".list-item:not(.list-item--open-water.list-item--duplicate").hide();
             });
             $("#confirmDeleteLocation").click( function() {
-                hideControls();
+                hideEditListControls();
+                // hideControls();
                 hideSavedLocationList();
                 hideListControlChildren();
                 $(lookupByLocationList).hide();
@@ -668,7 +689,8 @@ $(document).ready(function() {
                 $("#modalChosePoolConfigurationJensen").modal('show');
             });
             $("#confirmDeleteLocation").click( function() {
-                hideControls();
+                hideEditListControls();
+                // hideControls();
                 hideSavedLocationList();
                 hideListControlChildren();
                 $(lookupByLocationList).hide();
@@ -708,7 +730,8 @@ $(document).ready(function() {
                 $(".list-item-new .configuration__list--item.selected .configuration-title").show();
             });
             $("#confirmDeleteLocation").click( function() {
-                hideControls();
+                hideEditListControls();
+                // hideControls();
                 hideSavedLocationList();
                 hideListControlChildren();
                 $(lookupByLocationList).hide();
@@ -730,7 +753,8 @@ $(document).ready(function() {
                 $(".list-item:not(.list-item--open-water.list-item--duplicate").hide();
             });
             $("#confirmDeleteLocation").click( function() {
-                hideControls();
+                hideEditListControls();
+                // hideControls();
                 hideSavedLocationList();
                 hideListControlChildren();
                 $(lookupByLocationList).hide();
@@ -777,7 +801,8 @@ $(document).ready(function() {
                 $(".list-item:not(.list-item--pool.list-item--duplicate").hide();
             });
             $("#confirmDeleteLocation").click( function() {
-                hideControls();
+                hideEditListControls();
+                // hideControls();
                 hideSavedLocationList();
                 hideListControlChildren();
                 $(lookupByLocationList).hide();
@@ -790,6 +815,14 @@ $(document).ready(function() {
                 filterByRange();
             });
         }
+        $('#editLocationBtn').click( function(e) {
+            e.preventDefault();
+            if (($('.list-item-open-water').css('display') === 'block') || $('.list-item-new').css('display') === 'block') {
+                showEditListControlsEditable();
+            } else {
+                showEditListControlsReadOnly();
+            }
+        });
         console.log("This is " + currentPageName);
     });
     setPageName();
@@ -809,12 +842,16 @@ $(document).ready(function() {
             }
         });
         $("#entryInfoComments").removeClass('has-error');
+        $('.help-block--addHeadRef.has-error').removeClass('has-error');
         $('.help-block--addSafetyCoordinator.has-error').removeClass('has-error');
+        $('.help-block--chosePoolConfiguration.has-error').removeClass('has-error');
+        $('.list-item-existing .help-block.has-error').removeClass('has-error');
+        
         // $('.website-url-icon > i').removeClass('fa-check').addClass('fa-times');
     });
 
-    var x = $('.list-control-search__input > label');
-    console.log(x[0]);
+    // var x = $('.list-control-search__input > label');
+    // console.log(x[0]);
     // console.log(x);
     // $(document).ready(function() {
     //     var maxHeight = 0;

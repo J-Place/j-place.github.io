@@ -1,47 +1,56 @@
 <div class="row">
    <div class="col-sm-12">
-      <div class="list list--result locations">
-         <div class="list__container">
-            <div class="row is-flex">
-               <div class="col-xs-12">
+      <div class="location-header location-header__edit">
+         <div class="form-group"> 
+            <button class="btn btn-small btn-outline" id="editLocationBtn">Edit Location</button>
+            <button class="btn btn-small btn-success" id="doneEditLocationBtn" style="display: none;">Done Editing</button>
+            <button class="btn btn-small btn-outline" id="cancelAddLocationBtn" style="display: none;">Cancel</button>
+         </div>
+      </div>
+   </div>
+   <div class="col-sm-12">
+         <div class="form-group">
+            <div class="list locations">
+               <div class="list__container">
+                  <div class="row is-flex">
+                     <div class="col-xs-12">
 
-                  <div class="list-item list-item-existing list-item-pool">
-                     <p class="location-name text-bold">Selby Aquatic Center
-                        <span class="list__controls">
-                           <a class="list__controls--settings" id="settingsListEventLocationExisting"></a>
-                           <a class="btn btn-link list-item__edit" id="editListEventLocationExisting">Edit</a>
-                           <a class="btn btn-link list-item__save" id="saveListEventLocationExisting">Done Editing</a>
-                           <a class="btn btn-link list-item__delete" id="deleteListEventLocationExisting">Remove</a>
-                        </span>
-                     </p>
-                     <p class="location-address-street">8501 Potter Park Drive | Sarasota, FL 34238</p>
+                        <div class="list-item list-item-existing list-item-pool">
+                           <div class="list__controls">
+                              <!-- <a class="list__controls--settings" id="settingsListEventLocationExisting"></a> -->
+                              <a class="btn btn-link list-item__edit" id="editListEventLocationExisting">Edit</a>
+                              <!-- <a class="btn btn-link list-item__save" id="saveListEventLocationExisting">Done Editing</a> -->
+                              <a class="btn btn-link list-item__delete" id="deleteListEventLocationExisting">Remove</a>
+                           </div>
+                           <p class="location-name text-bold">Selby Aquatic Center</p>
+                           <p class="location-address-street">8501 Potter Park Drive | Sarasota, FL 34238</p>
+                        </div>
+                        <div class="list-item list-item-new list-item-pool">
+                           <div class="list__controls">
+                              <!-- <a class="list__controls--settings" id="settingsListEventLocationNew"></a> -->
+                              <a class="btn btn-link list-item__edit" id="editListEventLocationNew">Edit</a>
+                              <!-- <a class="btn btn-link list-item__save" id="saveListEventLocationNew">Done Editing</a> -->
+                              <a class="btn btn-link list-item__delete" id="deleteListEventLocationNew">Remove</a>
+                           </div>
+                           <p class="location-name text-bold">Jensen Beach Pool</p>
+                           <p class="location-address-street">123 Southeast Sailfish Lane | Stuart, FL 34996</p>
+                        </div>
+                        <div class="list-item list-item-duplicate list-item-pool">
+                           <div class="list__controls">
+                              <!-- <a class="list__controls--settings" id="settingsListEventLocationDuplicate"></a> -->
+                              <a class="btn btn-link list-item__edit" id="editListEventLocationDuplicate">Edit</a>
+                              <!-- <a class="btn btn-link list-item__save" id="saveListEventLocationDuplicate">Done Editing</a> -->
+                              <a class="btn btn-link list-item__delete" id="deleteListEventLocationDuplicate">Remove</a>
+                           </div>
+                           <p class="location-name text-bold">HealthFit powered by SMH</p>
+                           <p class="location-address-street">5880 Rand Blvd #102 | Sarasota, FL 34238</p>
+                        </div>
+                        
+                     </div>
+                     <div class="col-xs-12">
+                        <p style="font-size: 1.7rem; width: 100%;">If you would like to make edits to this location, pool or course, contact USMS: <a href="mailto:events@usmastersswimming.org">events@usmastersswimming.org.</a></p>
+                     </div>
                   </div>
-                  <div class="list-item list-item-new list-item-pool">
-                     <p class="location-name text-bold">Jensen Beach Pool
-                        <span class="list__controls">
-                           <a class="list__controls--settings" id="settingsListEventLocationNew"></a>
-                           <a class="btn btn-link list-item__edit" id="editListEventLocationNew">Edit</a>
-                           <a class="btn btn-link list-item__save" id="saveListEventLocationNew">Done Editing</a>
-                           <a class="btn btn-link list-item__delete" id="deleteListEventLocationNew">Remove</a>
-                        </span>
-                     </p>
-                     <p class="location-address-street">123 Southeast Sailfish Lane | Stuart, FL 34996</p>
-                  </div>
-                  <div class="list-item list-item-duplicate list-item-pool">
-                     <p class="location-name text-bold">HealthFit powered by SMH
-                        <span class="list__controls">
-                           <a class="list__controls--settings" id="settingsListEventLocationDuplicate"></a>
-                           <a class="btn btn-link list-item__edit" id="editListEventLocationDuplicate">Edit</a>
-                           <a class="btn btn-link list-item__save" id="saveListEventLocationDuplicate">Done Editing</a>
-                           <a class="btn btn-link list-item__delete" id="deleteListEventLocationDuplicate">Remove</a>
-                        </span>
-                     </p>
-                     <p class="location-address-street">5880 Rand Blvd #102 | Sarasota, FL 34238</p>
-                  </div>
-                  
-               </div>
-               <div class="col-xs-12">
-                  <p style="font-size: 1.7rem; width: 100%;">If you would like to make edits to this location, pool or course, contact USMS: <a href="mailto:events@usmastersswimming.org">events@usmastersswimming.org.</a></p>
                </div>
             </div>
          </div>

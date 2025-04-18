@@ -1664,6 +1664,10 @@ input[disabled] + span {
 .club-edit .list.locations.edit-list .list__controls {
   display: block;
 }
+.club-edit .list.locations.edit-list .configuration__list .list__controls,
+.club-edit .list.locations.edit-list .venue__list .list__controls {
+  display: none;
+}
 .club-edit .list.locations .list__controls {
   display: none;
   vertical-align: baseline;
@@ -2448,4 +2452,35 @@ input[type='url'].has-error + span {
 
 .input-group-url-lookup > .row {
   margin-bottom: 0 !important;
+}
+
+
+
+.club-edit .edit-list a.list-item__delete, 
+.club-edit .edit-list a.list-item__edit {
+  color: #666;
+  display: inline-block;
+  font-size: 1rem;
+  height: auto;
+  line-height: 1.1rem;
+  margin: 0 10px 0 0;
+  padding: 0;
+  vertical-align: baseline;
+}
+
+.club-edit .edit-list a.configuration-edit-button:before, 
+.club-edit .edit-list a.list-item__edit:before, 
+.club-edit .edit-list a.venue-edit-button:before {
+  background-image: url('https://www.usms.org/-/media/usms/developers/images/club/icon-pencil.png');
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: 20px;
+  content: "";
+  display: inline-block;
+  height: 20px;
+  left: 0;
+  margin: 0;
+  position: relative;
+  top: 4px;
+  width: 15px;
 }

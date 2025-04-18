@@ -1884,15 +1884,6 @@
                     <p class="event-location--course">SCY</p>
                 </div>
             </div>
-            <!-- <div class="list-item list-item--location ui-lookup-filter-50mile ui-lookup-filter-length-scy">
-                <button class="btn btn-small" id="confirmLocationJensen">Select</button>
-                <p class="event-location__address--name">Jensen Beach Pool</p>
-                <p class="event-location__address--street">123 Southeast Sailfish Lane</p>
-                <p class="event-location__city-state">Sarasota, FL</p>
-                <div class="event-location--course-tags">
-                    <p class="event-location--course">SCY</p>
-                </div>
-            </div> -->
             <div class="list-item list-item--location ui-lookup-filter-50mile ui-lookup-filter-length-scy">
                 <button class="btn btn-small">Select</button>
                 <p class="event-location__address--name">Venice High School</p>
@@ -2035,187 +2026,197 @@
 </div>
          <div class="row locations">
    <div class="col-sm-12">
-      <div class="list list--result locations">
-         <div class="list__container">
-            <div class="row is-flex">
-               <div class="col-xs-12">
-                  <div class="list-item list-item-existing list-item-pool">
-                     <p class="location-name text-bold">Selby Aquatic Center
-                        <span class="list__controls">
-                           <a class="list__controls--settings" id="settingsListEventLocationExisting"></a>
+      <div class="location-header location-header__edit">
+         <div class="form-group"> 
+            <button class="btn btn-small btn-outline" id="editLocationBtn" onclick="" style="">Edit Location</button>
+            <button class="btn btn-small btn-success" id="doneEditLocationBtn" onclick="" style="display: none;">Done Editing</button>
+            <button class="btn btn-small btn-outline" id="cancelAddLocationBtn" onclick="" style="display: none;">Cancel</button>
+         </div>
+      </div>
+   </div>
+   <div class="col-sm-12">
+      <div class="form-group">
+         <div class="list locations">
+            <div class="list__container">
+               <div class="row is-flex">
+                  <div class="col-xs-12">
+                     <div class="list-item list-item-existing list-item-pool">
+                        <div class="list__controls">
+                           <!-- <a class="list__controls--settings" id="settingsListEventLocationExisting"></a> -->
                            <a class="btn btn-link list-item__edit" id="editListEventLocationExisting">Edit</a>
-                           <a class="btn btn-link list-item__save" id="saveListEventLocationExisting">Done Editing</a>
+                           <!-- <a class="btn btn-link list-item__save" id="saveListEventLocationExisting">Done Editing</a> -->
                            <a class="btn btn-link list-item__delete" id="deleteListEventLocationExisting">Remove</a>
-                        </span>
-                     </p>
-                     <p class="location-address-street">8501 Potter Park Drive | Sarasota, FL 34238</p>
-                     <span class="help-block">Venue or Pool missing</span>
-                     <button class="location-add-venue btn btn-small btn-outline">
-                        <span><i class="fa fa-plus"></i></span>Add Pool
-                     </button>
-                     <div class="venue__list">
-                        <div class="venue__list--item selected">
-                           <div class="list__controls">
-                              <a class="btn btn-link venue-edit-button">Edit</a>
-                              <a class="btn btn-link venue-remove-button">Remove</a>
-                           </div>
-                           <p class="venue-name selected">Competition Pool</p>
-                           <p class="venue-type">(Outdoor)</p>
-                           <span class="help-block">Missing Configuration</span>
-                           <div class="configuration__list">
-                                 <div class="configuration__list--item selected">
-                                    <div class="list__controls">
-                                       <a class="btn btn-link configuration-edit-button">Edit</a>
-                                       <a class="btn btn-link configuration-remove-button">Remove</a>
-                                    </div>
-                                    <p class="configuration-title">50 Meters, 7 Lanes</p>
-                                 </div>
-                                 <div class="configuration__list--item">
-                                    <div class="list__controls">
-                                       <a class="btn btn-link configuration-edit-button">Edit</a>
-                                       <a class="btn btn-link configuration-remove-button">Remove</a>
-                                    </div>
-                                    <p class="configuration-title">25 Yards, 11 Lanes</p>
-                                 </div>
-                                 <div class="configuration__list--item added">
-                                    <div class="list__controls">
-                                       <a class="btn btn-link configuration-edit-button">Edit</a>
-                                       <a class="btn btn-link configuration-remove-button">Remove</a>
-                                    </div>
-                                    <p class="configuration-title">South north - 25 Yards, 6 Lanes</p>
-                                 </div>
-                           </div>
-                           <!-- <button class="location-add-configuration btn btn-small btn-outline">
-                                 <span><i class="fa fa-plus"></i></span>Add Configuration
-                           </button> -->
                         </div>
-                        <div class="venue__list--item">
-                           <div class="list__controls">
-                              <a class="btn btn-link venue-edit-button">Edit</a>
-                              <a class="btn btn-link venue-remove-button">Remove</a>
-                           </div>
-                           <p class="venue-name">Warmup Pool</p>
-                           <p class="venue-type">(Outdoor)</p>
-                           <span class="help-block">Missing Configuration</span>
-                           <div class="configuration__list">
-                                 <div class="configuration__list--item">
-                                    <div class="list__controls">
-                                       <a class="btn btn-link configuration-edit-button">Edit</a>
-                                       <a class="btn btn-link configuration-remove-button">Remove</a>
+                        <p class="location-name text-bold">Selby Aquatic Center</p>
+                        <p class="location-address-street">8501 Potter Park Drive | Sarasota, FL 34238</p>
+                        <span class="help-block">Venue or Pool missing</span>
+                        <button class="location-add-venue btn btn-small btn-outline">
+                           <span><i class="fa fa-plus"></i></span>Add Pool
+                        </button>
+                        <div class="venue__list">
+                           <div class="venue__list--item selected">
+                              <div class="list__controls">
+                                 <a class="btn btn-link venue-edit-button">Edit</a>
+                                 <a class="btn btn-link venue-remove-button">Remove</a>
+                              </div>
+                              <p class="venue-name selected">Competition Pool</p>
+                              <p class="venue-type">(Outdoor)</p>
+                              <span class="help-block">Missing Configuration</span>
+                              <div class="configuration__list">
+                                    <div class="configuration__list--item selected">
+                                       <div class="list__controls">
+                                          <a class="btn btn-link configuration-edit-button">Edit</a>
+                                          <a class="btn btn-link configuration-remove-button">Remove</a>
+                                       </div>
+                                       <p class="configuration-title">50 Meters, 7 Lanes</p>
                                     </div>
-                                    <p class="configuration-title">25 Yards, 7 Lanes</p>
-                                 </div>
+                                    <div class="configuration__list--item">
+                                       <div class="list__controls">
+                                          <a class="btn btn-link configuration-edit-button">Edit</a>
+                                          <a class="btn btn-link configuration-remove-button">Remove</a>
+                                       </div>
+                                       <p class="configuration-title">25 Yards, 11 Lanes</p>
+                                    </div>
+                                    <div class="configuration__list--item added">
+                                       <div class="list__controls">
+                                          <a class="btn btn-link configuration-edit-button">Edit</a>
+                                          <a class="btn btn-link configuration-remove-button">Remove</a>
+                                       </div>
+                                       <p class="configuration-title">South north - 25 Yards, 6 Lanes</p>
+                                    </div>
+                              </div>
+                              <!-- <button class="location-add-configuration btn btn-small btn-outline">
+                                    <span><i class="fa fa-plus"></i></span>Add Configuration
+                              </button> -->
                            </div>
-                           <!-- <button class="location-add-configuration btn btn-small btn-outline">
-                                 <span><i class="fa fa-plus"></i></span>Add Configuration
-                           </button> -->
+                           <div class="venue__list--item">
+                              <div class="list__controls">
+                                 <a class="btn btn-link venue-edit-button">Edit</a>
+                                 <a class="btn btn-link venue-remove-button">Remove</a>
+                              </div>
+                              <p class="venue-name">Warmup Pool</p>
+                              <p class="venue-type">(Outdoor)</p>
+                              <span class="help-block">Missing Configuration</span>
+                              <div class="configuration__list">
+                                    <div class="configuration__list--item">
+                                       <div class="list__controls">
+                                          <a class="btn btn-link configuration-edit-button">Edit</a>
+                                          <a class="btn btn-link configuration-remove-button">Remove</a>
+                                       </div>
+                                       <p class="configuration-title">25 Yards, 7 Lanes</p>
+                                    </div>
+                              </div>
+                              <!-- <button class="location-add-configuration btn btn-small btn-outline">
+                                    <span><i class="fa fa-plus"></i></span>Add Configuration
+                              </button> -->
+                           </div>
+                        </div>
+                     </div>
+                     <div class="list-item list-item-new list-item-pool">
+                        <p class="location-name text-bold">Jensen Beach Pool
+                           <span class="list__controls">
+                              <!-- <a class="list__controls--settings" id="settingsListEventLocationNew"></a> -->
+                              <a class="btn btn-link list-item__edit" id="editListEventLocationNew">Edit</a>
+                              <!-- <a class="btn btn-link list-item__save" id="saveListEventLocationNew">Done Editing</a> -->
+                              <a class="btn btn-link list-item__delete" id="deleteListEventLocationNew">Remove</a>
+                           </span>
+                        </p>
+                        <p class="location-address-street">123 Southeast Sailfish Lane | Stuart, FL 34996</p>
+                        <span class="help-block">Venue or Pool missing</span>
+                        <button class="location-add-venue btn btn-small btn-outline">
+                           <span><i class="fa fa-plus"></i></span>Add Pool
+                        </button>
+                        <div class="venue__list">
+                           <div class="venue__list--item">
+                              <div class="list__controls">
+                                 <a class="btn btn-link venue-edit-button">Edit</a>
+                                 <a class="btn btn-link venue-remove-button">Remove</a>
+                              </div>
+                              <p class="venue-name">The comp pool</p>
+                              <p class="venue-type">(Outdoor)</p>
+                              <span class="help-block">Missing Configuration</span>
+                              <div class="configuration__list">
+                                    <div class="configuration__list--item added">
+                                       <div class="list__controls">
+                                          <a class="btn btn-link configuration-edit-button">Edit</a>
+                                          <a class="btn btn-link configuration-remove-button">Remove</a>
+                                       </div>
+                                       <p class="configuration-title">East west - 25 Yards, 5 Lanes</p>
+                                    </div>
+                              </div>
+                              <!-- <button class="location-add-configuration btn btn-small btn-outline">
+                                    <span><i class="fa fa-plus"></i></span>Add Configuration
+                              </button> -->
+                           </div>
+                        </div>
+                     </div>
+                     <div class="list-item list-item-duplicate list-item-pool">
+                        <p class="location-name text-bold">HealthFit powered by SMH
+                           <span class="list__controls">
+                              <!-- <a class="list__controls--settings" id="settingsListEventLocationDuplicate"></a> -->
+                              <a class="btn btn-link list-item__edit" id="editListEventLocationDuplicate">Edit</a>
+                              <!-- <a class="btn btn-link list-item__save" id="saveListEventLocationDuplicate">Done Editing</a> -->
+                              <a class="btn btn-link list-item__delete" id="deleteListEventLocationDuplicate">Remove</a>
+                           </span>
+                        </p>
+                        <p class="location-address-street">5880 Rand Blvd #102 | Sarasota, FL 34238</p>
+                        <span class="help-block">Venue or Pool missing</span>
+                        <button class="location-add-venue btn btn-small btn-outline">
+                           <span><i class="fa fa-plus"></i></span>Add Pool
+                        </button>
+                        <div class="venue__list">
+                           <div class="venue__list--item selected">
+                              <div class="list__controls">
+                                 <a class="btn btn-link venue-edit-button">Edit</a>
+                                 <a class="btn btn-link venue-remove-button">Remove</a>
+                              </div>
+                              <p class="venue-name selected">Main Pool</p>
+                              <p class="venue-type">(Outdoor)</p>
+                              <span class="help-block">Missing Configuration</span>
+                              <div class="configuration__list">
+                                    <div class="configuration__list--item selected">
+                                       <div class="list__controls">
+                                          <a class="btn btn-link configuration-edit-button">Edit</a>
+                                          <a class="btn btn-link configuration-remove-button">Remove</a>
+                                       </div>
+                                       <p class="configuration-title">25 Yards, 8 Lanes</p>
+                                    </div>
+                              </div>
+                              <!-- <button class="location-add-configuration btn btn-small btn-outline">
+                                    <span><i class="fa fa-plus"></i></span>Add Configuration
+                              </button> -->
+                           </div>
+                        </div>
+                     </div>
+                     <div class="list-item list-item-existing list-item-open-water">
+                        <p class="location-name text-bold">Waterfront Park
+                           <span class="list__controls">
+                              <!-- <a class="list__controls--settings" id="settingsListEventLocationOpenWater"></a> -->
+                              <a class="btn btn-link list-item__edit" id="editListEventLocationOpenWater">Edit</a>
+                              <!-- <a class="btn btn-link list-item__save" id="saveListEventLocationOpenWater">Done Editing</a> -->
+                              <a class="btn btn-link list-item__delete" id="deleteListEventLocationOpenWater">Remove</a>
+                           </span>
+                        </p>
+                        <p class="location-address-street">330 3rd Street | Clermont, FL 34711</p>
+                        <span class="help-block">Venue or Pool missing</span>
+                        <button class="location-add-venue btn btn-small btn-outline">
+                           <span><i class="fa fa-plus"></i></span>Add Venue
+                        </button>
+                        <div class="venue__list">
+                           <div class="venue__list--item selected">
+                              <div class="list__controls">
+                                 <a class="btn btn-link venue-edit-button">Edit</a>
+                                 <a class="btn btn-link venue-remove-button">Remove</a>
+                              </div>
+                              <p class="venue-name">South Parking Lot</p>
+                              <p class="venue-type">(Lake)</p>
+                           </div>
                         </div>
                      </div>
                   </div>
-                  <div class="list-item list-item-new list-item-pool">
-                     <p class="location-name text-bold">Jensen Beach Pool
-                        <span class="list__controls">
-                           <a class="list__controls--settings" id="settingsListEventLocationNew"></a>
-                           <a class="btn btn-link list-item__edit" id="editListEventLocationNew">Edit</a>
-                           <a class="btn btn-link list-item__save" id="saveListEventLocationNew">Done Editing</a>
-                           <a class="btn btn-link list-item__delete" id="deleteListEventLocationNew">Remove</a>
-                        </span>
-                     </p>
-                     <p class="location-address-street">123 Southeast Sailfish Lane | Stuart, FL 34996</p>
-                     <span class="help-block">Venue or Pool missing</span>
-                     <button class="location-add-venue btn btn-small btn-outline">
-                        <span><i class="fa fa-plus"></i></span>Add Pool
-                     </button>
-                     <div class="venue__list">
-                        <div class="venue__list--item">
-                           <div class="list__controls">
-                              <a class="btn btn-link venue-edit-button">Edit</a>
-                              <a class="btn btn-link venue-remove-button">Remove</a>
-                           </div>
-                           <p class="venue-name">The comp pool</p>
-                           <p class="venue-type">(Outdoor)</p>
-                           <span class="help-block">Missing Configuration</span>
-                           <div class="configuration__list">
-                                 <div class="configuration__list--item added">
-                                    <div class="list__controls">
-                                       <a class="btn btn-link configuration-edit-button">Edit</a>
-                                       <a class="btn btn-link configuration-remove-button">Remove</a>
-                                    </div>
-                                    <p class="configuration-title">East west - 25 Yards, 5 Lanes</p>
-                                 </div>
-                           </div>
-                           <!-- <button class="location-add-configuration btn btn-small btn-outline">
-                                 <span><i class="fa fa-plus"></i></span>Add Configuration
-                           </button> -->
-                        </div>
-                     </div>
+                  <div class="col-xs-12">
+                     <p style="font-size: 1.7rem; width: 100%;">If you would like to make edits to this location, pool or course, contact USMS: <a href="mailto:events@usmastersswimming.org">events@usmastersswimming.org.</a></p>
                   </div>
-                  <div class="list-item list-item-duplicate list-item-pool">
-                     <p class="location-name text-bold">HealthFit powered by SMH
-                        <span class="list__controls">
-                           <a class="list__controls--settings" id="settingsListEventLocationDuplicate"></a>
-                           <a class="btn btn-link list-item__edit" id="editListEventLocationDuplicate">Edit</a>
-                           <a class="btn btn-link list-item__save" id="saveListEventLocationDuplicate">Done Editing</a>
-                           <a class="btn btn-link list-item__delete" id="deleteListEventLocationDuplicate">Remove</a>
-                        </span>
-                     </p>
-                     <p class="location-address-street">5880 Rand Blvd #102 | Sarasota, FL 34238</p>
-                     <span class="help-block">Venue or Pool missing</span>
-                     <button class="location-add-venue btn btn-small btn-outline">
-                        <span><i class="fa fa-plus"></i></span>Add Pool
-                     </button>
-                     <div class="venue__list">
-                        <div class="venue__list--item selected">
-                           <div class="list__controls">
-                              <a class="btn btn-link venue-edit-button">Edit</a>
-                              <a class="btn btn-link venue-remove-button">Remove</a>
-                           </div>
-                           <p class="venue-name selected">Main Pool</p>
-                           <p class="venue-type">(Outdoor)</p>
-                           <span class="help-block">Missing Configuration</span>
-                           <div class="configuration__list">
-                                 <div class="configuration__list--item selected">
-                                    <div class="list__controls">
-                                       <a class="btn btn-link configuration-edit-button">Edit</a>
-                                       <a class="btn btn-link configuration-remove-button">Remove</a>
-                                    </div>
-                                    <p class="configuration-title">25 Yards, 8 Lanes</p>
-                                 </div>
-                           </div>
-                           <!-- <button class="location-add-configuration btn btn-small btn-outline">
-                                 <span><i class="fa fa-plus"></i></span>Add Configuration
-                           </button> -->
-                        </div>
-                     </div>
-                  </div>
-                  <div class="list-item list-item-existing list-item-open-water">
-                     <p class="location-name text-bold">Waterfront Park
-                        <span class="list__controls">
-                           <a class="list__controls--settings" id="settingsListEventLocationOpenWater"></a>
-                           <a class="btn btn-link list-item__edit" id="editListEventLocationOpenWater">Edit</a>
-                           <a class="btn btn-link list-item__save" id="saveListEventLocationOpenWater">Done Editing</a>
-                           <a class="btn btn-link list-item__delete" id="deleteListEventLocationOpenWater">Remove</a>
-                        </span>
-                     </p>
-                     <p class="location-address-street">330 3rd Street | Clermont, FL 34711</p>
-                     <span class="help-block">Venue or Pool missing</span>
-                     <button class="location-add-venue btn btn-small btn-outline">
-                        <span><i class="fa fa-plus"></i></span>Add Venue
-                     </button>
-                     <div class="venue__list">
-                        <div class="venue__list--item selected">
-                           <div class="list__controls">
-                              <a class="btn btn-link venue-edit-button">Edit</a>
-                              <a class="btn btn-link venue-remove-button">Remove</a>
-                           </div>
-                           <p class="venue-name">South Parking Lot</p>
-                           <p class="venue-type">(Lake)</p>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-xs-12">
-                  <p style="font-size: 1.7rem; width: 100%;">If you would like to make edits to this location, pool or course, contact USMS: <a href="mailto:events@usmastersswimming.org">events@usmastersswimming.org.</a></p>
                </div>
             </div>
          </div>
@@ -2274,7 +2275,7 @@
 </div>
          <!-- Add New Location -->
 <div class="form-group entry location-info__add-new-location--container">
-    <div class="location-header">
+    <div class="location-header location-header__add">
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-12">

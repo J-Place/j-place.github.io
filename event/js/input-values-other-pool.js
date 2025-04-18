@@ -70,20 +70,17 @@ $(document).ready(function() {
 
     $("#location-information__content .list-control").hide();
     $(".location-info__add-new-location--container").hide();
-
     $(".contact-info__event-director-type-form").hide();  // Hide the Event Director inputs
-
+    // $(".list--lookup.locations").parent().parent().hide();
     $(".list--lookup.locations").hide();
     $("#location-information .row.locations").show();
-
-    
     $("#eventListOnCalendarYes").prop('checked', true);
     $("#agree").prop('checked', true);
     $(".contact-info__host-type--container").hide();
     $(".contact-information__event-host--list").show();
 
     // $(".list--event-host .list-item__delete").show();
-    $(".club-edit .list-item__delete").show();
+    // $(".club-edit .list-item__delete").show();
     $(".contact-list__event-host--header").show();
 
     // Show only the selected pool configuration
@@ -94,7 +91,7 @@ $(document).ready(function() {
 
     $(".list-item-pool.list-item-existing").show();
     $(".location-name > .list__controls").show();
-    $(".club-edit .btn.list-item__delete").show();
+    // $(".club-edit .btn.list-item__delete").show();
 
 
 

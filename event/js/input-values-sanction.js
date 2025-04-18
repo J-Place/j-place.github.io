@@ -70,16 +70,9 @@ $(document).ready(function() {
     $("#eventDirectorPrivacyName").prop('checked', true);
     $("#location-information__content .list-control").hide();
     $(".location-info__add-new-location--container").hide();
+    // $(".list--lookup.locations").parent().parent().hide();
     $(".list--lookup.locations").hide();
     $("#location-information .row.locations").show();
-    
-    
-    
-    
-    
-
-    
-    
     
     $(".list-item-existing.list-item-pool").show();    
     $(".list-item-existing .venue__list").show();
@@ -90,7 +83,7 @@ $(document).ready(function() {
     $(".configuration__list--item.selected .configuration-title").show();   
     $('.location-name .list__controls').show();
     // $(".location-name .list-item__delete").show();
-    $(".club-edit .list-item__delete").show();
+    // $(".club-edit .list-item__delete").show();
 
 
 

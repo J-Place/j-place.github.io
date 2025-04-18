@@ -58,12 +58,13 @@ $(document).ready(function() {
     $("#eventDirectorPrivacyName").prop('checked', true);
     $("#location-information__content .list-control").hide();
     $(".location-info__add-new-location--container").hide();
+    // $(".list--lookup.locations").parent().parent().hide();
     $(".list--lookup.locations").hide();
     $("#location-information .row.locations").show();
 
     $(".list-item-pool.list-item-existing").show();
     $(".location-name > .list__controls").show();
-    $(".club-edit .list-item__delete").show();
+    // $(".club-edit .list-item__delete").show();
 
     $(".venue__list--item").hide();
     $(".venue__list--item:first-of-type").show();

@@ -80,6 +80,7 @@ $(document).ready(function() {
 
     $("#location-information__content .list-control").hide();
     $(".location-info__add-new-location--container").hide();
+    // $(".list--lookup.locations").parent().parent().hide();
     $(".list--lookup.locations").hide();
     $(".contact-info__host-type--container").hide();
     $(".venue__list--item").hide();
