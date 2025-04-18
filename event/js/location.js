@@ -259,7 +259,15 @@ $(document).ready(function() {
 
     $('#doneEditLocationBtn').click( function(e) {
         e.preventDefault();
-        hideEditListControls();
+        // hideEditListControls();
+        $('#editLocationBtn').show();
+        $('#doneEditLocationBtn').hide();
+        $('.list.locations').removeClass('edit-list');
+        $(".locations .list-item__edit").hide();
+        $(".locations .list-item__delete").hide();
+        $('.list__controls').hide();
+        // $('.row.locations').hide();
+        // $('.location-header__edit').hide();
     });
 
     function showEditListControlsReadOnly() {
