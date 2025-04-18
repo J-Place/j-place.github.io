@@ -798,7 +798,11 @@ $(document).ready(function() {
         $('#editLocationBtn').click( function(e) {
             e.preventDefault();
             var currentLocation = $('.locations .list-item:visible').first(); // adjust .first() if needed
-            if (currentLocation.hasClass('list-item-existing')) {
+            if (currentLocation.hasClass('list-item-duplicate')) {
+                console.log("Duplicate location");
+                showEditListControlsReadOnly();
+            }
+            else if (currentLocation.hasClass('list-item-existing')) {
                 console.log("Existing location");
                 showEditListControlsReadOnly();
             } else {
