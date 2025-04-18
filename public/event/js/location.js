@@ -92,7 +92,6 @@ $(document).ready(function() {
         $(".form-group.form-group-hidden").removeClass("show");
         $("#locationType").prop('selectedIndex',0);
         $('.location-header__edit').show();
-        // showEditListControlsEditable();
         $(".venue__list").show();
     });
     
@@ -683,13 +682,9 @@ $(document).ready(function() {
             });
             $("#confirmDeleteLocation").click( function() {
                 hideEditListControls();
-                // hideControls();
                 hideSavedLocationList();
                 hideListControlChildren();
                 $(lookupByLocationList).hide();
-                // $(".list-item-existing").hide();
-                // $(".list-item-duplicate").hide();
-                // $(".list-item-new").hide();
                 $(".locations .list-item").hide();
                 showLocationLookup();
                 showLookupLocationList();
@@ -703,9 +698,6 @@ $(document).ready(function() {
                 confirmConfiguration();
                 showControlsExisting();
                 $(".list-item-existing.list-item-pool").show();
-                // $(".list-item-existing .configuration__list").show();
-                // $(".list-item-existing .configuration__list--item.selected").show();
-                // $(".list-item-existing .configuration__list--item.selected .configuration-title").show();
                 $(".venue__list").show();
                 $(".configuration-title").hide();
             });
@@ -727,13 +719,9 @@ $(document).ready(function() {
             });
             $("#confirmDeleteLocation").click( function() {
                 hideEditListControls();
-                // hideControls();
                 hideSavedLocationList();
                 hideListControlChildren();
                 $(lookupByLocationList).hide();
-                // $(".list-item-existing").hide();
-                // $(".list-item-duplicate").hide();
-                // $(".list-item-new").hide();
                 $(".locations .list-item").hide();
                 showLocationLookup();
                 showLookupLocationList();
@@ -747,18 +735,13 @@ $(document).ready(function() {
                 showLocationLookup();
                 showLookupLocationList();
                 resetAddNewLocation();
-                // scrollTopSection();
                 $(".list.locations .list-item--open-water.list-item--duplicate").show();
             });
             $("#confirmDeleteLocation").click( function() {
                 hideEditListControls();
-                // hideControls();
                 hideSavedLocationList();
                 hideListControlChildren();
                 $(lookupByLocationList).hide();
-                // $(".list-item-existing").hide();
-                // $(".list-item-duplicate").hide();
-                // $(".list-item-new").hide();
                 $(".locations .list-item").hide();
                 resetAddNewLocation();
                 filterByOpenWater();
@@ -796,15 +779,12 @@ $(document).ready(function() {
                 showLocationLookup();
                 showLookupLocationList();
                 resetAddNewLocation();
-                // scrollTopSection();
                 showLocationLookup();
                 showLookupLocationList();
                 $(".list.locations .list-item--pool.list-item--duplicate").show();
             });
             $("#confirmDeleteLocation").click( function() {
-                // alert("Deleting location");
                 hideEditListControls();
-                // hideControls();
                 hideSavedLocationList();
                 hideListControlChildren();
                 $(lookupByLocationList).hide();
@@ -848,23 +828,7 @@ $(document).ready(function() {
         $('.help-block--addHeadRef.has-error').removeClass('has-error');
         $('.help-block--addSafetyCoordinator.has-error').removeClass('has-error');
         $('.help-block--chosePoolConfiguration.has-error').removeClass('has-error');
-        $('.list-item-existing .help-block.has-error').removeClass('has-error');
-        
-        // $('.website-url-icon > i').removeClass('fa-check').addClass('fa-times');
+        $('.list-item-existing .help-block.has-error').removeClass('has-error');        
     });
-
-    // var x = $('.list-control-search__input > label');
-    // console.log(x[0]);
-    // console.log(x);
-    // $(document).ready(function() {
-    //     var maxHeight = 0;
-    //     $('.list-control-search__input > label').each(function() {
-    //         var thisHeight = $(this).outerHeight();
-    //         if (thisHeight > maxHeight) {
-    //             maxHeight = thisHeight;
-    //         }
-    //     });
-    //     $('.list-control-search__input > label').height(maxHeight);
-    // });
 
 });
