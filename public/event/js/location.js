@@ -737,11 +737,15 @@ $(document).ready(function() {
                 $(".list.locations .list-item--open-water.list-item--duplicate").show();
             });
             $("#confirmDeleteLocation").click( function() {
-                hideEditListControls();
-                hideSavedLocationList();
-                hideListControlChildren();
-                $(lookupByLocationList).hide();
-                $(".locations .list-item").hide();
+                // hideEditListControls();
+                // hideSavedLocationList();
+                // hideListControlChildren();
+                // $(lookupByLocationList).hide();
+                // $(".locations .list-item").hide();
+                // resetAddNewLocation();
+                // filterByOpenWater();
+                showLocationLookup();
+                showLookupLocationList();
                 resetAddNewLocation();
                 filterByOpenWater();
             });
