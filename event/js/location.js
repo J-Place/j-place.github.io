@@ -505,23 +505,15 @@ $(document).ready(function() {
         console.log("fx handleListControls");
         $(".location-name > .list__controls").show();
         $(".list.locations").removeClass("edit-list");
-
         if ($(".list-item-existing").css('display') === 'block') {
             showControlsExisting();
         }
-
         if ($(".list-item-new").css('display') === 'block') {
             // $(".locations .list-item__edit").show();
             // $(".locations .list-item__save").show();
             // $(".list__controls--settings").css('display', 'inline');
             showControlsNew();
         }
-
-        // else if ($(".list-item-new").css('display') === 'none') {
-        //     $(".locations .list-item__edit").hide();
-        //     $(".locations .list-item__save").hide();
-        //     $(".locations .list-item__delete").show();
-        // } 
     }
 
     function showControlsNew() {
