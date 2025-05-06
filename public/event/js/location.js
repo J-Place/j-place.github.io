@@ -502,7 +502,6 @@ $(document).ready(function() {
     }
 
     function handleListControls() {
-        console.log("fx handleListControls");
         $(".location-name > .list__controls").show();
         $(".list.locations").removeClass("edit-list");
         if ($(".list-item-existing").css('display') === 'block') {
@@ -517,7 +516,6 @@ $(document).ready(function() {
     }
 
     function showControlsNew() {
-        console.log("fx show controls new");
         $(".location-name > .list__controls").show();
         $(".list.locations").removeClass("edit-list");
         $(".locations .list-item__edit").show();
@@ -526,7 +524,6 @@ $(document).ready(function() {
     }
 
     function showControlsExisting() {
-        console.log("fx show controls existing");
         $(".location-name > .list__controls").show();
         $(".list.locations").removeClass("edit-list");
         $(".locations .list-item__edit").hide();
@@ -774,14 +771,11 @@ $(document).ready(function() {
             e.preventDefault();
             var currentLocation = $('.locations .list-item:visible').first(); // adjust .first() if needed
             if (currentLocation.hasClass('list-item-duplicate')) {
-                console.log("Duplicate location");
                 showEditListControlsReadOnly();
             }
             else if (currentLocation.hasClass('list-item-existing')) {
-                console.log("Existing location");
                 showEditListControlsReadOnly();
             } else {
-                console.log("New location");
                 showEditListControlsEditable();
             }            
         });   
