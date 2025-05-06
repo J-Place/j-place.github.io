@@ -774,14 +774,11 @@ $(document).ready(function() {
             e.preventDefault();
             var currentLocation = $('.locations .list-item:visible').first(); // adjust .first() if needed
             if (currentLocation.hasClass('list-item-duplicate')) {
-                console.log("Duplicate location");
                 showEditListControlsReadOnly();
             }
             else if (currentLocation.hasClass('list-item-existing')) {
-                console.log("Existing location");
                 showEditListControlsReadOnly();
             } else {
-                console.log("New location");
                 showEditListControlsEditable();
             }            
         });   
