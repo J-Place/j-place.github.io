@@ -731,6 +731,7 @@ $(document).ready(function() {
                 showControlsExisting();
                 $(".list-item-pool.list-item-existing").show();
                 $(".venue__list").show();
+                $(".list-item-pool.list-item-existing .venue__list--item").show();
                 $(".configuration-title").hide();
             });
             $("#confirmLocationHealthfit").click( function() {
