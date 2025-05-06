@@ -1,8 +1,6 @@
 
 :root {
     --lm-blue: #092c5c;
-    /* --ccs-nav-link-hover: #2cacc9; */
-    /* --ccs-nav-link-hover: #9ad1e6; */
     --ccs-nav-link-hover: rgba(255, 255, 255, 0.4);
 }
 
@@ -12,24 +10,14 @@
     z-index: -1;
 }
 
-.html-container p, 
-.usms-container p {
-    /* color: #fff; */
-}
-
-.section.section-full {
-    /* background-color: #051d37; */
-    /* background-color: #0e1e2f; */
+.section.section-full .usms-container {
+    width: 100%;
+    padding: 0;
 }
 
 .mega-menu-overlay.is-flex {
     display: flex;
 }
-
-/* .carousel__slide-content > h1 {
-    font-size: 22px;
-    text-shadow: 0 0 10px #111;
-} */
 
 .no-scroll {
     margin: 0; 
@@ -51,8 +39,6 @@
 }
 
 .mega-main-menu__items > li:last-of-type > a:hover {
-    /* background-color: #9ad1e6; */
-    /* border: 1px solid #9ad1e6; */
     background-color: rgba(255, 255, 255, 0.15);
     border: 1px solid #FFF;
     color: #fff;
@@ -60,9 +46,14 @@
 
 @media (min-width: 1200px) {
     .mega-main-menu__nav-search-container {
-        height: 80px;
+        height: 100px;
         z-index: 999;
+        margin: 0;
     }
+    /* .article-stepper {
+        width: auto;
+        margin-left: -15%;
+    } */
 }
 
 @media (min-width: 1400px) {
@@ -70,18 +61,11 @@
         width: auto;
     }
     
-    /* .mega-menu-overlay {
-        display: none;
-    } */
     .mega-menu-overlay {
         flex-direction: row-reverse;
-        /* height: 360px; */
-        height: 270px;
-        /* width: 100%; */
+        /* height: 410px; */
         padding-top: 10rem;
         padding-bottom: 4rem;
-        /* padding-left: calc(1200px - 540px); */
-
         padding-left: calc(1200px - 650px);
         padding: 2rem 0 4rem;
         top: 100px !important;
@@ -89,11 +73,27 @@
         border: 0 none;
     }
 
+    #menu-item-0.active + li + li + li + li + .mega-menu-overlay {
+        height: 230px;
+    }
+
+    #menu-item-2.active + li + li + .mega-menu-overlay {
+        height: 230px;
+    }
+
+    #menu-item-0.active + li + li + li + li + .mega-menu-overlay .mega-menu-overlay__items,
+    #menu-item-0.active + li + li + li + li + .mega-menu-overlay #menu-item-0 .mega-menu-overlay__items {
+        min-height: 150px;
+    }
+
+    #menu-item-2.active + li + li + .mega-menu-overlay .mega-menu-overlay__items,
+    #menu-item-2.active + li + li + .mega-menu-overlay #menu-item-2 .mega-menu-overlay__items {
+        min-height: 150px;
+    }
+
     .mega-menu-overlay > div {
         flex-direction: row-reverse;
-        /* align-items: flex-start; */
         align-items: center;
-        /* height: 192px; */
     }
 
     .mega-menu-overlay__menu-container {
@@ -103,13 +103,10 @@
 
     .mega-menu-overlay__menu-container,
     .mega-menu-overlay__content {
-        /* justify-content: flex-end; */
         justify-content: start !important;
     }
 
     .mega-menu-overlay__content {
-        /* min-width: 380px; */
-        /* min-width: 470px; */
         min-width: 720px;
         margin-left: 0;
         padding-left: 0;
@@ -119,15 +116,15 @@
     }
 
     .mega-menu-overlay__items {
-        min-height: 250px;
-        /* border-top: 1px solid #DDD; */
-        /* padding-top: 3rem; */
-        /* margin-top: 3rem; */
         flex-wrap: wrap;
         margin: 0 5rem;
         padding: 3rem 5rem 0;
         width: auto;
     }
+
+
+
+
 
     .mega-menu-overlay .mega-menu-overlay__image-container {
         display: none !important;
@@ -138,8 +135,7 @@
 
     .mega-menu-overlay__items > li {
         height: 4rem;
-        /* width: calc(50% - 10px); */
-        width: 50% !important;
+        width: 45% !important;
     }
 
     .mega-menu-overlay__items > li > a {
@@ -247,7 +243,6 @@
 
 @media (min-width: 1200px) {
     .carousel__slide-image--desktop .carousel__slide-image {
-        /* padding-bottom: 55%; */
         padding-bottom: 880px;
     }
 }
@@ -397,9 +392,9 @@
 }
 
 .slick-slide-image {
-    background-size: 60%;
-    height: 190px;
-    width: 190px;
+    background-size: 70%;
+    height: 130px;
+    width: 130px;
     margin: 0 auto;
 }
 
