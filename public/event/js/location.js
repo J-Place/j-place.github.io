@@ -10,7 +10,8 @@ $(document).ready(function() {
     let addLocationBtn = $("#addLocationBtn");
     let cancelAddLocationBtn = $("#cancelAddLocationBtn");
     let confirmNewFacility = $("#confirmNewFacility");
-    let addNewLocationForm = $(".event-location-details");
+    // let addNewLocationForm = $(".event-location-details");
+    let addNewLocationForm = $(".location-details");
     let addNewPoolForm = $(".list-venue-form");
     let addNewConfigurationForm = $(".list-configuration-form");
     
@@ -30,6 +31,7 @@ $(document).ready(function() {
         e.preventDefault();
         resetLocationInputs();
         $(lookupByLocationList).show();
+        $(addNewLocationForm).removeClass('show');
         $(addNewLocationForm).hide();
         $(".ui-lookup-filter-zip").hide();
     });
@@ -43,6 +45,7 @@ $(document).ready(function() {
         e.preventDefault();
         $(".location-header").hide();
         $('.list.locations .list-item').hide();
+        $(addNewLocationForm).addClass('show');
         $(addNewLocationForm).show();
         hideLookupLocationList();
         $("input[type='checkbox']").prop('checked', false);
@@ -50,6 +53,7 @@ $(document).ready(function() {
 
     $(cancelAddLocationBtn).click(function(e) {
         e.preventDefault();
+        $(addNewLocationForm).removeClass('show');
         $(addNewLocationForm).hide();
         $(addLocationBtn).show();
         $(cancelAddLocationBtn).hide();
@@ -57,6 +61,7 @@ $(document).ready(function() {
 
     $("#confirmNewFacility").click(function(e) {
         e.preventDefault();
+        $(addNewLocationForm).removeClass('show');
         $(addNewLocationForm).hide();
         $(addNewConfigurationForm).hide();
         $(cancelAddLocationBtn).hide();
@@ -144,6 +149,7 @@ $(document).ready(function() {
         e.preventDefault();
         filterByRange();
         filterByCourse();
+        $(addNewLocationForm).removeClass('show');
         $(addNewLocationForm).hide();
         $(lookupByLocationList).show();
     });
@@ -484,6 +490,7 @@ $(document).ready(function() {
     }
 
     function resetAddNewLocation() {
+        $(addNewLocationForm).removeClass('show');
         $(addNewLocationForm).hide();
         $(addNewPoolForm).hide();
         $(addNewConfigurationForm).hide();
@@ -804,7 +811,7 @@ $(document).ready(function() {
         $('.help-block--addHeadRef.has-error').removeClass('has-error');
         $('.help-block--addSafetyCoordinator.has-error').removeClass('has-error');
         $('.help-block--chosePoolConfiguration.has-error').removeClass('has-error');
-        $('.list-item-existing .help-block.has-error').removeClass('has-error');        
+        $('.list-item .help-block.has-error').removeClass('has-error');
     });
 
 });
