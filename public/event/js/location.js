@@ -812,6 +812,10 @@ $(document).ready(function() {
         $('.help-block--addSafetyCoordinator.has-error').removeClass('has-error');
         $('.help-block--chosePoolConfiguration.has-error').removeClass('has-error');
         $('.list-item .help-block.has-error').removeClass('has-error');
+        $('.help-block.file-type.has-error').removeClass('has-error');
+        $('.help-block.help-block--paper-entry.no-data.has-error').removeClass('has-error');
+        $('.form-control.lookup__input.lookup-primary__input.has-error').removeClass('has-error');
+        $('.help-block.help-block--LookupEventDirectorName.has-error').removeClass('has-error');
     });
 
 });
