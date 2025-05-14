@@ -31,6 +31,10 @@
 <!-- <script src="/js/src/bootstrap.min.js"></script> -->
 <!-- <script src="/js/src/common.min.js"></script> -->
 <!-- <script src="/js/src/home.min.js"></script> -->
+
+
+
+<script src="/js/page-name.js"></script>
       <!-- Bonfire Source Files -->
     <link rel="stylesheet" href="https://www.usms.org/styles/bootstrap.min.css">
     <link rel="stylesheet" href="https://www.usms.org/styles/bootstrap-3-usms-patch.css">
@@ -59,8 +63,9 @@
             --lm-blue-hover: var(--lm-blue-md);
         }
     </style>
-      <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
+      <!-- <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css"> -->
       <link rel="stylesheet" href="https://www.usms.org/styles/Club/club2.min.css">
+      <!-- <link rel="stylesheet" href="https://www.usms.org/styles/clubs.min.css"> -->
       <link rel="stylesheet" href="./css/date-picker.css">
       <link rel="stylesheet" href="./css/convert-this-from-club.css">
       <link rel="stylesheet" href="./css/event-sanction.css">
@@ -3032,11 +3037,13 @@
          $(".contact-group--safety-coordinator").hide();
          $(".contact-group--host-type").hide();
 
-         function setPageName() {
-            const pageName = "Open Water";
-            $(document).trigger("settingPageName", { data: pageName });
-         }
-         setPageName();
+         setViewName("Open Water");
+
+         // function setPageName() {
+         //    const pageName = "Open Water";
+         //    $(document).trigger("settingPageName", { data: pageName });
+         // }
+         // setPageName();
          
          $("#saveContactInfoSection").prop('disabled', false);
          

@@ -31,6 +31,10 @@
 <!-- <script src="/js/src/bootstrap.min.js"></script> -->
 <!-- <script src="/js/src/common.min.js"></script> -->
 <!-- <script src="/js/src/home.min.js"></script> -->
+
+
+
+<script src="/js/page-name.js"></script>
       <!-- Bonfire Source Files -->
     <link rel="stylesheet" href="https://www.usms.org/styles/bootstrap.min.css">
     <link rel="stylesheet" href="https://www.usms.org/styles/bootstrap-3-usms-patch.css">
@@ -1205,6 +1209,7 @@
         </div>
     </div>
  </div>
+ 
  <div class="modal pool-configuration" id="modalChosePoolConfigurationSelby" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -2674,10 +2679,12 @@
 </script>
       <script type="text/javascript">
 
-         function setPageName() {
-            const pageName = "Pool";
-            $(document).trigger("settingPageName", { data: pageName });
-         }
+         setViewName("Pool");
+
+         // function setPageName() {
+         //    const pageName = "Pool";
+         //    $(document).trigger("settingPageName", { data: pageName });
+         // }
 
          // Open first section on this page
          $("#event-name h3").click();

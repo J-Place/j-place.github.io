@@ -31,6 +31,10 @@
 <!-- <script src="/js/src/bootstrap.min.js"></script> -->
 <!-- <script src="/js/src/common.min.js"></script> -->
 <!-- <script src="/js/src/home.min.js"></script> -->
+
+
+
+<script src="/js/page-name.js"></script>
         <!-- Bonfire Source Files -->
     <link rel="stylesheet" href="https://www.usms.org/styles/bootstrap.min.css">
     <link rel="stylesheet" href="https://www.usms.org/styles/bootstrap-3-usms-patch.css">
@@ -67,6 +71,7 @@
   
         <link rel="stylesheet" href="./css/registration-club-detail.css">
         <!-- <link rel="stylesheet" href="./css/cherry-picked-from-event.css"> -->
+        <link rel="stylesheet" href="/event/css/location-lookups.css">
 
     </head>
     <body class="">
@@ -1451,7 +1456,12 @@
 <link rel="stylesheet" href="/event/css/list-control-event.css">
 <link rel="stylesheet" href="/event/css/location-overrides.css">
 
-<div class="list-control">    
+<div class="list-control">
+    
+    <div class="international-message">
+        <p style="margin-bottom: 3rem;">If the event is taking place outside of the U.S., please contact <a href="mailto:events@usmastersswimming.org">events@usmastersswimming.org</a> to add your location.</p>
+    </div>
+    
     <div class="list-control-search">
         <div class="list-control-search__content form-group is-flex">
             <div class="list-control-search__input list-control-search__input--club-name">
@@ -1503,7 +1513,6 @@
        <div class="list list--lookup locations">
 
             <div class="list-control-search__header">
-                <!-- <i class="fa fa-refresh fa-spin list-control-search--summary-loading" style="display:inline-block;"></i> -->
                 <div class="list-control-search--summary">
                     Showing <strong>4 Locations</strong> within <strong>10 Miles</strong> <span class="list-control-search--summary-detail">of <strong>Sarasota, FL, USA</strong></span>
                 </div>
@@ -1605,6 +1614,111 @@
         </div>
     </div>
  </div>
+
+ <div class="modal pool-configuration" id="modalChosePoolConfigurationSelby" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Select a Pool Course</h5>
+            </div>
+            <div class="modal-body">
+                <p>Now that you have selected a location, please select the course of the pool that the event will take place. The courses that are have been certified in our database are highlighted. If a course is not certified, the meet's times will not count. <a href="https://www.usms.org/volunteer-central/guide-to-local-operations/event-management/top-10-and-records-and-tabulation/pool-length-form-and-measurement-procedures">Learn more here.</a></p>
+                <p class="location-name"><strong>Selby Aquatic Center</strong></p>
+                <div class="input-group chose-pool-configuration">
+                    <span class="help-block help-block--chosePoolConfiguration">Please select a configuration</span>
+                    <label class="radio-label" for="option1Selby">
+                        <span class="radio-container">
+                            <input type="radio" name="configuration-selby" id="option1Selby" value="0" />
+                            <span class="radio__placeholder"></span>
+                        </span>
+                        Competition Pool - 25 Yards<br />Certified 08/2022 - 1 Touchpad, No Touchpads
+                    </label>
+                    <label class="radio-label" for="option2Selby">
+                        <span class="radio-container">
+                            <input type="radio" name="configuration-selby" id="option2Selby" value="1" />
+                            <span class="radio__placeholder"></span>
+                        </span>
+                        Competition Pool - 50 Meters<br />Certified 09/2024 - 1 Touchpad, 2 Touchpads, No Touchpads
+                    </label>
+                    <label class="radio-label" for="option3Selby">
+                        <span class="radio-container">
+                            <input type="radio" name="configuration-selby" id="option3Selby" value="2" />
+                            <span class="radio__placeholder"></span>
+                        </span>
+                        Warmup Pool - 25 Yards
+                    </label>
+                </div>
+                <br />
+                <p>If your course is not listed, please contact USMS to have it added: <a href="mailto:events@usmastersswimming.org">events@usmastersswimming.org</a></p>
+                <!-- <button type="button" class="btn btn-small btn-outline btn-add" data-bs-dismiss="modal" id="addConfigurationBtnSelby">Add New</button> -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-md btn-default" data-bs-dismiss="modal" id="modalConfirmSelby" disabled>Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal pool-configuration" id="modalChosePoolConfigurationHealthfit" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Select a Pool Course</h5>
+            </div>
+            <div class="modal-body">
+                <p>Now that you have selected a location, please select the course of the pool that the event will take place. The courses that are have been certified in our database are highlighted. If a course is not certified, the meet's times will not count. <a href="https://www.usms.org/volunteer-central/guide-to-local-operations/event-management/top-10-and-records-and-tabulation/pool-length-form-and-measurement-procedures">Learn more here.</a></p>
+                <p class="location-name"><strong>Healthfit</strong></p>
+                <div class="input-group chose-pool-configuration">
+                    <span class="help-block help-block--chosePoolConfiguration">Please select a configuration</span>
+                    <label class="radio-label" for="option1Helthfit">
+                        <span class="radio-container">
+                            <input type="radio" name="configuration-healthfit" id="option1Helthfit" value="1" selected />
+                            <span class="radio__placeholder"></span>
+                        </span>
+                        Main Pool - 33 Yards
+                    </label>
+                </div>
+                <br />
+                <p>If your course is not listed, please contact USMS to have it added: <a href="mailto:events@usmastersswimming.org">events@usmastersswimming.org</a></p>
+                <br />
+                <!-- <button class="btn btn-small btn-outline btn-add" id="addConfigurationBtn" type="button">Add New</button> -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-md btn-default" data-bs-dismiss="modal" id="modalConfirmHealthfit" disabled>Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal pool-configuration" id="modalChosePoolConfigurationJensen" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Select a Pool Course</h5>
+            </div>
+            <div class="modal-body">
+                <p>Now that you have selected a location, please select the course of the pool that the event will take place. The courses that are have been certified in our database are highlighted. If a course is not certified, the meet’s times will not count. <a href="https://www.usms.org/volunteer-central/guide-to-local-operations/event-management/top-10-and-records-and-tabulation/pool-length-form-and-measurement-procedures">Learn more here.</a></p>
+                <p class="location-name"><strong>Jensen Beach Pool</strong></p>
+                <div class="input-group chose-pool-configuration">
+                    <span class="help-block help-block--chosePoolConfiguration">Please select a configuration</span>
+                    <label class="radio-label" for="option1Jensen">
+                        <span class="radio-container">
+                            <input type="radio" name="configuration-jensen" id="option1Jensen" value="1" selected />
+                            <span class="radio__placeholder"></span>
+                        </span>
+                        The comp pool - 25 Yards, 5 Lanes
+                    </label>
+                </div>
+                <br />
+                <p>If your course is not listed, please contact USMS to have it added: <a href="mailto:events@usmastersswimming.org">events@usmastersswimming.org</a></p>
+                <!-- <button class="btn btn-small btn-outline btn-add" id="addConfigurationBtn" type="button">Add New</button> -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-md btn-default" data-bs-dismiss="modal" id="modalConfirmJensen" disabled>Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
          <div class="row locations">
    <div class="col-sm-12">
       <div class="location-header location-header__edit">
@@ -2195,6 +2309,7 @@
                <button class="btn save-section" type="button" id="saveLocation">Save &amp; Continue</button>
             </div>
          </div>
+         
       </div>
    </div>
 </form>
@@ -2212,7 +2327,7 @@
          scrollTop: $("#entry-information").offset().top - 45
       }, 100);
    });
-   $('.location-header__edit').hide();
+   
 </script>
 
                                     <!------ Gold Club ------------------------------------>
@@ -2529,7 +2644,7 @@
                 </div>
             </div>
             <p class="section-payment__contact-pending" style="display: none;">You cannot submit your club until your new club contact has approved their My USMS account.</p>
-            <button onclick="submitCreditCard(event)" id="submit-button" class="btn btn-pay btn-large text-uppercase pull-left membership-length__submit">Submit Payment</button>
+            <button onclick="" id="submit-button" class="btn btn-pay btn-large text-uppercase pull-left membership-length__submit">Submit Payment</button>
         </div>
     </div>
 </div>
@@ -3051,12 +3166,20 @@
         }
     </style>
     <script>
+        // $('.help-block').addClass('has-error');
+        $("#location-information h3").click();
         $('#location-information .section__number').text('5');
-        function setPageName() {
-            const pageName = "Other Pool";
-            $(document).trigger("settingPageName", { data: pageName });
-         }
-    </script>
+        $(".international-message").hide();
+        
+        setViewName("Club Registration");
+        
+        // function setPageName() {
+        //     const pageName = "Club Registration";
+        //     $(document).trigger("settingPageName", { data: pageName });
+        //     return pageName;
+        //  }
+
+</script>
     <!-- <script src="./js/util.js"></script> -->
     <!-- <script src="./js/validation.js"></script> -->
     <!-- <script src="./js/location.js"></script> -->

@@ -10,7 +10,7 @@
       <sergey-import src="site/head_meta" />
       <sergey-import src="site/head_js" />
       <sergey-import src="site/head_css" />
-      <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
+      <!-- <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css"> -->
       <link rel="stylesheet" href="https://www.usms.org/styles/Club/club2.min.css">
       <!-- <link rel="stylesheet" href="https://www.usms.org/styles/clubs.min.css"> -->
       <link rel="stylesheet" href="./css/date-picker.css">
@@ -85,12 +85,12 @@
       <script>
          $("#event-name h3").click();
 
-         function setPageName() {
-            const pageName = "Calendar";
-            $(document).trigger("settingPageName", { data: pageName });
-         }
+         setViewName("Calendar");
 
-         
+         // function setPageName() {
+         //    const pageName = "Calendar";
+         //    $(document).trigger("settingPageName", { data: pageName });
+         // }
          
          // $(".list-item-pool.list-item-existing .venue__list").show();
          // $(".list-item-pool.list-item-existing .configuration__list").hide();

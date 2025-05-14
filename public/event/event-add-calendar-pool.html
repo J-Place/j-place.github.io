@@ -31,6 +31,10 @@
 <!-- <script src="/js/src/bootstrap.min.js"></script> -->
 <!-- <script src="/js/src/common.min.js"></script> -->
 <!-- <script src="/js/src/home.min.js"></script> -->
+
+
+
+<script src="/js/page-name.js"></script>
       <!-- Bonfire Source Files -->
     <link rel="stylesheet" href="https://www.usms.org/styles/bootstrap.min.css">
     <link rel="stylesheet" href="https://www.usms.org/styles/bootstrap-3-usms-patch.css">
@@ -59,7 +63,7 @@
             --lm-blue-hover: var(--lm-blue-md);
         }
     </style>
-      <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
+      <!-- <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css"> -->
       <link rel="stylesheet" href="https://www.usms.org/styles/Club/club2.min.css">
       <!-- <link rel="stylesheet" href="https://www.usms.org/styles/clubs.min.css"> -->
       <link rel="stylesheet" href="./css/date-picker.css">
@@ -1179,6 +1183,7 @@
         </div>
     </div>
  </div>
+ 
  <div class="modal pool-configuration" id="modalChosePoolConfigurationSelby" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -2616,12 +2621,12 @@
       <script>
          $("#event-name h3").click();
 
-         function setPageName() {
-            const pageName = "Calendar";
-            $(document).trigger("settingPageName", { data: pageName });
-         }
+         setViewName("Calendar");
 
-         
+         // function setPageName() {
+         //    const pageName = "Calendar";
+         //    $(document).trigger("settingPageName", { data: pageName });
+         // }
          
          // $(".list-item-pool.list-item-existing .venue__list").show();
          // $(".list-item-pool.list-item-existing .configuration__list").hide();

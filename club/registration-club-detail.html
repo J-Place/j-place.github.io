@@ -18,6 +18,7 @@
   
         <link rel="stylesheet" href="./css/registration-club-detail.css">
         <!-- <link rel="stylesheet" href="./css/cherry-picked-from-event.css"> -->
+        <link rel="stylesheet" href="/event/css/location-lookups.css">
 
     </head>
     <body class="">
@@ -156,7 +157,7 @@
                                     <sergey-import src="club/02-club-detail" />
                                     <sergey-import src="club/03-club-contact" />
                                     <sergey-import src="club/04-coach-instructor" />
-                                    <sergey-import src="club/05-location-lookups" />
+                                    <sergey-import src="event-sanction/04-location-information-other-pool" />
                                     <sergey-import src="club/06-gold-club" />
                                     <sergey-import src="club/07-finish-pay" />
                                 </div>
@@ -175,12 +176,20 @@
         }
     </style>
     <script>
+        // $('.help-block').addClass('has-error');
+        $("#location-information h3").click();
         $('#location-information .section__number').text('5');
-        function setPageName() {
-            const pageName = "Other Pool";
-            $(document).trigger("settingPageName", { data: pageName });
-         }
-    </script>
+        $(".international-message").hide();
+        
+        setViewName("Club Registration");
+        
+        // function setPageName() {
+        //     const pageName = "Club Registration";
+        //     $(document).trigger("settingPageName", { data: pageName });
+        //     return pageName;
+        //  }
+
+</script>
     <!-- <script src="./js/util.js"></script> -->
     <!-- <script src="./js/validation.js"></script> -->
     <!-- <script src="./js/location.js"></script> -->

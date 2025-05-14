@@ -31,6 +31,10 @@
 <!-- <script src="/js/src/bootstrap.min.js"></script> -->
 <!-- <script src="/js/src/common.min.js"></script> -->
 <!-- <script src="/js/src/home.min.js"></script> -->
+
+
+
+<script src="/js/page-name.js"></script>
       <!-- Bonfire Source Files -->
     <link rel="stylesheet" href="https://www.usms.org/styles/bootstrap.min.css">
     <link rel="stylesheet" href="https://www.usms.org/styles/bootstrap-3-usms-patch.css">
@@ -2146,7 +2150,7 @@
       </h3>
       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
       <div class="section__content collapse" id="entry-information__content" data-parent="#accordion">
-         <div class="form-group location-information--container" style="display: block; visibility: visible;">
+         <div class="entry-information--container" style="display: block; visibility: visible;">
             
             <div class="row">
                <div class="col-xs-12 col-md-6">
@@ -2913,10 +2917,14 @@
 
       <script type="text/javascript">
          $("#event-name h3").click();
-         function setPageName() {
-            const pageName = "Other Pool";
-            $(document).trigger("settingPageName", { data: pageName });
-         }
+
+         setViewName("Other Pool");
+         
+         // function setPageName() {
+         //    const pageName = "Other Pool";
+         //    $(document).trigger("settingPageName", { data: pageName });
+         // }
+         
          $(".list-item--club").parent().show();
       </script>
       <script type="text/javascript" src="/event/js/event-director.js"></script>

@@ -10,7 +10,6 @@ $(document).ready(function() {
     let addLocationBtn = $("#addLocationBtn");
     let cancelAddLocationBtn = $("#cancelAddLocationBtn");
     let confirmNewFacility = $("#confirmNewFacility");
-    // let addNewLocationForm = $(".event-location-details");
     let addNewLocationForm = $(".location-details");
     let addNewPoolForm = $(".list-venue-form");
     let addNewConfigurationForm = $(".list-configuration-form");
@@ -86,7 +85,6 @@ $(document).ready(function() {
     $("#saveFormPool").click( function(e) {
         e.preventDefault();
         showControlsNew();
-        setPageName();
         $(".location-info__add-new-location--container").hide();
         $(".venue__list").show();
         $(".list-item-open-water .venue__list--item").show();
@@ -177,14 +175,6 @@ $(document).ready(function() {
         showControlsNew();
     });
 
-    // $("#confirmLocationHealthfit").click( function() {
-    //     $("#modalChosePoolConfigurationHealthfit").modal('show');
-    // });
-
-    // $("#confirmLocationJensen").click( function() {
-    //     $("#modalChosePoolConfigurationJensen").modal('show');
-    // });
-
     $("#modalConfirmSelby").click( function() {
         confirmConfiguration();
         showControlsExisting();        
@@ -227,92 +217,20 @@ $(document).ready(function() {
         $(".list-item-new.list-item-pool .configuration__list--item.selected .configuration-title").show();
     });
 
-    function confirmConfiguration() {
-        hideLocationLookup();
-        hideAddNewLocationContainer();
-        $(lookupByLocationList).hide();
-        showSavedLocationList();
-        $("#saveLocation").prop('disabled', false);
-        $(".venue__list--item").hide();
-        $(".venue__list--item:first-of-type").show();
-        $(".venue__list--item:first-of-type .configuration-title").hide();
-        $(".venue__list--item:first-of-type .configuration-title:last-of-type").show();
-    }
-
     $("#addConfigurationBtnSelby").click( function() {
         $("#modalChosePoolConfigurationSelby").modal('hide');
         addNewConfigurationSelby();
     });
 
-    function addNewConfigurationSelby() {
-        hideLocationLookup();
-        $(lookupByLocationList).hide();
-        $("#saveLocation").prop('disabled', false);
-        $(".list-item.list-item-existing .list__controls").hide();
-        $(".venue__list--item:first-of-type .configuration-title").hide();
-        $(".venue__list--item").hide();
-
-        // $(".venue__list--item.selected").show();
-        // $(".list-item-existing .venue__list").show();
-        
-        $(".list-item-pool.list-item-existing").show();
-        $(".configuration__list--item.added").show();
-        showSavedLocationList();
-        $(".location-header").hide();
-        $(addNewPoolForm).show();
-    }
-
     $('#doneEditLocationBtn').click( function(e) {
         e.preventDefault();
-        // hideEditListControls();
         $('#editLocationBtn').show();
         $('#doneEditLocationBtn').hide();
         $('.list.locations').removeClass('edit-list');
         $(".locations .list-item__edit").hide();
         $(".locations .list-item__delete").hide();
         $('.list__controls').hide();
-        // $('.row.locations').hide();
-        // $('.location-header__edit').hide();
     });
-
-    function showEditListControlsReadOnly() {
-        $('#editLocationBtn').hide();
-        $('#doneEditLocationBtn').show();
-        $('.list.locations').addClass('edit-list');
-        $('.locations .list-item > .list__controls').show();
-        $(".locations .list-item__edit").hide();
-        $(".locations .list-item__delete").show();
-        $('.row.locations').show();
-        $('.location-header__edit').show();
-    }
-    
-    function showEditListControlsEditable() {
-        $('#editLocationBtn').hide();
-        $('#doneEditLocationBtn').show();
-        $('.list.locations').addClass('edit-list');
-        $('.locations .list-item > .list__controls').show();
-        $(".locations .list-item__edit").show();
-        $(".locations .list-item__delete").show();
-        $('.row.locations').show();
-        $('.location-header__edit').show();
-        $('.venue__list .list__controls').show();
-        $('.configuration__list .list__controls').show();
-    }
-
-    function hideEditListControls() {
-        $('#editLocationBtn').show();
-        $('#doneEditLocationBtn').hide();
-        $('.list.locations').removeClass('edit-list');
-        $(".locations .list-item__edit").hide();
-        $(".locations .list-item__delete").hide();
-        $('.list__controls').hide();
-        $('.row.locations').hide();
-        $('.location-header__edit').hide();
-
-        // $('.locations .list-item > .list__controls').hide();
-        // $('.venue__list .list__controls').hide();
-        // $('.configuration__list .list__controls').hide();
-    }
 
     $(".locations .list-item__delete").click( function() {
         $("#modalDeleteLocation").modal('show');
@@ -414,6 +332,329 @@ $(document).ready(function() {
         }
     });
 
+    $("#confirmLocationSelby").click( function() {
+        if (viewName === "Club Registration") {
+            $("#modalChosePoolConfigurationSelby").modal('show');
+        } else if (viewName === "Pool") {
+            $("#modalChosePoolConfigurationSelby").modal('show');
+        } else if (viewName === "Calendar") {
+            confirmConfiguration();
+            showControlsExisting();
+            $(".list-item-existing.list-item-pool").show();
+            $(".venue__list").show();
+            $(".configuration-title").hide();
+        } else if (viewName === "Other Pool") {
+            confirmConfiguration();
+            showControlsExisting();
+            $(".list-item-pool.list-item-existing").show();
+            $(".venue__list").show();
+            $(".list-item-pool.list-item-existing .venue__list--item").show();
+            $(".configuration-title").hide();
+        }
+    });
+
+    $("#confirmDeleteLocation").click( function() {
+        if (viewName === "Open Water") {
+            hideEditListControls();
+            hideSavedLocationList();
+            hideListControlChildren();
+            showLocationLookup();
+            showLookupLocationList();
+            resetAddNewLocation();
+            filterByOpenWater();
+        } else if (viewName === "Pool") {
+            hideEditListControls();
+            hideSavedLocationList();
+            hideListControlChildren();
+            $(lookupByLocationList).hide();
+            $(".locations .list-item").hide();
+            showLocationLookup();
+            showLookupLocationList();
+            resetAddNewLocation();
+            filterByRange();
+        } else if (viewName === "Calendar") {
+            hideEditListControls();
+            hideSavedLocationList();
+            hideListControlChildren();
+            $(lookupByLocationList).hide();
+            $(".locations .list-item").hide();
+            showLocationLookup();
+            showLookupLocationList();
+            resetAddNewLocation();
+            filterByRange();
+        } else if (viewName === "Other Open Water") {
+            showLocationLookup();
+            showLookupLocationList();
+            resetAddNewLocation();
+            filterByOpenWater();
+        } else if (viewName === "Other Pool") {
+            hideEditListControls();
+            hideSavedLocationList();
+            hideListControlChildren();
+            $(lookupByLocationList).hide();
+            $(".locations .list-item").hide();
+            showLocationLookup();
+            showLookupLocationList();
+            resetAddNewLocation();
+            filterByRange();
+        } else if (viewName === "Club Registration") {
+            hideEditListControls();
+            hideSavedLocationList();
+            hideListControlChildren();
+            $(lookupByLocationList).hide();
+            $(".locations .list-item").hide();
+            showLocationLookup();
+            showLookupLocationList();
+            resetAddNewLocation();
+            filterByRange();
+        }
+    });
+    
+    $("#closeDuplicateAddress").click( function() {
+        if (viewName === "Open Water") {
+            showSavedLocationList();
+            showLocationLookup();
+            showLookupLocationList();
+            resetAddNewLocation();
+            $(".list.locations .list-item--open-water.list-item--duplicate").show();
+        } else if (viewName === "Other Open Water") {
+            showSavedLocationList();
+            showLocationLookup();
+            showLookupLocationList();
+            resetAddNewLocation();
+            $(".list.locations .list-item--open-water.list-item--duplicate").show();
+        } else if (viewName === "Other Pool") {
+            showSavedLocationList();
+            showLocationLookup();
+            showLookupLocationList();
+            resetAddNewLocation();
+            showLocationLookup();
+            showLookupLocationList();
+            $(".list.locations .list-item--pool.list-item--duplicate").show();
+        }
+    });
+
+    $("#confirmLocationHealthfit").click( function() {
+        if (viewName === "Pool") {
+            $("#modalChosePoolConfigurationHealthfit").modal('show');
+        } else if (viewName === "Calendar") {
+            confirmConfiguration();
+            showControlsExisting();
+            $(".list-item-duplicate").show();
+            $(".venue__list").show();
+            $(".configuration-title").hide();
+        } else if (viewName === "Other Pool") {
+            confirmConfiguration();
+            showControlsExisting();
+            $(".list-item-pool.list-item-duplicate").show();
+            $(".venue__list").show();
+            $(".configuration-title").hide();
+        }
+    });
+
+    $("#confirmLocationJensen").click( function() {
+        if (viewName === "Pool") {
+            $("#modalChosePoolConfigurationJensen").modal('show');
+        } else if (viewName === "Calendar") {
+            confirmConfiguration();
+            showControlsNew();
+            $(".list-item-new.list-item-pool").show();
+            $(".list-item-new .configuration__list").show();
+            $(".list-item-new .configuration__list--item.selected").show();
+            $(".list-item-new .configuration__list--item.selected .configuration-title").show();
+        } else if (viewName === "Open Water") {
+            confirmConfiguration();
+            showControlsNew();
+            $(".list-item-new.list-item-pool").show();
+            $(".list-item-new .configuration__list").show();
+            $(".list-item-new .configuration__list--item.selected").show();
+            $(".list-item-new .configuration__list--item.selected .configuration-title").show();
+        }
+    });
+
+    $('#editLocationBtn').click( function(e) {
+        e.preventDefault();
+        var currentLocation = $('.locations .list-item:visible').first();
+        if (currentLocation.hasClass('list-item-duplicate')) {
+            showEditListControlsReadOnly();
+        }
+        else if (currentLocation.hasClass('list-item-existing')) {
+            showEditListControlsReadOnly();
+        } else {
+            showEditListControlsEditable();
+        }            
+    });
+
+    $("#submit-button").click( function() {
+        if (window.viewName === "Club Registration") {
+            alert("This is Club Reg");
+        } else {
+            alert("This is not Club Reg");
+        }
+    });
+
+    $('#submitEdit').click( function() {
+        $('.help-block').each(function() {
+            var $inputGroup = $(this).closest('.input-group').find('.form-control');
+            var $formGroup = $(this).closest('.form-group').find('.form-control');
+            if ($(this).hasClass('has-error')) {
+                $(this).removeClass('has-error');
+                $inputGroup.removeClass('has-error');
+                $formGroup.removeClass('has-error');
+            } else {
+                $(this).addClass('has-error');
+                $inputGroup.addClass('has-error');
+                $formGroup.addClass('has-error');
+            }
+        });
+        $("#entryInfoComments").removeClass('has-error');
+        $('.help-block--addHeadRef.has-error').removeClass('has-error');
+        $('.help-block--addSafetyCoordinator.has-error').removeClass('has-error');
+        $('.help-block--chosePoolConfiguration.has-error').removeClass('has-error');
+        $('.list-item .help-block.has-error').removeClass('has-error');
+        $('.help-block.file-type.has-error').removeClass('has-error');
+        $('.help-block.help-block--paper-entry.no-data.has-error').removeClass('has-error');
+        $('.form-control.lookup__input.lookup-primary__input.has-error').removeClass('has-error');
+        $('.help-block.help-block--LookupEventDirectorName.has-error').removeClass('has-error');
+    });
+
+    $('#submit-button').click( function() {
+        $('.help-block').each(function() {
+            var $inputGroup = $(this).closest('.input-group').find('.form-control');
+            var $formGroup = $(this).closest('.form-group').find('.form-control');
+            if ($(this).hasClass('has-error')) {
+                $(this).removeClass('has-error');
+                $inputGroup.removeClass('has-error');
+                $formGroup.removeClass('has-error');
+            } else {
+                $(this).addClass('has-error');
+                $inputGroup.addClass('has-error');
+                $formGroup.addClass('has-error');
+            }
+        });
+        $("#entryInfoComments").removeClass('has-error');
+        $('.help-block--addHeadRef.has-error').removeClass('has-error');
+        $('.help-block--addSafetyCoordinator.has-error').removeClass('has-error');
+        $('.help-block--chosePoolConfiguration.has-error').removeClass('has-error');
+        $('.list-item .help-block.has-error').removeClass('has-error');
+        $('.help-block.file-type.has-error').removeClass('has-error');
+        $('.help-block.help-block--paper-entry.no-data.has-error').removeClass('has-error');
+        $('.form-control.lookup__input.lookup-primary__input.has-error').removeClass('has-error');
+        $('.help-block.help-block--LookupEventDirectorName.has-error').removeClass('has-error');
+    });
+
+
+
+
+
+
+    // Filter location lookup results list
+    if (viewName === "Open Water") {
+        filterByOpenWater();
+    } else if (viewName === "Pool") {
+        filterByRange();
+        filterByCourse();
+    } else if (viewName === "Calendar") {
+        filterByRange();
+        filterByCourse();
+    } else if (viewName === "Other Open Water") {
+        filterByOpenWater();
+    } else if (viewName === "Other Pool") {
+        filterByRange();
+        filterByCourse();
+    } else if (viewName === "Club Registration") {
+        filterByRange();
+    }
+
+    // // Get page name to filter location lookup results
+    // $(document).on("settingPageName", function(event, data) {
+    //     const currentPageName = data.data;
+    //     if (currentPageName === "Open Water") {
+    //         filterByOpenWater();
+    //     } else if (currentPageName === "Pool") {
+    //         filterByRange();
+    //         filterByCourse();
+    //     } else if (currentPageName === "Calendar") {
+    //         filterByRange();
+    //         filterByCourse();
+    //     } else if (currentPageName === "Other Open Water") {
+    //         filterByOpenWater();
+    //     } else if (currentPageName === "Other Pool") {
+    //         filterByRange();
+    //         filterByCourse();
+    //     } else if (currentPageName === "Club Registration") {
+    //         filterByRange();
+    //     }
+    //     console.log("This is " + currentPageName);
+    // });
+    // setPageName();
+
+
+
+
+
+
+    function confirmConfiguration() {
+        hideLocationLookup();
+        hideAddNewLocationContainer();
+        $(lookupByLocationList).hide();
+        showSavedLocationList();
+        $("#saveLocation").prop('disabled', false);
+        $(".venue__list--item").hide();
+        $(".venue__list--item:first-of-type").show();
+        $(".venue__list--item:first-of-type .configuration-title").hide();
+        $(".venue__list--item:first-of-type .configuration-title:last-of-type").show();
+    }
+
+    function addNewConfigurationSelby() {
+        hideLocationLookup();
+        $(lookupByLocationList).hide();
+        $("#saveLocation").prop('disabled', false);
+        $(".list-item.list-item-existing .list__controls").hide();
+        $(".venue__list--item:first-of-type .configuration-title").hide();
+        $(".venue__list--item").hide();       
+        $(".list-item-pool.list-item-existing").show();
+        $(".configuration__list--item.added").show();
+        showSavedLocationList();
+        $(".location-header").hide();
+        $(addNewPoolForm).show();
+    }
+
+    function showEditListControlsReadOnly() {
+        $('#editLocationBtn').hide();
+        $('#doneEditLocationBtn').show();
+        $('.list.locations').addClass('edit-list');
+        $('.locations .list-item > .list__controls').show();
+        $(".locations .list-item__edit").hide();
+        $(".locations .list-item__delete").show();
+        $('.row.locations').show();
+        $('.location-header__edit').show();
+    }
+    
+    function showEditListControlsEditable() {
+        $('#editLocationBtn').hide();
+        $('#doneEditLocationBtn').show();
+        $('.list.locations').addClass('edit-list');
+        $('.locations .list-item > .list__controls').show();
+        $(".locations .list-item__edit").show();
+        $(".locations .list-item__delete").show();
+        $('.row.locations').show();
+        $('.location-header__edit').show();
+        $('.venue__list .list__controls').show();
+        $('.configuration__list .list__controls').show();
+    }
+
+    function hideEditListControls() {
+        $('#editLocationBtn').show();
+        $('#doneEditLocationBtn').hide();
+        $('.list.locations').removeClass('edit-list');
+        $(".locations .list-item__edit").hide();
+        $(".locations .list-item__delete").hide();
+        $('.list__controls').hide();
+        $('.row.locations').hide();
+        $('.location-header__edit').hide();
+    }
+
     function showListControlChildren() {
         $(".venue__list--item .list__controls").show();
         $(".pool__list--item .list__controls").show();
@@ -452,24 +693,19 @@ $(document).ready(function() {
         $(".list.list--lookup.locations").parent().parent().show();
         $('.row.locations').hide();
         $('.location-header__edit').hide();
-        // alert("Showing list--lookup");
-
     }
 
     function hideLookupLocationList() {        
         $(".list.list--lookup.locations").hide();
         $(".list.list--lookup.locations").parent().parent().hide();
-        // alert("Hiding list--lookup");
     }
 
     function showLocationLookup() {
         $("#location-information__content .list-control").show();
-        // alert("Showing list-control");
     }
 
     function hideLocationLookup() {
         $("#location-information__content .list-control").hide();
-        // alert("Hiding list-control");
     }
 
     function resetLocationInputs() {
@@ -509,22 +745,17 @@ $(document).ready(function() {
     }
 
     function handleListControls() {
-        console.log("fx handleListControls");
         $(".location-name > .list__controls").show();
         $(".list.locations").removeClass("edit-list");
         if ($(".list-item-existing").css('display') === 'block') {
             showControlsExisting();
         }
         if ($(".list-item-new").css('display') === 'block') {
-            // $(".locations .list-item__edit").show();
-            // $(".locations .list-item__save").show();
-            // $(".list__controls--settings").css('display', 'inline');
             showControlsNew();
         }
     }
 
     function showControlsNew() {
-        console.log("fx show controls new");
         $(".location-name > .list__controls").show();
         $(".list.locations").removeClass("edit-list");
         $(".locations .list-item__edit").show();
@@ -533,13 +764,11 @@ $(document).ready(function() {
     }
 
     function showControlsExisting() {
-        console.log("fx show controls existing");
         $(".location-name > .list__controls").show();
         $(".list.locations").removeClass("edit-list");
         $(".locations .list-item__edit").hide();
         $(".locations .list-item__save").hide();
         $(".location-header__edit").show();
-        // $(".locations .list-item__delete").show();
     }
 
     function hideControls() {
@@ -576,7 +805,6 @@ $(document).ready(function() {
             $(".location-column .list-item.ui-lookup-filter-25mile").show();
             $(".location-column .list-item.ui-lookup-filter-50mile").show();
         }
-        // resetAddNewLocation();
         $(lookupByLocationList).show();
     }
 
@@ -623,9 +851,6 @@ $(document).ready(function() {
         } else if ( $("#length25Yards input").is(':checked') && $("#length25Meters input").is(':checked') && $("#length50Meters input").is(':checked')  &&  $("#lengthOther input").is(':checked') ) {
             $(".location-column .list-item:not(.ui-lookup-filter-length-scy):not(.ui-lookup-filter-length-scm):not(.ui-lookup-filter-length-lcm):not(.ui-lookup-filter-length-other)").hide();
         }
-        // else if ( $("#length25Yards input").is(':checked') && !$("#length25Meters input").is(':checked') && $("#length50Meters input").is(':checked') &&  $("#lengthOther input").is(':checked') ) {
-        //     $(".location-column .list-item:not(.ui-lookup-filter-length-scm)").hide();
-        // }
     }
 
     function filterByOpenWater() {
@@ -634,188 +859,5 @@ $(document).ready(function() {
         $(".list--lookup.locations .list-item").hide();
         $(".list--lookup.locations .list-item.list-item--open-water").show();
     }
-
-    // Get page name to filter location lookup results
-    $(document).on("settingPageName", function(event, data) {
-        const currentPageName = data.data;
-        if (currentPageName === "Open Water") {
-            filterByOpenWater();
-            $("#closeDuplicateAddress").click( function() {
-                showSavedLocationList();
-                showLocationLookup();
-                showLookupLocationList();
-                resetAddNewLocation();
-                $(".list.locations .list-item--open-water.list-item--duplicate").show();
-            });
-            $("#confirmDeleteLocation").click( function() {
-                hideEditListControls();
-                hideSavedLocationList();
-                hideListControlChildren();
-                showLocationLookup();
-                showLookupLocationList();
-                resetAddNewLocation();
-                filterByOpenWater();
-            }); 
-        } else if (currentPageName === "Pool") {
-            filterByRange();
-            filterByCourse();
-            $("#confirmLocationSelby").click( function() {
-                $("#modalChosePoolConfigurationSelby").modal('show');
-            });
-            $("#confirmLocationHealthfit").click( function() {
-                $("#modalChosePoolConfigurationHealthfit").modal('show');
-            });
-            $("#confirmLocationJensen").click( function() {
-                $("#modalChosePoolConfigurationJensen").modal('show');
-            });
-            $("#confirmDeleteLocation").click( function() {
-                hideEditListControls();
-                hideSavedLocationList();
-                hideListControlChildren();
-                $(lookupByLocationList).hide();
-                $(".locations .list-item").hide();
-                showLocationLookup();
-                showLookupLocationList();
-                resetAddNewLocation();
-                filterByRange();
-            });
-        } else if (currentPageName === "Calendar") {
-            filterByRange();
-            filterByCourse();
-            $("#confirmLocationSelby").click( function() {
-                confirmConfiguration();
-                showControlsExisting();
-                $(".list-item-existing.list-item-pool").show();
-                $(".venue__list").show();
-                $(".configuration-title").hide();
-            });
-            $("#confirmLocationHealthfit").click( function() {
-                confirmConfiguration();
-                showControlsExisting();
-                $(".list-item-duplicate").show();
-                $(".venue__list").show();
-                $(".configuration-title").hide();
-            });
-            $("#confirmLocationJensen").click( function() {
-                confirmConfiguration();
-                showControlsNew();
-                $(".list-item-new.list-item-pool").show();
-                $(".list-item-new .configuration__list").show();
-                $(".list-item-new .configuration__list--item.selected").show();
-                $(".list-item-new .configuration__list--item.selected .configuration-title").show();
-            });
-            $("#confirmDeleteLocation").click( function() {
-                hideEditListControls();
-                hideSavedLocationList();
-                hideListControlChildren();
-                $(lookupByLocationList).hide();
-                $(".locations .list-item").hide();
-                showLocationLookup();
-                showLookupLocationList();
-                resetAddNewLocation();
-                filterByRange();
-            });
-        } else if (currentPageName === "Other Open Water") {
-            filterByOpenWater();
-            $("#closeDuplicateAddress").click( function() {
-                showSavedLocationList();
-                showLocationLookup();
-                showLookupLocationList();
-                resetAddNewLocation();
-                $(".list.locations .list-item--open-water.list-item--duplicate").show();
-            });
-            $("#confirmDeleteLocation").click( function() {
-                showLocationLookup();
-                showLookupLocationList();
-                resetAddNewLocation();
-                filterByOpenWater();
-            });
-        } else if (currentPageName === "Other Pool") {
-            filterByRange();
-            filterByCourse();
-            $("#confirmLocationSelby").click( function() {
-                confirmConfiguration();
-                showControlsExisting();
-                $(".list-item-pool.list-item-existing").show();
-                $(".venue__list").show();
-                $(".list-item-pool.list-item-existing .venue__list--item").show();
-                $(".configuration-title").hide();
-            });
-            $("#confirmLocationHealthfit").click( function() {
-                confirmConfiguration();
-                showControlsExisting();
-                $(".list-item-pool.list-item-duplicate").show();
-                $(".venue__list").show();
-                $(".configuration-title").hide();
-            });
-            $("#confirmLocationJensen").click( function() {
-                confirmConfiguration();
-                showControlsNew();
-                $(".list-item-new.list-item-pool").show();
-                $(".list-item-new .configuration__list").show();
-                $(".list-item-new .configuration__list--item.selected").show();
-                $(".list-item-new .configuration__list--item.selected .configuration-title").show();
-            });                
-            $("#closeDuplicateAddress").click( function() {
-                showSavedLocationList();
-                showLocationLookup();
-                showLookupLocationList();
-                resetAddNewLocation();
-                showLocationLookup();
-                showLookupLocationList();
-                $(".list.locations .list-item--pool.list-item--duplicate").show();
-            });
-            $("#confirmDeleteLocation").click( function() {
-                hideEditListControls();
-                hideSavedLocationList();
-                hideListControlChildren();
-                $(lookupByLocationList).hide();
-                $(".locations .list-item").hide();
-                showLocationLookup();
-                showLookupLocationList();
-                resetAddNewLocation();
-                filterByRange();
-            });
-        }
-        $('#editLocationBtn').click( function(e) {
-            e.preventDefault();
-            var currentLocation = $('.locations .list-item:visible').first(); // adjust .first() if needed
-            if (currentLocation.hasClass('list-item-duplicate')) {
-                showEditListControlsReadOnly();
-            }
-            else if (currentLocation.hasClass('list-item-existing')) {
-                showEditListControlsReadOnly();
-            } else {
-                showEditListControlsEditable();
-            }            
-        });   
-        console.log("This is " + currentPageName);
-    });
-    setPageName();
-    
-    $('#submitEdit').click( function() {
-        $('.help-block').each(function() {
-            var $inputGroup = $(this).closest('.input-group').find('.form-control');
-            var $formGroup = $(this).closest('.form-group').find('.form-control');
-            if ($(this).hasClass('has-error')) {
-                $(this).removeClass('has-error');
-                $inputGroup.removeClass('has-error');
-                $formGroup.removeClass('has-error');
-            } else {
-                $(this).addClass('has-error');
-                $inputGroup.addClass('has-error');
-                $formGroup.addClass('has-error');
-            }
-        });
-        $("#entryInfoComments").removeClass('has-error');
-        $('.help-block--addHeadRef.has-error').removeClass('has-error');
-        $('.help-block--addSafetyCoordinator.has-error').removeClass('has-error');
-        $('.help-block--chosePoolConfiguration.has-error').removeClass('has-error');
-        $('.list-item .help-block.has-error').removeClass('has-error');
-        $('.help-block.file-type.has-error').removeClass('has-error');
-        $('.help-block.help-block--paper-entry.no-data.has-error').removeClass('has-error');
-        $('.form-control.lookup__input.lookup-primary__input.has-error').removeClass('has-error');
-        $('.help-block.help-block--LookupEventDirectorName.has-error').removeClass('has-error');
-    });
 
 });

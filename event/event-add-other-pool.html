@@ -10,7 +10,7 @@
       <sergey-import src="site/head_meta" />
       <sergey-import src="site/head_js" />
       <sergey-import src="site/head_css" />
-      <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
+      <!-- <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css"> -->
       <link rel="stylesheet" href="https://www.usms.org/styles/Club/club2.min.css">
       <!-- <link rel="stylesheet" href="https://www.usms.org/styles/clubs.min.css"> -->
       <link rel="stylesheet" href="./css/date-picker.css">
@@ -85,21 +85,13 @@
          
          $("#event-name h3").click();
 
-         function setPageName() {
-            const pageName = "Other Pool";
-            $(document).trigger("settingPageName", { data: pageName });
-            return pageName;
-         }
+         setViewName("Other Pool");
 
-         // alert(currentPageName);
-         // $("#confirmLocationSelby").click( function(currentPageName) {
-         //      setPageName(currentPageName);
-         //    // alert(currentPageName);
-         //    if (currentPageName == "Other Pool") {
-         //          alert("Nope");
-         //    }
-         //    $("#modalChosePoolConfigurationSelby").modal('show');
-         // });
+         // function setPageName() {
+         //    const pageName = "Other Pool";
+         //    $(document).trigger("settingPageName", { data: pageName });
+         //    return pageName;
+         // }
          
       </script>
       

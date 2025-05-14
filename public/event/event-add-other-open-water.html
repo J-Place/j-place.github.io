@@ -31,6 +31,10 @@
 <!-- <script src="/js/src/bootstrap.min.js"></script> -->
 <!-- <script src="/js/src/common.min.js"></script> -->
 <!-- <script src="/js/src/home.min.js"></script> -->
+
+
+
+<script src="/js/page-name.js"></script>
       <!-- Bonfire Source Files -->
     <link rel="stylesheet" href="https://www.usms.org/styles/bootstrap.min.css">
     <link rel="stylesheet" href="https://www.usms.org/styles/bootstrap-3-usms-patch.css">
@@ -59,7 +63,7 @@
             --lm-blue-hover: var(--lm-blue-md);
         }
     </style>
-      <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
+      <!-- <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css"> -->
       <link rel="stylesheet" href="https://www.usms.org/styles/Club/club2.min.css">
       <!-- <link rel="stylesheet" href="https://www.usms.org/styles/clubs.min.css"> -->
       <link rel="stylesheet" href="./css/date-picker.css">
@@ -1564,6 +1568,111 @@
         </div>
     </div>
  </div>
+
+ <div class="modal pool-configuration" id="modalChosePoolConfigurationSelby" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Select a Pool Course</h5>
+            </div>
+            <div class="modal-body">
+                <p>Now that you have selected a location, please select the course of the pool that the event will take place. The courses that are have been certified in our database are highlighted. If a course is not certified, the meet's times will not count. <a href="https://www.usms.org/volunteer-central/guide-to-local-operations/event-management/top-10-and-records-and-tabulation/pool-length-form-and-measurement-procedures">Learn more here.</a></p>
+                <p class="location-name"><strong>Selby Aquatic Center</strong></p>
+                <div class="input-group chose-pool-configuration">
+                    <span class="help-block help-block--chosePoolConfiguration">Please select a configuration</span>
+                    <label class="radio-label" for="option1Selby">
+                        <span class="radio-container">
+                            <input type="radio" name="configuration-selby" id="option1Selby" value="0" />
+                            <span class="radio__placeholder"></span>
+                        </span>
+                        Competition Pool - 25 Yards<br />Certified 08/2022 - 1 Touchpad, No Touchpads
+                    </label>
+                    <label class="radio-label" for="option2Selby">
+                        <span class="radio-container">
+                            <input type="radio" name="configuration-selby" id="option2Selby" value="1" />
+                            <span class="radio__placeholder"></span>
+                        </span>
+                        Competition Pool - 50 Meters<br />Certified 09/2024 - 1 Touchpad, 2 Touchpads, No Touchpads
+                    </label>
+                    <label class="radio-label" for="option3Selby">
+                        <span class="radio-container">
+                            <input type="radio" name="configuration-selby" id="option3Selby" value="2" />
+                            <span class="radio__placeholder"></span>
+                        </span>
+                        Warmup Pool - 25 Yards
+                    </label>
+                </div>
+                <br />
+                <p>If your course is not listed, please contact USMS to have it added: <a href="mailto:events@usmastersswimming.org">events@usmastersswimming.org</a></p>
+                <!-- <button type="button" class="btn btn-small btn-outline btn-add" data-bs-dismiss="modal" id="addConfigurationBtnSelby">Add New</button> -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-md btn-default" data-bs-dismiss="modal" id="modalConfirmSelby" disabled>Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal pool-configuration" id="modalChosePoolConfigurationHealthfit" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Select a Pool Course</h5>
+            </div>
+            <div class="modal-body">
+                <p>Now that you have selected a location, please select the course of the pool that the event will take place. The courses that are have been certified in our database are highlighted. If a course is not certified, the meet's times will not count. <a href="https://www.usms.org/volunteer-central/guide-to-local-operations/event-management/top-10-and-records-and-tabulation/pool-length-form-and-measurement-procedures">Learn more here.</a></p>
+                <p class="location-name"><strong>Healthfit</strong></p>
+                <div class="input-group chose-pool-configuration">
+                    <span class="help-block help-block--chosePoolConfiguration">Please select a configuration</span>
+                    <label class="radio-label" for="option1Helthfit">
+                        <span class="radio-container">
+                            <input type="radio" name="configuration-healthfit" id="option1Helthfit" value="1" selected />
+                            <span class="radio__placeholder"></span>
+                        </span>
+                        Main Pool - 33 Yards
+                    </label>
+                </div>
+                <br />
+                <p>If your course is not listed, please contact USMS to have it added: <a href="mailto:events@usmastersswimming.org">events@usmastersswimming.org</a></p>
+                <br />
+                <!-- <button class="btn btn-small btn-outline btn-add" id="addConfigurationBtn" type="button">Add New</button> -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-md btn-default" data-bs-dismiss="modal" id="modalConfirmHealthfit" disabled>Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal pool-configuration" id="modalChosePoolConfigurationJensen" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Select a Pool Course</h5>
+            </div>
+            <div class="modal-body">
+                <p>Now that you have selected a location, please select the course of the pool that the event will take place. The courses that are have been certified in our database are highlighted. If a course is not certified, the meet’s times will not count. <a href="https://www.usms.org/volunteer-central/guide-to-local-operations/event-management/top-10-and-records-and-tabulation/pool-length-form-and-measurement-procedures">Learn more here.</a></p>
+                <p class="location-name"><strong>Jensen Beach Pool</strong></p>
+                <div class="input-group chose-pool-configuration">
+                    <span class="help-block help-block--chosePoolConfiguration">Please select a configuration</span>
+                    <label class="radio-label" for="option1Jensen">
+                        <span class="radio-container">
+                            <input type="radio" name="configuration-jensen" id="option1Jensen" value="1" selected />
+                            <span class="radio__placeholder"></span>
+                        </span>
+                        The comp pool - 25 Yards, 5 Lanes
+                    </label>
+                </div>
+                <br />
+                <p>If your course is not listed, please contact USMS to have it added: <a href="mailto:events@usmastersswimming.org">events@usmastersswimming.org</a></p>
+                <!-- <button class="btn btn-small btn-outline btn-add" id="addConfigurationBtn" type="button">Add New</button> -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-md btn-default" data-bs-dismiss="modal" id="modalConfirmJensen" disabled>Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
          <div class="row locations">
    <div class="col-sm-12">
       <div class="location-header location-header__edit">
@@ -2184,7 +2293,7 @@
       </h3>
       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
       <div class="section__content collapse" id="entry-information__content" data-parent="#accordion">
-         <div class="form-group location-information--container" style="display: block; visibility: visible;">
+         <div class="entry-information--container" style="display: block; visibility: visible;">
             
             <div class="row">
                <div class="col-xs-12 col-md-6">
@@ -2918,10 +3027,12 @@
          
          $("#event-name h3").click();
 
-         function setPageName() {
-            const pageName = "Other Open Water";
-            $(document).trigger("settingPageName", { data: pageName });
-         }
+         setViewName("Other Open Water");
+
+         // function setPageName() {
+         //    const pageName = "Other Open Water";
+         //    $(document).trigger("settingPageName", { data: pageName });
+         // }
 
          $("#isClinicNo").prop('checked', true);
          

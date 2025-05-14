@@ -10,8 +10,9 @@
       <sergey-import src="site/head_meta" />
       <sergey-import src="site/head_js" />
       <sergey-import src="site/head_css" />
-      <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
+      <!-- <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css"> -->
       <link rel="stylesheet" href="https://www.usms.org/styles/Club/club2.min.css">
+      <!-- <link rel="stylesheet" href="https://www.usms.org/styles/clubs.min.css"> -->
       <link rel="stylesheet" href="./css/date-picker.css">
       <link rel="stylesheet" href="./css/convert-this-from-club.css">
       <link rel="stylesheet" href="./css/event-sanction.css">
@@ -90,11 +91,13 @@
          $(".contact-group--safety-coordinator").hide();
          $(".contact-group--host-type").hide();
 
-         function setPageName() {
-            const pageName = "Open Water";
-            $(document).trigger("settingPageName", { data: pageName });
-         }
-         setPageName();
+         setViewName("Open Water");
+
+         // function setPageName() {
+         //    const pageName = "Open Water";
+         //    $(document).trigger("settingPageName", { data: pageName });
+         // }
+         // setPageName();
          
          $("#saveContactInfoSection").prop('disabled', false);
          

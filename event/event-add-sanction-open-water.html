@@ -10,7 +10,7 @@
       <sergey-import src="site/head_meta" />
       <sergey-import src="site/head_js" />
       <sergey-import src="site/head_css" />
-      <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
+      <!-- <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css"> -->
       <link rel="stylesheet" href="https://www.usms.org/styles/Club/club2.min.css">
       <!-- <link rel="stylesheet" href="https://www.usms.org/styles/clubs.min.css"> -->
       <link rel="stylesheet" href="./css/date-picker.css">
@@ -88,11 +88,13 @@
          $(".row .event-info-list-on-calendar").show();
          $(".row .event-info-is-championship").show();
          $(".row .event-info-is-virtual").hide();
+
+         setViewName("Open Water");
          
-         function setPageName() {
-            const pageName = "Open Water";
-            $(document).trigger("settingPageName", { data: pageName });
-         }
+         // function setPageName() {
+         //    const pageName = "Open Water";
+         //    $(document).trigger("settingPageName", { data: pageName });
+         // }
      
       </script>
    </body>
