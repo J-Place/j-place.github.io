@@ -11,7 +11,7 @@
         <sergey-import src="site/head_js" />
         <sergey-import src="site/head_css" />
         <link rel="stylesheet" href="/lanemate/css/lanemate.css">
-        <link rel="stylesheet" href="/lanemate/css-components/my-information-lanemate.css">
+        <link rel="stylesheet" href="/lanemate/css-components/my-information.css">
         <!-- <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css"> -->
         <!-- <link rel="stylesheet" href="/registration/css/registration-overrides.css"> -->
         <!-- <link rel="stylesheet" href="/lanemate/css/registration-lanemate.css"> -->
@@ -60,15 +60,29 @@
                     <div class="usms-container renew__form-container form__container my-account__container usms">
                         <div class="row is-flex">
                             <div class="col-xs-12">
+
+                                <style>
+                                    .usms-container.form__container .form-header h3 {
+                                        color: var(--lm-blue);
+                                        margin-bottom: 3rem;
+                                        font-size: 2.5rem;
+                                        font-weight: 500;
+                                    }
+
+                                    #tempNav .btn-link-selected {
+                                        color: var(--lm-blue);
+                                    }
+                                </style>
                                 
                                 <sergey-import src="lanemate/content/my-information" />
                                 
                                 <script>
                                     $(document).ready(function() {
-                                        env = 'usms';
+                                        env = 'lanemate';
                                         setEnv(env);
                                     });
                                 </script>
+
                             </div>
                         </div>
                     </div>
