@@ -69,9 +69,21 @@
         <!-- <link rel="stylesheet" href="/lanemate/css/registration-lanemate.css"> -->
     </head>
     <body>
-        <div class="loading" style="display: none;">
-            <img src="../img/loader.gif" alt="loading">
-        </div>
+        <style>
+            .usms-container.form__container .form-header h3 {
+                color: #0068ad;
+                margin-bottom: 3rem;
+                font-size: 2.5rem;
+                font-weight: 500;
+            }
+            #tempNav .btn-link-selected {
+                color: #0068ad;
+            }
+            #editPrivateInfo,
+            .form__container .btn {
+                background-color: #0068ad;
+            }
+        </style>
         <div id="main-container">
             <header class="header-static">
     <div id="">
@@ -328,7 +340,7 @@
     </div>
  </header>
             <main role="main">
-                <div class="breadcrumb-container" style="position: relative; padding-bottom: 40px;">
+                <div class="breadcrumb-container" style="position: relative; padding-bottom: 50px;">
                     <div class="breadcrumb">
                         <div class="usms-container">
                             <div class="row">
@@ -338,55 +350,34 @@
                                             <li class="text-capitalize breadcrumb__item ">
                                                 <a class="breadcrumb__link" href="/public">Home<i class="fa fa-chevron-right"></i></a>
                                             </li>
-                                            <li class="text-capitalize breadcrumb__item ">
-                                                <a class="breadcrumb__link" href="/public">My Account<i class="fa fa-chevron-right"></i></a>
-                                            </li>
                                         </ul>
-                                        <span class="breadcrumb__title text-capitalize">Add-On</span>
+                                        <span class="breadcrumb__title text-capitalize">My Information</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="section section-full bg-gray p-tb-10 p-mh-500 ">
-                    <div class="usms-container p-tb-10">                        
+                <div class="section section-full p-mh-500 ">
+                    <div class="usms-container p-t-10">                    
                         <div class="row">
                             <div class="col-xs-12">
-                                <header>
+                                <header class="page-title">
                                     <h1>My Information</h1>
-                                    <div class="lead">
-                                        <p style="font-size: 15px; line-height: 25px;font-weight: normal;">RTE text ...</p>
-                                    </div>
                                 </header>
                             </div>
                         </div>
                     </div>
-                    <div class="usms-container renew__form-container form__container my-account__container usms">
-                        <div class="row is-flex">
-                            <div class="col-xs-12">
-                                <!-- <link rel="stylesheet" href="/lanemate/css/my-information.css"> -->
-                                <!-- <script src="/lanemate/js/my-information.js"></script> -->
-
-                                <style>
-                                    .usms-container.form__container .form-header h3 {
-                                        color: #0068ad;
-                                        margin-bottom: 3rem;
-                                        font-size: 2.5rem;
-                                        font-weight: 500;
-                                    }
-                                    #tempNav .btn-link-selected {
-                                        color: #0068ad;
-                                    }
-                                    #editPrivateInfo,
-                                    .form__container .btn {
-                                        background-color: #0068ad;
-                                    }
-                                </style>
-
-
-                                <!-- <link rel="stylesheet" href="/lanemate/css/my-information-lanemate.css"> -->
-<div class="modal" id="savePrivateInfoModal" tabindex="-1" role="dialog" style="display: none;" aria-modal="true">
+                    <div class="usms-container p-tb-40">
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <div class="loading" style="display: none;">
+                                <img src="../img/loader.gif" alt="loading">
+                            </div>
+                            <div class="usms-container renew__form-container form__container my-account__container usms">
+                                <div class="row is-flex">
+                                    <div class="col-xs-12">
+                                        <div class="modal" id="savePrivateInfoModal" tabindex="-1" role="dialog" style="display: none;" aria-modal="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="margin: 0 auto;">
             <div class="modal-body">
@@ -399,13 +390,6 @@
         </div>
     </div>
 </div>
-
-<div id="tempNav">
-    <button class="btn-small btn-link" style="margin-top: -2px; display: none;" id="showValidation">Toggle Validation</button>
-    <button class="btn-small btn-link btn-link-selected" style="margin-right: .7rem;" id="showUsmsView">USMS</button>
-    <button class="btn-small btn-link" id="showLanemateView">LaneMate</button>
-</div>
-
 <div class="button-row" style="text-align:right; margin-top:-1rem; width: 100%;">
     <button class="btn-small btn-danger" id="editPrivateInfo">Edit My Information</button>
     <button class="btn-small btn-blue" id="savePrivateInfo" href="#/" data-bs-toggle="modal" data-bs-target="#savePrivateInfoModal" style="display: none;">Save</button>
@@ -759,12 +743,10 @@
         </div>
     </div>
 </div>
-
 <div class="fun-facts">
     <div class="form-header">
         <h3>Fun Facts</h3>
     </div>
-
     <div class="row input-group checkbox-group favorite-events">
         <div class="input-group-header">Favorite Events</div>
         <span class="form-group-display-value">50 Free, 100 Free</span>
@@ -814,7 +796,6 @@
             <label class="checkbox-label" for="VirtualEvents"><div class="checkbox-container"><input type="checkbox" name="VirtualEvents" id="VirtualEvents" value="true"><span class="checkbox__placeholder"></span></div>Virtual Events</label>
         </div>
     </div>
-
     <div class="row form-group favorite-stroke row">
         <div class="col-sm-4">
             <input type="hidden" name="hiddenFavoriteStroke">
@@ -832,13 +813,11 @@
             </div>
         </div>
     </div>
-
     <div class="row form-group clearfix college-university">
         <div class="col-xs-12 col-sm-6">
             <label class="font-weight-bold" for="CollegeUniversity">College or University</label>
             <span class="form-group-display-value">University of Florida</span>
             <div>
-                <!-- <span class="help-block help-block--CollegeUniversity">Please enter a college or university</span> -->
                 <input type="text" min="1" max="40" class="form-control" placeholder="College or University" name="CollegeUniversity" autocomplete="true" maxlength="100" value="College or University">
                 <span class="glyphicon form-control-feedback glyphicon--CollegeUniversity" aria-hidden="true"></span>
             </div>
@@ -846,18 +825,15 @@
         <div class="col-xs-12 col-sm-6">
             <label class="font-weight-bold" for="Occupation">Occupation</label>
             <span class="form-group-display-value">Occupation</span>
-            <div>
-                
+            <div>                
                 <input type="text" min="1" max="40" class="form-control" placeholder="Occupation" name="Occupation" autocomplete="true" maxlength="100" value="Occupation">
                 <span class="glyphicon form-control-feedback glyphicon--Occupation" aria-hidden="true"></span>
             </div>
         </div>
     </div>
-
     <div class="row form-group clearfix social-links">
         <div class="col-xs-12 col-sm-8">
             <label class="font-weight-bold" for="SocialLinks">Social Links</label>
-            
             <div class="form-group-display-value" style="max-width:200px;">
                 <ul class="social-share-icons list--nostyle">
                     <li class="social-share-icons__item"><a href="/#" target="_blank" title="Facebook"><i class="fa fa-facebook"></i></a></li>
@@ -889,13 +865,14 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="/lanemate/js/my-information.js"></script>
-
-                                <script>
-                                    $(document).ready(function() {
-                                        env = 'usms';
-                                        setEnv(env);
-                                    });
-                                </script>
+                                        <!-- <script>
+                                            $(document).ready(function() {
+                                                env = 'usms';
+                                                setEnv(env);
+                                            });
+                                        </script> -->
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

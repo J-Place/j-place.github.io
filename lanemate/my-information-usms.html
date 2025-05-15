@@ -16,13 +16,25 @@
         <!-- <link rel="stylesheet" href="/lanemate/css/registration-lanemate.css"> -->
     </head>
     <body>
-        <div class="loading" style="display: none;">
-            <img src="../img/loader.gif" alt="loading">
-        </div>
+        <style>
+            .usms-container.form__container .form-header h3 {
+                color: #0068ad;
+                margin-bottom: 3rem;
+                font-size: 2.5rem;
+                font-weight: 500;
+            }
+            #tempNav .btn-link-selected {
+                color: #0068ad;
+            }
+            #editPrivateInfo,
+            .form__container .btn {
+                background-color: #0068ad;
+            }
+        </style>
         <div id="main-container">
             <sergey-import src="foundation/site-header" />
             <main role="main">
-                <div class="breadcrumb-container" style="position: relative; padding-bottom: 40px;">
+                <div class="breadcrumb-container" style="position: relative; padding-bottom: 50px;">
                     <div class="breadcrumb">
                         <div class="usms-container">
                             <div class="row">
@@ -32,61 +44,42 @@
                                             <li class="text-capitalize breadcrumb__item ">
                                                 <a class="breadcrumb__link" href="/public">Home<i class="fa fa-chevron-right"></i></a>
                                             </li>
-                                            <li class="text-capitalize breadcrumb__item ">
-                                                <a class="breadcrumb__link" href="/public">My Account<i class="fa fa-chevron-right"></i></a>
-                                            </li>
                                         </ul>
-                                        <span class="breadcrumb__title text-capitalize">Add-On</span>
+                                        <span class="breadcrumb__title text-capitalize">My Information</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="section section-full bg-gray p-tb-10 p-mh-500 ">
-                    <div class="usms-container p-tb-10">                        
+                <div class="section section-full p-mh-500 ">
+                    <div class="usms-container p-t-10">                    
                         <div class="row">
                             <div class="col-xs-12">
-                                <header>
+                                <header class="page-title">
                                     <h1>My Information</h1>
-                                    <div class="lead">
-                                        <p style="font-size: 15px; line-height: 25px;font-weight: normal;">RTE text ...</p>
-                                    </div>
                                 </header>
                             </div>
                         </div>
                     </div>
-                    <div class="usms-container renew__form-container form__container my-account__container usms">
-                        <div class="row is-flex">
-                            <div class="col-xs-12">
-                                <!-- <link rel="stylesheet" href="/lanemate/css/my-information.css"> -->
-                                <!-- <script src="/lanemate/js/my-information.js"></script> -->
-
-                                <style>
-                                    .usms-container.form__container .form-header h3 {
-                                        color: #0068ad;
-                                        margin-bottom: 3rem;
-                                        font-size: 2.5rem;
-                                        font-weight: 500;
-                                    }
-                                    #tempNav .btn-link-selected {
-                                        color: #0068ad;
-                                    }
-                                    #editPrivateInfo,
-                                    .form__container .btn {
-                                        background-color: #0068ad;
-                                    }
-                                </style>
-
-
-                                <sergey-import src="lanemate/content/my-information" />
-
-                                <script>
-                                    $(document).ready(function() {
-                                        env = 'usms';
-                                        setEnv(env);
-                                    });
-                                </script>
+                    <div class="usms-container p-tb-40">
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <div class="loading" style="display: none;">
+                                <img src="../img/loader.gif" alt="loading">
+                            </div>
+                            <div class="usms-container renew__form-container form__container my-account__container usms">
+                                <div class="row is-flex">
+                                    <div class="col-xs-12">
+                                        <sergey-import src="lanemate/content/my-information" />
+                                        <!-- <script>
+                                            $(document).ready(function() {
+                                                env = 'usms';
+                                                setEnv(env);
+                                            });
+                                        </script> -->
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -17,9 +17,6 @@
         <!-- <link rel="stylesheet" href="/lanemate/css/registration-lanemate.css"> -->
     </head>
     <body>
-        <div class="loading" style="display: none;">
-            <img src="../img/loader.gif" alt="loading">
-        </div>
         <div id="main-container">
             <sergey-import src="foundation/site-header-lanemate" />
             <main role="main">
@@ -44,48 +41,61 @@
                         </div>
                     </div>
                 </div>
-                <div class="section section-full bg-gray p-tb-10 p-mh-500 ">
-                    <div class="usms-container p-tb-10">                        
+                <div class="section section-full p-mh-500 bg-gray">
+                    <div class="usms-container p-tb-10">                    
                         <div class="row">
                             <div class="col-xs-12">
-                                <header>
+                                <header class="page-title">
                                     <h1>My Information</h1>
-                                    <div class="lead">
-                                        <p style="font-size: 15px; line-height: 25px;font-weight: normal;">RTE text ...</p>
-                                    </div>
                                 </header>
                             </div>
                         </div>
                     </div>
-                    <div class="usms-container renew__form-container form__container my-account__container usms">
-                        <div class="row is-flex">
-                            <div class="col-xs-12">
-
-                                <style>
-                                    .usms-container.form__container .form-header h3 {
-                                        color: var(--lm-blue);
-                                        margin-bottom: 3rem;
-                                        font-size: 2.5rem;
-                                        font-weight: 500;
-                                    }
-
-                                    #tempNav .btn-link-selected {
-                                        color: var(--lm-blue);
-                                    }
-                                </style>
-                                
-                                <sergey-import src="lanemate/content/my-information" />
-                                
-                                <script>
-                                    $(document).ready(function() {
-                                        env = 'lanemate';
-                                        setEnv(env);
-                                    });
-                                </script>
-
+                    <div class="usms-container p-tb-40">
+                        <div class="row">
+                          <div class="col-xs-12">
+                            <div class="loading" style="display: none;">
+                                <img src="../img/loader.gif" alt="loading">
                             </div>
+
+
+                            <div class="usms-container renew__form-container form__container my-account__container usms">
+                                <div class="row is-flex">
+                                    <div class="col-xs-12">
+
+                                        <style>
+                                            .usms-container.form__container .form-header h3 {
+                                                color: var(--lm-blue);
+                                                margin-bottom: 3rem;
+                                                font-size: 2.5rem;
+                                                font-weight: 500;
+                                            }
+
+                                            #tempNav .btn-link-selected {
+                                                color: var(--lm-blue);
+                                            }
+                                        </style>
+                                        
+                                        <sergey-import src="lanemate/content/my-information" />
+                                        
+                                        <script>
+                                            $(document).ready(function() {
+                                                env = 'lanemate';
+                                                setEnv(env);
+                                            });
+                                        </script>
+
+                                    </div>
+                                </div>
+                            </div>
+                    
+
+                          </div>
                         </div>
                     </div>
+
+
+
                 </div>
             </main>
             <sergey-import src="foundation/footer-lanemate" />
