@@ -19,14 +19,14 @@
     .carousel-wrapper {
       overflow: hidden;
       width: 100%;
-      background: #f9f9f9;
+      background: #fff;
       padding: 20px 0;
     }
 
     .marquee-track {
       display: flex;
       width: max-content;
-      animation: scroll-left 30s linear infinite;
+      animation: scroll-left 15s linear infinite;
     }
 
     .carousel-item {
@@ -73,6 +73,29 @@
         transform: translateX(-50%);
       }
     }
+    .carousel-box {
+      flex-direction: column;
+      height: 200px;
+    }
+    .carousel-box > * {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+    }
+    .event-date {
+        font-weight: bold;
+        color: #444;
+        margin-bottom: 0;
+    }
+    .event-logo {
+        height: 100%;
+        width: 100px;
+        margin: 0 auto;
+    }
+    .event-name {
+        font-size: 1.0rem;
+        margin-top: 1rem;
+    }
   </style>
 </head>
 <body>
@@ -83,15 +106,15 @@
       <div class="carousel-item">
         <div class="carousel-box">
           <p class="event-date">Thu. Nov. 19</p>
-          <div class="event-logo" style="background-image: url('https://upload.wikimedia.org/wikipedia/en/thumb/1/14/Florida_Gators_gator_logo.svg'); background-repeat: no-repeat; background-position: center; background-size: 80%;"></div>
+          <div class="event-logo" style="background-image: url('https://upload.wikimedia.org/wikipedia/en/thumb/1/14/Florida_Gators_gator_logo.svg/596px-Florida_Gators_gator_logo.svg.png'); background-repeat: no-repeat; background-position: center; background-size: 80%;"></div>
           <h3 class="event-name">Gainesville Classic</h3>
         </div>
       </div>
       <div class="carousel-item">
         <div class="carousel-box">
           <p class="event-date">Sat. Jan. 23</p>
-          <div class="event-logo" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/California_Golden_Bears_logo.svg'); background-repeat: no-repeat; background-position: center; background-size: 80%;"></div>
-          <h3 class="event-name">Purdue Intrasquad Meet</h3>
+          <div class="event-logo" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/California_Golden_Bears_logo.svg/300px-California_Golden_Bears_logo.svg.png'); background-repeat: no-repeat; background-position: center; background-size: 80%;"></div>
+          <h3 class="event-name">Cal Invitational</h3>
         </div>
       </div>
       <div class="carousel-item">
@@ -117,14 +140,14 @@
       </div>
     </div>
   </div>
-
   <script>
-    // ✅ Duplicate items to create seamless infinite scroll
-    const marquee = document.getElementById('marquee');
-    const items = marquee.children.length;
-    for (let i = 0; i < items; i++) {
-      marquee.appendChild(marquee.children[i].cloneNode(true));
-    }
+    $(document).ready(function() {
+        const marquee = document.getElementById('marquee');
+        const items = marquee.children.length;
+        for (let i = 0; i < items; i++) {
+        marquee.appendChild(marquee.children[i].cloneNode(true));
+        }
+    });
   </script>
 </body>
 </html>

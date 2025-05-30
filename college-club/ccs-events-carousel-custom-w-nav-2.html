@@ -1,0 +1,133 @@
+<style>
+.ccs-carousel-wrapper {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  margin: 0 auto;
+}
+
+.ccs-carousel {
+  display: flex;
+  transition: transform 0.5s ease;
+  will-change: transform;
+}
+
+.ccs-slide {
+  flex: 0 0 auto;
+  padding: 1rem;
+  background: #ddd;
+  border: 1px solid #ccc;
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+/* Breakpoints */
+@media (min-width: 1280px) {
+  .ccs-slide { width: 20%; } /* 5 per row */
+}
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .ccs-slide { width: 25%; } /* 4 per row */
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .ccs-slide { width: 33.33%; } /* 3 per row */
+}
+@media (max-width: 767px) {
+  .ccs-slide { width: 100%; } /* 1 per row */
+}
+
+.ccs-carousel-nav {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.ccs-nav-button {
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
+}
+
+</style>
+
+<div class="ccs-carousel-wrapper">
+  <div class="ccs-carousel" id="ccs-carousel">
+    <!-- Slides -->
+    <div class="ccs-slide">1</div>
+    <div class="ccs-slide">2</div>
+    <div class="ccs-slide">3</div>
+    <div class="ccs-slide">4</div>
+    <div class="ccs-slide">5</div>
+    <div class="ccs-slide">6</div>
+    <div class="ccs-slide">7</div>
+    <div class="ccs-slide">8</div>
+    <div class="ccs-slide">9</div>
+    <div class="ccs-slide">10</div>
+  </div>
+  <div class="ccs-carousel-nav">
+    <button id="ccs-prev" class="ccs-nav-button">◀</button>
+    <button id="ccs-next" class="ccs-nav-button">▶</button>
+  </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const carousel = document.getElementById('ccs-carousel');
+      const prevBtn = document.getElementById('ccs-prev');
+      const nextBtn = document.getElementById('ccs-next');
+      let scrollAmount = 0;
+      let slidesPerView = getSlidesPerView();
+    
+      function getSlidesPerView() {
+        const width = window.innerWidth;
+        if (width >= 1280) return 5;
+        if (width >= 1024) return 4;
+        if (width >= 768) return 3;
+        return 1;
+      }
+    
+      function updateCarousel() {
+        const slideWidth = carousel.querySelector('.ccs-slide').offsetWidth;
+        const slidesToScroll = slidesPerView;
+        const scrollBy = slideWidth * slidesToScroll;
+    
+        carousel.style.transform = `translateX(-${scrollAmount}px)`;
+    
+        if (scrollAmount >= carousel.scrollWidth - carousel.offsetWidth) {
+          scrollAmount = 0;
+        }
+      }
+    
+      function scrollCarousel(forward = true) {
+        const slideWidth = carousel.querySelector('.ccs-slide').offsetWidth;
+        const slidesToScroll = slidesPerView;
+        const scrollBy = slideWidth * slidesToScroll;
+    
+        if (forward) {
+          scrollAmount += scrollBy;
+          if (scrollAmount >= carousel.scrollWidth - carousel.offsetWidth) {
+            scrollAmount = 0;
+          }
+        } else {
+          scrollAmount -= scrollBy;
+          if (scrollAmount < 0) {
+            scrollAmount = carousel.scrollWidth - carousel.offsetWidth;
+          }
+        }
+    
+        updateCarousel();
+      }
+    
+      setInterval(() => {
+        scrollCarousel(true);
+      }, 3000);
+    
+      prevBtn.addEventListener('click', () => scrollCarousel(false));
+      nextBtn.addEventListener('click', () => scrollCarousel(true));
+    
+      window.addEventListener('resize', () => {
+        slidesPerView = getSlidesPerView();
+        updateCarousel();
+      });
+    
+      window.addEventListener('load', updateCarousel);
+    });
+    </script>    

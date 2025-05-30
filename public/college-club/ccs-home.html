@@ -69,352 +69,465 @@
     </head>
     <body class="">
         <div id="main-container">
+
+            <style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    .ccs-header {
+        margin-bottom: -110px;
+        position: sticky;
+        top: 0;
+        z-index: 999;
+        display: flex;
+        flex-direction: column;
+        height: 110px;
+        /* background-color: #000; */
+        background-color: rgba(0,0,0,0.7);
+    }
+    .ccs-header {
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        opacity: 1;
+        visibility: visible;
+    }
+    .ccs-header.hidden {
+        opacity: 0;
+        visibility: hidden;
+    }
+    .ccs-logo {
+        display: flex;
+        width: auto;
+        margin-right: 1rem;
+        padding: 1.5rem 3rem 0;
+        align-items: center;
+    }
+    .menu {
+        list-style: none;
+        align-items: center;
+        height: 110px;
+        padding: 0;
+        margin: 0;
+    }
+    .main .menu {
+        /* display: flex; */
+        position: absolute;
+        height: 100vh;
+        width: 100vw;
+        top: 110px;
+        background-color: rgba(0,0,0,0.7);
+        flex-direction: column;
+        display: none;
+    }
+    .main .menu[aria-hidden="true"] {
+        display: none;
+    }
+    .main .menu[aria-hidden="false"] {
+        display: block;
+    }
+    .admin .menu {
+        display: flex;
+        flex-direction: row;
+    }
+    .menu > li {
+        position: relative;
+    }
+    .menu > li > button,
+    .menu > li > a {
+        background: none;
+        border: none;
+        color: white;
+        text-shadow: 0 0 3px black, 0 0 8px black;
+        margin-right: 1.5rem;
+        padding: 1rem;
+        cursor: pointer;
+        font-size: 1.6rem;
+        font-weight: bold;
+        text-decoration: none;
+    }
+    .menu > li > button:focus,
+    .menu > li > button:hover,
+    .menu > li > a:focus,
+    .menu > li > a:hover {
+        color: #8fc4dd;
+        outline: none;
+    }
+    .submenu {
+        display: none;
+        position: absolute;
+        /* background-color: #000; */
+        background-color: rgba(0,0,0,0.7);
+        list-style: none;
+        top: 74px;
+        left: -2rem;
+        min-width: 270px;
+        margin: 0;
+        padding: 2rem 3rem 1.5rem;
+        z-index: 1000;
+    }
+    .submenu[aria-hidden="false"] {
+        display: block;
+    }
+    .submenu li {
+        width: 100%;
+    }
+    .submenu li a {
+        display: block;
+        padding: 0 0 2.25rem 0;
+        color: white;
+        text-shadow: 0 0 3px black, 0 0 8px black;
+        text-decoration: none;
+        font-size: 1.6rem;
+        line-height: 140%;
+    }
+    .submenu li a:hover,
+    .submenu li a:focus {
+        color: #8fc4dd;
+    }
+    #submenu-search {
+        left: 0;
+        width: 100%;
+        height: 12rem;
+        /* margin: 0; */
+        top: 110px;
+        /* right: 0; */
+        /* min-width: unset; */
+        padding: 3rem 0 0;
+        position: fixed;
+    }
+    #submenu-search li > * {
+        display: inline;
+    }
+    #submenu-search li input {
+        height: 40px;
+        /* width: 350px; */
+        /* right: 40px; */
+        /* padding-left: 1rem; */
+        position: absolute;
+        width: calc(100% - 10rem);
+        right: 5rem;
+        left: 3rem;
+        display: block;
+    }
+    nav.admin {
+        right: 2rem;
+        position: absolute;
+    }
+    nav.admin .menu > li > button, 
+    nav.admin .menu > li > a {
+        margin-right: 0;
+    }
+    .admin-search-btn span,
+    .admin-login-btn span,
+    .mobile-nav-btn span {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+    }
+    .submenu-login {
+        top: 110px;
+        left: 0;
+        right: 0;
+        padding-right: 7rem;
+        padding-top: 1.5rem;
+        text-align: right;
+        height: 160px;
+        position: fixed;
+    }
+    .menu-item--search {
+        margin-right: 1rem;
+    }
+    .menu-item--login {
+        margin-right: 1rem;
+    }
+    #submenu-search li a {
+        position: absolute;
+        right: 0.5rem;
+        background: url('img/icon-search-submit-svg.svg');
+        background-repeat: no-repeat;
+        background-position: 20px 8px;
+        width: 60px;
+        height: 40px;
+        background-size: 12px;
+        margin: 0;
+        padding: 0;
+    }
+    #submenu-search li a span {
+        opacity: 0;
+    }
+    .menu > li > button.admin-search-btn {
+        background: url('img/icon-search-svg.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 30px;
+        height: 30px;
+        background-size: 22px;
+        padding: 0;
+        margin: 40px 0;
+        opacity: 1;
+    }
+    .menu > li > button.admin-search-btn.hidden {
+        opacity: 0;
+    }
+    .menu > li > button.admin-login-btn {
+        background: url('img/icon-admin-login-svg.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 38px;
+        height: 38px;
+        background-size: 30px;
+        padding: 0;
+        margin: 36px 0;
+    }
+    .menu > li > .mobile-nav-btn {
+        display: inline-block;
+        background: url('img/icon-mobile-nav-svg.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 38px;
+        height: 38px;
+        background-size: 25px;
+        padding: 0;
+        margin: 36px 0;
+    }
+
+    @media (min-width: 1200px) {
+        .ccs-logo {
+            padding: 0 3rem;
+        }
+        .ccs-header {
+            flex-direction: row;
+        }
+        .main .menu,
+        .admin .menu {
+            display: flex;
+            flex-direction: row;
+        }
+        .main .menu {
+            position: static;
+            height: 110px;
+            /* width: 100%; */
+            background-color: transparent;
+        }
+        .menu > li > button.mobile-nav-btn {
+            display: none;
+        }
+        .menu-item--search {
+            margin-right: 3rem;
+        }
+        .menu-item--login {
+            margin-right: 6rem;
+        }
+        .menu-item--mobile-nav {
+            display: none;
+        }
+        #submenu-search {
+            position: absolute;
+            background: transparent;
+            top: 0;
+            left: -368px;
+            width: 400px;
+            height: 110px;
+            padding-top: 35px;
+        }
+        #submenu-search li input {
+            height: 40px;
+            width: 330px;
+            right: 40px;
+            padding-left: 1rem;
+            position: absolute;
+        }
+        #submenu-search li a {
+            /* position: absolute; */
+            right: 0;
+            /* background: url('img/icon-search-submit-svg.svg'); */
+            /* background-repeat: no-repeat; */
+            /* background-position: -32px -5px; */
+            width: 40px;
+            /* height: 40px; */
+            /* background-size: 110px; */
+            /* margin: 0; */
+            /* padding: 0; */
+        }
+        .submenu-login {
+            top: 110px;
+            left: unset;
+            right: 4.5rem;
+            margin: 0;
+            padding-right: 3.5rem;
+            text-align: right;
+            width: auto;
+        }
+    }
+
+</style>
+
+<header class="ccs-header">
+    <div class="ccs-logo">
+      <img height="70" width="auto" alt="College Club Swimming" src="img/ccs-logo-custom.svg" />
+    </div>
+    <nav class="main" role="navigation" aria-label="Main navigation" role="menu" aria-label="Main mobilemenu" aria-hidden="true">
+        <ul class="menu" id="mobile-nav-main">
+            <li>
+                <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-events">Events</button>
+                <ul id="submenu-events" class="submenu" role="menu" aria-label="Events submenu" aria-hidden="true">
+                    <li><a href="/" role="menuitem">Calendar of Events</a></li>
+                    <li><a href="/" role="menuitem">National Championships</a></li>
+                    <li><a href="/" role="menuitem">Regional Championships</a></li>
+                    <li><a href="/" role="menuitem">Submit an Event to the Calendar</a></li>
+                </ul>
+            </li>
+            <li>
+                <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-results">Results</button>
+                <ul id="submenu-results" class="submenu" role="menu" aria-label="Results submenu" aria-hidden="true">
+                    <li><a href="/" role="menuitem">Meet Results</a></li>
+                    <li><a href="/" role="menuitem">Rankings</a></li>
+                    <li><a href="/" role="menuitem">Records</a></li>
+                </ul>
+            </li>
+            <li><a href="/">Club Lookup</a></li>
+            <li>
+                <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-about">About</button>
+                <ul id="submenu-about" class="submenu" role="menu" aria-label="About submenu" aria-hidden="true">
+                    <li><a href="/" role="menuitem">FAQ's</a></li>
+                    <li><a href="/" role="menuitem">Policy and Governance</a></li>
+                    <li><a href="/" role="menuitem">Town Hall Meetings</a></li>
+                    <li><a href="/" role="menuitem">Advisory Board</a></li>
+                    <li><a href="/" role="menuitem">Background</a></li>
+                    <li><a href="/" role="menuitem">Benefits</a></li>
+                </ul>
+            </li>
+            <li>
+                <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-register">Register</button>
+                <ul id="submenu-register" class="submenu" role="menu" aria-label="Register submenu" aria-hidden="true">
+                    <li><a href="/" role="menuitem">Swimmer Registration</a></li>
+                    <li><a href="/" role="menuitem">Club Registration</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <nav class="admin" aria-label="Admin navigation">
+        <ul class="menu">
+            <li class="menu-item--search">
+                <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-search" class="admin-search-btn" id="searchBtn"><span>Search</span></button>
+                <ul id="submenu-search" class="submenu submenu-search" role="menu" aria-label="Search submenu" aria-hidden="true">
+                    <li><input type="text" /><a href="/" role="menuitem"><span>Submit</span></a></li>
+                </ul>
+            </li>
+            <li class="menu-item--login">
+                <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-admin" class="admin-login-btn"><span>Login</span></button>
+                <ul id="submenu-admin" class="submenu submenu-login" role="menu" aria-label="Admin submenu" aria-hidden="true">
+                    <li><a href="/" role="menuitem">Swimmer Login</a></li>
+                    <li><a href="/" role="menuitem">Admin Login</a></li>
+                </ul>
+            </li>
+            <li aria-haspopup="true" aria-expanded="false" aria-controls="mobile-nav-main" class="menu-item--mobile-nav">
+                <a class="mobile-nav-btn" id="mobileNavBtn"><span>Menu</span></a>
+                <!-- <button aria-haspopup="true" aria-expanded="false" aria-controls="mobile-nav-main" class="mobile-nav-btn"><span>Login</span></button> -->
+                <!-- <a aria-haspopup="true" aria-expanded="false" aria-controls="mobile-nav-main" class="mobile-nav-btn"><span>Login</span></a> -->
+            </li>
+        </ul>
+    </nav>
+</header>
+    
+<script>
+
+    document.querySelectorAll('.menu > li > button').forEach(button => {
+        button.addEventListener('click', () => {
+            const expanded = button.getAttribute('aria-expanded') === 'true';
+            const submenu = document.getElementById(button.getAttribute('aria-controls'));
+            // const searchBtn = document.getElementById("searchBtn");
+
+            document.querySelectorAll('.menu > li > button').forEach(btn => {
+                btn.setAttribute('aria-expanded', 'false');
+                // searchBtn.classList.remove('hidden');
+            });
+            document.querySelectorAll('.submenu').forEach(menu => {
+                menu.setAttribute('aria-hidden', 'true');
+                // searchBtn.classList.remove('hidden');
+            });
+
+            button.setAttribute('aria-expanded', String(!expanded));
+            submenu.setAttribute('aria-hidden', String(expanded));
+            
+            // searchBtn.classList.remove('hidden');
+        });
+
+        button.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                button.setAttribute('aria-expanded', 'false');
+                const submenu = document.getElementById(button.getAttribute('aria-controls'));
+                submenu.setAttribute('aria-hidden', 'true');
+                button.focus();
+            }
+        });
+    });
+
+    document.addEventListener('click', (e) => {
+        const searchBtn = document.getElementById("searchBtn");
+        // const mobileNavBtn = document.querySelector('mobile-nav-btn');
+        const mobileNavBtn = document.getElementById('mobileNavBtn');
+        // if (e.target === searchBtn) {
+            // searchBtn.classList.add('hidden');
+            // console.log("search btn");
+        // }
+        if (e.target === mobileNavBtn) {
+            copnsole.log("mobile nav");
+            mobileNavBtn.parentNode.setAttribute('aria-expanded', 'true');
+        }
+        if (!e.target.closest('nav')) {
+            document.querySelectorAll('.menu > li > button').forEach(btn => btn.setAttribute('aria-expanded', 'false'));
+            document.querySelectorAll('.submenu').forEach(menu => menu.setAttribute('aria-hidden', 'true'));
+            // searchBtn.classList.remove('hidden');
+        }
+    });
+
+    let lastScrollTop = 0;
+    let header = document.querySelector('.ccs-header');
+    let isHidden = false;
+
+    window.addEventListener('scroll', () => {
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+      if (scrollTop > 200) {
+      if (scrollTop > lastScrollTop) {
+          if (!isHidden) {
+            header.classList.add('hidden');
+            isHidden = true;
+          }
+      } else {
+          if (isHidden) {
+            header.classList.remove('hidden');
+            isHidden = false;
+          }
+      }
+      } else {
+      header.classList.remove('hidden');
+      isHidden = false;
+      }
+
+      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+    });
+
+    // const mobileNavBtn = document.querySelector('.mobile-nav-btn');
+    // const menuMain = document.querySelector('.main .menu');
+    // const mobileNavBtn = document.querySelector('.menu-item--mobile-nav');
+    // const mobileNavBtnOpen = document.querySelector('.menu-item--mobile-nav').setAttribute('aria-expanded', 'true');
+    // const mobileNavBtnClosed = document.querySelector('.menu-item--mobile-nav').setAttribute('aria-expanded', 'false');
+    // const menuMainOpen = document.querySelector('.main .menu').setAttribute('aria-hidden', 'false');
+    // const menuMainClosed = document.querySelector('.main .menu').setAttribute('aria-hidden', 'true');
+
+    // $(".mobile-nav-btn").click( function() {
+    //     document.querySelector('.menu-item--mobile-nav').setAttribute('aria-expanded', 'true');
+    //     menuMain.setAttribute('aria-hidden', 'false');
+    // });
+
+</script>
+            
             <main role="main">
 
-                <header class="header-static">
-
-	<div id="mega-main-menu__container">
-		<nav class="mega-main-menu">
-			<button class="mega-main-menu__toggle-mobile btn btn-default" aria-label="toggle mobile">
-			<i class="fa fa-bars text-primary">
-			</i>
-			<label>Menu</label>
-			</button>
-			<div class="mega-main-menu__logo-container">
-				<a class="mega-main-menu__logo" href="/public">
-				<img src="https://www.collegeclubswimming.com/c/72E6D32/website/collegeClubSwimmingLogo.png" alt="College CLub Swimming">
-				</a>
-			</div>
-			<div class="mega-main-menu__nav-search-container">
-				<div class="login__items-container">
-					<ul class="login__list">
-						<li class="login__list-item">
-							<a href="#">My USMS</a>
-						</li>
-						<li class="login__list-item">
-							<a href="#">Community/Forums</a>
-						</li>
-						<li class="login__list-item">
-							<a href="#">USMS Website</a>
-						</li>
-						<li class="login__list-item">
-							<a href="#">Logout</a>
-						</li>
-					</ul>
-				</div>
-				<form method="GET" action="/search" class="search" style="transition:all 0ms ease-in-out;transform:translateX(0px);opacity:0;z-index:-1;">
-					<div class="input-group">
-						<input type="text" name="filter" class="form-control search__input" placeholder="Search USMS" aria-describedby="basic-addon">
-						<input type="hidden" name="page" value="1">
-						<input type="hidden" name="perPage" value="10">
-						<span class="input-group-addon btn search__button text-uppercase" id="basic-addon">Search</span>
-					</div>
-				</form>
-				<div class="mega-main-menu__items-container">
-					<ul class="mega-main-menu__items list--nostyle" style="width:auto;">
-						<li class="has--children" data-target="menuEvents" id="menu-item-0">
-							<span class="fa fa-chevron-right">
-							</span>
-							Events
-						</li>
-						<li class="has--children" data-target="menuResults" id="menu-item-1">
-							<span class="fa fa-chevron-right">
-							</span>
-							Results
-						</li>
-						<li class="" id="menu-item-2">
-							<a href="#">Club Lookup</a>
-						</li>
-						<li class="has--children" data-target="menuAbout" id="menu-item-3">
-							<span class="fa fa-chevron-right">
-							</span>
-							About
-						</li>
-						<li id="menu-item-4">
-							<a href="#">Shop</a>
-						</li>
-						<li id="menu-item-5">
-							<a href="#">Register</a>
-						</li>
-						<!-- Dropdown Events -->
-<div class="mega-menu-overlay" id="menuEvents" style="top: 100.5px; background: rgba(0,0,0,0.5); border: 0 none;">
-	<div class="mega-menu-overlay__menu-container">
-		<!-- <h4 class="mega-menu-overlay__title text-primary"><strong>Events</strong></h4> -->
-		<div class="mega-menu-overlay__content">
-			<ul class="mega-menu-overlay__items list--nostyle">
-				<li class=""><a href="/events">Calendar of Events</a></li>
-				<li class=""><a href="/events/national-championships">National Championships</a></li>
-				<li class=""><a href="/events/regional-championships">Regional Championships</a></li>
-				<li class=""><a href="">Submit an Event to the Calendar</a></li>
-			</ul>
-		</div>
-	</div>
-	<!-- <div class="mega-menu-overlay__image-container">
-		<a href="/events">
-			<img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/megamenu/eventscta_2-200x150.jpg?rev=4c1890fbd1bb4c19be738fbeb3fd13d0" alt="" class="mega-menu-overlay__image">
-			<div class="mega-menu-overlay__image-title text-center">Calendar of Events</div>
-		</a>
-	</div> -->
-</div>
-
-<!-- Dropdown Results -->
-<div class="mega-menu-overlay" id="menuResults" style="top: 100.5px; background: rgba(0,0,0,0.5); border: 0 none;">
-	<div class="mega-menu-overlay__menu-container">
-		<!-- <h4 class="mega-menu-overlay__title text-primary"><strong>Events</strong></h4> -->
-		<div class="mega-menu-overlay__content">
-			<ul class="mega-menu-overlay__items list--nostyle">
-				<li class=""><a href="#">Meet Results</a></li>
-				<li class=""><a href="#">Rankings</a></li>
-				<li class=""><a href="#">Records</a></li>
-			</ul>
-		</div>
-	</div>
-	<!-- <div class="mega-menu-overlay__image-container">
-		<a href="/events">
-			<img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/megamenu/eventscta_2-200x150.jpg?rev=4c1890fbd1bb4c19be738fbeb3fd13d0" alt="" class="mega-menu-overlay__image">
-			<div class="mega-menu-overlay__image-title text-center">Calendar of Events</div>
-		</a>
-	</div> -->
-</div>
-
-
-<!-- Dropdown About -->
-<div class="mega-menu-overlay" id="menuAbout" style="top: 100.5px; background: rgba(0,0,0,0.5); border: 0 none;">
-	<div class="mega-menu-overlay__menu-container">
-		<!-- <h4 class="mega-menu-overlay__title text-primary"><strong>Events</strong></h4> -->
-		<div class="mega-menu-overlay__content">
-			<ul class="mega-menu-overlay__items list--nostyle">
-				<li class=""><a href="#">FAQ's</a></li>
-				<li class=""><a href="#">Governance Handbook</a></li>
-				<li class=""><a href="#">Advisory Board</a></li>
-				<li class=""><a href="#">Background</a></li>
-				<li class=""><a href="#">Benefits</a></li>
-			</ul>
-		</div>
-	</div>
-	<!-- <div class="mega-menu-overlay__image-container">
-		<a href="/events">
-			<img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/megamenu/eventscta_2-200x150.jpg?rev=4c1890fbd1bb4c19be738fbeb3fd13d0" alt="" class="mega-menu-overlay__image">
-			<div class="mega-menu-overlay__image-title text-center">Calendar of Events</div>
-		</a>
-	</div> -->
-</div>
-					</ul>
-				</div>
-				<div class="mega-main-menu__actions">
-					<div class="mega-main-menu__actions-search--wrapper">
-						<i class="search--icon">
-							<?xml version="1.0" encoding="utf-8"?>
-							<svg version="1.1" id="Layer_2_00000016760508122049128130000006009090580243899308_"
-								xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 25 25"
-								style="enable-background:new 0 0 25 25;" xml:space="preserve">
-								<style type="text/css">
-									.icon-search{fill:#FFF;}
-								</style>
-								<path class="icon-search" d="M15.1,1.5c-4.7,0-8.4,3.8-8.4,8.4c0,1.9,0.6,3.6,1.7,5l-2.1,2.1c-0.5,0-1,0.1-1.4,0.5l-3.6,3.6
-									c-0.7,0.7-0.7,1.8,0,2.5c0.3,0.3,0.8,0.5,1.2,0.5s0.9-0.2,1.2-0.5L7.3,20c0.4-0.4,0.5-0.9,0.5-1.3l2.1-2.1c1.4,1.1,3.2,1.8,5.2,1.8
-									c4.7,0,8.5-3.8,8.5-8.5C23.6,5.2,19.8,1.5,15.1,1.5z M15.1,16c-3.4,0-6.1-2.8-6.1-6.1s2.8-6.1,6.1-6.1c3.4,0,6.2,2.8,6.2,6.1
-									S18.5,16,15.1,16z"/>
-							</svg>
-						</i>
-						<label>Search</label>
-					</div>
-					<div class="mega-main-menu__actions-login--wrapper">
-						<a href="/myusmslogin">
-							<i class="login--icon">
-								<!-- Swimmer Icon -->
-								<!-- <?xml version="1.0" encoding="utf-8"?>
-									<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-									   viewBox="0 0 25 25" style="enable-background:new 0 0 25 25;" xml:space="preserve">
-									<style type="text/css">
-									   .icon-login{fill:#FFF;}
-									</style>
-									<path class="icon-login" d="M21.7,22.3c-0.2,0-4.6-0.3-4.6-4c0-0.1,0-0.2-0.1-0.3c2-2.3,3.3-6,3.3-8.7c0-4.5-2.3-9.2-7.5-9.2
-									   c-4.9,0-7.4,4.7-7.4,9.2c0,2.8,1.2,6.4,3.2,8.7c0,0.1-0.1,0.2-0.1,0.3c0,3.6-4.4,3.9-4.6,4c-0.6,0-1.1,0.6-1.1,1.2
-									   c0,0.6,0.5,1.1,1.1,1.1c0,0,0,0,0.1,0c2.1-0.1,5.8-1.3,6.6-4.8c0.7,0.4,1.4,0.6,2.2,0.6c0.7,0,1.4-0.2,2.1-0.6
-									   c0.8,3.5,4.5,4.7,6.6,4.8c0,0,0,0,0.1,0c0.6,0,1.1-0.5,1.1-1.1C22.8,22.8,22.3,22.3,21.7,22.3z M13.5,9.7c-0.5-0.1-1,0-1.5,0
-									   c-0.5-0.8-1.7-1.4-3-1.4c-0.5,0-1,0.1-1.4,0.2c0-0.2,0-0.5,0.1-0.7c1.2-0.5,3-1.1,5-1.1c2,0,3.8,0.6,5,1.1c0,0.3,0.1,0.5,0.1,0.7
-									   c-0.4-0.2-0.9-0.3-1.4-0.3C15.1,8.3,14,8.9,13.5,9.7z M12.8,18c-1.8,0-3.6-2.6-4.6-5.4c0.3,0.1,0.6,0.1,0.9,0.1
-									   c1.6,0,2.8-0.8,3.1-1.8c0.4,0,0.8-0.1,1.1,0c0.3,1,1.6,1.8,3.1,1.8c0.3,0,0.6,0,0.8-0.1C16.4,15.4,14.5,18,12.8,18z"/>
-									</svg> -->
-								<!-- Happy Face Icon -->
-								<?xml version="1.0" encoding="utf-8"?>
-								<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-									viewBox="0 0 25 25" style="enable-background:new 0 0 25 25;" xml:space="preserve">
-									<style type="text/css">
-										.st0{display:none;}
-										.st1{display:inline;fill:#FFF;}
-										.st2{fill:#FFF;}
-									</style>
-									<g id="Layer_2_00000016760508122049128130000006009090580243899308_" class="st0">
-										<path class="st1" d="M15.1,1.5c-4.7,0-8.4,3.8-8.4,8.4c0,1.9,0.6,3.6,1.7,5l-2.1,2.1c-0.5,0-1,0.1-1.4,0.5l-3.6,3.6
-											c-0.7,0.7-0.7,1.8,0,2.5c0.3,0.3,0.8,0.5,1.2,0.5s0.9-0.2,1.2-0.5L7.3,20c0.4-0.4,0.5-0.9,0.5-1.3l2.1-2.1c1.4,1.1,3.2,1.8,5.2,1.8
-											c4.7,0,8.5-3.8,8.5-8.5C23.6,5.2,19.8,1.5,15.1,1.5z M15.1,16c-3.4,0-6.1-2.8-6.1-6.1s2.8-6.1,6.1-6.1c3.4,0,6.2,2.8,6.2,6.1
-											S18.5,16,15.1,16z"/>
-									</g>
-									<g id="Layer_3">
-										<path class="st2" d="M12.5,1.4c-6.1,0-11.1,5-11.1,11.1s5,11.1,11.1,11.1s11.1-5,11.1-11.1S18.6,1.4,12.5,1.4z M8.6,5.9
-											c1.4,0,2.5,1.5,2.5,3.3c0,1.8-1.1,3.3-2.5,3.3c-1.4,0-2.5-1.5-2.5-3.3C6.1,7.4,7.2,5.9,8.6,5.9z M18.3,17.2
-											c-1.3,1.4-3.5,2.3-5.8,2.3S8,18.7,6.7,17.2c-0.4-0.4-0.4-1,0.1-1.4c0.4-0.4,1-0.4,1.4,0.1c0.9,1,2.6,1.6,4.4,1.6s3.4-0.6,4.4-1.6
-											c0.4-0.4,1-0.4,1.4-0.1C18.7,16.2,18.7,16.8,18.3,17.2z M16.4,12.5c-1.4,0-2.5-1.5-2.5-3.3c0-1.8,1.1-3.3,2.5-3.3
-											c1.4,0,2.5,1.5,2.5,3.3C18.9,11,17.8,12.5,16.4,12.5z"/>
-									</g>
-								</svg>
-							</i>
-							<label>Log In</label>
-						</a>
-					</div>
-				</div>
-			</div>
-			<div class="mobile-menu" style="transition:all 0ms ease-in-out;transform:translateY(0);opacity:0;z-index:-1;">
-				w
-				<div class="mobile-menu__container">
-					<button class="mobile-menu__toggle" aria-label="toggle menu">
-					<i class="mobile-menu__close">
-					</i>
-					<label>Close</label>
-					</button>
-					<form class="mobile-menu__form" action="/search">
-						<div class="mobile-menu__input">
-							<input type="text" name="filter" placeholder="Search">
-							<button class="mobile-menu__search-button" type="submit" aria-label="search button">
-							<i class="fa fa-search text-primary">
-							</i>
-							</button>
-						</div>
-					</form>
-				</div>
-				<div class="mobile-menu-overlay">
-					<ul class="mobile-menu-overlay__items list--nostyle">
-						<li class="mobile-menu-overlay__item text-capitalize">
-							<div class="mobile-menu-overlay__item-content">
-								<i class="fa fa-chevron-right "></i>Training
-							</div>
-							<div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
-								<ul class="mobile-menu-overlay__submenu list--nostyle">
-									<li class="mobile-menu-overlay__submenu-items text-capitalize">
-										<a href="#">Workout Library</a>
-									</li>
-									<li class="mobile-menu-overlay__submenu-items text-capitalize">
-										<a href="#">Articles and Videos</a>
-									</li>
-									<li class="mobile-menu-overlay__submenu-items text-capitalize">
-										<a href="#">Club Finder</a>
-									</li>
-									<li class="mobile-menu-overlay__submenu-items text-capitalize">
-										<a href="#">Swimming 101</a>
-									</li>
-									<li class="mobile-menu-overlay__submenu-items text-capitalize">
-										<a href="#">Workout Tracking</a>
-									</li>
-									<li class="mobile-menu-overlay__submenu-items text-capitalize">
-										<a href="#">SWIMMER Magazine</a>
-									</li>
-								</ul>
-							</div>
-						</li>
-						<li class="mobile-menu-overlay__item text-capitalize">
-							<div class="mobile-menu-overlay__item-content">
-								<i class="fa fa-chevron-right "></i>Events
-							</div>
-							<div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
-								<ul class="mobile-menu-overlay__submenu list--nostyle">
-									<li class="mobile-menu-overlay__submenu-items text-capitalize">
-										<a href="#">Calendar of Events</a>
-									</li>
-									<li class="mobile-menu-overlay__submenu-items text-capitalize">
-										<a href="#">Virtual and Fitness Events</a>
-									</li>
-									<li class="mobile-menu-overlay__submenu-items text-capitalize">
-										<a href="#">2023 Spring Nationals</a>
-									</li>
-									<li class="mobile-menu-overlay__submenu-items text-capitalize">
-										<a href="#">National Championships</a>
-									</li>
-									<li class="mobile-menu-overlay__submenu-items text-capitalize">
-										<a href="#">Results and Rankings</a>
-									</li>
-									<li class="mobile-menu-overlay__submenu-items text-capitalize">
-										<a href="#">Records</a>
-									</li>
-								</ul>
-							</div>
-						</li>
-						<li class="mobile-menu-overlay__item text-capitalize">
-							<div class="mobile-menu-overlay__item-content">
-								<i class=" ">
-								</i>
-								<a href="#" style="text-decoration:none;">Club Finder</a>
-							</div>
-							<div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
-								<ul class="mobile-menu-overlay__submenu list--nostyle">
-								</ul>
-							</div>
-						</li>
-						<li class="mobile-menu-overlay__item text-capitalize">
-							<div class="mobile-menu-overlay__item-content">
-								<i class=" ">
-								</i>
-								<a href="#" style="text-decoration:none;">Workout Library</a>
-							</div>
-							<div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
-								<ul class="mobile-menu-overlay__submenu list--nostyle">
-								</ul>
-							</div>
-						</li>
-						<li class="mobile-menu-overlay__item text-capitalize">
-							<div class="mobile-menu-overlay__item-content">
-								<i class="fa fa-chevron-right "></i>About Us
-							</div>
-							<div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
-								<ul class="mobile-menu-overlay__submenu list--nostyle">
-									<li class="mobile-menu-overlay__submenu-items text-capitalize">
-										<a href="/about-usms/what-is-us-masters-swimming">What is Masters Swimming?</a>
-									</li>
-									<li class="mobile-menu-overlay__submenu-items text-capitalize">
-										<a href="http://community.usms.org">USMS Community</a>
-									</li>
-									<li class="mobile-menu-overlay__submenu-items text-capitalize">
-										<a href="https://www.swimoutlet.com/ProductBrand.asp?Brand=1766&amp;click=1668780">Logo Merchandise</a>
-									</li>
-									<li class="mobile-menu-overlay__submenu-items text-capitalize">
-										<a href="/join-usms/membership-benefits">Membership Benefits</a>
-									</li>
-									<li class="mobile-menu-overlay__submenu-items text-capitalize">
-										<a href="/open-water-central">Open Water Central</a>
-									</li>
-									<li class="mobile-menu-overlay__submenu-items text-capitalize">
-										<a href="/club-central">Club Central</a>
-									</li>
-									<li class="mobile-menu-overlay__submenu-items text-capitalize">
-										<a href="/coach-central">Coach Central</a>
-									</li>
-									<li class="mobile-menu-overlay__submenu-items text-capitalize">
-										<a href="/volunteer-central">Volunteer Central</a>
-									</li>
-									<li class="mobile-menu-overlay__submenu-items text-capitalize">
-										<a href="/alts-central">Adult Learn-to-Swim Central</a>
-									</li>
-								</ul>
-							</div>
-						</li>
-						<li class="mobile-menu-overlay__item text-capitalize">
-							<div class="mobile-menu-overlay__item-content">
-								<i class=""></i>
-								<a href="/join-usms/join-or-renew" style="text-decoration:none;">Join</a>
-							</div>
-							<div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
-								<ul class="mobile-menu-overlay__submenu list--nostyle">
-								</ul>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-	</div>
-
-   <div class="carousel-container" data-reactroot="" data-reactid="1">
+                <div class="carousel-container" data-reactroot="" data-reactid="1">
    <button class="carousel-previous-button" data-reactid="2"><i class="fa fa-chevron-left" data-reactid="3"></i></button>
    <ul class="carousel list--nostyle" data-reactid="4" style="left: 0%;">
       <li class="carousel__slide" data-reactid="5">
@@ -448,11 +561,11 @@
                <p>Image: William Kolb</p> 
             </div>
          </div> -->
-         <div class="carousel__slide-video" data-reactid="19">
+         <!-- <div class="carousel__slide-video" data-reactid="19">
              <video autoplay="" loop="" muted="" class="" preload="none" data-reactid="20">
                 <source src="https://www.usms.org/-/media/videos/homepage hero videos/swimmer dive 15.mp4" type="video/mp4" data-reactid="21">
              </video>
-         </div>
+         </div> -->
          <div class="carousel__slide-image--mobile" data-reactid="22">
              <div class="carousel__slide-image" style="background-image:url('https://www.usms.org/-/media/usms/lightroom/anthony-kung- 2023 usms sp nats 2962-enhanced-nr.jpg');" data-reactid="23"></div>
          </div>
@@ -464,10 +577,7 @@
    </ul>
    <button class="carousel-next-button" data-reactid="29"><i class="fa fa-chevron-right" data-reactid="30"></i></button>
  </div>
-
-
-</header>
-
+                
                 <div class="section section-full p-mh-500">
                     <div class="usms-container p-tb-50">
                         <div class="row is-flex">
