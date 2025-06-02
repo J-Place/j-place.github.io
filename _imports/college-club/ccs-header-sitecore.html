@@ -44,6 +44,7 @@
         height: 100vh;
         width: 100vw;
         top: 110px;
+        padding: 2rem;
         background-color: rgba(0,0,0,0.7);
         flex-direction: column;
         display: none;
@@ -51,7 +52,7 @@
     .main .menu[aria-hidden="true"] {
         display: none;
     }
-    .main .menu[aria-hidden="false"] {
+    .main .menu.open {
         display: block;
     }
     .admin .menu {
@@ -60,6 +61,9 @@
     }
     .menu > li {
         position: relative;
+    }
+    .main .menu > li {
+        margin-bottom: 2rem;
     }
     .menu > li > button,
     .menu > li > a {
@@ -172,7 +176,7 @@
     #submenu-search li a {
         position: absolute;
         right: 0.5rem;
-        background: url('img/icon-search-submit-svg.svg');
+        background: url('https://j-place.github.io/public/college-club/img/icon-search-submit-svg.svg');
         background-repeat: no-repeat;
         background-position: 20px 8px;
         width: 60px;
@@ -185,7 +189,7 @@
         opacity: 0;
     }
     .menu > li > button.admin-search-btn {
-        background: url('img/icon-search-svg.svg');
+        background: url('https://j-place.github.io/public/college-club/img/icon-search-svg.svg');
         background-repeat: no-repeat;
         background-position: center;
         width: 30px;
@@ -199,7 +203,7 @@
         opacity: 0;
     }
     .menu > li > button.admin-login-btn {
-        background: url('img/icon-admin-login-svg.svg');
+        background: url('https://j-place.github.io/public/college-club/img/icon-admin-login-svg.svg');
         background-repeat: no-repeat;
         background-position: center;
         width: 38px;
@@ -210,7 +214,7 @@
     }
     .menu > li > .mobile-nav-btn {
         display: inline-block;
-        background: url('img/icon-mobile-nav-svg.svg');
+        background: url('https://j-place.github.io/public/college-club/img/icon-mobile-nav-svg.svg');
         background-repeat: no-repeat;
         background-position: center;
         width: 38px;
@@ -218,6 +222,21 @@
         background-size: 25px;
         padding: 0;
         margin: 36px 0;
+    }
+    .menu > li > .mobile-nav-btn.open {
+        display: inline-block;
+        background: url('https://j-place.github.io/public/college-club/img/icon-mobile-nav-close-svg.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 38px;
+        height: 38px;
+        background-size: 25px;
+        padding: 0;
+        margin: 36px 0;
+    }
+
+    .menu > li > .mobile-nav-btn.open {
+
     }
 
     @media (min-width: 1200px) {
@@ -269,7 +288,7 @@
         #submenu-search li a {
             /* position: absolute; */
             right: 0;
-            /* background: url('img/icon-search-submit-svg.svg'); */
+            /* background: url('https://j-place.github.io/public/college-club/img/icon-search-submit-svg.svg'); */
             /* background-repeat: no-repeat; */
             /* background-position: -32px -5px; */
             width: 40px;
@@ -293,7 +312,7 @@
 
 <header class="ccs-header">
     <div class="ccs-logo">
-      <img height="70" width="auto" alt="College Club Swimming" src="img/ccs-logo-custom.svg" />
+      <img height="70" width="auto" alt="College Club Swimming" src="https://j-place.github.io/public/college-club/img/ccs-logo-custom.svg" />
     </div>
     <nav class="main" role="navigation" aria-label="Main navigation" role="menu" aria-label="Main mobilemenu" aria-hidden="true">
         <ul class="menu" id="mobile-nav-main">
@@ -350,10 +369,9 @@
                     <li><a href="/" role="menuitem">Admin Login</a></li>
                 </ul>
             </li>
-            <li aria-haspopup="true" aria-expanded="false" aria-controls="mobile-nav-main" class="menu-item--mobile-nav">
+            <!-- aria-haspopup="true" aria-expanded="false" aria-controls="mobile-nav-main"  -->
+            <li class="menu-item--mobile-nav">
                 <a class="mobile-nav-btn" id="mobileNavBtn"><span>Menu</span></a>
-                <!-- <button aria-haspopup="true" aria-expanded="false" aria-controls="mobile-nav-main" class="mobile-nav-btn"><span>Login</span></button> -->
-                <!-- <a aria-haspopup="true" aria-expanded="false" aria-controls="mobile-nav-main" class="mobile-nav-btn"><span>Login</span></a> -->
             </li>
         </ul>
     </nav>
@@ -363,23 +381,18 @@
 
     document.querySelectorAll('.menu > li > button').forEach(button => {
         button.addEventListener('click', () => {
-            const expanded = button.getAttribute('aria-expanded') === 'true';
-            const submenu = document.getElementById(button.getAttribute('aria-controls'));
-            // const searchBtn = document.getElementById("searchBtn");
-
-            document.querySelectorAll('.menu > li > button').forEach(btn => {
-                btn.setAttribute('aria-expanded', 'false');
-                // searchBtn.classList.remove('hidden');
-            });
-            document.querySelectorAll('.submenu').forEach(menu => {
-                menu.setAttribute('aria-hidden', 'true');
-                // searchBtn.classList.remove('hidden');
-            });
-
-            button.setAttribute('aria-expanded', String(!expanded));
-            submenu.setAttribute('aria-hidden', String(expanded));
-            
-            // searchBtn.classList.remove('hidden');
+            // if ((window.matchMedia("(min-width: 1200px)").matches)) {
+                const expanded = button.getAttribute('aria-expanded') === 'true';
+                const submenu = document.getElementById(button.getAttribute('aria-controls'));
+                document.querySelectorAll('.menu > li > button').forEach(btn => {
+                    btn.setAttribute('aria-expanded', 'false');
+                });
+                document.querySelectorAll('.submenu').forEach(menu => {
+                    menu.setAttribute('aria-hidden', 'true');
+                });
+                button.setAttribute('aria-expanded', String(!expanded));
+                submenu.setAttribute('aria-hidden', String(expanded));
+            // }
         });
 
         button.addEventListener('keydown', (e) => {
@@ -394,20 +407,20 @@
 
     document.addEventListener('click', (e) => {
         const searchBtn = document.getElementById("searchBtn");
-        // const mobileNavBtn = document.querySelector('mobile-nav-btn');
         const mobileNavBtn = document.getElementById('mobileNavBtn');
-        // if (e.target === searchBtn) {
-            // searchBtn.classList.add('hidden');
-            // console.log("search btn");
-        // }
-        if (e.target === mobileNavBtn) {
-            copnsole.log("mobile nav");
-            mobileNavBtn.parentNode.setAttribute('aria-expanded', 'true');
+        const mobileMenuMain = document.getElementById('mobile-nav-main')
+
+        if (e.target === searchBtn) {
+            console.log("search btn");
         }
-        if (!e.target.closest('nav')) {
+        if (e.target === mobileNavBtn && (window.matchMedia("(max-width: 1199px)").matches)) {
+            console.log("mobile nav");
+            mobileMenuMain.classList.toggle('open');
+            mobileNavBtn.classList.toggle('open');
+        }
+        if (!e.target.closest('nav') && (window.matchMedia("(min-width: 1200px)").matches)) {
             document.querySelectorAll('.menu > li > button').forEach(btn => btn.setAttribute('aria-expanded', 'false'));
             document.querySelectorAll('.submenu').forEach(menu => menu.setAttribute('aria-hidden', 'true'));
-            // searchBtn.classList.remove('hidden');
         }
     });
 
@@ -446,9 +459,23 @@
     // const menuMainOpen = document.querySelector('.main .menu').setAttribute('aria-hidden', 'false');
     // const menuMainClosed = document.querySelector('.main .menu').setAttribute('aria-hidden', 'true');
 
-    // $(".mobile-nav-btn").click( function() {
-    //     document.querySelector('.menu-item--mobile-nav').setAttribute('aria-expanded', 'true');
-    //     menuMain.setAttribute('aria-hidden', 'false');
+
+
+    // if (e.target === mobileNavBtn) {
+    //         console.log("mobile nav");
+    //         // mobileNavBtn.parentNode.setAttribute('aria-expanded', 'true');
+    //         // mobileNavBtn.setAttribute('aria-hidden', 'false');
+    //         mobileNavBtn.classList.toggle('open');
+    //         mobileMenuMain.classList.add('open');
+    //     }
+
+    // const mobileNavBtn = document.getElementById('mobileNavBtn');
+    // const mobileMenuMain = document.getElementById('mobile-nav-main');
+
+    // document.getElementById('mobileNavBtn').click( function() {
+    //     console.log("Open mobile nav");
+    // //     document.querySelector('.menu-item--mobile-nav').setAttribute('aria-expanded', 'true');
+    // //     menuMain.setAttribute('aria-hidden', 'false');
     // });
 
 </script>
