@@ -84,8 +84,8 @@
         display: flex;
         flex-direction: column;
         height: 110px;
-        /* background-color: #000; */
-        background-color: rgba(0,0,0,0.7);
+        background-color: #000;
+        /* background-color: rgba(0,0,0,0.7); */
     }
     .ccs-header {
         transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -117,7 +117,8 @@
         width: 100vw;
         top: 110px;
         padding: 2rem;
-        background-color: rgba(0,0,0,0.7);
+        background-color: #000;
+        /* background-color: rgba(0,0,0,0.7); */
         flex-direction: column;
         display: none;
     }
@@ -159,22 +160,48 @@
     }
     .submenu {
         display: none;
-        position: absolute;
-        /* background-color: #000; */
-        background-color: rgba(0,0,0,0.7);
+        position: fixed;
+        background-color: #000;
+        /* background-color: rgba(0,0,0,0.7); */
         list-style: none;
-        top: 74px;
-        left: -2rem;
-        min-width: 270px;
+        height: 100vh;
+        width: 100%;
+        top: 110px;
+        left: 0;
         margin: 0;
-        padding: 2rem 3rem 1.5rem;
+        padding: 3rem;
         z-index: 1000;
     }
-    .submenu[aria-hidden="false"] {
+    .main .menu .submenu {
+        display: block;
+        overflow-y: auto;
+        transition: all 0.3s ease;
+        left: -100%;
+    }
+    .main .menu.open .submenu[aria-hidden="false"] {
+        left: 0;
+    }
+    .admin .submenu[aria-hidden="false"] {
         display: block;
     }
     .submenu li {
         width: 100%;
+    }
+    .submenu li.menu-return a {
+        color: red;
+    }
+    .submenu li.menu-return:before {
+        content: "";
+        position: absolute;
+        right: 0.5rem;
+        background: url('https://j-place.github.io/public/college-club/img/icon-search-submit-svg.svg');
+        background-repeat: no-repeat;
+        background-position: 20px 8px;
+        width: 30px;
+        height: 20px;
+        background-size: 12px;
+        margin: 0;
+        padding: 0;
     }
     .submenu li a {
         display: block;
@@ -288,7 +315,7 @@
         display: inline-block;
         background: url('https://j-place.github.io/public/college-club/img/icon-mobile-nav-svg.svg');
         background-repeat: no-repeat;
-        background-position: center;
+        background-position: 7px 11px;
         width: 38px;
         height: 38px;
         background-size: 25px;
@@ -299,14 +326,13 @@
         display: inline-block;
         background: url('https://j-place.github.io/public/college-club/img/icon-mobile-nav-close-svg.svg');
         background-repeat: no-repeat;
-        background-position: center;
+        background-position: 8px 9px;
         width: 38px;
         height: 38px;
-        background-size: 25px;
+        background-size: 23px;
         padding: 0;
         margin: 36px 0;
     }
-
     .menu > li > .mobile-nav-btn.open {
 
     }
@@ -340,6 +366,20 @@
         }
         .menu-item--mobile-nav {
             display: none;
+        }
+        .main .menu .submenu {
+            display: none;
+            position: absolute;
+            background-color: #000;
+            /* background-color: rgba(0,0,0,0.7); */
+            list-style: none;
+            top: 74px;
+            left: -2rem;
+            height: auto;
+            min-width: 270px;
+            margin: 0;
+            padding: 2rem 3rem 1.5rem;
+            z-index: 1000;
         }
         #submenu-search {
             position: absolute;
@@ -391,6 +431,7 @@
             <li>
                 <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-events">Events</button>
                 <ul id="submenu-events" class="submenu" role="menu" aria-label="Events submenu" aria-hidden="true">
+                    <li class="menu-return"><a href="">Menu</a></li>
                     <li><a href="/" role="menuitem">Calendar of Events</a></li>
                     <li><a href="/" role="menuitem">National Championships</a></li>
                     <li><a href="/" role="menuitem">Regional Championships</a></li>
@@ -482,15 +523,17 @@
         const mobileNavBtn = document.getElementById('mobileNavBtn');
         const mobileMenuMain = document.getElementById('mobile-nav-main')
 
-        if (e.target === searchBtn) {
-            console.log("search btn");
-        }
-        if (e.target === mobileNavBtn && (window.matchMedia("(max-width: 1199px)").matches)) {
+        // if (e.target === searchBtn) {
+        //     console.log("search btn");
+        // }
+        // if (e.target === mobileNavBtn && (window.matchMedia("(max-width: 1199px)").matches)) {
+        if (e.target === mobileNavBtn) {
             console.log("mobile nav");
             mobileMenuMain.classList.toggle('open');
             mobileNavBtn.classList.toggle('open');
         }
-        if (!e.target.closest('nav') && (window.matchMedia("(min-width: 1200px)").matches)) {
+        // if (!e.target.closest('nav') && (window.matchMedia("(min-width: 1200px)").matches)) {
+        if (!e.target.closest('nav')) {
             document.querySelectorAll('.menu > li > button').forEach(btn => btn.setAttribute('aria-expanded', 'false'));
             document.querySelectorAll('.submenu').forEach(menu => menu.setAttribute('aria-hidden', 'true'));
         }
@@ -522,33 +565,6 @@
 
       lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
     });
-
-    // const mobileNavBtn = document.querySelector('.mobile-nav-btn');
-    // const menuMain = document.querySelector('.main .menu');
-    // const mobileNavBtn = document.querySelector('.menu-item--mobile-nav');
-    // const mobileNavBtnOpen = document.querySelector('.menu-item--mobile-nav').setAttribute('aria-expanded', 'true');
-    // const mobileNavBtnClosed = document.querySelector('.menu-item--mobile-nav').setAttribute('aria-expanded', 'false');
-    // const menuMainOpen = document.querySelector('.main .menu').setAttribute('aria-hidden', 'false');
-    // const menuMainClosed = document.querySelector('.main .menu').setAttribute('aria-hidden', 'true');
-
-
-
-    // if (e.target === mobileNavBtn) {
-    //         console.log("mobile nav");
-    //         // mobileNavBtn.parentNode.setAttribute('aria-expanded', 'true');
-    //         // mobileNavBtn.setAttribute('aria-hidden', 'false');
-    //         mobileNavBtn.classList.toggle('open');
-    //         mobileMenuMain.classList.add('open');
-    //     }
-
-    // const mobileNavBtn = document.getElementById('mobileNavBtn');
-    // const mobileMenuMain = document.getElementById('mobile-nav-main');
-
-    // document.getElementById('mobileNavBtn').click( function() {
-    //     console.log("Open mobile nav");
-    // //     document.querySelector('.menu-item--mobile-nav').setAttribute('aria-expanded', 'true');
-    // //     menuMain.setAttribute('aria-hidden', 'false');
-    // });
 
 </script>
             
