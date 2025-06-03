@@ -187,19 +187,19 @@
     .submenu li {
         width: 100%;
     }
-    .submenu li.menu-return a {
+    /* .submenu li.menu-return a {
         color: red;
-    }
+    } */
     .submenu li.menu-return:before {
         content: "";
         position: absolute;
-        right: 0.5rem;
-        background: url('https://j-place.github.io/public/college-club/img/icon-search-submit-svg.svg');
+        left: 2.65rem;
+        background: url('https://j-place.github.io/public/college-club/img/icon-mobile-nav-return-svg.svg');
         background-repeat: no-repeat;
-        background-position: 20px 8px;
+        background-position: 0 2px;
         width: 30px;
         height: 20px;
-        background-size: 12px;
+        background-size: 8px;
         margin: 0;
         padding: 0;
     }
@@ -211,6 +211,10 @@
         text-decoration: none;
         font-size: 1.6rem;
         line-height: 140%;
+    }
+    .submenu li.menu-return a {
+        padding-left: 1.25rem;
+        font-size: 1.25rem;
     }
     .submenu li a:hover,
     .submenu li a:focus {
@@ -333,10 +337,6 @@
         padding: 0;
         margin: 36px 0;
     }
-    .menu > li > .mobile-nav-btn.open {
-
-    }
-
     @media (min-width: 1200px) {
         .ccs-logo {
             padding: 0 3rem;
@@ -349,11 +349,15 @@
             display: flex;
             flex-direction: row;
         }
+
         .main .menu {
             position: static;
             height: 110px;
             /* width: 100%; */
             background-color: transparent;
+        }
+        .main .menu > li {
+            margin-bottom: 0;
         }
         .menu > li > button.mobile-nav-btn {
             display: none;
@@ -380,6 +384,12 @@
             margin: 0;
             padding: 2rem 3rem 1.5rem;
             z-index: 1000;
+        }
+        .main .menu .submenu[aria-hidden="false"] {
+            display: block;
+        }
+        li.menu-return {
+            display: none;
         }
         #submenu-search {
             position: absolute;
@@ -419,7 +429,6 @@
             width: auto;
         }
     }
-
 </style>
 
 <header class="ccs-header">
@@ -441,6 +450,7 @@
             <li>
                 <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-results">Results</button>
                 <ul id="submenu-results" class="submenu" role="menu" aria-label="Results submenu" aria-hidden="true">
+                    <li class="menu-return"><a href="">Menu</a></li>
                     <li><a href="/" role="menuitem">Meet Results</a></li>
                     <li><a href="/" role="menuitem">Rankings</a></li>
                     <li><a href="/" role="menuitem">Records</a></li>
@@ -450,6 +460,7 @@
             <li>
                 <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-about">About</button>
                 <ul id="submenu-about" class="submenu" role="menu" aria-label="About submenu" aria-hidden="true">
+                    <li class="menu-return"><a href="">Menu</a></li>
                     <li><a href="/" role="menuitem">FAQ's</a></li>
                     <li><a href="/" role="menuitem">Policy and Governance</a></li>
                     <li><a href="/" role="menuitem">Town Hall Meetings</a></li>
@@ -461,6 +472,7 @@
             <li>
                 <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-register">Register</button>
                 <ul id="submenu-register" class="submenu" role="menu" aria-label="Register submenu" aria-hidden="true">
+                    <li class="menu-return"><a href="">Menu</a></li>
                     <li><a href="/" role="menuitem">Swimmer Registration</a></li>
                     <li><a href="/" role="menuitem">Club Registration</a></li>
                 </ul>
@@ -498,9 +510,11 @@
                 const expanded = button.getAttribute('aria-expanded') === 'true';
                 const submenu = document.getElementById(button.getAttribute('aria-controls'));
                 document.querySelectorAll('.menu > li > button').forEach(btn => {
+                    console.log("1A");
                     btn.setAttribute('aria-expanded', 'false');
                 });
                 document.querySelectorAll('.submenu').forEach(menu => {
+                    console.log("1B");
                     menu.setAttribute('aria-hidden', 'true');
                 });
                 button.setAttribute('aria-expanded', String(!expanded));
@@ -522,18 +536,21 @@
         const searchBtn = document.getElementById("searchBtn");
         const mobileNavBtn = document.getElementById('mobileNavBtn');
         const mobileMenuMain = document.getElementById('mobile-nav-main')
+        const mobileMenuReturn = document.querySelectorAll('menu-return');
 
-        // if (e.target === searchBtn) {
-        //     console.log("search btn");
-        // }
-        // if (e.target === mobileNavBtn && (window.matchMedia("(max-width: 1199px)").matches)) {
         if (e.target === mobileNavBtn) {
             console.log("mobile nav");
             mobileMenuMain.classList.toggle('open');
             mobileNavBtn.classList.toggle('open');
         }
-        // if (!e.target.closest('nav') && (window.matchMedia("(min-width: 1200px)").matches)) {
+        // if (e.target === mobileMenuReturn) {
+        // if (e.target.closest('menu-return')) {
+        //     console.log("mobile nav return");
+        //     document.querySelectorAll('.menu > li > button').forEach(btn => btn.setAttribute('aria-expanded', 'false'));
+        //     document.querySelectorAll('.submenu').forEach(menu => menu.setAttribute('aria-hidden', 'true'));
+        // }
         if (!e.target.closest('nav')) {
+            console.log("2A");
             document.querySelectorAll('.menu > li > button').forEach(btn => btn.setAttribute('aria-expanded', 'false'));
             document.querySelectorAll('.submenu').forEach(menu => menu.setAttribute('aria-hidden', 'true'));
         }
@@ -547,17 +564,17 @@
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
       if (scrollTop > 200) {
-      if (scrollTop > lastScrollTop) {
-          if (!isHidden) {
-            header.classList.add('hidden');
-            isHidden = true;
-          }
-      } else {
-          if (isHidden) {
-            header.classList.remove('hidden');
-            isHidden = false;
-          }
-      }
+        if (scrollTop > lastScrollTop) {
+            if (!isHidden) {
+                header.classList.add('hidden');
+                isHidden = true;
+            }
+        } else {
+            if (isHidden) {
+                header.classList.remove('hidden');
+                isHidden = false;
+            }
+        }
       } else {
       header.classList.remove('hidden');
       isHidden = false;
@@ -626,128 +643,112 @@
                         <div class="row is-flex">
                             <div class="col-xs-12">
                                 <!-- <h3>Page Content Header</h3> -->
-                                <style>
-    .event-list__container {
-        padding: 1rem 0rem 2rem;
-        margin: 0 2rem;
-        text-align: center;
-        display: grid;
-    }
-    .event-list__container h3 {
-        text-align: center;
-        margin-bottom: 2rem;
-    }
-    .event-list {
-        display: flex;
-        margin: 2rem auto 3rem;
-        padding: 0rem;
-        text-align: center;
-        flex-direction: column;
-    }
-    .event-list-item {
-        margin: 0;
-        padding: 3rem 1rem 3rem;
-        text-align: center;
-        width: 100%;
-        border-top: 2px solid #EEE;
-        flex-direction: column;
-    }
-    .event-date {
-        font-weight: bold;
-        color: #444;
-    }
-    .event-host {
-        height: 120px;
-        align-content: center;
-    }
-    .event-host img {
-        /* max-width: 82px; */
-        height: auto;
-        padding: 1rem;
-    }
-    .event-name {
-        font-size: 1.7rem;
-        margin-top: 1rem;
-    }
-    .event-list__footer {
-        margin: 0 auto 6rem;
-    }
-    @media (min-width: 1200px) {
-        .event-list__container {
-            padding: 5rem;
-            margin: 0 5rem;
-        }
-        .event-list {
-            /* flex-direction: row; */
-            margin: 6rem auto;
-            border: 0 none;
-        }
-        .event-list-item {
-            /* margin: 0; */
-            padding: 2rem 2rem 1rem;
-            /* text-align: center; */
-            /* width: 100%; */
-            border-top: 0;
-            border-right: 2px solid #EEE;
-        }
-        .event-list-item:last-of-type {
-            border:0 none;
-        }
-    }
-</style>
-<div class="event-list__container">
-    <h2>Upcoming Events</h2>
-    <div class="event-list">
-
-        <div class="event-list-item">
-            <div class="event-date">Fri. Oct. 4</div>
-            <div class="event-host">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/Indiana_Hoosiers_logo.svg" alt="" width="85px" height="auto">
-            </div>
-            <h2 class="event-name">2024 Swim Club at IU Cream vs Crimson Meet</h2>
-        </div>
-
-        <div class="event-list-item">
-            <div class="event-date">Thu. Dec. 12</div>
-            <div class="event-host">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/3/35/Purdue_Boilermakers_logo.svg" alt="" width="120px" height="auto">
-            </div>
-            <h2 class="event-name">Purdue Intrasquad Meet</h2>
-        </div>
-
-        <div class="event-list-item">
-            <div class="event-date">Sat. April. 4</div>
-            <div class="event-host">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f3/1901%E2%80%9394_Michigan_Wolverines_primary_logo.svg" alt="" width="95px" height="auto">
-            </div>
-            <h2 class="event-name">Wolverine Fall Time Trials</h2>
-        </div>
-
-        <div class="event-list-item">
-            <div class="event-date">Fri. Oct. 4</div>
-            <div class="event-host">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/Indiana_Hoosiers_logo.svg" alt="" width="85px" height="auto">
-            </div>
-            <h2 class="event-name">2024 Swim Club at IU Cream vs Crimson Meet</h2>
-        </div>
-
-        <div class="event-list-item">
-            <div class="event-date">Thu. Dec. 12</div>
-            <div class="event-host">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/3/35/Purdue_Boilermakers_logo.svg" alt="" width="120px" height="auto">
-            </div>
-            <h2 class="event-name">Purdue Intrasquad Meet</h2>
-        </div>
-
-    </div>
-    <div class="event-list__footer">
-        <p>The club and its university or college decides who can be a member of their local club team. The below definition is only for eligibility as a nationally-registered CCS swimmer, who will be listed in the CCS database.</p>
-    </div>
-</div>
+                                
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="section section-full p-mh-500">
+                    <div class="usms-container p-tb-50">
+                        <div class="row is-flex">
+                            <div class="col-xs-12">
+                                <style>
+    /* Basic Reset and Setup */
+    body, html {
+    margin: 0;
+    padding: 0;
+    height: 200vh; /* Enough height to enable scrolling */
+    overflow-x: hidden;
+    }
+
+    /* Parallax Container */
+    .parallax-container {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    perspective: 1px; /* Used for 3D effect */
+    }
+
+    /* Background Layer */
+    .parallax-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    transform: translateZ(-1px) scale(2); /* Creates slower movement */
+    }
+
+    .parallax-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    }
+
+    /* Foreground Layer */
+    .parallax-foreground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    pointer-events: none;
+    }
+
+    .parallax-foreground img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    }
+
+    /* Text Content */
+    .parallax-text {
+    position: relative;
+    z-index: 5;
+    color: white;
+    text-align: center;
+    padding-top: 40vh;
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    }
+</style>
+
+<div class="parallax-container">
+    <div class="parallax-text">
+        <h3>Fave Fun.</h3>
+        <h3>Compete.</h3>
+        <h3>Connect.</h3>
+    </div>
+    <div class="parallax-foreground">
+        <img src="" alt="">
+    </div>
+    <div class="parallax-background">
+        <img src="" alt="">
+    </div>
+</div>
+
+<script>
+    window.addEventListener('scroll', function () {
+      const scrollTop = window.pageYOffset;
+  
+      const background = document.querySelector('.parallax-background');
+      const foreground = document.querySelector('.parallax-foreground');
+  
+      // Adjust speed as needed
+      background.style.transform = `translateY(${scrollTop * 0.3}px)`;
+      foreground.style.transform = `translateY(${scrollTop * 0.6}px)`;
+    });
+  </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </main>
             
         </div>
