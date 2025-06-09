@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Parallax Fix</title>
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    height: 200vh; /* enough scroll */
+    background-color: #222;
+    font-family: Arial, sans-serif;
+  }
+
+  .parallax-container {
+    position: relative;
+    height: 600px;
+    overflow: hidden;
+    margin-top: 100vh; /* push it below so we can scroll */
+  }
+
+  /* Background container covers whole area */
+  .parallax-background {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 1;
+  }
+  .parallax-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Text container absolutely positioned, above background */
+  .parallax-text {
+    position: absolute;
+    bottom: -100%; /* start fully below */
+    width: 100%;
+    z-index: 2;
+    text-align: center;
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
+    user-select: none;
+    pointer-events: none;
+  }
+  .parallax-text h3 {
+    margin: 0.3rem 0;
+  }
+
+  /* Foreground on top */
+  .parallax-foreground {
+    position: relative;
+    z-index: 3;
+    will-change: transform;
+  }
+  .parallax-foreground img {
+    display: block;
+    width: 100%;
+  }
+</style>
+</head>
+<body>
+
+<div class="parallax-container" id="parallaxContainer">
+  <div class="parallax-foreground" id="foreground">
+    <img src="https://j-place.github.io/public/college-club/img/ccs-parallax-foreground.png" alt="Foreground" />
+  </div>
+
+  <div class="parallax-text" id="text">
+    <h3>Fave Fun.</h3>
+    <h3>Compete.</h3>
+    <h3>Connect.</h3>
+  </div>
+
+  <div class="parallax-background">
+    <img src="https://j-place.github.io/public/college-club/img/ccs-parallax-background.jpg" alt="Background" />
+  </div>
+</div>
+
+<script>
+  const container = document.getElementById('parallaxContainer');
+  const foreground = document.getElementById('foreground');
+  const text = document.getElementById('text');
+
+  window.addEventListener('scroll', () => {
+    const rect = container.getBoundingClientRect();
+
+    if (rect.top <= 0 && rect.bottom > 0) {
+      const progress = Math.min(-rect.top / rect.height, 1);
+      const maxTranslate = 150;
+
+      foreground.style.transform = `translateY(${progress * maxTranslate}px)`;
+      text.style.transform = `translateY(${-progress * maxTranslate}px)`;
+    } else {
+      foreground.style.transform = 'translateY(0)';
+      text.style.transform = 'translateY(0)';
+    }
+  });
+</script>
+
+</body>
+</html>

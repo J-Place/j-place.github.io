@@ -1,0 +1,720 @@
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    .ccs-header {
+        /* position: sticky; */
+        top: 0;
+        z-index: 999;
+        display: flex;
+        flex-direction: column;
+        height: 80px;
+        background-color: #000;
+    }
+    .header-static {
+        /* position: sticky; */
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 999;
+        display: flex;
+        flex-direction: column;
+        height: 80px;
+        background-color: #000;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        opacity: 1;
+        /* visibility: visible; */
+    }
+    .header-static.hidden {
+        opacity: 0;
+        /* visibility: hidden; */
+    }
+    .ccs-logo {
+        display: flex;
+        width: auto;
+        margin-right: 1rem;
+        padding: 1.5rem 3rem 0;
+        align-items: center;
+    }
+    .ccs-logo img {
+        height: 50px;
+    }
+    .menu {
+        list-style: none;
+        align-items: center;
+        height: 80px;
+        padding: 0;
+        margin: 0;
+    }
+    .main .menu {
+        position: absolute;
+        height: 100vh;
+        width: 100vw;
+        top: 80px;
+        padding: 4rem 2rem;
+        background-color: #000;
+        flex-direction: column;
+        display: none;
+    }
+    .main .menu[aria-hidden="true"] {
+        display: none;
+    }
+    .main .menu.open {
+        display: block;
+    }
+    .main .menu.open button {
+        opacity: 1;
+        transition: opacity 1s ease;
+    }
+    .main .menu.open button.open {
+        opacity: 0;
+    }
+    .admin .menu {
+        display: flex;
+        flex-direction: row;
+    }
+    .menu > li {
+        position: relative;
+    }
+    .main .menu > li {
+        margin-bottom: 2rem;
+    }
+    .admin .menu > li {
+        height: 80px;
+    }
+    .menu > li > button,
+    .menu > li > a {
+        background: none;
+        border: none;
+        color: white;
+        text-shadow: 0 0 3px black, 0 0 8px black;
+        margin-right: 1.5rem;
+        padding: 1rem;
+        cursor: pointer;
+        font-size: 1.6rem;
+        font-weight: bold;
+        text-decoration: none;
+    }
+    .menu > li > button:focus,
+    .menu > li > button:hover,
+    .menu > li > a:focus,
+    .menu > li > a:hover {
+        color: #5C5C5C;
+        outline: none;
+    }
+    .submenu,
+    #submenuSearch {
+        display: none;
+        position: fixed;
+        background-color: #000;
+        list-style: none;
+        height: 100vh;
+        width: 100%;
+        top: 110px;
+        left: 0;
+        margin: 0;
+        padding: 3rem;
+        z-index: 1000;
+    }
+    .main .menu .submenu {
+        display: block;
+        overflow-y: auto;
+        transition: all 0.3s ease;
+        left: -100%;
+    }
+    .main .menu.open .submenu[aria-hidden="false"] {
+        left: 0;
+    }
+    .admin .submenu[aria-hidden="false"] {
+        display: block;
+    }
+    .submenu li {
+        width: 100%;
+    }
+    .submenu li.menu-return {
+        margin: -1rem 0 2rem;
+    }
+    .submenu li.menu-return:before {
+        content: "";
+        position: absolute;
+        left: 2.65rem;
+        background: url('https://j-place.github.io/public/college-club/img/icon-mobile-nav-return-svg.svg');
+        background-repeat: no-repeat;
+        background-position: 0 2px;
+        width: 30px;
+        height: 20px;
+        background-size: 8px;
+        margin: 0;
+        padding: 0;
+    }
+    .submenu li a {
+        display: block;
+        padding: 1.75rem 0;
+        color: white;
+        text-shadow: 0 0 3px black, 0 0 8px black;
+        text-decoration: none;
+        font-size: 1.6rem;
+        line-height: 140%;
+    }
+    .submenu li.menu-return a {
+        padding: 0 0 1.25rem 1.25rem;
+        font-size: 1.25rem;
+    }
+    .submenu li a:hover,
+    .submenu li a:focus {
+        color: #5C5C5C;
+    }
+    #submenuSearch {
+        left: 0;
+        width: 100%;
+        height: 12rem;
+        top: 80px;
+        margin: 0;
+        padding: 3rem 0 0;
+        position: fixed;
+        display: none;
+    }
+    #submenuSearch.open {
+        display: inline-block;
+    }
+    #submenuSearch > * {
+        display: inline;
+    }
+    #submenuSearch input {
+        height: 40px;
+        position: absolute;
+        width: calc(100% - 10rem);
+        right: 5rem;
+        left: 3rem;
+        display: block;
+        background-color: transparent;
+        border: 0 none;
+        outline: none;
+        color: #FFF;
+        font-size: 2.3rem;
+        font-weight: 300;
+        letter-spacing: 0.5px;
+        padding-right: 3rem;
+        padding-bottom: .4rem;
+    }
+    #submitSearch a {
+        position: absolute;
+        right: 0;
+        height: 40px;
+        width: 40px;
+        background-position: 22px 7px;
+        background-size: 14px;
+    }
+    nav.admin {
+        right: 2rem;
+        position: absolute;
+    }
+    nav.admin .menu > li > button, 
+    nav.admin .menu > li > a {
+        margin-right: 0;
+    }
+    .submenu-login {
+        top: 80px;
+        left: 0;
+        right: 0;
+        margin: 0;
+        padding-right: 7rem;
+        padding-top: 1.5rem;
+        text-align: right;
+        height: 160px;
+        position: fixed;
+        background-color: #000;
+        display: none;
+    }
+    .submenu-login.open {
+        display: block;
+    }
+    .submenu-login li a {
+        display: block;
+        padding: 1.75rem 0;
+        color: white;
+        text-shadow: 0 0 3px black, 0 0 8px black;
+        text-decoration: none;
+        font-size: 1.6rem;
+        line-height: 140%;
+    }
+    .menu-item--search,
+    .menu-item--login {
+        margin-right: 1.5rem;
+    }
+    .menu-item--mobile-nav {
+        margin-right: 0.5rem;
+    }
+    #searchSubmit {
+        position: absolute;
+        right: 2rem;
+        background: url('https://j-place.github.io/public/college-club/img/icon-search-submit-svg.svg');
+        background-repeat: no-repeat;
+        background-position: 15px 8px;
+        width: 38px;
+        height: 38px;
+        background-size: 13px;
+        margin: 0;
+        padding: 0;
+    }
+    .menu > li > a.admin-search-btn {
+        display: inline-block;
+        background: url('https://j-place.github.io/public/college-club/img/icon-search-svg.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 38px;
+        height: 38px;
+        background-size: 22px;
+        padding: 0;
+        margin: 21px 0;
+        opacity: 1;
+    }
+    .menu > li > a.admin-search-btn.open {
+        background: url('https://j-place.github.io/public/college-club/img/icon-mobile-nav-close-svg.svg');
+        background-repeat: no-repeat;
+        background-position: 8px 8px;
+        width: 38px;
+        height: 38px;
+        background-size: 21px;
+        padding: 0;
+        margin: 21px 0;
+    }
+    .menu > li > a.admin-search-btn.hidden {
+        opacity: 0;
+    }
+    #adminNavBtn {
+        display: inline-block;
+        background: url('https://j-place.github.io/public/college-club/img/icon-admin-login-svg.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 38px;
+        height: 38px;
+        background-size: 30px;
+        padding: 0;
+        margin: 21px 0;
+    }
+    #adminNavBtn.open {
+        background: url('https://j-place.github.io/public/college-club/img/icon-mobile-nav-close-svg.svg');
+        background-repeat: no-repeat;
+        background-position: 8px 8px;
+        width: 38px;
+        height: 38px;
+        background-size: 21px;
+        padding: 0;
+        margin: 21px 0;
+    }
+    .menu > li > a.mobile-nav-btn {
+        display: inline-block;
+        background: url('https://j-place.github.io/public/college-club/img/icon-mobile-nav-svg.svg');
+        background-repeat: no-repeat;
+        background-position: 7px 10px;
+        width: 38px;
+        height: 38px;
+        background-size: 25px;
+        padding: 0;
+        margin: 21px 0;
+    }
+    .menu > li > .mobile-nav-btn.open {
+            display: inline-block;
+            background: url('https://j-place.github.io/public/college-club/img/icon-mobile-nav-close-svg.svg');
+            background-repeat: no-repeat;
+            background-position: 8px 10px;
+            width: 38px;
+            height: 38px;
+            background-size: 21px;
+            padding: 0;
+            margin: 21px 0;
+    }
+    @media (min-width: 1200px) {
+        .ccs-logo {
+            padding: 0 3rem;
+        }
+        .ccs-logo img {
+            height: 70px;
+        }
+        .ccs-header {
+            flex-direction: row;
+            height: 110px;
+        }
+        .header-static {
+            height: 110px;
+        }
+        .main .menu,
+        .admin .menu {
+            display: flex;
+            flex-direction: row;
+        }
+        .menu {
+            height: 110px;
+        }
+        .main .menu {
+            position: static;
+            height: 110px;
+            width: 100%;
+            background-color: transparent;
+        }
+        .main .menu > li {
+            margin-bottom: 0;            
+        }
+        .admin .menu > li {
+            height: 110px;
+            padding: 15px 0;
+        }
+        .menu > li > button.mobile-nav-btn {
+            display: none;
+        }
+        .menu > li > .mobile-nav-btn.open {
+            display: none;
+        }
+        .menu > li > a.admin-search-btn.open {
+            background: none;
+            width: 0;
+        }
+        .menu-item--search {
+            margin-right: 3rem;
+        }
+        .menu-item--login {
+            margin-right: 6rem;
+        }
+        .menu-item--mobile-nav {
+            display: none;
+        }
+        .main .menu .submenu {
+            display: none;
+            position: absolute;
+            background-color: #000;
+            list-style: none;
+            top: 74px;
+            left: -2rem;
+            height: auto;
+            min-width: 270px;
+            margin: 0;
+            padding: 0 3rem 2.5rem;
+            z-index: 1000;
+        }
+        .main .menu .submenu[aria-hidden="false"] {
+            display: block;
+        }
+        li.menu-return {
+            display: none;
+        }
+        .submenu-login li a {
+            padding: 0 0 2.0rem 0;
+        }
+        #submenuSearch {
+            position: absolute;
+            background: transparent;
+            top: 0;
+            height: 110px;
+            padding-top: 35px;
+        }
+        #searchSubmit {
+            right: 0;
+        }
+        #submenuSearch input {
+            height: 40px;
+            width: 85%;
+            position: absolute;
+        }
+        .submenu-login {
+            height: auto;
+            top: 110px;
+            left: unset;
+            right: 4.5rem;
+            margin: 0;
+            padding: 1.5rem 3.5rem 1.5rem 5rem;
+            text-align: right;
+            width: auto;
+        }
+    }
+    @media (min-width: 992px) and (max-width: 1199px) {
+        #submenuSearch input {
+            width: calc(100% - 40rem);
+            left: 20rem;
+        }
+        #searchSubmit {
+            right: 20rem;
+        }
+    }
+    @media (min-width: 1200px) {
+        #submenuSearch {
+                left: -260px;
+                width: 260px;
+        }
+    }
+    @media (min-width: 1300px) {
+        #submenuSearch {
+                left: -330px;
+                width: 330px;
+        }
+    }
+    @media (min-width: 1350px) {
+        #submenuSearch {
+                left: -380px;
+                width: 380px;
+        }
+    }
+    @media (min-width: 1400px) {
+        #submenuSearch {
+                left: -420px;
+                width: 420px;
+        }
+    }
+    @media (min-width: 1450px) {
+        #submenuSearch {
+                left: -460px;
+                width: 460px;
+        }
+    }
+    @media (min-width: 1500px) {
+        #submenuSearch {
+                left: -500px;
+                width: 500px;
+        }
+    }
+</style>
+
+<header class="ccs-header">
+    <div class="ccs-logo">
+      <img width="auto" alt="College Club Swimming" src="https://j-place.github.io/public/college-club/img/ccs-logo-custom.svg" />
+    </div>
+    <nav class="main" role="navigation" aria-label="Main navigation" role="menu" aria-label="Main mobilemenu" aria-hidden="true">
+        <ul class="menu" id="mobileNavMain">
+            <li>
+                <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-events">Events</button>
+                <ul id="submenu-events" class="submenu" role="menu" aria-label="Events submenu" aria-hidden="true">
+                    <li class="menu-return"><a href="">Menu</a></li>
+                    <li><a href="/" role="menuitem">Calendar of Events</a></li>
+                    <li><a href="/" role="menuitem">National Championships</a></li>
+                    <li><a href="/" role="menuitem">Regional Championships</a></li>
+                    <li><a href="/" role="menuitem">Submit an Event to the Calendar</a></li>
+                </ul>
+            </li>
+            <li>
+                <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-results">Results</button>
+                <ul id="submenu-results" class="submenu" role="menu" aria-label="Results submenu" aria-hidden="true">
+                    <li class="menu-return"><a href="">Menu</a></li>
+                    <li><a href="/" role="menuitem">Meet Results</a></li>
+                    <li><a href="/" role="menuitem">Rankings</a></li>
+                    <li><a href="/" role="menuitem">Records</a></li>
+                </ul>
+            </li>
+            <li>
+                <button aria-haspopup="false" aria-expanded="false" aria-controls="">Club Lookup</button>
+            </li>
+            <li>
+                <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-about">About</button>
+                <ul id="submenu-about" class="submenu" role="menu" aria-label="About submenu" aria-hidden="true">
+                    <li class="menu-return"><a href="">Menu</a></li>
+                    <li><a href="/" role="menuitem">FAQ's</a></li>
+                    <li><a href="/" role="menuitem">Policy and Governance</a></li>
+                    <li><a href="/" role="menuitem">Town Hall Meetings</a></li>
+                    <li><a href="/" role="menuitem">Advisory Board</a></li>
+                    <li><a href="/" role="menuitem">Background</a></li>
+                    <li><a href="/" role="menuitem">Benefits</a></li>
+                </ul>
+            </li>
+            <li>
+                <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-register">Register</button>
+                <ul id="submenu-register" class="submenu" role="menu" aria-label="Register submenu" aria-hidden="true">
+                    <li class="menu-return"><a href="">Menu</a></li>
+                    <li><a href="/" role="menuitem">Swimmer Registration</a></li>
+                    <li><a href="/" role="menuitem">Club Registration</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <nav class="admin" aria-label="Admin navigation">
+        <ul class="menu">
+            <li class="menu-item--search">
+                <a class="admin-search-btn" id="searchBtn"></a>
+                <div id="submenuSearch">
+                    <input id="searchInput" type="text" placeholder="Enter search term" tabindex="0" />
+                    <a id="searchSubmit" href="#" role="menuitem"></a>
+                </div>
+            </li>
+            <li class="menu-item--login">
+                <a class="admin-login-btn" id="adminNavBtn"></a>
+                <ul id="submenuAdmin" class="submenu-login">
+                    <li><a href="/" role="menuitem">Swimmer Login</a></li>
+                    <li><a href="/" role="menuitem">Admin Login</a></li>
+                </ul>
+            </li>
+            <li class="menu-item--mobile-nav">
+                <a id="mobileNavBtn" class="mobile-nav-btn"></a>
+            </li>
+        </ul>
+    </nav>
+</header>
+    
+<script>
+    const mobileNavBtn = document.getElementById('mobileNavBtn');
+    const mobileNavBtnOpen = document.querySelector('.mobile-nav-btn.open');
+    const mobileMenuMain = document.getElementById('mobileNavMain');
+    const mobileMenuReturn = document.querySelectorAll('menu-return');
+    const searchInput = document.getElementById("searchInput");
+    const searchBtn = document.getElementById("searchBtn");
+    const searchSubmitBtn = document.getElementById("searchSubmit");
+    const searchMenu = document.getElementById("submenuSearch");
+    const adminNavBtn = document.getElementById('adminNavBtn');
+    const adminMenu = document.getElementById('submenuAdmin');
+    function openMainNav() {
+        document.querySelectorAll('.menu > li > button').forEach(btn => btn.setAttribute('aria-expanded', 'true'));
+        document.querySelectorAll('.submenu').forEach(menu => menu.setAttribute('aria-hidden', 'false'));
+    }
+    function closeMainNav() {
+        document.querySelectorAll('.menu > li > button').forEach(btn => btn.setAttribute('aria-expanded', 'false'));
+        document.querySelectorAll('.menu > li > button').forEach(btn => btn.blur());
+        document.querySelectorAll('.submenu').forEach(menu => menu.setAttribute('aria-hidden', 'true'));
+    }
+    function clickMainNavMobile() {
+        if (mobileMenuMain.classList.contains("open")) {
+            closeSubNavMobile();
+            mobileMenuMain.classList.remove('open');
+            mobileNavBtn.classList.remove('open');
+        } else {
+            mobileMenuMain.classList.add('open');
+            mobileNavBtn.classList.add('open');
+        }
+    }
+    function closeMainNavMobile() {
+        mobileNavBtn.classList.remove('open');
+        mobileMenuMain.classList.remove('open');
+        closeSubNavMobile();
+    }
+    function closeSubNavMobile() {
+        document.querySelectorAll('.menu > li > button').forEach(btn => btn.setAttribute('aria-expanded', 'false'));
+        document.querySelectorAll('.submenu').forEach(menu => menu.setAttribute('aria-hidden', 'true'));
+        const buttons = mobileMenuMain.getElementsByTagName('button');
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].className = '';
+        }
+    }
+    function openSearch() {
+        searchBtn.classList.add('open');
+        searchMenu.classList.toggle('open');
+    }
+    function closeSearch() {
+        searchBtn.classList.remove('open');
+        searchMenu.classList.remove('open');
+        searchInput.blur();
+    }
+    function openAdmin() {
+        adminNavBtn.classList.toggle("open");
+        adminMenu.classList.toggle("open");
+    }
+    function closeAdmin() {
+        adminNavBtn.classList.remove("open");
+        adminMenu.classList.remove("open");
+    }
+    searchInput.addEventListener('focus', () => {
+        searchInput.placeholder = '';
+    });
+    searchInput.addEventListener('blur', () => {
+        searchInput.value = '';
+        setTimeout(() => {
+            searchInput.placeholder = 'Enter search term';
+        }, 1000);
+    });
+    document.querySelectorAll('.menu > li > button').forEach(button => {
+        button.addEventListener('click', () => {
+            closeSearch();
+            closeAdmin();
+            const expanded = button.getAttribute('aria-expanded') === 'true';
+            const submenu = document.getElementById(button.getAttribute('aria-controls'));
+            document.querySelectorAll('.menu > li > button').forEach(btn => {
+                btn.setAttribute('aria-expanded', 'false');
+            });
+            document.querySelectorAll('.submenu').forEach(menu => {
+                menu.setAttribute('aria-hidden', 'true');
+            });
+            button.setAttribute('aria-expanded', String(!expanded));
+            submenu.setAttribute('aria-hidden', String(expanded));
+            
+            const buttons = mobileMenuMain.getElementsByTagName('button');
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].className = 'open';
+            }
+        });
+        button.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                button.setAttribute('aria-expanded', 'false');
+                const submenu = document.getElementById(button.getAttribute('aria-controls'));
+                submenu.setAttribute('aria-hidden', 'true');
+                button.focus();
+            }
+        });
+    });
+    document.querySelectorAll('.menu-return').forEach(function(e) {
+        e.addEventListener('click', function(e) {
+            e.preventDefault();
+            closeSubNavMobile();
+            const buttons = mobileMenuMain.getElementsByTagName('button');
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].className = '';
+            }
+        });
+    });
+    document.addEventListener('click', (e) => {
+        if (e.target === searchBtn) {
+            closeMainNav();
+            closeMainNavMobile();
+            closeAdmin();
+            openSearch();
+        } 
+        if (e.target === searchInput) {
+            return;
+        }
+        if (e.target === searchSubmitBtn) {
+            closeMainNav();
+            closeSearch();
+        }
+        if (e.target === adminNavBtn) {
+            closeMainNav();
+            closeMainNavMobile();
+            closeSearch();
+            openAdmin();
+        }
+        if (e.target === mobileNavBtn) {
+            closeMainNav();
+            closeSearch();
+            closeAdmin();
+            clickMainNavMobile();
+        }
+        if (!e.target.closest('nav')) {
+            closeMainNav();
+            closeMainNavMobile();
+            closeSearch();
+            closeAdmin();
+        }
+    });
+    let lastScrollTop = 0;
+    let header = document.querySelector('.header-static');
+    let isHidden = false;
+    window.addEventListener('scroll', () => {
+      let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      if (scrollTop > 110) {
+        if (scrollTop > lastScrollTop) {
+            if (!isHidden) {
+                header.classList.add('hidden');
+                isHidden = true;
+                closeMainNav();
+                closeMainNavMobile();
+                closeSearch();
+                closeAdmin();
+            }
+        } else {
+            if (isHidden) {
+                header.classList.remove('hidden');
+                isHidden = false;
+            }
+        }
+      } else {
+        header.classList.remove('hidden');
+        isHidden = false;
+      }
+      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+    });
+</script>
