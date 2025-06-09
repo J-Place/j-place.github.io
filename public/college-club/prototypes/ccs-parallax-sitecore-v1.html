@@ -1,0 +1,110 @@
+<style>
+    .parallax-container {
+        /* background-image: url('https://j-place.github.io/public/college-club/img/ccs-parallax-background.jpg'); */
+        height: 1100px;
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+    }
+    .parallax-container img {
+        width: 100%;
+    }
+    .parallax-text {
+        position: absolute;
+        width: 100%;
+        bottom: -100px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        opacity: 1;
+        transition: bottom 2s ease-out, opacity 1s ease-out;
+        color: white;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+    }
+    .parallax-text.visible {
+        bottom: 20%;
+        opacity: 1;
+    }
+    .parallax-text h3 {
+        color: #FFF !important;
+        font-size: 6rem;
+        margin: 0 auto;
+        text-transform: uppercase;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .parallax-text h3 {
+        opacity: 1;
+        transform: translateY(30px);
+        transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+    }
+
+    /* Triggered animation state with delays */
+    .parallax-text.visible h3:nth-child(1) {
+        transition-delay: 0.2s;
+        opacity: 1;
+        transform: translateY(0);
+    }
+    .parallax-text.visible h3:nth-child(2) {
+        transition-delay: 0.5s;
+        opacity: 1;
+        transform: translateY(0);
+    }
+    .parallax-text.visible h3:nth-child(3) {
+        transition-delay: 0.8s;
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    @media (min-width: 1200px) {
+        .parallax-text {
+            position: absolute;
+            /* bottom: -300px; */
+            bottom: -35%;
+        }
+        .parallax-text.visible {
+            bottom: 35%;
+        }
+        .parallax-text h3 {
+            font-size: 20.5rem;
+            line-height: 19rem;
+            letter-spacing: -5px;
+        }
+    }
+</style>
+
+<div class="parallax-container">    
+    <div class="parallax-foreground">
+        <img src="https://j-place.github.io/public/college-club/img/ccs-parallax-foreground.png" alt="">
+    </div>
+    <div class="parallax-text">
+        <h3>Have Fun.</h3>
+        <h3>Compete.</h3>
+        <h3>Connect.</h3>
+    </div>
+</div>
+
+
+<script>
+    const observer = new IntersectionObserver(
+        ([entry]) => {
+            const text = document.querySelector('.parallax-text');
+            if (entry.isIntersecting) {
+                text.classList.add('visible');
+            } else {
+                text.classList.remove('visible');
+            }
+        },
+        {
+            threshold: 0,
+            rootMargin: '20% 0px -100% 0px'
+        }
+    );
+    observer.observe(document.querySelector('.parallax-container'));
+</script>

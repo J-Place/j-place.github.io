@@ -1,0 +1,2707 @@
+<!DOCTYPE html>
+<!--[if IE 9]>
+<html lang="en" class="ie9 no-js">
+<![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+   <!--<![endif]-->
+   <head>
+      <title>Edit Calendar Pool</title>
+      <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<meta name="twitter:card" content="" />
+<meta property="og:title" content="" />
+<meta property="og:image" content="" />
+<meta property="og:description" content="" />
+<meta property="og:url" content="" />
+<meta name="robots" content="noindex">
+
+
+      <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.12/jquery.mask.min.js"></script> -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://usms-cdn.azureedge.net/scripts/common.min.js"></script>
+<script src="https://usms-cdn.azureedge.net/scripts/home.min.js"></script>
+
+<!-- Local Fallbacks -->
+<!-- <script src="/js/src/jquery-3.6.0.min.js"></script> -->
+<!-- <script src="/js/src/bootstrap.min.js"></script> -->
+<!-- <script src="/js/src/common.min.js"></script> -->
+<!-- <script src="/js/src/home.min.js"></script> -->
+
+
+
+<script src="/js/page-name.js"></script>
+      <!-- Bonfire Source Files -->
+    <link rel="stylesheet" href="https://www.usms.org/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="https://www.usms.org/styles/bootstrap-3-usms-patch.css">
+    <link rel="stylesheet" href="https://www.usms.org/styles/font-awesome.min.css">
+    <link rel="stylesheet" href="https://www.usms.org/styles/common.min.css">
+    <link rel="stylesheet" href="https://www.usms.org/styles/print.min.css">
+    <link rel="stylesheet" href="https://www.usms.org/styles/rte.min.css">
+<!-- Local Dev Files -->
+    <link rel="stylesheet" href="/css/rte-updates.css">
+    <link rel="stylesheet" href="/css/common-updates.css">
+    <style>
+        :root {
+            --color-primary: #0068AD;
+            --color-primary-hover: #267fb9;
+            --color-dark-blue: #071C31;
+            --color-lt-blue: #DBE7F1;
+            --color-red: #D2202E;
+            --color-gray: #F4F4F4;
+            --rte-blue: #0068AD;
+            --rte-blue-hover: #267fb9;
+            --lm-blue: #092c5c;
+            --lm-blue-rgb: rgb(9, 44, 92);
+            --lm-blue-md: #084c89;
+            --lm-blue-lt: #8FBCE6;
+            --lm-blue-xlt: #eaf4ff;
+            --lm-blue-hover: var(--lm-blue-md);
+        }
+    </style>
+
+      <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
+      <link rel="stylesheet" href="https://www.usms.org/styles/Club/club2.min.css">
+      <!-- <link rel="stylesheet" href="https://www.usms.org/styles/clubs.min.css"> -->
+      <link rel="stylesheet" href="./css/date-picker.css">
+      <link rel="stylesheet" href="./css/convert-this-from-club.css">
+      <link rel="stylesheet" href="./css/event-sanction.css">
+      <link rel="stylesheet" href="./css/event-mockup-ignore.css">
+   </head>
+   <body>
+      <div id="main-container">
+         <header class="header-static">
+    <div id="">
+       <nav class="mega-main-menu">
+          <button class="mega-main-menu__toggle-mobile btn btn-default" aria-label="toggle mobile">
+          <i class="fa fa-bars text-primary">
+          </i>
+          <label>Menu</label>
+          </button>
+          <div class="mega-main-menu__logo-container">
+             <a class="mega-main-menu__logo" href="/public">
+               <img src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/logo/usms-logo-hrz.svg?rev=fb463362f2fb496d9eae400e3198386e" alt="U.S. Masters Swimming" width="264" height="50">
+             </a>
+          </div>
+          <div class="mega-main-menu__nav-search-container">
+             <div class="login__items-container">
+                <ul class="login__list">
+                   <li class="login__list-item">
+                      <a href="/myusmslogin">My USMS</a>
+                   </li>
+                   <li class="login__list-item">
+                      <a href="https://community.usms.org/">Community/Forums</a>
+                   </li>
+                   <li class="login__list-item">
+                      <a href="/">USMS Website</a>
+                   </li>
+                   <li class="login__list-item">
+                      <a href="/account/single-sign-out">Logout</a>
+                   </li>
+                </ul>
+             </div>
+             <form method="GET" action="/search" class="search" style="transition:all 0ms ease-in-out;transform:translateX(0px);opacity:0;z-index:-1;">
+                <div class="input-group">
+                   <input type="text" name="filter" class="form-control search__input" placeholder="Search USMS" aria-describedby="basic-addon">
+                   <input type="hidden" name="page" value="1">
+                   <input type="hidden" name="perPage" value="10">
+                   <span class="input-group-addon btn search__button text-uppercase" id="basic-addon">Search</span>
+                </div>
+             </form>
+            <div class="mega-main-menu__items-container">
+               <ul class="mega-main-menu__items list--nostyle" style="width:auto;">
+                  <li class="has--children" id="menu-item-0" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                     <span class="fa fa-chevron-right">
+                     </span>
+                     Training
+                  </li>
+                  <li class="has--children" id="menu-item-1" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                     <span class="fa fa-chevron-right">
+                     </span>
+                     Events
+                  </li>
+                  <li id="menu-item-2" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                     <a href="/clubs">Club Finder</a>
+                  </li>
+                  <li id="menu-item-3" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                     <a href="/workout-library">Workout Library</a>
+                  </li>
+                  <li class="has--children" id="menu-item-4" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                     <span class="fa fa-chevron-right">
+                     </span>
+                     About Us
+                  </li>
+                  <li id="menu-item-5" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                     <a href="/join-usms/join-or-renew">Join</a>
+                  </li>
+                  
+                  
+               </ul>
+            </div>
+            <div class="mega-menu-overlay" style="top: 78px; display: none;">
+               <div class="mega-menu-overlay__menu-container">
+                  <h4 class="mega-menu-overlay__title text-primary"><strong>Training</strong></h4>
+                  <div class="mega-menu-overlay__content">
+                     <ul class="mega-menu-overlay__items list--nostyle">
+                        <li class=""><a href="/workout-library">Workout Library</a></li>
+                        <li class=""><a href="/fitness-and-training/articles-and-videos">Articles and Videos</a></li>
+                        <li class=""><a href="/clubs">Club Finder</a></li>
+                        <li class=""><a href="/fitness-and-training/workout-tracking">Workout Tracking</a></li>
+                        <li class=""><a href="/about/swimmer-magazine">SWIMMER Magazine</a></li>
+                        <li class=""><a href="/fitness-and-training/guides/swimming-101">Swimming 101</a></li>
+                        <li class=""><a href="/fitness-and-training/guides/freestyle">Freestyle Guide</a></li>
+                        <li class=""><a href="/fitness-and-training/guides">Stroke Guides</a></li>
+                        <li class=""><a href="/fitness-and-training/usms-video-stroke-analysis">Video Stroke Analysis</a></li>
+                     </ul>
+                  </div>
+               </div>
+               <div class="mega-menu-overlay__image-container">
+                  <a href="/workout-library">
+                     <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/megamenu/fittraincta-200x150.png?rev=dc95a7fc0d8348648260d6495466eb1e" alt="" class="mega-menu-overlay__image">
+                     <div class="mega-menu-overlay__image-title text-center">Workout Library</div>
+                  </a>
+               </div>
+            </div>
+            <div class="mega-main-menu__actions">
+               <div class="mega-main-menu__actions-search--wrapper">
+                  <i class="search--icon">
+                  </i>
+                  <label>Search</label>
+               </div>
+               <div class="mega-main-menu__actions-login--wrapper">
+                  <a href="/myusmslogin">
+                  <i class="login--icon">
+                  </i>
+                  <label>Log In</label>
+                  </a>
+               </div>
+            </div>
+         </div>
+         <div class="mobile-menu" style="transition:all 0ms ease-in-out;transform:translateY(0);opacity:0;z-index:-1;">w
+            <div class="mobile-menu__container">
+               <button class="mobile-menu__toggle" aria-label="toggle menu">
+               <i class="mobile-menu__close">
+               </i>
+               <label>Close</label>
+               </button>
+               <form class="mobile-menu__form" action="/search">
+                  <div class="mobile-menu__input">
+                     <input type="text" name="filter" placeholder="Search">
+                     <button class="mobile-menu__search-button" type="submit" aria-label="search button">
+                     <i class="fa fa-search text-primary">
+                     </i>
+                     </button>
+                  </div>
+               </form>
+            </div>
+            <div class="mobile-menu-overlay">
+               <ul class="mobile-menu-overlay__items list--nostyle">
+                  <li class="mobile-menu-overlay__item text-capitalize">
+                     <div class="mobile-menu-overlay__item-content">
+                        <i class="fa fa-chevron-right "></i>Training
+                     </div>
+                     <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+                        <ul class="mobile-menu-overlay__submenu list--nostyle">
+                           <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                              <a href="/workout-library">Workout Library</a>
+                           </li>
+                           <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                              <a href="/fitness-and-training/articles-and-videos">Articles and Videos</a>
+                           </li>
+                           <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                              <a href="/clubs">Club Finder</a>
+                           </li>
+                           <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                              <a href="/search?filter=swimming+101&amp;page=1&amp;perPage=10">Swimming 101</a>
+                           </li>
+                           <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                              <a href="/fitness-and-training/workout-tracking">Workout Tracking</a>
+                           </li>
+                           <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                              <a href="/about-usms/swimmer-magazine">SWIMMER Magazine</a>
+                           </li>
+                        </ul>
+                     </div>
+                  </li>
+                  <li class="mobile-menu-overlay__item text-capitalize">
+                     <div class="mobile-menu-overlay__item-content">
+                        <i class="fa fa-chevron-right "></i>Events
+                     </div>
+                     <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+                        <ul class="mobile-menu-overlay__submenu list--nostyle">
+                           <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                              <a href="/events">Calendar of Events</a>
+                           </li>
+                           <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                              <a href="/events/fitness-events">Virtual and Fitness Events</a>
+                           </li>
+                           <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                              <a href="/events/national-championships/pool-national-championships/2023-pool-national-championships/2023-spring-national-championship">2023 Spring Nationals</a>
+                           </li>
+                           <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                              <a href="/events/national-championships">National Championships</a>
+                           </li>
+                           <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                              <a href="/events/event-results-database">Results and Rankings</a>
+                           </li>
+                           <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                              <a href="/events/usms-records">Records</a>
+                           </li>
+                        </ul>
+                     </div>
+                  </li>
+                  <li class="mobile-menu-overlay__item text-capitalize">
+                     <div class="mobile-menu-overlay__item-content">
+                        <i class=" ">
+                        </i>
+                        <a href="/clubs" style="text-decoration:none;">Club Finder</a>
+                     </div>
+                     <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+                        <ul class="mobile-menu-overlay__submenu list--nostyle">
+                        </ul>
+                     </div>
+                  </li>
+                  <li class="mobile-menu-overlay__item text-capitalize">
+                     <div class="mobile-menu-overlay__item-content">
+                        <i class=" ">
+                        </i>
+                        <a href="/workout-library" style="text-decoration:none;">Workout Library</a>
+                     </div>
+                     <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+                        <ul class="mobile-menu-overlay__submenu list--nostyle">
+                        </ul>
+                     </div>
+                  </li>
+                  <li class="mobile-menu-overlay__item text-capitalize">
+                     <div class="mobile-menu-overlay__item-content">
+                        <i class="fa fa-chevron-right "></i>About Us
+                     </div>
+                     <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+                        <ul class="mobile-menu-overlay__submenu list--nostyle">
+                           <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                              <a href="/about-usms/what-is-us-masters-swimming">What is Masters Swimming?</a>
+                           </li>
+                           <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                              <a href="http://community.usms.org">USMS Community</a>
+                           </li>
+                           <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                              <a href="https://www.swimoutlet.com/ProductBrand.asp?Brand=1766&amp;click=1668780">Logo Merchandise</a>
+                           </li>
+                           <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                              <a href="/join-usms/membership-benefits">Membership Benefits</a>
+                           </li>
+                           <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                              <a href="/open-water-central">Open Water Central</a>
+                           </li>
+                           <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                              <a href="/club-central">Club Central</a>
+                           </li>
+                           <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                              <a href="/coach-central">Coach Central</a>
+                           </li>
+                           <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                              <a href="/volunteer-central">Volunteer Central</a>
+                           </li>
+                           <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                              <a href="/alts-central">Adult Learn-to-Swim Central</a>
+                           </li>
+                        </ul>
+                     </div>
+                  </li>
+                  <li class="mobile-menu-overlay__item text-capitalize">
+                     <div class="mobile-menu-overlay__item-content">
+                        <i class=""></i>
+                        <a href="/join-usms/join-or-renew" style="text-decoration:none;">Join</a>
+                     </div>
+                     <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+                        <ul class="mobile-menu-overlay__submenu list--nostyle">
+                        </ul>
+                     </div>
+                  </li>
+               </ul>
+            </div>
+         </div>
+       </nav>
+    </div>
+ </header>
+         <main role="main">
+            <div class="breadcrumb-container" style="position: relative; padding-bottom: 50px;">
+               <div class="breadcrumb">
+                  <div class="usms-container">
+                     <div class="row">
+                        <div class="col-xs-12">
+                           <div class="breadcrumb__container">
+                              <ul class="breadcrumb__items list--nostyle">
+                                 <li class="text-capitalize breadcrumb__item ">
+                                    <a class="breadcrumb__link" href="/public">Home<i class="fa fa-chevron-right"></i></a>
+                                 </li>
+                                 <li class="text-capitalize breadcrumb__item ">
+                                    <a class="breadcrumb__link" href="/public/event/event-dashboard.html">Event Central<i class="fa fa-chevron-right"></i></a>
+                                 </li>
+                              </ul>
+                              <span class="breadcrumb__title text-capitalize">Manage Event</span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="section section-full bg-gray p-tb-10 p-mh-500">
+               <div class="usms-container p-tb-10">
+                     <div class="row">
+                        <div class="col-xs-12">
+                           <header>
+                              <h1>View, Edit or Upgrade Calendar Listing Event</h1>
+                           </header>
+                        </div>
+                     </div>
+               </div>
+               <div class="usms-container form__container  p-tb-10 club-edit__container">
+                  <div class="row ">
+                     <div class="col-xs-12 ">
+                        <div class="loading" style="display: none;">
+                           <img src="https://www.usms.org/img/loader.gif" alt="loading">
+                        </div>
+                        <div class="club-edit event-edit" id="accordion">
+
+                           <div class="form-header manage-event">
+                              <p>You can edit or view your calendar listing details or you can upgrade to a sanction or recognition. If you choose to upgrade, you can edit any of your existing information and will need to add additional information to complete the sanction process. If you choose to edit, you can make changes to any section except for Event Type. If you make an edit, you must click Save & Continue to proceed to the next section. Once you have finished editing, click Save & Submit.</p>
+                              <div class="manage-event-options">
+                                 <a href="#" class="btn btn-large btn-outline" id="upgradeToSanction">Upgrade to a Sanction or Recognition</a>
+                              </div>
+                           </div>
+
+                           <div class="modal fade" id="modalConfirmMeetAnnouncement" tabindex="-1" role="dialog">
+                              <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                      <div class="modal-header">
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                          <h4 class="modal-title">Meet Announcement Ready?</h4>
+                                      </div>
+                                      <div class="modal-body">
+                                          <p>Please make sure your Meet Announcement has been reviewed by your sanctions chair before applying for event sanction or recognition.</p>
+                                      </div>
+                                      <div class="modal-footer">
+                                          <button type="button" class="btn btn-default btn-outline" data-bs-dismiss="modal" id="noMeetAnnouncementReady">Cancel</button>
+                                          <!-- <button type="button" class="btn btn-default" id="yesMeetAnnouncementReady">Continue</button> -->
+                                           <a href="event-convert-calendar-listing.html" id="yesMeetAnnouncementReady" class="btn btn-default">Continue</a>
+                                      </div>
+                                  </div>
+                              </div>
+                           </div>
+
+                           <div class="accordion-group">
+                              <form id="form-event-name">
+    <div class="section section-event-name" id="event-name">
+        <h3 class="section__header" data-target="#event-name__content" data-toggle="collapse" aria-expanded="false" aria-controls="event-name__content">
+            <span class="section__number">1</span>Event Name
+        </h3>
+        <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
+        <div class="section__content collapse" id="event-name__content" data-parent="#accordion">
+
+            <!-- Event Name -->
+<div class="row form-group">
+    <div class="col-xs-12 col-sm-6 col-md-5">
+        <div class="input-group event-info-name required">
+            <label for="eventInfoName" class="label-large">
+                Event Name
+                <span 
+                    class="icon-help" 
+                    data-toggle="tooltip" 
+                    data-placement="top" 
+                    title="If it is an annual event, use the same name each year. Your application will not be approved if you use the word Olympic and/or Paralympic." 
+                    data-container="body" 
+                    data-original-title="">
+                </span>
+            </label>
+            <input type="email" class="form-control" name="eventInfoName" id="eventInfoName" value="">
+            <span class="help-block help-block--eventInfoName">Please enter the event name</span>
+        </div>
+    </div>
+</div>
+            <div class="input-group radio-group event-type">
+    <div class="input-group-header radio-group-header required">
+        <!-- <label class="label-large" for="event-type">Event Type</label> -->
+        Event Type
+    </div>
+    <!-- Depending on your choice, you will be given slightly different sanction process flows. -->
+    <span class="help-block help-block--eventType">Please select an event type</span>
+    <label class="radio-label radio-label--inline" for="eventTypeAnsweredPool">
+        <span class="radio-container">
+        <input type="radio" name="EventType" id="eventTypeAnsweredPool" value="pool">
+        <span class="radio__placeholder"></span>
+        </span>
+        Pool
+    </label>
+    <label class="radio-label radio-label--inline" for="eventTypeAnsweredOpenWater">
+        <span class="radio-container">
+                <input type="radio" name="EventType" id="eventTypeAnsweredOpenWater" value="open-water">
+        <span class="radio__placeholder"></span>
+        </span>
+        Open Water
+    </label>
+</div>
+
+            <div class="row">
+                <div class="section__controls">
+                    <button class="btn save-section" id="saveEventName" type="button">Save &amp; Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    // var sectionId = "#event-name";
+    // var nextSectionId = "#event-information";
+    // var sectionInputs = sectionId + " input";
+    // var sectionSelects = sectionId + " select";
+    // var sectionTextarea = sectionId + " textarea";   
+    // var sectionBtn = "#saveEventName";
+
+
+    $("#event-name input").click( function() {
+        $("#saveEventName").prop('disabled', false);
+    });
+    // $(sectionSelects).on("change", function() {
+    //     $("#saveEventName").prop('disabled', false);
+    // });
+    // $(sectionTextarea).focus( function() {
+    //     $("#saveEventName").prop('disabled', false);
+    // });
+
+    $("#saveEventName").click( function() {
+        $("#event-name").addClass('hasData');
+        $("#event-information h3").click();
+        $(document.documentElement).animate({
+            scrollTop: $("#event-information").offset().top - 45
+        }, 100);
+    });
+</script>
+                              <form id="form-calendar-event-info">
+    <div class="section section-calendar-event-info" id="calendar-eventinfo">
+       <h3 class="section__header" data-target="#calendar-event-info__content" data-toggle="collapse" aria-expanded="false" aria-controls="calendar-event-info__content">
+          <span class="section__number">2</span>Event Details
+       </h3>
+       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
+       <div class="section__content collapse" id="calendar-event-info__content" data-parent="#accordion">
+
+            <!-- Course -->
+<div class="row form-group">
+   <div class="col-xs-12 col-sm-8 col-md-5">
+      <div class="input-group select-group event-info-course required">
+         <label for="SelectEventCourse">
+            Event Course
+         </label>
+         <select name="SelectEventCourse" class="form-control" id="selectEventCourse" required="True">                                                            
+            <option value="{Sitecore ID}" disabled selected>Select an Event Course</option>
+            <option value="SCY">Short Course Yards</option>
+            <option value="SCM">Short Course Meters</option>
+            <option value="LCM">Long Course Meters</option>
+            <option value="Other">Other</option>
+         </select>
+         <span class="help-block help-block--SelectEventCourse">Please select an event course</span>
+      </div>
+   </div>
+</div>
+            <!-- Start and End Dates -->
+<div class="row">
+   <div class="col-xs-12 col-lg-12">
+      <div class="form-group date-select-group has-feedback event-info__start-date--dropdown-start-date-container required">
+      
+         <label for="">Start Date</label>
+         <div class="SingleDatePicker SingleDatePicker_1">
+            <div>
+               <div class="SingleDatePickerInput SingleDatePickerInput_1 SingleDatePickerInput__withBorder SingleDatePickerInput__withBorder_2">
+                  <button class="SingleDatePickerInput_calendarIcon SingleDatePickerInput_calendarIcon_1" type="button">
+                     <svg class="SingleDatePickerInput_calendarIcon_svg SingleDatePickerInput_calendarIcon_svg_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1393.1 1500"><path d="M107.2 1392.9h241.1v-241.1H107.2v241.1zm294.7 0h267.9v-241.1H401.9v241.1zm-294.7-294.7h241.1V830.4H107.2v267.8zm294.7 0h267.9V830.4H401.9v267.8zM107.2 776.8h241.1V535.7H107.2v241.1zm616.2 616.1h267.9v-241.1H723.4v241.1zM401.9 776.8h267.9V535.7H401.9v241.1zm642.9 616.1H1286v-241.1h-241.1v241.1zm-321.4-294.7h267.9V830.4H723.4v267.8zM428.7 375V133.9c0-7.3-2.7-13.5-8-18.8-5.3-5.3-11.6-8-18.8-8h-53.6c-7.3 0-13.5 2.7-18.8 8-5.3 5.3-8 11.6-8 18.8V375c0 7.3 2.7 13.5 8 18.8 5.3 5.3 11.6 8 18.8 8h53.6c7.3 0 13.5-2.7 18.8-8 5.3-5.3 8-11.5 8-18.8zm616.1 723.2H1286V830.4h-241.1v267.8zM723.4 776.8h267.9V535.7H723.4v241.1zm321.4 0H1286V535.7h-241.1v241.1zm26.8-401.8V133.9c0-7.3-2.7-13.5-8-18.8-5.3-5.3-11.6-8-18.8-8h-53.6c-7.3 0-13.5 2.7-18.8 8-5.3 5.3-8 11.6-8 18.8V375c0 7.3 2.7 13.5 8 18.8 5.3 5.3 11.6 8 18.8 8h53.6c7.3 0 13.5-2.7 18.8-8 5.4-5.3 8-11.5 8-18.8zm321.5-53.6v1071.4c0 29-10.6 54.1-31.8 75.3-21.2 21.2-46.3 31.8-75.3 31.8H107.2c-29 0-54.1-10.6-75.3-31.8C10.6 1447 0 1421.9 0 1392.9V321.4c0-29 10.6-54.1 31.8-75.3s46.3-31.8 75.3-31.8h107.2v-80.4c0-36.8 13.1-68.4 39.3-94.6S311.4 0 348.3 0h53.6c36.8 0 68.4 13.1 94.6 39.3 26.2 26.2 39.3 57.8 39.3 94.6v80.4h321.5v-80.4c0-36.8 13.1-68.4 39.3-94.6C922.9 13.1 954.4 0 991.3 0h53.6c36.8 0 68.4 13.1 94.6 39.3s39.3 57.8 39.3 94.6v80.4H1286c29 0 54.1 10.6 75.3 31.8 21.2 21.2 31.8 46.3 31.8 75.3z"></path></svg>
+                  </button>
+                  <div class="DateInput DateInput_1">
+                        <input type="text" class="DateInput_input DateInput_input_1" aria-label="MM/DD/YYYY" id="dateStart" name="date" value="" placeholder="MM/DD/YYYY" autocomplete="off" aria-describedby="DateInput__screen-reader-message-date">
+                        <p class="DateInput_screenReaderMessage DateInput_screenReaderMessage_1" id="DateInput__screen-reader-message-date">Press the down arrow key to interact with the calendar and select a date. Press the question mark key to get the keyboard shortcuts for changing dates.</p>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <span class="help-block help-block--StartDate">Please select a start date. For one day events, select the same date.</span>
+      </div>
+   </div>
+</div>
+<div class="row">
+   <div class="col-xs-12 col-lg-12">
+      <div class="form-group date-select-group has-feedback event-info__start-date--dropdown-end-date-container required">
+      
+         <label for="">End Date</label>
+         <div class="SingleDatePicker SingleDatePicker_1">
+            <div>
+               <div class="SingleDatePickerInput SingleDatePickerInput_1 SingleDatePickerInput__withBorder SingleDatePickerInput__withBorder_2">
+                  <button class="SingleDatePickerInput_calendarIcon SingleDatePickerInput_calendarIcon_1" type="button">
+                     <svg class="SingleDatePickerInput_calendarIcon_svg SingleDatePickerInput_calendarIcon_svg_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1393.1 1500"><path d="M107.2 1392.9h241.1v-241.1H107.2v241.1zm294.7 0h267.9v-241.1H401.9v241.1zm-294.7-294.7h241.1V830.4H107.2v267.8zm294.7 0h267.9V830.4H401.9v267.8zM107.2 776.8h241.1V535.7H107.2v241.1zm616.2 616.1h267.9v-241.1H723.4v241.1zM401.9 776.8h267.9V535.7H401.9v241.1zm642.9 616.1H1286v-241.1h-241.1v241.1zm-321.4-294.7h267.9V830.4H723.4v267.8zM428.7 375V133.9c0-7.3-2.7-13.5-8-18.8-5.3-5.3-11.6-8-18.8-8h-53.6c-7.3 0-13.5 2.7-18.8 8-5.3 5.3-8 11.6-8 18.8V375c0 7.3 2.7 13.5 8 18.8 5.3 5.3 11.6 8 18.8 8h53.6c7.3 0 13.5-2.7 18.8-8 5.3-5.3 8-11.5 8-18.8zm616.1 723.2H1286V830.4h-241.1v267.8zM723.4 776.8h267.9V535.7H723.4v241.1zm321.4 0H1286V535.7h-241.1v241.1zm26.8-401.8V133.9c0-7.3-2.7-13.5-8-18.8-5.3-5.3-11.6-8-18.8-8h-53.6c-7.3 0-13.5 2.7-18.8 8-5.3 5.3-8 11.6-8 18.8V375c0 7.3 2.7 13.5 8 18.8 5.3 5.3 11.6 8 18.8 8h53.6c7.3 0 13.5-2.7 18.8-8 5.4-5.3 8-11.5 8-18.8zm321.5-53.6v1071.4c0 29-10.6 54.1-31.8 75.3-21.2 21.2-46.3 31.8-75.3 31.8H107.2c-29 0-54.1-10.6-75.3-31.8C10.6 1447 0 1421.9 0 1392.9V321.4c0-29 10.6-54.1 31.8-75.3s46.3-31.8 75.3-31.8h107.2v-80.4c0-36.8 13.1-68.4 39.3-94.6S311.4 0 348.3 0h53.6c36.8 0 68.4 13.1 94.6 39.3 26.2 26.2 39.3 57.8 39.3 94.6v80.4h321.5v-80.4c0-36.8 13.1-68.4 39.3-94.6C922.9 13.1 954.4 0 991.3 0h53.6c36.8 0 68.4 13.1 94.6 39.3s39.3 57.8 39.3 94.6v80.4H1286c29 0 54.1 10.6 75.3 31.8 21.2 21.2 31.8 46.3 31.8 75.3z"></path></svg>
+                  </button>
+                  <div class="DateInput DateInput_1">
+                     <input type="text" class="DateInput_input DateInput_input_1" aria-label="MM/DD/YYYY" id="dateEnd" name="date" value="" placeholder="MM/DD/YYYY" autocomplete="off" aria-describedby="DateInput__screen-reader-message-date">
+                     <p class="DateInput_screenReaderMessage DateInput_screenReaderMessage_1" id="DateInput__screen-reader-message-date">Press the down arrow key to interact with the calendar and select a date. Press the question mark key to get the keyboard shortcuts for changing dates.</p>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <span class="help-block help-block--EndDate">Please select an end date. For one day events, select the same date.</span>
+      </div>
+   </div>
+</div>
+            <!-- Description -->
+<div class="row form-group">
+    <div class="col-xs-12 col-sm-8">
+        <div class="input-group event-info-details required">
+            <label for="eventInfoDetails" class="label-large">
+                Event Description
+                <span class="icon-help" 
+                    data-toggle="tooltip" 
+                    data-placement="top" 
+                    title="This will be displayed to the public and help sell someone on participating in the event. Make sure to include what makes your event unique and why someone would want to attend. Don't just list the date and course again. Your application will not be approved if you use the word Olympic and/or Paralympic." 
+                    data-container="body" 
+                    data-original-title="">
+                </span>
+            </label>
+            <textarea class="form-control" rows="3" cols="50" name="eventInfoDetails" id="eventInfoDetails" required=""></textarea>
+            <span class="help-block help-block--eventInfoDetails">Please enter the event details</span>
+        </div>
+    </div>
+</div>
+               <!-- Event Image -->
+   <div class="row form-group">
+      <div class="col-xs-12 col-sm-8">
+         <div class="input-group event-info-image">
+            <label for="EventInfoImage">Upload an image - to appear on the event detail page</label>
+            <span class="help-block">Invalid image type</span>
+            <div class="upload-thumbnail" style="background-image: url('')">
+               <button type="button" class="club-logo__remove-image" data-toggle="tooltip" title="" data-original-title="Remove event photo">
+                  <i class="fa fa-times"></i>
+               </button>
+            </div>
+            <div class="upload-box">
+               <input type="file" data-file-size="3584000" name="EventImage[]" id="EventImage" class="inputfile inputEventImage" data-multiple-caption="{count} files selected" accept="image/*" multiple="">
+               <label for="EventImage">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                     <path fill="#FFF" d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path>
+                  </svg>
+                  <span class="file-stored">Choose File</span>
+               </label>
+            </div>
+            <div class="upload-instructions">
+               <span>Dimensions: 1200 x 480 pixels</span>
+               <span>Format: JPG, PNG, GIF</span>
+               <span>Max file size: 3.5mb</span>
+            </div>
+         </div>
+      </div>
+   </div>   
+            <!-- Is Virtual? -->
+<div class="row form-group event-info-is-virtual">
+    <div class="col-xs-12">
+        <div class="input-group radio-group event-info-is-virtualXXX">
+            <div class="input-group-header radio-group-header required">
+                <label class="icon-help-label" for="tooltip">
+                    Is this a virtual event?
+                    <span class="icon-help" data-toggle="tooltip" data-placement="top" title="A Virtual Event is a swimming competition conducted in multiple locations with results compiled in a central location." data-container="body" data-original-title=""></span>
+                </label>
+            </div>
+            <span class="help-block help-block--isVirtual">Please make a selection</span>
+            <label class="radio-label radio-label--inline" for="isVirtualYes">
+                <span class="radio-container">
+                    <input type="radio" name="isVirtual" id="isVirtualYes" value="true">
+                    <span class="radio__placeholder"></span>
+                </span>
+                Yes
+            </label>
+            <label class="radio-label radio-label--inline" for="isVirtualNo">
+                <span class="radio-container">
+                    <input type="radio" name="isVirtual" id="isVirtualNo" value="false" checked>
+                    <span class="radio__placeholder"></span>
+                </span>
+                No
+            </label>
+        </div>
+    </div>
+</div>
+<script>
+    $("#isVirtualYes").click( function() {
+        if ($('.timing-system-group').length) {
+            $('.timing-system-group').hide();
+        }
+    });
+    $("#isVirtualNo").click( function() {
+        $('.timing-system-group').show();
+    });
+</script>
+
+            <!-- Save Section -->
+            <div class="row form-group">
+                <div class="section__controls">
+                    <button class="btn save-section" id="saveEventType" type="button">Save &amp; Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+ </form>
+
+ <script> 
+   var sectionId = "#event-information";
+   var sectionInputs = sectionId + " input";
+   var sectionSelects = sectionId + " select";
+   var sectionTextarea = sectionId + " textarea";
+   var sectionBtn = "#saveEventInfo";
+   $(sectionInputs).click( function() {
+      $(sectionBtn).prop('disabled', false);
+   });
+   $(sectionSelects).on("change", function() {
+      $(sectionBtn).prop('disabled', false);
+   });
+   $(sectionTextarea).focus( function() {
+       $(sectionBtn).prop('disabled', false);
+   });
+
+   $("#EventImage").click( function() {
+      $("event-information .file-stored").text('Replace File');
+   });
+
+   $(sectionBtn).click( function() {
+      $("#event-information").addClass('hasData');
+      $("#contact-information h3").click();
+      $(document.documentElement).animate({
+         scrollTop: $("#contact-information").offset().top - 45
+      }, 100);
+   });
+   
+ </script>
+                              <form id="form-contact-info">
+    <div class="section  section-contact-info" id="contact-information">
+        <div class="modal fade" id="modalContactInfoConfirmation" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Email Address Is Already In Use</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>The email you have entered belongs to an existing USMS member. Please search for that member using option 2 from the dropdown or to use a different email address.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default">Okay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <h3 class="section__header" data-target="#contact-info__content" data-toggle="collapse" aria-expanded="false" aria-controls="contact-info__content">
+            <span class="section__number">3</span>Contact Information
+        </h3>
+
+        <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
+        
+        <!-- Event Director -->
+        <div class="section__content collapse" id="contact-info__content" data-parent="#accordion">
+
+            <div class="contact-group--event-director">
+
+    <!-- Contact Forms -->
+    <div class="form-group form-group-default contact-info__event-director-type-form">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="input-group radio-group event-director">
+                    <div class="input-group-header radio-group-header required">
+                        Event Director
+                    </div>
+                    <div class="input-group radio-group">
+                        <label class="radio-label" for="contactTypeEventDirectorCurrent">
+                            I'm the event director
+                            <span class="radio-container">
+                                <input type="radio" id="contactTypeEventDirectorCurrent" name="ContactTypeEventDirector" value="contactTypeEventDirectorCurrent">
+                                <span class="radio__placeholder"></span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="input-group radio-group">
+                        <label class="radio-label" for="contactTypeEventDirectorOther">
+                            Someone else is the event director
+                            <span class="radio-container">
+                                <input type="radio" id="contactTypeEventDirectorOther" name="ContactTypeEventDirector" value="contactTypeEventDirectorOther">
+                                <span class="radio__placeholder"></span>
+                            </span>
+                        </label>
+                    </div>
+                    <span class="help-block help-block--EventDirector">Please select an event director</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group contact-info__event-director-other--container">
+        <div class="row">
+            <div class="col-sm-4 col-md-8">
+                <div class="input-group lookup-name">
+                    <label for="lookupEventDirectorName">Search Event Directors</label>
+                    <input tabindex="0" type="text" class="form-control lookup__input lookup-primary__input" min="3" max="30" name="LookupEventDirectorName" id="lookupEventDirectorName" autocomplete="off" placeholder="">
+                    <span class="help-block help-block--LookupEventDirectorName">Please enter event director name</span>
+                </div>
+            </div>
+            <div class="input-group lookup-confirm">
+                <button class="btn btn-small save-as-contact" type="button" id="addAsEventDirector">
+                    <span class="lookup-confirm--name">Confirm Kyle Deery</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group contact-info__event-director-other--add-new">
+        <div class="row">
+            <div class="col-sm-12 col-md-8">
+                <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">Or Add a New Event Director</p>
+                <div>
+                    <!-- <input class="btn btn-small btn-outline" id="addNewEventDirector" name="addNewEventDirector" type="button" value="Add New"> -->
+                    <button class="btn btn-small btn-outline btn-add" id="addNewEventDirector" name="addNewEventDirector" type="button" value="Add New">Add New</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group contact-info__event-director-current--container">
+        <div class="row">
+            <div class="col-sm-4">
+                Current Event Director Container
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group contact-info-event-director__current-message">
+        <div class="row">
+            <div class="col-sm-12">
+                <p id="contact__recentlyadded">
+                    The current contact has been added and an email has been sent for them to validate their email. Once validated, they will be able to edit this club.
+                </p>
+                <p id="contact__recentlyadded-valid">
+                    The current contact has validated their email and has the ability to edit his club.
+                </p>
+                <p id="contact__recentlyadded-invalid">
+                    The current contact has NOT validated their email and does NOT have the ability to edit his club.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group contact-info__event-director--add-new-container add-new-inputs">
+        <div class="row">
+    <div class="col-sm-6">
+        <div class="input-group contact-first-name required">
+            <label for="newEventDirectorFirstName">First Name</label>
+            <input type="text" maxlength="30" class="form-control" name="NewEventDirectorFirstName" id="newEventDirectorFirstName" value="" placeholder="">
+            <span class="help-block help-block--NewEventDirectorFirstName">Please enter a first name.</span>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="input-group contact-last-name required">
+            <label for="newPersonLastName" class="">Last Name</label>
+            <input type="text" maxlength="30" class="form-control" name="NewPersonLastName" id="newPersonLastName" value="" placeholder="">
+            <span class="help-block help-block--NewPersonLastName">Please enter a last name. </span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="input-group contact-primary-email required">
+            <label for="newPersonEmailPrimary">Primary Email Address</label>
+            <input type="email" class="form-control" name="NewPersonEmailPrimary" id="newPersonEmailPrimary" maxlength="50" value="">
+            <span class="help-block help-block--NewPersonEmailPrimary">Please enter a primary email address.</span>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="input-group contact-primary-phone required">
+            <label for="newPersonPhonePrimary">Primary Phone Number</label>
+            <input type="text" class="form-control" pattern="[0-9]{3}[-][0-9]{3}[-][0-9]{4}" name="NewPersonPhonePrimary" id="newPersonPhonePrimary" value="" maxlength="12">
+            <span class="help-block help-block--NewPersonPhonePrimary">Please enter a primary phone number.</span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-7">
+        <div class="input-group contact-city required">
+            <label for="newPersonCity">City</label>
+            <input type="text" maxlength="30" class="form-control" name="NewPersonCity" id="newPersonCity" value="">
+            <span class="help-block help-block--NewPersonCity">Please enter a city.</span>
+        </div>
+    </div>
+    <div class="col-sm-5">
+        <div class="input-group contact-state required">
+            <label for="newEventDirectorState" class="">State</label>
+            <select name="newEventDirectorState" class="form-control" id="newEventDirectorState">
+                <option value="">Select State</option>
+                <option value="AL">Alabama</option>
+                <option value="AK">Alaska</option>
+                <option value="AZ">Arizona</option>
+            </select>
+            <span class="help-block help-block--newEventDirectorState">Please select a state.</span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-5 col-md-6">
+        <div class="form-group lookup person">
+            <button class="btn btn-small confirm-form-add-new-person" type="button" id="">Confirm</button>
+        </div>
+    </div>
+</div>
+    </div>
+
+    <!-- Contact List -->
+    <div class="form-group form-group-result contact-info__event-director-list">
+        <div class="row contact-information__event-director--list">
+            <div class="list list--event-director list--lookup people">
+                <div class="list__header contact-list__event-director--header required">
+                    <span class="lookup-results--event-director">Event Director </span>
+                    <div class="list__controls contact-list__controls">
+                        <button class="list__controls--settings" id="settingsEventDirectorListItem"></button>
+                        <!-- <button class="btn btn-link list-item__edit" id="editEventDirectorListItem">Edit</button> -->
+                        <!-- <button class="btn btn-link list-item__save" id="saveEventDirectorListItem">Done Editing</button> -->
+                        <button class="btn btn-link list-item__delete" id="deleteEventDirectorListItem">Remove</button>
+                </div>
+                </div>
+            
+                <div class="list__container">
+                    <div class="row is-flex">
+                        <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
+                        <div class="list-item list-item--current">
+                            <input type="hidden" class="contact-isMember" value="true">
+                            <!-- <button type="button" class="list-item__delete">Remove</button> -->
+                            <div class="contact-name">Jay Place</div>
+                            <div class="contact-location">Sarasota, FL</div>
+                            <div class="contact-phone"></div>
+                            <div class="contact-email">jplace@usmastersswimming.org</div>
+                            <div class="contact-id">Member ID: <span class="contact-id__value">KT2JH</span></div>
+                        </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
+                        <div class="list-item list-item--lookup">
+                            <input type="hidden" class="contact-isMember" value="true">
+                            <!-- <button type="button" class="list-item__delete">Remove</button> -->
+                            <div class="list-item__pending">Account Pending</div>
+                            <div class="contact-name">Kyle Deery</div>
+                            <div class="contact-location">Sarasota, FL</div>
+                            <div class="contact-phone"></div>
+                            <div class="contact-email">kdeery@usmastersswimming.org</div>
+                            <div class="contact-id">Member ID: <span class="contact-id__value">GAT0R</span></div>
+                        </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
+                        <div class="list-item list-item--new">
+                            <input type="hidden" class="contact-isMember" value="true">
+                            <!-- <button type="button" class="list-item__delete">Remove</button> -->
+                            <div class="list-item__pending">Account Pending</div>
+                            <div class="contact-name">Jess Riley</div>
+                            <div class="contact-location">Sarasota, FL</div>
+                            <div class="contact-phone"></div>
+                            <div class="contact-email">jreilly@usmastersswimming.org</div>
+                            <div class="contact-id">Member ID: <span class="contact-id__value">AB123</span></div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-small btn-success" id="confirmCurrentEventDirector">Confirm</button>
+            </div>
+            <div class="contact-info__event-director-privacy--container">
+                <div class="event-director-privacy">
+                    <div class="event-director-privacy__header">USMS website event page privacy preferences</div>
+                    <div class="input-group checkbox-group event-director-privacy-name">
+                        <label class="checkbox-label" for="eventDirectorPrivacyName">
+                            <div class="checkbox-container">
+                                <input type="checkbox" name="EventDirectorPrivacyName" id="eventDirectorPrivacyName">
+                                <span class="checkbox__placeholder"></span>
+                            </div>
+                            Display the event director's name on the USMS website event page
+                        </label>
+                    </div>
+                    <div class="input-group checkbox-group event-director-privacy-email">
+                        <label class="checkbox-label" for="eventDirectorPrivacyEmail">
+                            <div class="checkbox-container">
+                                <input type="checkbox" name="eventDirectorPrivacyEmail" id="eventDirectorPrivacyEmail">
+                                <span class="checkbox__placeholder"></span>
+                            </div>
+                            Display the event director's email address on the USMS website event page
+                        </label>
+                    </div>
+                    <div class="input-group checkbox-group event-director-privacy-phone">
+                        <label class="checkbox-label" for="eventDirectorPrivacyPhone">
+                            <div class="checkbox-container">
+                                <input type="checkbox" name="eventDirectorPrivacyPhone" id="eventDirectorPrivacyPhone">
+                                <span class="checkbox__placeholder"></span>
+                            </div>
+                            Display the event director's phone number on the USMS website event page
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Messaging -->
+    <div class="section__header--summary contact-list__event-director--message" style="display: none;">
+        <p>The event director must have a USMS My Account. If they are not in the dropdown list, they will need to create an account. You can get the account creation started by clicking 'Add New' below. Once the form is completed, the new event director will receive an email to finish the process and you will see them listed here as 'Account Pending'. <em>You will not be able to register/update your event until the new contact has completed the account set up</em>. After you have registered/updated your event and then it is approved by USMS, you will receive an email notifying you the new contact is done and your permissions are removed.</p>
+    </div>
+
+    <div class="section__header--summary contact-list__event-director-add-new--awaiting-message" style="display: none;">
+        <p>You will remain the event director until the new contact has finished creating their account. Once the event has been approved, they will be the event director and your permissions will be removed.</p>
+    </div>
+
+    <script src="/event/js/event-director.js"></script>
+
+</div>
+
+            <div class="row">
+                <div class="section__controls">
+                    <button class="btn save-section" id="saveContactInfoSection" type="button">Save &amp; Continue</button>
+                </div>
+            </div>
+
+        </div>        
+    </div>
+</form>
+<script src="/event/js/head-ref.js"></script>
+<script src="/event/js/safety-coordinator.js"></script>
+<script src="/event/js/event-host.js"></script>
+<script>
+    // Enable save button on input focus
+    var sectionId = "#contact-information";
+    var sectionInputs = sectionId + " input";
+    var sectionSelects = sectionId + " select";
+    $(sectionInputs).click( function() {
+        $("#saveContactInfoSection").prop('disabled', false);
+    });
+    // Save section
+    $("#saveContactInfoSection").click( function() {
+        $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+        $('#accordion').find('.collapse.in').parent().addClass('hasData');
+        $("#location-information h3").click();
+        $(document.documentElement).animate({
+            scrollTop: $("#location-information").offset().top - 45
+        }, 100);
+    });
+    // List Control Edit
+    $("[class^='list list--'] #editContactList").click(function() {
+        // alert("What?");
+        $(this).closest(".list").addClass("edit-list");
+    });
+    // List Control Cancel
+    $("[class^='list list--'] #cancelContactList").click(function() {
+        $(".list").removeClass("edit-list");
+        $(".list-item").removeClass("list-item--fade-out");
+        $('.list__container').removeClass('list__container--modified');
+    });
+</script>
+                              <form id="form-location-info">
+   <div class="section section-location-information" id="location-information">
+      <h3 class="section__header" data-target="#location-information__content" data-toggle="collapse" aria-expanded="false" aria-controls="location-information__content">
+         <span class="section__number">4</span>Location Information
+      </h3>
+      <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
+      <div class="section__content collapse" id="location-information__content" data-parent="#accordion">
+
+         <link rel="stylesheet" href="/search/css/ListControl.css">
+<link rel="stylesheet" href="/event/css/list-control-event.css">
+<link rel="stylesheet" href="/event/css/location-overrides.css">
+<div class="list-control">
+    <div class="list-control-search">
+        <div class="list-control-search__content form-group is-flex">
+            <div class="list-control-search__input list-control-search__input--club-name">
+                <label for="search-filter__club-name">Search by Location Name</label>
+                <div class="input-group">
+                    <span class="help-block help-block--ClubName">Please Enter a Location Name</span><input type="text" class="form-control" name="search-filter__club-name" placeholder="Location Name" />
+                </div>
+            </div>
+            <div class="list-control-search__input list-control-search__input--range">
+                <label for="search-filter__range">Select a Range</label>
+                <div class="input-group">
+                    <select id="search-filter__range" name="search-filter__range">
+                        <option value="1">1 Mile</option>
+                        <option value="5">5 Miles</option>
+                        <option selected="" value="10">10 Miles</option>
+                        <option value="25">25 Miles</option>
+                        <option value="50">50 Miles</option>
+                    </select>
+                </div>
+            </div>
+            <div class="list-control-search__input list-control-search__input--location">
+                <label for="search-filter__location">Search by City, State or Zip</label>
+                <div class="input-group">
+                    <span class="help-block help-block--CityStateZip">Please enter a City, State or Zip</span>
+                    <div>
+                        <div class="map" style="display: none;"></div>
+                        <input type="text" class="google-places-input form-control pac-target-input" placeholder="Select city &amp; state or zip" name="location" value="Sarasota, FL, USA" autocomplete="off" />
+                        <input type="hidden" class="google-places-input--zip" name="google-places-input--zip" value="" />
+                        <input type="hidden" class="google-places-input--lat" name="google-places-input--lat" value="" />
+                        <input type="hidden" class="google-places-input--lng" name="google-places-input--lng" value="" />
+                    </div>
+                </div>
+            </div>
+            <div class="list-control-search__input list-control-search__input--button align-self-end">
+                <div class="input-group"><button type="button" class="btn btn-primary" id="listSearchSubmit">Submit</button></div>
+            </div>
+        </div>
+    </div>
+    <div class="list-control-filter">
+        <div class="list-control-filter__content">
+            <div class="form-group is-flex">
+                <div class="check-list check-list--pool-length">
+                    <div class="input-group check-list-item">
+                        <label id="length25Yards" class="checkbox-label">
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="input25y" name="25 Yards" value="25y" />
+                                <span class="checkbox__placeholder"></span>
+                            </div>
+                            Short Course Yards
+                        </label>
+                    </div>
+                    <div class="input-group check-list-item">
+                        <label id="length25Meters" class="checkbox-label">
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="input25m" name="25 Meters" value="25m" />
+                                <span class="checkbox__placeholder"></span>
+                            </div>
+                            Short Course Meters
+                        </label>
+                    </div>
+                    <div class="input-group check-list-item">
+                        <label id="length50Meters" class="checkbox-label">
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="input50m" name="50 Meters" value="50m" />
+                                <span class="checkbox__placeholder"></span>
+                            </div>
+                            Long Course Meters
+                        </label>
+                    </div>
+                    <div class="input-group check-list-item">
+                        <label id="lengthOther" class="checkbox-label">
+                            <div class="checkbox-container">
+                                <input type="checkbox" id="lengthOtherInput" name="Other" value="other" />
+                                <span class="checkbox__placeholder"></span>
+                            </div>
+                            Other
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <span class="help-block help-block--selectLocation">Please select a location</span>
+        <span class="help-block help-block--expandSearch">Please expand your search parameters</span>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+       <div class="list list--lookup locations">
+
+            <div class="list-control-search__header">
+                <div class="list-control-search--summary">
+                    Showing <strong>4 Locations</strong> within <strong>10 Miles</strong> <span class="list-control-search--summary-detail">of <strong>Sarasota, FL, USA</strong></span>
+                </div>
+            </div>
+
+            <div class="list__container">
+    <div class="row is-flex">
+        <div class="col-xs-12 location-column">
+            <div class="list-item list-item--location ui-lookup-filter-1mile ui-lookup-filter-length-scm">
+                <button class="btn btn-small">Select</button>
+                <p class="event-location__address--name">Sun Outdoors</p>
+                <p class="event-location__address--street">7125 Fruitville Road</p>
+                <p class="event-location__city-state">Sarasota, FL</p>
+                <div class="event-location--course-tags">
+                    <p class="event-location--course">SCM</p>
+                </div>
+            </div>
+            <div class="list-item list-item--location ui-lookup-filter-5mile ui-lookup-filter-length-scy ui-lookup-filter-length-lcm">
+                <button class="btn btn-small">Select</button>
+                <p class="event-location__address--name">Arlington Park Aquatic Center</p>
+                <p class="event-location__address--street">2650 Waldemere Street</p>
+                <p class="event-location__city-state">Sarasota, FL</p>
+                <div class="event-location--course-tags">
+                    <p class="event-location--course">SCY</p>
+                    <p class="event-location--course">LCM</p>
+                </div>
+            </div>
+            <div class="list-item list-item--location ui-lookup-filter-10mile ui-lookup-filter-length-scy ui-lookup-filter-length-scm ui-lookup-filter-length-lcm list-item--pool list-item--duplicate">
+                <button class="btn btn-small" id="confirmLocationSelby">Select</button>
+                <p class="event-location__address--name">Selby Aquatic Center</p>
+                <p class="event-location__address--street">8501 Potter Park Drive</p>
+                <p class="event-location__city-state">Sarasota, FL</p>
+                <div class="event-location--course-tags">
+                    <p class="event-location--course">SCY</p>
+                    <p class="event-location--course">SCM</p>
+                    <p class="event-location--course">LCM</p>
+                </div>
+            </div>
+            <div class="list-item list-item--location ui-lookup-filter-10mile ui-lookup-filter-length-other">
+                <button class="btn btn-small" id="confirmLocationHealthfit">Select</button>
+                <p class="event-location__address--name">HealthFit powered by SMH</p>
+                <p class="event-location__address--street">5880 Rand Blvd</p>
+                <p class="event-location__city-state">Sarasota, FL</p>
+                <div class="event-location--course-tags">
+                    <p class="event-location--course">Other</p>
+                </div>
+            </div>
+            <div class="list-item list-item--location ui-lookup-filter-25mile ui-lookup-filter-length-scy">
+                <button class="btn btn-small">Select</button>
+                <p class="event-location__address--name">LA Fitness 1</p>
+                <p class="event-location__address--street">8502 Cooper Creek Blvd</p>
+                <p class="event-location__city-state">Sarasota, FL</p>
+                <div class="event-location--course-tags">
+                    <p class="event-location--course">SCY</p>
+                </div>
+            </div>
+            <div class="list-item list-item--location ui-lookup-filter-25mile ui-lookup-filter-length-scy">
+                <button class="btn btn-small">Select</button>
+                <p class="event-location__address--name">LA Fitness 2</p>
+                <p class="event-location__address--street">8502 Cooper Creek Blvd</p>
+                <p class="event-location__city-state">Sarasota, FL</p>
+                <div class="event-location--course-tags">
+                    <p class="event-location--course">SCY</p>
+                </div>
+            </div>
+            <div class="list-item list-item--location ui-lookup-filter-50mile ui-lookup-filter-length-scy">
+                <button class="btn btn-small">Select</button>
+                <p class="event-location__address--name">Venice High School</p>
+                <p class="event-location__address--street">1 Indian Ave</p>
+                <p class="event-location__city-state">Sarasota, FL</p>
+                <div class="event-location--course-tags">
+                    <p class="event-location--course">SCY</p>
+                </div>
+            </div>
+
+            <div class="list-item list-item--location list-item--open-water list-item--duplicate">
+                <button class="btn btn-small" id="confirmWaterFrontPark">Select</button>
+                <p class="event-location__address--name">Waterfront Park</p>
+                <p class="event-location__address--street">2650 Waldemere Street</p>
+                <p class="event-location__city-state">Clermont, FL</p>
+                <div class="event-location--course-tags">
+                    <p class="event-location--course">OW</p>
+                </div>
+            </div>
+            <div class="list-item list-item--location list-item--open-water">
+                <button class="btn btn-small">Select</button>
+                <p class="event-location__address--name">Clearwater Beach</p>
+                <p class="event-location__address--street">1 Avalon Street</p>
+                <p class="event-location__city-state">Clearwater, FL</p>
+                <div class="event-location--course-tags">
+                    <p class="event-location--course">OW</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <p class="location__add-new-btn">If your location is not listed, contact USMS to have it added: <a href="mailto:events@usmastersswimming.org" class="text-link">events@usmastersswimming.org</a></p> -->
+
+        </div>
+    </div>
+ </div>
+ 
+ <div class="modal pool-configuration" id="modalChosePoolConfigurationSelby" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Select a Pool Course</h5>
+            </div>
+            <div class="modal-body">
+                <p>Now that you have selected a location, please select the course of the pool that the event will take place. The courses that are have been certified in our database are highlighted. If a course is not certified, the meet's times will not count. <a href="https://www.usms.org/volunteer-central/guide-to-local-operations/event-management/top-10-and-records-and-tabulation/pool-length-form-and-measurement-procedures">Learn more here.</a></p>
+                <p class="location-name"><strong>Selby Aquatic Center</strong></p>
+                <div class="input-group chose-pool-configuration">
+                    <span class="help-block help-block--chosePoolConfiguration">Please select a configuration</span>
+                    <label class="radio-label" for="option1Selby">
+                        <span class="radio-container">
+                            <input type="radio" name="configuration-selby" id="option1Selby" value="0" />
+                            <span class="radio__placeholder"></span>
+                        </span>
+                        Competition Pool - 25 Yards<br />Certified 08/2022 - 1 Touchpad, No Touchpads
+                    </label>
+                    <label class="radio-label" for="option2Selby">
+                        <span class="radio-container">
+                            <input type="radio" name="configuration-selby" id="option2Selby" value="1" />
+                            <span class="radio__placeholder"></span>
+                        </span>
+                        Competition Pool - 50 Meters<br />Certified 09/2024 - 1 Touchpad, 2 Touchpads, No Touchpads
+                    </label>
+                    <label class="radio-label" for="option3Selby">
+                        <span class="radio-container">
+                            <input type="radio" name="configuration-selby" id="option3Selby" value="2" />
+                            <span class="radio__placeholder"></span>
+                        </span>
+                        Warmup Pool - 25 Yards
+                    </label>
+                </div>
+                <br />
+                <p>If your course is not listed, please contact USMS to have it added: <a href="mailto:events@usmastersswimming.org">events@usmastersswimming.org</a></p>
+                <!-- <button type="button" class="btn btn-small btn-outline btn-add" data-bs-dismiss="modal" id="addConfigurationBtnSelby">Add New</button> -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-md btn-default" data-bs-dismiss="modal" id="modalConfirmSelby" disabled>Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal pool-configuration" id="modalChosePoolConfigurationHealthfit" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Select a Pool Course</h5>
+            </div>
+            <div class="modal-body">
+                <p>Now that you have selected a location, please select the course of the pool that the event will take place. The courses that are have been certified in our database are highlighted. If a course is not certified, the meet's times will not count. <a href="https://www.usms.org/volunteer-central/guide-to-local-operations/event-management/top-10-and-records-and-tabulation/pool-length-form-and-measurement-procedures">Learn more here.</a></p>
+                <p class="location-name"><strong>Healthfit</strong></p>
+                <div class="input-group chose-pool-configuration">
+                    <span class="help-block help-block--chosePoolConfiguration">Please select a configuration</span>
+                    <label class="radio-label" for="option1Helthfit">
+                        <span class="radio-container">
+                            <input type="radio" name="configuration-healthfit" id="option1Helthfit" value="1" selected />
+                            <span class="radio__placeholder"></span>
+                        </span>
+                        Main Pool - 33 Yards
+                    </label>
+                </div>
+                <br />
+                <p>If your course is not listed, please contact USMS to have it added: <a href="mailto:events@usmastersswimming.org">events@usmastersswimming.org</a></p>
+                <br />
+                <!-- <button class="btn btn-small btn-outline btn-add" id="addConfigurationBtn" type="button">Add New</button> -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-md btn-default" data-bs-dismiss="modal" id="modalConfirmHealthfit" disabled>Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal pool-configuration" id="modalChosePoolConfigurationJensen" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Select a Pool Course</h5>
+            </div>
+            <div class="modal-body">
+                <p>Now that you have selected a location, please select the course of the pool that the event will take place. The courses that are have been certified in our database are highlighted. If a course is not certified, the meet’s times will not count. <a href="https://www.usms.org/volunteer-central/guide-to-local-operations/event-management/top-10-and-records-and-tabulation/pool-length-form-and-measurement-procedures">Learn more here.</a></p>
+                <p class="location-name"><strong>Jensen Beach Pool</strong></p>
+                <div class="input-group chose-pool-configuration">
+                    <span class="help-block help-block--chosePoolConfiguration">Please select a configuration</span>
+                    <label class="radio-label" for="option1Jensen">
+                        <span class="radio-container">
+                            <input type="radio" name="configuration-jensen" id="option1Jensen" value="1" selected />
+                            <span class="radio__placeholder"></span>
+                        </span>
+                        The comp pool - 25 Yards, 5 Lanes
+                    </label>
+                </div>
+                <br />
+                <p>If your course is not listed, please contact USMS to have it added: <a href="mailto:events@usmastersswimming.org">events@usmastersswimming.org</a></p>
+                <!-- <button class="btn btn-small btn-outline btn-add" id="addConfigurationBtn" type="button">Add New</button> -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-md btn-default" data-bs-dismiss="modal" id="modalConfirmJensen" disabled>Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+         <div class="row locations">
+   <div class="col-sm-12">
+      <div class="location-header location-header__edit">
+         <div class="form-group"> 
+            <button class="btn btn-small btn-outline" id="editLocationBtn" onclick="" style="">Edit Location</button>
+            <button class="btn btn-small btn-success" id="doneEditLocationBtn" onclick="" style="display: none;">Done Editing</button>
+            <button class="btn btn-small btn-outline" id="cancelAddLocationBtn" onclick="" style="display: none;">Cancel</button>
+         </div>
+      </div>
+   </div>
+   <div class="col-sm-12">
+      <div class="form-group">
+         <div class="list locations">
+            <div class="list__container">
+               <div class="row is-flex">
+                  <div class="col-xs-12">
+                     <div class="list-item list-item-existing list-item-pool">
+                        <div class="list__controls">
+                           <!-- <a class="list__controls--settings" id="settingsListEventLocationExisting"></a> -->
+                           <a class="btn btn-link list-item__edit" id="editListEventLocationExisting">Edit</a>
+                           <!-- <a class="btn btn-link list-item__save" id="saveListEventLocationExisting">Done Editing</a> -->
+                           <a class="btn btn-link list-item__delete" id="deleteListEventLocationExisting">Remove</a>
+                        </div>
+                        <p class="location-name text-bold">Selby Aquatic Center</p>
+                        <p class="location-address-street">8501 Potter Park Drive | Sarasota, FL 34238</p>
+                        <span class="help-block">Venue or Pool missing</span>
+                        <button class="location-add-venue btn btn-small btn-outline">
+                           <span><i class="fa fa-plus"></i></span>Add Pool
+                        </button>
+                        <div class="venue__list">
+                           <div class="venue__list--item selected">
+                              <div class="list__controls">
+                                 <a class="btn btn-link venue-edit-button">Edit</a>
+                                 <a class="btn btn-link venue-remove-button">Remove</a>
+                              </div>
+                              <p class="venue-name selected">Competition Pool</p>
+                              <p class="venue-type">(Outdoor)</p>
+                              <span class="help-block">Missing Configuration</span>
+                              <div class="configuration__list">
+                                    <div class="configuration__list--item selected">
+                                       <div class="list__controls">
+                                          <a class="btn btn-link configuration-edit-button">Edit</a>
+                                          <a class="btn btn-link configuration-remove-button">Remove</a>
+                                       </div>
+                                       <p class="configuration-title">50 Meters, 7 Lanes</p>
+                                    </div>
+                                    <div class="configuration__list--item">
+                                       <div class="list__controls">
+                                          <a class="btn btn-link configuration-edit-button">Edit</a>
+                                          <a class="btn btn-link configuration-remove-button">Remove</a>
+                                       </div>
+                                       <p class="configuration-title">25 Yards, 11 Lanes</p>
+                                    </div>
+                                    <div class="configuration__list--item added">
+                                       <div class="list__controls">
+                                          <a class="btn btn-link configuration-edit-button">Edit</a>
+                                          <a class="btn btn-link configuration-remove-button">Remove</a>
+                                       </div>
+                                       <p class="configuration-title">South north - 25 Yards, 6 Lanes</p>
+                                    </div>
+                              </div>
+                              <!-- <button class="location-add-configuration btn btn-small btn-outline">
+                                    <span><i class="fa fa-plus"></i></span>Add Configuration
+                              </button> -->
+                           </div>
+                           <div class="venue__list--item">
+                              <div class="list__controls">
+                                 <a class="btn btn-link venue-edit-button">Edit</a>
+                                 <a class="btn btn-link venue-remove-button">Remove</a>
+                              </div>
+                              <p class="venue-name">Warmup Pool</p>
+                              <p class="venue-type">(Outdoor)</p>
+                              <span class="help-block">Missing Configuration</span>
+                              <div class="configuration__list">
+                                    <div class="configuration__list--item">
+                                       <div class="list__controls">
+                                          <a class="btn btn-link configuration-edit-button">Edit</a>
+                                          <a class="btn btn-link configuration-remove-button">Remove</a>
+                                       </div>
+                                       <p class="configuration-title">25 Yards, 7 Lanes</p>
+                                    </div>
+                              </div>
+                              <!-- <button class="location-add-configuration btn btn-small btn-outline">
+                                    <span><i class="fa fa-plus"></i></span>Add Configuration
+                              </button> -->
+                           </div>
+                        </div>
+                     </div>
+                     <div class="list-item list-item-new list-item-pool">
+                        <span class="list__controls">
+                           <!-- <a class="list__controls--settings" id="settingsListEventLocationNew"></a> -->
+                           <a class="btn btn-link list-item__edit" id="editListEventLocationNew">Edit</a>
+                           <!-- <a class="btn btn-link list-item__save" id="saveListEventLocationNew">Done Editing</a> -->
+                           <a class="btn btn-link list-item__delete" id="deleteListEventLocationNew">Remove</a>
+                        </span>
+                        <p class="location-name text-bold">Jensen Beach Pool</p>
+                        <p class="location-address-street">123 Southeast Sailfish Lane | Stuart, FL 34996</p>
+                        <span class="help-block">Venue or Pool missing</span>
+                        <button class="location-add-venue btn btn-small btn-outline">
+                           <span><i class="fa fa-plus"></i></span>Add Pool
+                        </button>
+                        <div class="venue__list">
+                           <div class="venue__list--item">
+                              <div class="list__controls">
+                                 <a class="btn btn-link venue-edit-button">Edit</a>
+                                 <a class="btn btn-link venue-remove-button">Remove</a>
+                              </div>
+                              <p class="venue-name">The comp pool</p>
+                              <p class="venue-type">(Outdoor)</p>
+                              <span class="help-block">Missing Configuration</span>
+                              <div class="configuration__list">
+                                    <div class="configuration__list--item added">
+                                       <div class="list__controls">
+                                          <a class="btn btn-link configuration-edit-button">Edit</a>
+                                          <a class="btn btn-link configuration-remove-button">Remove</a>
+                                       </div>
+                                       <p class="configuration-title">East west - 25 Yards, 5 Lanes</p>
+                                    </div>
+                              </div>
+                              <!-- <button class="location-add-configuration btn btn-small btn-outline">
+                                    <span><i class="fa fa-plus"></i></span>Add Configuration
+                              </button> -->
+                           </div>
+                        </div>
+                     </div>
+                     <div class="list-item list-item-duplicate list-item-pool">
+                        <span class="list__controls">
+                           <!-- <a class="list__controls--settings" id="settingsListEventLocationDuplicate"></a> -->
+                           <a class="btn btn-link list-item__edit" id="editListEventLocationDuplicate">Edit</a>
+                           <!-- <a class="btn btn-link list-item__save" id="saveListEventLocationDuplicate">Done Editing</a> -->
+                           <a class="btn btn-link list-item__delete" id="deleteListEventLocationDuplicate">Remove</a>
+                        </span>
+                        <p class="location-name text-bold">HealthFit powered by SMH</p>
+                        <p class="location-address-street">5880 Rand Blvd #102 | Sarasota, FL 34238</p>
+                        <span class="help-block">Venue or Pool missing</span>
+                        <button class="location-add-venue btn btn-small btn-outline">
+                           <span><i class="fa fa-plus"></i></span>Add Pool
+                        </button>
+                        <div class="venue__list">
+                           <div class="venue__list--item selected">
+                              <div class="list__controls">
+                                 <a class="btn btn-link venue-edit-button">Edit</a>
+                                 <a class="btn btn-link venue-remove-button">Remove</a>
+                              </div>
+                              <p class="venue-name selected">Main Pool</p>
+                              <p class="venue-type">(Outdoor)</p>
+                              <span class="help-block">Missing Configuration</span>
+                              <div class="configuration__list">
+                                    <div class="configuration__list--item selected">
+                                       <div class="list__controls">
+                                          <a class="btn btn-link configuration-edit-button">Edit</a>
+                                          <a class="btn btn-link configuration-remove-button">Remove</a>
+                                       </div>
+                                       <p class="configuration-title">25 Yards, 8 Lanes</p>
+                                    </div>
+                              </div>
+                              <!-- <button class="location-add-configuration btn btn-small btn-outline">
+                                    <span><i class="fa fa-plus"></i></span>Add Configuration
+                              </button> -->
+                           </div>
+                        </div>
+                     </div>
+                     <div class="list-item list-item-existing list-item-open-water">
+                        <span class="list__controls">
+                           <!-- <a class="list__controls--settings" id="settingsListEventLocationOpenWater"></a> -->
+                           <a class="btn btn-link list-item__edit" id="editListEventLocationOpenWater">Edit</a>
+                           <!-- <a class="btn btn-link list-item__save" id="saveListEventLocationOpenWater">Done Editing</a> -->
+                           <a class="btn btn-link list-item__delete" id="deleteListEventLocationOpenWater">Remove</a>
+                        </span>
+                        <p class="location-name text-bold">Waterfront Park</p>
+                        <p class="location-address-street">330 3rd Street | Clermont, FL 34711</p>
+                        <span class="help-block">Venue or Pool missing</span>
+                        <button class="location-add-venue btn btn-small btn-outline">
+                           <span><i class="fa fa-plus"></i></span>Add Venue
+                        </button>
+                        <div class="venue__list">
+                           <div class="venue__list--item selected">
+                              <div class="list__controls">
+                                 <a class="btn btn-link venue-edit-button">Edit</a>
+                                 <a class="btn btn-link venue-remove-button">Remove</a>
+                              </div>
+                              <p class="venue-name">South Parking Lot</p>
+                              <p class="venue-type">(Lake)</p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xs-12">
+                     <p style="font-size: 1.7rem; width: 100%;">If you would like to make edits to this location, pool or course, contact USMS: <a href="mailto:events@usmastersswimming.org">events@usmastersswimming.org.</a></p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<div class="modal" id="modalDuplicateAddress" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Potential Duplicate Location</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>The address you selected is already in our database. Please select that location from the location search box above.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-md btn-default" data-bs-dismiss="modal" id="closeDuplicateAddress">Continue</button>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="modal" id="modalDuplicateOrganization" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Potential Duplicate Organization</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>The address you selected is already in our database. Please select that organization from the organization search box above.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-md btn-default" data-bs-dismiss="modal" id="closeDuplicateOrganization">Continue</button>
+        </div>
+      </div>
+    </div>
+</div>
+<div class="modal" id="modalDeleteLocation" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Remove Location</h5>
+              <!-- <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button> -->
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <p>This will remove your saved pool or open water venue. Are you sure you want to continue?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-md btn-default btn-ko" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-md btn-default" id="confirmDeleteLocation" data-bs-dismiss="modal">Continue</button>
+          </div>
+      </div>
+  </div>
+</div>
+         <!-- Add New Location -->
+<div class="form-group entry location-info__add-new-location--container">
+    <div class="location-header location-header__add">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-12">
+                    <!-- <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">If your location is not listed, contact USMS to have it added. <a href="mailto:membership@usmastersswimming.org" class="text-link">Contact USMS</a></p> -->
+                     <p>If your location is not listed, contact USMS to have it added: <a href="mailto:events@usmastersswimming.org" class="text-link">events@usmastersswimming.org</a></p>
+                </div>
+            </div>
+            <!-- <div>
+                <button class="btn btn-small btn-outline btn-add" id="addLocationBtn" name="addLocationBtn" type="button" value="Add New">Add New</button>
+                <button class="btn btn-small btn-outline" id="cancelAddLocationBtn" name="cancelAddLocationBtn" type="button" value="Cancel" style="display:none;">Cancel</button>
+            </div> -->
+        </div>
+    </div>
+    <!-- <div class="row"> -->
+        <!-- <div class="col-sm-12 col-md-6"> -->
+            <!-- <div class="event-location-details add-new-inputs">
+    <div class="form-group location-inputs show" id="locationInputs"> -->
+
+<div class="location-details event-location-details">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="input-group location-name required">
+                    <label for="locationName">
+                        Enter Your Location Name<span class="icon-help" data-toggle="tooltip" data-placement="top" title="Enter the facility or open water venue name." data-container="body" data-original-title=""></span>
+                    </label>
+                    <input type="text" class="form-control entry__input entry-primary__input" name="LocationName" id="locationName" maxlength="80" placeholder=""/>
+                    <span class="help-block help-block--LocationName">Name required</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="input-group location-address--street required">
+                    <label for="locationAddressStreet">
+                        Street Address (must select from the dropdown, do not copy and paste!)
+                        <span class="icon-help" data-toggle="tooltip" data-placement="top" title="You must select an address from the dropdown." data-container="body" data-original-title=""></span>
+                    </label>
+                    <input
+                        type="text"
+                        class="form-control pac-target-input"
+                        name="LocationAddressStreet"
+                        id="locationAddressStreet"
+                        autocomplete="off"
+                        maxlength="255"
+                        placeholder="Enter an address"
+                    />
+                    <span class="help-block help-block--LocationAddressStreet">Must select address from the Google dropdown list</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="input-group location-type required">
+                    <label for="locationType">Facility Type</label>
+                    <select name="locationType" class="form-control" id="locationType">
+                        <option value="">Select Facility Type</option>
+                        <option value="High School">High School</option>
+                        <option value="JCC">JCC</option>
+                        <option value="Municipal Pool">Municipal Pool</option>
+                        <option value="Open Water">Open Water</option>
+                        <option value="Private Club">Private Club</option>
+                        <option value="Retirement Community">Retirement Community</option>
+                        <option value="University">University</option>
+                        <option value="YMCA">YMCA</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <span class="help-block help-block--locationType">Please select a location type</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-10">
+                <div class="form-group form-group-hidden">
+                    <div class="input-group location-type--other">
+                        <label for="locationTypeOther">Description</label>
+                        <input type="text" class="form-control" name="LocationTypeOther" id="locationTypeOther" maxlength="50" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-8">
+            <div class="input-group entry-confirm">
+                <label style="margin: 0 0 1.5rem; font-weight: normal;" class="caption" for="addLocation">After you've entered your facility information, click the button below to save it as your location.</label>
+                <button class="btn btn-small save-location" id="confirmNewFacility">Continue</button>
+                <button class="btn btn-small btn-outline" id="cancelNewFacility">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+        <!-- </div> -->
+    <!-- </div> -->
+    <div class="row">
+        <div class="col-xs-12 col-sm-6">
+            <div class="list-venue-form">
+    <div class="input-group required">
+        <label for="venueName">Pool or Open Water Venue Name</label>
+        <input type="text" class="form-control" name="venueName" id="venueName" maxlength="80" />
+        <span class="help-block help-block--venueName">Please enter a venue name</span>
+    </div>
+    <div class="input-group input-group--poolType required">
+        <label for="poolType">Body of Water</label>
+        <select name="poolType" class="form-control" id="poolType">
+            <option value="">Select Pool Type</option>
+            <option value="Indoor">Indoor</option>
+            <option value="Outdoor">Outdoor</option>
+        </select>
+        <span class="help-block help-block--poolType">Please enter a pool type</span>
+    </div>
+    <div class="input-group required input-group--openWaterType fade">
+        <label for="openWaterType">Body of Water</label>
+        <select name="openWaterType" class="form-control" id="openWaterType">
+            <option value="">Select Open Water Type</option>
+            <option value="Lake">Lake</option>
+            <option value="Ocean">Ocean</option>a
+            <option value="Reservoir">Reservoir</option>
+            <option value="River">River</option>
+            <option value="Creek">Creek</option>
+        </select>
+        <span class="help-block help-block--openWaterType">Please enter a type</span>
+    </div>
+    <div class="input-group checkbox-group input-group--course input-group--add-new-course">
+        <span class="help-block help-block--selectNewCourse">Please select a course</span>
+        <label class="checkbox-label" for="courseSCY">
+            <div class="checkbox-container">
+                <input type="checkbox" name="courseSCY" id="courseSCY" />
+                <span class="checkbox__placeholder"></span>
+            </div>
+            Short Course Yards
+        </label>
+        <label class="checkbox-label" for="courseSCM">
+            <div class="checkbox-container">
+                <input type="checkbox" name="courseSCM" id="courseSCM" />
+                <span class="checkbox__placeholder"></span>
+            </div>
+            Short Course Meters
+        </label>
+        <label class="checkbox-label" for="courseLCM">
+            <div class="checkbox-container">
+                <input type="checkbox" name="courseLCM" id="courseLCM" />
+                <span class="checkbox__placeholder"></span>
+            </div>
+            Long Course Meters
+        </label>
+        <label class="checkbox-label" for="courseOther">
+            <div class="checkbox-container">
+                <input type="checkbox" name="courseOther" id="courseOther" />
+                <span class="checkbox__placeholder"></span>
+            </div>
+            Other
+        </label>
+    </div>
+    <div class="input-group checkbox-group input-group--venueCableCourse fade">
+        <label class="checkbox-label" for="venueCableCourse">
+            <div class="checkbox-container">
+                <input type="checkbox" name="venueCableCourse" id="venueCableCourse" />
+                <span class="checkbox__placeholder"></span>
+            </div>
+            Cable Course
+        </label>
+    </div>
+    <div class="input-group list-venue-form__cable-course-form list-venue-form__cable-course-form--fade">
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="input-group required">
+                    <label>Distance</label>
+                    <input class="form-control" type="number" id="venueCableCourseValue" name="venueCableCourseValue" />
+                    <span class="help-block help-block--venueCableCourseValue">Please enter a distance</span>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="input-group required">
+                    <label>Unit</label>
+                    <select name="venueCableCourseUnit" class="form-control" id="venueCableCourseUnit" required="">
+                        <option value="Unit">Unit</option>
+                        <option value="Meters">Meters</option>
+                        <option value="Miles">Miles</option>
+                    </select>
+                    <span class="help-block help-block--venueCableCourseUnit">Please enter a unit</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="input-group">
+        <label style="margin: 2.5rem 0 1.5rem; font-weight: normal;">After you've entered your pool information, click the button below to save and continue</label>
+        <button class="btn btn-small" id="saveFormPool" >Confirm</button>
+        <button class="btn btn-small btn-outline" id="cancelSaveVenue">Cancel</button>
+    </div>
+</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-8">
+            <div class="input-group list-configuration-form">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="input-group required">
+                <label>Configuration Name</label>
+                <input class="form-control" type="text" id="configurationName" name="configurationName" maxlength="80" />
+                <span class="help-block help-block--configurationName">Please enter a configuration name</span>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="input-group required">
+                <label>Lanes (1-50)</label>
+                <input class="form-control" type="number" min="1" max="50" id="configurationLanes" name="configurationLanes" />
+                <span class="help-block help-block--configurationLanes">Please enter number of lanes</span>
+            </div>
+        </div>
+        <div class="col-xs-8">
+            <div class="input-group required">
+                <label>Length</label>
+                <select name="configurationLength" class="form-control" id="configurationLength">
+                    <option value="">Select Length</option>
+                    <option value="25 Meters">25 Meters</option>
+                    <option value="25 Yards">25 Yards</option>
+                    <option value="50 Meters">50 Meters</option>
+                    <option value="Other">Other</option>
+                </select>
+                <span class="help-block help-block--configurationLength">You must select a length</span>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="input-group required input-group--configurationLengthOther fade">
+                <label>Other Length</label>
+                <input class="form-control" type="text" maxlength="50" id="configurationOtherLength" name="configurationLengthOther" />
+                <span class="help-block help-block--configurationLengthOther">Please enter length value</span>
+            </div>
+        </div>
+        <!-- <div class="input-group">
+            <label class="checkbox-label">
+                <div class="checkbox-container">
+                    <input type="checkbox" name="usmsVerified" id="usmsVerified" />
+                    <span class="checkbox__placeholder"></span>
+                </div>
+                USMS Verified
+                <span
+                    class="icon-help"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title=""
+                    data-container="body"
+                    data-original-title="The distance for the listed pool configuration has been measured then submitted to and verified by USMS so it can host sanctioned meets and be used to break records. If you are not sure of the date, enter 1111-01-01."
+                ></span>
+            </label>
+        </div> -->
+        <div class="input-group usms-verified-form usms-verified-form--fade required">
+            <input type="text" name="usmsVerifiedDate" id="usmsVerifiedDate" placeholder="YYYY-MM-DD" maxlength="10" />
+            <span class="help-block help-block--usmsVerifiedDate">Please enter a valid date</span>
+        </div>
+        <div class="input-group">
+            <label style="margin: 1.5rem 0; font-weight: normal;" class="caption" for="addConfiguration">After you've entered a pool configuration, click the button below to save and continue.</label>
+            <button class="btn btn-small" id="saveFormConfiguration">Confirm</button>
+            <button class="btn btn-small btn-outline" id="cancelSaveConfiguration">Cancel</button>
+        </div>
+    </div>
+</div>
+        </div>
+    </div>
+    <div class="form-group location-information__locations-list">
+        <div class="list locations-list">
+            <div class="list__header locations-list__header">
+                <div class="list__controls locations-list__controls" style="display: none;">
+                    <button class="list__controls--settings" id="listLocationsSettings"></button>
+                    <button class="btn btn-link" id="editLocationsList">Edit</button>
+                    <button class="btn btn-link" id="saveLocationsList">Done Editing</button>
+                    <button class="btn btn-link" id="cancelLocationsList">Cancel</button>
+                </div>
+            </div>
+            <div class="list__container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="list-item">
+                            <div class="list__controls">
+                                <button class="btn btn-link list-item__edit">Edit</button>
+                                <button class="btn btn-link list-item__delete">Remove</button>
+                            </div>
+                            <p class="location-name text-bold">LA Fitness</p>
+                            <p class="location-address-street">8502 Cooper Creek Blvd | Sarasota, FL 34201</p>
+                            <span class="help-block">Venue or Pool missing</span>
+                            <button class="location-add-venue btn btn-small btn-outline">
+                                <span><i class="fa fa-plus"></i></span>Add Pool
+                            </button>
+                            <div class="venue__list">
+                                <div class="venue__list--item">
+                                    <div class="list__controls"><button class="btn btn-link venue-edit-button">Edit</button><button class="btn btn-link venue-remove-button">Remove</button></div>
+                                    <p class="venue-name">Pool</p>
+                                    <p class="venue-type">(Indoor)</p>
+                                    <span class="help-block">Missing Configuration</span>
+                                    <div class="configuration__list">
+                                        <div class="configuration__list--item">
+                                            <div class="list__controls"><button class="btn btn-link configuration-edit-button">Edit</button><button class="btn btn-link configuration-remove-button">Remove</button></div>
+                                            <p class="configuration-title">Pool - 25 Yards, 8 Lanes</p>
+                                        </div>
+                                    </div>
+                                    <button class="location-add-configuration btn btn-small btn-outline">
+                                        <span><i class="fa fa-plus"></i></span>Add Configuration
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+         <style>
+    #tempNavCourseDescription {
+        display: inline;
+        position: relative;
+        /* margin-left: 3rem; */
+        float: left;
+        margin-top: -6rem;
+    }
+    #tempNavCourseDescription span {
+        color: red;
+        font-size: 1.4rem;
+        line-height: 50%;
+        padding: 0;
+        margin: 0;
+        height: 1.5rem;
+    }
+    #tempNavCourseDescription span:hover {
+        cursor: pointer;
+    }
+    @media (min-width: 1200px) {
+        #tempNavCourseDescription {
+            margin-top: -6rem;
+            float: right;
+        }
+    }
+</style>
+<div class="row course-description">
+    <div class="col-xs-12">
+        <!-- <h5 style="display:inline; font-size: 1.4rem;">Course Description</h5> -->
+        <div class="input-group input-footnote">
+            <label>Course Description</label>    
+        </div>
+        <p id="tempNavCourseDescription"><span id="default">Default</span>&nbsp;&nbsp;<span id="optionA">Option A</span>&nbsp;&nbsp;<span id="optionB">Option B</span>&nbsp;&nbsp;<span id="optionC">Option C</span>&nbsp;&nbsp;<span id="optionD">Option D</span></p>
+        <div class="list list--result">
+            <div class="list__container">
+                <div class="row is-flex">
+                   <div class="col-xs-12">
+                    <div class="list-item list-item-default">
+                        <p class="course-description-link">Once a pool configuration is selected, a course description will be shown. After selection, if you feel this description is not accurate, please contact <a href="mailto:events@usmastersswimming.org">events@usmastersswimming.org</a>.</p>
+                    </div>
+                      <div class="list-item list-item-option-a">
+                        <p>The length of the competition course without a bulkhead is in compliance and on file with USMS in accordance with articles 105.1.7 and 106.2.1.</p>
+                      </div>
+                      <div class="list-item list-item-option-b">
+                        <p>The length of the competition course has been measured and is NOT in compliance with USMS articles 105.1.7 and 106.2.1: Times achieved in the meet will NOT be eligible for USMS Top 10 and records.</p>
+                      </div>
+                      <div class="list-item list-item-option-c">
+                        <p>The length of the competition course is not on file with USMS. Eligibility of times achieved in this meet will be contingent upon pool length measurement and approval with USMS; if bulkheads are present, their placement must also be confirmed by measurements at the meet (USMS articles 105.1.7 and 106.2.1).</p>
+                      </div>
+                      <div class="list-item list-item-option-d">
+                        <p>The length of the competition course is in compliance and on file with USMS in accordance with articles 105.1.7 and 106.2.1, but as a bulkhead course, is subject to length confirmation. Eligibility of times for USMS Top 10 and records will be contingent on verification of bulkhead placement.</p>
+                      </div>
+                   </div>
+                </div>
+             </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#default").click( function() {
+        $(".course-description .list-item").hide();
+        $(".list-item-default").toggle();
+    });
+    $("#optionA").click( function() {
+        $(".course-description .list-item").hide();
+        $(".list-item-option-a").toggle();
+    });
+    $("#optionB").click( function() {
+        $(".course-description .list-item").hide();
+        $(".list-item-option-b").toggle();
+    });
+    $("#optionC").click( function() {
+        $(".course-description .list-item").hide();
+        $(".list-item-option-c").toggle();
+    });
+    $("#optionD").click( function() {
+        $(".course-description .list-item").hide();
+        $(".list-item-option-d").toggle();
+    });
+</script>
+         <!-- Timing System -->
+<div class="row form-group timing-system-group">
+    <div class="col-xs-12 col-sm-8 col-md-5">
+
+        <div class="input-group event-info-lmsc required">
+            <label for="SelectTimingSystem">
+                Timing System
+               <!-- <span class="icon-help" data-toggle="tooltip" data-placement="top" title="Select the timing system that will be used." data-container="body" data-original-title=""></span> -->
+            </label>
+            <select name="SelectTimingSystem" class="form-control" id="selectTimingSystem" required="True">                                                            
+               <option value="" disabled selected>Select a Timing System</option>
+               <option value="automatic-semiautomatic">Automatic with semi-automatic backup</option>
+               <option value="semiautomatic2">Semi-automatic with manual backup of at least 2 valid watches</option>
+               <option value="semiautomatic1">Semi-automatic with manual backup of 1 valid watch</option>
+               <option value="manual2">Manual with at least 2 valid watches</option>
+               <option value="manual1">Manual with 1 valid watch</option>
+               <option value="manual2only">Automatic with manual backup of at least 2 valid watches only</option>
+            </select>
+            <span class="help-block help-block--SelectTimingSystem">Please select a timing system.</span>
+         </div>
+    </div>
+    <div class="col-xs-12">
+        <div class="timing-system-note">
+            <div class="input-group-header">
+                Timing System Statement
+            </div>
+            <p class="default">Please review 103.18.5—103.18.9 in the USMS Rule Book for more information on these statements. They are based on your timing system set up and usage.</p>
+            <p class="automatic-semiautomatic">Times from this competition will be eligible for world record, USMS record, and Top 10 consideration. For more information, see 103.18.9 in the USMS Rule Book.</p>
+            <p class="semiautomatic2">Auto w semi auto </p>
+            <p class="semiautomatic1">Times from this competition will be eligible for USMS records and Top 10 consideration, but not for world records. For more information, see 103.18.9 in the USMS Rule Book.</p>
+            <p class="manual2">Times from this competition will be eligible for USMS Top 10 consideration, but not for world or USMS records. For more information, see 103.18.9 in the USMS Rule Book.</p>
+            <p class="manual1">Times from this competition will not be eligible for world record, USMS record, or Top 10 consideration. For more information, see 103.18.9 in the USMS Rule Book.</p>
+            <p class="manual2only">Auto with 2 manual</p>
+        </div>   
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+      $('#selectTimingSystem').change(function() {
+        var selectedValue = $(this).val();
+        console.log(selectedValue);
+        showTimingStatement(selectedValue);
+        console.log(selectedValue);
+      });
+
+      // Function to be called based on selected value
+      function showTimingStatement(value) {
+        switch(value) {
+          case 'automatic':
+            console.log('You selected Option 1');
+            $(".timing-system-note p").hide();
+            $(".timing-system-note p.automatic").show();
+            break;
+          case 'semiautomatic':
+            console.log('You selected Option 2');
+            $(".timing-system-note p").hide();
+            $(".timing-system-note p.semi-automatic").show();
+            break;
+          case 'manual1':
+            console.log('You selected Option 3');
+            $(".timing-system-note p").hide();
+            $(".timing-system-note p.manual1").show();
+            break;
+        case 'manual2':
+            console.log('You selected Option 4');
+            $(".timing-system-note p").hide();
+            $(".timing-system-note p.manual2").show();
+            break;
+        default:
+            console.log('Please select an option');
+        }
+      }
+    });
+  </script>
+
+  <!-- <script>
+    //  Show variations of timing system statement
+    $("#timingAutomatic").click( function() {
+        $(".timing-system-note p").hide();
+        $(".timing-system-note p.automatic").show();
+    });
+    $("#timingSemiAutomatic").click( function() {
+        $(".timing-system-note p").hide();
+        $(".timing-system-note p.semi-automatic").show();
+    });
+    $("#timingManual").click( function() {
+        $(".timing-system-note p").hide();
+        $(".timing-system-note p.manual").show();
+    });
+    $("#timingManualMinimum").click( function() {
+        $(".timing-system-note p").hide();
+        $(".timing-system-note p.manual-min").show();
+    });
+</script> -->
+
+         <div class="section__controls">
+            <button class="btn save-section" type="button" id="saveLocation">Save &amp; Continue</button>
+         </div>
+      </div>
+   </div>
+</form>
+
+<script src="/event/js/location.js"></script>
+
+<script>
+   var sectionId = "#location-information";
+   var sectionInputs = sectionId + " input";
+   var sectionSelects = sectionId + " select";
+   var sectionTextarea = sectionId + " textarea";
+   $(sectionInputs).click( function() {
+      $("#saveLocation").prop('disabled', false);
+   });
+   $(sectionSelects).on("change", function() {
+      $("#saveLocation").prop('disabled', false);
+   });
+   
+   $("#saveLocation").click( function() {
+      $('#accordion').find('.collapse.in').parent().addClass('hasData');
+      $("#entry-information h3").click();
+      $(document.documentElement).animate({
+         scrollTop: $("#entry-information").offset().top - 45
+      }, 100);
+   });
+</script>
+                              <form id="form-accept-submit">
+   <div class="section section-accept-submit" id="accept-submit">
+      <h3 class="section__header" data-target="#accept-submit__content" data-toggle="collapse in" aria-expanded="false" aria-controls="accept-submit__content">
+         <!-- <span class="section__number"></span> -->
+         Accept Terms and Submit Request
+      </h3>
+      <div class="section__content collapseXXX in" id="accept-submit__content" data-parent="#accordion">
+         <div class="row">
+            <div class="col-xs-12">
+               <div class="card liability submit">
+
+                  <div class="form-group agree-terms">
+                     <div class="input-group checkbox-group payment-agreement">
+                           <label class="checkbox-label" for="agreeTerms">
+                              <div class="checkbox-container">
+                                 <input name="agree-terms" type="checkbox" id="agreeTerms" onchange="">
+                                 <span class="checkbox__placeholder"></span>
+                              </div>
+                              I agree that all information I'm providing is factual.
+                           </label>
+                           <span class="help-block help-block--agreeTerms">Please agree to the terms</span>
+                     </div>
+                  </div>
+
+               </div>
+            </div>
+         </div>
+         <div class="row">
+               <div class="section__controls">
+                  <button class="btn save-section" id="submitEdit" type="button">Save & Submit</button>
+               </div>
+         </div>
+      </div>
+   </div>
+</form>
+
+<div class="modal" id="modalSaveEdits" tabindex="-1" role="dialog">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <p>Thank you for editing your event information. Your event has been sent for approval. You should hear back in no more than 14 days.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-md btn-default" id="confirmSaveEditsModal" data-bs-dismiss="modal">Okay</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+<script>
+  $("#selectEventClass").on('change', function() {
+     if ($(this).val() === 'sanctioned') {
+        $(".terms-recognized").hide();
+        $(".terms-sanctioned").show();
+     } else if ($(this).val() === 'recognized') {
+        $(".terms-recognized").show();
+        $(".terms-sanctioned").hide();  
+     }
+  });
+  $("#submitEdit").click( function() {
+     console.log("Y");
+       $("#modalSaveEdits").modal('show');
+   });
+</script>
+
+<script>
+   $("#selectEventClass").on('change', function() {
+      if ($(this).val() === 'sanctioned') {
+         $(".terms-recognized").hide();
+         $(".terms-sanctioned").show();
+      } else if ($(this).val() === 'recognized') {
+         $(".terms-recognized").show();
+         $(".terms-sanctioned").hide();  
+      }
+   });
+</script>
+                           </div>
+
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </main>
+         <footer>
+   <div id="footerOverlay">
+      <div class="container-fluid">
+         <div class="row">
+            <div class="footer-content">
+               <div class="footer-left">
+                  <div class="footer-left__menu">
+                     <div class="row">
+                        <div class="col-xs-6 col-md-3">
+                           <div class="footer-menu">
+                              <h3 class="footer-menu__header">
+                                 About USMS
+                              </h3>
+                              <ul class="footer-menu__list list--nostyle">
+                                 <li class="footer-menu__list-item">
+                                    <a href="/about-usms/what-is-us-masters-swimming" target="" title="What is Masters Swimming?">
+                                    What is Masters Swimming?
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/org.php" target="" title="Organization">
+                                    Organization
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/natoffice.php" target="" title="National Office">
+                                    National Office
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/hist/" target="" title="USMS History">
+                                    USMS History
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="https://www.swimoutlet.com/ProductBrand.asp?Brand=1766&amp;click=1668780" target="_blank" title="Logo Merchandise">
+                                    Logo Merchandise
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/about-usms/partners" target="" title="Partners">
+                                    Partners
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/about-usms/swimmer-magazine" target="" title="SWIMMER Magazine">
+                                    SWIMMER Magazine
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/about-usms/usms-swimming-saves-lives-foundation" target="" title="Swimming Saves Lives Foundation">
+                                    Swimming Saves Lives Foundation
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/content/applyforgrant" target="" title="How to Apply for a Grant">
+                                    How to Apply for a Grant
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="https://www.collegeclubswimming.com/" target="_blank" title="College Club Swimming">
+                                    College Club Swimming
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="http://forums.usms.org" target="" title="Discussion Forums">
+                                    Discussion Forums
+                                    </a>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                           <div class="footer-menu">
+                              <h3 class="footer-menu__header">
+                                 Events
+                              </h3>
+                              <ul class="footer-menu__list list--nostyle">
+                                 <li class="footer-menu__list-item">
+                                    <a href="/events" target="" title="Calendar of Events">
+                                    Calendar of Events
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/comp/sanction/request.php" target="" title="Sanction an Event">
+                                    Sanction an Event
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/events/fitness-events" target="" title="Fitness Events">
+                                    Fitness Events
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/events/national-championships" target="" title="National Championships">
+                                    National Championships
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/events/event-results-database" target="" title="Event Results">
+                                    Event Results
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/comp/meets/toptimes.php" target="" title="Rankings">
+                                    Rankings
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/events/usms-records" target="" title="Records">
+                                    Records
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/comp/tt/" target="" title="Top 10">
+                                    Top 10
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/comp/aa/" target="" title="All-American">
+                                    All-American
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/comp/as/" target="" title="All-Stars">
+                                    All-Stars
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/events/18th-fina-world-masters-championships" target="" title="FINA World Masters Championships">
+                                    FINA World Masters Championships
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="https://www.teamunify.com/SubTabGeneric.jsp?team=uana&amp;_stabid_=57815" target="_blank" title="Pan American Championships">
+                                    Pan American Championships
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/events/usms-stroke-development-clinics" target="" title="Stroke Development Clinic">
+                                    Stroke Development Clinic
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="https://www.trianglesportscommission.com/usms-hpc/" target="_blank" title="High Performance Camp">
+                                    High Performance Camp
+                                    </a>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                           <div class="footer-menu">
+                              <h3 class="footer-menu__header">
+                                 Join
+                              </h3>
+                              <ul class="footer-menu__list list--nostyle">
+                                 <li class="footer-menu__list-item">
+                                    <a href="/join-usms/join-or-renew" target="" title="Join or Renew">
+                                    Join or Renew
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/join-usms/membership-benefits" target="" title="Membership Benefits">
+                                    Membership Benefits
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/join-usms/trial-membership-general" target="" title="TMF - General">
+                                    TMF - General
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/join-usms/trial-membership" target="" title="TMF - TMS">
+                                    TMF - TMS
+                                    </a>
+                                 </li>
+                              </ul>
+                           </div>
+                           <div class="footer-menu">
+                              <h3 class="footer-menu__header">
+                                 Club Central
+                              </h3>
+                              <ul class="footer-menu__list list--nostyle">
+                                 <li class="footer-menu__list-item">
+                                    <a href="/club-central" target="" title="Club Central">
+                                    Club Central
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/club-central/start-a-club" target="" title="How to Start a Club">
+                                    How to Start a Club
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/club-central/club-login" target="" title="Register or Renew a Club">
+                                    Register or Renew a Club
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/content/coachresources" target="" title="Club Resources">
+                                    Club Resources
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/club-central/gold-club-designation" target="" title="Gold Club Designation">
+                                    Gold Club Designation
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/content/insuranceinfo" target="" title="Insurance">
+                                    Insurance
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/reg/members/" target="" title="Membership Lists">
+                                    Membership Lists
+                                    </a>
+                                 </li>
+                              </ul>
+                           </div>
+                           <div class="footer-menu">
+                              <h3 class="footer-menu__header">
+                                 Coach Central
+                              </h3>
+                              <ul class="footer-menu__list list--nostyle">
+                                 <li class="footer-menu__list-item">
+                                    <a href="/coach-central" target="" title="Coach Central">
+                                    Coach Central
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/coach/content/becomeacoach" target="" title="Become a Coach">
+                                    Become a Coach
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/content/coachcert" target="" title="Coach Certification">
+                                    Coach Certification
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/coach/certified/certifiedcoaches.php" target="" title="Certified Coaches">
+                                    Certified Coaches
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/coach/certified/coachinfo.php" target="" title="Designated Coach Resources">
+                                    Designated Coach Resources
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/content/cliniccourse" target="" title="Clinic Course for Coaches">
+                                    Clinic Course for Coaches
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/coach-central/coach-mentor-program" target="" title="Mentor Coach Program">
+                                    Mentor Coach Program
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/content/ondeckcoach" target="" title="On-Deck Coaching">
+                                    On-Deck Coaching
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="http://forums.usms.org/forumdisplay.php?8-Coaching" target="_blank" title="Coaching Jobs">
+                                    Coaching Jobs
+                                    </a>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                           <div class="footer-menu">
+                              <h3 class="footer-menu__header">
+                                 ALTS Central
+                              </h3>
+                              <ul class="footer-menu__list list--nostyle">
+                                 <li class="footer-menu__list-item">
+                                    <a href="/alts-central" target="" title="ALTS Central">
+                                    ALTS Central
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/alts-central/april-is-alts-month" target="" title="April is Adult Learn-to-Swim Month">
+                                    April is Adult Learn-to-Swim Month
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/alts-central/alts-initiatives" target="" title="Adult Learn-to-Swim Initiatives">
+                                    Adult Learn-to-Swim Initiatives
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/content/alts_cert" target="" title="Instructor Certification">
+                                    Instructor Certification
+                                    </a>
+                                 </li>
+                              </ul>
+                           </div>
+                           <div class="footer-menu">
+                              <h3 class="footer-menu__header">
+                                 Fitness and Training
+                              </h3>
+                              <ul class="footer-menu__list list--nostyle">
+                                 <li class="footer-menu__list-item">
+                                    <a href="/club-resources" target="" title="Club Finder">
+                                    Club Finder
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/fitness-and-training/online-workouts" target="" title="Online Workouts">
+                                    Online Workouts
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/events/fitness-events/fitness-series/fitness-series-training-plans" target="" title="Training Plans">
+                                    Training Plans
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/fitness/content/fitnesslogs" target="" title="Fitness Logs">
+                                    Fitness Logs
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/fitness-and-training/articles-and-videos" target="" title="Articles and Videos">
+                                    Articles and Videos
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/fitness-and-training/articles-and-videos?contentType[0]=Article&amp;contentType[1]=Video&amp;filter=&amp;tags[0]=Drills&amp;categories[0]=Technique%20and%20Training&amp;page=1&amp;perPage=10&amp;filterItem=20cf26a9-68b1-490f-8408-471cdd7513f8" target="" title="Drills and Technique">
+                                    Drills and Technique
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/fitness-and-training/articles-and-videos?contentType[0]=Article&amp;contentType[1]=Video&amp;filter=swimming%20101&amp;page=1&amp;perPage=10&amp;filterItem=20cf26a9-68b1-490f-8408-471cdd7513f8" target="" title="Swimming 101">
+                                    Swimming 101
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/alts-central/learn-to-swim" target="" title="Learn to Swim">
+                                    Learn to Swim
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/content/triathlon" target="" title="Triathletes">
+                                    Triathletes
+                                    </a>
+                                 </li>
+                              </ul>
+                           </div>
+                           <div class="footer-menu">
+                              <h3 class="footer-menu__header">
+                                 Volunteers
+                              </h3>
+                              <ul class="footer-menu__list list--nostyle">
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/lmschb/" target="" title="Guide to Operations">
+                                    Guide to Operations
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/policies/" target="" title="Policy and Governance">
+                                    Policy and Governance
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/volunteer-central/us-masters-swimming-rule-book" target="" title="Rule Book">
+                                    Rule Book
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/lmsc/" target="" title="LMSCs">
+                                    LMSCs
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/content/volunteer" target="" title="Become a Volunteer">
+                                    Become a Volunteer
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/gto/gto_officials" target="" title="Officials">
+                                    Officials
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/committee.php" target="" title="Committees and Assignments">
+                                    Committees and Assignments
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/minutes/" target="" title="Meeting Minutes">
+                                    Meeting Minutes
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/conv/" target="" title="Convention">
+                                    Convention
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/elections/" target="" title="Elections">
+                                    Elections
+                                    </a>
+                                 </li>
+                                 <li class="footer-menu__list-item">
+                                    <a href="/admin/awards/" target="" title="Awards">
+                                    Awards
+                                    </a>
+                                 </li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="footer-right">
+                  <div class="subscribe">
+                     <div>
+                        <h4 class="subscribe__header m-b-30"></h4>
+                        <p class="m-b-30"></p>
+                        <a class="btn btn-primary btn-lg text-uppercase" href="/login-to-registration-page">Join Now</a>
+                     </div>
+                  </div>
+                  <nav>
+                     <ul class="social-share-icons list--nostyle p-tb-30">
+                        <li class="social-share-icons__item">
+                           <a href="http://facebook.com/USMastersSwimmingFanPage/" target="_blank" title="Facebook">
+                           <i class="fa fa-facebook"></i>
+                           </a>
+                        </li>
+                        <li class="social-share-icons__item">
+                           <a href="https://www.instagram.com/mastersswimming" target="_blank" title="Instagram">
+                           <i class="fa fa-instagram"></i>
+                           </a>
+                        </li>
+                        <li class="social-share-icons__item">
+                           <a href="https://twitter.com/MastersSwimming" target="_blank" title="Twitter">
+                           <i class="fa fa-twitter"></i>
+                           </a>
+                        </li>
+                        <li class="social-share-icons__item">
+                           <a href="https://www.youtube.com/user/USMastersSwimming" target="_blank" title="YouTube">
+                           <i class="fa fa-youtube"></i>
+                           </a>
+                        </li>
+                     </ul>
+                  </nav>
+                  <small class="copyright">
+                  &copy; 2018 U.S. Masters Swimming
+                  </small>
+                  <nav>
+                     <ul class="nav nav-service navbar-nav nav-pills">
+                        <li class="">
+                           <a href="/about-usms/contact-usms" target="" title="Contact Us" class="">
+                           Contact Us        </a>
+                        </li>
+                        <li class="">
+                           <a href="/content/privacy" target="" title="USMS Privacy Policy" class="">
+                           USMS Privacy Policy        </a>
+                        </li>
+                     </ul>
+                  </nav>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</footer>
+
+      </div>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Local Fallbacks -->
+<!-- <script src="/js/src/jquery-3.6.0.min.js"></script> -->
+<!-- <script src="/js/src/bootstrap.bundle.min.js"></script> -->
+
+<script>
+    var accordion = $('#accordion');
+    var section = $(this).parent();
+    // accordion.on('hide.bs.collapse', function () {
+    //     console.log("hide");
+    // });
+    // accordion.on('hidden.bs.collapse', function () {
+    //     console.log("hidden");
+    // });
+    accordion.on('show.bs.collapse','.collapse', function() {
+        accordion.find('.collapse.in').parent().removeClass('isEdit');
+        accordion.find('.collapse.in').removeClass('in');
+        let section = $(this).parent();
+        $(section).addClass('isEdit');
+        // console.log("show")
+    });
+    // accordion.on('shown.bs.collapse', function () {
+    //     console.log("shown");
+    // });
+
+    $("[data-toggle='tooltip']").tooltip();
+
+</script>
+      <script type="text/javascript">
+
+         setViewName("Pool");
+
+         // function setPageName() {
+         //    const pageName = "Pool";
+         //    $(document).trigger("settingPageName", { data: pageName });
+         // }
+
+         // Open first section on this page
+         $("#event-name h3").click();
+         // Set has data state on all sections
+         $('#accordion').find('.collapse').parent().removeClass('isEdit');
+         $('#accordion').find('.collapse').parent().addClass('hasData');
+
+         // Upgrade to sanction button and meet announcement modal
+         var modalConfirmMeetAnnouncement = new bootstrap.Modal(document.getElementById('modalConfirmMeetAnnouncement'));
+         $("#upgradeToSanction").click( function() {
+            $("#modalConfirmMeetAnnouncement").removeClass('fade');
+            modalConfirmMeetAnnouncement.show();
+         });
+
+      </script>
+      
+   </body>
+</html>
+
+<script type="text/javascript" src="/event/js/input-values-sanction.js"></script>
