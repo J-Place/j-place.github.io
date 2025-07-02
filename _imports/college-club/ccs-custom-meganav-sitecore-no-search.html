@@ -4,16 +4,6 @@
         margin: 0;
         padding: 0;
     }
-
-    header + main {
-        margin-top: 80px;
-    }
-
-    @media (min-width: 1200px) {
-        header + main {
-            margin-top: 110px;
-        }
-    }
     .header-static {
         position: fixed;
         width: 100%;
@@ -102,7 +92,8 @@
         color: #5C5C5C;
         outline: none;
     }
-    .submenu {
+    .submenu,
+    #submenuSearch {
         display: none;
         position: fixed;
         background-color: #000;
@@ -110,7 +101,7 @@
         height: 100vh;
         width: 100%;
         top: 110px;
-        right: 0;
+        left: 0;
         margin: 0;
         padding: 3rem;
         z-index: 1000;
@@ -160,8 +151,7 @@
     .submenu li a {
         display: block;
         padding: 1.75rem 0;
-        color: white !important;
-        text-decoration: none;
+        color: white;
         text-shadow: 0 0 3px black, 0 0 8px black;
         text-decoration: none;
         font-size: 1.8rem;
@@ -176,18 +166,14 @@
         color: #5C5C5C;
     }
     #submenuSearch {
-        display: none;
-        position: fixed;
-        /* max-width: 600px; */
-        right: 0;
+        left: 0;
         width: 100%;
-        list-style: none;
-        background-color: #000;
-        height: 8rem;
+        height: 12rem;
         top: 80px;
         margin: 0;
-        padding: 1rem 0 0;
-        z-index: 999;
+        padding: 3rem 0 0;
+        position: fixed;
+        display: none;
     }
     #submenuSearch.open {
         display: inline-block;
@@ -209,8 +195,7 @@
         font-size: 2.3rem;
         font-weight: 300;
         letter-spacing: 0.5px;
-        padding-left: 1.5rem;
-        padding-right: 4rem;
+        padding-right: 3rem;
         padding-bottom: .4rem;
     }
     #submitSearch a {
@@ -342,18 +327,9 @@
             padding: 0;
             margin: 21px 0;
     }
-    @media (min-width: 992px) and (max-width: 1199px) {
-        #submenuSearch input {
-            width: calc(100% - 40rem);
-            left: 20rem;
-        }
-        #searchSubmit {
-            right: 20rem;
-        }
-    }
     @media (min-width: 1200px) {
         .ccs-logo {
-            padding: 0 3rem 0 0;
+            padding: 0 3rem;
         }
         .ccs-logo img {
             height: 70px;
@@ -414,7 +390,7 @@
             top: 74px;
             left: -2rem;
             height: auto;
-            min-width: 300px;
+            min-width: 270px;
             margin: 0;
             padding: 1.5rem 3rem;
             z-index: 1000;
@@ -441,10 +417,7 @@
         }
         #submenuSearch input {
             height: 40px;
-            width: 100%;
-            padding-left: 5rem;
-            left: unset;
-            right: 0;
+            width: 85%;
             position: absolute;
         }
         .submenu-login {
@@ -458,83 +431,110 @@
             width: auto;
         }
     }
+    @media (min-width: 992px) and (max-width: 1199px) {
+        #submenuSearch input {
+            width: calc(100% - 40rem);
+            left: 20rem;
+        }
+        #searchSubmit {
+            right: 20rem;
+        }
+    }
+    @media (min-width: 1200px) {
+        #submenuSearch {
+                left: -260px;
+                width: 260px;
+        }
+    }
+    @media (min-width: 1300px) {
+        #submenuSearch {
+                left: -330px;
+                width: 330px;
+        }
+    }
+    @media (min-width: 1350px) {
+        #submenuSearch {
+                left: -380px;
+                width: 380px;
+        }
+    }
+    @media (min-width: 1400px) {
+        #submenuSearch {
+                left: -420px;
+                width: 420px;
+        }
+    }
+    @media (min-width: 1450px) {
+        #submenuSearch {
+                left: -460px;
+                width: 460px;
+        }
+    }
+    @media (min-width: 1500px) {
+        #submenuSearch {
+                left: -500px;
+                width: 500px;
+        }
+    }
 </style>
 
-<div class="ccs-logo" id="cssLogo">
+<div class="ccs-logo">
     <a href="https://ccstest.usms.org/">
         <img width="auto" alt="College Club Swimming" src="https://ccstest.usms.org/site/-/media/ccs/site/ccs-logo-custom.svg" />
     </a>
 </div>
-
-<nav class="main" id="ccsNavMain" role="navigation" aria-label="Main navigation" role="menu" aria-label="Main mobilemenu" aria-hidden="true">
+<nav class="main" role="navigation" aria-label="Main navigation" role="menu" aria-label="Main mobilemenu" aria-hidden="true">
     <ul class="menu" id="mobileNavMain">
         <li>
             <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-events">Events</button>
             <ul id="submenu-events" class="submenu" role="menu" aria-label="Events submenu" aria-hidden="true">
                 <li class="menu-return"><a href="">Return to Menu</a></li>
                 <li><a href="https://www.collegeclubswimming.com/page.cfm?pagetitle=Calendar+of+Events" role="menuitem">Calendar of Events</a></li>
-                <li><a href="/events/National%20Championships" role="menuitem">National Championships</a></li>
-                <li><a href="/events/Regional%20Championships" role="menuitem">Regional Championships</a></li>
-                <li><a href="https://www.collegeclubswimming.com/page.cfm?pagetitle=Submit+an+Event+to+the+Calendar" role="menuitem">Submit an Event to the Calendar</a></li>
+                <li><a href="/events/Championships" role="menuitem">Championships</a></li>
+                <li><a href="https://www.collegeclubswimming.com/page.cfm?pagetitle=Submit+an+Event+to+the+Calendar" role="menuitem">How to Submit an Event to the Calendar</a></li>
+                <li><a href="/about-ccs/CCS%20Style%20Guide" role="menuitem">Style Guide</a></li>
             </ul>
         </li>
         <li>
             <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-results">Results</button>
             <ul id="submenu-results" class="submenu" role="menu" aria-label="Results submenu" aria-hidden="true">
                 <li class="menu-return"><a href="">Return to Menu</a></li>
-                <li><a href="https://www.collegeclubswimming.com/page.cfm?pagetitle=Swim+Meet+Results" role="menuitem">Meet Results</a></li>
-                <li><a href="https://www.collegeclubswimming.com/page.cfm?pagetitle=Event+Rankings" role="menuitem">Rankings</a></li>
-                <li><a href="/results/records" role="menuitem">Records</a></li>
+                <li><a href="/" role="menuitem">Meet Results</a></li>
+                <li><a href="/" role="menuitem">Rankings</a></li>
+                <li><a href="/" role="menuitem">Records</a></li>
             </ul>
         </li>
         <li>
-            <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-clubs">Clubs</button>
-            <ul id="submenu-clubs" class="submenu" role="menu" aria-label="Clubs submenu" aria-hidden="true">
-                <li class="menu-return"><a href="">Return to Menu</a></li>
-                <li><a href="https://www.collegeclubswimming.com/page.cfm?pagetitle=Club+Lookup" role="menuitem">Club Lookup</a></li>
-                <li><a href="https://www.clubassistant.com/club/college_club_swimming.cfm">Club Rosters & Registration</a></li>
-                <li><a href="/clubs/best%20practices" role="menuitem">Best Practises</a></li>
-                <li><a href="/clubs/insurance" role="menuitem">Insurance</a></li>
-            </ul>
+            <button aria-haspopup="false" aria-expanded="false" aria-controls="">Club Lookup</button>
         </li>
         <li>
             <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-about">About</button>
             <ul id="submenu-about" class="submenu" role="menu" aria-label="About submenu" aria-hidden="true">
                 <li class="menu-return"><a href="">Return to Menu</a></li>
-                <li><a href="/about-ccs/contact" role="menuitem">Contact</a></li>
-                <li><a href="/about-ccs/FAQs" role="menuitem">FAQ's</a></li>
-                <li><a href="/about-ccs/Policy%20and%20Governance" role="menuitem">Policy and Governance</a></li>
-                <li><a href="/about-ccs/Town%20Hall%20Meetings" role="menuitem">Town Hall Meetings</a></li>
+                <li><a href="/" role="menuitem">FAQ's</a></li>
+                <li><a href="/" role="menuitem">Policy and Governance</a></li>
+                <li><a href="/" role="menuitem">Town Hall Meetings</a></li>
                 <li><a href="/about-ccs/Advisory%20Board" role="menuitem">Advisory Board</a></li>
-                <li><a href="/about-ccs/Background" role="menuitem">Background</a></li>
-                <li><a href="/about-ccs/Benefits" role="menuitem">Benefits</a></li>
-                <li><a href="/about-ccs/Insurance" role="menuitem">Insurance</a></li>
+                <li><a href="/" role="menuitem">Background</a></li>
+                <li><a href="/" role="menuitem">Benefits</a></li>
             </ul>
         </li>
         <li>
             <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-register">Register</button>
             <ul id="submenu-register" class="submenu" role="menu" aria-label="Register submenu" aria-hidden="true">
                 <li class="menu-return"><a href="">Return to Menu</a></li>
-                <li><a href="https://www.collegeclubswimming.com/page.cfm?pagetitle=Individual+Registration" role="menuitem">Swimmer Registration</a></li>
-                <li><a href="https://www.collegeclubswimming.com/page.cfm?pagetitle=Club+Registration" role="menuitem">Club Registration</a></li>
+                <li><a href="/" role="menuitem">Swimmer Registration</a></li>
+                <li><a href="/" role="menuitem">Club Registration</a></li>
             </ul>
         </li>
     </ul>
 </nav>
-
-<nav class="admin" id="ccsNavAdmin" aria-label="Admin navigation">
+<nav class="admin" aria-label="Admin navigation">
     <ul class="menu">
-        <li class="menu-item--search">
-            <a class="admin-search-btn" id="searchBtn"></a>
-            <div id="submenuSearch">
-                <input id="searchInput" type="text" placeholder="Enter search term" tabindex="0" />
-                <a id="searchSubmit" href="#" role="menuitem"></a>
-            </div>
-        </li>
         <li class="menu-item--login">
             <a class="admin-login-btn" id="adminNavBtn"></a>
             <ul id="submenuAdmin" class="submenu-login">
-                <li><a href="https://www.clubassistant.com/club/login_form.cfm?c=2417" role="menuitem">Swimmer Login</a></li>
+                <li><a href="/" role="menuitem">Swimmer Login</a></li>
                 <li><a href="https://www.clubassistant.com/clubs/?c=2413" role="menuitem">Admin Login</a></li>
             </ul>
         </li>
@@ -544,59 +544,12 @@
     </ul>
 </nav>
 
-<style>
-    .aa-Panel {
-        display: none;
-        /* display: block; */
-        border: 0 none;
-        border-radius: 0;
-        background-color: #000;
-        color: #FFF;
-        left: 0;
-        right: 0;
-        top: 155px;
-        width: 100%;
-        margin: 0;
-        padding: 0 3rem 3rem;
-        font-size: 2.0rem;
-        font-weight: 300;
-        letter-spacing: 0.4px;
-    }
-    .aa-Panel.open {
-        display: block;
-    }
-    .aa-Panel--header {
-        max-height: 600px;
-    }
-    .aa-Item {
-        min-height: 50px;
-    }
-    .aa-ItemContent mark {
-        color: #5C5C5C;
-    }
-    .aa-ItemLink:hover {
-        color: #5C5C5C;
-    }
-    .temp-hide-mobile { display: none; }
-    @media (min-width: 992px) and (max-width: 1199px) {
-        .aa-Panel {
-            padding-left: 19rem;
-            padding-right: 20rem;
-        }
-    }
-    @media (min-width: 1200px) {
-        .aa-Panel {
-            top: 110px;
-            left: unset;
-            right: 140px;
-            min-width: 500px;
-        }
-        .temp-hide-mobile { display: grid; }
-    }
-</style>
 
-<div class="aa-Panel aa-Panel--header">
-    <div class="aa-PanelLayout">
+
+
+
+<div class="aa-Panel aa-Panel--header" style="top: 62px; left: 596.5px; right: 275.5px; width: unset; max-width: unset;">
+    <div class="aa-PanelLayout aa-Panel--scrollable">
         <section class="aa-Source" data-autocomplete-source-id="prod_general">
             <ul class="aa-List" role="listbox" aria-labelledby="autocomplete-0-label" id="autocomplete-0-prod_general-list">
                 <li class="aa-Item" id="autocomplete-0-prod_general-item-0" role="option" aria-selected="false">
@@ -653,7 +606,7 @@
                         </div>
                     </a>
                 </li>
-                <li class="aa-Item temp-hide-mobile" id="autocomplete-0-prod_general-item-6" role="option" aria-selected="false">
+                <li class="aa-Item" id="autocomplete-0-prod_general-item-6" role="option" aria-selected="false">
                     <a class="aa-ItemLink" href="/events/national-championships/pool-national-championships">
                         <div class="aa-ItemContent">
                             <div class="aa-ItemContentBody">
@@ -662,7 +615,7 @@
                         </div>
                     </a>
                 </li>
-                <li class="aa-Item temp-hide-mobile" id="autocomplete-0-prod_general-item-7" role="option" aria-selected="false">
+                <li class="aa-Item" id="autocomplete-0-prod_general-item-7" role="option" aria-selected="false">
                     <a class="aa-ItemLink" href="/events/national-championships/pool-national-championships/2025-pool-national-championships/2025-summer-national-championship/2025-summer-nationals-travel-and-hotels">
                         <div class="aa-ItemContent">
                             <div class="aa-ItemContentBody">
@@ -671,7 +624,7 @@
                         </div>
                     </a>
                 </li>
-                <li class="aa-Item temp-hide-mobile" id="autocomplete-0-prod_general-item-8" role="option" aria-selected="false">
+                <li class="aa-Item" id="autocomplete-0-prod_general-item-8" role="option" aria-selected="false">
                     <a class="aa-ItemLink" href="/events/national-championships/pool-national-championships/2025-pool-national-championships/2025-spring-national-championship">
                         <div class="aa-ItemContent">
                             <div class="aa-ItemContentBody">
@@ -680,7 +633,7 @@
                         </div>
                     </a>
                 </li>
-                <li class="aa-Item temp-hide-mobile" id="autocomplete-0-prod_general-item-9" role="option" aria-selected="false">
+                <li class="aa-Item" id="autocomplete-0-prod_general-item-9" role="option" aria-selected="false">
                     <a class="aa-ItemLink" href="/events/national-championships/pool-national-championships/2025-pool-national-championships/2025-spring-national-championship/2025-spring-nationals-team-scores">
                         <div class="aa-ItemContent">
                             <div class="aa-ItemContentBody">
@@ -692,43 +645,27 @@
             </ul>
         </section>
     </div>
-    <!-- <div class="aa-GradientBottom"></div> -->
+    <div class="aa-GradientBottom"></div>
 </div>
 
-<script>
-    function setSearchSubmenuWidth() {
-        const logo = document.querySelector('.ccs-logo');
-        const mainNav = document.querySelector('nav.main');
-        const adminNav = document.querySelector('nav.admin');
-        const searchSubmenu = document.getElementById('submenuSearch');
-        const searchTypeAhead = document.querySelector('.aa-Panel');
-        if (!logo || !mainNav || !adminNav || !searchSubmenu) return;
-        const meganavElementsWidth = logo.offsetWidth + mainNav.offsetWidth + adminNav.offsetWidth;
-        const availableWidth = window.innerWidth - meganavElementsWidth;
-        if (window.innerWidth > 1200) {
-            searchSubmenu.style.width = `${availableWidth}px`;
-            searchTypeAhead.style.width = `${availableWidth}px`;
-        } else {
-            searchSubmenu.style.width = '100%';
-        }
-    }
-    window.addEventListener('DOMContentLoaded', setSearchSubmenuWidth);
-    window.addEventListener('resize', setSearchSubmenuWidth);
-</script>
+
+
+
+
+
+
+
+
+
+
     
 <script>
     const mobileNavBtn = document.getElementById('mobileNavBtn');
     const mobileNavBtnOpen = document.querySelector('.mobile-nav-btn.open');
     const mobileMenuMain = document.getElementById('mobileNavMain');
     const mobileMenuReturn = document.querySelectorAll('menu-return');
-    const searchInput = document.getElementById("searchInput");
-    const searchBtn = document.getElementById("searchBtn");
-    const searchSubmitBtn = document.getElementById("searchSubmit");
-    const searchMenu = document.getElementById("submenuSearch");
     const adminNavBtn = document.getElementById('adminNavBtn');
     const adminMenu = document.getElementById('submenuAdmin');
-    const typeaheadPanel = document.querySelector('.aa-Panel');
-
     function openMainNav() {
         document.querySelectorAll('.menu > li > button').forEach(btn => btn.setAttribute('aria-expanded', 'true'));
         document.querySelectorAll('.submenu').forEach(menu => menu.setAttribute('aria-hidden', 'false'));
@@ -761,15 +698,6 @@
             buttons[i].className = '';
         }
     }
-    function openSearch() {
-        searchBtn.classList.add('open');
-        searchMenu.classList.toggle('open');
-    }
-    function closeSearch() {
-        searchBtn.classList.remove('open');
-        searchMenu.classList.remove('open');
-        searchInput.blur();
-    }
     function openAdmin() {
         adminNavBtn.classList.toggle("open");
         adminMenu.classList.toggle("open");
@@ -778,34 +706,8 @@
         adminNavBtn.classList.remove("open");
         adminMenu.classList.remove("open");
     }
-    function showTypeahead() {
-        typeaheadPanel.classList.add('open');
-    }
-    function hideTypeahead() {
-        typeaheadPanel.classList.remove('open');
-    }
-    searchInput.addEventListener('focus', () => {
-        searchInput.placeholder = '';
-    });
-    searchInput.addEventListener('keydown', () => {
-        if (event.key === 'N') {
-            showTypeahead();
-        }
-        else {
-            hideTypeahead();
-        }
-    });
-    searchInput.addEventListener('blur', () => {
-        searchInput.value = '';
-        hideTypeahead();
-        setTimeout(() => {
-            searchInput.placeholder = 'Enter search term';
-        }, 1000);
-    });
-
     document.querySelectorAll('.menu > li > button').forEach(button => {
         button.addEventListener('click', () => {
-            closeSearch();
             closeAdmin();
             const expanded = button.getAttribute('aria-expanded') === 'true';
             const submenu = document.getElementById(button.getAttribute('aria-controls'));
@@ -832,7 +734,6 @@
             }
         });
     });
-
     document.querySelectorAll('.menu-return').forEach(function(e) {
         e.addEventListener('click', function(e) {
             e.preventDefault();
@@ -843,48 +744,26 @@
             }
         });
     });
-
     document.addEventListener('click', (e) => {
-        const isOpen = e.target.classList;
-        if (e.target === searchBtn && isOpen.contains('open') === true) {
-            closeSearch();
-        } else if (e.target === searchBtn) {
-            closeMainNav();
-            closeMainNavMobile();
-            closeAdmin();
-            openSearch();
-        }
-        if (e.target === searchInput) {
-            return;
-        }
-        if (e.target === searchSubmitBtn) {
-            closeMainNav();
-            closeSearch();
-        }
         if (e.target === adminNavBtn) {
             closeMainNav();
             closeMainNavMobile();
-            closeSearch();
             openAdmin();
         }
         if (e.target === mobileNavBtn) {
             closeMainNav();
-            closeSearch();
             closeAdmin();
             clickMainNavMobile();
         }
         if (!e.target.closest('nav')) {
             closeMainNav();
             closeMainNavMobile();
-            closeSearch();
             closeAdmin();
         }
     });
-
     let lastScrollTop = 0;
     let header = document.querySelector('.header-static');
     let isHidden = false;
-
     window.addEventListener('scroll', () => {
       let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       if (scrollTop > 110) {
@@ -894,7 +773,6 @@
                 isHidden = true;
                 closeMainNav();
                 closeMainNavMobile();
-                closeSearch();
                 closeAdmin();
             }
         } else {
