@@ -24,7 +24,9 @@
         justify-content: center;
         pointer-events: none;
         height: 600px;
-        bottom: 800px;
+        /* bottom: 800px; */
+        bottom: -180px;
+        display: none;
     }
     .parallax-foreground img {
         width: 1500px;
@@ -54,7 +56,8 @@
         transform: translateY(-50%);
         text-align: center;
         height: 500px;
-        bottom: -150px;
+        /* bottom: -150px; */
+        /* bottom: -210px; */
     }
     .parallax-text h3 {
         color: #FFF !important;
@@ -65,15 +68,39 @@
         line-height: 9rem;
         letter-spacing: -3px;
     }
-    @media (min-width: 768px) and (max-width: 1199px) {
-        .parallax-foreground {
-            bottom: 800px;
-        }
+    @media (min-width: 375px) {
         .parallax-text {
-            bottom: -100px;
+            bottom: -240px;
         }
-        .parallax-background img {
-            top: -380px;
+    }
+    @media (min-width: 390px) {
+        .parallax-text {
+            bottom: -235px;
+        }
+    }
+    @media (min-width: 430px) {
+        .parallax-text {
+            bottom: -230px;
+        }
+    }
+    @media (min-width: 768px) {
+        .parallax-text {
+            bottom: -225px;
+        }
+    }
+    @media (min-width: 820px) {
+        .parallax-text {
+            bottom: -220px;
+        }
+    }
+    @media (min-width: 900px) {
+        .parallax-text {
+            bottom: -210px;
+        }
+    }
+    @media (min-width: 1050px) {
+        .parallax-text {
+            bottom: -240px;
         }
     }
     @media (min-width: 1200px) {
@@ -151,32 +178,13 @@
         if (windowWidth < 768) {
             console.log("<768");
             if (startParallax < windowHeight && endParallax > windowHeight) {
-                const foregroundOffset = scrollProgress * 800;
-                foreground.style.transform = `translateY(calc(500px + ${foregroundOffset}px))`;
-            }
-            if (startParallax < windowHeight && endParallax - 250 > windowHeight) {
-                const textOffset = scrollProgress * -500;
+                const textOffset = scrollProgress * -300;
                 text.style.transform = `translateY(calc(${textOffset}px))`;
             }        }
         if (windowWidth >= 768 && windowWidth < 1200) {
             console.log("768><1200");
             if (startParallax < windowHeight && endParallax > windowHeight) {
-                const foregroundOffset = scrollProgress * 1100;
-                foreground.style.transform = `translateY(calc(500px + ${foregroundOffset}px))`;
-            }
-            if (startParallax < windowHeight && endParallax - 200 > windowHeight) {
-                const textOffset = scrollProgress * -500;
-                text.style.transform = `translateY(calc(${textOffset}px))`;
-            }
-        }
-        if (windowWidth >= 1200) {
-            console.log(">1200");
-            if (startParallax < windowHeight && endParallax > windowHeight) {
-                const foregroundOffset = scrollProgress * 720;
-                foreground.style.transform = `translateY(calc(600px + ${foregroundOffset}px))`;
-            }
-            if (startParallax < windowHeight && endParallax - 400 > windowHeight) {
-                const textOffset = scrollProgress * -620;
+                const textOffset = scrollProgress * -390;
                 text.style.transform = `translateY(calc(${textOffset}px))`;
             }
         }
