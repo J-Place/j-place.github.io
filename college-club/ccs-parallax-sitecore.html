@@ -1,4 +1,7 @@
 <style>
+    #ccsParallaxLarge {
+        display: none;
+    }
     .parallax-container {
         position: relative;
         background-size: cover;
@@ -16,29 +19,42 @@
     }
     .parallax-foreground {
         z-index: 9999;
-        bottom: -450px;
-        left: 0;
+        overflow: hidden;
         display: flex;
         justify-content: center;
         pointer-events: none;
+        height: 600px;
+        bottom: 800px;
+    }
+    .parallax-foreground img {
+        width: 1500px;
+        height: 450px;
+        left: 50%;
+        bottom: 0;
+        transform: translateX(-50%);
+        position: absolute;
     }
     .parallax-background {
         position: absolute;
+        width: 100%;
     }
     .parallax-background img {
-        margin-top: -180px;
         position: relative;
         z-index: 1;
-        width: auto;
-        bottom: 640px;
-        left: -50%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 1500px;
+        top: -380px;
     }
     .parallax-text {
+        /* border: 1px solid blue; */
+        position: absolute;
         z-index: 999;
-        top: 110%;
         left: 0;
         transform: translateY(-50%);
         text-align: center;
+        height: 500px;
+        bottom: -150px;
     }
     .parallax-text h3 {
         color: #FFF !important;
@@ -49,18 +65,26 @@
         line-height: 9rem;
         letter-spacing: -3px;
     }
+    @media (min-width: 768px) and (max-width: 1199px) {
+        .parallax-foreground {
+            bottom: 800px;
+        }
+        .parallax-text {
+            bottom: -100px;
+        }
+        .parallax-background img {
+            top: -380px;
+        }
+    }
     @media (min-width: 1200px) {
         .parallax-container {
             height: 900px;
         }
         .parallax-foreground {
-            bottom: -250px;
+            bottom: 1200px;
         }
-        .parallax-text {
-            position: absolute;
-            top: 100%;
-            bottom: -20%;
-            /* bottom: -40%; */
+        .parallax-foreground img {
+            width: 100%;
         }
         .parallax-text h3 {
             font-size: 18rem;
@@ -68,14 +92,35 @@
         }
         .parallax-background img {
             width: 100%;
-            left: 0;
-            bottom: -50px;
+            top: -100px;
+        }
+    }
+    .col-ccs-parallax {
+        background-color: #000;
+    }
+    
+    /* Hide parallax elements and show static image */
+    @media (min-width: 1200px) {
+        .parallax-container {
+            height: auto;
+        }
+        #ccsParallaxLarge {
+            display: block;
+            width: 100%;
+        }
+        .parallax-foreground,
+        .parallax-text,
+        .parallax-background {
+            display: none;
         }
     }
 </style>
 <div class="parallax-container">
+    <img id="ccsParallaxLarge" src="-/media/ccs/site/ccs-parallax-large.jpg" alt="College CLub Swimming. Have Fun. Compete. Connect.">
     <div class="parallax-foreground">
-        <img src="https://j-place.github.io/public/college-club/img/ccs-parallax-foreground.png" alt="">
+        <!-- <img src="https://j-place.github.io/public/college-club/img/ccs-parallax-foreground.png" alt=""> -->
+        <img src="-/media/ccs/site/ccs-parallax-foreground.png" alt="">
+        
     </div>
     <div class="parallax-text">
         <h3>Have Fun.</h3>
@@ -83,7 +128,8 @@
         <h3>Connect.</h3>
     </div>
     <div class="parallax-background">
-        <img src="https://j-place.github.io/public/college-club/img/ccs-parallax-background.jpg" alt="">
+        <!-- <img src="https://j-place.github.io/public/college-club/img/ccs-parallax-background.jpg" alt=""> -->
+        <img src="-/media/ccs/site/ccs-parallax-background.jpg" alt="">
     </div>
 </div>
 <script>
@@ -91,15 +137,48 @@
         const container = document.querySelector(".parallax-container");
         const foreground = document.querySelector(".parallax-foreground");
         const text = document.querySelector(".parallax-text");
-        const rect = container.getBoundingClientRect();
-        const startParallax = rect.top + 200;
+        const containerRect = container.getBoundingClientRect();
+        const startParallax = containerRect.top;
+        const endParallax = containerRect.bottom;
         const windowHeight = window.innerHeight;
-        if (startParallax < windowHeight && rect.bottom > 800) {
-            const scrollProgress = 1 - (rect.top / windowHeight);
-            const foregroundOffset = scrollProgress * 520;
-            const textOffset = scrollProgress * -600;
-            foreground.style.transform = `translateY(calc(-90% + ${foregroundOffset}px))`;
-            text.style.transform = `translateY(calc(-50% + ${textOffset}px))`;
+        const windowWidth = window.innerWidth;
+        const footer = document.querySelector(".ccs-footer-container");
+        const footerHeight = footer.offsetHeight;
+        const scrollProgress = 1 - (containerRect.top / windowHeight);
+
+        console.log(windowWidth);
+
+        if (windowWidth < 768) {
+            console.log("<768");
+            if (startParallax < windowHeight && endParallax > windowHeight) {
+                const foregroundOffset = scrollProgress * 800;
+                foreground.style.transform = `translateY(calc(500px + ${foregroundOffset}px))`;
+            }
+            if (startParallax < windowHeight && endParallax - 250 > windowHeight) {
+                const textOffset = scrollProgress * -500;
+                text.style.transform = `translateY(calc(${textOffset}px))`;
+            }        }
+        if (windowWidth >= 768 && windowWidth < 1200) {
+            console.log("768><1200");
+            if (startParallax < windowHeight && endParallax > windowHeight) {
+                const foregroundOffset = scrollProgress * 1100;
+                foreground.style.transform = `translateY(calc(500px + ${foregroundOffset}px))`;
+            }
+            if (startParallax < windowHeight && endParallax - 200 > windowHeight) {
+                const textOffset = scrollProgress * -500;
+                text.style.transform = `translateY(calc(${textOffset}px))`;
+            }
+        }
+        if (windowWidth >= 1200) {
+            console.log(">1200");
+            if (startParallax < windowHeight && endParallax > windowHeight) {
+                const foregroundOffset = scrollProgress * 720;
+                foreground.style.transform = `translateY(calc(600px + ${foregroundOffset}px))`;
+            }
+            if (startParallax < windowHeight && endParallax - 400 > windowHeight) {
+                const textOffset = scrollProgress * -620;
+                text.style.transform = `translateY(calc(${textOffset}px))`;
+            }
         }
     });
 </script>
