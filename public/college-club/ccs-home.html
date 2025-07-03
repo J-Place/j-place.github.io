@@ -474,7 +474,8 @@
             margin-right: 3rem;
         }
         .menu-item--login {
-            margin-right: 6rem;
+            /* margin-right: 6rem; */
+            margin-right: 0;
         }
         .menu-item--mobile-nav {
             display: none;
@@ -524,11 +525,14 @@
             height: auto;
             top: 110px;
             left: unset;
-            right: 4.5rem;
+            /* right: 4.5rem; */
             margin: 0;
             padding: 1.5rem 3.5rem 1.5rem 5rem;
             text-align: right;
-            width: auto;
+            /* width: auto; */
+            position: absolute;
+            right: -3rem;
+            width: 225px;
         }
     }
 </style>
@@ -545,36 +549,35 @@
             <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-events">Events</button>
             <ul id="submenu-events" class="submenu" role="menu" aria-label="Events submenu" aria-hidden="true">
                 <li class="menu-return"><a href="">Return to Menu</a></li>
-                <li><a href="https://www.collegeclubswimming.com/page.cfm?pagetitle=Calendar+of+Events" role="menuitem">Calendar of Events</a></li>
+                <li><a href="/events/Calendar%20of%20Events" role="menuitem">Calendar of Events</a></li>
                 <li><a href="/events/National%20Championships" role="menuitem">National Championships</a></li>
                 <li><a href="/events/Regional%20Championships" role="menuitem">Regional Championships</a></li>
-                <li><a href="https://www.collegeclubswimming.com/page.cfm?pagetitle=Submit+an+Event+to+the+Calendar" role="menuitem">Submit an Event to the Calendar</a></li>
+                <li><a href="/events/Submit%20an%20Event" role="menuitem">Submit an Event to the Calendar</a></li>
             </ul>
         </li>
         <li>
             <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-results">Results</button>
             <ul id="submenu-results" class="submenu" role="menu" aria-label="Results submenu" aria-hidden="true">
                 <li class="menu-return"><a href="">Return to Menu</a></li>
-                <li><a href="https://www.collegeclubswimming.com/page.cfm?pagetitle=Swim+Meet+Results" role="menuitem">Meet Results</a></li>
+                <li><a href="/results/Meet%20Results" role="menuitem">Meet Results</a></li>
                 <li><a href="https://www.collegeclubswimming.com/page.cfm?pagetitle=Event+Rankings" role="menuitem">Rankings</a></li>
-                <li><a href="/results/records" role="menuitem">Records</a></li>
+                <li><a href="/results/Records" role="menuitem">Records</a></li>
             </ul>
         </li>
         <li>
             <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-clubs">Clubs</button>
             <ul id="submenu-clubs" class="submenu" role="menu" aria-label="Clubs submenu" aria-hidden="true">
                 <li class="menu-return"><a href="">Return to Menu</a></li>
-                <li><a href="https://www.collegeclubswimming.com/page.cfm?pagetitle=Club+Lookup" role="menuitem">Club Lookup</a></li>
+                <li><a href="/clubs/Club%20Lookup" role="menuitem">Club Lookup</a></li>
                 <li><a href="https://www.clubassistant.com/club/college_club_swimming.cfm">Club Rosters & Registration</a></li>
-                <li><a href="/clubs/best%20practices" role="menuitem">Best Practises</a></li>
-                <li><a href="/clubs/insurance" role="menuitem">Insurance</a></li>
+                <li><a href="/clubs/Best%20Practices" role="menuitem">Best Practises</a></li>
             </ul>
         </li>
         <li>
             <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-about">About</button>
             <ul id="submenu-about" class="submenu" role="menu" aria-label="About submenu" aria-hidden="true">
                 <li class="menu-return"><a href="">Return to Menu</a></li>
-                <li><a href="/about-ccs/contact" role="menuitem">Contact</a></li>
+                <li><a href="/about-ccs/Contact" role="menuitem">Contact</a></li>
                 <li><a href="/about-ccs/FAQs" role="menuitem">FAQ's</a></li>
                 <li><a href="/about-ccs/Policy%20and%20Governance" role="menuitem">Policy and Governance</a></li>
                 <li><a href="/about-ccs/Town%20Hall%20Meetings" role="menuitem">Town Hall Meetings</a></li>
@@ -588,8 +591,8 @@
             <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-register">Register</button>
             <ul id="submenu-register" class="submenu" role="menu" aria-label="Register submenu" aria-hidden="true">
                 <li class="menu-return"><a href="">Return to Menu</a></li>
-                <li><a href="https://www.collegeclubswimming.com/page.cfm?pagetitle=Individual+Registration" role="menuitem">Swimmer Registration</a></li>
-                <li><a href="https://www.collegeclubswimming.com/page.cfm?pagetitle=Club+Registration" role="menuitem">Club Registration</a></li>
+                <li><a href="/register/Swimmer%20Registration" role="menuitem">Swimmer Registration</a></li>
+                <li><a href="/register/Club%20Registration" role="menuitem">Club Registration</a></li>
             </ul>
         </li>
     </ul>
@@ -775,14 +778,27 @@
         const adminNav = document.querySelector('nav.admin');
         const searchSubmenu = document.getElementById('submenuSearch');
         const searchTypeAhead = document.querySelector('.aa-Panel');
+        let containerWidth = 0;
+                
         if (!logo || !mainNav || !adminNav || !searchSubmenu) return;
+        
+        if (window.innerWidth >= 1200) {
+            containerWidth = 1100;
+        } if (window.innerWidth >= 1400) {
+            containerWidth = 1200;
+        } if (window.innerWidth >= 1600) {
+            containerWidth = 1400;
+        }
+        console.log("Breakpoint Width " + containerWidth);
         const meganavElementsWidth = logo.offsetWidth + mainNav.offsetWidth + adminNav.offsetWidth;
-        const availableWidth = window.innerWidth - meganavElementsWidth;
-        if (window.innerWidth > 1200) {
+        const availableWidth = containerWidth - meganavElementsWidth;
+        console.log("Available Width " + availableWidth);
+        if (containerWidth >= 1200) {
             searchSubmenu.style.width = `${availableWidth}px`;
             searchTypeAhead.style.width = `${availableWidth}px`;
         } else {
             searchSubmenu.style.width = '100%';
+            searchTypeAhead.style.width = '100%';
         }
     }
     window.addEventListener('DOMContentLoaded', setSearchSubmenuWidth);
@@ -1133,7 +1149,7 @@
                 <h4>About</h4>
                 <ul>
                     <li><a href="/about-ccs/FAQs">FAQs</a></li>
-                    <li><a href="/about-ccs/benefits">Beneftis</a></li>
+                    <li><a href="/about-ccs/benefits">Benefits</a></li>
                     <li><a href="/about-ccs/contact">Contact</a></li>
                 </ul>
             </div>
@@ -1142,7 +1158,7 @@
                 <ul class="social-links">
                     <li class="instagram"><a href="https://www.instagram.com/collegeclubswimming"><img alt="Instagram" src="https://ccstest.usms.org/site/-/media/6ed2cd4ca50a44039bd8f74cef452e42.ashx" /></a></li>
                     <li class="facebook"><a href="https://www.facebook.com/collegeclubswimming/"><img alt="Facebook" src="https://ccstest.usms.org/site/-/media/c9dbd21e054543f58d44cf477326f800.ashx" /></a></li>
-                    <li class="youtube"><a href="#/"><img alt="YouTube" src="https://ccstest.usms.org/site/-/media/a517fcbf64a6497fb2f72f8514d769f0.ashx" /></a></li>
+                    <li class="youtube"><a href="https://www.youtube.com/USMastersSwimming"><img alt="YouTube" src="https://ccstest.usms.org/site/-/media/a517fcbf64a6497fb2f72f8514d769f0.ashx" /></a></li>
                 </ul>
             </div>
         </div>
