@@ -487,7 +487,7 @@
             <ul id="submenu-results" class="submenu" role="menu" aria-label="Results submenu" aria-hidden="true">
                 <li class="menu-return"><a href="">Return to Menu</a></li>
                 <li><a href="/results/Meet%20Results" role="menuitem">Meet Results</a></li>
-                <li><a href="https://www.collegeclubswimming.com/page.cfm?pagetitle=Event+Rankings" role="menuitem">Rankings</a></li>
+                <li><a href="/results/Rankings" role="menuitem">Rankings</a></li>
                 <li><a href="/results/Records" role="menuitem">Records</a></li>
             </ul>
         </li>
@@ -716,11 +716,10 @@
         } if (window.innerWidth >= 1600) {
             containerWidth = 1400;
         }
-        console.log("Breakpoint Width " + containerWidth);
         const meganavElementsWidth = logo.offsetWidth + mainNav.offsetWidth + adminNav.offsetWidth;
         const availableWidth = containerWidth - meganavElementsWidth;
         console.log("Available Width " + availableWidth);
-        if (containerWidth >= 1200) {
+        if (window.innerWidth >= 1200) {
             searchSubmenu.style.width = `${availableWidth}px`;
             searchTypeAhead.style.width = `${availableWidth}px`;
         } else {

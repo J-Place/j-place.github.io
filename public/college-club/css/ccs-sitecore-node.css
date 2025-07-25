@@ -4,6 +4,13 @@ header + main + .html-container {
     padding: 0;
 }
 
+.header-static.hidden {
+    z-index: -1;
+}
+.header-static {
+    z-index: 999999;
+}
+
 /* Overrides style coming form source. This is supposed to be fixed in source. This can be removed when that happens */
 @media (max-width: 991px) {
     .usms-container {
@@ -49,7 +56,7 @@ main h6 {
     color: #000 !important;
 }
 
-.html-container a {
+.html-container a:not(.btn) {
     color: #5C5C5C !important;
     text-decoration: underline;
 }
@@ -210,6 +217,9 @@ hr {
     font-size: 2.3rem;
     margin-top: 11px;
     color: #5C5C5C !important;
+}
+.accordion__content--shown {
+    margin-bottom: 2rem;
 }
 
 /* Style borders for column component rendering parameter */
@@ -392,8 +402,9 @@ hr {
 .ccs-bio p {
     line-height: 150%;
 }
-.ccs-bio a {
+.html-container .ccs-bio a {
     font-size: 15px !important;
+    border-radius: 4px !important;
     height: 32px !important;
     line-height: 20px !important;
     padding: 6px 12px !important;

@@ -560,7 +560,7 @@
             <ul id="submenu-results" class="submenu" role="menu" aria-label="Results submenu" aria-hidden="true">
                 <li class="menu-return"><a href="">Return to Menu</a></li>
                 <li><a href="/results/Meet%20Results" role="menuitem">Meet Results</a></li>
-                <li><a href="https://www.collegeclubswimming.com/page.cfm?pagetitle=Event+Rankings" role="menuitem">Rankings</a></li>
+                <li><a href="/results/Rankings" role="menuitem">Rankings</a></li>
                 <li><a href="/results/Records" role="menuitem">Records</a></li>
             </ul>
         </li>
@@ -789,11 +789,10 @@
         } if (window.innerWidth >= 1600) {
             containerWidth = 1400;
         }
-        console.log("Breakpoint Width " + containerWidth);
         const meganavElementsWidth = logo.offsetWidth + mainNav.offsetWidth + adminNav.offsetWidth;
         const availableWidth = containerWidth - meganavElementsWidth;
         console.log("Available Width " + availableWidth);
-        if (containerWidth >= 1200) {
+        if (window.innerWidth >= 1200) {
             searchSubmenu.style.width = `${availableWidth}px`;
             searchTypeAhead.style.width = `${availableWidth}px`;
         } else {
@@ -1005,12 +1004,205 @@
 
                 
                 
-                <div class="section section-full p-mh-500">
-                    <div class="usms-container p-tb-50">
-                        <div class="row is-flex">
+                <div class="section section-full">
+                    <div class="container-fluid">
+                        <div class="row">
                             <div class="col-xs-12">
-                                <!-- <h3>Page Content Header</h3> -->
-                                
+                                <style>
+    .marquee-wrapper {
+      overflow: hidden;
+      width: 100%;
+      background: #FFF;
+      padding: 3rem 0 5rem;
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: scroll-left 18s linear infinite;
+    }
+    .marquee-box {
+      background: #FFF;
+      height: 240px;
+      width: 280px;
+      margin: 0 1rem;
+      padding: 2rem 0 1rem;
+      border-radius: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 30px rgba(55, 55, 55, 0.2);
+    }
+    .marquee-item {
+      flex: 0 0 auto;
+      width: 100vw;
+      max-width: 100%;
+      padding: 10px;
+      display: contents;
+    }
+    .marquee-item a {
+        color: #000;
+    }
+    .marquee-item p.event-date {
+        font-size: 1.4rem;
+        font-weight: 400;
+        margin-bottom: 0;
+    }
+    .marquee-item .event-logo {
+        width: 160px;
+        height: 100%;
+        margin: 0 auto;
+    }
+    .marquee-item .event-name {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+        font-size: 1.65rem;
+        font-weight: bold !important;
+        margin-top: 1rem;
+        padding: 0 2rem;
+        height: 65px;
+        text-align: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    /* Responsive widths */
+    @media (min-width: 576px) {
+      .marquee-item {
+        width: 50vw;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .marquee-item {
+        width: 33.3333vw;
+      }
+    }
+
+    @media (min-width: 992px) {
+      .marquee-item {
+        width: 20vw;
+      }
+    }
+
+    @keyframes scroll-left {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+</style>
+<style>
+    .event-logo {
+        position: relative;
+    }
+    .event-logo img {
+        width: 100%;
+        margin: -1.5rem auto -3rem;
+    }
+</style>
+<div class="marquee-wrapper">
+    <div class="marquee-track" id="marquee">
+        <!-- These items will be duplicated via JS for seamless looping -->
+        <div class="marquee-item">
+            <a href="https://www.usms.org/events">
+                <div class="marquee-box">
+                    <p class="event-date">Nov. 19</p>
+                    <!-- <div class="event-logo" style="background-image: 
+                        url('https://upload.wikimedia.org/wikipedia/en/thumb/1/14/Florida_Gators_gator_logo.svg/596px-Florida_Gators_gator_logo.svg.png'); 
+                        background-repeat: no-repeat; 
+                        background-position: center; 
+                        background-size: 72%;">
+                    </div> -->
+                    <div class="event-logo">
+                        <img src="https://ccstest.usms.org/-/media/ccs/events/college%20logos/university-of-florida.png" alt="University of Florida">
+                    </div>
+                    <h3 class="event-name">Gainesville Classic</h3>
+                </div>
+            </a>            
+        </div>
+        <div class="marquee-item">
+            <a href="https://www.usms.org/events">
+                <div class="marquee-box">
+                    <p class="event-date">Jan. 23</p>
+                    <!-- <div class="event-logo" style="background-image: 
+                        url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/California_Golden_Bears_logo.svg/300px-California_Golden_Bears_logo.svg.png'); 
+                        background-repeat: no-repeat; 
+                        background-position: center; 
+                        background-size: 61%;">
+                    </div> -->
+                    <div class="event-logo">
+                        <img src="https://ccstest.usms.org/-/media/ccs/events/college%20logos/uc-berkley.png" alt="University of California">
+                    </div>
+                    <h3 class="event-name">Cal Invitational</h3>
+                </div>
+            </a>            
+        </div>
+        <div class="marquee-item">
+            <a href="https://www.usms.org/events">
+                <div class="marquee-box">
+                    <p class="event-date">Dec. 12 — 13</p>
+                    <!-- <div class="event-logo" style="background-image: 
+                        url('https://upload.wikimedia.org/wikipedia/commons/3/35/Purdue_Boilermakers_logo.svg'); 
+                        background-repeat: no-repeat; 
+                        background-position: center; 
+                        background-size: 63%;">
+                    </div> -->
+                    <div class="event-logo">
+                        <img src="https://ccstest.usms.org/-/media/ccs/events/college%20logos/purdue-university.png" alt="Purdue University">
+                    </div>
+                    <h3 class="event-name">Purdue Intrasquad Meet</h3>
+                </div>
+            </a>            
+        </div>
+        <div class="marquee-item">
+            <a href="https://www.usms.org/events">
+                <div class="marquee-box">
+                    <p class="event-date">April. 4</p>
+                    <!-- <div class="event-logo" style="background-image: 
+                        url('https://upload.wikimedia.org/wikipedia/commons/f/f3/1901%E2%80%9394_Michigan_Wolverines_primary_logo.svg'); 
+                        background-repeat: no-repeat; 
+                        background-position: center;
+                        background-size: 51%;">
+                    </div> -->
+                    <div class="event-logo">
+                        <img src="https://ccstest.usms.org/-/media/ccs/events/college%20logos/university-of-michigan" alt="University of Michigan">
+                    </div>
+                    <h3 class="event-name">Wolverine Fall Time Trials</h3>
+                </div>
+            </a>            
+        </div>
+        <div class="marquee-item">
+            <a href="https://www.usms.org/events">
+                <div class="marquee-box">
+                    <p class="event-date">Oct. 31 – Nov. 1</p>
+                    <!-- <div class="event-logo" style="background-image: 
+                        url('https://upload.wikimedia.org/wikipedia/commons/4/47/Indiana_Hoosiers_logo.svg'); 
+                        background-repeat: no-repeat; 
+                        background-position: center;  
+                        background-size: 42%;">
+                    </div> -->
+                    <div class="event-logo">
+                        <img src="https://ccstest.usms.org/-/media/ccs/events/college%20logos/indiana-university.png" alt="Indiana University">
+                    </div>
+                    <h3 class="event-name">2024 Swim Club at IU Cream vs Crimson Meet w/ a Really Long Event Title</h3>
+                </div>
+            </a>            
+        </div>
+    </div>
+</div>
+<script>
+    const marquee = document.getElementById('marquee');
+    const items = marquee.children.length;
+    for (let i = 0; i < items; i++) {
+    marquee.appendChild(marquee.children[i].cloneNode(true));
+    }
+</script>
                             </div>
                         </div>
                     </div>
@@ -1026,7 +1218,6 @@
                     </div>
                 </div>
 
-                <div style="height: 1000px;">Test</div>
 
 
             </main>
@@ -1131,8 +1322,8 @@
 </style>
 <div class="row ccs-footer-container">
     <div class="col-md-12 col-lg-4 footer-branding">
-        <a href="https://ccstest.usms.org">
-            <img height="65" alt="College Club Swimming" width="auto" src="https://ccstest.usms.org/site/-/media/3c0c0d06a83242b8bbc1befccdf28011.ashx" />
+        <a href="/">
+            <img height="65" alt="College Club Swimming" width="auto" src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/ccs/site/ccs-logo-custom.svg" />
         </a>
     </div>
     <div class="col-md-12 col-lg-8 footer-links">
@@ -1140,32 +1331,32 @@
             <div class="col-xs-12 col-md-4">
                 <h4>Explore</h4>
                 <ul>
-                    <li><a href="https://www.collegeclubswimming.com/page.cfm?pagetitle=Calendar+of+Events">Calendar of Events</a></li>
-                    <li><a href="https://www.collegeclubswimming.com/page.cfm?pagetitle=Swim+Meet+Results">Meet Results</a></li>
-                    <li><a href="https://www.collegeclubswimming.com/page.cfm?pagetitle=Club+Lookup">Club Lookup</a></li>
+                    <li><a href="/events/Calendar%20of%20Events">Calendar of Events</a></li>
+                    <li><a href="/results/Meet%20Results">Meet Results</a></li>
+                    <li><a href="/clubs/Club%20Lookup">Club Lookup</a></li>
                 </ul>
             </div>
             <div class="col-xs-12 col-md-3">
                 <h4>About</h4>
                 <ul>
                     <li><a href="/about-ccs/FAQs">FAQs</a></li>
-                    <li><a href="/about-ccs/benefits">Benefits</a></li>
-                    <li><a href="/about-ccs/contact">Contact</a></li>
+                    <li><a href="/about-ccs/Benefits">Benefits</a></li>
+                    <li><a href="/about-ccs/Contact">Contact</a></li>
                 </ul>
             </div>
             <div class="col-xs-12 col-md-5">
                 <h4>Connect</h4>
                 <ul class="social-links">
-                    <li class="instagram"><a href="https://www.instagram.com/collegeclubswimming"><img alt="Instagram" src="https://ccstest.usms.org/site/-/media/6ed2cd4ca50a44039bd8f74cef452e42.ashx" /></a></li>
-                    <li class="facebook"><a href="https://www.facebook.com/collegeclubswimming/"><img alt="Facebook" src="https://ccstest.usms.org/site/-/media/c9dbd21e054543f58d44cf477326f800.ashx" /></a></li>
-                    <li class="youtube"><a href="https://www.youtube.com/USMastersSwimming"><img alt="YouTube" src="https://ccstest.usms.org/site/-/media/a517fcbf64a6497fb2f72f8514d769f0.ashx" /></a></li>
+                    <li class="instagram"><a target="_blank" href="https://www.instagram.com/collegeclubswimming"><img alt="Instagram" src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/ccs/site/icon-instagram-svg.svg" /></a></li>
+                    <li class="facebook"><a target="_blank" href="https://www.facebook.com/collegeclubswimming/"><img alt="Facebook" src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/ccs/site/icon-facebook-svg.svg" /></a></li>
+                    <li class="youtube"><a target="_blank" href="https://www.youtube.com/USMastersSwimming"><img alt="YouTube" src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/ccs/site/icon-youtube-svg.svg" /></a></li>
                 </ul>
             </div>
         </div>
         <div class="col-12 footer-legal">
             <div class="row">
                 <div class="col-md-6 footer-copyright">&copy; 2025 College Club Swimming</div>
-                <div class="col-md-6 footer-terms"><a href="#/">Privacy Policy</a></div>
+                <div class="col-md-6 footer-terms"><a href="/about-ccs/Privacy Policy">Privacy Policy</a></div>
             </div>
         </div>
     </div>
@@ -1206,6 +1397,6 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="/college-club/js/college-club.js"></script>
+        <!-- <script src="/college-club/js/college-club.js"></script> -->
     </body>
 </html>

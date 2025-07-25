@@ -560,7 +560,7 @@
             <ul id="submenu-results" class="submenu" role="menu" aria-label="Results submenu" aria-hidden="true">
                 <li class="menu-return"><a href="">Return to Menu</a></li>
                 <li><a href="/results/Meet%20Results" role="menuitem">Meet Results</a></li>
-                <li><a href="https://www.collegeclubswimming.com/page.cfm?pagetitle=Event+Rankings" role="menuitem">Rankings</a></li>
+                <li><a href="/results/Rankings" role="menuitem">Rankings</a></li>
                 <li><a href="/results/Records" role="menuitem">Records</a></li>
             </ul>
         </li>
@@ -789,11 +789,10 @@
         } if (window.innerWidth >= 1600) {
             containerWidth = 1400;
         }
-        console.log("Breakpoint Width " + containerWidth);
         const meganavElementsWidth = logo.offsetWidth + mainNav.offsetWidth + adminNav.offsetWidth;
         const availableWidth = containerWidth - meganavElementsWidth;
         console.log("Available Width " + availableWidth);
-        if (containerWidth >= 1200) {
+        if (window.innerWidth >= 1200) {
             searchSubmenu.style.width = `${availableWidth}px`;
             searchTypeAhead.style.width = `${availableWidth}px`;
         } else {
@@ -1135,8 +1134,8 @@
 </style>
 <div class="row ccs-footer-container">
     <div class="col-md-12 col-lg-4 footer-branding">
-        <a href="https://ccstest.usms.org">
-            <img height="65" alt="College Club Swimming" width="auto" src="https://ccstest.usms.org/site/-/media/3c0c0d06a83242b8bbc1befccdf28011.ashx" />
+        <a href="/">
+            <img height="65" alt="College Club Swimming" width="auto" src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/ccs/site/ccs-logo-custom.svg" />
         </a>
     </div>
     <div class="col-md-12 col-lg-8 footer-links">
@@ -1144,32 +1143,32 @@
             <div class="col-xs-12 col-md-4">
                 <h4>Explore</h4>
                 <ul>
-                    <li><a href="https://www.collegeclubswimming.com/page.cfm?pagetitle=Calendar+of+Events">Calendar of Events</a></li>
-                    <li><a href="https://www.collegeclubswimming.com/page.cfm?pagetitle=Swim+Meet+Results">Meet Results</a></li>
-                    <li><a href="https://www.collegeclubswimming.com/page.cfm?pagetitle=Club+Lookup">Club Lookup</a></li>
+                    <li><a href="/events/Calendar%20of%20Events">Calendar of Events</a></li>
+                    <li><a href="/results/Meet%20Results">Meet Results</a></li>
+                    <li><a href="/clubs/Club%20Lookup">Club Lookup</a></li>
                 </ul>
             </div>
             <div class="col-xs-12 col-md-3">
                 <h4>About</h4>
                 <ul>
                     <li><a href="/about-ccs/FAQs">FAQs</a></li>
-                    <li><a href="/about-ccs/benefits">Benefits</a></li>
-                    <li><a href="/about-ccs/contact">Contact</a></li>
+                    <li><a href="/about-ccs/Benefits">Benefits</a></li>
+                    <li><a href="/about-ccs/Contact">Contact</a></li>
                 </ul>
             </div>
             <div class="col-xs-12 col-md-5">
                 <h4>Connect</h4>
                 <ul class="social-links">
-                    <li class="instagram"><a href="https://www.instagram.com/collegeclubswimming"><img alt="Instagram" src="https://ccstest.usms.org/site/-/media/6ed2cd4ca50a44039bd8f74cef452e42.ashx" /></a></li>
-                    <li class="facebook"><a href="https://www.facebook.com/collegeclubswimming/"><img alt="Facebook" src="https://ccstest.usms.org/site/-/media/c9dbd21e054543f58d44cf477326f800.ashx" /></a></li>
-                    <li class="youtube"><a href="https://www.youtube.com/USMastersSwimming"><img alt="YouTube" src="https://ccstest.usms.org/site/-/media/a517fcbf64a6497fb2f72f8514d769f0.ashx" /></a></li>
+                    <li class="instagram"><a target="_blank" href="https://www.instagram.com/collegeclubswimming"><img alt="Instagram" src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/ccs/site/icon-instagram-svg.svg" /></a></li>
+                    <li class="facebook"><a target="_blank" href="https://www.facebook.com/collegeclubswimming/"><img alt="Facebook" src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/ccs/site/icon-facebook-svg.svg" /></a></li>
+                    <li class="youtube"><a target="_blank" href="https://www.youtube.com/USMastersSwimming"><img alt="YouTube" src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/ccs/site/icon-youtube-svg.svg" /></a></li>
                 </ul>
             </div>
         </div>
         <div class="col-12 footer-legal">
             <div class="row">
                 <div class="col-md-6 footer-copyright">&copy; 2025 College Club Swimming</div>
-                <div class="col-md-6 footer-terms"><a href="#/">Privacy Policy</a></div>
+                <div class="col-md-6 footer-terms"><a href="/about-ccs/Privacy Policy">Privacy Policy</a></div>
             </div>
         </div>
     </div>
@@ -1210,7 +1209,6 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <!-- <script src="/college-club/js/convert-rankings-with-time-link.js"></script> -->
-        <script src="/college-club/js/try-this.js"></script>
+        <script src="/college-club/js/convert-rankings-with-time-link.js"></script>
     </body>
 </html>

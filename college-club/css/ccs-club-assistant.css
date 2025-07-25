@@ -1,4 +1,51 @@
-h1.ca-article-title {
-    color: #000;
-    text-shadow: none;
+body {
+    background-image: none 
+}
+body > div:has(+ nav.navbar) {
+    height: 0 !important;
+}
+nav.navbar {
+    /* display: none; */
+    height: 0 !important;
+    opacity: 0 !important;
+}
+div#mainContent {
+    margin-top: 0;
+}
+.ca-article-title {
+    display: none;
+}
+.btn.btn-primary {
+    background-color: #000;
+    border-color: #000;
+}
+@media (min-width: 992px) {
+    .container, 
+    .container-lg, 
+    .container-md, 
+    .container-sm {
+        width: 100%;
+        max-width: unset;
+        padding: 0;
+    }
+}
+@media (min-width: 1200px) {
+    .container, 
+    .container-lg, 
+    .container-md, 
+    .container-sm {
+        width: 1100px;
+        max-width: unset;
+        padding: 0;
+    }
+}
+@media (min-width: 1400px) {
+    .container, 
+    .container-lg, 
+    .container-md, 
+    .container-sm {
+        width: 1200px;
+        max-width: unset;
+        padding: 0;
+    }
 }
