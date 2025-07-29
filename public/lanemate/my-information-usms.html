@@ -386,477 +386,483 @@
         </div>
     </div>
 </div>
-<div class="button-row" style="text-align:right; margin-top:-1rem; width: 100%;">
-    <button class="btn-small btn-danger" id="editPrivateInfo">Edit My Information</button>
-    <button class="btn-small btn-blue" id="savePrivateInfo" href="#/" data-bs-toggle="modal" data-bs-target="#savePrivateInfoModal" style="display: none;">Save</button>
-    <button class="btn-small btn-blue btn-outline" id="cancelPrivateInfo" style="display: none;">Cancel</button>
-</div>
-<div class="general-information">
-    <div class="form-header">
-        <h3>General Information</h3>
-        <!-- <p style="font-size:14px; margin: -1rem auto 2rem;">(Only you can see these fields. They can be updated by clicking the "Edit Profile" button above. NOTE: This information updates your USMS membership record.)</p>     -->
-    </div>
-    <div class="row form-group clearfix first-last">
-        <div class="col-xs-12 col-sm-5">
-            <label class="font-weight-bold" for="FirstName">First Name</label>
-            <span class="form-group-display-value">Firstname</span>
-            <div>
-                <span class="help-block help-block--FirstName">Please enter your first name</span>
-                <input type="text" min="1" max="30" class="form-control" placeholder="First Name" name="FirstName" autocomplete="true" maxlength="100" value="Firstname">
-                <span class="glyphicon form-control-feedback glyphicon--FirstName" aria-hidden="true"></span>
+<div class="row is-flex">
+    <div class="col-xs-12">
+        <div class="button-row" style="text-align:right; margin-top:-1rem; width: 100%;">
+            <button class="btn-small btn-danger" id="editPrivateInfo">Edit My Information</button>
+            <button class="btn-small btn-blue" id="savePrivateInfo" href="#/" data-bs-toggle="modal" data-bs-target="#savePrivateInfoModal" style="display: none;">Save</button>
+            <button class="btn-small btn-blue btn-outline" id="cancelPrivateInfo" style="display: none;">Cancel</button>
+        </div>
+        <div class="general-information">
+            <div class="form-header">
+                <h3>General Information</h3>
+                <!-- <p style="font-size:14px; margin: -1rem auto 2rem;">(Only you can see these fields. They can be updated by clicking the "Edit Profile" button above. NOTE: This information updates your USMS membership record.)</p>     -->
             </div>
-        </div>
-        <div class="col-xs-12 col-sm-1">
-            <label for="MiddleInitial">MI</label>
-            <span class="form-group-display-value">M</span>
-            <input type="text" class="form-control" placeholder="MI" name="MiddleInitial" maxlength="1">
-        </div>
-        <div class="col-xs-12 col-sm-6">
-            <label class="font-weight-bold" for="LastName">Last Name</label>
-            <span class="form-group-display-value">Lastname</span>
-            <div>
-                <span class="help-block help-block--LastName">Please enter your last name</span>
-                <input type="text" min="1" max="40" class="form-control" placeholder="Last Name" name="LastName" autocomplete="true" maxlength="100" value="Lastname">
-                <span class="glyphicon form-control-feedback glyphicon--LastName" aria-hidden="true"></span>
-            </div>
-        </div>
-    </div>
-    <div class="row form-group clearfix bio-detail">
-        <div class="col-xs-12 col-sm-2">
-            <label class="font-weight-bold" for="Sex">
-                Sex
-                <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Sex is binary for the purpose of racing and results."></span>
-            </label>
-            <span class="form-group-display-value-static">Male</span>
-        </div>
-        <div class="col-xs-12 col-sm-3">
-            <div class="gender">
-                <label for="Gender">
-                    Gender Identity
-                    <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Gender identity is an optional field that helps USMS better serve you."></span>
-                </label>
-                <input type="hidden" name="hiddenGender">
-                <span class="form-group-display-value">Male</span>
-                <div>
-                    <select disabled name="gender" id="Gender" class="form-control" style="min-width: 180px;">
-                        <option value="female">Female</option>
-                        <option value="male">Male</option>
-                        <option value="non-binary">Non-binary</option>
-                        <option value="transgender">Transgender</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-            </div>        
-        </div>
-        <div class="col-xs-12 col-sm-3">
-            <div class="ethnicity">
-                <label for="Ethnicity">
-                    Ethnicity
-                    <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Race/Ethnicity is an optional field that helps USMS better serve you."></span>
-                </label>
-                <input type="hidden" name="hiddenEthnicity">
-                <span class="form-group-display-value">Caucasian</span>
-                <div>
-                    <select disabled name="Ethnicity" id="Ethnicity" class="form-control" style="min-width: 180px;">
-                        <option value="caucasian">Caucasian</option>
-                        <option value="male">Male</option>
-                        <option value="non-binary">Non-binary</option>
-                        <option value="transEthnicity">TransEthnicity</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-            </div>        
-        </div>
-        <div class="col-xs-12 col-sm-3">
-            <label class="font-weight-bold" for="LastName">Birthday</label>
-            <span class="form-group-display-value-static">03/12/1987</span>
-        </div>
-    </div>
-    <div class="row form-group clearfix country">
-        <div class="col-xs-12 col-sm-6">
-            <input type="hidden" name="hiddenCountry"  value=""><label class="font-weight-bold" for="SelectedCountry">Country</label>
-            <span class="form-group-display-value">United States of America</span>
-            <div>
-                <span class="help-block help-block--SelectedCountry" >Please enter a value for SelectedCountry</span>
-                <select disabled name="SelectedCountry" id="country" class="form-control" >
-                    <option value="-1" >Country</option><option value="AF" >Afghanistan </option>
-                    <option selected="" value="US">United States Of America </option>
-                    <option value="UY">Uruguay </option><option value="UZ">Uzbekistan </option>
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="row form-group clearfix street">
-        <div class="col-xs-12">
-            <label class="font-weight-bold" for="Address">Address</label>
-            <span class="form-group-display-value">1234 Main St.</span>
-            <div>
-                <span class="help-block help-block--Address">Please enter a value for Address</span>
-                <input type="text" min="1" max="100" class="form-control" placeholder="Address" name="Address" id="address" autocomplete="true" maxlength="255">
-                <span class="glyphicon form-control-feedback glyphicon--Address" aria-hidden="true"></span>
-            </div>
-        </div>
-    </div>
-    <div class="row form-group clearfix city-state-zip">
-        <div class="col-xs-12 col-sm-5">
-            <label class="font-weight-bold" for="City">City</label>
-            <span class="form-group-display-value">Sarasota</span>
-            <div>
-                <span class="help-block help-block--City">Please enter a value for City</span>
-                <input type="text" min="1" max="80" class="form-control" placeholder="City" name="City" id="city" autocomplete="true" maxlength="100">
-                <span class="glyphicon form-control-feedback glyphicon--City" aria-hidden="true"></span>
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-4">
-            <div>
-                <label class="font-weight-bold" for="SelectedState">State</label>
-                <span class="form-group-display-value">Florida</span>
-                <div>
-                    <span class="help-block help-block--SelectedState">Please select a valid State</span>
-                    <select disabled name="SelectedState" id="state" class="form-control">
-                        <option value="-1">State</option>
-                        <option value="AL">Alabama</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-7 col-sm-3">
-            <input type="hidden" name="hiddenZip" value="">
-            <label class="font-weight-bold" for="ZipUs">Zip Code</label>
-            <span class="form-group-display-value">12345</span>
-            <div>
-                <span class="help-block help-block--ZipInt">Please enter a value for Zip</span>
-                <input type="text" min="1" max="15" class="form-control" placeholder="Zip Code" name="ZipInt" id="zipInt" autocomplete="true" maxlength="100" style="display: none;">
-                <span class="glyphicon form-control-feedback glyphicon--ZipInt" aria-hidden="true"></span>
-            </div>
-        </div>
-    </div>
-    <div class="row form-group clearfix email-phone">
-        <div class="col-xs-12 col-sm-6">
-            <label class="font-weight-bold" for="Email">Email</label>
-            <span class="form-group-display-value-static">email@address.com</span>
-            <span style="font-size: 14px; display: block;">(To edit your email, please visit <a href="">settings</a> page.)</span>
-            <!-- <div>
-                <span class="help-block help-block--Email">Please enter a valid email</span>
-                <input type="text" min="1" max="40" class="form-control" placeholder="Last Name" name="Email" autocomplete="true" maxlength="100" value="Email">
-                <span class="glyphicon form-control-feedback glyphicon--Email" aria-hidden="true"></span>
-            </div> -->
-        </div>
-        <div class="col-xs-12 col-sm-6">
-            <label class="font-weight-bold" for="Phone">Phone</label>
-            <span class="form-group-display-value">111-111-1111</span>
-            <div>
-                <span class="help-block help-block--Phone">Please enter your phone number</span>
-                <input type="text" min="1" max="40" class="form-control" placeholder="Last Name" name="Phone" autocomplete="true" maxlength="100" value="Phone">
-                <span class="glyphicon form-control-feedback glyphicon--Phone" aria-hidden="true"></span>
-            </div>
-        </div>
-    </div>
-    <div class=" row form-group interests-swimmer usms-only">
-        <div class="col-sm-5 input-group checkbox-group interests">
-            <div class="input-group-header">Interests</div>
-            <span class="form-group-display-value">Health and Fitness, Triathlon</span>
-            <div>
-                <label class="checkbox-label" for="healthFitness">
-                    <div class="checkbox-container">
-                        <input type="checkbox" name="healthFitness" id="healthFitness" value="true" checked>
-                        <span class="checkbox__placeholder"></span>
+            <div class="row form-group clearfix first-last">
+                <div class="col-xs-12 col-sm-5">
+                    <label class="font-weight-bold" for="FirstName">First Name</label>
+                    <span class="form-group-display-value">Firstname</span>
+                    <div>
+                        <span class="help-block help-block--FirstName">Please enter your first name</span>
+                        <input type="text" min="1" max="30" class="form-control" placeholder="First Name" name="FirstName" autocomplete="true" maxlength="100" value="Firstname">
+                        <span class="glyphicon form-control-feedback glyphicon--FirstName" aria-hidden="true"></span>
                     </div>
-                    Health and Fitness
-                </label>
-                <label class="checkbox-label" for="triathlon">
-                    <div class="checkbox-container">
-                        <input type="checkbox" name="triathlon" id="triathlon" value="true" checked>
-                        <span class="checkbox__placeholder"></span>
-                    </div>
-                    Triathlon
-                </label>
-                <label class="checkbox-label" for="openWater">
-                    <div class="checkbox-container">
-                        <input type="checkbox" name="openWater" id="openWater" value="true">
-                        <span class="checkbox__placeholder"></span>
-                    </div>
-                    Open Water
-                </label>
-                <label class="checkbox-label" for="competition">
-                    <div class="checkbox-container">
-                        <input type="checkbox" name="competition" id="competition" value="true">
-                        <span class="checkbox__placeholder"></span>
-                    </div>
-                    Competition
-                </label>
-            </div>
-        </div>        
-        <div class="col-sm-5 swimmer-print">
-            <label for="swimmerPrint">How would you like to receive your copy of SWIMMER magazine? Our digital edition now offers a more readable experience.</label>
-            <input type="hidden" name="hiddenSwimmerPrint">
-            <span class="form-group-display-value">Digital</span>
-            <div>
-                <span class="help-block help-block--SwimmerPrint">Please select a preference for SWIMMER Magazine</span>
-                <select name="swimmerPrint" id="SwimmerPrint" class="form-control" style="min-width: 180px;">
-                    <option value="digital">Digital</option>
-                    <option value="print">Print</option>
-                </select>
-            </div>
-        </div>    
-    </div>
-</div>
-<div class="contact-preferences">
-    <div class="form-header">
-        <h3>Contact Preferences</h3>
-        <!-- <p style="font-size:14px; margin: -1rem auto 2rem;"></p>     -->
-    </div>
-    <div class="row input-group checkbox-group mail-text">
-        <!-- <div class="input-group-header">Contact Preferences</div> -->
-        <div class="col-sm-6 mail-text-usms usms-only">
-            <label class="checkbox-label" for="sendMailUSMS">
-                <div class="checkbox-container">
-                    <input type="checkbox" name="sendMailUSMS" id="sendMailUSMS" value="true" disabled checked>
-                    <span class="checkbox__placeholder"></span>
                 </div>
-                USMS can send me physical mail (aside from SWIMMER magazine)
-            </label>
-            <label class="checkbox-label" for="sendTextUSMS">
-                <div class="checkbox-container">
-                    <input type="checkbox" name="sendTextUSMS" id="sendTextUSMS" value="true" disabled>
-                    <span class="checkbox__placeholder"></span>
+                <div class="col-xs-12 col-sm-1">
+                    <label for="MiddleInitial">MI</label>
+                    <span class="form-group-display-value">M</span>
+                    <input type="text" class="form-control" placeholder="MI" name="MiddleInitial" maxlength="1">
                 </div>
-                USMS can text me
-            </label>
-        </div>
-        <div class="col-sm-6 mail-text-lanemate lanemate-only">
-            <label class="checkbox-label" for="sendMailLaneMate">
-                <div class="checkbox-container">
-                    <input type="checkbox" name="sendMailLaneMate" id="sendMailLaneMate" value="true" disabled checked>
-                    <span class="checkbox__placeholder"></span>
-                </div>
-                LaneMate can send me physical mail
-            </label>
-            <label class="checkbox-label" for="sendTextLaneMate">
-                <div class="checkbox-container">
-                    <input type="checkbox" name="sendTextLaneMate" id="sendTextLaneMate" value="true" disabled>
-                    <span class="checkbox__placeholder"></span>
-                </div>
-                LaneMate can text me
-            </label>
-        </div>
-    </div>
-</div>
-<div class="registration-information usms-only">
-    <div class="form-header">
-        <h3>Registration Information</h3>
-        <!-- <p style="font-size:14px; margin: -1rem auto 2rem;"></p>     -->
-    </div>
-    <div class="row form-group clearfix registration-info usms-only">
-        <!-- <div class="form-group-header">Registration Information</div> -->
-        <div class="col-xs-12 col-sm-3 usms-only" id="registrationId">
-            <label class="font-weight-bold" for="regId">Registration ID</label>
-            <span class="form-group-display-value-static">1443-KT2JH</span>
-        </div>
-        <div class="col-xs-12 col-sm-3 usms-only" id="membershipStatus">
-            <label class="font-weight-bold" for="status">Membership Status</label>
-            <span class="form-group-display-value-static">Renewed</span>
-        </div>
-        <div class="col-xs-12 col-sm-2" id="firstYear">
-            <label class="font-weight-bold" for="FirstYear">First Year*</label>
-            <span class="form-group-display-value-static">1988</span>
-        </div>
-        <div class="col-xs-12 col-sm-2" id="lastYear">
-            <label class="font-weight-bold" for="LastYear">Last Year*</label>
-            <span class="form-group-display-value-static">2024</span>
-        </div>
-        <div class="col-xs-12 col-sm-2" id="yearsTenure">
-            <label class="font-weight-bold" for="YearsTenure">Years Tenure*</label>
-            <span class="form-group-display-value-static">36</span>
-        </div>
-    </div>
-    <div class="row input-group club-lmsc usms-only">
-        <div class="col-xs-12 col-sm-3" id="clubAbbr">
-            <label class="font-weight-bold" for="clubAbbr">Club Abbr</label>
-            <span class="form-group-display-value-static">SHARK</span>
-        </div>
-        <div class="col-xs-12 col-sm-4" id="clubName">
-            <label class="font-weight-bold" for="clubName">Club</label>
-            <span class="form-group-display-value-static">Sarasota Sharks Masters</span>
-        </div>
-        <div class="col-xs-12 col-sm-4" id="lmscName">
-            <label class="font-weight-bold" for="PermID">LMSC</label>
-            <span class="form-group-display-value-static">Florida</span>
-        </div>
-    </div>
-    <div class="row input-group coach-alts usms-only">
-        <div class="col-xs-12 col-sm-3" id="certifiedCoach">
-            <label class="font-weight-bold" for="certifiedCoach">Certified Coach</label>
-            <span class="form-group-display-value-static">No</span>
-        </div>
-        <div class="col-xs-12 col-sm-3" id="certifiedAlts">
-            <label class="font-weight-bold" for="certifiedAlts">Certified ALTS Instructor</label>
-            <span class="form-group-display-value-static">No</span>
-        </div>
-        <div class="col-xs-12 col-sm-3" id="designatedCoachAlts">
-            <label class="font-weight-bold" for="designatedCoachAlts">Designated Coach/ALTS Instructor</label>
-            <span class="form-group-display-value-static">No</span>
-        </div>
-        <div class="col-xs-12 col-sm-3" id="selfIdentifiedCoach">
-            <div class="input-group checkbox-group self-id-coach usms-only disabled">
-                <div class="input-group-header">Self Identified Coach</div>
-                <span class="form-group-display-value">Yes</span>
-                <label class="checkbox-label" for="selfIdCoach" style="display: none;">
-                    <div class="checkbox-container">
-                        <input type="checkbox" name="selfIdCoach" id="selfIdCoach" value="true" disabled checked>
-                        <span class="checkbox__placeholder"></span>
+                <div class="col-xs-12 col-sm-6">
+                    <label class="font-weight-bold" for="LastName">Last Name</label>
+                    <span class="form-group-display-value">Lastname</span>
+                    <div>
+                        <span class="help-block help-block--LastName">Please enter your last name</span>
+                        <input type="text" min="1" max="40" class="form-control" placeholder="Last Name" name="LastName" autocomplete="true" maxlength="100" value="Lastname">
+                        <span class="glyphicon form-control-feedback glyphicon--LastName" aria-hidden="true"></span>
                     </div>
-                    Yes
-                </label>
+                </div>
+            </div>
+            <div class="row form-group clearfix bio-detail">
+                <div class="col-xs-12 col-sm-2">
+                    <label class="font-weight-bold" for="Sex">
+                        Sex
+                        <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Sex is binary for the purpose of racing and results."></span>
+                    </label>
+                    <span class="form-group-display-value-static">Male</span>
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                    <div class="gender">
+                        <label for="Gender">
+                            Gender Identity
+                            <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Gender identity is an optional field that helps USMS better serve you."></span>
+                        </label>
+                        <input type="hidden" name="hiddenGender">
+                        <span class="form-group-display-value">Male</span>
+                        <div>
+                            <select disabled name="gender" id="Gender" class="form-control" style="min-width: 180px;">
+                                <option value="female">Female</option>
+                                <option value="male">Male</option>
+                                <option value="non-binary">Non-binary</option>
+                                <option value="transgender">Transgender</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>        
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                    <div class="ethnicity">
+                        <label for="Ethnicity">
+                            Ethnicity
+                            <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="Race/Ethnicity is an optional field that helps USMS better serve you."></span>
+                        </label>
+                        <input type="hidden" name="hiddenEthnicity">
+                        <span class="form-group-display-value">Caucasian</span>
+                        <div>
+                            <select disabled name="Ethnicity" id="Ethnicity" class="form-control" style="min-width: 180px;">
+                                <option value="caucasian">Caucasian</option>
+                                <option value="male">Male</option>
+                                <option value="non-binary">Non-binary</option>
+                                <option value="transEthnicity">TransEthnicity</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>        
+                </div>
+                <div class="col-xs-12 col-sm-3">
+                    <label class="font-weight-bold" for="LastName">Birthday</label>
+                    <span class="form-group-display-value-static">03/12/1987</span>
+                </div>
+            </div>
+            <div class="row form-group clearfix country">
+                <div class="col-xs-12 col-sm-6">
+                    <input type="hidden" name="hiddenCountry"  value=""><label class="font-weight-bold" for="SelectedCountry">Country</label>
+                    <span class="form-group-display-value">United States of America</span>
+                    <div>
+                        <span class="help-block help-block--SelectedCountry" >Please enter a value for SelectedCountry</span>
+                        <select disabled name="SelectedCountry" id="country" class="form-control" >
+                            <option value="-1" >Country</option><option value="AF" >Afghanistan </option>
+                            <option selected="" value="US">United States Of America </option>
+                            <option value="UY">Uruguay </option><option value="UZ">Uzbekistan </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row form-group clearfix street">
+                <div class="col-xs-12">
+                    <label class="font-weight-bold" for="Address">Address</label>
+                    <span class="form-group-display-value">1234 Main St.</span>
+                    <div>
+                        <span class="help-block help-block--Address">Please enter a value for Address</span>
+                        <input type="text" min="1" max="100" class="form-control" placeholder="Address" name="Address" id="address" autocomplete="true" maxlength="255">
+                        <span class="glyphicon form-control-feedback glyphicon--Address" aria-hidden="true"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row form-group clearfix city-state-zip">
+                <div class="col-xs-12 col-sm-5">
+                    <label class="font-weight-bold" for="City">City</label>
+                    <span class="form-group-display-value">Sarasota</span>
+                    <div>
+                        <span class="help-block help-block--City">Please enter a value for City</span>
+                        <input type="text" min="1" max="80" class="form-control" placeholder="City" name="City" id="city" autocomplete="true" maxlength="100">
+                        <span class="glyphicon form-control-feedback glyphicon--City" aria-hidden="true"></span>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4">
+                    <div>
+                        <label class="font-weight-bold" for="SelectedState">State</label>
+                        <span class="form-group-display-value">Florida</span>
+                        <div>
+                            <span class="help-block help-block--SelectedState">Please select a valid State</span>
+                            <select disabled name="SelectedState" id="state" class="form-control">
+                                <option value="-1">State</option>
+                                <option value="AL">Alabama</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-7 col-sm-3">
+                    <input type="hidden" name="hiddenZip" value="">
+                    <label class="font-weight-bold" for="ZipUs">Zip Code</label>
+                    <span class="form-group-display-value">12345</span>
+                    <div>
+                        <span class="help-block help-block--ZipInt">Please enter a value for Zip</span>
+                        <input type="text" min="1" max="15" class="form-control" placeholder="Zip Code" name="ZipInt" id="zipInt" autocomplete="true" maxlength="100" style="display: none;">
+                        <span class="glyphicon form-control-feedback glyphicon--ZipInt" aria-hidden="true"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row form-group clearfix email-phone">
+                <div class="col-xs-12 col-sm-6">
+                    <label class="font-weight-bold" for="Email">Email</label>
+                    <span class="form-group-display-value-static">email@address.com</span>
+                    <span style="font-size: 14px; display: block;">(To edit your email, please visit <a href="">settings</a> page.)</span>
+                    <!-- <div>
+                        <span class="help-block help-block--Email">Please enter a valid email</span>
+                        <input type="text" min="1" max="40" class="form-control" placeholder="Last Name" name="Email" autocomplete="true" maxlength="100" value="Email">
+                        <span class="glyphicon form-control-feedback glyphicon--Email" aria-hidden="true"></span>
+                    </div> -->
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <label class="font-weight-bold" for="Phone">Phone</label>
+                    <span class="form-group-display-value">111-111-1111</span>
+                    <div>
+                        <span class="help-block help-block--Phone">Please enter your phone number</span>
+                        <input type="text" min="1" max="40" class="form-control" placeholder="Last Name" name="Phone" autocomplete="true" maxlength="100" value="Phone">
+                        <span class="glyphicon form-control-feedback glyphicon--Phone" aria-hidden="true"></span>
+                    </div>
+                </div>
+            </div>
+            <div class=" row form-group interests-swimmer usms-only">
+                <div class="col-sm-5 input-group checkbox-group interests">
+                    <div class="input-group-header">Interests</div>
+                    <span class="form-group-display-value">Health and Fitness, Triathlon</span>
+                    <div>
+                        <label class="checkbox-label" for="healthFitness">
+                            <div class="checkbox-container">
+                                <input type="checkbox" name="healthFitness" id="healthFitness" value="true" checked>
+                                <span class="checkbox__placeholder"></span>
+                            </div>
+                            Health and Fitness
+                        </label>
+                        <label class="checkbox-label" for="triathlon">
+                            <div class="checkbox-container">
+                                <input type="checkbox" name="triathlon" id="triathlon" value="true" checked>
+                                <span class="checkbox__placeholder"></span>
+                            </div>
+                            Triathlon
+                        </label>
+                        <label class="checkbox-label" for="openWater">
+                            <div class="checkbox-container">
+                                <input type="checkbox" name="openWater" id="openWater" value="true">
+                                <span class="checkbox__placeholder"></span>
+                            </div>
+                            Open Water
+                        </label>
+                        <label class="checkbox-label" for="competition">
+                            <div class="checkbox-container">
+                                <input type="checkbox" name="competition" id="competition" value="true">
+                                <span class="checkbox__placeholder"></span>
+                            </div>
+                            Competition
+                        </label>
+                    </div>
+                </div>        
+                <div class="col-sm-5 swimmer-print">
+                    <label for="swimmerPrint">How would you like to receive your copy of SWIMMER magazine? Our digital edition now offers a more readable experience.</label>
+                    <input type="hidden" name="hiddenSwimmerPrint">
+                    <span class="form-group-display-value">Digital</span>
+                    <div>
+                        <span class="help-block help-block--SwimmerPrint">Please select a preference for SWIMMER Magazine</span>
+                        <select name="swimmerPrint" id="SwimmerPrint" class="form-control" style="min-width: 180px;">
+                            <option value="digital">Digital</option>
+                            <option value="print">Print</option>
+                        </select>
+                    </div>
+                </div>    
             </div>
         </div>
-    </div>
-    <div class="row footnote">
-        <p style="font-size: 1.6rem;">*Our database can only accurately track membership years back to 2008. If you were a member before then, it may not be reflected here.</p>
+        <div class="contact-preferences">
+            <div class="form-header">
+                <h3>Contact Preferences</h3>
+                <!-- <p style="font-size:14px; margin: -1rem auto 2rem;"></p>     -->
+            </div>
+            <div class="row input-group checkbox-group mail-text">
+                <!-- <div class="input-group-header">Contact Preferences</div> -->
+                <div class="col-sm-6 mail-text-usms usms-only">
+                    <label class="checkbox-label" for="sendMailUSMS">
+                        <div class="checkbox-container">
+                            <input type="checkbox" name="sendMailUSMS" id="sendMailUSMS" value="true" disabled checked>
+                            <span class="checkbox__placeholder"></span>
+                        </div>
+                        USMS can send me physical mail (aside from SWIMMER magazine)
+                    </label>
+                    <label class="checkbox-label" for="sendTextUSMS">
+                        <div class="checkbox-container">
+                            <input type="checkbox" name="sendTextUSMS" id="sendTextUSMS" value="true" disabled>
+                            <span class="checkbox__placeholder"></span>
+                        </div>
+                        USMS can text me
+                    </label>
+                </div>
+                <div class="col-sm-6 mail-text-lanemate lanemate-only">
+                    <label class="checkbox-label" for="sendMailLaneMate">
+                        <div class="checkbox-container">
+                            <input type="checkbox" name="sendMailLaneMate" id="sendMailLaneMate" value="true" disabled checked>
+                            <span class="checkbox__placeholder"></span>
+                        </div>
+                        LaneMate can send me physical mail
+                    </label>
+                    <label class="checkbox-label" for="sendTextLaneMate">
+                        <div class="checkbox-container">
+                            <input type="checkbox" name="sendTextLaneMate" id="sendTextLaneMate" value="true" disabled>
+                            <span class="checkbox__placeholder"></span>
+                        </div>
+                        LaneMate can text me
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="registration-information usms-only">
+            <div class="form-header">
+                <h3>Registration Information</h3>
+                <!-- <p style="font-size:14px; margin: -1rem auto 2rem;"></p>     -->
+            </div>
+            <div class="row form-group clearfix registration-info usms-only">
+                <!-- <div class="form-group-header">Registration Information</div> -->
+                <div class="col-xs-12 col-sm-3 usms-only" id="registrationId">
+                    <label class="font-weight-bold" for="regId">Registration ID</label>
+                    <span class="form-group-display-value-static">1443-KT2JH</span>
+                </div>
+                <div class="col-xs-12 col-sm-3 usms-only" id="membershipStatus">
+                    <label class="font-weight-bold" for="status">Membership Status</label>
+                    <span class="form-group-display-value-static">Renewed</span>
+                </div>
+                <div class="col-xs-12 col-sm-2" id="firstYear">
+                    <label class="font-weight-bold" for="FirstYear">First Year*</label>
+                    <span class="form-group-display-value-static">1988</span>
+                </div>
+                <div class="col-xs-12 col-sm-2" id="lastYear">
+                    <label class="font-weight-bold" for="LastYear">Last Year*</label>
+                    <span class="form-group-display-value-static">2024</span>
+                </div>
+                <div class="col-xs-12 col-sm-2" id="yearsTenure">
+                    <label class="font-weight-bold" for="YearsTenure">Years Tenure*</label>
+                    <span class="form-group-display-value-static">36</span>
+                </div>
+            </div>
+            <div class="row input-group club-lmsc usms-only">
+                <div class="col-xs-12 col-sm-3" id="clubAbbr">
+                    <label class="font-weight-bold" for="clubAbbr">Club Abbr</label>
+                    <span class="form-group-display-value-static">SHARK</span>
+                </div>
+                <div class="col-xs-12 col-sm-4" id="clubName">
+                    <label class="font-weight-bold" for="clubName">Club</label>
+                    <span class="form-group-display-value-static">Sarasota Sharks Masters</span>
+                </div>
+                <div class="col-xs-12 col-sm-4" id="lmscName">
+                    <label class="font-weight-bold" for="PermID">LMSC</label>
+                    <span class="form-group-display-value-static">Florida</span>
+                </div>
+            </div>
+            <div class="row input-group coach-alts usms-only">
+                <div class="col-xs-12 col-sm-3" id="certifiedCoach">
+                    <label class="font-weight-bold" for="certifiedCoach">Certified Coach</label>
+                    <span class="form-group-display-value-static">No</span>
+                </div>
+                <div class="col-xs-12 col-sm-3" id="certifiedAlts">
+                    <label class="font-weight-bold" for="certifiedAlts">Certified ALTS Instructor</label>
+                    <span class="form-group-display-value-static">No</span>
+                </div>
+                <div class="col-xs-12 col-sm-3" id="designatedCoachAlts">
+                    <label class="font-weight-bold" for="designatedCoachAlts">Designated Coach/ALTS Instructor</label>
+                    <span class="form-group-display-value-static">No</span>
+                </div>
+                <div class="col-xs-12 col-sm-3" id="selfIdentifiedCoach">
+                    <div class="input-group checkbox-group self-id-coach usms-only disabled">
+                        <div class="input-group-header">Self Identified Coach</div>
+                        <span class="form-group-display-value">Yes</span>
+                        <label class="checkbox-label" for="selfIdCoach" style="display: none;">
+                            <div class="checkbox-container">
+                                <input type="checkbox" name="selfIdCoach" id="selfIdCoach" value="true" disabled checked>
+                                <span class="checkbox__placeholder"></span>
+                            </div>
+                            Yes
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row footnote">
+                <p style="font-size: 1.6rem;">*Our database can only accurately track membership years back to 2008. If you were a member before then, it may not be reflected here.</p>
+            </div>
+        </div>
+        <div class="swimming-history">
+            <div class="form-header">
+                <h3>Swimming History</h3>
+                <!-- <p style="font-size:14px; margin: -1rem auto 2rem;">(Only you can see these fields. They can be updated by clicking the "Edit Profile" button above. NOTE: This information updates your USMS membership record.)</p>     -->
+            </div>
+            <div class="row form-group clearfix workouts">
+                <div class="col-xs-12 col-sm-3 usms-only" id="eventsCompleted">
+                    <label class="font-weight-bold" for="eventsCompleted">Events Completed This Year</label>
+                    <span class="form-group-display-value-static">2</span>
+                </div>
+                <div class="col-xs-12 col-sm-3" id="swimComConnect">
+                    <label class="font-weight-bold" for="swimComConnected">Swim.com Connected</label>
+                    <span class="form-group-display-value-static">Yes</span>
+                </div>
+                <div class="col-xs-12 col-sm-3" id="swimComSwimsThisYear">
+                    <label class="font-weight-bold" for="swimComThisYear">Swim.com Workouts Completed This Year</label>
+                    <span class="form-group-display-value-static">101</span>
+                </div>
+                <div class="col-xs-12 col-sm-3" id="swimComSwimsLastYear">
+                    <label class="font-weight-bold" for="swimComLastYear">Swim.com Workouts Completed Last Year</label>
+                    <span class="form-group-display-value-static">231</span>
+                </div>
+            </div>
+        </div>
+        <div class="fun-facts">
+            <div class="form-header">
+                <h3>Fun Facts</h3>
+            </div>
+            <div class="row input-group checkbox-group favorite-events">
+                <div class="input-group-header">Favorite Events</div>
+                <span class="form-group-display-value">50 Free, 100 Free</span>
+                <div class="col-sm-3 order-1 order-sm-1 checkbox-col">
+                    <label class="checkbox-label" for="25Free"><div class="checkbox-container"><input type="checkbox" name="25Free" id="25Free" value="true"><span class="checkbox__placeholder"></span></div>25 Free</label>
+                    <label class="checkbox-label" for="50Free"><div class="checkbox-container"><input type="checkbox" name="50Free" id="50Free" value="true" checked><span class="checkbox__placeholder"></span></div>50 Free</label>
+                    <label class="checkbox-label" for="100Free"><div class="checkbox-container"><input type="checkbox" name="100Free" id="100Free" value="true" checked><span class="checkbox__placeholder"></span></div>100 Free</label>
+                    <label class="checkbox-label" for="200Free"><div class="checkbox-container"><input type="checkbox" name="200Free" id="200Free" value="true"><span class="checkbox__placeholder"></span></div>200 Free</label>
+                </div>
+                <div class="col-sm-3 order-3 order-sm-2 checkbox-col">
+                    <label class="checkbox-label" for="25Breaststroke"><div class="checkbox-container"><input type="checkbox" name="25Breaststroke" id="25Breaststroke" value="true"><span class="checkbox__placeholder"></span></div>25 Breaststroke</label>
+                    <label class="checkbox-label" for="50Breaststroke"><div class="checkbox-container"><input type="checkbox" name="50Breaststroke" id="50Breaststroke" value="true"><span class="checkbox__placeholder"></span></div>50 Breaststroke</label>
+                    <label class="checkbox-label" for="100Breaststroke"><div class="checkbox-container"><input type="checkbox" name="100Breaststroke" id="100Breaststroke" value="true"><span class="checkbox__placeholder"></span></div>100 Breaststroke</label>
+                    <label class="checkbox-label" for="200Breaststroke"><div class="checkbox-container"><input type="checkbox" name="200Breaststroke" id="200Breaststroke" value="true"><span class="checkbox__placeholder"></span></div>200 Breaststroke</label>
+                </div>
+                <div class="col-sm-3 order-4 order-sm-3 checkbox-col">
+                    <label class="checkbox-label" for="25Backstroke"><div class="checkbox-container"><input type="checkbox" name="25Backstroke" id="25Backstroke" value="true"><span class="checkbox__placeholder"></span></div>25 Backstroke</label>
+                    <label class="checkbox-label" for="50Backstroke"><div class="checkbox-container"><input type="checkbox" name="50Backstroke" id="50Backstroke" value="true"><span class="checkbox__placeholder"></span></div>50 Backstroke</label>
+                    <label class="checkbox-label" for="100Backstroke"><div class="checkbox-container"><input type="checkbox" name="100Backstroke" id="100Backstroke" value="true"><span class="checkbox__placeholder"></span></div>100 Backstroke</label>
+                    <label class="checkbox-label" for="200Backstroke"><div class="checkbox-container"><input type="checkbox" name="200Backstroke" id="200Backstroke" value="true"><span class="checkbox__placeholder"></span></div>200 Backstroke</label>
+                </div>
+                <div class="col-sm-3 order-5 order-sm-4 checkbox-col">
+                    <label class="checkbox-label" for="25Butterfly"><div class="checkbox-container"><input type="checkbox" name="25Butterfly" id="25Butterfly" value="true"><span class="checkbox__placeholder"></span></div>25 Butterfly</label>
+                    <label class="checkbox-label" for="50Butterfly"><div class="checkbox-container"><input type="checkbox" name="50Butterfly" id="50Butterfly" value="true"><span class="checkbox__placeholder"></span></div>50 Butterfly</label>
+                    <label class="checkbox-label" for="100Butterfly"><div class="checkbox-container"><input type="checkbox" name="100Butterfly" id="100Butterfly" value="true"><span class="checkbox__placeholder"></span></div>100 Butterfly</label>
+                    <label class="checkbox-label" for="200Butterfly"><div class="checkbox-container"><input type="checkbox" name="200Butterfly" id="200Butterfly" value="true"><span class="checkbox__placeholder"></span></div>200 Butterfly</label>
+                </div>
+                <div class="col-sm-3 order-2 order-sm-5 checkbox-col">
+                    <label class="checkbox-label" for="400-500Free"><div class="checkbox-container"><input type="checkbox" name="400-500Free" id="400-500Free" value="true"><span class="checkbox__placeholder"></span></div>400/500 Free</label>
+                    <label class="checkbox-label" for="800-1000Free"><div class="checkbox-container"><input type="checkbox" name="800-1000Free" id="800-1000Free" value="true"><span class="checkbox__placeholder"></span></div>800/1000 Free</label>
+                    <label class="checkbox-label" for="1500-1650Free"><div class="checkbox-container"><input type="checkbox" name="1500-1650Free" id="1500-1650Free" value="true"><span class="checkbox__placeholder"></span></div>1500/1650 Free</label>
+                </div>
+                <div class="col-sm-3 order-5 order-sm-5 checkbox-col">
+                    <label class="checkbox-label" for="100IM"><div class="checkbox-container"><input type="checkbox" name="100IM" id="100IM" value="true"><span class="checkbox__placeholder"></span></div>100 Individual Medley</label>
+                    <label class="checkbox-label" for="200IM"><div class="checkbox-container"><input type="checkbox" name="200IM" id="200IM" value="true"><span class="checkbox__placeholder"></span></div>200 Individual Medley</label>
+                    <label class="checkbox-label" for="400IM"><div class="checkbox-container"><input type="checkbox" name="400IM" id="400IM" value="true"><span class="checkbox__placeholder"></span></div>400 Individual Medley</label>
+                    <label class="checkbox-label" for="Relays"><div class="checkbox-container"><input type="checkbox" name="Relays" id="Relays" value="true"><span class="checkbox__placeholder"></span></div>Relays</label>
+                </div>
+                <div class="col-sm-3 order-5 order-sm-5 checkbox-col">
+                    <label class="checkbox-label" for="OW1Mile"><div class="checkbox-container"><input type="checkbox" name="OW1Mile" id="OW1Mile" value="true"><span class="checkbox__placeholder"></span></div>Open Water 1-Mile</label>
+                    <label class="checkbox-label" for="OW5k"><div class="checkbox-container"><input type="checkbox" name="OW5k" id="OW5k" value="true"><span class="checkbox__placeholder"></span></div>Open Water 5k</label>
+                    <label class="checkbox-label" for="OW10k"><div class="checkbox-container"><input type="checkbox" name="OW10k" id="OW10k" value="true"><span class="checkbox__placeholder"></span></div>Open Water 10k</label>
+                    <label class="checkbox-label" for="OW10k+"><div class="checkbox-container"><input type="checkbox" name="OW10k+" id="OW10k+" value="true"><span class="checkbox__placeholder"></span></div>Open Water 10k+</label>
+                </div>
+                <div class="col-sm-3 order-5 order-sm-5 checkbox-col">
+                    <label class="checkbox-label" for="FitnessEvents"><div class="checkbox-container"><input type="checkbox" name="FitnessEvents" id="FitnessEvents" value="true"><span class="checkbox__placeholder"></span></div>Fitness Events</label>
+                    <label class="checkbox-label" for="VirtualEvents"><div class="checkbox-container"><input type="checkbox" name="VirtualEvents" id="VirtualEvents" value="true"><span class="checkbox__placeholder"></span></div>Virtual Events</label>
+                </div>
+            </div>
+            <div class="row form-group favorite-stroke row">
+                <div class="col-sm-4">
+                    <input type="hidden" name="hiddenFavoriteStroke">
+                    <label for="favoriteStroke">Favorite Stroke</label>
+                    <span class="form-group-display-value">Freestyle</span>
+                    <div>
+                        <!-- <span class="help-block help-block--FavoriteStroke"></span> -->
+                        <select name="FavoriteStroke" id="favoriteStroke" class="form-control" style="min-width: 180px;">
+                            <option value="freestyle">Freestyle</option>
+                            <option value="breaststroke">Breaststroke</option>
+                            <option value="backstroke">Backstroke</option>
+                            <option value="butterfly">Butterfly</option>
+                            <option value="medley">Medley</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row form-group clearfix college-university">
+                <div class="col-xs-12 col-sm-6">
+                    <label class="font-weight-bold" for="CollegeUniversity">College or University</label>
+                    <span class="form-group-display-value">University of Florida</span>
+                    <div>
+                        <input type="text" min="1" max="40" class="form-control" placeholder="College or University" name="CollegeUniversity" autocomplete="true" maxlength="100" value="College or University">
+                        <span class="glyphicon form-control-feedback glyphicon--CollegeUniversity" aria-hidden="true"></span>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <label class="font-weight-bold" for="Occupation">Occupation</label>
+                    <span class="form-group-display-value">Occupation</span>
+                    <div>                
+                        <input type="text" min="1" max="40" class="form-control" placeholder="Occupation" name="Occupation" autocomplete="true" maxlength="100" value="Occupation">
+                        <span class="glyphicon form-control-feedback glyphicon--Occupation" aria-hidden="true"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row form-group clearfix social-links">
+                <div class="col-xs-12 col-sm-8">
+                    <label class="font-weight-bold" for="SocialLinks">Social Links</label>
+                    <div class="form-group-display-value" style="max-width:200px;">
+                        <ul class="social-share-icons list--nostyle">
+                            <li class="social-share-icons__item"><a href="/#" target="_blank" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                            <li class="social-share-icons__item"><a href="/#" target="_blank" title="Instagram"><i class="fa fa-instagram"></i></a></li>
+                            <li class="social-share-icons__item"><a href="/#" target="_blank" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                            <li class="social-share-icons__item"><a href="/#" target="_blank" title="YouTube"><i class="fa fa-youtube"></i></a></li>
+                        </ul>
+                    </div>            
+                    <div>
+                        <input type="text" min="1" max="40" class="form-control" placeholder="Facebook" name="Facebook" autocomplete="true" maxlength="100" value="Facebook">
+                        <span class="glyphicon form-control-feedback glyphicon--Facebook" aria-hidden="true"></span>
+                    </div>    
+                    <div>
+                        <input type="text" min="1" max="40" class="form-control" placeholder="Instagram" name="Instagram" autocomplete="true" maxlength="100" value="Instagram">
+                        <span class="glyphicon form-control-feedback glyphicon--Instagram" aria-hidden="true"></span>
+                    </div>
+                    <div>
+                        <input type="text" min="1" max="40" class="form-control" placeholder="Twitter" name="Twitter" autocomplete="true" maxlength="100" value="Twitter">
+                        <span class="glyphicon form-control-feedback glyphicon--Twitter" aria-hidden="true"></span>
+                    </div>
+                    <div>
+                        <input type="text" min="1" max="40" class="form-control" placeholder="Linkedin" name="Linkedin" autocomplete="true" maxlength="100" value="Linkedin">
+                        <span class="glyphicon form-control-feedback glyphicon--Linkedin" aria-hidden="true"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<div class="swimming-history">
-    <div class="form-header">
-        <h3>Swimming History</h3>
-        <!-- <p style="font-size:14px; margin: -1rem auto 2rem;">(Only you can see these fields. They can be updated by clicking the "Edit Profile" button above. NOTE: This information updates your USMS membership record.)</p>     -->
-    </div>
-    <div class="row form-group clearfix workouts">
-        <div class="col-xs-12 col-sm-3 usms-only" id="eventsCompleted">
-            <label class="font-weight-bold" for="eventsCompleted">Events Completed This Year</label>
-            <span class="form-group-display-value-static">2</span>
-        </div>
-        <div class="col-xs-12 col-sm-3" id="swimComConnect">
-            <label class="font-weight-bold" for="swimComConnected">Swim.com Connected</label>
-            <span class="form-group-display-value-static">Yes</span>
-        </div>
-        <div class="col-xs-12 col-sm-3" id="swimComSwimsThisYear">
-            <label class="font-weight-bold" for="swimComThisYear">Swim.com Workouts Completed This Year</label>
-            <span class="form-group-display-value-static">101</span>
-        </div>
-        <div class="col-xs-12 col-sm-3" id="swimComSwimsLastYear">
-            <label class="font-weight-bold" for="swimComLastYear">Swim.com Workouts Completed Last Year</label>
-            <span class="form-group-display-value-static">231</span>
-        </div>
-    </div>
-</div>
-<div class="fun-facts">
-    <div class="form-header">
-        <h3>Fun Facts</h3>
-    </div>
-    <div class="row input-group checkbox-group favorite-events">
-        <div class="input-group-header">Favorite Events</div>
-        <span class="form-group-display-value">50 Free, 100 Free</span>
-        <div class="col-sm-3 order-1 order-sm-1 checkbox-col">
-            <label class="checkbox-label" for="25Free"><div class="checkbox-container"><input type="checkbox" name="25Free" id="25Free" value="true"><span class="checkbox__placeholder"></span></div>25 Free</label>
-            <label class="checkbox-label" for="50Free"><div class="checkbox-container"><input type="checkbox" name="50Free" id="50Free" value="true" checked><span class="checkbox__placeholder"></span></div>50 Free</label>
-            <label class="checkbox-label" for="100Free"><div class="checkbox-container"><input type="checkbox" name="100Free" id="100Free" value="true" checked><span class="checkbox__placeholder"></span></div>100 Free</label>
-            <label class="checkbox-label" for="200Free"><div class="checkbox-container"><input type="checkbox" name="200Free" id="200Free" value="true"><span class="checkbox__placeholder"></span></div>200 Free</label>
-        </div>
-        <div class="col-sm-3 order-3 order-sm-2 checkbox-col">
-            <label class="checkbox-label" for="25Breaststroke"><div class="checkbox-container"><input type="checkbox" name="25Breaststroke" id="25Breaststroke" value="true"><span class="checkbox__placeholder"></span></div>25 Breaststroke</label>
-            <label class="checkbox-label" for="50Breaststroke"><div class="checkbox-container"><input type="checkbox" name="50Breaststroke" id="50Breaststroke" value="true"><span class="checkbox__placeholder"></span></div>50 Breaststroke</label>
-            <label class="checkbox-label" for="100Breaststroke"><div class="checkbox-container"><input type="checkbox" name="100Breaststroke" id="100Breaststroke" value="true"><span class="checkbox__placeholder"></span></div>100 Breaststroke</label>
-            <label class="checkbox-label" for="200Breaststroke"><div class="checkbox-container"><input type="checkbox" name="200Breaststroke" id="200Breaststroke" value="true"><span class="checkbox__placeholder"></span></div>200 Breaststroke</label>
-        </div>
-        <div class="col-sm-3 order-4 order-sm-3 checkbox-col">
-            <label class="checkbox-label" for="25Backstroke"><div class="checkbox-container"><input type="checkbox" name="25Backstroke" id="25Backstroke" value="true"><span class="checkbox__placeholder"></span></div>25 Backstroke</label>
-            <label class="checkbox-label" for="50Backstroke"><div class="checkbox-container"><input type="checkbox" name="50Backstroke" id="50Backstroke" value="true"><span class="checkbox__placeholder"></span></div>50 Backstroke</label>
-            <label class="checkbox-label" for="100Backstroke"><div class="checkbox-container"><input type="checkbox" name="100Backstroke" id="100Backstroke" value="true"><span class="checkbox__placeholder"></span></div>100 Backstroke</label>
-            <label class="checkbox-label" for="200Backstroke"><div class="checkbox-container"><input type="checkbox" name="200Backstroke" id="200Backstroke" value="true"><span class="checkbox__placeholder"></span></div>200 Backstroke</label>
-        </div>
-        <div class="col-sm-3 order-5 order-sm-4 checkbox-col">
-            <label class="checkbox-label" for="25Butterfly"><div class="checkbox-container"><input type="checkbox" name="25Butterfly" id="25Butterfly" value="true"><span class="checkbox__placeholder"></span></div>25 Butterfly</label>
-            <label class="checkbox-label" for="50Butterfly"><div class="checkbox-container"><input type="checkbox" name="50Butterfly" id="50Butterfly" value="true"><span class="checkbox__placeholder"></span></div>50 Butterfly</label>
-            <label class="checkbox-label" for="100Butterfly"><div class="checkbox-container"><input type="checkbox" name="100Butterfly" id="100Butterfly" value="true"><span class="checkbox__placeholder"></span></div>100 Butterfly</label>
-            <label class="checkbox-label" for="200Butterfly"><div class="checkbox-container"><input type="checkbox" name="200Butterfly" id="200Butterfly" value="true"><span class="checkbox__placeholder"></span></div>200 Butterfly</label>
-        </div>
-        <div class="col-sm-3 order-2 order-sm-5 checkbox-col">
-            <label class="checkbox-label" for="400-500Free"><div class="checkbox-container"><input type="checkbox" name="400-500Free" id="400-500Free" value="true"><span class="checkbox__placeholder"></span></div>400/500 Free</label>
-            <label class="checkbox-label" for="800-1000Free"><div class="checkbox-container"><input type="checkbox" name="800-1000Free" id="800-1000Free" value="true"><span class="checkbox__placeholder"></span></div>800/1000 Free</label>
-            <label class="checkbox-label" for="1500-1650Free"><div class="checkbox-container"><input type="checkbox" name="1500-1650Free" id="1500-1650Free" value="true"><span class="checkbox__placeholder"></span></div>1500/1650 Free</label>
-        </div>
-        <div class="col-sm-3 order-5 order-sm-5 checkbox-col">
-            <label class="checkbox-label" for="100IM"><div class="checkbox-container"><input type="checkbox" name="100IM" id="100IM" value="true"><span class="checkbox__placeholder"></span></div>100 Individual Medley</label>
-            <label class="checkbox-label" for="200IM"><div class="checkbox-container"><input type="checkbox" name="200IM" id="200IM" value="true"><span class="checkbox__placeholder"></span></div>200 Individual Medley</label>
-            <label class="checkbox-label" for="400IM"><div class="checkbox-container"><input type="checkbox" name="400IM" id="400IM" value="true"><span class="checkbox__placeholder"></span></div>400 Individual Medley</label>
-            <label class="checkbox-label" for="Relays"><div class="checkbox-container"><input type="checkbox" name="Relays" id="Relays" value="true"><span class="checkbox__placeholder"></span></div>Relays</label>
-        </div>
-        <div class="col-sm-3 order-5 order-sm-5 checkbox-col">
-            <label class="checkbox-label" for="OW1Mile"><div class="checkbox-container"><input type="checkbox" name="OW1Mile" id="OW1Mile" value="true"><span class="checkbox__placeholder"></span></div>Open Water 1-Mile</label>
-            <label class="checkbox-label" for="OW5k"><div class="checkbox-container"><input type="checkbox" name="OW5k" id="OW5k" value="true"><span class="checkbox__placeholder"></span></div>Open Water 5k</label>
-            <label class="checkbox-label" for="OW10k"><div class="checkbox-container"><input type="checkbox" name="OW10k" id="OW10k" value="true"><span class="checkbox__placeholder"></span></div>Open Water 10k</label>
-            <label class="checkbox-label" for="OW10k+"><div class="checkbox-container"><input type="checkbox" name="OW10k+" id="OW10k+" value="true"><span class="checkbox__placeholder"></span></div>Open Water 10k+</label>
-        </div>
-        <div class="col-sm-3 order-5 order-sm-5 checkbox-col">
-            <label class="checkbox-label" for="FitnessEvents"><div class="checkbox-container"><input type="checkbox" name="FitnessEvents" id="FitnessEvents" value="true"><span class="checkbox__placeholder"></span></div>Fitness Events</label>
-            <label class="checkbox-label" for="VirtualEvents"><div class="checkbox-container"><input type="checkbox" name="VirtualEvents" id="VirtualEvents" value="true"><span class="checkbox__placeholder"></span></div>Virtual Events</label>
-        </div>
-    </div>
-    <div class="row form-group favorite-stroke row">
-        <div class="col-sm-4">
-            <input type="hidden" name="hiddenFavoriteStroke">
-            <label for="favoriteStroke">Favorite Stroke</label>
-            <span class="form-group-display-value">Freestyle</span>
-            <div>
-                <!-- <span class="help-block help-block--FavoriteStroke"></span> -->
-                <select name="FavoriteStroke" id="favoriteStroke" class="form-control" style="min-width: 180px;">
-                    <option value="freestyle">Freestyle</option>
-                    <option value="breaststroke">Breaststroke</option>
-                    <option value="backstroke">Backstroke</option>
-                    <option value="butterfly">Butterfly</option>
-                    <option value="medley">Medley</option>
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="row form-group clearfix college-university">
-        <div class="col-xs-12 col-sm-6">
-            <label class="font-weight-bold" for="CollegeUniversity">College or University</label>
-            <span class="form-group-display-value">University of Florida</span>
-            <div>
-                <input type="text" min="1" max="40" class="form-control" placeholder="College or University" name="CollegeUniversity" autocomplete="true" maxlength="100" value="College or University">
-                <span class="glyphicon form-control-feedback glyphicon--CollegeUniversity" aria-hidden="true"></span>
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-6">
-            <label class="font-weight-bold" for="Occupation">Occupation</label>
-            <span class="form-group-display-value">Occupation</span>
-            <div>                
-                <input type="text" min="1" max="40" class="form-control" placeholder="Occupation" name="Occupation" autocomplete="true" maxlength="100" value="Occupation">
-                <span class="glyphicon form-control-feedback glyphicon--Occupation" aria-hidden="true"></span>
-            </div>
-        </div>
-    </div>
-    <div class="row form-group clearfix social-links">
-        <div class="col-xs-12 col-sm-8">
-            <label class="font-weight-bold" for="SocialLinks">Social Links</label>
-            <div class="form-group-display-value" style="max-width:200px;">
-                <ul class="social-share-icons list--nostyle">
-                    <li class="social-share-icons__item"><a href="/#" target="_blank" title="Facebook"><i class="fa fa-facebook"></i></a></li>
-                    <li class="social-share-icons__item"><a href="/#" target="_blank" title="Instagram"><i class="fa fa-instagram"></i></a></li>
-                    <li class="social-share-icons__item"><a href="/#" target="_blank" title="Twitter"><i class="fa fa-twitter"></i></a></li>
-                    <li class="social-share-icons__item"><a href="/#" target="_blank" title="YouTube"><i class="fa fa-youtube"></i></a></li>
-                </ul>
-            </div>            
-            <div>
-                <input type="text" min="1" max="40" class="form-control" placeholder="Facebook" name="Facebook" autocomplete="true" maxlength="100" value="Facebook">
-                <span class="glyphicon form-control-feedback glyphicon--Facebook" aria-hidden="true"></span>
-            </div>    
-            <div>
-                <input type="text" min="1" max="40" class="form-control" placeholder="Instagram" name="Instagram" autocomplete="true" maxlength="100" value="Instagram">
-                <span class="glyphicon form-control-feedback glyphicon--Instagram" aria-hidden="true"></span>
-            </div>
-            <div>
-                <input type="text" min="1" max="40" class="form-control" placeholder="Twitter" name="Twitter" autocomplete="true" maxlength="100" value="Twitter">
-                <span class="glyphicon form-control-feedback glyphicon--Twitter" aria-hidden="true"></span>
-            </div>
-            <div>
-                <input type="text" min="1" max="40" class="form-control" placeholder="Linkedin" name="Linkedin" autocomplete="true" maxlength="100" value="Linkedin">
-                <span class="glyphicon form-control-feedback glyphicon--Linkedin" aria-hidden="true"></span>
-            </div>
-        </div>
-    </div>
-</div>
+
+
 <script src="https://www.usms.org/scripts/registration.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
