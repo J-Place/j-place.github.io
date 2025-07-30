@@ -8,6 +8,7 @@ $(document).ready(function() {
 });
 
 $("#editPrivateInfo").on( "click", function() {
+    console.log("This ...");
     showInputs();
     toggleEditButtons();
     $("#showValidation").show();
