@@ -1,44 +1,41 @@
 <div id="cardCompetition" class="card competition-qualification">
     <h3>Certification of Competition Category</h3>
-    <p>Your competition category is  based on your Sex selection above. Please certify that it also is you sex assigned at birth.</p>
-        <div class="form-group">
-            <span class="help-block help-block--StrokeAnalysis has-error">Please make a selection</span>
-            <label id="competitionMembershipYes" class="radio-label radio-label--inline col-xs-12" for="competitionMembershipYes">
+    <p>Your competition category is based on your Sex selection above. Please certify that it also is your sex assigned at birth.</p>
+    <div class="form-group">
+        <span class="help-block help-block--StrokeAnalysis has-error">Please make a selection</span>
+        <label id="competitionMembershipYes" class="radio-label radio-label--inline col-xs-12" for="competitionMembershipYesInput" style="cursor:pointer;">
+            <div class="radio-container">
+                <input type="radio" name="CompetitionMembership" id="competitionMembershipYesInput" value="yes">
+                <span class="radio__placeholder"></span>
+            </div>
+            <strong>Yes, I certify that my sex matched my sex assigned at birth</strong>
+        </label>
+        <label id="competitionMembershipNo" class="radio-label radio-label--inline col-xs-12" for="competitionMembershipNoInput" style="cursor:pointer;">
                 <div class="radio-container">
-                    <input type="radio" name="CompetitionMembership" id="competitionMembershipYesInput" value="yes">
+                    <input type="radio" name="CompetitionMembership" id="competitionMembershipNoInput" value="no">
                     <span class="radio__placeholder"></span>
                 </div>
-                <strong>Yes, I certify that my sex macthed my sex assigned at birth</strong>
-            </label>
-            <label id="competitionMembershipNo" class="radio-label radio-label--inline col-xs-12" for="competitionMembershipNo">
-                    <div class="radio-container">
-                        <input type="radio" name="CompetitionMembershipNoInput" id="competitionMembershipNoInput" value="no">
-                        <span class="radio__placeholder"></span>
-                    </div>
-                    No, my sex does NOT match my sex assigned at birth
-            </label>
-        </div>
-        <!-- <h4 class="card__total">
-            Video Stroke Analysis: <span class="video-stroke-analysis--total card__total--amount">$__.__</span>
-        </h4> -->
-        <div class="modal" id="modalSexNotMatch" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5>We Will Contact You</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p>A USMS staff member will contact you within a week to discuss and determine eligibility. Please go ahead and finish your registration.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <a class="btn btn-lg btn-primary" id="confirmSexNotMatch" href="">Okay</a>
-                    </div>
+                No, my sex does NOT match my sex assigned at birth
+        </label>
+    </div>
+    <div class="modal" id="modalSexNotMatch" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>We Will Contact You</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>A USMS staff member will contact you within a week to discuss and determine eligibility. Please go ahead and finish your registration.</p>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-lg btn-primary" id="confirmSexNotMatch" href="#">Okay</a>
                 </div>
             </div>
         </div>
+    </div>
 </div>
 <style>
     .card.competition-qualification {
