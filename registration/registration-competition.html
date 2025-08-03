@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<!--[if IE 9]>
+<html lang="en" class="ie9 no-js">
+   <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+    <!--<![endif]-->
+    <head>
+        <title>U.S. Masters Swimming</title>
+        <sergey-import src="site/head_meta" />
+        <sergey-import src="site/head_js" />
+        <sergey-import src="site/head_css" />
+        <!-- <link rel="stylesheet" href="/lanemate/css/lanemate.css"> -->
+        <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
+        <link rel="stylesheet" href="/registration/css/registration-overrides.css">
+        <!-- <link rel="stylesheet" href="/lanemate/css-components/review-order.css"> -->
+        <!-- <link rel="stylesheet" href="/lanemate/css/lanemate-compiled.css"> -->
+    </head>
+    <body class="">
+        <div id="main-container">
+            
+            <sergey-import src="foundation/site-header" />
+
+            <main role="main">
+                <div class="section section-full bg-gray">
+                    <div class="usms-container">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="renew__form-container m-b-30">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <div class="renew__header">
+                                                <p>Welcome to U.S. Masters Swimming. Let's finish your registration.</p>
+                                            </div>
+                                            <div class="renew__form-body">
+                                                <sergey-import src="lanemate/registration/contact-information-competition" />
+                                                <div id="reactId">
+                                                    <div data-reactroot="">
+                                                        <form class="form-membership-length form-horizontal">
+                                                            <sergey-import src="lanemate/registration/club-selection" />
+                                                            <sergey-import src="lanemate/registration/liability" />
+                                                            <sergey-import src="registration/membership-options-competition" />
+                                                            <sergey-import src="registration/competition-qualification" />
+                                                            <sergey-import src="lanemate/registration/video-stroke-analysis-pending" />
+                                                            <sergey-import src="lanemate/registration/interests-swimmer" />
+                                                            <sergey-import src="lanemate/registration/donations" />
+                                                            <sergey-import src="lanemate/registration/payment-info-competition" />
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <sergey-import src="lanemate/disclaimers/usa-swimming-donations" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+            <sergey-import src="foundation/footer" />
+        </div>
+
+
+        <script>
+
+            let membershipPriceEl = document.querySelector('.membership-length--total');
+            let videoPriceEl = document.querySelector('.video-stroke-analysis--total');
+            let swimmerPriceEl = document.querySelector('.swimmer-magazine--total');
+
+            var updateTotalPayment = function() {
+                // Get the price values from the elements with unique class names
+                let membershipPriceEl = document.querySelector('.membership-length--total');
+                let videoPriceEl = document.querySelector('.video-stroke-analysis--total');
+                let swimmerPriceEl = document.querySelector('.swimmer-magazine--total');
+
+                // Function to safely parse and validate the price from an element's innerText
+                function parsePrice(element) {
+                    if (element) {
+                        let text = element.innerText.trim(); // Remove any extra spaces                        
+                        let validPricePattern = /^\$\d+(\.\d{2})?$/; // Regular expression to check for a valid price format (e.g., "$10.00")
+                        // Check if the text matches the valid price pattern
+                        if (validPricePattern.test(text)) {
+                            // Remove the dollar sign and convert to a floating-point number
+                            let price = parseFloat(text.replace('$', ''));                            
+                            // Check if the result is a valid number
+                            if (!isNaN(price)) {
+                                return price;
+                            } else {
+                                // console.warn(`Invalid number after parsing in element: "${text}"`);
+                                return 0;  // Return 0 if the parsing fails
+                            }
+                        } else {
+                            // console.warn(`Invalid price format in element: "${text}"`);
+                            return 0;  // Return 0 if the format is invalid
+                        }
+                    }
+                    return 0;  // Return 0 if the element is missing
+                }
+
+                // Safely parse prices from the elements
+                let membershipPrice = parsePrice(membershipPriceEl);
+                let videoPrice = parsePrice(videoPriceEl);
+                let swimmerPrice = parsePrice(swimmerPriceEl);
+
+                // Sum the parsed prices
+                let totalSum = membershipPrice + videoPrice + swimmerPrice;
+
+                // Convert the total sum back to a dollar format with two decimal places
+                let formattedSum = `$${totalSum.toFixed(2)}`;
+
+                // Display the subtotal in the HTML element with ID 'subtotal'
+                let regPriceTotal = document.querySelector(".payment-info__line-item--total .payment-info__line-item--price");
+                regPriceTotal.innerText = `${formattedSum}`;
+            };
+
+        </script>
+
+    </body>
+</html>

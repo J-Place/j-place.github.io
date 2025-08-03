@@ -1,0 +1,231 @@
+
+            <style>
+                .membership-length--competition {
+                    border: 1px solid #d6d6d6;
+                    box-shadow: 0 0 20px #ccc;
+                    cursor: pointer;
+                    opacity: 1;
+                    text-align: center;
+                    transition: opacity .25s ease;
+                    vertical-align: top;
+                }
+                .membership-length--competition.disabled {
+                    background-color: #DDD;
+                    color: #CCC;
+                }
+                .membership-length--competition.disabled .membership-length--price p  {
+                    color: #CCC !important;
+                }
+            </style>
+            <div class="modal-container" style="transition:all 250ms ease-in-out;transform:translateY(-10px);opacity:0;z-index:-1;">
+				<div class="modal">
+					<div class="modal-close"><button><i class="fa fa-times"></i></button></div>
+					<div class="row ">
+						<div class="col-xs-12">
+							<p class="text-danger text-center" style="display:flex;flex-direction:column;"></p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<input type="hidden" name="dataDesc" value=""><input type="hidden" name="dataValue" value=""><input type="hidden" name="current-reg-year" value="2024">
+			<div class="card membership-length">
+				<!-- react-empty: 15 -->
+				<div class="modal-container" style="transition:all 250ms ease-in-out;transform:translateY(-10px);opacity:0;z-index:-1;">
+					<div class="modal">
+						<div class="modal-close"><button><i class="fa fa-times"></i></button></div>
+						<div class="row ">
+							<div class="col-xs-12">
+								<p class="text-danger text-center" style="display:flex;flex-direction:column;"></p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-container" style="transition:all 250ms ease-in-out;transform:translateY(-10px);opacity:0;z-index:-1;">
+					<div class="modal">
+						<div class="modal-close"><button><i class="fa fa-times"></i></button></div>
+						<p>We cannot find the address that you entered in our records. Please check the spelling of all address information to ensure it is accurate.</p>
+						<br><button type="button" class="btn btn-primary btn-small" style="margin-right:15px;">Edit Address</button><button type="button" class="btn btn-outline btn-small">Use Address As Is</button>
+					</div>
+				</div>
+				<h3 class="membership-length__form-header">Membership Options</h3>
+				<p class="membership-length__form-summary">Pick a membership option that works best for you</p>
+				<div class="col-xs-12 text-center">
+                    <span class="help-block help-block--length">Please select a membership option</span>
+                </div>
+				<div class="row is-flex membership-length--container">
+					<div class="col-xs-12 col-md-3" style="display:flex;">
+						<div class="membership-length--option membership-length--currentYear">
+							<span class="promo current-year-promo">Standard Membership</span>
+							<label for="currentYear" class="control-label">
+								<div class="radio-container"><input type="radio" name="length" id="currentYear" value="currentYear"></div>
+								<div class="current-year-container">
+									<span class="membership-length--price">
+										<p class="form-control-static current-year-cost">$0.00</p>
+									</span>
+									<span class="membership-length--description">USMS Membership</span>
+								</div>
+								<span>Expires on Dec. 31,  2024</span>
+							</label>
+							<span class="membership-length--note"></span>
+						</div>
+					</div>
+					<div class="col-xs-12 col-md-3" style="display:flex;">
+						<div class="membership-length--option membership-length--usmsPlus" style="display:block;">
+							<span class="promo usms-plus-promo">Full Access Membership</span><span class="savings"></span>
+							<label for="usmsPlus" class="control-label">
+								<div class="radio-container"><input type="radio" name="length" id="usmsPlus" value="usmsPlus"></div>
+								<div class="usms-plus-container">
+									<span class="membership-length--price">
+										<p class="form-control-static usms-plus-cost">$179.00</p>
+									</span>
+									<span class="membership-length--description">USMS+</span>
+								</div>
+								<span>Expires on Dec. 31,  2024</span>
+							</label>
+							<span class="membership-length--note">
+								<ul class="payment-bullets">
+									<li>Standard membership</li>
+									<li>Premium welcome box</li>
+									<li>Free virtual event entry</li>
+									<li>Entry to USA Swimming Supporters Club</li>
+									<li>Olympian webinars</li>
+									<li>Optional Video Stroke Analysis (1 free analysis per year)</li>
+									<li><a data-toggle="modal" data-target="#modalYearPlus">And even more</a></li>
+								</ul>
+								<div class="modal" id="modalYearPlus" tabindex="-1" role="dialog">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">×</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<ul>
+													<li>A standard USMS membership</li>
+													<li>
+														Exclusive welcome package including:
+														<ul>
+															<li>Premium USMS-branded item of your choosing</li>
+															<li>USMS cap</li>
+															<li>USMS stickers</li>
+															<li>Plastic membership card</li>
+														</ul>
+													</li>
+													<li>
+														Free registration to all of these events
+														<ul>
+															<li>Swim.com USMS Fitness Series (three challenges per year)</li>
+															<li>Virtual Championships (five distances per year)</li>
+														</ul>
+													</li>
+													<li>Access to exclusive Olympian-featured webinars</li>
+													<li>
+														Free USA Swimming Supporters Club membership which includes a donation to support Adult Learn-to-Swim grants and:
+														<ul>
+															<li>&nbsp;A Supporters Club merchandise items</li>
+															<li>"Skip the line" access to autograph signings at major events</li>
+															<li>Invitations to participate in USA Swimming fan surveys and pools</li>
+															<li>Exclusive offer from USA Swimming and USA Swimming Foundation partners</li>
+														</ul>
+													</li>
+													<li>Free All American patches<span style="font-size: 14px;">&nbsp;(<em>once you reach All American status</em>)</span></li>
+													<li>Free Go the Distance 50-mile cap&nbsp;<span style="font-size: 14px;">(<em>once you reach 50 miles</em>)</span></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</span>
+						</div>
+					</div>
+                    <div class="col-xs-12 col-md-3" style="display:flex;">
+						<div id="membershipCompetition" class="membership-length--option membership-length--competition disabled" style="display:block;">
+							<span class="promo usms-plus-promo">Competitive Membership</span><span class="savings"></span>
+							<label for="usmsPlus" class="control-label">
+								<div class="radio-container"><input type="radio" name="length" id="usmsPlus" value="usmsPlus"></div>
+								<div class="usms-plus-container">
+									<span class="membership-length--price">
+										<p class="form-control-static usms-plus-cost">$75.00</p>
+									</span>
+									<span class="membership-length--description">USMS+</span>
+								</div>
+								<span>Competitive Membership Expires on Dec. 31,  2025</span>
+							</label>
+							<span class="membership-length--note">
+								<ul class="payment-bullets">
+									<li>Standard membership</li>
+									<li>Can compete (only select if you plan on competing)</li>
+								</ul>
+								<div class="modal" id="modalCompetition" tabindex="-1" role="dialog">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">×</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<ul>
+													<li>A standard USMS membership</li>
+													<li>
+														Exclusive welcome package including:
+														<ul>
+															<li>Premium USMS-branded item of your choosing</li>
+															<li>USMS cap</li>
+															<li>USMS stickers</li>
+															<li>Plastic membership card</li>
+														</ul>
+													</li>
+													<li>
+														Free registration to all of these events
+														<ul>
+															<li>Swim.com USMS Fitness Series (three challenges per year)</li>
+															<li>Virtual Championships (five distances per year)</li>
+														</ul>
+													</li>
+													<li>Access to exclusive Olympian-featured webinars</li>
+													<li>
+														Free USA Swimming Supporters Club membership which includes a donation to support Adult Learn-to-Swim grants and:
+														<ul>
+															<li>&nbsp;A Supporters Club merchandise items</li>
+															<li>"Skip the line" access to autograph signings at major events</li>
+															<li>Invitations to participate in USA Swimming fan surveys and pools</li>
+															<li>Exclusive offer from USA Swimming and USA Swimming Foundation partners</li>
+														</ul>
+													</li>
+													<li>Free All American patches<span style="font-size: 14px;">&nbsp;(<em>once you reach All American status</em>)</span></li>
+													<li>Free Go the Distance 50-mile cap&nbsp;<span style="font-size: 14px;">(<em>once you reach 50 miles</em>)</span></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</span>
+						</div>
+					</div>
+                </div>
+				<h4 class="card__total">
+					USMS Membership: <span class="membership-length--total card__total--amount">$__.__</span>
+				</h4>
+			</div>
+		</form>
+	</div>
+</div>
+<script>
+    // const cardCompetition = document.getElementById('cardCompetition');
+    const tileNa = document.getElementById('membershipCompetition');
+    // const isActive = tileNa.classList.contains('active');
+    const isDisabled = tileNa.classList.contains('disabled');
+    tileNa.addEventListener('click', function() {
+        if (tileNa.classList.contains('disabled')) {
+            return;
+        } 
+        else {
+            console.log("Not disabled ...");
+            cardCompetition.classList.add('active');
+        }
+    });
+
+</script>
+<script src="./js/membership-options-pending.js"></script>
