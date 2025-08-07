@@ -272,27 +272,35 @@
         const btnNa = document.getElementById('genderNa');
         btnMale.addEventListener('click', function(e) {
             e.preventDefault();
-            btnFemale.classList.remove('active');
-            btnNa.classList.remove('active');
             btnMale.classList.add('active');
-            tileNa.classList.remove('disabled');
-            tileNa.classList.add('active');
+            btnFemale.classList.remove('active');            
+            btnNa.classList.remove('active');
+            tileCompetition.classList.remove('disabled');
+            tileCompetitionPlus.classList.remove('disabled');
+            tileCompetition.classList.add('active');
+            tileCompetitionPlus.classList.add('active');
+            cardCompetition.classList.add('active');
         });
         btnFemale.addEventListener('click', function(e) {
             e.preventDefault();
             btnMale.classList.remove('active');
-            btnNa.classList.remove('active');
             btnFemale.classList.add('active');
-            tileNa.classList.remove('disabled');
-            tileNa.classList.add('active');
+            btnNa.classList.remove('active');
+            tileCompetition.classList.remove('disabled');
+            tileCompetitionPlus.classList.remove('disabled');
+            tileCompetition.classList.add('active');
+            tileCompetitionPlus.classList.add('active');
+            cardCompetition.classList.add('active');
         });
         btnNa.addEventListener('click', function(e) {
             e.preventDefault();
             btnMale.classList.remove('active');
             btnFemale.classList.remove('active');
             btnNa.classList.add('active');
-            tileNa.classList.remove('active');
-            tileNa.classList.add('disabled');
+            tileCompetition.classList.remove('active');
+            tileCompetitionPlus.classList.remove('active');
+            tileCompetition.classList.add('disabled');
+            tileCompetitionPlus.classList.add('disabled');
             cardCompetition.classList.remove('active');
         });
     </script>

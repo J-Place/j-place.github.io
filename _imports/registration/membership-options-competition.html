@@ -16,6 +16,18 @@
                 .membership-length--competition.disabled .membership-length--price p  {
                     color: #CCC !important;
                 }
+				.membership-length--competition.selected {
+					border: 2px solid red !important;
+				}
+				.membership-length--competition.selected .promo {
+					background-color: red !important;
+				}
+				.membership-length--competition.selected.disabled {
+					border: 1px solid #d6d6d6 !important;
+				}
+				.membership-length--competition.selected.disabled .promo {
+					background-color: #999 !important;
+				}
             </style>
             <div class="modal-container" style="transition:all 250ms ease-in-out;transform:translateY(-10px);opacity:0;z-index:-1;">
 				<div class="modal">
@@ -63,7 +75,7 @@
 									</span>
 									<span class="membership-length--description">USMS Membership</span>
 								</div>
-								<span>Expires on Dec. 31,  2024</span>
+								<span>Expires on Dec. 31, 2025</span>
 							</label>
 							<span class="membership-length--note">
                                 <ul class="payment-bullets">
@@ -91,7 +103,7 @@
 									</span>
 									<span class="membership-length--description">USMS+</span>
 								</div>
-								<span>Expires on Dec. 31,  2024</span>
+								<span>Expires on Dec. 31, 2026</span>
 							</label>
 							<span class="membership-length--note">
 								<ul class="payment-bullets">
@@ -151,7 +163,7 @@
 						</div>
 					</div>
                     <div class="col-xs-12 col-md-3" style="display:flex;">
-						<div id="membershipCompetition" class="membership-length--option membership-length--competition disabled" style="display:block;">
+						<div id="membershipCompetition" class="membership-length--option membership-length--currentYear membership-length--competition" style="display:block;">
 							<span class="promo usms-plus-promo">Competitive Membership</span><span class="savings"></span>
 							<label for="usmsPlus" class="control-label">
 								<div class="radio-container"><input type="radio" name="length" id="usmsPlus" value="usmsPlus"></div>
@@ -161,7 +173,72 @@
 									</span>
 									<span class="membership-length--description">Competitive</span>
 								</div>
-								<span>Expires on Dec. 31,  2025</span>
+								<span>Expires on Dec. 31, 2025</span>
+							</label>
+							<span class="membership-length--note">
+								<ul class="payment-bullets">
+									<li>Standard membership</li>
+									<li>Can compete (only select if you plan on competing)</li>
+								</ul>
+								<div class="modal" id="modalCompetition" tabindex="-1" role="dialog">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">x</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<ul>
+													<li>A standard USMS membership</li>
+													<li>
+														Exclusive welcome package including:
+														<ul>
+															<li>Premium USMS-branded item of your choosing</li>
+															<li>USMS cap</li>
+															<li>USMS stickers</li>
+															<li>Plastic membership card</li>
+														</ul>
+													</li>
+													<li>
+														Free registration to all of these events
+														<ul>
+															<li>Swim.com USMS Fitness Series (three challenges per year)</li>
+															<li>Virtual Championships (five distances per year)</li>
+														</ul>
+													</li>
+													<li>Access to exclusive Olympian-featured webinars</li>
+													<li>
+														Free USA Swimming Supporters Club membership which includes a donation to support Adult Learn-to-Swim grants and:
+														<ul>
+															<li>&nbsp;A Supporters Club merchandise items</li>
+															<li>"Skip the line" access to autograph signings at major events</li>
+															<li>Invitations to participate in USA Swimming fan surveys and pools</li>
+															<li>Exclusive offer from USA Swimming and USA Swimming Foundation partners</li>
+														</ul>
+													</li>
+													<li>Free All American patches<span style="font-size: 14px;">&nbsp;(<em>once you reach All American status</em>)</span></li>
+													<li>Free Go the Distance 50-mile cap&nbsp;<span style="font-size: 14px;">(<em>once you reach 50 miles</em>)</span></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</span>
+						</div>
+					</div>
+                    <div class="col-xs-12 col-md-3" style="display:flex;">
+						<div id="membershipCompetitionYearPlus" class="membership-length--option membership-length--nextYear membership-length--competition" style="display:block;">
+							<span class="promo usms-plus-promo">Competitive Membership</span><span class="savings"></span>
+							<label for="usmsPlus" class="control-label">
+								<div class="radio-container"><input type="radio" name="length" id="usmsPlus" value="usmsPlus"></div>
+								<div class="usms-plus-container">
+									<span class="membership-length--price">
+										<p class="form-control-static usms-plus-cost">$179.00</p>
+									</span>
+									<span class="membership-length--description">Competitive Year-Plus</span>
+								</div>
+								<span>Expires on Dec. 31, 2026</span>
 							</label>
 							<span class="membership-length--note">
 								<ul class="payment-bullets">
@@ -225,18 +302,30 @@
 </div>
 <script>
     // const cardCompetition = document.getElementById('cardCompetition');
-    const tileNa = document.getElementById('membershipCompetition');
-    // const isActive = tileNa.classList.contains('active');
-    const isDisabled = tileNa.classList.contains('disabled');
-    tileNa.addEventListener('click', function() {
-        if (tileNa.classList.contains('disabled')) {
+    const tileCompetition = document.getElementById('membershipCompetition');
+	const tileCompetitionPlus = document.getElementById('membershipCompetitionYearPlus');
+    // const isActive = tileCompetition.classList.contains('active');
+    const isDisabled = tileCompetition.classList.contains('disabled');
+    tileCompetition.addEventListener('click', function() {
+		tileCompetitionPlus.classList.remove('selected');
+		tileCompetition.classList.add('selected');
+        if (tileCompetition.classList.contains('disabled')) {
             return;
         } 
         else {
-            console.log("Not disabled ...");
             cardCompetition.classList.add('active');
         }
     });
+	tileCompetitionPlus.addEventListener('click', function() {
+		tileCompetition.classList.remove('selected');
+		tileCompetitionPlus.classList.add('selected');
+        if (tileCompetitionPlus.classList.contains('disabled')) {
+            return;
+        } 
+        else {
+            cardCompetition.classList.add('active');
+        }
+	});
 
 </script>
 <script src="./js/membership-options-pending.js"></script>

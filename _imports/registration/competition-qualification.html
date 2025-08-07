@@ -1,4 +1,4 @@
-<div id="cardCompetition" class="card competition-qualification">
+<div id="cardCompetition" class="card competition-qualification active">
     <h3>Certification of Competition Category</h3>
     <p>Your competition category is based on your Sex selection in the Contact Information section above.</p>
     <div class="form-group">
@@ -47,12 +47,28 @@
     .card.competition-qualification .form-group {
         margin: 0 auto;
     }
+    .competition-qualification h3 + p {
+        text-align: center;
+    }
+    @media (min-width: 1200px) {
+        .competition-qualification h3 + p {
+            padding: 0 8rem;
+        }
+    }
     .competition-qualification .form-group label {
         white-space: unset;
         padding-left: 3rem;
         margin-bottom: 1rem;
         margin-top: 1rem;
         margin-right: 1rem;
+        text-indent: -3.2rem;
+    }
+    @media (min-width: 576px) {
+        .competition-qualification .form-group label {
+            padding-left: 0;
+            text-indent: 0;
+            white-space: nowrap;
+        }
     }
     @media (min-width: 1200px) {
         .competition-qualification h3 + p {
@@ -79,7 +95,6 @@
     const cardCompetition = document.getElementById('cardCompetition');
     const radioSexNoMatch = document.getElementById('competitionMembershipNo');
     radioSexNoMatch.addEventListener('click', function() {
-        // alert("No");
         $('#modalSexNotMatch').modal('show');
     });
 </script>
