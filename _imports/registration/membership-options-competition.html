@@ -301,11 +301,15 @@
 	</div>
 </div>
 <script>
-    // const cardCompetition = document.getElementById('cardCompetition');
     const tileCompetition = document.getElementById('membershipCompetition');
 	const tileCompetitionPlus = document.getElementById('membershipCompetitionYearPlus');
-    // const isActive = tileCompetition.classList.contains('active');
+	const anyTile = document.getElementsByClassName('membership-length--option');
     const isDisabled = tileCompetition.classList.contains('disabled');
+	document.addEventListener('click', function(event) {
+		if (event.target.classList.contains('membership-length--option')) {
+			event.target.classList.add('selected');
+		}
+	});
     tileCompetition.addEventListener('click', function() {
 		tileCompetitionPlus.classList.remove('selected');
 		tileCompetition.classList.add('selected');
@@ -326,6 +330,5 @@
             cardCompetition.classList.add('active');
         }
 	});
-
 </script>
-<script src="./js/membership-options-pending.js"></script>
+<script src="/lanemate/js/membership-options-pending.js"></script>

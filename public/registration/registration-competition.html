@@ -374,15 +374,23 @@
                     <div><span class="help-block help-block--LastName">Please enter a value for LastName</span><input type="text" min="1" max="40" class="form-control" placeholder="Last Name" name="LastName" autocomplete="true" maxlength="100" value="Place"><span class="glyphicon form-control-feedback glyphicon--LastName" aria-hidden="true"></span></div>
                 </div>
             </div>
-            <div class="form-group clearfix gender">
-                <div class="contact-information__gender-column col-xs-12 col-sm-4">
-                    <input type="hidden" min="1" max="1" name="Gender" id="gender" value="">
-                    <label class="font-weight-bold" for="Gender">Sex</label>
-                    <span class="help-block help-block--Gender">Please enter a value for {0}</span>
+            <div class="form-group clearfix sex">
+                <div class="contact-information__sex-column col-xs-12 col-sm-4">
+                    <!-- <label class="font-weight-bold" for="Sex">Sex</label> -->
+                    <!-- <span class="help-block help-block--Sex">Please enter a value for {0}</span> -->
                     <div class="row ">
-                        <div class="col-xs-4"><button id="genderMale" class="btn btn-gender">Male</button></div>
-                        <div class="col-xs-4"><button id="genderFemale" class="btn btn-gender">Female</button></div>
-                        <div class="col-xs-4"><button id="genderNa" class="btn btn-gender">N/A</button></div>
+                        <div class="col-xs-10">
+                            <label class="font-weight-bold" for="Sex">Sex</label>
+                            <div>
+                                <span class="help-block help-block--Sex">Please enter a value for Sex</span>
+                                <select id="selectSex" name="Sex" class="form-control">
+                                    <option value="-1">Please Make a Selection</option>
+                                    <option value="m">Male</option>
+                                    <option value="f">Female</option>
+                                    <option value="na">I prefer not to say</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-push-1 contact-information__dob-column col-xs-12 col-sm-7">
@@ -915,42 +923,27 @@
         </form>
     </div>
     <script>
-        const genderButtons = document.getElementsByClassName('btn-gender');
-        const btnMale = document.getElementById('genderMale');
-        const btnFemale = document.getElementById('genderFemale');
-        const btnNa = document.getElementById('genderNa');
-        btnMale.addEventListener('click', function(e) {
-            e.preventDefault();
-            btnMale.classList.add('active');
-            btnFemale.classList.remove('active');            
-            btnNa.classList.remove('active');
-            tileCompetition.classList.remove('disabled');
-            tileCompetitionPlus.classList.remove('disabled');
-            tileCompetition.classList.add('active');
-            tileCompetitionPlus.classList.add('active');
-            cardCompetition.classList.add('active');
-        });
-        btnFemale.addEventListener('click', function(e) {
-            e.preventDefault();
-            btnMale.classList.remove('active');
-            btnFemale.classList.add('active');
-            btnNa.classList.remove('active');
-            tileCompetition.classList.remove('disabled');
-            tileCompetitionPlus.classList.remove('disabled');
-            tileCompetition.classList.add('active');
-            tileCompetitionPlus.classList.add('active');
-            cardCompetition.classList.add('active');
-        });
-        btnNa.addEventListener('click', function(e) {
-            e.preventDefault();
-            btnMale.classList.remove('active');
-            btnFemale.classList.remove('active');
-            btnNa.classList.add('active');
-            tileCompetition.classList.remove('active');
-            tileCompetitionPlus.classList.remove('active');
-            tileCompetition.classList.add('disabled');
-            tileCompetitionPlus.classList.add('disabled');
-            cardCompetition.classList.remove('active');
+        selectSex.addEventListener('change', function(e) {
+        const tileCompetition = document.getElementById('membershipCompetition');
+        const tileCompetitionPlus = document.getElementById('membershipCompetitionYearPlus');
+        const anyTile = document.getElementsByClassName('membership-length--option');
+        const selectSex = document.getElementById('selectSex');
+            const selectedValue = this.value;
+            if (selectedValue === 'na') {
+                tileCompetition.classList.remove('active');
+                tileCompetitionPlus.classList.remove('active');
+                tileCompetition.classList.add('disabled');
+                tileCompetitionPlus.classList.add('disabled');
+                cardCompetition.classList.remove('active');
+            } else {
+                // return;
+                tileCompetition.classList.add('active');
+                tileCompetitionPlus.classList.add('active');
+                tileCompetition.classList.remove('disabled');
+                tileCompetitionPlus.classList.remove('disabled');
+                cardCompetition.classList.add('active');
+
+            }
         });
     </script>
 <!-- </div> -->
@@ -1627,11 +1620,15 @@
 	</div>
 </div>
 <script>
-    // const cardCompetition = document.getElementById('cardCompetition');
     const tileCompetition = document.getElementById('membershipCompetition');
 	const tileCompetitionPlus = document.getElementById('membershipCompetitionYearPlus');
-    // const isActive = tileCompetition.classList.contains('active');
+	const anyTile = document.getElementsByClassName('membership-length--option');
     const isDisabled = tileCompetition.classList.contains('disabled');
+	document.addEventListener('click', function(event) {
+		if (event.target.classList.contains('membership-length--option')) {
+			event.target.classList.add('selected');
+		}
+	});
     tileCompetition.addEventListener('click', function() {
 		tileCompetitionPlus.classList.remove('selected');
 		tileCompetition.classList.add('selected');
@@ -1652,9 +1649,8 @@
             cardCompetition.classList.add('active');
         }
 	});
-
 </script>
-<script src="./js/membership-options-pending.js"></script>
+<script src="/lanemate/js/membership-options-pending.js"></script>
                                                             <div id="cardCompetition" class="card competition-qualification active">
     <h3>Certification of Competition Category</h3>
     <p>Your competition category is based on your Sex selection in the Contact Information section above.</p>
@@ -1791,7 +1787,7 @@
             Video Stroke Analysis: <span class="video-stroke-analysis--total card__total--amount">$__.__</span>
         </h4>
 </div>
-<script src="./js/video-stroke-analysis-pending.js"></script>
+<script src="/lanemate/js/video-stroke-analysis-pending.js"></script>
                                                             <div id="reactId">
 	<form class="form-interests form-horizontal" data-reactroot="">
 		<div class="modal-container" style="transition:all 250ms ease-in-out;transform:translateY(-10px);opacity:0;z-index:-1;">
