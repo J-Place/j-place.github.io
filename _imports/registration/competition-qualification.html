@@ -8,14 +8,14 @@
                 <input type="radio" name="CompetitionMembership" id="competitionMembershipYesInput" value="yes">
                 <span class="radio__placeholder"></span>
             </div>
-            <strong>Yes, I certify that my sex matches my sex assigned at birth</strong>
+            <strong>I certify that my sex assigned at birth corresponds with the competition category selected OR I have selected the male competition category).</strong>
         </label>
         <label id="competitionMembershipNo" class="radio-label radio-label--inline col-xs-12" for="competitionMembershipNoInput" style="cursor:pointer;">
                 <div class="radio-container">
                     <input type="radio" name="CompetitionMembership" id="competitionMembershipNoInput" value="no">
                     <span class="radio__placeholder"></span>
                 </div>
-                No, my sex does NOT match my sex assigned at birth
+                I DO NOT certify that my sex assigned at birth corresponds with the competition category selected. (A USMS representative will contact you to discuss participation and eligibility procedures.)
         </label>
     </div>
     <div class="modal" id="modalSexNotMatch" tabindex="-1" role="dialog">
@@ -62,12 +62,18 @@
         margin-top: 1rem;
         margin-right: 1rem;
         text-indent: -3.2rem;
+        overflow-wrap: break-word;
     }
     @media (min-width: 576px) {
         .competition-qualification .form-group label {
             padding-left: 0;
             text-indent: 0;
-            white-space: nowrap;
+            text-indent: -3.2rem !important;
+            white-space: unset !important;
+            overflow-wrap: break-word;
+        }
+        .competition-qualification .form-group .radio__placeholder {
+            left: -27px;
         }
     }
     @media (min-width: 1200px) {
