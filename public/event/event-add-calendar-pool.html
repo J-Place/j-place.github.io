@@ -571,7 +571,45 @@
             </div>
          </div>
       </div>
-   </div>   
+   </div>
+            <!-- Third Party Verification -->
+<div class="row form-group event-info-third-party-verification">
+    <div class="col-xs-12 col-md-6">
+        <div class="input-group radio-group">
+            <div class="input-group-header radio-group-header required">
+                <label class="icon-help-label" for="tooltip">
+                    Is your event using Club Assistant or RunSignUp for registration?
+                    <span class="icon-help" data-toggle="tooltip" data-placement="top" title="These companies can automatically verify USMS membership." data-container="body" data-original-title=""></span>
+                </label>
+            </div>
+            <span class="help-block help-block--thirdPartyVerification">Please make a selection</span>
+            <label class="radio-label radio-label--inline" for="thirdPartyVerificationYes">
+                <span class="radio-container">
+                    <input type="radio" name="thirdPartyVerification" id="thirdPartyVerificationYes" value="true">
+                    <span class="radio__placeholder"></span>
+                </span>
+                Yes
+            </label>
+            <label class="radio-label radio-label--inline" for="thirdPartyVerificationNo">
+                <span class="radio-container">
+                    <input type="radio" name="thirdPartyVerification" id="thirdPartyVerificationNo" value="false" checked>
+                    <span class="radio__placeholder"></span>
+                </span>
+                No
+            </label>
+        </div>
+    </div>
+</div>
+<script>
+    // $("#thirdPartyVerificationYes").click( function() {
+        // if ($('.timing-system-group').length) {
+        //     $('.timing-system-group').hide();
+        // }
+    // });
+    // $("#thirdPartyVerificationNo").click( function() {
+    //     $('.timing-system-group').show();
+    // });
+</script>
             <!-- Is Virtual? -->
 <div class="row form-group event-info-is-virtual">
     <div class="col-xs-12">
@@ -2067,17 +2105,29 @@
 
                   <div class="form-group agree-terms">
                      <div class="input-group checkbox-group payment-agreement">
-                           <label class="checkbox-label" for="agreeTerms">
-                              <div class="checkbox-container">
-                                 <input name="agree-terms" type="checkbox" id="agreeTerms" onchange="">
-                                 <span class="checkbox__placeholder"></span>
-                              </div>
-                              I agree that all information I'm providing is factual.
-                           </label>
-                           <span class="help-block help-block--agreeTerms">Please agree to the terms</span>
+                        <label class="checkbox-label" for="agreeTerms">
+                           <div class="checkbox-container">
+                              <input name="agree-terms" type="checkbox" id="agreeTerms" onchange="">
+                              <span class="checkbox__placeholder"></span>
+                           </div>
+                           I agree that all information I'm providing is factual.
+                        </label>
+                        <span class="help-block help-block--agreeTerms">Please agree to the terms</span>
                      </div>
                   </div>
 
+                  <div class="form-group agree-interim-policy">
+                     <div class="input-group checkbox-group interim-policy">
+                        <label class="checkbox-label" for="agreeInterimPolicy">
+                           <div class="checkbox-container">
+                              <input name="agree-terms" type="checkbox" id="agreeInterimPolicy" onchange="">
+                              <span class="checkbox__placeholder"></span>
+                           </div>
+                           I acknowledge that the Interim USMS Policy on Participation in the Men's and Women's Competition Category and Eligibility for Official Recognition Programs (link) allows members to participate in the competition category that reflects the sex with which they identify; however, swimmers will not be included in Recognition Programs in the female competition category unless they are swimming in the competition category that aligns with their sex assigned at birth. Anyone participating in the male competition category is eligible for recognition, subject to all other USMS rules and regulations.
+                        </label>
+                        <span class="help-block help-block--agreeInterimPolicy">Please agree to the terms</span>
+                     </div>
+                  </div>
                </div>
             </div>
          </div>
