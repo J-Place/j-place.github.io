@@ -113,6 +113,8 @@ $(document).ready(function() {
     $(".venue__list--item:first-of-type").show();
     $(".venue__list--item:first-of-type .configuration-title:last-of-type").show();
 
+    $("#thirdPartyVerificationYes").prop('checked', true);
+
 
 });
 

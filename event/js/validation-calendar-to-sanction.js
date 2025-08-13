@@ -47,3 +47,9 @@ $(".entry-info__close-date--date-container").addClass('has-error');
 
 // $(".help-block--addHeadRef").addClass('has-error');
 // $(".input-group.contact-info__head-referee").addClass('has-error');
+
+    $("#thirdPartyVerificationYes").prop('checked', true);
+
+
+    $("#agreeTerms").prop('checked', true);
+    $("#agreeInterimPolicy").prop('checked', true);

@@ -127,6 +127,12 @@ $(document).ready(function() {
     $(".help-block--EstimatedTempMin").addClass("has-error");
     $(".help-block--EstimatedTempMax").addClass("has-error");
 
+    $("#thirdPartyVerificationYes").prop('checked', true);
+
+    $("#agreeTerms").prop('checked', true);
+    $("#agreeInterimPolicy").prop('checked', true);
+
+
 });
 
 $(".upload-summary").show();

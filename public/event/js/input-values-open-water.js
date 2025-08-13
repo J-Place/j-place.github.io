@@ -105,6 +105,7 @@ $(document).ready(function() {
     $(".venue__list").show();
     $(".venue__list--item").show();
     $("#eventClassificationSanctioned").prop('checked', true);
+    $("#thirdPartyVerificationYes").prop('checked', true);
     $("#agree").prop('checked', true);
     $(".contact-info__host-type--container").hide();
     $(".contact-information__event-host--list").show();
@@ -118,7 +119,10 @@ $(document).ready(function() {
     $(".venue__list--item:first-of-type .configuration-title").hide();
     $(".venue__list--item:first-of-type .configuration-title:last-of-type").show();
 
-    $(".list--event-host .list-item__delete").show();    
+    $(".list--event-host .list-item__delete").show();
+
+    $("#agreeTerms").prop('checked', true);
+    $("#agreeInterimPolicy").prop('checked', true);
 
 });
 

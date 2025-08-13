@@ -94,6 +94,7 @@ $(document).ready(function() {
 
     
     $("#timingAutomatic").prop('checked', true);
+    $("#thirdPartyVerificationYes").prop('checked', true);
     $("#eventListOnCalendarYes").prop('checked', true);
     $("#eventClassificationSanctioned").prop('checked', true);
     $("#agree").prop('checked', true);
@@ -110,6 +111,7 @@ $(document).ready(function() {
     $(".venue__list--item:first-of-type .configuration-title:last-of-type").show();
 
     $("#agreeTerms").prop('checked', true);
+    $("#agreeInterimPolicy").prop('checked', true);
 
 });
 
