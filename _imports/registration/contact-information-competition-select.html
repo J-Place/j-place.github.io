@@ -273,27 +273,55 @@
             </div>
         </form>
     </div>
+    <style>
+        #participationInfoYes.disabled {
+            cursor: default !important;
+            color: #CCC;
+        }
+        #participationInfoYes.disabled .radio__placeholder {
+            opacity: 0.5;
+        }
+    </style>
     <script>
         selectSex.addEventListener('change', function(e) {
-        const tileCompetition = document.getElementById('membershipCompetition');
-        const tileCompetitionPlus = document.getElementById('membershipCompetitionYearPlus');
-        const anyTile = document.getElementsByClassName('membership-length--option');
-        const selectSex = document.getElementById('selectSex');
+            const tileYear = document.getElementById('membershipYear');
+            const tileYearPlus = document.getElementById('membershipYearPlus');
+            const tileCompetitionYear = document.getElementById('membershipCompetitionYear');
+            const tileCompetitionYearPlus = document.getElementById('membershipCompetitionYearPlus');
+            const anyTile = document.getElementsByClassName('membership-length--option');
+            const selectSex = document.getElementById('selectSex');
+            const participationInfoYesLabel = document.getElementById('participationInfoYes');
+            const participationInfoYesInput = document.getElementById('participationInfoYesInput');
             const selectedValue = this.value;
+            clearRadioGroup();
             if (selectedValue === 'na') {
-                tileCompetition.classList.remove('active');
-                tileCompetitionPlus.classList.remove('active');
-                tileCompetition.classList.add('disabled');
-                tileCompetitionPlus.classList.add('disabled');
-                cardCompetition.classList.remove('active');
+                participationInfoYesLabel.classList.add('disabled');                
+                participationInfoYesInput.disabled = true;
+                tileYear.parentElement.style.display = 'block';
+                tileYearPlus.parentElement.style.display = 'block';
+                tileYear.classList.remove('disabled');
+                tileYearPlus.classList.remove('disabled');
+                tileCompetitionYear.parentElement.style.display = 'none';
+                tileCompetitionYearPlus.parentElement.style.display = 'none';
+                tileCompetitionYear.classList.add('disabled');
+                tileCompetitionYearPlus.classList.add('disabled');
             } else {
-                // return;
-                tileCompetition.classList.add('active');
-                tileCompetitionPlus.classList.add('active');
-                tileCompetition.classList.remove('disabled');
-                tileCompetitionPlus.classList.remove('disabled');
-                cardCompetition.classList.add('active');
-
+                participationInfoYesLabel.classList.remove('disabled');
+                participationInfoYesInput.disabled = false;
+                tileYear.parentElement.style.display = 'none';
+                tileYearPlus.parentElement.style.display = 'none';
+                tileYear.classList.add('disabled');
+                tileYearPlus.classList.add('disabled');
+                tileCompetitionYear.parentElement.style.display = 'block';
+                tileCompetitionYearPlus.parentElement.style.display = 'block';
+                tileCompetitionYear.classList.remove('disabled');
+                tileCompetitionYearPlus.classList.remove('disabled');
+            }
+            function clearRadioGroup() {
+                var radios = document.getElementsByName('ParticipationInfo');
+                for (var i = 0; i < radios.length; i++) {
+                    radios[i].checked = false;
+                }
             }
         });
     </script>
