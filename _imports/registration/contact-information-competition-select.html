@@ -292,11 +292,14 @@
             const selectSex = document.getElementById('selectSex');
             const participationInfoYesLabel = document.getElementById('participationInfoYes');
             const participationInfoYesInput = document.getElementById('participationInfoYesInput');
+            const participationInfoNoInput = document.getElementById('participationInfoNoInput');
             const selectedValue = this.value;
             clearRadioGroup();
             if (selectedValue === 'na') {
                 participationInfoYesLabel.classList.add('disabled');                
+                participationInfoYesInput.checked = false;
                 participationInfoYesInput.disabled = true;
+                participationInfoNoInput.checked = true;
                 tileYear.parentElement.style.display = 'block';
                 tileYearPlus.parentElement.style.display = 'block';
                 tileYear.classList.remove('disabled');
@@ -308,14 +311,18 @@
             } else {
                 participationInfoYesLabel.classList.remove('disabled');
                 participationInfoYesInput.disabled = false;
-                tileYear.parentElement.style.display = 'none';
-                tileYearPlus.parentElement.style.display = 'none';
+                // tileYear.parentElement.style.display = 'none';
+                // tileYearPlus.parentElement.style.display = 'none';
                 tileYear.classList.add('disabled');
                 tileYearPlus.classList.add('disabled');
+                tileCompetitionYear.classList.add('disabled');
+                tileCompetitionYearPlus.classList.add('disabled');
+                tileYear.parentElement.style.display = 'block';
+                tileYearPlus.parentElement.style.display = 'block';
                 tileCompetitionYear.parentElement.style.display = 'block';
                 tileCompetitionYearPlus.parentElement.style.display = 'block';
-                tileCompetitionYear.classList.remove('disabled');
-                tileCompetitionYearPlus.classList.remove('disabled');
+                // tileCompetitionYear.classList.remove('disabled');
+                // tileCompetitionYearPlus.classList.remove('disabled');
             }
             function clearRadioGroup() {
                 var radios = document.getElementsByName('ParticipationInfo');
