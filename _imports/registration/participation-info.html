@@ -1,7 +1,27 @@
 <link rel="stylesheet" href="/registration/css/participation-info.css">
+<style>
+    #tempNav {
+        position: absolute;
+        top: 1rem;
+        right: 3rem;
+        width: auto;
+        z-index: 999;
+    }
+    #tempNav a {
+        color: red;
+        font-size: 1.4rem;
+    }
+    #tempNav a + a {
+        margin-left: 2rem;;
+    }
+</style>
+<div id="tempNav">
+    <a href="#" id="MFSelected">Male or Female Selected</a>
+    <a href="#" id="NASelected">Sex Not Selected</a>
+</div>
 <div id="cardParticipationInfo" class="card participation-info">
     <h3 class="registration__section--header">Do you plan on participating in events?</h3>
-    <p class="registration__section--summary">If you selected "I prefer not to say" for your sex, you can not select a membership with an event license.</p>
+    <p class="registration__section--summary">If you selected "I prefer not to say" for your sex, you cannot select a membership with an event license. Please contact <a href="mailto:membership@usmastersswimming.org">membership services</a> if you wish to change your sex.</p>
     <div class="form-group">
         <span class="help-block help-block--StrokeAnalysis has-error">Please make a selection</span>
         <label id="participationInfoYes" class="radio-label radio-label--inline col-xs-12" for="participationInfoYesInput" style="cursor:pointer;">
@@ -20,91 +40,126 @@
         </label>
     </div>
 
-    <!-- <div class="modal" id="modalSexNotMatch" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5>We Will Contact You</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">x</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>A USMS staff member will contact you within a week to discuss and determine eligibility. Please go ahead and finish your registration.</p>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-lg btn-primary" id="confirmSexNotMatch" data-dismiss="modal">Okay</button>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
-</div>
-<style>
-    .card.competition-qualification {
-        display: none;
-    }
-    .card.competition-qualification.active {
-        display: flex
-    }
-    .card.competition-qualification .form-group {
-        margin: 0 auto;
-    }
-    .competition-qualification h3 + p {
-        text-align: center;
-    }
-    @media (min-width: 1200px) {
-        .competition-qualification h3 + p {
-            padding: 0 8rem;
+    <style>
+        .card.competition-qualification {
+            display: none;
         }
-    }
-    .competition-qualification .form-group label {
-        white-space: unset;
-        padding-left: 3rem;
-        margin-bottom: 1rem;
-        margin-top: 1rem;
-        margin-right: 1rem;
-        text-indent: -3.2rem;
-        overflow-wrap: break-word;
-    }
-    @media (min-width: 576px) {
+        .card.competition-qualification.active {
+            display: flex
+        }
+        .card.competition-qualification .form-group {
+            margin: 0 auto;
+        }
+        .competition-qualification h3 + p {
+            text-align: center;
+        }
+        @media (min-width: 1200px) {
+            .competition-qualification h3 + p {
+                padding: 0 8rem;
+            }
+        }
         .competition-qualification .form-group label {
-            padding-left: 0;
-            text-indent: 0;
-            text-indent: -3.2rem !important;
-            white-space: unset !important;
+            white-space: unset;
+            padding-left: 3rem;
+            margin-bottom: 1rem;
+            margin-top: 1rem;
+            margin-right: 1rem;
+            text-indent: -3.2rem;
             overflow-wrap: break-word;
         }
-        .competition-qualification .form-group .radio__placeholder {
-            left: -27px;
+        @media (min-width: 576px) {
+            .competition-qualification .form-group label {
+                padding-left: 0;
+                text-indent: 0;
+                text-indent: -3.2rem !important;
+                white-space: unset !important;
+                overflow-wrap: break-word;
+            }
+            .competition-qualification .form-group .radio__placeholder {
+                left: -27px;
+            }
         }
-    }
-    @media (min-width: 1200px) {
-        .competition-qualification h3 + p {
-            padding: 0 8rem;
+        @media (min-width: 1200px) {
+            .competition-qualification h3 + p {
+                padding: 0 8rem;
+            }
         }
-    }
-    @media (min-width: 576px) {
-        .competition-qualification .form-group label {
-            padding-left: 0;
-            text-indent: 0;
-            white-space: nowrap;
+        @media (min-width: 576px) {
+            .competition-qualification .form-group label {
+                padding-left: 0;
+                text-indent: 0;
+                white-space: nowrap;
+            }
         }
-    }
-    @media (min-width: 1200px) {
-        .card.competition-qualification .form-group {
-            width: 500px;
+        @media (min-width: 1200px) {
+            .card.competition-qualification .form-group {
+                width: 500px;
+            }
         }
-    }
-    .modal-header {
-        padding: 0 3rem;
-    }
-</style>
-<script>
-    const cardParticipation = document.getElementById('cardparticipationInfo');
-    // const radioSexNoMatch = document.getElementById('competitionMembershipNo');
-    // radioSexNoMatch.addEventListener('click', function() {
-        // $('#modalSexNotMatch').modal('show');
-    // });
-</script>
+        .modal-header {
+            padding: 0 3rem;
+        }
+        #participationInfoYes.disabled {
+            cursor: default !important;
+            color: #CCC;
+        }
+        #participationInfoYes.disabled .radio__placeholder {
+            opacity: 0.5;
+        }
+    </style>
 
+    <script>
+        //////////// Pre-selected from registration options //////////////////
+		/////////////////////////////////////////////////////////////////////
+        const tempNavMFSelected = document.getElementById('MFSelected');
+        const tempNavNASelected = document.getElementById('NASelected');
+        const participationInfoYesLabel = document.getElementById('participationInfoYes');
+        const participationInfoNoLabel = document.getElementById('participationInfoNo');
+        const selectSexInput = document.getElementById('selectSex');
+        tempNavMFSelected.addEventListener('click', function() {
+            competitionSelectYes();
+            $('input[name="ParticipationInfo"][value="yes"]').prop('checked', true);
+            $('input[name="ParticipationInfo"][value="no"]').prop('checked', false);
+            participationInfoYesLabel.classList.remove('disabled');
+            $('input[name="ParticipationInfo"][value="yes"]').prop('disabled', false);
+            cardCompetition.classList.add('active');
+            selectSexInput.value = 'm';
+        });
+        tempNavNASelected.addEventListener('click', function() {
+            competitionSelectNo();
+            $('input[name="ParticipationInfo"][value="yes"]').prop('checked', false);
+            $('input[name="ParticipationInfo"][value="no"]').prop('checked', true);
+            participationInfoYesLabel.classList.add('disabled');
+            $('input[name="ParticipationInfo"][value="yes"]').prop('disabled', true);
+            cardCompetition.classList.remove('active');
+            selectSexInput.value = 'na';
+        });
+        function competitionSelectYes() {
+            tileUsmsPlus.parentElement.style.display = 'flex';
+			tileYear.parentElement.style.display = 'none';
+			tileYearPlus.parentElement.style.display = 'none';
+			tileCompetitionYear.parentElement.style.display = 'flex';
+			tileCompetitionYearPlus.parentElement.style.display = 'flex';
+			tileYear.classList.add('disabled');
+			tileYearPlus.classList.add('disabled');
+			tileCompetitionYear.classList.remove('disabled');
+			tileCompetitionYearPlus.classList.remove('disabled');
+		}
+		function competitionSelectNo() {
+            tileUsmsPlus.parentElement.style.display = 'none';
+			tileYear.parentElement.style.display = 'flex';
+			tileYearPlus.parentElement.style.display = 'flex';
+			tileCompetitionYear.parentElement.style.display = 'none';
+			tileCompetitionYearPlus.parentElement.style.display = 'none';
+			tileYear.classList.remove('disabled');
+			tileYearPlus.classList.remove('disabled');
+			tileCompetitionYear.classList.add('disabled');
+			tileCompetitionYearPlus.classList.add('disabled');
+		}
+        document.addEventListener('DOMContentLoaded', function() {
+            if (tempNavMFSelected) {
+                tempNavMFSelected.click(); 
+            }
+        });
+    </script>
+</div>

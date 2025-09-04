@@ -273,17 +273,13 @@
             </div>
         </form>
     </div>
-    <style>
-        #participationInfoYes.disabled {
-            cursor: default !important;
-            color: #CCC;
-        }
-        #participationInfoYes.disabled .radio__placeholder {
-            opacity: 0.5;
-        }
-    </style>
     <script>
+
+        ////////////////// Select sex from Contact Info section //////////////
+        /////////////////////////////////////////////////////////////////////
+
         selectSex.addEventListener('change', function(e) {
+            const tileUsmsPlus = document.getElementById('membershipUsmsPlus');
             const tileYear = document.getElementById('membershipYear');
             const tileYearPlus = document.getElementById('membershipYearPlus');
             const tileCompetitionYear = document.getElementById('membershipCompetitionYear');
@@ -314,6 +310,7 @@
                 // tileYear.parentElement.style.display = 'none';
                 // tileYearPlus.parentElement.style.display = 'none';
                 tileYear.classList.add('disabled');
+                tileYearUsmsPlus.classList.add('disabled');
                 tileYearPlus.classList.add('disabled');
                 tileCompetitionYear.classList.add('disabled');
                 tileCompetitionYearPlus.classList.add('disabled');
