@@ -491,6 +491,7 @@
             $('input[name="ParticipationInfo"][value="yes"]').prop('disabled', false);
             cardCompetition.classList.add('active');
             // selectSexInput.value = 'm';
+            cardMembershipOptions.style.display = 'flex';
         });
         tempNavNASelected.addEventListener('click', function() {
             competitionSelectNo();
@@ -512,7 +513,6 @@
 			tileYearPlus.classList.add('disabled');
 			tileCompetitionYear.classList.remove('disabled');
 			// tileCompetitionYearPlus.classList.remove('disabled');
-            cardMembershipOptions.style.display = 'flex';
 		}
 		function competitionSelectNo() {
             tileUsmsPlus.parentElement.style.display = 'none';
@@ -849,10 +849,12 @@
 		radioParticipationInfoYesInput.addEventListener('click', function() {
 			competitionSelectYes();
 			cardCompetition.classList.add('active');
+			cardMembershipOptions.style.display = 'flex';
 		});
 		radioParticipationInfoNoInput.addEventListener('click', function() {
 			competitionSelectNo();
 			cardCompetition.classList.remove('active');
+			cardMembershipOptions.style.display = 'none';
 		});		
 		function competitionSelectYes() {
 			tileYear.parentElement.style.display = 'none';

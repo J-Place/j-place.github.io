@@ -314,10 +314,12 @@
 		radioParticipationInfoYesInput.addEventListener('click', function() {
 			competitionSelectYes();
 			cardCompetition.classList.add('active');
+			cardMembershipOptions.style.display = 'flex';
 		});
 		radioParticipationInfoNoInput.addEventListener('click', function() {
 			competitionSelectNo();
 			cardCompetition.classList.remove('active');
+			cardMembershipOptions.style.display = 'none';
 		});		
 		function competitionSelectYes() {
 			tileYear.parentElement.style.display = 'none';
