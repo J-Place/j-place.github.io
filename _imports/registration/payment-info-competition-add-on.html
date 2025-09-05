@@ -1,0 +1,56 @@
+<!-- <link rel="stylesheet" href="/lanemate/css/payment-info.css"> -->
+<div class="card payment-info">
+	<div class="card__content">
+		<h3 class="payment-info___form-header">Enter Your Payment Details</h3>
+		<!-- <p class="footnote" style="font-size: 1.6rem; text-align: center; margin-bottom: 4rem;">RTE text ...</p> -->
+		<div class="form-group card-name">
+		   <div class="col-xs-12">
+			  <label class="font-weight-bold">Name on Card</label>
+			  <div><span class="help-block help-block--cardName">Please enter a value for cardName</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardName" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardName" aria-hidden="true"></span></div>
+		   </div>
+		</div>
+		<div class="form-group card-number">
+		   <div class="col-xs-12 col-sm-7">
+			  <label class="font-weight-bold">Card Number</label>
+			  <div><span class="help-block help-block--cardNumberID">Please enter a valid credit card number</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardNumberID" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardNumberID" aria-hidden="true"></span></div>
+		   </div>
+		   <div class="col-xs-5 col-sm-2 form-membership-length__security-code">
+			  <label class="font-weight-bold">Security Code</label>
+			  <div><span class="help-block help-block--cardCodeID">Please enter a value for Security Code</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardCodeID" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardCodeID" aria-hidden="true"></span></div>
+		   </div>
+		   <div class="col-xs-7 col-sm-3">
+			  <label class="font-weight-bold">Expiration (mm/yy)</label>
+			  <div><span class="help-block help-block--expiration">Please enter a valid expiration date</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="expiration" autocomplete="true" maxlength="5" value=""><span class="glyphicon form-control-feedback glyphicon--expiration" aria-hidden="true"></span></div>
+		   </div>
+		</div>
+		<div class="form-group card-zip">
+		   <div class="col-xs-8 col-sm-4">
+			  <label class="font-weight-bold">Billing Zip</label>
+			  <div><span class="help-block help-block--cardZipID">Please enter a valid billing zip</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardZipID" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardZipID" aria-hidden="true"></span></div>
+		   </div>
+		</div>	
+	</div>
+	<sergey-import src="lanemate/disclaimers/add-on-standard" />
+	<sergey-import src="lanemate/disclaimers/add-on-usms-plus" />
+
+
+
+    <div class="form-group agree-terms-competition">
+	   <div class="col-xs-12">
+		  <span class="help-block help-block--agree-terms-competition has-error">You need to agree to the terms to complete your registration.</span>
+		  <label id="agreeTermsComp__label" class="checkbox-label " for="agreeTermsComp">
+			 <div class="checkbox-container"><input type="checkbox" name="agree-terms-competition" id="agreeTermsComp" value="" class="has-success" data-gtm-form-interact-field-id="7"><span class="checkbox__placeholder"></span></div>
+		  </label>
+		  <span class="font-weight-bold">I acknowledge that the <a style="text-decoration: underline;" href="https://www.usms.org/volunteer-central/policy-and-governance/usms-policies/interim-eligibility-policy?fbclid=IwZXh0bgNhZW0CMTAAYnJpZBExWW55VmhHcWVNTktYTkhmMQEe80ziJOevfBispu6yEhdUu94klz-APyf7wEtgJBLq2Iu-Jed_BwDlVdR7bNs_aem_WgCMjIbNDLX5f3IB0gGJXg">Interim USMS Policy</a> on Participation in the Men's and Women's Competition Category and Eligibility for Official Recognition Programs allows members to participate in the competition category that reflects the sex with which they identify; however, swimmers will not be included in Recognition Programs in the female competition category unless they are swimming in the competition category that aligns with their sex assigned at birth. Anyone participating in the male competition category is eligible for recognition, subject to all other USMS rules and regulations.</span>
+	   </div>
+	</div>
+
+
+
+
+
+
+
+	<button id="btnSubmitOrder" class="btn btn-primary btn-large text-uppercase pull-left" disabled>Submit</button>
+ </div>
+ <script src="/lanemate/js/payment-info.js"></script>

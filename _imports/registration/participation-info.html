@@ -15,13 +15,13 @@
         margin-left: 2rem;;
     }
 </style>
-<div id="tempNav">
+<!-- <div id="tempNav">
     <a href="#" id="MFSelected">Male or Female Selected</a>
     <a href="#" id="NASelected">Sex Not Selected</a>
-</div>
+</div> -->
 <div id="cardParticipationInfo" class="card participation-info">
     <h3 class="registration__section--header">Do you plan on participating in events?</h3>
-    <p class="registration__section--summary">If you selected "I prefer not to say" for your sex, you cannot select a membership with an event license. Please contact <a href="mailto:membership@usmastersswimming.org">membership services</a> if you wish to change your sex.</p>
+    <p class="registration__section--summary">If you selected "I prefer not to say" for your sex, you cannot select a membership with an event license. Even though you can change it later in your <a href="#">My Account</a>, we still suggest you select an event license if you are unsure.</p>
     <div class="form-group">
         <span class="help-block help-block--StrokeAnalysis has-error">Please make a selection</span>
         <label id="participationInfoYes" class="radio-label radio-label--inline col-xs-12" for="participationInfoYesInput" style="cursor:pointer;">
@@ -111,55 +111,55 @@
     <script>
         //////////// Pre-selected from registration options //////////////////
 		/////////////////////////////////////////////////////////////////////
-        const tempNavMFSelected = document.getElementById('MFSelected');
-        const tempNavNASelected = document.getElementById('NASelected');
-        const participationInfoYesLabel = document.getElementById('participationInfoYes');
-        const participationInfoNoLabel = document.getElementById('participationInfoNo');
-        const selectSexInput = document.getElementById('selectSex');
-        tempNavMFSelected.addEventListener('click', function() {
-            competitionSelectYes();
-            $('input[name="ParticipationInfo"][value="yes"]').prop('checked', true);
-            $('input[name="ParticipationInfo"][value="no"]').prop('checked', false);
-            participationInfoYesLabel.classList.remove('disabled');
-            $('input[name="ParticipationInfo"][value="yes"]').prop('disabled', false);
-            cardCompetition.classList.add('active');
-            selectSexInput.value = 'm';
-        });
-        tempNavNASelected.addEventListener('click', function() {
-            competitionSelectNo();
-            $('input[name="ParticipationInfo"][value="yes"]').prop('checked', false);
-            $('input[name="ParticipationInfo"][value="no"]').prop('checked', true);
-            participationInfoYesLabel.classList.add('disabled');
-            $('input[name="ParticipationInfo"][value="yes"]').prop('disabled', true);
-            cardCompetition.classList.remove('active');
-            selectSexInput.value = 'na';
-        });
-        function competitionSelectYes() {
-            tileUsmsPlus.parentElement.style.display = 'flex';
-			tileYear.parentElement.style.display = 'none';
-			tileYearPlus.parentElement.style.display = 'none';
-			tileCompetitionYear.parentElement.style.display = 'flex';
-			// tileCompetitionYearPlus.parentElement.style.display = 'flex';
-			tileYear.classList.add('disabled');
-			tileYearPlus.classList.add('disabled');
-			tileCompetitionYear.classList.remove('disabled');
-			// tileCompetitionYearPlus.classList.remove('disabled');
-		}
-		function competitionSelectNo() {
-            tileUsmsPlus.parentElement.style.display = 'none';
-			tileYear.parentElement.style.display = 'flex';
-			tileYearPlus.parentElement.style.display = 'flex';
-			tileCompetitionYear.parentElement.style.display = 'none';
-			// tileCompetitionYearPlus.parentElement.style.display = 'none';
-			tileYear.classList.remove('disabled');
-			tileYearPlus.classList.remove('disabled');
-			tileCompetitionYear.classList.add('disabled');
-			// tileCompetitionYearPlus.classList.add('disabled');
-		}
-        document.addEventListener('DOMContentLoaded', function() {
-            if (tempNavMFSelected) {
-                tempNavMFSelected.click(); 
-            }
-        });
+        // const tempNavMFSelected = document.getElementById('MFSelected');
+        // const tempNavNASelected = document.getElementById('NASelected');
+        // const participationInfoYesLabel = document.getElementById('participationInfoYes');
+        // const participationInfoNoLabel = document.getElementById('participationInfoNo');
+        // const selectSexInput = document.getElementById('selectSex');
+        // tempNavMFSelected.addEventListener('click', function() {
+        //     competitionSelectYes();
+        //     $('input[name="ParticipationInfo"][value="yes"]').prop('checked', true);
+        //     $('input[name="ParticipationInfo"][value="no"]').prop('checked', false);
+        //     participationInfoYesLabel.classList.remove('disabled');
+        //     $('input[name="ParticipationInfo"][value="yes"]').prop('disabled', false);
+        //     cardCompetition.classList.add('active');
+        //     selectSexInput.value = 'm';
+        // });
+        // tempNavNASelected.addEventListener('click', function() {
+        //     competitionSelectNo();
+        //     $('input[name="ParticipationInfo"][value="yes"]').prop('checked', false);
+        //     $('input[name="ParticipationInfo"][value="no"]').prop('checked', true);
+        //     participationInfoYesLabel.classList.add('disabled');
+        //     $('input[name="ParticipationInfo"][value="yes"]').prop('disabled', true);
+        //     cardCompetition.classList.remove('active');
+        //     selectSexInput.value = 'na';
+        // });
+        // function competitionSelectYes() {
+        //     tileUsmsPlus.parentElement.style.display = 'flex';
+		// 	tileYear.parentElement.style.display = 'none';
+		// 	tileYearPlus.parentElement.style.display = 'none';
+		// 	tileCompetitionYear.parentElement.style.display = 'flex';
+		// 	// tileCompetitionYearPlus.parentElement.style.display = 'flex';
+		// 	tileYear.classList.add('disabled');
+		// 	tileYearPlus.classList.add('disabled');
+		// 	tileCompetitionYear.classList.remove('disabled');
+		// 	// tileCompetitionYearPlus.classList.remove('disabled');
+		// }
+		// function competitionSelectNo() {
+        //     tileUsmsPlus.parentElement.style.display = 'none';
+		// 	tileYear.parentElement.style.display = 'flex';
+		// 	tileYearPlus.parentElement.style.display = 'flex';
+		// 	tileCompetitionYear.parentElement.style.display = 'none';
+		// 	// tileCompetitionYearPlus.parentElement.style.display = 'none';
+		// 	tileYear.classList.remove('disabled');
+		// 	tileYearPlus.classList.remove('disabled');
+		// 	tileCompetitionYear.classList.add('disabled');
+		// 	// tileCompetitionYearPlus.classList.add('disabled');
+		// }
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     if (tempNavMFSelected) {
+        //         tempNavMFSelected.click(); 
+        //     }
+        // });
     </script>
 </div>
