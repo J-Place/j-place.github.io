@@ -425,7 +425,7 @@
                 padding: 0 8rem;
             }
         }
-        .competition-qualification .form-group label {
+        /* .competition-qualification .form-group label {
             white-space: unset;
             padding-left: 3rem;
             margin-bottom: 1rem;
@@ -462,7 +462,7 @@
             .card.competition-qualification .form-group {
                 width: 500px;
             }
-        }
+        } */
         .modal-header {
             padding: 0 3rem;
         }
@@ -490,7 +490,7 @@
             participationInfoYesLabel.classList.remove('disabled');
             $('input[name="ParticipationInfo"][value="yes"]').prop('disabled', false);
             cardCompetition.classList.add('active');
-            selectSexInput.value = 'm';
+            // selectSexInput.value = 'm';
         });
         tempNavNASelected.addEventListener('click', function() {
             competitionSelectNo();
@@ -499,29 +499,31 @@
             participationInfoYesLabel.classList.add('disabled');
             $('input[name="ParticipationInfo"][value="yes"]').prop('disabled', true);
             cardCompetition.classList.remove('active');
-            selectSexInput.value = 'na';
+            // selectSexInput.value = 'na';
+            cardMembershipOptions.style.display = 'none';
         });
         function competitionSelectYes() {
             tileUsmsPlus.parentElement.style.display = 'flex';
 			tileYear.parentElement.style.display = 'none';
 			tileYearPlus.parentElement.style.display = 'none';
 			tileCompetitionYear.parentElement.style.display = 'flex';
-			tileCompetitionYearPlus.parentElement.style.display = 'flex';
+			// tileCompetitionYearPlus.parentElement.style.display = 'flex';
 			tileYear.classList.add('disabled');
 			tileYearPlus.classList.add('disabled');
 			tileCompetitionYear.classList.remove('disabled');
-			tileCompetitionYearPlus.classList.remove('disabled');
+			// tileCompetitionYearPlus.classList.remove('disabled');
+            cardMembershipOptions.style.display = 'flex';
 		}
 		function competitionSelectNo() {
             tileUsmsPlus.parentElement.style.display = 'none';
 			tileYear.parentElement.style.display = 'flex';
 			tileYearPlus.parentElement.style.display = 'flex';
 			tileCompetitionYear.parentElement.style.display = 'none';
-			tileCompetitionYearPlus.parentElement.style.display = 'none';
+			// tileCompetitionYearPlus.parentElement.style.display = 'none';
 			tileYear.classList.remove('disabled');
 			tileYearPlus.classList.remove('disabled');
 			tileCompetitionYear.classList.add('disabled');
-			tileCompetitionYearPlus.classList.add('disabled');
+			// tileCompetitionYearPlus.classList.add('disabled');
 		}
         document.addEventListener('DOMContentLoaded', function() {
             if (tempNavMFSelected) {
@@ -532,49 +534,49 @@
 </div>
                                     
                                     
-            <style>
-                .membership-length--competition {
-                    border: 1px solid #d6d6d6;
-                    box-shadow: 0 0 20px #ccc;
-                    cursor: pointer;
-                    opacity: 1;
-                    text-align: center;
-                    transition: opacity .25s ease;
-                    vertical-align: top;
-                }
-				.membership-length--option.disabled {
-                    background-color: #DDD;
-                    color: #CCC;
-                }
-                .membership-length--option.disabled .membership-length--price p,
-				.membership-length--option.disabled .savings  {
-                    color: #CCC !important;
-                }
-				.membership-length--competition.selected {
-					border: 2px solid red !important;
-				}
-				.membership-length--competition.selected .promo {
-					background-color: red !important;
-				}
-				.membership-length--competition.selected.disabled {
-					border: 1px solid #d6d6d6 !important;
-				}
-				.membership-length--competition.selected.disabled .promo {
-					background-color: #999 !important;
-				}
-            </style>
-            <div class="modal-container" style="transition:all 250ms ease-in-out;transform:translateY(-10px);opacity:0;z-index:-1;">
-				<div class="modal">
-					<div class="modal-close"><button><i class="fa fa-times"></i></button></div>
-					<div class="row ">
-						<div class="col-xs-12">
-							<p class="text-danger text-center" style="display:flex;flex-direction:column;"></p>
-						</div>
-					</div>
-				</div>
+<style>
+	.membership-length--competition {
+		border: 1px solid #d6d6d6;
+		box-shadow: 0 0 20px #ccc;
+		cursor: pointer;
+		opacity: 1;
+		text-align: center;
+		transition: opacity .25s ease;
+		vertical-align: top;
+	}
+	.membership-length--option.disabled {
+		background-color: #DDD;
+		color: #CCC;
+	}
+	.membership-length--option.disabled .membership-length--price p,
+	.membership-length--option.disabled .savings  {
+		color: #CCC !important;
+	}
+	.membership-length--competition.selected {
+		border: 2px solid red !important;
+	}
+	.membership-length--competition.selected .promo {
+		background-color: red !important;
+	}
+	.membership-length--competition.selected.disabled {
+		border: 1px solid #d6d6d6 !important;
+	}
+	.membership-length--competition.selected.disabled .promo {
+		background-color: #999 !important;
+	}
+</style>
+<div class="modal-container" style="transition:all 250ms ease-in-out;transform:translateY(-10px);opacity:0;z-index:-1;">
+	<div class="modal">
+		<div class="modal-close"><button><i class="fa fa-times"></i></button></div>
+		<div class="row ">
+			<div class="col-xs-12">
+				<p class="text-danger text-center" style="display:flex;flex-direction:column;"></p>
 			</div>
+		</div>
+	</div>
+</div>
 			<input type="hidden" name="dataDesc" value=""><input type="hidden" name="dataValue" value=""><input type="hidden" name="current-reg-year" value="2024">
-			<div class="card membership-length">
+			<div id="membershipOptions" class="card membership-length">
 				<div class="modal-container" style="transition:all 250ms ease-in-out;transform:translateY(-10px);opacity:0;z-index:-1;">
 					<div class="modal">
 						<div class="modal-close"><button><i class="fa fa-times"></i></button></div>
@@ -598,8 +600,8 @@
                     <span class="help-block help-block--length has-error">Please select a membership option</span>
                 </div>
 				<div class="row is-flex membership-length--container">
-					<div class="col-xs-12 col-md-3" style="display:flex;">
-						<div id="membershipUsmsPlus" class="membership-length--option membership-length--nextYear disabled">
+					<div class="col-xs-12 col-md-6 col-lg-4" style="display:flex;">
+						<div id="membershipUsmsPlus" class="membership-length--option membership-length--nextYear">
 							<span class="promo current-year-promo">USMS+</span>
 							<label for="currentYear" class="control-label">
 								<div class="radio-container"><input type="radio" name="length" id="currentYear" value="currentYear"></div>
@@ -623,8 +625,8 @@
                             </span>
 						</div>
 					</div>
-					<div class="col-xs-12 col-md-3" style="display:flex;">
-						<div id="membershipYear" class="membership-length--option membership-length--nextYear disabled" style="display:block;">
+					<div class="col-xs-12 col-md-6 col-lg-4" style="display:flex;">
+						<div id="membershipYear" class="membership-length--option membership-length--nextYear" style="display:block;">
 							<span class="promo usms-plus-promo">Standard Membership</span><span class="savings"></span>
 							<label for="usmsPlus" class="control-label">
 								<div class="radio-container"><input type="radio" name="length" id="usmsPlus" value="usmsPlus"></div>
@@ -646,14 +648,6 @@
                                     <li>Discounted gear</li>
                                     <li>And even more</li>
 									<li>No event license (to participate in events, select an event license option)</li>
-
-									<!-- <li>Standard membership</li>
-									<li>Premium welcome box</li>
-									<li>Free virtual event entry</li>
-									<li>Entry to USA Swimming Supporters Club</li>
-									<li>Olympian webinars</li>
-									<li>Optional Video Stroke Analysis (1 free analysis per year)</li>
-									<li><a data-toggle="modal" data-target="#modalYearPlus">And even more</a></li> -->
 								</ul>
 								<div class="modal" id="modalYearPlus" tabindex="-1" role="dialog">
 									<div class="modal-dialog" role="document">
@@ -702,7 +696,7 @@
 							</span>
 						</div>
 					</div>
-					<div class="col-xs-12 col-md-3" style="display:flex;">
+					<div class="col-xs-12 col-md-6 col-lg-4" style="display:flex;">
 						<div id="membershipYearPlus" class="membership-length--option membership-length--nextYear">
 							<span class="promo current-year-promo">Year-Plus</span>
 							<span class="savings">(Save $25.00)</span>
@@ -724,14 +718,14 @@
                             </span>
 						</div>
 					</div>
-					<div class="col-xs-12 col-md-3" style="display:flex;">
-						<div id="membershipCompetitionYear" class="membership-length--option membership-length--nextYear membership-length--competition disabled" style="display:block;">
+					<div class="col-xs-12 col-md-6 col-lg-4" style="display:flex;">
+						<div id="membershipCompetitionYear" class="membership-length--option membership-length--nextYear membership-length--competition" style="display:block;">
 							<span class="promo usms-plus-promo">Event License Standard</span><span class="savings"></span>
 							<label for="usmsPlus" class="control-label">
 								<div class="radio-container"><input type="radio" name="length" id="usmsPlus" value="usmsPlus"></div>
 								<div class="usms-plus-container">
 									<span class="membership-length--price">
-										<p class="form-control-static usms-plus-cost">$75.00</p>
+										<p class="form-control-static usms-plus-cost">$0.00</p>
 									</span>
 									<span class="membership-length--description">Event License Standard</span>
 								</div>
@@ -751,7 +745,7 @@
 							</span>
 						</div>
 					</div>
-					<div class="col-xs-12 col-md-3" style="display:flex;">
+					<!-- <div class="col-xs-12 col-md-6 col-lg-4" style="display:flex;">
 						<div id="membershipCompetitionYearPlus" class="membership-length--option membership-length--currentYear membership-length--competition disabled" style="display:block;">
 							<span class="promo usms-plus-promo">Event License Year-Plus</span><span class="savings"></span>
 							<span class="savings">(Save $25.00)</span>
@@ -816,20 +810,22 @@
 								</div>
 							</span>
 						</div>
-					</div>
+					</div> -->
                 </div>
 				<h4 class="card__total">
 					USMS Membership: <span class="membership-length--total card__total--amount">$__.__</span>
 				</h4>
 			</div>
-		</form>
-	</div>
+		<!-- </form> -->
+	<!-- </div> -->
+
 	<style>
 		.card.membership-length {
 			padding-bottom: 4rem;
 		}
 	</style>
 	<script>
+		const cardMembershipOptions = document.getElementById('membershipOptions');
 		const tileUsmsPlus = document.getElementById('membershipUsmsPlus');
 		const tileYear = document.getElementById('membershipYear');
 		const tileYearPlus = document.getElementById('membershipYearPlus');
@@ -863,30 +859,30 @@
 			tileUsmsPlus.parentElement.style.display = 'flex';
 			tileYearPlus.parentElement.style.display = 'none';
 			tileCompetitionYear.parentElement.style.display = 'flex';
-			tileCompetitionYearPlus.parentElement.style.display = 'flex';
+			// tileCompetitionYearPlus.parentElement.style.display = 'flex';
 			tileYear.classList.add('disabled');
 			tileUsmsPlus.classList.remove('disabled');
 			tileYearPlus.classList.remove('disabled');
 			tileCompetitionYear.classList.remove('disabled');
-			tileCompetitionYearPlus.classList.remove('disabled');
+			// tileCompetitionYearPlus.classList.remove('disabled');
 		}
 		function competitionSelectNo() {
 			tileYear.parentElement.style.display = 'flex';
 			tileUsmsPlus.parentElement.style.display = 'none';
 			tileYearPlus.parentElement.style.display = 'flex';
 			tileCompetitionYear.parentElement.style.display = 'none';
-			tileCompetitionYearPlus.parentElement.style.display = 'none';
+			// tileCompetitionYearPlus.parentElement.style.display = 'none';
 			tileYear.classList.remove('disabled');
 			tileYearPlus.classList.remove('disabled');
 			tileCompetitionYear.classList.add('disabled');
-			tileCompetitionYearPlus.classList.add('disabled');
+			// tileCompetitionYearPlus.classList.add('disabled');
 		}
 	</script>
 	<script src="/lanemate/js/membership-options-pending.js"></script>
-</div>
+                                    
                                     <div id="cardCompetition" class="card competition-qualification">
     <h3>Certification of Competition Category</h3>
-    <p>Your competition category is based on your Sex selection in the Contact Information section above.</p>
+    <p>Your competition category is based on your Sex selectionduring the registration process.</p>
     <div class="form-group">
         <span class="help-block help-block--StrokeAnalysis has-error">Please make a selection</span>
         <label id="competitionMembershipYes" class="radio-label radio-label--inline col-xs-12" for="competitionMembershipYesInput" style="cursor:pointer;">
@@ -904,24 +900,26 @@
                 I DO NOT certify that my sex assigned at birth corresponds with the competition category selected. (A USMS representative will contact you to discuss participation and eligibility procedures.)
         </label>
     </div>
-    <div class="modal" id="modalSexNotMatch" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5>We Will Contact You</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">x</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>A USMS staff member will contact you within a week to discuss and determine eligibility. Please go ahead and finish your registration.</p>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-lg btn-primary" id="confirmSexNotMatch" data-dismiss="modal">Okay</button>
-                </div>
+    
+<div class="modal" id="modalSexNotMatch" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5>We Will Contact You</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">x</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>A USMS staff member will contact you within a week to discuss and determine eligibility. Please go ahead and finish your registration.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-lg btn-primary" id="confirmSexNotMatch" data-dismiss="modal">Okay</button>
             </div>
         </div>
     </div>
+</div>
+
 <style>
     .card.competition-qualification {
         display: none;
@@ -943,24 +941,24 @@
     }
     .competition-qualification .form-group label {
         white-space: unset;
-        padding-left: 3rem;
+        padding-left: 0;
         margin-bottom: 1rem;
         margin-top: 1rem;
         margin-right: 1rem;
-        text-indent: -3.2rem;
+        /* text-indent: -3.2rem; */
         overflow-wrap: break-word;
     }
     @media (min-width: 576px) {
         .competition-qualification .form-group label {
             padding-left: 0;
-            text-indent: 0;
-            text-indent: -3.2rem !important;
+            /* text-indent: 0; */
+            /* text-indent: -3.2rem !important; */
             white-space: unset !important;
             overflow-wrap: break-word;
         }
-        .competition-qualification .form-group .radio__placeholder {
+        /* .competition-qualification .form-group .radio__placeholder {
             left: -27px;
-        }
+        } */
     }
     @media (min-width: 1200px) {
         .competition-qualification h3 + p {
@@ -983,6 +981,7 @@
         padding: 0 3rem;
     }
 </style>
+
 <script>
     const cardCompetition = document.getElementById('cardCompetition');
     const radioSexNoMatch = document.getElementById('competitionMembershipNo');
@@ -990,8 +989,8 @@
         $('#modalSexNotMatch').modal('show');
     });
 </script>
-</div>
 
+</div>
                                     <!-- <link rel="stylesheet" href="/lanemate/css/product-group.css"> -->
 <div class="card add-on-products">
     <h3>Product Options</h3>
@@ -1574,6 +1573,6 @@
 </script>
     </body>
     <script>
-        competitionSelectYes();
+        // competitionSelectYes();
     </script>
 </html>

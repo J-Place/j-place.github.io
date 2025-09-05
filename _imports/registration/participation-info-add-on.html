@@ -123,7 +123,7 @@
             participationInfoYesLabel.classList.remove('disabled');
             $('input[name="ParticipationInfo"][value="yes"]').prop('disabled', false);
             cardCompetition.classList.add('active');
-            selectSexInput.value = 'm';
+            // selectSexInput.value = 'm';
         });
         tempNavNASelected.addEventListener('click', function() {
             competitionSelectNo();
@@ -132,7 +132,8 @@
             participationInfoYesLabel.classList.add('disabled');
             $('input[name="ParticipationInfo"][value="yes"]').prop('disabled', true);
             cardCompetition.classList.remove('active');
-            selectSexInput.value = 'na';
+            // selectSexInput.value = 'na';
+            cardMembershipOptions.style.display = 'none';
         });
         function competitionSelectYes() {
             tileUsmsPlus.parentElement.style.display = 'flex';
@@ -144,6 +145,7 @@
 			tileYearPlus.classList.add('disabled');
 			tileCompetitionYear.classList.remove('disabled');
 			// tileCompetitionYearPlus.classList.remove('disabled');
+            cardMembershipOptions.style.display = 'flex';
 		}
 		function competitionSelectNo() {
             tileUsmsPlus.parentElement.style.display = 'none';
