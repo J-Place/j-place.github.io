@@ -32,7 +32,7 @@ var totalValProductCard = usmsPlusVal + videoVal + videoEligibleVal + coachAltsV
 var totalPaymentVal = totalValProductCard + donationNum;
 var totalPaymentNum = Number(totalPaymentVal);
 
-var lineItemUsmsPlus = $('.payment-info__line-item--usms-plus');
+var lineItemUsmsPlus = $('.payment-info__line-item--usms .payment-info__line-item--price');
 var lineItemVideo = $('.payment-info__line-item--video-stroke-analysis');
 var lineItemVideoEligible = $('.payment-info__line-item--video-stroke-analysis-eligible');
 var lineItemCoachAlts = $('.payment-info__line-item--coach-alts');
@@ -53,4 +53,4 @@ var totalPaymentVal = totalProductCardVal + donationNum;
 var updateProductCardTotal = function() {
     $(".add-on-products .card__total--amount").text("$ " + productCardTotal + ".00");
     updateTotalPayment();
-}
+}   

@@ -1,5 +1,12 @@
 console.log("load review-payment.js");
 
+
+const paymentFormHeader = document.getElementsByClassName('payment-info___form-header');
+if (paymentFormHeader) {
+    $(".usms-membership-container").prepend('<p class="payment-info__line-item payment-info__line-item--usms">USMS Membership: <span class="payment-info__line-item--price">$__.__</span></p>');
+}
+
+
 var usmsPlusSelected = $(".product-option_usms-plus.selected");
 var videoSelected = $(".product-option_video-stroke-analysis.selected");
 var videoEligibleSelected = $(".product-option_video-stroke-analysis-eligible.selected");
