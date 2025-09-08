@@ -76,8 +76,10 @@
             selectedTiles.forEach(element => {
                 element.classList.remove('selected');
             });
+            tileUsmsPlus.parentElement.style.display = 'flex';
+			tileUsmsPlus.classList.remove('disabled');
             tileYear.parentElement.style.display = 'none';
-			tileYearPlus.classList.remove('disabled');
+            tileYearPlus.parentElement.style.display = 'none';
             tileEventYearPlus.classList.remove('disabled');
             tileYear.classList.remove('disabled');
 			tileEventYear.parentElement.style.display = 'flex';
@@ -90,6 +92,8 @@
             selectedTiles.forEach(element => {
                 element.classList.remove('selected');
             });
+			tileUsmsPlus.classList.add('disabled');
+            tileUsmsPlus.parentElement.style.display = 'none';
 			tileYear.parentElement.style.display = 'flex';
 			tileYear.classList.remove('disabled');
             tileYearPlus.parentElement.style.display = 'flex';

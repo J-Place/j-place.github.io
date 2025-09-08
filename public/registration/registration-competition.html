@@ -1419,8 +1419,10 @@
             selectedTiles.forEach(element => {
                 element.classList.remove('selected');
             });
+            tileUsmsPlus.parentElement.style.display = 'flex';
+			tileUsmsPlus.classList.remove('disabled');
             tileYear.parentElement.style.display = 'none';
-			tileYearPlus.classList.remove('disabled');
+            tileYearPlus.parentElement.style.display = 'none';
             tileEventYearPlus.classList.remove('disabled');
             tileYear.classList.remove('disabled');
 			tileEventYear.parentElement.style.display = 'flex';
@@ -1433,6 +1435,8 @@
             selectedTiles.forEach(element => {
                 element.classList.remove('selected');
             });
+			tileUsmsPlus.classList.add('disabled');
+            tileUsmsPlus.parentElement.style.display = 'none';
 			tileYear.parentElement.style.display = 'flex';
 			tileYear.classList.remove('disabled');
             tileYearPlus.parentElement.style.display = 'flex';
@@ -1512,61 +1516,17 @@
                 </div>
 				<div class="row is-flex membership-length--container">
 					<div class="col-xs-12 col-md-6 col-lg-4 col-xl-3" style="display:flex;">
-						<div id="membershipYearPlus" class="membership-length--option membership-length--yearPlus disabled">
-							<span class="promo current-year-promo">Year-Plus</span>
-							<span class="savings">(Save $25.00)</span>
-							<label for="currentYear" class="control-label">
-								<div class="radio-container"><input type="radio" name="length" id="currentYear" value="currentYear"></div>
-								<div class="current-year-container">
-									<span class="membership-length--price">
-										<p class="form-control-static current-year-cost">$125.00</p>
-									</span>
-									<span class="membership-length--description">Standard Membership Year-Plus</span>
-								</div>
-								<span>Expires on Dec. 31, 2026</span>
-							</label>
-							<span class="membership-length--note">
-                                <ul class="payment-bullets">
-									<li>Includes a standard membership for remainder of this year and all of next year</li>
-									<li>No event license (to particiapate in events, select an event license option)</li>
-								</ul>
-                            </span>
-						</div>
-					</div>
-					<div class="col-xs-12 col-md-6 col-lg-4 col-xl-3" style="display:flex;">
-						<div id="membershipEventYearPlus" class="membership-length--option membership-length--yearPlusEvent disabled">
-							<span class="promo current-year-promo">Event License Year-Plus</span>
-							<!-- <span class="savings">(Save $25.00)</span> -->
-							<label for="currentYear" class="control-label">
-								<div class="radio-container"><input type="radio" name="length" id="currentYear" value="currentYear"></div>
-								<div class="current-year-container">
-									<span class="membership-length--price">
-										<p class="form-control-static current-year-cost">$125.00</p>
-									</span>
-									<span class="membership-length--description">Event License Year-Plus</span>
-								</div>
-								<span>Expires on Dec. 31, 2026</span>
-							</label>
-							<span class="membership-length--note">
-                                <ul class="payment-bullets">
-									<li>Includes a standard membership for remainder of this year and all of next year</li>
-									<li>No event license (to particiapate in events, select an event license option)</li>
-								</ul>
-                            </span>
-						</div>
-					</div>
-					<!-- <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3" style="display:flex;">
 						<div id="membershipUsmsPlus" class="membership-length--option membership-length--usmsPlus disabled">
 							<span class="promo current-year-promo">USMS+</span>
 							<label for="currentYear" class="control-label">
 								<div class="radio-container"><input type="radio" name="length" id="currentYear" value="currentYear"></div>
 								<div class="current-year-container">
 									<span class="membership-length--price">
-										<p class="form-control-static current-year-cost">$179.00</p>
+										<p class="form-control-static current-year-cost">$249.00</p>
 									</span>
 									<span class="membership-length--description">USMS+</span>
 								</div>
-								<span>Expires on Dec. 31, 2026</span>
+								<span>Expires on Dec. 31, 2025</span>
 							</label>
 							<span class="membership-length--note">
                                 <ul class="payment-bullets">
@@ -1579,7 +1539,29 @@
 								</ul>
                             </span>
 						</div>
-					</div> -->
+					</div>
+					<div class="col-xs-12 col-md-6 col-lg-4 col-xl-3" style="display:flex;">
+						<div id="membershipYearPlus" class="membership-length--option membership-length--yearPlus disabled">
+							<span class="promo current-year-promo">Year-Plus</span>
+							<span class="savings">(Save $25.00)</span>
+							<label for="currentYear" class="control-label">
+								<div class="radio-container"><input type="radio" name="length" id="currentYear" value="currentYear"></div>
+								<div class="current-year-container">
+									<span class="membership-length--price">
+										<p class="form-control-static current-year-cost">$125.00</p>
+									</span>
+									<span class="membership-length--description">Year-Plus Membership</span>
+								</div>
+								<span>Expires on Dec. 31, 2026</span>
+							</label>
+							<span class="membership-length--note">
+                                <ul class="payment-bullets">
+									<li>Includes a standard membership for remainder of this year and all of next year</li>
+									<li>Can not participate in events</li>
+								</ul>
+                            </span>
+						</div>
+					</div>
 					<div class="col-xs-12 col-md-6 col-lg-4 col-xl-3" style="display:flex;">
 						<div id="membershipYear" class="membership-length--option membership-length--currentYear disabled" style="display:block;">
 							<span class="promo usms-plus-promo">Standard Membership</span><span class="savings"></span>
@@ -1602,7 +1584,7 @@
 									<li>Swim.com integration</li>
                                     <li>Discounted gear</li>
                                     <li>And even more</li>
-									<li>No event license (to participate in events, select an event license option)</li>
+									<li>Can not participate in events</li>
 								</ul>
 								<div class="modal" id="modalYearPlus" tabindex="-1" role="dialog">
 									<div class="modal-dialog" role="document">
@@ -1652,6 +1634,28 @@
 						</div>
 					</div>
 					<div class="col-xs-12 col-md-6 col-lg-4 col-xl-3" style="display:flex;">
+						<div id="membershipEventYearPlus" class="membership-length--option membership-length--yearPlusEvent disabled">
+							<span class="promo current-year-promo">Event License Year-Plus</span>
+							<span class="savings">(Save $25.00)</span>
+							<label for="currentYear" class="control-label">
+								<div class="radio-container"><input type="radio" name="length" id="currentYear" value="currentYear"></div>
+								<div class="current-year-container">
+									<span class="membership-length--price">
+										<p class="form-control-static current-year-cost">$125.00</p>
+									</span>
+									<span class="membership-length--description">Event License Year-Plus</span>
+								</div>
+								<span>Expires on Dec. 31, 2026</span>
+							</label>
+							<span class="membership-length--note">
+                                <ul class="payment-bullets">
+									<li>Includes a standard membership for remainder of this year and all of next year</li>
+									<li>Can participate in events (only select if you want to go to events)</li>
+								</ul>
+                            </span>
+						</div>
+					</div>
+					<div class="col-xs-12 col-md-6 col-lg-4 col-xl-3" style="display:flex;">
 						<div id="membershipEventYear" class="membership-length--option membership-length--currentYearEvent disabled" style="display:block;">
 							<span class="promo event-standard-promo">Event License Standard</span>
 							<span class="savings"></span>
@@ -1676,7 +1680,7 @@
 									<li>Swim.com integration</li>
 									<li>Discounted gear</li>
 									<li>And even more</li>
-									<li>No event license (to participate in events, select an event license option)</li>
+									<li>Can participate in events (only select if you want to go to events)</li>
 								</ul>
 							</span>
 						</div>
