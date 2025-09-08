@@ -206,7 +206,7 @@
 						</div>
 					</div>
 					<div class="col-xs-12 col-md-6 col-lg-4 col-xl-3" style="display:flex;">
-						<div id="membershipEventYear" class="membership-length--option membership-length--currentYearEvent disabled" style="display:block;">
+						<div id="membershipEventYear" class="membership-length--option membership-length--currentYearEvent membership-length--competitionXXX disabled" style="display:block;">
 							<span class="promo event-standard-promo">Event License Standard</span>
 							<span class="savings"></span>
 							<label for="eventStandard" class="control-label">
@@ -250,7 +250,7 @@
 	</style>
 	<script>
 		const cardMembershipOptions = document.getElementById('membershipOptions');
-		const anyTile = document.querySelectorAll('membership-length--option');
+		const anyTile = document.getElementsByClassName('membership-length--option');
 		const tileYear = document.getElementById('membershipYear');
 		const tileYearPlus = document.getElementById('membershipYearPlus');
 		const tileEventYear = document.getElementById('membershipEventYear');
@@ -274,6 +274,8 @@
 		});
 		eventNoInput.addEventListener('click', function() {
 			competitionSelectNo();
+			cardCompetition.classList.remove('active');
+			cardMembershipOptions.style.display = 'none';
 		});
 	</script>
-	<script src="/lanemate/js/membership-options-competition.js"></script>
+	<script src="/lanemate/js/membership-options-pending.js"></script>

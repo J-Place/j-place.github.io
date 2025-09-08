@@ -279,54 +279,46 @@
         /////////////////////////////////////////////////////////////////////
 
         selectSex.addEventListener('change', function(e) {
-            const tileUsmsPlus = document.getElementById('membershipUsmsPlus');
-            const tileYear = document.getElementById('membershipYear');
-            const tileYearPlus = document.getElementById('membershipYearPlus');
-            const tileCompetitionYear = document.getElementById('membershipCompetitionYear');
-            const tileCompetitionYearPlus = document.getElementById('membershipCompetitionYearPlus');
-            const anyTile = document.getElementsByClassName('membership-length--option');
-            const selectSex = document.getElementById('selectSex');
-            const participationInfoYesLabel = document.getElementById('participationInfoYes');
-            const participationInfoYesInput = document.getElementById('participationInfoYesInput');
-            const participationInfoNoInput = document.getElementById('participationInfoNoInput');
-            const selectedValue = this.value;
             clearRadioGroup();
+            const selectSex = document.getElementById('selectSex');
+            const selectedValue = this.value;
             if (selectedValue === 'na') {
-                participationInfoYesLabel.classList.add('disabled');                
-                participationInfoYesInput.checked = false;
-                participationInfoYesInput.disabled = true;
-                participationInfoNoInput.checked = true;
+                eventYesLabel.classList.add('disabled');
+                eventYesInput.classList.add('disabled');
+                eventYesInput.checked = false;
+                eventYesInput.disabled = true;
+                eventNoInput.checked = true;
+                tileEventYear.classList.add('disabled');
+                tileEventYear.parentElement.style.display = 'none';
+                tileEventYearPlus.classList.add('disabled');
+                tileEventYearPlus.parentElement.style.display = 'none';
                 tileYear.parentElement.style.display = 'block';
-                tileYearPlus.parentElement.style.display = 'block';
                 tileYear.classList.remove('disabled');
-                tileYearPlus.classList.remove('disabled');
-                tileCompetitionYear.parentElement.style.display = 'none';
-                // tileCompetitionYearPlus.parentElement.style.display = 'none';
-                tileCompetitionYear.classList.add('disabled');
-                // tileCompetitionYearPlus.classList.add('disabled');
-            } else {
-                participationInfoYesLabel.classList.remove('disabled');
-                participationInfoYesInput.disabled = false;
-                // tileYear.parentElement.style.display = 'none';
-                // tileYearPlus.parentElement.style.display = 'none';
-                tileYear.classList.add('disabled');
-                tileYearUsmsPlus.classList.add('disabled');
-                tileYearPlus.classList.add('disabled');
-                tileCompetitionYear.classList.add('disabled');
-                // tileCompetitionYearPlus.classList.add('disabled');
-                tileYear.parentElement.style.display = 'block';
                 tileYearPlus.parentElement.style.display = 'block';
-                tileCompetitionYear.parentElement.style.display = 'block';
-                tileCompetitionYear.classList.remove('disabled');
-                // tileCompetitionYearPlus.parentElement.style.display = 'block';
-                // tileCompetitionYearPlus.classList.remove('disabled');
+                tileYearPlus.classList.remove('disabled');
+            } else {
+                eventYesLabel.classList.remove('disabled');
+                eventYesInput.classList.remove('disabled');
+                eventYesInput.disabled = false;
+                tileYear.parentElement.style.display = 'block';
+                tileYear.classList.add('disabled');
+                tileYearPlus.parentElement.style.display = 'block';
+                tileYearPlus.classList.add('disabled');
+                tileEventYear.parentElement.style.display = 'block';
+                tileEventYear.classList.add('disabled');
+                tileEventYearPlus.parentElement.style.display = 'block';
+                tileEventYearPlus.classList.add('disabled');
             }
             function clearRadioGroup() {
                 var radios = document.getElementsByName('ParticipationInfo');
                 for (var i = 0; i < radios.length; i++) {
                     radios[i].checked = false;
                 }
-            }
+            }            
+            const selectedTiles = document.querySelectorAll('.membership-length--option.selected');
+            selectedTiles.forEach(element => {
+                element.classList.remove('selected');
+            });
         });
     </script>
 <!-- </div> -->

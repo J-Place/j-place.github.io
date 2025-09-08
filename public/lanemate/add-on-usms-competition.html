@@ -497,7 +497,7 @@
                                     
                                     
 <style>
-	.membership-length--competition {
+	.membership-length--option {
 		border: 1px solid #d6d6d6;
 		box-shadow: 0 0 20px #ccc;
 		cursor: pointer;
@@ -556,14 +556,58 @@
 						<br><button type="button" class="btn btn-primary btn-small" style="margin-right:15px;">Edit Address</button><button type="button" class="btn btn-outline btn-small">Use Address As Is</button>
 					</div>
 				</div>
-				<h3 class="membership-length__form-header">Membership Options</h3>
+				<h3 class="membership-length__form-header">Membership Options XXX</h3>
 				<p class="membership-length__form-summary">These are the options available based on your selection in the previous section.</p>
 				<div class="col-xs-12 text-center">
                     <span class="help-block help-block--length has-error">Please select a membership option</span>
                 </div>
 				<div class="row is-flex membership-length--container">
 					<div class="col-xs-12 col-md-6 col-lg-4 col-xl-3" style="display:flex;">
-						<div id="membershipUsmsPlus" class="membership-length--option membership-length--usmsPlus">
+						<div id="membershipYearPlus" class="membership-length--option membership-length--yearPlus disabled">
+							<span class="promo current-year-promo">Year-Plus</span>
+							<span class="savings">(Save $25.00)</span>
+							<label for="currentYear" class="control-label">
+								<div class="radio-container"><input type="radio" name="length" id="currentYear" value="currentYear"></div>
+								<div class="current-year-container">
+									<span class="membership-length--price">
+										<p class="form-control-static current-year-cost">$125.00</p>
+									</span>
+									<span class="membership-length--description">Standard Membership Year-Plus</span>
+								</div>
+								<span>Expires on Dec. 31, 2026</span>
+							</label>
+							<span class="membership-length--note">
+                                <ul class="payment-bullets">
+									<li>Includes a standard membership for remainder of this year and all of next year</li>
+									<li>No event license (to particiapate in events, select an event license option)</li>
+								</ul>
+                            </span>
+						</div>
+					</div>
+					<div class="col-xs-12 col-md-6 col-lg-4 col-xl-3" style="display:flex;">
+						<div id="membershipEventYearPlus" class="membership-length--option membership-length--yearPlusEvent disabled">
+							<span class="promo current-year-promo">Event License Year-Plus</span>
+							<!-- <span class="savings">(Save $25.00)</span> -->
+							<label for="currentYear" class="control-label">
+								<div class="radio-container"><input type="radio" name="length" id="currentYear" value="currentYear"></div>
+								<div class="current-year-container">
+									<span class="membership-length--price">
+										<p class="form-control-static current-year-cost">$125.00</p>
+									</span>
+									<span class="membership-length--description">Event License Year-Plus</span>
+								</div>
+								<span>Expires on Dec. 31, 2026</span>
+							</label>
+							<span class="membership-length--note">
+                                <ul class="payment-bullets">
+									<li>Includes a standard membership for remainder of this year and all of next year</li>
+									<li>No event license (to particiapate in events, select an event license option)</li>
+								</ul>
+                            </span>
+						</div>
+					</div>
+					<!-- <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3" style="display:flex;">
+						<div id="membershipUsmsPlus" class="membership-length--option membership-length--usmsPlus disabled">
 							<span class="promo current-year-promo">USMS+</span>
 							<label for="currentYear" class="control-label">
 								<div class="radio-container"><input type="radio" name="length" id="currentYear" value="currentYear"></div>
@@ -586,9 +630,9 @@
 								</ul>
                             </span>
 						</div>
-					</div>
+					</div> -->
 					<div class="col-xs-12 col-md-6 col-lg-4 col-xl-3" style="display:flex;">
-						<div id="membershipYear" class="membership-length--option membership-length--currentYear" style="display:block;">
+						<div id="membershipYear" class="membership-length--option membership-length--currentYear disabled" style="display:block;">
 							<span class="promo usms-plus-promo">Standard Membership</span><span class="savings"></span>
 							<label for="usmsPlus" class="control-label">
 								<div class="radio-container"><input type="radio" name="length" id="usmsPlus" value="usmsPlus"></div>
@@ -659,29 +703,7 @@
 						</div>
 					</div>
 					<div class="col-xs-12 col-md-6 col-lg-4 col-xl-3" style="display:flex;">
-						<div id="membershipYearPlus" class="membership-length--option membership-length--nextYear membership-length--yearPlus">
-							<span class="promo current-year-promo">Year-Plus</span>
-							<span class="savings">(Save $25.00)</span>
-							<label for="currentYear" class="control-label">
-								<div class="radio-container"><input type="radio" name="length" id="currentYear" value="currentYear"></div>
-								<div class="current-year-container">
-									<span class="membership-length--price">
-										<p class="form-control-static current-year-cost">$125.00</p>
-									</span>
-									<span class="membership-length--description">Standard Membership Year-Plus</span>
-								</div>
-								<span>Expires on Dec. 31, 2026</span>
-							</label>
-							<span class="membership-length--note">
-                                <ul class="payment-bullets">
-									<li>Includes a standard membership for remainder of this year and all of next year</li>
-									<li>No event license (to particiapate in events, select an event license option)</li>
-								</ul>
-                            </span>
-						</div>
-					</div>
-					<div class="col-xs-12 col-md-6 col-lg-4 col-xl-3" style="display:flex;">
-						<div id="membershipCompetitionYear" class="membership-length--option membership-length--eventStandard membership-length--competition" style="display:block;">
+						<div id="membershipEventYear" class="membership-length--option membership-length--currentYearEvent membership-length--competitionXXX disabled" style="display:block;">
 							<span class="promo event-standard-promo">Event License Standard</span>
 							<span class="savings"></span>
 							<label for="eventStandard" class="control-label">
@@ -725,59 +747,33 @@
 	</style>
 	<script>
 		const cardMembershipOptions = document.getElementById('membershipOptions');
-		const tileUsmsPlus = document.getElementById('membershipUsmsPlus');
+		const anyTile = document.getElementsByClassName('membership-length--option');
 		const tileYear = document.getElementById('membershipYear');
 		const tileYearPlus = document.getElementById('membershipYearPlus');
-		const tileCompetitionYear = document.getElementById('membershipCompetitionYear');
-		const tileCompetitionYearPlus = document.getElementById('membershipCompetitionYearPlus');
-		const radioParticipationInfoYesInput = document.getElementById('participationInfoYesInput');
-		const radioParticipationInfoNoInput = document.getElementById('participationInfoNoInput');			
+		const tileEventYear = document.getElementById('membershipEventYear');
+		const tileEventYearPlus = document.getElementById('membershipEventYearPlus');
+		const tileUsmsPlus = document.getElementById('membershipUsmsPlus');		
 		
 		////////////////// Set selected class on tiles ///////////////////////å
 		/////////////////////////////////////////////////////////////////////
-
 		document.addEventListener('click', function(event) {
 			if (event.target.classList.contains('membership-length--option')) {
 				event.target.classList.add('selected');
 			}
 		});
 		
-		 ////////////////// Select yes or no for competitions ////////////////
+		 ////////////////// Select yes or no for event participation ////////////////
 		/////////////////////////////////////////////////////////////////////
-
-		radioParticipationInfoYesInput.addEventListener('click', function() {
+		eventYesInput.addEventListener('click', function() {
 			competitionSelectYes();
 			cardCompetition.classList.add('active');
 			cardMembershipOptions.style.display = 'flex';
 		});
-		radioParticipationInfoNoInput.addEventListener('click', function() {
+		eventNoInput.addEventListener('click', function() {
 			competitionSelectNo();
 			cardCompetition.classList.remove('active');
 			cardMembershipOptions.style.display = 'none';
-		});		
-		function competitionSelectYes() {
-			tileYear.parentElement.style.display = 'none';
-			tileUsmsPlus.parentElement.style.display = 'flex';
-			tileYearPlus.parentElement.style.display = 'none';
-			tileCompetitionYear.parentElement.style.display = 'flex';
-			// tileCompetitionYearPlus.parentElement.style.display = 'flex';
-			tileYear.classList.add('disabled');
-			tileUsmsPlus.classList.remove('disabled');
-			tileYearPlus.classList.remove('disabled');
-			tileCompetitionYear.classList.remove('disabled');
-			// tileCompetitionYearPlus.classList.remove('disabled');
-		}
-		function competitionSelectNo() {
-			tileYear.parentElement.style.display = 'flex';
-			tileUsmsPlus.parentElement.style.display = 'none';
-			tileYearPlus.parentElement.style.display = 'flex';
-			tileCompetitionYear.parentElement.style.display = 'none';
-			// tileCompetitionYearPlus.parentElement.style.display = 'none';
-			tileYear.classList.remove('disabled');
-			tileYearPlus.classList.remove('disabled');
-			tileCompetitionYear.classList.add('disabled');
-			// tileCompetitionYearPlus.classList.add('disabled');
-		}
+		});
 	</script>
 	<script src="/lanemate/js/membership-options-pending.js"></script>
                                     
