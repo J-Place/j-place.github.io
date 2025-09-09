@@ -85,8 +85,6 @@ var updateProductCardTotal = function() {
         if (tileCoachAlts.length === 1 ) {
             removeLineItemCoachAlts();
         }
-        // updateTotalPayment();
-        // $(".add-on-products .card__total--amount").text('$__.__');
         var tileUsmsPlus = $(".product-option.product-option_usms-plus");
         if (tileUsmsPlus.length !== 1 ) {
             console.log("USMS+ Tile is not on the page")
