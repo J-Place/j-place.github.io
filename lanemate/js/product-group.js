@@ -59,7 +59,7 @@ var updateProductCardTotal = function() {
         // return;
     } else if (coachAltsSelected.length !== 1 && usmsPlusSelected.length === 1 && videoSelected.length !== 1) {
         console.log("Coach Alts 2");
-        usmsPlusVal = 179;
+        usmsPlusVal = 174;
         videoVal = 0;
         coachAltsVal = 0;
         if (tileCoachAlts.length === 1 ) {
@@ -74,7 +74,7 @@ var updateProductCardTotal = function() {
     } else if (coachAltsSelected.length !== 1 && usmsPlusSelected.length !== 1 && videoSelected.length === 1) {
         console.log("Coach Alts 3");
         usmsPlusVal = 0;
-        videoVal = 120;
+        videoVal = 110;
         // videoVal = 0;
         coachAltsVal = 0;
         renderProductCardTotal();
@@ -98,7 +98,7 @@ var updateProductCardTotal = function() {
         // return;
     } else if (coachAltsSelected.length !== 1 && usmsPlusSelected.length === 1 && videoSelected.length === 1) {
         console.log("Coach Alts 4");
-        usmsPlusVal = 179;
+        usmsPlusVal = 174;
         videoVal = 0;
         coachAltsVal = 0;
         renderProductCardTotal();
@@ -126,7 +126,7 @@ var updateProductCardTotal = function() {
         // return;
     } else if (coachAltsSelected.length === 1 && usmsPlusSelected.length === 1 && videoSelected.length === 1) {
         console.log("Product Options 2");
-        usmsPlusVal = 179;
+        usmsPlusVal = 174;
         videoVal = 0;
         coachAltsVal = 30;
         // renderProductCardTotal();
@@ -141,7 +141,7 @@ var updateProductCardTotal = function() {
     } else if (coachAltsSelected.length === 1 && usmsPlusSelected.length !== 1 && videoSelected.length === 1) {
         console.log("Product Options 3");
         usmsPlusVal = 0;
-        videoVal = 120;
+        videoVal = 110;
         coachAltsVal = 30;
         renderProductCardTotal();
         if (tileUsmsPlus.length === 1 ) {
@@ -154,7 +154,7 @@ var updateProductCardTotal = function() {
         updateTotalPayment();
     } else if (coachAltsSelected.length === 1 && usmsPlusSelected.length === 1 && videoSelected.length !== 1) {
         console.log("Product Options 4");
-        usmsPlusVal = 179;
+        usmsPlusVal = 174;
         videoVal = 0;
         coachAltsVal = 30;
         renderProductCardTotal();

@@ -39,7 +39,7 @@ var addVideo = function() {
     $("#addVideoStrokeAnalysis").hide();
     $("#removeVideoStrokeAnalysis").show();
     if (usmsPlusSelected.length === 0 && videoSelected.length === 0 ) {
-        videoVal = 120;
+        videoVal = 110;
     } 
     else if (usmsPlusSelected.length === 0 && videoSelected.length === 1) {
         videoVal = 0;
@@ -58,7 +58,7 @@ var removeVideo = function() {
     $("#removeVideoStrokeAnalysis").hide();
     productCardTotal = productCardTotal - videoVal;
     if (usmsPlusSelected.length === 1) {
-        videoVal = 120;
+        videoVal = 110;
     } 
     removeLineItemVideo();
     updateProductCardTotal();

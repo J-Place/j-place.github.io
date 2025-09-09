@@ -388,7 +388,7 @@
 </div>
 <div id="cardParticipationInfo" class="card participation-info">
     <h3 class="registration__section--header">Do you plan on participating in events?</h3>
-    <p class="registration__section--summary">If you selected "I prefer not to say" for your sex, you cannot select a membership with an event license. Please contact <a href="mailto:membership@usmastersswimming.org">membership services</a> if you wish to change your sex.</p>
+    <p class="registration__section--summary">If you selected "I prefer not to say" for your sex, you cannot select a membership with an event license. Please contact Membership Services if you wish to change your sex.</p>
     <div class="form-group">
         <span class="help-block help-block--StrokeAnalysis has-error">Please make a selection</span>
         <label id="participationInfoYes" class="radio-label radio-label--inline col-xs-12" for="participationInfoYesInput" style="cursor:pointer;">
@@ -466,18 +466,22 @@
             cardMembershipOptions.style.display = 'none';
         });
         function competitionSelectYes() {
-            // tileUsmsPlus.parentElement.style.display = 'flex';
+            // const membershipCardTotal = document.getElementsByClassName(".membership-length--total.card__total--amount");
+            // membershipCardTotal.text('$__.__');
+            // $(".membership-length--total .card__total--amount").text('$__.__');
+            tileUsmsPlus.parentElement.style.display = 'flex';
+			tileUsmsPlus.classList.remove('disabled');
 			tileYear.parentElement.style.display = 'none';
-			tileYearPlus.parentElement.style.display = 'none';
-			tileEventYear.parentElement.style.display = 'flex';
-			tileEventYearPlus.parentElement.style.display = 'flex';
-			tileYear.classList.add('disabled');
+            tileYear.classList.add('disabled');
+            tileYearPlus.parentElement.style.display = 'none';
 			tileYearPlus.classList.add('disabled');
+			tileEventYear.parentElement.style.display = 'flex';
 			tileEventYear.classList.remove('disabled');
+			tileEventYearPlus.parentElement.style.display = 'none';
 			tileEventYearPlus.classList.remove('disabled');
 		}
 		function competitionSelectNo() {
-            // tileUsmsPlus.parentElement.style.display = 'none';
+            // $(".membership-length--total .card__total--amount").text('$__.__');
 			tileYear.parentElement.style.display = 'flex';
 			tileYearPlus.parentElement.style.display = 'flex';
 			tileEventYear.parentElement.style.display = 'none';
@@ -566,8 +570,8 @@
 						<div id="membershipYearPlus" class="membership-length--option membership-length--yearPlus disabled">
 							<span class="promo current-year-promo">Year-Plus</span>
 							<span class="savings">(Save $25.00)</span>
-							<label for="currentYear" class="control-label">
-								<div class="radio-container"><input type="radio" name="length" id="currentYear" value="currentYear"></div>
+							<label for="yearPlus" class="control-label">
+								<div class="radio-container"><input type="radio" name="length" id="yearPlus" value="yearPlus"></div>
 								<div class="current-year-container">
 									<span class="membership-length--price">
 										<p class="form-control-static current-year-cost">$125.00</p>
@@ -588,8 +592,8 @@
 						<div id="membershipEventYearPlus" class="membership-length--option membership-length--yearPlusEvent disabled">
 							<span class="promo current-year-promo">Event License Year-Plus</span>
 							<span class="savings">(Save $25.00)</span>
-							<label for="currentYear" class="control-label">
-								<div class="radio-container"><input type="radio" name="length" id="currentYear" value="currentYear"></div>
+							<label for="nextYearEvent" class="control-label">
+								<div class="radio-container"><input type="radio" name="length" id="nextYearEvent" value="nextYearEvent"></div>
 								<div class="current-year-container">
 									<span class="membership-length--price">
 										<p class="form-control-static current-year-cost">$125.00</p>
@@ -606,14 +610,14 @@
                             </span>
 						</div>
 					</div>
-					<!-- <div class="col-xs-12 col-md-6 col-lg-4 col-xl-3" style="display:flex;">
+					<div class="col-xs-12 col-md-6 col-lg-4 col-xl-3" style="display:flex;">
 						<div id="membershipUsmsPlus" class="membership-length--option membership-length--usmsPlus disabled">
 							<span class="promo current-year-promo">USMS+</span>
 							<label for="currentYear" class="control-label">
 								<div class="radio-container"><input type="radio" name="length" id="currentYear" value="currentYear"></div>
 								<div class="current-year-container">
 									<span class="membership-length--price">
-										<p class="form-control-static current-year-cost">$179.00</p>
+										<p class="form-control-static current-year-cost">$174.00</p>
 									</span>
 									<span class="membership-length--description">USMS+</span>
 								</div>
@@ -630,7 +634,7 @@
 								</ul>
                             </span>
 						</div>
-					</div> -->
+					</div>
 					<div class="col-xs-12 col-md-6 col-lg-4 col-xl-3" style="display:flex;">
 						<div id="membershipYear" class="membership-length--option membership-length--currentYear disabled" style="display:block;">
 							<span class="promo usms-plus-promo">Standard Membership</span><span class="savings"></span>
@@ -924,7 +928,7 @@
 <script src="/lanemate/js/product-tile-video-eligible.js"></script>
         <div class="product-option product-option-select-btn product-option_video-stroke-analysis">
     <p class="product-name">Video Stroke Analysis</p>
-    <p class="product-price">$120</p>
+    <p class="product-price">$110</p>
     <div class="product-summary">
         <ul>
             <li>Single stroke analysis by certified coach</li>

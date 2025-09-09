@@ -54,7 +54,7 @@ var updateProductCardTotal = function() {
         // return;
     } else if (coachAltsSelected.length !== 1 && usmsPlusSelected.length === 1 && videoEligibleSelected.length !== 1) {
         console.log("else if 2.1");
-        usmsPlusVal = 179;
+        usmsPlusVal = 174;
         videoVal = 0;
         coachAltsVal = 0;
         removeLineItemCoachAlts();
@@ -75,7 +75,7 @@ var updateProductCardTotal = function() {
         // return;
     } else if (coachAltsSelected.length !== 1 && usmsPlusSelected.length === 1 && videoEligibleSelected.length === 1) {
         console.log("else if 2.3");
-        usmsPlusVal = 179;
+        usmsPlusVal = 174;
         videoVal = 0;
         coachAltsVal = 0;
         renderProductCardTotal();
@@ -96,7 +96,7 @@ var updateProductCardTotal = function() {
         // return;
     } else if (coachAltsSelected.length === 1 && usmsPlusSelected.length === 1 && videoEligibleSelected.length === 1) {
         console.log("else if 2.5");
-        usmsPlusVal = 179;
+        usmsPlusVal = 174;
         videoVal = 0;
         coachAltsVal = 30;
         renderLineItemUsmsPlus();
@@ -115,7 +115,7 @@ var updateProductCardTotal = function() {
         updateTotalPayment();
     } else if (coachAltsSelected.length === 1 && usmsPlusSelected.length === 1 && videoEligibleSelected.length !== 1) {
         console.log("else if 2.7");
-        usmsPlusVal = 179;
+        usmsPlusVal = 174;
         videoVal = 0;
         coachAltsVal = 30;
         renderProductCardTotal();

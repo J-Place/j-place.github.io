@@ -17,7 +17,7 @@ var addUsmsPlus = function() {
     $(".product-option.product-option_usms-plus").toggleClass('selected');
     $("#addUsmsPlus").hide();
     $("#removeUsmsPlus").show();
-    usmsPlusVal = 179;
+    usmsPlusVal = 174;
     productCardTotal = productCardTotal + usmsPlusVal;
     if (videoSelected.length === 1) {
         productCardTotal = productCardTotal - videoVal;
@@ -30,7 +30,7 @@ var removeUsmsPlus = function() {
     $(".product-option.product-option_usms-plus").removeClass('selected');
     $("#addUsmsPlus").show();
     $("#removeUsmsPlus").hide();
-    usmsPlusVal = 179;
+    usmsPlusVal = 174;
     productCardTotal = productCardTotal - usmsPlusVal;
     isVideoEligible = false;
     removeLineItemUsmsPlus();

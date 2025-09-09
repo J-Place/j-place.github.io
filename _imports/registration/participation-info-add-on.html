@@ -21,7 +21,7 @@
 </div>
 <div id="cardParticipationInfo" class="card participation-info">
     <h3 class="registration__section--header">Do you plan on participating in events?</h3>
-    <p class="registration__section--summary">If you selected "I prefer not to say" for your sex, you cannot select a membership with an event license. Please contact <a href="mailto:membership@usmastersswimming.org">membership services</a> if you wish to change your sex.</p>
+    <p class="registration__section--summary">If you selected "I prefer not to say" for your sex, you cannot select a membership with an event license. Please contact Membership Services if you wish to change your sex.</p>
     <div class="form-group">
         <span class="help-block help-block--StrokeAnalysis has-error">Please make a selection</span>
         <label id="participationInfoYes" class="radio-label radio-label--inline col-xs-12" for="participationInfoYesInput" style="cursor:pointer;">
@@ -99,18 +99,22 @@
             cardMembershipOptions.style.display = 'none';
         });
         function competitionSelectYes() {
-            // tileUsmsPlus.parentElement.style.display = 'flex';
+            // const membershipCardTotal = document.getElementsByClassName(".membership-length--total.card__total--amount");
+            // membershipCardTotal.text('$__.__');
+            // $(".membership-length--total .card__total--amount").text('$__.__');
+            tileUsmsPlus.parentElement.style.display = 'flex';
+			tileUsmsPlus.classList.remove('disabled');
 			tileYear.parentElement.style.display = 'none';
-			tileYearPlus.parentElement.style.display = 'none';
-			tileEventYear.parentElement.style.display = 'flex';
-			tileEventYearPlus.parentElement.style.display = 'flex';
-			tileYear.classList.add('disabled');
+            tileYear.classList.add('disabled');
+            tileYearPlus.parentElement.style.display = 'none';
 			tileYearPlus.classList.add('disabled');
+			tileEventYear.parentElement.style.display = 'flex';
 			tileEventYear.classList.remove('disabled');
+			tileEventYearPlus.parentElement.style.display = 'none';
 			tileEventYearPlus.classList.remove('disabled');
 		}
 		function competitionSelectNo() {
-            // tileUsmsPlus.parentElement.style.display = 'none';
+            // $(".membership-length--total .card__total--amount").text('$__.__');
 			tileYear.parentElement.style.display = 'flex';
 			tileYearPlus.parentElement.style.display = 'flex';
 			tileEventYear.parentElement.style.display = 'none';

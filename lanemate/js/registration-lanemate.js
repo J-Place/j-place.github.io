@@ -18,7 +18,7 @@ $(".membership-length--lanemate-monthly").on( "click", function() {
 $(".membership-length--lanemate-yearly").on( "click", function() {
     $(".membership-length--total").text("$83.88");
     $(".payment-info__line-item--lanemate .payment-info__line-item--price").text("$83.88");
-    $(".price-string__video-stroke-analysis").text(" for $99.00");
+    $(".price-string__video-stroke-analysis").text(" for 110.00");
     var strokeFocus = $('#strokeFocus').val();
     if (strokeFocus !== 'blank' && $("#videoStrokeAnalysisYesInput").prop( "checked", true )) {
         $(".video-stroke-analysis--total").text("$99.00");

@@ -24,7 +24,7 @@ $(".membership-length--currentYear").on( "click", function() {
     productCardTotal = 70;
     $(".membership-length--total.card__total--amount").text("$70.00");
     $(".payment-info__line-item--usms .payment-info__line-item--price").text("$70.00");
-    $(".price-string__video-stroke-analysis").text(" for $99.00");
+    $(".price-string__video-stroke-analysis").text(" for 110.00");
     var strokeFocus = $('#strokeFocus').val();
     if (strokeFocus !== 'blank' && $("#videoStrokeAnalysisYesInput").prop( "checked", true )) {
         $(".video-stroke-analysis--total").text("$99.00");
@@ -35,8 +35,9 @@ $(".membership-length--currentYear").on( "click", function() {
 });
     
 $(".membership-length--usmsPlus").on( "click", function() {
-    $(".membership-length--total.card__total--amount").text("$179.00");
-    $(".payment-info__line-item--usms .payment-info__line-item--price").text("$179.00");
+    productCardTotal = 174;
+    $(".membership-length--total.card__total--amount").text("$174.00");
+    $(".payment-info__line-item--usms .payment-info__line-item--price").text("$174.00");
     $(".price-string__video-stroke-analysis").text(" for FREE!");
     var strokeFocus = $('#strokeFocus').val();
     if (strokeFocus !== 'blank' && $("#videoStrokeAnalysisYesInput").prop( "checked", true )) {
@@ -45,5 +46,3 @@ $(".membership-length--usmsPlus").on( "click", function() {
     }
     $(".price-string__coach-alts-certification").text("for $30.00");
 });
-
-// .video-stroke-analysis--total.card__total--amount
