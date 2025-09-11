@@ -39,9 +39,10 @@ $("#membershipYear").on( "click", function() {
 });
 
 $("#membershipEventYear").on( "click", function() {
-    productCardTotal = 0;
-    $(".membership-length--total.card__total--amount").text("$0.00");
-    $(".payment-info__line-item--usms .payment-info__line-item--price").text("$0.00");
+    productCardTotal = 75;
+    updateTotalPayment();
+    $(".membership-length--total.card__total--amount").text("$75.00");
+    $(".payment-info__line-item--usms .payment-info__line-item--price").text("$75.00");
     $(".price-string__video-stroke-analysis").text(" for $110.00");
     var strokeFocus = $('#strokeFocus').val();
     if (strokeFocus !== 'blank' && $("#videoStrokeAnalysisYesInput").prop( "checked", true )) {

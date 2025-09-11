@@ -121,13 +121,14 @@
 		$('.payment-info .card__content').hide();
 	}
 	var updateTotalPayment = function() {
-		console.console.log("UpdateTotalPayment BBB");
+		console.log("UpdateTotalPayment BBB");
 		var inputDonation = $("input[name='swimming-saves-lives']");
 		var donationVal = inputDonation.val();
 		var donationNum = parseInt(donationVal);
 		var totalPaymentVal = productCardTotal + donationNum;
 		var totalPaymentNum = Number(totalPaymentVal);
-		$(".payment-info__line-item--total .payment-info__line-item--price").text('$ ' + totalPaymentNum + '.00')    
+		var isVideoEligible = false;
+		$(".payment-info__line-item--total .payment-info__line-item--price").text('$ ' + totalPaymentNum + '.00');   
 		if (totalPaymentNum = 0) {
 			showPaymentInfo();
 			enableSubmit();

@@ -1687,7 +1687,7 @@ document.addEventListener('DOMContentLoaded', function() {
 								</div>
 								<div class="event-standard-container">
 									<span class="membership-length--price">
-										<p class="form-control-static event-standard-cost">$0.00</p>
+										<p class="form-control-static event-standard-cost">$75.00</p>
 									</span>
 									<span class="membership-length--description">Event License Standard</span>
 								</div>
@@ -1727,7 +1727,12 @@ document.addEventListener('DOMContentLoaded', function() {
 		const tileYearPlus = document.getElementById('membershipYearPlus');
 		const tileEventYear = document.getElementById('membershipEventYear');
 		const tileEventYearPlus = document.getElementById('membershipEventYearPlus');
-		const tileUsmsPlus = document.getElementById('membershipUsmsPlus');		
+		const tileUsmsPlus = document.getElementById('membershipUsmsPlus');	
+
+		// document.addEventListener('DOMContentLoaded', function() {
+		// 	productCardTotal = 0;
+        //     updateTotalPayment();
+		// });
 		
 		////////////////// Set selected class on tiles ///////////////////////å
 		/////////////////////////////////////////////////////////////////////
@@ -2299,13 +2304,14 @@ $("#videoStrokeAnalysisYesInput").click( function() {
 		$('.payment-info .card__content').hide();
 	}
 	var updateTotalPayment = function() {
-		console.console.log("UpdateTotalPayment BBB");
+		console.log("UpdateTotalPayment BBB");
 		var inputDonation = $("input[name='swimming-saves-lives']");
 		var donationVal = inputDonation.val();
 		var donationNum = parseInt(donationVal);
 		var totalPaymentVal = productCardTotal + donationNum;
 		var totalPaymentNum = Number(totalPaymentVal);
-		$(".payment-info__line-item--total .payment-info__line-item--price").text('$ ' + totalPaymentNum + '.00')    
+		var isVideoEligible = false;
+		$(".payment-info__line-item--total .payment-info__line-item--price").text('$ ' + totalPaymentNum + '.00');   
 		if (totalPaymentNum = 0) {
 			showPaymentInfo();
 			enableSubmit();
