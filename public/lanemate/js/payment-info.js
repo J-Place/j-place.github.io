@@ -15,8 +15,8 @@ var hidePaymentInfo = function() {
     $('.payment-info .card__content').hide();
 }
 
-// const disclaimerUsmsPlus = document.getElementsByClassName('.agree-usmsplus-terms');
-// const disclaimerCompetition = document.getElementsByClassName('.agree-terms-competition');
+const disclaimerUsmsPlus = document.getElementsByClassName('.agree-usmsplus-terms');
+const disclaimerCompetition = document.getElementsByClassName('.agree-terms-competition');
 
 var enableSubmit = function() {
     $("#btnSubmitOrder").prop('disabled', false);

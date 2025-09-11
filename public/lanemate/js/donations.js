@@ -5,15 +5,23 @@ $(document).ready(function() {
     // Handle Button Values //////////////////////////////////////////////////////////////
     $(".btn-donate--1").on('click', function() {
         $("input[name='swimming-saves-lives']").val("30.00");
+        productCardTotal = 30;
+        donationVal = 30;
     });
     $(".btn-donate--2").on('click', function() {
         $("input[name='swimming-saves-lives']").val("60.00");
+        productCardTotal = 60;
+        donationVal = 60;
     });
     $(".btn-donate--3").on('click', function() {
         $("input[name='swimming-saves-lives']").val("120.00");
+        productCardTotal = 120;
+        donationVal = 120;
     });
     $(".btn-donate--4").on('click', function() {
         $("input[name='swimming-saves-lives']").val("240.00");
+        productCardTotal = 240;
+        donationVal = 240;
     });
     $(".btn-donate").on('click', function() {
         updateDonationCardValue();
@@ -53,10 +61,12 @@ var updateDonationCardValue = function() {
 
 var updateLineItemDonation = function() {
     removeLineItemDonation();
-    var lineItemDonationBlank = $('<p class="payment-info__line-item payment-info__line-item--donation">Donation Total: <span class="payment-info__line-item--price"></span></p>');
-    $(".payment-info__line-item--summary").last().append(lineItemDonationBlank);
-    $('.payment-info__line-item--donation .payment-info__line-item--price').text($('[name=swimming-saves-lives]').val());
-    $('.payment-info__line-item--donation .payment-info__line-item--price').prepend('<span>$ </span>');
+    // var lineItemDonationBlank = $('<p class="payment-info__line-item payment-info__line-item--donations">Donation Total: <span class="payment-info__line-item--price"></span></p>');
+    // $(".payment-info__line-item--summary").last().append(lineItemDonationBlank);
+    // $('.payment-info__line-item--donation .payment-info__line-item--price').text($('[name=swimming-saves-lives]').val());
+    $('.payment-info__line-item--donations .payment-info__line-item--price').text('$ ' + donationVal + ".00");
+    // $('.payment-info__line-item--donations .payment-info__line-item--price').text(donationVal);
+    // $('.payment-info__line-item--donations .payment-info__line-item--price').prepend('<span>$ </span>');
 }
 
 var removeLineItemDonation = function() {
