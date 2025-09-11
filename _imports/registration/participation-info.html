@@ -92,6 +92,10 @@
             selectedTiles.forEach(element => {
                 element.classList.remove('selected');
             });
+            $(".membership-length--total .card__total--amount").text('$__.__');
+            $(".payment-info__line-item--usms .payment-info__line-item--price").text('$__.__');
+            productCardTotal = 0;
+            updateTotalPayment();
 			tileUsmsPlus.classList.add('disabled');
             tileUsmsPlus.parentElement.style.display = 'none';
 			tileYear.parentElement.style.display = 'flex';
