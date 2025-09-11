@@ -95,7 +95,7 @@
             $('input[name="ParticipationInfo"][value="no"]').prop('checked', true);
             participationInfoYesLabel.classList.add('disabled');
             $('input[name="ParticipationInfo"][value="yes"]').prop('disabled', true);
-            cardCompetition.classList.remove('active');
+            // cardCompetition.classList.remove('active');
             // selectSexInput.value = 'na';
             cardMembershipOptions.style.display = 'none';
         });
@@ -114,8 +114,18 @@
 		}
 		function competitionSelectNo() {
             // alert("No");
+            const selectedTiles = document.querySelectorAll('.membership-length--option.selected');
+            selectedTiles.forEach(element => {
+                element.classList.remove('selected');
+            });
             $(".membership-length--total .card__total--amount").text('$__.__');
             $(".payment-info__line-item--usms .payment-info__line-item--price").text('$__.__');
+        
+            const disclaimerUsmsPlus = document.getElementById('disclaimerCheckboxUsmsPlus');
+            const disclaimerCompetition = document.getElementById('disclaimerCheckboxCompetition');
+            disclaimerUsmsPlus.style.display = 'none';
+            disclaimerCompetition.style.display = 'none';
+
             productCardTotal = 0;
             updateTotalPayment();
 			tileYear.parentElement.style.display = 'flex';

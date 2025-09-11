@@ -71,7 +71,9 @@
 		const eventNoLabel = document.getElementById('participationInfoNo');
 		const eventYesInput = document.getElementById('participationInfoYesInput');
 		const eventNoInput = document.getElementById('participationInfoNoInput');
+
         function competitionSelectYes() {
+            // alert("Yep");
             const selectedTiles = document.querySelectorAll('.membership-length--option.selected');
             selectedTiles.forEach(element => {
                 element.classList.remove('selected');
@@ -87,13 +89,31 @@
             tileEventYearPlus.parentElement.style.display = 'flex';
             tileEventYearPlus.classList.remove('disabled');
 		}
+
+
+
 		function competitionSelectNo() {
+            // alert("Nope");
+
+
             const selectedTiles = document.querySelectorAll('.membership-length--option.selected');
             selectedTiles.forEach(element => {
                 element.classList.remove('selected');
             });
+
             $(".membership-length--total .card__total--amount").text('$__.__');
             $(".payment-info__line-item--usms .payment-info__line-item--price").text('$__.__');
+
+            const cardCompetition = document.getElementById('cardCompetition');
+            const radioSexNoMatch = document.getElementById('competitionMembershipNo');
+            cardCompetition.classList.remove('active');
+			// cardMembershipOptions.style.display = 'none';
+
+            const disclaimerUsmsPlus = document.getElementById('disclaimerCheckboxUsmsPlus');
+            const disclaimerCompetition = document.getElementById('disclaimerCheckboxCompetition');
+            disclaimerUsmsPlus.style.display = 'none';
+            disclaimerCompetition.style.display = 'none';
+
             productCardTotal = 0;
             updateTotalPayment();
 			tileUsmsPlus.classList.add('disabled');

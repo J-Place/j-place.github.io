@@ -462,7 +462,7 @@
             $('input[name="ParticipationInfo"][value="no"]').prop('checked', true);
             participationInfoYesLabel.classList.add('disabled');
             $('input[name="ParticipationInfo"][value="yes"]').prop('disabled', true);
-            cardCompetition.classList.remove('active');
+            // cardCompetition.classList.remove('active');
             // selectSexInput.value = 'na';
             cardMembershipOptions.style.display = 'none';
         });
@@ -481,8 +481,18 @@
 		}
 		function competitionSelectNo() {
             // alert("No");
+            const selectedTiles = document.querySelectorAll('.membership-length--option.selected');
+            selectedTiles.forEach(element => {
+                element.classList.remove('selected');
+            });
             $(".membership-length--total .card__total--amount").text('$__.__');
             $(".payment-info__line-item--usms .payment-info__line-item--price").text('$__.__');
+        
+            const disclaimerUsmsPlus = document.getElementById('disclaimerCheckboxUsmsPlus');
+            const disclaimerCompetition = document.getElementById('disclaimerCheckboxCompetition');
+            disclaimerUsmsPlus.style.display = 'none';
+            disclaimerCompetition.style.display = 'none';
+
             productCardTotal = 0;
             updateTotalPayment();
 			tileYear.parentElement.style.display = 'flex';
@@ -774,7 +784,7 @@
 		/////////////////////////////////////////////////////////////////////
 		eventYesInput.addEventListener('click', function() {
 			competitionSelectYes();
-			cardCompetition.classList.add('active');
+			// cardCompetition.classList.remove('active');
 			cardMembershipOptions.style.display = 'flex';
 		});
 		eventNoInput.addEventListener('click', function() {
@@ -1142,6 +1152,7 @@
 
 	<button id="btnSubmitOrder" class="btn btn-primary btn-large text-uppercase pull-left" disabled>Submit</button>
  </div>
+ 
  <script src="/lanemate/js/payment-info.js"></script>
                                 </div>
                             </div>

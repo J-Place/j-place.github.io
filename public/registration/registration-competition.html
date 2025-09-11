@@ -938,7 +938,7 @@ document.addEventListener('DOMContentLoaded', function() {
         tileEventYear.classList.remove('disabled');
         tileEventYearPlus.parentElement.style.display = 'flex';
         tileEventYearPlus.classList.remove('disabled');
-        cardCompetition.classList.add('active');
+        // cardCompetition.classList.add('active');
 });
 
         ////////////////// Select sex from Contact Info section //////////////
@@ -1436,7 +1436,9 @@ document.addEventListener('DOMContentLoaded', function() {
 		const eventNoLabel = document.getElementById('participationInfoNo');
 		const eventYesInput = document.getElementById('participationInfoYesInput');
 		const eventNoInput = document.getElementById('participationInfoNoInput');
+
         function competitionSelectYes() {
+            // alert("Yep");
             const selectedTiles = document.querySelectorAll('.membership-length--option.selected');
             selectedTiles.forEach(element => {
                 element.classList.remove('selected');
@@ -1452,13 +1454,31 @@ document.addEventListener('DOMContentLoaded', function() {
             tileEventYearPlus.parentElement.style.display = 'flex';
             tileEventYearPlus.classList.remove('disabled');
 		}
+
+
+
 		function competitionSelectNo() {
+            // alert("Nope");
+
+
             const selectedTiles = document.querySelectorAll('.membership-length--option.selected');
             selectedTiles.forEach(element => {
                 element.classList.remove('selected');
             });
+
             $(".membership-length--total .card__total--amount").text('$__.__');
             $(".payment-info__line-item--usms .payment-info__line-item--price").text('$__.__');
+
+            const cardCompetition = document.getElementById('cardCompetition');
+            const radioSexNoMatch = document.getElementById('competitionMembershipNo');
+            cardCompetition.classList.remove('active');
+			// cardMembershipOptions.style.display = 'none';
+
+            const disclaimerUsmsPlus = document.getElementById('disclaimerCheckboxUsmsPlus');
+            const disclaimerCompetition = document.getElementById('disclaimerCheckboxCompetition');
+            disclaimerUsmsPlus.style.display = 'none';
+            disclaimerCompetition.style.display = 'none';
+
             productCardTotal = 0;
             updateTotalPayment();
 			tileUsmsPlus.classList.add('disabled');
@@ -1750,7 +1770,6 @@ document.addEventListener('DOMContentLoaded', function() {
 		/////////////////////////////////////////////////////////////////////
 		eventYesInput.addEventListener('click', function() {
 			competitionSelectYes();
-			cardCompetition.classList.add('active');
 			cardMembershipOptions.style.display = 'flex';
 			$(".membership-length--total .card__total--amount").text('$__.__');
 		});
@@ -2257,36 +2276,6 @@ $("#videoStrokeAnalysisYesInput").click( function() {
 		  <div><span class="help-block help-block--cardZipID">Please enter a valid billing zip</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardZipID" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardZipID" aria-hidden="true"></span></div>
 	   </div>
 	</div>
-
-	<!-- <div class="form-group agree-terms">
-	   <div class="col-xs-12">
-		  <span class="help-block help-block--agree-terms">You need to agree to the terms to complete your registration.</span>
-		  <label id="agreeTerms__label" class="checkbox-label " for="agreeTerms">
-			 <div class="checkbox-container"><input type="checkbox" name="agree-terms" id="agreeTerms" value="" class="has-success" data-gtm-form-interact-field-id="7"><span class="checkbox__placeholder"></span></div>
-		  </label>
-		  <span class="font-weight-bold">I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming <a href="/content/privacy" target="_blank">Privacy Policy</a>. I understand that this membership will take effect immediately and is non-refundable, non-transferable, and expires on</span><span class="font-weight-bold">December 31, </span><span class="agree-terms--year font-weight-bold">2024</span><span class="font-weight-bold">.</span>
-	   </div>
-	</div> -->
-
-	<!-- <div class="form-group agree-terms-competition">
-	   <div class="col-xs-12">
-		  <span class="help-block help-block--agree-terms-competition has-error">You need to agree to the terms to complete your registration.</span>
-		  <label id="agreeTermsComp__label" class="checkbox-label " for="agreeTermsComp">
-			 <div class="checkbox-container"><input type="checkbox" name="agree-terms-competition" id="agreeTermsComp" value="" class="has-success" data-gtm-form-interact-field-id="7"><span class="checkbox__placeholder"></span></div>
-		  </label>
-		  <span class="font-weight-bold">I acknowledge that the <a style="text-decoration: underline;" href="https://www.usms.org/volunteer-central/policy-and-governance/usms-policies/interim-eligibility-policy?fbclid=IwZXh0bgNhZW0CMTAAYnJpZBExWW55VmhHcWVNTktYTkhmMQEe80ziJOevfBispu6yEhdUu94klz-APyf7wEtgJBLq2Iu-Jed_BwDlVdR7bNs_aem_WgCMjIbNDLX5f3IB0gGJXg">Interim USMS Policy</a> on Participation in the Men's and Women's Competition Category and Eligibility for Official Recognition Programs allows members to participate in the competition category that reflects the sex with which they identify; however, swimmers will not be included in Recognition Programs in the female competition category unless they are swimming in the competition category that aligns with their sex assigned at birth. Anyone participating in the male competition category is eligible for recognition, subject to all other USMS rules and regulations.</span>
-	   </div>
-	</div> -->
-
-	<!-- <div class="form-group agree-usmsplus-terms" style="display: block;">
-	   <div class="col-xs-12">
-		  <span class="help-block help-block--agree-usmsplus-terms">You need to agree to the USMS+ terms and  conditions to complete your registration.</span>
-		  <label id="agreeUsmsPlusTerms__label" class="checkbox-label " for="agreeUsmsPlusTerms">
-			 <div class="checkbox-container"><input type="checkbox" name="agree-usmsplus-terms" id="agreeUsmsPlusTerms" value="" class="has-success" data-gtm-form-interact-field-id="6"><span class="checkbox__placeholder"></span></div>
-		  </label>
-		  <span class="font-weight-bold">By selecting the USMS+ membership, I agree that USMS may share my information with the USA Swimming Foundation and USA Swimming in accordance with the USMS Privacy Policy, linked below (you may still opt out at any time).</span>
-	   </div>
-	</div> -->
 
 	<div id="disclaimerCheckboxStandard" class="form-group agree-terms">
    <div class="col-xs-12">

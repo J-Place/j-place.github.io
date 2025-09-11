@@ -36,6 +36,7 @@ $("#membershipYear").on( "click", function() {
 });
 
 $("#membershipEventYear").on( "click", function() {
+    cardCompetition.classList.add('active');
     const disclaimerUsmsPlus = document.getElementById('disclaimerCheckboxUsmsPlus');
     const disclaimerCompetition = document.getElementById('disclaimerCheckboxCompetition');
     productCardTotal = 75;
@@ -70,6 +71,7 @@ $("#membershipYearPlus").on( "click", function() {
 });
 
 $("#membershipEventYearPlus").on( "click", function() {
+    cardCompetition.classList.add('active');
     const disclaimerUsmsPlus = document.getElementById('disclaimerCheckboxUsmsPlus');
     const disclaimerCompetition = document.getElementById('disclaimerCheckboxCompetition');
     productCardTotal = 125;
@@ -86,6 +88,7 @@ $("#membershipEventYearPlus").on( "click", function() {
 });
 
 $("#membershipUsmsPlus").on( "click", function() {
+    cardCompetition.classList.add('active');
     const disclaimerUsmsPlus = document.getElementById('disclaimerCheckboxUsmsPlus');
     const disclaimerCompetition = document.getElementById('disclaimerCheckboxCompetition');
     productCardTotal = 249;
