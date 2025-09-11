@@ -451,7 +451,7 @@
             $('input[name="ParticipationInfo"][value="no"]').prop('checked', false);
             participationInfoYesLabel.classList.remove('disabled');
             $('input[name="ParticipationInfo"][value="yes"]').prop('disabled', false);
-            cardCompetition.classList.add('active');
+            // cardCompetition.classList.add('active');
             // selectSexInput.value = 'm';
             cardMembershipOptions.style.display = 'flex';
         });
@@ -498,7 +498,6 @@
         });
     </script>
 </div>
-                                    
                                     
 <style>
 	.membership-length--option {
@@ -782,7 +781,6 @@
 		});
 	</script>
 	<script src="/lanemate/js/membership-options-pending.js"></script>
-                                    
                                     <div id="cardCompetition" class="card competition-qualification">
     <h3>Certification of Competition Category</h3>
     <p>Your competition category is based on your Sex selection during the registration process.</p>
@@ -1006,7 +1004,7 @@
 <script src="/lanemate/js/product-group-usms.js"></script>
                                     <link rel="stylesheet" href="/lanemate/css-components/donations.css">
 <div class="card donations">
-    <h3 class="donation__form-header">Make a Donation</h3>
+    <h3 class="donation__form-header">Make a Donation YYY</h3>
     <div class="form-group donation donation--sslf">
         <span class="help-block help-block--swimming-saves-lives">The minimum donation to the USA Swimming Foundation is $5. Please correct this value and try again</span>
         <div class="donate__text"><label for="swimming-saves-lives" class="control-label"><strong>Adult Learn-to-Swim Grant Donation</strong></label></div>
@@ -1102,7 +1100,7 @@
 		   </div>
 		</div>	
 	</div>
-	<div class="form-group agree-terms">
+	<div id="disclaimerCheckboxStandard" class="form-group agree-terms">
    <div class="col-xs-12">
       <span class="help-block help-block--agree-terms">You need to agree to the terms to complete your registration.</span>
       <label id="agreeTerms__label" class="checkbox-label " for="agreeTerms">
@@ -1115,7 +1113,7 @@
    </div>
 </div>
 	
-<div class="form-group agree-usmsplus-terms" style="display: none;">
+<div id="disclaimerCheckboxUsmsPlus" class="form-group agree-usmsplus-terms" style="display: none;">
 	<div class="col-xs-12">
 		<span class="help-block help-block--agree-usmsplus-terms">You need to agree to the USMS+ terms and  conditions to complete your registration.</span>
 		<label id="agreeUsmsPlusTerms__label" class="checkbox-label " for="agreeUsmsPlusTerms">
@@ -1127,23 +1125,15 @@
 		<span class="font-weight-bold">By selecting the USMS+ membership, I agree that USMS may share my information with the USA Swimming Foundation and USA Swimming in accordance with the USMS <a href="/#">Privacy Policy</a> (you may still opt out at any time). I understand that this membership will take effect immediately and expires on December 31, 2024.</span>
 	</div>
 </div>
-
-
-
-    <div class="form-group agree-terms-competition">
-	   <div class="col-xs-12">
-		  <span class="help-block help-block--agree-terms-competition has-error">You need to agree to the terms to complete your registration.</span>
-		  <label id="agreeTermsComp__label" class="checkbox-label " for="agreeTermsComp">
-			 <div class="checkbox-container"><input type="checkbox" name="agree-terms-competition" id="agreeTermsComp" value="" class="has-success" data-gtm-form-interact-field-id="7"><span class="checkbox__placeholder"></span></div>
-		  </label>
-		  <span class="font-weight-bold">I acknowledge that the <a style="text-decoration: underline;" href="https://www.usms.org/volunteer-central/policy-and-governance/usms-policies/interim-eligibility-policy?fbclid=IwZXh0bgNhZW0CMTAAYnJpZBExWW55VmhHcWVNTktYTkhmMQEe80ziJOevfBispu6yEhdUu94klz-APyf7wEtgJBLq2Iu-Jed_BwDlVdR7bNs_aem_WgCMjIbNDLX5f3IB0gGJXg">Interim USMS Policy</a> on Participation in the Men's and Women's Competition Category and Eligibility for Official Recognition Programs allows members to participate in the competition category that reflects the sex with which they identify; however, swimmers will not be included in Recognition Programs in the female competition category unless they are swimming in the competition category that aligns with their sex assigned at birth. Anyone participating in the male competition category is eligible for recognition, subject to all other USMS rules and regulations.</span>
-	   </div>
-	</div>
-
-
-
-
-
+	<div id="disclaimerCheckboxCompetition" class="form-group agree-terms-competition" style="display: none;">
+    <div class="col-xs-12">
+        <span class="help-block help-block--agree-terms-competition has-error">You need to agree to the terms to complete your registration.</span>
+        <label id="agreeTermsComp__label" class="checkbox-label " for="agreeTermsComp">
+            <div class="checkbox-container"><input type="checkbox" name="agree-terms-competition" id="agreeTermsComp" value="" class="has-success" data-gtm-form-interact-field-id="7"><span class="checkbox__placeholder"></span></div>
+        </label>
+        <span class="font-weight-bold">I acknowledge that the <a style="text-decoration: underline;" href="https://www.usms.org/volunteer-central/policy-and-governance/usms-policies/interim-eligibility-policy?fbclid=IwZXh0bgNhZW0CMTAAYnJpZBExWW55VmhHcWVNTktYTkhmMQEe80ziJOevfBispu6yEhdUu94klz-APyf7wEtgJBLq2Iu-Jed_BwDlVdR7bNs_aem_WgCMjIbNDLX5f3IB0gGJXg">Interim USMS Policy</a> on Participation in the Men's and Women's Competition Category and Eligibility for Official Recognition Programs allows members to participate in the competition category that reflects the sex with which they identify; however, swimmers will not be included in Recognition Programs in the female competition category unless they are swimming in the competition category that aligns with their sex assigned at birth. Anyone participating in the male competition category is eligible for recognition, subject to all other USMS rules and regulations.</span>
+    </div>
+</div>
 
 
 	<button id="btnSubmitOrder" class="btn btn-primary btn-large text-uppercase pull-left" disabled>Submit</button>

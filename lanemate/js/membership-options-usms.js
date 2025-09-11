@@ -7,6 +7,9 @@
 //     $(".usms-membership-container").prepend('<p class="payment-info__line-item payment-info__line-item--usms">USMS Membership: <span class="payment-info__line-item--price">$__.__</span></p>');
 // }
 
+    const disclaimerUsmsPlus = document.getElementsByClassName('.agree-usmsplus-terms');
+    const disclaimerCompetition = document.getElementsByClassName('.agree-terms-competition');
+
 $(".membership-length--option").on( "click", function() {
     $(".membership-length--option").removeClass("selected");
     $(this).addClass("selected");
@@ -36,6 +39,7 @@ $(".membership-length--currentYear").on( "click", function() {
     
 $(".membership-length--usmsPlus").on( "click", function() {
     productCardTotal = 174;
+    cardCompetition.classList.add('active');
     $(".membership-length--total.card__total--amount").text("$174.00");
     $(".payment-info__line-item--usms .payment-info__line-item--price").text("$174.00");
     $(".price-string__video-stroke-analysis").text(" for FREE!");

@@ -8,6 +8,10 @@ $( document ).ready(function() {
 
 // form-group agree-terms disabled
 
+const disclaimerUsmsPlus = document.getElementsByClassName('.agree-usmsplus-terms');
+const disclaimerCompetition = document.getElementsByClassName('.agree-terms-competition');
+
+
 $(".membership-length--option").on( "click", function() {
     $(".membership-length--option").removeClass("selected");
     $(this).addClass("selected");
@@ -20,7 +24,7 @@ $("#membershipYear").on( "click", function() {
     productCardTotal = 75;
     $(".membership-length--total.card__total--amount").text("$75.00");
     $(".payment-info__line-item--usms .payment-info__line-item--price").text("$75.00");
-    $(".price-string__video-stroke-analysis").text(" for 110.00");
+    $(".price-string__video-stroke-analysis").text(" for $110.00");
     var strokeFocus = $('#strokeFocus').val();
     if (strokeFocus !== 'blank' && $("#videoStrokeAnalysisYesInput").prop( "checked", true )) {
         $(".video-stroke-analysis--total").text("$99.00");
@@ -38,7 +42,7 @@ $("#membershipEventYear").on( "click", function() {
     productCardTotal = 0;
     $(".membership-length--total.card__total--amount").text("$0.00");
     $(".payment-info__line-item--usms .payment-info__line-item--price").text("$0.00");
-    $(".price-string__video-stroke-analysis").text(" for 110.00");
+    $(".price-string__video-stroke-analysis").text(" for $110.00");
     var strokeFocus = $('#strokeFocus').val();
     if (strokeFocus !== 'blank' && $("#videoStrokeAnalysisYesInput").prop( "checked", true )) {
         $(".video-stroke-analysis--total").text("$99.00");
@@ -49,13 +53,14 @@ $("#membershipEventYear").on( "click", function() {
     $('.form-group.card-number').addClass('un-selected');
     $('.form-group.card-zip').addClass('un-selected');
     updateTotalPayment();
+    disclaimerCompetition.style.display = 'flex';
 });
 
 $("#membershipYearPlus").on( "click", function() {
     productCardTotal = 125;
     $(".membership-length--total.card__total--amount").text("$125.00");
     $(".payment-info__line-item--usms .payment-info__line-item--price").text("$125.00");
-    $(".price-string__video-stroke-analysis").text(" for 110.00");
+    $(".price-string__video-stroke-analysis").text(" for $110.00");
     $(".price-string__coach-alts-certification").text("for $30.00");
     $('.form-group.card-name').addClass('un-selected');
     $('.form-group.card-number').addClass('un-selected');
@@ -67,12 +72,13 @@ $("#membershipEventYearPlus").on( "click", function() {
     productCardTotal = 125;
         $(".membership-length--total.card__total--amount").text("$125.00");
     $(".payment-info__line-item--usms .payment-info__line-item--price").text("$125.00");
-    $(".price-string__video-stroke-analysis").text(" for 110.00");
+    $(".price-string__video-stroke-analysis").text(" for $110.00");
     $(".price-string__coach-alts-certification").text("for $30.00");
     $('.form-group.card-name').addClass('un-selected');
     $('.form-group.card-number').addClass('un-selected');
     $('.form-group.card-zip').addClass('un-selected');
     updateTotalPayment();
+    disclaimerCompetition.style.display = 'flex';
 });
 
 $("#membershipUsmsPlus").on( "click", function() {
@@ -90,4 +96,6 @@ $("#membershipUsmsPlus").on( "click", function() {
     $('.form-group.card-number').removeClass('un-selected');
     $('.form-group.card-zip').removeClass('un-selected');
     updateTotalPayment();
+    disclaimerCompetition.style.display = 'flex';
+    disclaimerUsmsPlus.style.display = 'flex';
 });

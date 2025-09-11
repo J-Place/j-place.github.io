@@ -33,7 +33,7 @@ $(".membership-length--lanemate-monthly").on( "click", function() {
 $(".membership-length--lanemate-yearly").on( "click", function() {
     $(".membership-length--total.card__total--amount").text("$83.88");
     $(".payment-info__line-item--lanemate .payment-info__line-item--price").text("$83.88");
-    $(".price-string__video-stroke-analysis").text(" for 110.00");
+    $(".price-string__video-stroke-analysis").text(" for $110.00");
     if ($(".membership-length--option")) {
         $(".payment-info__line-item--subscription .payment-info__line-item--price").text("LaneMate Yearly");
         $(".payment-info__line-item--plan-rate .payment-info__line-item--price").text("$83.88/yr.");

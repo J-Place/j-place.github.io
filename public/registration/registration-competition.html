@@ -2120,7 +2120,7 @@ $("#videoStrokeAnalysisYesInput").click( function() {
     }
 </style>
 <div class="card donations">
-    <h3 class="donation__form-header">Make a Donation</h3>
+    <h3 class="donation__form-header">Make a Donation ZZZ</h3>
     <div class="form-group donation donation--sslf">
         <span class="help-block help-block--swimming-saves-lives">The minimum donation to the USA Swimming Foundation is $5. Please correct this value and try again</span>
         <div class="donate__text"><label for="swimming-saves-lives" class="control-label"><strong>Adult Learn-to-Swim Grant Donation</strong></label></div>
@@ -2155,6 +2155,7 @@ $("#videoStrokeAnalysisYesInput").click( function() {
         Total Donations: <span class="total-donations card__total--amount">$__.__</span>
     </h4>
 </div>
+<script src="/lanemate/js/donations.js"></script>
                                                             <style>
 .renew__form-body .form-group.agree-terms-competition {
     margin-bottom: 3rem;
@@ -2258,6 +2259,44 @@ $("#videoStrokeAnalysisYesInput").click( function() {
 
 	<button id="register-button" class="btn btn-primary btn-large text-uppercase pull-left membership-length__submit--usms">Register</button>
  </div>
+
+ <script>
+	var enableSubmit = function() {
+		$("#btnSubmitOrder").prop('disabled', false);
+		$("#agreeTerms").prop('disabled', false);
+		$(".agree-terms").removeClass('disabled');
+	}
+	var disableSubmit = function() {
+		$("#btnSubmitOrder").prop('disabled', true);
+		$("#agreeTerms").prop('disabled', true);
+		$(".agree-terms").addClass('disabled');
+	}
+	var showPaymentInfo = function() {
+		$('.payment-info .card__content').show();
+	}
+	var hidePaymentInfo = function() {
+		$('.payment-info .card__content').hide();
+	}
+	var updateTotalPayment = function() {
+		console.console.log("UpdateTotalPayment BBB");
+		var inputDonation = $("input[name='swimming-saves-lives']");
+		var donationVal = inputDonation.val();
+		var donationNum = parseInt(donationVal);
+		var totalPaymentVal = productCardTotal + donationNum;
+		var totalPaymentNum = Number(totalPaymentVal);
+		$(".payment-info__line-item--total .payment-info__line-item--price").text('$ ' + totalPaymentNum + '.00')    
+		if (totalPaymentNum = 0) {
+			showPaymentInfo();
+			enableSubmit();
+		} else if (totalPaymentNum == 0 && isVideoEligible == true) {
+			hidePaymentInfo();
+			enableSubmit();
+		} else { 
+			hidePaymentInfo();
+			disableSubmit();
+		}
+	};
+ </script>
 
                                                         </form>
                                                     </div>
@@ -2761,53 +2800,52 @@ $("#videoStrokeAnalysisYesInput").click( function() {
 
         <script>
 
-            let membershipPriceEl = document.querySelector('.membership-length--total');
-            let videoPriceEl = document.querySelector('.video-stroke-analysis--total');
-            let swimmerPriceEl = document.querySelector('.swimmer-magazine--total');
+            // let membershipPriceEl = document.querySelector('.membership-length--total');
+            // let videoPriceEl = document.querySelector('.video-stroke-analysis--total');
+            // let swimmerPriceEl = document.querySelector('.swimmer-magazine--total');
+            // var updateTotalPayment = function() {
+            //     // Get the price values from the elements with unique class names
+            //     let membershipPriceEl = document.querySelector('.membership-length--total');
+            //     let videoPriceEl = document.querySelector('.video-stroke-analysis--total');
+            //     let swimmerPriceEl = document.querySelector('.swimmer-magazine--total');
 
-            var updateTotalPayment = function() {
-                // Get the price values from the elements with unique class names
-                let membershipPriceEl = document.querySelector('.membership-length--total');
-                let videoPriceEl = document.querySelector('.video-stroke-analysis--total');
-                let swimmerPriceEl = document.querySelector('.swimmer-magazine--total');
+            //     // Function to safely parse and validate the price from an element's innerText
+            //     function parsePrice(element) {
+            //         if (element) {
+            //             let text = element.innerText.trim(); // Remove any extra spaces                        
+            //             let validPricePattern = /^\$\d+(\.\d{2})?$/; // Regular expression to check for a valid price format (e.g., "$10.00")
+            //             // Check if the text matches the valid price pattern
+            //             if (validPricePattern.test(text)) {
+            //                 // Remove the dollar sign and convert to a floating-point number
+            //                 let price = parseFloat(text.replace('$', ''));                            
+            //                 // Check if the result is a valid number
+            //                 if (!isNaN(price)) {
+            //                     return price;
+            //                 } else {
+            //                     return 0;  // Return 0 if the parsing fails
+            //                 }
+            //             } else {
+            //                 return 0;  // Return 0 if the format is invalid
+            //             }
+            //         }
+            //         return 0;  // Return 0 if the element is missing
+            //     }
 
-                // Function to safely parse and validate the price from an element's innerText
-                function parsePrice(element) {
-                    if (element) {
-                        let text = element.innerText.trim(); // Remove any extra spaces                        
-                        let validPricePattern = /^\$\d+(\.\d{2})?$/; // Regular expression to check for a valid price format (e.g., "$10.00")
-                        // Check if the text matches the valid price pattern
-                        if (validPricePattern.test(text)) {
-                            // Remove the dollar sign and convert to a floating-point number
-                            let price = parseFloat(text.replace('$', ''));                            
-                            // Check if the result is a valid number
-                            if (!isNaN(price)) {
-                                return price;
-                            } else {
-                                return 0;  // Return 0 if the parsing fails
-                            }
-                        } else {
-                            return 0;  // Return 0 if the format is invalid
-                        }
-                    }
-                    return 0;  // Return 0 if the element is missing
-                }
+            //     // Safely parse prices from the elements
+            //     let membershipPrice = parsePrice(membershipPriceEl);
+            //     let videoPrice = parsePrice(videoPriceEl);
+            //     let swimmerPrice = parsePrice(swimmerPriceEl);
 
-                // Safely parse prices from the elements
-                let membershipPrice = parsePrice(membershipPriceEl);
-                let videoPrice = parsePrice(videoPriceEl);
-                let swimmerPrice = parsePrice(swimmerPriceEl);
+            //     // Sum the parsed prices
+            //     let totalSum = membershipPrice + videoPrice + swimmerPrice;
 
-                // Sum the parsed prices
-                let totalSum = membershipPrice + videoPrice + swimmerPrice;
+            //     // Convert the total sum back to a dollar format with two decimal places
+            //     let formattedSum = `$${totalSum.toFixed(2)}`;
 
-                // Convert the total sum back to a dollar format with two decimal places
-                let formattedSum = `$${totalSum.toFixed(2)}`;
-
-                // Display the subtotal in the HTML element with ID 'subtotal'
-                let regPriceTotal = document.querySelector(".payment-info__line-item--total .payment-info__line-item--price");
-                regPriceTotal.innerText = `${formattedSum}`;
-            };
+            //     // Display the subtotal in the HTML element with ID 'subtotal'
+            //     let regPriceTotal = document.querySelector(".payment-info__line-item--total .payment-info__line-item--price");
+            //     regPriceTotal.innerText = `${formattedSum}`;
+            // };
 
         </script>
 

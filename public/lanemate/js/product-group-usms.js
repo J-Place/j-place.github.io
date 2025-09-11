@@ -28,7 +28,7 @@ var productCardTotal = 0;
 var inputDonation = $("input[name='swimming-saves-lives']");
 var donationVal = inputDonation.val();
 var donationNum = parseInt(donationVal);
-var totalValProductCard = usmsPlusVal + videoVal + videoEligibleVal + coachAltsVal;
+var totalValProductCard = videoVal + videoEligibleVal + coachAltsVal;
 var totalPaymentVal = totalValProductCard + donationNum;
 var totalPaymentNum = Number(totalPaymentVal);
 
@@ -47,7 +47,7 @@ var inputDonation = $("input[name='swimming-saves-lives']");
 var donationVal = inputDonation.val();
 var donationNum = parseInt(donationVal);
 
-var totalProductCardVal = usmsPlusVal + videoVal + videoEligibleVal + coachAltsVal;
+var totalProductCardVal = videoVal + videoEligibleVal + coachAltsVal;
 var totalPaymentVal = totalProductCardVal + donationNum;
 
 var updateProductCardTotal = function() {
