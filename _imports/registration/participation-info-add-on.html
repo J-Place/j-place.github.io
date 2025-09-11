@@ -100,6 +100,7 @@
             cardMembershipOptions.style.display = 'none';
         });
         function competitionSelectYes() {
+            // alert("Yes");
             // const membershipCardTotal = document.getElementsByClassName(".membership-length--total.card__total--amount");
             // membershipCardTotal.text('$__.__');
             // $(".membership-length--total .card__total--amount").text('$__.__');
@@ -115,7 +116,11 @@
 			tileEventYearPlus.classList.remove('disabled');
 		}
 		function competitionSelectNo() {
-            // $(".membership-length--total .card__total--amount").text('$__.__');
+            // alert("No");
+            $(".membership-length--total .card__total--amount").text('$__.__');
+            $(".payment-info__line-item--usms .payment-info__line-item--price").text('$__.__');
+            productCardTotal = 0;
+            updateTotalPayment();
 			tileYear.parentElement.style.display = 'flex';
 			tileYearPlus.parentElement.style.display = 'flex';
 			tileEventYear.parentElement.style.display = 'none';
