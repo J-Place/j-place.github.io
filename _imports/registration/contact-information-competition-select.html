@@ -275,40 +275,59 @@
     </div>
     <script>
 
+document.addEventListener('DOMContentLoaded', function() {
+        const selectSexInput = document.getElementById('selectSex');
+        selectSexInput.value = 'm';
+        $('input[name="ParticipationInfo"][value="yes"]').prop('checked', true);
+        tileUsmsPlus.parentElement.style.display = 'flex';
+        tileUsmsPlus.classList.remove('disabled');
+        tileYear.parentElement.style.display = 'none';
+        tileYear.classList.add('disabled');
+        tileYearPlus.parentElement.style.display = 'none';
+        tileYearPlus.classList.add('disabled');
+        tileEventYear.parentElement.style.display = 'flex';
+        tileEventYear.classList.remove('disabled');
+        tileEventYearPlus.parentElement.style.display = 'flex';
+        tileEventYearPlus.classList.remove('disabled');
+        cardCompetition.classList.add('active');
+});
+
         ////////////////// Select sex from Contact Info section //////////////
         /////////////////////////////////////////////////////////////////////
 
         selectSex.addEventListener('change', function(e) {
             clearRadioGroup();
             const selectSex = document.getElementById('selectSex');
-            const selectedValue = this.value;
-            if (selectedValue === 'na') {
-                // alert("Non");
+            const selectedSexValue = this.value;
+            if (selectedSexValue === 'na') {
+                alert("Non");
                 eventYesLabel.classList.add('disabled');
                 eventYesInput.classList.add('disabled');
                 eventYesInput.checked = false;
                 eventYesInput.disabled = true;
                 eventNoInput.checked = true;
+                tileUsmsPlus.classList.add('disabled');
+                tileUsmsPlus.parentElement.style.display = 'none';
                 tileEventYear.classList.add('disabled');
                 tileEventYear.parentElement.style.display = 'none';
                 tileEventYearPlus.classList.add('disabled');
                 tileEventYearPlus.parentElement.style.display = 'none';
-                tileYear.parentElement.style.display = 'block';
+                tileYear.parentElement.style.display = 'flex';
                 tileYear.classList.remove('disabled');
-                tileYearPlus.parentElement.style.display = 'block';
+                tileYearPlus.parentElement.style.display = 'flex';
                 tileYearPlus.classList.remove('disabled');
             } else {
-                // alert("Oui");
+                alert("Oui");
                 eventYesLabel.classList.remove('disabled');
                 eventYesInput.classList.remove('disabled');
                 eventYesInput.disabled = false;
-                tileYear.parentElement.style.display = 'block';
+                tileYear.parentElement.style.display = 'flex';
                 tileYear.classList.add('disabled');
-                tileYearPlus.parentElement.style.display = 'block';
+                tileYearPlus.parentElement.style.display = 'flex';
                 tileYearPlus.classList.add('disabled');
-                tileEventYear.parentElement.style.display = 'block';
+                tileEventYear.parentElement.style.display = 'flex';
                 tileEventYear.classList.add('disabled');
-                tileEventYearPlus.parentElement.style.display = 'block';
+                tileEventYearPlus.parentElement.style.display = 'flex';
                 tileEventYearPlus.classList.add('disabled');
             }
             function clearRadioGroup() {
@@ -316,7 +335,8 @@
                 for (var i = 0; i < radios.length; i++) {
                     radios[i].checked = false;
                 }
-            }            
+            }
+            // Reset selcted tile to unselected
             const selectedTiles = document.querySelectorAll('.membership-length--option.selected');
             selectedTiles.forEach(element => {
                 element.classList.remove('selected');
