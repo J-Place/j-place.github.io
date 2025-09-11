@@ -31,6 +31,7 @@ $( document ).ready(function() {
 
     $(".membership-length--currentYearEvent").on( "click", function() {
         disclaimerCompetition.style.display = 'flex';
+        disclaimerUsmsPlus.style.display = 'none';
         productCardTotal = 0;
         cardCompetition.classList.add('active');
         $(".membership-length--total.card__total--amount").text("$0.00");
@@ -57,6 +58,7 @@ $( document ).ready(function() {
 
     $(".membership-length--yearPlusEvent").on( "click", function() {
         disclaimerCompetition.style.display = 'flex';
+        disclaimerUsmsPlus.style.display = 'none';
         productCardTotal = 125;
         cardCompetition.classList.add('active');
         $(".membership-length--total.card__total--amount").text("$125.00");
