@@ -86,8 +86,10 @@ $( document ).ready(function() {
         $('.form-group.card-name').removeClass('un-selected');
         $('.form-group.card-number').removeClass('un-selected');
         $('.form-group.card-zip').removeClass('un-selected');
+
         $("#agreeUsmsPlusTerms").prop('disabled', false);
         $(".agree-usmsplus-terms").removeClass('disabled');
+
         updateTotalPayment();
     });
 

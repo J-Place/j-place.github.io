@@ -2257,16 +2257,18 @@ $("#videoStrokeAnalysisYesInput").click( function() {
 		  <div><span class="help-block help-block--cardZipID">Please enter a valid billing zip</span><input type="text" min="1" max="100" class="form-control" placeholder="" name="cardZipID" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardZipID" aria-hidden="true"></span></div>
 	   </div>
 	</div>
-	<div class="form-group agree-terms">
+
+	<!-- <div class="form-group agree-terms">
 	   <div class="col-xs-12">
 		  <span class="help-block help-block--agree-terms">You need to agree to the terms to complete your registration.</span>
 		  <label id="agreeTerms__label" class="checkbox-label " for="agreeTerms">
 			 <div class="checkbox-container"><input type="checkbox" name="agree-terms" id="agreeTerms" value="" class="has-success" data-gtm-form-interact-field-id="7"><span class="checkbox__placeholder"></span></div>
 		  </label>
-		  <span class="font-weight-bold">I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming <a href="/content/privacy" target="_blank">Privacy Policy</a>. I understand that this membership will take effect immediately and is non-refundable, non-transferable, and expires on</span><!-- react-text: 191 --> <!-- /react-text --><span class="font-weight-bold">December 31, </span><span class="agree-terms--year font-weight-bold">2024</span><span class="font-weight-bold">.</span>
+		  <span class="font-weight-bold">I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming <a href="/content/privacy" target="_blank">Privacy Policy</a>. I understand that this membership will take effect immediately and is non-refundable, non-transferable, and expires on</span><span class="font-weight-bold">December 31, </span><span class="agree-terms--year font-weight-bold">2024</span><span class="font-weight-bold">.</span>
 	   </div>
-	</div>
-    <div class="form-group agree-terms-competition">
+	</div> -->
+
+	<!-- <div class="form-group agree-terms-competition">
 	   <div class="col-xs-12">
 		  <span class="help-block help-block--agree-terms-competition has-error">You need to agree to the terms to complete your registration.</span>
 		  <label id="agreeTermsComp__label" class="checkbox-label " for="agreeTermsComp">
@@ -2274,9 +2276,9 @@ $("#videoStrokeAnalysisYesInput").click( function() {
 		  </label>
 		  <span class="font-weight-bold">I acknowledge that the <a style="text-decoration: underline;" href="https://www.usms.org/volunteer-central/policy-and-governance/usms-policies/interim-eligibility-policy?fbclid=IwZXh0bgNhZW0CMTAAYnJpZBExWW55VmhHcWVNTktYTkhmMQEe80ziJOevfBispu6yEhdUu94klz-APyf7wEtgJBLq2Iu-Jed_BwDlVdR7bNs_aem_WgCMjIbNDLX5f3IB0gGJXg">Interim USMS Policy</a> on Participation in the Men's and Women's Competition Category and Eligibility for Official Recognition Programs allows members to participate in the competition category that reflects the sex with which they identify; however, swimmers will not be included in Recognition Programs in the female competition category unless they are swimming in the competition category that aligns with their sex assigned at birth. Anyone participating in the male competition category is eligible for recognition, subject to all other USMS rules and regulations.</span>
 	   </div>
-	</div>
+	</div> -->
 
-	<div class="form-group agree-usmsplus-terms" style="display: block;">
+	<!-- <div class="form-group agree-usmsplus-terms" style="display: block;">
 	   <div class="col-xs-12">
 		  <span class="help-block help-block--agree-usmsplus-terms">You need to agree to the USMS+ terms and  conditions to complete your registration.</span>
 		  <label id="agreeUsmsPlusTerms__label" class="checkbox-label " for="agreeUsmsPlusTerms">
@@ -2284,7 +2286,43 @@ $("#videoStrokeAnalysisYesInput").click( function() {
 		  </label>
 		  <span class="font-weight-bold">By selecting the USMS+ membership, I agree that USMS may share my information with the USA Swimming Foundation and USA Swimming in accordance with the USMS Privacy Policy, linked below (you may still opt out at any time).</span>
 	   </div>
+	</div> -->
+
+	<div id="disclaimerCheckboxStandard" class="form-group agree-terms">
+   <div class="col-xs-12">
+      <span class="help-block help-block--agree-terms">You need to agree to the terms to complete your registration.</span>
+      <label id="agreeTerms__label" class="checkbox-label " for="agreeTerms">
+         <div class="checkbox-container">
+            <input type="checkbox" name="agree-terms" id="agreeTerms" value="" class="has-success" disabled>
+            <span class="checkbox__placeholder"></span>
+         </div>
+      </label>
+      <span class="font-weight-bold">I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming <a href="/#">Privacy Policy</a>. I understand that this transaction will take effect immediately and is non-refundable and non-transferable.</span>
+   </div>
+</div>
+	<div id="disclaimerCheckboxCompetition" class="form-group agree-terms-competition" style="display: none;">
+    <div class="col-xs-12">
+        <span class="help-block help-block--agree-terms-competition has-error">You need to agree to the terms to complete your registration.</span>
+        <label id="agreeTermsComp__label" class="checkbox-label " for="agreeTermsComp">
+            <div class="checkbox-container"><input type="checkbox" name="agree-terms-competition" id="agreeTermsComp" value="" class="has-success" data-gtm-form-interact-field-id="7"><span class="checkbox__placeholder"></span></div>
+        </label>
+        <span class="font-weight-bold">I acknowledge that the <a style="text-decoration: underline;" href="https://www.usms.org/volunteer-central/policy-and-governance/usms-policies/interim-eligibility-policy?fbclid=IwZXh0bgNhZW0CMTAAYnJpZBExWW55VmhHcWVNTktYTkhmMQEe80ziJOevfBispu6yEhdUu94klz-APyf7wEtgJBLq2Iu-Jed_BwDlVdR7bNs_aem_WgCMjIbNDLX5f3IB0gGJXg">Interim USMS Policy</a> on Participation in the Men's and Women's Competition Category and Eligibility for Official Recognition Programs allows members to participate in the competition category that reflects the sex with which they identify; however, swimmers will not be included in Recognition Programs in the female competition category unless they are swimming in the competition category that aligns with their sex assigned at birth. Anyone participating in the male competition category is eligible for recognition, subject to all other USMS rules and regulations.</span>
+    </div>
+</div>
+	
+<div id="disclaimerCheckboxUsmsPlus" class="form-group agree-usmsplus-terms" style="display: none;">
+	<div class="col-xs-12">
+		<span class="help-block help-block--agree-usmsplus-terms">You need to agree to the USMS+ terms and  conditions to complete your registration.</span>
+		<label id="agreeUsmsPlusTerms__label" class="checkbox-label " for="agreeUsmsPlusTerms">
+			<div class="checkbox-container">
+				<input type="checkbox" name="agree-usmsplus-terms" id="agreeUsmsPlusTerms" value="">
+				<span class="checkbox__placeholder"></span>
+			</div>
+		</label>
+		<span class="font-weight-bold">By selecting the USMS+ membership, I agree that USMS may share my information with the USA Swimming Foundation and USA Swimming in accordance with the USMS <a href="/#">Privacy Policy</a> (you may still opt out at any time). I understand that this membership will take effect immediately and expires on December 31, 2024.</span>
 	</div>
+</div>
+
 
 	<button id="register-button" class="btn btn-primary btn-large text-uppercase pull-left membership-length__submit--usms">Register</button>
  </div>
