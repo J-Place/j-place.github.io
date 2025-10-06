@@ -94,11 +94,11 @@
                </script>
             </form>
          </div>
-         <div class="col-xs-12 col-md-6  ">
+         <div class="col-xs-12 col-md-6">
             <div class="html-container">
                <div class="form-col__header">
                   <h3>Create a My Account login</h3>
-                  <!-- <p>I'm a new LaneMate subscriber, here is my personal info</p> -->
+                  <p></p>
                </div>
             </div>
             <div id="react_eRigpJ8ekqYLMJdvFOAkQ">
@@ -106,11 +106,11 @@
                   <form method="" class="register-form form-horizontal">
                     <div class="form-group">
                         <div class="col-xs-5">
-                           <div><span class="help-block help-block--FirstName">Please enter a value for FirstName</span><input type="text" min="1" max="30" class="form-control" placeholder="First Name" name="FirstName" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--FirstName" aria-hidden="true"></span></div>
+                           <div><span class="help-block has-error help-block--FirstName">Please enter a value for FirstName</span><input type="text" min="1" max="30" class="form-control" placeholder="First Name" name="FirstName" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--FirstName" aria-hidden="true"></span></div>
                         </div>
                         <div class="col-xs-2"><input type="text" class="form-control" placeholder="MI" name="MiddleInitial" maxlength="1"></div>
                         <div class="col-xs-5">
-                           <div><span class="help-block help-block--LastName">Please enter a value for LastName</span><input type="text" min="1" max="40" class="form-control" placeholder="Last Name" name="LastName" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--LastName" aria-hidden="true"></span></div>
+                           <div><span class="help-block has-error help-block--LastName">Please enter a value for LastName</span><input type="text" min="1" max="40" class="form-control" placeholder="Last Name" name="LastName" autocomplete="true" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--LastName" aria-hidden="true"></span></div>
                         </div>
                     </div>
                     <!-- Overides source -->
@@ -138,7 +138,7 @@
                     <div class="form-group">
                         <div class="col-xs-9">
                            <div>
-                              <span class="help-block help-block--Sex">Please enter a value for Sex</span>
+                              <span class="help-block has-error help-block--Sex">Please enter a value for Sex</span>
                               <select name="Sex" class="form-control">
                                 <option value="-1">Please make a selection</option>
                                  <option value="m">Male</option>
@@ -154,7 +154,7 @@
                      <div class="form-group">
                         <div class="col-xs-4">
                            <div>
-                              <span class="help-block help-block--BirthMonth">Please enter a value for BirthMonth</span>
+                              <span class="help-block has-error help-block--BirthMonth">Please enter a value for BirthMonth</span>
                               <select name="BirthMonth" class="form-control">
                                  <option value="-1">Month</option>
                                  <option value="1">Jan</option>
@@ -174,7 +174,7 @@
                         </div>
                         <div class="col-xs-4">
                            <div>
-                              <span class="help-block help-block--BirthDay">Please enter a value for BirthDay</span>
+                              <span class="help-block has-error help-block--BirthDay">Please enter a value for BirthDay</span>
                               <select name="BirthDay" class="form-control">
                                  <option value="-1">Day</option>
                                  <option value="1">1</option>
@@ -213,7 +213,7 @@
                         </div>
                         <div class="col-xs-4">
                            <div>
-                              <span class="help-block help-block--BirthYear">Please enter a value for BirthYear</span>
+                              <span class="help-block has-error help-block--BirthYear">Please enter a value for BirthYear</span>
                               <select name="BirthYear" class="form-control">
                                  <option value="-1">Year</option>
                                  <option value="2006">2006</option>
@@ -313,11 +313,11 @@
                            </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col-xs-12">
                             <span class="help-block help-block--date-of-birth">You must be 18 or older to register.</span>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="form-group">
                         <div class="col-xs-12">
                             <button class="btn btn-primary text-uppercase register-form__submit">Go!</button>
@@ -326,10 +326,8 @@
                   </form>
                </div>
             </div>
-            <div class="temp-buttons">
-                  <br />
-                  <br />
-                  <br />
+            <div class="temp-buttons" style="margin-top: 20rem;">
+                  <a style="line-height: 3rem; padding: 1rem 0;" class="" href="#/" id="toggleValidation">Toggle Validation</a>
                   <br />
                   <a style="line-height: 3rem; padding: 1rem 0;" class="" href="#/" data-bs-toggle="modal" data-bs-target="#usmsActive">USMS.org Active</a>
                   <br />
@@ -608,3 +606,23 @@
       margin-top: 1rem;
    }
  </style>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const toggleLink = document.getElementById('toggleValidation');
+  
+    toggleLink.addEventListener('click', (event) => {
+      // Prevent the default link behavior to stop the page from reloading.
+      event.preventDefault();
+      
+      // Find all elements with the class name "has-error".
+      const helpBlocks = document.querySelectorAll('.help-block');
+      
+      // Loop through the collection of elements and toggle the class.
+      helpBlocks.forEach(element => {
+        element.classList.toggle('has-error');
+      });
+    });
+});
+</script>
