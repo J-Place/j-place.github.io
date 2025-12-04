@@ -1406,6 +1406,7 @@
             stopAuto();
         });
 
+        
         marqueecarousel.addEventListener("mousemove", e => {
             if (!isDown) return;
             marqueecarousel.scrollLeft = startScroll - (e.pageX - startX);
@@ -1413,8 +1414,6 @@
 
         // marqueecarousel.addEventListener("mouseup", stopDrag);
         // marqueecarousel.addEventListener("mouseleave", stopDrag);
-
-
 
         // Pause on hover
         marqueecarousel.addEventListener("mouseenter", () => {
@@ -1431,8 +1430,6 @@
             startAuto();
             isDown = false;
         });
-        //
-
 
 
         marqueecarousel.addEventListener("touchstart", e => {
