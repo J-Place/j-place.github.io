@@ -331,10 +331,32 @@
             marqueecarousel.scrollLeft = startScroll - (e.pageX - startX);
         });
 
-        marqueecarousel.addEventListener("mouseup", stopDrag);
-        marqueecarousel.addEventListener("mouseleave", stopDrag);
+        // marqueecarousel.addEventListener("mouseup", stopDrag);
+        // marqueecarousel.addEventListener("mouseleave", stopDrag);
+
+
+
+        // Pause on hover
+        marqueecarousel.addEventListener("mouseenter", () => {
+            if (!isDown) stopAuto();
+        });
+        marqueecarousel.addEventListener("mouseleave", () => {
+            if (!isDown) startAuto();
+        });
+        marqueecarousel.addEventListener("mousedown", (event) => { 
+            stopAuto();
+            isDown = true;
+        });
+        marqueecarousel.addEventListener("mouseup", (event) => { 
+            startAuto();
+            isDown = false;
+        });
+        //
+
+
 
         marqueecarousel.addEventListener("touchstart", e => {
+            alert("touch");
             isDown = true;
             startX = e.touches[0].pageX;
             startScroll = marqueecarousel.scrollLeft;
@@ -355,8 +377,10 @@
             marqueecarousel.scrollLeft += 1;
             checkEdges();
             }, 16);
+            console.log("start auto");
         }
         function stopAuto() {
+            console.log("stop auto");
             clearInterval(auto);
         }
 
