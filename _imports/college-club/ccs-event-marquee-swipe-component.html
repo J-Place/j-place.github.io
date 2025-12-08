@@ -196,7 +196,7 @@
         <div class="item marquee-item">
             <!-- <a href="/events/Calendar%20of%20Events"> -->
                 <div class="marquee-box">
-                    <p class="event-date">11/16/2025</p>
+                    <p class="event-date">Wed, 12/10/2025 - Wed, 12/10/2025</p>
                     <div class="event-logo">
                         <img src="https://www.collegeclubswimming.com/-/media/ccs/events/college%20logos/2025-26/Bowling-Green-Club-Swimming.png" />
                     </div>
@@ -239,15 +239,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const track = document.getElementById("track");
     if (!marquee || !track) return;
 
-    // 1. Fixed width settings
-    const itemWidth = 280;       // px, match CSS .marquee-item width
-    const spacing = 20;          // margin-right + padding if any
+    const itemWidth = 280;
+    const spacing = 20;
     const totalWidth = itemWidth + spacing;
 
     const original = Array.from(track.children);
     const itemCount = original.length;
 
-    // 2. Clone 2x left & 2x right
     function cloneSet() {
         return original.map(item => item.cloneNode(true));
     }
@@ -257,25 +255,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const after1 = cloneSet();
     const after2 = cloneSet();
 
-    // prepend left clones (reverse for visual order)
     before2.reverse().forEach(n => track.insertBefore(n, track.firstChild));
     before1.reverse().forEach(n => track.insertBefore(n, track.firstChild));
 
-    // append right clones
     after1.forEach(n => track.appendChild(n));
     after2.forEach(n => track.appendChild(n));
 
-    // 3. Track position
-    let position = -totalWidth * itemCount * 2; // start on original set
+    let position = -totalWidth * itemCount * 2;
     function applyTransform() {
         track.style.transform = `translateX(${position}px)`;
     }
     applyTransform();
 
-    // 4. Infinite loop
     function wrap() {
-        const maxLeft = -totalWidth * itemCount * 3;  // far left (past 2 left clones)
-        const maxRight = 0;                           // far right (past 2 right clones)
+        const maxLeft = -totalWidth * itemCount * 3;
+        const maxRight = 0;
 
         if (position > maxRight) {
             position -= totalWidth * itemCount;
@@ -284,8 +278,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // 5. Autoplay
-    const speed = 1.3;  // px per tick
+    const speed = 1.3;
     let auto = null;
 
     function startAuto() {
@@ -301,7 +294,6 @@ document.addEventListener("DOMContentLoaded", () => {
         clearInterval(auto);
     }
 
-    // 6. Drag / Swipe
     let isDragging = false;
     let startX = 0;
     let startPos = 0;
@@ -345,11 +337,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     marquee.addEventListener("touchend", up);
 
-    // 7. Pause on hover
     marquee.addEventListener("mouseenter", () => !isDragging && stopAuto());
     marquee.addEventListener("mouseleave", () => !isDragging && startAuto());
 
-    // 8. Start autoplay
     startAuto();
 });
 </script>
