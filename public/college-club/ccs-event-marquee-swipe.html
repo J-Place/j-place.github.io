@@ -1079,34 +1079,40 @@
                 </div>
 
                 <style>
-  /* body { margin: 0; padding: 40px; font-family: sans-serif; } */
-
-  .event-marquee {
+.event-marquee {
+    overflow: hidden;
     width: 100%;
-    overflow-x: scroll;
-    white-space: nowrap;
+    position: relative;
     cursor: grab;
-    scroll-behavior: auto;
-  }
+    touch-action: pan-y;
+}
 
-  .track {
-    display: inline-flex;
-  }
-
-  .item {
-    /* min-width: 200px; */
-    /* height: 120px; */
-    /* background: #eee; */
-    /* border: 1px solid #bbb; */
-    /* margin-right: 10px; */
-    /* border-radius: 8px; */
-    /* font-size: 2rem; */
+.track {
     display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+    width: max-content;
+    will-change: transform;
+}
 
-  .event-marquee::-webkit-scrollbar { display: none; }
+.item {
+    flex: 0 0 auto;
+    width: 100vw;
+    padding: 0;
+}
+
+/* Responsive widths */
+@media (min-width: 576px) {
+    .item { width: 50vw; }
+}
+@media (min-width: 768px) {
+    .item { width: 33.3333vw; }
+}
+@media (min-width: 992px) {
+    .item { width: 20vw; }
+}
+
+.event-marquee::-webkit-scrollbar {
+    display: none;
+}
 
 
 
@@ -1115,17 +1121,11 @@
 
 
 
-
-   .marquee-wrapper {
+    .marquee-wrapper {
       overflow: hidden;
       width: 100%;
       background: #FFF;
       padding: 3rem 0 5rem;
-    }
-    .marquee-track {
-      display: flex;
-      width: max-content;
-      animation: scroll-left 18s linear infinite;
     }
     .marquee-box {
       background: #FFF;
@@ -1140,12 +1140,17 @@
       justify-content: center;
       box-shadow: 0 0 30px rgba(55, 55, 55, 0.2);
     }
-    .marquee-item {
+    /* .marquee-item {
       flex: 0 0 auto;
       width: 100vw;
       max-width: 100%;
       padding: 10px;
       display: contents;
+    } */
+    .marquee-item {
+        flex: 0 0 280px;   /* match itemWidth in JS */
+        width: 280px;
+        margin-right: 20px; /* match spacing in JS */
     }
     .marquee-item a {
         color: #000;
@@ -1161,84 +1166,40 @@
         margin: 0 auto;
     }
     .marquee-item .event-name {
-        /* font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important; */
         font-size: 1.65rem;
-        /* font-weight: bold !important; */
         font-family: "Anton", sans-serif !important;
         font-weight: 400 !important;
         font-style: normal !important;
-        
-        /* margin-top: 1rem;
+        margin-top: 2rem;
         padding: 0 2rem;
-        height: 65px;
+        height: 38px;
         text-align: center;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
         -webkit-line-clamp: 2;
-        line-clamp: 2;
         -webkit-box-orient: vertical;
- */
-
-
-    margin-top: 2rem;
-    padding: 0 2rem;
-    height: 38px;
-    text-align: center;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    margin-bottom: 0;
-
-    text-wrap: wrap;
+        margin-bottom: 0;
+        text-wrap: wrap;
     }
-
-    /* Responsive widths */
-    @media (min-width: 576px) {
-      .marquee-item {
-        width: 50vw;
-      }
-    }
-
-    @media (min-width: 768px) {
-      .marquee-item {
-        width: 33.3333vw;
-      }
-    }
-
-    @media (min-width: 992px) {
-      .marquee-item {
-        width: 20vw;
-      }
-    }
-
-    /* .event-logo {
-        position: relative;
-    } */
     .event-logo img {
         width: 100%;
         margin: -1.5rem auto -3rem;
-        -webkit-user-drag: none; /* Safari and older Chrome */
-        -moz-user-drag: none;    /* Firefox */
-        -ms-user-drag: none;     /* Internet Explorer/Edge */
-        /* user-drag: none;         Standard property */
-        -webkit-user-select: none; /* Safari and older Chrome */
-        -moz-user-select: none;    /* Firefox */
-        -ms-user-select: none;     /* Internet Explorer/Edge */
+        -webkit-user-drag: none;
+        -moz-user-drag: none;
+        -ms-user-drag: none;
+        user-drag: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
         user-select: none;  
     }
+
 
 </style>
 
 <div class="event-marquee marquee-wrapper" id="eventMarquee">
     <div class="track" id="track">
-
-    <!-- <div class="item">1</div>
-    <div class="item">2</div>
-    <div class="item">3</div>
-    <div class="item">4</div> -->
 
         <div class="item marquee-item">
             <!-- <a href="/events/Calendar%20of%20Events"> -->
@@ -1352,119 +1313,127 @@
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", () => {
 
-        const marqueecarousel = document.getElementById("eventMarquee");
-        const track = document.getElementById("track");
+    const marquee = document.getElementById("eventMarquee");
+    const track = document.getElementById("track");
+    if (!marquee || !track) return;
 
-        if (!marqueecarousel || !track) return; // Sitecore safety check
+    // 1. Fixed width settings
+    const itemWidth = 280;       // px, match CSS .marquee-item width
+    const spacing = 20;          // margin-right + padding if any
+    const totalWidth = itemWidth + spacing;
 
-        const originalItems = Array.from(track.children);
-        const THRESHOLD = 400;
+    const original = Array.from(track.children);
+    const itemCount = original.length;
 
-        function checkEdges() {
-            const scrollLeft = marqueecarousel.scrollLeft;
-            const maxScroll = track.scrollWidth - marqueecarousel.clientWidth;
+    // 2. Clone 2x left & 2x right
+    function cloneSet() {
+        return original.map(item => item.cloneNode(true));
+    }
 
-            if (scrollLeft < THRESHOLD) prependSet();
-            if (scrollLeft > maxScroll - THRESHOLD) appendSet();
+    const before1 = cloneSet();
+    const before2 = cloneSet();
+    const after1 = cloneSet();
+    const after2 = cloneSet();
+
+    // prepend left clones (reverse for visual order)
+    before2.reverse().forEach(n => track.insertBefore(n, track.firstChild));
+    before1.reverse().forEach(n => track.insertBefore(n, track.firstChild));
+
+    // append right clones
+    after1.forEach(n => track.appendChild(n));
+    after2.forEach(n => track.appendChild(n));
+
+    // 3. Track position
+    let position = -totalWidth * itemCount * 2; // start on original set
+    function applyTransform() {
+        track.style.transform = `translateX(${position}px)`;
+    }
+    applyTransform();
+
+    // 4. Infinite loop
+    function wrap() {
+        const maxLeft = -totalWidth * itemCount * 3;  // far left (past 2 left clones)
+        const maxRight = 0;                           // far right (past 2 right clones)
+
+        if (position > maxRight) {
+            position -= totalWidth * itemCount;
+        } else if (position < maxLeft) {
+            position += totalWidth * itemCount;
         }
+    }
 
-        function appendSet() {
-            originalItems.forEach(item =>
-            track.appendChild(item.cloneNode(true))
-            );
-        }
+    // 5. Autoplay
+    const speed = 1;  // px per tick
+    let auto = null;
 
-        function prependSet() {
-            const oldLeft = marqueecarousel.scrollLeft;
-            const clones = originalItems.map(i => i.cloneNode(true));
+    function startAuto() {
+        stopAuto();
+        auto = setInterval(() => {
+            position -= speed;
+            wrap();
+            applyTransform();
+        }, 16);
+    }
 
-            clones.reverse().forEach(clone =>
-            track.insertBefore(clone, track.firstChild)
-            );
+    function stopAuto() {
+        clearInterval(auto);
+    }
 
-            const addedWidth = clones.length * (originalItems[0].offsetWidth + 10);
-            marqueecarousel.scrollLeft = oldLeft + addedWidth;
-        }
+    // 6. Drag / Swipe
+    let isDragging = false;
+    let startX = 0;
+    let startPos = 0;
 
-        setInterval(checkEdges, 50);
+    function down(x) {
+        isDragging = true;
+        startX = x;
+        startPos = position;
+        marquee.style.cursor = "grabbing";
+        stopAuto();
+    }
 
-        let isDown = false, startX, startScroll;
+    function move(x) {
+        if (!isDragging) return;
+        const delta = x - startX;
+        position = startPos + delta;
+        wrap();
+        applyTransform();
+    }
 
-        function stopDrag() {
-            isDown = false;
-            marqueecarousel.style.cursor = "grab";
-            startAuto();
-        }
-
-        marqueecarousel.addEventListener("mousedown", e => {
-            isDown = true;
-            startX = e.pageX;
-            startScroll = marqueecarousel.scrollLeft;
-            marqueecarousel.style.cursor = "grabbing";
-            stopAuto();
-        });
-
-        
-        marqueecarousel.addEventListener("mousemove", e => {
-            if (!isDown) return;
-            marqueecarousel.scrollLeft = startScroll - (e.pageX - startX);
-        });
-
-        // marqueecarousel.addEventListener("mouseup", stopDrag);
-        // marqueecarousel.addEventListener("mouseleave", stopDrag);
-
-        // Pause on hover
-        marqueecarousel.addEventListener("mouseenter", () => {
-            if (!isDown) stopAuto();
-        });
-        marqueecarousel.addEventListener("mouseleave", () => {
-            if (!isDown) startAuto();
-        });
-        marqueecarousel.addEventListener("mousedown", (event) => { 
-            stopAuto();
-            isDown = true;
-        });
-        marqueecarousel.addEventListener("mouseup", (event) => { 
-            startAuto();
-            isDown = false;
-        });
-
-
-        marqueecarousel.addEventListener("touchstart", e => {
-            alert("touch");
-            isDown = true;
-            startX = e.touches[0].pageX;
-            startScroll = marqueecarousel.scrollLeft;
-            stopAuto();
-        }, { passive: true });
-
-        marqueecarousel.addEventListener("touchmove", e => {
-            if (!isDown) return;
-            marqueecarousel.scrollLeft = startScroll - (e.touches[0].pageX - startX);
-        }, { passive: true });
-
-        marqueecarousel.addEventListener("touchend", stopDrag);
-
-        let auto;
-        function startAuto() {
-            stopAuto();
-            auto = setInterval(() => {
-            marqueecarousel.scrollLeft += 1;
-            checkEdges();
-            }, 16);
-            console.log("start auto");
-        }
-        function stopAuto() {
-            console.log("stop auto");
-            clearInterval(auto);
-        }
-
+    function up() {
+        if (!isDragging) return;
+        isDragging = false;
+        marquee.style.cursor = "grab";
         startAuto();
+    }
 
-    });
+    marquee.addEventListener("mousedown", e => down(e.pageX));
+    window.addEventListener("mousemove", e => move(e.pageX));
+    window.addEventListener("mouseup", up);
+
+    marquee.addEventListener("touchstart", e => {
+        down(e.touches[0].pageX);
+        e.preventDefault();
+    }, { passive: false });
+
+    marquee.addEventListener("touchmove", e => {
+        move(e.touches[0].pageX);
+        e.preventDefault();
+    }, { passive: false });
+
+    marquee.addEventListener("touchend", up);
+
+    // 7. Pause on hover
+    marquee.addEventListener("mouseenter", () => !isDragging && stopAuto());
+    marquee.addEventListener("mouseleave", () => !isDragging && startAuto());
+
+    // 8. Start autoplay
+    startAuto();
+});
 </script>
+
                 
                 <div class="section section-full">
                     <div class="container-fluid">
