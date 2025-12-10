@@ -339,32 +339,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let touchMoved = false;
 
-marquee.addEventListener("touchstart", e => {
-    touchMoved = false;
-    down(e.touches[0].pageX);
-}, { passive: true });
+    marquee.addEventListener("touchstart", e => {
+        touchMoved = false;
+        down(e.touches[0].pageX);
+    }, { passive: true });
 
-marquee.addEventListener("touchmove", e => {
-    const deltaX = Math.abs(e.touches[0].pageX - startX);
-    if (deltaX > 5) {
-        touchMoved = true;      // user is dragging
-        move(e.touches[0].pageX);
-        e.preventDefault();     // only block scrolling when dragging
-    }
-}, { passive: false });
+    marquee.addEventListener("touchmove", e => {
+        const deltaX = Math.abs(e.touches[0].pageX - startX);
+        if (deltaX > 5) {
+            touchMoved = true;      // user is dragging
+            move(e.touches[0].pageX);
+            e.preventDefault();     // only block scrolling when dragging
+        }
+    }, { passive: false });
 
-marquee.addEventListener("touchend", e => {
-    up();
+    marquee.addEventListener("touchend", e => {
+        up();
 
-    // If user tapped → allow link click to fire
-    if (!touchMoved) {
-        const target = e.target.closest("a");
-        if (target) target.click();
-    }
-});
-
-
-
+        // If user tapped → allow link click to fire
+        if (!touchMoved) {
+            const target = e.target.closest("a");
+            if (target) target.click();
+        }
+    });
 
 
 
@@ -374,5 +371,9 @@ marquee.addEventListener("touchend", e => {
     marquee.addEventListener("mouseleave", () => !isDragging && startAuto());
 
     startAuto();
+
+
+
 });
+
 </script>
