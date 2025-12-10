@@ -1405,17 +1405,50 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("mousemove", e => move(e.pageX));
     window.addEventListener("mouseup", up);
 
-    marquee.addEventListener("touchstart", e => {
-        down(e.touches[0].pageX);
-        e.preventDefault();
-    }, { passive: false });
+    // marquee.addEventListener("touchstart", e => {
+    //     down(e.touches[0].pageX);
+    //     e.preventDefault();
+    // }, { passive: false });
 
-    marquee.addEventListener("touchmove", e => {
+    // marquee.addEventListener("touchmove", e => {
+    //     move(e.touches[0].pageX);
+    //     e.preventDefault();
+    // }, { passive: false });
+
+    // marquee.addEventListener("touchend", up);
+
+    let touchMoved = false;
+
+marquee.addEventListener("touchstart", e => {
+    touchMoved = false;
+    down(e.touches[0].pageX);
+}, { passive: true });
+
+marquee.addEventListener("touchmove", e => {
+    const deltaX = Math.abs(e.touches[0].pageX - startX);
+    if (deltaX > 5) {
+        touchMoved = true;      // user is dragging
         move(e.touches[0].pageX);
-        e.preventDefault();
-    }, { passive: false });
+        e.preventDefault();     // only block scrolling when dragging
+    }
+}, { passive: false });
 
-    marquee.addEventListener("touchend", up);
+marquee.addEventListener("touchend", e => {
+    up();
+
+    // If user tapped → allow link click to fire
+    if (!touchMoved) {
+        const target = e.target.closest("a");
+        if (target) target.click();
+    }
+});
+
+
+
+
+
+
+
 
     marquee.addEventListener("mouseenter", () => !isDragging && stopAuto());
     marquee.addEventListener("mouseleave", () => !isDragging && startAuto());
