@@ -1,33 +1,20 @@
 @import url("/event/css/location-lookups.css");
 
-.input-group-url-lookup .website-url-icon {
-    -webkit-text-stroke: 1.5px;
-    /* display: none; */
-    font-size: 2rem;
-    position: relative;
-    right: unset;
-    top: unset;
-    text-align: left;
-    display: inline;
-}
-
 .form__container .input-group-url-lookup input[type=url] {
-    display: inline-block;
-    width: 220px;
+    display: inline;
+    width: 210px;
     margin-right: 1rem;
 }
 
-@media (min-width: 576px) {}
-
 @media (min-width: 992px) {
     .form__container .input-group-url-lookup input[type=url] {
-        width: 320px;
+        width: 380px;
     }
 }
 
 @media (min-width: 1200px) {
     .form__container .input-group-url-lookup input[type=url] {
-        width: 360px;
+        width: 430px;
     }
 }
 
@@ -36,23 +23,33 @@
     height: 46px;
     padding: 0;
     margin-right: 1.5rem;
-    margin-top: -3px;
+    margin-top: -4px;
 }
 
-input[type='url'].has-error + span.website-url-icon__check {
+.input-group-url-lookup .website-url-icon {
+    -webkit-text-stroke: 1.5px;
+    /* display: none; */
+    font-size: 2rem;
+    position: relative;
+    right: unset;
+    top: unset;
+    text-align: left;
+}
+
+input[type='url'] + span.website-url-icon__check,
+input[type='url'] + span.website-url-icon {
   display: inline !important;
 }
-input[type='url'].has-success + span.website-url-icon__check {
-  display: inline !important;
-}
+
 input[type='url'].has-error + span.website-url-icon__check + span.website-url-icon {
-    display: inline !important;
     color: #d9534f;
 }
+
 input[type='url'].has-success + span.website-url-icon__check + span.website-url-icon {
-    display: inline !important;
     color: #3e8f3e;
 }
+
+
 
 .input-group-url-lookup .input-instruction {
     display: block;
@@ -60,6 +57,14 @@ input[type='url'].has-success + span.website-url-icon__check + span.website-url-
     max-width: 400px;
     line-height: 150% !important;
 }
+
+
+
+
+
+
+
+
 
 :root {
     --bs-btn-active-color: #FFF;
