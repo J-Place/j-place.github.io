@@ -6,7 +6,7 @@
 <html lang="en">
    <!--<![endif]-->
    <head>
-      <title>Add Sanction Open Water</title>
+      <title>Add Virtual Pool</title>
       <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
@@ -355,7 +355,7 @@
                      <div class="row">
                         <div class="col-xs-12">
                            <header>
-                              <h1>Add an Open Water Event</h1>
+                              <h1>Add a Virtual Event</h1>
                            </header>
                         </div>
                      </div>
@@ -462,61 +462,53 @@
       <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
       <div class="section__content collapse" id="event-info__content" data-parent="#accordion">
 
+         <!-- Event Classification Radios -->
+<div class="row form-group">
+   <div class="col-xs-12">
+         <div class="input-group radio-group event-info-classification">
+            <div class="input-group-header radio-group-header required">
+               <label class="icon-help-label" for="tooltip">
+                  Event Classification
+                  <span class="icon-help" data-toggle="tooltip" data-placement="top" title="A USMS Sanction requires that every participant is a USMS member. A USMS Recognition allows for some participants to not be a USMS member, but still allows for a USMS member's results to count as an official time." data-container="body" data-original-title=""></span>
+               </label>
+            </div>
+            <span class="help-block help-block--eventClassification">Please select an event classification</span>
+            <label class="radio-label radio-label--inline" for="eventClassificationSanctioned">
+               <span class="radio-container">
+                     <input type="radio" name="eventClassification" id="eventClassificationSanctioned" value="sanctioned">
+                     <span class="radio__placeholder"></span>
+               </span>
+               Sanctioned
+            </label>
+            <label class="radio-label radio-label--inline" for="eventClassificationRecognized">
+               <span class="radio-container">
+                     <input type="radio" name="eventClassification" id="eventClassificationRecognized" value="recognized">
+                     <span class="radio__placeholder"></span>
+               </span>
+               Recognized
+            </label>
+         </div>
+   </div>
+</div>
          
          <!-- Course -->
 <div class="row form-group">
-    <div class="col-xs-12 col-sm-8 col-md-5">
-        <div class="input-group checkbox-group event-distance">
-            <div class="input-group-header required">
-                Event Distance
-                <span class="icon-help" data-toggle="tooltip" data-placement="top" title="" data-container="body" data-original-title="If you have more than one race in your event, please select all of the race distances that apply"></span>
-            </div>
-            <span class="help-block help-block--SelectOpenWaterDistance">Please select at least one distance</span>
-            <label class="checkbox-label" for="lessThan1">
-                <div class="checkbox-container">
-                    <input type="checkbox" name="lessThan1" id="lessThan1" value="true"><span class="checkbox__placeholder"></span>
-                </div>
-                1 Mile and Under
-            </label>
-            <label class="checkbox-label" for="1-3Miles">
-                <div class="checkbox-container">
-                    <input type="checkbox" name="1-3Miles" id="1-3Miles" value="true"><span class="checkbox__placeholder"></span>
-                </div>
-                Over 1 Mile to 3 Miles
-            </label>
-            <label class="checkbox-label" for="3-6Miles">
-                <div class="checkbox-container">
-                    <input type="checkbox" name="3-6Miles" id="3-6Miles" value="true"><span class="checkbox__placeholder"></span>
-                </div>
-                Over 3 Miles to 6 Miles
-            </label>
-            <label class="checkbox-label" for="6-10Miles">
-                <div class="checkbox-container">
-                    <input type="checkbox" name="6-10Miles" id="6-10Miles" value="true"><span class="checkbox__placeholder"></span>
-                </div>
-                Over 6 Miles to 9 Miles
-            </label>
-            <label class="checkbox-label" for="moreThan10">
-                <div class="checkbox-container">
-                    <input type="checkbox" name="moreThan10" id="moreThan10" value="true"><span class="checkbox__placeholder"></span>
-                </div>
-                Over 9 Miles
-            </label>
-        </div>        
-    </div>
+   <div class="col-xs-12 col-sm-8 col-md-5">
+      <div class="input-group select-group event-info-course required">
+         <label for="SelectEventCourse">
+            Event Course
+         </label>
+         <select name="SelectEventCourse" class="form-control" id="selectEventCourse" required="True">                                                            
+            <option value="{Sitecore ID}" disabled selected>Select an Event Course</option>
+            <option value="SCY">Short Course Yards</option>
+            <option value="SCM">Short Course Meters</option>
+            <option value="LCM">Long Course Meters</option>
+            <option value="Other">Other</option>
+         </select>
+         <span class="help-block help-block--SelectEventCourse">Please select an event course</span>
+      </div>
+   </div>
 </div>
-
-
-
-<!-- Under 1 mile 
-
-1 – 3 miles 
-
-3 – 6 miles 
-
-6 – 10 miles 
-
-10+ miles  -->
          <!-- Start and End Dates -->
 <div class="row">
    <div class="col-xs-12 col-lg-12">
@@ -695,6 +687,44 @@
          </div>
    </div>
 </div>
+         <!-- Is Virtual? -->
+<div class="row form-group event-info-is-virtual">
+    <div class="col-xs-12">
+        <div class="input-group radio-group event-info-is-virtualXXX">
+            <div class="input-group-header radio-group-header required">
+                <label class="icon-help-label" for="tooltip">
+                    Is this a virtual event?
+                    <span class="icon-help" data-toggle="tooltip" data-placement="top" title="A Virtual Event is a swimming competition conducted in multiple locations with results compiled in a central location." data-container="body" data-original-title=""></span>
+                </label>
+            </div>
+            <span class="help-block help-block--isVirtual">Please make a selection</span>
+            <label class="radio-label radio-label--inline" for="isVirtualYes">
+                <span class="radio-container">
+                    <input type="radio" name="isVirtual" id="isVirtualYes" value="true">
+                    <span class="radio__placeholder"></span>
+                </span>
+                Yes
+            </label>
+            <label class="radio-label radio-label--inline" for="isVirtualNo">
+                <span class="radio-container">
+                    <input type="radio" name="isVirtual" id="isVirtualNo" value="false" checked>
+                    <span class="radio__placeholder"></span>
+                </span>
+                No
+            </label>
+        </div>
+    </div>
+</div>
+<script>
+    $("#isVirtualYes").click( function() {
+        if ($('.timing-system-group').length) {
+            $('.timing-system-group').hide();
+        }
+    });
+    $("#isVirtualNo").click( function() {
+        $('.timing-system-group').show();
+    });
+</script>
             
          <!-- Save Section -->
          <div class="row form-group">
@@ -714,10 +744,6 @@
    $("#EventImage").click( function() {
       $("#event-information .file-stored").text('Replace File');
    });
-
-   // Hide isVirtual radio on Open Water Sanction page
-   // Show on the Open Water Calendar Listing page
-   $(".event-info-is-virtual").hide();
 
    $("#saveEventInfo").click( function() {
       $("#event-information").addClass('hasData');
@@ -1012,12 +1038,12 @@
     <div class="form-group form-group-default contact-info__head-ref--container">
         <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-4">
-                <div class="input-group contact-info__head-ref required">
+                <div class="input-group contact-info__head-ref">
                     <label for="addHeadRef">
-                        Open Water Referee
+                        Head Referee
                     </label>
-                    <span class="help-block help-block--addHeadRef">Please choose a referee</span>
-                    <button class="btn btn-sm btn-outline" id="addHeadRef">Add Open Water Referee</button>
+                    <span class="help-block help-block--addHeadRef">Please choose a head referee</span>
+                    <button class="btn btn-sm btn-outline" id="addHeadRef">Add Head Referee</button>
                     <button class="btn btn-sm btn-outline" id="cancelAddHeadRef" style="display: none;">Cancel</button>
                 </div>
             </div>
@@ -1030,7 +1056,7 @@
                 <div class="input-group lookup-ref-name">
                     <label for="lookupRefName">Search Referees</label>
                     <input tabindex="0" type="text" class="form-control lookup__input lookup-primary__input" min="3" max="30" name="LookupRefName" id="lookupRefName" autocomplete="off" placeholder="">
-                    <span class="help-block help-block--LookupRefName">Please enter referee name</span>
+                    <!-- <span class="help-block help-block--LookupRefName">Please enter head referee name</span> -->
                 </div>
             </div>
         </div>
@@ -1048,7 +1074,7 @@
     <!-- <div class="form-group contact-info__head-ref-new--add-new">
         <div class="row">
             <div class="col-sm-12 col-md-8">
-                <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">Or Add a New Open Water Referee</p>
+                <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">Or Add a New Head Referee</p>
                 <div>
                     <button class="btn btn-small btn-outline btn-add" id="addNewHeadRef" name="addNewHeadRef" type="button" value="Add New">Add New</button>
                 </div>
@@ -1124,13 +1150,13 @@
         <div class="row contact-list contact-info__head-ref-list">
         
             <div class="list list--head-ref list--lookup people">
-                <div class="list__header contact-list__head-ref--header required">
-                    <span class="lookup-results--head-ref">Open Water Referee</span>
+                <div class="list__header contact-list__head-ref--header">
+                    <span class="lookup-results--head-ref">Head Referee</span>
                     <div class="list__controls contact-list__controls">
-                        <button class="list__controls--settings" id="settingsOpenWaterRefListItem"></button>
-                        <!-- <button class="btn btn-link list-item__edit" id="editOpenWaterRefListItem">Edit</button> -->
-                        <!-- <button class="btn btn-link list-item__save" id="saveOpenWaterRefListItem">Done Editing</button> -->
-                        <button class="btn btn-link list-item__delete" id="deleteOpenWaterRefListItem">Remove</button>
+                        <button class="list__controls--settings" id="settingsHeadRefListItem"></button>
+                        <!-- <button class="btn btn-link list-item__edit" id="editHeadRefListItem">Edit</button> -->
+                        <!-- <button class="btn btn-link list-item__save" id="saveHeadRefListItem">Done Editing</button> -->
+                        <button class="btn btn-link list-item__delete" id="deleteHeadRefListItem">Remove</button>
                     </div>
                 </div>
             
@@ -1150,6 +1176,7 @@
                         <div class="col-xs-12 col-sm-6 col-md-8 contact-column">
                             <div class="list-item list-item--new">
                                 <input type="hidden" class="contact-isMember" value="true">
+                                <!-- <div class="list-item__pending">Account Pending</div> -->
                                 <!-- <button type="button" class="list-item__delete">Remove</button> -->
                                 <div class="contact-name">Steve Hall</div>
                                 <div class="contact-location">Sarasota, FL</div>
@@ -1168,7 +1195,7 @@
                 <div class="col-sm-12">
                     <div class="club-privacy" style="display: block;">
                         <div class="club-privacy__header">
-                            Display the Open Water Referee's information on the USMS website event page.
+                            Display the Head Referee's information on the USMS website event page.
                         </div>
                         <div class="input-group checkbox-group contact-privacy-name">
                             <label class="checkbox-label" for="privacyName">
@@ -1210,12 +1237,12 @@
     <div class="form-group form-group-default contact-info__safety-coordinator--container">
         <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-4">
-                <div class="input-group contact-info__safety-coordinator required">
+                <div class="input-group contact-info__safety-coordinator">
                     <label for="addSafetyCoordinator">
-                        Safety Director
+                        Safety Coordinator
                     </label>
-                    <span class="help-block help-block--addSafetyCoordinator">Please choose a safety director</span>
-                    <button class="btn btn-sm btn-outline" id="addSafetyCoordinator">Add Safety Director</button>
+                    <span class="help-block help-block--addSafetyCoordinator">Please choose a safety coordinator</span>
+                    <button class="btn btn-sm btn-outline" id="addSafetyCoordinator">Add Safety Coordinator</button>
                     <button class="btn btn-sm btn-outline" id="cancelAddSafetyCoordinator" style="display: none;">Cancel</button>
                 </div>
             </div>
@@ -1227,9 +1254,9 @@
         <div class="row">
             <div class="col-sm-8">
                 <div class="input-group lookup-safety-coordinator-name">
-                    <label for="lookupSafetyCoordinatorName">Search Safety Directors</label>
+                    <label for="lookupSafetyCoordinatorName">Search Safety Coordinators</label>
                     <input tabindex="0" type="text" class="form-control lookup__input lookup-primary__input" min="3" max="30" name="LookupSafetyCoordinatorName" id="lookupSafetyCoordinatorName" autocomplete="off" placeholder="">
-                    <span class="help-block help-block--lookup-safety-coordinator-name">Please enter safety director name</span>
+                    <!-- <span class="help-block help-block--lookup-safety-coordinator-name">Please enter safety coordinator name</span> -->
                 </div>
             </div>
         </div>
@@ -1245,16 +1272,16 @@
     </div>
 
     <!-- Or add a new Safety Coordinator -->
-    <!-- <div class="form-group contact-info__safety-coordinator-new--add-new">
+    <div class="form-group contact-info__safety-coordinator-new--add-new">
         <div class="row">
             <div class="col-sm-12 col-md-8">
-                <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">Or Add a New Safety Director</p>
+                <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">Or Add a New Safety Coordinator</p>
                 <div>
                     <button class="btn btn-small btn-outline btn-add" id="addNewSafetyCoordinator" name="addNewSafetyCoordinator" type="button" value="Add New">Add New</button>
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
 
     <!-- Add New Safety Coordinator Form -->
     <div class="form-group contact-info__safety-coordinator--add-new-container add-new-inputs">
@@ -1321,16 +1348,16 @@
     </div>
 
     <!-- Safety Coordinator List -->
-    <div class="form-group contact-information__safety-coordinator--list">
-        <div class="row contact-list contact-info__safety-coordinator-list">
+    <div class="row contact-list contact-info__safety-coordinator-list">
+        <div class="form-group contact-information__safety-coordinator--list">
             <div class="list list--safety-coordinator list--lookup people">
-                <div class="list__header contact-list__safety-coordinator--header required">
-                    <span class="lookup-results--safety-coordinator">Safety Director</span>
+                <div class="list__header contact-list__safety-coordinator--header">
+                    <span class="lookup-results--safety-coordinator">Safety Coordinator</span>
                     <div class="list__controls contact-list__controls">
-                        <button class="list__controls--settings" id="settingsSafetyDirectorListItem"></button>
-                        <!-- <button class="btn btn-link list-item__edit" id="editSafetyDirectorListItem">Edit</button> -->
-                        <!-- <button class="btn btn-link list-item__save" id="saveSafetyDirectorListItem">Done Editing</button> -->
-                        <button class="btn btn-link list-item__delete" id="deleteSafetyDirectorListItem">Remove</button>
+                        <button class="list__controls--settings" id="settingsSafetyCoordinatorListItem"></button>
+                        <!-- <button class="btn btn-link list-item__edit" id="editSafetyCoordinatorListItem">Edit</button> -->
+                        <!-- <button class="btn btn-link list-item__save" id="saveSafetyCoordinatorListItem">Done Editing</button> -->
+                        <button class="btn btn-link list-item__delete" id="deleteSafetyCoordinatorListItem">Remove</button>
                     </div>
                 </div>
             
@@ -1369,7 +1396,7 @@
                 <div class="col-sm-12">
                     <div class="club-privacy" style="display: block;">
                         <div class="club-privacy__header">
-                            Display the Safety Director's information on the USMS website event page.
+                            Display the Safety Coordinator's information on the USMS website event page.
                         </div>
                         <div class="input-group checkbox-group contact-privacy-name">
                             <label class="checkbox-label" for="privacyName">
@@ -1682,808 +1709,31 @@
 </form>
 
 <script>
-    // Enable Contact Section Save & Continue
-    $("#contact-information input").click( function() {
-        $("#saveContactInfoSection").prop('disabled', false);
-    });
-    // Save Contact Section
-    $("#saveContactInfoSection").click( function() {
-        $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
-        $('#accordion').find('.collapse.in').parent().addClass('hasData');
-        $("#location-information h3").click();
-        scrollToLocation();
-    });
+
+
+    
+    // // Enable Contact Section Save & Continue
+    // $("#contact-information input").click( function() {
+    //     $("#saveContactInfoSection").prop('disabled', false);
+    // });
+    // // Save Contact Section
+    // $("#saveContactInfoSection").click( function() {
+    //     $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
+    //     $('#accordion').find('.collapse.in').parent().addClass('hasData');
+    //     $("#location-information h3").click();
+    //     scrollToLocation();
+    // });
     // Contact List Edit
     $("[class^='list list--'] #editContactList").click(function() {
         $(this).closest(".list").addClass("edit-list");
     });
-    // Contact List Cancel
-    $("[class^='list list--'] #cancelContactList").click(function() {
-        $(".list").removeClass("edit-list");
-        $(".list-item").removeClass("list-item--fade-out");
-        $('.list__container').removeClass('list__container--modified');
-    });
-</script>                              
-                              <form id="form-location-info">
-   <div class="section section-location-information" id="location-information">
-      <h3 class="section__header" data-target="#location-information__content" data-toggle="collapse" aria-expanded="false" aria-controls="location-information__content">
-         <span class="section__number">4</span>Location Information
-      </h3>
-      <span class="section__edit"><button class="section__edit-btn section__edit-btn--name" type="button"></button></span>
-      <div class="section__content collapse" id="location-information__content" data-parent="#accordion">
-
-         
-<link rel="stylesheet" href="/search/css/ListControl.css">
-<link rel="stylesheet" href="/event/css/list-control-event.css">
-<link rel="stylesheet" href="/event/css/location-overrides.css">
-
-<div class="list-control">    
-    <div class="list-control-search">
-        <div class="list-control-search__content form-group is-flex">
-            <div class="list-control-search__input list-control-search__input--club-name">
-                <label for="search-filter__club-name">Search by Location Name</label>
-                <div class="input-group">
-                    <span class="help-block help-block--ClubName">Please Enter a Location Name</span><input type="text" class="form-control" name="search-filter__club-name" placeholder="Location Name" />
-                </div>
-            </div>
-            <div class="list-control-search__input list-control-search__input--range">
-                <label for="search-filter__range">Select a Range</label>
-                <div class="input-group">
-                    <select id="search-filter__range" name="search-filter__range">
-                        <option value="1">1 Mile</option>
-                        <option value="5">5 Miles</option>
-                        <option selected="" value="10">10 Miles</option>
-                        <option value="25">25 Miles</option>
-                        <option value="50">50 Miles</option>
-                    </select>
-                </div>
-            </div>
-            <div class="list-control-search__input list-control-search__input--location">
-                <label for="search-filter__location">Search by City, State or Zip</label>
-                <div class="input-group">
-                    <span class="help-block help-block--CityStateZip">Please enter a City, State or Zip</span>
-                    <div>
-                        <div class="map" style="display: none;"></div>
-                        <input type="text" class="google-places-input form-control pac-target-input" placeholder="Select city &amp; state or zip" name="location" value="Sarasota, FL, USA" autocomplete="off" />
-                        <input type="hidden" class="google-places-input--zip" name="google-places-input--zip" value="" />
-                        <input type="hidden" class="google-places-input--lat" name="google-places-input--lat" value="" />
-                        <input type="hidden" class="google-places-input--lng" name="google-places-input--lng" value="" />
-                    </div>
-                </div>
-            </div>
-            <div class="list-control-search__input list-control-search__input--button align-self-end">
-                <div class="input-group"><button type="button" class="btn btn-primary" id="listSearchSubmit">Submit</button></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-12">
-        <span class="help-block help-block--selectLocation">Please select a location, or add a new location</span>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-12">
-       <div class="list list--lookup locations">
-
-            <div class="list-control-search__header">
-                <!-- <i class="fa fa-refresh fa-spin list-control-search--summary-loading" style="display:inline-block;"></i> -->
-                <div class="list-control-search--summary">
-                    Showing <strong>4 Locations</strong> within <strong>10 Miles</strong> <span class="list-control-search--summary-detail">of <strong>Sarasota, FL, USA</strong></span>
-                </div>
-            </div>
-
-            <div class="list__container">
-    <div class="row is-flex">
-        <div class="col-xs-12 location-column">
-            <div class="list-item list-item--location ui-lookup-filter-1mile ui-lookup-filter-length-scm">
-                <button class="btn btn-small">Select</button>
-                <p class="event-location__address--name">Sun Outdoors</p>
-                <p class="event-location__address--street">7125 Fruitville Road</p>
-                <p class="event-location__city-state">Sarasota, FL</p>
-                <div class="event-location--course-tags">
-                    <p class="event-location--course">SCM</p>
-                </div>
-            </div>
-            <div class="list-item list-item--location ui-lookup-filter-5mile ui-lookup-filter-length-scy ui-lookup-filter-length-lcm">
-                <button class="btn btn-small">Select</button>
-                <p class="event-location__address--name">Arlington Park Aquatic Center</p>
-                <p class="event-location__address--street">2650 Waldemere Street</p>
-                <p class="event-location__city-state">Sarasota, FL</p>
-                <div class="event-location--course-tags">
-                    <p class="event-location--course">SCY</p>
-                    <p class="event-location--course">LCM</p>
-                </div>
-            </div>
-            <div class="list-item list-item--location ui-lookup-filter-10mile ui-lookup-filter-length-scy ui-lookup-filter-length-scm ui-lookup-filter-length-lcm list-item--pool list-item--duplicate">
-                <button class="btn btn-small" id="confirmLocationSelby">Select</button>
-                <p class="event-location__address--name">Selby Aquatic Center</p>
-                <p class="event-location__address--street">8501 Potter Park Drive</p>
-                <p class="event-location__city-state">Sarasota, FL</p>
-                <div class="event-location--course-tags">
-                    <p class="event-location--course">SCY</p>
-                    <p class="event-location--course">SCM</p>
-                    <p class="event-location--course">LCM</p>
-                </div>
-            </div>
-            <div class="list-item list-item--location ui-lookup-filter-10mile ui-lookup-filter-length-other">
-                <button class="btn btn-small" id="confirmLocationHealthfit">Select</button>
-                <p class="event-location__address--name">HealthFit powered by SMH</p>
-                <p class="event-location__address--street">5880 Rand Blvd</p>
-                <p class="event-location__city-state">Sarasota, FL</p>
-                <div class="event-location--course-tags">
-                    <p class="event-location--course">Other</p>
-                </div>
-            </div>
-            <div class="list-item list-item--location ui-lookup-filter-25mile ui-lookup-filter-length-scy">
-                <button class="btn btn-small">Select</button>
-                <p class="event-location__address--name">LA Fitness 1</p>
-                <p class="event-location__address--street">8502 Cooper Creek Blvd</p>
-                <p class="event-location__city-state">Sarasota, FL</p>
-                <div class="event-location--course-tags">
-                    <p class="event-location--course">SCY</p>
-                </div>
-            </div>
-            <div class="list-item list-item--location ui-lookup-filter-25mile ui-lookup-filter-length-scy">
-                <button class="btn btn-small">Select</button>
-                <p class="event-location__address--name">LA Fitness 2</p>
-                <p class="event-location__address--street">8502 Cooper Creek Blvd</p>
-                <p class="event-location__city-state">Sarasota, FL</p>
-                <div class="event-location--course-tags">
-                    <p class="event-location--course">SCY</p>
-                </div>
-            </div>
-            <div class="list-item list-item--location ui-lookup-filter-50mile ui-lookup-filter-length-scy">
-                <button class="btn btn-small">Select</button>
-                <p class="event-location__address--name">Venice High School</p>
-                <p class="event-location__address--street">1 Indian Ave</p>
-                <p class="event-location__city-state">Sarasota, FL</p>
-                <div class="event-location--course-tags">
-                    <p class="event-location--course">SCY</p>
-                </div>
-            </div>
-
-            <div class="list-item list-item--location list-item--open-water list-item--duplicate">
-                <button class="btn btn-small" id="confirmWaterFrontPark">Select</button>
-                <p class="event-location__address--name">Waterfront Park</p>
-                <p class="event-location__address--street">2650 Waldemere Street</p>
-                <p class="event-location__city-state">Clermont, FL</p>
-                <div class="event-location--course-tags">
-                    <p class="event-location--course">OW</p>
-                </div>
-            </div>
-            <div class="list-item list-item--location list-item--open-water">
-                <button class="btn btn-small">Select</button>
-                <p class="event-location__address--name">Clearwater Beach</p>
-                <p class="event-location__address--street">1 Avalon Street</p>
-                <p class="event-location__city-state">Clearwater, FL</p>
-                <div class="event-location--course-tags">
-                    <p class="event-location--course">OW</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- <p class="location__add-new-btn">If your location is not listed, contact USMS to have it added: <a href="mailto:events@usmastersswimming.org" class="text-link">events@usmastersswimming.org</a></p> -->
-
-        </div>
-    </div>
- </div>
-         <div class="row locations">
-   <div class="col-sm-12">
-      <div class="location-header location-header__edit">
-         <div class="form-group"> 
-            <button class="btn btn-small btn-outline" id="editLocationBtn" onclick="" style="">Edit Location</button>
-            <button class="btn btn-small btn-success" id="doneEditLocationBtn" onclick="" style="display: none;">Done Editing</button>
-            <button class="btn btn-small btn-outline" id="cancelAddLocationBtn" onclick="" style="display: none;">Cancel</button>
-         </div>
-      </div>
-      <div class="col-sm-12">
-         <div class="form-group">
-            <div class="list locations">
-               <div class="list__container">
-                  <div class="row is-flex">
-                     <div class="col-xs-12">
-                        <div class="list-item list-item-pool list-item-existing">
-                           <div class="list__controls">
-                              <!-- <a class="list__controls--settings" id="settingsListEventLocationExisting"></a> -->
-                              <a class="btn btn-link list-item__edit" id="editListEventLocationExisting">Edit</a>
-                              <!-- <a class="btn btn-link list-item__save" id="saveListEventLocationExisting">Done Editing</a> -->
-                              <a class="btn btn-link list-item__delete" id="deleteListEventLocationExisting">Remove</a>
-                           </div>
-                           <p class="location-name text-bold">Selby Aquatic Center</p>
-                           <p class="location-address-street">8501 Potter Park Drive | Sarasota, FL 34238</p>
-                           <span class="help-block">Venue or Pool missing</span>
-                           <button class="location-add-venue btn btn-small btn-outline">
-                              <span><i class="fa fa-plus"></i></span>Add Pool
-                           </button>
-                           <div class="venue__list">
-                              <div class="venue__list--item selected">
-                                 <div class="list__controls">
-                                    <a class="btn btn-link venue-edit-button">Edit</a>
-                                    <a class="btn btn-link venue-remove-button">Remove</a>
-                                 </div>
-                                 <p class="venue-name selected">Competition Pool</p>
-                                 <p class="venue-type">(Outdoor)</p>
-                                 <span class="help-block">Missing Configuration</span>
-                                 <div class="configuration__list">
-                                       <div class="configuration__list--item selected">
-                                          <div class="list__controls">
-                                             <a class="btn btn-link configuration-edit-button">Edit</a>
-                                             <a class="btn btn-link configuration-remove-button">Remove</a>
-                                          </div>
-                                          <p class="configuration-title">50 Meters, 7 Lanes</p>
-                                       </div>
-                                       <div class="configuration__list--item">
-                                          <div class="list__controls">
-                                             <a class="btn btn-link configuration-edit-button">Edit</a>
-                                             <a class="btn btn-link configuration-remove-button">Remove</a>
-                                          </div>
-                                          <p class="configuration-title">25 Yards, 11 Lanes</p>
-                                       </div>
-                                       <div class="configuration__list--item added">
-                                          <div class="list__controls">
-                                             <a class="btn btn-link configuration-edit-button">Edit</a>
-                                             <a class="btn btn-link configuration-remove-button">Remove</a>
-                                          </div>
-                                          <p class="configuration-title">South north - 25 Yards, 6 Lanes</p>
-                                       </div>
-                                 </div>
-                                 <!-- <button class="location-add-configuration btn btn-small btn-outline">
-                                       <span><i class="fa fa-plus"></i></span>Add Configuration
-                                 </button> -->
-                              </div>
-                              <div class="venue__list--item">
-                                 <div class="list__controls">
-                                    <a class="btn btn-link venue-edit-button">Edit</a>
-                                    <a class="btn btn-link venue-remove-button">Remove</a>
-                                 </div>
-                                 <p class="venue-name">Warmup Pool</p>
-                                 <p class="venue-type">(Outdoor)</p>
-                                 <span class="help-block">Missing Configuration</span>
-                                 <div class="configuration__list">
-                                       <div class="configuration__list--item">
-                                          <div class="list__controls">
-                                             <a class="btn btn-link configuration-edit-button">Edit</a>
-                                             <a class="btn btn-link configuration-remove-button">Remove</a>
-                                          </div>
-                                          <p class="configuration-title">25 Yards, 7 Lanes</p>
-                                       </div>
-                                 </div>
-                                 <!-- <button class="location-add-configuration btn btn-small btn-outline">
-                                       <span><i class="fa fa-plus"></i></span>Add Configuration
-                                 </button> -->
-                              </div>
-                           </div>
-                        </div>
-                        <div class="list-item list-item-pool list-item-new">
-                           <div class="list__controls">
-                              <!-- <a class="list__controls--settings" id="settingsListEventLocationNew"></a> -->
-                              <a class="btn btn-link list-item__edit" id="editListEventLocationNew">Edit</a>
-                              <!-- <a class="btn btn-link list-item__save" id="saveListEventLocationNew">Done Editing</a> -->
-                              <a class="btn btn-link list-item__delete" id="deleteListEventLocationNew">Remove</a>
-                           </div>
-                           <p class="location-name text-bold">Jensen Beach Pool</p>
-                           <p class="location-address-street">123 Southeast Sailfish Lane | Stuart, FL 34996</p>
-                           <span class="help-block">Venue or Pool missing</span>
-                           <button class="location-add-venue btn btn-small btn-outline">
-                              <span><i class="fa fa-plus"></i></span>Add Pool
-                           </button>
-                           <div class="venue__list">
-                              <div class="venue__list--item">
-                                 <div class="list__controls">
-                                    <a class="btn btn-link venue-edit-button">Edit</a>
-                                    <a class="btn btn-link venue-remove-button">Remove</a>
-                                 </div>
-                                 <p class="venue-name">The comp pool</p>
-                                 <p class="venue-type">(Outdoor)</p>
-                                 <span class="help-block">Missing Configuration</span>
-                                 <div class="configuration__list">
-                                       <div class="configuration__list--item added">
-                                          <div class="list__controls">
-                                             <a class="btn btn-link configuration-edit-button">Edit</a>
-                                             <a class="btn btn-link configuration-remove-button">Remove</a>
-                                          </div>
-                                          <p class="configuration-title">East west - 25 Yards, 5 Lanes</p>
-                                       </div>
-                                 </div>
-                                 <!-- <button class="location-add-configuration btn btn-small btn-outline">
-                                       <span><i class="fa fa-plus"></i></span>Add Configuration
-                                 </button> -->
-                              </div>
-                           </div>
-                        </div>
-                        <div class="list-item list-item-pool list-item-duplicate">
-                           <div class="list__controls">
-                              <!-- <a class="list__controls--settings" id="settingsListEventLocationDuplicate"></a> -->
-                              <a class="btn btn-link list-item__edit" id="editListEventLocationDuplicate">Edit</a>
-                              <!-- <a class="btn btn-link list-item__save" id="saveListEventLocationDuplicate">Done Editing</a> -->
-                              <a class="btn btn-link list-item__delete" id="deleteListEventLocationDuplicate">Remove</a>
-                           </div>
-                           <p class="location-name text-bold">HealthFit powered by SMH</p>
-                           <p class="location-address-street">5880 Rand Blvd #102 | Sarasota, FL 34238</p>
-                           <span class="help-block">Venue or Pool missing</span>
-                           <button class="location-add-venue btn btn-small btn-outline">
-                              <span><i class="fa fa-plus"></i></span>Add Pool
-                           </button>
-                           <div class="venue__list">
-                              <div class="venue__list--item selected">
-                                 <div class="list__controls">
-                                    <a class="btn btn-link venue-edit-button">Edit</a>
-                                    <a class="btn btn-link venue-remove-button">Remove</a>
-                                 </div>
-                                 <p class="venue-name selected">Main Pool</p>
-                                 <p class="venue-type">(Outdoor)</p>
-                                 <span class="help-block">Missing Configuration</span>
-                                 <div class="configuration__list">
-                                       <div class="configuration__list--item selected">
-                                          <div class="list__controls">
-                                             <a class="btn btn-link configuration-edit-button">Edit</a>
-                                             <a class="btn btn-link configuration-remove-button">Remove</a>
-                                          </div>
-                                          <p class="configuration-title">25 Yards, 8 Lanes</p>
-                                       </div>
-                                 </div>
-                                 <!-- <button class="location-add-configuration btn btn-small btn-outline">
-                                       <span><i class="fa fa-plus"></i></span>Add Configuration
-                                 </button> -->
-                              </div>
-                           </div>
-                        </div>
-                        <div class="list-item list-item-open-water list-item-existing">
-                           <div class="list__controls">
-                              <!-- <a class="list__controls--settings" id="settingsListEventLocationOpenWater"></a> -->
-                              <a class="btn btn-link list-item__edit" id="editListEventLocationOpenWater">Edit</a>
-                              <!-- <a class="btn btn-link list-item__save" id="saveListEventLocationOpenWater">Done Editing</a> -->
-                              <a class="btn btn-link list-item__delete" id="deleteListEventLocationOpenWater">Remove</a>
-                           </div>
-                           <p class="location-name text-bold">Waterfront Park</p>
-                           <p class="location-address-street">330 3rd Street | Clermont, FL 34711</p>
-                           <span class="help-block">Venue or Pool missing</span>
-                           <button class="location-add-venue btn btn-small btn-outline">
-                              <span><i class="fa fa-plus"></i></span>Add Venue
-                           </button>
-                           <div class="venue__list">
-                              <div class="venue__list--item selected">
-                                 <div class="list__controls">
-                                    <a class="btn btn-link venue-edit-button">Edit</a>
-                                    <a class="btn btn-link venue-remove-button">Remove</a>
-                                 </div>
-                                 <p class="venue-name">South Parking Lot</p>
-                                 <p class="venue-type">(Lake)</p>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="list-item list-item-open-water list-item-new">
-                           <div class="list__controls">
-                              <!-- <a class="list__controls--settings" id="settingsListEventLocationOpenWater"></a> -->
-                              <a class="btn btn-link list-item__edit" id="editListEventLocationOpenWater">Edit</a>
-                              <!-- <a class="btn btn-link list-item__save" id="saveListEventLocationOpenWater">Done Editing</a> -->
-                              <a class="btn btn-link list-item__delete" id="deleteListEventLocationOpenWater">Remove</a>
-                           </div>
-                           <p class="location-name text-bold">Loggerhead Park</p>
-                           <p class="location-address-street">14200 U.S. Highway 1 | Juno Beach, FL 33408</p>
-                           <span class="help-block">Venue or Pool missing</span>
-                           <button class="location-add-venue btn btn-small btn-outline">
-                              <span><i class="fa fa-plus"></i></span>Add Venue
-                           </button>
-                           <div class="venue__list">
-                              <div class="venue__list--item selected">
-                                 <div class="list__controls">
-                                    <a class="btn btn-link venue-edit-button">Edit</a>
-                                    <a class="btn btn-link venue-remove-button">Remove</a>
-                                 </div>
-                                 <p class="venue-name">Boardwalk</p>
-                                 <p class="venue-type">(Ocean)</p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-</div>
-<div class="modal" id="modalDuplicateAddress" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Potential Duplicate Location</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p>The address you selected is already in our database. Please select that location from the location search box above.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-md btn-default" data-bs-dismiss="modal" id="closeDuplicateAddress">Continue</button>
-        </div>
-      </div>
-    </div>
-</div>
-<div class="modal" id="modalDuplicateOrganization" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Potential Duplicate Organization</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <p>The address you selected is already in our database. Please select that organization from the organization search box above.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-md btn-default" data-bs-dismiss="modal" id="closeDuplicateOrganization">Continue</button>
-        </div>
-      </div>
-    </div>
-</div>
-<div class="modal" id="modalDeleteLocation" tabindex="-1" role="dialog">
-  <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Remove Location</h5>
-              <!-- <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button> -->
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-              <p>This will remove your saved pool or open water venue. Are you sure you want to continue?</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-md btn-default btn-ko" data-bs-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-md btn-default" id="confirmDeleteLocation" data-bs-dismiss="modal">Continue</button>
-          </div>
-      </div>
-  </div>
-</div>
-         <!-- Add New Location -->
-<div class="form-group entry location-info__add-new-location--container">
-    <div class="location-header location-header__add">
-        <div class="form-group">
-            <div class="row">
-                <div class="col-sm-12">
-                    <!-- <p style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.5rem; color: #333;">If your location is not listed, contact USMS to have it added. <a href="mailto:membership@usmastersswimming.org" class="text-link">Contact USMS</a></p> -->
-                    <!-- <p>If your location is not listed, contact USMS to have it added: <a href="mailto:events@usmastersswimming.org" class="text-link">events@usmastersswimming.org</a></p> -->
-                    <p>If your location is not listed, you can add a new one.</p>
-                </div>
-            </div>
-            <div class="row">
-                <button class="btn btn-small btn-outline btn-add" id="addLocationBtn" name="addLocationBtn" type="button" value="Add New">Add New</button>
-                <button class="btn btn-small btn-outline" id="cancelAddLocationBtn" name="cancelAddLocationBtn" type="button" value="Cancel" style="display:none;">Cancel</button>
-            </div>
-        </div>
-    </div>
-    <!-- <div class="row"> -->
-        <!-- <div class="col-sm-12 col-md-6"> -->
-            <!-- <div class="event-location-details add-new-inputs">
-    <div class="form-group location-inputs show" id="locationInputs"> -->
-
-<div class="location-details event-location-details">
-    <div class="form-group">
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="input-group location-name required">
-                    <label for="locationName">
-                        Enter Your Location Name<span class="icon-help" data-toggle="tooltip" data-placement="top" title="Enter the facility or open water venue name." data-container="body" data-original-title=""></span>
-                    </label>
-                    <input type="text" class="form-control entry__input entry-primary__input" name="LocationName" id="locationName" maxlength="80" placeholder=""/>
-                    <span class="help-block help-block--LocationName">Name required</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="input-group location-address--street required">
-                    <label for="locationAddressStreet">
-                        Street Address (must select from the dropdown, do not copy and paste!)
-                        <span class="icon-help" data-toggle="tooltip" data-placement="top" title="You must select an address from the dropdown." data-container="body" data-original-title=""></span>
-                    </label>
-                    <input
-                        type="text"
-                        class="form-control pac-target-input"
-                        name="LocationAddressStreet"
-                        id="locationAddressStreet"
-                        autocomplete="off"
-                        maxlength="255"
-                        placeholder="Enter an address"
-                    />
-                    <span class="help-block help-block--LocationAddressStreet">Must select address from the Google dropdown list</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="input-group location-type required">
-                    <label for="locationType">Facility Type</label>
-                    <select name="locationType" class="form-control" id="locationType">
-                        <option value="">Select Facility Type</option>
-                        <option value="High School">High School</option>
-                        <option value="JCC">JCC</option>
-                        <option value="Municipal Pool">Municipal Pool</option>
-                        <option value="Open Water">Open Water</option>
-                        <option value="Private Club">Private Club</option>
-                        <option value="Retirement Community">Retirement Community</option>
-                        <option value="University">University</option>
-                        <option value="YMCA">YMCA</option>
-                        <option value="Other">Other</option>
-                    </select>
-                    <span class="help-block help-block--locationType">Please select a location type</span>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12 col-sm-10">
-                <div class="form-group form-group-hidden">
-                    <div class="input-group location-type--other">
-                        <label for="locationTypeOther">Description</label>
-                        <input type="text" class="form-control" name="LocationTypeOther" id="locationTypeOther" maxlength="50" />
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12 col-md-8">
-            <div class="input-group entry-confirm">
-                <label style="margin: 0 0 1.5rem; font-weight: normal;" class="caption" for="addLocation">After you've entered your facility information, click the button below to save it as your location.</label>
-                <button class="btn btn-small save-location" id="confirmNewFacility">Continue</button>
-                <button class="btn btn-small btn-outline" id="cancelNewFacility">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
-        <!-- </div> -->
-    <!-- </div> -->
-    <div class="row">
-        <div class="col-xs-12 col-sm-6">
-            <div class="list-venue-form">
-    <div class="input-group required">
-        <label for="venueName">Pool or Open Water Venue Name</label>
-        <input type="text" class="form-control" name="venueName" id="venueName" maxlength="80" />
-        <span class="help-block help-block--venueName">Please enter a venue name</span>
-    </div>
-    <div class="input-group input-group--poolType required">
-        <label for="poolType">Body of Water</label>
-        <select name="poolType" class="form-control" id="poolType">
-            <option value="">Select Pool Type</option>
-            <option value="Indoor">Indoor</option>
-            <option value="Outdoor">Outdoor</option>
-        </select>
-        <span class="help-block help-block--poolType">Please enter a pool type</span>
-    </div>
-    <div class="input-group required input-group--openWaterType fade">
-        <label for="openWaterType">Body of Water</label>
-        <select name="openWaterType" class="form-control" id="openWaterType">
-            <option value="">Select Open Water Type</option>
-            <option value="Lake">Lake</option>
-            <option value="Ocean">Ocean</option>a
-            <option value="Reservoir">Reservoir</option>
-            <option value="River">River</option>
-            <option value="Creek">Creek</option>
-        </select>
-        <span class="help-block help-block--openWaterType">Please enter a type</span>
-    </div>
-    <div class="input-group checkbox-group input-group--course input-group--add-new-course">
-        <span class="help-block help-block--selectNewCourse">Please select a course</span>
-        <label class="checkbox-label" for="courseSCY">
-            <div class="checkbox-container">
-                <input type="checkbox" name="courseSCY" id="courseSCY" />
-                <span class="checkbox__placeholder"></span>
-            </div>
-            Short Course Yards
-        </label>
-        <label class="checkbox-label" for="courseSCM">
-            <div class="checkbox-container">
-                <input type="checkbox" name="courseSCM" id="courseSCM" />
-                <span class="checkbox__placeholder"></span>
-            </div>
-            Short Course Meters
-        </label>
-        <label class="checkbox-label" for="courseLCM">
-            <div class="checkbox-container">
-                <input type="checkbox" name="courseLCM" id="courseLCM" />
-                <span class="checkbox__placeholder"></span>
-            </div>
-            Long Course Meters
-        </label>
-        <label class="checkbox-label" for="courseOther">
-            <div class="checkbox-container">
-                <input type="checkbox" name="courseOther" id="courseOther" />
-                <span class="checkbox__placeholder"></span>
-            </div>
-            Other
-        </label>
-    </div>
-    <div class="input-group checkbox-group input-group--venueCableCourse fade">
-        <label class="checkbox-label" for="venueCableCourse">
-            <div class="checkbox-container">
-                <input type="checkbox" name="venueCableCourse" id="venueCableCourse" />
-                <span class="checkbox__placeholder"></span>
-            </div>
-            Cable Course
-        </label>
-    </div>
-    <div class="input-group list-venue-form__cable-course-form list-venue-form__cable-course-form--fade">
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="input-group required">
-                    <label>Distance</label>
-                    <input class="form-control" type="number" id="venueCableCourseValue" name="venueCableCourseValue" />
-                    <span class="help-block help-block--venueCableCourseValue">Please enter a distance</span>
-                </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="input-group required">
-                    <label>Unit</label>
-                    <select name="venueCableCourseUnit" class="form-control" id="venueCableCourseUnit" required="">
-                        <option value="Unit">Unit</option>
-                        <option value="Meters">Meters</option>
-                        <option value="Miles">Miles</option>
-                    </select>
-                    <span class="help-block help-block--venueCableCourseUnit">Please enter a unit</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="input-group">
-        <label style="margin: 2.5rem 0 1.5rem; font-weight: normal;">After you've entered your pool information, click the button below to save and continue</label>
-        <button class="btn btn-small" id="saveFormPool" >Confirm</button>
-        <button class="btn btn-small btn-outline" id="cancelSaveVenue">Cancel</button>
-    </div>
-</div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12 col-md-8">
-            <div class="input-group list-configuration-form">
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="input-group required">
-                <label>Configuration Name</label>
-                <input class="form-control" type="text" id="configurationName" name="configurationName" maxlength="80" />
-                <span class="help-block help-block--configurationName">Please enter a configuration name</span>
-            </div>
-        </div>
-        <div class="col-xs-4">
-            <div class="input-group required">
-                <label>Lanes (1-50)</label>
-                <input class="form-control" type="number" min="1" max="50" id="configurationLanes" name="configurationLanes" />
-                <span class="help-block help-block--configurationLanes">Please enter number of lanes</span>
-            </div>
-        </div>
-        <div class="col-xs-8">
-            <div class="input-group required">
-                <label>Length</label>
-                <select name="configurationLength" class="form-control" id="configurationLength">
-                    <option value="">Select Length</option>
-                    <option value="25 Meters">25 Meters</option>
-                    <option value="25 Yards">25 Yards</option>
-                    <option value="50 Meters">50 Meters</option>
-                    <option value="Other">Other</option>
-                </select>
-                <span class="help-block help-block--configurationLength">You must select a length</span>
-            </div>
-        </div>
-        <div class="col-xs-12">
-            <div class="input-group required input-group--configurationLengthOther fade">
-                <label>Other Length</label>
-                <input class="form-control" type="text" maxlength="50" id="configurationOtherLength" name="configurationLengthOther" />
-                <span class="help-block help-block--configurationLengthOther">Please enter length value</span>
-            </div>
-        </div>
-        <!-- <div class="input-group">
-            <label class="checkbox-label">
-                <div class="checkbox-container">
-                    <input type="checkbox" name="usmsVerified" id="usmsVerified" />
-                    <span class="checkbox__placeholder"></span>
-                </div>
-                USMS Verified
-                <span
-                    class="icon-help"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title=""
-                    data-container="body"
-                    data-original-title="The distance for the listed pool configuration has been measured then submitted to and verified by USMS so it can host sanctioned meets and be used to break records. If you are not sure of the date, enter 1111-01-01."
-                ></span>
-            </label>
-        </div> -->
-        <div class="input-group usms-verified-form usms-verified-form--fade required">
-            <input type="text" name="usmsVerifiedDate" id="usmsVerifiedDate" placeholder="YYYY-MM-DD" maxlength="10" />
-            <span class="help-block help-block--usmsVerifiedDate">Please enter a valid date</span>
-        </div>
-        <div class="input-group">
-            <label style="margin: 1.5rem 0; font-weight: normal;" class="caption" for="addConfiguration">After you've entered a pool configuration, click the button below to save and continue.</label>
-            <button class="btn btn-small" id="saveFormConfiguration">Confirm</button>
-            <button class="btn btn-small btn-outline" id="cancelSaveConfiguration">Cancel</button>
-        </div>
-    </div>
-</div>
-        </div>
-    </div>
-    <div class="form-group location-information__locations-list">
-        <div class="list locations-list">
-            <div class="list__header locations-list__header">
-                <div class="list__controls locations-list__controls" style="display: none;">
-                    <button class="list__controls--settings" id="listLocationsSettings"></button>
-                    <button class="btn btn-link" id="editLocationsList">Edit</button>
-                    <button class="btn btn-link" id="saveLocationsList">Done Editing</button>
-                    <button class="btn btn-link" id="cancelLocationsList">Cancel</button>
-                </div>
-            </div>
-            <div class="list__container">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <div class="list-item">
-                            <div class="list__controls">
-                                <button class="btn btn-link list-item__edit">Edit</button>
-                                <button class="btn btn-link list-item__delete">Remove</button>
-                            </div>
-                            <p class="location-name text-bold">LA Fitness</p>
-                            <p class="location-address-street">8502 Cooper Creek Blvd | Sarasota, FL 34201</p>
-                            <span class="help-block">Venue or Pool missing</span>
-                            <button class="location-add-venue btn btn-small btn-outline">
-                                <span><i class="fa fa-plus"></i></span>Add Pool
-                            </button>
-                            <div class="venue__list">
-                                <div class="venue__list--item">
-                                    <div class="list__controls"><button class="btn btn-link venue-edit-button">Edit</button><button class="btn btn-link venue-remove-button">Remove</button></div>
-                                    <p class="venue-name">Pool</p>
-                                    <p class="venue-type">(Indoor)</p>
-                                    <span class="help-block">Missing Configuration</span>
-                                    <div class="configuration__list">
-                                        <div class="configuration__list--item">
-                                            <div class="list__controls"><button class="btn btn-link configuration-edit-button">Edit</button><button class="btn btn-link configuration-remove-button">Remove</button></div>
-                                            <p class="configuration-title">Pool - 25 Yards, 8 Lanes</p>
-                                        </div>
-                                    </div>
-                                    <button class="location-add-configuration btn btn-small btn-outline">
-                                        <span><i class="fa fa-plus"></i></span>Add Configuration
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-         
-         <div class="row section__controls">
-            <div class="col-xs-12">
-               <button class="btn save-section" type="button" id="saveLocation">Save &amp; Continue</button>
-            </div>
-         </div>
-      </div>
-   </div>
-</form>
-
-
-<script src="/event/js/location.js"></script>
-<script src="/event/js/location-open-water.js"></script>
-
-<script>
-   // Enable Save & Continue
-   $("#location-information input").click( function() {
-      $("#saveLocation").prop('disabled', false);
-   });
-   // Save Location Section
-   $("#saveLocation").click( function() {
-      $('#accordion').find('.collapse.in').parent().addClass('hasData');
-      $("#entry-information h3").click();
-      $(document.documentElement).animate({
-         scrollTop: $("#entry-information").offset().top - 45
-      }, 100);
-   });
+    // // Contact List Cancel
+    // $("[class^='list list--'] #cancelContactList").click(function() {
+    //     $(".list").removeClass("edit-list");
+    //     $(".list-item").removeClass("list-item--fade-out");
+    //     $('.list__container').removeClass('list__container--modified');
+    // });
 </script>
-
                               <form id="form-entry-info">
    <div class="section  section-entry-information" id="entry-information">
       <h3 class="section__header" data-target="#entry-information__content" data-toggle="collapse" aria-expanded="false" aria-controls="entry-information__content">
@@ -2493,42 +1743,17 @@
       <div class="section__content collapse" id="entry-information__content" data-parent="#accordion">
          <div class="entry-information--container" style="display: block; visibility: visible;">
 
-            <!-- <div class="row">
-               <div class="col-xs-12 col-md-6">
-                  <div class="input-group entry-info__website-url required">
-                     <label for="entryInfoWebsiteUrl">Event Website URL</label>
-                     <input tabindex="0" type="text" class="form-control" min="3" max="30" name="EntryInfoWebsiteUrl" id="entryInfoWebsiteUrl" autocomplete="off">
-                     <span class="help-block help-block--EntryInfoWebsiteUrl">Please enter an event website URL</span>
-                  </div>
-               </div>
-            </div>
             <div class="row">
-               <div class="col-xs-12 col-md-6">
-                  <div class="input-group entry-info__entries-url required">
-                     <label for="entryInfoOnlineEntriesUrl">Online Entries URL</label>
-                     <input tabindex="0" type="text" class="form-control" min="3" max="30" name="EntryInfoOnlineEntriesUrl" id="entryInfoOnlineEntriesUrl" autocomplete="off">
-                     <span class="help-block help-block--EntryInfoOnlineEntriesUrl">Please enter an online entries URL</span>
-                  </div>
-               </div>
-            </div> -->
-
-            <div class="row">
-               <div class="col-xs-12 col-md-6">
+               <div class="col-xs-12">
                   <div class="input-group input-group-url-lookup required">
                      <label for="entryInfoWebsiteUrl">Event Website URL</label>
-                     <div class="row" style="width: 100%;">
-                         <div class="col-xs-8">
-                             <input type="url" class="form-control" name="entryInfoWebsiteUrl" id="entryInfoWebsiteUrl" placeholder="" value="" maxlength="255" data-gtm-form-interact-field-id="0" />
-                             <span class="website-url-icon">
-                                 <i class="fa fa-times"></i>
-                             </span>
-                         </div>
-                         <div class="col-xs-2">
-                             <span class="website-url-icon__check">
-                                 <i class="fa fa-search btn" id="testShowGreenCheck"></i>
-                             </span>
-                         </div>
-                     </div>
+                        <input type="url" class="form-control has-success" name="entryInfoWebsiteUrl" id="entryInfoWebsiteUrl" placeholder="" value="" maxlength="255" data-gtm-form-interact-field-id="0" />
+                        <span class="website-url-icon__check">
+                           <i class="fa fa-search btn" id="testShowGreenCheck"></i>
+                        </span>
+                        <span class="website-url-icon">
+                           <i class="fa fa-check"></i>
+                        </span>
                      <span class="input-instruction">Copy and paste the full URL (including http:// or https:// from a browser). Once input, click the search button and it will indicate whether the site is valid (green check) or not valid (red x).</span>
                      <span class="help-block help-block--entryInfoWebsiteUrl">Please enter a valid website address</span>
                   </div>
@@ -2536,29 +1761,23 @@
             </div>
 
             <div class="row">
-               <div class="col-xs-12 col-md-6">
+               <div class="col-xs-12">
                   <div class="input-group input-group-url-lookup required">
                      <label for="entryInfoOnlineUrl">Online Entries URL</label>
-                     <div class="row" style="width: 100%;">
-                         <div class="col-xs-8">
-                             <input type="url" class="form-control" name="entryInfoOnlineUrl" id="entryInfoOnlineUrl" placeholder="" value="" maxlength="255" data-gtm-form-interact-field-id="0" />
-                             <span class="website-url-icon">
-                                 <i class="fa fa-times"></i>
-                             </span>
-                         </div>
-                         <div class="col-xs-2">
-                             <span class="website-url-icon__check">
-                                 <i class="fa fa-search btn"></i>
-                             </span>
-                         </div>
-                     </div>
+                        <input type="url" class="form-control has-error" name="entryInfoOnlineUrl" id="entryInfoOnlineUrl" placeholder="" value="" maxlength="255" data-gtm-form-interact-field-id="0" />
+                        <span class="website-url-icon__check">
+                           <i class="fa fa-search btn"></i>
+                        </span>
+                        <span class="website-url-icon">
+                           <i class="fa fa-times"></i>
+                        </span>
                      <span class="input-instruction">Copy and paste the full URL (including http:// or https:// from a browser). Once input, click the search button and it will indicate whether the site is valid (green check) or not valid (red x).</span>
-                     <span class="help-block help-block--entryInfoOnlineUrl">Please enter a valid website address for online entries</span>
+                     <span class="help-block help-block--entryInfoOnlineUrl has-error">Please enter a valid website address for online entries</span>
                   </div>
                </div>
             </div>
 
-
+            
             <div class="row date-entries-close">
    <div class="col-xs-12 col-lg-4">
       <div class="form-group date-select-group has-feedback entry-info__close-date--date-container required">
@@ -2578,42 +1797,6 @@
          </div>
          <span class="help-block help-block--DateEntriesClose">Please select a date entries close</span>
       </div>
-   </div>
-</div>
-            <!-- Event Classification Radios -->
-<div class="row one-event-registration">
-   <div class="col-xs-12">
-         <div class="input-group radio-group">
-            <div class="input-group-header radio-group-header required">
-               <label class="icon-help-label" for="tooltip">
-                  One-Event Registration
-                    <!-- <span 
-                        class="icon-help" 
-                        data-toggle="tooltip" 
-                        data-placement="top" 
-                        title="" 
-                        data-container="body" 
-                        data-original-title="">
-                    </span> -->
-               </label>
-            </div>
-            <span class="help-block help-block--eventClassification">Please select an event classification</span>
-            <label class="radio-label radio-label--inline" for="eventClassificationSanctioned">
-               <span class="radio-container">
-                     <input type="radio" name="eventClassification" id="eventClassificationSanctioned" value="sanctioned">
-                     <span class="radio__placeholder"></span>
-               </span>
-               Yes
-            </label>
-            <label class="radio-label radio-label--inline" for="eventClassificationRecognized">
-               <span class="radio-container">
-                     <input type="radio" name="eventClassification" id="eventClassificationRecognized" value="recognized">
-                     <span class="radio__placeholder"></span>
-               </span>
-               No
-            </label>
-         </div>
-         <p class="summary">One-event registration provides USMS insurance coverage to a participant in &quot;one event&quot; (open water race or pool meet). An event that spans consecutive days, such as a two-day swim meet, counts as one event. One-event participants pay a one-time fee. One-event registration is strictly for insurance coverage for the event.  One-event participants are not eligible for Event Rankings, Top 10, USMS records, or other honors (either individual or relay) achieved in that event. Per <a href="https://usms-cdn.azureedge.net/-/media/usms/pdfs/volunteer%20central/rule%20book/part%203.pdf">Article 306.4</a> of the USMS Rule Book, one-event registrations are not allowed for postal events. <a href="https://www.usms.org/volunteer-central/guide-to-local-operations/lmsc-operations/registration/registration-procedures/one-events">Learn more here.</a></p>
    </div>
 </div>
             <div class="row number-of-entries-group">
@@ -2638,34 +1821,6 @@
       </div>
    </div>
 </div>
-            <div class="row temp-range-group">
-   <div class="col-xs-12 col-sm-4">
-      <div class="input-group entry-info__temp-range--min required">
-         <label for="estimatedTempMin">
-            Estimated Low Water Temperature
-         </label>
-         <input dir="rtl" tabindex="0" min="32" max="99" value="" type="number" placeholder="" class="form-control" name="EstimatedTempMin" id="estimatedTempMin">
-         <span class="temp-unit">F</span>
-         <span class="help-block help-block--EstimatedTempMin">Please enter estimated mimimum temperature</span>
-      </div>
-   </div>
-   <div class="col-xs-12 col-sm-4">
-      <div class="input-group entry-info__temp-range--max required">
-         <label for="estimatedTempMax">
-            Estimated High Water Temperature
-         </label>
-         <input tabindex="0" min="32" max="99" value="" type="number" placeholder="" class="form-controlXXX" name="EstimatedTempMaxXXX" id="estimatedTempMaxXXX">
-         <!-- <input dir="rtl" tabindex="0" min="32" max="99" value="" type="number" placeholder="" class="form-control" name="EstimatedTempMax" id="estimatedTempMax"> -->
-         <span class="temp-unit">F</span>
-         <span class="help-block help-block--EstimatedTempMax">Please enter estimated maximum temperature</span>
-      </div>
-   </div>
-</div>
-<script>
-   // $("#estimatedTempMax").spinner({
-   //    step: -1,
-   // });
-</script>
             <div class="row comments-to-chair">
    <div class="col-xs-12 col-sm-8">
          <div class="input-group entry-info__comments">
@@ -2746,7 +1901,7 @@
 
    $("#saveEntryInfo").click( function() {
       $('#accordion').find('.collapse.in').parent().addClass('hasData');
-      $("#safetyPlan h3").click();
+      $("#meetAnnouncement h3").click();
       $(document.documentElement).animate({
          scrollTop: $("#meetAnnouncement").offset().top - 45
       }, 100);
@@ -2761,32 +1916,30 @@
 
 </script>
                               <form id="form-meet-announcement">
-   <div class="section section-meet-announcement" id="safetyPlan">
+   <div class="section section-meet-announcement" id="meetAnnouncement">
       <h3 class="section__header" data-target="#meet-announcement__content" data-toggle="collapse" aria-expanded="false" aria-controls="meet-announcement__content">
-         <span class="section__number">6</span>Safety Plan
+         <span class="section__number">6</span>Meet Announcement
       </h3>
       <div class="section__content collapse" id="meet-announcement__content" data-parent="#accordion">
          <div class="row">
             <div class="col-xs-12">
-               <p>A PDF is required. We've included links below to download the fillable USMS Safety Plan Application and the open water information page to help get you started.</p>
+               <p>This information can be organized by your event registration company or created manually and uploaded. A PDF is required. We've included links below to a checklist of all required items, and a formatted Mirosoft Word template to help get you started.</p>
                <br />
-               <a href="https://www.usms.org/admin/lmschb/owgto_safety_plan_application.docx" class="btn-link">Download the USMS Safety Plan Application Fillable Doc</a>
+               <a href="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/pdfs/guide%20to%20operations%20-%20gto/sanctions/gtomeetannouncementguidepdf.pdf" class="btn-link">Download Checklist</a>
                <br />
                <br />
-               <a href="https://www.usms.org/volunteer-central/guide-to-local-operations/event-management/open-water-event-management/open-water-guide-to-event-operations" class="btn-link">Open Water Information</a>
+               <a href="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/pdfs/guide%20to%20operations%20-%20gto/sanctions/gto_meet_announcement_guide.docx" class="btn-link">Download Template</a>
                <br />
                <br />
                <br />
             </div>
-         </div>
-         <div class="row">
-            <div class="col-xs-12 col-sm-4">
-               <div class="input-group upload-file safety-plan required">
-                  <!-- <span class="help-block file-type">Invalid file type</span> -->
-                  <!-- <span class="help-block no-data">Please upload a safety plan</span> -->
-                  <label for="">USMS Safety Plan Application (PDF only)</label>
+            <div class="col-xs-12 col-sm-8">
+               <div class="input-group upload-file meet-announcement required">
+                  <label for="">Upload Meet Announcement (PDF only)</label>
                   <span class="help-block file-type">Invalid file type</span>
-                  <span class="help-block help-block--safety-plan no-data">Please upload a safety plan</span>
+                  <span class="help-block help-block--meet-announcement no-data">Please upload a meet announcement</span>
+                  <span class="help-block file-type securtiy-scan">Your file did not pass our security scan. Please upload a different file.</span>
+
                   <div class="upload-summary">
                      <button type="button" class="event-document__remove-file" data-toggle="tooltip" title="" data-original-title="Remove document">
                         <i class="fa fa-times"></i>
@@ -2794,7 +1947,7 @@
                      Storedfilename.pdf
                   </div>
                   <div class="upload-box upload-box--file">
-                     <input type="file" data-file-size="3584000" name="safety-plan[]" id="uploadMeetAnnouncement" class="inputfile inputfile-safety-plan" data-multiple-caption="{count} files selected" accept="application/pdf" />
+                     <input type="file" data-file-size="3584000" name="meet-announcement[]" id="uploadMeetAnnouncement" class="inputfile inputfile-meet-announcement" data-multiple-caption="{count} files selected" accept="application/pdf" />
                      <label for="uploadMeetAnnouncement">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path fill="#FFF" d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
                         <span class="file-stored">Choose File</span>
@@ -2803,32 +1956,7 @@
                </div>
             </div>
          </div>
-         <div class="row">
-            <div class="col-xs-12 col-sm-4">
-                <div class="input-group upload-file course-map required">
-                   <label for="">Course Map (PDF only)</label>
-                   <span class="help-block file-type">Invalid file type</span>
-                   <span class="help-block help-block--course-map no-data">Please upload a course map</span>
-                   <div class="upload-summary">
-                      <button type="button" class="event-document__remove-file" data-toggle="tooltip" title="" data-original-title="Remove document">
-                         <i class="fa fa-times"></i>
-                      </button>
-                      Storedfilename.pdf
-                   </div>
-                   <div class="upload-box upload-box--file">
-                      <input type="file" data-file-size="3584000" name="course-map[]" id="uploadMeetAnnouncement" class="inputfile inputfile-course-map" data-multiple-caption="{count} files selected" accept="application/pdf" />
-                      <label for="uploadMeetAnnouncement">
-                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path fill="#FFF" d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
-                         <span class="file-stored">Choose File</span>
-                      </label>
-                   </div>
-                </div>
-             </div>
- 
-
-
-        </div>
-         <!-- <div class="modal fade" id="modalID" tabindex="-1" role="dialog">
+         <div class="modal fade" id="modalID" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                <div class="modal-content">
                   <div class="modal-header">
@@ -2840,29 +1968,29 @@
                   </div>
                </div>
             </div>
-         </div> -->
+         </div>
          <div class="row">
             <div class="section__controls">
-               <button class="btn save-section" id="saveSafetyPlan" type="button">Save & Continue</button>
+               <button class="btn save-section" id="saveMeetAnnouncement" type="button">Save & Continue</button>
             </div>
          </div>
       </div>    
    </div>
  </form>
  <script>
-   var sectionId = ".isEdit #safetyPlane";
+   var sectionId = ".isEdit #meetAnnouncement";
    var sectionInputs = sectionId + " input";
-//    var sectionSelects = sectionId + " select";
-//    var sectionTextarea = sectionId + " textarea";
+   var sectionSelects = sectionId + " select";
+   var sectionTextarea = sectionId + " textarea";
    $(sectionInputs).click( function() {
-      $("#saveSafetyPlan").prop('disabled', false);
+      $("#saveMeetAnnouncement").prop('disabled', false);
    });
-//    $(sectionSelects).on("change", function() {
-//       console.log("select");
-//       $("#saveSafetyPlan").prop('disabled', false);
-//    });
+   $(sectionSelects).on("change", function() {
+      console.log("select");
+      $("#saveMeetAnnouncement").prop('disabled', false);
+   });
 
-   $("#saveSafetyPlan").click( function() {
+   $("#saveMeetAnnouncement").click( function() {
       $('#accordion').find('.collapse.in').parent().removeClass('isEdit');
       $('#accordion').find('.collapse.in').parent().addClass('hasData');
       $("#meetAnnouncement h3").click();
@@ -2873,7 +2001,7 @@
    });
 
    $("#uploadMeetAnnouncement").click( function() {
-      $("#saveSafetyPlan").prop('disabled', false);
+      $("#saveMeetAnnouncement").prop('disabled', false);
       $("#meetAnnouncement .upload-summary").show();
       $("#meetAnnouncement .file-stored").text('Replace File');
    });
@@ -3458,19 +2586,22 @@
 </script>
 
       <script type="text/javascript">
-         $("#event-name h3").click();
-
-         $(".row .event-info-list-on-calendar").show();
-         $(".row .event-info-is-championship").show();
-         $(".row .event-info-is-virtual").hide();
-
-         setViewName("Open Water");
          
-         // function setPageName() {
-         //    const pageName = "Open Water";
-         //    $(document).trigger("settingPageName", { data: pageName });
-         // }
-     
+         // $("#event-name h3").click();
+
+         setViewName("Virtual");
+
+         // Rewrite the section number for Virtual because we removed the Locations section
+         const section5 = document.querySelector('#entry-information .section__number');
+         const section6 = document.querySelector('#meetAnnouncement .section__number');
+
+         if (section5) {
+            section5.textContent = '4';
+         }
+         if (section6) {
+            section6.textContent = '5';
+         }
+
       </script>
    </body>
 </html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<!--[if IE 9]>
+<html lang="en" class="ie9 no-js">
+<![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+   <!--<![endif]-->
+   <head>
+      <title>Add Virtual Pool</title>
+      <sergey-import src="site/head_meta" />
+      <sergey-import src="site/head_js" />
+      <sergey-import src="site/head_css" />
+      <!-- <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css"> -->
+      <link rel="stylesheet" href="https://www.usms.org/styles/Club/club2.min.css">
+      <!-- <link rel="stylesheet" href="https://www.usms.org/styles/clubs.min.css"> -->
+      <link rel="stylesheet" href="./css/date-picker.css">
+      <link rel="stylesheet" href="./css/convert-this-from-club.css">
+      <link rel="stylesheet" href="./css/event-sanction.css">
+      <link rel="stylesheet" href="./css/event-mockup-ignore.css">
+   </head>
+   <body>
+      <div id="main-container">
+         <sergey-import src="foundation/site-header" />
+         <main role="main">
+            <div class="breadcrumb-container" style="position: relative; padding-bottom: 50px;">
+               <div class="breadcrumb">
+                  <div class="usms-container">
+                     <div class="row">
+                        <div class="col-xs-12">
+                           <div class="breadcrumb__container">
+                              <ul class="breadcrumb__items list--nostyle">
+                                 <li class="text-capitalize breadcrumb__item ">
+                                    <a class="breadcrumb__link" href="/public">Home<i class="fa fa-chevron-right"></i></a>
+                                 </li>
+                                 <li class="text-capitalize breadcrumb__item ">
+                                    <a class="breadcrumb__link" href="/public/event/event-dashboard.html">Event Central<i class="fa fa-chevron-right"></i></a>
+                                 </li>
+                              </ul>
+                              <span class="breadcrumb__title text-capitalize">Add Event</span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="section section-full bg-gray p-tb-10 p-mh-500">
+               <div class="usms-container p-tb-10">
+                     <div class="row">
+                        <div class="col-xs-12">
+                           <header>
+                              <h1>Add a Virtual Event</h1>
+                           </header>
+                        </div>
+                     </div>
+               </div>
+               <div class="usms-container form__container  p-tb-10 club-edit__container">
+                  <div class="row ">
+                     <div class="col-xs-12 ">
+                        <div class="loading" style="display: none;">
+                           <img src="https://www.usms.org/img/loader.gif" alt="loading">
+                        </div>
+                        <div class="club-edit event-edit" id="accordion">
+
+                           <div class="accordion-group">
+                              <sergey-import src="event-sanction/01-event-name" />
+                              <sergey-import src="event-sanction/02-event-information" />
+                              <sergey-import src="event-sanction/03-contact-information" />
+                              <sergey-import src="event-sanction/05-entry-information" />
+                              <sergey-import src="event-sanction/06-meet-announcement" />
+                              <sergey-import src="event-sanction/accept-submit" />
+                           </div>
+
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </main>
+         <sergey-import src="foundation/footer" />
+      </div>
+
+      <sergey-import src="site/footer_scripts" />
+
+      <script type="text/javascript">
+         
+         // $("#event-name h3").click();
+
+         setViewName("Virtual");
+
+         // Rewrite the section number for Virtual because we removed the Locations section
+         const section5 = document.querySelector('#entry-information .section__number');
+         const section6 = document.querySelector('#meetAnnouncement .section__number');
+
+         if (section5) {
+            section5.textContent = '4';
+         }
+         if (section6) {
+            section6.textContent = '5';
+         }
+
+      </script>
+   </body>
+</html>
