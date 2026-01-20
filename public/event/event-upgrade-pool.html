@@ -2815,6 +2815,11 @@
       $("#saveLocation").prop('disabled', false);
    });
    
+   // var isVirtualYesRadio = document.getElementById('isVirtualYes');
+   $("#isVirtualYes").click( function() {
+      $(".section.section-location-information").toggleClass('section--disabled');
+   });
+
    $("#saveLocation").click( function() {
       $('#accordion').find('.collapse.in').parent().addClass('hasData');
       $("#entry-information h3").click();
