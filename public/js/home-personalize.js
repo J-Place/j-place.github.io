@@ -2,7 +2,7 @@
   document.addEventListener('DOMContentLoaded', function () {
     var section = document.querySelector('.personalize');
     var content = document.querySelector('.personalize__content');
-    var cols = document.querySelectorAll('.personalize .cta-row .cta-col');
+    var cols = document.querySelectorAll('.personalize .cta-row .col-lg-3.cta-col');
 
     if (!section || !content) return;
 
