@@ -1,0 +1,43 @@
+<style>
+
+    .ccs-records .html-container {
+        display: block;
+        overflow-x: auto;
+        padding: 0;
+        margin: 0 0 5rem 0;
+    }
+    .ccs-records table {
+        width: 100%;
+        min-width: 640px;
+    }
+    .ccs-records thead tr {
+        background-color: #000;
+        color: #FFF;
+    }
+    .ccs-records tr:nth-of-type(even) {
+        background-color: #CCC;
+    }
+    .ccs-records th, .ccs-records td {
+        padding: .75rem;
+    }
+    .ccs-records td {
+        vertical-align: top;
+    }
+    .ccs-records td.swimmer {
+        max-width: 200px;
+    }
+</style>
+
+<script>
+    function setTableWidth() {
+        const windowWidth = window.innerWidth - 10;
+        const containers = document.querySelectorAll('.ccs-records .html-container');
+        containers.forEach(container => {
+            container.style.width = `${windowWidth}px`;
+        });
+    }
+    if (window.innerWidth < 1200) {
+        window.addEventListener('load', setTableWidth);
+        window.addEventListener('resize', setTableWidth);
+    }
+</script>

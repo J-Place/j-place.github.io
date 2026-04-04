@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Live-Cloning Infinite Carousel</title>
+<style>
+  body { margin: 0; padding: 40px; font-family: sans-serif; }
+
+  .event-marquee {
+    width: 100%;
+    overflow-x: scroll;
+    white-space: nowrap;
+    cursor: grab;
+    scroll-behavior: auto;
+  }
+
+  .track {
+    display: inline-flex;
+  }
+
+  .item {
+    min-width: 200px;
+    height: 120px;
+    background: #eee;
+    border: 1px solid #bbb;
+    margin-right: 10px;
+    border-radius: 8px;
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .event-marquee::-webkit-scrollbar { display: none; }
+</style>
+</head>
+
+<body>
+
+<div class="event-marquee" id="eventMarquee">
+  <div class="track" id="track">
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+    <div class="item">4</div>
+  </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        const marqueecarousel = document.getElementById("eventMarquee");
+        const track = document.getElementById("track");
+
+        if (!marqueecarousel || !track) return; // Sitecore safety check
+
+        const originalItems = Array.from(track.children);
+        const THRESHOLD = 400;
+
+        function checkEdges() {
+            const scrollLeft = marqueecarousel.scrollLeft;
+            const maxScroll = track.scrollWidth - marqueecarousel.clientWidth;
+
+            if (scrollLeft < THRESHOLD) prependSet();
+            if (scrollLeft > maxScroll - THRESHOLD) appendSet();
+        }
+
+        function appendSet() {
+            originalItems.forEach(item =>
+            track.appendChild(item.cloneNode(true))
+            );
+        }
+
+        function prependSet() {
+            const oldLeft = marqueecarousel.scrollLeft;
+            const clones = originalItems.map(i => i.cloneNode(true));
+
+            clones.reverse().forEach(clone =>
+            track.insertBefore(clone, track.firstChild)
+            );
+
+            const addedWidth = clones.length * (originalItems[0].offsetWidth + 10);
+            marqueecarousel.scrollLeft = oldLeft + addedWidth;
+        }
+
+        setInterval(checkEdges, 50);
+
+        let isDown = false, startX, startScroll;
+
+        function stopDrag() {
+            isDown = false;
+            marqueecarousel.style.cursor = "grab";
+            startAuto();
+        }
+
+        marqueecarousel.addEventListener("mousedown", e => {
+            isDown = true;
+            startX = e.pageX;
+            startScroll = marqueecarousel.scrollLeft;
+            marqueecarousel.style.cursor = "grabbing";
+            stopAuto();
+        });
+
+        marqueecarousel.addEventListener("mousemove", e => {
+            if (!isDown) return;
+            marqueecarousel.scrollLeft = startScroll - (e.pageX - startX);
+        });
+
+        marqueecarousel.addEventListener("mouseup", stopDrag);
+        marqueecarousel.addEventListener("mouseleave", stopDrag);
+
+        marqueecarousel.addEventListener("touchstart", e => {
+            isDown = true;
+            startX = e.touches[0].pageX;
+            startScroll = marqueecarousel.scrollLeft;
+            stopAuto();
+        }, { passive: true });
+
+        marqueecarousel.addEventListener("touchmove", e => {
+            if (!isDown) return;
+            marqueecarousel.scrollLeft = startScroll - (e.touches[0].pageX - startX);
+        }, { passive: true });
+
+        marqueecarousel.addEventListener("touchend", stopDrag);
+
+        let auto;
+        function startAuto() {
+            stopAuto();
+            auto = setInterval(() => {
+            marqueecarousel.scrollLeft += 1;
+            checkEdges();
+            }, 16);
+        }
+        function stopAuto() {
+            clearInterval(auto);
+        }
+
+        startAuto();
+
+    });
+</script>
+
+</body>
+</html>

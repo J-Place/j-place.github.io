@@ -1,0 +1,198 @@
+<style>
+    .header-static {
+        margin-bottom: -10px;
+        position: sticky;
+        top: 0;
+        z-index: 999;
+        background-color: transparent;
+    }
+    .header-static > div {
+        background-color: transparent;
+        background-color: rgba(0,0,0,0.5);
+        position: relative;
+        z-index: 101;
+    }
+    .ccs-header {
+        display: flex;
+        height: 110px;
+        background-color: rgba(0, 0, 0, 0.35);
+    }
+    .ccs-header {
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+        opacity: 1;
+        visibility: visible;
+    }
+    .ccs-header.hidden {
+        opacity: 0;
+        visibility: hidden;
+    }
+    .ccs-logo {
+        width: 300px;
+    }
+    .ccs-logo img {
+        margin-left: 2rem;
+        margin-top: 2rem;
+    }
+    .ccs-nav {
+        line-height: 110px;
+        display: flex;
+        flex-direction: row;
+    }
+    .ccs-nav--main {
+        list-style: none;
+        display: flex;
+    }
+    .ccs-nav--main li {
+        flex-direction: row;
+        font-weight: bold;
+        color: #FFF;
+        margin-right: 1.5rem;
+    }
+    .ccs-nav--dropdown {
+        display: none;
+    }
+    .ccs-nav--actions {
+        list-style: none;
+        display: flex;
+    }
+    .ccs-nav__search {
+        width: 35px;
+    }
+    .ccs-nav__login {
+        width: 35px;
+    }
+
+
+    nav {
+      background: #003366;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    .menu {
+      display: flex;
+      list-style: none;
+      position: relative;
+    }
+
+    .menu > li {
+      position: relative;
+    }
+
+    .menu > li > a {
+      display: block;
+      padding: 1rem;
+      color: white;
+      text-decoration: none;
+    }
+
+    .menu > li > a:focus,
+    .menu > li > a:hover {
+      background: #0055aa;
+    }
+
+    .submenu {
+      display: none;
+      position: absolute;
+      background: #0055aa;
+      list-style: none;
+      top: 100%;
+      left: 0;
+      min-width: 200px;
+    }
+
+    .submenu li a {
+      display: block;
+      padding: 0.75rem 1rem;
+      color: white;
+      text-decoration: none;
+    }
+
+    .submenu li a:hover,
+    .submenu li a:focus {
+      background: #0077cc;
+    }
+
+    /* Show dropdown on focus or hover */
+    .menu > li:focus-within .submenu,
+    .menu > li:hover .submenu {
+      display: block;
+    }
+
+    /* Visually Hidden (Screen Reader Text) */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    
+</style>
+<div class="ccs-header">
+
+    
+    <div class="ccs-logo">
+        <img height="70" width="auto" alt="College Club Swimming" src="-/media/5db8b2b7a4ee417d9513761a7ae5e9e7.ashx" />
+    </div>
+    <!-- <nav class="ccs-nav">
+        <ul class="ccs-nav--main">
+            <li class="ccs-nav__link">
+                <a href="" class="">Events</a>
+                <ul class="ccs-nav--dropdown">
+                    <li class="ccs-nav__link ccs-nav__link--dropdown"><a href="">Link 1</a></li>
+                    <li class="ccs-nav__link ccs-nav__link--dropdown"><a href="">Link 2</a></li>
+                </ul>
+            </li>
+            <li class="ccs-nav__link"><a href="">Results</a></li>
+            <li class="ccs-nav__link"><a href="">Club Lookup</a></li>
+            <li class="ccs-nav__link"><a href="">About</a></li>
+            <li class="ccs-nav__link ccs-nav__register"><a href="">Register</a></li>
+        </ul>
+        <ul class="ccs-nav--actions">
+            <li class="ccs-nav__search"><a href=""><img src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-search.svg" alt="Search"></a></li>
+            <li class="ccs-nav__login"><a href=""><img src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-profile-login.svg" alt="Login"></a></li>
+        </ul>
+    </nav>  -->
+   
+    <nav role="navigation" aria-label="Main navigation">
+      <ul class="menu">
+        <li><a href="/">Home</a></li>
+        <li>
+          <a href="/about" aria-haspopup="true" aria-expanded="false">About</a>
+          <ul class="submenu" role="menu" aria-label="About submenu">
+            <li><a href="/about/team" role="menuitem">Our Team</a></li>
+            <li><a href="/about/history" role="menuitem">Our History</a></li>
+          </ul>
+        </li>
+        <li>
+          <a href="/services" aria-haspopup="true" aria-expanded="false">Services</a>
+          <ul class="submenu" role="menu" aria-label="Services submenu">
+            <li><a href="/services/web-dev" role="menuitem">Web Development</a></li>
+            <li><a href="/services/accessibility" role="menuitem">Accessibility Consulting</a></li>
+          </ul>
+        </li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </nav>
+
+</div>
+
+<script>
+    let lastScrollTop = 0;
+    const header = document.querySelector('.ccs-header');
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+        if (currentScroll > lastScrollTop && currentScroll > 200) {
+            header.classList.add('hidden');
+        } else if (currentScroll < lastScrollTop) {
+            header.classList.remove('hidden');
+        }
+        lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+    });
+</script>

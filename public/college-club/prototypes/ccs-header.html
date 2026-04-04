@@ -1,0 +1,108 @@
+<link rel="stylesheet" href="css/ccs-header.css">
+<header class="ccs-header">
+    <div class="ccs-logo">
+        <img height="70" width="auto" alt="College Club Swimming" src="https://ccstest.usms.org/-/media/ccs/site/ccs-logo-custom.svg" />
+    </div>
+
+    <nav role="navigation" aria-label="Main navigation">
+      <ul class="menu">
+          <li>
+            <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-events">Events</button>
+            <ul id="submenu-events" class="submenu" role="menu" aria-label="Events submenu" aria-hidden="true">
+                <li><a href="/" role="menuitem">Calendar of Events</a></li>
+                <li><a href="/" role="menuitem">National Championships</a></li>
+                <li><a href="/" role="menuitem">Regional Championships</a></li>
+                <li><a href="/" role="menuitem">Submit an Event to the Calendar</a></li>
+            </ul>
+          </li>
+          <li>
+            <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-results">Results</button>
+            <ul id="submenu-results" class="submenu" role="menu" aria-label="Results submenu" aria-hidden="true">
+                <li><a href="/" role="menuitem">Meet Results</a></li>
+                <li><a href="/" role="menuitem">Rankings</a></li>
+                <li><a href="/" role="menuitem">Records</a></li>
+            </ul>
+          </li>
+          <li><a href="/">Club Lookup</a></li>
+          <li>
+            <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-about">About</button>
+            <ul id="submenu-about" class="submenu" role="menu" aria-label="About submenu" aria-hidden="true">
+                <li><a href="/" role="menuitem">FAQ's</a></li>
+                <li><a href="/" role="menuitem">Policy and Governance</a></li>
+                <li><a href="/" role="menuitem">Town Hall Meetings</a></li>
+                <li><a href="/" role="menuitem">Advisory Board</a></li>
+                <li><a href="/" role="menuitem">Background</a></li>
+                <li><a href="/" role="menuitem">Benefits</a></li>
+            </ul>
+          </li>
+          <li>
+            <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-registert">Register</button>
+            <ul id="submenu-registert" class="submenu" role="menu" aria-label="Register submenu" aria-hidden="true">
+                <li><a href="/" role="menuitem">Swimmer Registration</a></li>
+                <li><a href="/" role="menuitem">Club Registration</a></li>
+            </ul>
+          </li>
+
+
+      </ul>
+    </nav>
+
+    <nav class="admin" aria-label="Admin navigation">
+      <ul class="menu">
+        <li class="menu-item--search">
+          <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-search" class="admin-search-btn"><span>Login</span></button>
+          <ul id="submenu-search" class="submenu submenu-search" role="menu" aria-label="Admin submenu" aria-hidden="true">
+              <li><input type="text" /><a href="/" role="menuitem"><span>Submit</span></a></li>
+          </ul>
+        </li>
+        <li class="menu-item--login">
+          <button aria-haspopup="true" aria-expanded="false" aria-controls="submenu-admin" class="admin-login-btn"><span>Login</span></button>
+          <ul id="submenu-admin" class="submenu submenu-login" role="menu" aria-label="Admin submenu" aria-hidden="true">
+              <li><a href="/" role="menuitem">Swimmer Login</a></li>
+              <li><a href="/" role="menuitem">Admin Login</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+  </header>
+
+<script>
+  // Accessible Dropdown Toggle Script
+  document.querySelectorAll('.menu > li > button').forEach(button => {
+    button.addEventListener('click', () => {
+      const expanded = button.getAttribute('aria-expanded') === 'true';
+      const submenu = document.getElementById(button.getAttribute('aria-controls'));
+
+      // Close all other open dropdowns
+      document.querySelectorAll('.menu > li > button').forEach(btn => {
+        btn.setAttribute('aria-expanded', 'false');
+      });
+      document.querySelectorAll('.submenu').forEach(menu => {
+        menu.setAttribute('aria-hidden', 'true');
+      });
+
+      // Toggle this one
+      button.setAttribute('aria-expanded', String(!expanded));
+      submenu.setAttribute('aria-hidden', String(expanded));
+    });
+
+    // Keyboard support
+    button.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        button.setAttribute('aria-expanded', 'false');
+        const submenu = document.getElementById(button.getAttribute('aria-controls'));
+        submenu.setAttribute('aria-hidden', 'true');
+        button.focus();
+      }
+    });
+  });
+
+  // Optional: Close menus when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('nav')) {
+      document.querySelectorAll('.menu > li > button').forEach(btn => btn.setAttribute('aria-expanded', 'false'));
+      document.querySelectorAll('.submenu').forEach(menu => menu.setAttribute('aria-hidden', 'true'));
+    }
+  });
+</script>

@@ -1,0 +1,105 @@
+<style>
+
+.parallax-container {
+    position: relative;
+    height: 900px;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  /* Background full width and height */
+  .parallax-background img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 900px;
+    object-fit: cover;
+    z-index: 1;
+  }
+
+  /* Foreground image full width, positioned bottom of container */
+  .parallax-foreground {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: visible;
+    z-index: 3;
+    pointer-events: none; /* avoid interaction */
+  }
+  .parallax-foreground img {
+    width: 100%;
+    display: block;
+  }
+
+  /* Text container below parallax container */
+  .parallax-text {
+    position: relative;
+    width: 100%;
+    margin-top: 20px; /* some spacing */
+    z-index: 4;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 2rem;
+    color: #222;
+  }
+
+    .parallax-text h3 {
+        color: white;
+        font-size: 8rem;
+        font-weight: normal;
+        line-height: 100%;
+        font-family: "Anton", sans-serif !important;
+        text-transform: uppercase;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+
+
+<div class="parallax-container" id="parallaxContainer">
+    <div class="parallax-foreground" id="foreground">
+      <img src="https://j-place.github.io/public/college-club/img/ccs-parallax-foreground.png" alt="" />
+    </div>
+    <div class="parallax-text" id="text">
+      <h3>Fave Fun.</h3>
+      <h3>Compete.</h3>
+      <h3>Connect.</h3>
+    </div>
+    <div class="parallax-background">
+      <img src="https://j-place.github.io/public/college-club/img/ccs-parallax-background.jpg" alt="" />
+    </div>
+  </div>
+
+
+
+
+
+  <script>
+    const foreground = document.getElementById('foreground');
+  const text = document.getElementById('text');
+  const parallaxContainer = document.getElementById('parallaxContainer');
+
+  window.addEventListener('scroll', () => {
+    const containerRect = parallaxContainer.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+
+    // Calculate how far the container top is from viewport top (negative if scrolled past top)
+    const scrollProgress = 1 - (containerRect.bottom / (windowHeight + containerRect.height));
+    // clamp scrollProgress between 0 and 1
+    const clampedProgress = Math.min(Math.max(scrollProgress, 0), 1);
+
+    // Foreground moves DOWN slightly as user scrolls down (max 50px)
+    const fgTranslateY = clampedProgress * 50; 
+
+    // Text moves UP from below (max 100px)
+    const textTranslateY = (1 - clampedProgress) * 100;
+
+    foreground.style.transform = `translateY(${fgTranslateY}px)`;
+    text.style.transform = `translateY(${textTranslateY}px)`;
+  });
+  </script>

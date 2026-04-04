@@ -1,0 +1,356 @@
+<meta charset="utf-8" /> <!-- utf-8 works for most cases -->
+<meta name="viewport" content="width=device-width" /> <!-- Forcing initial-scale shouldn't be necessary -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge" /> <!-- Use the latest (edge) version of IE rendering engine -->
+<meta name="x-apple-disable-message-reformatting" />  <!-- Disable auto-scale in iOS 10 Mail entirely -->
+<title>LMSC Sanction Approval &mdash; U.S. Masters Swimming</title>
+<!-- The title tag shows in email notifications, like Android 4.4. -->
+<!-- Web Font / @font-face : BEGIN -->
+<!-- NOTE: If web fonts are not required, lines 10 - 27 can be safely removed. -->
+<!-- Desktop Outlook chokes on web font references and defaults to Times New Roman, so we force a safe fallback font. -->
+<!--[if mso]>
+        <style>
+            * {
+                font-family: sans-serif !important;
+            }
+        </style>
+    <![endif]-->
+<!-- All other clients get the webfont reference; some will render the font and others will silently fail to the fallbacks. More on that here: http://stylecampaign.com/blog/2015/02/webfont-support-in-email/ -->
+<!--[if !mso]><!-->
+<!-- insert web font reference, eg: <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'> -->
+<!--<![endif]-->
+<!-- Web Font / @font-face : END -->
+<!-- CSS Reset : BEGIN -->
+<style>
+    /* What it does: Remove spaces around the email design added by some email clients. */
+    /* Beware: It can remove the padding / margin and add a background color to the compose a reply window. */
+    html,
+    body {
+    margin: 0 auto !important;
+    padding: 0 !important;
+    height: 100% !important;
+    width: 100% !important;
+    }
+    ul {
+    list-style-type: none;
+    }
+    /* What it does: Stops email clients resizing small text. */
+    * {
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    }
+    /* What it does: Centers email on Android 4.4 */
+    div[style*="margin: 16px 0"] {
+    margin: 0 !important;
+    }
+    /* What it does: Stops Outlook from adding extra spacing to tables. */
+    table,
+    td {
+    mso-table-lspace: 0pt !important;
+    mso-table-rspace: 0pt !important;
+    }
+    /* What it does: Fixes webkit padding issue. Fix for Yahoo mail table alignment bug. Applies table-layout to the first 2 tables then removes for anything nested deeper. */
+    table {
+    border-spacing: 0 !important;
+    border-collapse: collapse !important;
+    table-layout: fixed !important;
+    margin: 0 auto !important;
+    }
+    table table table {
+    table-layout: auto;
+    }
+    /* What it does: Prevents Windows 10 Mail from underlining links despite inline CSS. Styles for underlined links should be inline. */
+    a {
+    text-decoration: none;
+    }
+    /* What it does: Uses a better rendering method when resizing images in IE. */
+    img {
+    -ms-interpolation-mode:bicubic;
+    }
+    /* What it does: A work-around for email clients meddling in triggered links. */
+    *[x-apple-data-detectors],  /* iOS */
+    .unstyle-auto-detected-links *,
+    .aBn {
+    border-bottom: 0 !important;
+    cursor: default !important;
+    color: inherit !important;
+    text-decoration: none !important;
+    font-size: inherit !important;
+    font-family: inherit !important;
+    font-weight: inherit !important;
+    line-height: inherit !important;
+    }
+    /* What it does: Prevents Gmail from displaying a download button on large, non-linked images. */
+    .a6S {
+    display: none !important;
+    opacity: 0.01 !important;
+    }
+    /* If the above doesn't work, add a .g-img class to any image in question. */
+    img.g-img + div {
+    display: none !important;
+    }
+    body {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+    background-color: #ffffff;
+    }
+    .email-container {
+    margin: 20px auto !important;
+    }
+    .promo-grid img {
+    width: 100%;
+    }
+    .promo-grid a {
+    color: #333;
+    }
+    .promo-grid h2 {
+    font-size: 15px;
+    margin-top: 5px;
+    margin-bottom: 0;
+    text-align: center;
+    }
+    .promo-grid p {
+    font-size: 14px;
+    line-height: 16px;
+    margin-top: 2px;
+    text-align: center;
+    }
+    /* What it does: Removes right gutter in Gmail iOS app: https://github.com/TedGoas/Cerberus/issues/89  */
+    /* Create one of these media queries for each additional viewport size you'd like to fix */
+    /* iPhone 4, 4S, 5, 5S, 5C, and 5SE */
+    @media only screen and (min-device-width: 320px) and (max-device-width: 374px) {
+    .email-container {
+    min-width: 320px !important;
+    }
+    }
+    /* iPhone 6, 6S, 7, 8, and X */
+    @media only screen and (min-device-width: 375px) and (max-device-width: 413px) {
+    .email-container {
+    min-width: 375px !important;
+    }
+    }
+    /* iPhone 6+, 7+, and 8+ */
+    @media only screen and (min-device-width: 414px) {
+    .email-container {
+    min-width: 414px !important;
+    }
+    }
+</style>
+<!-- CSS Reset : END -->
+<!-- Reset list spacing because Outlook ignores much of our inline CSS. -->
+<!--[if mso]>
+    <style type="text/css">
+        ul,
+        ol {
+            margin: 0 !important;
+        }
+        li {
+            margin-left: 30px !important;
+        }
+        li.list-item-first {
+            margin-top: 0 !important;
+        }
+        li.list-item-last {
+            margin-bottom: 10px !important;
+        }
+    </style>
+    <![endif]-->
+<!-- Progressive Enhancements : BEGIN -->
+<style>
+    /* What it does: Hover styles for buttons */
+    .button-td,
+    .button-a {
+    transition: all 100ms ease-in;
+    }
+    .button-td-primary:hover,
+    .button-a-primary:hover {
+    background: #1e3666 !important;
+    border-color: #1e3666 !important;
+    }
+    .email-container {
+    border: 3px solid #256BB2;
+    margin: 2rem 0;
+    }
+    /* Media Queries */
+    @media screen and (max-width: 600px) {
+    .email-container {
+    width: 100% !important;
+    margin: auto !important;
+    }
+    /* What it does: Forces elements to resize to the full width of their container. Useful for resizing images beyond their max-width. */
+    .fluid {
+    max-width: 100% !important;
+    height: auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    }
+    /* What it does: Forces table cells into full-width rows. */
+    .stack-column,
+    .stack-column-center {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    direction: ltr !important;
+    }
+    /* And center justify these ones. */
+    .stack-column-center {
+    text-align: center !important;
+    }
+    /* What it does: Generic utility class for centering. Useful for images, buttons, and nested tables. */
+    .center-on-narrow {
+    text-align: center !important;
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    float: none !important;
+    }
+    table.center-on-narrow {
+    display: inline-block !important;
+    }
+    /* What it does: Adjust typography on small screens to improve readability */
+    .email-container p {
+    font-size: 17px !important;
+    }
+    }
+</style>
+<!-- Progressive Enhancements : END -->
+<!-- What it does: Makes background images in 72ppi Outlook render at correct size. -->
+<!--[if gte mso 9]>
+    <xml>
+        <o:OfficeDocumentSettings>
+            <o:AllowPNG></o:AllowPNG>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+    </xml>
+    <![endif]-->
+<!--
+    The email background color (#ffffff) is defined in three places:
+    1. body tag: for most email clients
+    2. center tag: for Gmail and Inbox mobile apps and web versions of Gmail, GSuite, Inbox, Yahoo, AOL, Libero, Comcast, freenet, Mail.ru, Orange.fr
+    3. mso conditional: For Windows 10 Mail
+-->
+<center style="width: 100%; background-color: #ffffff;">
+<!--[if mso | IE]>
+    <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #ffffff;">
+    <tr>
+    <td>
+    <![endif]-->
+<!-- Visually Hidden Preheader Text : BEGIN -->
+</center>
+<div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">
+Create Your Account &mdash; U.S. Masters Swimming
+</div>
+<center style="width: 100%; background-color: #ffffff;">
+<!-- Visually Hidden Preheader Text : END -->
+<!-- Create white space after the desired preview text so email clients don’t pull other distracting text into the inbox preview. Extend as necessary. -->
+<!-- Preview Text Spacing Hack : BEGIN -->
+</center>
+<div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">
+&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+</div>
+<center style="width: 100%; background-color: #ffffff;">
+<!-- Preview Text Spacing Hack : END -->
+<!-- Email Body : BEGIN -->
+</center>
+<table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" class="email-container">
+    <!-- Email Header : BEGIN -->
+    <tbody>
+        <tr>
+            <td style="padding: 20px 20px 15px; text-align: left; background-color: #ffffff; border-bottom: 3px solid #256BB2;">
+            <img alt="U.S.Masters Swimming" width="264" class="email-confirmation__logo" src="https://www.usms.org/-/media/usms/developers/images/logo/usmslogo-email.jpg" />
+            </td>
+        </tr>
+        <!-- Email Header : END -->
+        <!-- Hero Image, Flush : BEGIN -->
+        <tr>
+            <td style="background-color: #ffffff; padding: 20px;">
+                <p>Hi $firstname$ of LMSC Sanctions Officer,</p>
+                <p>Words here about the sanction request that has been submitted or resubmitted.&nbsp; The Sanctions Officer needs to either approve or deny the request using the buttons below.&nbsp;&nbsp;</p>
+                <p><strong>Event Name</strong>: $Event Name$</p>
+                <p><strong>Event Type</strong>: $Event Type$</p>
+
+                <p><strong>Event Classification</strong>: $Event Classification$</p>
+                <p><strong>Sanctioned Other</strong>: $Sanctioned Other$</p>
+
+                <p><strong>Event Course</strong>: $Event Course$</p>
+                <p><strong>Event Distance</strong>: $Event Distance$</p>
+                <p><strong>LMSC</strong>: $LMSC Name$</p>
+                <p><strong>Start Date</strong>: $Start Date$</p>
+                <p><strong>End Date</strong>: $End Date$</p>                
+                <p><strong>Event Description</strong>: $Event Description$</p>
+                <p><strong>Image Uploaded</strong>: $Image Uploaded$</p>
+                <p><strong>Public</strong>: $Public$</p>
+                <p><strong>Championship</strong>: $Championship$</p>
+                <p><strong>Virtual</strong>: $Virtual$</p>
+                <p><strong>Clinic</strong>: $Clinic$</p>
+
+                <p><strong>Event Director</strong>: $Event Director$</p>
+                <p><strong>Head Referee</strong>: $Head Referee$</p>
+                <p><strong>Safety Coordinator</strong>: $Safety Coordinator$</p>
+                <p><strong>Open Water Referee</strong>: $Open Water Referee$</p>
+                <p><strong>Safety Director</strong>: $Safety Director$</p>
+                <p><strong>Event Host</strong>: $Event Host$</p>
+
+                <p><strong>Venue Name</strong>: $Venue Name$</p>
+                <p><strong>Pool Name</strong>: $Pool Name$</p>
+                <p><strong>Pool Configuration</strong>: $Pool Configuration$</p>
+                <p><strong>Course Decription</strong>: $Course Decription$</p>
+                <p><strong>Timing System</strong>: $Timing System$</p>
+                
+                <p><strong>Event Website</strong>: $Event Website$</p>
+                <p><strong>Online Entries</strong>: $Online Entries$</p>
+                <p><strong>Entries Previous</strong>: $Entries Previous$</p>
+                <p><strong>Entries Expected</strong>: $Entries Expected$</p>
+                <p><strong>Expected Low Temp</strong>: $Expected Low Temp$</p>
+                <p><strong>Expected High Temp</strong>: $Expected High Temp$</p>
+                <p><strong>Comments To Chair</strong>: $Comments To Chair$</p>
+                <p><strong>Uploaded Paper Entry</strong>: $Uploaded Paper Entry$</p>                
+                <p><strong>Uploaded Safety Plan</strong>: $Uploaded Safety Plan$</p>
+                <p><strong>Uploaded Course Map</strong>: $Uploaded Course Map$</p>
+                <p><strong>Uploaded Meet Announcement</strong>: $Uploaded Meet Announcement$</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="background-color: #ffffff; padding: 20px 20px 0;">
+            <table align="left" role="presentation" cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr>
+                        <td align="center" class="button-td button-td-primary" style="padding:15px; border-radius:4px; background-color:#0068ad; color:#FFF;">
+                        <a href="$tokenized_url$" style="color:#ffffff; font-size:15px; font-weight:normal; text-align:center; text-decoration:none; font-family:Arial, sans-serif; -webkit-text-size-adjust:none;">
+                        Approve Sanction Request</a>
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;</td>
+                        <td align="center" class="button-td button-td-primary" style="padding:15px; border-radius:4px; background-color:#0068ad; color:#FFF;">
+                            <a href="$tokenized_url$" style="color:#ffffff; font-size:15px; font-weight:normal; text-align:center; text-decoration:none; font-family:Arial, sans-serif; -webkit-text-size-adjust:none;">
+                            Deny Sanction Request</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            </td>
+        </tr>
+        <tr>
+            <td style="background-color: #ffffff; padding: 20px;">
+            <p style="margin: 0 auto;">
+            <strong>Questions?</strong>
+            <br />
+            Contact us at&nbsp;<a href="mailto:membership@usmastersswimming.org">membership@usmastersswimming.org</a>
+            <br />
+            or call 941‑256‑USMS&nbsp;(8767)
+            </p>
+            <p><em><strong>Your Friends at U.S. Masters Swimming</strong></em></p>
+            <p>&nbsp;</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<center style="width: 100%; background-color: #ffffff;">
+<!-- Email Body : END -->
+<!--[if mso | IE]>
+    </td>
+    </tr>
+    </table>
+    <![endif]-->
+</center>
+&lt;grammarly-desktop-integration data-grammarly-shadow-root="true"&gt;&lt;/grammarly-desktop-integration&gt;

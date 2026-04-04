@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: Arial, sans-serif;
+    }
+    thead {
+      background-color: #333;
+      color: white;
+    }
+    th, td {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+    tbody tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+
+<div id="table-container"></div>
+
+<script>
+  const data = [
+    ["#", "First", "Last", "Club", "Time", "Date"],
+    ["1", "Allison", "Nastasi", "GTSC", "4:36.10", "04/06/2018"],
+    ["2", "April", "Wood", "CSM", "4:37.10", "12/01/2017"],
+    ["3", "Candice", "Rosen", "MESA", "4:37.89", "12/01/2017"],
+    ["4", "Sydney", "Skiles", "WSCU", "4:42.90", "12/01/2017"],
+    ["5", "Allison", "Nastasi", "GTSC", "4:48.32", "01/28/2018"],
+    // ... add remaining data rows
+  ];
+
+  function generateTable(data) {
+    const table = document.createElement('table');
+    const thead = document.createElement('thead');
+    const tbody = document.createElement('tbody');
+
+    // Create header row
+    const headerRow = document.createElement('tr');
+    data[0].forEach(headerText => {
+      const th = document.createElement('th');
+      th.textContent = headerText;
+      headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+
+    // Create data rows
+    for (let i = 1; i < data.length; i++) {
+      const row = document.createElement('tr');
+      data[i].forEach(cellText => {
+        const td = document.createElement('td');
+        td.textContent = cellText;
+        row.appendChild(td);
+      });
+      tbody.appendChild(row);
+    }
+
+    table.appendChild(thead);
+    table.appendChild(tbody);
+    return table;
+  }
+
+  document.getElementById('table-container').appendChild(generateTable(data));
+</script>
+
+</body>
+</html>
