@@ -1,0 +1,11 @@
+---
+layout: layouts/base.njk
+---
+{% block pageCSS %}
+<!-- Local Dev Files — retire when production search CSS ships -->
+<link rel="stylesheet" href="/search/css/ResultsFilterForm.css">
+<link rel="stylesheet" href="/search/css/ResultList.css">
+<link rel="stylesheet" href="/search/css/events-filter-overrides.css">
+<link rel="stylesheet" href="/search/css/results-overrides.css">
+{% endblock %}
+{% block content %}{{ content | safe }}{% endblock %}

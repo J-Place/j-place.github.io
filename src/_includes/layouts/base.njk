@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<!--[if IE 9]><html lang="en" class="ie9 no-js"><![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+  <title>{{ title if title else "U.S. Masters Swimming" }}</title>
+  {% include "partials/head-meta.njk" %}
+  {% include "partials/head-js.njk" %}
+  {% include "partials/head-css.njk" %}
+  {% block pageCSS %}{% endblock %}
+</head>
+<body class="">
+  <div id="main-container">
+    {% include "partials/header.njk" %}
+    {% block content %}{% endblock %}
+  </div>
+  {% include "partials/footer.njk" %}
+</body>
+</html>
