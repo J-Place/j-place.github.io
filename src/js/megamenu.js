@@ -110,5 +110,32 @@
     window.addEventListener('resize', function () {
       if (getActiveItem()) setOverlayTop();
     });
+
+    // Search toggle
+    var searchWrapper = document.querySelector('.mega-main-menu__actions-search--wrapper');
+    var searchForm    = document.querySelector('.mega-main-menu .search');
+
+    if (searchWrapper && searchForm) {
+      searchWrapper.addEventListener('click', function () {
+        var isActive = searchWrapper.classList.toggle('search--active');
+        searchForm.style.opacity  = isActive ? '1' : '0';
+        searchForm.style.zIndex   = isActive ? '1' : '-1';
+        if (isActive) {
+          var input = searchForm.querySelector('input[type="text"], .aa-Input');
+          if (input) input.focus();
+        } else {
+          var form = searchForm.querySelector('form');
+          if (form) form.reset();
+        }
+      });
+
+      document.addEventListener('click', function (e) {
+        if (!searchWrapper.contains(e.target) && !searchForm.contains(e.target)) {
+          searchWrapper.classList.remove('search--active');
+          searchForm.style.opacity = '0';
+          searchForm.style.zIndex  = '-1';
+        }
+      });
+    }
   });
 })();
