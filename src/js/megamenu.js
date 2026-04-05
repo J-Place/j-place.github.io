@@ -96,6 +96,22 @@
       overlay.style.display = 'flex';
     }
 
+    // Production closes on mouseleave from the items list. Because our overlay
+    // is a DOM sibling (not a child of the ul like in the React version), we
+    // use a short timer so mousing from a nav item into the overlay doesn't
+    // flicker closed.
+    var closeTimer;
+    function scheduleClose() { closeTimer = setTimeout(closeMenu, 150); }
+    function cancelClose()   { clearTimeout(closeTimer); }
+
+    var itemsList = nav.querySelector('.mega-main-menu__items');
+    if (itemsList) {
+      itemsList.addEventListener('mouseleave', scheduleClose);
+      itemsList.addEventListener('mouseenter', cancelClose);
+    }
+    overlay.addEventListener('mouseenter', cancelClose);
+    overlay.addEventListener('mouseleave', closeMenu);
+
     items.forEach(function (item) {
       item.addEventListener('click', function (e) {
         e.stopPropagation();
@@ -110,6 +126,11 @@
     window.addEventListener('resize', function () {
       if (getActiveItem()) setOverlayTop();
     });
+
+    window.addEventListener('scroll', function () {
+      cancelClose();
+      closeMenu();
+    }, { passive: true });
 
     // Search toggle
     var searchWrapper = document.querySelector('.mega-main-menu__actions-search--wrapper');
