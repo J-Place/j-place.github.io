@@ -17,17 +17,10 @@
 <meta property="og:url" content="" />
 <meta name="robots" content="noindex">
 
-  <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://usms-cdn.azureedge.net/scripts/common.min.js"></script>
 <script src="https://usms-cdn.azureedge.net/scripts/home.min.js"></script>
-<!-- Local Fallbacks -->
-<!-- <script src="/js/src/jquery-3.6.0.min.js"></script> -->
-<!-- <script src="/js/src/bootstrap.min.js"></script> -->
-<!-- <script src="/js/src/common.min.js"></script> -->
-<!-- <script src="/js/src/home.min.js"></script> -->
-<script src="/js/page-name.js"></script>
 
   <!-- Prod CSS -->
 <link rel="stylesheet" href="https://www.usms.org/styles/bootstrap.min.css">
@@ -37,9 +30,6 @@
 <link rel="stylesheet" href="https://www.usms.org/styles/usms.min.css">
 <link rel="stylesheet" href="https://www.usms.org/styles/print.min.css">
 <link rel="stylesheet" href="https://www.usms.org/styles/rte.min.css">
-<!-- Local Dev Overrides -->
-<link rel="stylesheet" href="/css/rte-updates.css">
-<link rel="stylesheet" href="/css/common-updates.css">
 <style>
     :root {
         --color-primary: #0068AD;
@@ -64,6 +54,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/theme.min.css">
 <link rel="stylesheet" href="https://www.usms.org/styles/algoliaStyles.min.css">
 <link rel="stylesheet" href="https://www.usms.org/styles/algoliaEventSearch.min.css">
+<link rel="stylesheet" href="/css/events.css">
 
 </head>
 <body class="">
@@ -81,6 +72,7 @@
                <img src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/logo/usms-logo-hrz.svg?rev=fb463362f2fb496d9eae400e3198386e" alt="U.S. Masters Swimming" width="264" height="50">
              </a>
           </div>
+
           <div class="mega-main-menu__nav-search-container">
              <div class="login__items-container">
                 <ul class="login__list">
@@ -98,14 +90,13 @@
                    </li>
                 </ul>
              </div>
-             <form method="GET" action="/search" class="search" style="transition:all 0ms ease-in-out;transform:translateX(0px);opacity:0;z-index:-1;">
-                <div class="input-group">
-                   <input type="text" name="filter" class="form-control search__input" placeholder="Search USMS" aria-describedby="basic-addon">
-                   <input type="hidden" name="page" value="1">
-                   <input type="hidden" name="perPage" value="10">
-                   <span class="input-group-addon btn search__button text-uppercase" id="basic-addon">Search</span>
-                </div>
-             </form>
+             <div class="search" style="transition: ease-in-out; transform: translateX(0px); opacity: 0; z-index: -1;">
+             
+                
+             
+             <div class="autocomplete" data-reactid="20"><div class="aa-Autocomplete" role="combobox" aria-expanded="false" aria-haspopup="listbox" aria-labelledby="autocomplete-1-label" data-reactid="21"><div class="aa-Form" method="GET" action="/search" role="search" data-reactid="22"><div class="aa-InputWrapperPrefix" data-reactid="23"><label class="aa-Label" aria-label="Search" for="autocomplete-1-input" id="autocomplete-1-label" data-reactid="24"><button class="aa-SubmitButton" type="submit" title="Search" data-reactid="25"><svg class="aa-SubmitIcon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" data-reactid="26"><path d="M16.041 15.856c-0.034 0.026-0.067 0.055-0.099 0.087s-0.060 0.064-0.087 0.099c-1.258 1.213-2.969 1.958-4.855 1.958-1.933 0-3.682-0.782-4.95-2.050s-2.050-3.017-2.050-4.95 0.782-3.682 2.050-4.95 3.017-2.050 4.95-2.050 3.682 0.782 4.95 2.050 2.050 3.017 2.050 4.95c0 1.886-0.745 3.597-1.959 4.856zM21.707 20.293l-3.675-3.675c1.231-1.54 1.968-3.493 1.968-5.618 0-2.485-1.008-4.736-2.636-6.364s-3.879-2.636-6.364-2.636-4.736 1.008-6.364 2.636-2.636 3.879-2.636 6.364 1.008 4.736 2.636 6.364 3.879 2.636 6.364 2.636c2.125 0 4.078-0.737 5.618-1.968l3.675 3.675c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414z" data-reactid="27"></path></svg></button></label><div class="aa-LoadingIndicator" data-reactid="28"><svg class="aa-LoadingIcon" viewBox="0 0 100 100" width="20" height="20" data-reactid="29"><circle cx="50" cy="50" fill="none" r="35" stroke="currentColor" stroke-dasharray="164.93361431346415 56.97787143782138" stroke-width="6" data-reactid="30"><animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;90 50 50;180 50 50;360 50 50" keyTimes="0;0.40;0.65;1" data-reactid="31"></animateTransform></circle></svg></div></div><div class="aa-InputWrapper" data-reactid="32"><input type="search" name="filter" class="aa-Input" aria-autocomplete="both" aria-labelledby="autocomplete-1-label" id="autocomplete-1-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search USMS" maxlength="512" data-reactid="33"></div><div class="aa-InputWrapperSuffix" data-reactid="34"><span class="input-group-addon btn search__button text-uppercase" id="basic-addon" data-reactid="35">Search</span></div></div></div></div>
+            </div>
+          
             <div class="mega-main-menu__items-container">
                <ul class="mega-main-menu__items list--nostyle" style="width:auto;">
                   <li class="has--children" id="menu-item-0" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
@@ -152,7 +143,7 @@
             </div>
 
             <div class="mega-main-menu__actions">
-               <div class="mega-main-menu__actions-search--wrapper" onClick={this.toggleSearch}>
+               <div class="mega-main-menu__actions-search--wrapper">
                   <i class="search--icon">
                   </i>
                   <label>Search</label>
@@ -598,29 +589,29 @@
 </div>
 
   <div class="results-list__summary">
-    <div>Showing <strong>3 Events</strong><span id="rangePrefix">&nbsp;within&nbsp;</span><strong id="rangeText">50 Miles</strong><strong id="cityStateText"></strong></div>
+    <div>Showing <strong>6 Events</strong><span id="rangePrefix">&nbsp;within&nbsp;</span><strong id="rangeText">50 Miles</strong><strong id="cityStateText"></strong></div>
   </div>
   <div class="results-list results-list-large" style="display: block;">
   
-  <div class="results-list__item" id="event-001" distance="42">
-    <input type="hidden" name="distance" value="42">
+  <div class="results-list__item" id="{50C21A56-9924-4135-9437-B7E3DEFA184A}" distance="162">
+    <input type="hidden" name="distance" value="162">
     <div class="results-list__item-detail" role="main">
       <div class="results-list__item-type--container">
         <div class="results-list__item-type item-type--course-scy text-uppercase">SCY</div>
       </div>
       <h3 class="results-list__item-title">
-        <a href="/events/national-championships/pool-national-championships/2026-pool-national-championships/2026-spring-national-championship">2026 USMS Spring National Championship</a>
+        <a href="/events/events/6th-annual-show-your-swag-meet-a1jpo00000avlwy2a1">6th Annual Show Your SWAG Meet</a>
       </h3>
-      <div class="results-list__item-date">Thursday, May 7, 2026-Sunday, May 10, 2026</div>
+      <div class="results-list__item-date">Sunday, Apr. 12, 2026</div>
       
-      <p class="results-list__item-location">Greensboro Aquatic Center<br>1921 W Gate City Blvd, Greensboro, NC 27403</p>
+      <p class="results-list__item-location">City of Gainesville Recreation Centers<br>1100 Northeast 14th Street, Gainesville, FL 32601</p>
       
       <div class="results-list__item-footer">
-        <a href="/events/national-championships/pool-national-championships/2026-pool-national-championships/2026-spring-national-championship">More Info</a>
+        <a href="/events/events/6th-annual-show-your-swag-meet-a1jpo00000avlwy2a1">More Info</a>
       </div>
     </div>
-    <a class="results-list__item-image-container" href="/events/national-championships/pool-national-championships/2026-pool-national-championships/2026-spring-national-championship">
-      <div class="results-list__item-image" style="background-image: url('https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/venue-flags-usms-summer-nats-2017 0661.jpg');">
+    <a class="results-list__item-image-container" href="/events/events/6th-annual-show-your-swag-meet-a1jpo00000avlwy2a1">
+      <div class="results-list__item-image" style="background-image: url('https://maps.googleapis.com/maps/api/staticmap?&amp;markers=size:tiny|29.6618574,-82.3075724&amp;zoom=12&amp;size=360x270&amp;maptype=roadmap&amp;scale=1');">
         
         <div class="results-list__event-status--sanctioned">Sanctioned</div>
         
@@ -628,23 +619,51 @@
     </a>
   </div>
   
-  <div class="results-list__item" id="event-002" distance="0">
-    <input type="hidden" name="distance" value="0">
+  <div class="results-list__item" id="{577FB649-294F-4738-8BAD-BBD7385D25D9}" distance="8">
+    <input type="hidden" name="distance" value="8">
+    <div class="results-list__item-detail" role="main">
+      <div class="results-list__item-type--container">
+        <div class="results-list__item-type item-type--course-scy text-uppercase">SCY</div>
+      </div>
+      <h3 class="results-list__item-title">
+        <a href="/events/events/2026-ymca-masters-national-meet-a1jpo00000avlmz2al">2026 YMCA Masters National Meet</a>
+      </h3>
+      <div class="results-list__item-date">Thursday, Apr. 16, 2026-Sunday, Apr. 19, 2026</div>
+      
+      <p class="results-list__item-location">Selby Aquatic Center<br>8501 Potter Park Drive, Sarasota, FL 34238</p>
+      
+      <div class="results-list__item-footer">
+        <a href="/events/events/2026-ymca-masters-national-meet-a1jpo00000avlmz2al">More Info</a>
+      </div>
+    </div>
+    <a class="results-list__item-image-container" href="/events/events/2026-ymca-masters-national-meet-a1jpo00000avlmz2al">
+      <div class="results-list__item-image" style="background-image: url('https://maps.googleapis.com/maps/api/staticmap?&amp;markers=size:tiny|27.2276457,-82.4877323&amp;zoom=12&amp;size=360x270&amp;maptype=roadmap&amp;scale=1');">
+        
+        <div class="results-list__event-status--sanctioned">Sanctioned</div>
+        
+      </div>
+    </a>
+  </div>
+  
+  <div class="results-list__item" id="{21A53030-3A62-4D2F-91AD-CFFC7B2BD0AC}" distance="204">
+    <input type="hidden" name="distance" value="204">
     <div class="results-list__item-detail" role="main">
       <div class="results-list__item-type--container">
         <div class="results-list__item-type item-type--course-open-water text-uppercase">OPEN WATER</div>
       </div>
       <h3 class="results-list__item-title">
-        <a href="/events/fitness-events">USMS 1-Hour ePostal National Championship</a>
+        <a href="/events/events/swim-across-america-florida-keys-a1jpo00000aw7xp2a1">Swim Across America - Florida Keys</a>
       </h3>
-      <div class="results-list__item-date">Wednesday, Oct. 1, 2025-Friday, Oct. 31, 2025</div>
+      <div class="results-list__item-date">Saturday, Apr. 18, 2026</div>
+      
+      <p class="results-list__item-location">Founders Park<br>87000 Overseas Highway, Islamorada, FL 33036</p>
       
       <div class="results-list__item-footer">
-        <a href="/events/fitness-events">More Info</a>
+        <a href="/events/events/swim-across-america-florida-keys-a1jpo00000aw7xp2a1">More Info</a>
       </div>
     </div>
-    <a class="results-list__item-image-container" href="/events/fitness-events">
-      <div class="results-list__item-image" style="background-image: url('https://www.usms.org/-/media//USMS/Images/Content%20Type%20Icons/tile-virtual-event.png');">
+    <a class="results-list__item-image-container" href="/events/events/swim-across-america-florida-keys-a1jpo00000aw7xp2a1">
+      <div class="results-list__item-image" style="background-image: url('https://maps.googleapis.com/maps/api/staticmap?&amp;markers=size:tiny|24.9625942,-80.5681485&amp;zoom=12&amp;size=360x270&amp;maptype=roadmap&amp;scale=1');">
         
         <div class="results-list__event-status--sanctioned">Sanctioned</div>
         
@@ -652,27 +671,79 @@
     </a>
   </div>
   
-  <div class="results-list__item" id="event-003" distance="18">
-    <input type="hidden" name="distance" value="18">
+  <div class="results-list__item" id="{47A4B99A-F71B-4EA6-847C-3F538B72F02C}" distance="103">
+    <input type="hidden" name="distance" value="103">
     <div class="results-list__item-detail" role="main">
       <div class="results-list__item-type--container">
         <div class="results-list__item-type item-type--course-scy text-uppercase">SCY</div>
       </div>
       <h3 class="results-list__item-title">
-        <a href="/events/event-results-database">Speedo Sectional Championship — Mid-Atlantic</a>
+        <a href="/events/events/the-villages-senior-games-a1jpo00000avl552ad">The Villages Senior Games</a>
       </h3>
-      <div class="results-list__item-date">Saturday, Apr. 12, 2026-Sunday, Apr. 13, 2026</div>
+      <div class="results-list__item-date">Saturday, Apr. 18, 2026-Sunday, Apr. 19, 2026</div>
       
-      <p class="results-list__item-location">Germantown Academy Aquatic Center<br>340 Morris Rd, Fort Washington, PA 19034</p>
+      <p class="results-list__item-location">Villages High School Aquatics Center<br>2210 Dr Randy McDaniel Way, Middleton, FL 34762</p>
       
       <div class="results-list__item-footer">
-        <a href="/events/event-results-database">More Info</a>
+        <a href="/events/events/the-villages-senior-games-a1jpo00000avl552ad">More Info</a>
       </div>
     </div>
-    <a class="results-list__item-image-container" href="/events/event-results-database">
-      <div class="results-list__item-image" style="background-image: url('https://maps.googleapis.com/maps/api/staticmap?markers=size:tiny|40.1409,-75.2088&amp;zoom=12&amp;size=360x270&amp;maptype=roadmap&amp;scale=1');">
+    <a class="results-list__item-image-container" href="/events/events/the-villages-senior-games-a1jpo00000avl552ad">
+      <div class="results-list__item-image" style="background-image: url('https://maps.googleapis.com/maps/api/staticmap?&amp;markers=size:tiny|28.7458384,-82.0084256&amp;zoom=12&amp;size=360x270&amp;maptype=roadmap&amp;scale=1');">
         
-        <div class="results-list__event-status--recognized">Recognized</div>
+        <div class="results-list__event-status--sanctioned">Sanctioned</div>
+        
+      </div>
+    </a>
+  </div>
+  
+  <div class="results-list__item" id="{3B456734-C34F-4512-A78C-96E90CDF87BB}" distance="31">
+    <input type="hidden" name="distance" value="31">
+    <div class="results-list__item-detail" role="main">
+      <div class="results-list__item-type--container">
+        <div class="results-list__item-type item-type--course-open-water text-uppercase">OPEN WATER</div>
+      </div>
+      <h3 class="results-list__item-title">
+        <a href="/events/events/swim-across-america-tampa-a1jpo00000aw7ww2al">Swim Across America - Tampa</a>
+      </h3>
+      <div class="results-list__item-date">Saturday, May. 9, 2026</div>
+      
+      <p class="results-list__item-location">SPA Beach at St. Pete Pier<br>615 2nd Avenue Northeast, St. Petersburg, FL 33701</p>
+      
+      <div class="results-list__item-footer">
+        <a href="/events/events/swim-across-america-tampa-a1jpo00000aw7ww2al">More Info</a>
+      </div>
+    </div>
+    <a class="results-list__item-image-container" href="/events/events/swim-across-america-tampa-a1jpo00000aw7ww2al">
+      <div class="results-list__item-image" style="background-image: url('https://maps.googleapis.com/maps/api/staticmap?&amp;markers=size:tiny|27.7742449,-82.6268457&amp;zoom=12&amp;size=360x270&amp;maptype=roadmap&amp;scale=1');">
+        
+        <div class="results-list__event-status--sanctioned">Sanctioned</div>
+        
+      </div>
+    </a>
+  </div>
+  
+  <div class="results-list__item" id="{E6F1AE26-788B-4977-BDF9-1BBE127EB31F}" distance="164">
+    <input type="hidden" name="distance" value="164">
+    <div class="results-list__item-detail" role="main">
+      <div class="results-list__item-type--container">
+        <div class="results-list__item-type item-type--course-scy text-uppercase">SCY</div>
+      </div>
+      <h3 class="results-list__item-title">
+        <a href="/events/events/2026-faa-paradise-sprint-a1jpo00000avl8y2ad">2026 FAA Paradise Sprint</a>
+      </h3>
+      <div class="results-list__item-date">Saturday, May. 23, 2026</div>
+      
+      <p class="results-list__item-location">Florida Atlantic University<br>777 Glades Road, Boca Raton, FL 33431</p>
+      
+      <div class="results-list__item-footer">
+        <a href="/events/events/2026-faa-paradise-sprint-a1jpo00000avl8y2ad">More Info</a>
+      </div>
+    </div>
+    <a class="results-list__item-image-container" href="/events/events/2026-faa-paradise-sprint-a1jpo00000avl8y2ad">
+      <div class="results-list__item-image" style="background-image: url('https://maps.googleapis.com/maps/api/staticmap?&amp;markers=size:tiny|26.3683141,-80.101765&amp;zoom=12&amp;size=360x270&amp;maptype=roadmap&amp;scale=1');">
+        
+        <div class="results-list__event-status--sanctioned">Sanctioned</div>
         
       </div>
     </a>
@@ -682,14 +753,14 @@
 
   <div class="results-list results-list-small" style="display: none;">
   
-  <a href="/events/national-championships/pool-national-championships/2026-pool-national-championships/2026-spring-national-championship">
-    <div class="results-list__item-detail" id="event-001" distance="42">
-      <input type="hidden" name="distance" value="42">
-      <p class="results-list__item-date">May 7-10</p>
+  <a href="/events/events/6th-annual-show-your-swag-meet-a1jpo00000avlwy2a1">
+    <div class="results-list__item-detail" id="{50C21A56-9924-4135-9437-B7E3DEFA184A}" distance="162">
+      <input type="hidden" name="distance" value="162">
+      <p class="results-list__item-date">Apr 12</p>
       <p class="results-list__item-type">SCY</p>
-      <h3 class="results-list__item-title">2026 USMS Spring National Championship</h3>
+      <h3 class="results-list__item-title">6th Annual Show Your SWAG Meet</h3>
       
-      <p class="results-list__item-location">Greensboro, NC</p>
+      <p class="results-list__item-location">Gainesville, FL</p>
       
       
       <p class="results-list__item-status sanctioned">Sanctioned</p>
@@ -697,12 +768,14 @@
     </div>
   </a>
   
-  <a href="/events/fitness-events">
-    <div class="results-list__item-detail" id="event-002" distance="0">
-      <input type="hidden" name="distance" value="0">
-      <p class="results-list__item-date">Oct 1-31</p>
-      <p class="results-list__item-type">OPEN WATER</p>
-      <h3 class="results-list__item-title">USMS 1-Hour ePostal National Championship</h3>
+  <a href="/events/events/2026-ymca-masters-national-meet-a1jpo00000avlmz2al">
+    <div class="results-list__item-detail" id="{577FB649-294F-4738-8BAD-BBD7385D25D9}" distance="8">
+      <input type="hidden" name="distance" value="8">
+      <p class="results-list__item-date">Apr 16-19</p>
+      <p class="results-list__item-type">SCY</p>
+      <h3 class="results-list__item-title">2026 YMCA Masters National Meet</h3>
+      
+      <p class="results-list__item-location">Sarasota, FL</p>
       
       
       <p class="results-list__item-status sanctioned">Sanctioned</p>
@@ -710,17 +783,62 @@
     </div>
   </a>
   
-  <a href="/events/event-results-database">
-    <div class="results-list__item-detail" id="event-003" distance="18">
-      <input type="hidden" name="distance" value="18">
-      <p class="results-list__item-date">Apr 12-13</p>
+  <a href="/events/events/swim-across-america-florida-keys-a1jpo00000aw7xp2a1">
+    <div class="results-list__item-detail" id="{21A53030-3A62-4D2F-91AD-CFFC7B2BD0AC}" distance="204">
+      <input type="hidden" name="distance" value="204">
+      <p class="results-list__item-date">Apr 18</p>
+      <p class="results-list__item-type">OW</p>
+      <h3 class="results-list__item-title">Swim Across America - Florida Keys</h3>
+      
+      <p class="results-list__item-location">Islamorada, FL</p>
+      
+      
+      <p class="results-list__item-status sanctioned">Sanctioned</p>
+      
+    </div>
+  </a>
+  
+  <a href="/events/events/the-villages-senior-games-a1jpo00000avl552ad">
+    <div class="results-list__item-detail" id="{47A4B99A-F71B-4EA6-847C-3F538B72F02C}" distance="103">
+      <input type="hidden" name="distance" value="103">
+      <p class="results-list__item-date">Apr 18-19</p>
       <p class="results-list__item-type">SCY</p>
-      <h3 class="results-list__item-title">Speedo Sectional Championship — Mid-Atlantic</h3>
+      <h3 class="results-list__item-title">The Villages Senior Games</h3>
       
-      <p class="results-list__item-location">Fort Washington, PA</p>
+      <p class="results-list__item-location">Middleton, FL</p>
       
       
-      <p class="results-list__item-status sanctioned">Recognized</p>
+      <p class="results-list__item-status sanctioned">Sanctioned</p>
+      
+    </div>
+  </a>
+  
+  <a href="/events/events/swim-across-america-tampa-a1jpo00000aw7ww2al">
+    <div class="results-list__item-detail" id="{3B456734-C34F-4512-A78C-96E90CDF87BB}" distance="31">
+      <input type="hidden" name="distance" value="31">
+      <p class="results-list__item-date">May 9</p>
+      <p class="results-list__item-type">OW</p>
+      <h3 class="results-list__item-title">Swim Across America - Tampa</h3>
+      
+      <p class="results-list__item-location">St. Petersburg, FL</p>
+      
+      
+      <p class="results-list__item-status sanctioned">Sanctioned</p>
+      
+    </div>
+  </a>
+  
+  <a href="/events/events/2026-faa-paradise-sprint-a1jpo00000avl8y2ad">
+    <div class="results-list__item-detail" id="{E6F1AE26-788B-4977-BDF9-1BBE127EB31F}" distance="164">
+      <input type="hidden" name="distance" value="164">
+      <p class="results-list__item-date">May 23</p>
+      <p class="results-list__item-type">SCY</p>
+      <h3 class="results-list__item-title">2026 FAA Paradise Sprint</h3>
+      
+      <p class="results-list__item-location">Boca Raton, FL</p>
+      
+      
+      <p class="results-list__item-status sanctioned">Sanctioned</p>
       
     </div>
   </a>
@@ -1247,5 +1365,8 @@
 
   <script src="/js/megamenu.js" defer></script>
   
+<script src="/js/filters.js" defer></script>
+<script src="/js/events.js" defer></script>
+
 </body>
 </html>
