@@ -1,0 +1,29 @@
+<div class="results-list results-list-large" style="display: block;">
+  {% for item in eventItems %}
+  <div class="results-list__item" id="{{ item.id }}" distance="{{ item.distance }}">
+    <input type="hidden" name="distance" value="{{ item.distance }}">
+    <div class="results-list__item-detail" role="main">
+      <div class="results-list__item-type--container">
+        <div class="results-list__item-type item-type--course-{{ item.courseType | lower | replace(" ", "-") }} text-uppercase">{{ item.courseType }}</div>
+      </div>
+      <h3 class="results-list__item-title">
+        <a href="{{ item.url }}">{{ item.title }}</a>
+      </h3>
+      <div class="results-list__item-date">{{ item.date }}</div>
+      {% if not item.virtual %}
+      <p class="results-list__item-location">{{ item.venueName }}<br>{{ item.venueAddress }}, {{ item.venueCity }}, {{ item.venueState }} {{ item.venueZip }}</p>
+      {% endif %}
+      <div class="results-list__item-footer">
+        <a href="{{ item.url }}">More Info</a>
+      </div>
+    </div>
+    <a class="results-list__item-image-container" href="{{ item.url }}">
+      <div class="results-list__item-image" style="background-image: url('{{ item.image }}');">
+        {% if item.classification and item.classification != "Not Sanctioned" and item.classification != "Other" %}
+        <div class="results-list__event-status--{{ item.classification | lower | replace(" ", "") }}">{{ item.classification }}</div>
+        {% endif %}
+      </div>
+    </a>
+  </div>
+  {% endfor %}
+</div>

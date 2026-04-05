@@ -1,0 +1,183 @@
+<div class="events-summary-content">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="list-control">
+
+        <div class="list-control-search">
+          <div class="list-control-search__header">
+            <span class="tag-list--title">Filters:</span>
+            <div class="list-control-search--tags"></div>
+          </div>
+          <div class="list-control-search-mobile__toggle">Update Your Results</div>
+          <div class="list-control-search__content form-group">
+            <div class="list-control-search__input list-control-search__input--club-name">
+              <label for="filter-name">Search by Event Name</label>
+              <div class="input-group">
+                <span class="help-block help-block--ClubName">Please enter a valid event name.</span>
+                <input type="text" class="form-control" name="filter-name" value="">
+              </div>
+            </div>
+            <div class="list-control-search__input list-control-search__input--range">
+              <label for="search-filter__range">Select a Range</label>
+              <div class="input-group">
+                <select id="search-filter__range" name="search-filter__range">
+                  <option value="10">10 Miles</option>
+                  <option value="25">25 Miles</option>
+                  <option value="50" selected>50 Miles</option>
+                  <option value="100">100 Miles</option>
+                  <option value="200">200 Miles</option>
+                  <option value="500">500 Miles</option>
+                  <option value="all">All</option>
+                </select>
+              </div>
+            </div>
+            <div class="list-control-search__input list-control-search__input--location">
+              <label for="location">City, State or Zip</label>
+              <div class="input-group">
+                <span class="help-block help-block--CityStateZip">Please enter a valid city, state or zip.</span>
+                <div>
+                  <div class="map" style="display:none;"></div>
+                  <input type="text" class="google-places-input form-control" placeholder="City, State or Zip" name="location" id="location" autocomplete="off">
+                  <input type="hidden" class="google-places-input--zip" name="google-places-input--zip" value="">
+                  <input type="hidden" class="google-places-input--lat" name="google-places-input--lat" value="">
+                  <input type="hidden" class="google-places-input--lng" name="google-places-input--lng" value="">
+                </div>
+              </div>
+            </div>
+            <div class="list-control-search__input list-control-search__input--button align-self-end">
+              <div class="input-group">
+                <button type="button" class="btn btn-primary" id="listSearchSubmit">Search</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="list-control-filter">
+          <div class="list-control-filter__header">
+            <button class="toggle-filters">More Filters</button>
+          </div>
+          <div class="list-control-filter__content">
+            <div class="row">
+              <div class="col-xs-12">
+                <h5 class="events-filter-form__dropdown-title events-filter-form__dropdown-title--date-range text-capitalize">Date Range</h5>
+                <div class="date-range__wrapper">
+                  <div class="form-group has-feedback events-filter-form__dropdown-start-date-container">
+                    <input type="text" data-toggle="datepicker-event" name="startDate" value="" placeholder="MM/DD/YYYY">
+                  </div>
+                  <h5 class="form-group__inline-separator">to</h5>
+                  <div class="form-group has-feedback events-filter-form__dropdown-end-date-container">
+                    <input type="text" data-toggle="datepicker-event" name="endDate" value="" placeholder="MM/DD/YYYY">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-sm-3">
+                <h5 class="events-filter-form__dropdown-title text-capitalize">Course Type</h5>
+                <div class="events-filter-form__dropdown-event-filter">
+                  <div class="check-list check-list--course-type">
+                    {% set courseTypes = [
+                      { label: "Short Course Yards", value: "ShortCourseYards" },
+                      { label: "Short Course Meters", value: "ShortCourseMeters" },
+                      { label: "Long Course Meters", value: "LongCourseMeters" },
+                      { label: "Open Water", value: "OpenWater" }
+                    ] %}
+                    {% for course in courseTypes %}
+                    <div class="input-group check-list-item">
+                      <label id="{{ course.value }}__label" class="checkbox-label" for="{{ course.value }}">
+                        <div class="checkbox-container">
+                          <input type="checkbox" data-filter-label="{{ course.label }}" name="checkbox-filter-courses-{{ course.value }}" id="{{ course.value }}" value="{{ course.value }}">
+                          <span class="checkbox__placeholder"></span>
+                        </div>
+                        {{ course.label }}
+                      </label>
+                    </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-3">
+                <h5 class="events-filter-form__dropdown-title text-capitalize">Other Details</h5>
+                <div class="events-filter-form__dropdown-event-filter">
+                  <div class="check-list check-list--other-event-details">
+                    {% set otherDetails = [
+                      { label: "Has Results", value: "hasResults" },
+                      { label: "Accepts Entries", value: "acceptsEntries" },
+                      { label: "Has Heat Sheets", value: "hasHeatSheets" }
+                    ] %}
+                    {% for detail in otherDetails %}
+                    <div class="input-group check-list-item">
+                      <label id="{{ detail.value }}__label" class="checkbox-label" for="{{ detail.value }}">
+                        <div class="checkbox-container">
+                          <input type="checkbox" data-filter-label="{{ detail.label }}" name="checkbox-filter-details-{{ detail.value }}" id="{{ detail.value }}" value="{{ detail.value }}">
+                          <span class="checkbox__placeholder"></span>
+                        </div>
+                        {{ detail.label }}
+                      </label>
+                    </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-3">
+                <h5 class="events-filter-form__dropdown-title text-capitalize">Sanction Type</h5>
+                <div class="events-filter-form__dropdown-event-filter">
+                  <div class="check-list check-list--sanction-type">
+                    {% set sanctionTypes = [
+                      { label: "Sanctioned", value: "Sanctioned" },
+                      { label: "Recognized", value: "Recognized" },
+                      { label: "Approved", value: "Approved" }
+                    ] %}
+                    {% for sanction in sanctionTypes %}
+                    <div class="input-group check-list-item">
+                      <label id="{{ sanction.value }}__label" class="checkbox-label" for="{{ sanction.value }}">
+                        <div class="checkbox-container">
+                          <input type="checkbox" data-filter-label="{{ sanction.label }}" name="checkbox-filter-sanction-{{ sanction.value }}" id="{{ sanction.value }}" value="{{ sanction.value }}">
+                          <span class="checkbox__placeholder"></span>
+                        </div>
+                        {{ sanction.label }}
+                      </label>
+                    </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-3" style="padding-right:35px;">
+                <h5 class="events-filter-form__dropdown-title text-capitalize">LMSC</h5>
+                <div class="input-group">
+                  <select id="search-filter__lmsc" name="search-filter__lmsc">
+                    <option value="all">All</option>
+                  </select>
+                </div>
+                <h5 class="events-filter-form__dropdown-title text-capitalize">Virtual Events</h5>
+                <div class="check-list check-list--extra">
+                  <div class="input-group check-list-item">
+                    <label id="VirtualEvents__label" class="checkbox-label" for="VirtualEvents">
+                      <div class="checkbox-container">
+                        <input type="checkbox" data-filter-label="Virtual Events" name="checkbox-filter-details-VirtualEvents" id="VirtualEvents" value="virtual">
+                        <span class="checkbox__placeholder"></span>
+                      </div>
+                      Virtual Events
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="list-control-view">
+          <div class="list-control-view__header">
+            <span class="toggle-grid active">
+              <button id="buttonGrid">Grid</button>
+            </span>
+            <span class="toggle-list">
+              <button id="buttonList">List</button>
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

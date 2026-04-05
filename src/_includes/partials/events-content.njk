@@ -1,0 +1,69 @@
+{% set resultsTotal = "847" %}
+{% set currentPage  = 0 %}
+{% set totalPages   = 5 %}
+{% set eventItems = [
+  {
+    id:                  "event-001",
+    url:                 "/events/national-championships/pool-national-championships/2026-pool-national-championships/2026-spring-national-championship",
+    title:               "2026 USMS Spring National Championship",
+    date:                "Thursday, May 7, 2026-Sunday, May 10, 2026",
+    dateShort:           "May 7-10",
+    courseType:          "SCY",
+    virtual:             false,
+    venueName:           "Greensboro Aquatic Center",
+    venueAddress:        "1921 W Gate City Blvd",
+    venueCity:           "Greensboro",
+    venueState:          "NC",
+    venueZip:            "27403",
+    classification:      "Sanctioned",
+    classificationDisplay: "Sanctioned",
+    distance:            "42",
+    image:               "https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/venue-flags-usms-summer-nats-2017 0661.jpg"
+  },
+  {
+    id:                  "event-002",
+    url:                 "/events/fitness-events",
+    title:               "USMS 1-Hour ePostal National Championship",
+    date:                "Wednesday, Oct. 1, 2025-Friday, Oct. 31, 2025",
+    dateShort:           "Oct 1-31",
+    courseType:          "OPEN WATER",
+    virtual:             true,
+    venueName:           "",
+    venueAddress:        "",
+    venueCity:           "",
+    venueState:          "",
+    venueZip:            "",
+    classification:      "Sanctioned",
+    classificationDisplay: "Sanctioned",
+    distance:            "0",
+    image:               "https://www.usms.org/-/media//USMS/Images/Content%20Type%20Icons/tile-virtual-event.png"
+  },
+  {
+    id:                  "event-003",
+    url:                 "/events/event-results-database",
+    title:               "Speedo Sectional Championship — Mid-Atlantic",
+    date:                "Saturday, Apr. 12, 2026-Sunday, Apr. 13, 2026",
+    dateShort:           "Apr 12-13",
+    courseType:          "SCY",
+    virtual:             false,
+    venueName:           "Germantown Academy Aquatic Center",
+    venueAddress:        "340 Morris Rd",
+    venueCity:           "Fort Washington",
+    venueState:          "PA",
+    venueZip:            "19034",
+    classification:      "Recognized",
+    classificationDisplay: "Recognized",
+    distance:            "18",
+    image:               "https://maps.googleapis.com/maps/api/staticmap?markers=size:tiny|40.1409,-75.2088&zoom=12&size=360x270&maptype=roadmap&scale=1"
+  }
+] %}
+
+<div class="results-content">
+  {% include "partials/results/events-filter.njk" %}
+  <div class="results-list__summary">
+    <div>Showing <strong>{{ eventItems | length }} Events</strong><span id="rangePrefix">&nbsp;within&nbsp;</span><strong id="rangeText">50 Miles</strong><strong id="cityStateText"></strong></div>
+  </div>
+  {% include "partials/results/events-list-large.njk" %}
+  {% include "partials/results/events-list-small.njk" %}
+  {% include "partials/results/results-pagination.njk" %}
+</div>

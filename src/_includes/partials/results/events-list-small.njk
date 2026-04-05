@@ -1,0 +1,18 @@
+<div class="results-list results-list-small" style="display: none;">
+  {% for item in eventItems %}
+  <a href="{{ item.url }}">
+    <div class="results-list__item-detail" id="{{ item.id }}" distance="{{ item.distance }}">
+      <input type="hidden" name="distance" value="{{ item.distance }}">
+      <p class="results-list__item-date">{{ item.dateShort }}</p>
+      <p class="results-list__item-type">{{ item.courseType }}</p>
+      <h3 class="results-list__item-title">{{ item.title }}</h3>
+      {% if not item.virtual %}
+      <p class="results-list__item-location">{{ item.venueCity }}, {{ item.venueState }}</p>
+      {% endif %}
+      {% if item.classification != "Other" %}
+      <p class="results-list__item-status sanctioned">{{ item.classificationDisplay if item.classificationDisplay else item.classification }}</p>
+      {% endif %}
+    </div>
+  </a>
+  {% endfor %}
+</div>
