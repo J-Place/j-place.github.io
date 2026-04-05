@@ -3,19 +3,19 @@ module.exports = function(eleventyConfig) {
   // Copy public/ to _site/public/ untouched
   eleventyConfig.addPassthroughCopy("public");
 
+  // Course type abbreviation for small list view
+  const courseTypeMap = { "OPEN WATER": "OW", "SHORT COURSE YARDS": "SCY", "SHORT COURSE METERS": "SCM", "LONG COURSE METERS": "LCM" };
+  eleventyConfig.addFilter("courseTypeAbbr", val => courseTypeMap[val.toUpperCase()] || val);
+
   // Copy src/js to _site/js
   eleventyConfig.addPassthroughCopy({ "src/js": "js" });
 
-  // Also copy public subfolders to root so legacy root-relative CSS/JS paths resolve
-  // e.g. /css/rte-updates.css, /search/css/ResultList.css, /swimmer/js/carousel.js
-  const legacyDirs = [
-    "css", "club", "club-dashboard", "college-club",
-    "event", "forum-comments", "gtd", "homepage", "join-usms",
-    "lanemate", "misc", "registration", "search", "swimmer", "video"
-  ];
-  for (const dir of legacyDirs) {
-    eleventyConfig.addPassthroughCopy({ [`public/${dir}`]: dir });
-  }
+  // Copy src/css to _site/css
+  eleventyConfig.addPassthroughCopy({ "src/css": "css" });
+
+  // Copy src/assets and src/img to _site root
+  eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
+  eleventyConfig.addPassthroughCopy({ "src/img": "img" });
 
   return {
     dir: {
