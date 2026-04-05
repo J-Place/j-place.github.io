@@ -1,0 +1,97 @@
+<style>
+    body, html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.parallax-container {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  perspective: 1px;
+}
+
+.parallax-background {
+  background-image: url('https://j-place.github.io/public/college-club/img/ccs-parallax-background.jpg');
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  height: 120%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  transform: translateY(0);
+  transition: transform 0.1s ease-out;
+}
+
+.parallax-foreground {
+  background-image: url('https://j-place.github.io/public/college-club/img/ccs-parallax-foreground.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: absolute;
+  height: 400px;
+  width: 100%;
+  top: 30%;
+  left: 0;
+  z-index: 3;
+  transform: translateY(0);
+  transition: transform 0.1s ease-out;
+  pointer-events: none;
+}
+
+.parallax-text {
+  position: absolute;
+  width: 100%;
+  top: 40%;
+  text-align: center;
+  font-size: 3rem;
+  color: white;
+  z-index: 2;
+  transform: translateY(0);
+  transition: transform 0.1s ease-out;
+}
+
+</style>
+
+<div style="height: 100vh; background: #ccc;">
+    <h1 style="text-align: center; padding-top: 40vh;">Scroll down to see the parallax</h1>
+  </div>
+
+  <section class="parallax-container">
+    <div class="parallax-background"></div>
+    <div class="parallax-foreground"></div>
+    <div class="parallax-text">Parallax Text Rising</div>
+  </section>
+
+  <div style="height: 100vh; background: #eee;"></div>
+
+
+
+  <script>
+    const container = document.querySelector('.parallax-container');
+    const background = document.querySelector('.parallax-background');
+    const foreground = document.querySelector('.parallax-foreground');
+    const text = document.querySelector('.parallax-text');
+
+    function isInViewport(el) {
+        const rect = el.getBoundingClientRect();
+        return rect.top < window.innerHeight && rect.bottom > 0;
+    }
+
+    function handleParallax() {
+        if (!isInViewport(container)) return;
+
+        const rect = container.getBoundingClientRect();
+        const offset = 1 - rect.top / window.innerHeight;
+
+        background.style.transform = `translateY(${offset * -20}px)`;
+        foreground.style.transform = `translateY(${offset * 40}px)`;  // move down
+        text.style.transform = `translateY(${offset * -40}px)`;       // move up
+    }
+
+    window.addEventListener('scroll', handleParallax);
+
+  </script>

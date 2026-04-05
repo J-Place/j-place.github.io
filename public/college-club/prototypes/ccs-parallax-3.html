@@ -1,0 +1,161 @@
+<style>
+    .parallax-container {
+        position: relative;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .parallax-background,
+    .parallax-foreground,
+    .parallax-text {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+    }
+
+    .parallax-background img,
+    .parallax-foreground img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* TEXT LAYER */
+    .parallax-text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 2rem;
+        font-weight: bold;
+        transform: translateY(100%);
+        opacity: 0;
+        transition: transform 1.5s ease-out, opacity 1.5s ease-out;
+        z-index: 2;
+    }
+
+    /* FOREGROUND LAYER */
+    .parallax-foreground {
+        z-index: 3;
+        transform: translateY(0);
+        transition: transform 1.5s ease-out;
+    }
+
+    /* BACKGROUND LAYER */
+    .parallax-background {
+        z-index: 1;
+        transform: scale(1);
+        transition: transform 1.5s ease-out;
+    }
+
+    /* Triggered when in view */
+    .parallax-container.in-view .parallax-text {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .parallax-container.in-view .parallax-background {
+        transform: scale(1.05);
+    }
+
+    .parallax-container.in-view .parallax-foreground {
+        transform: translateY(20px); /* Slight downward shift */
+    }
+    .parallax-text h3 {
+        color: white;
+        font-size: 8rem;
+        font-weight: normal;
+        line-height: 100%;
+        font-family: "Anton", sans-serif !important;
+        text-transform: uppercase;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+
+<div class="parallax-container">
+    <div class="parallax-foreground">
+        <img src="https://j-place.github.io/public/college-club/img/ccs-parallax-foreground.png" alt="">
+    </div>
+    <div class="parallax-text">
+        <h3>Fave Fun.</h3>
+        <h3>Compete.</h3>
+        <h3>Connect.</h3>
+    </div>
+    <div class="parallax-background">
+        <img src="https://j-place.github.io/public/college-club/img/ccs-parallax-background.jpg" alt="">
+    </div>
+</div>
+<div>
+    <br>
+    <br>
+    <br>
+</div>
+<div>
+    <br>
+    <br>
+    <br>
+</div>
+<div>
+    <br>
+    <br>
+    <br>
+</div>
+<div>
+    <br>
+    <br>
+    <br>
+</div>
+<div>
+    <br>
+    <br>
+    <br>
+</div>
+<div>
+    <br>
+    <br>
+    <br>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("in-view");
+            }
+        });
+    }, {
+        threshold: 0.5
+    });
+
+    document.querySelectorAll('.parallax-container').forEach(container => {
+        observer.observe(container);
+    });
+});
+  </script>
+
+<!-- <script>
+    window.addEventListener('scroll', function () {
+      const container = document.querySelector('.parallax-container');
+      const background = document.querySelector('.parallax-background');
+      const foreground = document.querySelector('.parallax-foreground');
+  
+      const rect = container.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+  
+      // Check if the container is in the viewport
+      if (rect.top < windowHeight && rect.bottom > 0) {
+        // Get how far into the container we've scrolled
+        const scrollProgress = (windowHeight - rect.top) / (windowHeight + rect.height);
+        
+        // Parallax effect based on scroll progress within container
+        background.style.transform = `translateY(${scrollProgress * 50}px)`;
+        foreground.style.transform = `translateY(${scrollProgress * 100}px)`;
+      }
+    });
+  </script> -->

@@ -1,0 +1,130 @@
+<style>
+    .parallax-container {
+        position: relative;
+        background-size: cover;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        height: 600px;
+        overflow: hidden;
+    }
+    .parallax-foreground,
+    .parallax-text {
+        position: absolute;
+        width: 100%;
+        transition: transform 0.1s ease-out;
+        will-change: transform;
+    }
+    .parallax-foreground {
+        z-index: 9999;
+        bottom: -75%;
+        display: flex;
+        justify-content: center;
+        pointer-events: none;
+    }
+    .parallax-foreground img {
+        width: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        position: relative;
+    }
+    .parallax-background {
+        position: absolute;
+        width: 100%;
+    }
+    .parallax-background img {
+        position: relative;
+        z-index: 1;
+        width: auto;
+        top: -680px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    .parallax-text {
+        z-index: 999;
+        top: 120%;
+        left: 0;
+        transform: translateY(-50%);
+        text-align: center;
+    }
+    .parallax-text h3 {
+        color: #FFF !important;
+        margin: 0 auto;
+        text-transform: uppercase;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        font-size: 10rem;
+        line-height: 9rem;
+        letter-spacing: -3px;
+    }
+    @media (min-width: 1200px) {
+        .parallax-container {
+            height: 900px;
+        }
+        .parallax-foreground {
+            bottom: 10%;
+        }
+        .parallax-foreground img {
+            width: 100%;
+        }
+        .parallax-text {
+            position: absolute;
+            top: 100%;
+        }
+        .parallax-text h3 {
+            font-size: 18rem;
+            line-height: 16.5rem;
+        }
+        .parallax-background img {
+            width: 100%;
+            top: -100px;
+        }
+    }
+    .col-ccs-parallax {
+        background-color: #000;
+    }
+    @media (min-width: 1400px) {
+        .parallax-container {
+            max-width: 1200px !important;
+            margin: 0 auto !important;
+        }
+    }
+    @media (min-width: 1600px) {
+        .parallax-container {
+            max-width: 1400px !important;
+        }
+    }
+</style>
+<div class="parallax-container">
+    <div class="parallax-foreground">
+        <!-- <img src="https://j-place.github.io/public/college-club/img/ccs-parallax-foreground.png" alt=""> -->
+        <img src="-/media/ccs/site/ccs-parallax-foreground.png" alt="">
+        
+    </div>
+    <div class="parallax-text">
+        <h3>Have Fun.</h3>
+        <h3>Compete.</h3>
+        <h3>Connect.</h3>
+    </div>
+    <div class="parallax-background">
+        <!-- <img src="https://j-place.github.io/public/college-club/img/ccs-parallax-background.jpg" alt=""> -->
+        <img src="-/media/ccs/site/ccs-parallax-background.jpg" alt="">
+    </div>
+</div>
+<script>
+    document.addEventListener("scroll", function () {
+        const container = document.querySelector(".parallax-container");
+        const foreground = document.querySelector(".parallax-foreground");
+        const text = document.querySelector(".parallax-text");
+        const containerRect = container.getBoundingClientRect();
+        const startParallax = containerRect.top + 300;
+        const windowHeight = window.innerHeight;
+        const windowWidth = window.innerWidth;
+        console.log("Window Width: " + windowWidth);
+        if (startParallax < windowHeight && containerRect.bottom > 600) {
+            const scrollProgress = 1 - (containerRect.top / windowHeight);
+            const foregroundOffset = scrollProgress * 500;
+            const textOffset = scrollProgress * -500;
+            foreground.style.transform = `translateY(calc(-90% + ${foregroundOffset}px))`;
+            text.style.transform = `translateY(calc(-40% + ${textOffset}px))`;
+        }
+    });
+</script>

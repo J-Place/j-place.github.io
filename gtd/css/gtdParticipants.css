@@ -1,0 +1,317 @@
+.gtd-participants {
+    width: 100%;
+    margin: 3rem auto;
+    position: relative;
+}
+.gtd-participants .filters .filters__swimmer--bio > div,
+.gtd-participants .filters .filters__swimmer > div > div,
+.gtd-participants .filters .filters__admin > div > div {
+    margin-right: 10px;
+}
+/* .gtd-participants .summary-container {
+    position: absolute;
+    top: 42px;
+} */
+.gtd-participants .filters .title {
+    margin-bottom: 0;
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 5px 0 0;
+}
+.gtd-participants .filters .title a {
+    font-size: 13px;
+    font-weight: normal;
+    margin-left: 4px;
+    padding-left: 8px;
+    text-decoration: underline;
+    border-left: 1px solid #BBB;
+}
+.gtd-participants .filters__admin {
+    display: block;
+    margin: 15px 0 0;
+    padding-top: 0;
+    border-top: 1px solid #CCC;
+}
+.gtd-participants .filters__admin--club {
+    display: inline-block;
+    width: 80px;
+    margin-right: 10px;
+}
+.gtd-participants .filters__admin--lmsc-zone {
+    display: inline-block;
+}
+.gtd-participants .filters__swimmer--bio {
+    margin: 2px 0 15px;
+}
+.gtd-participants .filters .name {
+    width: 200px;
+    max-width: 200px;
+    display: block;
+    top: 0;
+}
+.gtd-participants .filters .age {
+    width: 80px;
+    max-width: 80px;
+    min-width: 80px;
+    display: inline-block;
+    top: 0;
+}
+.gtd-participants .filters .sex {
+    width: 90px;
+    max-width: 90px;
+    min-width: 90px;
+    display: inline-block;
+}
+.gtd-participants .filters .ageGroup {
+    width: 90px;
+    max-width: 90px;
+    min-width: 90px;
+    display: inline-block;
+}
+.gtd-participants .filters .clubAbbr {
+    width: 100%;
+    min-width: 100%;
+    display: inline-block;
+    top: 0;
+}
+.gtd-participants .filters .lmsc {
+    width: 110px;
+    max-width: 110px;
+    min-width: 110px;
+    display: inline-block;
+}
+.gtd-participants .filters .zone {
+    width: 110px;
+    max-width: 110px;
+    min-width: 110px;
+    display: inline-block;
+}
+.gtd-participants .filters .title a.download-csv {
+    font-size: 10px;
+    position: absolute;
+    top: 15px;
+    right: 13px;
+    height: 45px;
+    line-height: 45px;
+    overflow: hidden;
+    border: 0 none;
+    text-decoration: none;
+}
+.gtd-participants .filters #downloadCsv:before {
+    color: #0068ad;
+    opacity: 1.0;
+    /* content: 'save_alt'; */
+    /* content: 'get_app'; */
+    content: 'description';
+    margin: 0 0 0 -3px;
+    font-family: 'Material Icons';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 2rem;
+    position: relative;
+    top: -13px;
+    right: -16px;
+    display: inline-block;
+    width: 15px;
+    height: 15px;;
+    vertical-align: sub;
+    line-height: inherit;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'liga';
+}
+.gtd-participants .search__summary > p:before,
+.gtd-participants .filters__summary > p:before {
+    color: #000;
+    opacity: 0.25;
+    content: 'close';
+    margin: 0 0 0 -3px;
+    font-family: 'Material Icons';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.5rem;
+    position: relative;
+    top: -1px;
+    right: 1px;
+    display: inline;
+    vertical-align: sub;
+    line-height: inherit;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'liga';
+}
+.gtd-participants .search__summary--item-key,
+.gtd-participants .filters__summary--item-key {
+    font-size: 11px;
+    font-weight: normal;
+}
+.gtd-participants .search__summary--item-value,
+.gtd-participants .filters__summary--item-value {
+    font-size: 12px;
+    font-weight: bold;
+    border-bottom: 1px solid #CCC;
+    cursor: pointer;
+}
+.gtd-participants .list .last {
+    display: block;
+    font-size: 18px;
+    font-weight: bold;
+}
+.gtd-participants .sorting .lmsc,
+.gtd-participants .sorting .zone,
+.gtd-participants .list .lmsc,
+.gtd-participants .list .zone,
+.gtd-participants .sorting .ageGroup,
+.gtd-participants .list .ageGroup,
+.gtd-participants .sorting .clubAbbr,
+.gtd-participants .list .clubAbbr {
+    display: none;
+}
+@media only screen and (min-width: 768px) {
+    .gtd-participants .sorting .lmsc,
+    .gtd-participants .sorting .zone,
+    .gtd-participants .list .lmsc,
+    .gtd-participants .list .zone,    
+    .gtd-participants .sorting .ageGroup,
+    .gtd-participants .list .ageGroup,
+    .gtd-participants .sorting .clubAbbr,
+    .gtd-participants .list .clubAbbr {
+        display: table-cell;
+    }
+    .gtd-participants .sorting .first,
+    .gtd-participants .list .first {
+        display: inline-block;
+        font-size: 16px;
+    }
+    .gtd-participants .sorting .last,
+    .gtd-participants .list .last {
+        display: inline-block;
+        font-size: 16px;
+        font-weight: normal;
+    }
+    .gtd-participants .sorting .sex,
+    .gtd-participants .list .sex {
+        text-align: center;
+    }
+    .gtd-participants .sorting .ageGroup,
+    .gtd-participants .list .ageGroup {
+        text-align: center;
+    }
+    .gtd-participants .sorting .age,
+    .gtd-participants .list .age {
+        text-align: center;
+    }
+    .gtd-participants .summary-container {
+        position: absolute;
+        top: 109px;
+    }
+    .gtd-participants .filters .title {
+        margin-bottom: 0;
+        padding-bottom: 5px;
+    }
+    .gtd-participants .filters .title a {
+        font-size: 11px;
+    }
+    .gtd-participants .filters .title a.download-csv {
+        top: 16px;
+        right: 15px;
+    }
+    .gtd-participants .filters .filters__swimmer--bio > div,
+    .gtd-participants .filters .filters__swimmer > div > div,
+    .gtd-participants .filters .filters__admin > div > div {
+        margin-right: 5px;
+    }
+    .gtd-participants input.search--club {
+        text-transform: uppercase;
+    }
+    .gtd-participants .filters__swimmer {
+        display: inline-block;
+        margin-right: 30px;
+        margin-bottom: 30px;
+        padding-right: 30px;
+        padding-bottom: 5px;
+        border-right: 1px solid #CCC;
+    }
+    .gtd-participants .filters__admin {
+        width: 35%;
+        display: inline-block;
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-top: 0;
+        border: 0 none;
+        padding-bottom: 5px;
+    }
+    .gtd-participants .filters__swimmer > div,
+    .gtd-participants .filters__admin > div {
+        margin-right: 0;
+    }
+    .gtd-participants .filters__swimmer--name {
+        vertical-align: top;
+        display: inline-block;;
+    }
+    .gtd-participants .filters__swimmer--bio {
+        display: inline-block;
+    }
+    .gtd-participants .filters__admin--club {
+        width: 280px;
+    }
+    .gtd-participants .filters__admin--lmsc-zone {
+        width: auto;
+    }
+    .gtd-participants .filters .name {
+        width: 280px;
+        max-width: 280px;
+        display: inline-block;
+    }
+    .gtd-participants .filters .sex {
+        width: 80px;
+        max-width: 80px;
+    }
+    .gtd-participants .filters .age {
+        width: 60px;
+        max-width: 60px;
+        display: inline-block;
+    }
+    .gtd-participants .filters .ageGroup {
+        width: 80px;
+        max-width: 80px;
+        display: inline-block;
+    }
+    .gtd-participants .filters .clubAbbr {
+        display: inline-block;
+    }    
+    .gtd-participants .filters .zone {
+        width: 120px;
+        min-width: 120px;
+        display: inline-block;
+        max-width: initial;
+    }
+    .gtd-participants .filters .lmsc {
+        width: 150px;
+        min-width: 150px;
+        display: inline-block;
+        max-width: initial;
+    }
+    .gtd-participants .sorting .sex,
+    .gtd-participants .list .sex {
+        width: 80px;
+        max-width: 80px;
+        padding-right: 0;
+        padding-left: 25px;
+        display: inline-block;
+        text-align: center;
+    }
+}
