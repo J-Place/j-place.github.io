@@ -13,8 +13,10 @@
 <body class="">
   <div id="main-container">
     {% include "partials/header.njk" %}
-    {% block pageHeader %}{% endblock %}
-    {% block content %}{% endblock %}
+    <main role="main">
+      {% block pageHeader %}{% endblock %}
+      {% block content %}{% endblock %}
+    </main>
   </div>
   {% include "partials/footer.njk" %}
   <script src="/js/megamenu.js" defer></script>
