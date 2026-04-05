@@ -1,0 +1,229 @@
+{% set defaultImg = "https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/non-lightroom images/house art/default article images/defaultarticleimage2.jpg?cx=0.5&cy=0.5&cw=600&ch=270&hash=11617B14C76C8CAE14733AD0E63AE4BE" %}
+
+{% set searchResults = [
+  {
+    id: "{F7F0485E-556A-4153-AE3A-FA8937FFA0B6}",
+    type: "article",
+    typeLabel: "Article",
+    url: "/fitness-and-training/articles-and-videos/articles/three-dryland-tests-for-improved-swimming",
+    title: "Three Dryland Tests for Improved Swimming",
+    summary: "When it comes to making your dryland workouts effective for you, doing some simple tests can unearth your strengths and weaknesses for a better path forward. By completing these tests, you can build your athleticism and improve your weaknesses, which can result in injury reduction and more efficient swimming.",
+    ctaLabel: "Read Article",
+    img: "https://www-usms-hhgdctfafngha6hr.z01.azurefd.net//-/media/usms/lightroom/istock-182926438.jpg?cx=0.5&cy=0.5&cw=600&ch=270&hash=A8CE521738DFD77C1B224E0329466442"
+  },
+  {
+    id: "{181633A6-767B-451E-BBE2-EF2FB7611207}",
+    type: "article",
+    typeLabel: "Article",
+    url: "/fitness-and-training/articles-and-videos/articles/usms-member-elizabeth-lowe-saves-lives-in-the-bay-area-with-mobile-covid-19-testing-clinic",
+    title: "USMS Member Elizabeth Lowe Saves Lives in the Bay Area With Mobile COVID-19 Testing Clinic",
+    summary: "Elizabeth Lowe and her mobile COVID-19 testing unit arrived in June at a residential care facility in Marin County, California, just outside of San Francisco. Outfitted with a repurposed commuter shuttle van and toolboxes toting medical supplies, Lowe's team set up three testing stations in the building's parking lot.",
+    ctaLabel: "Read Article",
+    img: "https://www-usms-hhgdctfafngha6hr.z01.azurefd.net//-/media/usms/lightroom/signage-usms-summer-nats-2017 0018.jpg?cx=0.5&cy=0.5&cw=600&ch=270&hash=6AF1AEE669A7FB4752E5147C6AFCE04B"
+  },
+  {
+    id: "{C592EFD8-1120-4CE1-BBC5-BF551C1CEF92}",
+    type: "article",
+    typeLabel: "Article",
+    url: "/fitness-and-training/articles-and-videos/articles/a-test-of-fortitude",
+    title: "A Test of Fortitude",
+    summary: "A friend's New Year's resolution of \"Do something that scares you\" motivated me to enter the Sixth Annual City Mile meet. With some introspection, I came up with an answer that surprised me: It's important to do hard things—in the pool and in life. Doing hard things in the pool gives us the strength to do hard things in our real life.",
+    ctaLabel: "Read Article",
+    img: defaultImg
+  },
+  {
+    id: "{59208ED2-8580-46C1-9492-8FFA3254E9F7}",
+    type: "article",
+    typeLabel: "Article",
+    url: "/fitness-and-training/articles-and-videos/articles/test-your-knowledge",
+    title: "Test Your Knowledge",
+    summary: "How well do you know swimming? Take our quiz and find out. From technique tips to competitive swimming history, this test covers a broad range of topics for swimmers of all levels.",
+    ctaLabel: "Read Article",
+    img: defaultImg
+  },
+  {
+    id: "{A1234567-89AB-CDEF-0123-456789ABCDEF}",
+    type: "video",
+    typeLabel: "Article w/ Video",
+    url: "/fitness-and-training/articles-and-videos/articles/profiling-bram-tester",
+    title: "Profiling Bram Tester",
+    summary: "Get to know USMS athlete Bram Tester, whose dedication to open water swimming has taken him around the world. In this video feature, Bram shares his training philosophy, favorite swims, and advice for swimmers looking to push their limits in open water.",
+    ctaLabel: "Read Article",
+    img: defaultImg
+  },
+  {
+    id: "{B2345678-9ABC-DEF0-1234-56789ABCDEF0}",
+    type: "infopage",
+    typeLabel: "Info Page",
+    url: "/fitness-and-training/guides/swimming-101",
+    title: "Swimming 101",
+    summary: "New to swimming or looking to sharpen your fundamentals? This guide covers stroke technique, pool etiquette, training terminology, and everything you need to know to get started or improve your swimming.",
+    ctaLabel: "Learn More",
+    img: defaultImg
+  },
+  {
+    id: "{C3456789-ABCD-EF01-2345-6789ABCDEF01}",
+    type: "document",
+    typeLabel: "Document",
+    url: "/volunteer-central/policy-and-governance/usms-policies",
+    title: "USMS Rulebook and Policy Documents",
+    summary: "Access the complete USMS rulebook, governance documents, and official policies including meet conduct, eligibility requirements, and administrative procedures for clubs and officials.",
+    ctaLabel: "View Document",
+    img: null
+  }
+] %}
+
+<div class="modal fade" id="pageModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Go To Page</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <input type="number" min="1" max="50" name="gotoInput" id="gotoInput" value="" class="form-control">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="gotoPageButton" class="btn btn-primary">Go</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="results-content">
+
+  <div class="filter-header">
+    <div class="filter-form__nav">
+      <span class="tag-list--title">Filters:</span>
+      <div class="list-control-search--tags"></div>
+    </div>
+  </div>
+
+  <div class="filter-form filter-form--results form-horizontal">
+    <div class="filter-form__title">
+      <div class="filter-form__top">
+        <div class="aa-Autocomplete" role="combobox" aria-expanded="false" aria-haspopup="listbox">
+          <form class="aa-Form" method="GET" action="/search" role="search" novalidate>
+            <div class="aa-InputWrapperPrefix">
+              <label class="aa-Label" aria-label="Submit" for="search-input">
+                <button class="aa-SubmitButton" type="submit" title="Submit">
+                  <svg class="aa-SubmitIcon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                    <path d="M16.041 15.856c-0.034 0.026-0.067 0.055-0.099 0.087s-0.060 0.064-0.087 0.099c-1.258 1.213-2.969 1.958-4.855 1.958-1.933 0-3.682-0.782-4.95-2.050s-2.050-3.017-2.050-4.95 0.782-3.682 2.050-4.95 3.017-2.050 4.95-2.050 3.682 0.782 4.95 2.050 2.050 3.017 2.050 4.95c0 1.886-0.745 3.597-1.959 4.856zM21.707 20.293l-3.675-3.675c1.231-1.54 1.968-3.493 1.968-5.618 0-2.485-1.008-4.736-2.636-6.364s-3.879-2.636-6.364-2.636-4.736 1.008-6.364 2.636-2.636 3.879-2.636 6.364 1.008 4.736 2.636 6.364 3.879 2.636 6.364 2.636c2.125 0 4.078-0.737 5.618-1.968l3.675 3.675c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414z"></path>
+                  </svg>
+                </button>
+              </label>
+            </div>
+            <div class="aa-InputWrapper">
+              <input class="aa-Input" name="filter" id="search-input" type="search" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search USMS" maxlength="512">
+            </div>
+            <div class="aa-InputWrapperSuffix">
+              <button class="aa-ClearButton" type="reset" title="Clear">
+                <svg class="aa-ClearIcon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                  <path d="M5.293 6.707l5.293 5.293-5.293 5.293c-0.391 0.391-0.391 1.024 0 1.414s1.024 0.391 1.414 0l5.293-5.293 5.293 5.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-5.293-5.293 5.293-5.293c0.391-0.391 0.391-1.024 0-1.414s-1.024-0.391-1.414 0l-5.293 5.293-5.293-5.293c-0.391-0.391-1.024-0.391-1.414 0s-0.391 1.024 0 1.414z"></path>
+                </svg>
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="filter-form__actions">
+          <button type="submit" class="btn btn-primary filter-form__go-button">Submit</button>
+        </div>
+      </div>
+
+      <div class="filter-form__bottom">
+        <div class="filter-form__facets">
+          <span class="facet-title">Filter By:</span>
+          <label id="filterByArticle__label" class="checkbox-label" for="filterByArticle">
+            <div class="checkbox-container">
+              <input type="checkbox" data-label="Article" name="filterByArticle" id="filterByArticle" value="Article">
+              <span class="checkbox__placeholder"></span>
+            </div>
+            Article
+          </label>
+          <label id="filterByVideo__label" class="checkbox-label" for="filterByVideo">
+            <div class="checkbox-container">
+              <input type="checkbox" data-label="Article w/ Video" name="filterByVideo" id="filterByVideo" value="Video">
+              <span class="checkbox__placeholder"></span>
+            </div>
+            Article w/ Video
+          </label>
+          <label id="filterByInfoPage__label" class="checkbox-label" for="filterByInfoPage">
+            <div class="checkbox-container">
+              <input type="checkbox" data-label="Info Page" name="filterByInfoPage" id="filterByInfoPage" value="Info Page">
+              <span class="checkbox__placeholder"></span>
+            </div>
+            Info Page
+          </label>
+          <label id="filterByPeople__label" class="checkbox-label" for="filterByPeople">
+            <div class="checkbox-container">
+              <input type="checkbox" data-label="People" name="filterByPeople" id="filterByPeople" value="People">
+              <span class="checkbox__placeholder"></span>
+            </div>
+            People
+          </label>
+          <label id="filterByDocuments__label" class="checkbox-label" for="filterByDocuments">
+            <div class="checkbox-container">
+              <input type="checkbox" data-label="Documents" name="filterByDocuments" id="filterByDocuments" value="Documents">
+              <span class="checkbox__placeholder"></span>
+            </div>
+            Documents
+          </label>
+        </div>
+
+        <div class="filter-form__sorting">
+          <span class="sort-title">Sort By:</span>
+          <button type="button" class="btn-sort sort-relevance selected" data-sort="match">Best Match</button>
+          <button type="button" class="btn-sort sort-date" data-sort="recent">Most Recent</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="results-list__summary">
+    Showing <strong>1–{{ searchResults | length }}</strong> of <strong>1851</strong> Results
+  </div>
+
+  <div class="results-list">
+    {% for result in searchResults %}
+    <div class="results-list__item" id="{{ result.id }}">
+      <div class="results-list__item-detail" role="main">
+        <div class="results-list__item-type--container">
+          <div class="results-list__item-type item-type--{{ result.type }} text-uppercase">{{ result.typeLabel }}</div>
+        </div>
+        <h3 class="results-list__item-title">
+          <a href="{{ result.url }}">{{ result.title }}</a>
+        </h3>
+        <p class="results-list__item-summary">{{ result.summary }}</p>
+        <div class="results-list__item-footer">
+          <a href="{{ result.url }}">{{ result.ctaLabel }}</a>
+        </div>
+      </div>
+      {% if result.img %}
+      <a class="results-list__item-image-container" href="{{ result.url }}">
+        <div class="results-list__item-image" style="background-image: url('{{ result.img }}'); background-repeat: no-repeat; background-size: cover; background-position: center;"></div>
+      </a>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="results-list__pagination-container">
+    <ul class="results-list__pagination list--nostyle">
+      <li>
+        <button class="btn btn-chevron-left" data-page="-1" disabled><i class="fa-solid fa-chevron-left"></i></button>
+      </li>
+      <li><button class="btn btn-results-0 btn-active" data-page="0">1</button></li>
+      <li><button class="btn btn-results-1" data-page="1">2</button></li>
+      <li><button class="btn btn-results-2" data-page="2">3</button></li>
+      <li><button class="btn btn-results-3" data-page="3">4</button></li>
+      <li><button class="btn btn-results-4" data-page="4">5</button></li>
+      <li>
+        <button class="btn btn-chevron-right" data-page="1"><i class="fa-solid fa-chevron-right"></i></button>
+      </li>
+    </ul>
+  </div>
+
+</div>
