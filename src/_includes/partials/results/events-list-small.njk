@@ -4,7 +4,7 @@
     <div class="results-list__item-detail" id="{{ item.id }}" distance="{{ item.distance }}">
       <input type="hidden" name="distance" value="{{ item.distance }}">
       <p class="results-list__item-date">{{ item.dateShort }}</p>
-      <p class="results-list__item-type">{{ item.courseType }}</p>
+      <p class="results-list__item-type">{{ item.courseType | courseTypeAbbr }}</p>
       <h3 class="results-list__item-title">{{ item.title }}</h3>
       {% if not item.virtual %}
       <p class="results-list__item-location">{{ item.venueCity }}, {{ item.venueState }}</p>

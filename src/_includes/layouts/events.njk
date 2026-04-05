@@ -4,8 +4,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/theme.min.css">
 <link rel="stylesheet" href="https://www.usms.org/styles/algoliaStyles.min.css">
 <link rel="stylesheet" href="https://www.usms.org/styles/algoliaEventSearch.min.css">
+<link rel="stylesheet" href="/css/events.css">
 {% endblock %}
 {% block pageHeader %}
 {% include "partials/page-header.njk" %}
 {% endblock %}
 {% block content %}{{ content | safe }}{% endblock %}
+{% block pageJS %}
+<script src="/js/filters.js" defer></script>
+<script src="/js/events.js" defer></script>
+{% endblock %}
