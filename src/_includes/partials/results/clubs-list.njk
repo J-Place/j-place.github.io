@@ -1,0 +1,44 @@
+<ul class="club-list-new list--nostyle">
+  {% for club in clubItems %}
+  <li class="club-list-item-new">
+    <input type="hidden" value="{{ club.id }}">
+    <a href="{{ club.url }}" class="club-list-item-new__title-link">
+      <h4 class="club-list-item-new__title">{{ club.title }}</h4>
+    </a>
+    <div class="club-list-item-new__locations">
+      {% for location in club.locations %}
+      <button type="button" class="club-list-item-new__locations-item">
+        <div class="row">
+          <div class="col-2">
+            <div class="club-list-item-new__marker-container">
+              <div class="club-list-item-new__marker">
+                <img src="{{ location.markerImg }}" alt="Map pin">
+              </div>
+              <p class="club-list-item-new__distance text-center">{{ location.distance }} mi.</p>
+            </div>
+          </div>
+          <div class="col-10">
+            <h5 class="club-list-item-new__locations-item--name">{{ location.name }}</h5>
+            <p>{{ location.address }}</p>
+            <p>{{ location.city }}, {{ location.state }} {{ location.zip }}</p>
+          </div>
+        </div>
+      </button>
+      {% endfor %}
+    </div>
+    {% if club.badges %}
+    <div class="club-list-item-new__badges-container">
+      {% for badge in club.badges %}
+      <div class="club-list-item-new__badge-item">
+        <img class="club-list-item-new__badge" src="{{ badge.img }}" alt="{{ badge.alt }}">
+        <p class="text-center">{{ badge.label }}</p>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <a href="{{ club.url }}" class="club-list-item-new__details-link">
+      <button type="button" class="club-list-item-new__action">Club Details</button>
+    </a>
+  </li>
+  {% endfor %}
+</ul>
