@@ -1,3 +1,63 @@
+{% set markerOrange = "https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/images/map/marker_orange.png?rev=9b3b34aaf0ca468990121aa0a0afdcb9" %}
+{% set markerBlue   = "https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/images/map/marker_blue.png?rev=8fda666ed7454ef38a4bf7e4ac7684cf" %}
+{% set badgeCoach   = "https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club detail/club-badge-coach.png?h=321&w=350&rev=635d566be36d4cdcadc27626fde72b68" %}
+{% set badgeAlts    = "https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club detail/club-badge-alts.png?h=321&w=350&rev=3b08e5ab609141ad9a924f61da33bc96" %}
+{% set badgeGold    = "https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club detail/club-badge-gold.png?h=321&w=350&rev=31ba632063c64b5ab6621a05722f46ad" %}
+
+{% set clubItems = [
+  {
+    id:  "{3C14E51E-98D6-432E-A668-C9A480FBD41D}",
+    url: "/clubs/sarasota-y-sharks-536",
+    title: "Sarasota Sharks Masters (SHARK)",
+    locations: [
+      { markerImg: markerOrange, distance: "22", name: "Selby Aquatic Center", address: "8501 Potter Park Drive", city: "Sarasota", state: "FL", zip: "34238" }
+    ],
+    badges: [
+      { img: badgeCoach, alt: "USMS-certified-coach",    label: "USMS Certified Coach" },
+      { img: badgeAlts,  alt: "USMS-alts-instructor",    label: "USMS Certified ALTS Instructor" },
+      { img: badgeGold,  alt: "GoldClubBadge",           label: "USMS Certified Gold Club" }
+    ]
+  },
+  {
+    id:  "{5E16864D-BDAB-4CA1-99A5-77ED538F60B1}",
+    url: "/clubs/sarasota-tsunami-masters-2050",
+    title: "Sarasota Tsunami Masters (SRQM)",
+    locations: [
+      { markerImg: markerBlue, distance: "22", name: "Arlington Park &amp; Aquatic Complex", address: "2650 Waldemere St", city: "Sarasota", state: "FL", zip: "34239" }
+    ],
+    badges: [
+      { img: badgeCoach, alt: "USMS-certified-coach", label: "USMS Certified Coach" }
+    ]
+  },
+  {
+    id:  "{B2C3D4E5-F6A7-8901-BCDE-F12345678901}",
+    url: "/clubs/sea-dragon-aquatics-masters-1234",
+    title: "Sea Dragon Aquatics Masters (SDAMS)",
+    locations: [
+      { markerImg: markerBlue, distance: "23", name: "Centennial Park Aquatic Center", address: "1605 N Tamiami Trail", city: "Sarasota", state: "FL", zip: "34234" }
+    ],
+    badges: []
+  },
+  {
+    id:  "{C3D4E5F6-A7B8-9012-CDEF-123456789012}",
+    url: "/clubs/torpedo-masters-club-5678",
+    title: "Torpedo Masters Club (TMC)",
+    locations: [
+      { markerImg: markerBlue, distance: "23", name: "Centennial Park Aquatic Center", address: "1605 N Tamiami Trail", city: "Sarasota", state: "FL", zip: "34234" }
+    ],
+    badges: []
+  },
+  {
+    id:  "{D4E5F6A7-B8C9-0123-DEF0-234567890123}",
+    url: "/clubs/ymca-southwest-florida-masters-hurricanes-9012",
+    title: "YMCA of Southwest Florida Masters Hurricanes (SFYH)",
+    locations: [
+      { markerImg: markerBlue, distance: "24", name: "South County Family YMCA Venice", address: "701 Center Rd", city: "Venice", state: "FL", zip: "34285" }
+    ],
+    badges: []
+  }
+] %}
+
 <ul class="club-list-new list--nostyle">
   {% for club in clubItems %}
   <li class="club-list-item-new">
@@ -26,7 +86,7 @@
       </button>
       {% endfor %}
     </div>
-    {% if club.badges %}
+    {% if club.badges | length %}
     <div class="club-list-item-new__badges-container">
       {% for badge in club.badges %}
       <div class="club-list-item-new__badge-item">

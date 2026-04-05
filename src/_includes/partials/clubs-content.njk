@@ -1,50 +1,8 @@
-{% set markerOrange = "https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/images/map/marker_orange.png?rev=9b3b34aaf0ca468990121aa0a0afdcb9" %}
-{% set markerBlue   = "https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/images/map/marker_blue.png?rev=8fda666ed7454ef38a4bf7e4ac7684cf" %}
-{% set badgeCoach   = "https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club detail/club-badge-coach.png?h=321&w=350&rev=635d566be36d4cdcadc27626fde72b68" %}
-{% set badgeAlts    = "https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club detail/club-badge-alts.png?h=321&w=350&rev=3b08e5ab609141ad9a924f61da33bc96" %}
-{% set badgeGold    = "https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club detail/club-badge-gold.png?h=321&w=350&rev=31ba632063c64b5ab6621a05722f46ad" %}
-
-{% set clubItems = [
-  {
-    id:  "{3C14E51E-98D6-432E-A668-C9A480FBD41D}",
-    url: "/clubs/sarasota-y-sharks-536",
-    title: "Sarasota Sharks Masters (SHARK)",
-    locations: [
-      { markerImg: markerOrange, distance: "22", name: "Selby Aquatic Center", address: "8501 Potter Park Drive", city: "Sarasota", state: "FL", zip: "34238" }
-    ],
-    badges: [
-      { img: badgeCoach, alt: "USMS-certified-coach",    label: "USMS Certified Coach" },
-      { img: badgeAlts,  alt: "USMS-alts-instructor",    label: "USMS Certified ALTS Instructor" },
-      { img: badgeGold,  alt: "GoldClubBadge",           label: "USMS Certified Gold Club" }
-    ]
-  },
-  {
-    id:  "{5E16864D-BDAB-4CA1-99A5-77ED538F60B1}",
-    url: "/clubs/sarasota-tsunami-masters-2050",
-    title: "Sarasota Tsunami Masters (SRQM)",
-    locations: [
-      { markerImg: markerBlue, distance: "22", name: "Arlington Park &amp; Aquatic Complex", address: "2650 Waldemere St", city: "Sarasota", state: "FL", zip: "34239" }
-    ],
-    badges: [
-      { img: badgeCoach, alt: "USMS-certified-coach", label: "USMS Certified Coach" }
-    ]
-  },
-  {
-    id:  "{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}",
-    url: "/clubs/suncoast-masters-1234",
-    title: "Suncoast Masters Aquatics (SCMA)",
-    locations: [
-      { markerImg: markerBlue, distance: "18", name: "Venice Community Pool", address: "257 W Venice Ave", city: "Venice", state: "FL", zip: "34285" }
-    ],
-    badges: [
-      { img: badgeGold, alt: "GoldClubBadge", label: "USMS Certified Gold Club" }
-    ]
-  }
-] %}
-
 <div class="row clubs-content-new">
-  <div class="col-xs-12 col-sm-4">
+  <div class="col-xs-12">
     {% include "partials/results/clubs-filter.njk" %}
+  </div>
+  <div class="col-xs-12 col-sm-4">
     {% include "partials/results/clubs-list.njk" %}
   </div>
   <div class="col-xs-12 col-sm-8">

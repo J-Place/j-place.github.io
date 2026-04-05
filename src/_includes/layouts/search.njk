@@ -1,9 +1,9 @@
 {% extends "layouts/base.njk" %}
 {% block pageCSS %}
-<!-- Local Dev Files — retire when production search CSS ships -->
-<link rel="stylesheet" href="/search/css/ResultsFilterForm.css">
-<link rel="stylesheet" href="/search/css/ResultList.css">
-<link rel="stylesheet" href="/search/css/events-filter-overrides.css">
-<link rel="stylesheet" href="/search/css/results-overrides.css">
+<link href="https://cdn.jsdelivr.net/npm/@algolia/autocomplete-theme-classic" rel="stylesheet">
+<link rel="stylesheet" href="https://www.usms.org/styles/algoliaStyles.min.css">
+{% endblock %}
+{% block pageHeader %}
+{% include "partials/page-header.njk" %}
 {% endblock %}
 {% block content %}{{ content | safe }}{% endblock %}
