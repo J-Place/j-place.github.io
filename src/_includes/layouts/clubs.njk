@@ -1,11 +1,13 @@
 {% extends "layouts/base.njk" %}
 {% block pageCSS %}
 <link rel="stylesheet" href="https://www.usms.org/styles/clubs.min.css">
+<link rel="stylesheet" href="/css/clubs.css">
 {% endblock %}
 {% block pageHeader %}
 {% include "partials/page-header.njk" %}
 {% endblock %}
 {% block content %}{{ content | safe }}{% endblock %}
 {% block pageJS %}
+<script src="/js/filters.js" defer></script>
 <script src="/js/clubs.js" defer></script>
 {% endblock %}
