@@ -56,13 +56,14 @@
     <div class="list-control-filter__header">
       <button class="toggle-filters">More Filters</button>
     </div>
-    <div class="list-control-filter__content">
+    <div class="list-control-filter__content form-group is-flex">
       <div class="form-group is-flex">
         <div class="check-list check-list--certifications">
           {% set certifications = [
-            { label: "Gold Club",          value: "gc" },
-            { label: "ALTS Grant Program", value: "alts" },
-            { label: "USMS Certified Coach", value: "coach" }
+            { label: "Gold Club",                   value: "gc"   },
+            { label: "ALTS Grant Program",          value: "sslf" },
+            { label: "Certified Coach",             value: "cc"   },
+            { label: "Certified ALTS Instructor",   value: "alts" }
           ] %}
           {% for cert in certifications %}
           <div class="input-group check-list-item">
@@ -76,22 +77,25 @@
           </div>
           {% endfor %}
         </div>
-        <div class="check-list check-list--activity-type">
-          {% set activityTypes = [
-            { label: "Outdoor",    value: "outdoor" },
-            { label: "Open Water", value: "ow" }
-          ] %}
-          {% for activity in activityTypes %}
-          <div class="input-group check-list-item">
-            <label id="{{ activity.label | replace(' ', '') }}__label" class="checkbox-label" for="{{ activity.label | replace(' ', '') }}">
-              <div class="checkbox-container">
-                <input type="checkbox" name="{{ activity.label }}" id="{{ activity.label | replace(' ', '') }}" value="{{ activity.value }}">
-                <span class="checkbox__placeholder"></span>
-              </div>
-              {{ activity.label }}
-            </label>
+        <div class="check-list check-list--double">
+          <div class="check-list check-list--facility-type">
+            {% set facilityTypes = [
+              { label: "Indoor",     value: "ip" },
+              { label: "Outdoor",    value: "op" },
+              { label: "Open Water", value: "ow" }
+            ] %}
+            {% for facility in facilityTypes %}
+            <div class="input-group check-list-item">
+              <label id="{{ facility.label | replace(' ', '') }}__label" class="checkbox-label" for="{{ facility.label | replace(' ', '') }}">
+                <div class="checkbox-container">
+                  <input type="checkbox" name="{{ facility.label }}" id="{{ facility.label | replace(' ', '') }}" value="{{ facility.value }}">
+                  <span class="checkbox__placeholder"></span>
+                </div>
+                {{ facility.label }}
+              </label>
+            </div>
+            {% endfor %}
           </div>
-          {% endfor %}
         </div>
         <div class="check-list check-list--pool-length">
           {% set poolLengths = [
