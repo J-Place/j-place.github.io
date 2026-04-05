@@ -1,0 +1,25 @@
+<div class="results-list">
+  {% for item in resultItems %}
+  <div class="results-list__item">
+    <div class="results-list__item-detail" role="main">
+      <div class="results-list__item-type--container">
+        {% for type in item.types %}
+        <div class="results-list__item-type item-type--{{ type | lower }} text-uppercase">{{ type }}</div>
+        {% endfor %}
+      </div>
+      <h3 class="results-list__item-title">
+        <a href="{{ item.url }}">{{ item.title }}</a>
+      </h3>
+      <p class="results-list__item-summary">{{ item.summary }}</p>
+      <div class="results-list__item-footer">
+        <a href="{{ item.url }}">{{ item.cta if item.cta else "Learn More" }}</a>
+      </div>
+    </div>
+    {% if item.image %}
+    <a class="results-list__item-image-container" href="{{ item.url }}">
+      <div class="results-list__item-image" style="background-image: url('{{ item.image }}');"></div>
+    </a>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>

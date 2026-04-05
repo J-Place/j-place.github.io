@@ -1,0 +1,19 @@
+<div class="results-list__pagination-container">
+  <ul class="results-list__pagination list--nostyle">
+    <li>
+      <button class="btn btn-chevron-left" data-page="{{ currentPage - 1 }}" {% if currentPage == 0 %}disabled{% endif %}>
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+    </li>
+    {% for page in range(0, totalPages) %}
+    <li>
+      <button class="btn btn-results-{{ page }}{% if page == currentPage %} btn-active{% endif %}" data-page="{{ page }}">{{ page + 1 }}</button>
+    </li>
+    {% endfor %}
+    <li>
+      <button class="btn btn-chevron-right" data-page="{{ currentPage + 1 }}" {% if currentPage == totalPages - 1 %}disabled{% endif %}>
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </li>
+  </ul>
+</div>
