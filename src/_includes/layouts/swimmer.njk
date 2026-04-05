@@ -1,0 +1,17 @@
+{% extends "layouts/base.njk" %}
+{% block pageCSS %}
+<link href="https://www.usms.org/styles/inThisArticle.min.css" rel="stylesheet">
+<link href="https://www.usms.org/styles/alsoInThisIssue.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css" rel="stylesheet">
+<link href="https://www.usms.org/styles/articleCarousel.min.css" rel="stylesheet">
+<link href="https://www.usms.org/styles/feature.min.css" rel="stylesheet">
+<link href="https://www.usms.org/styles/rteMasters.min.css" rel="stylesheet">
+{% endblock %}
+{% block pageHeader %}
+{% include "partials/swimmer-page-header.njk" %}
+{% endblock %}
+{% block content %}{{ content | safe }}{% endblock %}
+{% block pageJS %}
+<script src="https://www.usms.org/scripts/swimmerMagazine.min.js"></script>
+<script src="https://www.usms.org/scripts/stickyAd.min.js"></script>
+{% endblock %}
