@@ -72,6 +72,13 @@
       overlay.style.display = 'none';
     }
 
+    function closeLogin() {
+      var lw = document.querySelector('.mega-main-menu__actions-login--wrapper');
+      var ll = document.querySelector('.login__list');
+      if (lw) lw.classList.remove('login--active');
+      if (ll) ll.classList.remove('login--shown');
+    }
+
     function populateOverlay(item) {
       var data = MENU_DATA[item.id];
       if (!data) return false;
@@ -90,6 +97,7 @@
 
     function openMenu(item) {
       closeMenu();
+      closeLogin();
       if (!populateOverlay(item)) return;
       item.classList.add('active');
       setOverlayTop();
@@ -132,9 +140,42 @@
       closeMenu();
     }, { passive: true });
 
+    // Login toggle
+    var loginWrapper = document.querySelector('.mega-main-menu__actions-login--wrapper');
+    var loginList    = document.querySelector('.login__list');
+
+    if (loginWrapper && loginList) {
+      loginWrapper.addEventListener('click', function (e) {
+        e.stopPropagation();
+        if (loginWrapper.classList.contains('login--active')) {
+          closeLogin();
+        } else {
+          closeMenu();
+          closeSearch();
+          loginWrapper.classList.add('login--active');
+          loginList.classList.add('login--shown');
+        }
+      });
+
+      loginList.addEventListener('mouseleave', closeLogin);
+
+      document.addEventListener('click', function (e) {
+        if (!loginWrapper.contains(e.target) && !loginList.contains(e.target)) {
+          closeLogin();
+        }
+      });
+    }
+
     // Search toggle
     var searchWrapper = document.querySelector('.mega-main-menu__actions-search--wrapper');
     var searchForm    = document.querySelector('.mega-main-menu .search');
+
+    function closeSearch() {
+      if (!searchWrapper || !searchForm) return;
+      searchWrapper.classList.remove('search--active');
+      searchForm.style.opacity = '0';
+      searchForm.style.zIndex  = '-1';
+    }
 
     if (searchWrapper && searchForm) {
       searchWrapper.addEventListener('click', function () {
@@ -142,6 +183,7 @@
         searchForm.style.opacity  = isActive ? '1' : '0';
         searchForm.style.zIndex   = isActive ? '1' : '-1';
         if (isActive) {
+          closeLogin();
           var input = searchForm.querySelector('input[type="text"], .aa-Input');
           if (input) input.focus();
         } else {
@@ -152,9 +194,7 @@
 
       document.addEventListener('click', function (e) {
         if (!searchWrapper.contains(e.target) && !searchForm.contains(e.target)) {
-          searchWrapper.classList.remove('search--active');
-          searchForm.style.opacity = '0';
-          searchForm.style.zIndex  = '-1';
+          closeSearch();
         }
       });
     }
