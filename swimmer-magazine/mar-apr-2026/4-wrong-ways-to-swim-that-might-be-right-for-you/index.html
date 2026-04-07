@@ -4,7 +4,7 @@
 <html lang="en">
 <!--<![endif]-->
 <head>
-  <title>Club Finder | U.S. Masters Swimming</title>
+  <title>4 &#39;Wrong&#39; Ways to Swim That Might Be Right for You | U.S. Masters Swimming</title>
   <meta charset="utf-8" />
 <link rel="icon" href="https://www.usms.org/favicon.ico">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -50,8 +50,12 @@
 </style>
 
   
-<link rel="stylesheet" href="https://www.usms.org/styles/clubs.min.css">
-<link rel="stylesheet" href="/css/clubs.css">
+<link href="https://www.usms.org/styles/inThisArticle.min.css" rel="stylesheet">
+<link href="https://www.usms.org/styles/alsoInThisIssue.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css" rel="stylesheet">
+<link href="https://www.usms.org/styles/articleCarousel.min.css" rel="stylesheet">
+<link href="https://www.usms.org/styles/feature.min.css" rel="stylesheet">
+<link href="https://www.usms.org/styles/rteMasters.min.css" rel="stylesheet">
 
 </head>
 <body class="">
@@ -317,8 +321,20 @@
                 </a>
               </li>
               
+              <li class="text-capitalize breadcrumb__item">
+                <a class="breadcrumb__link" href="/swimmer-magazine">SWIMMER
+                  <i class="fa-solid fa-chevron-right"></i>
+                </a>
+              </li>
+              
+              <li class="text-capitalize breadcrumb__item">
+                <a class="breadcrumb__link" href="/swimmer-magazine/mar-apr-2026">Mar-Apr 2026
+                  <i class="fa-solid fa-chevron-right"></i>
+                </a>
+              </li>
+              
             </ul>
-            <span class="breadcrumb__title text-capitalize">Club Finder</span>
+            <span class="breadcrumb__title text-capitalize">4 &#39;Wrong&#39; ways to Swim That Might Be Right for You</span>
           </div>
         </div>
       </div>
@@ -326,433 +342,223 @@
   </div>
 </div>
 
-<header class="page-header">
-  <h1>
-    Club Finder
+<header class="page-header bg-media page-header__image page-header__image--inset"
+  style="background-image: url('https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/ldm06782.jpg?rev=095743b97e0140b1aec57d4e01b01de5&amp;cx=0.5&amp;cy=0.5&amp;cw=900&amp;ch=500&amp;hash=BD52FACFF791F911DC2EA299B0977410'); background-position: center center;">
+  <div class="page-header__image-container">
     
-  </h1>
+    <div class="page-header__photo-credit photo-credit--light-1">
+      <div class="photo-credit__wrapper">
+        <p>Image: Mike Lewis/@Mike2Swim</p>
+      </div>
+    </div>
+    
+    <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/ldm06782.jpg?rev=095743b97e0140b1aec57d4e01b01de5&amp;cx=0.5&amp;cy=0.5&amp;cw=900&amp;ch=500&amp;hash=BD52FACFF791F911DC2EA299B0977410" alt="LDM06782">
+  </div>
+  <div class="page-header__tint-placeholder page-header--dark"></div>
 </header>
 
 
       
-<section class="section section-full bg-gray p-tb-10">
+<section class="section section-full p-tb-10">
   <div class="usms-container p-tb-10">
     <div class="row">
-      <div class="col-xs-12">
-        <div class="row clubs-content-new">
-  <div class="col-xs-12">
-    <div class="list-control">
 
-  <div class="list-control-search">
-    <div class="list-control-search__header">
-      <span class="tag-list--title">Filters:</span>
-      <div class="list-control-search--tags"></div>
-      <i class="fa-solid fa-refresh fa-spin list-control-search--summary-loading" style="display:none;"></i>
-      <div class="list-control-search--summary">
-        Showing <strong>0 Clubs</strong> within <strong>25 Miles</strong>
-      </div>
-    </div>
-    <div class="list-control-search-mobile__toggle">Update Your Results</div>
-    <div class="list-control-search__content form-group is-flex">
-      <div class="list-control-search__input list-control-search__input--club-name">
-        <label for="search-filter__club-name">Search by Club Name</label>
-        <div class="input-group">
-          <span class="help-block help-block--ClubName">Please Enter a Club Name</span>
-          <input type="text" class="form-control" name="search-filter__club-name" placeholder="Club Name">
+      <div class="col-xs-12 col-lg-3">
+        <div class="article-nav article-nav--Scroll">
+          <h3 class="article-nav-title">In This Article</h3>
+          <ul id="navList"></ul>
         </div>
       </div>
-      <div class="list-control-search__input list-control-search__input--range">
-        <label for="search-filter__range">Select a Range</label>
-        <div class="input-group">
-          <select id="search-filter__range" name="search-filter__range">
-            <option value="10">10 Miles</option>
-            <option value="25" selected>25 Miles</option>
-            <option value="50">50 Miles</option>
-            <option value="100">100 Miles</option>
-            <option value="250">250 Miles</option>
-            <option value="max">Nationwide</option>
-          </select>
-        </div>
-      </div>
-      <div class="list-control-search__input list-control-search__input--location">
-        <label for="location">Search by City, State or Zip</label>
-        <div class="input-group">
-          <span class="help-block help-block--CityStateZip">Please enter a City, State or Zip</span>
-          <div>
-            <div class="map" style="display:none;"></div>
-            <input type="text" class="google-places-input form-control" placeholder="Select city &amp; state or zip" name="location" id="location" autocomplete="off">
-            <input type="hidden" class="google-places-input--zip" name="google-places-input--zip">
-            <input type="hidden" class="google-places-input--lat" name="google-places-input--lat">
-            <input type="hidden" class="google-places-input--lng" name="google-places-input--lng">
-          </div>
-        </div>
-      </div>
-      <div class="list-control-search__input list-control-search__input--button align-self-end">
-        <div class="input-group">
-          <button type="button" class="btn btn-primary" id="listSearchSubmit">Submit</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="list-control-filter">
-    <div class="list-control-filter__header">
-      <button class="toggle-filters">More Filters</button>
-    </div>
-    <div class="list-control-filter__content form-group is-flex">
-      <div class="form-group is-flex">
-        <div class="check-list check-list--certifications">
-          
-          
-          <div class="input-group check-list-item">
-            <label id="GoldClub__label" class="checkbox-label" for="GoldClub">
-              <div class="checkbox-container">
-                <input type="checkbox" name="Gold Club" id="GoldClub" value="gc">
-                <span class="checkbox__placeholder"></span>
-              </div>
-              Gold Club
-            </label>
-          </div>
-          
-          <div class="input-group check-list-item">
-            <label id="ALTSGrantProgram__label" class="checkbox-label" for="ALTSGrantProgram">
-              <div class="checkbox-container">
-                <input type="checkbox" name="ALTS Grant Program" id="ALTSGrantProgram" value="sslf">
-                <span class="checkbox__placeholder"></span>
-              </div>
-              ALTS Grant Program
-            </label>
-          </div>
-          
-          <div class="input-group check-list-item">
-            <label id="CertifiedCoach__label" class="checkbox-label" for="CertifiedCoach">
-              <div class="checkbox-container">
-                <input type="checkbox" name="Certified Coach" id="CertifiedCoach" value="cc">
-                <span class="checkbox__placeholder"></span>
-              </div>
-              Certified Coach
-            </label>
-          </div>
-          
-          <div class="input-group check-list-item">
-            <label id="CertifiedALTSInstructor__label" class="checkbox-label" for="CertifiedALTSInstructor">
-              <div class="checkbox-container">
-                <input type="checkbox" name="Certified ALTS Instructor" id="CertifiedALTSInstructor" value="alts">
-                <span class="checkbox__placeholder"></span>
-              </div>
-              Certified ALTS Instructor
-            </label>
-          </div>
-          
+      <div class="col-xs-12 col-lg-6">
+        <div class="article-issue">
+          <div class="article-issue__title text"><em>SWIMMER</em>&nbsp;Magazine</div>
+          <div class="article-issue__date">Mar-Apr 2026</div>
         </div>
-        <div class="check-list check-list--double">
-          <div class="check-list check-list--facility-type">
-            
-            
-            <div class="input-group check-list-item">
-              <label id="Indoor__label" class="checkbox-label" for="Indoor">
-                <div class="checkbox-container">
-                  <input type="checkbox" name="Indoor" id="Indoor" value="ip">
-                  <span class="checkbox__placeholder"></span>
-                </div>
-                Indoor
-              </label>
+
+        <header class="page-title">
+          <h1>4 'Wrong' Ways to Swim that Might Be Right for You</h1>
+          <h2>If you're swimming faster and easier, stick with it—even if you're doing something "wrong."</h2>
+        </header>
+
+        <div class="article-attribution">
+          <div class="author feature-author">
+            <div class="author__container">
+              <div class="author__detail">
+                <p class="author__name">By <strong>Andrew Sheaff</strong></p>
+              </div>
             </div>
-            
-            <div class="input-group check-list-item">
-              <label id="Outdoor__label" class="checkbox-label" for="Outdoor">
-                <div class="checkbox-container">
-                  <input type="checkbox" name="Outdoor" id="Outdoor" value="op">
-                  <span class="checkbox__placeholder"></span>
-                </div>
-                Outdoor
-              </label>
-            </div>
-            
-            <div class="input-group check-list-item">
-              <label id="OpenWater__label" class="checkbox-label" for="OpenWater">
-                <div class="checkbox-container">
-                  <input type="checkbox" name="Open Water" id="OpenWater" value="ow">
-                  <span class="checkbox__placeholder"></span>
-                </div>
-                Open Water
-              </label>
-            </div>
-            
+          </div>
+          <div class="article-attribution" style="padding-bottom:15px">
+            <p>Photographs by: <strong>Mike Lewis/Mike2Swim</strong></p>
+            <p>Demonstrated by: <strong>Ralph Porrazzo</strong></p>
           </div>
         </div>
-        <div class="check-list check-list--pool-length">
-          
-          
-          <div class="input-group check-list-item">
-            <label id="25Meters__label" class="checkbox-label" for="25Meters">
-              <div class="checkbox-container">
-                <input type="checkbox" name="25 Meters" id="25Meters" value="25m">
-                <span class="checkbox__placeholder"></span>
-              </div>
-              25 Meters
-            </label>
-          </div>
-          
-          <div class="input-group check-list-item">
-            <label id="25Yards__label" class="checkbox-label" for="25Yards">
-              <div class="checkbox-container">
-                <input type="checkbox" name="25 Yards" id="25Yards" value="25y">
-                <span class="checkbox__placeholder"></span>
-              </div>
-              25 Yards
-            </label>
-          </div>
-          
-          <div class="input-group check-list-item">
-            <label id="50Meters__label" class="checkbox-label" for="50Meters">
-              <div class="checkbox-container">
-                <input type="checkbox" name="50 Meters" id="50Meters" value="50m">
-                <span class="checkbox__placeholder"></span>
-              </div>
-              50 Meters
-            </label>
-          </div>
-          
-          <div class="input-group check-list-item">
-            <label id="Other__label" class="checkbox-label" for="Other">
-              <div class="checkbox-container">
-                <input type="checkbox" name="Other" id="Other" value="other">
-                <span class="checkbox__placeholder"></span>
-              </div>
-              Other
-            </label>
-          </div>
-          
+
+        <div class="html-container include-in-nav">
+          <p>Swimming has a lot of traditional thinking and conventional wisdom. Coaches adhere to many of these ideas because they're effective, but not all coaches agree on what works best.</p>
+          <p>Some ideas make sense but just don't lead to the fastest possible swimming. Some ideas are generally true, but there are certain circumstances in which you can and should ignore them.</p>
+          <p>Here are four "wrong" ways to swim that might actually help you swim faster. For each one, consider whether the logic makes sense for you, and if it does, give it a try. You might see instant change, or you might need to work more on something. If you're swimming faster and easier, stick with it—even if you're doing something "wrong."</p>
         </div>
+
+        <div class="usms-container p-tb-10">
+          <div class="row">
+            <div class="col-xs-12">
+              
+<div class="articleStepper">
+  <button class="carousel-control-prev" type="button">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <div class="carousel-inner-slick">
+    
+    <div>
+      <div class="carousel-image-container">
+        <a href="https://www.usms.org/swimmer-magazine/mar-apr-2026/what-swimmers-need-to-know-about-ultra-processed-foods">
+          <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/bigstock-example-of-a-fresh-product-mi-387137050.jpg?rev=b7996d76280e4983a911bb6f258ed558&amp;cx=0.5&amp;cy=0.5&amp;cw=1024&amp;ch=767&amp;hash=7F0D6C3C79DC9FD400783016879C182D" alt="What Swimmers Need to Know About Ultra-Processed Foods" />
+        </a>
+      </div>
+      <div class="carousel-text-container">
+        <a href="https://www.usms.org/swimmer-magazine/mar-apr-2026/what-swimmers-need-to-know-about-ultra-processed-foods"><p>What Swimmers Need to Know About Ultra-Processed Foods</p></a>
       </div>
     </div>
-  </div>
-
-  <div class="list-control-view">
-    <div class="list-control-view__header">
-      <span class="toggle-list active">
-        <button type="button" disabled>List</button>
-      </span>
-      <span class="toggle-map">
-        <button type="button">Map</button>
-      </span>
+    
+    <div>
+      <div class="carousel-image-container">
+        <a href="https://www.usms.org/swimmer-magazine/mar-apr-2026/toiling-toward-faster">
+          <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/screenshot 2026-02-11.jpg?rev=b5ff9f101ff340529106da74f35e396c&amp;cx=0.55&amp;cy=0.49&amp;cw=1024&amp;ch=767&amp;hash=B6BFEC3C26D5EB340408C0457C245E08" alt="Toiling Toward Faster" />
+        </a>
+      </div>
+      <div class="carousel-text-container">
+        <a href="https://www.usms.org/swimmer-magazine/mar-apr-2026/toiling-toward-faster"><p>Toiling Toward Faster</p></a>
+      </div>
     </div>
+    
+    <div>
+      <div class="carousel-image-container">
+        <a href="https://www.usms.org/swimmer-magazine/mar-apr-2026/its-a-manns-world">
+          <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/becca-mann- 2023 usms sp nats 1567-enhanced-nr.jpg?rev=6f2466bad9e745269a7677d380da0b6c&amp;cx=0.4&amp;cy=0.58&amp;cw=1024&amp;ch=767&amp;hash=62EEA2A615D8DD5305BACB049AC44741" alt="It&#39;s a Mann&#39;s World" />
+        </a>
+      </div>
+      <div class="carousel-text-container">
+        <a href="https://www.usms.org/swimmer-magazine/mar-apr-2026/its-a-manns-world"><p>It&#39;s a Mann&#39;s World</p></a>
+      </div>
+    </div>
+    
+    <div>
+      <div class="carousel-image-container">
+        <a href="https://www.usms.org/swimmer-magazine/mar-apr-2026/dont-fear-the-drylands">
+          <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/26 ma dd_03.jpg?rev=b2561c0befd148db92b79eb3a51b9c26&amp;cx=0.5&amp;cy=0.5&amp;cw=1024&amp;ch=767&amp;hash=1BB5CED22FA3922C630CEB9015BA0A01" alt="Don&#39;t Fear the Drylands" />
+        </a>
+      </div>
+      <div class="carousel-text-container">
+        <a href="https://www.usms.org/swimmer-magazine/mar-apr-2026/dont-fear-the-drylands"><p>Don&#39;t Fear the Drylands</p></a>
+      </div>
+    </div>
+    
+    <div>
+      <div class="carousel-image-container">
+        <a href="https://www.usms.org/swimmer-magazine/mar-apr-2026/how-to-clear-your-mind-when-you-cant-clear-your-mind">
+          <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/bigstock-young-women-meditate-while-doi-311415658.jpg?rev=03fa7724fa7a4877aeaa402d1c676f24&amp;cx=0.52&amp;cy=0.59&amp;cw=1024&amp;ch=767&amp;hash=9F41BC443791195108462179FEA2FA72" alt="How to Clear Your Mind When You Can&#39;t Clear Your Mind" />
+        </a>
+      </div>
+      <div class="carousel-text-container">
+        <a href="https://www.usms.org/swimmer-magazine/mar-apr-2026/how-to-clear-your-mind-when-you-cant-clear-your-mind"><p>How to Clear Your Mind When You Can&#39;t Clear Your Mind</p></a>
+      </div>
+    </div>
+    
+    <div>
+      <div class="carousel-image-container">
+        <a href="https://www.usms.org/swimmer-magazine/mar-apr-2026/three-habits-to-train-smart-hard-and-injury-free">
+          <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/arp_6224.jpg?rev=c1e89d58d3dc42c68b960cb67de76bb6&amp;cx=0.5&amp;cy=0.5&amp;cw=1024&amp;ch=767&amp;hash=29A1DD8634098799FF89EBE34641E531" alt="Three Habits to Train Smart, Hard, and Injury-Free" />
+        </a>
+      </div>
+      <div class="carousel-text-container">
+        <a href="https://www.usms.org/swimmer-magazine/mar-apr-2026/three-habits-to-train-smart-hard-and-injury-free"><p>Three Habits to Train Smart, Hard, and Injury-Free</p></a>
+      </div>
+    </div>
+    
+    <div>
+      <div class="carousel-image-container">
+        <a href="https://www.usms.org/swimmer-magazine/mar-apr-2026/wrangling-the-periods-and-commas">
+          <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/meg-smath- usms sum nats 2023 1875-enhanced-nr.jpg?rev=a8ef1edb86364baea582b02c8871e8f7&amp;cx=0.65&amp;cy=0.43&amp;cw=1024&amp;ch=767&amp;hash=27FEED72A80A40F47A39204FA7AC8C1D" alt="Wrangling the Periods and Commas" />
+        </a>
+      </div>
+      <div class="carousel-text-container">
+        <a href="https://www.usms.org/swimmer-magazine/mar-apr-2026/wrangling-the-periods-and-commas"><p>Wrangling the Periods and Commas</p></a>
+      </div>
+    </div>
+    
+    <div>
+      <div class="carousel-image-container">
+        <a href="https://www.usms.org/swimmer-magazine/mar-apr-2026/what-open-water-swimmers-need-to-know-about-gps-watches">
+          <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/z81_9445edit.jpg?rev=6b20db69a58e48cfadff9189d523fd84&amp;cx=0.45&amp;cy=0.52&amp;cw=1024&amp;ch=767&amp;hash=90E66D23934691D774E54B986E803A9E" alt="What Open Water Swimmers Need to Know About GPS Watches" />
+        </a>
+      </div>
+      <div class="carousel-text-container">
+        <a href="https://www.usms.org/swimmer-magazine/mar-apr-2026/what-open-water-swimmers-need-to-know-about-gps-watches"><p>What Open Water Swimmers Need to Know About GPS Watches</p></a>
+      </div>
+    </div>
+    
+    <div>
+      <div class="carousel-image-container">
+        <a href="https://www.usms.org/swimmer-magazine/mar-apr-2026/swim-parent">
+          <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/img_9461.jpg?rev=2d882b9c2ce449a08d5ea996c550b800&amp;cx=0.5&amp;cy=0.48&amp;cw=1024&amp;ch=767&amp;hash=45D522ECFFF3A949D2C5282344C4A783" alt="Swim. Parent." />
+        </a>
+      </div>
+      <div class="carousel-text-container">
+        <a href="https://www.usms.org/swimmer-magazine/mar-apr-2026/swim-parent"><p>Swim. Parent.</p></a>
+      </div>
+    </div>
+    
+    <div>
+      <div class="carousel-image-container">
+        <a href="https://www.usms.org/swimmer-magazine/mar-apr-2026/gutting-it-out">
+          <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/bigstock-health-benefits-of-taking-prob-332277577.jpg?rev=ed644f9b87d5450196f07c337b002e6b&amp;cx=0.46&amp;cy=0.56&amp;cw=1024&amp;ch=767&amp;hash=6DF31BDE0AEEF35F6E43C8718E6E3BF9" alt="Gutting it Out" />
+        </a>
+      </div>
+      <div class="carousel-text-container">
+        <a href="https://www.usms.org/swimmer-magazine/mar-apr-2026/gutting-it-out"><p>Gutting it Out</p></a>
+      </div>
+    </div>
+    
+    <div>
+      <div class="carousel-image-container">
+        <a href="https://www.usms.org/swimmer-magazine/mar-apr-2026/ask-the-coach-jeff-commings">
+          <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/26 ma whiteboard.jpg?rev=e696f024256b46b1b966415679009ccb&amp;cx=0.5&amp;cy=0.5&amp;cw=1024&amp;ch=767&amp;hash=F2D903522B351D0A13797A8AEFBB92D3" alt="Ask the Coach: Jeff Commings" />
+        </a>
+      </div>
+      <div class="carousel-text-container">
+        <a href="https://www.usms.org/swimmer-magazine/mar-apr-2026/ask-the-coach-jeff-commings"><p>Ask the Coach: Jeff Commings</p></a>
+      </div>
+    </div>
+    
+    <div>
+      <div class="carousel-image-container">
+        <a href="https://www.usms.org/swimmer-magazine/mar-apr-2026/from-the-center-lanes-valentin-preda">
+          <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/2025usmssummernats5344-edit.jpg?rev=1522b6cccc8f4922a1bc6852b16516b0&amp;cx=0.5&amp;cy=0.5&amp;cw=1024&amp;ch=767&amp;hash=68B2C2940BA9ED951FE7AB5B2CA85ECE" alt="From the Center Lanes: Valentin Preda" />
+        </a>
+      </div>
+      <div class="carousel-text-container">
+        <a href="https://www.usms.org/swimmer-magazine/mar-apr-2026/from-the-center-lanes-valentin-preda"><p>From the Center Lanes: Valentin Preda</p></a>
+      </div>
+    </div>
+    
   </div>
-
+  <button class="carousel-control-next" type="button">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
 </div>
 
-  </div>
-  <div class="col-xs-12 col-sm-4">
-    
-
-
-
-
-
-
-
-<ul class="club-list-new list--nostyle">
-  
-  <li class="club-list-item-new">
-    <input type="hidden" value="{3C14E51E-98D6-432E-A668-C9A480FBD41D}">
-    <a href="/clubs/sarasota-y-sharks-536" class="club-list-item-new__title-link">
-      <h4 class="club-list-item-new__title">Sarasota Sharks Masters (SHARK)</h4>
-    </a>
-    <div class="club-list-item-new__locations">
-      
-      <button type="button" class="club-list-item-new__locations-item">
-        <div class="row">
-          <div class="col-2">
-            <div class="club-list-item-new__marker-container">
-              <div class="club-list-item-new__marker">
-                <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/images/map/marker_orange.png?rev=9b3b34aaf0ca468990121aa0a0afdcb9" alt="Map pin">
-              </div>
-              <p class="club-list-item-new__distance text-center">22 mi.</p>
             </div>
           </div>
-          <div class="col-10">
-            <h5 class="club-list-item-new__locations-item--name">Selby Aquatic Center</h5>
-            <p>8501 Potter Park Drive</p>
-            <p>Sarasota, FL 34238</p>
-          </div>
         </div>
-      </button>
-      
-    </div>
-    
-    <div class="club-list-item-new__badges-container">
-      
-      <div class="club-list-item-new__badge-item">
-        <img class="club-list-item-new__badge" src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club detail/club-badge-coach.png?h=321&amp;w=350&amp;rev=635d566be36d4cdcadc27626fde72b68" alt="USMS-certified-coach">
-        <p class="text-center">USMS Certified Coach</p>
-      </div>
-      
-      <div class="club-list-item-new__badge-item">
-        <img class="club-list-item-new__badge" src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club detail/club-badge-alts.png?h=321&amp;w=350&amp;rev=3b08e5ab609141ad9a924f61da33bc96" alt="USMS-alts-instructor">
-        <p class="text-center">USMS Certified ALTS Instructor</p>
-      </div>
-      
-      <div class="club-list-item-new__badge-item">
-        <img class="club-list-item-new__badge" src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club detail/club-badge-gold.png?h=321&amp;w=350&amp;rev=31ba632063c64b5ab6621a05722f46ad" alt="GoldClubBadge">
-        <p class="text-center">USMS Certified Gold Club</p>
-      </div>
-      
-    </div>
-    
-    <a href="/clubs/sarasota-y-sharks-536" class="club-list-item-new__details-link">
-      <button type="button" class="club-list-item-new__action">Club Details</button>
-    </a>
-  </li>
-  
-  <li class="club-list-item-new">
-    <input type="hidden" value="{5E16864D-BDAB-4CA1-99A5-77ED538F60B1}">
-    <a href="/clubs/sarasota-tsunami-masters-2050" class="club-list-item-new__title-link">
-      <h4 class="club-list-item-new__title">Sarasota Tsunami Masters (SRQM)</h4>
-    </a>
-    <div class="club-list-item-new__locations">
-      
-      <button type="button" class="club-list-item-new__locations-item">
-        <div class="row">
-          <div class="col-2">
-            <div class="club-list-item-new__marker-container">
-              <div class="club-list-item-new__marker">
-                <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/images/map/marker_blue.png?rev=8fda666ed7454ef38a4bf7e4ac7684cf" alt="Map pin">
-              </div>
-              <p class="club-list-item-new__distance text-center">22 mi.</p>
-            </div>
-          </div>
-          <div class="col-10">
-            <h5 class="club-list-item-new__locations-item--name">Arlington Park &amp;amp; Aquatic Complex</h5>
-            <p>2650 Waldemere St</p>
-            <p>Sarasota, FL 34239</p>
-          </div>
-        </div>
-      </button>
-      
-    </div>
-    
-    <div class="club-list-item-new__badges-container">
-      
-      <div class="club-list-item-new__badge-item">
-        <img class="club-list-item-new__badge" src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club detail/club-badge-coach.png?h=321&amp;w=350&amp;rev=635d566be36d4cdcadc27626fde72b68" alt="USMS-certified-coach">
-        <p class="text-center">USMS Certified Coach</p>
-      </div>
-      
-    </div>
-    
-    <a href="/clubs/sarasota-tsunami-masters-2050" class="club-list-item-new__details-link">
-      <button type="button" class="club-list-item-new__action">Club Details</button>
-    </a>
-  </li>
-  
-  <li class="club-list-item-new">
-    <input type="hidden" value="{B2C3D4E5-F6A7-8901-BCDE-F12345678901}">
-    <a href="/clubs/sea-dragon-aquatics-masters-1234" class="club-list-item-new__title-link">
-      <h4 class="club-list-item-new__title">Sea Dragon Aquatics Masters (SDAMS)</h4>
-    </a>
-    <div class="club-list-item-new__locations">
-      
-      <button type="button" class="club-list-item-new__locations-item">
-        <div class="row">
-          <div class="col-2">
-            <div class="club-list-item-new__marker-container">
-              <div class="club-list-item-new__marker">
-                <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/images/map/marker_blue.png?rev=8fda666ed7454ef38a4bf7e4ac7684cf" alt="Map pin">
-              </div>
-              <p class="club-list-item-new__distance text-center">23 mi.</p>
-            </div>
-          </div>
-          <div class="col-10">
-            <h5 class="club-list-item-new__locations-item--name">Centennial Park Aquatic Center</h5>
-            <p>1605 N Tamiami Trail</p>
-            <p>Sarasota, FL 34234</p>
-          </div>
-        </div>
-      </button>
-      
-    </div>
-    
-    <a href="/clubs/sea-dragon-aquatics-masters-1234" class="club-list-item-new__details-link">
-      <button type="button" class="club-list-item-new__action">Club Details</button>
-    </a>
-  </li>
-  
-  <li class="club-list-item-new">
-    <input type="hidden" value="{C3D4E5F6-A7B8-9012-CDEF-123456789012}">
-    <a href="/clubs/torpedo-masters-club-5678" class="club-list-item-new__title-link">
-      <h4 class="club-list-item-new__title">Torpedo Masters Club (TMC)</h4>
-    </a>
-    <div class="club-list-item-new__locations">
-      
-      <button type="button" class="club-list-item-new__locations-item">
-        <div class="row">
-          <div class="col-2">
-            <div class="club-list-item-new__marker-container">
-              <div class="club-list-item-new__marker">
-                <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/images/map/marker_blue.png?rev=8fda666ed7454ef38a4bf7e4ac7684cf" alt="Map pin">
-              </div>
-              <p class="club-list-item-new__distance text-center">23 mi.</p>
-            </div>
-          </div>
-          <div class="col-10">
-            <h5 class="club-list-item-new__locations-item--name">Centennial Park Aquatic Center</h5>
-            <p>1605 N Tamiami Trail</p>
-            <p>Sarasota, FL 34234</p>
-          </div>
-        </div>
-      </button>
-      
-    </div>
-    
-    <a href="/clubs/torpedo-masters-club-5678" class="club-list-item-new__details-link">
-      <button type="button" class="club-list-item-new__action">Club Details</button>
-    </a>
-  </li>
-  
-  <li class="club-list-item-new">
-    <input type="hidden" value="{D4E5F6A7-B8C9-0123-DEF0-234567890123}">
-    <a href="/clubs/ymca-southwest-florida-masters-hurricanes-9012" class="club-list-item-new__title-link">
-      <h4 class="club-list-item-new__title">YMCA of Southwest Florida Masters Hurricanes (SFYH)</h4>
-    </a>
-    <div class="club-list-item-new__locations">
-      
-      <button type="button" class="club-list-item-new__locations-item">
-        <div class="row">
-          <div class="col-2">
-            <div class="club-list-item-new__marker-container">
-              <div class="club-list-item-new__marker">
-                <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/images/map/marker_blue.png?rev=8fda666ed7454ef38a4bf7e4ac7684cf" alt="Map pin">
-              </div>
-              <p class="club-list-item-new__distance text-center">24 mi.</p>
-            </div>
-          </div>
-          <div class="col-10">
-            <h5 class="club-list-item-new__locations-item--name">South County Family YMCA Venice</h5>
-            <p>701 Center Rd</p>
-            <p>Venice, FL 34285</p>
-          </div>
-        </div>
-      </button>
-      
-    </div>
-    
-    <a href="/clubs/ymca-southwest-florida-masters-hurricanes-9012" class="club-list-item-new__details-link">
-      <button type="button" class="club-list-item-new__action">Club Details</button>
-    </a>
-  </li>
-  
-</ul>
-
-  </div>
-  <div class="col-xs-12 col-sm-8">
-    <div class="club-map-new-container">
-      <div class="club-map-new"></div>
-    </div>
-  </div>
-</div>
 
       </div>
+
+      <div class="col-xs-12 col-lg-3"></div>
+
     </div>
   </div>
 </section>
@@ -1235,8 +1041,8 @@
 
   <script src="/js/megamenu.js" defer></script>
   
-<script src="/js/filters.js" defer></script>
-<script src="/js/clubs.js" defer></script>
+<script src="https://www.usms.org/scripts/swimmerMagazine.min.js"></script>
+<script src="https://www.usms.org/scripts/stickyAd.min.js"></script>
 
 </body>
 </html>
