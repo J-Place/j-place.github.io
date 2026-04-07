@@ -4,7 +4,7 @@
 <html lang="en">
 <!--<![endif]-->
 <head>
-  <title>Club Finder | U.S. Masters Swimming</title>
+  <title>My Account | U.S. Masters Swimming</title>
   <meta charset="utf-8" />
 <link rel="icon" href="https://www.usms.org/favicon.ico">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -315,7 +315,7 @@
               </li>
               
             </ul>
-            <span class="breadcrumb__title text-capitalize">Club Finder</span>
+            <span class="breadcrumb__title text-capitalize">My Account</span>
           </div>
         </div>
       </div>
@@ -330,419 +330,220 @@
   <div class="usms-container p-tb-10">
     <div class="row">
       <div class="col-xs-12">
-        <div class="row clubs-content-new">
-  <div class="col-xs-12">
-    <div class="list-control">
-
-  <div class="list-control-search">
-    <div class="list-control-search__header">
-      <span class="tag-list--title">Filters:</span>
-      <div class="list-control-search--tags"></div>
-      <i class="fa-solid fa-refresh fa-spin list-control-search--summary-loading" style="display:none;"></i>
-      <div class="list-control-search--summary">
-        Showing <strong>0 Clubs</strong> within <strong>25 Miles</strong>
-      </div>
-    </div>
-    <div class="list-control-search-mobile__toggle">Update Your Results</div>
-    <div class="list-control-search__content form-group is-flex">
-      <div class="list-control-search__input list-control-search__input--club-name">
-        <label for="search-filter__club-name">Search by Club Name</label>
-        <div class="input-group">
-          <span class="help-block help-block--ClubName">Please Enter a Club Name</span>
-          <input type="text" class="form-control" name="search-filter__club-name" placeholder="Club Name">
-        </div>
-      </div>
-      <div class="list-control-search__input list-control-search__input--range">
-        <label for="search-filter__range">Select a Range</label>
-        <div class="input-group">
-          <select id="search-filter__range" name="search-filter__range">
-            <option value="10">10 Miles</option>
-            <option value="25" selected>25 Miles</option>
-            <option value="50">50 Miles</option>
-            <option value="100">100 Miles</option>
-            <option value="250">250 Miles</option>
-            <option value="max">Nationwide</option>
-          </select>
-        </div>
-      </div>
-      <div class="list-control-search__input list-control-search__input--location">
-        <label for="location">Search by City, State or Zip</label>
-        <div class="input-group">
-          <span class="help-block help-block--CityStateZip">Please enter a City, State or Zip</span>
-          <div>
-            <div class="map" style="display:none;"></div>
-            <input type="text" class="google-places-input form-control" placeholder="Select city &amp; state or zip" name="location" id="location" autocomplete="off">
-            <input type="hidden" class="google-places-input--zip" name="google-places-input--zip">
-            <input type="hidden" class="google-places-input--lat" name="google-places-input--lat">
-            <input type="hidden" class="google-places-input--lng" name="google-places-input--lng">
-          </div>
-        </div>
-      </div>
-      <div class="list-control-search__input list-control-search__input--button align-self-end">
-        <div class="input-group">
-          <button type="button" class="btn btn-primary" id="listSearchSubmit">Submit</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="list-control-filter">
-    <div class="list-control-filter__header">
-      <button class="toggle-filters">More Filters</button>
-    </div>
-    <div class="list-control-filter__content form-group is-flex">
-      <div class="form-group is-flex">
-        <div class="check-list check-list--certifications">
-          
-          
-          <div class="input-group check-list-item">
-            <label id="GoldClub__label" class="checkbox-label" for="GoldClub">
-              <div class="checkbox-container">
-                <input type="checkbox" name="Gold Club" id="GoldClub" value="gc">
-                <span class="checkbox__placeholder"></span>
-              </div>
-              Gold Club
-            </label>
-          </div>
-          
-          <div class="input-group check-list-item">
-            <label id="ALTSGrantProgram__label" class="checkbox-label" for="ALTSGrantProgram">
-              <div class="checkbox-container">
-                <input type="checkbox" name="ALTS Grant Program" id="ALTSGrantProgram" value="sslf">
-                <span class="checkbox__placeholder"></span>
-              </div>
-              ALTS Grant Program
-            </label>
-          </div>
-          
-          <div class="input-group check-list-item">
-            <label id="CertifiedCoach__label" class="checkbox-label" for="CertifiedCoach">
-              <div class="checkbox-container">
-                <input type="checkbox" name="Certified Coach" id="CertifiedCoach" value="cc">
-                <span class="checkbox__placeholder"></span>
-              </div>
-              Certified Coach
-            </label>
-          </div>
-          
-          <div class="input-group check-list-item">
-            <label id="CertifiedALTSInstructor__label" class="checkbox-label" for="CertifiedALTSInstructor">
-              <div class="checkbox-container">
-                <input type="checkbox" name="Certified ALTS Instructor" id="CertifiedALTSInstructor" value="alts">
-                <span class="checkbox__placeholder"></span>
-              </div>
-              Certified ALTS Instructor
-            </label>
-          </div>
-          
-        </div>
-        <div class="check-list check-list--double">
-          <div class="check-list check-list--facility-type">
-            
-            
-            <div class="input-group check-list-item">
-              <label id="Indoor__label" class="checkbox-label" for="Indoor">
-                <div class="checkbox-container">
-                  <input type="checkbox" name="Indoor" id="Indoor" value="ip">
-                  <span class="checkbox__placeholder"></span>
-                </div>
-                Indoor
-              </label>
-            </div>
-            
-            <div class="input-group check-list-item">
-              <label id="Outdoor__label" class="checkbox-label" for="Outdoor">
-                <div class="checkbox-container">
-                  <input type="checkbox" name="Outdoor" id="Outdoor" value="op">
-                  <span class="checkbox__placeholder"></span>
-                </div>
-                Outdoor
-              </label>
-            </div>
-            
-            <div class="input-group check-list-item">
-              <label id="OpenWater__label" class="checkbox-label" for="OpenWater">
-                <div class="checkbox-container">
-                  <input type="checkbox" name="Open Water" id="OpenWater" value="ow">
-                  <span class="checkbox__placeholder"></span>
-                </div>
-                Open Water
-              </label>
-            </div>
-            
-          </div>
-        </div>
-        <div class="check-list check-list--pool-length">
-          
-          
-          <div class="input-group check-list-item">
-            <label id="25Meters__label" class="checkbox-label" for="25Meters">
-              <div class="checkbox-container">
-                <input type="checkbox" name="25 Meters" id="25Meters" value="25m">
-                <span class="checkbox__placeholder"></span>
-              </div>
-              25 Meters
-            </label>
-          </div>
-          
-          <div class="input-group check-list-item">
-            <label id="25Yards__label" class="checkbox-label" for="25Yards">
-              <div class="checkbox-container">
-                <input type="checkbox" name="25 Yards" id="25Yards" value="25y">
-                <span class="checkbox__placeholder"></span>
-              </div>
-              25 Yards
-            </label>
-          </div>
-          
-          <div class="input-group check-list-item">
-            <label id="50Meters__label" class="checkbox-label" for="50Meters">
-              <div class="checkbox-container">
-                <input type="checkbox" name="50 Meters" id="50Meters" value="50m">
-                <span class="checkbox__placeholder"></span>
-              </div>
-              50 Meters
-            </label>
-          </div>
-          
-          <div class="input-group check-list-item">
-            <label id="Other__label" class="checkbox-label" for="Other">
-              <div class="checkbox-container">
-                <input type="checkbox" name="Other" id="Other" value="other">
-                <span class="checkbox__placeholder"></span>
-              </div>
-              Other
-            </label>
-          </div>
-          
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="list-control-view">
-    <div class="list-control-view__header">
-      <span class="toggle-list active">
-        <button type="button" disabled>List</button>
-      </span>
-      <span class="toggle-map">
-        <button type="button">Map</button>
-      </span>
-    </div>
-  </div>
-
+        <div class="section section-full bg-gray  p-mh-500 ">
+	<div class="usms-container  p-tb-10">
+		<div class="row  ">
+			<div class="col-xs-12  ">
+				<header class="page-title">
+					<h1>
+						My Account
+					</h1>
+				</header>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="html-container include-in-nav">
+						</div>
+					</div>
+				</div>
+				<div class="my-usms--wrapper">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-xs-12">
+								<h3 class="myusms__section-header">Account</h3>
+								<div class="myusms__section-header--details">
+									<span class="first-name">Jay Place</span>
+									<span class="member-id">146W-KT2JH</span>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4">
+								<div class="myusms--tile myusms--tile--same">
+									<a href="./my-information">
+										<img alt="My Information" src="https://www.usms.org/-/media/usms/developers/images/myaccount/icon-edit-my-information.svg">
+										<h4>My Information</h4>
+										<span class="my-usms__tile--edit">(Edit My Information)</span>
+									</a>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="myusms--tile">
+									<a href="/emailpreferences">
+										<img alt="Email Preferences" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-email-preferences.svg">
+										<h4>Email Preferences</h4>
+									</a>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="myusms--tile myusms--tile--same">
+									<a href="https://community.usms.org/user/settings">
+										<img alt="Community Settings" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-community-settings.svg">
+										<h4>Community Settings</h4>
+									</a>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="myusms--tile">
+									<a href="./plans-and-payment">
+										<img alt="Plans and Payment" src="https://www.usms.org/-/media/usms/developers/images/myaccount/icon-plans-payment.svg">
+										<h4>Plans and Payment</h4>
+									</a>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="myusms--tile myusms--tile--same">
+									<a class="myusms__link myusms__link--app" href="/account/addons">
+										<img alt="Add-Ons and Upgrades" src="https://www.usms.org/-/media/usms/developers/images/myaccount/icon-add-ons-upgrades.svg">
+										<h4>Add-Ons and Upgrades</h4>
+									</a>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="myusms--tile myusms--tile--same">
+									<a href="/people/KT2JH">
+										<img alt="Public Swimmer Info Page" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-public-profile.svg">
+										<h4>Public Swimmer Info Page</h4>
+									</a>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="myusms--tile myusms--tile--same">
+									<a class="myusms__link myusms__link--pdf" href="/reg/getcard.php?FirstName=Jay&amp;MI=&amp;LastName=Place&amp;Gender=Male&amp;BirthDate=10/24/1972&amp;Zip=34240-8840&amp;SwimmerID=KT2JH&amp;action=getcard">
+										<img alt="Membership Card (PDF Download)" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-card-pdf.svg">
+										<h4>Membership Card</h4>
+										<span class="my-usms__tile--description">
+										<span>(PDF Download)</span>
+										</span>
+									</a>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="myusms--tile">
+									<a href="https://wallet.usms.org/integration/getPass/KT2JH?token=OsVQvPYkWx3AhcAUXnodpjduZhNOSFBaNl3u6FMbojdU8HCOYw" class="myusms__link myusms__link--app">
+										<img alt="Membership Card (Digital App)" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-card-digital.svg">
+										<h4>Membership Card</h4>
+										<span class="my-usms__tile--description">(Digital App)</span>
+									</a>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="myusms--tile">
+									<a href="/account/transfer-my-membership" class="myusms__link myusms__link--app">
+										<img alt="Transfer My Membership" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-transfer.png">
+										<h4>Transfer My Membership</h4>
+									</a>
+								</div>
+							</div>
+						</div>
+						<h3 class="myusms__section-header">Swimming</h3>
+						<div class="row">
+							<div class="col-sm-4">
+								<div class="myusms--tile myusms--tile--same" id="workout-library">
+									<a href="/workout-library">
+										<img alt="Workout Library" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-workout-library.svg">
+										<h4>Workout Library</h4>
+									</a>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="myusms--tile myusms--tile--same" id="swim-com">
+									<a href="https://community.usms.org/p/swim-feed">
+										<img alt="Swim.com/My SwimFeed" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-swim.svg">
+										<h4>Swim.com/My SwimFeed</h4>
+									</a>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="myusms--tile myusms--tile--same" id="my-results">
+									<a href="/comp/meets/indresults.php?SwimmerID=KT2JH">
+										<img alt="My Results" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-places.svg">
+										<h4>My Results</h4>
+									</a>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="myusms--tile">
+									<a href="https://www.swim.com/pools">
+										<img alt="Places to Swim" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-places.svg">
+										<h4>Places to Swim</h4>
+									</a>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="myusms--tile">
+									<a href="/myusms/flog/">
+										<img alt="Fitness Log" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-flog.svg">
+										<h4>Fitness Log</h4>
+									</a>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="myusms--tile">
+									<a href="/events/fitness-events/fitness-series/fitness-series-training-plans">
+										<img alt="Fitness Series Training Plans" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-fitness-series.svg">
+										<h4>Training Plans</h4>
+									</a>
+								</div>
+							</div>
+						</div>
+						<h3 class="myusms__section-header">Resources</h3>
+						<div class="row">
+							<div class="col-sm-4">
+								<div class="myusms--tile myusms--tile--same" id="community">
+									<a href="https://community.usms.org/">
+										<img alt="Community/Forums" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-forums.svg">
+										<h4>Community/Forums</h4>
+									</a>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="myusms--tile myusms--tile--same" id="swimmer-mag">
+									<a href="/swimmer-magazine">
+										<img alt="SWIMMER Magazine" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-swimmer-mag.svg">
+										<h4>SWIMMER Magazine</h4>
+									</a>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="myusms--tile myusms--tile--same" id="member-discounts">
+									<a href="/join-usms/membership-discounts">
+										<img alt="Member Discounts" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-discounts.svg">
+										<h4>Discounts</h4>
+									</a>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="myusms--tile myusms--tile--same" id="online-learning">
+									<a href="/about/online-learning">
+										<img alt="Online Learning" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-online-learning.svg">
+										<h4>Webinars and E-books</h4>
+									</a>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="myusms--tile">
+									<a href="/club-central/club-dashboard">
+										<img alt="Club Dashboard" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-club-dashboard.svg">
+										<h4>Club Dashboard</h4>
+									</a>
+								</div>
+							</div>
+							<div class="col-sm-4">
+								<div class="myusms--tile myusms--tile--same">
+									<a class="myusms__link myusms__link--app" href="https://www.youtube.com/@USMastersSwimming">
+										<img alt="Instructional Videos" src="https://www.usms.org/-/media/usms/developers/images/myaccount/icon-instructional-videos.svg">
+										<h4>Instructional Videos</h4>
+									</a>
+								</div>
+							</div>
+							<iframe id="telligentLogin" name="telligentLogin" src="https://community.usms.org/sso/login" class="login__iframe" style="width: 0; height: 0; border: 0; border: none;"></iframe>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-
-  </div>
-  <div class="col-xs-12 col-sm-4">
-    
-
-
-
-
-
-
-
-<ul class="club-list-new list--nostyle">
-  
-  <li class="club-list-item-new">
-    <input type="hidden" value="{3C14E51E-98D6-432E-A668-C9A480FBD41D}">
-    <a href="/clubs/sarasota-y-sharks-536" class="club-list-item-new__title-link">
-      <h4 class="club-list-item-new__title">Sarasota Sharks Masters (SHARK)</h4>
-    </a>
-    <div class="club-list-item-new__locations">
-      
-      <button type="button" class="club-list-item-new__locations-item">
-        <div class="row">
-          <div class="col-2">
-            <div class="club-list-item-new__marker-container">
-              <div class="club-list-item-new__marker">
-                <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/images/map/marker_orange.png?rev=9b3b34aaf0ca468990121aa0a0afdcb9" alt="Map pin">
-              </div>
-              <p class="club-list-item-new__distance text-center">22 mi.</p>
-            </div>
-          </div>
-          <div class="col-10">
-            <h5 class="club-list-item-new__locations-item--name">Selby Aquatic Center</h5>
-            <p>8501 Potter Park Drive</p>
-            <p>Sarasota, FL 34238</p>
-          </div>
-        </div>
-      </button>
-      
-    </div>
-    
-    <div class="club-list-item-new__badges-container">
-      
-      <div class="club-list-item-new__badge-item">
-        <img class="club-list-item-new__badge" src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club detail/club-badge-coach.png?h=321&amp;w=350&amp;rev=635d566be36d4cdcadc27626fde72b68" alt="USMS-certified-coach">
-        <p class="text-center">USMS Certified Coach</p>
-      </div>
-      
-      <div class="club-list-item-new__badge-item">
-        <img class="club-list-item-new__badge" src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club detail/club-badge-alts.png?h=321&amp;w=350&amp;rev=3b08e5ab609141ad9a924f61da33bc96" alt="USMS-alts-instructor">
-        <p class="text-center">USMS Certified ALTS Instructor</p>
-      </div>
-      
-      <div class="club-list-item-new__badge-item">
-        <img class="club-list-item-new__badge" src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club detail/club-badge-gold.png?h=321&amp;w=350&amp;rev=31ba632063c64b5ab6621a05722f46ad" alt="GoldClubBadge">
-        <p class="text-center">USMS Certified Gold Club</p>
-      </div>
-      
-    </div>
-    
-    <a href="/clubs/sarasota-y-sharks-536" class="club-list-item-new__details-link">
-      <button type="button" class="club-list-item-new__action">Club Details</button>
-    </a>
-  </li>
-  
-  <li class="club-list-item-new">
-    <input type="hidden" value="{5E16864D-BDAB-4CA1-99A5-77ED538F60B1}">
-    <a href="/clubs/sarasota-tsunami-masters-2050" class="club-list-item-new__title-link">
-      <h4 class="club-list-item-new__title">Sarasota Tsunami Masters (SRQM)</h4>
-    </a>
-    <div class="club-list-item-new__locations">
-      
-      <button type="button" class="club-list-item-new__locations-item">
-        <div class="row">
-          <div class="col-2">
-            <div class="club-list-item-new__marker-container">
-              <div class="club-list-item-new__marker">
-                <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/images/map/marker_blue.png?rev=8fda666ed7454ef38a4bf7e4ac7684cf" alt="Map pin">
-              </div>
-              <p class="club-list-item-new__distance text-center">22 mi.</p>
-            </div>
-          </div>
-          <div class="col-10">
-            <h5 class="club-list-item-new__locations-item--name">Arlington Park &amp;amp; Aquatic Complex</h5>
-            <p>2650 Waldemere St</p>
-            <p>Sarasota, FL 34239</p>
-          </div>
-        </div>
-      </button>
-      
-    </div>
-    
-    <div class="club-list-item-new__badges-container">
-      
-      <div class="club-list-item-new__badge-item">
-        <img class="club-list-item-new__badge" src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club detail/club-badge-coach.png?h=321&amp;w=350&amp;rev=635d566be36d4cdcadc27626fde72b68" alt="USMS-certified-coach">
-        <p class="text-center">USMS Certified Coach</p>
-      </div>
-      
-    </div>
-    
-    <a href="/clubs/sarasota-tsunami-masters-2050" class="club-list-item-new__details-link">
-      <button type="button" class="club-list-item-new__action">Club Details</button>
-    </a>
-  </li>
-  
-  <li class="club-list-item-new">
-    <input type="hidden" value="{B2C3D4E5-F6A7-8901-BCDE-F12345678901}">
-    <a href="/clubs/sea-dragon-aquatics-masters-1234" class="club-list-item-new__title-link">
-      <h4 class="club-list-item-new__title">Sea Dragon Aquatics Masters (SDAMS)</h4>
-    </a>
-    <div class="club-list-item-new__locations">
-      
-      <button type="button" class="club-list-item-new__locations-item">
-        <div class="row">
-          <div class="col-2">
-            <div class="club-list-item-new__marker-container">
-              <div class="club-list-item-new__marker">
-                <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/images/map/marker_blue.png?rev=8fda666ed7454ef38a4bf7e4ac7684cf" alt="Map pin">
-              </div>
-              <p class="club-list-item-new__distance text-center">23 mi.</p>
-            </div>
-          </div>
-          <div class="col-10">
-            <h5 class="club-list-item-new__locations-item--name">Centennial Park Aquatic Center</h5>
-            <p>1605 N Tamiami Trail</p>
-            <p>Sarasota, FL 34234</p>
-          </div>
-        </div>
-      </button>
-      
-    </div>
-    
-    <a href="/clubs/sea-dragon-aquatics-masters-1234" class="club-list-item-new__details-link">
-      <button type="button" class="club-list-item-new__action">Club Details</button>
-    </a>
-  </li>
-  
-  <li class="club-list-item-new">
-    <input type="hidden" value="{C3D4E5F6-A7B8-9012-CDEF-123456789012}">
-    <a href="/clubs/torpedo-masters-club-5678" class="club-list-item-new__title-link">
-      <h4 class="club-list-item-new__title">Torpedo Masters Club (TMC)</h4>
-    </a>
-    <div class="club-list-item-new__locations">
-      
-      <button type="button" class="club-list-item-new__locations-item">
-        <div class="row">
-          <div class="col-2">
-            <div class="club-list-item-new__marker-container">
-              <div class="club-list-item-new__marker">
-                <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/images/map/marker_blue.png?rev=8fda666ed7454ef38a4bf7e4ac7684cf" alt="Map pin">
-              </div>
-              <p class="club-list-item-new__distance text-center">23 mi.</p>
-            </div>
-          </div>
-          <div class="col-10">
-            <h5 class="club-list-item-new__locations-item--name">Centennial Park Aquatic Center</h5>
-            <p>1605 N Tamiami Trail</p>
-            <p>Sarasota, FL 34234</p>
-          </div>
-        </div>
-      </button>
-      
-    </div>
-    
-    <a href="/clubs/torpedo-masters-club-5678" class="club-list-item-new__details-link">
-      <button type="button" class="club-list-item-new__action">Club Details</button>
-    </a>
-  </li>
-  
-  <li class="club-list-item-new">
-    <input type="hidden" value="{D4E5F6A7-B8C9-0123-DEF0-234567890123}">
-    <a href="/clubs/ymca-southwest-florida-masters-hurricanes-9012" class="club-list-item-new__title-link">
-      <h4 class="club-list-item-new__title">YMCA of Southwest Florida Masters Hurricanes (SFYH)</h4>
-    </a>
-    <div class="club-list-item-new__locations">
-      
-      <button type="button" class="club-list-item-new__locations-item">
-        <div class="row">
-          <div class="col-2">
-            <div class="club-list-item-new__marker-container">
-              <div class="club-list-item-new__marker">
-                <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/images/map/marker_blue.png?rev=8fda666ed7454ef38a4bf7e4ac7684cf" alt="Map pin">
-              </div>
-              <p class="club-list-item-new__distance text-center">24 mi.</p>
-            </div>
-          </div>
-          <div class="col-10">
-            <h5 class="club-list-item-new__locations-item--name">South County Family YMCA Venice</h5>
-            <p>701 Center Rd</p>
-            <p>Venice, FL 34285</p>
-          </div>
-        </div>
-      </button>
-      
-    </div>
-    
-    <a href="/clubs/ymca-southwest-florida-masters-hurricanes-9012" class="club-list-item-new__details-link">
-      <button type="button" class="club-list-item-new__action">Club Details</button>
-    </a>
-  </li>
-  
-</ul>
-
-  </div>
-  <div class="col-xs-12 col-sm-8">
-    <div class="club-map-new-container">
-      <div class="club-map-new"></div>
-    </div>
-  </div>
-</div>
-
       </div>
     </div>
   </div>
