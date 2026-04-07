@@ -1,0 +1,31 @@
+---
+permalink: /account/addons.html
+title: Addons | U.S. Masters Swimming
+pageTitle: Add-Ons and Upgrades
+breadcrumbs:
+  - url: "/home"
+    label: "Home"
+breadcrumbTitle: "Add-Ons"
+---
+{% extends "layouts/base.njk" %}
+{% block pageCSS %}
+<link rel="stylesheet" href="https://www.usms.org/styles/mastersAddons.min.css">
+{% endblock %}
+{% block pageJS %}
+<script src="https://www.usms.org/scripts/mastersAddons.min.js" defer></script>
+<script src="/js/addons.js" defer></script>
+{% endblock %}
+{% block breadcrumb %}
+{% include "partials/breadcrumb.njk" %}
+{% endblock %}
+{% block content %}
+<section class="section section-full bg-gray p-tb-10">
+  <div class="usms-container p-tb-10">
+    <div class="row">
+      <div class="col-xs-12">
+        {% include "partials/addons-content.njk" %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
