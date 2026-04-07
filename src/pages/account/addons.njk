@@ -6,13 +6,39 @@ breadcrumbs:
   - url: "/home"
     label: "Home"
 breadcrumbTitle: "Add-Ons"
+productOptions:
+  - name: "Video Stroke Analysis"
+    modifier: "video-stroke-analysis-eligible"
+    extraClasses: "product-option-select-btn"
+    price: 0
+    addDisabled: true
+    bulletList:
+      - "Single stroke analysis by certified coach"
+      - "~5 five-minute long analysis"
+      - "Two rounds of visual and verbal feedback"
+      - "Additional resources to help improve"
+    hasStrokeSelect: true
+  - name: "Video Stroke Analysis Pro"
+    modifier: "video-stroke-analysis-pro"
+    extraClasses: "product-option-select-btn"
+    price: 90
+    addDisabled: false
+    bulletList:
+      - "3-Pack stroke analysis by certified coach"
+      - "~5 five-minute long analysis"
+      - "Three rounds of visual and verbal feedback"
+    hasStrokeSelect: true
+  - name: "Print <em>SWIMMER</em> Magazine"
+    modifier: "usms-plus"
+    price: 10
+    summary: "Get the print <em>SWIMMER</em> magazine subscription for the remainder of the 2026 membership year. There are six issues a year and you will only receive the upcoming issues. The price will not be prorated based on when you purchase."
 ---
 {% extends "layouts/base.njk" %}
 {% block pageCSS %}
 <link rel="stylesheet" href="https://www.usms.org/styles/mastersAddons.min.css">
 {% endblock %}
 {% block pageJS %}
-<script src="https://www.usms.org/scripts/mastersAddons.min.js" defer></script>
+{# <script src="https://www.usms.org/scripts/mastersAddons.min.js" defer></script> #}
 <script src="/js/addons.js" defer></script>
 {% endblock %}
 {% block breadcrumb %}
