@@ -1,0 +1,74 @@
+---
+permalink: /login-to-registration-page/index.html
+title: Login to Registration Page | U.S. Masters Swimming
+---
+{% extends "layouts/base.njk" %}
+{% block pageCSS %}
+<style>
+  .login-form a { display: block; font-size: 13px; }
+  .form-col__header h3 { font-size: 21px !important; }
+  .form-col__header h3 + p { font-size: 14px !important; }
+  .login-form__submit,
+  .register-form__submit { width: 100px !important; }
+  .section.bg-gray { padding-top: 0; padding-bottom: 0; }
+</style>
+{% endblock %}
+{% block content %}
+
+<div class="section section-full bg-gray p-tb-10">
+  <div class="usms-container p-tb-10">
+    <div class="row">
+      <div class="col-xs-12"></div>
+    </div>
+  </div>
+</div>
+
+<div class="section section-full bg-gray p-tb-10">
+  <div class="usms-container form__container p-tb-10">
+    <div class="row">
+
+      <div class="col-xs-12 col-md-6">
+        <div class="html-container">
+          <div class="form-col__header">
+            <h3>Renew with a USMS Account</h3>
+          </div>
+        </div>
+        <form action="/login-to-registration-page" class="login-form" method="post">
+          <input type="hidden" name="fhController" value="RegistrationController">
+          <input type="hidden" name="fhAction" value="RenewLogin">
+          <input id="ReturnUrl" name="ReturnUrl" type="hidden" value="">
+          <div class="form-group">
+            <input class="form-control" id="loginEmail" name="Email" placeholder="Email Address" type="text" value="">
+          </div>
+          <div class="form-group">
+            <input class="form-control" id="loginPassword" name="Password" placeholder="Password" type="password">
+          </div>
+          <div class="form-group">
+            <input id="rememberMe" name="RememberMe" type="checkbox" value="true">
+            <input name="RememberMe" type="hidden" value="false">
+            <label for="rememberMe">Remember Me</label>
+          </div>
+          <div class="form-group">
+            <input type="submit" class="btn btn-primary text-uppercase login-form__submit" value="GO!">
+          </div>
+          <div class="form-group">
+            <a href="https://www.usms.org/account/forgotpassword">Forgot/Reset Password</a>
+            <a href="https://www.usms.org/join-usms">Join USMS Today</a>
+          </div>
+        </form>
+      </div>
+
+      <div class="col-xs-12 col-md-6">
+        <div class="html-container">
+          <div class="form-col__header">
+            <h3>Create a USMS My Account</h3>
+            <p>I'm a new or renewing member who has <strong>not</strong> created a USMS account, here's my personal info.</p>
+          </div>
+        </div>
+        {% include "partials/login-4-point.njk" %}
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
