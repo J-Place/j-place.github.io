@@ -12,7 +12,10 @@
 </head>
 <body class="">
   <div id="main-container">
-    {% include "partials/header.njk" %}
+    <header class="header-static">
+      {% include "partials/header.njk" %}
+      {% block siteHeader %}{% endblock %}
+    </header>
     <main role="main">
       {% block pageHeader %}{% endblock %}
       {% block content %}{% endblock %}
