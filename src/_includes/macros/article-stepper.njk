@@ -1,26 +1,25 @@
 {% macro articleStepper(articles) %}
-<div class="articleStepper">
-  <button class="carousel-control-prev" type="button">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <div class="carousel-inner-slick">
-    {% for article in articles %}
-    <div>
-      <div class="carousel-image-container">
-        <a href="{{ article.href }}">
-          <img src="{{ article.image }}" alt="{{ article.title }}" />
+<div class="article-stepper">
+  <h3 class="article-stepper__title">Also in this Issue</h3>
+  <div id="articleStepper_main" class="articleStepper">
+    <div class="carousel-inner-slick">
+      {% for article in articles %}
+      <div>
+        <a class="slick-slide-container" href="{{ article.href }}" style="width: 100%; display: inline-block;">
+          <div class="slick-slide-image" style="background-image: url('{{ article.image }}'); background-repeat: no-repeat; background-position: center; background-size: cover;"></div>
+          <div class="slick-slide-text">
+            <p>{{ article.title }}</p>
+          </div>
         </a>
       </div>
-      <div class="carousel-text-container">
-        <a href="{{ article.href }}"><p>{{ article.title }}</p></a>
-      </div>
+      {% endfor %}
     </div>
-    {% endfor %}
+    <a class="carousel-control-prev bg-transparent w-aut" href="#articleStepper_main">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </a>
+    <a class="carousel-control-next bg-transparent w-aut" href="#articleStepper_main">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </a>
   </div>
-  <button class="carousel-control-next" type="button">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
 </div>
 {% endmacro %}
