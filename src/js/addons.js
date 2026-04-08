@@ -54,6 +54,11 @@ document.addEventListener('DOMContentLoaded', () => {
     addBtn?.addEventListener('click', () => {
       const isSelected = tile.classList.toggle('selected');
       productTotal += isSelected ? price : -price;
+      if (addBtn) addBtn.textContent = isSelected ? 'Remove' : 'Add';
+      if (!isSelected && strokeSelect) {
+        strokeSelect.value = '0';
+        addBtn.disabled = true;
+      }
       updateTotals();
       updateAgreement();
     });
