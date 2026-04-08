@@ -8,18 +8,7 @@ breadcrumbTitle: "Join USMS Today"
 ---
 {% extends "layouts/base.njk" %}
 {% block pageCSS %}
-<style>
-  .icon-menu__item h4 { line-height: 120% !important; margin-bottom: 0.8rem; }
-  .icon-menu__item p { line-height: 120% !important; }
-  .icon-menu__item p a { font-weight: 300; color: #666; font-size: 2rem; }
-  .form__container .btn.btn-xl {
-    font-size: 21px !important;
-    height: 60px !important;
-    line-height: 30px !important;
-    padding: 15px 25px !important;
-  }
-  #register-button { width: 150px; }
-</style>
+<link rel="stylesheet" href="/css/join-tms.css">
 {% endblock %}
 {% block breadcrumb %}
 {% include "partials/breadcrumb.njk" %}
@@ -28,6 +17,19 @@ breadcrumbTitle: "Join USMS Today"
 {% include "partials/join-tms-content.njk" %}
 {% endblock %}
 {% block pageJS %}
+<script>
+  (function() {
+    function pullUpImageCol() {
+      var textCol = document.getElementById('hero-text-col');
+      var imgCol = document.getElementById('hero-img-col');
+      if (textCol && imgCol) {
+        imgCol.style.marginTop = '-' + textCol.offsetHeight + 'px';
+      }
+    }
+    document.addEventListener('DOMContentLoaded', pullUpImageCol);
+    window.addEventListener('resize', pullUpImageCol);
+  })();
+</script>
 <script>
   (function() {
     document.getElementById('sign-up__button').addEventListener('click', function(e) {
