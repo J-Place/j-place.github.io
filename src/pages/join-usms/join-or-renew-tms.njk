@@ -1,0 +1,64 @@
+---
+permalink: /join-usms/join-or-renew-tms/index.html
+title: Join USMS | U.S. Masters Swimming
+breadcrumbs:
+  - url: "/"
+    label: "Home"
+breadcrumbTitle: "Join USMS Today"
+---
+{% extends "layouts/base.njk" %}
+{% block pageCSS %}
+<style>
+  .icon-menu__item h4 { line-height: 120% !important; margin-bottom: 0.8rem; }
+  .icon-menu__item p { line-height: 120% !important; }
+  .icon-menu__item p a { font-weight: 300; color: #666; font-size: 2rem; }
+  .form__container .btn.btn-xl {
+    font-size: 21px !important;
+    height: 60px !important;
+    line-height: 30px !important;
+    padding: 15px 25px !important;
+  }
+  #register-button { width: 150px; }
+</style>
+{% endblock %}
+{% block breadcrumb %}
+{% include "partials/breadcrumb.njk" %}
+{% endblock %}
+{% block content %}
+{% include "partials/join-tms-content.njk" %}
+{% endblock %}
+{% block pageJS %}
+<script>
+  (function() {
+    document.getElementById('sign-up__button').addEventListener('click', function(e) {
+      e.preventDefault();
+      const data = { email: document.querySelector('.sign-up #emailAddress').value };
+      fetch('/apis/v1/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+        mode: 'cors',
+        credentials: 'include'
+      })
+      .then(response => response.json())
+      .then(data => handleFormSuccess(data))
+      .catch(error => console.error('Error:', error));
+    });
+  })();
+
+  function handleFormSuccess(response) {
+    if (response && response.data && response.data.SignedUp) {
+      document.querySelector('.sign-up__container').classList.add('sign-up__container--hide');
+      setTimeout(function() {
+        document.querySelector('.sign-up__container').style.display = 'none';
+        document.querySelector('.sign-up__confirmation').style.display = 'block';
+        setTimeout(function() {
+          document.querySelector('.sign-up__confirmation').classList.add('sign-up__confirmation--shown');
+        }, 50);
+      }, 500);
+    } else if (response.error === 'Invalid email') {
+      document.querySelector('.sign-up__validation').style.display = 'block';
+    }
+  }
+</script>
+{% endblock %}
