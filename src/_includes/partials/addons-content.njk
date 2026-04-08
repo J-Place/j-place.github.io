@@ -45,7 +45,9 @@
 							<div class="card add-on-products">
 								<h3 class="addons__form-header">Product Options</h3>
 								<div class="product-group">
-									{% for option in productOptions %}
+									{% for key in productOptionKeys %}
+									{% set option = products[key] %}
+									{% if option and option.active !== false %}
 									<div class="product-option {{ option.extraClasses }} product-option_{{ option.modifier }}">
 										<p class="product-name">{{ option.name | safe }}</p>
 										<p class="product-price">${{ option.price }}</p>
@@ -72,8 +74,9 @@
 											</select>
 										</div>
 										{% endif %}
-										<button class="btn btn-outline btn-md add-on"{% if option.addDisabled %} disabled=""{% endif %}>Add</button>
+										<button class="btn btn-outline btn-md add-on"{% if option.hasStrokeSelect %} disabled=""{% endif %}>Add</button>
 									</div>
+									{% endif %}
 									{% endfor %}
 								</div>
 								<h4 class="card__total">
