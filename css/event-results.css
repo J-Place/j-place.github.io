@@ -77,7 +77,7 @@
 .swimmer-stats__lookup {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 6px;
   margin-left: auto;
 }
@@ -130,7 +130,16 @@
   border-color: #004f8c;
 }
 
+.swimmer-stats__lookup-input-wrap {
+  position: relative;
+}
+
 .swimmer-stats__lookup-error {
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  padding-right: 10px;
   font-size: 1.2rem;
   color: #c00;
   white-space: nowrap;

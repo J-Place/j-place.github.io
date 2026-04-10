@@ -353,8 +353,10 @@
         <form class="swimmer-stats__lookup" id="swimmerLookup" autocomplete="off">
           <span class="swimmer-stats__lookup-label">Swimmer Lookup</span>
           <div class="swimmer-stats__lookup-fields">
-            <span class="swimmer-stats__lookup-error" id="swimmerLookupError" hidden>ID not found</span>
-            <input class="swimmer-stats__lookup-input" type="text" name="id" placeholder="Swimmer ID" aria-label="USMS Swimmer ID" maxlength="10" spellcheck="false">
+            <div class="swimmer-stats__lookup-input-wrap">
+              <span class="swimmer-stats__lookup-error" id="swimmerLookupError" hidden></span>
+              <input class="swimmer-stats__lookup-input" type="text" name="id" placeholder="Swimmer ID" aria-label="USMS Swimmer ID" maxlength="10" spellcheck="false">
+            </div>
             <button class="swimmer-stats__lookup-btn" type="submit">View</button>
             <button class="swimmer-stats__compare-btn" type="button" id="swimmerCompareBtn">Compare</button>
           </div>
@@ -387,7 +389,7 @@
 
         <div class="swimmer-stats__filter-group pb-group">
           <span class="swimmer-stats__filter-label">Personal Best</span>
-          <button class="swimmer-stats__btn swimmer-stats__pb-btn">Show</button>
+          <button class="swimmer-stats__btn swimmer-stats__pb-btn">Show PB</button>
         </div>
 
       </div>
@@ -1029,6 +1031,7 @@
     activeEvent  = 'all';
     showPB       = false;
     pbBtn.classList.remove('is-active');
+    pbBtn.textContent = 'Show PB';
 
     // Rebuild course buttons (keep All, remove extras)
     courseGroup.querySelectorAll('.swimmer-stats__course-btn:not([data-course="all"])').forEach(function (b) { b.remove(); });
@@ -1203,8 +1206,13 @@
   pbBtn.addEventListener('click', function () {
     showPB = !showPB;
     pbBtn.classList.toggle('is-active', showPB);
-    pbBtn.textContent = showPB ? 'Hide' : 'Show';
+    pbBtn.textContent = showPB ? 'Show All' : 'Show PB';
     filterRows();
+  });
+
+  // Clear error on input focus
+  lookupForm.querySelector('input[name="id"]').addEventListener('focus', function () {
+    lookupError.hidden = true;
   });
 
   // ── Lookup form ──────────────────────────────────────────────────────────
@@ -1212,9 +1220,10 @@
     e.preventDefault();
     var id = lookupForm.querySelector('input[name="id"]').value.trim().toUpperCase();
     lookupError.hidden = true;
-    if (!id) return;
+    if (!id) { lookupError.textContent = 'Enter a swimmer ID'; lookupError.hidden = false; return; }
     var data = SWIMMER_REGISTRY[id];
     if (!data) {
+      lookupError.textContent = 'Swimmer ID not found';
       lookupError.hidden = false;
       return;
     }
@@ -1360,9 +1369,9 @@
   compareBtn.addEventListener('click', function () {
     var id = lookupForm.querySelector('input[name="id"]').value.trim().toUpperCase();
     lookupError.hidden = true;
-    if (!id) { lookupError.hidden = false; return; }
+    if (!id) { lookupError.textContent = 'Enter a swimmer ID'; lookupError.hidden = false; return; }
     var data = SWIMMER_REGISTRY[id];
-    if (!data) { lookupError.hidden = false; return; }
+    if (!data) { lookupError.textContent = 'Swimmer ID not found'; lookupError.hidden = false; return; }
     lookupForm.querySelector('input').value = '';
     openCompareModal(data);
   });
