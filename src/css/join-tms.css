@@ -28,6 +28,21 @@
   margin-bottom: 12rem;
 }
 
+.usms-container.tms-benefits {
+  margin-top: 0rem;
+  margin-bottom: 2rem;
+}
+
+/* .usms-container.tms-benefits {
+  margin-top: 11rem;
+  margin-bottom: 13rem;
+} */
+
+/* .usms-container.tms-benefits.tms-benefits--visible {
+  margin-top: 3rem;
+  margin-bottom: 4rem;
+} */
+
 @media (min-width: 768px) {
   .usms-container.tms-benefits {
     padding-left: 6rem;
@@ -172,4 +187,16 @@ h4.as-seen-in__header {
 /* Join CTA */
 .usms-container.tms-cta-join {
   max-width: 850px;
+}
+
+/* Scroll fade-in for benefits rows */
+.tms-benefits {
+  opacity: 0;
+  /* transform: translateY(24px); */
+  transform: translateY(10px);
+  transition: opacity 1.25s ease, transform 0.55s ease;
+}
+.tms-benefits.tms-benefits--visible {
+  opacity: 1;
+  transform: translateY(0);
 }

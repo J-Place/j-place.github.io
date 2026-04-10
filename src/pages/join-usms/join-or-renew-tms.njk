@@ -63,4 +63,19 @@ breadcrumbTitle: "Join USMS Today"
     }
   }
 </script>
+<script>
+  (function() {
+    var rows = document.querySelectorAll('.tms-benefits');
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('tms-benefits--visible');
+        } else {
+          entry.target.classList.remove('tms-benefits--visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -20% 0px' });
+    rows.forEach(function(row) { observer.observe(row); });
+  })();
+</script>
 {% endblock %}
