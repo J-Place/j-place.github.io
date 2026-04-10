@@ -1,0 +1,570 @@
+---
+permalink: /event-results/swimmer/index.html
+title: Swimmer Results | U.S. Masters Swimming
+pageTitle: Swimmer Results
+breadcrumbs:
+  - url: "/"
+    label: "Home"
+  - url: "/event-results/"
+    label: "Event Results"
+---
+{% extends "layouts/base.njk" %}
+{% block pageCSS %}
+<link rel="stylesheet" href="/css/event-results.css">
+{% endblock %}
+{% block breadcrumb %}
+{% include "partials/breadcrumb.njk" %}
+{% endblock %}
+{% block pageHeader %}
+{% include "partials/page-header.njk" %}
+{% endblock %}
+{% block content %}
+{% include "partials/swimmer-stats.njk" %}
+{% endblock %}
+{% block pageJS %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2/dist/chartjs-plugin-datalabels.min.js"></script>
+<script>
+(function () {
+
+  // ── Swimmer registry ────────────────────────────────────────────────────
+  // All available swimmer datasets keyed by usmsId.
+  // Eleventy camelCases hyphenated _data filenames at build time.
+  var SWIMMER_REGISTRY = {{ (swimmers or {}) | dump | safe }};
+  var DEFAULT_SWIMMER = {{ swimmer | dump | safe }};
+
+  // ── State ───────────────────────────────────────────────────────────────
+  var activeCourse = 'all';
+  var activeAge    = 'all';
+  var activeEvent  = 'all';
+  var showPB       = false;
+
+  // ── DOM refs ────────────────────────────────────────────────────────────
+  var courseGroup  = document.querySelector('.swimmer-stats__course-filters');
+  var ageGroup     = document.querySelector('.swimmer-stats__age-filters');
+  var eventAllBtn  = document.querySelector('.swimmer-stats__event-all-btn');
+  var eventSelect  = document.querySelector('.swimmer-stats__event-select');
+  var pbBtn        = document.querySelector('.swimmer-stats__pb-btn');
+  var results      = document.querySelector('.swimmer-stats__results');
+  var lookupForm   = document.getElementById('swimmerLookup');
+  var lookupError  = document.getElementById('swimmerLookupError');
+
+  // ── Helpers ─────────────────────────────────────────────────────────────
+  function timeToSeconds(t) {
+    var parts = t.split(':');
+    return parts.length === 1 ? parseFloat(parts[0]) : parseInt(parts[0], 10) * 60 + parseFloat(parts[1]);
+  }
+
+  function formatTime(secs) {
+    if (secs < 60) return secs.toFixed(2);
+    var m = Math.floor(secs / 60);
+    var s = (secs - m * 60).toFixed(2);
+    return m + ':' + (s < 10 ? '0' : '') + s;
+  }
+
+  function fmtDate(iso) {
+    var p = iso.split('-');
+    return p[1] + '/' + p[2] + '/' + p[0];
+  }
+
+  var CHART_ICON = '<svg width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polyline points="1,9 4,5 7,7 10,2 13,4" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" fill="none"/><circle cx="1" cy="9" r="1.2" fill="currentColor"/><circle cx="4" cy="5" r="1.2" fill="currentColor"/><circle cx="7" cy="7" r="1.2" fill="currentColor"/><circle cx="10" cy="2" r="1.2" fill="currentColor"/><circle cx="13" cy="4" r="1.2" fill="currentColor"/></svg>';
+
+  // ── Render ──────────────────────────────────────────────────────────────
+  function renderProfile(data) {
+    document.getElementById('swimmerName').textContent = data.firstName + ' ' + data.lastName;
+    document.getElementById('swimmerMeta').innerHTML =
+      '<span>' + data.club + '</span>' +
+      '<span class="swimmer-stats__sep">·</span>' +
+      '<span>' + data.lmsc + '</span>' +
+      '<span class="swimmer-stats__sep">·</span>' +
+      '<span>USMS #' + data.usmsId + '</span>';
+  }
+
+  function renderResults(data) {
+    var meets = (data.meetBreakdown && data.meetBreakdown.meets) ? data.meetBreakdown.meets.slice() : [];
+    meets.sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : 0; });
+
+    var html = '';
+    meets.forEach(function (meet) {
+      html += '<div class="swimmer-stats__meet-group" data-course="' + meet.courseType + '">';
+      html += '<div class="swimmer-stats__meet-hdr">';
+      html += '<h4 class="swimmer-stats__meet-hdr-name">' + meet.name + '</h4>';
+      html += '<p class="swimmer-stats__meet-hdr-date">' + fmtDate(meet.date) + '</p>';
+      html += '</div>';
+      html += '<table class="swimmer-stats__table"><thead><tr>';
+      html += '<th>Event</th><th class="th-time">Time</th><th class="th-course">Course</th><th class="th-place">Place</th><th>Improvement</th><th>Age Group</th>';
+      html += '</tr></thead><tbody>';
+      meet.results.forEach(function (r) {
+        html += '<tr data-age-group="' + r.ageGroup + '" data-event="' + r.event + '" data-date="' + meet.date + '" data-time="' + r.time + '">';
+        html += '<td class="swimmer-stats__event"><span>' + r.event + '</span>';
+        html += '<button class="swimmer-stats__chart-btn" aria-label="View progress chart for ' + r.event + '">' + CHART_ICON + '</button>';
+        html += '</td>';
+        html += '<td class="swimmer-stats__time">' + r.time + '</td>';
+        html += '<td class="swimmer-stats__course">' + r.courseType + '</td>';
+        html += '<td class="swimmer-stats__place">' + (r.place > 0 ? r.place : '—') + '</td>';
+        html += '<td class="swimmer-stats__improvement">' + (r.improvement || '') + '</td>';
+        html += '<td>' + r.ageGroup + '</td>';
+        html += '</tr>';
+      });
+      html += '</tbody></table></div>';
+    });
+    results.innerHTML = html;
+  }
+
+  function initFilters() {
+    // Reset state
+    activeCourse = 'all';
+    activeAge    = 'all';
+    activeEvent  = 'all';
+    showPB       = false;
+    pbBtn.classList.remove('is-active');
+
+    // Rebuild course buttons (keep All, remove extras)
+    courseGroup.querySelectorAll('.swimmer-stats__course-btn:not([data-course="all"])').forEach(function (b) { b.remove(); });
+    courseGroup.querySelector('[data-course="all"]').classList.add('is-active');
+    var courses = [];
+    document.querySelectorAll('.swimmer-stats__meet-group[data-course]').forEach(function (g) {
+      var c = g.dataset.course;
+      if (c && courses.indexOf(c) === -1) courses.push(c);
+    });
+    courses.sort().forEach(function (c) {
+      var btn = document.createElement('button');
+      btn.className = 'swimmer-stats__btn swimmer-stats__course-btn';
+      btn.dataset.course = c;
+      btn.textContent = c;
+      courseGroup.appendChild(btn);
+    });
+
+    // Rebuild age buttons
+    ageGroup.querySelectorAll('.swimmer-stats__age-btn:not([data-age="all"])').forEach(function (b) { b.remove(); });
+    ageGroup.querySelector('[data-age="all"]').classList.add('is-active');
+    var ages = [];
+    document.querySelectorAll('tr[data-age-group]').forEach(function (row) {
+      var ag = row.dataset.ageGroup;
+      if (ag && ages.indexOf(ag) === -1) ages.push(ag);
+    });
+    ages.sort().forEach(function (ag) {
+      var btn = document.createElement('button');
+      btn.className = 'swimmer-stats__btn swimmer-stats__age-btn';
+      btn.dataset.age = ag;
+      btn.textContent = ag;
+      ageGroup.appendChild(btn);
+    });
+
+    // Rebuild event select
+    eventSelect.innerHTML = '<option value="all" disabled selected hidden>--</option>';
+    eventSelect.classList.remove('is-active');
+    eventAllBtn.classList.add('is-active');
+    var courseOrder = ['SCY', 'SCM', 'LCM'];
+    var eventsByCourse = {};
+    document.querySelectorAll('tr[data-event]').forEach(function (row) {
+      var ev = row.dataset.event;
+      var course = row.closest('.swimmer-stats__meet-group').dataset.course;
+      if (!ev || !course) return;
+      if (!eventsByCourse[course]) eventsByCourse[course] = [];
+      if (eventsByCourse[course].indexOf(ev) === -1) eventsByCourse[course].push(ev);
+    });
+    courseOrder.forEach(function (course) {
+      if (!eventsByCourse[course]) return;
+      var group = document.createElement('optgroup');
+      group.label = course;
+      eventsByCourse[course].sort().forEach(function (ev) {
+        var opt = document.createElement('option');
+        opt.value = course + '::' + ev;
+        opt.textContent = ev + ' - ' + course;
+        group.appendChild(opt);
+      });
+      eventSelect.appendChild(group);
+    });
+
+    // Hide chart icons for events with only one entry
+    var counts = {};
+    document.querySelectorAll('tr[data-event]').forEach(function (row) {
+      var key = row.closest('.swimmer-stats__meet-group').dataset.course + '::' + row.dataset.event;
+      counts[key] = (counts[key] || 0) + 1;
+    });
+    document.querySelectorAll('tr[data-event]').forEach(function (row) {
+      var key = row.closest('.swimmer-stats__meet-group').dataset.course + '::' + row.dataset.event;
+      var btn = row.querySelector('.swimmer-stats__chart-btn');
+      if (btn) btn.hidden = counts[key] <= 1;
+    });
+  }
+
+  function loadSwimmer(data) {
+    renderProfile(data);
+    renderResults(data);
+    initFilters();
+  }
+
+  // ── Filtering ────────────────────────────────────────────────────────────
+  function buildPBMap() {
+    var pb = {};
+    document.querySelectorAll('tr[data-event][data-time]').forEach(function (row) {
+      var course = row.closest('.swimmer-stats__meet-group').dataset.course;
+      var key = course + '::' + row.dataset.event;
+      var secs = timeToSeconds(row.dataset.time);
+      if (!(key in pb) || secs < pb[key]) pb[key] = secs;
+    });
+    return pb;
+  }
+
+  function filterRows() {
+    var eventParts = activeEvent !== 'all' ? activeEvent.split('::') : null;
+    var pb = showPB ? buildPBMap() : null;
+    document.querySelectorAll('.swimmer-stats__meet-group').forEach(function (group) {
+      var courseMatch = activeCourse === 'all' || group.dataset.course === activeCourse;
+      var anyVisible = false;
+      group.querySelectorAll('tr[data-age-group]').forEach(function (row) {
+        var eventMatch = !eventParts ||
+          (group.dataset.course === eventParts[0] && row.dataset.event === eventParts[1]);
+        var pbMatch = !pb || (function () {
+          var key = group.dataset.course + '::' + row.dataset.event;
+          return timeToSeconds(row.dataset.time) === pb[key];
+        })();
+        var show = courseMatch &&
+                   (activeAge === 'all' || row.dataset.ageGroup === activeAge) &&
+                   eventMatch && pbMatch;
+        row.style.display = show ? '' : 'none';
+        if (show) anyVisible = true;
+      });
+      group.style.display = anyVisible ? '' : 'none';
+    });
+  }
+
+  // Filter event listeners (delegated on stable parent containers)
+  courseGroup.addEventListener('click', function (e) {
+    var btn = e.target.closest('.swimmer-stats__course-btn');
+    if (!btn) return;
+    courseGroup.querySelectorAll('.swimmer-stats__course-btn').forEach(function (b) { b.classList.remove('is-active'); });
+    btn.classList.add('is-active');
+    activeCourse = btn.dataset.course;
+    if (activeEvent !== 'all') {
+      activeEvent = 'all';
+      eventSelect.selectedIndex = 0;
+      eventSelect.classList.remove('is-active');
+      eventAllBtn.classList.add('is-active');
+    }
+    filterRows();
+  });
+
+  ageGroup.addEventListener('click', function (e) {
+    var btn = e.target.closest('.swimmer-stats__age-btn');
+    if (!btn) return;
+    ageGroup.querySelectorAll('.swimmer-stats__age-btn').forEach(function (b) { b.classList.remove('is-active'); });
+    btn.classList.add('is-active');
+    activeAge = btn.dataset.age;
+    filterRows();
+  });
+
+  function setCourseBtn(course) {
+    courseGroup.querySelectorAll('.swimmer-stats__course-btn').forEach(function (b) { b.classList.remove('is-active'); });
+    var target = courseGroup.querySelector('.swimmer-stats__course-btn[data-course="' + course + '"]');
+    if (target) { target.classList.add('is-active'); activeCourse = course; }
+  }
+
+  eventSelect.addEventListener('change', function () {
+    activeEvent = eventSelect.value;
+    eventAllBtn.classList.remove('is-active');
+    eventSelect.classList.add('is-active');
+    if (activeEvent !== 'all') {
+      var course = activeEvent.split('::')[0];
+      setCourseBtn(course);
+    }
+    activeAge = 'all';
+    ageGroup.querySelectorAll('.swimmer-stats__age-btn').forEach(function (b) { b.classList.remove('is-active'); });
+    ageGroup.querySelector('[data-age="all"]').classList.add('is-active');
+    filterRows();
+  });
+
+  eventAllBtn.addEventListener('click', function () {
+    var hadEvent = activeEvent !== 'all';
+    activeEvent = 'all';
+    eventSelect.selectedIndex = 0;
+    eventAllBtn.classList.add('is-active');
+    eventSelect.classList.remove('is-active');
+    if (hadEvent) {
+      setCourseBtn('all');
+      activeCourse = 'all';
+    }
+    filterRows();
+  });
+
+  pbBtn.addEventListener('click', function () {
+    showPB = !showPB;
+    pbBtn.classList.toggle('is-active', showPB);
+    pbBtn.textContent = showPB ? 'Hide' : 'Show';
+    filterRows();
+  });
+
+  // ── Lookup form ──────────────────────────────────────────────────────────
+  lookupForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var id = lookupForm.querySelector('input[name="id"]').value.trim().toUpperCase();
+    lookupError.hidden = true;
+    if (!id) return;
+    var data = SWIMMER_REGISTRY[id];
+    if (!data) {
+      lookupError.hidden = false;
+      return;
+    }
+    lookupForm.querySelector('input').value = '';
+    loadSwimmer(data);
+  });
+
+  // ── Compare ──────────────────────────────────────────────────────────────
+  var compareModal     = document.getElementById('swimmerCompareModal');
+  var compareBackdrop  = document.getElementById('swimmerCompareBackdrop');
+  var compareChartWrap = document.getElementById('swimmerCompareChartWrap');
+  var compareBtn       = document.getElementById('swimmerCompareBtn');
+  var compareInstance  = null;
+  var compareSwimmer   = null;
+  var currentSwimmer   = DEFAULT_SWIMMER;
+
+  function getBestTime(data, eventName, course) {
+    var best = null;
+    var meets = (data.meetBreakdown && data.meetBreakdown.meets) ? data.meetBreakdown.meets : [];
+    meets.forEach(function (meet) {
+      if (meet.courseType !== course) return;
+      meet.results.forEach(function (r) {
+        if (r.event !== eventName) return;
+        var secs = timeToSeconds(r.time);
+        if (best === null || secs < best) best = secs;
+      });
+    });
+    return best;
+  }
+
+  function getCommonEvents(a, b) {
+    var aKeys = {}, common = [];
+    var aMeets = (a.meetBreakdown && a.meetBreakdown.meets) ? a.meetBreakdown.meets : [];
+    var bMeets = (b.meetBreakdown && b.meetBreakdown.meets) ? b.meetBreakdown.meets : [];
+    aMeets.forEach(function (meet) {
+      meet.results.forEach(function (r) { aKeys[meet.courseType + '::' + r.event] = true; });
+    });
+    bMeets.forEach(function (meet) {
+      meet.results.forEach(function (r) {
+        var key = meet.courseType + '::' + r.event;
+        if (aKeys[key] && common.indexOf(key) === -1) common.push(key);
+      });
+    });
+    return common.sort();
+  }
+
+  function renderCompareChart(common) {
+    var labels = common.map(function (key) {
+      var p = key.split('::');
+      return p[1] + ' (' + p[0] + ')';
+    });
+    var aData = common.map(function (key) {
+      var p = key.split('::');
+      return getBestTime(currentSwimmer, p[1], p[0]);
+    });
+    var bData = common.map(function (key) {
+      var p = key.split('::');
+      return getBestTime(compareSwimmer, p[1], p[0]);
+    });
+
+    if (compareInstance) compareInstance.destroy();
+
+    var ctx = document.getElementById('swimmerCompareChart').getContext('2d');
+    compareInstance = new Chart(ctx, {
+      type: 'bar',
+      plugins: [ChartDataLabels],
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: currentSwimmer.firstName + ' ' + currentSwimmer.lastName,
+            data: aData,
+            backgroundColor: 'rgba(0,96,167,0.75)',
+            borderColor: '#0060a7',
+            borderWidth: 1,
+            borderRadius: 4
+          },
+          {
+            label: compareSwimmer.firstName + ' ' + compareSwimmer.lastName,
+            data: bData,
+            backgroundColor: 'rgba(232,93,4,0.75)',
+            borderColor: '#e85d04',
+            borderWidth: 1,
+            borderRadius: 4
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: true, position: 'top' },
+          tooltip: {
+            callbacks: {
+              label: function (ctx) {
+                return ctx.dataset.label + ': ' + formatTime(ctx.parsed.y);
+              }
+            }
+          },
+          datalabels: {
+            anchor: 'end',
+            align: 'end',
+            formatter: function (v) { return v !== null ? formatTime(v) : ''; },
+            font: { size: 11, weight: '600' },
+            color: '#333',
+            clip: false
+          }
+        },
+        layout: { padding: { top: 24 } },
+        scales: {
+          x: { grid: { color: 'rgba(0,0,0,0.06)' }, ticks: { font: { size: 11 } } },
+          y: {
+            grid: { color: 'rgba(0,0,0,0.06)' },
+            ticks: { font: { size: 12 }, callback: function (v) { return formatTime(v); } }
+          }
+        }
+      }
+    });
+  }
+
+  function openCompareModal(compareData) {
+    compareSwimmer = compareData;
+    if (compareInstance) { compareInstance.destroy(); compareInstance = null; }
+
+    var common = getCommonEvents(currentSwimmer, compareSwimmer);
+    document.getElementById('swimmerCompareTitle').textContent =
+      currentSwimmer.firstName + ' ' + currentSwimmer.lastName +
+      ' vs ' +
+      compareSwimmer.firstName + ' ' + compareSwimmer.lastName;
+
+    compareModal.hidden    = false;
+    compareBackdrop.hidden = false;
+
+    renderCompareChart(common);
+  }
+
+  function closeCompareModal() {
+    compareModal.hidden    = true;
+    compareBackdrop.hidden = true;
+    if (compareInstance) { compareInstance.destroy(); compareInstance = null; }
+  }
+
+  compareBtn.addEventListener('click', function () {
+    var id = lookupForm.querySelector('input[name="id"]').value.trim().toUpperCase();
+    lookupError.hidden = true;
+    if (!id) { lookupError.hidden = false; return; }
+    var data = SWIMMER_REGISTRY[id];
+    if (!data) { lookupError.hidden = false; return; }
+    lookupForm.querySelector('input').value = '';
+    openCompareModal(data);
+  });
+
+  document.getElementById('swimmerCompareClose').addEventListener('click', closeCompareModal);
+  compareBackdrop.addEventListener('click', closeCompareModal);
+
+  // Keep currentSwimmer in sync with loadSwimmer
+  var _origLoadSwimmer = loadSwimmer;
+  loadSwimmer = function (data) {
+    currentSwimmer = data;
+    _origLoadSwimmer(data);
+  };
+
+  // ── Progress chart ───────────────────────────────────────────────────────
+  var modal      = document.getElementById('swimmerChartModal');
+  var backdrop   = document.getElementById('swimmerChartBackdrop');
+  var modalTitle = document.getElementById('swimmerChartTitle');
+  var chartInstance = null;
+
+  function openChart(eventName, course, clickedDate) {
+    var points = [];
+    document.querySelectorAll('.swimmer-stats__meet-group[data-course="' + course + '"]').forEach(function (group) {
+      group.querySelectorAll('tr[data-event="' + eventName + '"]').forEach(function (row) {
+        points.push({ date: row.dataset.date, time: row.dataset.time });
+      });
+    });
+    points.sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
+    if (points.length === 0) return;
+
+    var labels  = points.map(function (p) { return fmtDate(p.date); });
+    var seconds = points.map(function (p) { return timeToSeconds(p.time); });
+    var dotColors = points.map(function (p) { return p.date === clickedDate ? '#c00' : '#0060a7'; });
+    var minSec  = Math.min.apply(null, seconds);
+    var maxSec  = Math.max.apply(null, seconds);
+
+    modalTitle.textContent = eventName + ' — ' + course;
+    modal.hidden   = false;
+    backdrop.hidden = false;
+
+    if (chartInstance) { chartInstance.destroy(); }
+
+    var ctx = document.getElementById('swimmerProgressChart').getContext('2d');
+    chartInstance = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          data: seconds,
+          borderColor: '#0060a7',
+          backgroundColor: 'rgba(0,96,167,0.08)',
+          pointBackgroundColor: dotColors,
+          pointBorderColor: dotColors,
+          pointRadius: 3,
+          pointHoverRadius: 4,
+          pointHitRadius: 20,
+          borderWidth: 2,
+          tension: 0.25,
+          fill: true
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: function (ctx) { return formatTime(ctx.parsed.y); }
+            }
+          }
+        },
+        scales: {
+          x: {
+            grid: { color: 'rgba(0,0,0,0.06)' },
+            ticks: { font: { size: 12 } }
+          },
+          y: {
+            min: Math.floor((minSec * 0.85) / 5) * 5,
+            max: Math.ceil((maxSec * 1.10) / 5) * 5,
+            grid: { color: 'rgba(0,0,0,0.06)' },
+            ticks: {
+              font: { size: 12 },
+              callback: function (val) { return formatTime(val); }
+            }
+          }
+        }
+      }
+    });
+  }
+
+  function closeChart() {
+    modal.hidden   = true;
+    backdrop.hidden = true;
+    if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
+  }
+
+  // Chart button clicks (delegated on stable results container)
+  results.addEventListener('click', function (e) {
+    var btn = e.target.closest('.swimmer-stats__chart-btn');
+    if (!btn) return;
+    var row   = btn.closest('tr');
+    var group = btn.closest('.swimmer-stats__meet-group');
+    openChart(row.dataset.event, group.dataset.course, row.dataset.date);
+  });
+
+  document.querySelector('.swimmer-stats__chart-close').addEventListener('click', closeChart);
+  backdrop.addEventListener('click', closeChart);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeChart(); });
+
+  // ── Initial render ───────────────────────────────────────────────────────
+  loadSwimmer(DEFAULT_SWIMMER);
+
+})();
+</script>
+{% endblock %}

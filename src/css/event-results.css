@@ -1,0 +1,535 @@
+/* ============================================================
+   Swimmer Stats — event-results/swimmer
+   ============================================================ */
+
+.swimmer-stats {
+  padding: 30px 0 60px;
+}
+
+/* Profile header */
+
+.swimmer-stats__name {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.2;
+}
+
+.swimmer-stats__meta {
+  margin-top: 26px;
+  /* font-size: 0.9rem; */
+  margin-left: 2.5rem;
+  color: #555;
+}
+
+.swimmer-stats__sep {
+  margin: 0 8px;
+  color: #bbb;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.swimmer-stats__profile {
+  display: flex;
+  align-items: center; /* vertical centering */
+  gap: 0.75rem; /* space between name and meta */
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #CCC;
+}
+
+.swimmer-stats__name h1 {
+  margin: 0; /* remove default h1 margin so alignment is clean */
+}
+
+.swimmer-stats__meta {
+  display: flex;
+  align-items: center; /* keeps the dots and text aligned nicely */
+  gap: 0.25rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Swimmer lookup form */
+.swimmer-stats__lookup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.swimmer-stats__lookup-fields {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.swimmer-stats__lookup-label {
+  font-size: 1.1rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #888;
+  white-space: nowrap;
+}
+
+.swimmer-stats__lookup-input {
+  padding: 7px 12px;
+  border: 1px solid #d8d8d8;
+  border-radius: 20px;
+  font-size: 1.3rem;
+  color: #1a1a1a;
+  width: 130px;
+  transition: border-color 0.15s;
+}
+
+.swimmer-stats__lookup-input:focus {
+  outline: none;
+  border-color: #0060a7;
+}
+
+.swimmer-stats__lookup-btn {
+  padding: 7px 16px;
+  background: #0060a7;
+  border: 1px solid #0060a7;
+  border-radius: 20px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.swimmer-stats__lookup-btn:hover {
+  background: #004f8c;
+  border-color: #004f8c;
+}
+
+.swimmer-stats__lookup-error {
+  font-size: 1.2rem;
+  color: #c00;
+  white-space: nowrap;
+}
+
+/* Controls row (course + age group) */
+.swimmer-stats__controls {
+  display: flex;
+  align-items: flex-end;
+  gap: 32px;
+  margin-bottom: 5rem;
+  flex-wrap: wrap;
+}
+
+.swimmer-stats__filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.swimmer-stats__filter-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #888;
+}
+
+/* Course buttons */
+.swimmer-stats__tabs {
+  display: flex;
+  gap: 6px;
+}
+
+/* .swimmer-stats__tab {
+  padding: 6px 14px;
+  background: none;
+  border: 1px solid #d8d8d8;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #555;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+} */
+
+.swimmer-stats__tab:hover {
+  border-color: #0060a7;
+  color: #0060a7;
+}
+
+.swimmer-stats__tab.is-active {
+  background: #0060a7;
+  border-color: #0060a7;
+  color: #fff;
+}
+
+/* Event filter: All button + select side by side */
+.swimmer-stats__event-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Event select dropdown */
+.swimmer-stats__event-select {
+  padding: 10px 36px 10px 16px;
+  border: 1px solid #d8d8d8;
+  border-radius: 20px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #555;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 14px center;
+  appearance: none;
+  cursor: pointer;
+}
+
+.swimmer-stats__event-select:focus {
+  outline: none;
+  border-color: #0060a7;
+  color: #0060a7;
+}
+
+.swimmer-stats__event-select.is-active {
+  background-color: #0060a7;
+  border-color: #0060a7;
+  color: #fff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23ffffff' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+/* Course and age group filter buttons */
+.swimmer-stats__course-filters,
+.swimmer-stats__age-filters {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.swimmer-stats__btn,
+.swimmer-stats__age-btn {
+  padding: 10px 20px;
+  background: none;
+  border: 1px solid #d8d8d8;
+  border-radius: 20px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #555;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.swimmer-stats__course-btn:hover,
+.swimmer-stats__age-btn:hover {
+  border-color: #0060a7;
+  color: #0060a7;
+}
+
+.swimmer-stats__btn.is-active,
+.swimmer-stats__course-btn.is-active,
+.swimmer-stats__age-btn.is-active {
+  background: #0060a7;
+  border-color: #0060a7;
+  color: #fff;
+}
+
+/* Meet groups */
+.swimmer-stats__meet-group {
+  margin-bottom: 4rem;
+}
+
+.swimmer-stats__meet-hdr {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  gap: 12px;
+  padding: 8px 0 4px;
+  /* border-bottom: 2px solid #0060a7; */
+  margin-bottom: 0;
+}
+
+h4.swimmer-stats__meet-hdr-name {
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: #0060a7;
+  margin-top: -7px;
+  margin-bottom: 0;
+}
+
+p.swimmer-stats__meet-hdr-date {
+  font-size: 1.4rem;
+  line-height: 100%;
+  margin-top: 0;
+  margin-left: 0;
+  margin-bottom: 0;
+  color: #777;
+}
+
+/* Results table */
+.swimmer-stats__table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-size: 1.5rem;
+}
+
+/* .swimmer-stats__table thead tr {
+  border-bottom: 2px solid #0060a7;
+} */
+
+/* Fixed column widths — keep consistent across all meet tables */
+.swimmer-stats__table th:nth-child(1) { width: 30%; }  /* Event */
+.swimmer-stats__table th:nth-child(2) { width: 14%; }  /* Time */
+.swimmer-stats__table th:nth-child(3) { width: 10%; }  /* Course */
+.swimmer-stats__table th:nth-child(4) { width: 8%; }   /* Place */
+.swimmer-stats__table th:nth-child(5) { width: 18%; }  /* Improvement */
+.swimmer-stats__table th:nth-child(6) { width: 20%; }  /* Age Group */
+
+.swimmer-stats__table th {
+  padding: 10px 12px;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #555;
+  white-space: nowrap;
+}
+
+.swimmer-stats__table tbody tr {
+  border-bottom: 1px solid #eee;
+  transition: background 0.1s;
+}
+
+.swimmer-stats__table tbody tr:hover {
+  background: #f5f8fc;
+}
+
+.swimmer-stats__table td {
+  padding: 10px 12px;
+  color: #1a1a1a;
+  vertical-align: middle;
+}
+
+.swimmer-stats__event {
+  font-weight: 600;
+  white-space: nowrap;
+  /* min-width: 300px; */
+}
+
+/* Chart icon button */
+.swimmer-stats__event {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.swimmer-stats__chart-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 4px;
+  background: none;
+  border: none;
+  border-radius: 3px;
+  color: #aaa;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+  line-height: 1;
+  margin-bottom: 1px;
+}
+
+.swimmer-stats__chart-btn:hover {
+  color: #0060a7;
+  background: rgba(0, 96, 167, 0.08);
+}
+
+/* Progress chart modal */
+.swimmer-stats__chart-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1000;
+}
+
+.swimmer-stats__chart-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.swimmer-stats__chart-modal[hidden],
+.swimmer-stats__chart-backdrop[hidden] {
+  display: none;
+}
+
+.swimmer-stats__chart-modal-inner {
+  pointer-events: all;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.18);
+  padding: 28px 32px 24px;
+  width: min(680px, 92vw);
+}
+
+.swimmer-stats__chart-modal-hdr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.swimmer-stats__chart-modal-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.swimmer-stats__chart-close {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: #888;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: color 0.15s;
+}
+
+.swimmer-stats__chart-close:hover {
+  color: #1a1a1a;
+}
+
+.swimmer-stats__chart-wrap {
+  position: relative;
+  height: 280px;
+}
+
+/* Compare modal */
+.swimmer-stats__compare-modal-inner {
+  width: min(720px, 92vw);
+}
+
+
+.swimmer-stats__compare-event-select {
+  padding: 7px 36px 7px 14px;
+  border: 1px solid #d8d8d8;
+  border-radius: 20px;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #555;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 12px center;
+  appearance: none;
+  cursor: pointer;
+}
+
+.swimmer-stats__compare-event-select:focus {
+  outline: none;
+  border-color: #0060a7;
+}
+
+/* Compare button */
+.swimmer-stats__compare-btn {
+  padding: 7px 16px;
+  background: none;
+  border: 1px solid #0060a7;
+  border-radius: 20px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #0060a7;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+
+.swimmer-stats__compare-btn:hover {
+  background: #0060a7;
+  color: #fff;
+}
+
+.swimmer-stats__time {
+  /* font-family: monospace; */
+  /* font-size: 1rem; */
+  /* font-weight: 700; */
+  /* color: #0060a7; */
+  width: 120px;
+  padding-left: 0;
+}
+
+th.th-time,
+td.swimmer-stats__time {
+  text-align: right;
+  padding-right: 4rem;
+}
+th.th-course,
+td.swimmer-stats__course {
+  padding-left: 5rem;
+}
+
+.swimmer-stats__meet {
+  color: #444;
+  max-width: 280px;
+}
+
+.swimmer-stats__date {
+  white-space: nowrap;
+  color: #777;
+  font-size: 0.85rem;
+}
+
+/* Standard badges */
+.swimmer-stats__standard {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.swimmer-stats__standard--aaaa { background: #fff3cd; color: #7a5800; }
+.swimmer-stats__standard--aaa  { background: #d1ecf1; color: #0c5460; }
+.swimmer-stats__standard--aa   { background: #d4edda; color: #155724; }
+.swimmer-stats__standard--a    { background: #e8e8e8; color: #444; }
+.swimmer-stats__standard--bb   { background: #f5e6ff; color: #5a0080; }
+.swimmer-stats__standard--b    { background: #fce8e8; color: #7a0000; }
+
+/* Responsive — collapse meet column on small screens */
+@media (max-width: 767px) {
+  .swimmer-stats__table th:nth-child(5),
+  .swimmer-stats__table td:nth-child(5) {
+    display: none;
+  }
+
+}
