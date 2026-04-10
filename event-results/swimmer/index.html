@@ -351,11 +351,11 @@
         </div>
         <div class="swimmer-stats__meta" id="swimmerMeta"></div>
         <form class="swimmer-stats__lookup" id="swimmerLookup" autocomplete="off">
-          <span class="swimmer-stats__lookup-label">Find Another Swimmer</span>
+          <span class="swimmer-stats__lookup-label">Swimmer Lookup</span>
           <div class="swimmer-stats__lookup-fields">
             <span class="swimmer-stats__lookup-error" id="swimmerLookupError" hidden>ID not found</span>
             <input class="swimmer-stats__lookup-input" type="text" name="id" placeholder="Swimmer ID" aria-label="USMS Swimmer ID" maxlength="10" spellcheck="false">
-            <button class="swimmer-stats__lookup-btn" type="submit">Look Up</button>
+            <button class="swimmer-stats__lookup-btn" type="submit">View</button>
             <button class="swimmer-stats__compare-btn" type="button" id="swimmerCompareBtn">Compare</button>
           </div>
         </form>
@@ -947,7 +947,7 @@
 
   function fmtDate(iso) {
     var p = iso.split('-');
-    return p[1] + '/' + p[2] + '/' + p[0];
+    return parseInt(p[1], 10) + '/' + parseInt(p[2], 10) + '/' + p[0].slice(2);
   }
 
   var CHART_ICON = '<svg width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polyline points="1,9 4,5 7,7 10,2 13,4" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round" fill="none"/><circle cx="1" cy="9" r="1.2" fill="currentColor"/><circle cx="4" cy="5" r="1.2" fill="currentColor"/><circle cx="7" cy="7" r="1.2" fill="currentColor"/><circle cx="10" cy="2" r="1.2" fill="currentColor"/><circle cx="13" cy="4" r="1.2" fill="currentColor"/></svg>';
@@ -963,8 +963,35 @@
       '<span>USMS #' + data.usmsId + '</span>';
   }
 
+  function calcImprovements(meets) {
+    // Pass 1: find the personal best (fastest) time per course::event
+    var best = {};
+    meets.forEach(function (meet) {
+      meet.results.forEach(function (r) {
+        var key = meet.courseType + '::' + r.event;
+        var secs = timeToSeconds(r.time);
+        if (best[key] === undefined || secs < best[key]) best[key] = secs;
+      });
+    });
+
+    // Pass 2: diff each result against the PB
+    meets.forEach(function (meet) {
+      meet.results.forEach(function (r) {
+        var key = meet.courseType + '::' + r.event;
+        var secs = timeToSeconds(r.time);
+        var diff = secs - best[key];
+        if (diff === 0) {
+          r._improvement = 'PB';
+        } else {
+          r._improvement = '+' + diff.toFixed(2) + 's';
+        }
+      });
+    });
+  }
+
   function renderResults(data) {
     var meets = (data.meetBreakdown && data.meetBreakdown.meets) ? data.meetBreakdown.meets.slice() : [];
+    calcImprovements(meets);
     meets.sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : 0; });
 
     var html = '';
@@ -975,17 +1002,18 @@
       html += '<p class="swimmer-stats__meet-hdr-date">' + fmtDate(meet.date) + '</p>';
       html += '</div>';
       html += '<table class="swimmer-stats__table"><thead><tr>';
-      html += '<th>Event</th><th class="th-time">Time</th><th class="th-course">Course</th><th class="th-place">Place</th><th>Improvement</th><th>Age Group</th>';
+      html += '<th>Event</th><th class="th-time">Time</th><th class="th-course">Course</th><th class="th-place">Place</th><th>Age Group</th>';
       html += '</tr></thead><tbody>';
       meet.results.forEach(function (r) {
-        html += '<tr data-age-group="' + r.ageGroup + '" data-event="' + r.event + '" data-date="' + meet.date + '" data-time="' + r.time + '">';
+        var imp = r._improvement || '';
+        html += '<tr data-age-group="' + r.ageGroup + '" data-event="' + r.event + '" data-date="' + meet.date + '" data-time="' + r.time + '" data-improvement="' + imp + '">';
         html += '<td class="swimmer-stats__event"><span>' + r.event + '</span>';
         html += '<button class="swimmer-stats__chart-btn" aria-label="View progress chart for ' + r.event + '">' + CHART_ICON + '</button>';
         html += '</td>';
         html += '<td class="swimmer-stats__time">' + r.time + '</td>';
         html += '<td class="swimmer-stats__course">' + r.courseType + '</td>';
         html += '<td class="swimmer-stats__place">' + (r.place > 0 ? r.place : '—') + '</td>';
-        html += '<td class="swimmer-stats__improvement">' + (r.improvement || '') + '</td>';
+        // html += '<td class="swimmer-stats__improvement">' + imp + '</td>';
         html += '<td>' + r.ageGroup + '</td>';
         html += '</tr>';
       });
@@ -1297,7 +1325,7 @@
         },
         layout: { padding: { top: 24 } },
         scales: {
-          x: { grid: { color: 'rgba(0,0,0,0.06)' }, ticks: { font: { size: 11 } } },
+          x: { grid: { color: 'rgba(0,0,0,0.06)' }, ticks: { font: { size: 11 }, maxRotation: 90, minRotation: 90 } },
           y: {
             grid: { color: 'rgba(0,0,0,0.06)' },
             ticks: { font: { size: 12 }, callback: function (v) { return formatTime(v); } }
@@ -1359,7 +1387,7 @@
     var points = [];
     document.querySelectorAll('.swimmer-stats__meet-group[data-course="' + course + '"]').forEach(function (group) {
       group.querySelectorAll('tr[data-event="' + eventName + '"]').forEach(function (row) {
-        points.push({ date: row.dataset.date, time: row.dataset.time });
+        points.push({ date: row.dataset.date, time: row.dataset.time, improvement: row.dataset.improvement || '' });
       });
     });
     points.sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
@@ -1367,7 +1395,10 @@
 
     var labels  = points.map(function (p) { return fmtDate(p.date); });
     var seconds = points.map(function (p) { return timeToSeconds(p.time); });
-    var dotColors = points.map(function (p) { return p.date === clickedDate ? '#c00' : '#0060a7'; });
+    var dotColors       = points.map(function (p) { return p.date === clickedDate ? '#fff' : '#0060a7'; });
+    var dotBorderColors = points.map(function (p) { return '#0060a7'; });
+    var dotRadii        = points.map(function (p) { return p.date === clickedDate ? 5 : 3; });
+    var dotBorderWidths = points.map(function (p) { return p.date === clickedDate ? 2 : 1; });
     var minSec  = Math.min.apply(null, seconds);
     var maxSec  = Math.max.apply(null, seconds);
 
@@ -1382,19 +1413,33 @@
       type: 'line',
       data: {
         labels: labels,
-        datasets: [{
-          data: seconds,
-          borderColor: '#0060a7',
-          backgroundColor: 'rgba(0,96,167,0.08)',
-          pointBackgroundColor: dotColors,
-          pointBorderColor: dotColors,
-          pointRadius: 3,
-          pointHoverRadius: 4,
-          pointHitRadius: 20,
-          borderWidth: 2,
-          tension: 0.25,
-          fill: true
-        }]
+        datasets: [
+          {
+            data: seconds,
+            borderColor: '#0060a7',
+            backgroundColor: 'rgba(0,96,167,0.08)',
+            pointBackgroundColor: dotColors,
+            pointBorderColor: dotBorderColors,
+            pointBorderWidth: dotBorderWidths,
+            pointRadius: dotRadii,
+            pointHoverRadius: 4,
+            pointHitRadius: 20,
+            borderWidth: 2,
+            tension: 0.25,
+            fill: true
+          },
+          {
+            data: labels.map(function () { return minSec; }),
+            borderColor: '#0060a7',
+            borderWidth: 1,
+            borderDash: [4, 4],
+            pointRadius: 0,
+            pointHoverRadius: 0,
+            pointHitRadius: 0,
+            fill: false,
+            tension: 0
+          }
+        ]
       },
       options: {
         responsive: true,
@@ -1402,15 +1447,24 @@
         plugins: {
           legend: { display: false },
           tooltip: {
+            padding: 12,
+            bodyFont: { size: 14 },
             callbacks: {
-              label: function (ctx) { return formatTime(ctx.parsed.y); }
+              title: function () { return ''; },
+              label: function (ctx) {
+                if (ctx.datasetIndex === 1) return null;
+                var lines = [formatTime(ctx.parsed.y)];
+                var imp = points[ctx.dataIndex] && points[ctx.dataIndex].improvement;
+                if (imp) lines.push(imp);
+                return lines;
+              }
             }
           }
         },
         scales: {
           x: {
             grid: { color: 'rgba(0,0,0,0.06)' },
-            ticks: { font: { size: 12 } }
+            ticks: { font: { size: 12 }, maxRotation: 90, minRotation: 90 }
           },
           y: {
             min: Math.floor((minSec * 0.85) / 5) * 5,
@@ -1441,7 +1495,7 @@
     openChart(row.dataset.event, group.dataset.course, row.dataset.date);
   });
 
-  document.querySelector('.swimmer-stats__chart-close').addEventListener('click', closeChart);
+  document.querySelector('#swimmerChartModal .swimmer-stats__chart-close').addEventListener('click', closeChart);
   backdrop.addEventListener('click', closeChart);
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeChart(); });
 
