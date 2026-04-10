@@ -10,8 +10,10 @@
         <form class="swimmer-stats__lookup" id="swimmerLookup" autocomplete="off">
           <span class="swimmer-stats__lookup-label">Swimmer Lookup</span>
           <div class="swimmer-stats__lookup-fields">
-            <span class="swimmer-stats__lookup-error" id="swimmerLookupError" hidden>ID not found</span>
-            <input class="swimmer-stats__lookup-input" type="text" name="id" placeholder="Swimmer ID" aria-label="USMS Swimmer ID" maxlength="10" spellcheck="false">
+            <div class="swimmer-stats__lookup-input-wrap">
+              <span class="swimmer-stats__lookup-error" id="swimmerLookupError" hidden></span>
+              <input class="swimmer-stats__lookup-input" type="text" name="id" placeholder="Swimmer ID" aria-label="USMS Swimmer ID" maxlength="10" spellcheck="false">
+            </div>
             <button class="swimmer-stats__lookup-btn" type="submit">View</button>
             <button class="swimmer-stats__compare-btn" type="button" id="swimmerCompareBtn">Compare</button>
           </div>
@@ -44,7 +46,7 @@
 
         <div class="swimmer-stats__filter-group pb-group">
           <span class="swimmer-stats__filter-label">Personal Best</span>
-          <button class="swimmer-stats__btn swimmer-stats__pb-btn">Show</button>
+          <button class="swimmer-stats__btn swimmer-stats__pb-btn">Show PB</button>
         </div>
 
       </div>
