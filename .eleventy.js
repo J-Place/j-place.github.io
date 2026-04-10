@@ -1,5 +1,23 @@
+const fs   = require('fs');
+const path = require('path');
+
 module.exports = function(eleventyConfig) {
   eleventyConfig.addWatchTarget("src/_data/");
+
+  // Build swimmer registry from all swimmer-*.json files in _data/.
+  // Using addGlobalData (called fresh each build) instead of a _data/swimmers.js
+  // module (which Node caches between hot-reloads, causing stale registry).
+  eleventyConfig.addGlobalData('swimmers', function () {
+    const dir = path.join(__dirname, 'src/_data');
+    const registry = {};
+    fs.readdirSync(dir)
+      .filter(f => /^swimmer-.+\.json$/.test(f))
+      .forEach(f => {
+        const data = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
+        if (data && data.usmsId) registry[data.usmsId] = data;
+      });
+    return registry;
+  });
 
   // Copy public/ to _site/public/ untouched
   eleventyConfig.addPassthroughCopy("public");
