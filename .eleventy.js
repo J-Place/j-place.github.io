@@ -1,4 +1,5 @@
 module.exports = function(eleventyConfig) {
+  eleventyConfig.addWatchTarget("src/_data/");
 
   // Copy public/ to _site/public/ untouched
   eleventyConfig.addPassthroughCopy("public");
