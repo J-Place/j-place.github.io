@@ -344,48 +344,48 @@
     <div class="row  ">
       <div class="col-xs-12  ">
         <div class="html-container  ">
-          <p style="margin-top: 4rem; margin-bottom: 3rem; text-align: center;">With access to our online community, an extensive workout library and exclusive content, you can get started training today! If you want structured workouts, join a local swim club for on-deck coaching. You'll also be eligible for events and partner discounts. Stay on track to achieve you goals this year.</p>
+          <p style="margin-top: 10rem; margin-bottom: 3rem; text-align: left;">With access to our online community, an extensive workout library and exclusive content, you can get started training today! If you want structured workouts, join a local swim club for on-deck coaching. You'll also be eligible for events and partner discounts. Stay on track to achieve you goals this year.</p>
         </div>
       </div>
     </div>
   </div>
+
   <div class="usms-container container-narrow p-tb-10">
-  <div class="row  ">
-    <div class="col-xs-12  ">
-      
-
-
-      <div class="html-container  ">
-        <style>
-            /* .col-xs-9.icon-menu__item {
-              padding-left: 3rem;
-            }
-            @media (min-width: 1200px) {
-              .col-xs-9.icon-menu__item {
-                padding-left: 1rem;
+    <div class="row  ">
+      <div class="col-xs-12  ">
+        
+        <div style="height:10px; display:block;" class="html-container  ">
+          <style>
+              /* .col-xs-9.icon-menu__item {
+                padding-left: 3rem;
               }
-            }
-            .icon-menu__item h4 {
-              line-height: 120% !important;
-              margin-bottom: 0.8rem;
-              margin-left: -0.8rem;
-            }
-            .icon-menu__item p {
-              line-height: 120% !important;
-              margin-left: -0.8rem;
-            }
-            .icon-menu__item p a {
-              font-weight: 300;
-              color: #666;
-              font-size: 2rem;
-            } */
-        </style>
+              @media (min-width: 1200px) {
+                .col-xs-9.icon-menu__item {
+                  padding-left: 1rem;
+                }
+              }
+              .icon-menu__item h4 {
+                line-height: 120% !important;
+                margin-bottom: 0.8rem;
+                margin-left: -0.8rem;
+              }
+              .icon-menu__item p {
+                line-height: 120% !important;
+                margin-left: -0.8rem;
+              }
+              .icon-menu__item p a {
+                font-weight: 300;
+                color: #666;
+                font-size: 2rem;
+              } */
+          </style>
+        </div>
+
       </div>
     </div>
   </div>
-</div>
 
-  <div class="usms-container tms-benefits p-tb-10">
+  <div class="usms-container tms-benefits">
     <div class="row">
       <div class="col-xs-12 col-md-6">
         <div class="col-xs-2 offset-xs-1 icon-menu__item" style="text-align: center;">
@@ -412,7 +412,7 @@
     </div>
   </div>
 
-  <div class="usms-container tms-benefits p-tb-10">
+  <div class="usms-container tms-benefits">
     <div class="row">
       <div class="col-xs-12 col-md-6">
         <div class="col-xs-2 offset-xs-1 icon-menu__item" style="text-align: center;">
@@ -439,7 +439,7 @@
     </div>
   </div>
 
-  <div class="usms-container tms-benefits p-tb-10">
+  <div class="usms-container tms-benefits">
     <div class="row">
       <div class="col-xs-12 col-md-6">
         <div class="col-xs-2 offset-xs-1 icon-menu__item" style="text-align: center;">
@@ -469,7 +469,7 @@
   <div class="usms-container p-tb-10">
     <div class="row">
       <div class="col-xs-12">
-        <div style="height:50px; display:block; margin:0; padding:0;"> </div>
+        <div style="height:200px; display:block; margin:0; padding:0;"> </div>
       </div>
     </div>
   </div>
@@ -1208,6 +1208,21 @@
       document.querySelector('.sign-up__validation').style.display = 'block';
     }
   }
+</script>
+<script>
+  (function() {
+    var rows = document.querySelectorAll('.tms-benefits');
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('tms-benefits--visible');
+        } else {
+          entry.target.classList.remove('tms-benefits--visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -20% 0px' });
+    rows.forEach(function(row) { observer.observe(row); });
+  })();
 </script>
 
 </body>
