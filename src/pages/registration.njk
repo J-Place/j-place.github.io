@@ -6,6 +6,306 @@ title: Registration | U.S. Masters Swimming
 {% block pageCSS %}
 <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
 <link rel="stylesheet" href="https://www.usms.org/styles/rteMasters.min.css">
+<link rel="stylesheet" href="/css/registration.css">
+{% endblock %}
+{% block pageJS %}
+<script>
+(function () {
+  // Membership tile selection — toggle .selected on click, show/hide competition card
+  var cardCompetition = document.getElementById('cardCompetition');
+  var eventLicenseTiles = ['membership-length--usmsPlus', 'membership-length--competition'];
+
+  var membershipContainerEl = document.querySelector('.membership-length--container');
+  if (membershipContainerEl) {
+    membershipContainerEl.addEventListener('click', function (e) {
+      var tile = e.target.closest('.membership-length--option');
+      if (!tile || tile.hasAttribute('disabled')) return;
+      document.querySelectorAll('.membership-length--option').forEach(function (t) { t.classList.remove('selected'); });
+      tile.classList.add('selected');
+
+      var isEventLicense = eventLicenseTiles.some(function (cls) { return tile.classList.contains(cls); });
+      if (cardCompetition) cardCompetition.style.display = isEventLicense ? 'block' : 'none';
+
+      var tilePriceEl = tile.querySelector('.membership-length--price p');
+      var membershipTotalEl = document.querySelector('.membership-length--total');
+      if (tilePriceEl && membershipTotalEl) {
+        membershipTotalEl.textContent = tilePriceEl.textContent.trim();
+      }
+
+      resetVsa();
+      document.querySelectorAll('input[name="videoStrokeAnalysis"]').forEach(function (radio) {
+        radio.disabled = false;
+        radio.closest('label').classList.remove('disabled');
+      });
+      var isUsmsPlusTile = tile.classList.contains('membership-length--usmsPlus');
+      var priceEl = document.querySelector('.price-string__video-stroke-analysis');
+      if (priceEl) priceEl.textContent = isUsmsPlusTile ? ' for FREE!' : ' for $110.00';
+      updateOrderSummary();
+
+    });
+  }
+
+  // Membership tiles: shown/activated based on participation selection
+  var colUsmsPlus   = document.getElementById('col-usmsPlus');
+  var colCompetition = document.getElementById('col-competition');
+  var colCurrentYear = document.getElementById('col-currentYear');
+  var membershipContainer = document.querySelector('.membership-length--container');
+
+  function activateTile(col) {
+    var tile = col.querySelector('.membership-length--option');
+    if (tile) {
+      tile.removeAttribute('aria-hidden');
+      tile.removeAttribute('disabled');
+    }
+  }
+
+  function deactivateTile(col) {
+    var tile = col.querySelector('.membership-length--option');
+    if (tile) {
+      tile.setAttribute('aria-hidden', 'true');
+      tile.setAttribute('disabled', '');
+      var radio = tile.querySelector('input[type="radio"]');
+      if (radio) radio.checked = false;
+    }
+  }
+
+  function resetVsa() {
+    var priceEl = document.querySelector('.price-string__video-stroke-analysis');
+    if (priceEl) priceEl.textContent = '';
+    var vsaTotalEl = document.querySelector('.video-stroke-analysis--total');
+    if (vsaTotalEl) vsaTotalEl.textContent = '$0.00';
+    var strokeSelectEl = document.getElementById('stroke-video-analysis__focus');
+    if (strokeSelectEl) strokeSelectEl.value = '-1';
+    var strokeFocusDivEl = document.querySelector('.select-stroke-focus');
+    if (strokeFocusDivEl) strokeFocusDivEl.style.display = 'none';
+    document.querySelectorAll('input[name="videoStrokeAnalysis"]').forEach(function (radio) {
+      radio.checked = false;
+      radio.disabled = true;
+      radio.closest('label').classList.add('disabled');
+    });
+  }
+
+  document.querySelectorAll('input[name="participationInfo"]').forEach(function (radio) {
+    radio.addEventListener('change', function () {
+      if (membershipContainer) membershipContainer.classList.remove('disabled');
+      resetVsa();
+      if (this.value === 'yes') {
+        colUsmsPlus.style.display = 'flex';
+        colCompetition.style.display = 'flex';
+        colCurrentYear.style.display = 'none';
+        activateTile(colUsmsPlus);
+        activateTile(colCompetition);
+        deactivateTile(colCurrentYear);
+      } else {
+        colUsmsPlus.style.display = 'none';
+        colCompetition.style.display = 'none';
+        colCurrentYear.style.display = 'flex';
+        deactivateTile(colUsmsPlus);
+        deactivateTile(colCompetition);
+        activateTile(colCurrentYear);
+        if (cardCompetition) cardCompetition.style.display = 'none';
+      }
+    });
+  });
+
+  // Coach interest: hidden until "No" selected for "Are you currently a coach?"
+  var coachInterestDiv = document.querySelector('.order-4.col-xs-12');
+  if (coachInterestDiv) {
+    coachInterestDiv.style.display = 'none';
+    document.querySelectorAll('input[name="checkbox-interests-self-identified-coach"]').forEach(function (radio) {
+      radio.addEventListener('change', function () {
+        coachInterestDiv.style.display = this.value === 'false' ? '' : 'none';
+      });
+    });
+  }
+
+  // Club options by LMSC value
+  var CLUBS = {
+    florida: [
+      { value: 'a0w3h000001KFKKAA4', text: 'Unattached - Will appear as  (UC14)' },
+      { value: 'a0w3h000001KEaWAAW', text: 'All Day Endurance Masters (ADEM)' },
+      { value: 'a0w3h000001KEakAAG', text: 'ATAC Masters (ATAC)' },
+      { value: 'a0wPO000000BYXpYAO', text: 'Avalon Swim Club (AVSC)' },
+      { value: 'a0w3h000001KE3lAAG', text: 'Blue Dolfins Masters (BDO)' },
+      { value: 'a0w3h000001KEajAAG', text: 'Blue Marlins Aquatic Club (BMAC)' },
+      { value: 'a0w3h000003BrqcAAC', text: 'Bolles School Sharks Masters Swimming (BSS)' },
+      { value: 'a0w3h000003bmDGAAY', text: 'BOLTS Masters (BOLTS)' },
+      { value: 'a0wPO000000WTq5YAG', text: 'Carrollwood Village Masters Swim Team (CVMST)' },
+      { value: 'a0wPO000000S3J7YAK', text: 'Champions Mojo Masters (CHAMP)' },
+      { value: 'a0wPO000001SMufYAG', text: 'Champions Mojo Masters (MOJO)' },
+      { value: 'a0wPO000001T7NJYA0', text: 'City Of Miramar (COM)' },
+      { value: 'a0w3h000001KEDQAA4', text: 'Clearwater Aquatic Masters (CAM)' },
+      { value: 'a0wPO000000S3KjYAK', text: 'Dream Team Masters (DREAM)' },
+      { value: 'a0w3h000001KEctAAG', text: 'FAST Falcons (FLCNS)' },
+      { value: 'a0w3h000001KEWVAA4', text: 'Flagler Fluid Swim Team (FFST)' },
+      { value: 'a0w3h000001KEe5AAG', text: 'Florida Aquatic Combined Team (FACT)' },
+      { value: 'a0w3h000001KEeAAAW', text: 'Florida League Of Aquatics (FLA)' },
+      { value: 'a0w3h000001KEG7AAO', text: 'Forever Swimmers (4SWM)' },
+      { value: 'a0w3h000001KEenAAG', text: 'Gator Swim Club (GSC)' },
+      { value: 'a0w3h000001KEJ6AAO', text: 'Greater Tampa Swim Association (GTSA)' },
+      { value: 'a0w3h000001KE5FAAW', text: 'Gulf Coast Swim Team Masters (GCST)' },
+      { value: 'a0wPO000000PrtxYAC', text: 'Hydro Swim Club Masters (HYDRO)' },
+      { value: 'a0w3h000001KEeqAAG', text: 'Jacksonville Area Warrior Swimmers (JWS)' },
+      { value: 'a0w3h000001KESRAA4', text: 'Julington Creek Masters (JCM)' },
+      { value: 'a0w3h000001KEXYAA4', text: 'Lake Gators Swim Club (LG)' },
+      { value: 'a0w3h000001KEMBAA4', text: 'Lake Highland Masters Swimming Club (LHM)' },
+      { value: 'a0wPO0000014TqrYAE', text: 'Lakeside Chargers (CCST)' },
+      { value: 'a0w3h000001KEbiAAG', text: 'Legends Masters Swim Club (LMSC)' },
+      { value: 'a0wPO000000EKoTYAW', text: 'North Florida Swimming (NFS)' },
+      { value: 'a0w3h000001KESMAA4', text: 'Palm Coast Piranha Club (PCSC)' },
+      { value: 'a0wPO000000I6jhYAC', text: 'Pike Performance Training (perf)' },
+      { value: 'a0w3h000001KEeyAAG', text: 'Sarasota Sharks Masters (SHARK)' },
+      { value: 'a0w3h000001KEB6AAO', text: 'Sarasota Tsunami Masters (SRQM)' },
+      { value: 'a0w3h000001KEXvAAO', text: 'Sea Dragon Aquatics Masters (SDAMS)' },
+      { value: 'a0w3h000001KEaPAAW', text: 'Shanna and Bryan Glazer JCC (BGJCC)' },
+      { value: 'a0wPO000001RevFYAS', text: 'SHOW Swim Team (SHOW)' },
+      { value: 'a0w3h000001KEeuAAG', text: 'Southwest Florida Aquatics (SWFA)' },
+      { value: 'a0w3h000001KEeDAAW', text: 'Space Coast Aquanauts (AQNT)' },
+      { value: 'a0w3h000001KEf1AAG', text: 'Space Coast Masters (SPCO)' },
+      { value: 'a0w3h000001KEHUAA4', text: 'St Augustine Reef Sharks (SARS)' },
+      { value: 'a0w3h000001KEe8AAG', text: 'St Pete Masters Inc (SPM)' },
+      { value: 'a0w3h000001KEexAAG', text: 'Sun City Center Sharks (SCCS)' },
+      { value: 'a0w3h000001KEXxAAO', text: 'Suncoast YMCA Masters Swimming (SYMS)' },
+      { value: 'a0w3h000001KESjAAO', text: 'Swamp Water Aquatics Gainesville (SWAG)' },
+      { value: 'a0w3h000001KEeEAAW', text: 'Swim Florida Masters (SWIM)' },
+      { value: 'a0w3h000001KEC7AAO', text: 'Swim Like A Pro (SLAP)' },
+      { value: 'a0w3h000001KEWlAAO', text: 'Swim Melbourne Masters (MELB)' },
+      { value: 'a0w3h000001KEWTAA4', text: 'Swim Out (SWOUT)' },
+      { value: 'a0wPO0000006r6TYAQ', text: 'Swim Start (STRT)' },
+      { value: 'a0wPO0000007HXBYA2', text: 'SwimRise Aquatics (SRA)' },
+      { value: 'a0w3h000001KE6OAAW', text: 'T2 Naples Masters (T2NM)' },
+      { value: 'a0wPO000000Q99JYAS', text: 'Tampa Elite Aquatics - Manta Rays (TEAM)' },
+      { value: 'a0w3h000001KElGAAW', text: 'Tampa Tarpons Masters (TTM)' },
+      { value: 'a0w3h000001KEemAAG', text: 'Tampa Y Swimming Masters (TYSM)' },
+      { value: 'a0w3h000001KE2iAAG', text: 'Team Windfall (TWFL)' },
+      { value: 'a0wPO000000p7vWYAQ', text: 'Torpedo Masters Club (TMC)' },
+      { value: 'a0wPO000000BnrpYAC', text: 'Treasure Coast Aquatics (TCA)' },
+      { value: 'a0w3h000001KEREAA4', text: 'Unagi (UNAGI)' },
+      { value: 'a0w3h000003bl2qAAA', text: 'Villagers Masters Aquatic Squad (VMAS)' },
+      { value: 'a0w3h000003bmTTAAY', text: 'Wahoos of Jacksonville (WAHOO)' },
+      { value: 'a0w3h000004GoiWAAS', text: 'West Volusia (WVMS)' },
+      { value: 'a0w3h000001KEOrAAO', text: 'YMCA of Southwest Florida Masters Hurricanes (SFYH)' }
+    ]
+  };
+
+  // LMSC → populate clubs
+  var lmscSelect = document.getElementById('selectedLmsc');
+  var clubSelect = document.getElementById('selectedClub');
+  if (lmscSelect && clubSelect) {
+    lmscSelect.addEventListener('change', function () {
+      var clubs = CLUBS[this.value] || [];
+      clubSelect.innerHTML = '<option selected value="-1">Select a club</option>';
+      clubs.forEach(function (c) {
+        var opt = document.createElement('option');
+        opt.value = c.value;
+        opt.textContent = c.text;
+        clubSelect.appendChild(opt);
+      });
+      // Reset workout group
+      if (workoutGroupSelect) workoutGroupSelect.innerHTML = '<option selected value="-1">Select a workout group</option>';
+      if (workoutGroupCol) workoutGroupCol.style.display = 'none';
+    });
+  }
+
+  // Workout groups by club value (add entries here as needed)
+  var WORKOUT_GROUPS = {
+    'a0w3h000001KFKKAA4': [
+      { value: 'wg1', text: 'Meet at Blue' }
+    ]
+  };
+
+  // Workout group: hidden until a club with workout groups is selected
+  var workoutGroupCol = document.querySelector('.club-information__column');
+  var workoutGroupSelect = document.getElementById('selectedWorkoutgroup');
+  if (workoutGroupCol) workoutGroupCol.style.display = 'none';
+
+  if (clubSelect && workoutGroupCol && workoutGroupSelect) {
+    clubSelect.addEventListener('change', function () {
+      var groups = WORKOUT_GROUPS[this.value] || [];
+      workoutGroupSelect.innerHTML = '<option selected value="-1">Select a workout group</option>';
+      groups.forEach(function (g) {
+        var opt = document.createElement('option');
+        opt.value = g.value;
+        opt.textContent = g.text;
+        workoutGroupSelect.appendChild(opt);
+      });
+      workoutGroupCol.style.display = groups.length > 0 ? '' : 'none';
+    });
+  }
+  // ── Order summary ─────────────────────────────────────────────────────────
+  function parseAmount(text) {
+    return parseFloat((text || '').replace(/[^0-9.]/g, '')) || 0;
+  }
+
+  function updateOrderSummary() {
+    var membership = parseAmount(document.querySelector('.membership-length--total') && document.querySelector('.membership-length--total').textContent);
+    var vsa        = parseAmount(document.querySelector('.video-stroke-analysis--total') && document.querySelector('.video-stroke-analysis--total').textContent);
+    var donations  = parseAmount(document.querySelector('.total-donations') && document.querySelector('.total-donations').textContent);
+    var total      = membership + vsa + donations;
+    var fmt = function (n) { return '$' + n.toFixed(2); };
+    var set = function (sel, val) { var el = document.querySelector(sel); if (el) el.textContent = val; };
+    set('.review-order__line-item--membership', fmt(membership));
+    set('.review-order__line-item--vsa',        fmt(vsa));
+    set('.review-order__line-item--donations',  fmt(donations));
+    set('.review-order__line-item--price',      fmt(total));
+    var pi = function (cls) {
+      var p = document.querySelector('.payment-info__line-item--' + cls);
+      return p ? p.querySelector('.payment-info__line-item--price') : null;
+    };
+    var piSet = function (cls, val) { var el = pi(cls); if (el) el.textContent = val; };
+    piSet('usms',      fmt(membership));
+    piSet('vsa',       fmt(vsa));
+    piSet('donations', fmt(donations));
+    piSet('total',     fmt(total));
+  }
+
+  // ── Donation buttons & inputs ─────────────────────────────────────────────
+  var sslInput  = document.querySelector("input[name='swimming-saves-lives']");
+  var shffInput = document.querySelector("input[name='swimming-hall-of-fame']");
+  var lmscInput = document.querySelector("input[name='lmsc']");
+  var donationTotalEl = document.querySelector('.total-donations');
+
+  function updateDonationTotal() {
+    var total = [sslInput, shffInput, lmscInput].reduce(function (sum, el) {
+      return sum + (el ? parseFloat(el.value) || 0 : 0);
+    }, 0);
+    if (donationTotalEl) donationTotalEl.textContent = '$' + total.toFixed(2);
+    updateOrderSummary();
+  }
+
+  document.querySelectorAll('.btn-donate').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      if (sslInput) sslInput.value = parseFloat(this.value).toFixed(2);
+      updateDonationTotal();
+    });
+  });
+
+  [sslInput, shffInput, lmscInput].forEach(function (input) {
+    if (input) input.addEventListener('change', updateDonationTotal);
+  });
+
+  // Video Stroke Analysis: show stroke selector when Yes chosen; update total only when a stroke is selected
+  var strokeFocusDiv = document.querySelector('.select-stroke-focus');
+  var vsaTotalEl = document.querySelector('.video-stroke-analysis--total');
+  var strokeSelect = document.getElementById('stroke-video-analysis__focus');
+  if (strokeFocusDiv) strokeFocusDiv.style.display = 'none';
+  document.querySelectorAll('input[name="videoStrokeAnalysis"]').forEach(function (radio) {
+    radio.addEventListener('change', function () {
+      if (strokeFocusDiv) strokeFocusDiv.style.display = this.value === 'yes' ? '' : 'none';
+      if (vsaTotalEl && this.value === 'no') vsaTotalEl.textContent = '$0.00';
+      if (this.value === 'yes' && strokeSelect) strokeSelect.value = '-1';
+    });
+  });
+  if (strokeSelect && vsaTotalEl) {
+    strokeSelect.addEventListener('change', function () {
+      if (this.value === '-1') return;
+      var isUsmsPlus = document.querySelector('.membership-length--usmsPlus.selected') !== null;
+      vsaTotalEl.textContent = isUsmsPlus ? '$0.00' : '$110.00';
+      updateOrderSummary();
+    });
+  }
+})();
+</script>
 {% endblock %}
 {% block content %}
 
