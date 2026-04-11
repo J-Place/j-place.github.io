@@ -11,6 +11,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let productTotal = 0;
 
+  // ── Terms visibility ─────────────────────────────────────────────────────
+  const usmsPlusTerms = document.querySelector('.agree-usmsplus-terms');
+  const competitionTerms = document.querySelector('.form-group.agree-terms-competition');
+
+  if (usmsPlusTerms) usmsPlusTerms.style.display = 'none';
+  if (competitionTerms) competitionTerms.style.display = 'none';
+
+  function updateTermsVisibility() {
+    const checkedRadio = document.querySelector('input[name="length"]:checked');
+    const val = checkedRadio?.value ?? '';
+    if (usmsPlusTerms) usmsPlusTerms.style.display = val === 'usmsPlus' ? '' : 'none';
+    if (competitionTerms) competitionTerms.style.display = val === 'competition' ? '' : 'none';
+  }
+
   // ── Agreement / Submit ────────────────────────────────────────────────────
   function updateAgreement() {
     const anySelected = document.querySelector('.add-on-products .product-option.selected') !== null;
@@ -61,8 +75,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       updateTotals();
       updateAgreement();
+      updateTermsVisibility();
     });
   });
+
 
   // ── Donations ─────────────────────────────────────────────────────────────
   document.querySelectorAll('.btn-donate').forEach(btn => {
