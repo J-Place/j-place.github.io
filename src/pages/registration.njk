@@ -15,6 +15,16 @@ title: Registration | U.S. Masters Swimming
   var cardCompetition = document.getElementById('cardCompetition');
   var eventLicenseTiles = ['membership-length--usmsPlus', 'membership-length--competition'];
 
+  var usmsPlusTermsEl = document.querySelector('.form-group.agree-usmsplus-terms');
+  var competitionTermsEl = document.querySelector('.form-group.agree-terms-competition');
+
+  function updateTermsVisibility(tile) {
+    var isUsmsPlus = tile.classList.contains('membership-length--usmsPlus');
+    var isCompetition = tile.classList.contains('membership-length--competition-currentYear');
+    if (usmsPlusTermsEl) usmsPlusTermsEl.style.display = isUsmsPlus ? '' : 'none';
+    if (competitionTermsEl) competitionTermsEl.style.display = (isUsmsPlus || isCompetition) ? '' : 'none';
+  }
+
   var membershipContainerEl = document.querySelector('.membership-length--container');
   if (membershipContainerEl) {
     membershipContainerEl.addEventListener('click', function (e) {
@@ -32,6 +42,7 @@ title: Registration | U.S. Masters Swimming
         membershipTotalEl.textContent = tilePriceEl.textContent.trim();
       }
 
+      updateTermsVisibility(tile);
       resetVsa();
       document.querySelectorAll('input[name="videoStrokeAnalysis"]').forEach(function (radio) {
         radio.disabled = false;
@@ -41,6 +52,7 @@ title: Registration | U.S. Masters Swimming
       var priceEl = document.querySelector('.price-string__video-stroke-analysis');
       if (priceEl) priceEl.textContent = isUsmsPlusTile ? ' for FREE!' : ' for $110.00';
       updateOrderSummary();
+      setPaymentFieldsVisible(shouldShowPaymentFields());
 
     });
   }
@@ -259,6 +271,30 @@ title: Registration | U.S. Masters Swimming
     piSet('total',     fmt(total));
   }
 
+  // ── Payment field visibility ──────────────────────────────────────────────
+  var paymentFields = [
+    document.querySelector('.form-group.auto-renew'),
+    document.querySelector('.form-group.card-name'),
+    document.querySelector('.form-group.card-number'),
+    document.querySelector('.form-group.card-zip')
+  ];
+
+  function setPaymentFieldsVisible(visible) {
+    paymentFields.forEach(function (el) {
+      if (el) el.style.display = visible ? '' : 'none';
+    });
+  }
+
+  function shouldShowPaymentFields() {
+    var hasTile = document.querySelector('.membership-length--option.selected') !== null;
+    var hasDonation = [sslInput, shffInput, lmscInput].some(function (el) {
+      return el && parseFloat(el.value) > 0;
+    });
+    return hasTile || hasDonation;
+  }
+
+  setPaymentFieldsVisible(false);
+
   // ── Donation buttons & inputs ─────────────────────────────────────────────
   var sslInput  = document.querySelector("input[name='swimming-saves-lives']");
   var shffInput = document.querySelector("input[name='swimming-hall-of-fame']");
@@ -271,6 +307,7 @@ title: Registration | U.S. Masters Swimming
     }, 0);
     if (donationTotalEl) donationTotalEl.textContent = '$' + total.toFixed(2);
     updateOrderSummary();
+    setPaymentFieldsVisible(shouldShowPaymentFields());
   }
 
   document.querySelectorAll('.btn-donate').forEach(function (btn) {
