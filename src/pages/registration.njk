@@ -42,15 +42,27 @@ title: Registration | U.S. Masters Swimming
         membershipTotalEl.textContent = tilePriceEl.textContent.trim();
       }
 
+      var agreeUsmsPlus = document.getElementById('agreeUsmsPlusTerms');
+      var agreeCompetition = document.getElementById('agree-terms-competition');
+      if (agreeUsmsPlus) agreeUsmsPlus.checked = false;
+      if (agreeCompetition) agreeCompetition.checked = false;
       updateTermsVisibility(tile);
-      resetVsa();
-      document.querySelectorAll('input[name="videoStrokeAnalysis"]').forEach(function (radio) {
-        radio.disabled = false;
-        radio.closest('label').classList.remove('disabled');
-      });
       var isUsmsPlusTile = tile.classList.contains('membership-length--usmsPlus');
       var priceEl = document.querySelector('.price-string__video-stroke-analysis');
-      if (priceEl) priceEl.textContent = isUsmsPlusTile ? ' for FREE!' : ' for $110.00';
+      var vsaYesSelected = document.querySelector('input[name="videoStrokeAnalysis"][value="yes"]:checked') !== null;
+      if (vsaYesSelected) {
+        // VSA already selected — update price only, don't reset
+        var vsaTotalEl = document.querySelector('.video-stroke-analysis--total');
+        if (priceEl) priceEl.textContent = isUsmsPlusTile ? ' for FREE!' : ' for $110.00';
+        if (vsaTotalEl) vsaTotalEl.textContent = isUsmsPlusTile ? '$0.00' : '$110.00';
+      } else {
+        resetVsa();
+        document.querySelectorAll('input[name="videoStrokeAnalysis"]').forEach(function (radio) {
+          radio.disabled = false;
+          radio.closest('label').classList.remove('disabled');
+        });
+        if (priceEl) priceEl.textContent = isUsmsPlusTile ? ' for FREE!' : ' for $110.00';
+      }
       updateOrderSummary();
       setPaymentFieldsVisible(shouldShowPaymentFields());
 
@@ -97,10 +109,27 @@ title: Registration | U.S. Masters Swimming
     });
   }
 
+  function resetMembershipSelection() {
+    document.querySelectorAll('.membership-length--option').forEach(function (t) { t.classList.remove('selected'); });
+    document.querySelectorAll('input[name="length"]').forEach(function (r) { r.checked = false; });
+    var membershipTotalEl = document.querySelector('.membership-length--total');
+    if (membershipTotalEl) membershipTotalEl.textContent = '$0.00';
+    if (usmsPlusTermsEl) usmsPlusTermsEl.style.display = 'none';
+    if (competitionTermsEl) competitionTermsEl.style.display = 'none';
+    document.querySelectorAll('input[name="CompetitionMembership"]').forEach(function (r) { r.checked = false; });
+    var agreeUsmsPlus = document.getElementById('agreeUsmsPlusTerms');
+    var agreeCompetition = document.getElementById('agree-terms-competition');
+    if (agreeUsmsPlus) agreeUsmsPlus.checked = false;
+    if (agreeCompetition) agreeCompetition.checked = false;
+    setPaymentFieldsVisible(false);
+  }
+
   document.querySelectorAll('input[name="participationInfo"]').forEach(function (radio) {
     radio.addEventListener('change', function () {
       if (membershipContainer) membershipContainer.classList.remove('disabled');
+      resetMembershipSelection();
       resetVsa();
+      updateOrderSummary();
       if (this.value === 'yes') {
         colUsmsPlus.style.display = 'flex';
         colCompetition.style.display = 'flex';
