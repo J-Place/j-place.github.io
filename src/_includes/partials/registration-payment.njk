@@ -1,0 +1,113 @@
+<div class="card payment-info clearfix">
+	<h3 class="payment-info___form-header m-b-30">Enter Your Payment Details</h3>
+
+	{# Subtotals — JS-rendered via registration.js buildPaymentSummary() #}
+	<div class="payment-info__form-summary js-payment-summary">
+		{# Line items are built dynamically; empty on load #}
+	</div>
+
+	<div class="registration-payment__fields" style="display:none;">
+		<div class="form-group auto-renew">
+			<div class="col-xs-12">
+				<label id="signup__label" class="checkbox-label" for="signup">
+					<div class="checkbox-container">
+						<input type="checkbox" name="signup" id="signup" value="">
+						<span class="checkbox__placeholder"></span>
+					</div>
+					Auto Renew
+				</label>
+				<span class="checkbox-note">If you select to pay via auto renewal, please note that only the standard membership fee WITHOUT donations or other updates will be charged in November 2026. Membership fees may vary over time. You will be notified in advance of any fee changes.</span>
+			</div>
+		</div>
+
+		<div class="form-group card-name">
+			<div class="col-xs-12">
+				<label class="font-weight-bold" for="cardName">Name on Card</label>
+				<div>
+					<span class="help-block help-block--cardName">Please enter the name on your card</span>
+					<input type="text" class="form-control" name="cardName" id="cardName">
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group card-number">
+			<div class="col-xs-12 col-sm-7">
+				<label class="font-weight-bold" for="cardNumberID">Card Number</label>
+				<div>
+					<span class="help-block help-block--cardNumberID">Please enter your card number</span>
+					<input type="text" class="form-control" name="cardNumberID" id="cardNumberID">
+				</div>
+			</div>
+			<div class="col-xs-5 col-sm-2">
+				<label class="font-weight-bold" for="cardCodeID">CVV</label>
+				<div>
+					<span class="help-block help-block--cardCodeID">Please enter your CVV</span>
+					<input type="text" class="form-control" name="cardCodeID" id="cardCodeID">
+				</div>
+			</div>
+			<div class="col-xs-7 col-sm-3">
+				<label class="font-weight-bold" for="expiration">Exp (mm/yy)</label>
+				<div>
+					<span class="help-block help-block--expiration">Please enter your card expiration date</span>
+					<input type="text" class="form-control" name="expiration" id="expiration" maxlength="5">
+				</div>
+			</div>
+		</div>
+
+		<div class="form-group card-zip">
+			<div class="col-xs-8 col-sm-4">
+				<label class="font-weight-bold" for="cardZipID">Billing Zip</label>
+				<div>
+					<span class="help-block help-block--cardZipID">Please enter a valid billing zip</span>
+					<input type="text" class="form-control" name="cardZipID" id="cardZipID" maxlength="10">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{# Standard terms — always shown once a membership is selected #}
+	<div class="form-group agree-terms">
+		<div class="col-xs-12">
+			<span class="help-block help-block--agree-terms">You need to agree to the terms to complete your registration.</span>
+			<label id="agreeTerms__label" class="checkbox-label disabled" for="agreeTerms">
+				<div class="checkbox-container">
+					<input type="checkbox" name="agree-terms" id="agreeTerms" disabled="" value="">
+					<span class="checkbox__placeholder"></span>
+				</div>
+			</label>
+			<span class="font-weight-bold">I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming <a href="/content/privacy" target="_blank">Privacy Policy</a>. I understand that this membership will take effect immediately and is non-refundable, non-transferable, and expires on</span><span class="font-weight-bold"> December 31, </span><span class="agree-terms--year font-weight-bold">2026</span><span class="font-weight-bold">.</span>
+		</div>
+	</div>
+
+	{# Variable terms — shown/hidden by registration.js based on selected membership tier #}
+
+	{# USMS+ terms — shown when a USMS+ tier is selected #}
+	<div class="form-group agree-terms-tier agree-terms-tier--usmsPlus" style="display:none;">
+		<div class="col-xs-12">
+			<span class="help-block help-block--agree-usmsplus-terms">You need to agree to the USMS+ terms and conditions to complete your registration.</span>
+			<label id="agreeUsmsPlusTerms__label" class="checkbox-label disabled" for="agreeUsmsPlusTerms">
+				<div class="checkbox-container">
+					<input type="checkbox" name="agree-usmsplus-terms" id="agreeUsmsPlusTerms" disabled="" value="">
+					<span class="checkbox__placeholder"></span>
+				</div>
+			</label>
+			<span class="font-weight-bold">By selecting the USMS+ membership, I agree that USMS may share my information with the USA Swimming Foundation and USA Swimming in accordance with the USMS Privacy Policy, linked below (you may still opt out at any time).</span>
+		</div>
+	</div>
+
+	{# Competition terms — shown when an event license tier is selected #}
+	<div class="form-group agree-terms-tier agree-terms-tier--competition" style="display:none;">
+		<div class="col-xs-12">
+			<span class="help-block help-block--agree-terms-competition">You need to agree to the terms to complete your registration.</span>
+			<label id="agree-terms-competition__label" class="checkbox-label disabled" for="agree-terms-competition">
+				<div class="checkbox-container">
+					<input type="checkbox" name="agree-terms-competition" id="agree-terms-competition" value="">
+					<span class="checkbox__placeholder"></span>
+				</div>
+			</label>
+			<span class="font-weight-bold">I acknowledge that the <a href="~/link.aspx?_id=B1745ABEA65D4D65AC6F848A0E3E413A&_z=z">Interim USMS Policy on Participation in the Men's/Open and Women's Competition Category and Eligibility for Official Recognition Programs</a>&nbsp;allows members to participate in the competition category that reflects the sex with which they identify; however, members will not be included in Recognition Programs in the female competition category unless their sex assigned at birth is also female. Members participating in the male competition category will be eligible for recognition. Eligibility is subject to all other USMS rules and regulations.</span>
+		</div>
+	</div>
+
+	<button type="submit" id="register-button" class="btn btn-primary btn-large text-uppercase">Register</button>
+</div>
