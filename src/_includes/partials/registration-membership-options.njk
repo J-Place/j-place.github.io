@@ -1,0 +1,65 @@
+<div class="card membership-length">
+	<h3 class="membership-length__form-header">Membership Options</h3>
+	<div class="col-xs-12 text-center">
+		<span class="help-block help-block--length">Please select a membership option</span>
+	</div>
+	<div class="row is-flex membership-length--container disabled">
+		{% for key in membershipTierKeys %}
+		{% set tier = membershipTiers[key] %}
+		{% if tier %}
+		<div class="col-xs-12 col-md-3" id="{{ tier.colId }}" style="display: flex;">
+			<div class="membership-length--option membership-length--{{ tier.value }}{% if tier.extraClasses %} {{ tier.extraClasses }}{% endif %}"
+				aria-hidden="true"
+				disabled=""
+				data-price="{{ tier.price }}"
+				data-vsa-price="{{ tier.vsaPrice }}"
+				data-terms-keys="{{ tier.termsKeys | join(',') }}"
+				data-shows-competition-cert="{{ tier.showsCompetitionCert }}">
+				<span class="promo">{{ tier.promo }}</span>
+				<span class="savings"></span>
+				<label for="{{ tier.value }}" class="control-label">
+					<div class="radio-container">
+						<input type="radio" name="length" id="{{ tier.value }}" value="{{ tier.value }}">
+					</div>
+					<div class="{{ tier.value }}-container">
+						<span class="membership-length--price">
+							<p class="form-control-static {{ tier.value }}-cost">${{ tier.price }}.00</p>
+						</span>
+						<span class="membership-length--description">{{ tier.description }}</span>
+					</div>
+					<span>Expires on Dec. 31, 2026</span>
+				</label>
+				<span class="membership-length--note">
+					<ul class="payment-bullets">
+						{% for bullet in tier.bullets %}
+						<li>{{ bullet }}</li>
+						{% endfor %}
+					</ul>
+					{% if tier.modal %}
+					<div class="modal" id="{{ tier.modal.id }}" tabindex="-1" role="dialog">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<ul>
+										{% for bullet in tier.modal.bullets %}
+										<li>{{ bullet }}</li>
+										{% endfor %}
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					{% endif %}
+				</span>
+			</div>
+		</div>
+		{% endif %}
+		{% endfor %}
+	</div>
+	<h4 class="card__total">USMS Membership: <span class="membership-length--total card__total--amount">$0.00</span></h4>
+</div>
