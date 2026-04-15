@@ -484,24 +484,31 @@
       </div>
     </div>
   </div>
-  <div class="usms-container p-tb-10">
-    <div class="row">
-      <div class="col-xs-12 col-md-3">
-        <p style="color: #FFF; padding: 0 10px;">"I love the idea of getting stronger as I get older, instead of the opposite. I also love being part of a club that supportively and enthusiastically helps each other do their best!"</p>
-        <p style="color: #FFF; padding: 0 10px; margin-bottom: 30px;">– <strong>Britta D.</strong></p>
+  <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute;">
+    <filter id="quotes-hblur">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="8 0"/>
+    </filter>
+  </svg>
+  <div class="quotes-carousel__outer">
+    <div class="usms-container quotes-carousel__container">
+    <div class="quotes-carousel__track">
+      <div class="quotes-carousel__item">
+        <p class="quotes-carousel__text">"I love the idea of getting stronger as I get older, instead of the opposite. I also love being part of a club that supportively and enthusiastically helps each other do their best!"</p>
+        <p class="quotes-carousel__attr">– <strong>Britta D.</strong></p>
       </div>
-      <div class="col-xs-12 col-md-3">
-        <p style="color: #FFF; padding: 0 10px;">"I didn't need any competitive swimming experience to join a club at 48 years old. I was welcomed with open arms and loads of encouragement!"</p>
-        <p style="color: #FFF; padding: 0 10px; margin-bottom: 30px;">– <strong>Brianna J.</strong></p>
+      <div class="quotes-carousel__item">
+        <p class="quotes-carousel__text">"I didn't need any competitive swimming experience to join a club at 48 years old. I was welcomed with open arms and loads of encouragement!"</p>
+        <p class="quotes-carousel__attr">– <strong>Brianna J.</strong></p>
       </div>
-      <div class="col-xs-12 col-md-3">
-        <p style="color: #FFF; padding: 0 10px;">"I am not a great swimmer but as a team member I contribute with my effort. We are all in the same pool putting in our best efforts and having fun together!"</p>
-        <p style="color: #FFF; padding: 0 10px; margin-bottom: 30px;">– <strong>Frances W.</strong></p>
+      <div class="quotes-carousel__item">
+        <p class="quotes-carousel__text">"I am not a great swimmer but as a team member I contribute with my effort. We are all in the same pool putting in our best efforts and having fun together!"</p>
+        <p class="quotes-carousel__attr">– <strong>Frances W.</strong></p>
       </div>
-      <div class="col-xs-12 col-md-3">
-        <p style="color: #FFF; padding: 0 10px;">"Such a motivating community-great coaches, best friends, hard workouts that both challenge me physically and let me have fun-practice is the highlight of my day!"</p>
-        <p style="color: #FFF; padding: 0 10px; margin-bottom: 30px;">– <strong>Joanna T.</strong></p>
+      <div class="quotes-carousel__item">
+        <p class="quotes-carousel__text">"Such a motivating community-great coaches, best friends, hard workouts that both challenge me physically and let me have fun-practice is the highlight of my day!"</p>
+        <p class="quotes-carousel__attr">– <strong>Joanna T.</strong></p>
       </div>
+    </div>
     </div>
   </div>
   <div class="usms-container p-tb-10">
@@ -1210,6 +1217,196 @@
   }
 </script>
 <script>
+  /* quotes carousel — commented out for now
+  (function() {
+    var container = document.querySelector('.quotes-carousel__container');
+    var track = document.querySelector('.quotes-carousel__track');
+    if (!track || !container) return;
+
+    var items = Array.from(track.querySelectorAll('.quotes-carousel__item'));
+    var total = items.length;  // 4
+    var perPage = 3;
+    var current = -3;          // all three slots empty on entry; three advances fill them one by one
+    var intervalMs = 4000;
+    var transitionMs = 600;
+    var animating = false;
+
+    // Clone all items so we can scroll past the end seamlessly
+    items.forEach(function (item) {
+      track.appendChild(item.cloneNode(true));
+    });
+
+    var allItems = Array.from(track.querySelectorAll('.quotes-carousel__item'));
+
+    function containerWidth() {
+      return container.offsetWidth;
+    }
+
+    function itemWidth() {
+      return containerWidth() / perPage;
+    }
+
+    function applyWidths() {
+      var iw = itemWidth();
+      allItems.forEach(function (el) {
+        el.style.width = iw + 'px';
+        el.style.flex  = '0 0 ' + iw + 'px';
+      });
+    }
+
+    function goTo(index, animate) {
+      track.style.transition = animate ? ('transform ' + transitionMs + 'ms ease') : 'none';
+      track.style.transform  = 'translateX(-' + (index * itemWidth()) + 'px)';
+    }
+
+    function advance() {
+      if (animating) return;
+      animating = true;
+      current++;
+
+      // Blur in, slide, then blur out
+      track.classList.add('quotes-carousel__track--blurring');
+      goTo(current, true);
+
+      setTimeout(function () {
+        track.classList.remove('quotes-carousel__track--blurring');
+      }, transitionMs / 2);
+
+      setTimeout(function () {
+        if (current >= total) {
+          current = 0;
+          goTo(current, false);
+        }
+        animating = false;
+      }, transitionMs);
+    }
+
+    var outer = document.querySelector('.quotes-carousel__outer');
+    var started = false;
+
+    applyWidths();
+    goTo(current, false);
+
+    var step = transitionMs + 80;
+
+    function startCarousel() {
+      if (started) return;
+      started = true;
+      container.style.visibility = 'visible';
+      // Fill right slot, then middle, then left — then hand off to interval
+      advance();
+      setTimeout(function () { advance(); }, step);
+      setTimeout(function () { advance(); }, step * 2);
+      setTimeout(function () { setInterval(advance, intervalMs); }, step * 3);
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          observer.disconnect();
+          setTimeout(startCarousel, 2000);
+        }
+      });
+    }, { threshold: 1.0 });
+
+    if (outer) observer.observe(outer);
+
+    window.addEventListener('resize', function () {
+      applyWidths();
+      goTo(current, false);
+    });
+  })();
+  */
+
+  (function() {
+    var container = document.querySelector('.quotes-carousel__container');
+    var track     = document.querySelector('.quotes-carousel__track');
+    if (!track || !container) return;
+
+    var items       = Array.from(track.querySelectorAll('.quotes-carousel__item'));
+    var total       = items.length;
+    var current     = -1;  // starts one item right of position 0 — no quote visible
+    var intervalMs  = 4000;
+    var transitionMs = 600;
+    var animating   = false;
+
+    // Clone all items for seamless looping
+    items.forEach(function (item) { track.appendChild(item.cloneNode(true)); });
+    var allItems = Array.from(track.querySelectorAll('.quotes-carousel__item'));
+
+    function applyWidths() {
+      var w = container.offsetWidth;
+      allItems.forEach(function (el) { el.style.width = w + 'px'; el.style.flex = '0 0 ' + w + 'px'; });
+    }
+
+    function goTo(index, animate) {
+      track.style.transition = animate ? 'transform ' + transitionMs + 'ms ease' : 'none';
+      track.style.transform  = 'translateX(-' + (index * container.offsetWidth) + 'px)';
+    }
+
+    function advance() {
+      if (animating) return;
+      animating = true;
+      current++;
+      track.classList.add('quotes-carousel__track--blurring');
+      goTo(current, true);
+      setTimeout(function () { track.classList.remove('quotes-carousel__track--blurring'); }, transitionMs / 2);
+      setTimeout(function () {
+        if (current >= total) { current = 0; goTo(current, false); }
+        animating = false;
+      }, transitionMs);
+    }
+
+    applyWidths();
+    goTo(current, false);
+
+    var started = false;
+    var timer = null;
+    var paused = false;
+
+    function startCarousel() {
+      if (started) return;
+      started = true;
+      container.style.visibility = 'visible';
+      advance();
+      setTimeout(function () { timer = setInterval(advance, intervalMs); }, transitionMs + 50);
+    }
+
+    function pause() {
+      if (timer) { clearInterval(timer); timer = null; }
+      paused = true;
+    }
+
+    function resume() {
+      if (!started || !paused) return;
+      paused = false;
+      timer = setInterval(advance, intervalMs);
+    }
+
+    var outer = document.querySelector('.quotes-carousel__outer');
+
+    // Start once fully scrolled into view
+    var startObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          startObserver.disconnect();
+          startCarousel();
+        }
+      });
+    }, { threshold: 1.0 });
+    if (outer) startObserver.observe(outer);
+
+    // Pause/resume as container enters/leaves viewport
+    var pauseObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { resume(); } else { pause(); }
+      });
+    }, { threshold: 0 });
+    if (outer) pauseObserver.observe(outer);
+
+    window.addEventListener('resize', function () { applyWidths(); goTo(current, false); });
+  })();
+
   (function() {
     var rows = document.querySelectorAll('.tms-benefits');
     var observer = new IntersectionObserver(function(entries) {

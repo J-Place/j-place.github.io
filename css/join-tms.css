@@ -30,7 +30,7 @@
 
 .usms-container.tms-benefits {
   margin-top: 0rem;
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
 }
 
 /* .usms-container.tms-benefits {
@@ -183,6 +183,54 @@ h4.as-seen-in__header {
 }
 
 
+
+/* Quotes carousel */
+.quotes-carousel__outer {
+  overflow: hidden;
+  padding: 0 0 3rem;
+}
+
+.quotes-carousel__container {
+  overflow: hidden;
+  visibility: hidden;
+}
+
+.quotes-carousel__track {
+  display: flex;
+  will-change: transform;
+  transition: filter 0ms;
+}
+
+.quotes-carousel__track--blurring {
+  filter: url(#quotes-hblur);
+  transition: filter 200ms ease;
+}
+
+.quotes-carousel__item {
+  /* width set by JS to full container width — one quote visible at a time */
+  flex-shrink: 0;
+  box-sizing: border-box;
+  text-align: center;
+  padding: 0 33%;
+}
+
+.quotes-carousel__item,
+.quotes-carousel__item * {
+  color: #fff;
+}
+
+p.quotes-carousel__text {
+  font-size: 1.6rem;
+  line-height: 160%;
+  margin-bottom: 0.8rem;
+  color: #FFF;
+}
+
+p.quotes-carousel__attr {
+  color: #FFF;
+  font-size: 1.5rem;
+  margin-bottom: 0;
+}
 
 /* Join CTA */
 .usms-container.tms-cta-join {
