@@ -64,6 +64,196 @@ breadcrumbTitle: "Join USMS Today"
   }
 </script>
 <script>
+  /* quotes carousel — commented out for now
+  (function() {
+    var container = document.querySelector('.quotes-carousel__container');
+    var track = document.querySelector('.quotes-carousel__track');
+    if (!track || !container) return;
+
+    var items = Array.from(track.querySelectorAll('.quotes-carousel__item'));
+    var total = items.length;  // 4
+    var perPage = 3;
+    var current = -3;          // all three slots empty on entry; three advances fill them one by one
+    var intervalMs = 4000;
+    var transitionMs = 600;
+    var animating = false;
+
+    // Clone all items so we can scroll past the end seamlessly
+    items.forEach(function (item) {
+      track.appendChild(item.cloneNode(true));
+    });
+
+    var allItems = Array.from(track.querySelectorAll('.quotes-carousel__item'));
+
+    function containerWidth() {
+      return container.offsetWidth;
+    }
+
+    function itemWidth() {
+      return containerWidth() / perPage;
+    }
+
+    function applyWidths() {
+      var iw = itemWidth();
+      allItems.forEach(function (el) {
+        el.style.width = iw + 'px';
+        el.style.flex  = '0 0 ' + iw + 'px';
+      });
+    }
+
+    function goTo(index, animate) {
+      track.style.transition = animate ? ('transform ' + transitionMs + 'ms ease') : 'none';
+      track.style.transform  = 'translateX(-' + (index * itemWidth()) + 'px)';
+    }
+
+    function advance() {
+      if (animating) return;
+      animating = true;
+      current++;
+
+      // Blur in, slide, then blur out
+      track.classList.add('quotes-carousel__track--blurring');
+      goTo(current, true);
+
+      setTimeout(function () {
+        track.classList.remove('quotes-carousel__track--blurring');
+      }, transitionMs / 2);
+
+      setTimeout(function () {
+        if (current >= total) {
+          current = 0;
+          goTo(current, false);
+        }
+        animating = false;
+      }, transitionMs);
+    }
+
+    var outer = document.querySelector('.quotes-carousel__outer');
+    var started = false;
+
+    applyWidths();
+    goTo(current, false);
+
+    var step = transitionMs + 80;
+
+    function startCarousel() {
+      if (started) return;
+      started = true;
+      container.style.visibility = 'visible';
+      // Fill right slot, then middle, then left — then hand off to interval
+      advance();
+      setTimeout(function () { advance(); }, step);
+      setTimeout(function () { advance(); }, step * 2);
+      setTimeout(function () { setInterval(advance, intervalMs); }, step * 3);
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          observer.disconnect();
+          setTimeout(startCarousel, 2000);
+        }
+      });
+    }, { threshold: 1.0 });
+
+    if (outer) observer.observe(outer);
+
+    window.addEventListener('resize', function () {
+      applyWidths();
+      goTo(current, false);
+    });
+  })();
+  */
+
+  (function() {
+    var container = document.querySelector('.quotes-carousel__container');
+    var track     = document.querySelector('.quotes-carousel__track');
+    if (!track || !container) return;
+
+    var items       = Array.from(track.querySelectorAll('.quotes-carousel__item'));
+    var total       = items.length;
+    var current     = -1;  // starts one item right of position 0 — no quote visible
+    var intervalMs  = 4000;
+    var transitionMs = 600;
+    var animating   = false;
+
+    // Clone all items for seamless looping
+    items.forEach(function (item) { track.appendChild(item.cloneNode(true)); });
+    var allItems = Array.from(track.querySelectorAll('.quotes-carousel__item'));
+
+    function applyWidths() {
+      var w = container.offsetWidth;
+      allItems.forEach(function (el) { el.style.width = w + 'px'; el.style.flex = '0 0 ' + w + 'px'; });
+    }
+
+    function goTo(index, animate) {
+      track.style.transition = animate ? 'transform ' + transitionMs + 'ms ease' : 'none';
+      track.style.transform  = 'translateX(-' + (index * container.offsetWidth) + 'px)';
+    }
+
+    function advance() {
+      if (animating) return;
+      animating = true;
+      current++;
+      track.classList.add('quotes-carousel__track--blurring');
+      goTo(current, true);
+      setTimeout(function () { track.classList.remove('quotes-carousel__track--blurring'); }, transitionMs / 2);
+      setTimeout(function () {
+        if (current >= total) { current = 0; goTo(current, false); }
+        animating = false;
+      }, transitionMs);
+    }
+
+    applyWidths();
+    goTo(current, false);
+
+    var started = false;
+    var timer = null;
+    var paused = false;
+
+    function startCarousel() {
+      if (started) return;
+      started = true;
+      container.style.visibility = 'visible';
+      advance();
+      setTimeout(function () { timer = setInterval(advance, intervalMs); }, transitionMs + 50);
+    }
+
+    function pause() {
+      if (timer) { clearInterval(timer); timer = null; }
+      paused = true;
+    }
+
+    function resume() {
+      if (!started || !paused) return;
+      paused = false;
+      timer = setInterval(advance, intervalMs);
+    }
+
+    var outer = document.querySelector('.quotes-carousel__outer');
+
+    // Start once fully scrolled into view
+    var startObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          startObserver.disconnect();
+          startCarousel();
+        }
+      });
+    }, { threshold: 1.0 });
+    if (outer) startObserver.observe(outer);
+
+    // Pause/resume as container enters/leaves viewport
+    var pauseObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { resume(); } else { pause(); }
+      });
+    }, { threshold: 0 });
+    if (outer) pauseObserver.observe(outer);
+
+    window.addEventListener('resize', function () { applyWidths(); goTo(current, false); });
+  })();
+
   (function() {
     var rows = document.querySelectorAll('.tms-benefits');
     var observer = new IntersectionObserver(function(entries) {
