@@ -1,3 +1,4 @@
+{% set swimmer = swimmers[swimmerId] if swimmerId else null %}
 <!DOCTYPE html>
 <!--[if IE 9]><html lang="en" class="ie9 no-js"><![endif]-->
 <!--[if !IE]><!-->
@@ -9,6 +10,7 @@
   {% include "partials/head-js.njk" %}
   {% include "partials/head-css.njk" %}
   {% block pageCSS %}{% endblock %}
+  {% if dev.env === "dev" %}{% for name, overlay in devOverlays %}{% if permalink in overlay.pages %}<link rel="stylesheet" href="{{ overlay.css }}">{% endif %}{% endfor %}{% endif %}
 </head>
 <body class="">
   <div id="main-container">
@@ -25,5 +27,6 @@
   {% include "partials/footer.njk" %}
   <script src="/js/megamenu.js" defer></script>
   {% block pageJS %}{% endblock %}
+  {% if dev.env === "dev" %}{% for name, overlay in devOverlays %}{% if permalink in overlay.pages %}<script src="{{ overlay.js }}" defer></script>{% endif %}{% endfor %}{% endif %}
 </body>
 </html>
