@@ -1,6 +1,6 @@
 /* ============================================================
    DEV ONLY — do not load in production
-   Styles for dev overlays injected by dev.js
+   Styles for the swimmer-switcher dev overlay
    ============================================================ */
 
 .login-status {
@@ -12,12 +12,26 @@
     margin: 0 auto;
     max-width: 1100px;
     text-align: right;
-    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
 
-.login-status p {
-    color: #4a6a8f;
-    margin: 0;
+.login-status__select {
     font-size: 1.5rem;
-    line-height: 50px;
+    padding: 2px 8px;
+    /* border: 1px solid rgba(255, 255, 255, 0.5); */
+    /* border-radius: 4px; */
+    border: none;
+    /* background: rgba(0, 0, 0, 0.35); */
+    background: transparent;
+    color: #495b7d;
+    cursor: pointer;
+    /* max-width: 320px; */
+}
+
+.login-status__select option {
+    /* background: #333; */
+    background: transparent;
+    color: #495b7d;
 }
