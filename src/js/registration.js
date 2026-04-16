@@ -198,7 +198,7 @@
       if (membershipTotalEl) membershipTotalEl.textContent = fmt(price);
 
       // Competition cert card
-      var showsCert = tile.dataset.showsCompetitionCert === 'true';
+      var showsCert = tile.dataset.competitionEligible === 'true';
       if (cardCompetition) cardCompetition.style.display = showsCert ? 'block' : 'none';
 
       // VSA: update price label; reset or update total
@@ -239,7 +239,7 @@
       document.querySelectorAll('.membership-length--container > [id]').forEach(function (col) {
         var tile = col.querySelector('.membership-length--option');
         if (!tile) return;
-        var showsCert = tile.dataset.showsCompetitionCert === 'true';
+        var showsCert = tile.dataset.competitionEligible === 'true';
 
         if (this.value === 'yes') {
           // Event participants: show event-license tiers, hide standard
