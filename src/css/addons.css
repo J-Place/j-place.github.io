@@ -19,9 +19,44 @@
     background-color: #ddd;
 }
 
-/* NCC tiles: reduce padding-bottom so they match the height of standard tiles
-   (production default is 7rem; product-option-select-btn bumps it to 13rem,
-   but NCC tiles don't have a stroke select so they only need the base value) */
-.product-option_ncc-2026 {
+/* !!!!!!!!!!!!!!!!!!!!!!! Override Source !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+
+.product-option {
+    margin: 0 6px 20px !important;
+}
+
+/* .product-group .product-option:first-of-type {
+    margin-left: -2px !important;
+} */
+
+/* .product-option.selected {
+    margin: 0 0px 20px !important;
+} */
+
+.product-option.selected .product-name {
+    margin-top: -2px;
+    /* margin-left: -2px; */
+    /* margin-right: -2px; */
+}
+
+.product-option.selected ul {
+    padding: 0px 28px 0px 35px !important;
+}
+.product-summary ul {
+    padding: 0px 30px 0px 35px !important;
+}
+
+/* NCC tiles: production's .product-option.selected (specificity 0,2,0) overrides
+   our .product-option_ncc-2026 (0,1,0) and forces padding-bottom to 12.4rem,
+   making the tile jump in height. Match specificity with .selected to win.
+   Also cancel production's margin-top:-2px and margin-bottom:1.8rem so the tile
+   stays at the same 20px bottom margin as its unselected state. */
+/* .product-option_ncc-2026 {
     padding-bottom: 7rem;
 }
+
+.product-option_ncc-2026.selected {
+    padding-bottom: 7rem;
+    margin-top: 0;
+    margin-bottom: 20px;
+} */
