@@ -14,7 +14,7 @@
 				data-price="{{ tier.price }}"
 				data-vsa-price="{{ tier.vsaPrice }}"
 				data-terms-keys="{{ tier.termsKeys | join(',') }}"
-				data-shows-competition-cert="{{ tier.showsCompetitionCert }}">
+				data-competition-eligible="{{ tier.competitionEligible }}">
 				<span class="promo">{{ tier.promo }}</span>
 				<span class="savings"></span>
 				<label for="{{ tier.value }}" class="control-label">
@@ -23,7 +23,7 @@
 					</div>
 					<div class="{{ tier.value }}-container">
 						<span class="membership-length--price">
-							<p class="form-control-static {{ tier.value }}-cost">${{ tier.price }}.00</p>
+							<p class="form-control-static {{ tier.value }}-cost">${{ tier.price | price }}</p>
 						</span>
 						<span class="membership-length--description">{{ tier.description }}</span>
 					</div>

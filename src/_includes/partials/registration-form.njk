@@ -1,4 +1,3 @@
-{% set swimmer = swimmers[swimmerId] if swimmerId else null %}
 <div class="renew__form-container m-b-30">
 	<div class="row">
 		<div class="col-xs-12">
@@ -7,7 +6,7 @@
 			</div>
 			<div class="renew__form-body">
 				<div id="registration_form">
-					<div class="full-registration-form" data-membership-level="{{ swimmer.membershipLevel if swimmer else '' }}">
+					<div class="full-registration-form" data-membership-level="{{ swimmer.membership.tier if swimmer else '' }}">
 
 						{% include "partials/registration-contact.njk" %}
 
