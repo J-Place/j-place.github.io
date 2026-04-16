@@ -1,8 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // ── Membership level (from swimmer data via data attribute) ───────────────
-  // Determines VSA pricing: usmsPlus members get VSA for free.
+  // ── Swimmer data (from wrapper data attributes) ───────────────────────────
   const wrapper         = document.querySelector('.renew__form-body.masters-addons');
-  const membershipLevel = wrapper ? wrapper.dataset.membershipLevel : '';
+  const vsaPrice        = wrapper ? parseFloat(wrapper.dataset.vsaPrice ?? '') : NaN;
 
   // ── Selectors ─────────────────────────────────────────────────────────────
   const productTotalEl  = document.querySelector('.total-product.card__total--amount');
@@ -164,12 +163,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const priceEl    = tile.querySelector('.product-price');
     const hasStroke  = tile.querySelector('select[name="StrokeSelect"]') !== null;
 
-    // VSA tiles: price is overridden by membership level (usmsPlus = free)
-    // The product JSON price is the base; we override it here.
+    // VSA tiles: use vsaPrice from the swimmer's tier (data-vsa-price on wrapper).
+    // Falls back to the product JSON price if vsaPrice is not set.
     let price;
-    if (hasStroke && (membershipLevel === 'usmsPlus' || membershipLevel === 'usmsPlusEventLicense')) {
-      price = 0;
-      if (priceEl) priceEl.textContent = '$0 (included with USMS+)';
+    if (hasStroke && !isNaN(vsaPrice)) {
+      price = vsaPrice;
+      if (priceEl) priceEl.textContent = vsaPrice === 0 ? '$0 (included with USMS+)' : `$${vsaPrice.toFixed(2)}`;
     } else {
       price = parseFloat((priceEl?.textContent ?? '').replace(/[^0-9.]/g, '')) || 0;
     }
