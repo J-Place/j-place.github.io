@@ -37,6 +37,9 @@ module.exports = function(eleventyConfig) {
   const courseTypeMap = { "OPEN WATER": "OW", "SHORT COURSE YARDS": "SCY", "SHORT COURSE METERS": "SCM", "LONG COURSE METERS": "LCM" };
   eleventyConfig.addFilter("courseTypeAbbr", val => courseTypeMap[val.toUpperCase()] || val);
 
+  // Format a number as a price with always-two decimal places: 110 → "110.00"
+  eleventyConfig.addFilter("price", val => parseFloat(val || 0).toFixed(2));
+
   // Copy src/js to _site/js
   eleventyConfig.addPassthroughCopy({ "src/js": "js" });
 
