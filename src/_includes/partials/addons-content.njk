@@ -14,7 +14,7 @@
 		<div class="row  ">
 			<div class="col-xs-12  ">
 				<div id="">
-					<div class="renew__form-body masters-addons" data-membership-level="{{ swimmer.membership.tier if swimmer else '' }}" data-swimmer-name="{{ swimmer.firstName + ' ' + swimmer.lastName if swimmer else '' }}">
+					<div class="renew__form-body masters-addons" data-membership-level="{{ swimmer.membership.tier if swimmer else '' }}" data-vsa-price="{{ membershipTiers[swimmer.membership.tier].vsaPrice if swimmer else '' }}" data-swimmer-name="{{ swimmer.firstName + ' ' + swimmer.lastName if swimmer else '' }}">
 						<input type="hidden" name="videoStrokeAnalysisProductId" value=""><input type="hidden" name="usmsPlusProductId" data-product-name="" value=""><input type="hidden" name="designatedCoachProductId" data-product-name="" value=""><input type="hidden" name="magazineProductId" data-product-name="" value=""><input type="hidden" name="swimmerId" id="swimmerId" value="{{ swimmer.swimmerId if swimmer else '' }}">
 						<div class="modal" id="modalSexNotMatch" tabindex="-1" role="dialog">
 							<div class="modal-dialog" role="document">
