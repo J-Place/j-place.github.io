@@ -1,0 +1,27 @@
+/* Locked product tiles: disabled and grayed out until their required product
+   is selected. Mirrors the .membership-length--option[disabled] pattern.
+   Scoped to the add-ons page wrapper to avoid !important wars with source CSS. */
+.add-on-products .product-option[disabled] {
+    background-color: #ddd;
+    color: #ccc;
+    pointer-events: none;
+    cursor: default;
+}
+
+.add-on-products .product-option[disabled] .product-name,
+.add-on-products .product-option[disabled] .product-price {
+    color: #ccc;
+}
+
+.add-on-products .product-option[disabled] .btn.add-on {
+    border-color: #ccc;
+    color: #ccc;
+    background-color: #ddd;
+}
+
+/* NCC tiles: reduce padding-bottom so they match the height of standard tiles
+   (production default is 7rem; product-option-select-btn bumps it to 13rem,
+   but NCC tiles don't have a stroke select so they only need the base value) */
+.product-option_ncc-2026 {
+    padding-bottom: 7rem;
+}
