@@ -17,9 +17,11 @@ src/
   _includes/
     layouts/      # Base and page-type layouts (base, home, article, clubs, events, search, swimmer, swimmer-library)
     partials/     # Reusable HTML fragments (header, footer, page-header, head-css, head-js, etc.)
-    macros/       # Nunjucks macros (article-stepper)
+    components/   # Nunjucks macros/components (article-stepper)
   js/             # Local JS (megamenu.js, clubs.js, events.js, filters.js, home-personalize.js, search.js)
+    dev/          # Dev-only JS overlays — not loaded in production
   css/            # Local CSS overrides (clubs.css, events.css, home.css)
+    dev/          # Dev-only CSS for overlays — not loaded in production
 public/           # Legacy Sergey mockup files — passthrough copied as-is, do not modify
 _site/            # Build output (gitignored)
 ```
@@ -52,6 +54,45 @@ Custom JS replacement for the production React megamenu (from `common.min.js`). 
 - Mouseleave from the nav items list closes the dropdown (150ms delay to bridge the gap to the overlay, which is a DOM sibling rather than a child of the `<ul>` like in the React version)
 - Mouseenter on the overlay cancels the close timer
 - Closes on scroll and on click outside the nav
+
+## Dev Environment
+
+### Switching dev/prod
+
+`src/_data/dev.json` controls the environment for the entire site:
+
+```json
+{ "env": "dev" }   // dev overlays active
+{ "env": "prod" }  // nothing dev loads anywhere
+```
+
+### Dev overlays
+
+When `env === "dev"`, `base.njk` automatically loads any overlay whose page list includes the current `permalink`. Overlays live in:
+
+```
+src/_data/devOverlays/   # one JSON config per overlay
+src/js/dev/              # overlay JS
+src/css/dev/             # overlay CSS
+```
+
+Each config file defines which pages the overlay loads on:
+
+```json
+{
+  "js": "/js/dev/my-overlay.js",
+  "css": "/css/dev/my-overlay.css",
+  "pages": ["/account/some-page.html"]
+}
+```
+
+To add a new overlay: create the JS, CSS, and JSON config files — no changes to `base.njk` or any page template needed.
+
+**Current overlays:**
+
+| Overlay | Pages | Purpose |
+|---|---|---|
+| `login-status` | addons, addons-ncc | Shows current swimmer ID and membership tier in the breadcrumb bar |
 
 ## Deployment
 
