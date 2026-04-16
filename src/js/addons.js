@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let price;
     if (hasStroke && !isNaN(vsaPrice)) {
       price = vsaPrice;
-      if (priceEl) priceEl.textContent = vsaPrice === 0 ? '$0 (included with USMS+)' : `$${vsaPrice.toFixed(2)}`;
+      if (priceEl) priceEl.textContent = `$${vsaPrice.toFixed(2)}`;
     } else {
       price = parseFloat((priceEl?.textContent ?? '').replace(/[^0-9.]/g, '')) || 0;
     }
