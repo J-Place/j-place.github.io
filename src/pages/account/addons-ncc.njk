@@ -16,6 +16,7 @@ productOptionKeys:
 {% extends "layouts/base.njk" %}
 {% block pageCSS %}
 <link rel="stylesheet" href="https://www.usms.org/styles/mastersAddons.min.css">
+<link rel="stylesheet" href="/css/addons.css">
 <link rel="stylesheet" href="/css/ncc.css">
 {% endblock %}
 {% block pageJS %}
@@ -26,13 +27,5 @@ productOptionKeys:
 {% include "partials/breadcrumb.njk" %}
 {% endblock %}
 {% block content %}
-<section class="section section-full bg-gray p-tb-10">
-  <div class="usms-container p-tb-10">
-    <div class="row">
-      <div class="col-xs-12">
-        {% include "partials/addons-content.njk" %}
-      </div>
-    </div>
-  </div>
-</section>
+{% include "partials/addons-content.njk" %}
 {% endblock %}

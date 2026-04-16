@@ -57,6 +57,30 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ── Locked tiles ─────────────────────────────────────────────────────────
+  // A tile with data-requires-product="{key}" is locked (grayed out, not
+  // clickable) until the tile with data-product-key="{key}" is selected.
+  // If the required tile is deselected, the dependent tile is also deselected.
+  function updateLockedTiles() {
+    document.querySelectorAll('.add-on-products .product-option[data-requires-product]').forEach(tile => {
+      const requiredKey  = tile.dataset.requiresProduct;
+      const requiredTile = document.querySelector(`.add-on-products .product-option[data-product-key="${requiredKey}"]`);
+      const satisfied    = requiredTile?.classList.contains('selected') ?? false;
+
+      if (!satisfied && tile.classList.contains('selected')) {
+        // Deselect this tile if its requirement was removed
+        const addBtn   = tile.querySelector('.add-on');
+        const priceEl  = tile.querySelector('.product-price');
+        const tilePrice = parseFloat((priceEl?.textContent ?? '').replace(/[^0-9.]/g, '')) || 0;
+        tile.classList.remove('selected');
+        productTotal -= tilePrice;
+        if (addBtn) addBtn.textContent = 'Add';
+      }
+
+      tile.toggleAttribute('disabled', !satisfied);
+    });
+  }
+
   // ── Agreement / Submit ────────────────────────────────────────────────────
   function updateAgreement() {
     const anySelected = document.querySelector('.add-on-products .product-option.selected') !== null;
@@ -126,6 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function updateAll() {
+    updateLockedTiles();
     updateTotals();
     buildReviewOrder();
     updateVariableTerms();
@@ -142,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // VSA tiles: price is overridden by membership level (usmsPlus = free)
     // The product JSON price is the base; we override it here.
     let price;
-    if (hasStroke && membershipLevel === 'usmsPlus') {
+    if (hasStroke && (membershipLevel === 'usmsPlus' || membershipLevel === 'usmsPlusEventLicense')) {
       price = 0;
       if (priceEl) priceEl.textContent = '$0 (included with USMS+)';
     } else {
@@ -183,5 +208,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ── Init ──────────────────────────────────────────────────────────────────
+  updateLockedTiles();
   setPaymentVisible(false);
 });

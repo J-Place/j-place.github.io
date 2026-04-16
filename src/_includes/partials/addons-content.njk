@@ -2,7 +2,7 @@
 	<div class="usms-container  p-tb-10">
 		<div class="row  ">
 			<div class="col-xs-12  ">
-				<header class="page-title">
+				<header class="page-title" style="position: relative;">
 					<h1>
 						{{ pageTitle }}
 					</h1>
@@ -14,8 +14,7 @@
 		<div class="row  ">
 			<div class="col-xs-12  ">
 				<div id="">
-					{% set swimmer = swimmers[swimmerId] if swimmerId else null %}
-					<div class="renew__form-body masters-addons" data-membership-level="{{ swimmer.membershipLevel if swimmer else '' }}">
+					<div class="renew__form-body masters-addons" data-membership-level="{{ swimmer.membership.tier if swimmer else '' }}" data-swimmer-name="{{ swimmer.firstName + ' ' + swimmer.lastName if swimmer else '' }}">
 						<input type="hidden" name="videoStrokeAnalysisProductId" value=""><input type="hidden" name="usmsPlusProductId" data-product-name="" value=""><input type="hidden" name="designatedCoachProductId" data-product-name="" value=""><input type="hidden" name="magazineProductId" data-product-name="" value=""><input type="hidden" name="swimmerId" id="swimmerId" value="{{ swimmer.swimmerId if swimmer else '' }}">
 						<div class="modal" id="modalSexNotMatch" tabindex="-1" role="dialog">
 							<div class="modal-dialog" role="document">
@@ -32,7 +31,7 @@
 							</div>
 						</div>
 
-						<div class="modal-container" style="transition:all 250ms ease-in-out;transform:translateY(-10px);opacity:0;z-index:-1;">
+						<div class="modal-co	ntainer" style="transition:all 250ms ease-in-out;transform:translateY(-10px);opacity:0;z-index:-1;">
 							<div class="modal" id="">
 								<div class="modal-close"><button type="button"><i class="fa-solid fa-times"></i></button></div>
 								<div class="row ">

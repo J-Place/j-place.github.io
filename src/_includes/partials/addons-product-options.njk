@@ -1,40 +1,59 @@
+{% macro productTile(option, key) %}
+<div class="product-option {{ option.extraClasses }} product-option_{{ option.modifier }}"{% if key %} data-product-key="{{ key }}"{% endif %}{% if option.termsKey %} data-terms-key="{{ option.termsKey }}"{% endif %}{% if option.requiresProduct %} data-requires-product="{{ option.requiresProduct }}"{% endif %}>
+	<p class="product-name">{{ option.name | safe }}</p>
+	<p class="product-price">${{ option.price | price }}</p>
+	<div class="product-summary">
+		{% if option.bulletList %}
+		<ul class="payment-bullets">
+			{% for item in option.bulletList %}
+			<li>{{ item }}</li>
+			{% endfor %}
+		</ul>
+		{% elif option.summary %}
+		<p>{{ option.summary | safe }}</p>
+		{% endif %}
+	</div>
+	{% if option.type === "stroke-select" %}
+	<div class="form-group">
+		<select name="StrokeSelect" id="strokeSelect" class="form-control">
+			<option selected="" value="0" disabled="">Select a stroke</option>
+			<option value="Freestyle">Freestyle</option>
+			<option value="Breaststroke">Breaststroke</option>
+			<option value="Backstroke">Backstroke</option>
+			<option value="Butterfly">Butterfly</option>
+			<option value="Starts and Turns">Starts/Turns</option>
+		</select>
+	</div>
+	{% endif %}
+	<button class="btn btn-outline btn-md add-on"{% if option.type === "stroke-select" %} disabled=""{% endif %}>Add</button>
+</div>
+{% endmacro %}
+
 <div class="card add-on-products">
 	<h3 class="addons__form-header">Product Options</h3>
-	<div class="product-group">
-		{% for key in productOptionKeys %}
-		{% set option = products[key] %}
-		{% if option and option.active !== false %}
-		<div class="product-option {{ option.extraClasses }} product-option_{{ option.modifier }}"{% if option.termsKey %} data-terms-key="{{ option.termsKey }}"{% endif %}>
-			<p class="product-name">{{ option.name | safe }}</p>
-			<p class="product-price">${{ option.price }}</p>
-			<div class="product-summary">
-				{% if option.bulletList %}
-				<ul class="payment-bullets">
-					{% for item in option.bulletList %}
-					<li>{{ item }}</li>
-					{% endfor %}
-				</ul>
-				{% elif option.summary %}
-				<p>{{ option.summary | safe }}</p>
-				{% endif %}
-			</div>
-			{% if option.hasStrokeSelect %}
-			<div class="form-group">
-				<select name="StrokeSelect" id="strokeSelect" class="form-control">
-					<option selected="" value="0" disabled="">Select a stroke</option>
-					<option value="Freestyle">Freestyle</option>
-					<option value="Breaststroke">Breaststroke</option>
-					<option value="Backstroke">Backstroke</option>
-					<option value="Butterfly">Butterfly</option>
-					<option value="Starts and Turns">Starts/Turns</option>
-				</select>
-			</div>
+	{% if productOptionGroups %}
+		{# Multi-row: one product-group row per group, all within the same card #}
+		{% for group in productOptionGroups %}
+		<div class="product-group">
+			{% for key in group.keys %}
+			{% set option = products[key] %}
+			{% if option and option.active !== false %}
+			{{ productTile(option, key) }}
 			{% endif %}
-			<button class="btn btn-outline btn-md add-on"{% if option.hasStrokeSelect %} disabled=""{% endif %}>Add</button>
+			{% endfor %}
 		</div>
-		{% endif %}
 		{% endfor %}
-	</div>
+	{% else %}
+		{# Single-row fallback: uses productOptionKeys #}
+		<div class="product-group">
+			{% for key in productOptionKeys %}
+			{% set option = products[key] %}
+			{% if option and option.active !== false %}
+			{{ productTile(option, key) }}
+			{% endif %}
+			{% endfor %}
+		</div>
+	{% endif %}
 	<h4 class="card__total">
 		Product Total: <span class="total-product card__total--amount">$0.00</span>
 	</h4>
