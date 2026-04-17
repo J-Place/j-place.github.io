@@ -7,13 +7,17 @@ breadcrumbs:
     label: "Home"
 breadcrumbTitle: "Add-Ons"
 swimmerId: "KT2JH"
+devSwimmerIds:
+  - COACH
+  - NOT COACH
 showDonations: true
 productOptionGroups:
   - label: "Product Options"
     keys:
       - videoStrokeAnalysis
       - printSwimmerMagazine
-  - label: "2026 National Coaches Conference"
+  - label: "2026 National Coaches Clinic"
+    requiresRole: "isCoach"
     keys:
       - ncc-2026-registration
       - ncc-2026-hospitality
@@ -23,6 +27,7 @@ productOptionGroups:
 {% block pageCSS %}
 <link rel="stylesheet" href="https://www.usms.org/styles/mastersAddons.min.css">
 <link rel="stylesheet" href="/css/addons.css">
+<link rel="stylesheet" href="/css/agree-terms.css">
 {% endblock %}
 {% block pageJS %}
 {# <script src="https://www.usms.org/scripts/mastersAddons.min.js" defer></script> #}
