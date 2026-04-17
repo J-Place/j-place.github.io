@@ -38,19 +38,24 @@
 
   // ── Variable terms ────────────────────────────────────────────────────────
   // Tier tiles carry data-terms-keys="key1,key2" — JS shows matching
-  // .agree-terms-tier--{key} blocks and enables their checkboxes.
+  // production-class terms blocks and enables their checkboxes.
+  var termsBlocks = {
+    usmsPlus:    document.querySelector('.agree-usmsplus-terms'),
+    competition: document.querySelector('.agree-terms-competition')
+  };
+
   function updateVariableTerms() {
-    var tile     = selectedTile();
+    var tile      = selectedTile();
     var activeKeys = new Set();
     if (tile) {
       var raw = tile.dataset.termsKeys || '';
       raw.split(',').forEach(function (k) { if (k) activeKeys.add(k.trim()); });
     }
 
-    document.querySelectorAll('.agree-terms-tier').forEach(function (block) {
-      var modClass = Array.from(block.classList).find(function (c) { return c.startsWith('agree-terms-tier--'); });
-      var key = modClass ? modClass.replace('agree-terms-tier--', '') : null;
-      var active = key && activeKeys.has(key);
+    Object.keys(termsBlocks).forEach(function (key) {
+      var block  = termsBlocks[key];
+      if (!block) return;
+      var active = activeKeys.has(key);
       block.style.display = active ? '' : 'none';
       var cb  = block.querySelector('input[type="checkbox"]');
       var lbl = block.querySelector('label');
@@ -67,7 +72,9 @@
 
     var allChecked = (function () {
       if (!agreeCheckbox || !agreeCheckbox.checked) return false;
-      var varChecks = document.querySelectorAll('.agree-terms-tier:not([style*="display: none"]):not([style*="display:none"]) input[type="checkbox"]');
+      var varChecks = Object.values(termsBlocks).filter(function (b) {
+        return b && b.style.display !== 'none';
+      }).map(function (b) { return b.querySelector('input[type="checkbox"]'); }).filter(Boolean);
       return Array.from(varChecks).every(function (cb) { return cb.checked; });
     })();
     if (registerBtn) registerBtn.disabled = !(hasTile && allChecked);
