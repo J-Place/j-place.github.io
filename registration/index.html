@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <!--[if IE 9]><html lang="en" class="ie9 no-js"><![endif]-->
 <!--[if !IE]><!-->
@@ -53,7 +54,11 @@
 <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
 <link rel="stylesheet" href="https://www.usms.org/styles/rteMasters.min.css">
 <link rel="stylesheet" href="/css/registration.css">
+<link rel="stylesheet" href="/css/agree-terms.css">
 
+  
+  <script type="application/json" id="dev-swimmers-data">{"swimmers":{"KT2JH":{"swimmerId":"KT2JH","memberId":"146W-KT2JH","accountType":"member","firstName":"Jay","lastName":"Place","email":"jay.place@example.com","birthDate":"10/24/1972","gender":"M","club":"SRQM","lmsc":"Florida","zip":"34240-8840","membership":{"status":"expired","tier":"usmsStandardEventLicense","expires":"2025-12-31"},"isCoach":false,"coachCertification":null,"coachCertificationActive":null},"GAT0R":{"swimmerId":"GAT0R","memberId":"FL01-GAT0R","accountType":"member","firstName":"Kyle","lastName":"Deery","email":"kyle.deery@example.com","birthDate":"06/15/1983","gender":"M","club":"SHARK","lmsc":"Florida","zip":"33101","membership":{"status":"current","tier":"usmsPlusEventLicense","expires":"2026-12-31"},"isCoach":false,"coachCertification":null,"coachCertificationActive":null},"STNDRD":{"swimmerId":"STNDRD","memberId":"FL01-STNDRD","accountType":"member","firstName":"Alex","lastName":"Rivera","email":"alex.rivera@example.com","birthDate":"03/08/1990","gender":"F","club":"SYSM","lmsc":"Florida","zip":"32801","membership":{"status":"current","tier":"usmsStandard","expires":"2026-12-31"},"isCoach":false,"coachCertification":null,"coachCertificationActive":null},"COACH":{"swimmerId":"COACH","memberId":"FL01-COACH","accountType":"member","firstName":"Not","lastName":"Coach","email":"jplace72+bob@gmail.com","birthDate":"03/08/1990","gender":"F","club":"SYSM","lmsc":"Florida","zip":"32801","membership":{"status":"current","tier":"usmsPlus","expires":"2026-12-31"},"isCoach":true,"coachCertification":true,"coachCertificationActive":true},"NOT COACH":{"swimmerId":"NOT COACH","memberId":"FL01-NOTCOACH","accountType":"member","firstName":"Is","lastName":"Coach","email":"jplace72+bob@gmail.com","birthDate":"03/08/1990","gender":"F","club":"SYSM","lmsc":"Florida","zip":"32801","membership":{"status":"current","tier":"usmsPlus","expires":"2026-12-31"},"isCoach":false,"coachCertification":null,"coachCertificationActive":null}},"membershipTiers":{"usmsPlus":{"value":"usmsPlus","promo":"Event License USMS+","description":"USMS+","price":249,"vsaPrice":0,"termsKeys":["usmsPlus","competition"],"competitionEligible":true,"colId":"col-usmsPlus","bullets":["Standard membership","Premium welcome box","Free virtual event entry","Donation to the USA Swimming Foundation","Optional Video Stroke Analysis (1 free analysis per year)","Can participate in events (only select if you want to go to events)"],"modal":{"id":"modalYearPlus2","bullets":["A standard USMS membership","Exclusive welcome package including: Premium USMS-branded item of your choosing, USMS cap, USMS stickers, Plastic membership card","Free registration to all Swim.com USMS Fitness Series (three challenges per year) and Virtual Championships (five distances per year)","Donation to USA Swimming Foundation","Free All American patches (once you reach All American status)","Free Go the Distance 50-mile cap (once you reach 50 miles)"]}},"usmsPlusEventLicense":{"value":"usmsPlus","promo":"Event License USMS+","description":"USMS+","price":249,"vsaPrice":0,"termsKeys":["usmsPlus","competition"],"competitionEligible":true,"colId":"col-usmsPlus","bullets":["Standard membership","Premium welcome box","Free virtual event entry","Donation to the USA Swimming Foundation","Optional Video Stroke Analysis (1 free analysis per year)","Can participate in events (only select if you want to go to events)"],"modal":{"id":"modalYearPlus2","bullets":["A standard USMS membership","Exclusive welcome package including: Premium USMS-branded item of your choosing, USMS cap, USMS stickers, Plastic membership card","Free registration to all Swim.com USMS Fitness Series (three challenges per year) and Virtual Championships (five distances per year)","Donation to USA Swimming Foundation","Free All American patches (once you reach All American status)","Free Go the Distance 50-mile cap (once you reach 50 miles)"]}},"usmsStandard":{"value":"currentYear","promo":"Standard Membership","description":"Standard Membership","price":75,"vsaPrice":110,"termsKeys":[],"competitionEligible":false,"colId":"col-currentYear","bullets":["Swim with a club","Workout Library","Training Plans","Digital magazine","Swim.com integration","Discounted gear","And even more","No event license (to participate in events, select an event license option)"]},"usmsStandardEventLicense":{"value":"competition","extraClasses":"membership-length--competition-currentYear","promo":"Event License Standard","description":"Event License Standard","price":75,"vsaPrice":110,"termsKeys":["competition"],"competitionEligible":true,"colId":"col-competition","bullets":["Swim with a club","Workout Library","Training Plans","Digital magazine","Swim.com integration","Discounted gear","And even more","Can participate in events (only select if you want to go to events)"]}}}</script>
+  
 </head>
 <body class="">
   <div id="main-container">
@@ -308,8 +313,7 @@
 	<div class="usms-container">
 		<div class="row">
 			<div class="col-xs-12">
-				
-<div class="renew__form-container m-b-30">
+				<div class="renew__form-container m-b-30">
 	<div class="row">
 		<div class="col-xs-12">
 			<div class="renew__header">
@@ -317,7 +321,7 @@
 			</div>
 			<div class="renew__form-body">
 				<div id="registration_form">
-					<div class="full-registration-form" data-membership-level="standard">
+					<div class="full-registration-form" data-membership-level="usmsStandardEventLicense">
 
 						<div class="registration-step registration-step--contact">
 	<div class="card contact-information">
@@ -688,7 +692,82 @@
 				data-price="249"
 				data-vsa-price="0"
 				data-terms-keys="usmsPlus,competition"
-				data-shows-competition-cert="true">
+				data-competition-eligible="true">
+				<span class="promo">Event License USMS+</span>
+				<span class="savings"></span>
+				<label for="usmsPlus" class="control-label">
+					<div class="radio-container">
+						<input type="radio" name="length" id="usmsPlus" value="usmsPlus">
+					</div>
+					<div class="usmsPlus-container">
+						<span class="membership-length--price">
+							<p class="form-control-static usmsPlus-cost">$249.00</p>
+						</span>
+						<span class="membership-length--description">USMS+</span>
+					</div>
+					<span>Expires on Dec. 31, 2026</span>
+				</label>
+				<span class="membership-length--note">
+					<ul class="payment-bullets">
+						
+						<li>Standard membership</li>
+						
+						<li>Premium welcome box</li>
+						
+						<li>Free virtual event entry</li>
+						
+						<li>Donation to the USA Swimming Foundation</li>
+						
+						<li>Optional Video Stroke Analysis (1 free analysis per year)</li>
+						
+						<li>Can participate in events (only select if you want to go to events)</li>
+						
+					</ul>
+					
+					<div class="modal" id="modalYearPlus2" tabindex="-1" role="dialog">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<ul>
+										
+										<li>A standard USMS membership</li>
+										
+										<li>Exclusive welcome package including: Premium USMS-branded item of your choosing, USMS cap, USMS stickers, Plastic membership card</li>
+										
+										<li>Free registration to all Swim.com USMS Fitness Series (three challenges per year) and Virtual Championships (five distances per year)</li>
+										
+										<li>Donation to USA Swimming Foundation</li>
+										
+										<li>Free All American patches (once you reach All American status)</li>
+										
+										<li>Free Go the Distance 50-mile cap (once you reach 50 miles)</li>
+										
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				</span>
+			</div>
+		</div>
+		
+		
+		
+		
+		<div class="col-xs-12 col-md-3" id="col-usmsPlus" style="display: flex;">
+			<div class="membership-length--option membership-length--usmsPlus"
+				aria-hidden="true"
+				disabled=""
+				data-price="249"
+				data-vsa-price="0"
+				data-terms-keys="usmsPlus,competition"
+				data-competition-eligible="true">
 				<span class="promo">Event License USMS+</span>
 				<span class="savings"></span>
 				<label for="usmsPlus" class="control-label">
@@ -763,7 +842,7 @@
 				data-price="75"
 				data-vsa-price="110"
 				data-terms-keys="competition"
-				data-shows-competition-cert="true">
+				data-competition-eligible="true">
 				<span class="promo">Event License Standard</span>
 				<span class="savings"></span>
 				<label for="competition" class="control-label">
@@ -813,7 +892,7 @@
 				data-price="75"
 				data-vsa-price="110"
 				data-terms-keys=""
-				data-shows-competition-cert="false">
+				data-competition-eligible="false">
 				<span class="promo">Standard Membership</span>
 				<span class="savings"></span>
 				<label for="currentYear" class="control-label">
@@ -1030,23 +1109,23 @@
 			<span class="help-block help-block--agree-terms">You need to agree to the terms to complete your registration.</span>
 			<label id="agreeTerms__label" class="checkbox-label disabled" for="agreeTerms">
 				<div class="checkbox-container">
-					<input type="checkbox" name="agree-terms" id="agreeTerms" disabled="" value="">
+					<input type="checkbox" name="agree-terms" id="agreeTerms" value="">
 					<span class="checkbox__placeholder"></span>
 				</div>
 			</label>
-			<span class="font-weight-bold">I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming <a href="/content/privacy" target="_blank">Privacy Policy</a>. I understand that this membership will take effect immediately and is non-refundable, non-transferable, and expires on</span><span class="font-weight-bold"> December 31, </span><span class="agree-terms--year font-weight-bold">2026</span><span class="font-weight-bold">.</span>
+			<span class="font-weight-bold">I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming <a href="/content/privacy" target="_blank">Privacy Policy</a>. I understand that this membership will take effect immediately and is non-refundable, non-transferable, and expires on December 31, <span class="agree-terms--year">2026</span>.</span>
 		</div>
 	</div>
 
 	
 
 	
-	<div class="form-group agree-terms-tier agree-terms-tier--usmsPlus" style="display:none;">
+	<div class="form-group agree-usmsplus-terms" style="display:none;">
 		<div class="col-xs-12">
 			<span class="help-block help-block--agree-usmsplus-terms">You need to agree to the USMS+ terms and conditions to complete your registration.</span>
 			<label id="agreeUsmsPlusTerms__label" class="checkbox-label disabled" for="agreeUsmsPlusTerms">
 				<div class="checkbox-container">
-					<input type="checkbox" name="agree-usmsplus-terms" id="agreeUsmsPlusTerms" disabled="" value="">
+					<input type="checkbox" name="agree-usmsplus-terms" id="agreeUsmsPlusTerms" value="">
 					<span class="checkbox__placeholder"></span>
 				</div>
 			</label>
@@ -1055,7 +1134,7 @@
 	</div>
 
 	
-	<div class="form-group agree-terms-tier agree-terms-tier--competition" style="display:none;">
+	<div class="form-group agree-terms-competition" style="display:none;">
 		<div class="col-xs-12">
 			<span class="help-block help-block--agree-terms-competition">You need to agree to the terms to complete your registration.</span>
 			<label id="agree-terms-competition__label" class="checkbox-label disabled" for="agree-terms-competition">
@@ -1064,7 +1143,7 @@
 					<span class="checkbox__placeholder"></span>
 				</div>
 			</label>
-			<span class="font-weight-bold">I acknowledge that the <a href="~/link.aspx?_id=B1745ABEA65D4D65AC6F848A0E3E413A&_z=z">Interim USMS Policy on Participation in the Men's/Open and Women's Competition Category and Eligibility for Official Recognition Programs</a>&nbsp;allows members to participate in the competition category that reflects the sex with which they identify; however, members will not be included in Recognition Programs in the female competition category unless their sex assigned at birth is also female. Members participating in the male competition category will be eligible for recognition. Eligibility is subject to all other USMS rules and regulations.</span>
+			<span class="font-weight-bold">I acknowledge that the <a href="~/link.aspx?_id=B1745ABEA65D4D65AC6F848A0E3E413A&amp;_z=z">Interim USMS Policy on Participation in the Men's/Open and Women's Competition Category and Eligibility for Official Recognition Programs</a>&nbsp;allows members to participate in the competition category that reflects the sex with which they identify; however, members will not be included in Recognition Programs in the female competition category unless their sex assigned at birth is also female. Members participating in the male competition category will be eligible for recognition. Eligibility is subject to all other USMS rules and regulations.</span>
 		</div>
 	</div>
 
@@ -1567,5 +1646,8 @@
   
 <script src="/js/registration.js" defer></script>
 
+  
+  
+  
 </body>
 </html>

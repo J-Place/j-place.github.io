@@ -1,8 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // ── Membership level (from swimmer data via data attribute) ───────────────
-  // Determines VSA pricing: usmsPlus members get VSA for free.
+  // ── Swimmer data (from wrapper data attributes) ───────────────────────────
   const wrapper         = document.querySelector('.renew__form-body.masters-addons');
-  const membershipLevel = wrapper ? wrapper.dataset.membershipLevel : '';
+  const vsaPrice        = wrapper ? parseFloat(wrapper.dataset.vsaPrice ?? '') : NaN;
 
   // ── Selectors ─────────────────────────────────────────────────────────────
   const productTotalEl  = document.querySelector('.total-product.card__total--amount');
@@ -31,21 +30,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Variable terms ────────────────────────────────────────────────────────
   // Each product tile may carry a data-terms-key attribute. When any product
-  // with that key is selected, the matching .agree-terms-product--{key} block
-  // is shown and its checkbox is enabled.
+  // with that key is selected, the matching [data-terms-key] block in the
+  // payment card is shown and its checkbox is enabled.
   function updateVariableTerms() {
-    // Collect active terms keys from selected product tiles
     const activeKeys = new Set();
     document.querySelectorAll('.add-on-products .product-option.selected').forEach(tile => {
       const key = tile.dataset.termsKey;
       if (key) activeKeys.add(key);
     });
 
-    document.querySelectorAll('.agree-terms-product').forEach(block => {
-      // Derive key from the modifier class: agree-terms-product--{key}
-      const modClass = Array.from(block.classList).find(c => c.startsWith('agree-terms-product--'));
-      const key = modClass ? modClass.replace('agree-terms-product--', '') : null;
-      const active = key && activeKeys.has(key);
+    document.querySelectorAll('.card.payment-info [data-terms-key]').forEach(block => {
+      const key    = block.dataset.termsKey;
+      const active = activeKeys.has(key);
       block.style.display = active ? '' : 'none';
       const cb  = block.querySelector('input[type="checkbox"]');
       const lbl = block.querySelector('label');
@@ -54,6 +50,30 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!active) cb.checked = false;
       }
       if (lbl) lbl.classList.toggle('disabled', !active);
+    });
+  }
+
+  // ── Locked tiles ─────────────────────────────────────────────────────────
+  // A tile with data-requires-product="{key}" is locked (grayed out, not
+  // clickable) until the tile with data-product-key="{key}" is selected.
+  // If the required tile is deselected, the dependent tile is also deselected.
+  function updateLockedTiles() {
+    document.querySelectorAll('.add-on-products .product-option[data-requires-product]').forEach(tile => {
+      const requiredKey  = tile.dataset.requiresProduct;
+      const requiredTile = document.querySelector(`.add-on-products .product-option[data-product-key="${requiredKey}"]`);
+      const satisfied    = requiredTile?.classList.contains('selected') ?? false;
+
+      if (!satisfied && tile.classList.contains('selected')) {
+        // Deselect this tile if its requirement was removed
+        const addBtn   = tile.querySelector('.add-on');
+        const priceEl  = tile.querySelector('.product-price');
+        const tilePrice = parseFloat((priceEl?.textContent ?? '').replace(/[^0-9.]/g, '')) || 0;
+        tile.classList.remove('selected');
+        productTotal -= tilePrice;
+        if (addBtn) addBtn.textContent = 'Add';
+      }
+
+      tile.toggleAttribute('disabled', !satisfied);
     });
   }
 
@@ -69,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Submit: all visible terms checkboxes must be checked
     const allChecked = (() => {
       if (!agreeCheckbox?.checked) return false;
-      const variableChecks = document.querySelectorAll('.agree-terms-product:not([style*="display: none"]):not([style*="display:none"]) input[type="checkbox"]');
+      const variableChecks = document.querySelectorAll('.card.payment-info [data-terms-key]:not([style*="display: none"]):not([style*="display:none"]) input[type="checkbox"]');
       return Array.from(variableChecks).every(cb => cb.checked);
     })();
     if (submitBtn) submitBtn.disabled = !(anySelected && allChecked);
@@ -126,6 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function updateAll() {
+    updateLockedTiles();
     updateTotals();
     buildReviewOrder();
     updateVariableTerms();
@@ -139,12 +160,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const priceEl    = tile.querySelector('.product-price');
     const hasStroke  = tile.querySelector('select[name="StrokeSelect"]') !== null;
 
-    // VSA tiles: price is overridden by membership level (usmsPlus = free)
-    // The product JSON price is the base; we override it here.
+    // VSA tiles: use vsaPrice from the swimmer's tier (data-vsa-price on wrapper).
+    // Falls back to the product JSON price if vsaPrice is not set.
     let price;
-    if (hasStroke && membershipLevel === 'usmsPlus') {
-      price = 0;
-      if (priceEl) priceEl.textContent = '$0 (included with USMS+)';
+    if (hasStroke && !isNaN(vsaPrice)) {
+      price = vsaPrice;
+      if (priceEl) priceEl.textContent = `$${vsaPrice.toFixed(2)}`;
     } else {
       price = parseFloat((priceEl?.textContent ?? '').replace(/[^0-9.]/g, '')) || 0;
     }
@@ -183,5 +204,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ── Init ──────────────────────────────────────────────────────────────────
+  updateLockedTiles();
   setPaymentVisible(false);
 });
