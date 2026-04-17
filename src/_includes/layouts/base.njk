@@ -12,6 +12,7 @@
   {% block pageCSS %}{% endblock %}
   {% if dev.env === "dev" %}{% for name, overlay in devOverlays %}{% if permalink in overlay.pages %}<link rel="stylesheet" href="{{ overlay.css }}">{% endif %}{% endfor %}{% endif %}
   {% if dev.env === "dev" %}<script type="application/json" id="dev-swimmers-data">{{ { "swimmers": swimmers, "membershipTiers": membershipTiers } | dump | safe }}</script>{% endif %}
+  {% if dev.env === "dev" and devSwimmerIds %}<script type="application/json" id="dev-swimmer-filter">{{ devSwimmerIds | dump | safe }}</script>{% endif %}
 </head>
 <body class="">
   <div id="main-container">

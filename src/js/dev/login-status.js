@@ -27,6 +27,12 @@
           }
           var swimmerInput = document.getElementById('swimmerId');
           if (swimmerInput) swimmerInput.value = swimmer.swimmerId;
+
+          // Show/hide role-gated product groups based on selected swimmer's fields
+          document.querySelectorAll('[data-requires-role]').forEach(function (el) {
+            var role = el.dataset.requiresRole;
+            el.style.display = swimmer[role] === true ? '' : 'none';
+          });
         }
       } catch (e) {}
     }
@@ -44,6 +50,16 @@
     try { data = JSON.parse(dataEl.textContent); } catch (e) { return; }
 
     var swimmers = data.swimmers;
+
+    // If a filter list is present, restrict to those IDs only
+    var filterEl = document.getElementById('dev-swimmer-filter');
+    var allowedIds = null;
+    if (filterEl) {
+      try { allowedIds = JSON.parse(filterEl.textContent); } catch (e) {}
+    }
+    var swimmerIds = Object.keys(swimmers);
+    if (allowedIds) swimmerIds = swimmerIds.filter(function (id) { return allowedIds.indexOf(id) !== -1; });
+
     var tierLabels = {
       usmsStandard:             'Standard Membership',
       usmsStandardEventLicense: 'Event License Standard',
@@ -56,16 +72,11 @@
     var select = document.createElement('select');
     select.className = 'login-status__select';
 
-    var defaultOpt = document.createElement('option');
-    defaultOpt.value = '';
-    defaultOpt.textContent = '— Select Swimmer —';
-    select.appendChild(defaultOpt);
-
-    Object.keys(swimmers).forEach(function (id) {
+    swimmerIds.forEach(function (id) {
       var s   = swimmers[id];
       var opt = document.createElement('option');
       opt.value       = id;
-      opt.textContent = tierLabels[s.membership.tier] || s.membership.tier;
+      opt.textContent = allowedIds ? id : (tierLabels[s.membership.tier] || s.membership.tier);
       if (id === currentId) opt.selected = true;
       select.appendChild(opt);
     });
