@@ -30,11 +30,12 @@
 {% endmacro %}
 
 <div class="card add-on-products">
-	<h3 class="addons__form-header">Product Options</h3>
 	{% if productOptionGroups %}
 		{# Multi-row: one product-group row per group, all within the same card #}
 		{% for group in productOptionGroups %}
-		<div class="product-group">
+		{% set roleHidden = group.requiresRole and not swimmer[group.requiresRole] %}
+		{% if group.label %}<h3 class="addons__form-header"{% if group.requiresRole %} data-requires-role="{{ group.requiresRole }}"{% endif %}{% if roleHidden %} style="display:none"{% endif %}>{{ group.label }}</h3>{% endif %}
+		<div class="product-group"{% if group.requiresRole %} data-requires-role="{{ group.requiresRole }}"{% endif %}{% if roleHidden %} style="display:none"{% endif %}>
 			{% for key in group.keys %}
 			{% set option = products[key] %}
 			{% if option and option.active !== false %}
