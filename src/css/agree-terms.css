@@ -1,0 +1,82 @@
+/* ============================================================
+   Agree Terms component
+   Extends production's .agree-terms styles to add-ons variable
+   terms blocks, which have no production stylesheet equivalent.
+   Production already styles .agree-usmsplus-terms and
+   .agree-terms-competition via mastersAddons/registration CSS.
+   ============================================================ */
+
+.form-group.agree-vsa-terms,
+.form-group.agree-ncc-registration-terms {
+    font-size: 1.3rem;
+    line-height: 1.5rem;
+    margin: 3.5rem auto 2rem;
+}
+
+.agree-vsa-terms .checkbox-label,
+.agree-ncc-registration-terms .checkbox-label {
+    line-height: 2rem;
+    margin-left: 0;
+}
+
+.form-group.agree-vsa-terms span.help-block,
+.form-group.agree-ncc-registration-terms span.help-block {
+    font-size: 12px;
+}
+
+.renew__form-body .form-group.agree-vsa-terms,
+.renew__form-body .form-group.agree-ncc-registration-terms {
+    margin-bottom: 3rem;
+    margin-left: 30px;
+    margin-top: 2rem;
+}
+
+/* ── Text wrapping alignment ─────────────────────────────────────────────────
+   The .checkbox-container uses display:inline-block with margin-left:-28px and
+   width:20px + margin-right:5px. The label's margin-left:0 means the net
+   position of text after the checkbox is -3px from the col left edge. When text
+   wraps to line 2 it resets to 0px — causing a 3px right-shift on wrapped lines.
+   Fix: flex layout on col-xs-12 isolates the label and text span as separate
+   flex items, so wrapped text always aligns with its own left edge (line 1 start).
+   For registration terms (multiple sibling spans) the label becomes display:block
+   via flex, and all text spans flow after it at a consistent indent.
+   ============================================================ */
+
+.form-group.agree-terms .col-xs-12,
+.form-group.agree-usmsplus-terms .col-xs-12,
+.form-group.agree-terms-competition .col-xs-12,
+.form-group.agree-vsa-terms .col-xs-12,
+.form-group.agree-ncc-registration-terms .col-xs-12 {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+/* help-block takes its own full-width row */
+.form-group.agree-terms .col-xs-12 > span.help-block,
+.form-group.agree-usmsplus-terms .col-xs-12 > span.help-block,
+.form-group.agree-terms-competition .col-xs-12 > span.help-block,
+.form-group.agree-vsa-terms .col-xs-12 > span.help-block,
+.form-group.agree-ncc-registration-terms .col-xs-12 > span.help-block {
+    flex: 0 0 100%;
+}
+
+/* checkbox label shrinks to its content width */
+.form-group.agree-terms .col-xs-12 > .checkbox-label,
+.form-group.agree-usmsplus-terms .col-xs-12 > .checkbox-label,
+.form-group.agree-terms-competition .col-xs-12 > .checkbox-label,
+.form-group.agree-vsa-terms .col-xs-12 > .checkbox-label,
+.form-group.agree-ncc-registration-terms .col-xs-12 > .checkbox-label {
+    flex: 0 0 auto;
+    align-self: flex-start;
+}
+
+/* all remaining spans (agreement text) share the remaining width */
+.form-group.agree-terms .col-xs-12 > span:not(.help-block),
+.form-group.agree-usmsplus-terms .col-xs-12 > span:not(.help-block),
+.form-group.agree-terms-competition .col-xs-12 > span:not(.help-block),
+.form-group.agree-vsa-terms .col-xs-12 > span:not(.help-block),
+.form-group.agree-ncc-registration-terms .col-xs-12 > span:not(.help-block) {
+    flex: 1 1 0;
+    min-width: 0;
+}
