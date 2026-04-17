@@ -2,7 +2,6 @@
 permalink: /event-results/swimmer/index.html
 title: Swimmer Results | U.S. Masters Swimming
 pageTitle: Swimmer Results
-swimmerId: "GAT0R"
 breadcrumbs:
   - url: "/"
     label: "Home"
@@ -31,8 +30,9 @@ breadcrumbs:
   // ── Swimmer registry ────────────────────────────────────────────────────
   // All available swimmer datasets keyed by usmsId.
   // Eleventy camelCases hyphenated _data filenames at build time.
-  var SWIMMER_REGISTRY = {{ swimmerResults | dump | safe }};
-  var DEFAULT_SWIMMER  = {{ swimmerResults[swimmerId] | dump | safe }};
+  var SWIMMER_REGISTRY = {{ (swimmerResults or {}) | dump | safe }};
+  var _keys = Object.keys(SWIMMER_REGISTRY);
+  var DEFAULT_SWIMMER = _keys.length ? SWIMMER_REGISTRY[_keys[0]] : null;
 
   // ── State ───────────────────────────────────────────────────────────────
   var activeCourse = 'all';
