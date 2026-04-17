@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Product line items
     document.querySelectorAll('.add-on-products .product-option.selected').forEach(tile => {
-      const name  = tile.querySelector('.product-name')?.textContent?.trim() ?? '';
+      const name  = tile.querySelector('.product-name')?.innerHTML?.trim() ?? '';
       const price = tile.querySelector('.product-price')?.textContent?.trim() ?? '';
       const p     = document.createElement('p');
       p.className = 'review-order__line-item review-order__line-item--bill-date';
