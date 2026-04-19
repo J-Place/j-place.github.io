@@ -1,0 +1,30 @@
+<div class="list list--lookup locations">
+	<div class="list__container">
+		<div class="row is-flex">
+			<div class="col-xs-12 location-column">
+
+				{% for location in locations.data.locations %}
+				<div class="list-item list-item--location"
+				     data-location-id="{{ location.Id }}"
+				     data-name="{{ location.Name }}"
+				     data-address="{{ location.Address }}"
+				     data-city="{{ location.City }}"
+				     data-state="{{ location.State }}"
+				     data-zip="{{ location.ZipCode }}"
+				     data-courses="{{ location.Courses | slimCourses | json }}">
+					<button type="button" class="btn btn-small btn-detail">Details</button>
+					<p class="event-location__address--name">{{ location.Name }}</p>
+					<p class="event-location__address--street">{{ location.Address }}</p>
+					<p class="event-location__city-state">{{ location.City }}, {{ location.State }} {{ location.ZipCode }}</p>
+					<div class="event-location--course-tags">
+						{% for tag in location.Courses | uniqueCourseTags %}
+						<p class="event-location--course">{{ tag }}</p>
+						{% endfor %}
+					</div>
+				</div>
+				{% endfor %}
+
+			</div>
+		</div>
+	</div>
+</div>

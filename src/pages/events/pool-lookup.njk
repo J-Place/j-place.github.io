@@ -7,15 +7,12 @@ breadcrumbs:
     label: "Home"
 ---
 {% extends "layouts/clubs.njk" %}
+{% block pageJS %}
+<script src="/js/pool-lookup.js" defer></script>
+{% endblock %}
 {% block pageCSS %}
-{# <link rel="stylesheet" href="/css/prod/src/App/sitecorePages/algolia/eventSearch.css"> #}
-{# <link rel="stylesheet" href="/css/prod/src/App/views/Sanctions/sanctionsEvents.css"> #}
-{# <link rel="stylesheet" href="/css/prod/src/App/views/Club/ClubEdit/location.css"> #}
-{# <link rel="stylesheet" href="/css/prod/src/App/views/Forms/ClubFilterForm2.css"> #}
-<link rel="stylesheet" href="/css/dev/list-control-club.css">
-<link rel="stylesheet" href="/css/pool-lookup.css">
-{# <link rel="stylesheet" href="https://www.usms.org/styles/club2.min.css"> #}
-{# <link rel="stylesheet" href="https://www.usms.org/styles/sanctions.min.css"> #}
+<link rel="stylesheet" href="/css/pool/pool-list-control.css">
+<link rel="stylesheet" href="/css/pool/pool-list-results.css">
 {% endblock %}
 {# {% block pageHeader %}
 {% include "partials/page-header.njk" %}
@@ -28,6 +25,27 @@ breadcrumbs:
 				{% include "partials/pool-lookup-filters.njk" %}
 			</div>
 		</div>
+		<div class="row p-tb-50">
+			<div class="col-xs-12">
+				{% include "partials/pool-lookup-results.njk" %}
+			</div>
+		</div>
 	</div>
 </div>
+
+{% set modalId = "modalPoolDetail" %}
+{% set modalModifier = "pool-location-detail" %}
+{% set modalSize = "lg" %}
+{% set modalTitleId = "poolDetailName" %}
+{% set modalHeaderExtra %}
+	<p class="pool-detail__address" id="poolDetailAddress"></p>
+	<p class="pool-detail__city-state" id="poolDetailCityState"></p>
+{% endset %}
+{% set modalBody %}
+	<div class="pool-detail__courses" id="poolDetailCourses"></div>
+{% endset %}
+{% set modalFooter %}
+	<button class="btn btn-lg btn-primary" type="button" id="poolDetailClose">Okay</button>
+{% endset %}
+{% include "components/modal.njk" %}
 {% endblock %}

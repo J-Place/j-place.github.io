@@ -37,6 +37,28 @@ module.exports = function(eleventyConfig) {
   const courseTypeMap = { "OPEN WATER": "OW", "SHORT COURSE YARDS": "SCY", "SHORT COURSE METERS": "SCM", "LONG COURSE METERS": "LCM" };
   eleventyConfig.addFilter("courseTypeAbbr", val => courseTypeMap[val.toUpperCase()] || val);
 
+  // Serialize a value to a JSON string (for data-* attributes)
+  eleventyConfig.addFilter("json", value => JSON.stringify(value));
+
+  // Return deduplicated course Tag values from a courses array
+  eleventyConfig.addFilter("uniqueCourseTags", courses =>
+    [...new Set((courses || []).map(c => c.Tag))]
+  );
+
+  // Slim course objects down to only the fields shown in the pool detail modal
+  eleventyConfig.addFilter("slimCourses", courses =>
+    (courses || []).map(c => ({
+      tag:       c.Tag,
+      pool:      c.PoolName || c.Name,
+      length:    c.Length,
+      type:      c.SubType,
+      lanes:     c.Lanes,
+      touchpads: c.Touchpads,
+      certified: c.Certified,
+      measured:  c.Measured
+    }))
+  );
+
   // Format a number as a price with always-two decimal places: 110 → "110.00"
   eleventyConfig.addFilter("price", val => parseFloat(val || 0).toFixed(2));
 
@@ -46,8 +68,6 @@ module.exports = function(eleventyConfig) {
   // Copy src/css to _site/css
   eleventyConfig.addPassthroughCopy({ "src/css": "css" });
 
-  // Copy src/assets and src/img to _site root
-  eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
   eleventyConfig.addPassthroughCopy({ "src/img": "img" });
 
   return {
