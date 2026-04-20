@@ -53,9 +53,11 @@ module.exports = function(eleventyConfig) {
       length:    c.Length,
       type:      c.SubType,
       lanes:     c.Lanes,
-      touchpads: c.Touchpads,
-      certified: c.Certified,
-      measured:  c.Measured
+      touchpads:     c.Touchpads,
+      certified:     c.Certified,
+      certifiedDate: c.CertifiedDate,
+      measured:      c.Measured,
+      measuredDate:  c.MeasuredDate
     }))
   );
 
