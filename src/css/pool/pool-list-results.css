@@ -4,11 +4,6 @@
         padding-left: 1.5rem;
     }
 
-    /* .list-item--location button.btn.btn-small {
-        margin-bottom: .5rem;
-        margin-top: 3rem;
-    } */
-
     .locations .list__container p {
         margin-bottom: 0;
     }
@@ -16,21 +11,16 @@
     .locations .list-item {
         display: block;
         height: auto;
-        margin: 18px 0 15px;
+        margin: 15px 0 5px;
     }
 
+    /* Children inline by default; street + course-tags override to block-level below */
     .location-column .list-item > * {
         display: inline-flex;
     }
 
+    /* Button visual styles */
     .list-item--location button.btn.btn-small {
-        display: inline-flex;
-        /* margin-bottom: 0; */
-        /* margin-top: 1rem; */
-        margin-bottom: .5rem;
-        margin-top: 3rem;
-
-        vertical-align: text-bottom;
         font-size: 1.1rem !important;
         height: 2.3rem !important;
         line-height: 2.3rem !important;
@@ -39,10 +29,7 @@
         color: #fff;
         text-transform: none;
         border-radius: 3px;
-    }
-
-    .locations .list-item--location button.btn {
-        display: flex;
+        vertical-align: text-bottom;
     }
 
     .list-item p.event-location__address--name {
@@ -52,7 +39,7 @@
         padding: 0 1.2rem 0 0;
     }
 
-    .list-item p.event-location__address--street, 
+    .list-item p.event-location__address--street,
     .list-item p.event-location__city-state {
         font-size: 1.7rem;
         line-height: 100%;
@@ -60,6 +47,7 @@
         padding: 0 1.2rem 0 0;
     }
 
+    /* Mobile: block-level flex forces stacking */
     .list-item p.event-location__address--street {
         display: flex;
     }
@@ -69,30 +57,41 @@
         margin-top: .8rem;
     }
 
+    .locations .list-item--location button.btn {
+        display: flex;
+        margin-bottom: .5rem;
+        margin-top: 3rem;
+    }
+
     @media (min-width: 768px) {
+
+        /* Desktop: inline-flex restores single-row flow */
+        .list-item p.event-location__address--street,
+        .list-item .event-location--course-tags,
+        .locations .list-item--location button.btn.btn-small {
+            display: inline-flex;
+        }
+
         .list-item p.event-location__address--name {
             border-right: 1px solid #ccc;
             margin: 0 .8rem 0 1rem;
         }
-    }
 
-    @media (min-width: 768px) {
-        .list-item p.event-location__address--street, 
-        .list-item p.event-location__city-state {
-            font-size: 1.7rem;
-            line-height: 100%;
-            margin: .5rem 1rem 2.2rem 0;
-            padding: 0 1.2rem 0 0;
-        }
-    }
-    @media (min-width: 768px) {
         .list-item p.event-location__address--street {
             border-right: 1px solid #ccc;
         }
-        .locations .list-item {
-            margin-bottom: 0;
+
+        .list-item p.event-location__address--street,
+        .list-item p.event-location__city-state {
+            margin: 3.0rem 1rem 0 0;
+            padding: 0 1.2rem 0 0;
         }
 
+        .locations .list-item--location button.btn.btn-small {
+            margin-bottom: 0;
+            margin-top: 1rem;
+            vertical-align: text-bottom;
+        }
     }
 
     .list-item p.event-location--course {
@@ -107,9 +106,40 @@
         padding: 0 .3rem;
         position: relative;
     }
+
+      /* ── Desktop (768px+) ─────────────────────────────────────────────────── */
+
+  @media only screen and (min-width: 768px) {
+    .locations .list-item {
+            margin: 0;
+        }
+    }
+
+    .list--lookup.locations .list__container {
+        /* max-height: 450px; */
+        /* overflow-x: clip; */
+        /* overflow-y: auto; */
+        padding-left: 1.5rem;
+        width: 100%;
+        margin-bottom: 100px;
+    }
+
 }
 
-.pool-detail__table td,
+.pool-course-list {
+    margin-top: 20px;
+}
+
+.pool-course-item {
+    margin: 15px 0 15px 25px;
+}
+
+.pool-course-item__meta {
+    display: block
+}
+
+
+/* .pool-detail__table td,
 .pool-detail__table th {
     border: 0 none;
 }
@@ -123,4 +153,4 @@
 .pool-detail__city-state {
     margin-bottom: 10px;
     font-size: 1.6rem;
-}
+} */
