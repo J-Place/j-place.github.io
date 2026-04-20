@@ -22,9 +22,26 @@ src/
     dev/          # Dev-only JS overlays — not loaded in production
   css/            # Local CSS overrides (clubs.css, events.css, home.css)
     dev/          # Dev-only CSS for overlays — not loaded in production
-public/           # Legacy Sergey mockup files — passthrough copied as-is, do not modify
+public/           # Legacy Sergey mockup files — passthrough copied as-is, do not modify here
 _site/            # Build output (gitignored)
 ```
+
+## Updating Legacy Sergey Pages (`public/`)
+
+Pages in `public/` originate from the separate Sergey repo at `~/USMS-Github-JPlace`. To make changes:
+
+1. Edit source files in `~/USMS-Github-JPlace/`
+2. Start the Sergey dev server if not already running: `cd ~/USMS-Github-JPlace && npm run dev` (serves at `http://localhost:8888`)
+3. Fetch the compiled output from the dev server and write it to `public/`:
+   ```bash
+   curl -s http://localhost:8888/registration/welcome-member.html \
+     > public/registration/welcome-member.html
+   ```
+4. Eleventy passthrough-copies `public/` into its own `_site/` unchanged
+
+**Why curl and not `_site/`:** Sergey 0.0.13 only pre-builds `home/` and `index.html` to `_site/`. All other pages are compiled on-the-fly by the dev server as requests come in. Fetching from `localhost:8888` is the reliable way to get fully resolved HTML (all `<sergey-import>` tags expanded) for any page.
+
+Do not edit files directly inside `public/` — they will be overwritten the next time a Sergey page is synced.
 
 ## Key Conventions
 
