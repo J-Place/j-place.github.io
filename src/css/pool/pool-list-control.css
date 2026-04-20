@@ -1,8 +1,61 @@
 .pool-lookup {
 
+  /* ── General ──────────────────────────────────────────────────────────── */
+
   .form-group {
     margin-bottom: 0;
   }
+
+  .input-group {
+    display: block;
+  }
+
+  .is-flex {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  button:focus,
+  .input-text:focus,
+  select:focus {
+    outline: none;
+  }
+
+
+  /* ── List control wrapper ─────────────────────────────────────────────── */
+
+  .list-control {
+    margin: 30px 0 0;
+  }
+
+  .list-control input {
+    font-size: 1.4rem;
+  }
+
+  .list-control select,
+  .list-control input[type="text"] {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    box-sizing: content-box;
+    border: 0 none;
+    margin: 0;
+    padding: 0;
+    text-indent: 15px;
+    width: 100%;
+    height: 44px;
+    line-height: 44px;
+    font-size: 1.4rem;
+    color: #656565;
+    background-color: #fff;
+  }
+
+  .list-control select {
+    border-radius: 5px;
+    text-transform: initial;
+  }
+
+
+  /* ── Buttons ──────────────────────────────────────────────────────────── */
 
   .btn {
     line-height: 100%;
@@ -15,61 +68,16 @@
     letter-spacing: .2px;
   }
 
-  .list-control input[type="text"] {
-    box-sizing: content-box;
-    border: 0 none;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 44px;
-    line-height: 44px;
-    font-size: 1.4rem;
-    text-indent: 15px;
-    color: #656565;
-    background-color: #fff;
-  }
-
-  .list-control select {
-    box-shadow: none;
-    box-sizing: content-box;
-    border: 0 none;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 44px;
-    line-height: 44px;
-    font-size: 1.4rem;
-    text-indent: 15px;
-    color: #656565;
-    background-color: #fff;
-  }
-
   .list-control .btn-primary {
     text-transform: uppercase;
-  }
-
-  .list-control-search__content label {
-    font-size: 1.05rem;
-    line-height: 12px;
-    margin: 0;
-    padding: 0;
-    font-weight: bold;
-  }
-
-  button:focus,
-  .input-text:focus,
-  select:focus {
-    outline: none;
-  }
-
-  .is-flex {
-    display: flex;
-    flex-wrap: wrap;
   }
 
   .list-control-view span.active button {
     color: #333333;
   }
+
+
+  /* ── Search bar ───────────────────────────────────────────────────────── */
 
   .list-control-search {
     display: flex;
@@ -77,11 +85,10 @@
   }
 
   .list-control-search__header {
-    margin: 0;
+    margin: -5px auto 0;
     position: relative;
     height: 100%;
     font-size: 1.2rem;
-    margin: -5px auto 0;
     text-align: center;
   }
 
@@ -104,10 +111,45 @@
     color: #6aa1c5;
   }
 
-  .fa-refresh {
-    -webkit-animation: fa-spin 1.2s infinite linear;
-    animation: fa-spin 1.2s infinite linear;
+  .list-control-search--tags {
+    display: none;
   }
+
+  .list-control-search__content {
+    background-color: #ddd;
+    margin: 0 -10px;
+    padding: 10px 20px 0;
+    display: none;
+    flex-wrap: wrap;
+  }
+
+  .list-control-search__content.is-flex {
+    display: flex;
+  }
+
+  .list-control-search__content label {
+    font-size: 1.05rem;
+    line-height: 12px;
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+  }
+
+  .list-control-search__input {
+    margin: 0 auto 15px;
+    flex: 0 0 100%;
+  }
+
+  .list-control-search__input:first-of-type {
+    margin-left: 0;
+  }
+
+  .list-control-search__input--button {
+    margin-top: 1.5rem;
+  }
+
+
+  /* ── Mobile toggle ────────────────────────────────────────────────────── */
 
   .list-control-search-mobile__toggle {
     flex-basis: 100%;
@@ -140,159 +182,11 @@
     background-image: url('/img/icon-toggle-up-blk.png');
   }
 
-  .list-control-search--tags {
-    display: none;
-  }
+
+  /* ── Tag pills ────────────────────────────────────────────────────────── */
 
   .tag-list--title {
     display: none;
-  }
-
-  .list-control-search__content {
-    background-color: #ddd;
-    margin: 0 -10px;
-    padding: 10px 20px 0;
-    display: none;
-  }
-
-  .input-group {
-    display: block;
-  }
-
-  .list-control-search__input {
-    margin: 0 auto 15px;
-    flex: 0 0 100%;
-  }
-
-  .list-control-search__input:first-of-type {
-    margin-left: 0;
-  }
-
-  .list-control-search__input--button {
-    margin-top: 1.5rem;
-  }
-
-  .list-control input {
-    font-size: 1.4rem;
-  }
-
-  .list-control select,
-  .list-control input[type="text"] {
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    -webkit-box-sizing: content-box;
-    box-sizing: content-box;
-    border: 0 none;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 44px;
-    line-height: 44px;
-    font-size: 1.4rem;
-    color: #656565;
-    background-color: #fff;
-  }
-
-  .list-control input[type="text"] {
-    text-indent: 15px;
-  }
-
-  .list-control select {
-    border-radius: 5px;
-    text-transform: initial;
-  }
-
-  .list-control-filter {
-    background-color: #ddd;
-  }
-
-  .list-control {
-      margin: 30px 0 0;
-    } 
-
-  .list-control-search--summary-loading {
-    position: absolute;
-    left: unset;
-    top: 5px;
-    right: 0;
-  }
-
-  .list-control-search__content {
-    margin: 0;
-    padding: 15px 35px 0;
-    display: flex;
-    margin: 0;
-  }
-
-  .list-control-search--summary {
-    width: 35%;
-    text-align: right;
-    position: absolute;
-    line-height: 15px;
-    right: 0;
-    bottom: 0;
-  }
-
-  .list-control-search__header {
-    margin: 0 0 6px;
-    text-align: left;
-  }
-
-  .list-control-search__input {
-    margin-bottom: 0;
-    margin-left: 15px;
-    flex: 1;
-  }
-
-  .list-control-search-mobile__toggle {
-    display: none;
-  }
-
-  .list-control-search__input.list-control-search__input--button {
-    position: relative;
-    bottom: 0;
-    flex-grow: initial;
-    margin-top: 20px;
-    align-self: flex-end;
-  }
-
-  .list-control-search--tags {
-    display: block;
-    width: 60%;
-    position: absolute;
-    left: 55px;
-    bottom: -3px;
-    line-height: 20px;
-  }
-
-  .tag-list--title {
-    font-weight: 600;
-    display: inline-block;
-    position: absolute;
-    bottom: -3px;
-  }
-
-  .list-control-filter {
-    display: block;
-    margin: 0 auto;
-    padding: 0 35px;
-  }
-
-  .list-control-filter .list-control-filter__content {
-    margin: 0;
-    padding: 5px 0 0;
-    width: 100%;
-  }
-
-
-  @media only screen and (min-width: 768px) {
-    .tag-list--item {
-        cursor: pointer;
-        display: inline-block;
-        margin: 0 13px;
-        padding: 0;
-        position: relative;
-    }
   }
 
   .tag-list--item:before {
@@ -309,40 +203,251 @@
     width: 11px;
   }
 
-  .list-control-filter__content .check-list {
-    margin-bottom: 0;
+
+  /* ── Filter section ───────────────────────────────────────────────────── */
+
+  /* Mobile: entire filter section hidden; JS reveals it when search opens */
+  .list-control-filter {
+    background-color: #ddd;
+    display: none;
+    margin: -1px -10px 0;
+    padding: 10px 20px 30px;
   }
 
-  .list-control-filter .list-control-filter__content .check-list {
+  .list-control-filter__header {
+    position: relative;
+    /* padding: 8px 10px; */
+  }
+
+  .toggle-filters {
+    background-color: #6aa1c5;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    font-size: .9rem;
+    height: 2rem;
+    letter-spacing: .4px;
+    line-height: 2rem;
+    overflow: visible;
+    padding: 0 1rem 0 2.2rem;
+    position: relative;
+    text-align: left;
+    text-transform: uppercase;
+    width: 10.6rem;
+  }
+
+  .toggle-filters:before {
+    background-image: url(/img/icon-toggle-down.png);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: 1.6rem;
+    content: "";
+    display: block;
+    height: 1rem;
+    left: .7rem;
+    position: absolute;
+    top: .5rem;
+    width: 1rem;
+  }
+
+  .show-filters .toggle-filters:before {
+    background-image: url(/img/icon-toggle-up.png);
+  }
+
+  .list-control-filter__content {
+    left: 5px;
+    margin-left: 0;
+    margin-top: 15px;
+    opacity: 0;
+    padding-left: 0;
+    position: absolute;
+    top: 100%;
+    transform: translateY(-2em);
+    transition: all .15s ease-in-out 0s, visibility 0s linear .15s, z-index 0s linear .01s;
+    visibility: hidden;
+    width: calc(100% - 10px);
+  }
+
+  .list-control-filter.show-filters .list-control-filter__content {
+    background-color: #ddd;
     opacity: 1;
+    position: relative;
+    transform: translateY(0);
+    transition-delay: 0s, 0s, .15s;
     visibility: visible;
+    z-index: 1;
+  }
+
+  .list-control-filter__content .check-list {
+    flex: 1 1;
+    margin-bottom: .5rem;
+    opacity: 0;
+  }
+
+  .show-filters .list-control-filter__content .check-list {
+    opacity: 1;
+    transition: all .15s, .3s ease-in;
   }
 
   .check-list--pool-length {
-      -webkit-box-orient: vertical;
-      -webkit-box-direction: normal;
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      -ms-flex-direction: column;
-      flex-direction: column;
-      margin-bottom: 13px;
-  }
-
-  @media (min-width: 1200px) {
-      .check-list--pool-length {
-          -webkit-box-orient: horizontal;
-          -webkit-box-direction: normal;
-          -ms-flex-direction: row;
-          flex-direction: row;
-          margin-bottom: 0 !important;
-          margin-top: 0 !important;
-      }
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 13px;
   }
 
   .list-control-filter__content .check-list-item {
-      margin-right: 4rem;
-      width: auto;
+    margin-right: 4rem;
+    width: auto;
   }
+
+
+  /* ── Desktop (768px+) ─────────────────────────────────────────────────── */
+
+  @media only screen and (min-width: 768px) {
+
+    .list-control-search__header {
+      margin: 0 0 6px;
+      text-align: left;
+    }
+
+    .list-control-search--summary {
+      width: 35%;
+      text-align: right;
+      position: absolute;
+      line-height: 15px;
+      right: 0;
+      bottom: 0;
+    }
+
+    .list-control-search--summary-loading {
+      position: absolute;
+      left: unset;
+      top: 5px;
+      right: 0;
+    }
+
+    .list-control-search--tags {
+      display: block;
+      width: 60%;
+      position: absolute;
+      left: 55px;
+      bottom: -3px;
+      line-height: 20px;
+    }
+
+    .list-control-search__content {
+      margin: 0;
+      padding: 15px 35px 0;
+      display: flex;
+    }
+
+    .list-control-search__input {
+      margin-bottom: 0;
+      margin-left: 15px;
+      flex: 1;
+    }
+
+    .list-control-search__input.list-control-search__input--button {
+      position: relative;
+      bottom: 0;
+      flex-grow: initial;
+      margin-top: 20px;
+      align-self: flex-end;
+    }
+
+    .list-control-search-mobile__toggle {
+      display: none;
+    }
+
+    .tag-list--title {
+      font-weight: 600;
+      display: inline-block;
+      position: absolute;
+      bottom: -3px;
+    }
+
+    .tag-list--item {
+      cursor: pointer;
+      display: inline-block;
+      margin: 0 13px;
+      padding: 0;
+      position: relative;
+    }
+
+    .list-control-filter {
+      display: block;
+      margin: 0 auto;
+      padding: 0 35px;
+    }
+
+    /* Desktop default: always show content, hide the toggle header */
+    .list-control-filter__header {
+      display: none;
+    }
+
+    .list-control-filter__content {
+      opacity: 1;
+      position: relative;
+      transform: none;
+      transition: none;
+      visibility: visible;
+      margin: 0;
+      padding: 5px 0 0;
+      width: 100%;
+      left: auto;
+    }
+
+    .list-control-filter__content .check-list {
+      opacity: 1;
+    }
+
+    /* Desktop toggle mode (data-desktop-filters="toggle"): same show/hide as mobile */
+    .list-control-filter.filters--desktop-toggle .list-control-filter__header {
+      display: block;
+    }
+
+    .list-control-filter.filters--desktop-toggle .list-control-filter__content {
+      margin-top: 0;
+      opacity: 0;
+      position: absolute;
+      transform: translateY(-2em);
+      transition: all .15s ease-in-out 0s, visibility 0s linear .15s, z-index 0s linear .01s;
+      visibility: hidden;
+    }
+
+    .list-control-filter.filters--desktop-toggle .list-control-filter__content .check-list {
+      opacity: 0;
+    }
+
+    .list-control-filter.filters--desktop-toggle.show-filters .list-control-filter__content {
+      background-color: #ddd;
+      opacity: 1;
+      position: relative;
+      transform: translateY(0);
+      transition-delay: 0s, 0s, .15s;
+      visibility: visible;
+      z-index: 1;
+    }
+
+    .list-control-filter.filters--desktop-toggle.show-filters .list-control-filter__content .check-list {
+      opacity: 1;
+      transition: all .15s, .3s ease-in;
+    }
+
+  } /* end @media 768px */
+
+
+  /* ── Wide desktop (1200px+) ───────────────────────────────────────────── */
+
+  @media (min-width: 1200px) {
+
+    .check-list--pool-length {
+      flex-direction: row;
+      margin-bottom: 0 !important;
+      margin-top: 0 !important;
+    }
+
+  } /* end @media 1200px */
 
 }
