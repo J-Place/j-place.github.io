@@ -47,6 +47,30 @@ _site/            # Build output (gitignored)
 | `swimmer.njk` | SWIMMER Magazine articles | `swimmer-page-header.njk` |
 | `swimmer-library.njk` | SWIMMER Magazine index/TOC | `swimmer-library-header.njk` |
 
+## `filters.js` — Shared list-control UI
+
+`src/js/filters.js` is loaded by the `clubs.njk` and `events.njk` layouts, and explicitly by `pool-lookup.njk`. It owns three generic UI behaviors shared across Club Finder, Events, and Pool Lookup:
+
+1. **Mobile search toggle** — `.list-control-search-mobile__toggle` shows/hides `.list-control-search__content` (as `display:flex`) and the entire `.list-control-filter` section together. Collapsing always resets More Filters to closed.
+2. **More Filters toggle** — `.toggle-filters` toggles `.show-filters` on `.list-control-filter`, animating the content in/out. Button text updates to "Fewer Filters" / "More Filters".
+3. **Checkbox tag pills** — watches all `input[type="checkbox"]` inside `.list-control-filter__content`. On change or tag-pill click, syncs `.list-control-search--tags` and dispatches a `filtersChanged` custom event on `document`. Label text is read from the associated `<label>` element — no hardcoded value maps needed.
+
+Page-specific filter logic (e.g. `pool-lookup.js`) listens for `filtersChanged` to re-run its own `applyFilters()`.
+
+### Desktop filter display
+
+By default, filters are always visible on desktop and the More Filters header is hidden via CSS. To opt a page into the desktop toggle (show/hide on desktop too), add `data-desktop-filters="toggle"` to the `.list-control-filter` element:
+
+```html
+<!-- Always open on desktop (default) -->
+<div class="list-control-filter">
+
+<!-- Toggle on desktop as well as mobile -->
+<div class="list-control-filter" data-desktop-filters="toggle">
+```
+
+`filters.js` reads the attribute and adds `.filters--desktop-toggle` to the element; the page's CSS uses that class to re-enable the animated show/hide on desktop. Pool Lookup's desktop toggle CSS is in `src/css/pool/pool-list-control.css`; clubs/events would add equivalent rules to `src/css/clubs.css`.
+
 ## Megamenu (`src/js/megamenu.js`)
 
 Custom JS replacement for the production React megamenu (from `common.min.js`). Matches production behavior:
