@@ -333,7 +333,7 @@
 
       
       
-<div class="section section-full p-mh-500">
+<div class="section section-full p-mh-750">
 	<div class="usms-container pool-lookup">
 		<div class="row">
 			<div class="col-xs-12">
@@ -344,11 +344,11 @@
 			<div class="list-control-search--tags"></div>
 			<i class="fa-solid fa-refresh fa-spin list-control-search--summary-loading" style="display:none;"></i>
 			<div class="list-control-search--summary">
-				Showing <strong class="summary-count">0</strong> location(s) within <strong class="summary-range">25 Miles</strong> of <strong class="summary-location">Tampa, FL</strong>
+				Showing <strong class="summary-count">0</strong> location(s) within <strong class="summary-range">10 Miles</strong> of <strong class="summary-location">Tampa, FL</strong>
 			</div>
 		</div>
 		<div class="list-control-search-mobile__toggle">Update Your Results</div>
-		<div class="list-control-search__content form-group is-flex">
+		<div class="list-control-search__content form-group">
 			<div class="list-control-search__input list-control-search__input--club-name">
 				<label for="search-filter__club-name">Search by Location Name</label>
 				<div class="input-group">
@@ -360,8 +360,8 @@
 				<label for="search-filter__range">Select a Range</label>
 				<div class="input-group">
 					<select id="search-filter__range" name="search-filter__range">
-						<option value="10">10 Miles</option>
-						<option value="25" selected="">25 Miles</option>
+						<option value="10" selected="">10 Miles</option>
+						<option value="25">25 Miles</option>
 						<option value="50">50 Miles</option>
 						<option value="100">100 Miles</option>
 						<option value="250">250 Miles</option>
@@ -440,7 +440,7 @@
 
 			</div>
 		</div>
-		<div class="row p-tb-50">
+		<div class="row">
 			<div class="col-xs-12">
 				<div class="list list--lookup locations">
 	<div class="list__container">
@@ -24607,23 +24607,26 @@
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="poolDetailName"></h5>
+				<h5 class="modal-title">Certified Courses</h5>
 				
-	<p class="pool-detail__address" id="poolDetailAddress"></p>
-	<p class="pool-detail__city-state" id="poolDetailCityState"></p>
+	<button type="button" class="btn-close" id="poolDetailClose" aria-label="Close"></button>
 
 			</div>
 			
 			<div class="modal-body">
-				
-	<div class="pool-detail__courses" id="poolDetailCourses"></div>
+					
+	<p>The courses that have been certified in our database are listed below. If a course is not certified, the meet's times will not count. <a href="https://www.usms.org/volunteer-central/guide-to-local-operations/event-management/top-10-and-records-and-tabulation/pool-length-form-and-measurement-procedures">Learn more here.</a></p>
+	<p class="location-name"><strong id="poolDetailName"></strong></p>
+	<div id="poolDetailCourses"></div>
+	<br>
+	<p>If your course is not listed, please contact USMS to have it added: <a href="mailto:events@usmastersswimming.org">events@usmastersswimming.org</a></p>
 
 			</div>
 			
 			
 			<div class="modal-footer">
 				
-	<button class="btn btn-lg btn-primary" type="button" id="poolDetailClose">Okay</button>
+	<button class="btn btn-md btn-primary" type="button" id="poolDetailConfirm">Okay</button>
 
 			</div>
 			
