@@ -1,9 +1,21 @@
 (function () {
   'use strict';
 
+  // ── Haversine distance (miles) ─────────────────────────────────────────────
+
+  function haversine(lat1, lng1, lat2, lng2) {
+    var R  = 3958.8; // Earth radius in miles
+    var d1 = (lat2 - lat1) * Math.PI / 180;
+    var d2 = (lng2 - lng1) * Math.PI / 180;
+    var a  = Math.sin(d1 / 2) * Math.sin(d1 / 2)
+           + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180)
+           * Math.sin(d2 / 2) * Math.sin(d2 / 2);
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  }
+
   // ── Modal ──────────────────────────────────────────────────────────────────
 
-  var modal   = document.getElementById('modalPoolDetail');
+  var modal    = document.getElementById('modalPoolDetail');
   var backdrop = document.createElement('div');
   backdrop.className = 'modal-backdrop fade in';
 
@@ -95,6 +107,10 @@
   var summaryRange  = document.querySelector('.summary-range');
   var summaryLoc    = document.querySelector('.summary-location');
 
+  // User's resolved coordinates from Google Places
+  var userLat = null;
+  var userLng = null;
+
   var courseTagMap = { '25y': 'SCY', '25m': 'SCM', '50m': 'LCM' };
 
   var courseLabels = {
@@ -103,6 +119,29 @@
     '50m':   'Long Course Meters',
     'other': 'Other'
   };
+
+  // ── Google Places Autocomplete ─────────────────────────────────────────────
+
+  window.initPoolPlaces = function () {
+    if (!locationInput || !window.google) return;
+    var ac = new google.maps.places.Autocomplete(locationInput, {
+      types: ['(regions)'],
+      componentRestrictions: { country: 'us' }
+    });
+    ac.addListener('place_changed', function () {
+      var place = ac.getPlace();
+      if (place.geometry && place.geometry.location) {
+        userLat = place.geometry.location.lat();
+        userLng = place.geometry.location.lng();
+      } else {
+        userLat = null;
+        userLng = null;
+      }
+      applyFilters();
+    });
+  };
+
+  // ── Tag pills ──────────────────────────────────────────────────────────────
 
   function syncTags() {
     if (!tagsContainer) return;
@@ -117,64 +156,55 @@
     });
   }
 
-  // Parse free-text location entry into a structured filter object.
-  // Handles: ZIP (34239), state abbr (FL), "City, ST", plain city.
+  // ── Location text fallback (no Places selection) ───────────────────────────
+
   function parseLocation(raw) {
     var s = raw.trim();
     if (!s) return null;
-
-    if (/^\d{5}$/.test(s)) {
-      return { zip: s };
-    }
-
+    if (/^\d{5}$/.test(s)) return { zip: s };
     if (s.indexOf(',') !== -1) {
       var parts = s.split(',');
-      return {
-        city:  parts[0].trim().toLowerCase(),
-        state: parts[1].trim().toLowerCase()
-      };
+      return { city: parts[0].trim().toLowerCase(), state: parts[1].trim().toLowerCase() };
     }
-
-    if (/^[a-zA-Z]{2}$/.test(s)) {
-      return { state: s.toLowerCase() };
-    }
-
+    if (/^[a-zA-Z]{2}$/.test(s)) return { state: s.toLowerCase() };
     return { city: s.toLowerCase() };
   }
 
   function itemMatchesLocation(item, parsed) {
     if (!parsed) return true;
-
-    if (parsed.zip) {
-      return (item.dataset.zip || '') === parsed.zip;
-    }
-
+    if (parsed.zip) return (item.dataset.zip || '') === parsed.zip;
     var cityOk  = !parsed.city  || (item.dataset.city  || '').toLowerCase().includes(parsed.city);
     var stateOk = !parsed.state || (item.dataset.state || '').toLowerCase().includes(parsed.state);
     return cityOk && stateOk;
   }
 
-  function updateSummary(count) {
-    if (summaryCount) summaryCount.textContent = count;
+  // ── Distance filter ────────────────────────────────────────────────────────
 
-    if (summaryRange && rangeSelect) {
-      var rangeVal = rangeSelect.options[rangeSelect.selectedIndex].text;
-      summaryRange.textContent = rangeVal;
-    }
-
-    if (summaryLoc && locationInput) {
-      var loc = locationInput.value.trim();
-      summaryLoc.textContent = loc || 'Nationwide';
-    }
+  function getSelectedRange() {
+    if (!rangeSelect) return null;
+    var val = rangeSelect.value;
+    if (val === 'max') return null; // Nationwide — no distance filter
+    return parseFloat(val);        // miles
   }
+
+  function itemMatchesDistance(item, rangeMiles) {
+    if (rangeMiles === null) return true;      // Nationwide
+    if (userLat === null || userLng === null) return true; // no user coords yet
+
+    var itemLat = parseFloat(item.dataset.lat);
+    var itemLng = parseFloat(item.dataset.lng);
+    if (isNaN(itemLat) || isNaN(itemLng)) return true; // no coords on item
+
+    return haversine(userLat, userLng, itemLat, itemLng) <= rangeMiles;
+  }
+
+  // ── Course filter ──────────────────────────────────────────────────────────
 
   function itemMatchesCourses(item, checkedValues) {
     if (!checkedValues.length) return true;
-
     var courses = [];
     try { courses = JSON.parse(item.dataset.courses || '[]'); } catch (e) {}
     var knownTags = Object.values(courseTagMap);
-
     return checkedValues.some(function (val) {
       if (val === 'other') {
         return courses.some(function (c) { return knownTags.indexOf(c.tag) === -1; })
@@ -185,19 +215,34 @@
     });
   }
 
-  function applyFilters() {
-    var nameQuery = nameInput     ? nameInput.value.trim().toLowerCase() : '';
-    var parsedLoc = locationInput ? parseLocation(locationInput.value)   : null;
+  // ── Summary ────────────────────────────────────────────────────────────────
 
+  function updateSummary(count) {
+    if (summaryCount) summaryCount.textContent = count;
+    if (summaryRange && rangeSelect) {
+      summaryRange.textContent = rangeSelect.options[rangeSelect.selectedIndex].text;
+    }
+    if (summaryLoc && locationInput) {
+      summaryLoc.textContent = locationInput.value.trim() || 'Nationwide';
+    }
+  }
+
+  // ── Apply all filters ──────────────────────────────────────────────────────
+
+  function applyFilters() {
+    var nameQuery     = nameInput ? nameInput.value.trim().toLowerCase() : '';
+    var rangeMiles    = getSelectedRange();
+    var parsedLoc     = (userLat === null && locationInput) ? parseLocation(locationInput.value) : null;
     var checkedValues = [];
     courseBoxes.forEach(function (cb) { if (cb.checked) checkedValues.push(cb.value); });
 
     var visible = 0;
     items.forEach(function (item) {
-      var nameOk    = !nameQuery || (item.dataset.name || '').toLowerCase().includes(nameQuery);
-      var locOk     = itemMatchesLocation(item, parsedLoc);
-      var courseOk  = itemMatchesCourses(item, checkedValues);
-      var show      = nameOk && locOk && courseOk;
+      var nameOk   = !nameQuery || (item.dataset.name || '').toLowerCase().includes(nameQuery);
+      var distOk   = itemMatchesDistance(item, rangeMiles);
+      var locOk    = distOk || itemMatchesLocation(item, parsedLoc); // fallback to text if no coords
+      var courseOk = itemMatchesCourses(item, checkedValues);
+      var show     = nameOk && (userLat !== null ? distOk : locOk) && courseOk;
       item.style.display = show ? '' : 'none';
       if (show) visible++;
     });
@@ -205,9 +250,10 @@
     updateSummary(visible);
   }
 
+  // ── Event listeners ────────────────────────────────────────────────────────
+
   submitBtn.addEventListener('click', applyFilters);
 
-  // Trigger on Enter in either text input
   [nameInput, locationInput].forEach(function (input) {
     if (!input) return;
     input.addEventListener('keydown', function (e) {
@@ -215,7 +261,18 @@
     });
   });
 
-  // Checkboxes filter immediately on change and sync tags
+  // Clear resolved coords if user edits the location field manually
+  if (locationInput) {
+    locationInput.addEventListener('input', function () {
+      userLat = null;
+      userLng = null;
+    });
+  }
+
+  if (rangeSelect) {
+    rangeSelect.addEventListener('change', applyFilters);
+  }
+
   courseBoxes.forEach(function (cb) {
     cb.addEventListener('change', function () {
       syncTags();
@@ -223,21 +280,19 @@
     });
   });
 
-  // Clicking a tag pill unchecks the corresponding checkbox and re-filters
   if (tagsContainer) {
     tagsContainer.addEventListener('click', function (e) {
       var tag = e.target.closest('.tag-list--item');
       if (!tag) return;
       var val = tag.dataset.courseValue;
-      courseBoxes.forEach(function (cb) {
-        if (cb.value === val) cb.checked = false;
-      });
+      courseBoxes.forEach(function (cb) { if (cb.value === val) cb.checked = false; });
       syncTags();
       applyFilters();
     });
   }
 
-  // Default filter: Tampa, FL
+  // ── Init ───────────────────────────────────────────────────────────────────
+
   if (locationInput) locationInput.value = 'Tampa, FL';
   syncTags();
   applyFilters();
