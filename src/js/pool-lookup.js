@@ -43,10 +43,11 @@
     modal.style.display = 'block';
     modal.classList.add('show');
     modal.removeAttribute('aria-hidden');
+    var scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
     document.body.appendChild(backdrop);
     document.body.classList.add('modal-open');
     document.body.style.overflow = 'hidden';
-    document.body.style.paddingRight = '0px';
+    document.body.style.paddingRight = scrollbarWidth + 'px';
   }
 
   function closeModal() {
