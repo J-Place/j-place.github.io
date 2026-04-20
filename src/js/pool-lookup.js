@@ -37,14 +37,15 @@
           + '<td>' + (c.type      || '')              + '</td>'
           + '<td>' + (c.lanes     != null ? c.lanes     : '') + '</td>'
           + '<td>' + (c.touchpads != null ? c.touchpads : '') + '</td>'
-          + '<td>' + (c.certified ? 'Yes' : 'No')    + '</td>'
+          + '<td>' + (c.certified ? (c.certifiedDate || 'Yes') : 'No') + '</td>'
+          + '<td>' + (c.measured  ? (c.measuredDate  || 'Yes') : 'No') + '</td>'
           + '</tr>';
       }).join('');
       coursesEl.innerHTML =
         '<table class="table table-sm pool-detail__table">'
         + '<thead><tr>'
         + '<th>Course</th><th>Length</th><th>Type</th>'
-        + '<th>Lanes</th><th>Touchpads</th><th>Certified</th>'
+        + '<th>Lanes</th><th>Touchpads</th><th>Certified</th><th>Measured</th>'
         + '</tr></thead>'
         + '<tbody>' + rows + '</tbody>'
         + '</table>';
@@ -100,7 +101,6 @@
   var nameInput     = document.querySelector('input[name="search-filter__club-name"]');
   var locationInput = document.getElementById('locationSearch');
   var courseBoxes   = document.querySelectorAll('input[name="check-list--searchCourseTypes"]');
-  var tagsContainer = document.querySelector('.list-control-search--tags');
   var rangeSelect   = document.getElementById('search-filter__range');
   var items         = document.querySelectorAll('.list-item[data-location-id]');
   var summaryCount  = document.querySelector('.summary-count');
@@ -112,13 +112,6 @@
   var userLng = null;
 
   var courseTagMap = { '25y': 'SCY', '25m': 'SCM', '50m': 'LCM' };
-
-  var courseLabels = {
-    '25y':   'Short Course Yards',
-    '25m':   'Short Course Meters',
-    '50m':   'Long Course Meters',
-    'other': 'Other'
-  };
 
   // ── Google Places Autocomplete ─────────────────────────────────────────────
 
@@ -140,21 +133,6 @@
       applyFilters();
     });
   };
-
-  // ── Tag pills ──────────────────────────────────────────────────────────────
-
-  function syncTags() {
-    if (!tagsContainer) return;
-    tagsContainer.innerHTML = '';
-    courseBoxes.forEach(function (cb) {
-      if (!cb.checked) return;
-      var tag = document.createElement('span');
-      tag.className = 'tag-list--item';
-      tag.textContent = courseLabels[cb.value] || cb.value;
-      tag.dataset.courseValue = cb.value;
-      tagsContainer.appendChild(tag);
-    });
-  }
 
   // ── Location text fallback (no Places selection) ───────────────────────────
 
@@ -193,7 +171,7 @@
 
     var itemLat = parseFloat(item.dataset.lat);
     var itemLng = parseFloat(item.dataset.lng);
-    if (isNaN(itemLat) || isNaN(itemLng)) return true; // no coords on item
+    if (isNaN(itemLat) || isNaN(itemLng)) return false; // no coords — exclude when range is active
 
     return haversine(userLat, userLng, itemLat, itemLng) <= rangeMiles;
   }
@@ -273,28 +251,13 @@
     rangeSelect.addEventListener('change', applyFilters);
   }
 
-  courseBoxes.forEach(function (cb) {
-    cb.addEventListener('change', function () {
-      syncTags();
-      applyFilters();
-    });
-  });
-
-  if (tagsContainer) {
-    tagsContainer.addEventListener('click', function (e) {
-      var tag = e.target.closest('.tag-list--item');
-      if (!tag) return;
-      var val = tag.dataset.courseValue;
-      courseBoxes.forEach(function (cb) { if (cb.value === val) cb.checked = false; });
-      syncTags();
-      applyFilters();
-    });
-  }
+  // Checkbox changes and tag pill removals are handled by filters.js;
+  // it dispatches 'filtersChanged' when the selection changes.
+  document.addEventListener('filtersChanged', applyFilters);
 
   // ── Init ───────────────────────────────────────────────────────────────────
 
   if (locationInput) locationInput.value = 'Tampa, FL';
-  syncTags();
   applyFilters();
 
 }());
