@@ -20,14 +20,14 @@ breadcrumbs:
 {% include "partials/page-header.njk" %}
 {% endblock %} #}
 {% block content %}
-<div class="section section-full p-mh-500">
+<div class="section section-full p-mh-750">
 	<div class="usms-container pool-lookup">
 		<div class="row">
 			<div class="col-xs-12">
 				{% include "partials/pool-lookup-filters.njk" %}
 			</div>
 		</div>
-		<div class="row p-tb-50">
+		<div class="row">
 			<div class="col-xs-12">
 				{% include "partials/pool-lookup-results.njk" %}
 			</div>
@@ -38,16 +38,19 @@ breadcrumbs:
 {% set modalId = "modalPoolDetail" %}
 {% set modalModifier = "pool-location-detail" %}
 {% set modalSize = "lg" %}
-{% set modalTitleId = "poolDetailName" %}
+{% set modalTitle = "Certified Courses" %}
 {% set modalHeaderExtra %}
-	<p class="pool-detail__address" id="poolDetailAddress"></p>
-	<p class="pool-detail__city-state" id="poolDetailCityState"></p>
+	<button type="button" class="btn-close" id="poolDetailClose" aria-label="Close"></button>
 {% endset %}
-{% set modalBody %}
-	<div class="pool-detail__courses" id="poolDetailCourses"></div>
+{% set modalBody %}	
+	<p>The courses that have been certified in our database are listed below. If a course is not certified, the meet's times will not count. <a href="https://www.usms.org/volunteer-central/guide-to-local-operations/event-management/top-10-and-records-and-tabulation/pool-length-form-and-measurement-procedures">Learn more here.</a></p>
+	<p class="location-name"><strong id="poolDetailName"></strong></p>
+	<div id="poolDetailCourses"></div>
+	<br>
+	<p>If your course is not listed, please contact USMS to have it added: <a href="mailto:events@usmastersswimming.org">events@usmastersswimming.org</a></p>
 {% endset %}
 {% set modalFooter %}
-	<button class="btn btn-lg btn-primary" type="button" id="poolDetailClose">Okay</button>
+	<button class="btn btn-md btn-primary" type="button" id="poolDetailConfirm">Okay</button>
 {% endset %}
 {% include "components/modal.njk" %}
 {% endblock %}

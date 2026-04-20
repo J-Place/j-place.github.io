@@ -21,34 +21,25 @@
 
   function openModal(data) {
     document.getElementById('poolDetailName').textContent = data.name;
-    document.getElementById('poolDetailAddress').textContent = data.address;
-    document.getElementById('poolDetailCityState').textContent =
-      data.city + ', ' + data.state + ' ' + data.zip;
-
     var courses = [];
     try { courses = JSON.parse(data.courses || '[]'); } catch (e) {}
 
     var coursesEl = document.getElementById('poolDetailCourses');
     if (courses.length) {
-      var rows = courses.map(function (c) {
-        return '<tr>'
-          + '<td>' + (c.tag       || '')              + '</td>'
-          + '<td>' + (c.length    || '')              + '</td>'
-          + '<td>' + (c.type      || '')              + '</td>'
-          + '<td>' + (c.lanes     != null ? c.lanes     : '') + '</td>'
-          + '<td>' + (c.touchpads != null ? c.touchpads : '') + '</td>'
-          + '<td>' + (c.certified ? (c.certifiedDate || 'Yes') : 'No') + '</td>'
-          + '<td>' + (c.measured  ? (c.measuredDate  || 'Yes') : 'No') + '</td>'
-          + '</tr>';
+      var items = courses.map(function (c) {
+        var poolName    = c.pool || data.name;
+        var line1       = poolName + (c.length ? ' - ' + c.length : '');
+        var certified   = c.certified
+          ? 'Certified ' + (c.certifiedDate || '')
+          : 'Not Certified';
+        var touchpadTxt = '1 Touchpad, 2 Touchpads, No Touchpads';
+        var line2 = certified + (touchpadTxt ? ' \u2013 ' + touchpadTxt : '');
+        return '<li class="pool-course-item">'
+          + line1
+          + '<span class="pool-course-item__meta">' + line2 + '</span>'
+          + '</li>';
       }).join('');
-      coursesEl.innerHTML =
-        '<table class="table table-sm pool-detail__table">'
-        + '<thead><tr>'
-        + '<th>Course</th><th>Length</th><th>Type</th>'
-        + '<th>Lanes</th><th>Touchpads</th><th>Certified</th><th>Measured</th>'
-        + '</tr></thead>'
-        + '<tbody>' + rows + '</tbody>'
-        + '</table>';
+      coursesEl.innerHTML = '<ul class="pool-course-list">' + items + '</ul>';
     } else {
       coursesEl.innerHTML = '';
     }
@@ -90,7 +81,10 @@
     });
 
     document.getElementById('poolDetailClose').addEventListener('click', closeModal);
-    backdrop.addEventListener('click', closeModal);
+    document.getElementById('poolDetailConfirm').addEventListener('click', closeModal);
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) closeModal();
+    });
   }
 
   // ── Search filters ─────────────────────────────────────────────────────────
@@ -257,7 +251,25 @@
 
   // ── Init ───────────────────────────────────────────────────────────────────
 
-  if (locationInput) locationInput.value = 'Tampa, FL';
-  applyFilters();
+  // Forward-geocode a text address via Nominatim and apply filters.
+  function geocodeAddress(address) {
+    if (!address) { applyFilters(); return; }
+    fetch(
+      'https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=us&q=' + encodeURIComponent(address),
+      { headers: { 'Accept-Language': 'en-US,en' } }
+    )
+    .then(function (r) { return r.json(); })
+    .then(function (results) {
+      if (results && results[0]) {
+        userLat = parseFloat(results[0].lat);
+        userLng = parseFloat(results[0].lon);
+      }
+      applyFilters();
+    })
+    .catch(function () { applyFilters(); });
+  }
+
+  if (locationInput) locationInput.value = 'Sarasota, FL';
+  geocodeAddress(locationInput ? locationInput.value : '');
 
 }());
