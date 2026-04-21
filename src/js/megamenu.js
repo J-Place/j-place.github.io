@@ -198,5 +198,70 @@
         }
       });
     }
+
+    // ── Mobile menu ────────────────────────────────────────────────────────────
+
+    var mobileToggle = document.querySelector('.mega-main-menu__toggle-mobile');
+    var mobileMenu   = document.querySelector('.mobile-menu');
+    var mobileClose  = document.querySelector('.mobile-menu__toggle');
+
+    if (mobileToggle && mobileMenu) {
+      // Start in the slide-up (closed) position
+      mobileMenu.style.transform = 'translateY(-100%)';
+
+      function openMobileMenu() {
+        closeMenu();
+        closeLogin();
+        closeSearch();
+        mobileMenu.style.transition = 'transform 0.3s ease-in-out, opacity 0.3s ease-in-out';
+        mobileMenu.style.zIndex     = '100';
+        mobileMenu.style.opacity    = '1';
+        mobileMenu.style.transform  = 'translateY(0)';
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeMobileMenu() {
+        mobileMenu.style.transition = 'transform 0.3s ease-in-out, opacity 0.3s ease-in-out';
+        mobileMenu.style.opacity   = '0';
+        mobileMenu.style.transform = 'translateY(-100%)';
+        document.body.style.overflow = '';
+        // Move behind other content once the slide-out finishes
+        setTimeout(function () {
+          if (parseFloat(mobileMenu.style.opacity) === 0) {
+            mobileMenu.style.zIndex = '-1';
+          }
+        }, 300);
+      }
+
+      mobileToggle.addEventListener('click', openMobileMenu);
+      if (mobileClose) mobileClose.addEventListener('click', closeMobileMenu);
+
+      // Close on Escape
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && mobileMenu.style.zIndex !== '-1') closeMobileMenu();
+      });
+
+      // ── Mobile submenu accordion ─────────────────────────────────────────────
+
+      document.querySelectorAll('.mobile-menu-overlay__item-content').forEach(function (content) {
+        var chevron   = content.querySelector('.fa-chevron-right');
+        var container = content.nextElementSibling; // .mobile-menu-overlay__submenu-container
+
+        // Items without submenus (no chevron) get no click handler
+        if (!chevron || !container) return;
+
+        content.addEventListener('click', function () {
+          var isOpen = container.style.maxHeight && container.style.maxHeight !== '0px';
+          if (isOpen) {
+            container.style.maxHeight = '0px';
+            chevron.classList.remove('fa--rotate');
+          } else {
+            container.style.maxHeight = container.scrollHeight + 'px';
+            chevron.classList.add('fa--rotate');
+          }
+        });
+      });
+    }
+
   });
 })();
