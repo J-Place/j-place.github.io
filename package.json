@@ -4,13 +4,23 @@
   "main": "index.js",
   "scripts": {
     "build": "eleventy",
-    "dev": "eleventy --serve --port=8080"
+    "dev": "eleventy --serve --port=8080",
+    "build:css": "node scripts/build-css.js",
+    "build:css:common": "node scripts/build-css.js common"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@11ty/eleventy": "^3.1.5"
+    "@11ty/eleventy": "^3.1.5",
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.10",
+    "postcss-calc": "^10.1.1",
+    "postcss-custom-media": "^12.0.1",
+    "postcss-custom-properties": "^15.0.1",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-import": "^16.1.1",
+    "postcss-nested": "^7.0.2"
   }
 }

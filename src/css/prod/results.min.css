@@ -1,0 +1,119 @@
+/* === views/Forms/ClubFilterForm.css === */
+/* media queries */
+:root {
+  /* Typography */
+
+  /* Colors */
+  --color-primary: #0068AD;
+  --color-primary-hover: #267fb9;
+  --color-dark-blue: #071C31;
+  --color-lt-blue: #DBE7F1;
+  --color-red: #D2202E;
+  --color-gray: #F4F4F4;
+
+    /* RTE Colors */
+  --rte-blue: #0068AD;
+  --rte-blue-hover: #267fb9;
+
+  /* LaneMate Colors */
+    --lm-blue: #092c5c;
+    --lm-blue-rgb: rgb(9, 44, 92);
+    --lm-blue-md: #084c89;
+    --lm-blue-lt: #8FBCE6;
+    --lm-blue-xlt: #eaf4ff;
+    --lm-blue-hover: var(--lm-blue-md);
+
+  /* breakpoints */
+  --screen-xs: 480px;
+  --screen-sm: 768px;
+  --screen-md: 992px;
+  --screen-lg: 1200px;
+  --screen-xl: 1400px;
+}
+.filter-form {
+  background-color: #FFF;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  -webkit-box-shadow: 0 0 15px rgba(0,0,0,0.1);
+          box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  position: relative;
+}
+.filter-form .form-group,
+.filter-form .input-group {
+  margin-bottom: 0;
+}
+.filter-form__filters {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+.filter-form button.btn-danger {
+  border: 1px solid transparent;
+}
+.filter-form__title {
+  margin-bottom: 1rem;
+}
+.filter-form__filters,
+.filter-form__zip label {
+  padding-top: 8px;
+  white-space: nowrap;
+}
+.filter-form__dropdown-container i {
+  -webkit-transition: -webkit-transform 0.15s ease;
+  transition: -webkit-transform 0.15s ease;
+  transition: transform 0.15s ease;
+  transition: transform 0.15s ease, -webkit-transform 0.15s ease;
+}
+.filter-form .filter-form__dropdown {
+  left: -1.5rem;
+}
+@media (min-width: 768px) {
+  .filter-form button.btn-danger {
+    min-width: 100px;
+  }
+}
+@media (min-width: 992px) {
+  .filter-form__title {
+    margin-bottom: 0;
+    overflow: initial;
+  }
+  .filter-form__dropdown-container i.fa-chevron-down {
+    height: 17px;
+  }
+}
+
+
+/* === views/Event/EventsFilterForm.css === */
+.filter-form__input-search span {
+  color: #0068AD;
+}
+
+.filter-form-title {
+  margin-bottom: 30px;
+}
+
+.filter-form__filters--open {
+  color: #0068AD;
+}
+
+.filter-form__zip-label {
+  padding-top: 7px;
+}
+
+.filter-form__show-all {
+  width: 100%;
+}
+
+.events-summary-content .filter-form__title .input-group {
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+}
+
+.events-summary-content .filter-form__title .input-group > div {
+  width: 100%;
+}
+
+.events-summary-content .filter-form__title .input-group .input-group-btn .btn {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  margin-left: -1px;
+ }
