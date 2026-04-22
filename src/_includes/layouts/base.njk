@@ -17,7 +17,7 @@
 <body class="">
   <div id="main-container">
     <header class="header-static">
-      {% include "partials/header.njk" %}
+      {% include "partials/Navigation/MegaMainMenu.njk" %}
       {% block siteHeader %}{% endblock %}
     </header>
     <main role="main">
@@ -26,7 +26,7 @@
       {% block content %}{% endblock %}
     </main>
   </div>
-  {% include "partials/footer.njk" %}
+  {% include "partials/Navigation/Footer.njk" %}
   <script src="/js/megamenu.js" defer></script>
   {% block pageJS %}{% endblock %}
   {% if dev.env === "dev" %}

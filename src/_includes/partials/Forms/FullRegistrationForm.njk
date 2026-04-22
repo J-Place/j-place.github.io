@@ -8,30 +8,30 @@
 				<div id="registration_form">
 					<div class="full-registration-form" data-membership-level="{{ swimmer.membership.tier if swimmer else '' }}">
 
-						{% include "partials/registration-contact.njk" %}
+						{% include "partials/Forms/ContactInformation.njk" %}
 
-						{% include "partials/registration-club.njk" %}
+						{% include "partials/Forms/ClubInformation.njk" %}
 
-						{% include "partials/registration-interests.njk" %}
+						{% include "partials/Forms/Interests.njk" %}
 
-						{% include "partials/registration-liability.njk" %}
+						{% include "partials/Forms/Liability.njk" %}
 
 						<div class="registration-step registration-step--payment">
 							<form class="form-membership-length form-horizontal">
 								<input type="hidden" name="current-reg-year" value="2026">
 								<input type="hidden" name="magazineAddonPrice" value="10">
 
-								{% include "partials/registration-participation.njk" %}
+								{% include "partials/Forms/Participation.njk" %}
 
-								{% include "partials/registration-membership-options.njk" %}
+								{% include "partials/Forms/MembershipOptions.njk" %}
 
-								{% include "partials/registration-competition-cert.njk" %}
+								{% include "partials/Forms/CompetitionCert.njk" %}
 
-								{% include "partials/registration-vsa.njk" %}
+								{% include "partials/Forms/Vsa.njk" %}
 
-								{% include "partials/donations.njk" %}
+								{% include "partials/Forms/Donations.njk" %}
 
-								{% include "partials/registration-payment.njk" %}
+								{% include "partials/Forms/Payment.njk" %}
 
 							</form>
 						</div>

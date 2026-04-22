@@ -1,16 +1,15 @@
 {% extends "layouts/base.njk" %}
 {% block pageCSS %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/theme.min.css">
+<link rel="stylesheet" href="/css/prod/events.min.css">
 <link rel="stylesheet" href="https://www.usms.org/styles/algoliaStyles.min.css">
 <link rel="stylesheet" href="https://www.usms.org/styles/algoliaEventSearch.min.css">
 <link rel="stylesheet" href="/css/events.css">
 {% endblock %}
 {% block breadcrumb %}
-{% include "partials/breadcrumb.njk" %}
+{% include "partials/Common/Breadcrumb.njk" %}
 {% endblock %}
 {% block pageHeader %}
-{% include "partials/page-header.njk" %}
+{% include "partials/Event/EventHeader.njk" %}
 {% endblock %}
 {% block content %}{{ content | safe }}{% endblock %}
 {% block pageJS %}

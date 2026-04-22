@@ -63,10 +63,23 @@ const bundles = {
     'views/Media/YoutubeVideo.css',
     'views/Navigation/Footer.css',
     'views/Navigation/FooterMenu.css',
+    'views/Navigation/Navigation.css',
+    'views/Navigation/MegaMainMenu.css',
+    'views/Navigation/LoginMenu.css',
+    'views/Navigation/MegaMenuOverlay.css',
+    'views/Navigation/MobileMenu.css',
+    'views/Navigation/MobileMenuOverlay.css',
+    'views/Navigation/MobileMenuOverlayItem.css',
+    'views/Navigation/Search.css',
     'views/Social/Subscribe.css',
     'views/Social/SocialShare.css',
     'views/Social/SocialShareIcons.css',
     'views/Accounts/MyAccount.css',
+    'views/Media/Carousel.css',
+    'views/Media/ImageSlider.css',
+    'views/PageContent/Personalize.css',
+    'views/PageContent/Date.css',
+    'views/PageContent/Location.css',
   ],
 
   clubs: [
@@ -98,7 +111,25 @@ const bundles = {
     'views/Event/EventsFilterForm.css',
   ],
 
-  sanctions: [],
+  sanctions: [
+    'views/Sanctions/sanctionsEvents.css',
+    'views/Sanctions/sanctionsAddEvent.css',
+    'views/Sanctions/sanctionsEditEvent.css',
+    'views/Sanctions/sanctionsLogin.css',
+    'views/Sanctions/SanctionSubmit/sanctionSubmit.css',
+    'views/Sanctions/SectionEntryInformation/sectionEntryInformation.css',
+    'views/Sanctions/SectionLocation/sectionLocation.css',
+    'views/Sanctions/SectionMeetAnnouncement/sectionMeetAnnouncement.css',
+    'views/Sanctions/ContentFreeze/modal.css',
+  ],
+
+  mastersAddons: [
+    'views/Masters/AddOns/AddOns.css',
+    'views/Masters/AddOns/MastersAddOns.css',
+    'views/Masters/AddOns/Payment.css',
+    'views/Forms/AddOn.css',
+    'views/Forms/CoachAddon.css',
+  ],
 
   workouts: [
     'views/Workout/ListControl.css',
