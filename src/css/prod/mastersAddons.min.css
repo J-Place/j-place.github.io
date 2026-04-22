@@ -1,0 +1,447 @@
+/* === views/Masters/AddOns/AddOns.css === */
+.usms-container.form__container h3,
+.usms-container .current-product h3,
+.usms-container .product-group h3,
+.usms-container .billing-information h3,
+.usms-container .payment-information h3 {
+  margin: 0 0 1rem;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
+/* button:disabled,
+button[disabled] {
+  background-color: #CCC !important;
+  color: #FFF !important;
+} */
+
+.product-group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  /* align-items: flex-start; */
+  margin: 2rem auto 0;
+}
+
+@media (min-width: 1200px) {
+  .product-group {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    margin-bottom: 4rem;
+  }
+}
+
+.product-option {
+  text-align: center;
+  vertical-align: top;
+  -webkit-transition: opacity .25s ease;
+  transition: opacity .25s ease;
+  cursor: pointer;
+  opacity: 1;
+  border: 1px solid #ddd;
+  -webkit-box-shadow: 0 0 20px #ccc;
+          box-shadow: 0 0 20px #ccc;
+  height: auto;
+  width: 100%;
+  margin: 0 0.5rem 2rem;
+  padding: 0 0 7rem;
+  position: relative;
+}
+
+.product-option-select-btn {
+  padding-bottom: 13rem;
+}
+
+.current-product a,
+.product-option a {
+  text-decoration: underline;
+}
+
+.product-option.selected {
+    border: 3px solid #0068ad;
+    margin-top: -2px;
+    padding-bottom: 12.4rem;
+    margin-bottom: 1.8rem;
+}
+
+.product-option.selected ul {
+    padding: 0 2.7rem 0.75rem 3.3rem;
+}
+
+.product-option.selected .product-name {
+    background-color: #0068ad;
+}
+
+.product-option.selected .product-summary {
+    margin-bottom: -0.2rem;
+}
+
+.product-group select {
+  width: 180px;
+  margin: 0 auto 2rem;
+  bottom: 9rem;
+  border-radius: 5px;
+  height: 4.4rem;
+  padding: 0;
+  font-size: 1.75rem;
+  text-indent: 15px;
+  color: #656565;
+}
+
+.btn.add-on {
+  position: absolute;
+  margin-top: 2rem;
+  margin-left: 4rem;
+  margin-right: 4rem;
+  left: 0;
+  right: 0;
+  bottom: 3rem;
+  width: 12rem;
+  margin: 0 auto;
+}
+
+.product-option .product-summary+.form-group {
+  position: absolute;
+  bottom: 6rem;
+  left: 0;
+  right: 0;
+}
+
+@media (min-width: 1200px) {
+  .product-option {
+    max-width: 260px;
+    height: auto;
+    padding-bottom: 13rem;
+  }
+
+  /* .product-option-select-btn {
+        padding-bottom: 13rem;
+    } */
+  .product-group select {
+    margin-bottom: 0.5rem;
+  }
+
+  /* .product-group {
+        justify-content: center;
+        align-items: baseline;
+    } */
+  /* .btn.add-on {
+        position: absolute;
+        margin-top: 2rem;
+        margin-left: 4rem;
+        margin-right: 4rem;
+        left: 0;
+        right: 0;
+        bottom: 3rem;
+    } */
+  #addVideoStrokeAnalysis {
+    margin-top: 0;
+  }
+}
+
+p.product-name {
+  font-weight: 500;
+  width: 100%;
+}
+
+p span.product-type {
+  font-weight: 300;
+  padding-left: 0.7rem;
+}
+
+.current-product__summary {
+  display: none;
+  background-color: #0068ad;
+  margin-bottom: 5rem;
+}
+
+.current-product__summary p {
+  color: #FFF;
+}
+
+.current-product__renewal-date {
+  margin: 0 0 1rem;
+}
+
+.current-product__renewal-date.current-product--selected,
+.current-product__summary.current-product--selected {
+  /* display: block; */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.product-option p.product-selected-label {
+  font-size: 1.6rem;
+  margin: 0;
+  padding: 0;
+  font-weight: 500;
+  /* height: 5rem;
+    line-height: 5rem; */
+}
+
+.current-product .current-product__summary p {
+  font-size: 1.8rem;
+  margin: 0;
+  padding: 0;
+  line-height: 120%;
+}
+
+.product-option p {
+  font-size: 1.8rem;
+  margin: 0;
+  padding: 0;
+  line-height: 120%;
+}
+
+.product-option a {
+  margin: 0;
+  padding: 0;
+  /* height: 5rem;
+    line-height: 5rem; */
+  font-size: 1.6rem;
+}
+
+.current-product__summary p.product-name,
+.current-product__summary p.product-price {
+  margin-right: 1rem;
+  margin-bottom: 0;
+  font-size: 1.8rem;
+  padding: 1rem 2rem;
+}
+
+.current-product .product-name,
+.current-product .product-type,
+.current-product .product-price {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  color: #FFF;
+}
+
+.product-option .product-name,
+.product-option .product-type {
+  padding: 0.5rem;
+  font-size: 1.6rem;
+  background-color: #777;
+  color: #FFF;
+  -webkit-box-flex: 1;
+      -ms-flex: auto;
+          flex: auto;
+}
+
+.product-option.product-option-selected {
+  border: 3px solid #0068ad;
+  border-top-width: 1px;
+}
+
+p.switch-product-label,
+p.product-selected-label {
+  height: 5rem;
+  line-height: 5rem;
+  /* display: block; */
+}
+
+.product-selected-label {
+  display: none;
+}
+
+.product-option-selected .product-selected-label {
+  display: block;
+}
+
+.product-option-selected .switch-product-label {
+  display: none;
+}
+
+.product-option.product-option-selected .product-name,
+.product-option.product-option-selected .product-type {
+  background-color: #0068ad;
+}
+
+.product-option .product-price {
+  -webkit-box-flex: 100%;
+      -ms-flex: 100% 1;
+          flex: 100% 1;
+  margin: 0;
+  padding-top: 2rem;
+  padding-bottom: 0;
+  padding-left: 0;
+  font-size: 2.3rem;
+  font-weight: 700;
+}
+
+@media (min-width: 1200px) {
+  .product-option .product-price {
+    padding-top: 1.5rem;
+  }
+}
+
+.product-summary {
+  display: block;
+  width: 100%;
+  margin: 1rem auto 2rem;
+}
+
+.product-summary p {
+  margin: 0 2rem;
+  font-size: 1.4rem;
+  line-height: 130%;
+}
+
+.product-summary ul {
+  text-align: left;
+  margin: 0 0 2rem;
+  padding: 0 3rem 0 3.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-flex: 1;
+      -ms-flex: auto;
+          flex: auto;
+}
+
+.product-group .product-option .product-summary li {
+  margin: 0 0 0.5rem;
+  font-size: 1.4rem;
+  line-height: 130%;
+}
+
+.product-group .product-option.product-option_lanemate-monthly,
+.product-group .product-option.product-option_lanemate-yearly,
+.product-group .product-option.product-option_usms-yearly {
+  padding-bottom: 2rem;
+}
+
+.add-on-products .btn:focus,
+.add-on-products .btn:hover {
+  color: #0068ad;
+}
+
+
+/* === views/Masters/AddOns/MastersAddOns.css === */
+.masters-addons h3 {
+  color: #434343;
+  font-size: 2.4rem;
+  font-weight: 400;
+  text-align: center;
+  margin: 2.4rem auto 3rem;
+}
+
+
+/* === views/Masters/AddOns/Payment.css === */
+.lane-mate-addons .card.payment-info {
+  border-bottom: 0;
+}
+
+
+/* === views/Forms/AddOn.css === */
+.addon .membership-length__form-header {
+  color: #0068ad;
+}
+
+.add-on p.membership-length__form-summary {
+  margin: 0 auto 2rem;
+  padding: 0 1rem;
+  text-align: center;
+  font-size: 20px;
+}
+
+#stroke-video-analysis__focus {
+  width: 223px;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  border-color: rgb(204, 204, 204);
+  margin-left: 5px;
+}
+
+.card.video-stroke-analysis .form-group {
+  margin: 0 auto;
+}
+
+.card__total {
+  font-size: 20.8px;
+  font-size: 1.3rem;
+  color: #434343;
+  margin: 48px auto 16px;
+  margin: 3rem auto 1rem;
+  text-align: right;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.video-stroke-analysis .form-group label {
+  padding-left: 3.2rem;
+  text-indent: -2.8rem;
+}
+
+@media (min-width: 576px) {
+  .video-stroke-analysis .form-group label {
+    white-space: nowrap;
+    padding-left: 0;
+    text-indent: 0;
+  }
+}
+
+@media (min-width: 1200px) {
+  .card.video-stroke-analysis .form-group {
+    width: 500px;
+  }
+
+  /* .add-on p.membership-length__form-summary {
+    padding: 0 8rem;
+  } */
+}
+
+@media (min-width: 1200px) {
+
+  p.addon__registration {
+    padding: 0 8rem !important;
+  }
+
+}
+
+
+/* === views/Forms/CoachAddon.css === */
+a.coach-addon__benefits {
+  cursor: pointer;
+}
+
+#checkbox-coach-yes__label {
+	font-weight: 700;
+}
+
+.card.coach-alts-certification .form-group {
+  margin: 0 auto;
+}
+
+.form-group.agree-coach-alts-certification .radio-container {
+  width: 0px;
+  margin-right: 0;
+}
+
+.form-group.agree-coach-alts-certification .radio-label {
+  padding-left: 28px;
+}
+
+p.coach-addon__text {
+  text-align: center;
+}
+
+@media (min-width: 1200px) {
+  .card.coach-alts-certification .form-group {
+      width: 500px;
+  }
+}
