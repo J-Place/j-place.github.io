@@ -57,7 +57,10 @@ const bundles = {
     'views/Forms/ContactInformation.css',
     'views/Forms/SignUp.css',
     'views/Forms/LoginForm.css',
+    'views/Forms/LoginFormOverlay.css',
     'views/Forms/Input.css',
+    'views/Forms/Select.css',
+    'views/Forms/ContactModal.css',
     'views/Forms/SitecoreForms.css',
     'views/Media/HeroImage.css',
     'views/Media/YoutubeVideo.css',
@@ -84,6 +87,7 @@ const bundles = {
 
   clubs: [
     'pages/Club.css',
+    'views/Club/ClubList2.css',
     'views/PageContent/CallToAction.css',
     'views/Forms/LoginForm.css',
     'views/Forms/ContactInformation.css',

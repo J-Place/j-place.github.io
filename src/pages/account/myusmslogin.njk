@@ -1,0 +1,29 @@
+---
+permalink: /account/myusmslogin/index.html
+title: Log In | U.S. Masters Swimming
+pageTitle: Log In
+breadcrumbs:
+  - url: "/home"
+    label: "Home"
+breadcrumbTitle: "Log In"
+swimmerId: "loggedOut"
+devSwimmerIds:
+  - loggedOut
+  - nonMember
+  - standardCurrent
+  - standardExpired
+---
+{% extends "layouts/base.njk" %}
+
+{% block pageCSS %}
+<link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
+<link rel="stylesheet" href="/css/login.css">
+{% endblock %}
+
+{% block breadcrumb %}
+{% include "partials/Common/Breadcrumb.njk" %}
+{% endblock %}
+
+{% block content %}
+{% include "partials/Forms/LoginForm.njk" %}
+{% endblock %}
