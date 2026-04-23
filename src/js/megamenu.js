@@ -72,11 +72,19 @@
       overlay.style.display = 'none';
     }
 
+    function setDevSelectPointerEvents(val) {
+      var sel = document.querySelector('.login-status__select');
+      if (sel) sel.style.pointerEvents = val;
+    }
+
     function closeLogin() {
       var lw = document.querySelector('.mega-main-menu__actions-login--wrapper');
       var ll = document.querySelector('.login__list');
       if (lw) lw.classList.remove('login--active');
       if (ll) ll.classList.remove('login--shown');
+      var lc = document.querySelector('.login__items-container');
+      if (lc) lc.style.zIndex = '';
+      setDevSelectPointerEvents('');
     }
 
     function populateOverlay(item) {
@@ -141,10 +149,15 @@
     }, { passive: true });
 
     // Login toggle
-    var loginWrapper = document.querySelector('.mega-main-menu__actions-login--wrapper');
-    var loginList    = document.querySelector('.login__list');
+    var loginWrapper   = document.querySelector('.mega-main-menu__actions-login--wrapper');
+    var loginList      = document.querySelector('.login__list');
+    var loginContainer = document.querySelector('.login__items-container');
 
     if (loginWrapper && loginList) {
+      var loginCloseTimer;
+      function scheduleLoginClose() { loginCloseTimer = setTimeout(closeLogin, 150); }
+      function cancelLoginClose()   { clearTimeout(loginCloseTimer); }
+
       loginWrapper.addEventListener('click', function (e) {
         if (loginWrapper.dataset.loggedIn !== 'true') return;
         e.stopPropagation();
@@ -155,10 +168,16 @@
           closeSearch();
           loginWrapper.classList.add('login--active');
           loginList.classList.add('login--shown');
+          if (loginContainer) loginContainer.style.zIndex = '10000';
+          setDevSelectPointerEvents('none');
         }
       });
 
-      loginList.addEventListener('mouseleave', closeLogin);
+      [loginWrapper, loginList, loginContainer].forEach(function (el) {
+        if (!el) return;
+        el.addEventListener('mouseenter', cancelLoginClose);
+        el.addEventListener('mouseleave', scheduleLoginClose);
+      });
 
       document.addEventListener('click', function (e) {
         if (!loginWrapper.contains(e.target) && !loginList.contains(e.target)) {
