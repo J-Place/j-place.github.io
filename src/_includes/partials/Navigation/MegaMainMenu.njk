@@ -91,12 +91,14 @@
                   <label>Search</label>
                </div>
                <div class="mega-main-menu__actions-login--wrapper" aria-hidden="true" data-logged-in="{{ 'true' if currentUser and currentUser.loggedIn else 'false' }}">
-                  <i class="login--icon"></i>
-                  {% if currentUser and currentUser.loggedIn %}
-                  <label>{{ (swimmer.firstName if swimmer else 'My Account') | truncate(7, false, '') }}</label>
-                  {% else %}
-                  <a href="/account/myusmslogin"><label>Log In</label></a>
-                  {% endif %}
+                  <a href="/account/myusmslogin">
+                     <i class="login--icon"></i>
+                     {% if currentUser and currentUser.loggedIn %}
+                     <label>{{ (swimmer.firstName if swimmer else 'My Account') | truncate(7, false, '') }}</label>
+                     {% else %}
+                     <label>Log In</label>
+                     {% endif %}
+                  </a>
                </div>
             </div>
          </div>
