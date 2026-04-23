@@ -146,6 +146,7 @@
 
     if (loginWrapper && loginList) {
       loginWrapper.addEventListener('click', function (e) {
+        if (loginWrapper.dataset.loggedIn !== 'true') return;
         e.stopPropagation();
         if (loginWrapper.classList.contains('login--active')) {
           closeLogin();

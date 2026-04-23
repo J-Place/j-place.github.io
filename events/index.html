@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <!--[if IE 9]><html lang="en" class="ie9 no-js"><![endif]-->
 <!--[if !IE]><!-->
@@ -22,54 +23,34 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://usms-cdn.azureedge.net/scripts/common.min.js"></script>
 
-  <!-- Prod CSS -->
+  <!-- Third-party CSS (Bootstrap, Font Awesome) -->
 <link rel="stylesheet" href="https://www.usms.org/styles/bootstrap.min.css">
 <link rel="stylesheet" href="https://www.usms.org/styles/bootstrap-3-usms-patch.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/brands.min.css" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous">
+<!-- Production CSS bundles — loaded from CDN to match production exactly -->
 <link rel="stylesheet" href="https://www.usms.org/styles/common.min.css">
 <link rel="stylesheet" href="https://www.usms.org/styles/usms.min.css">
 <link rel="stylesheet" href="https://www.usms.org/styles/print.min.css">
-<link rel="stylesheet" href="https://www.usms.org/styles/rte.min.css">
-<!-- Local overrides -->
-<link rel="stylesheet" href="/css/modal.css">
-<style>
-    :root {
-        --color-primary: #0068AD;
-        --color-primary-hover: #267fb9;
-        --color-dark-blue: #071C31;
-        --color-lt-blue: #DBE7F1;
-        --color-red: #D2202E;
-        --color-gray: #F4F4F4;
-        --rte-blue: #0068AD;
-        --rte-blue-hover: #267fb9;
-        --lm-blue: #092c5c;
-        --lm-blue-rgb: rgb(9, 44, 92);
-        --lm-blue-md: #084c89;
-        --lm-blue-lt: #8FBCE6;
-        --lm-blue-xlt: #eaf4ff;
-        --lm-blue-hover: var(--lm-blue-md);
-    }
-</style>
+<link rel="stylesheet" href="https://www.usms.org/styles/rteMasters.min.css">
 
   
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/theme.min.css">
+<link rel="stylesheet" href="https://www.usms.org/styles/events.min.css">
 <link rel="stylesheet" href="https://www.usms.org/styles/algoliaStyles.min.css">
 <link rel="stylesheet" href="https://www.usms.org/styles/algoliaEventSearch.min.css">
 <link rel="stylesheet" href="/css/events.css">
 
   
-  <script type="application/json" id="dev-swimmers-data">{"swimmers":{"KT2JH":{"swimmerId":"KT2JH","memberId":"146W-KT2JH","accountType":"member","firstName":"Jay","lastName":"Place","email":"jay.place@example.com","birthDate":"10/24/1972","gender":"M","club":"SRQM","lmsc":"Florida","zip":"34240-8840","membership":{"status":"expired","tier":"usmsStandardEventLicense","expires":"2025-12-31"},"isCoach":false,"coachCertification":null,"coachCertificationActive":null},"GAT0R":{"swimmerId":"GAT0R","memberId":"FL01-GAT0R","accountType":"member","firstName":"Kyle","lastName":"Deery","email":"kyle.deery@example.com","birthDate":"06/15/1983","gender":"M","club":"SHARK","lmsc":"Florida","zip":"33101","membership":{"status":"current","tier":"usmsPlusEventLicense","expires":"2026-12-31"},"isCoach":false,"coachCertification":null,"coachCertificationActive":null},"STNDRD":{"swimmerId":"STNDRD","memberId":"FL01-STNDRD","accountType":"member","firstName":"Alex","lastName":"Rivera","email":"alex.rivera@example.com","birthDate":"03/08/1990","gender":"F","club":"SYSM","lmsc":"Florida","zip":"32801","membership":{"status":"current","tier":"usmsStandard","expires":"2026-12-31"},"isCoach":false,"coachCertification":null,"coachCertificationActive":null},"COACH":{"swimmerId":"COACH","memberId":"FL01-COACH","accountType":"member","firstName":"Not","lastName":"Coach","email":"jplace72+bob@gmail.com","birthDate":"03/08/1990","gender":"F","club":"SYSM","lmsc":"Florida","zip":"32801","membership":{"status":"current","tier":"usmsStandard","expires":"2026-12-31"},"isCoach":true,"coachCertification":true,"coachCertificationActive":true},"NOT COACH":{"swimmerId":"NOT COACH","memberId":"FL01-NOTCOACH","accountType":"member","firstName":"Is","lastName":"Coach","email":"jplace72+bob@gmail.com","birthDate":"03/08/1990","gender":"F","club":"SYSM","lmsc":"Florida","zip":"32801","membership":{"status":"current","tier":"usmsStandard","expires":"2026-12-31"},"isCoach":false,"coachCertification":null,"coachCertificationActive":null}},"membershipTiers":{"usmsPlus":{"value":"usmsPlus","promo":"Event License USMS+","description":"USMS+","price":249,"vsaPrice":0,"termsKeys":["usmsPlus","competition"],"competitionEligible":true,"colId":"col-usmsPlus","bullets":["Standard membership","Premium welcome box","Free virtual event entry","Donation to the USA Swimming Foundation","Optional Video Stroke Analysis (1 free analysis per year)","Can participate in events (only select if you want to go to events)"],"modal":{"id":"modalYearPlus2","bullets":["A standard USMS membership","Exclusive welcome package including: Premium USMS-branded item of your choosing, USMS cap, USMS stickers, Plastic membership card","Free registration to all Swim.com USMS Fitness Series (three challenges per year) and Virtual Championships (five distances per year)","Donation to USA Swimming Foundation","Free All American patches (once you reach All American status)","Free Go the Distance 50-mile cap (once you reach 50 miles)"]}},"usmsPlusEventLicense":{"value":"usmsPlus","promo":"Event License USMS+","description":"USMS+","price":249,"vsaPrice":0,"termsKeys":["usmsPlus","competition"],"competitionEligible":true,"colId":"col-usmsPlus","bullets":["Standard membership","Premium welcome box","Free virtual event entry","Donation to the USA Swimming Foundation","Optional Video Stroke Analysis (1 free analysis per year)","Can participate in events (only select if you want to go to events)"],"modal":{"id":"modalYearPlus2","bullets":["A standard USMS membership","Exclusive welcome package including: Premium USMS-branded item of your choosing, USMS cap, USMS stickers, Plastic membership card","Free registration to all Swim.com USMS Fitness Series (three challenges per year) and Virtual Championships (five distances per year)","Donation to USA Swimming Foundation","Free All American patches (once you reach All American status)","Free Go the Distance 50-mile cap (once you reach 50 miles)"]}},"usmsStandard":{"value":"currentYear","promo":"Standard Membership","description":"Standard Membership","price":75,"vsaPrice":110,"termsKeys":[],"competitionEligible":false,"colId":"col-currentYear","bullets":["Swim with a club","Workout Library","Training Plans","Digital magazine","Swim.com integration","Discounted gear","And even more","No event license (to participate in events, select an event license option)"]},"usmsStandardEventLicense":{"value":"competition","extraClasses":"membership-length--competition-currentYear","promo":"Event License Standard","description":"Event License Standard","price":75,"vsaPrice":110,"termsKeys":["competition"],"competitionEligible":true,"colId":"col-competition","bullets":["Swim with a club","Workout Library","Training Plans","Digital magazine","Swim.com integration","Discounted gear","And even more","Can participate in events (only select if you want to go to events)"]}}}</script>
+  <script type="application/json" id="dev-swimmers-data">{"siteUsers":{"loggedOut":{"label":"Logged Out","loggedIn":false,"usmsMember":false,"clubAdmin":false,"swimmerId":null},"nonMember":{"label":"Non-Member","loggedIn":true,"usmsMember":false,"clubAdmin":false,"swimmerId":null},"clubAdminNonMember":{"label":"Club Admin","loggedIn":true,"usmsMember":false,"clubAdmin":true,"swimmerId":null},"standardCurrent":{"label":"Standard Membership","loggedIn":true,"usmsMember":true,"membershipStatus":"current","membershipTier":"usmsStandard","isCoach":false,"clubAdmin":false,"swimmerId":"STNDRD"},"standardExpired":{"label":"Standard Membership, Expired","loggedIn":true,"usmsMember":true,"membershipStatus":"expired","membershipTier":"usmsStandard","isCoach":false,"clubAdmin":false,"swimmerId":"KT2JH"},"eventLicenseStandardCurrent":{"label":"Event License Standard","loggedIn":true,"usmsMember":true,"membershipStatus":"current","membershipTier":"usmsStandardEventLicense","isCoach":false,"clubAdmin":false,"swimmerId":"STNDRD"},"usmsPlusCurrent":{"label":"USMS+ Membership","loggedIn":true,"usmsMember":true,"membershipStatus":"current","membershipTier":"usmsPlus","isCoach":false,"clubAdmin":false,"swimmerId":"GAT0R"},"usmsPlusEventLicenseCurrent":{"label":"Event License USMS+","loggedIn":true,"usmsMember":true,"membershipStatus":"current","membershipTier":"usmsPlusEventLicense","isCoach":false,"clubAdmin":false,"swimmerId":"GAT0R"},"coachCurrent":{"label":"Standard Membership, Coach","loggedIn":true,"usmsMember":true,"membershipStatus":"current","membershipTier":"usmsStandard","isCoach":true,"clubAdmin":false,"swimmerId":"COACH"},"clubAdminMember":{"label":"Standard Membership, Club Admin","loggedIn":true,"usmsMember":true,"membershipStatus":"current","membershipTier":"usmsStandard","isCoach":false,"clubAdmin":true,"swimmerId":"STNDRD"}},"swimmers":{"KT2JH":{"swimmerId":"KT2JH","memberId":"146W-KT2JH","firstName":"Jay","lastName":"Place","email":"jay.place@example.com","birthDate":"10/24/1972","gender":"M","club":"SRQM","lmsc":"Florida","zip":"34240-8840","coachCertification":null,"coachCertificationActive":null},"GAT0R":{"swimmerId":"GAT0R","memberId":"FL01-GAT0R","firstName":"Kyle","lastName":"Deery","email":"kyle.deery@example.com","birthDate":"06/15/1983","gender":"M","club":"SHARK","lmsc":"Florida","zip":"33101","coachCertification":null,"coachCertificationActive":null},"STNDRD":{"swimmerId":"STNDRD","memberId":"FL01-STNDRD","firstName":"Alex","lastName":"Rivera","email":"alex.rivera@example.com","birthDate":"03/08/1990","gender":"F","club":"SYSM","lmsc":"Florida","zip":"32801","coachCertification":null,"coachCertificationActive":null},"COACH":{"swimmerId":"COACH","memberId":"FL01-COACH","firstName":"Bob","lastName":"Coach","email":"bob.coach@example.com","birthDate":"05/14/1975","gender":"M","club":"SYSM","lmsc":"Florida","zip":"32801","coachCertification":true,"coachCertificationActive":true}},"membershipTiers":{"usmsPlus":{"value":"usmsPlus","promo":"USMS+","description":"USMS+","price":249,"vsaPrice":0,"termsKeys":["usmsPlus"],"competitionEligible":false,"colId":"col-usmsPlus","bullets":["Standard membership","Premium welcome box","Free virtual event entry","Donation to the USA Swimming Foundation","Optional Video Stroke Analysis (1 free analysis per year)","No event license (to participate in events, select an event license option)"],"modal":{"id":"modalYearPlus1","bullets":["A standard USMS membership","Exclusive welcome package including: Premium USMS-branded item of your choosing, USMS cap, USMS stickers, Plastic membership card","Free registration to all Swim.com USMS Fitness Series (three challenges per year) and Virtual Championships (five distances per year)","Donation to USA Swimming Foundation","Free All American patches (once you reach All American status)","Free Go the Distance 50-mile cap (once you reach 50 miles)"]}},"usmsPlusEventLicense":{"value":"usmsPlusYearPlus","promo":"Event License USMS+","description":"Event License USMS+","price":249,"vsaPrice":0,"termsKeys":["usmsPlus","competition"],"competitionEligible":true,"colId":"col-usmsPlusYearPlus","bullets":["Standard membership","Premium welcome box","Free virtual event entry","Donation to the USA Swimming Foundation","Optional Video Stroke Analysis (1 free analysis per year)","Can participate in events (only select if you want to go to events)"],"modal":{"id":"modalYearPlus2","bullets":["A standard USMS membership","Exclusive welcome package including: Premium USMS-branded item of your choosing, USMS cap, USMS stickers, Plastic membership card","Free registration to all Swim.com USMS Fitness Series (three challenges per year) and Virtual Championships (five distances per year)","Donation to USA Swimming Foundation","Free All American patches (once you reach All American status)","Free Go the Distance 50-mile cap (once you reach 50 miles)"]}},"usmsStandard":{"value":"currentYear","promo":"Standard Membership","description":"Standard Membership","price":75,"vsaPrice":110,"termsKeys":[],"competitionEligible":false,"colId":"col-currentYear","bullets":["Swim with a club","Workout Library","Training Plans","Digital magazine","Swim.com integration","Discounted gear","And even more","No event license (to participate in events, select an event license option)"]},"usmsStandardEventLicense":{"value":"competition","extraClasses":"membership-length--competition-currentYear","promo":"Event License Standard","description":"Event License Standard","price":75,"vsaPrice":110,"termsKeys":["competition"],"competitionEligible":true,"colId":"col-competition","bullets":["Swim with a club","Workout Library","Training Plans","Digital magazine","Swim.com integration","Discounted gear","And even more","Can participate in events (only select if you want to go to events)"]}}}</script>
+  
   
 </head>
 <body class="">
   <div id="main-container">
     <header class="header-static">
-          <div id="">
-       <nav class="mega-main-menu">
+             <nav class="mega-main-menu">
           <button class="mega-main-menu__toggle-mobile btn btn-default" aria-label="toggle mobile">
-          <i class="fa fa-bars text-primary">
+          <i class="fa-solid fa-bars text-primary">
           </i>
           <label>Menu</label>
           </button>
@@ -106,12 +87,12 @@
             <div class="mega-main-menu__items-container">
                <ul class="mega-main-menu__items list--nostyle" style="width:auto;">
                   <li class="has--children" id="menu-item-0" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                     <span class="fa fa-chevron-right">
+                     <span class="fa-solid fa-chevron-right">
                      </span>
                      Training
                   </li>
                   <li class="has--children" id="menu-item-1" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                     <span class="fa fa-chevron-right">
+                     <span class="fa-solid fa-chevron-right">
                      </span>
                      Events
                   </li>
@@ -122,7 +103,7 @@
                      <a href="/workout-library">Workout Library</a>
                   </li>
                   <li class="has--children" id="menu-item-4" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                     <span class="fa fa-chevron-right">
+                     <span class="fa-solid fa-chevron-right">
                      </span>
                      About Us
                   </li>
@@ -154,9 +135,11 @@
                   </i>
                   <label>Search</label>
                </div>
-               <div class="mega-main-menu__actions-login--wrapper" aria-hidden="true">
+               <div class="mega-main-menu__actions-login--wrapper" aria-hidden="true" data-logged-in="false">
                   <i class="login--icon"></i>
-                  <label>Log In</label>
+                  
+                  <a href="/account/myusmslogin"><label>Log In</label></a>
+                  
                </div>
             </div>
          </div>
@@ -171,7 +154,7 @@
                   <div class="mobile-menu__input">
                      <input type="text" name="filter" placeholder="Search">
                      <button class="mobile-menu__search-button" type="submit" aria-label="search button">
-                     <i class="fa fa-search text-primary">
+                     <i class="fa-solid fa-search text-primary">
                      </i>
                      </button>
                   </div>
@@ -181,7 +164,7 @@
                <ul class="mobile-menu-overlay__items list--nostyle">
                   <li class="mobile-menu-overlay__item text-capitalize">
                      <div class="mobile-menu-overlay__item-content">
-                        <i class="fa fa-chevron-right "></i>Training
+                        <i class="fa-solid fa-chevron-right "></i>Training
                      </div>
                      <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
                         <ul class="mobile-menu-overlay__submenu list--nostyle">
@@ -208,7 +191,7 @@
                   </li>
                   <li class="mobile-menu-overlay__item text-capitalize">
                      <div class="mobile-menu-overlay__item-content">
-                        <i class="fa fa-chevron-right "></i>Events
+                        <i class="fa-solid fa-chevron-right "></i>Events
                      </div>
                      <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
                         <ul class="mobile-menu-overlay__submenu list--nostyle">
@@ -257,7 +240,7 @@
                   </li>
                   <li class="mobile-menu-overlay__item text-capitalize">
                      <div class="mobile-menu-overlay__item-content">
-                        <i class="fa fa-chevron-right "></i>About Us
+                        <i class="fa-solid fa-chevron-right "></i>About Us
                      </div>
                      <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
                         <ul class="mobile-menu-overlay__submenu list--nostyle">
@@ -305,13 +288,12 @@
             </div>
          </div>
        </nav>
-    </div>
       
     </header>
     <main role="main">
       
 <div class="breadcrumb-container" style="position: relative; padding-bottom: 50px;">
-  <div class="breadcrumb">
+<div class="breadcrumb">
     <div class="usms-container">
       <div class="row">
         <div class="col-xs-12">
@@ -330,7 +312,7 @@
         </div>
       </div>
     </div>
-  </div>
+</div>
 </div>
 
 
@@ -1333,22 +1315,22 @@
                      <ul class="social-share-icons list--nostyle p-tb-30">
                         <li class="social-share-icons__item">
                            <a href="http://facebook.com/USMastersSwimmingFanPage/" target="_blank" title="Facebook">
-                           <i class="fa fa-facebook"></i>
+                           <i class="fa-brands fa-facebook"></i>
                            </a>
                         </li>
                         <li class="social-share-icons__item">
                            <a href="https://www.instagram.com/mastersswimming" target="_blank" title="Instagram">
-                           <i class="fa fa-instagram"></i>
+                           <i class="fa-brands fa-instagram"></i>
                            </a>
                         </li>
                         <li class="social-share-icons__item">
                            <a href="https://twitter.com/MastersSwimming" target="_blank" title="Twitter">
-                           <i class="fa fa-twitter"></i>
+                           <i class="fa-brands fa-x-twitter"></i>
                            </a>
                         </li>
                         <li class="social-share-icons__item">
                            <a href="https://www.youtube.com/user/USMastersSwimming" target="_blank" title="YouTube">
-                           <i class="fa fa-youtube"></i>
+                           <i class="fa-brands fa-youtube"></i>
                            </a>
                         </li>
                      </ul>
@@ -1357,7 +1339,7 @@
                   &copy; 2018 U.S. Masters Swimming
                   </small>
                   <nav>
-                     <ul class="nav nav-service navbar-nav nav-pills">
+                     <ul class="footer-right__links list--nostyle">
                         <li class="">
                            <a href="/about-usms/contact-usms" target="" title="Contact Us" class="">
                            Contact Us        </a>
