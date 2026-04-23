@@ -501,6 +501,342 @@ p.club-location__address--city-state-zip {
 }
 
 
+/* === views/Club/ClubList2.css === */
+/* media queries */
+:root {
+  /* Typography */
+
+  /* Colors */
+  --color-primary: #0068AD;
+  --color-primary-hover: #267fb9;
+  --color-dark-blue: #071C31;
+  --color-lt-blue: #DBE7F1;
+  --color-red: #D2202E;
+  --color-gray: #F4F4F4;
+
+    /* RTE Colors */
+  --rte-blue: #0068AD;
+  --rte-blue-hover: #267fb9;
+
+  /* LaneMate Colors */
+    --lm-blue: #092c5c;
+    --lm-blue-rgb: rgb(9, 44, 92);
+    --lm-blue-md: #084c89;
+    --lm-blue-lt: #8FBCE6;
+    --lm-blue-xlt: #eaf4ff;
+    --lm-blue-hover: var(--lm-blue-md);
+
+  /* breakpoints */
+  --screen-xs: 480px;
+  --screen-sm: 768px;
+  --screen-md: 992px;
+  --screen-lg: 1200px;
+  --screen-xl: 1400px;
+}
+.club-list-new.list--nostyle {
+  overflow-y: scroll;
+  margin-bottom: 0rem;
+  padding-top: 2rem;
+}
+.no-clubs-form--trial .form-control-feedback {
+  line-height: 56px;
+}
+.club-map-new-container .club-map-new {
+  height: 600px;
+}
+.club-map-new {
+  padding-top: 10px;
+}
+.club-map-new,
+.club-list-item-new {
+  min-height: 200px;
+  position: relative;
+  -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  padding: 2rem 2rem 3rem;
+  margin: 0 0.5rem 2rem 0.25rem;
+  max-width: calc(100% - 1rem);
+  background-color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+.club-list-item-new a.expand-club-search {
+  color: #0068ad !important;
+  text-decoration: underline !important;
+}
+.club-list-item-new p.club-list-item-new__distance {
+  font-size: 1.0rem;
+  line-height: 1.0rem;
+  margin-top: 4px;
+  margin-left: -5px;
+  margin-right: -5px;
+}
+.club-list-item-new__locations p,
+.club-list-item-new p {
+  margin: 0;
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 400;
+  padding: 0;
+  line-height: 1.8rem;
+  color: #333;
+}
+.club-list-item-new__locations p.club-list-item-new__address {
+  font-size: 1.75rem;
+  color: #333;
+  margin-bottom: 5px;
+}
+.club-list-item-new__pooltypes {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+.club-list-item-new__pooltypes-item {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0;
+          flex: 0 0;
+  white-space: nowrap;
+  margin-right: 15px;
+}
+.club-list-item-new__pooltype-value {
+  background: #9b9b9b;
+  border-radius: 5px;
+  padding: 0.5rem;
+  font-size: 1.25rem;
+  color: white;
+}
+.club-list-item-new__marker-container {
+  overflow: hidden;
+}
+.club-list-item-new__marker {
+  width: 100%;
+}
+.club-list-item-new__marker img {
+  max-width: 20px;
+  max-height: 20px;
+  margin: 0 auto;
+  display: block;
+}
+.club-list-item-new__locations-item {
+  width: 100%;
+  margin-bottom: 0;
+  border: 0;
+  text-align: inherit;
+  background: transparent;
+}
+.club-list-item-new__locations-item>div>.col-xs-10 {
+  padding: 0;
+}
+.club-list-item-new__locations-item--name {
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 120%;
+  margin: 0 auto .2rem;
+}
+.club-list-item-new__title {
+  margin: 0 0 2rem;
+}
+.club-list-item-new__title-link {
+  margin-top: 0;
+}
+.club-list-item-new__details-link {
+  margin-top: auto;
+}
+.club-list-item-new a,
+.club-list-item-new a:hover {
+  text-decoration: none;
+  /* color: #4A4A4A; */
+}
+.club-list-new-new__html a,
+.club-list-item-new__html a,
+.club-list-item-new__html a:hover {
+  color: #0068ad !important;
+}
+.club-list-new .club-list-item-new h4 {
+  font-size: 2.0rem;
+  line-height: 120%;
+  color: #333;
+}
+.club-list-item-new__info-window--club-title {
+  font-size: 15px;
+  font-weight: 400;
+  color: #333;
+  margin: 1rem auto;
+}
+p.club-list-item-new__info-window--location-name {
+  font-size: 1.3rem;
+  line-height: 130%;
+  font-weight: 700;
+  margin: 0 auto 0.5rem;
+}
+p.club-list-item-new__info-window--address,
+p.club-list-item-new__info-window--city-state-zip {
+  font-size: 1.3rem;
+  line-height: 100%;
+  font-weight: 300;
+  margin: 0 auto 0.25rem;
+}
+p.club-list-item-new__info-window--details {
+  font-size: 1.3rem;
+  line-height: 130%;
+  text-decoration: underline;
+  margin: 1rem auto;
+}
+.club-list-item-new__action {
+  background-color: #D8D8D8;
+  border-radius: 4px;
+  bottom: 1rem;
+  left: 1rem;
+  font-size: 1.4rem;
+  padding: 0.75rem 1.5rem;
+  border: 0;
+}
+.club-list-item-new__badges-container {
+  margin: 2.3rem 0 1.5rem;
+}
+.club-list-item-new__badge-item {
+  float: left;
+  max-width: 69px;
+  margin: 5px;
+}
+.club-list-item-new__badge-item p {
+  font-size: .9rem;
+  font-weight: 400;
+  line-height: 1rem;
+}
+.club-list-item-new__badge-item img {
+  width: 45px;
+  height: auto;
+  margin: 0 auto 0.5rem;
+  display: block;
+}
+.club__join-now {
+  background: #4a4a4a;
+  color: white;
+  font-size: 1.75rem;
+  border-radius: 3px;
+  padding: 0.75rem 2.5rem;
+  margin-bottom: 15px;
+  outline: 0;
+  border: 0;
+}
+.club-detail2__name-link h3 {
+    color: #333;
+  }
+.club-detail2__contact {
+  margin-bottom: 15px;
+}
+.club-detail2__contact h3 {
+    color: #333;
+  }
+.club-detail2__contact p {
+    margin: 0;
+    color: #B4B4B4;
+  }
+.hero-image.hero-image--club-detail2 {
+  margin-bottom: 0;
+}
+button#noClubSubmit {
+  margin-top: 30px;
+}
+.club-detail2__social {
+  margin-bottom: 15px;
+}
+.club-detail2__social a {
+    text-decoration: none;
+    margin-right: 10px;
+  }
+.club-detail2__social .facebook-container {
+    margin: 30px 0;
+  }
+.btn-hero-modal {
+  position: absolute;
+  top: 435px;
+  border-radius: 4px;
+  padding: 3px 6px;
+  left: 35px;
+  width: auto;
+  height: auto;
+  font-size: 12px;
+  color: #FFF;
+  background-color: rgba(125, 125, 125, 0.6);
+  z-index: 99;
+}
+.btn-hero-modal:hover {
+  background-color: rgba(125, 125, 125, 0.8);
+}
+.btn-hero-modal:active,
+.btn-hero-modal:focus,
+.btn-hero-modal:hover,
+.btn-hero-modal:visited {
+  text-decoration: none;
+  color: #FFF !important;
+}
+@media only screen and (max-width: 991px) {
+  .btn-hero-modal {
+    display: none;
+  }
+}
+.club-detail-modal .modal-body {
+  padding: 15px 30px 30px;
+}
+@media(min-width: 768px) {
+  .club-list-new.list--nostyle {
+    max-height: 600px;
+    margin-left: -3rem;
+    padding-top: 2.0rem;
+    padding-left: 2.8rem;
+    padding-right: .5rem;
+  }
+}
+p.info-window-shared--street,
+p.info-window-shared--city-state-zip {
+  font-size: 1.3rem;
+  line-height: 130%;
+  font-weight: normal;
+  margin: 0 auto;
+  padding: 0;
+  color: #333;
+}
+p.info-window-shared--street {
+  padding-top: 1rem;
+  margin-top: 5px;
+  padding-top: 1rem;
+}
+p.info-window-shared--city-state-zip {
+  margin-bottom: 1rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #CCC;
+}
+.info-window-shared--link {
+  display: block;
+}
+.info-window-shared--link:hover {
+  text-decoration: none;
+}
+.info-window-shared--link:last-of-type {
+  margin-bottom: 7px;
+}
+.info-window-shared--marker {
+  display: inline-block;
+  width: 11px;
+}
+.info-window-shared--club-title {
+  display: inline-block;
+  margin: 7px 0 7px 5px;
+  color: #333;
+  font-size: 1.7rem;
+}
+
+
 /* === views/PageContent/CallToAction.css === */
 /* media queries */
 :root {
