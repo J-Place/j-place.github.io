@@ -117,7 +117,7 @@
             loginWrapper.removeChild(loginLink);
           }
           var loginLabel = loginWrapper.querySelector('label');
-          if (loginLabel) loginLabel.textContent = (swimmerName || 'My Account').substring(0, 7);
+          if (loginLabel) loginLabel.textContent = profile ? profile.firstName.substring(0, 7) : '';
         } else {
           // Logged out: wrap content in <a> if not already
           if (!loginWrapper.querySelector('a')) {
