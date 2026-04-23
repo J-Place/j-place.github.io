@@ -4,20 +4,25 @@
    ============================================================ */
 
 .login-status {
-    height: 50px;
     position: absolute;
-    top: 0;
+    top: 60px;
     left: 0;
     right: 0;
-    margin: 0 auto;
-    max-width: 1100px;
-    text-align: right;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.login-status .usms-container {
     display: flex;
-    align-items: center;
     justify-content: flex-end;
 }
 
+@media (min-width: 768px) {
+    .login-status { top: 92px; }
+}
+
 .login-status__select {
+    pointer-events: auto;
     font-size: 1.5rem;
     padding: 2px 8px;
     /* border: 1px solid rgba(255, 255, 255, 0.5); */
@@ -25,8 +30,7 @@
     border: none;
     /* background: rgba(0, 0, 0, 0.35); */
     background: transparent;
-    /* color: #0368ac; */
-    color: #FFF;
+    color: #0068ad;
     cursor: pointer;
     /* max-width: 320px; */
     -webkit-appearance: auto;
@@ -41,7 +45,7 @@
 .login-status__select option {
     /* background: #333; */
     background: transparent;
-    color: #495b7d;
+    color: #333;
 }
 
 
