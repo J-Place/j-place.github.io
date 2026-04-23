@@ -94,7 +94,7 @@
                   <a href="/account/myusmslogin">
                      <i class="login--icon"></i>
                      {% if currentUser and currentUser.loggedIn %}
-                     <label>{{ (swimmer.firstName if swimmer else 'My Account') | truncate(7, false, '') }}</label>
+                     <label>{{ swimmer.firstName | truncate(7, false, '') if swimmer }}</label>
                      {% else %}
                      <label>Log In</label>
                      {% endif %}
