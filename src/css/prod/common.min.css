@@ -6212,6 +6212,22 @@ button:focus,
   }
 
 
+/* === views/Forms/LoginFormOverlay.css === */
+.login-form-overlay {
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  z-index: 10;
+  background-color: #F7F7F9;
+  display: block;
+  width: 100%;
+  max-width: calc(1500px - 2rem);
+  padding: 1rem;
+}
+
+
 /* === views/Forms/Input.css === */
 /* media queries */
 :root {
@@ -6296,6 +6312,109 @@ button:focus,
 }
 a.bg-primary:focus, a.bg-primary:hover {
   background-color: #4097cc;
+}
+
+
+/* === views/Forms/Select.css === */
+select,
+select.form-control {
+  padding: 6px 12px;
+  background-image: url('https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/Images/MyUSMS/icon-arrow-down');
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px 12px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {  /*safari and chrome*/
+  select,
+  select.form-control {
+      height:44px;
+      line-height:100%;
+      background-color:#f4f4f4;
+      font-size: 1.7rem;
+      color: #666;
+  }
+}
+
+select::-moz-focus-inner,
+select.form-control::-moz-focus-inner { /*Remove button padding in FF*/
+  border: 0;
+  padding: 0;
+}
+
+@-moz-document url-prefix() { /* targets Firefox only */
+  select,
+  select.form-control {
+      padding: 5px 0 !important;
+  }
+}
+
+@media screen\0 { /* IE Hacks: targets IE 8, 9 and 10 */
+  select,
+  select.form-control {
+      height:35px;
+      line-height:35px;
+  }
+}
+
+
+/* === views/Forms/ContactModal.css === */
+/* media queries */
+:root {
+  /* Typography */
+
+  /* Colors */
+  --color-primary: #0068AD;
+  --color-primary-hover: #267fb9;
+  --color-dark-blue: #071C31;
+  --color-lt-blue: #DBE7F1;
+  --color-red: #D2202E;
+  --color-gray: #F4F4F4;
+
+    /* RTE Colors */
+  --rte-blue: #0068AD;
+  --rte-blue-hover: #267fb9;
+
+  /* LaneMate Colors */
+    --lm-blue: #092c5c;
+    --lm-blue-rgb: rgb(9, 44, 92);
+    --lm-blue-md: #084c89;
+    --lm-blue-lt: #8FBCE6;
+    --lm-blue-xlt: #eaf4ff;
+    --lm-blue-hover: var(--lm-blue-md);
+
+  /* breakpoints */
+  --screen-xs: 480px;
+  --screen-sm: 768px;
+  --screen-md: 992px;
+  --screen-lg: 1200px;
+  --screen-xl: 1400px;
+}
+div.contact-modal__identity label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+div.contact-modal__identity .radio-container {
+  margin-right: 18px;
+}
+.modal-container .modal .contact-modal__identity--details p {
+  font-size: 16px;
+  margin: 0px auto 1rem;
+  line-height: 19px;
+}
+.modal-header {
+  padding: 0;
+}
+.contact-modal__identity {
+  position: relative;
+  margin-top: 2rem;
+}
+.modal-column-email {
+  max-width: 100%;
+  word-break: break-all;
 }
 
 
