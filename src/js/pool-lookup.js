@@ -4,13 +4,66 @@
   // ── Haversine distance (miles) ─────────────────────────────────────────────
 
   function haversine(lat1, lng1, lat2, lng2) {
-    var R  = 3958.8; // Earth radius in miles
+    var R  = 3958.8;
     var d1 = (lat2 - lat1) * Math.PI / 180;
     var d2 = (lng2 - lng1) * Math.PI / 180;
     var a  = Math.sin(d1 / 2) * Math.sin(d1 / 2)
            + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180)
            * Math.sin(d2 / 2) * Math.sin(d2 / 2);
     return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  }
+
+  // ── Data ───────────────────────────────────────────────────────────────────
+
+  var dataEl = document.getElementById('pool-locations-data');
+  if (!dataEl) return;
+  var allLocations = [];
+  try { allLocations = JSON.parse(dataEl.textContent); } catch (e) {}
+
+  var locationColumn = document.querySelector('.location-column');
+
+  // ── Card rendering ─────────────────────────────────────────────────────────
+
+  var courseTagMap = { '25y': 'SCY', '25m': 'SCM', '50m': 'LCM' };
+
+  function uniqueTags(courses) {
+    var seen = {};
+    var tags = [];
+    (courses || []).forEach(function (c) {
+      if (c.tag && !seen[c.tag]) { seen[c.tag] = true; tags.push(c.tag); }
+    });
+    return tags;
+  }
+
+  function escapeHtml(str) {
+    return String(str || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function renderCard(loc) {
+    var tags = uniqueTags(loc.courses).map(function (tag) {
+      return '<p class="event-location--course">' + escapeHtml(tag) + '</p>';
+    }).join('');
+
+    return '<div class="list-item list-item--location"'
+      + ' data-location-id="' + escapeHtml(loc.id) + '"'
+      + ' data-name="'        + escapeHtml(loc.name) + '"'
+      + ' data-address="'     + escapeHtml(loc.address) + '"'
+      + ' data-city="'        + escapeHtml(loc.city) + '"'
+      + ' data-state="'       + escapeHtml(loc.state) + '"'
+      + ' data-zip="'         + escapeHtml(loc.zip) + '"'
+      + ' data-lat="'         + escapeHtml(loc.lat) + '"'
+      + ' data-lng="'         + escapeHtml(loc.lng) + '"'
+      + ' data-courses="'     + escapeHtml(JSON.stringify(loc.courses)) + '">'
+      + '<button type="button" class="btn btn-small btn-detail">Details</button>'
+      + '<p class="event-location__address--name">'   + escapeHtml(loc.name)    + '</p>'
+      + '<p class="event-location__address--street">' + escapeHtml(loc.address) + '</p>'
+      + '<p class="event-location__city-state">'      + escapeHtml(loc.city) + ', ' + escapeHtml(loc.state) + ' ' + escapeHtml(loc.zip) + '</p>'
+      + '<div class="event-location--course-tags">' + tags + '</div>'
+      + '</div>';
   }
 
   // ── Modal ──────────────────────────────────────────────────────────────────
@@ -27,9 +80,9 @@
     var coursesEl = document.getElementById('poolDetailCourses');
     if (courses.length) {
       var items = courses.map(function (c) {
-        var poolName    = c.pool || data.name;
-        var line1       = poolName + (c.length ? ' - ' + c.length : '');
-        var certified   = c.certified
+        var poolName  = c.pool || data.name;
+        var line1     = poolName + (c.length ? ' - ' + c.length : '');
+        var certified = c.certified
           ? 'Certified ' + (c.certifiedDate || '')
           : 'Not Certified';
         var touchpadTxt = '1 Touchpad, 2 Touchpads, No Touchpads';
@@ -96,7 +149,6 @@
   var locationInput = document.getElementById('locationSearch');
   var courseBoxes   = document.querySelectorAll('input[name="check-list--searchCourseTypes"]');
   var rangeSelect   = document.getElementById('search-filter__range');
-  var items         = document.querySelectorAll('.list-item[data-location-id]');
   var summaryCount  = document.querySelector('.summary-count');
   var summaryRange  = document.querySelector('.summary-range');
   var summaryLoc    = document.querySelector('.summary-location');
@@ -104,8 +156,6 @@
   // User's resolved coordinates from Google Places
   var userLat = null;
   var userLng = null;
-
-  var courseTagMap = { '25y': 'SCY', '25m': 'SCM', '50m': 'LCM' };
 
   // ── Google Places Autocomplete ─────────────────────────────────────────────
 
@@ -142,11 +192,11 @@
     return { city: s.toLowerCase() };
   }
 
-  function itemMatchesLocation(item, parsed) {
+  function locMatchesText(loc, parsed) {
     if (!parsed) return true;
-    if (parsed.zip) return (item.dataset.zip || '') === parsed.zip;
-    var cityOk  = !parsed.city  || (item.dataset.city  || '').toLowerCase().includes(parsed.city);
-    var stateOk = !parsed.state || (item.dataset.state || '').toLowerCase().includes(parsed.state);
+    if (parsed.zip) return (loc.zip || '') === parsed.zip;
+    var cityOk  = !parsed.city  || (loc.city  || '').toLowerCase().includes(parsed.city);
+    var stateOk = !parsed.state || (loc.state || '').toLowerCase().includes(parsed.state);
     return cityOk && stateOk;
   }
 
@@ -155,27 +205,24 @@
   function getSelectedRange() {
     if (!rangeSelect) return null;
     var val = rangeSelect.value;
-    if (val === 'max') return null; // Nationwide — no distance filter
-    return parseFloat(val);        // miles
+    if (val === 'max') return null;
+    return parseFloat(val);
   }
 
-  function itemMatchesDistance(item, rangeMiles) {
-    if (rangeMiles === null) return true;      // Nationwide
-    if (userLat === null || userLng === null) return true; // no user coords yet
-
-    var itemLat = parseFloat(item.dataset.lat);
-    var itemLng = parseFloat(item.dataset.lng);
-    if (isNaN(itemLat) || isNaN(itemLng)) return false; // no coords — exclude when range is active
-
+  function locMatchesDistance(loc, rangeMiles) {
+    if (rangeMiles === null) return true;
+    if (userLat === null || userLng === null) return true;
+    var itemLat = parseFloat(loc.lat);
+    var itemLng = parseFloat(loc.lng);
+    if (isNaN(itemLat) || isNaN(itemLng)) return false;
     return haversine(userLat, userLng, itemLat, itemLng) <= rangeMiles;
   }
 
   // ── Course filter ──────────────────────────────────────────────────────────
 
-  function itemMatchesCourses(item, checkedValues) {
+  function locMatchesCourses(loc, checkedValues) {
     if (!checkedValues.length) return true;
-    var courses = [];
-    try { courses = JSON.parse(item.dataset.courses || '[]'); } catch (e) {}
+    var courses = loc.courses || [];
     var knownTags = Object.values(courseTagMap);
     return checkedValues.some(function (val) {
       if (val === 'other') {
@@ -208,18 +255,19 @@
     var checkedValues = [];
     courseBoxes.forEach(function (cb) { if (cb.checked) checkedValues.push(cb.value); });
 
-    var visible = 0;
-    items.forEach(function (item) {
-      var nameOk   = !nameQuery || (item.dataset.name || '').toLowerCase().includes(nameQuery);
-      var distOk   = itemMatchesDistance(item, rangeMiles);
-      var locOk    = distOk || itemMatchesLocation(item, parsedLoc); // fallback to text if no coords
-      var courseOk = itemMatchesCourses(item, checkedValues);
-      var show     = nameOk && (userLat !== null ? distOk : locOk) && courseOk;
-      item.style.display = show ? '' : 'none';
-      if (show) visible++;
+    var matched = allLocations.filter(function (loc) {
+      var nameOk   = !nameQuery || (loc.name || '').toLowerCase().includes(nameQuery);
+      var distOk   = locMatchesDistance(loc, rangeMiles);
+      var locOk    = distOk || locMatchesText(loc, parsedLoc);
+      var courseOk = locMatchesCourses(loc, checkedValues);
+      return nameOk && (userLat !== null ? distOk : locOk) && courseOk;
     });
 
-    updateSummary(visible);
+    if (locationColumn) {
+      locationColumn.innerHTML = matched.map(renderCard).join('');
+    }
+
+    updateSummary(matched.length);
   }
 
   // ── Event listeners ────────────────────────────────────────────────────────
@@ -233,7 +281,6 @@
     });
   });
 
-  // Clear resolved coords if user edits the location field manually
   if (locationInput) {
     locationInput.addEventListener('input', function () {
       userLat = null;
@@ -245,13 +292,10 @@
     rangeSelect.addEventListener('change', applyFilters);
   }
 
-  // Checkbox changes and tag pill removals are handled by filters.js;
-  // it dispatches 'filtersChanged' when the selection changes.
   document.addEventListener('filtersChanged', applyFilters);
 
   // ── Init ───────────────────────────────────────────────────────────────────
 
-  // Forward-geocode a text address via Nominatim and apply filters.
   function geocodeAddress(address) {
     if (!address) { applyFilters(); return; }
     fetch(

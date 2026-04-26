@@ -45,6 +45,32 @@ module.exports = function(eleventyConfig) {
     [...new Set((courses || []).map(c => c.Tag))]
   );
 
+  // Serialize locations array to JSON for the pool-lookup JS data blob
+  eleventyConfig.addFilter("poolLocationsJson", locations =>
+    JSON.stringify((locations || []).map(loc => ({
+      id:      loc.Id,
+      name:    loc.Name,
+      address: loc.Address,
+      city:    loc.City,
+      state:   loc.State,
+      zip:     loc.ZipCode,
+      lat:     loc.Lat,
+      lng:     loc.Lng,
+      courses: (loc.Courses || []).map(c => ({
+        tag:           c.Tag,
+        pool:          c.PoolName || c.Name,
+        length:        c.Length,
+        type:          c.SubType,
+        lanes:         c.Lanes,
+        touchpads:     c.Touchpads,
+        certified:     c.Certified,
+        certifiedDate: c.CertifiedDate,
+        measured:      c.Measured,
+        measuredDate:  c.MeasuredDate
+      }))
+    })))
+  );
+
   // Slim course objects down to only the fields shown in the pool detail modal
   eleventyConfig.addFilter("slimCourses", courses =>
     (courses || []).map(c => ({
