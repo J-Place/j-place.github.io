@@ -36,7 +36,11 @@ if (!page) {
 // ── Derive name from page slug + today's date if not supplied ─────────────────
 
 function todayIso() {
-  return new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+  const d = new Date();
+  const yy = String(d.getUTCFullYear()).slice(2);
+  const mm = String(d.getUTCMonth() + 1).padStart(2, '0');
+  const dd = String(d.getUTCDate()).padStart(2, '0');
+  return yy + mm + dd; // YYMMDD
 }
 
 function pageSlug(pagePath) {
@@ -54,7 +58,17 @@ const siteDir     = path.join(root, '_site');
 const outDir      = path.join(root, 'dist/snapshots', name);
 
 const normalizedPage = page.replace(/^\//, '').replace(/\/$/, '');
+// Support both directory-style permalinks (_site/foo/bar/index.html)
+// and flat-file permalinks (_site/foo/bar.html → copied as index.html).
+// Prefer the flat file when it exists, to avoid accidentally matching a
+// same-named passthrough directory (e.g. public/account/addons/).
 const pageSiteDir    = path.join(siteDir, normalizedPage);
+const pageSiteFile   = normalizedPage.endsWith('.html')
+  ? path.join(siteDir, normalizedPage)
+  : path.join(siteDir, normalizedPage + '.html');
+const useFlatFile    = !normalizedPage.endsWith('.html') &&
+                       fs.existsSync(pageSiteFile) &&
+                       fs.statSync(pageSiteFile).isFile();
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
@@ -82,7 +96,9 @@ try {
   console.log(`\nBuilding site...`);
   execSync('npm run build', { cwd: root, stdio: 'inherit' });
 
-  if (!fs.existsSync(pageSiteDir)) {
+  if (useFlatFile) {
+    // flat-file permalink (e.g. /account/addons.html)
+  } else if (!fs.existsSync(pageSiteDir) || !fs.statSync(pageSiteDir).isDirectory()) {
     throw new Error(
       `Page not found in build output: ${pageSiteDir}\n` +
       `Check that --page matches the page's permalink (without trailing slash).`
@@ -96,7 +112,11 @@ try {
   fs.rmSync(outDir, { recursive: true, force: true });
   fs.mkdirSync(outDir, { recursive: true });
 
-  copyDir(pageSiteDir, outDir);
+  if (useFlatFile) {
+    fs.copyFileSync(pageSiteFile, path.join(outDir, 'index.html'));
+  } else {
+    copyDir(pageSiteDir, outDir);
+  }
   copyDir(path.join(siteDir, 'css'), path.join(outDir, 'css'));
   copyDir(path.join(siteDir, 'js'),  path.join(outDir, 'js'));
 
@@ -113,7 +133,7 @@ try {
   } else {
     console.log(`\nTo deploy:`);
     console.log(`  netlify deploy --dir=dist/snapshots/${name} --alias=${name} --message=${name}`);
-    console.log(`  → https://${name}--usms-mockups.netlify.app`);
+    console.log(`  → https://${name}--usms-mockup.netlify.app`);
   }
 
 } finally {
