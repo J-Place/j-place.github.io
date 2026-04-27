@@ -1,6 +1,6 @@
 ---
 name: snapshot
-description: Build and deploy an immutable snapshot of a prototype page to Netlify, then update snapshot-registry.json and commit it. Use this when delivering a finished page as a permanent Netlify URL.
+description: Build and deploy an immutable snapshot of a prototype page to Netlify, then update snapshot-registry.json. Use this when delivering a finished page as a permanent Netlify URL.
 argument-hint: [/path/to/page]
 allowed-tools: Bash(npm run deploy:snapshot*) Bash(git *) Read Write Edit
 ---
@@ -14,7 +14,6 @@ You are running the snapshot deployment workflow for the USMS mockup project.
 3. Reads the resulting deploy URL from CLI output
 4. Prompts the user for optional notes
 5. Updates `snapshot-registry.json` with the new entry
-6. Commits and pushes the registry file
 
 ---
 
@@ -94,21 +93,8 @@ Write the updated file. Do not remove existing entries.
 
 ---
 
-## Step 6 — Commit and push
-
-Stage and commit only `snapshot-registry.json`:
-
-```
-git add snapshot-registry.json
-git commit -m "Register snapshot: <alias-name>"
-git push
-```
-
----
-
-## Step 7 — Report
+## Step 6 — Report
 
 Tell the user:
 - The permanent URL
 - The registry key that was written
-- Confirm the commit was pushed

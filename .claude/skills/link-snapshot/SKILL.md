@@ -45,14 +45,6 @@ Read `src/pages/index.njk`. Find the comment `<!-- snapshot-links -->`. Insert a
 
 Write the updated file.
 
-## Step 6 — Commit and push
+## Step 6 — Report
 
-```
-git add src/pages/index.njk
-git commit -m "Add snapshot link: <alias>"
-git push
-```
-
-## Step 7 — Report
-
-Tell the user the link text and URL that were added, and confirm the commit was pushed.
+Tell the user the link text and URL that were added.
