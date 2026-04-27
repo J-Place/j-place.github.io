@@ -3,9 +3,11 @@
 // and optionally deploys to Netlify with a permanent alias URL.
 //
 // Usage:
-//   node scripts/snapshot.js --page=/path/to/page [--name=my-name] [--deploy]
+//   node scripts/snapshot.js --page=/path/to/page [--name=my-name] [--dev] [--deploy]
 //   npm run build:snapshot --page=/events/event-central/usms-measured-pools
 //   npm run deploy:snapshot --page=/events/event-central/usms-measured-pools
+//
+// --dev  Build with env=dev so dev overlays (e.g. login-status) are included.
 
 'use strict';
 
@@ -26,6 +28,7 @@ const cliArgs = Object.fromEntries(
 
 const page   = cliArgs.page   || process.env.npm_config_page;
 const deploy = cliArgs.deploy === true || process.env.npm_config_deploy === 'true';
+const devMode = cliArgs.dev   === true || process.env.npm_config_dev   === 'true';
 
 if (!page) {
   console.error('Usage: node scripts/snapshot.js --page=</path/to/page> [--name=<name>] [--deploy]');
@@ -84,12 +87,14 @@ function copyDir(src, dest) {
 
 // ── Build ──────────────────────────────────────────────────────────────────────
 
-const devJson    = JSON.parse(fs.readFileSync(devJsonPath, 'utf8'));
-const wasDevMode = devJson.env !== 'prod';
+const devJson        = JSON.parse(fs.readFileSync(devJsonPath, 'utf8'));
+const originalEnv    = devJson.env;
+const targetEnv      = devMode ? 'dev' : 'prod';
+const needsEnvChange = originalEnv !== targetEnv;
 
-if (wasDevMode) {
-  fs.writeFileSync(devJsonPath, JSON.stringify({ env: 'prod' }, null, 2));
-  console.log('Temporarily switched dev.json → prod');
+if (needsEnvChange) {
+  fs.writeFileSync(devJsonPath, JSON.stringify({ env: targetEnv }, null, 2));
+  console.log(`Temporarily switched dev.json → ${targetEnv}`);
 }
 
 try {
@@ -137,8 +142,8 @@ try {
   }
 
 } finally {
-  if (wasDevMode) {
-    fs.writeFileSync(devJsonPath, JSON.stringify(devJson, null, 2));
+  if (needsEnvChange) {
+    fs.writeFileSync(devJsonPath, JSON.stringify({ env: originalEnv }, null, 2));
     console.log('\nRestored dev.json');
   }
 }
