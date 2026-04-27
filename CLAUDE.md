@@ -138,3 +138,10 @@ To add a new overlay: create the JS, CSS, and JSON config files — no changes t
 ## Deployment
 
 GitHub Actions deploys `_site/` to `gh-pages` on push to `master`.
+
+## Custom Skills
+
+| Skill | Command | Purpose |
+|---|---|---|
+| Snapshot | `/snapshot [/path/to/page]` | Build and deploy a finished page as an immutable Netlify alias, then update `snapshot-registry.json` and commit |
+| Commit | `/commit` | Review uncommitted changes, group into logical commits with messages, and commit after approval |
