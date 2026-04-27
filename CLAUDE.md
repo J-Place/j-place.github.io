@@ -143,5 +143,6 @@ GitHub Actions deploys `_site/` to `gh-pages` on push to `master`.
 
 | Skill | Command | Purpose |
 |---|---|---|
-| Snapshot | `/snapshot [/path/to/page]` | Build and deploy a finished page as an immutable Netlify alias, then update `snapshot-registry.json` and commit |
-| Commit | `/commit` | Review uncommitted changes, group into logical commits with messages, and commit after approval |
+| Snapshot | `/snapshot [/path/to/page] [--dev]` | Build and deploy a finished page as an immutable Netlify alias, then update `snapshot-registry.json` and commit. `--dev` includes dev overlays (e.g. login-status). |
+| Link Snapshot | `/link-snapshot [alias]` | Add a link to a snapshot on the site index page (`src/pages/index.njk`). Run after `/snapshot`. Omit alias to use the most recent snapshot. |
+| Commit | `/commit` | Review uncommitted changes, group into logical commits with messages, and commit immediately |
