@@ -12,8 +12,7 @@ You are running the snapshot deployment workflow for the USMS mockup project.
 1. Determines the target page path
 2. Runs `npm run deploy:snapshot` to build and deploy to Netlify
 3. Reads the resulting deploy URL from CLI output
-4. Prompts the user for optional notes
-5. Updates `snapshot-registry.json` with the new entry
+4. Updates `snapshot-registry.json` with the new entry
 
 ---
 
@@ -64,16 +63,7 @@ If the command fails, stop and show the error to the user. Do not continue to th
 
 ---
 
-## Step 4 — Prompt for notes
-
-Ask the user:
-> "Any notes to record for this snapshot? (Reply with notes, or just say 'skip')"
-
-Wait for input. If the user says "skip" or sends an empty reply, use an empty string.
-
----
-
-## Step 5 — Update snapshot-registry.json
+## Step 4 — Update snapshot-registry.json
 
 Read the current contents of `snapshot-registry.json`.
 
@@ -84,8 +74,7 @@ Add a new entry using the alias name as the key:
   "page": "<page-path>",
   "url": "<full-url>",
   "date": "<today's date as YYYY-MM-DD>",
-  "branch": "<branch name from Step 2>",
-  "notes": "<notes or empty string>"
+  "branch": "<branch name from Step 2>"
 }
 ```
 
