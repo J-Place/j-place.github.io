@@ -1,6 +1,6 @@
 ---
 name: commit
-description: Review all uncommitted changes, group them into logical commits with meaningful messages, and commit each group after user approval. Use this when the user has accumulated changes across multiple files and wants them organized into clean, intentional commits.
+description: Review all uncommitted changes, group them into logical commits with meaningful messages, and commit each group immediately. Use this when the user has accumulated changes across multiple files and wants them organized into clean, intentional commits.
 allowed-tools: Bash(git *) Read
 ---
 
@@ -26,29 +26,9 @@ Rules for grouping:
 - Skill files (`.claude/skills/`) can be grouped together or with the feature they support
 - Config changes (package.json, netlify.toml, .gitignore) belong with the feature they enable, not in a catch-all
 
-## Step 3 — Propose to the user
+## Step 3 — Commit each group
 
-Present the proposed commits clearly before doing anything:
-
----
-**Proposed commits:**
-
-**1.** `<commit message>`
-- `path/to/file.js`
-- `path/to/other.css`
-
-**2.** `<commit message>`
-- `path/to/config.json`
-
----
-
-Ask: "Does this look right? I'll commit in this order unless you'd like changes."
-
-Wait for approval before proceeding. Accept edits to groupings or messages if the user suggests them.
-
-## Step 4 — Commit each group
-
-For each approved group, stage only those specific files and commit:
+For each group, stage only those specific files and commit:
 
 ```
 git add <file1> <file2> ...
