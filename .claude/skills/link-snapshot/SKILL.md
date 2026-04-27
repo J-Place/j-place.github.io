@@ -36,11 +36,17 @@ Link text: `<pageTitle> <MM/DD/YY>` (e.g. `Add-Ons and Upgrades 04/27/26`)
 
 ## Step 5 — Insert the link into index.njk
 
-Read `src/pages/index.njk`. Find the comment `<!-- snapshot-links -->`. Insert a new `<li>` immediately before it:
+Read `src/pages/index.njk`.
+
+First, check whether any existing `<li>` in the file contains an `href` that includes the page's path (e.g. a Netlify URL containing `usms-measured-pools`). Use the last segment(s) of the page path as the match pattern — enough to uniquely identify the page.
+
+- **If a matching `<li>` is found:** Insert the new `<li>` immediately before the first matching one. This groups all snapshots for the same page together, newest first.
+- **If no match is found:** Insert the new `<li>` immediately before the `<!-- snapshot-links -->` comment.
+
+The new `<li>` format in both cases:
 
 ```html
           <li style="padding: 3px 0; font-size: 15px;"><a href="<url>"><link text></a></li>
-          <!-- snapshot-links -->
 ```
 
 Write the updated file.
