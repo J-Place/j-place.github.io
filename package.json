@@ -8,7 +8,7 @@
     "build:css": "node scripts/build-css.js",
     "build:css:common": "node scripts/build-css.js common",
     "build:snapshot": "node scripts/snapshot.js",
-    "deploy:snapshot": "node scripts/snapshot.js && netlify deploy --dir=dist/snapshots/$npm_config_name --alias=$npm_config_name --message=$npm_config_name",
+    "deploy:snapshot": "node scripts/snapshot.js --deploy",
     "deploy:prototype": "npm run build && netlify deploy --dir=_site --prod"
   },
   "keywords": [],

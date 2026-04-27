@@ -1,9 +1,11 @@
 // scripts/snapshot.js
-// Builds a single-page immutable snapshot and vendors local CSS/JS alongside it.
+// Builds a single-page immutable snapshot, vendors local CSS/JS alongside it,
+// and optionally deploys to Netlify with a permanent alias URL.
 //
 // Usage:
-//   node scripts/snapshot.js --name=my-snapshot --page=/path/to/page
-//   npm run build:snapshot --name=my-snapshot --page=/path/to/page
+//   node scripts/snapshot.js --page=/path/to/page [--name=my-name] [--deploy]
+//   npm run build:snapshot --page=/events/event-central/usms-measured-pools
+//   npm run deploy:snapshot --page=/events/event-central/usms-measured-pools
 
 'use strict';
 
@@ -12,22 +14,37 @@ const fs   = require('fs');
 const path = require('path');
 
 // ── Parse args ────────────────────────────────────────────────────────────────
-// Supports both `node snapshot.js --name=foo --page=/bar` and npm config vars.
 
 const cliArgs = Object.fromEntries(
   process.argv.slice(2)
     .filter(a => a.startsWith('--'))
-    .map(a => a.replace(/^--/, '').split('='))
+    .map(a => {
+      const [key, ...rest] = a.replace(/^--/, '').split('=');
+      return [key, rest.length ? rest.join('=') : true];
+    })
 );
 
-const name = cliArgs.name || process.env.npm_config_name;
-const page = cliArgs.page || process.env.npm_config_page;
+const page   = cliArgs.page   || process.env.npm_config_page;
+const deploy = cliArgs.deploy === true || process.env.npm_config_deploy === 'true';
 
-if (!name || !page) {
-  console.error('Usage: node scripts/snapshot.js --name=<name> --page=</path/to/page>');
-  console.error('Example: node scripts/snapshot.js --name=pool-lookup-v1 --page=/events/event-central/usms-measured-pools');
+if (!page) {
+  console.error('Usage: node scripts/snapshot.js --page=</path/to/page> [--name=<name>] [--deploy]');
+  console.error('Example: node scripts/snapshot.js --page=/events/event-central/usms-measured-pools');
   process.exit(1);
 }
+
+// ── Derive name from page slug + today's date if not supplied ─────────────────
+
+function todayIso() {
+  return new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+}
+
+function pageSlug(pagePath) {
+  // /events/event-central/usms-measured-pools → usms-measured-pools
+  return pagePath.replace(/\/$/, '').split('/').pop();
+}
+
+const name = (cliArgs.name || process.env.npm_config_name) || (pageSlug(page) + '-' + todayIso());
 
 // ── Paths ──────────────────────────────────────────────────────────────────────
 
@@ -36,8 +53,6 @@ const devJsonPath = path.join(root, 'src/_data/dev.json');
 const siteDir     = path.join(root, '_site');
 const outDir      = path.join(root, 'dist/snapshots', name);
 
-// Resolve page path → _site subdirectory
-// e.g. /events/event-central/usms-measured-pools → _site/events/event-central/usms-measured-pools
 const normalizedPage = page.replace(/^\//, '').replace(/\/$/, '');
 const pageSiteDir    = path.join(siteDir, normalizedPage);
 
@@ -81,16 +96,25 @@ try {
   fs.rmSync(outDir, { recursive: true, force: true });
   fs.mkdirSync(outDir, { recursive: true });
 
-  // Copy the page's HTML (index.html and any sub-pages)
   copyDir(pageSiteDir, outDir);
-
-  // Vendor local CSS and JS so they're frozen with this snapshot
   copyDir(path.join(siteDir, 'css'), path.join(outDir, 'css'));
   copyDir(path.join(siteDir, 'js'),  path.join(outDir, 'js'));
 
   console.log(`\nSnapshot ready: dist/snapshots/${name}`);
-  console.log(`\nDeploy with:`);
-  console.log(`  netlify deploy --dir=dist/snapshots/${name} --alias=${name}`);
+
+  // ── Deploy ───────────────────────────────────────────────────────────────────
+
+  if (deploy) {
+    console.log(`\nDeploying to Netlify as alias "${name}"...`);
+    execSync(
+      `netlify deploy --dir="${outDir}" --alias="${name}" --message="${name}"`,
+      { cwd: root, stdio: 'inherit' }
+    );
+  } else {
+    console.log(`\nTo deploy:`);
+    console.log(`  netlify deploy --dir=dist/snapshots/${name} --alias=${name} --message=${name}`);
+    console.log(`  → https://${name}--usms-mockups.netlify.app`);
+  }
 
 } finally {
   if (wasDevMode) {
