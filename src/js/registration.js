@@ -1,4 +1,11 @@
 (function () {
+  // ── User state (set by login-status.js via data attributes) ───────────────
+  // TODO: use renew/isLapsed to vary header copy, pre-population mode,
+  // and any flow differences between new, renewing-current, and lapsed paths.
+  var formWrapper = document.querySelector('.full-registration-form');
+  var renew    = formWrapper && formWrapper.dataset.renew    === 'true';
+  var isLapsed = formWrapper && formWrapper.dataset.isLapsed === 'true';
+
   // ── Selectors ─────────────────────────────────────────────────────────────
   var cardCompetition    = document.getElementById('cardCompetition');
   var membershipContainer = document.querySelector('.membership-length--container');
