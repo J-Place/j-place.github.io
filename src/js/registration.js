@@ -384,6 +384,274 @@
     });
   }
 
+  // ── Validation ────────────────────────────────────────────────────────────
+  function isVisible(el) {
+    if (!el) return false;
+    if (el.style.display === 'none') return false;
+    return el.offsetParent !== null;
+  }
+
+  // Declarative rules: span class, validity check, and fields to watch for live re-check.
+  // watch entries use CSS selectors — querySelectorAll is used so radio groups get one
+  // listener per input.
+  // Rules marked with ValidateField delegate to validate.js (extracted from production)
+  // which in turn uses validator.js for email, credit card, and length checks.
+  var RULES = [
+    // Contact
+    {
+      span: 'help-block--FirstName',
+      check: function () { var e = document.getElementById('firstName'); return e && !!e.value.trim(); },
+      watch: [{ sel: '#firstName', ev: 'input' }]
+    },
+    {
+      span: 'help-block--LastName',
+      check: function () { var e = document.getElementById('lastName'); return e && !!e.value.trim(); },
+      watch: [{ sel: '#lastName', ev: 'input' }]
+    },
+    {
+      span: 'help-block--Gender',
+      check: function () { var e = document.getElementById('Gender'); return e && e.value !== '-1'; },
+      watch: [{ sel: '#Gender', ev: 'change' }]
+    },
+    {
+      span: 'help-block--BirthMonth',
+      check: function () { var e = document.getElementById('BirthMonth'); return e && e.value !== '-1'; },
+      watch: [{ sel: '#BirthMonth', ev: 'change' }]
+    },
+    {
+      span: 'help-block--BirthDay',
+      check: function () { var e = document.getElementById('BirthDay'); return e && e.value !== '-1'; },
+      watch: [{ sel: '#BirthDay', ev: 'change' }]
+    },
+    {
+      span: 'help-block--BirthYear',
+      check: function () { var e = document.getElementById('BirthYear'); return e && e.value !== '-1'; },
+      watch: [{ sel: '#BirthYear', ev: 'change' }]
+    },
+    {
+      span: 'help-block--date-of-birth',
+      check: function () {
+        var bm = document.getElementById('BirthMonth');
+        var bd = document.getElementById('BirthDay');
+        var by = document.getElementById('BirthYear');
+        if (!bm || !bd || !by || bm.value === '-1' || bd.value === '-1' || by.value === '-1') return true;
+        ValidateDob(by, bm, bd);
+        var span = document.querySelector('.help-block--date-of-birth');
+        return !span || !span.classList.contains('has-error');
+      },
+      watch: [
+        { sel: '#BirthMonth', ev: 'change' },
+        { sel: '#BirthDay',   ev: 'change' },
+        { sel: '#BirthYear',  ev: 'change' }
+      ]
+    },
+    {
+      span: 'help-block--Email',
+      check: function () { var e = document.getElementById('email'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
+      watch: [{ sel: '#email', ev: 'input' }]
+    },
+    {
+      span: 'help-block--Phone',
+      check: function () { var e = document.getElementById('phone'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
+      watch: [{ sel: '#phone', ev: 'input' }, { sel: '#SelectedCountry', ev: 'change' }]
+    },
+    {
+      span: 'help-block--SelectedCountry',
+      check: function () { var e = document.getElementById('SelectedCountry'); return e && e.value !== '-1'; },
+      watch: [{ sel: '#SelectedCountry', ev: 'change' }]
+    },
+    {
+      span: 'help-block--Address',
+      check: function () { var e = document.getElementById('address'); return e && !!e.value.trim(); },
+      watch: [{ sel: '#address', ev: 'input' }]
+    },
+    {
+      span: 'help-block--City',
+      check: function () { var e = document.getElementById('city'); return e && !!e.value.trim(); },
+      watch: [{ sel: '#city', ev: 'input' }]
+    },
+    {
+      span: 'help-block--SelectedState',
+      check: function () { var e = document.getElementById('SelectedState'); return e && e.value !== '-1'; },
+      watch: [{ sel: '#SelectedState', ev: 'change' }]
+    },
+    {
+      span: 'help-block--ZipUs',
+      check: function () { var e = document.getElementById('zipUs'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
+      watch: [{ sel: '#zipUs', ev: 'input' }, { sel: '#SelectedCountry', ev: 'change' }]
+    },
+    // Interests
+    {
+      span: 'help-block--checkbox-interests-self-identified-coach',
+      check: function () { return !!document.querySelector('input[name="checkbox-interests-self-identified-coach"]:checked'); },
+      watch: [{ sel: 'input[name="checkbox-interests-self-identified-coach"]', ev: 'change' }]
+    },
+    {
+      span: 'help-block--checkbox-interests-coach',
+      check: function () {
+        if (!isVisible(coachInterestDiv)) return true;
+        return !!document.querySelector('input[name="checkbox-interests-coach"]:checked');
+      },
+      watch: [{ sel: 'input[name="checkbox-interests-coach"]', ev: 'change' }]
+    },
+    // Liability
+    {
+      span: 'help-block--WaiverTerms',
+      check: function () { return !!document.querySelector('input[name="WaiverTerms"][value="agree"]:checked'); },
+      watch: [{ sel: 'input[name="WaiverTerms"]', ev: 'change' }]
+    },
+    // Participation
+    {
+      span: 'help-block--participationInfo',
+      check: function () { return !!document.querySelector('input[name="participationInfo"]:checked'); },
+      watch: [{ sel: 'input[name="participationInfo"]', ev: 'change' }]
+    },
+    // Membership tier
+    {
+      span: 'help-block--length',
+      check: function () { return selectedTile() !== null; },
+      watch: [{ sel: '.membership-length--option', ev: 'click' }]
+    },
+    // Competition cert (conditional)
+    {
+      span: 'help-block--CompetitionMembership',
+      check: function () {
+        if (!isVisible(cardCompetition)) return true;
+        return !!document.querySelector('input[name="CompetitionMembership"]:checked');
+      },
+      watch: [{ sel: 'input[name="CompetitionMembership"]', ev: 'change' }]
+    },
+    // VSA
+    {
+      span: 'help-block--videoStrokeAnalysis',
+      check: function () { return !!document.querySelector('input[name="videoStrokeAnalysis"]:checked'); },
+      watch: [{ sel: 'input[name="videoStrokeAnalysis"]', ev: 'change' }]
+    },
+    {
+      span: 'help-block--stroke-video-analysis__focus',
+      check: function () {
+        if (!isVisible(strokeFocusDiv)) return true;
+        return strokeSelect && strokeSelect.value !== '-1';
+      },
+      watch: [{ sel: '#stroke-video-analysis__focus', ev: 'change' }]
+    },
+    // Donations — minimum $5 if non-zero
+    {
+      span: 'help-block--swimming-saves-lives',
+      check: function () { var v = parseFloat(sslInput && sslInput.value) || 0; return v === 0 || v >= 5; },
+      watch: [{ sel: "input[name='swimming-saves-lives']", ev: 'input' }]
+    },
+    {
+      span: 'help-block--swimming-hall-of-fame',
+      check: function () { var v = parseFloat(shffInput && shffInput.value) || 0; return v === 0 || v >= 5; },
+      watch: [{ sel: "input[name='swimming-hall-of-fame']", ev: 'input' }]
+    },
+    {
+      span: 'help-block--lmsc',
+      check: function () { var v = parseFloat(lmscInput && lmscInput.value) || 0; return v === 0 || v >= 5; },
+      watch: [{ sel: "input[name='lmsc']", ev: 'input' }]
+    },
+    // Payment fields (conditional)
+    {
+      span: 'help-block--cardName',
+      check: function () { if (!isVisible(paymentFields)) return true; var e = document.getElementById('cardName'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
+      watch: [{ sel: '#cardName', ev: 'input' }]
+    },
+    {
+      span: 'help-block--cardNumberID',
+      check: function () { if (!isVisible(paymentFields)) return true; var e = document.getElementById('cardNumberID'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
+      watch: [{ sel: '#cardNumberID', ev: 'input' }]
+    },
+    {
+      span: 'help-block--cardCodeID',
+      check: function () { if (!isVisible(paymentFields)) return true; var e = document.getElementById('cardCodeID'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
+      watch: [{ sel: '#cardCodeID', ev: 'input' }]
+    },
+    {
+      span: 'help-block--expiration',
+      check: function () { if (!isVisible(paymentFields)) return true; var e = document.getElementById('expiration'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
+      watch: [{ sel: '#expiration', ev: 'input' }]
+    },
+    {
+      span: 'help-block--cardZipID',
+      check: function () { if (!isVisible(paymentFields)) return true; var e = document.getElementById('cardZipID'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
+      watch: [{ sel: '#cardZipID', ev: 'input' }]
+    },
+    // Terms
+    {
+      span: 'help-block--agree-terms',
+      check: function () { var e = document.getElementById('agreeTerms'); return e && e.checked; },
+      watch: [{ sel: '#agreeTerms', ev: 'change' }]
+    },
+    {
+      span: 'help-block--agree-usmsplus-terms',
+      check: function () {
+        if (!isVisible(document.querySelector('.agree-usmsplus-terms'))) return true;
+        var e = document.getElementById('agreeUsmsPlusTerms'); return e && e.checked;
+      },
+      watch: [{ sel: '#agreeUsmsPlusTerms', ev: 'change' }]
+    },
+    {
+      span: 'help-block--agree-terms-competition',
+      check: function () {
+        if (!isVisible(document.querySelector('.agree-terms-competition'))) return true;
+        var e = document.getElementById('agree-terms-competition'); return e && e.checked;
+      },
+      watch: [{ sel: '#agree-terms-competition', ev: 'change' }]
+    }
+  ];
+
+  var liveRulesAttached = new Set();
+
+  function attachLiveCheck(rule) {
+    if (liveRulesAttached.has(rule.span)) return;
+    liveRulesAttached.add(rule.span);
+    var span = document.querySelector('.' + rule.span);
+    if (!span) return;
+    rule.watch.forEach(function (w) {
+      document.querySelectorAll(w.sel).forEach(function (el) {
+        el.addEventListener(w.ev, function () {
+          var valid = rule.check();
+          span.classList.toggle('has-error', !valid);
+          MakeColumnWithErrorSameHeight();
+        });
+      });
+    });
+  }
+
+  function validate() {
+    document.querySelectorAll('.help-block.has-error').forEach(function (el) {
+      el.classList.remove('has-error');
+    });
+    document.querySelectorAll('.form-control.has-error, .form-control.has-success').forEach(function (el) {
+      el.classList.remove('has-error', 'has-success');
+    });
+
+    var firstError = null;
+
+    RULES.forEach(function (rule) {
+      if (!rule.check()) {
+        var span = document.querySelector('.' + rule.span);
+        if (span) {
+          span.classList.add('has-error');
+          if (!firstError) firstError = span;
+        }
+        attachLiveCheck(rule);
+      }
+    });
+
+    MakeColumnWithErrorSameHeight();
+    if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return !firstError;
+  }
+
+  if (registerBtn) {
+    registerBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      validate();
+    });
+  }
+
   // ── Init ──────────────────────────────────────────────────────────────────
   setPaymentVisible(false);
   buildPaymentSummary();
