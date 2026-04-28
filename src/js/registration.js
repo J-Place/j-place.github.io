@@ -814,6 +814,7 @@
 
   $('[data-toggle="tooltip"]').tooltip();
 
+
   // Populate BirthYear options (server-rendered in production; built here
   // for the mockup). Max year = current year minus 18 (minimum age).
   (function () {
