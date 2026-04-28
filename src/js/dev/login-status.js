@@ -33,13 +33,16 @@
     var reg = document.querySelector('.full-registration-form');
     if (!reg) return;
 
-    setVal('firstName',  profile.firstName);
-    setVal('lastName',   profile.lastName);
-    setVal('email',      profile.email);
-    setVal('zipUs',      profile.zip);
+    // Only set fields that exist on the profile — partial profiles (e.g. new
+    // members) only carry account-creation fields (name, sex, DOB).
+    setVal('firstName',    profile.firstName);
+    setVal('lastName',     profile.lastName);
+    setVal('middleInitial', profile.middleInitial);
+    if (profile.email)  setVal('email', profile.email);
+    if (profile.zip)    setVal('zipUs', profile.zip);
 
-    setSelectByValue('Gender',     profile.gender);
-    setSelectByValue('selectedLmsc', profile.lmsc ? profile.lmsc.toLowerCase() : null);
+    setSelectByValue('Gender', profile.gender);
+    if (profile.lmsc) setSelectByValue('selectedLmsc', profile.lmsc.toLowerCase());
 
     if (profile.birthDate) {
       var parts = profile.birthDate.split('/'); // MM/DD/YYYY
@@ -91,6 +94,8 @@
       var regWrapper = document.querySelector('.full-registration-form');
       if (regWrapper) {
         regWrapper.dataset.membershipLevel = siteUser.membershipTier || '';
+        regWrapper.dataset.renew     = siteUser.renew     ? 'true' : 'false';
+        regWrapper.dataset.isLapsed  = siteUser.isLapsed  ? 'true' : 'false';
       }
 
       // Patch hidden swimmerId input
