@@ -48,7 +48,8 @@ function todayIso() {
 
 function pageSlug(pagePath) {
   // /events/event-central/usms-measured-pools → usms-measured-pools
-  return pagePath.replace(/\/$/, '').split('/').pop();
+  // /public/search/content-hub-2.html → content-hub-2
+  return pagePath.replace(/\/$/, '').split('/').pop().replace(/\.html$/, '');
 }
 
 const name = (cliArgs.name || process.env.npm_config_name) || (pageSlug(page) + '-' + todayIso());
@@ -69,8 +70,7 @@ const pageSiteDir    = path.join(siteDir, normalizedPage);
 const pageSiteFile   = normalizedPage.endsWith('.html')
   ? path.join(siteDir, normalizedPage)
   : path.join(siteDir, normalizedPage + '.html');
-const useFlatFile    = !normalizedPage.endsWith('.html') &&
-                       fs.existsSync(pageSiteFile) &&
+const useFlatFile    = fs.existsSync(pageSiteFile) &&
                        fs.statSync(pageSiteFile).isFile();
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
@@ -122,6 +122,21 @@ try {
   } else {
     copyDir(pageSiteDir, outDir);
   }
+
+  // For public/ pages, the HTML references assets relative to the Sergey
+  // project root (e.g. /search/css/..., /css/..., /js/...). Copy Sergey's
+  // global css/js layers first so Eleventy's overrides win on conflict.
+  if (normalizedPage.startsWith('public/')) {
+    copyDir(path.join(siteDir, 'public', 'css'), path.join(outDir, 'css'));
+    copyDir(path.join(siteDir, 'public', 'js'),  path.join(outDir, 'js'));
+    // Copy the page's sibling directory (e.g. _site/public/search/ → outDir/search/)
+    // so paths like /search/css/ResultList.css resolve correctly.
+    const pageSubdir = normalizedPage.split('/')[1];
+    if (pageSubdir) {
+      copyDir(path.join(siteDir, 'public', pageSubdir), path.join(outDir, pageSubdir));
+    }
+  }
+
   copyDir(path.join(siteDir, 'css'), path.join(outDir, 'css'));
   copyDir(path.join(siteDir, 'js'),  path.join(outDir, 'js'));
 
