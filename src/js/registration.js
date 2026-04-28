@@ -394,4 +394,18 @@
   // ── Init ──────────────────────────────────────────────────────────────────
   setPaymentVisible(false);
   buildPaymentSummary();
+
+  // Populate BirthYear options (server-rendered in production; built here
+  // for the mockup). Max year = current year minus 18 (minimum age).
+  (function () {
+    var select = document.getElementById('BirthYear');
+    if (!select) return;
+    var maxYear = new Date().getFullYear() - 18;
+    for (var y = maxYear; y >= 1920; y--) {
+      var opt = document.createElement('option');
+      opt.value = y;
+      opt.textContent = y;
+      select.appendChild(opt);
+    }
+  })();
 })();
