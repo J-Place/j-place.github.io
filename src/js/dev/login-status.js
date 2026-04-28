@@ -74,6 +74,7 @@
     }
   }
 
+
   // Must run after registration.js (deferred) has attached the LMSC change
   // listener that populates club options. Triggers the change event on the
   // already-set LMSC select, then sets the club value once options exist.
@@ -83,18 +84,7 @@
     var lmscEl = document.getElementById('selectedLmsc');
     if (!lmscEl) return;
     lmscEl.dispatchEvent(new Event('change'));
-    if (profile.club) {
-      var abbr    = '(' + profile.club + ')';
-      var clubEl  = document.getElementById('selectedClub');
-      if (clubEl) {
-        for (var i = 0; i < clubEl.options.length; i++) {
-          if (clubEl.options[i].textContent.indexOf(abbr) !== -1) {
-            clubEl.selectedIndex = i;
-            break;
-          }
-        }
-      }
-    }
+    if (profile.club) setSelectByValue('selectedClub', profile.club);
   }
 
   // ── Synchronous patch ─────────────────────────────────────
@@ -185,14 +175,17 @@
   // populates BirthYear options). Injects the switcher select
   // and sets BirthYear.
   document.addEventListener('DOMContentLoaded', function () {
-    // BirthYear — options now available after registration.js ran
+    // BirthYear and club — options now available after registration.js ran
     if (data && activeId) {
       var siteUser = data.siteUsers[activeId];
       if (siteUser && siteUser.swimmerId) {
         var profile = data.swimmers[siteUser.swimmerId] || null;
         populateBirthYear(profile);
         populateClub(profile);
+<<<<<<< HEAD
         populateCoachInterests(profile);
+=======
+>>>>>>> 84ac24be (Pre-populate club select for returning members in dev overlay)
       }
     }
 
