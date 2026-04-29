@@ -7,8 +7,8 @@
 		{% for key in membershipTierKeys %}
 		{% set tier = membershipTiers[key] %}
 		{% if tier %}
-		<div class="col-xs-12 col-md-3"
-			style="display: flex;">
+		<div class="col-xs-12 col-md-3" id="{{ tier.colId }}" {% if tier.registrationHidden %}data-registration-hidden="true" {% endif %}style="display: {{ 'none' if tier.registrationHidden else 'flex' }};">
+
 			<div class="membership-length--option membership-length--{{ tier.value }}{% if tier.extraClasses %} {{ tier.extraClasses }}{% endif %}"
 				id="{{ tier.colId }}"
 				aria-hidden="true"
