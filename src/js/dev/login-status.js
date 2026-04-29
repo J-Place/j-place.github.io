@@ -67,7 +67,18 @@
     var lmscEl = document.getElementById('selectedLmsc');
     if (!lmscEl) return;
     lmscEl.dispatchEvent(new Event('change'));
-    if (profile.club) setSelectByValue('selectedClub', profile.club);
+    if (profile.club) {
+      var abbr    = '(' + profile.club + ')';
+      var clubEl  = document.getElementById('selectedClub');
+      if (clubEl) {
+        for (var i = 0; i < clubEl.options.length; i++) {
+          if (clubEl.options[i].textContent.indexOf(abbr) !== -1) {
+            clubEl.selectedIndex = i;
+            break;
+          }
+        }
+      }
+    }
   }
 
   // ── Synchronous patch ─────────────────────────────────────
