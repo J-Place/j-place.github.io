@@ -3,6 +3,80 @@
    ============================================================ */
 
 
+/* ── Participation card — competition terms fixes ──────────── */
+/* Production applies width: 350px at ≥1200px and radio-specific label
+   styles (margin, text-indent, padding-left) to all labels in this card.
+   Override both for the terms block only. */
+
+.card.participation-info .form-group,
+.card.participation-info .form-group.competition-category,
+.card.participation-info .form-group.national-recognition,
+.card.participation-info .form-group.competition-certification {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+
+@media (min-width: 1200px) {
+    .card.participation-info .form-group.agree-terms-competition {
+        width: auto;
+        padding-left: 20rem;
+        padding-right: 20rem;
+    }
+}
+
+/* Reset radio-label-specific production styles on question heading labels */
+.card.participation-info .form-group label.control-label {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-right: 0;
+    padding-left: 0;
+    text-indent: 0;
+    white-space: normal;
+}
+
+/* Replicate .competition-qualification label layout for the in-card certification group.
+   Production positions .radio-container absolutely so text wraps flush left. */
+.card.participation-info .form-group.competition-certification label.radio-label {
+    margin: 1rem 0 1rem 2rem;
+    padding-left: 0;
+    text-indent: 0;
+    position: relative;
+    white-space: unset;
+}
+.card.participation-info .form-group.competition-certification label.radio-label .radio-container {
+    position: absolute;
+    left: -3rem;
+    top: -.5rem;
+}
+@media (min-width: 1200px) {
+    .card.participation-info .form-group.competition-certification label.radio-label {
+        margin: 1rem 0 1rem 3.5rem;
+    }
+    .card.participation-info .form-group.competition-certification label.radio-label .radio-container {
+        left: -3rem;
+    }
+}
+.card.participation-info .form-group.competition-certification label.radio-label > * {
+    text-wrap: wrap;
+    line-height: 2rem;
+}
+
+.card.participation-info .form-group.agree-terms-competition label.checkbox-label {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-right: 0;
+    padding-left: 0;
+    text-indent: 0;
+    white-space: normal;
+}
+
+/* ── Participation card — summary max-width ────────────────── */
+@media (min-width: 1200px) {
+    .card.participation-info h3+p {
+        max-width: 800px;
+    }
+}
+
 /* ── Video Stroke Analysis ─────────────────────────────────── */
 
 .video-stroke-analysis .form-group label {
