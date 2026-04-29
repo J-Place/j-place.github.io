@@ -7,7 +7,6 @@
   var isLapsed = formWrapper && formWrapper.dataset.isLapsed === 'true';
 
   // ── Selectors ─────────────────────────────────────────────────────────────
-  var cardCompetition    = document.getElementById('cardCompetition');
   var membershipContainer = document.querySelector('.membership-length--container');
   var paymentFields      = document.querySelector('.registration-payment__fields');
   var paymentSummary     = document.querySelector('.js-payment-summary');
@@ -47,8 +46,7 @@
   // Tier tiles carry data-terms-keys="key1,key2" — JS shows matching
   // production-class terms blocks and enables their checkboxes.
   var termsBlocks = {
-    usmsPlus:    document.querySelector('.agree-usmsplus-terms'),
-    competition: document.querySelector('.agree-terms-competition')
+    usmsPlus: document.querySelector('.agree-usmsplus-terms')
   };
 
   function updateVariableTerms() {
@@ -211,10 +209,6 @@
       var price = parseFloat(tile.dataset.price || 0);
       if (membershipTotalEl) membershipTotalEl.textContent = fmt(price);
 
-      // Competition cert card
-      var showsCert = tile.dataset.competitionEligible === 'true';
-      if (cardCompetition) cardCompetition.style.display = showsCert ? 'block' : 'none';
-
       // VSA: update price label; reset or update total
       var vsaPrice   = parseFloat(tile.dataset.vsaPrice || 0);
       var priceEl    = document.querySelector('.price-string__video-stroke-analysis');
@@ -246,10 +240,10 @@
     if (block) block.style.display = 'none';
     if (cb)   cb.checked = false;
     if (membershipContainer) membershipContainer.classList.add('disabled');
-    // Restore cols to initial load state
-    document.querySelectorAll('.membership-length--option').forEach(function (tile) {
-      tile.parentElement.style.display = tile.dataset.initialDisplay || 'flex';
-      deactivateTile(tile.parentElement);
+    // Restore cols to visible-but-disabled (initial state)
+    document.querySelectorAll('.membership-length--container > [id]').forEach(function (col) {
+      col.style.display = col.dataset.registrationHidden === 'true' ? 'none' : 'flex';
+      deactivateTile(col);
     });
     resetMembershipSelection();
     resetVsa();
@@ -280,10 +274,7 @@
   // ── Participation radio ───────────────────────────────────────────────────
   document.querySelectorAll('input[name="participationInfo"]').forEach(function (radio) {
     radio.addEventListener('change', function () {
-      if (membershipContainer) membershipContainer.classList.remove('disabled');
-      resetMembershipSelection();
-      resetVsa();
-      buildPaymentSummary();
+      resetCompetitionCategory();
 
       if (this.value === 'yes') {
         var group = document.querySelector('.competition-category');
@@ -291,9 +282,10 @@
       } else {
         // No: enable membership with standard (non-event-license) tiers
         if (membershipContainer) membershipContainer.classList.remove('disabled');
-        document.querySelectorAll('.membership-length--option').forEach(function (tile) {
-          var col = tile.parentElement;
-          if (tile.dataset.initialDisplay === 'none' || tile.dataset.competitionEligible === 'true') {
+        document.querySelectorAll('.membership-length--container > [id]').forEach(function (col) {
+          var tile = col && col.querySelector('.membership-length--option');
+          if (!tile) return;
+          if (col.dataset.registrationHidden === 'true' || tile.dataset.competitionEligible === 'true') {
             col.style.display = 'none';
             deactivateTile(col);
           } else {
@@ -375,8 +367,9 @@
     competitionAgree.addEventListener('change', function () {
       if (this.checked) {
         if (membershipContainer) membershipContainer.classList.remove('disabled');
-        document.querySelectorAll('.membership-length--option').forEach(function (tile) {
-          var col = tile.parentElement;
+        document.querySelectorAll('.membership-length--container > [id]').forEach(function (col) {
+          var tile = col && col.querySelector('.membership-length--option');
+          if (!tile) return;
           if (tile.dataset.competitionEligible === 'true') {
             col.style.display = 'flex';
             activateTile(col);
@@ -387,10 +380,10 @@
         });
       } else {
         if (membershipContainer) membershipContainer.classList.add('disabled');
-        // Restore cols to initial load state
-        document.querySelectorAll('.membership-length--option').forEach(function (tile) {
-          tile.parentElement.style.display = tile.dataset.initialDisplay || 'flex';
-          deactivateTile(tile.parentElement);
+        // Restore cols to visible-but-disabled (initial state)
+        document.querySelectorAll('.membership-length--container > [id]').forEach(function (col) {
+          col.style.display = col.dataset.registrationHidden === 'true' ? 'none' : 'flex';
+          deactivateTile(col);
         });
         resetMembershipSelection();
         resetVsa();
@@ -633,20 +626,35 @@
       check: function () { return !!document.querySelector('input[name="participationInfo"]:checked'); },
       watch: [{ sel: 'input[name="participationInfo"]', ev: 'change' }]
     },
+    {
+      span: 'help-block--competitionCategory',
+      check: function () {
+        if (!isVisible(document.querySelector('.competition-category'))) return true;
+        return !!document.querySelector('input[name="competitionCategory"]:checked');
+      },
+      watch: [{ sel: 'input[name="competitionCategory"]', ev: 'change' }]
+    },
+    {
+      span: 'help-block--nationalRecognition',
+      check: function () {
+        if (!isVisible(document.querySelector('.national-recognition'))) return true;
+        return !!document.querySelector('input[name="nationalRecognition"]:checked');
+      },
+      watch: [{ sel: 'input[name="nationalRecognition"]', ev: 'change' }]
+    },
+    {
+      span: 'help-block--CompetitionMembership',
+      check: function () {
+        if (!isVisible(document.querySelector('.competition-certification'))) return true;
+        return !!document.querySelector('input[name="CompetitionMembership"]:checked');
+      },
+      watch: [{ sel: 'input[name="CompetitionMembership"]', ev: 'change' }]
+    },
     // Membership tier
     {
       span: 'help-block--length',
       check: function () { return selectedTile() !== null; },
       watch: [{ sel: '.membership-length--option', ev: 'click' }]
-    },
-    // Competition cert (conditional)
-    {
-      span: 'help-block--CompetitionMembership',
-      check: function () {
-        if (!isVisible(cardCompetition)) return true;
-        return !!document.querySelector('input[name="CompetitionMembership"]:checked');
-      },
-      watch: [{ sel: 'input[name="CompetitionMembership"]', ev: 'change' }]
     },
     // VSA
     {
