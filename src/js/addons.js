@@ -199,6 +199,108 @@ document.addEventListener('DOMContentLoaded', () => {
     input?.addEventListener('input', updateAll);
   });
 
+  // ── Participation flow (gates Event Participation product group) ──────────
+
+  function deselectGatedTiles() {
+    document.querySelectorAll('[data-participation-gated] .product-option.selected').forEach(tile => {
+      const priceEl   = tile.querySelector('.product-price');
+      const tilePrice = parseFloat((priceEl?.textContent ?? '').replace(/[^0-9.]/g, '')) || 0;
+      const addBtn    = tile.querySelector('.add-on');
+      tile.classList.remove('selected');
+      productTotal -= tilePrice;
+      if (addBtn) addBtn.textContent = 'Add';
+    });
+  }
+
+  function hideParticipationGate() {
+    document.querySelectorAll('[data-participation-gated]').forEach(el => { el.style.display = 'none'; });
+    deselectGatedTiles();
+    updateAll();
+  }
+
+  function resetCompetitionTerms() {
+    const block = document.querySelector('.form-group.agree-terms-competition');
+    const cb    = document.getElementById('agree-terms-competition');
+    if (block) block.style.display = 'none';
+    if (cb)   cb.checked = false;
+    hideParticipationGate();
+  }
+
+  function resetCompetitionCertification() {
+    const group = document.querySelector('.competition-certification');
+    if (group) group.style.display = 'none';
+    document.querySelectorAll('input[name="CompetitionMembership"]').forEach(r => { r.checked = false; });
+    resetCompetitionTerms();
+  }
+
+  function resetNationalRecognition() {
+    const group = document.querySelector('.national-recognition');
+    if (group) group.style.display = 'none';
+    document.querySelectorAll('input[name="nationalRecognition"]').forEach(r => { r.checked = false; });
+    resetCompetitionCertification();
+  }
+
+  function resetCompetitionCategory() {
+    const group = document.querySelector('.competition-category');
+    if (group) group.style.display = 'none';
+    document.querySelectorAll('input[name="competitionCategory"]').forEach(r => { r.checked = false; });
+    resetNationalRecognition();
+  }
+
+  document.querySelectorAll('input[name="participationInfo"]').forEach(radio => {
+    radio.addEventListener('change', function () {
+      resetCompetitionCategory();
+      if (this.value === 'yes') {
+        const group = document.querySelector('.competition-category');
+        if (group) group.style.display = '';
+      }
+    });
+  });
+
+  document.querySelectorAll('input[name="competitionCategory"]').forEach(radio => {
+    radio.addEventListener('change', function () {
+      resetNationalRecognition();
+      if (this.value === 'mens-open') {
+        const block = document.querySelector('.form-group.agree-terms-competition');
+        if (block) block.style.display = '';
+      } else {
+        const group = document.querySelector('.national-recognition');
+        if (group) group.style.display = '';
+      }
+    });
+  });
+
+  document.querySelectorAll('input[name="nationalRecognition"]').forEach(radio => {
+    radio.addEventListener('change', function () {
+      resetCompetitionCertification();
+      if (this.value === 'no') {
+        const block = document.querySelector('.form-group.agree-terms-competition');
+        if (block) block.style.display = '';
+      } else {
+        const group = document.querySelector('.competition-certification');
+        if (group) group.style.display = '';
+      }
+    });
+  });
+
+  document.querySelectorAll('input[name="CompetitionMembership"]').forEach(radio => {
+    radio.addEventListener('change', function () {
+      const block = document.querySelector('.form-group.agree-terms-competition');
+      if (block) block.style.display = '';
+    });
+  });
+
+  const competitionAgree = document.getElementById('agree-terms-competition');
+  if (competitionAgree) {
+    competitionAgree.addEventListener('change', function () {
+      if (this.checked) {
+        document.querySelectorAll('[data-participation-gated]').forEach(el => { el.style.display = ''; });
+      } else {
+        hideParticipationGate();
+      }
+    });
+  }
+
   // ── Init ──────────────────────────────────────────────────────────────────
   updateLockedTiles();
   setPaymentVisible(false);
