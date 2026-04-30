@@ -1,5 +1,5 @@
 {% macro productTile(option, key) %}
-<div class="product-option {{ option.extraClasses }} product-option_{{ option.modifier }}"{% if key %} data-product-key="{{ key }}"{% endif %}{% if option.termsKey %} data-terms-key="{{ option.termsKey }}"{% endif %}{% if option.requiresProduct %} data-requires-product="{{ option.requiresProduct }}"{% endif %}>
+<div class="product-option {{ option.extraClasses }} product-option_{{ option.modifier }}"{% if key %} data-product-key="{{ key }}"{% endif %}{% if option.termsKey %} data-terms-key="{{ option.termsKey }}"{% endif %}{% if option.requiresProduct %} data-requires-product="{{ option.requiresProduct }}"{% endif %}{% if option.participationGated %} data-participation-gated="true"{% endif %}{% if option.participationGated %} style="display:none"{% endif %}>
 	<p class="product-name">{{ option.name | safe }}</p>
 	<p class="product-price">${{ option.price | price }}</p>
 	<div class="product-summary">
