@@ -10,23 +10,13 @@
 			</div>
 		</div>
 	</div>
-	<div class="usms-container  p-tb-10">
-		<div class="row  ">
-			<div class="col-xs-12  ">
+	<div class="usms-container p-tb-10">
+		<div class="row">
+			<div class="col-xs-12">
 				<div id="">
-					<div class="renew__form-body masters-addons" data-membership-level="{{ currentUser.membershipTier if currentUser else '' }}" data-vsa-price="{{ membershipTiers[currentUser.membershipTier].vsaPrice if currentUser else '' }}" data-swimmer-name="{{ swimmer.firstName + ' ' + swimmer.lastName if swimmer else '' }}">
-						<input type="hidden" name="videoStrokeAnalysisProductId" value=""><input type="hidden" name="usmsPlusProductId" data-product-name="" value=""><input type="hidden" name="designatedCoachProductId" data-product-name="" value=""><input type="hidden" name="magazineProductId" data-product-name="" value=""><input type="hidden" name="swimmerId" id="swimmerId" value="{{ currentUser.swimmerId if currentUser else '' }}">
-<div class="modal-container" style="transition:all 250ms ease-in-out;transform:translateY(-10px);opacity:0;z-index:-1;">
-							<div class="modal" id="">
-								<div class="modal-close"><button type="button"><i class="fa-solid fa-times"></i></button></div>
-								<div class="row ">
-									<div class="col-xs-12">
-										<p class="text-danger text-center" style="display:flex;flex-direction:column;"></p>
-									</div>
-								</div>
-							</div>
-						</div>
-
+					<div class="renew__form-body masters-addons" data-membership-level="{{ currentUser.membershipTier if currentUser else '' }}" data-vsa-price="{{ membershipTiers[currentUser.membershipTier].vsaPrice if currentUser else '' }}" data-swimmer-name="{{ swimmer.firstName + ' ' + swimmer.lastName if swimmer else '' }}" data-competition-eligible="{{ 'true' if (currentUser and membershipTiers[currentUser.membershipTier].competitionEligible) else 'false' }}" data-event-license-upgrade-price="{{ membershipTiers[currentUser.membershipTier].eventLicenseUpgradePrice if currentUser else '' }}">
+						<input type="hidden" name="videoStrokeAnalysisProductId" value="">
+						<input type="hidden" name="usmsPlusProductId" data-product-name="" value=""><input type="hidden" name="designatedCoachProductId" data-product-name="" value=""><input type="hidden" name="magazineProductId" data-product-name="" value=""><input type="hidden" name="swimmerId" id="swimmerId" value="{{ currentUser.swimmerId if currentUser else '' }}">
 						{% include "partials/Forms/Participation.njk" %}
 
 						<div>
