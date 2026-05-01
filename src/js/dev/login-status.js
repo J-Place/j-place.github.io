@@ -124,9 +124,11 @@
       // Patch add-ons wrapper
       var addonsWrapper = document.querySelector('.masters-addons');
       if (addonsWrapper) {
-        addonsWrapper.dataset.membershipLevel = siteUser.membershipTier || '';
-        addonsWrapper.dataset.vsaPrice        = tier.vsaPrice != null ? tier.vsaPrice : '';
-        addonsWrapper.dataset.swimmerName     = swimmerName;
+        addonsWrapper.dataset.membershipLevel         = siteUser.membershipTier || '';
+        addonsWrapper.dataset.vsaPrice                = tier.vsaPrice != null ? tier.vsaPrice : '';
+        addonsWrapper.dataset.swimmerName             = swimmerName;
+        addonsWrapper.dataset.competitionEligible     = tier.competitionEligible ? 'true' : 'false';
+        addonsWrapper.dataset.eventLicenseUpgradePrice = tier.eventLicenseUpgradePrice != null ? tier.eventLicenseUpgradePrice : '';
       }
 
       // Patch registration form wrapper

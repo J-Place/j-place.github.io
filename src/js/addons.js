@@ -1,7 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
   // ── Swimmer data (from wrapper data attributes) ───────────────────────────
-  const wrapper         = document.querySelector('.renew__form-body.masters-addons');
-  const vsaPrice        = wrapper ? parseFloat(wrapper.dataset.vsaPrice ?? '') : NaN;
+  const wrapper                = document.querySelector('.renew__form-body.masters-addons');
+  const vsaPrice               = wrapper ? parseFloat(wrapper.dataset.vsaPrice ?? '') : NaN;
+  const competitionEligible    = wrapper?.dataset.competitionEligible === 'true';
+  const eventLicenseUpgradePrice = parseFloat(wrapper?.dataset.eventLicenseUpgradePrice ?? '');
 
   // ── Selectors ─────────────────────────────────────────────────────────────
   const productTotalEl  = document.querySelector('.total-product.card__total--amount');
@@ -166,6 +168,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (hasStroke && !isNaN(vsaPrice)) {
       price = vsaPrice;
       if (priceEl) priceEl.textContent = `$${vsaPrice.toFixed(2)}`;
+    } else if (!isNaN(eventLicenseUpgradePrice) && tile.dataset.productKey === 'eventLicenseStandard') {
+      price = eventLicenseUpgradePrice;
+      if (priceEl) priceEl.textContent = `$${eventLicenseUpgradePrice.toFixed(2)}`;
     } else {
       price = parseFloat((priceEl?.textContent ?? '').replace(/[^0-9.]/g, '')) || 0;
     }
@@ -330,6 +335,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ── Init ──────────────────────────────────────────────────────────────────
+  if (competitionEligible) {
+    const participationCard = document.getElementById('cardParticipationInfo');
+    if (participationCard) participationCard.style.display = 'none';
+  }
   updateLockedTiles();
   setPaymentVisible(false);
   $('[data-toggle="tooltip"]').tooltip();
