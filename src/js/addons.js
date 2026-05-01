@@ -283,10 +283,38 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  const certModal    = document.getElementById('modalCompetitionNotCertify');
+  const certBackdrop = document.createElement('div');
+  certBackdrop.className = 'modal-backdrop fade in';
+
+  function openCertModal() {
+    if (!certModal) return;
+    document.body.appendChild(certBackdrop);
+    certModal.style.display = 'block';
+    certModal.classList.add('show');
+    certModal.removeAttribute('aria-hidden');
+    document.body.classList.add('modal-open');
+  }
+
+  function closeCertModal() {
+    if (!certModal) return;
+    certModal.style.display = 'none';
+    certModal.classList.remove('show');
+    certModal.setAttribute('aria-hidden', 'true');
+    if (certBackdrop.parentNode) certBackdrop.parentNode.removeChild(certBackdrop);
+    document.body.classList.remove('modal-open');
+  }
+
+  const certConfirmBtn = document.getElementById('confirmCompetitionNotCertify');
+  if (certConfirmBtn) certConfirmBtn.addEventListener('click', closeCertModal);
+
   document.querySelectorAll('input[name="CompetitionMembership"]').forEach(radio => {
     radio.addEventListener('change', function () {
       const block = document.querySelector('.form-group.agree-terms-competition');
       if (block) block.style.display = '';
+      const cb = document.getElementById('agree-terms-competition');
+      if (cb && cb.checked) { cb.checked = false; cb.dispatchEvent(new Event('change')); }
+      if (this.value === 'no') openCertModal();
     });
   });
 
@@ -304,4 +332,5 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── Init ──────────────────────────────────────────────────────────────────
   updateLockedTiles();
   setPaymentVisible(false);
+  $('[data-toggle="tooltip"]').tooltip();
 });
