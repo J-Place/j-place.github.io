@@ -1,7 +1,7 @@
 <div id="cardParticipationInfo" class="card participation-info">
 	<h3 class="registration__section--header">Event Participation</h3>
 	<p class="registration__section--summary">
-		You need an event license to participate in events. Events include swim meets, virtual championships, and open water races. If you selected "I prefer not to say" for your gender, you cannot select a membership with an event license. Even though you can select an event license later in your My Account, we still suggest you select an event license now if you are unsure.
+		You need an event license to participate in events. Events include swim meets, virtual championships, and open water races. Even though you can select an event license later in your My Account, we still suggest you select an event license now if you are unsure.
 	</p>
 	<div class="form-group">
 		<label class="control-label font-weight-bold col-xs-12">Do you plan on participating in events?</label>
@@ -35,20 +35,26 @@
 					<input type="radio" name="competitionCategory" id="competitionCategoryMens" value="mens-open">
 					<span class="radio__placeholder"></span>
 				</div>
-				Mens/Open
+				Men's/Open
 			</label>
 			<label class="radio-label" for="competitionCategoryWomens" style="cursor:pointer;">
 				<div class="radio-container">
 					<input type="radio" name="competitionCategory" id="competitionCategoryWomens" value="womens">
 					<span class="radio__placeholder"></span>
 				</div>
-				Womens
+				Women's
 			</label>
 		</div>
 	</div>
 
 	<div class="form-group national-recognition" style="display:none;">
-		<label class="control-label font-weight-bold col-xs-12">Do you want to be included in National Competitive Recognition Programs?</label>
+		<label class="control-label font-weight-bold col-xs-12">Do you want to be included in National Competitive Recognition Programs?
+			<span class="icon-help"
+			      data-toggle="tooltip"
+			      data-placement="top"
+			      data-container="body"
+			      title="These are national competitive awards and rankings. They consist of the publication of USMS records and annual Top 10 times and the naming of All-Stars and All-Americans."></span>
+		</label>
 		<div class="col-xs-12"><span class="help-block help-block--nationalRecognition">Please select an option</span></div>
 		<div class="col-xs-12">
 			<label class="radio-label" for="nationalRecognitionYes" style="cursor:pointer;">
@@ -78,7 +84,7 @@
 				<input type="radio" name="CompetitionMembership" id="competitionMembershipYesInput" value="yes">
 				<span class="radio__placeholder"></span>
 			</div>
-			I certify that my sex assigned at birth corresponds with the competition category selected OR I have selected the male/open competition category.
+			I certify that my sex assigned at birth corresponds with the competition category selected.
 		</label>
 		<label class="radio-label radio-label--inline col-xs-12" for="competitionMembershipNoInput" style="cursor:pointer;">
 			<div class="radio-container">
@@ -98,7 +104,17 @@
 					<span class="checkbox__placeholder"></span>
 				</div>
 			</label>
-			<span class="font-weight-bold">I acknowledge that the <a href="~/link.aspx?_id=B1745ABEA65D4D65AC6F848A0E3E413A&amp;_z=z">Interim USMS Policy on Participation in the Men's/Open and Women's Competition Category and Eligibility for Official Recognition Programs</a>&nbsp;allows members to participate in the competition category that reflects the sex with which they identify; however, members will not be included in Recognition Programs in the female competition category unless their sex assigned at birth is also female. Members participating in the male competition category will be eligible for recognition. Eligibility is subject to all other USMS rules and regulations.</span>
+			<span class="font-weight-bold">I acknowledge that the <a href="~/link.aspx?_id=B1745ABEA65D4D65AC6F848A0E3E413A&amp;_z=z">Interim USMS Policy on Participation in the Men's/Open and Women's Competition Category and Eligibility for Official Recognition Programs</a>&nbsp;allows members to participate in the competition category that reflects the sex with which they identify; however, members will not be included in Recognition Programs in the female competition category unless their sex assigned at birth is also female. Members participating in the Men's/Open competition category will be eligible for recognition. Eligibility is subject to all other USMS rules and regulations.</span>
 		</div>
 	</div>
 </div>
+
+{% set modalId = "modalCompetitionNotCertify" %}
+{% set modalTitle = "We Will Contact You" %}
+{% set modalBody %}
+<p>A USMS representative will contact you within a week to discuss participation and eligibility procedures. Please go ahead and finish your registration.</p>
+{% endset %}
+{% set modalFooter %}
+<button type="button" class="btn btn-lg btn-primary" id="confirmCompetitionNotCertify">Okay</button>
+{% endset %}
+{% include "components/modal.njk" %}
