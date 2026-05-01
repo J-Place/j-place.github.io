@@ -232,7 +232,45 @@
     });
   }
 
-  // ── Participation radio — show/hide tier columns ──────────────────────────
+  // ── Competition flow helpers (cascade reset downward) ────────────────────
+  function resetCompetitionTerms() {
+    var block = document.querySelector('.agree-terms-competition');
+    var cb    = document.getElementById('agree-terms-competition');
+    if (block) block.style.display = 'none';
+    if (cb)   cb.checked = false;
+    if (membershipContainer) membershipContainer.classList.add('disabled');
+    // Restore cols to initial load state
+    document.querySelectorAll('.membership-length--option').forEach(function (tile) {
+      tile.parentElement.style.display = tile.dataset.initialDisplay || 'flex';
+      deactivateTile(tile.parentElement);
+    });
+    resetMembershipSelection();
+    resetVsa();
+    buildPaymentSummary();
+  }
+
+  function resetCompetitionCertification() {
+    var group = document.querySelector('.competition-certification');
+    if (group) group.style.display = 'none';
+    document.querySelectorAll('input[name="CompetitionMembership"]').forEach(function (r) { r.checked = false; });
+    resetCompetitionTerms();
+  }
+
+  function resetNationalRecognition() {
+    var group = document.querySelector('.national-recognition');
+    if (group) group.style.display = 'none';
+    document.querySelectorAll('input[name="nationalRecognition"]').forEach(function (r) { r.checked = false; });
+    resetCompetitionCertification();
+  }
+
+  function resetCompetitionCategory() {
+    var group = document.querySelector('.competition-category');
+    if (group) group.style.display = 'none';
+    document.querySelectorAll('input[name="competitionCategory"]').forEach(function (r) { r.checked = false; });
+    resetNationalRecognition();
+  }
+
+  // ── Participation radio ───────────────────────────────────────────────────
   document.querySelectorAll('input[name="participationInfo"]').forEach(function (radio) {
     radio.addEventListener('change', function () {
       if (membershipContainer) membershipContainer.classList.remove('disabled');
@@ -240,35 +278,117 @@
       resetVsa();
       buildPaymentSummary();
 
-      // Show/hide tier columns based on participation choice.
-      // Columns are identified by data-col-id on the tier tile's parent col div
-      // (set by registration-membership-options.njk via tier.colId).
-      document.querySelectorAll('.membership-length--container > [id]').forEach(function (col) {
-        var tile = col.querySelector('.membership-length--option');
-        if (!tile) return;
-        var showsCert = tile.dataset.competitionEligible === 'true';
+      if (this.value === 'yes') {
+        var group = document.querySelector('.competition-category');
+        if (group) group.style.display = '';
+      } else {
+        // No: enable membership with standard (non-event-license) tiers
+        if (membershipContainer) membershipContainer.classList.remove('disabled');
+        document.querySelectorAll('.membership-length--option').forEach(function (tile) {
+          var col = tile.parentElement;
+          if (tile.dataset.initialDisplay === 'none' || tile.dataset.competitionEligible === 'true') {
+            col.style.display = 'none';
+            deactivateTile(col);
+          } else {
+            col.style.display = 'flex';
+            activateTile(col);
+          }
+        });
+      }
+    });
+  });
 
-        if (this.value === 'yes') {
-          // Event participants: show event-license tiers, hide standard
-          if (showsCert) {
+  // ── Competition Category radio ────────────────────────────────────────────
+  document.querySelectorAll('input[name="competitionCategory"]').forEach(function (radio) {
+    radio.addEventListener('change', function () {
+      resetNationalRecognition();
+      if (this.value === 'mens-open') {
+        var block = document.querySelector('.agree-terms-competition');
+        if (block) block.style.display = '';
+      } else {
+        var group = document.querySelector('.national-recognition');
+        if (group) group.style.display = '';
+      }
+    });
+  });
+
+  // ── National Recognition radio ────────────────────────────────────────────
+  document.querySelectorAll('input[name="nationalRecognition"]').forEach(function (radio) {
+    radio.addEventListener('change', function () {
+      resetCompetitionCertification();
+      if (this.value === 'no') {
+        var block = document.querySelector('.agree-terms-competition');
+        if (block) block.style.display = '';
+      } else {
+        var group = document.querySelector('.competition-certification');
+        if (group) group.style.display = '';
+      }
+    });
+  });
+
+  // ── Competition Certification radio ───────────────────────────────────────
+  var certModal     = document.getElementById('modalCompetitionNotCertify');
+  var certBackdrop  = document.createElement('div');
+  certBackdrop.className = 'modal-backdrop fade in';
+
+  function openCertModal() {
+    if (!certModal) return;
+    document.body.appendChild(certBackdrop);
+    certModal.style.display = 'block';
+    certModal.classList.add('show');
+    certModal.removeAttribute('aria-hidden');
+    document.body.classList.add('modal-open');
+  }
+
+  function closeCertModal() {
+    if (!certModal) return;
+    certModal.style.display = 'none';
+    certModal.classList.remove('show');
+    certModal.setAttribute('aria-hidden', 'true');
+    if (certBackdrop.parentNode) certBackdrop.parentNode.removeChild(certBackdrop);
+    document.body.classList.remove('modal-open');
+  }
+
+  var certConfirmBtn = document.getElementById('confirmCompetitionNotCertify');
+  if (certConfirmBtn) certConfirmBtn.addEventListener('click', closeCertModal);
+
+  document.querySelectorAll('input[name="CompetitionMembership"]').forEach(function (radio) {
+    radio.addEventListener('change', function () {
+      var block = document.querySelector('.agree-terms-competition');
+      if (block) block.style.display = '';
+      var cb = document.getElementById('agree-terms-competition');
+      if (cb && cb.checked) { cb.checked = false; cb.dispatchEvent(new Event('change')); }
+      if (this.value === 'no') openCertModal();
+    });
+  });
+
+  // ── Competition agreement — gates event tier display ──────────────────────
+  var competitionAgree = document.getElementById('agree-terms-competition');
+  if (competitionAgree) {
+    competitionAgree.addEventListener('change', function () {
+      if (this.checked) {
+        if (membershipContainer) membershipContainer.classList.remove('disabled');
+        document.querySelectorAll('.membership-length--option').forEach(function (tile) {
+          var col = tile.parentElement;
+          if (tile.dataset.competitionEligible === 'true') {
             col.style.display = 'flex';
             activateTile(col);
           } else {
             col.style.display = 'none';
             deactivateTile(col);
           }
-        } else {
-          // Non-event participants: hide event-license tiers, show standard
-          if (showsCert) {
-            col.style.display = 'none';
-            deactivateTile(col);
-          } else {
-            col.style.display = 'flex';
-            activateTile(col);
-          }
-        }
-        if (cardCompetition) cardCompetition.style.display = 'none';
-      }.bind(this));
+        });
+      } else {
+        if (membershipContainer) membershipContainer.classList.add('disabled');
+        // Restore cols to initial load state
+        document.querySelectorAll('.membership-length--option').forEach(function (tile) {
+          tile.parentElement.style.display = tile.dataset.initialDisplay || 'flex';
+          deactivateTile(tile.parentElement);
+        });
+        resetMembershipSelection();
+        resetVsa();
+        buildPaymentSummary();
+      }
     });
   });
 
@@ -653,6 +773,51 @@
   }
 
   // ── Init ──────────────────────────────────────────────────────────────────
+
+  // Hide tiers outside their availability window based on today's date (or a
+  // dev-injected mock date via window.USMS_MOCK_DATE set by registration-date.js).
+  (function () {
+    var now   = window.USMS_MOCK_DATE ? new Date(window.USMS_MOCK_DATE + 'T12:00:00') : new Date();
+    var today = (now.getMonth() + 1) * 100 + now.getDate(); // e.g. July 15 → 715
+    function md(str) { var p = str.split('-'); return parseInt(p[0], 10) * 100 + parseInt(p[1], 10); }
+    document.querySelectorAll('.membership-length--option[data-avail-start]').forEach(function (tile) {
+      var start = md(tile.dataset.availStart);
+      var end   = tile.dataset.availEnd ? md(tile.dataset.availEnd) : null;
+      var available = end === null  ? today >= start
+                    : start <= end  ? today >= start && today <= end
+                    :                 today >= start || today <= end; // cross-year (e.g. Nov 1–Jun 30)
+      if (!available) {
+        tile.parentElement.style.display = 'none';
+      }
+    });
+
+    // Hide event-license tiers until the user opts into competition.
+    document.querySelectorAll('.membership-length--option[data-competition-eligible="true"]').forEach(function (tile) {
+      tile.parentElement.style.display = 'none';
+    });
+
+    // Snapshot each col's display after all init logic so resets can restore it.
+    document.querySelectorAll('.membership-length--option').forEach(function (tile) {
+      tile.dataset.initialDisplay = tile.parentElement.style.display;
+    });
+  })();
+
   setPaymentVisible(false);
   buildPaymentSummary();
+
+  $('[data-toggle="tooltip"]').tooltip();
+
+  // Populate BirthYear options (server-rendered in production; built here
+  // for the mockup). Max year = current year minus 18 (minimum age).
+  (function () {
+    var select = document.getElementById('BirthYear');
+    if (!select) return;
+    var maxYear = new Date().getFullYear() - 18;
+    for (var y = maxYear; y >= 1920; y--) {
+      var opt = document.createElement('option');
+      opt.value = y;
+      opt.textContent = y;
+      select.appendChild(opt);
+    }
+  })();
 })();
