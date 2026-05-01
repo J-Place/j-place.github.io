@@ -42,6 +42,10 @@
     if (profile.zip)    setVal('zipUs', profile.zip);
 
     setSelectByValue('Gender', profile.gender);
+    if (profile.phone)   setVal('phone', profile.phone);
+    if (profile.address) setVal('address', profile.address);
+    if (profile.city)    setVal('city', profile.city);
+    if (profile.state)   setSelectByValue('SelectedState', profile.state);
     if (profile.lmsc) setSelectByValue('selectedLmsc', profile.lmsc.toLowerCase());
 
     if (profile.birthDate) {
@@ -56,6 +60,18 @@
     if (!document.querySelector('.full-registration-form')) return;
     var parts = profile.birthDate.split('/');
     setSelectByValue('BirthYear', parseInt(parts[2], 10));
+  }
+
+  // Must run after registration.js (deferred) has attached coach-interest listeners.
+  function populateCoachInterests(profile) {
+    if (!profile || profile.coachSelfIdentified == null) return;
+    if (!document.querySelector('.full-registration-form')) return;
+    var val = profile.coachSelfIdentified ? 'true' : 'false';
+    var radio = document.querySelector('input[name="checkbox-interests-self-identified-coach"][value="' + val + '"]');
+    if (radio) {
+      radio.checked = true;
+      radio.dispatchEvent(new Event('change'));
+    }
   }
 
   // Must run after registration.js (deferred) has attached the LMSC change
@@ -176,6 +192,7 @@
         var profile = data.swimmers[siteUser.swimmerId] || null;
         populateBirthYear(profile);
         populateClub(profile);
+        populateCoachInterests(profile);
       }
     }
 
