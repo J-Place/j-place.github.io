@@ -243,6 +243,7 @@ var MakeColumnWithErrorSameHeight = function () {
     });
     errorCols.forEach(function (span) {
       var group = _findFormGroup(span);
+      if (group.querySelector('input[type="radio"], input[type="checkbox"]')) return;
       var groupH = group.getBoundingClientRect().height;
       group.querySelectorAll('div[class^="col-"]').forEach(function (col) {
         if (col.parentNode.classList.contains('form-group') && col.getBoundingClientRect().height < groupH) {
