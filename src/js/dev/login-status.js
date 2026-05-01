@@ -75,6 +75,7 @@
   }
 
 
+
   // Must run after registration.js (deferred) has attached the LMSC change
   // listener that populates club options. Triggers the change event on the
   // already-set LMSC select, then sets the club value once options exist.
@@ -193,10 +194,7 @@
         var profile = data.swimmers[siteUser.swimmerId] || null;
         populateBirthYear(profile);
         populateClub(profile);
-<<<<<<< HEAD
         populateCoachInterests(profile);
-=======
->>>>>>> 84ac24be (Pre-populate club select for returning members in dev overlay)
       }
     }
 
