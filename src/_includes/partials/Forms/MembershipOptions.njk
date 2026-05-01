@@ -7,23 +7,27 @@
 		{% for key in membershipTierKeys %}
 		{% set tier = membershipTiers[key] %}
 		{% if tier %}
-		<div class="col-xs-12 col-md-3" id="{{ tier.colId }}" {% if tier.registrationHidden %}data-registration-hidden="true" {% endif %}style="display: {{ 'none' if tier.registrationHidden else 'flex' }};">
+		<div class="col-xs-12 col-md-3"
+			style="display: flex;">
 			<div class="membership-length--option membership-length--{{ tier.value }}{% if tier.extraClasses %} {{ tier.extraClasses }}{% endif %}"
+				id="{{ tier.colId }}"
 				aria-hidden="true"
 				disabled=""
 				data-price="{{ tier.price }}"
 				data-vsa-price="{{ tier.vsaPrice }}"
 				data-terms-keys="{{ tier.termsKeys | join(',') }}"
-				data-competition-eligible="{{ tier.competitionEligible }}">
-				<span class="promo">{{ tier.promo }}</span>
-				<span class="savings"></span>
+				data-competition-eligible="{{ tier.competitionEligible }}"
+				{% if tier.availStart %}data-avail-start="{{ tier.availStart.month }}-{{ tier.availStart.day }}" {% endif %}
+				{% if tier.availEnd %}data-avail-end="{{ tier.availEnd.month }}-{{ tier.availEnd.day }}"{% endif %}>
+				<span class="promo{% if tier.promoClass %} {{ tier.promoClass }}{% endif %}">{{ tier.promo }}</span>
+				<span class="savings">{{ tier.savings if tier.savings }}</span>
 				<label for="{{ tier.value }}" class="control-label">
 					<div class="radio-container">
 						<input type="radio" name="length" id="{{ tier.value }}" value="{{ tier.value }}">
 					</div>
-					<div class="{{ tier.value }}-container">
+					<div class="{{ tier.containerClass if tier.containerClass else (tier.value + '-container') }}">
 						<span class="membership-length--price">
-							<p class="form-control-static {{ tier.value }}-cost">${{ tier.price | price }}</p>
+							<p class="form-control-static {{ tier.costClass if tier.costClass else (tier.value + '-cost') }}">${{ tier.price | price }}</p>
 						</span>
 						<span class="membership-length--description">{{ tier.description }}</span>
 					</div>
@@ -36,13 +40,12 @@
 						{% endfor %}
 					</ul>
 					{% if tier.modal %}
-					<div class="modal" id="{{ tier.modal.id }}" tabindex="-1" role="dialog">
-						<div class="modal-dialog" role="document">
+					<div class="modal" id="{{ tier.modal.id }}" tabindex="-1" role="dialog" aria-hidden="true" style="display:none;">
+						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-										<span aria-hidden="true">&times;</span>
-									</button>
+									<h5 class="modal-title"></h5>
+									<button type="button" class="btn-close js-modal-close" aria-label="Close"></button>
 								</div>
 								<div class="modal-body">
 									<ul>
