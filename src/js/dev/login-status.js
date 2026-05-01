@@ -38,8 +38,12 @@
     setVal('email',      profile.email);
     setVal('zipUs',      profile.zip);
 
-    setSelectByValue('Gender',     profile.gender);
-    setSelectByValue('selectedLmsc', profile.lmsc ? profile.lmsc.toLowerCase() : null);
+    setSelectByValue('Gender', profile.gender);
+    if (profile.phone)   setVal('phone', profile.phone);
+    if (profile.address) setVal('address', profile.address);
+    if (profile.city)    setVal('city', profile.city);
+    if (profile.state)   setSelectByValue('SelectedState', profile.state);
+    if (profile.lmsc) setSelectByValue('selectedLmsc', profile.lmsc.toLowerCase());
 
     if (profile.birthDate) {
       var parts = profile.birthDate.split('/'); // MM/DD/YYYY
@@ -53,6 +57,41 @@
     if (!document.querySelector('.full-registration-form')) return;
     var parts = profile.birthDate.split('/');
     setSelectByValue('BirthYear', parseInt(parts[2], 10));
+  }
+
+  // Must run after registration.js (deferred) has attached coach-interest listeners.
+  function populateCoachInterests(profile) {
+    if (!profile || profile.coachSelfIdentified == null) return;
+    if (!document.querySelector('.full-registration-form')) return;
+    var val = profile.coachSelfIdentified ? 'true' : 'false';
+    var radio = document.querySelector('input[name="checkbox-interests-self-identified-coach"][value="' + val + '"]');
+    if (radio) {
+      radio.checked = true;
+      radio.dispatchEvent(new Event('change'));
+    }
+  }
+
+  // Must run after registration.js (deferred) has attached the LMSC change
+  // listener that populates club options. Triggers the change event on the
+  // already-set LMSC select, then sets the club value once options exist.
+  function populateClub(profile) {
+    if (!profile || !profile.lmsc) return;
+    if (!document.querySelector('.full-registration-form')) return;
+    var lmscEl = document.getElementById('selectedLmsc');
+    if (!lmscEl) return;
+    lmscEl.dispatchEvent(new Event('change'));
+    if (profile.club) {
+      var abbr    = '(' + profile.club + ')';
+      var clubEl  = document.getElementById('selectedClub');
+      if (clubEl) {
+        for (var i = 0; i < clubEl.options.length; i++) {
+          if (clubEl.options[i].textContent.indexOf(abbr) !== -1) {
+            clubEl.selectedIndex = i;
+            break;
+          }
+        }
+      }
+    }
   }
 
   // ── Synchronous patch ─────────────────────────────────────
@@ -145,7 +184,10 @@
     if (data && activeId) {
       var siteUser = data.siteUsers[activeId];
       if (siteUser && siteUser.swimmerId) {
-        populateBirthYear(data.swimmers[siteUser.swimmerId] || null);
+        var profile = data.swimmers[siteUser.swimmerId] || null;
+        populateBirthYear(profile);
+        populateClub(profile);
+        populateCoachInterests(profile);
       }
     }
 
