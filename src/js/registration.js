@@ -390,7 +390,7 @@
         buildPaymentSummary();
       }
     });
-  });
+  }
 
   // ── Coach interest ────────────────────────────────────────────────────────
   var coachInterestDiv = document.querySelector('.order-4.col-xs-12');
