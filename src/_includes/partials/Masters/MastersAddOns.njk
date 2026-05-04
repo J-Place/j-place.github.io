@@ -16,17 +16,17 @@
 				<div id="">
 					<div class="renew__form-body masters-addons" data-membership-level="{{ currentUser.membershipTier if currentUser else '' }}" data-vsa-price="{{ membershipTiers[currentUser.membershipTier].vsaPrice if currentUser else '' }}" data-swimmer-name="{{ swimmer.firstName + ' ' + swimmer.lastName if swimmer else '' }}">
 						<input type="hidden" name="videoStrokeAnalysisProductId" value=""><input type="hidden" name="usmsPlusProductId" data-product-name="" value=""><input type="hidden" name="designatedCoachProductId" data-product-name="" value=""><input type="hidden" name="magazineProductId" data-product-name="" value=""><input type="hidden" name="swimmerId" id="swimmerId" value="{{ currentUser.swimmerId if currentUser else '' }}">
-						<div class="modal" id="modalSexNotMatch" tabindex="-1" role="dialog">
-							<div class="modal-dialog" role="document">
+						<div class="modal usms-modal-global" id="modalSexNotMatch" tabindex="-1" role="dialog" aria-hidden="true" style="display:none;">
+							<div class="modal-dialog modal-dialog-centered">
 								<div class="modal-content">
-									<div class="modal-header">
-										<h5>We Will Contact You</h5>
-										<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									<div class="modal-header modal-header--titled">
+										<h5 class="modal-title">We Will Contact You</h5>
+										<button type="button" class="btn-close js-modal-close" aria-label="Close"></button>
 									</div>
-									<div class="modal-body">
+									<div class="modal-body modal-body--sm">
 										<p>A USMS representative will contact you within a week to discuss participation and eligibility procedures. Please go ahead and finish your registration.</p>
 									</div>
-									<div class="modal-footer"><button type="button" class="btn btn-lg btn-primary" id="confirmSexNotMatch" data-bs-dismiss="modal">Okay</button></div>
+									<div class="modal-footer"><button type="button" class="btn btn-lg btn-primary js-modal-close" id="confirmSexNotMatch">Okay</button></div>
 								</div>
 							</div>
 						</div>
