@@ -133,7 +133,6 @@
       });
     });
 
-    document.getElementById('poolDetailClose').addEventListener('click', closeModal);
     document.getElementById('poolDetailConfirm').addEventListener('click', closeModal);
     modal.addEventListener('click', function (e) {
       if (e.target === modal) closeModal();

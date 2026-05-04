@@ -1,44 +1,87 @@
-@media (min-width: 768px) {
-    .modal-dialog {
-        margin: 30px auto;
-        width: 500px;
-    }
+/* All rules scoped to .usms-modal-global to override BS3 production CSS */
+
+/* Vertical centering: fires only while BS3 has added .in (modal is open) */
+.usms-modal-global.modal.in {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
 }
 
-.modal-header {
-    border-bottom: 1px solid #e5e5e5;
-    /* margin: 0 2rem 2rem; */
+.usms-modal-global .modal-dialog {
+    margin: 30px auto;
+    width: auto;
+    max-width: 500px;
+}
+
+.usms-modal-global .modal-dialog-centered {
+    align-self: center;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.usms-modal-global .modal-content {
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    overflow: visible;
+    position: relative;
+    width: 100%;
+    z-index: 10000;
+}
+
+.usms-modal-global .modal-header {
+    border-radius: 8px 8px 0 0;
     padding: 15px;
-    /* flex-direction: column; */
-    /* align-items: flex-start; */
+    position: relative;
+    display: flex;
+    align-items: center;
 }
 
-.modal-title {
+.usms-modal-global .modal-header--titled {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.usms-modal-global .modal-title {
+    font-size: 2.2rem;
     font-weight: 700;
     line-height: 120%;
     margin: 0;
 }
 
-.modal-header .btn-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
+/* Close button — self-contained, no BS3 or BS5 dependency */
+.usms-modal-global .btn-close {
+    background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e") center / 1em auto no-repeat;
+    border: 0;
+    border-radius: 4px;
+    cursor: pointer;
+    flex-shrink: 0;
+    height: 1em;
+    margin-left: auto;
+    opacity: 0.5;
+    padding: 0.25em;
+    width: 1em;
 }
 
-.modal-body {
+.usms-modal-global .btn-close:hover {
+    opacity: 1;
+}
+
+.usms-modal-global .modal-body {
     padding: 15px;
     position: relative;
 }
 
-.modal-content {
-    background: #fff;
-    border-radius: 8px;
-    /* padding: 2rem; */
-    z-index: 10000;
+.usms-modal-global .modal-header:not(.modal-header--titled) + .modal-body {
+    padding-top: 10px;
 }
 
-.modal-footer {
+.usms-modal-global .modal-body--sm p { font-size: 1.4rem; }
+.usms-modal-global .modal-body--lg p { font-size: 2rem; font-weight: 300; }
+
+.usms-modal-global .modal-footer {
     border-top: 1px solid #e5e5e5;
+    border-radius: 0 0 8px 8px;
+    display: flex;
+    justify-content: flex-end;
     padding: 15px;
-    text-align: right;
 }
