@@ -73,20 +73,20 @@
   }
 ] %}
 
-<div class="modal fade" id="pageModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-sm" role="document">
+<div class="modal usms-modal-global" id="pageModal" tabindex="-1" role="dialog" aria-hidden="true" style="display:none;">
+  <div class="modal-dialog modal-sm modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Go To Page</h4>
+      <div class="modal-header modal-header--titled">
+        <h5 class="modal-title">Go To Page</h5>
+        <button type="button" class="btn-close js-modal-close" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body modal-body--sm">
         <div class="form-group">
           <input type="number" min="1" max="50" name="gotoInput" id="gotoInput" value="" class="form-control">
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default js-modal-close">Close</button>
         <button type="button" id="gotoPageButton" class="btn btn-primary">Go</button>
       </div>
     </div>
