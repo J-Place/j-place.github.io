@@ -4,8 +4,9 @@
   Set these variables before including:
 
     modalId        — required: id on the outer .modal element
-    modalModifier  — optional: extra class on .modal (e.g. "pool-location-detail")
+    modalModifier  — optional: extra class on .modal (e.g. "cta-modal--club-badge")
     modalSize      — optional: "sm" | "lg" | "xl" for .modal-dialog size
+    modalCentered  — optional: true to vertically center the dialog
     modalTitleId   — optional: id on the <h5> (useful for aria-labelledby)
     modalTitle     — optional: title text; leave unset for JS-populated titles
 
@@ -18,6 +19,7 @@
   Example:
     {% set modalId = "myModal" %}
     {% set modalSize = "lg" %}
+    {% set modalCentered = true %}
     {% set modalBody %}
       <p>Some content</p>
     {% endset %}
@@ -27,30 +29,29 @@
     {% include "components/modal.njk" %}
 #}
 
-<div class="modal{{ (' ' + modalModifier) if modalModifier }}"
+<div class="modal usms-modal-global{{ (' ' + modalModifier) if modalModifier }}"
      id="{{ modalId }}"
      tabindex="-1"
      role="dialog"
-     data-bs-backdrop="static"
-     data-bs-keyboard="false"
      aria-hidden="true"
      style="display:none;">
-	<div class="modal-dialog{{ (' modal-' + modalSize) if modalSize }}">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title"{% if modalTitleId %} id="{{ modalTitleId }}"{% endif %}>{{ modalTitle if modalTitle }}</h5>
-				{% if modalHeaderExtra %}{{ modalHeaderExtra | safe }}{% endif %}
-			</div>
-			{% if modalBody %}
-			<div class="modal-body">
-				{{ modalBody | safe }}
-			</div>
-			{% endif %}
-			{% if modalFooter %}
-			<div class="modal-footer">
-				{{ modalFooter | safe }}
-			</div>
-			{% endif %}
-		</div>
-	</div>
+  <div class="modal-dialog{{ (' modal-dialog-centered') if modalCentered }}{{ (' modal-' + modalSize) if modalSize }}">
+    <div class="modal-content">
+      <div class="modal-header{{ ' modal-header--titled' if modalTitle }}">
+        <h5 class="modal-title"{% if modalTitleId %} id="{{ modalTitleId }}"{% endif %}>{{ modalTitle if modalTitle }}</h5>
+        <button type="button" class="btn-close js-modal-close" aria-label="Close"></button>
+        {% if modalHeaderExtra %}{{ modalHeaderExtra | safe }}{% endif %}
+      </div>
+      {% if modalBody %}
+      <div class="modal-body{{ (' ' + modalBodyClass) if modalBodyClass }}">
+        {{ modalBody | safe }}
+      </div>
+      {% endif %}
+      {% if modalFooter %}
+      <div class="modal-footer">
+        {{ modalFooter | safe }}
+      </div>
+      {% endif %}
+    </div>
+  </div>
 </div>
