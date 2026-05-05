@@ -27,6 +27,15 @@
   function parseAmt(el) { return parseFloat((el && el.textContent || '').replace(/[^0-9.]/g, '')) || 0; }
   function inputVal(el) { return el ? parseFloat(el.value) || 0 : 0; }
 
+  function preselectByDataAttr(id) {
+    var el = document.getElementById(id);
+    if (!el || !el.dataset.preselect) return;
+    var val = el.dataset.preselect;
+    for (var i = 0; i < el.options.length; i++) {
+      if (el.options[i].value == val) { el.selectedIndex = i; return; }
+    }
+  }
+
   function selectedTile() {
     return document.querySelector('.membership-length--option.selected') || null;
   }
@@ -820,6 +829,27 @@
 
   $('[data-toggle="tooltip"]').tooltip();
 
+  // Pre-select static form fields from data-preselect attributes (renewing/lapsed members).
+  preselectByDataAttr('Gender');
+  preselectByDataAttr('BirthMonth');
+  preselectByDataAttr('BirthDay');
+  preselectByDataAttr('SelectedState');
+
+  // Pre-select LMSC and club
+  (function () {
+    var lmsc = document.getElementById('selectedLmsc');
+    var club = document.getElementById('selectedClub');
+    if (!lmsc || !lmsc.dataset.preselect) return;
+    preselectByDataAttr('selectedLmsc');
+    lmsc.dispatchEvent(new Event('change'));
+    var preselectClub = lmsc.dataset.preselectClub;
+    if (preselectClub && club) {
+      for (var i = 0; i < club.options.length; i++) {
+        if (club.options[i].value === preselectClub) { club.selectedIndex = i; break; }
+      }
+    }
+  })();
+
   // Populate BirthYear options (server-rendered in production; built here
   // for the mockup). Max year = current year minus 18 (minimum age).
   (function () {
@@ -832,5 +862,6 @@
       opt.textContent = y;
       select.appendChild(opt);
     }
+    preselectByDataAttr('BirthYear');
   })();
 })();
