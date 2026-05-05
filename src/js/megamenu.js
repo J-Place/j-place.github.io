@@ -160,6 +160,7 @@
 
       loginWrapper.addEventListener('click', function (e) {
         if (loginWrapper.dataset.loggedIn !== 'true') return;
+        e.preventDefault();
         e.stopPropagation();
         if (loginWrapper.classList.contains('login--active')) {
           closeLogin();
