@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── Participation flow (gates Event Participation product group) ──────────
 
   function deselectGatedTiles() {
-    document.querySelectorAll('[data-participation-gated] .product-option.selected').forEach(tile => {
+    document.querySelectorAll('.product-option[data-participation-gated].selected').forEach(tile => {
       const priceEl   = tile.querySelector('.product-price');
       const tilePrice = parseFloat((priceEl?.textContent ?? '').replace(/[^0-9.]/g, '')) || 0;
       const addBtn    = tile.querySelector('.add-on');
