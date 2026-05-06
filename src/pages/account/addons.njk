@@ -6,21 +6,29 @@ breadcrumbs:
   - url: "/home"
     label: "Home"
 breadcrumbTitle: "Add-Ons"
-swimmerId: "standardCurrent"
-devSwimmerIds:
-  - standardCurrent
-  - eventLicenseStandardCurrent
 showDonations: true
+membershipTierKeys:
+  - usmsPlus
+  - usmsPlusEventLicense
+  - usmsYearPlus
+  - usmsEventYearPlus
+  - usmsStandardEventLicense
+  - usmsStandard
 productOptionGroups:
   - label: "Product Options"
     keys:
-      - eventLicenseYearPlus
-      - eventLicenseStandard
+      - coachLicense
       - videoStrokeAnalysis
       - printSwimmerMagazine
+  - label: "NCC 2026"
+    keys:
+      - ncc-2026-registration
+      - ncc-2026-golden-goggles
+      - ncc-2026-hospitality
 ---
 {% extends "layouts/base.njk" %}
 {% block pageCSS %}
+<link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
 <link rel="stylesheet" href="https://www.usms.org/styles/mastersAddons.min.css">
 <link rel="stylesheet" href="/css/Account/addons.css">
 <link rel="stylesheet" href="/css/Registration/agree-terms.css">

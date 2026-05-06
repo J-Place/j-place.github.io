@@ -1,10 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // ── Swimmer data (from wrapper data attributes) ───────────────────────────
-  const wrapper                = document.querySelector('.renew__form-body.masters-addons');
-  const vsaPrice               = wrapper ? parseFloat(wrapper.dataset.vsaPrice ?? '') : NaN;
-  const competitionEligible    = wrapper?.dataset.competitionEligible === 'true';
-  const eventLicenseUpgradePrice = parseFloat(wrapper?.dataset.eventLicenseUpgradePrice ?? '');
-
   // ── Selectors ─────────────────────────────────────────────────────────────
   const productTotalEl  = document.querySelector('.total-product.card__total--amount');
   const totalChargeEl   = document.querySelector('.review-order__line-item--total .review-order__line-item--price');
@@ -17,13 +11,67 @@ document.addEventListener('DOMContentLoaded', () => {
   const submitBtn       = document.getElementById('register-button');
   const paymentFields   = document.querySelector('.addons-payment__fields');
 
-  let productTotal = 0;
+  let productTotal    = 0;
+  let membershipPrice = 0;
+
+  // ── Section show/hide ─────────────────────────────────────────────────────
+  const membershipSection = document.querySelector('.addon-membership-section');
+  const membershipTotalEl = document.querySelector('.membership-length--total');
+
+  function enableMembershipTiles() {
+    const container = document.querySelector('.membership-length--container');
+    if (container) container.classList.remove('disabled');
+    document.querySelectorAll('.membership-length--option').forEach(t => {
+      t.removeAttribute('disabled');
+      t.removeAttribute('aria-hidden');
+    });
+  }
+
+  function disableMembershipTiles() {
+    const container = document.querySelector('.membership-length--container');
+    if (container) container.classList.add('disabled');
+    document.querySelectorAll('.membership-length--option').forEach(t => {
+      t.setAttribute('disabled', '');
+      t.setAttribute('aria-hidden', 'true');
+    });
+  }
+
+  function showSections() {
+    if (membershipSection) membershipSection.style.display = '';
+    enableMembershipTiles();
+  }
+
+  function hideSections() {
+    if (membershipSection) membershipSection.style.display = 'none';
+    disableMembershipTiles();
+  }
+
+  // ── Membership tier selection ─────────────────────────────────────────────
+  function deselectMembershipTier() {
+    document.querySelectorAll('.membership-length--option.selected').forEach(t => t.classList.remove('selected'));
+    membershipPrice = 0;
+    if (membershipTotalEl) membershipTotalEl.textContent = '$0.00';
+  }
+
+  document.querySelectorAll('.membership-length--option').forEach(tile => {
+    tile.addEventListener('click', () => {
+      const wasSelected = tile.classList.contains('selected');
+      deselectMembershipTier();
+      if (!wasSelected) {
+        tile.classList.add('selected');
+        membershipPrice = parseFloat(tile.dataset.price) || 0;
+        if (membershipTotalEl) membershipTotalEl.textContent = `$${membershipPrice.toFixed(2)}`;
+      }
+      updateAll();
+    });
+  });
 
   // ── Payment section visibility ────────────────────────────────────────────
   function hasSelection() {
-    const hasProduct  = document.querySelector('.add-on-products .product-option.selected') !== null;
-    const hasDonation = [sslInput, shffInput, lmscInput].some(el => el && parseFloat(el.value) > 0);
-    return hasProduct || hasDonation;
+    const hasMembership = membershipPrice > 0;
+    const hasProduct    = document.querySelector('.add-on-products .product-option.selected') !== null;
+    const hasDonation   = [sslInput, shffInput, lmscInput].some(el => el && parseFloat(el.value) > 0);
+    return hasMembership || hasProduct || hasDonation;
   }
 
   function setPaymentVisible(visible) {
@@ -81,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Agreement / Submit ────────────────────────────────────────────────────
   function updateAgreement() {
-    const anySelected = document.querySelector('.add-on-products .product-option.selected') !== null;
+    const anySelected = membershipPrice > 0 || document.querySelector('.add-on-products .product-option.selected') !== null;
 
     // Standard terms checkbox
     agreeLabel?.classList.toggle('disabled', !anySelected);
@@ -106,6 +154,16 @@ document.addEventListener('DOMContentLoaded', () => {
   function buildReviewOrder() {
     if (!reviewLineItems) return;
     reviewLineItems.innerHTML = '';
+
+    // Membership tier line item
+    const selectedTier = document.querySelector('.membership-length--option.selected');
+    if (selectedTier) {
+      const tierName  = selectedTier.querySelector('.membership-length--description')?.textContent?.trim() ?? 'Membership';
+      const p = document.createElement('p');
+      p.className = 'review-order__line-item review-order__line-item--bill-date';
+      p.innerHTML = `${tierName} <span class="review-order__line-item--price">$${membershipPrice.toFixed(2)}</span>`;
+      reviewLineItems.appendChild(p);
+    }
 
     // Product line items
     document.querySelectorAll('.add-on-products .product-option.selected').forEach(tile => {
@@ -142,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function updateTotals() {
-    const grand = productTotal + donationTotal();
+    const grand = membershipPrice + productTotal + donationTotal();
     if (productTotalEl) productTotalEl.textContent = `$${productTotal.toFixed(2)}`;
     if (totalChargeEl)  totalChargeEl.textContent  = `$${grand.toFixed(2)}`;
   }
@@ -162,18 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const priceEl    = tile.querySelector('.product-price');
     const hasStroke  = tile.querySelector('select[name="StrokeSelect"]') !== null;
 
-    // VSA tiles: use vsaPrice from the swimmer's tier (data-vsa-price on wrapper).
-    // Falls back to the product JSON price if vsaPrice is not set.
-    let price;
-    if (hasStroke && !isNaN(vsaPrice)) {
-      price = vsaPrice;
-      if (priceEl) priceEl.textContent = `$${vsaPrice.toFixed(2)}`;
-    } else if (!isNaN(eventLicenseUpgradePrice) && tile.dataset.productKey === 'eventLicenseStandard') {
-      price = eventLicenseUpgradePrice;
-      if (priceEl) priceEl.textContent = `$${eventLicenseUpgradePrice.toFixed(2)}`;
-    } else {
-      price = parseFloat((priceEl?.textContent ?? '').replace(/[^0-9.]/g, '')) || 0;
-    }
+    const price = parseFloat((priceEl?.textContent ?? '').replace(/[^0-9.]/g, '')) || 0;
 
     const strokeSelect = tile.querySelector('select[name="StrokeSelect"]');
 
@@ -218,6 +265,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function hideParticipationGate() {
+    hideSections();
+    deselectMembershipTier();
     document.querySelectorAll('[data-participation-gated]').forEach(el => { el.style.display = 'none'; });
     deselectGatedTiles();
     updateAll();
@@ -258,6 +307,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (this.value === 'yes') {
         const group = document.querySelector('.competition-category');
         if (group) group.style.display = '';
+      } else {
+        // "No" — show sections but hide competition-eligible tier columns
+        showSections();
+        document.querySelectorAll('.membership-length--option[data-competition-eligible="true"]')
+          .forEach(t => { t.closest('.col-xs-12').style.display = 'none'; });
       }
     });
   });
@@ -327,6 +381,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (competitionAgree) {
     competitionAgree.addEventListener('change', function () {
       if (this.checked) {
+        showSections();
+        document.querySelectorAll('.membership-length--option[data-competition-eligible="true"]')
+          .forEach(t => { t.closest('.col-xs-12').style.display = ''; });
         document.querySelectorAll('[data-participation-gated]').forEach(el => { el.style.display = ''; });
       } else {
         hideParticipationGate();
@@ -335,10 +392,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ── Init ──────────────────────────────────────────────────────────────────
-  if (competitionEligible) {
-    const participationCard = document.getElementById('cardParticipationInfo');
-    if (participationCard) participationCard.style.display = 'none';
-  }
   updateLockedTiles();
   setPaymentVisible(false);
   $('[data-toggle="tooltip"]').tooltip();
