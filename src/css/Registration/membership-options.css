@@ -1,0 +1,29 @@
+/* ============================================================
+   MembershipOptions component overrides
+   Load on any page that includes partials/Forms/MembershipOptions.njk
+   ============================================================ */
+
+/* ── Year-Plus tile alignment and shadow ───────────────────── */
+/* These classes are not in production source. When Year-Plus tiers ship,
+   add --yearPlus and --yearPlusEvent to the selector list in
+   production/src/App/views/Forms/Payment.css ~line 75 alongside
+   --usmsPlus, --usmsPlusYearPlus, --currentYear, --nextYear, --competition */
+/* ── Tile margin override ───────────────────────────────────── */
+/* Production sets margin: 1.5rem 2rem; tighten horizontal for mockup layout */
+.membership-length--option {
+    margin: 2.5rem 0;
+}
+
+/* ── Year-Plus tile alignment and shadow ───────────────────── */
+.membership-length--yearPlus,
+.membership-length--yearPlusEvent {
+    text-align: center;
+    vertical-align: top;
+    cursor: pointer;
+    opacity: 1;
+    border: 1px solid #ddd;
+    -webkit-box-shadow: 0 0 20px #ccc;
+    box-shadow: 0 0 20px #ccc;
+    -webkit-transition: opacity .25s ease;
+    transition: opacity .25s ease;
+}
