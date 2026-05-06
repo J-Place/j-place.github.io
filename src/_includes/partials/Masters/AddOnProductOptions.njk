@@ -1,4 +1,5 @@
 {% macro productTile(option, key) %}
+<div class="col-xs-12 col-sm-6 col-md-3" style="display:flex;">
 <div class="product-option {{ option.extraClasses }} product-option_{{ option.modifier }}"{% if key %} data-product-key="{{ key }}"{% endif %}{% if option.termsKey %} data-terms-key="{{ option.termsKey }}"{% endif %}{% if option.requiresProduct %} data-requires-product="{{ option.requiresProduct }}"{% endif %}{% if option.participationGated %} data-participation-gated="true"{% endif %}{% if option.participationGated %} style="display:none"{% endif %}>
 	<p class="product-name">{{ option.name | safe }}</p>
 	<p class="product-price">${{ option.price | price }}</p>
@@ -27,6 +28,7 @@
 	{% endif %}
 	<button class="btn btn-outline btn-md add-on"{% if option.type === "stroke-select" %} disabled=""{% endif %}>Add</button>
 </div>
+</div>
 {% endmacro %}
 
 <div class="card add-on-products">
@@ -35,7 +37,7 @@
 		{% for group in productOptionGroups %}
 		{% set roleHidden = group.requiresRole and not swimmer[group.requiresRole] %}
 		{% if group.label %}<h3 class="addons__form-header"{% if group.requiresRole %} data-requires-role="{{ group.requiresRole }}"{% endif %}{% if roleHidden %} style="display:none"{% endif %}>{{ group.label }}</h3>{% endif %}
-		<div class="product-group"{% if group.requiresRole %} data-requires-role="{{ group.requiresRole }}"{% endif %}{% if roleHidden %} style="display:none"{% endif %}>
+		<div class="row is-flex product-group"{% if group.requiresRole %} data-requires-role="{{ group.requiresRole }}"{% endif %}{% if roleHidden %} style="display:none"{% endif %}>
 			{% for key in group.keys %}
 			{% set option = products[key] %}
 			{% if option and option.active !== false %}
@@ -46,7 +48,7 @@
 		{% endfor %}
 	{% else %}
 		{# Single-row fallback: uses productOptionKeys #}
-		<div class="product-group">
+		<div class="row is-flex product-group">
 			{% for key in productOptionKeys %}
 			{% set option = products[key] %}
 			{% if option and option.active !== false %}
