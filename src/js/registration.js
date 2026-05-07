@@ -206,41 +206,36 @@
     setPaymentVisible(false);
   }
 
-  if (membershipContainer) {
-    membershipContainer.addEventListener('click', function (e) {
-      var tile = e.target.closest('.membership-length--option');
-      if (!tile || tile.hasAttribute('disabled')) return;
+  // ── Membership tile selection ─────────────────────────────────────────────
+  // Class manipulation and click wiring live in membership-options.js.
+  // This handler runs the registration-specific logic after a tile is selected.
+  document.addEventListener('membershipTierSelected', function (e) {
+    var tile = e.detail.tile;
 
-      document.querySelectorAll('.membership-length--option').forEach(function (t) { t.classList.remove('selected'); });
-      tile.classList.add('selected');
+    var price = parseFloat(tile.dataset.price || 0);
+    if (membershipTotalEl) membershipTotalEl.textContent = fmt(price);
 
-      // Membership total
-      var price = parseFloat(tile.dataset.price || 0);
-      if (membershipTotalEl) membershipTotalEl.textContent = fmt(price);
+    var vsaPrice    = parseFloat(tile.dataset.vsaPrice || 0);
+    var priceEl     = document.querySelector('.price-string__video-stroke-analysis');
+    var vsaSelected = document.querySelector('input[name="videoStrokeAnalysis"][value="yes"]:checked') !== null;
 
-      // VSA: update price label; reset or update total
-      var vsaPrice   = parseFloat(tile.dataset.vsaPrice || 0);
-      var priceEl    = document.querySelector('.price-string__video-stroke-analysis');
-      var vsaSelected = document.querySelector('input[name="videoStrokeAnalysis"][value="yes"]:checked') !== null;
+    if (vsaSelected) {
+      if (priceEl) priceEl.textContent = vsaPrice === 0 ? ' for FREE!' : ' for $' + vsaPrice.toFixed(2);
+      if (vsaTotalEl) vsaTotalEl.textContent = fmt(vsaPrice);
+    } else {
+      resetVsa();
+      document.querySelectorAll('input[name="videoStrokeAnalysis"]').forEach(function (r) {
+        r.disabled = false;
+        r.closest('label').classList.remove('disabled');
+      });
+      if (priceEl) priceEl.textContent = vsaPrice === 0 ? ' for FREE!' : ' for $' + vsaPrice.toFixed(2);
+    }
 
-      if (vsaSelected) {
-        if (priceEl) priceEl.textContent = vsaPrice === 0 ? ' for FREE!' : ' for $' + vsaPrice.toFixed(2);
-        if (vsaTotalEl) vsaTotalEl.textContent = fmt(vsaPrice);
-      } else {
-        resetVsa();
-        document.querySelectorAll('input[name="videoStrokeAnalysis"]').forEach(function (r) {
-          r.disabled = false;
-          r.closest('label').classList.remove('disabled');
-        });
-        if (priceEl) priceEl.textContent = vsaPrice === 0 ? ' for FREE!' : ' for $' + vsaPrice.toFixed(2);
-      }
-
-      updateVariableTerms();
-      buildPaymentSummary();
-      setPaymentVisible(hasPayableSelection());
-      updateAgreement();
-    });
-  }
+    updateVariableTerms();
+    buildPaymentSummary();
+    setPaymentVisible(hasPayableSelection());
+    updateAgreement();
+  });
 
   // ── Competition flow helpers (cascade reset downward) ────────────────────
   function resetCompetitionTerms() {
