@@ -28,6 +28,24 @@
     transition: opacity .25s ease;
 }
 
+/* ── Prevent text reflow on membership tile selection ────────── */
+/* Production border grows 1px → 2px (1px per side). Pre-load that space as
+   padding at rest; zero it out when selected so content width stays constant. */
+.membership-length--usmsPlus,
+.membership-length--usmsPlusYearPlus,
+.membership-length--currentYear,
+.membership-length--nextYear,
+.membership-length--competition,
+.membership-length--yearPlus,
+.membership-length--yearPlusEvent {
+    padding-left: 1px;
+    padding-right: 1px;
+}
+.membership-length--option.selected {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 /* ── Year-Plus selected state (mirrors currentYear in production Payment.css) ── */
 .membership-length--yearPlus.selected .promo,
 .membership-length--yearPlusEvent.selected .promo {
