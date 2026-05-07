@@ -94,16 +94,18 @@
     }
 }
 
-/* ── Prevent text reflow on product tile selection ───────────── */
-/* Production border grows 1px → 3px (2px per side). Pre-load that space as
-   padding at rest; zero it out when selected so content width stays constant. */
-.add-on-products .product-option {
-    padding-left: 2px;
-    padding-right: 2px;
+/* ── Consistent horizontal indentation: both p and ul use margin for offset ── */
+/* ul must keep padding-left for bullet markers; reduce it so margin+padding = 3.5rem */
+.add-on-products .product-summary ul {
+    margin: 0 2rem;
+    padding: 0 0 0 1.5rem;
 }
-.add-on-products .product-option.selected {
-    padding-left: 0;
-    padding-right: 0;
+
+/* ── Selected tile: compensate for border growth (1px → 3px = 2px per side) ── */
+.add-on-products .product-option.selected .product-summary p,
+.add-on-products .product-option.selected .product-summary ul {
+    margin-left: calc(2rem - 2px);
+    margin-right: calc(2rem - 2px);
 }
 
 /* ── Locked product tiles ────────────────────────────────────── */
@@ -124,4 +126,13 @@
     border-color: #ccc;
     color: #ccc;
     background-color: #ddd;
+}
+
+/* Scoped to Add-Ons page so Membership Option tile headers match Product Option tile headers */
+.promo {
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 120%;
+    padding: .5rem;
+    height: auto;
 }
