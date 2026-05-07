@@ -7,6 +7,17 @@
 /* Production sets margin: 1.5rem 2rem; tighten horizontal for mockup layout */
 .membership-length--option {
     margin: 1.5rem 0;
+    position: relative;
+}
+
+/* ── Radio container width ──────────────────────────────────── */
+/* Production sets width:0 (the visual radio circle comes from an absolutely
+   positioned .radio__placeholder not present in this mockup). Without a
+   placeholder, width:0 creates a dead zone: clicks land on the <label>,
+   hit the LABEL guard in JS, and never fire selectTile. width:100% makes
+   the container a full-width div so clicks route through the div→tile path. */
+.membership-length .radio-container {
+    width: 100%;
 }
 
 /* ── Year-Plus tile alignment and shadow ───────────────────── */
@@ -27,18 +38,6 @@
 
 
 /* ── USMS+ selected state ────────────────────────────────────── */
-/* Production scopes this to .selection-made which our mockup JS may not add;
-   explicit rule here ensures border matches promo (#1e3666) on both pages. */
-.membership-length--option.membership-length--usmsPlus.selected,
-.membership-length--option.membership-length--usmsPlusYearPlus.selected {
+.membership-length--option.membership-length--usmsPlus.selected {
     border: 2px solid #1e3666;
-}
-
-/* ── Year-Plus selected state (matches production Payment.css ~line 138) ── */
-.membership-length--nextYear.selected .promo {
-    background-color: green;
-}
-
-.membership-length--option.membership-length--nextYear.selected {
-    border: 2px solid green;
 }

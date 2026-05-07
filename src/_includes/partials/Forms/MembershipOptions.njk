@@ -21,7 +21,7 @@
 				{% if tier.availStart %}data-avail-start="{{ tier.availStart.month }}-{{ tier.availStart.day }}" {% endif %}
 				{% if tier.availEnd %}data-avail-end="{{ tier.availEnd.month }}-{{ tier.availEnd.day }}"{% endif %}>
 				<span class="promo{% if tier.promoClass %} {{ tier.promoClass }}{% endif %}">{{ tier.promo }}</span>
-				<span class="savings">{{ tier.savings if tier.savings }}</span>
+				{% if tier.savings %}<span class="savings">{{ tier.savings }}</span>{% endif %}
 				<label for="{{ tier.value }}" class="control-label">
 					<div class="radio-container">
 						<input type="radio" name="length" id="{{ tier.value }}" value="{{ tier.value }}">
