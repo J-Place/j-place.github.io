@@ -7,12 +7,13 @@
 		{% for key in membershipTierKeys %}
 		{% set tier = membershipTiers[key] %}
 		{% if tier %}
+		{% set displayPrice = tier.addonPrice if (useAddonPricing and tier.addonPrice is not undefined) else tier.price %}
 		<div class="col-xs-12 col-md-3" id="{{ tier.colId }}" {% if tier.registrationHidden %}data-registration-hidden="true" {% endif %}style="display: {{ 'none' if tier.registrationHidden else 'flex' }};">
 
 			<div class="membership-length--option membership-length--{{ tier.value }}{% if tier.extraClasses %} {{ tier.extraClasses }}{% endif %}"
 				aria-hidden="true"
 				disabled=""
-				data-price="{{ tier.price }}"
+				data-price="{{ displayPrice }}"
 				data-vsa-price="{{ tier.vsaPrice }}"
 				data-terms-keys="{{ tier.termsKeys | join(',') }}"
 				data-competition-eligible="{{ tier.competitionEligible }}"
@@ -26,7 +27,7 @@
 					</div>
 					<div class="{{ tier.containerClass if tier.containerClass else (tier.value + '-container') }}">
 						<span class="membership-length--price">
-							<p class="form-control-static {{ tier.costClass if tier.costClass else (tier.value + '-cost') }}">${{ tier.price | price }}</p>
+							<p class="form-control-static {{ tier.costClass if tier.costClass else (tier.value + '-cost') }}">${{ displayPrice | price }}</p>
 						</span>
 						<span class="membership-length--description">{{ tier.description }}</span>
 					</div>

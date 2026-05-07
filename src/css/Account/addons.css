@@ -94,6 +94,18 @@
     }
 }
 
+/* ── Prevent text reflow on product tile selection ───────────── */
+/* Production border grows 1px → 3px (2px per side). Pre-load that space as
+   padding at rest; zero it out when selected so content width stays constant. */
+.add-on-products .product-option {
+    padding-left: 2px;
+    padding-right: 2px;
+}
+.add-on-products .product-option.selected {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 /* ── Locked product tiles ────────────────────────────────────── */
 
 .add-on-products .product-option[disabled] {
