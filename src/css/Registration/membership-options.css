@@ -3,11 +3,6 @@
    Load on any page that includes partials/Forms/MembershipOptions.njk
    ============================================================ */
 
-/* ── Year-Plus tile alignment and shadow ───────────────────── */
-/* These classes are not in production source. When Year-Plus tiers ship,
-   add --yearPlus and --yearPlusEvent to the selector list in
-   production/src/App/views/Forms/Payment.css ~line 75 alongside
-   --usmsPlus, --usmsPlusYearPlus, --currentYear, --nextYear, --competition */
 /* ── Tile margin override ───────────────────────────────────── */
 /* Production sets margin: 1.5rem 2rem; tighten horizontal for mockup layout */
 .membership-length--option {
@@ -15,8 +10,10 @@
 }
 
 /* ── Year-Plus tile alignment and shadow ───────────────────── */
-.membership-length--yearPlus,
-.membership-length--yearPlusEvent {
+/* --nextYear is already in the production Payment.css selector list (line ~75).
+   This block is here because the tile is hidden by default in production;
+   our mockup shows it, so we re-declare these styles explicitly. */
+.membership-length--nextYear {
     text-align: center;
     vertical-align: top;
     cursor: pointer;
@@ -29,13 +26,19 @@
 }
 
 
-/* ── Year-Plus selected state (mirrors currentYear in production Payment.css) ── */
-.membership-length--yearPlus.selected .promo,
-.membership-length--yearPlusEvent.selected .promo {
-    background-color: #0068ad;
+/* ── USMS+ selected state ────────────────────────────────────── */
+/* Production scopes this to .selection-made which our mockup JS may not add;
+   explicit rule here ensures border matches promo (#1e3666) on both pages. */
+.membership-length--option.membership-length--usmsPlus.selected,
+.membership-length--option.membership-length--usmsPlusYearPlus.selected {
+    border: 2px solid #1e3666;
 }
 
-.membership-length--option.membership-length--yearPlus.selected,
-.membership-length--option.membership-length--yearPlusEvent.selected {
-    border: 2px solid #0068ad;
+/* ── Year-Plus selected state (matches production Payment.css ~line 138) ── */
+.membership-length--nextYear.selected .promo {
+    background-color: green;
+}
+
+.membership-length--option.membership-length--nextYear.selected {
+    border: 2px solid green;
 }
