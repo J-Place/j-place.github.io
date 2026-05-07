@@ -1,6 +1,8 @@
 /* All rules scoped to .usms-modal-global to override BS3 production CSS */
 
-/* Vertical centering: fires only while BS3 has added .in (modal is open) */
+body.modal-open { overflow: hidden; }
+
+/* Vertical centering: fires only while .in is present (modal is open) */
 .usms-modal-global.modal.in {
     display: flex !important;
     align-items: center;
@@ -45,6 +47,10 @@
     font-size: 2.2rem;
     font-weight: 700;
     line-height: 120%;
+    margin: 0;
+}
+
+.usms-modal-global .modal-header--titled .modal-title {
     margin: 0;
 }
 
