@@ -53,21 +53,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (membershipTotalEl) membershipTotalEl.textContent = '$0.00';
   }
 
-  document.querySelectorAll('.membership-length--option').forEach(tile => {
-    tile.addEventListener('click', (e) => {
-      // Label's for=radio creates a synthetic INPUT click after the original click
-      // bubbles through the label. Without this guard the handler fires twice,
-      // selecting then immediately deselecting the tile.
-      if (e.target.nodeName === 'INPUT' || e.target.nodeName === 'LABEL') return;
-      const wasSelected = tile.classList.contains('selected');
-      deselectMembershipTier();
-      if (!wasSelected) {
-        tile.classList.add('selected');
-        membershipPrice = parseFloat(tile.dataset.price) || 0;
-        if (membershipTotalEl) membershipTotalEl.textContent = `$${membershipPrice.toFixed(2)}`;
-      }
-      updateAll();
-    });
+  // Class manipulation and click wiring live in membership-options.js.
+  document.addEventListener('membershipTierSelected', (e) => {
+    membershipPrice = parseFloat(e.detail.tile.dataset.price) || 0;
+    if (membershipTotalEl) membershipTotalEl.textContent = `$${membershipPrice.toFixed(2)}`;
+    updateAll();
   });
 
   // ── Payment section visibility ────────────────────────────────────────────
