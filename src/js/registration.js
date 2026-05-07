@@ -289,16 +289,16 @@
         var group = document.querySelector('.competition-category');
         if (group) group.style.display = '';
       } else {
-        // No: enable membership with standard (non-event-license) tiers
+        // No: show only the standard (no-events) tier
         if (membershipContainer) membershipContainer.classList.remove('disabled');
         document.querySelectorAll('.membership-length--option').forEach(function (tile) {
           var col = tile.parentElement;
-          if (tile.dataset.initialDisplay === 'none' || tile.dataset.competitionEligible === 'true') {
-            col.style.display = 'none';
-            deactivateTile(col);
-          } else {
+          if (tile.dataset.noEventsDefault === 'true') {
             col.style.display = 'flex';
             activateTile(col);
+          } else {
+            col.style.display = 'none';
+            deactivateTile(col);
           }
         });
       }

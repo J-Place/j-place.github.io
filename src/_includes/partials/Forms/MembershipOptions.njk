@@ -17,6 +17,7 @@
 				data-vsa-price="{{ tier.vsaPrice }}"
 				data-terms-keys="{{ tier.termsKeys | join(',') }}"
 				data-competition-eligible="{{ tier.competitionEligible }}"
+				{% if tier.noEventsDefault %}data-no-events-default="true"{% endif %}
 				{% if tier.availStart %}data-avail-start="{{ tier.availStart.month }}-{{ tier.availStart.day }}" {% endif %}
 				{% if tier.availEnd %}data-avail-end="{{ tier.availEnd.month }}-{{ tier.availEnd.day }}"{% endif %}>
 				<span class="promo{% if tier.promoClass %} {{ tier.promoClass }}{% endif %}">{{ tier.promo }}</span>
