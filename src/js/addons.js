@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function showSections() {
-    if (membershipSection) membershipSection.style.display = '';
+    if (membershipSection) membershipSection.style.display = 'block';
     enableMembershipTiles();
   }
 
@@ -54,7 +54,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   document.querySelectorAll('.membership-length--option').forEach(tile => {
-    tile.addEventListener('click', () => {
+    tile.addEventListener('click', (e) => {
+      // Label's for=radio creates a synthetic INPUT click after the original click
+      // bubbles through the label. Without this guard the handler fires twice,
+      // selecting then immediately deselecting the tile.
+      if (e.target.nodeName === 'INPUT' || e.target.nodeName === 'LABEL') return;
       const wasSelected = tile.classList.contains('selected');
       deselectMembershipTier();
       if (!wasSelected) {
@@ -307,11 +311,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (this.value === 'yes') {
         const group = document.querySelector('.competition-category');
         if (group) group.style.display = '';
-      } else {
-        // "No" — show sections but hide competition-eligible tier columns
-        showSections();
-        document.querySelectorAll('.membership-length--option[data-competition-eligible="true"]')
-          .forEach(t => { t.closest('.col-xs-12').style.display = 'none'; });
       }
     });
   });
@@ -349,16 +348,14 @@ document.addEventListener('DOMContentLoaded', () => {
   function openCertModal() {
     if (!certModal) return;
     document.body.appendChild(certBackdrop);
-    certModal.style.display = 'block';
-    certModal.classList.add('show');
+    certModal.classList.add('in');
     certModal.removeAttribute('aria-hidden');
     document.body.classList.add('modal-open');
   }
 
   function closeCertModal() {
     if (!certModal) return;
-    certModal.style.display = 'none';
-    certModal.classList.remove('show');
+    certModal.classList.remove('in');
     certModal.setAttribute('aria-hidden', 'true');
     if (certBackdrop.parentNode) certBackdrop.parentNode.removeChild(certBackdrop);
     document.body.classList.remove('modal-open');
@@ -383,7 +380,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (this.checked) {
         showSections();
         document.querySelectorAll('.membership-length--option[data-competition-eligible="true"]')
-          .forEach(t => { t.closest('.col-xs-12').style.display = ''; });
+          .forEach(t => { t.closest('.col-xs-12').style.display = 'flex'; });
         document.querySelectorAll('[data-participation-gated]').forEach(el => { el.style.display = ''; });
       } else {
         hideParticipationGate();
