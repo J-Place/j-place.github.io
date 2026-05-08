@@ -55,8 +55,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Class manipulation and click wiring live in membership-options.js.
   document.addEventListener('membershipTierSelected', (e) => {
-    membershipPrice = parseFloat(e.detail.tile.dataset.price) || 0;
+    const tier = e.detail.tile;
+    membershipPrice = parseFloat(tier.dataset.price) || 0;
     if (membershipTotalEl) membershipTotalEl.textContent = `$${membershipPrice.toFixed(2)}`;
+
+    // VSA price depends on the selected membership tier (e.g. $0 for USMS+)
+    const vsaPrice = parseFloat(tier.dataset.vsaPrice ?? 0);
+    const vsaTile  = document.querySelector('.product-option[data-product-key="videoStrokeAnalysis"]');
+    if (vsaTile) {
+      const vsaPriceEl = vsaTile.querySelector('.product-price');
+      if (vsaPriceEl) {
+        const oldPrice = parseFloat(vsaPriceEl.textContent.replace(/[^0-9.]/g, '')) || 0;
+        vsaPriceEl.textContent = `$${vsaPrice.toFixed(2)}`;
+        if (vsaTile.classList.contains('selected')) {
+          productTotal = productTotal - oldPrice + vsaPrice;
+        }
+      }
+    }
+
     updateAll();
   });
 
@@ -214,8 +230,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const priceEl    = tile.querySelector('.product-price');
     const hasStroke  = tile.querySelector('select[name="StrokeSelect"]') !== null;
 
-    const price = parseFloat((priceEl?.textContent ?? '').replace(/[^0-9.]/g, '')) || 0;
-
     const strokeSelect = tile.querySelector('select[name="StrokeSelect"]');
 
     if (strokeSelect) {
@@ -225,6 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     addBtn?.addEventListener('click', () => {
+      const price      = parseFloat((priceEl?.textContent ?? '').replace(/[^0-9.]/g, '')) || 0;
       const isSelected = tile.classList.toggle('selected');
       productTotal += isSelected ? price : -price;
       if (addBtn) addBtn.textContent = isSelected ? 'Remove' : 'Add';
