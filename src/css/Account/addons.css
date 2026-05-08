@@ -94,45 +94,41 @@
     }
 }
 
-/* ── Consistent horizontal indentation: both p and ul use margin for offset ── */
-/* ul must keep padding-left for bullet markers; reduce it so margin+padding = 3.5rem */
-.add-on-products .product-summary ul {
-    margin: 0 2rem;
-    padding: 0 0 0 1.5rem;
-}
-
-/* ── Selected tile: compensate for border growth (1px → 3px = 2px per side) ── */
-.add-on-products .product-option.selected .product-summary p,
-.add-on-products .product-option.selected .product-summary ul {
-    margin-left: calc(2rem - 2px);
-    margin-right: calc(2rem - 2px);
-}
-
 /* ── Locked product tiles ────────────────────────────────────── */
-
 .add-on-products .product-option[disabled] {
     background-color: #ddd;
     color: #ccc;
     pointer-events: none;
     cursor: default;
 }
-
 .add-on-products .product-option[disabled] .product-name,
 .add-on-products .product-option[disabled] .product-price {
     color: #ccc;
 }
-
 .add-on-products .product-option[disabled] .btn.add-on {
     border-color: #ccc;
     color: #ccc;
     background-color: #ddd;
 }
 
-/* Scoped to Add-Ons page so Membership Option tile headers match Product Option tile headers */
-.promo {
+/* Membership Options classes scoped to Add-Ons page so tiles match Product Option tiles */
+.addon-membership-section .promo {
     font-size: 1.6rem;
     font-weight: 500;
     line-height: 120%;
     padding: .5rem;
     height: auto;
+}
+.addon-membership-section .membership-length--option.selected .promo {
+    margin-top: -2px;
+    margin-bottom: -1px;
+}
+.addon-membership-section .membership-length--option.selected .control-label {
+    margin-top: 4px;
+}
+.addon-membership-section .membership-length--option.selected .membership-length--note {
+    padding: 0 8px 10px;
+}
+.addon-membership-section .membership-length--container .membership-length--option.selected {
+    border-width: 3px;
 }
