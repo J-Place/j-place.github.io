@@ -11,7 +11,11 @@ breadcrumbTitle: "Sarasota Sharks Masters"
 {% extends "layouts/base.njk" %}
 {% block pageCSS %}
 <link rel="stylesheet" href="https://www.usms.org/styles/clubDetail.min.css">
+<link rel="stylesheet" href="/css/sc-form.css">
 <link rel="stylesheet" href="/css/club-detail.css">
+{% endblock %}
+{% block pageJS %}
+<script src="/js/sc-form.js" defer></script>
 {% endblock %}
 {% block breadcrumb %}
 {% include "partials/Common/Breadcrumb.njk" %}
@@ -20,7 +24,7 @@ breadcrumbTitle: "Sarasota Sharks Masters"
 
 <div class="section section-full p-b-10">
   <iframe
-    src="https://maps.google.com/maps?q=Selby+Aquatic+Center+8501+Potter+Park+Drive+Sarasota+FL+34238&output=embed"
+    src="https://maps.google.com/maps?ll=27.2526,-82.4695&z=12&output=embed"
     style="height: 350px; width: 100%; border: 0; display: block;"
     allowfullscreen=""
     loading="lazy"
@@ -74,30 +78,35 @@ breadcrumbTitle: "Sarasota Sharks Masters"
                   <div class="row">
                     <div class="col-sm-6">
                       <label for="firstName">First Name</label>
-                      <input id="firstName" name="firstName" type="text" maxlength="255">
+                      <input id="firstName" name="firstName" type="text" maxlength="255" aria-required="true" data-val="true" data-val-required="First Name is required.">
+                      <span class="field-validation-valid" data-valmsg-for="firstName" data-valmsg-replace="true"></span>
                     </div>
                     <div class="col-sm-6">
                       <label for="lastName">Last Name</label>
-                      <input id="lastName" name="lastName" type="text" maxlength="255">
+                      <input id="lastName" name="lastName" type="text" maxlength="255" aria-required="true" data-val="true" data-val-required="Last Name is required.">
+                      <span class="field-validation-valid" data-valmsg-for="lastName" data-valmsg-replace="true"></span>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-sm-10">
                       <label for="email">Email Address</label>
-                      <input id="email" name="email" type="email" maxlength="255">
+                      <input id="email" name="email" type="email" maxlength="255" aria-required="true" data-val="true" data-val-required="Email Address is required." data-val-regex="Email Address contains an invalid email address." data-val-regex-pattern="^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,17}$">
+                      <span class="field-validation-valid" data-valmsg-for="email" data-valmsg-replace="true"></span>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-sm-8">
                       <label for="phone">Phone Number</label>
-                      <input id="phone" name="phone" type="tel" maxlength="255">
+                      <input id="phone" name="phone" type="tel" maxlength="255" data-val="true" data-val-regex="Phone Number contains an invalid telephone number." data-val-regex-pattern="^\+?\d{3,}">
+                      <span class="field-validation-valid" data-valmsg-for="phone" data-valmsg-replace="true"></span>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-sm-8 is-member">
                       <label class="sc-form__radio-inline--label">Are you a current USMS member?</label>
-                      <label><input type="radio" name="member" value="Yes"> Yes</label>
+                      <label><input type="radio" name="member" value="Yes" aria-required="true" data-val="true" data-val-required="Are you a current USMS member? is required."> Yes</label>
                       <label><input type="radio" name="member" value="No"> No</label>
+                      <span class="field-validation-valid" data-valmsg-for="member" data-valmsg-replace="true"></span>
                     </div>
                   </div>
                   <div class="row">
@@ -116,7 +125,8 @@ breadcrumbTitle: "Sarasota Sharks Masters"
                   <div class="row">
                     <div class="col-sm-10">
                       <label for="message">Message</label>
-                      <textarea id="message" name="message" rows="4" maxlength="512"></textarea>
+                      <textarea id="message" name="message" rows="4" maxlength="512" aria-required="true" data-val="true" data-val-required="Message is required."></textarea>
+                      <span class="field-validation-valid" data-valmsg-for="message" data-valmsg-replace="true"></span>
                     </div>
                   </div>
                   <div class="row">
@@ -128,10 +138,52 @@ breadcrumbTitle: "Sarasota Sharks Masters"
                       </div>
                     </div>
                   </div>
+                  <div class="row">
+                    <div class="col-sm-10">
+                      <div class="sc-captcha">
+                        <div class="sc-recaptcha-anchor">
+                          <div class="sc-captcha__widget" tabindex="0" aria-label="I'm not a robot">
+                            <span class="goog-inline-block recaptcha-checkbox" role="checkbox" aria-checked="false">
+                              <div class="recaptcha-checkbox-border" role="presentation"></div>
+                              <div class="recaptcha-checkbox-spinner-gif"></div>
+                              <div class="recaptcha-checkbox-spinner" role="presentation">
+                                <div class="recaptcha-checkbox-spinner-overlay"></div>
+                              </div>
+                              <div class="recaptcha-checkbox-checkmark" role="presentation"></div>
+                            </span>
+                          </div>
+                          <div class="sc-recaptcha-content">
+                            <span class="sc-recaptcha-label">I'm not a robot</span>
+                          </div>
+                          <div class="sc-recaptcha-logo">
+                            <div class="sc-recaptcha-logo-icon"></div>
+                            <span class="sc-recaptcha-logo-name">reCAPTCHA</span>
+                            <div class="sc-recaptcha-logo-links">
+                              <a href="#" tabindex="-1" onclick="return false">Privacy</a><span aria-hidden="true"> - </span><a href="#" tabindex="-1" onclick="return false">Terms</a>
+                            </div>
+                          </div>
+                        </div>
+                        <input id="captchaVerified" name="captchaVerified" type="hidden" class="fxt-captcha"
+                          data-val="true" data-val-required="Please confirm you are not a robot."
+                          aria-required="true" value="">
+                        <span class="field-validation-valid" data-valmsg-for="captchaVerified" data-valmsg-replace="true"></span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div class="row btn-submit--initial">
                   <div class="sc-form__footer">
-                    <input value="Submit" type="submit" class="btn btn-primary btn-large btn-submit--member">
+                    <input value="Submit" type="submit" class="btn btn-primary btn-large">
+                  </div>
+                </div>
+                <div class="row btn-submit--nonmember-row" style="display: none;">
+                  <div class="sc-form__footer">
+                    <input value="Submit" type="submit" class="btn btn-primary btn-large">
+                  </div>
+                </div>
+                <div class="row btn-submit--member-row" style="display: none;">
+                  <div class="sc-form__footer">
+                    <input value="Submit" type="submit" class="btn btn-primary btn-large">
                   </div>
                 </div>
               </form>
@@ -149,19 +201,19 @@ breadcrumbTitle: "Sarasota Sharks Masters"
           <h4 class="club-detail2__badges--header">Club Designations</h4>
           <ul class="club-detail2__badges-list list--nostyle">
             <li class="club-detail2__badges-item">
-              <a href="#" data-toggle="modal" data-target="#badgeCoach">
+              <a href="#" data-modal-target="#badgeCoach">
                 <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club%20detail/club-badge-coach.png?h=321&w=350&rev=635d566be36d4cdcadc27626fde72b68&hash=82DC6C945E565F72016697C779170E0D">
                 <p>USMS Certified Coach</p>
               </a>
             </li>
             <li class="club-detail2__badges-item">
-              <a href="#" data-toggle="modal" data-target="#badgeAlts">
+              <a href="#" data-modal-target="#badgeAlts">
                 <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club%20detail/club-badge-alts.png?h=321&w=350&rev=3b08e5ab609141ad9a924f61da33bc96&hash=CEA3F6989ED4F63208DFA8A8AC32352B">
                 <p>USMS Certified ALTS Instructor</p>
               </a>
             </li>
             <li class="club-detail2__badges-item">
-              <a href="#" data-toggle="modal" data-target="#badgeGold">
+              <a href="#" data-modal-target="#badgeGold">
                 <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club%20detail/club-badge-gold.png?h=321&w=350&rev=31ba632063c64b5ab6621a05722f46ad&hash=F7D51558DD678357C7C8CB607BA359BE">
                 <p>USMS Certified Gold Club</p>
               </a>
@@ -189,51 +241,52 @@ breadcrumbTitle: "Sarasota Sharks Masters"
 
     </div>
   </div>
-</div>
 
-{% set modalId = "badgeCoach" %}
-{% set modalModifier = "cta-modal--club-badge" %}
-{% set modalCentered = true %}
-{% set modalBodyClass = "modal-body--lg" %}
-{% set modalBody %}
-<div class="cta-col--center">
-  <div class="club-badge--image">
-    <img style="width:80px;" src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club%20detail/club-badge-coach.png?h=321&w=350&rev=635d566be36d4cdcadc27626fde72b68&hash=82DC6C945E565F72016697C779170E0D">
+  {% set modalId = "badgeCoach" %}
+  {% set modalModifier = "cta-modal--club-badge" %}
+  {% set modalCentered = true %}
+  {% set modalBodyClass = "modal-body--lg" %}
+  {% set modalBody %}
+  <div class="cta-col--center">
+    <div class="club-badge--image">
+      <img style="width:80px;" src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club%20detail/club-badge-coach.png?h=321&w=350&rev=635d566be36d4cdcadc27626fde72b68&hash=82DC6C945E565F72016697C779170E0D">
+    </div>
+    <h4 class="club-badge--header">USMS Certified Coaches</h4>
+    <p class="club-badge--content">The U.S. Masters Swimming–Certified Coach logo identifies swim clubs near me where you can find a USMS-certified coach. These coaches have furthered their Masters coaching education and have passed the certification exam. Note: A certified coach might not be at all locations or workouts.</p>
   </div>
-  <h4 class="club-badge--header">USMS Certified Coaches</h4>
-  <p class="club-badge--content">The U.S. Masters Swimming–Certified Coach logo identifies swim clubs near me where you can find a USMS-certified coach. These coaches have furthered their Masters coaching education and have passed the certification exam. Note: A certified coach might not be at all locations or workouts.</p>
-</div>
-{% endset %}
-{% include "components/modal.njk" %}
+  {% endset %}
+  {% include "components/modal.njk" %}
 
-{% set modalId = "badgeAlts" %}
-{% set modalModifier = "cta-modal--club-badge" %}
-{% set modalCentered = true %}
-{% set modalBodyClass = "modal-body--lg" %}
-{% set modalBody %}
-<div class="cta-col--center">
-  <div class="club-badge--image">
-    <img style="width:80px;" src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club%20detail/club-badge-alts.png?h=321&w=350&rev=3b08e5ab609141ad9a924f61da33bc96&hash=CEA3F6989ED4F63208DFA8A8AC32352B">
+  {% set modalId = "badgeAlts" %}
+  {% set modalModifier = "cta-modal--club-badge" %}
+  {% set modalCentered = true %}
+  {% set modalBodyClass = "modal-body--lg" %}
+  {% set modalBody %}
+  <div class="cta-col--center">
+    <div class="club-badge--image">
+      <img style="width:80px;" src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club%20detail/club-badge-alts.png?h=321&w=350&rev=3b08e5ab609141ad9a924f61da33bc96&hash=CEA3F6989ED4F63208DFA8A8AC32352B">
+    </div>
+    <h4 class="club-badge--header">USMS Certified Adult Learn-to-Swim Instructors</h4>
+    <p class="club-badge--content">The Certified Adult Learn-to-Swim Instructor logo identifies swim teams near me that have a U.S. Masters Swimming–certified ALTS instructor. These instructors have furthered their swim-lessons instruction education and have passed the certification exam. Note: A certified ALTS instructor might not be at all locations or workouts.</p>
   </div>
-  <h4 class="club-badge--header">USMS Certified Adult Learn-to-Swim Instructors</h4>
-  <p class="club-badge--content">The Certified Adult Learn-to-Swim Instructor logo identifies swim teams near me that have a U.S. Masters Swimming–certified ALTS instructor. These instructors have furthered their swim-lessons instruction education and have passed the certification exam. Note: A certified ALTS instructor might not be at all locations or workouts.</p>
-</div>
-{% endset %}
-{% include "components/modal.njk" %}
+  {% endset %}
+  {% include "components/modal.njk" %}
 
-{% set modalId = "badgeGold" %}
-{% set modalModifier = "cta-modal--club-badge" %}
-{% set modalCentered = true %}
-{% set modalBodyClass = "modal-body--lg" %}
-{% set modalBody %}
-<div class="cta-col--center">
-  <div class="club-badge--image">
-    <img style="width:80px;" src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club%20detail/club-badge-gold.png?h=321&w=350&rev=31ba632063c64b5ab6621a05722f46ad&hash=F7D51558DD678357C7C8CB607BA359BE">
+  {% set modalId = "badgeGold" %}
+  {% set modalModifier = "cta-modal--club-badge" %}
+  {% set modalCentered = true %}
+  {% set modalBodyClass = "modal-body--lg" %}
+  {% set modalBody %}
+  <div class="cta-col--center">
+    <div class="club-badge--image">
+      <img style="width:80px;" src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club%20detail/club-badge-gold.png?h=321&w=350&rev=31ba632063c64b5ab6621a05722f46ad&hash=F7D51558DD678357C7C8CB607BA359BE">
+    </div>
+    <h4 class="club-badge--header">Gold Club Designation</h4>
+    <p class="club-badge--content">The Gold Club logo identifies Masters clubs and workout groups that provide members with the best Masters Swimming experience possible. Gold Clubs have a U.S. Masters Swimming–certified coach on staff, participate in fitness events, and offer a free trial to potential members, among many other benefits.</p>
   </div>
-  <h4 class="club-badge--header">Gold Club Designation</h4>
-  <p class="club-badge--content">The Gold Club logo identifies Masters clubs and workout groups that provide members with the best Masters Swimming experience possible. Gold Clubs have a U.S. Masters Swimming–certified coach on staff, participate in fitness events, and offer a free trial to potential members, among many other benefits.</p>
+  {% endset %}
+  {% include "components/modal.njk" %}
+
 </div>
-{% endset %}
-{% include "components/modal.njk" %}
 
 {% endblock %}
