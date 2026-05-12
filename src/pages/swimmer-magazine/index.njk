@@ -1,118 +1,250 @@
 ---
 permalink: /swimmer-magazine/index.html
-title: SWIMMER Magazine | U.S. Masters Swimming
+title: SWIMMER Magazine Issues | U.S. Masters Swimming
 pageTitle: SWIMMER Magazine
+breadcrumbTitle: SWIMMER
 breadcrumbs:
-  - url: "/home"
+  - url: "/"
     label: "Home"
 ---
 {% extends "layouts/swimmer-library.njk" %}
+{% block pageCSS %}
+{{ super() }}
+<link rel="stylesheet" href="/css/swimmer-magazine.css">
+{% endblock %}
 {% block content %}
 <section class="section section-full">
   <div class="usms-container">
     <div class="row">
       <div class="col-xs-12">
         <div class="image-rendering image-left swimmer-magazine__header-image">
-          <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/jbw%20magazine/swimmermastko.svg?rev=6457b089043041cd82475f86d24f6a85&hash=0D060E4375694A995AF78FCF7E02833E" alt="SWIMMER Magazine">
-        </div>
-        <div class="html-container">
-          <p>SWIMMER is the official magazine of U.S. Masters Swimming. Featuring swim tips from world-class coaches and athletes, race strategy, training plans, nutrition advice, and member profiles, SWIMMER is the perfect resource for Masters swimmers of all ability levels.</p>
+          <a>
+            <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/jbw%20magazine/swimmermastko.svg?rev=6457b089043041cd82475f86d24f6a85&hash=0D060E4375694A995AF78FCF7E02833E" alt="">
+          </a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<script>
-  function handleYearChange(event) {
-    var selectedYear = event.target.value;
-    if (selectedYear !== '2026' && selectedYear !== '2025') return;
-    var allIssues = document.querySelectorAll('.magazine-issue');
-    allIssues.forEach(function(issue) {
-      if (issue.getAttribute('data-year') === selectedYear) {
-        issue.style.display = 'block';
-        issue.classList.remove('fade');
-      } else {
-        issue.style.display = 'none';
-        issue.classList.add('fade');
-      }
-    });
-  }
-</script>
+<div class="section section-full p-mh-500">
+  <div class="usms-container p-tb-10">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="usms-container swimmer-library p-b-30">
+          <div class="issue-selector">
+            <div class="year-select" role="listbox" aria-label="Select year" aria-expanded="false" tabindex="0">
+              <div class="year-select__trigger" aria-hidden="true">
+                <span class="year-select__value">2026</span>
+                <svg class="year-select__chevron" viewBox="0 0 25 25" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                  <polyline points="22.4,7.5 12.5,17.5 2.6,7.5" fill="none" stroke="#849ba9" stroke-width="4.7231" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"/>
+                </svg>
+              </div>
+              <ul class="year-select__list">
+                <li class="year-select__option is-selected" role="option" aria-selected="true"  data-value="2026">2026</li>
+                <li class="year-select__option"              role="option" aria-selected="false" data-value="2025">2025</li>
+                <li class="year-select__option"              role="option" aria-selected="false" data-value="2024">2024</li>
+                <li class="year-select__option"              role="option" aria-selected="false" data-value="2023">2023</li>
+                <li class="year-select__option"              role="option" aria-selected="false" data-value="2022">2022</li>
+                <li class="year-select__option"              role="option" aria-selected="false" data-value="2021">2021</li>
+                <li class="year-select__option"              role="option" aria-selected="false" data-value="2020">2020</li>
+                <li class="year-select__option"              role="option" aria-selected="false" data-value="2019">2019</li>
+                <li class="year-select__option"              role="option" aria-selected="false" data-value="2018">2018</li>
+                <li class="year-select__option"              role="option" aria-selected="false" data-value="2017">2017</li>
+                <li class="year-select__option"              role="option" aria-selected="false" data-value="2016">2016</li>
+                <li class="year-select__option"              role="option" aria-selected="false" data-value="2015">2015</li>
+                <li class="year-select__option"              role="option" aria-selected="false" data-value="2014">2014</li>
+                <li class="year-select__option"              role="option" aria-selected="false" data-value="2013">2013</li>
+                <li class="year-select__option"              role="option" aria-selected="false" data-value="2012">2012</li>
+                <li class="year-select__option"              role="option" aria-selected="false" data-value="2011">2011</li>
+                <li class="year-select__option"              role="option" aria-selected="false" data-value="2010">2010</li>
+                <li class="year-select__option"              role="option" aria-selected="false" data-value="2009">2009</li>
+                <li class="year-select__option"              role="option" aria-selected="false" data-value="2008">2008</li>
+                <li class="year-select__option"              role="option" aria-selected="false" data-value="2007">2007</li>
+                <li class="year-select__option"              role="option" aria-selected="false" data-value="2006">2006</li>
+                <li class="year-select__option"              role="option" aria-selected="false" data-value="2005">2005</li>
+              </ul>
+            </div>
+          </div>
+          <div class="row publications-list">
 
-<div class="usms-container swimmer-library">
-  <div class="issue-selector">
-    <select class="current-year" onchange="handleYearChange(event)">
-      <option value="2026">2026</option>
-      <option value="2025">2025</option>
-      <option value="2024">2024</option>
-      <option value="2023">2023</option>
-      <option value="2022">2022</option>
-      <option value="2021">2021</option>
-      <option value="2020">2020</option>
-      <option value="2019">2019</option>
-      <option value="2018">2018</option>
-      <option value="2017">2017</option>
-      <option value="2016">2016</option>
-      <option value="2015">2015</option>
-      <option value="2014">2014</option>
-      <option value="2013">2013</option>
-      <option value="2012">2012</option>
-      <option value="2011">2011</option>
-      <option value="2010">2010</option>
-      <option value="2009">2009</option>
-      <option value="2008">2008</option>
-      <option value="2007">2007</option>
-      <option value="2006">2006</option>
-      <option value="2005">2005</option>
-    </select>
-  </div>
-  <div class="row publications-list">
+            <div data-year="2026" class="magazine-issue col-xs-12 col-sm-6 col-md-4">
+              <a href="https://www.usms.org/swimmer-magazine/may-jun-2026" target="_self">
+                <p>May-Jun 2026</p>
+                <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/swm_26mj_webcover.jpg?h=2000&w=1494&rev=3e0680943d554827a143bd213661a5fd&hash=E609FDF8713032009D74B94F0FD075D6" alt="May-Jun 2026">
+              </a>
+            </div>
 
-    {# 2026 issues — visible by default #}
-    <div class="magazine-issue col-xs-12 col-sm-6 col-md-4" data-year="2026">
-      <a href="/swimmer-magazine/mar-apr-2026/" target="_self">
-        <p>Mar-Apr 2026</p>
-        <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/swm_26ma_webcover.jpg?h=2000&w=1494&rev=c8d9936c6eda4c33a3550b3e168bd992&hash=5580350F152F90D54708CA405106D9F2" alt="Mar-Apr 2026">
-      </a>
+            <div data-year="2026" class="magazine-issue col-xs-12 col-sm-6 col-md-4">
+              <a href="/swimmer-magazine/mar-apr-2026/" target="_self">
+                <p>Mar-Apr 2026</p>
+                <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/swm_26ma_webcover.jpg?h=2000&w=1494&rev=c8d9936c6eda4c33a3550b3e168bd992&hash=5580350F152F90D54708CA405106D9F2" alt="Mar-Apr 2026">
+              </a>
+            </div>
+
+            <div data-year="2026" class="magazine-issue col-xs-12 col-sm-6 col-md-4">
+              <a href="https://www.usms.org/swimmer-magazine/jan-feb-2026" target="_self">
+                <p>Jan-Feb 2026</p>
+                <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/swm_26jf_webcover.jpg?h=2000&w=1494&rev=622e4fe48ad949bbb78cfc7043eb7f25&hash=C51EE4108C1C8D2E49565F6FB90948A2" alt="Jan-Feb 2026">
+              </a>
+            </div>
+
+            <div data-year="2025" class="magazine-issue col-xs-12 col-sm-6 col-md-4 fade">
+              <a href="https://www.usms.org/swimmer-magazine/nov-dec-2025" target="_self">
+                <p>Nov-Dec 2025</p>
+                <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/swm_25nd_webcover.jpg?h=2000&w=1494&rev=c643319224cf45e99d13b3197fbfac5c&hash=769D57B5A558593C155517C14DAC80A6" alt="Nov-Dec 2025">
+              </a>
+            </div>
+
+            <div data-year="2025" class="magazine-issue col-xs-12 col-sm-6 col-md-4 fade">
+              <a href="https://www.usms.org/swimmer-magazine/sep-oct-2025" target="_self">
+                <p>Sep-Oct 2025</p>
+                <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/swm_25so_webcover.jpg?h=2000&w=1494&rev=838d4974375940019705968999c07c27&hash=E21677707B12A7328CF65E0F71208283" alt="Sep-Oct 2025">
+              </a>
+            </div>
+
+            <div data-year="2025" class="magazine-issue col-xs-12 col-sm-6 col-md-4 fade">
+              <a href="https://www.usms.org/swimmer-magazine/jul-aug-2025" target="_self">
+                <p>Jul-Aug 2025</p>
+                <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/swm_25ja_webcover.jpg?h=2000&w=1494&rev=9f4c69b3d43f4de39de7cf249a7364a0&hash=6D7D5CE5B7DCEB22E5F97B8B604B64BF" alt="Jul-Aug 2025">
+              </a>
+            </div>
+
+            <div data-year="2025" class="magazine-issue col-xs-12 col-sm-6 col-md-4 fade">
+              <a href="https://www.usms.org/swimmer-magazine/may-jun-2025" target="_self">
+                <p>May-Jun 2025</p>
+                <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/swm_25mj_webcover.jpg?h=2000&w=1494&rev=0cf8de9a0fec483f82fc8ed66c97aa90&hash=369735467A5118AFBB7A3B3667B8B571" alt="May-Jun 2025">
+              </a>
+            </div>
+
+            <div data-year="2025" class="magazine-issue col-xs-12 col-sm-6 col-md-4 fade">
+              <a href="https://www.usms.org/swimmer-magazine/mar-apr-2025" target="_self">
+                <p>Mar-Apr 2025</p>
+                <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/swm_25ma_webcover.jpg?h=2000&w=1494&rev=aba5c23257ee4b97bbe1d246d3cb8a19&hash=E486A080E0A91844D132CCB3EF582DB2" alt="Mar-Apr 2025">
+              </a>
+            </div>
+
+            <div data-year="2025" class="magazine-issue col-xs-12 col-sm-6 col-md-4 fade">
+              <a href="https://www.usms.org/swimmer-magazine/jan-feb-2025" target="_self">
+                <p>Jan-Feb 2025</p>
+                <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/swm_25jf_webcover.jpg?h=2000&w=1494&rev=c4b9c95d4c014a2b8deb14d872b7a103&hash=0CCD8BFC54170235FE4EDC6A461B8F01" alt="Jan-Feb 2025">
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
     </div>
-
-    <div class="magazine-issue col-xs-12 col-sm-6 col-md-4" data-year="2026">
-      <p>Jan-Feb 2026</p>
-      <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/swm_26jf_webcover.jpg?h=2000&w=1494&rev=622e4fe48ad949bbb78cfc7043eb7f25&hash=C51EE4108C1C8D2E49565F6FB90948A2" alt="Jan-Feb 2026">
-    </div>
-
-    {# 2025 issues — hidden by default #}
-    <div class="magazine-issue col-xs-12 col-sm-6 col-md-4 fade" data-year="2025" style="display:none">
-      <p>Nov-Dec 2025</p>
-      <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/swm_25nd_webcover.jpg?h=2000&w=1494&rev=c643319224cf45e99d13b3197fbfac5c&hash=769D57B5A558593C155517C14DAC80A6" alt="Nov-Dec 2025">
-    </div>
-
-    <div class="magazine-issue col-xs-12 col-sm-6 col-md-4 fade" data-year="2025" style="display:none">
-      <p>Sep-Oct 2025</p>
-      <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/swm_25so_webcover.jpg?h=2000&w=1494&rev=838d4974375940019705968999c07c27&hash=E21677707B12A7328CF65E0F71208283" alt="Sep-Oct 2025">
-    </div>
-
-    <div class="magazine-issue col-xs-12 col-sm-6 col-md-4 fade" data-year="2025" style="display:none">
-      <p>Jul-Aug 2025</p>
-      <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/swm_25ja_webcover.jpg?h=2000&w=1494&rev=9f4c69b3d43f4de39de7cf249a7364a0&hash=6D7D5CE5B7DCEB22E5F97B8B604B64BF" alt="Jul-Aug 2025">
-    </div>
-
-    <div class="magazine-issue col-xs-12 col-sm-6 col-md-4 fade" data-year="2025" style="display:none">
-      <p>May-Jun 2025</p>
-      <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/swm_25mj_webcover.jpg?h=2000&w=1494&rev=0cf8de9a0fec483f82fc8ed66c97aa90&hash=369735467A5118AFBB7A3B3667B8B571" alt="May-Jun 2025">
-    </div>
-
-    <div class="magazine-issue col-xs-12 col-sm-6 col-md-4 fade" data-year="2025" style="display:none">
-      <p>Mar-Apr 2025</p>
-      <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/swm_25ma_webcover.jpg?h=2000&w=1494&rev=aba5c23257ee4b97bbe1d246d3cb8a19&hash=E486A080E0A91844D132CCB3EF582DB2" alt="Mar-Apr 2025">
-    </div>
-
-    <div class="magazine-issue col-xs-12 col-sm-6 col-md-4 fade" data-year="2025" style="display:none">
-      <p>Jan-Feb 2025</p>
-      <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/swm_25jf_webcover.jpg?h=2000&w=1494&rev=c4b9c95d4c014a2b8deb14d872b7a103&hash=0CCD8BFC54170235FE4EDC6A461B8F01" alt="Jan-Feb 2025">
-    </div>
-
   </div>
 </div>
+
+<div class="section section-full bg-blue p-tb-10">
+  <div class="usms-container p-tb-10">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="col-xs-6 col-sm-4 col-md-2">
+          <div class="national-sponsors__item">
+            <a class="national-sponsors__link" href="http://www.activeswim.com/" target="_blank" rel="noreferrer" aria-label="national sponsor ACTIVE Network">
+              <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/non-lightroom images/partner logos/active-network_90x90_ko.png?h=90&w=90&rev=f8aaea7bbfbf44cea3150fe7d19c5982&hash=A176E5137971A840DEEECF1FFEB7FCEC" class="national-sponsors__image" alt="Active Network" width="90" height="90">
+            </a>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-2">
+          <div class="national-sponsors__item">
+            <a class="national-sponsors__link" href="https://dermasport.com/" target="_blank" rel="noreferrer" aria-label="national sponsor Dermasport">
+              <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/non-lightroom images/partner logos/dermasport_90x90_ko.png?h=90&w=90&rev=90372399413649bc8532200694c461ec&hash=89C2AF55762714465C7C081B3B9D218B" class="national-sponsors__image" alt="Dermasport" width="90" height="90">
+            </a>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-2">
+          <div class="national-sponsors__item">
+            <a class="national-sponsors__link" href="https://www.coloradotime.com/" target="_blank" rel="noreferrer" aria-label="national sponsor Colorado Time Systems">
+              <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/non-lightroom images/partner logos/cts_90x90_ko.png?h=90&w=90&rev=75cd8e59c6bb40beb4ee0eacf1490058&hash=67FDDE12E9EB8DB52BAFB9307857FBE6" class="national-sponsors__image" alt="Colorado Timing Systems" width="90" height="90">
+            </a>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-2">
+          <div class="national-sponsors__item">
+            <a class="national-sponsors__link" href="https://www.infinitnutrition.us/" target="_blank" rel="noreferrer" aria-label="national sponsor INFINIT Nutrition">
+              <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/non-lightroom images/partner logos/infinit_90x90_ko.png?h=90&w=90&rev=7af35b8d01f54bf5ab4f921854d4143d&hash=92BABD1E57A91A2C9928AD89A40CAE80" class="national-sponsors__image" alt="Infinit" width="90" height="90">
+            </a>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-2">
+          <div class="national-sponsors__item">
+            <a class="national-sponsors__link" href="https://www.ioausa.com" target="_blank" rel="noreferrer" aria-label="national sponsor Insurance Office of America">
+              <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/non-lightroom images/partner logos/ioa_90x90_ko.png?h=90&w=90&rev=fc61fd8125a44bd8aebe77c2bf94647a&hash=001EFB8F881A11C02F07A54D07BAC9FB" class="national-sponsors__image" alt="Insurance Office of America" width="90" height="90">
+            </a>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-2">
+          <div class="national-sponsors__item">
+            <a class="national-sponsors__link" href="https://www.masterspas.com/usms/" target="_blank" rel="noreferrer" aria-label="national sponsor Master Spas">
+              <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/non-lightroom images/partner logos/master-spas_90x90_ko.png?h=90&w=90&rev=b78ac56dfd494cf492d34bcdbbd57001&hash=76CB5D6E5AF6C0A521ADB999B2FC5E91" class="national-sponsors__image" alt="MasterSpas" width="90" height="90">
+            </a>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-2">
+          <div class="national-sponsors__item">
+            <a class="national-sponsors__link" href="" target="_blank" rel="noreferrer" aria-label="national sponsor Swim Across America">
+              <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/non-lightroom images/partner logos/swim-across-america_90x90_ko.png?h=90&w=90&rev=8d2e5b016ff74a51be09a0c3ca790b0f&hash=49A3483B3BF7014730067CB6F2126350" class="national-sponsors__image" alt="Swim Across America" width="90" height="90">
+            </a>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-2">
+          <div class="national-sponsors__item">
+            <a class="national-sponsors__link" href="https://www.tyr.com/" target="_blank" rel="noreferrer" aria-label="national sponsor TYR Sport">
+              <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/non-lightroom images/partner logos/tyr_90x90_ko.png?h=90&w=90&rev=a918085cbd1544bf85e6478735cbe6e0&hash=2F2E98101AEE84D93CF46FAEB4526784" class="national-sponsors__image" alt="TYR" width="90" height="90">
+            </a>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-2">
+          <div class="national-sponsors__item">
+            <a class="national-sponsors__link" href="https://www.swim.com" target="_blank" rel="noreferrer" aria-label="national sponsor Swim.com">
+              <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/non-lightroom images/partner logos/swim-com_90x90_ko.png?h=90&w=90&rev=31470d8de0ec40d3974723d5c405aa91&hash=5E2E8598D92A3EF634AA7F4DFFA960EA" class="national-sponsors__image" alt="Swim.com" width="90" height="90">
+            </a>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-2">
+          <div class="national-sponsors__item">
+            <a class="national-sponsors__link" href="https://www.swimoutlet.com/ProductBrand.asp?Brand=1766&click=1668780" target="_blank" rel="noreferrer" aria-label="national sponsor SwimOutlet.com">
+              <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/non-lightroom images/partner logos/swimoutlet_90x90_ko.png?h=90&w=90&rev=6b0c4fac9cd24fb993dcaab6233925d8&hash=2BBEEF3CBC7339B52286438FED52004E" class="national-sponsors__image" alt="Swim Outlet" width="90" height="90">
+            </a>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-2">
+          <div class="national-sponsors__item">
+            <a class="national-sponsors__link" href="https://www.swimtrek.com/" target="_blank" rel="noreferrer" aria-label="national sponsor SwimTrek">
+              <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/non-lightroom images/partner logos/swimtrek_90x90_ko.png?h=90&w=90&rev=7d349af37f7e42c2a3f2ee1526193603&hash=28025FD1FF52679BF810CE20D5EB80FC" class="national-sponsors__image" alt="SwimTrek" width="90" height="90">
+            </a>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-2">
+          <div class="national-sponsors__item">
+            <a class="national-sponsors__link" href="http://www.toyota.com" target="_blank" rel="noreferrer" aria-label="national sponsor Toyota">
+              <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/non-lightroom images/partner logos/toyota_90x90_ko.png?h=90&w=90&rev=cf3edf3d37644f94b346b620a553fb44&hash=3F4FBDC1CCB14AE9C83EDE4ABCBED6D2" class="national-sponsors__image" alt="Toyota" width="90" height="90">
+            </a>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-2">
+          <div class="national-sponsors__item">
+            <a class="national-sponsors__link" href="https://www.sbrsportsinc.com/index.html" target="_blank" rel="noreferrer" aria-label="national sponsor TRISWIM">
+              <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/non-lightroom images/partner logos/triswim_90x90_ko.png?h=90&w=90&rev=e6d7f9df3488432d9b069918d0cbea8b&hash=AD2C6D0B1A655345984E117A8EBBAF47" class="national-sponsors__image" alt="TriSwim" width="90" height="90">
+            </a>
+          </div>
+        </div>
+        <div class="col-xs-6 col-sm-4 col-md-2">
+          <div class="national-sponsors__item">
+            <a class="national-sponsors__link" href="https://www.usaswimming.org/foundation" target="_blank" rel="noreferrer" aria-label="national sponsor USA Swimming Foundation">
+              <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/non-lightroom images/partner logos/usa swimming foundation vertical - all white90x90.png?h=90&w=90&rev=35fa89ec7326410394ae4d9ff42df819&hash=3A08BDB012AFD7504B9013452C659677" class="national-sponsors__image" alt="USA Swimming Foundation all white 90x90" width="90" height="90">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block pageJS %}
+<script src="/js/swimmer-magazine.js" defer></script>
 {% endblock %}
