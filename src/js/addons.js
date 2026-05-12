@@ -1,8 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // ── Swimmer data (from wrapper data attributes) ───────────────────────────
-  const wrapper         = document.querySelector('.renew__form-body.masters-addons');
-  const vsaPrice        = wrapper ? parseFloat(wrapper.dataset.vsaPrice ?? '') : NaN;
-
   // ── Selectors ─────────────────────────────────────────────────────────────
   const productTotalEl  = document.querySelector('.total-product.card__total--amount');
   const totalChargeEl   = document.querySelector('.review-order__line-item--total .review-order__line-item--price');
@@ -15,13 +11,77 @@ document.addEventListener('DOMContentLoaded', () => {
   const submitBtn       = document.getElementById('register-button');
   const paymentFields   = document.querySelector('.addons-payment__fields');
 
-  let productTotal = 0;
+  let productTotal    = 0;
+  let membershipPrice = 0;
+
+  // ── Section show/hide ─────────────────────────────────────────────────────
+  const membershipSection = document.querySelector('.addon-membership-section');
+  const membershipTotalEl = document.querySelector('.membership-length--total');
+
+  function enableMembershipTiles() {
+    const container = document.querySelector('.membership-length--container');
+    if (container) container.classList.remove('disabled');
+    document.querySelectorAll('.membership-length--option').forEach(t => {
+      t.removeAttribute('disabled');
+      t.removeAttribute('aria-hidden');
+    });
+  }
+
+  function disableMembershipTiles() {
+    const container = document.querySelector('.membership-length--container');
+    if (container) container.classList.add('disabled');
+    document.querySelectorAll('.membership-length--option').forEach(t => {
+      t.setAttribute('disabled', '');
+      t.setAttribute('aria-hidden', 'true');
+    });
+  }
+
+  function showSections() {
+    if (membershipSection) membershipSection.style.display = 'block';
+    enableMembershipTiles();
+  }
+
+  function hideSections() {
+    if (membershipSection) membershipSection.style.display = 'none';
+    disableMembershipTiles();
+  }
+
+  // ── Membership tier selection ─────────────────────────────────────────────
+  function deselectMembershipTier() {
+    document.querySelectorAll('.membership-length--option.selected').forEach(t => t.classList.remove('selected'));
+    membershipPrice = 0;
+    if (membershipTotalEl) membershipTotalEl.textContent = '$0.00';
+  }
+
+  // Class manipulation and click wiring live in membership-options.js.
+  document.addEventListener('membershipTierSelected', (e) => {
+    const tier = e.detail.tile;
+    membershipPrice = parseFloat(tier.dataset.price) || 0;
+    if (membershipTotalEl) membershipTotalEl.textContent = `$${membershipPrice.toFixed(2)}`;
+
+    // VSA price depends on the selected membership tier (e.g. $0 for USMS+)
+    const vsaPrice = parseFloat(tier.dataset.vsaPrice ?? 0);
+    const vsaTile  = document.querySelector('.product-option[data-product-key="videoStrokeAnalysis"]');
+    if (vsaTile) {
+      const vsaPriceEl = vsaTile.querySelector('.product-price');
+      if (vsaPriceEl) {
+        const oldPrice = parseFloat(vsaPriceEl.textContent.replace(/[^0-9.]/g, '')) || 0;
+        vsaPriceEl.textContent = `$${vsaPrice.toFixed(2)}`;
+        if (vsaTile.classList.contains('selected')) {
+          productTotal = productTotal - oldPrice + vsaPrice;
+        }
+      }
+    }
+
+    updateAll();
+  });
 
   // ── Payment section visibility ────────────────────────────────────────────
   function hasSelection() {
-    const hasProduct  = document.querySelector('.add-on-products .product-option.selected') !== null;
-    const hasDonation = [sslInput, shffInput, lmscInput].some(el => el && parseFloat(el.value) > 0);
-    return hasProduct || hasDonation;
+    const hasMembership = membershipPrice > 0;
+    const hasProduct    = document.querySelector('.add-on-products .product-option.selected') !== null;
+    const hasDonation   = [sslInput, shffInput, lmscInput].some(el => el && parseFloat(el.value) > 0);
+    return hasMembership || hasProduct || hasDonation;
   }
 
   function setPaymentVisible(visible) {
@@ -79,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Agreement / Submit ────────────────────────────────────────────────────
   function updateAgreement() {
-    const anySelected = document.querySelector('.add-on-products .product-option.selected') !== null;
+    const anySelected = membershipPrice > 0 || document.querySelector('.add-on-products .product-option.selected') !== null;
 
     // Standard terms checkbox
     agreeLabel?.classList.toggle('disabled', !anySelected);
@@ -104,6 +164,16 @@ document.addEventListener('DOMContentLoaded', () => {
   function buildReviewOrder() {
     if (!reviewLineItems) return;
     reviewLineItems.innerHTML = '';
+
+    // Membership tier line item
+    const selectedTier = document.querySelector('.membership-length--option.selected');
+    if (selectedTier) {
+      const tierName  = selectedTier.querySelector('.membership-length--description')?.textContent?.trim() ?? 'Membership';
+      const p = document.createElement('p');
+      p.className = 'review-order__line-item review-order__line-item--bill-date';
+      p.innerHTML = `${tierName} <span class="review-order__line-item--price">$${membershipPrice.toFixed(2)}</span>`;
+      reviewLineItems.appendChild(p);
+    }
 
     // Product line items
     document.querySelectorAll('.add-on-products .product-option.selected').forEach(tile => {
@@ -140,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function updateTotals() {
-    const grand = productTotal + donationTotal();
+    const grand = membershipPrice + productTotal + donationTotal();
     if (productTotalEl) productTotalEl.textContent = `$${productTotal.toFixed(2)}`;
     if (totalChargeEl)  totalChargeEl.textContent  = `$${grand.toFixed(2)}`;
   }
@@ -160,16 +230,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const priceEl    = tile.querySelector('.product-price');
     const hasStroke  = tile.querySelector('select[name="StrokeSelect"]') !== null;
 
-    // VSA tiles: use vsaPrice from the swimmer's tier (data-vsa-price on wrapper).
-    // Falls back to the product JSON price if vsaPrice is not set.
-    let price;
-    if (hasStroke && !isNaN(vsaPrice)) {
-      price = vsaPrice;
-      if (priceEl) priceEl.textContent = `$${vsaPrice.toFixed(2)}`;
-    } else {
-      price = parseFloat((priceEl?.textContent ?? '').replace(/[^0-9.]/g, '')) || 0;
-    }
-
     const strokeSelect = tile.querySelector('select[name="StrokeSelect"]');
 
     if (strokeSelect) {
@@ -179,6 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     addBtn?.addEventListener('click', () => {
+      const price      = parseFloat((priceEl?.textContent ?? '').replace(/[^0-9.]/g, '')) || 0;
       const isSelected = tile.classList.toggle('selected');
       productTotal += isSelected ? price : -price;
       if (addBtn) addBtn.textContent = isSelected ? 'Remove' : 'Add';
@@ -199,7 +260,141 @@ document.addEventListener('DOMContentLoaded', () => {
     input?.addEventListener('input', updateAll);
   });
 
+  // ── Participation flow (gates Event Participation product group) ──────────
+
+  function deselectGatedTiles() {
+    document.querySelectorAll('.product-option[data-participation-gated].selected').forEach(tile => {
+      const priceEl   = tile.querySelector('.product-price');
+      const tilePrice = parseFloat((priceEl?.textContent ?? '').replace(/[^0-9.]/g, '')) || 0;
+      const addBtn    = tile.querySelector('.add-on');
+      tile.classList.remove('selected');
+      productTotal -= tilePrice;
+      if (addBtn) addBtn.textContent = 'Add';
+    });
+  }
+
+  function hideParticipationGate() {
+    hideSections();
+    deselectMembershipTier();
+    document.querySelectorAll('[data-participation-gated]').forEach(el => { el.style.display = 'none'; });
+    deselectGatedTiles();
+    updateAll();
+  }
+
+  function resetCompetitionTerms() {
+    const block = document.querySelector('.form-group.agree-terms-competition');
+    const cb    = document.getElementById('agree-terms-competition');
+    if (block) block.style.display = 'none';
+    if (cb)   cb.checked = false;
+    hideParticipationGate();
+  }
+
+  function resetCompetitionCertification() {
+    const group = document.querySelector('.competition-certification');
+    if (group) group.style.display = 'none';
+    document.querySelectorAll('input[name="CompetitionMembership"]').forEach(r => { r.checked = false; });
+    resetCompetitionTerms();
+  }
+
+  function resetNationalRecognition() {
+    const group = document.querySelector('.national-recognition');
+    if (group) group.style.display = 'none';
+    document.querySelectorAll('input[name="nationalRecognition"]').forEach(r => { r.checked = false; });
+    resetCompetitionCertification();
+  }
+
+  function resetCompetitionCategory() {
+    const group = document.querySelector('.competition-category');
+    if (group) group.style.display = 'none';
+    document.querySelectorAll('input[name="competitionCategory"]').forEach(r => { r.checked = false; });
+    resetNationalRecognition();
+  }
+
+  document.querySelectorAll('input[name="participationInfo"]').forEach(radio => {
+    radio.addEventListener('change', function () {
+      resetCompetitionCategory();
+      if (this.value === 'yes') {
+        const group = document.querySelector('.competition-category');
+        if (group) group.style.display = '';
+      }
+    });
+  });
+
+  document.querySelectorAll('input[name="competitionCategory"]').forEach(radio => {
+    radio.addEventListener('change', function () {
+      resetNationalRecognition();
+      if (this.value === 'mens-open') {
+        const block = document.querySelector('.form-group.agree-terms-competition');
+        if (block) block.style.display = '';
+      } else {
+        const group = document.querySelector('.national-recognition');
+        if (group) group.style.display = '';
+      }
+    });
+  });
+
+  document.querySelectorAll('input[name="nationalRecognition"]').forEach(radio => {
+    radio.addEventListener('change', function () {
+      resetCompetitionCertification();
+      if (this.value === 'no') {
+        const block = document.querySelector('.form-group.agree-terms-competition');
+        if (block) block.style.display = '';
+      } else {
+        const group = document.querySelector('.competition-certification');
+        if (group) group.style.display = '';
+      }
+    });
+  });
+
+  const certModal    = document.getElementById('modalCompetitionNotCertify');
+  const certBackdrop = document.createElement('div');
+  certBackdrop.className = 'modal-backdrop fade in';
+
+  function openCertModal() {
+    if (!certModal) return;
+    document.body.appendChild(certBackdrop);
+    certModal.classList.add('in');
+    certModal.removeAttribute('aria-hidden');
+    document.body.classList.add('modal-open');
+  }
+
+  function closeCertModal() {
+    if (!certModal) return;
+    certModal.classList.remove('in');
+    certModal.setAttribute('aria-hidden', 'true');
+    if (certBackdrop.parentNode) certBackdrop.parentNode.removeChild(certBackdrop);
+    document.body.classList.remove('modal-open');
+  }
+
+  const certConfirmBtn = document.getElementById('confirmCompetitionNotCertify');
+  if (certConfirmBtn) certConfirmBtn.addEventListener('click', closeCertModal);
+
+  document.querySelectorAll('input[name="CompetitionMembership"]').forEach(radio => {
+    radio.addEventListener('change', function () {
+      const block = document.querySelector('.form-group.agree-terms-competition');
+      if (block) block.style.display = '';
+      const cb = document.getElementById('agree-terms-competition');
+      if (cb && cb.checked) { cb.checked = false; cb.dispatchEvent(new Event('change')); }
+      if (this.value === 'no') openCertModal();
+    });
+  });
+
+  const competitionAgree = document.getElementById('agree-terms-competition');
+  if (competitionAgree) {
+    competitionAgree.addEventListener('change', function () {
+      if (this.checked) {
+        showSections();
+        document.querySelectorAll('.membership-length--option[data-competition-eligible="true"]')
+          .forEach(t => { t.closest('.col-xs-12').style.display = 'flex'; });
+        document.querySelectorAll('[data-participation-gated]').forEach(el => { el.style.display = ''; });
+      } else {
+        hideParticipationGate();
+      }
+    });
+  }
+
   // ── Init ──────────────────────────────────────────────────────────────────
   updateLockedTiles();
   setPaymentVisible(false);
+  $('[data-toggle="tooltip"]').tooltip();
 });

@@ -1,0 +1,43 @@
+/* ============================================================
+   MembershipOptions component overrides
+   Load on any page that includes partials/Forms/MembershipOptions.njk
+   ============================================================ */
+
+/* ── Tile margin override ───────────────────────────────────── */
+/* Production sets margin: 1.5rem 2rem; tighten horizontal for mockup layout */
+.membership-length--option {
+    margin: 1.5rem 0;
+    position: relative;
+}
+
+/* ── Radio container width ──────────────────────────────────── */
+/* Production sets width:0 (the visual radio circle comes from an absolutely
+   positioned .radio__placeholder not present in this mockup). Without a
+   placeholder, width:0 creates a dead zone: clicks land on the <label>,
+   hit the LABEL guard in JS, and never fire selectTile. width:100% makes
+   the container a full-width div so clicks route through the div→tile path. */
+.membership-length .radio-container {
+    width: 100%;
+}
+
+/* ── Year-Plus tile alignment and shadow ───────────────────── */
+/* --nextYear is already in the production Payment.css selector list (line ~75).
+   This block is here because the tile is hidden by default in production;
+   our mockup shows it, so we re-declare these styles explicitly. */
+.membership-length--nextYear {
+    text-align: center;
+    vertical-align: top;
+    cursor: pointer;
+    opacity: 1;
+    border: 1px solid #ddd;
+    -webkit-box-shadow: 0 0 20px #ccc;
+    box-shadow: 0 0 20px #ccc;
+    -webkit-transition: opacity .25s ease;
+    transition: opacity .25s ease;
+}
+
+
+/* ── USMS+ selected state ────────────────────────────────────── */
+.membership-length--option.membership-length--usmsPlus.selected {
+    border: 2px solid #1e3666;
+}

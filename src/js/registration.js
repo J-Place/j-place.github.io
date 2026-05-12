@@ -1,6 +1,12 @@
 (function () {
+  // ── User state (set by login-status.js via data attributes) ───────────────
+  // TODO: use renew/isLapsed to vary header copy, pre-population mode,
+  // and any flow differences between new, renewing-current, and lapsed paths.
+  var formWrapper = document.querySelector('.full-registration-form');
+  var renew    = formWrapper && formWrapper.dataset.renew    === 'true';
+  var isLapsed = formWrapper && formWrapper.dataset.isLapsed === 'true';
+
   // ── Selectors ─────────────────────────────────────────────────────────────
-  var cardCompetition    = document.getElementById('cardCompetition');
   var membershipContainer = document.querySelector('.membership-length--container');
   var paymentFields      = document.querySelector('.registration-payment__fields');
   var paymentSummary     = document.querySelector('.js-payment-summary');
@@ -21,6 +27,15 @@
   function parseAmt(el) { return parseFloat((el && el.textContent || '').replace(/[^0-9.]/g, '')) || 0; }
   function inputVal(el) { return el ? parseFloat(el.value) || 0 : 0; }
 
+  function preselectByDataAttr(id) {
+    var el = document.getElementById(id);
+    if (!el || !el.dataset.preselect) return;
+    var val = el.dataset.preselect;
+    for (var i = 0; i < el.options.length; i++) {
+      if (el.options[i].value == val) { el.selectedIndex = i; return; }
+    }
+  }
+
   function selectedTile() {
     return document.querySelector('.membership-length--option.selected') || null;
   }
@@ -40,8 +55,7 @@
   // Tier tiles carry data-terms-keys="key1,key2" — JS shows matching
   // production-class terms blocks and enables their checkboxes.
   var termsBlocks = {
-    usmsPlus:    document.querySelector('.agree-usmsplus-terms'),
-    competition: document.querySelector('.agree-terms-competition')
+    usmsPlus: document.querySelector('.agree-usmsplus-terms')
   };
 
   function updateVariableTerms() {
@@ -192,45 +206,36 @@
     setPaymentVisible(false);
   }
 
-  if (membershipContainer) {
-    membershipContainer.addEventListener('click', function (e) {
-      var tile = e.target.closest('.membership-length--option');
-      if (!tile || tile.hasAttribute('disabled')) return;
+  // ── Membership tile selection ─────────────────────────────────────────────
+  // Class manipulation and click wiring live in membership-options.js.
+  // This handler runs the registration-specific logic after a tile is selected.
+  document.addEventListener('membershipTierSelected', function (e) {
+    var tile = e.detail.tile;
 
-      document.querySelectorAll('.membership-length--option').forEach(function (t) { t.classList.remove('selected'); });
-      tile.classList.add('selected');
+    var price = parseFloat(tile.dataset.price || 0);
+    if (membershipTotalEl) membershipTotalEl.textContent = fmt(price);
 
-      // Membership total
-      var price = parseFloat(tile.dataset.price || 0);
-      if (membershipTotalEl) membershipTotalEl.textContent = fmt(price);
+    var vsaPrice    = parseFloat(tile.dataset.vsaPrice || 0);
+    var priceEl     = document.querySelector('.price-string__video-stroke-analysis');
+    var vsaSelected = document.querySelector('input[name="videoStrokeAnalysis"][value="yes"]:checked') !== null;
 
-      // Competition cert card
-      var showsCert = tile.dataset.competitionEligible === 'true';
-      if (cardCompetition) cardCompetition.style.display = showsCert ? 'block' : 'none';
+    if (vsaSelected) {
+      if (priceEl) priceEl.textContent = vsaPrice === 0 ? ' for FREE!' : ' for $' + vsaPrice.toFixed(2);
+      if (vsaTotalEl) vsaTotalEl.textContent = fmt(vsaPrice);
+    } else {
+      resetVsa();
+      document.querySelectorAll('input[name="videoStrokeAnalysis"]').forEach(function (r) {
+        r.disabled = false;
+        r.closest('label').classList.remove('disabled');
+      });
+      if (priceEl) priceEl.textContent = vsaPrice === 0 ? ' for FREE!' : ' for $' + vsaPrice.toFixed(2);
+    }
 
-      // VSA: update price label; reset or update total
-      var vsaPrice   = parseFloat(tile.dataset.vsaPrice || 0);
-      var priceEl    = document.querySelector('.price-string__video-stroke-analysis');
-      var vsaSelected = document.querySelector('input[name="videoStrokeAnalysis"][value="yes"]:checked') !== null;
-
-      if (vsaSelected) {
-        if (priceEl) priceEl.textContent = vsaPrice === 0 ? ' for FREE!' : ' for $' + vsaPrice.toFixed(2);
-        if (vsaTotalEl) vsaTotalEl.textContent = fmt(vsaPrice);
-      } else {
-        resetVsa();
-        document.querySelectorAll('input[name="videoStrokeAnalysis"]').forEach(function (r) {
-          r.disabled = false;
-          r.closest('label').classList.remove('disabled');
-        });
-        if (priceEl) priceEl.textContent = vsaPrice === 0 ? ' for FREE!' : ' for $' + vsaPrice.toFixed(2);
-      }
-
-      updateVariableTerms();
-      buildPaymentSummary();
-      setPaymentVisible(hasPayableSelection());
-      updateAgreement();
-    });
-  }
+    updateVariableTerms();
+    buildPaymentSummary();
+    setPaymentVisible(hasPayableSelection());
+    updateAgreement();
+  });
 
   // ── Competition flow helpers (cascade reset downward) ────────────────────
   function resetCompetitionTerms() {
@@ -273,25 +278,22 @@
   // ── Participation radio ───────────────────────────────────────────────────
   document.querySelectorAll('input[name="participationInfo"]').forEach(function (radio) {
     radio.addEventListener('change', function () {
-      if (membershipContainer) membershipContainer.classList.remove('disabled');
-      resetMembershipSelection();
-      resetVsa();
-      buildPaymentSummary();
+      resetCompetitionCategory();
 
       if (this.value === 'yes') {
         var group = document.querySelector('.competition-category');
         if (group) group.style.display = '';
       } else {
-        // No: enable membership with standard (non-event-license) tiers
+        // No: show only the standard (no-events) tier
         if (membershipContainer) membershipContainer.classList.remove('disabled');
         document.querySelectorAll('.membership-length--option').forEach(function (tile) {
           var col = tile.parentElement;
-          if (tile.dataset.initialDisplay === 'none' || tile.dataset.competitionEligible === 'true') {
-            col.style.display = 'none';
-            deactivateTile(col);
-          } else {
+          if (tile.dataset.noEventsDefault === 'true') {
             col.style.display = 'flex';
             activateTile(col);
+          } else {
+            col.style.display = 'none';
+            deactivateTile(col);
           }
         });
       }
@@ -626,20 +628,35 @@
       check: function () { return !!document.querySelector('input[name="participationInfo"]:checked'); },
       watch: [{ sel: 'input[name="participationInfo"]', ev: 'change' }]
     },
+    {
+      span: 'help-block--competitionCategory',
+      check: function () {
+        if (!isVisible(document.querySelector('.competition-category'))) return true;
+        return !!document.querySelector('input[name="competitionCategory"]:checked');
+      },
+      watch: [{ sel: 'input[name="competitionCategory"]', ev: 'change' }]
+    },
+    {
+      span: 'help-block--nationalRecognition',
+      check: function () {
+        if (!isVisible(document.querySelector('.national-recognition'))) return true;
+        return !!document.querySelector('input[name="nationalRecognition"]:checked');
+      },
+      watch: [{ sel: 'input[name="nationalRecognition"]', ev: 'change' }]
+    },
+    {
+      span: 'help-block--CompetitionMembership',
+      check: function () {
+        if (!isVisible(document.querySelector('.competition-certification'))) return true;
+        return !!document.querySelector('input[name="CompetitionMembership"]:checked');
+      },
+      watch: [{ sel: 'input[name="CompetitionMembership"]', ev: 'change' }]
+    },
     // Membership tier
     {
       span: 'help-block--length',
       check: function () { return selectedTile() !== null; },
       watch: [{ sel: '.membership-length--option', ev: 'click' }]
-    },
-    // Competition cert (conditional)
-    {
-      span: 'help-block--CompetitionMembership',
-      check: function () {
-        if (!isVisible(cardCompetition)) return true;
-        return !!document.querySelector('input[name="CompetitionMembership"]:checked');
-      },
-      watch: [{ sel: 'input[name="CompetitionMembership"]', ev: 'change' }]
     },
     // VSA
     {
@@ -807,6 +824,27 @@
 
   $('[data-toggle="tooltip"]').tooltip();
 
+  // Pre-select static form fields from data-preselect attributes (renewing/lapsed members).
+  preselectByDataAttr('Gender');
+  preselectByDataAttr('BirthMonth');
+  preselectByDataAttr('BirthDay');
+  preselectByDataAttr('SelectedState');
+
+  // Pre-select LMSC and club
+  (function () {
+    var lmsc = document.getElementById('selectedLmsc');
+    var club = document.getElementById('selectedClub');
+    if (!lmsc || !lmsc.dataset.preselect) return;
+    preselectByDataAttr('selectedLmsc');
+    lmsc.dispatchEvent(new Event('change'));
+    var preselectClub = lmsc.dataset.preselectClub;
+    if (preselectClub && club) {
+      for (var i = 0; i < club.options.length; i++) {
+        if (club.options[i].value === preselectClub) { club.selectedIndex = i; break; }
+      }
+    }
+  })();
+
   // Populate BirthYear options (server-rendered in production; built here
   // for the mockup). Max year = current year minus 18 (minimum age).
   (function () {
@@ -819,5 +857,6 @@
       opt.textContent = y;
       select.appendChild(opt);
     }
+    preselectByDataAttr('BirthYear');
   })();
 })();

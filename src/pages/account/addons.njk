@@ -6,33 +6,35 @@ breadcrumbs:
   - url: "/home"
     label: "Home"
 breadcrumbTitle: "Add-Ons"
-swimmerId: "coachCurrent"
-devSwimmerIds:
-  - standardCurrent
-  - usmsPlusCurrent
-  - eventLicenseStandardCurrent
-  - coachCurrent
 showDonations: true
+useAddonPricing: true
+membershipTierKeys:
+  - usmsPlus
+  - eventLicenseUpgrade
+  
 productOptionGroups:
   - label: "Product Options"
     keys:
       - videoStrokeAnalysis
       - printSwimmerMagazine
-  - label: "2026 National Coaches Clinic"
-    requiresRole: "isCoach"
+      - coachLicense
+  - label: "NCC 2026"
     keys:
       - ncc-2026-registration
-      - ncc-2026-hospitality
       - ncc-2026-golden-goggles
+      - ncc-2026-hospitality
 ---
 {% extends "layouts/base.njk" %}
 {% block pageCSS %}
+<link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
 <link rel="stylesheet" href="https://www.usms.org/styles/mastersAddons.min.css">
+<link rel="stylesheet" href="/css/Registration/membership-options.css">
 <link rel="stylesheet" href="/css/Account/addons.css">
 <link rel="stylesheet" href="/css/Registration/agree-terms.css">
 {% endblock %}
 {% block pageJS %}
 {# <script src="https://www.usms.org/scripts/mastersAddons.min.js" defer></script> #}
+<script src="/js/membership-options.js" defer></script>
 <script src="/js/addons.js" defer></script>
 {% endblock %}
 {% block breadcrumb %}
