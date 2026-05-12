@@ -33,10 +33,13 @@
     var reg = document.querySelector('.full-registration-form');
     if (!reg) return;
 
-    setVal('firstName',  profile.firstName);
-    setVal('lastName',   profile.lastName);
-    setVal('email',      profile.email);
-    setVal('zipUs',      profile.zip);
+    // Only set fields that exist on the profile — partial profiles (e.g. new
+    // members) only carry account-creation fields (name, sex, DOB).
+    setVal('firstName',    profile.firstName);
+    setVal('lastName',     profile.lastName);
+    setVal('middleInitial', profile.middleInitial);
+    if (profile.email)  setVal('email', profile.email);
+    if (profile.zip)    setVal('zipUs', profile.zip);
 
     setSelectByValue('Gender', profile.gender);
     if (profile.phone)   setVal('phone', profile.phone);
@@ -70,6 +73,8 @@
       radio.dispatchEvent(new Event('change'));
     }
   }
+
+
 
   // Must run after registration.js (deferred) has attached the LMSC change
   // listener that populates club options. Triggers the change event on the
@@ -121,15 +126,19 @@
       // Patch add-ons wrapper
       var addonsWrapper = document.querySelector('.masters-addons');
       if (addonsWrapper) {
-        addonsWrapper.dataset.membershipLevel = siteUser.membershipTier || '';
-        addonsWrapper.dataset.vsaPrice        = tier.vsaPrice != null ? tier.vsaPrice : '';
-        addonsWrapper.dataset.swimmerName     = swimmerName;
+        addonsWrapper.dataset.membershipLevel         = siteUser.membershipTier || '';
+        addonsWrapper.dataset.vsaPrice                = tier.vsaPrice != null ? tier.vsaPrice : '';
+        addonsWrapper.dataset.swimmerName             = swimmerName;
+        addonsWrapper.dataset.competitionEligible     = tier.competitionEligible ? 'true' : 'false';
+        addonsWrapper.dataset.eventLicenseUpgradePrice = tier.eventLicenseUpgradePrice != null ? tier.eventLicenseUpgradePrice : '';
       }
 
       // Patch registration form wrapper
       var regWrapper = document.querySelector('.full-registration-form');
       if (regWrapper) {
         regWrapper.dataset.membershipLevel = siteUser.membershipTier || '';
+        regWrapper.dataset.renew     = siteUser.renew     ? 'true' : 'false';
+        regWrapper.dataset.isLapsed  = siteUser.isLapsed  ? 'true' : 'false';
       }
 
       // Patch hidden swimmerId input
@@ -180,7 +189,7 @@
   // populates BirthYear options). Injects the switcher select
   // and sets BirthYear.
   document.addEventListener('DOMContentLoaded', function () {
-    // BirthYear — options now available after registration.js ran
+    // BirthYear and club — options now available after registration.js ran
     if (data && activeId) {
       var siteUser = data.siteUsers[activeId];
       if (siteUser && siteUser.swimmerId) {

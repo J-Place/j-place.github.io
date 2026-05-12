@@ -15,6 +15,7 @@ document.addEventListener('click', function (e) {
     return;
   }
 
+
   if (!e.target.closest('.js-modal-close')) return;
   var modal = e.target.closest('.modal');
   if (!modal) return;

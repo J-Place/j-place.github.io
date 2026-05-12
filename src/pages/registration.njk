@@ -1,27 +1,24 @@
 ---
 permalink: /registration/index.html
 title: Registration | U.S. Masters Swimming
-swimmerId: "standardExpired"
-devSwimmerIds:
-  - nonMember
-  - standardExpired
+swimmerId: "newMember"
 membershipTierKeys:
   - usmsPlus
-  - usmsPlusEventLicense
-  - usmsYearPlus
-  - usmsEventYearPlus
   - usmsStandardEventLicense
   - usmsStandard
+  - usmsYearPlus
 ---
 {% extends "layouts/base.njk" %}
 {% block pageCSS %}
 <link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
+<link rel="stylesheet" href="/css/Registration/membership-options.css">
 <link rel="stylesheet" href="/css/Registration/registration.css">
 <link rel="stylesheet" href="/css/Registration/agree-terms.css">
 {% endblock %}
 {% block pageJS %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/validator/13.12.0/validator.min.js"></script>
 <script src="/js/validate.js"></script>
+<script src="/js/membership-options.js" defer></script>
 <script src="/js/registration.js" defer></script>
 {% endblock %}
 {% block content %}
