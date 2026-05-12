@@ -45,7 +45,36 @@ Store the raw HTML as `$SOURCE_HTML`.
 
 ---
 
-## Step 3 — Check for an existing local file
+## Step 3 — Check production CSS load order
+
+Extract all `<link rel="stylesheet">` tags from `$SOURCE_HTML` in DOM order.
+
+- If `$ARGUMENTS` was a URL, prefer fetching raw HTML via `curl -sL <url> | grep -i '<link.*stylesheet'` for an accurate head section (WebFetch strips `<head>`).
+- If source was pasted HTML, parse `<link>` tags from what was provided.
+
+List the stylesheet hrefs in order. Then compare against our base stack in `head-css.njk`:
+
+**Base stack (all pages):**
+1. `bootstrap.min.css`
+2. `bootstrap-3-usms-patch.css`
+3. Font Awesome `brands.min.css`
+4. Font Awesome `all.min.css`
+5. `common.min.css`
+6. `usms.min.css`
+7. *(page-specific CSS slots here)*
+8. `print.min.css`
+9. `rteMasters.min.css`
+
+Identify:
+- Any **page-specific CSS files** (those between `usms.min.css` and `print.min.css`) — these need to go in `{% block pageCSS %}` of either the layout or the page template
+- Any **missing files** from our base stack
+- Any **ordering differences** from the base stack
+
+Include these findings in the Step 7 plan report.
+
+---
+
+## Step 4 — Check for an existing local file
 
 Run:
 ```
@@ -57,7 +86,7 @@ find src -name "<filename from $TARGET_PATH>" 2>/dev/null
 
 ---
 
-## Step 4 — Strip production-only noise
+## Step 5 — Strip production-only noise
 
 From `$SOURCE_HTML`, identify and plan to remove:
 - Google Tag Manager — `<noscript><iframe src="//www.googletagmanager.com/...">` and GTM `<script>` blocks
@@ -72,7 +101,7 @@ List what you found and will strip.
 
 ---
 
-## Step 5 — Diff against existing file (if one exists)
+## Step 6 — Diff against existing file (if one exists)
 
 If an existing local file was found in Step 3, compare the cleaned production HTML against it and report:
 - Structural sections present in production but missing locally
@@ -83,11 +112,12 @@ Keep the diff summary concise — call out meaningful differences only, not whit
 
 ---
 
-## Step 6 — Report plan and confirm
+## Step 7 — Report plan and confirm
 
 Before writing anything, tell the user:
 
 - Target path: `$TARGET_PATH`
+- Production CSS load order: [page-specific files identified in Step 3, in order]
 - Production noise stripped: [list]
 - Diff summary (if applicable): [list]
 - New CSS file: `src/css/<page-or-component>.css` (if page-specific styles are needed)
@@ -101,7 +131,7 @@ Wait for confirmation before writing any files.
 
 ---
 
-## Step 7 — Build the mockup
+## Step 8 — Build the mockup
 
 After confirmation:
 
@@ -120,6 +150,6 @@ After confirmation:
 
 ---
 
-## Step 8 — Report
+## Step 9 — Report
 
 Tell the user what was created or modified, with file paths.
