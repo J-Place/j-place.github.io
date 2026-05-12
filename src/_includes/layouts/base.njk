@@ -15,6 +15,7 @@
   {% if dev.env === "dev" %}<script type="application/json" id="dev-swimmers-data">{{ { "siteUsers": siteUsers, "swimmers": swimmers, "membershipTiers": membershipTiers } | dump | safe }}</script>{% endif %}
   {% if dev.env === "dev" and devSwimmerIds %}<script type="application/json" id="dev-swimmer-filter">{{ devSwimmerIds | dump | safe }}</script>{% endif %}
   {% if dev.env === "dev" and swimmerId %}<script type="application/json" id="dev-default-user">{{ swimmerId | dump | safe }}</script>{% endif %}
+  <link rel="stylesheet" href="https://www.usms.org/styles/rteMasters.min.css">
 </head>
 <body class="">
   <div id="main-container">
