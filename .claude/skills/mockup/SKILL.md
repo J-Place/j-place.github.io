@@ -36,21 +36,26 @@ Check `$ARGUMENTS`:
   WebFetch(url: $ARGUMENTS)
   ```
   Confirm to the user: "Fetched `<url>` — `<N>` bytes."
+  Split the fetched HTML internally: everything up to and including `</head>` is `$SOURCE_HEAD`; the unique body content (excluding `<body>`, meganav, and footer) is `$SOURCE_BODY`.
 
-- **If `$ARGUMENTS` is empty or is not a URL** — ask the user:
-  > "Paste the production HTML below and send it when ready."
-  Wait for the user to paste markup before continuing.
+- **If `$ARGUMENTS` is empty or is not a URL** — use a two-paste sequence:
 
-Store the raw HTML as `$SOURCE_HTML`.
+  1. Ask the user:
+     > "Paste the production document head (from `<!DOCTYPE html>` to `</head>`) and send."
+     Wait for the paste. Store it as `$SOURCE_HEAD`.
+
+  2. Then ask:
+     > "Now paste the relevant body content — the unique page markup only. Skip `<body>`, the meganav, and the footer."
+     Wait for the paste. Store it as `$SOURCE_BODY`.
 
 ---
 
 ## Step 3 — Check production CSS load order
 
-Extract all `<link rel="stylesheet">` tags from `$SOURCE_HTML` in DOM order.
+Extract all `<link rel="stylesheet">` tags from `$SOURCE_HEAD` in DOM order.
 
 - If `$ARGUMENTS` was a URL, prefer fetching raw HTML via `curl -sL <url> | grep -i '<link.*stylesheet'` for an accurate head section (WebFetch strips `<head>`).
-- If source was pasted HTML, parse `<link>` tags from what was provided.
+- If source was pasted, parse `<link>` tags from `$SOURCE_HEAD`.
 
 List the stylesheet hrefs in order. Then compare against our base stack in `head-css.njk`:
 
@@ -88,7 +93,7 @@ find src -name "<filename from $TARGET_PATH>" 2>/dev/null
 
 ## Step 5 — Strip production-only noise
 
-From `$SOURCE_HTML`, identify and plan to remove:
+From `$SOURCE_BODY`, identify and plan to remove:
 - Google Tag Manager — `<noscript><iframe src="//www.googletagmanager.com/...">` and GTM `<script>` blocks
 - Pingdom RUM — `<script>` blocks referencing `rum-static.pingdom.net`
 - Facebook SDK — `<script>` blocks referencing `connect.facebook.net`
@@ -138,8 +143,9 @@ After confirmation:
 1. Write the Nunjucks page template at `$TARGET_PATH`:
    - Extend the appropriate layout
    - Set `permalink` and other frontmatter
-   - Adapt the cleaned production HTML into Nunjucks blocks
-   - Keep the custom dropdown or other interactive components from the local codebase where they exist
+   - The page shell (doctype, `<html>`, `<head>`, meganav, footer, `<main role="main">` wrapper) comes from our layouts and partials — do NOT reproduce it from production markup
+   - Adapt the cleaned `$SOURCE_BODY` content into the appropriate Nunjucks blocks only
+   - Keep custom dropdown or other interactive components from the local codebase where they exist
    - Do NOT embed `<style>` or `<script>` tags in the page template
 
 2. If page-specific styles are needed, create `src/css/<name>.css` and reference it in `{% block pageCSS %}`.
