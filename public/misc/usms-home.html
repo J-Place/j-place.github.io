@@ -24,7 +24,7 @@
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.12/jquery.mask.min.js"></script> -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://usms-cdn.azureedge.net/scripts/common.min.js"></script>
-<script src="https://usms-cdn.azureedge.net/scripts/home.min.js"></script>
+<!-- <script src="https://usms-cdn.azureedge.net/scripts/home.min.js"></script> -->
 
 <!-- Local Fallbacks -->
 <!-- <script src="/js/src/jquery-3.6.0.min.js"></script> -->
@@ -64,7 +64,7 @@
             --lm-blue-hover: var(--lm-blue-md);
         }
     </style>
-        <link rel="stylesheet" href="https://test.usms.org/styles/home.min.css">
+        <link rel="stylesheet" href="/homepage/css/home.min.css">
         <link rel="stylesheet" href="/css/home-carousel-updates.css">
     </head>
     <body class="">
@@ -332,11 +332,11 @@
              <p class="lead" data-reactid="8">1-Hour Virtual Championship</p>
              <a href="/events/national-championships/virtual-championships/2022-virtual-championships/2022-1-hour-virtual-championship" class="text-capitalize text-center" data-reactid="9">REGISTER NOW</a>
          </div>
-         <!-- <div class="page-header__photo-credit photo-credit--dark-1">
+         <div class="page-header__photo-credit photo-credit--dark-1">
             <div class="photo-credit__wrapper">
                <p>Image: William Kolb</p> 
             </div>
-         </div> -->
+         </div>
           <div class="carousel__slide-image--desktop" data-reactid="10">
              <div class="carousel__slide-image" style="background-image:url('https://www.usms.org/-/media/usms/lightroom/6023966686_0f37a918d4_o.jpg');" data-reactid="11"></div>
           </div>
@@ -350,7 +350,7 @@
              <p class="lead" data-reactid="17">Find an Event Near You</p>
              <a href="https://www.usms.org/events" class="text-capitalize text-center" data-reactid="18">Compete Now</a>
          </div>
-         <div class="page-header__photo-credit photo-credit--dark-1">
+         <div class="page-header__photo-credit photo-credit--light-1">
             <div class="photo-credit__wrapper">
                <p>Image: William Kolb</p> 
             </div>
@@ -1146,7 +1146,7 @@
 
 </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="https://test.usms.org/scripts/home.min.js"></script>
+        <script src="/js/src/home.min.js"></script>
         <script>
             $(document).ready(function () {
                 var maxHeight = 0;
@@ -1158,6 +1158,59 @@
                 });
                 $('.cta-col > div').height(maxHeight);
             });
+        </script>
+        <script>
+            (function () {
+                var container = document.querySelector('.carousel-container');
+                if (!container) return;
+                var list = container.querySelector('ul.carousel');
+                var navItems = container.querySelectorAll('.carousel-nav__item');
+                var count = navItems.length;
+                if (count < 2) return;
+                var current = 0;
+
+                function goTo(index) {
+                    list.style.left = '-' + (100 * index) + '%';
+                    var active = container.querySelector('.carousel-nav__item--active');
+                    if (active) active.classList.remove('carousel-nav__item--active');
+                    var dot = container.querySelector('#carousel-nav__item-' + index);
+                    if (dot) dot.classList.add('carousel-nav__item--active');
+                    current = index;
+                }
+
+                function startTimer() {
+                    return setInterval(function () { goTo((current + 1) % count); }, 5000);
+                }
+
+                var timer = startTimer();
+
+                var prevBtn = container.querySelector('.carousel-previous-button');
+                var nextBtn = container.querySelector('.carousel-next-button');
+                if (prevBtn) {
+                    prevBtn.style.display = '';
+                    prevBtn.addEventListener('click', function () {
+                        clearInterval(timer);
+                        goTo((current - 1 + count) % count);
+                        timer = startTimer();
+                    });
+                }
+                if (nextBtn) {
+                    nextBtn.style.display = '';
+                    nextBtn.addEventListener('click', function () {
+                        clearInterval(timer);
+                        goTo((current + 1) % count);
+                        timer = startTimer();
+                    });
+                }
+
+                navItems.forEach(function (item, i) {
+                    item.querySelector('button').addEventListener('click', function () {
+                        clearInterval(timer);
+                        goTo(i);
+                        timer = startTimer();
+                    });
+                });
+            })();
         </script>
     </body>
 </html>
