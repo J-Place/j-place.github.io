@@ -1,0 +1,146 @@
+.image-slider__container {
+  position: relative;
+}
+
+.image-slider__slider-container {
+  overflow: hidden;
+  width: calc(100% - 50px);
+  margin: 0 auto;
+}
+
+.image-slider__slider {
+  display: flex;
+  position: relative;
+  left: -50%;
+  transform: translateX(50%);
+}
+
+.image-slider__slider.is-reversing {
+  transform: translateX(-50%);
+}
+
+.image-slider__slider.is-set {
+  transform: none;
+  transition: transform 0.5s ease;
+}
+
+.image-slider__slider-item {
+  flex: 1 0 50%;
+  max-width: 50%;
+  order: 2;
+}
+
+.image-slider__slider-item.is-ref {
+  order: 1;
+}
+
+.image-slider__slider-item .image-desktop {
+  justify-content: center;
+  margin: 0 14px;
+}
+
+.image-slider__button-previous,
+.image-slider__button-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: 0;
+  box-shadow: 0 0 6px #AFAFAF;
+  border-radius: 50%;
+  outline: 0;
+  font-size: 1rem;
+  height: 20px;
+  width: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  z-index: 1;
+}
+
+.image-slider__button-previous {
+  left: 5px;
+}
+
+.image-slider__button-previous > i {
+  margin-top: 2px;
+  margin-left: -2px;
+}
+
+.image-slider__button-next {
+  right: 5px;
+}
+
+.image-slider__button-next > i {
+  margin-top: 2px;
+  margin-left: 2px;
+}
+
+@media (min-width: 480px) {
+  .image-slider__slider-container {
+    width: 360px;
+  }
+
+  .image-slider__slider-item {
+    flex: 1 0 180px;
+    max-width: 180px;
+  }
+
+  .image-slider__slider {
+    left: -180px;
+    transform: translateX(180px);
+  }
+
+  .image-slider__slider.is-reversing {
+    transform: translateX(-180px);
+  }
+}
+
+@media (min-width: 768px) {
+  .image-slider__slider-container {
+    width: 540px;
+  }
+
+  .image-slider__button-previous,
+  .image-slider__button-next {
+    font-size: 2rem;
+    height: 30px;
+    width: 30px;
+  }
+
+  .image-slider__button-previous {
+    left: 15px;
+  }
+
+  .image-slider__button-next {
+    right: 15px;
+  }
+}
+
+@media (min-width: 992px) {
+  .image-slider__slider-container {
+    width: 720px;
+  }
+
+  .image-slider__button-previous,
+  .image-slider__button-next {
+    font-size: 2rem;
+    height: 40px;
+    width: 40px;
+  }
+
+  .image-slider__button-previous {
+    left: 15px;
+  }
+
+  .image-slider__button-next {
+    right: 15px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .image-slider__slider-container {
+    width: 910px;
+  }
+}
