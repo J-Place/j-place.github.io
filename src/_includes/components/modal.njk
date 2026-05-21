@@ -5,7 +5,11 @@
 
     modalId        — required: id on the outer .modal element
     modalModifier  — optional: extra class on .modal (e.g. "cta-modal--club-badge")
-    modalSize      — optional: "sm" | "lg" | "xl" for .modal-dialog size
+    modalSize      — optional: BS5 dialog size class to add to .modal-dialog
+                     "sm"  → 300px  (BS5 default, ≤576px breakpoint)
+                     unset → 500px  (our default, via --bs-modal-width fallback in modal.css)
+                     "lg"  → 800px  (≥992px, per modal.css)
+                     "xl"  → 800px  (≥992px, per modal.css — same rule as lg)
     modalCentered  — optional: true to vertically center the dialog
     modalTitleId   — optional: id on the <h5> (useful for aria-labelledby)
     modalTitle     — optional: title text; leave unset for JS-populated titles

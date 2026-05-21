@@ -12,7 +12,14 @@ body.modal-open { overflow: hidden; }
 .usms-modal-global .modal-dialog {
     margin: 30px auto;
     width: auto;
-    max-width: 500px;
+    max-width: var(--bs-modal-width, 500px);
+}
+
+@media (min-width: 992px) {
+    .usms-modal-global .modal-lg,
+    .usms-modal-global .modal-xl {
+        --bs-modal-width: 800px;
+    }
 }
 
 .usms-modal-global .modal-dialog-centered {
