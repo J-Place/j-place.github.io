@@ -1,0 +1,23 @@
+.advertising-dc {
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0;
+}
+
+.ad-img {
+    max-width: 100%;
+    height: auto;
+    display: none;
+}
+
+.ad-img--mobile { display: block; }
+
+@media (min-width: 768px) {
+    .ad-img--mobile    { display: none; }
+    .ad-img--tablet    { display: block; }
+}
+
+@media (min-width: 992px) {
+    .ad-img--tablet      { display: none; }
+    .ad-img--leaderboard { display: block; }
+}
