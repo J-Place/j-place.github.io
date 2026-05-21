@@ -1,0 +1,84 @@
+---
+permalink: /clubs/swim-fort-lauderdale-1877.html
+title: Swim Fort Lauderdale | Club Finder | U.S. Masters Swimming
+breadcrumbs:
+  - url: "/"
+    label: "Home"
+  - url: "/clubs/index.html"
+    label: "Club Finder"
+breadcrumbTitle: "Swim Fort Lauderdale"
+---
+{% extends "layouts/club-detail.njk" %}
+
+{% block heroSection %}
+<div class="section section-full p-b-10">
+  <a href="#" class="btn-hero-modal" data-modal-target="#modalImage">+ View Full Image</a>
+  <div class="hero-image hero-image--club-detail2" style="background-image: url('https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/USMS/Club2/Upload/SFTL Logojpg.jpg'); height: 350px; background-position: center"></div>
+
+  {% set modalId = "modalImage" %}
+  {% set modalModifier = "club-detail-modal" %}
+  {% set modalCentered = true %}
+  {% set modalSize = "lg" %}
+  {% set modalBody %}
+  <div class="club-detail--full-image">
+    <img style="width:100%;" src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/USMS/Club2/Upload/SFTL Logojpg.jpg" alt="" />
+  </div>
+  {% endset %}
+  {% include "components/modal.njk" %}
+</div>
+{% endblock %}
+
+{% block clubMain %}
+<div class="club__description">
+  <h1 class="club__header">Swim Fort Lauderdale</h1>
+  <p>Swim Fort Lauderdale (SFTL) Masters is 400+ Member USMS Program in Broward County, Florida. SFTL Masters is open to all swimmers from your novice swimmer all the way to the competitive swimmer. SFTL members are extremely active in local, national and international competitions (pool, open water &amp; triathlon.) As well as a strong supporter of Swim Across America!<br>Main Training location is at Fort Lauderdale Aquatic Center, Home to the International Swimming Hall of Fame.</p>
+  <h3 class="club__practice-info">Practice Information</h3>
+  <p>Monday(1hr): 5:30am, 6:45am, 12:00pm, &amp; 6:30pm<br>Tuesday(1hr): 5:30am, 6:45am, 12:00pm, 6:30pm<br>Wednesday(1hr): 5:30am, 6:45am, 12:00pm, 6:30pm<br>Thursday(1hr): 5:30am, 6:45am, 12:00pm, 6:30pm<br>Friday(1hr): 5:30am, 6:45am, 12:00pm<br>Saturday(1.5hr): 6:30am, 8:15am<br>USMS Registration is required to participate in any of our workouts!</p>
+</div>
+
+<div class="club__locations">
+  <div class="club-location">
+    <div class="club-location__left-container">
+      <div class="club-location__map-pin">
+        <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/images/map/marker_blue.png?rev=8fda666ed7454ef38a4bf7e4ac7684cf">
+        <p class="club-location__map-pin--distance">153</p>
+      </div>
+    </div>
+    <div class="club-location__right-container">
+      <div class="club-location__address">
+        <a href="https://maps.google.com/?q=501+Seabreeze+Boulevard+Fort+Lauderdale+FL+33316" target="_blank">
+          <h5 class="club-location__address--name">Fort Lauderdale Aquatic Center</h5>
+          <p class="club-location__address--street">501 Seabreeze Boulevard</p>
+          <p class="club-location__address--city-state-zip">Fort Lauderdale, FL 33316</p>
+        </a>
+      </div>
+      <div class="club-location__facilities">
+        <div class="club-location__facility">
+          <div class="club-location__facility--length">50m/25m/25y</div>
+          <div class="club-location__facility--environment">Outdoor Pool</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block clubSidebar %}
+<button class="btn btn-usms btn-large club__join-now">Join USMS Now</button>
+<div class="club-contact">
+  <h4 class="club-contact__header">Club Contact</h4>
+  <div class="club-contact__content">
+    <p>John Janszen</p>
+    <p>513-410-1481</p>
+    <p>jjanszen@fortlauderdale.gov</p>
+  </div>
+</div>
+<div class="club-website">
+  <a href="https://www.teamunify.com/Home.jsp?team=fgflac" class="btn btn-link" target="_blank">Visit Club Website</a>
+</div>
+<div class="club-social-links">
+  <div class="club-social-links__content">
+    <ul class="social-share-icons list--nostyle"></ul>
+  </div>
+</div>
+{% endblock %}
