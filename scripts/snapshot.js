@@ -139,6 +139,7 @@ try {
 
   copyDir(path.join(siteDir, 'css'), path.join(outDir, 'css'));
   copyDir(path.join(siteDir, 'js'),  path.join(outDir, 'js'));
+  copyDir(path.join(siteDir, 'img'), path.join(outDir, 'img'));
 
   console.log(`\nSnapshot ready: dist/snapshots/${name}`);
 
