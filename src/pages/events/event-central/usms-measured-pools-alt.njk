@@ -1,0 +1,67 @@
+---
+permalink: /events/event-central/usms-measured-pools-alt/index.html
+title: USMS Measured Pools | U.S. Masters Swimming
+pageTitle: USMS Measured Pools
+breadcrumbs:
+  - url: "/home"
+    label: "Home"
+  - url: "/events"
+    label: "Events"
+  - url: "/event-central"
+    label: "Event Central"
+breadcrumbTitle: "USMS Measured Pools"
+---
+{% extends "layouts/clubs.njk" %}
+{% block pageJS %}
+<script src="/js/filters.js" defer></script>
+<script src="/js/pool-lookup-alt.js" defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI0dfTymf_5IhRI-YuOUKpTf3mEJlDmi8&libraries=places&callback=initPoolPlaces" async defer></script>
+{% endblock %}
+{% block pageCSS %}
+<link rel="stylesheet" href="/css/Event/pool-list-control.css">
+<link rel="stylesheet" href="/css/Event/pool-list-results.css">
+{% endblock %}
+{# {% block pageHeader %}
+{% include "partials/Event/EventHeader.njk" %}
+{% endblock %} #}
+{% block content %}
+<div class="section section-full p-mh-750">
+	<div class="usms-container pool-lookup">
+		<div class="row">
+			<div class="col-xs-12">
+				{% include "partials/pool-lookup-filters.njk" %}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				{% include "partials/pool-lookup-results.njk" %}
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="html-container">
+					<p>If your location or course is not listed, contact USMS to have it added: <a href="mailto:topten@usmastersswimming.org">topten@usmastersswimming.org</a></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% set modalId = "modalPoolDetail" %}
+{% set modalBodyClass = "modal-body--sm" %}
+{% set modalCentered = true %}
+{% set modalModifier = "pool-location-detail pool-location-detail--alt" %}
+{% set modalTitle = "Pool Courses" %}
+{% set modalBody %}
+	<p>The courses that have been measured in our database are listed below. Please note, not all measured courses are certified. A certification date will be listed for certified courses. If a course is not certified, the meet's times will not count. <a href="https://www.usms.org/volunteer-central/guide-to-local-operations/event-management/top-10-and-records-and-tabulation/pool-length-form-and-measurement-procedures">Learn more here.</a></p>
+	<p class="location-name" id="poolDetailName"></p>
+	<p class="pool-course-count" id="poolDetailCount"></p>
+	<div id="poolDetailCourses"></div>
+	<br>
+	<p>If your location or course is not listed, contact USMS to have it added: <a href="mailto:topten@usmastersswimming.org">topten@usmastersswimming.org</a></p>
+{% endset %}
+{% set modalFooter %}
+	<button class="btn btn-md btn-primary" type="button" id="poolDetailConfirm">Okay</button>
+{% endset %}
+{% include "components/modal.njk" %}
+{% endblock %}
