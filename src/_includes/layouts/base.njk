@@ -11,16 +11,22 @@
   {% include "partials/head-js.njk" %}
   {% include "partials/head-css.njk" %}
   {% block pageCSS %}{% endblock %}
+  <link rel="stylesheet" href="https://www.usms.org/styles/print.min.css">
+  <link rel="stylesheet" href="https://www.usms.org/styles/rteMasters.min.css">
+  <link rel="stylesheet" href="/css/Common/ad.css">
+  <link rel="stylesheet" href="/css/Common/modal.css">
+  {% block localCSS %}{% endblock %}
   {% if dev.env === "dev" %}{% for name, overlay in devOverlays %}{% if permalink in overlay.pages %}<link rel="stylesheet" href="{{ overlay.css }}">{% endif %}{% endfor %}{% endif %}
   {% if dev.env === "dev" %}<script type="application/json" id="dev-swimmers-data">{{ { "siteUsers": siteUsers, "swimmers": swimmers, "membershipTiers": membershipTiers } | dump | safe }}</script>{% endif %}
   {% if dev.env === "dev" and devSwimmerIds %}<script type="application/json" id="dev-swimmer-filter">{{ devSwimmerIds | dump | safe }}</script>{% endif %}
   {% if dev.env === "dev" and swimmerId %}<script type="application/json" id="dev-default-user">{{ swimmerId | dump | safe }}</script>{% endif %}
-  <link rel="stylesheet" href="https://www.usms.org/styles/rteMasters.min.css">
 </head>
 <body class="">
   <div id="main-container">
     <header class="header-static">
+      {% block siteNav %}
       {% include "partials/Navigation/MegaMainMenu.njk" %}
+      {% endblock %}
       {% block siteHeader %}{% endblock %}
     </header>
     <main role="main">
@@ -29,8 +35,12 @@
       {% block content %}{% endblock %}
     </main>
   </div>
+  {% block siteFooter %}
   {% include "partials/Navigation/Footer.njk" %}
+  {% endblock %}
+  {% block megamenuJS %}
   <script src="/js/megamenu.js" defer></script>
+  {% endblock %}
   {% block pageJS %}{% endblock %}
   {% if dev.env === "dev" %}
   {% for name, overlay in devOverlays %}{% if permalink in overlay.pages %}
