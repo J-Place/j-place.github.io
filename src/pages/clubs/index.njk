@@ -10,7 +10,12 @@ devSwimmerIds:
   - standardCurrent
 ---
 {% extends "layouts/clubs.njk" %}
+{% block pageCSS %}
+{{ super() }}
+<link rel="stylesheet" href="/css/Common/loading.css">
+{% endblock %}
 {% block content %}
+{% include "partials/Common/loading.njk" %}
 <section class="section section-full bg-gray p-tb-10">
   <div class="usms-container p-tb-10">
     <div class="row">
