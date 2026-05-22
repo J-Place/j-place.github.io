@@ -281,14 +281,26 @@
     updateSummary(matched.length);
   }
 
+  // ── Loading indicator ──────────────────────────────────────────────────────
+
+  var loaderEl = document.querySelector('.loading');
+
+  function withLoader(fn) {
+    if (loaderEl) loaderEl.style.display = 'flex';
+    setTimeout(function () {
+      fn();
+      if (loaderEl) loaderEl.style.display = 'none';
+    }, 1000);
+  }
+
   // ── Event listeners ────────────────────────────────────────────────────────
 
-  submitBtn.addEventListener('click', applyFilters);
+  submitBtn.addEventListener('click', function () { withLoader(applyFilters); });
 
   [nameInput, locationInput].forEach(function (input) {
     if (!input) return;
     input.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') applyFilters();
+      if (e.key === 'Enter') withLoader(applyFilters);
     });
   });
 
@@ -300,7 +312,7 @@
   }
 
   if (rangeSelect) {
-    rangeSelect.addEventListener('change', applyFilters);
+    rangeSelect.addEventListener('change', function () { withLoader(applyFilters); });
   }
 
   document.addEventListener('filtersChanged', applyFilters);
