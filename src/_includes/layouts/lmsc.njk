@@ -1,0 +1,248 @@
+{% extends "layouts/base.njk" %}
+
+{% block pageCSS %}
+<link href="https://www.usms.org/styles/home.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block localCSS %}
+<link rel="stylesheet" href="/css/lmsc.css">
+<link rel="stylesheet" href="/css/Common/sc-form.css">
+{% endblock %}
+
+{% block megamenuJS %}
+<script src="/js/lmsc-nav.js" defer></script>
+{% endblock %}
+
+{% block pageJS %}
+<script src="/js/image-slider.js" defer></script>
+{% endblock %}
+
+{% block siteNav %}
+<nav class="mega-main-menu">
+  <button type="button" class="mega-main-menu__toggle-mobile btn btn-default" aria-label="toggle mobile">
+    <i class="fa-solid fa-bars text-primary"></i>
+    <label>Menu</label>
+  </button>
+
+  <div class="mega-main-menu__logo-container">
+    <a class="mega-main-menu__logo" href="/">
+      <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/lmsc/ohlmsc/ohlmsc-logo.png?rev=b8639308842d4d619c8d0594c0870ef9" alt="Ohio LMSC" width="264" height="50">
+    </a>
+  </div>
+
+  <div class="mega-main-menu__nav-search-container">
+    <div class="login__items-container">
+      <ul class="login__list">
+        <li class="login__list-item"><a href="https://www.usms.org/myusmslogin">My Account</a></li>
+        <li class="login__list-item"><a href="https://community.usms.org/sso/login">Community/Forums</a></li>
+        <li class="login__list-item"><a href="https://www.usms.org">USMS Website</a></li>
+        <li class="login__list-item"><a href="https://www.usms.org/account/single-sign-out">Logout</a></li>
+      </ul>
+    </div>
+
+    <div class="mega-main-menu__items-container">
+      <ul class="mega-main-menu__items list--nostyle" style="width:auto;">
+        <li class="has--children" id="menu-item-0">
+          <span class="fa-solid fa-chevron-right"></span>
+          LMSC Info
+        </li>
+        <li id="menu-item-1"><a href="https://www.usms.org/events">Events</a></li>
+        <li id="menu-item-2"><a href="https://www.usms.org/clubs">Club Finder</a></li>
+        <li id="menu-item-3"><a href="https://www.usms.org/join-usms/join-or-renew">Join</a></li>
+        <li id="menu-item-4" class="menu-item-login-button"><a href="https://www.usms.org/myusmslogin">My USMS</a></li>
+      </ul>
+    </div>
+
+    <div class="mega-menu-overlay" style="top: 78px; display: none;">
+      <div class="mega-menu-overlay__menu-container">
+        <h4 class="mega-menu-overlay__title text-primary"><strong>LMSC Info</strong></h4>
+        <div class="mega-menu-overlay__content">
+          <ul class="mega-menu-overlay__items list--nostyle">
+            <li><a href="https://www.usms.org/lmsc/lmscofficers.php?LMSCID=17">Officers</a></li>
+            <li><a href="https://www.usms.org/lmsc/lmscinfoform.php?LMSCID=17">Resources</a></li>
+            <li><a href="/ohio-lmsc-records">Records</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mega-menu-overlay__image-container">
+        <a href="https://www.usms.org/about-usms/what-is-us-masters-swimming">
+          <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/megamenu/aboutcta-200x150.png?rev=d3379460971e4ab1946a4e2971b7d818" alt="What is Masters Swimming?" class="mega-menu-overlay__image">
+          <div class="mega-menu-overlay__image-title text-center">What is Masters Swimming?</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="mega-main-menu__actions">
+      <div class="mega-main-menu__actions-search--wrapper" aria-hidden="true">
+        <i class="search--icon"></i>
+        <label>Search</label>
+      </div>
+      <div class="mega-main-menu__actions-login--wrapper">
+        <a href="https://www.usms.org/myusmslogin">
+          <i class="login--icon"></i>
+          <label>Log In</label>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mobile-menu" style="transform:translateY(-100%);opacity:0;z-index:-1;">
+    <div class="mobile-menu__container">
+      <button class="mobile-menu__toggle" aria-label="toggle menu">
+        <i class="mobile-menu__close"></i>
+        <label>Close</label>
+      </button>
+    </div>
+    <div class="mobile-menu-overlay">
+      <ul class="mobile-menu-overlay__items list--nostyle">
+        <li class="mobile-menu-overlay__item text-capitalize">
+          <div class="mobile-menu-overlay__item-content">
+            <i class="fa-solid fa-chevron-right"></i>LMSC Info
+          </div>
+          <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+            <ul class="mobile-menu-overlay__submenu list--nostyle">
+              <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                <a href="https://www.usms.org/lmsc/lmscofficers.php?LMSCID=17">Officers</a>
+              </li>
+              <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                <a href="https://www.usms.org/lmsc/lmscinfoform.php?LMSCID=17">Resources</a>
+              </li>
+              <li class="mobile-menu-overlay__submenu-items text-capitalize">
+                <a href="/ohio-lmsc-records">Records</a>
+              </li>
+            </ul>
+          </div>
+        </li>
+        <li class="mobile-menu-overlay__item text-capitalize">
+          <div class="mobile-menu-overlay__item-content">
+            <i class=""></i>
+            <a href="https://www.usms.org/events" style="text-decoration:none;">Events</a>
+          </div>
+          <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+            <ul class="mobile-menu-overlay__submenu list--nostyle"></ul>
+          </div>
+        </li>
+        <li class="mobile-menu-overlay__item text-capitalize">
+          <div class="mobile-menu-overlay__item-content">
+            <i class=""></i>
+            <a href="https://www.usms.org/clubs" style="text-decoration:none;">Club Finder</a>
+          </div>
+          <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+            <ul class="mobile-menu-overlay__submenu list--nostyle"></ul>
+          </div>
+        </li>
+        <li class="mobile-menu-overlay__item text-capitalize">
+          <div class="mobile-menu-overlay__item-content">
+            <i class=""></i>
+            <a href="https://www.usms.org/join-usms/join-or-renew" style="text-decoration:none;">Join</a>
+          </div>
+          <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+            <ul class="mobile-menu-overlay__submenu list--nostyle"></ul>
+          </div>
+        </li>
+        <li class="mobile-menu-overlay__item text-capitalize">
+          <div class="mobile-menu-overlay__item-content">
+            <i class=""></i>
+            <a href="https://www.usms.org/myusmslogin" style="text-decoration:none;">My USMS</a>
+          </div>
+          <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+            <ul class="mobile-menu-overlay__submenu list--nostyle"></ul>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+{% endblock %}
+
+{% block siteFooter %}
+<footer>
+  <div id="footerOverlay">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="footer-content">
+          <div class="footer-left">
+            <div class="footer-left__menu">
+              <div class="row">
+                <div class="col-xs-6 col-md-3">
+                  <div class="footer-menu">
+                    <h3 class="footer-menu__header">LMSC Info</h3>
+                    <ul class="footer-menu__list list--nostyle">
+                      <li class="footer-menu__list-item">
+                        <a href="https://www.usms.org/club-central/start-a-club">How to Start a Club</a>
+                      </li>
+                      <li class="footer-menu__list-item">
+                        <a href="https://www.usms.org/comp/sanction/request.php">Sanction an Event</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-xs-6 col-md-3">
+                  <div class="footer-menu">
+                    <h3 class="footer-menu__header">USMS Info</h3>
+                    <ul class="footer-menu__list list--nostyle">
+                      <li class="footer-menu__list-item">
+                        <a href="https://www.usms.org/join-usms/membership-benefits">Membership Benefits</a>
+                      </li>
+                      <li class="footer-menu__list-item">
+                        <a href="https://www.usms.org/about-usms/what-is-us-masters-swimming">What is Masters Swimming?</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-xs-6 col-md-3"></div>
+                <div class="col-xs-6 col-md-3"></div>
+              </div>
+            </div>
+          </div>
+          <div class="footer-right">
+            <div class="subscribe">
+              <div>
+                <h4 class="subscribe__header m-b-30"></h4>
+                <p class="m-b-30"></p>
+                <a class="btn btn-primary btn-lg text-uppercase" href="https://www.usms.org/login-to-registration-page">JOIN NOW</a>
+              </div>
+            </div>
+            <ul class="nav nav-stacked">
+              <li>
+                <a href="https://www.usms.org/content/privacy">
+                  <span>Privacy Policy</span>
+                </a>
+              </li>
+            </ul>
+            <small class="copyright">&copy; 2021 Ohio LMSC</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+{% endblock %}
+
+{% block siteHeader %}
+<div class="carousel-container">
+  <button class="carousel-previous-button" style="display:none;">
+    <i class="fa-solid fa-chevron-left"></i>
+  </button>
+  <ul class="carousel list--nostyle">
+    <li class="carousel__slide">
+      <div class="carousel__slide-content">
+        <h1 class="text-capitalize">Welcome to</h1>
+        <p class="lead">Ohio LMSC</p>
+        <a href="https://www.usms.org/join-usms/join-or-renew" class="text-capitalize text-center">Join Now</a>
+      </div>
+      <div class="carousel__slide-image--desktop">
+        <div class="carousel__slide-image" style="background-image:url('https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/bigstock-swimming-pool-under-water---53318314.jpg?rev=9e0462dd5d2b414598c89e0d6e087a82');"></div>
+      </div>
+      <div class="carousel__slide-image--mobile">
+        <div class="carousel__slide-image" style="background-image:url('https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/bigstock-swimming-pool-under-water---53318314.jpg?rev=9e0462dd5d2b414598c89e0d6e087a82');"></div>
+      </div>
+    </li>
+  </ul>
+  <button class="carousel-next-button" style="display:none;">
+    <i class="fa-solid fa-chevron-right"></i>
+  </button>
+</div>
+{% endblock %}
+
+{% block content %}{{ content | safe }}{% endblock %}
