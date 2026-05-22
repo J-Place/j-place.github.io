@@ -1,0 +1,95 @@
+---
+permalink: /clubs/south-end-rowing-club-580.html
+title: South End Rowing Club | Club Finder | U.S. Masters Swimming
+breadcrumbs:
+  - url: "/"
+    label: "Home"
+  - url: "/clubs/index.html"
+    label: "Club Finder"
+breadcrumbTitle: "South End Rowing Club"
+---
+{% extends "layouts/club-detail.njk" %}
+
+{% block heroSection %}
+<div class="section section-full p-b-10">
+  <a href="#" class="btn-hero-modal" data-modal-target="#modalImage">+ View Full Image</a>
+  <div class="hero-image hero-image--club-detail2" style="background-image: url('https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/USMS/Club2/Upload/GGBphotosmalljpg.jpg'); height: 350px; background-position: center"></div>
+
+  {% set modalId = "modalImage" %}
+  {% set modalModifier = "club-detail-modal" %}
+  {% set modalCentered = true %}
+  {% set modalSize = "lg" %}
+  {% set modalBody %}
+  <div class="club-detail--full-image">
+    <img style="width:100%;" src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/USMS/Club2/Upload/GGBphotosmalljpg.jpg" alt="" />
+  </div>
+  {% endset %}
+  {% include "components/modal.njk" %}
+</div>
+{% endblock %}
+
+{% block clubMain %}
+<div class="club__description">
+  <h1 class="club__header">South End Rowing Club</h1>
+  <p>Open water swimming in the San Francisco Bay</p>
+  <h3 class="club__practice-info">Practice Information</h3>
+  <p>Monday-Sunday</p>
+</div>
+
+<div class="club__locations">
+  <div class="club-location">
+    <div class="club-location__left-container">
+      <div class="club-location__map-pin">
+        <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/images/map/marker_blue.png?rev=8fda666ed7454ef38a4bf7e4ac7684cf">
+        <p class="club-location__map-pin--distance">2585</p>
+      </div>
+    </div>
+    <div class="club-location__right-container">
+      <div class="club-location__address">
+        <a href="https://maps.google.com/?q=500+Jefferson+Street+San+Francisco+CA+94109" target="_blank">
+          <h5 class="club-location__address--name">South End Rowing Club</h5>
+          <p class="club-location__address--street">500 Jefferson Street</p>
+          <p class="club-location__address--city-state-zip">San Francisco, CA 94109</p>
+        </a>
+      </div>
+      <div class="club-location__facilities">
+        <div class="club-location__facility">
+          <div class="club-location__facility--name">Aquatic Park</div>
+          <div class="club-location__facility--environment">Open Water</div>
+          <div class="club-location__facility--length">Ocean</div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block clubSidebar %}
+<button class="btn btn-usms btn-large club__join-now">Join USMS Now</button>
+<div class="club-website">
+  <a href="https://www.serc.com" class="btn btn-link" target="_blank">Visit Club Website</a>
+</div>
+<div class="club-social-links">
+  <h4 class="club-social-links__header">Connect With Us</h4>
+  <div class="club-social-links__content">
+    <ul class="social-share-icons list--nostyle">
+      <li class="social-share-icons__item">
+        <a href="https://www.facebook.com/southendrowingclub" target="_blank" title="Facebook">
+          <i class="fa-brands fa-facebook-f"></i>
+        </a>
+      </li>
+      <li class="social-share-icons__item">
+        <a href="https://www.instagram.com/southendrowingclub" target="_blank" title="Instagram">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+      </li>
+      <li class="social-share-icons__item">
+        <a href="https://www.twitter.com/alcatrazserc" target="_blank" title="Twitter">
+          <i class="fa-brands fa-x-twitter"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+{% endblock %}
