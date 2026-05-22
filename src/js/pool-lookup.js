@@ -77,19 +77,31 @@
     var courses = [];
     try { courses = JSON.parse(data.courses || '[]'); } catch (e) {}
 
+    var countEl = document.getElementById('poolDetailCount');
+    if (countEl) countEl.textContent = 'Showing ' + courses.length + ' course' + (courses.length !== 1 ? 's' : '');
+
     var coursesEl = document.getElementById('poolDetailCourses');
     if (courses.length) {
       var items = courses.map(function (c) {
-        var poolName  = c.pool || data.name;
-        var line1     = poolName + (c.length ? ' - ' + c.length : '');
-        var certified = c.certified
-          ? 'Certified ' + (c.certifiedDate || '')
-          : 'Not Certified';
-        var touchpadTxt = '1 Touchpad, 2 Touchpads, No Touchpads';
-        var line2 = certified + (touchpadTxt ? ' \u2013 ' + touchpadTxt : '');
+        var poolName    = c.pool || data.name;
+        var tp          = parseInt(c.touchpads, 10);
+        var touchpadTxt = isNaN(tp) ? 'No Touchpads' : tp + ' Touchpad' + (tp !== 1 ? 's' : '');
+        var lanesTxt    = c.lanes ? c.lanes + ' Lane' + (c.lanes !== 1 ? 's' : '') : '';
+        var bulkheadTxt = c.bulkhead ? 'Bulkhead' : 'No Bulkhead';
+        var certDate = (c.certifiedDate || '').replace(/(\d{2})\/\d{2}(\d{2})$/, '$1/$2');
+        var certifiedTxt = c.certified ? 'Certified ' + certDate : 'Not Certified';
         return '<li class="pool-course-item">'
-          + line1
-          + '<span class="pool-course-item__meta">' + line2 + '</span>'
+          + '<span class="pool-course-item__name">'         + escapeHtml(poolName)     + '</span>'
+          + '<br>'
+          + '<span class="pool-course-item__length">'         + escapeHtml(c.length||'') + '</span>'
+          + ', '
+          + '<span class="pool-course-item__lanes">'          + escapeHtml(lanesTxt)     + '</span>'
+          + ', '
+          + '<span class="pool-course-item__bulkhead">'       + escapeHtml(bulkheadTxt)  + '</span>'
+          + '<br>'
+          + '<span class="pool-course-item__certified-date">' + escapeHtml(certifiedTxt) + '</span>'
+          + ' - '
+          + '<span class="pool-course-item__touchpads">'      + escapeHtml(touchpadTxt)  + '</span>'
           + '</li>';
       }).join('');
       coursesEl.innerHTML = '<ul class="pool-course-list">' + items + '</ul>';
