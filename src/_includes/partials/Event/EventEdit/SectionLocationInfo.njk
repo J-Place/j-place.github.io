@@ -1,0 +1,121 @@
+<div class="form-location-info">
+  <div class="section section-location-information hasNoData">
+    <h3 class="section__header" data-bs-target="#location-information__content" data-bs-toggle="collapse" aria-controls="location-information__content">
+      <span class="section__number">4</span>Location Information
+    </h3>
+
+    {% set modalId = "modalRemoveLocation" %}
+    {% set modalModifier = "" %}
+    {% set modalTitle = "Remove Location" %}
+    {% set modalBody %}
+    <p>This will remove your saved pool or open water venue. Are you sure you want to continue?</p>
+    {% endset %}
+    {% set modalFooter %}
+    <button type="button" class="btn btn-md btn-default btn-ko" data-bs-dismiss="modal">Cancel</button>
+    <button type="button" class="btn btn-md btn-default">Continue</button>
+    {% endset %}
+    {% include "components/modal.njk" %}
+
+    {% set modalId = "modalRemovePool" %}
+    {% set modalTitle = "Remove Location" %}
+    {% set modalBody %}
+    <p>This will remove your saved pool or open water venue. Are you sure you want to continue?</p>
+    {% endset %}
+    {% set modalFooter %}
+    <button type="button" class="btn btn-md btn-default btn-ko" data-bs-dismiss="modal">Cancel</button>
+    <button type="button" class="btn btn-md btn-default">Continue</button>
+    {% endset %}
+    {% include "components/modal.njk" %}
+
+    {% set modalId = "modalCourseSelection" %}
+    {% set modalModifier = "pool-configuration" %}
+    {% set modalTitle = "Select a Pool Course" %}
+    {% set modalBody = "" %}
+    {% set modalFooter %}
+    <button type="button" class="btn btn-primary">Confirm</button>
+    {% endset %}
+    {% include "components/modal.njk" %}
+
+    <span class="section__edit">
+      <button class="section__edit-btn section__edit-btn--name" type="button"></button>
+    </span>
+    <div class="section__content collapse" id="location-information__content" data-bs-parent="#accordion" aria-expanded="true">
+      <div>
+        <div class="list-control">
+          <div class="list-control-search">
+            <div class="list-control-search__content form-group is-flex">
+              <div class="list-control-search__input list-control-search__input--club-name">
+                <label for="search-filter__club-name">Search by Location Name</label>
+                <div class="input-group">
+                  <span class="help-block help-block--ClubName">Please Enter a Location Name</span>
+                  <input type="text" class="form-control" name="search-filter__club-name" placeholder="Location Name">
+                </div>
+              </div>
+              <div class="list-control-search__input list-control-search__input--range">
+                <label for="search-filter__range">Select a Range</label>
+                <div class="input-group">
+                  <select id="search-filter__range" name="search-filter__range">
+                    <option value="1">1 Mile</option>
+                    <option value="5">5 Miles</option>
+                    <option value="10" selected>10 Miles</option>
+                    <option value="25">25 Miles</option>
+                    <option value="50">50 Miles</option>
+                    <option value="max">Nationwide</option>
+                  </select>
+                </div>
+              </div>
+              <div class="list-control-search__input list-control-search__input--location">
+                <label for="search-filter__location">Search by City, State or Zip</label>
+                <div class="input-group">
+                  <span class="help-block help-block--CityStateZip">Please enter a City, State or Zip</span>
+                  <input type="text" class="google-places-input form-control" placeholder="Select State, City or Zip" name="location" id="locationSearch" value="Myakka City, FL" autocomplete="off">
+                  <input type="hidden" class="google-places-input--zip" name="google-places-input--zip">
+                  <input type="hidden" class="google-places-input--lat" name="google-places-input--lat">
+                  <input type="hidden" class="google-places-input--lng" name="google-places-input--lng">
+                </div>
+              </div>
+              <div class="list-control-search__input list-control-search__input--button align-self-end">
+                <div class="input-group">
+                  <button type="button" class="btn btn-primary text-uppercase" id="listSearchSubmit">Submit</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="section-location--validation">
+              <span class="help-block help-block--selectLocation">Please select a location</span>
+              <span class="help-block help-block--expandSearch">Please expand your search parameters</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group entry location-info__add-new-location--container">
+        {% set modalId = "modalAddDuplicateOrganization" %}
+        {% set modalModifier = "duplicate-organization-modal" %}
+        {% set modalTitle = "Potential Duplicate Location" %}
+        {% set modalBody %}
+        <p>The address you selected is already in our database. Please select that location from the location search box above.</p>
+        {% endset %}
+        {% set modalFooter %}
+        <button type="button" class="btn btn-md btn-default" data-bs-dismiss="modal">Continue</button>
+        {% endset %}
+        {% include "components/modal.njk" %}
+
+        <div class="location-header location-header__add">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-xs-12">
+                <p>If your location is not listed, contact USMS to have it added: <a href="mailto:events@usmastersswimming.org" class="text-link">events@usmastersswimming.org</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="section__controls">
+        <button class="btn save-section" type="button" id="saveLocation">Save &amp; Continue</button>
+      </div>
+    </div>
+  </div>
+</div>

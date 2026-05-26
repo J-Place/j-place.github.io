@@ -1,0 +1,88 @@
+<form id="form-contact-info">
+  <div class="section section-contact-info hasNoData" id="contact-information">
+    <h3 class="section__header" data-bs-target="#contact-info__content" data-bs-toggle="collapse" aria-controls="contact-info__content">
+      <span class="section__number">3</span>Contact Information
+    </h3>
+    <span class="section__edit">
+      <button class="section__edit-btn section__edit-btn--name" type="button"></button>
+    </span>
+    <div class="section__content collapse" id="contact-info__content" data-bs-parent="#accordion" aria-expanded="true">
+      <div class="contact-group--event-director">
+        <div class="form-group form-group-default contact-info__event-director-type-form">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="input-group radio-group event-director">
+                <div class="input-group radio-group event-info-classification">
+                  <div class="input-group-header radio-group-header required">
+                    <label for="ContactTypeEventDirector">Event Director</label>
+                  </div>
+                  <span class="help-block help-block--ContactTypeEventDirector">Please select an event director</span>
+                  <div class="input-group radio-group">
+                    <label class="radio-label radio-label--inline" for="contactTypeEventDirectorCurrent">
+                      <div class="radio-container">
+                        <input type="radio" name="ContactTypeEventDirector" id="contactTypeEventDirectorCurrent" value="Yes">
+                        <span class="radio__placeholder"></span>
+                      </div>I'm the event director
+                    </label>
+                  </div>
+                  <div class="input-group radio-group">
+                    <label class="radio-label radio-label--inline" for="contactTypeEventDirectorOther">
+                      <div class="radio-container">
+                        <input type="radio" name="ContactTypeEventDirector" id="contactTypeEventDirectorOther" value="No">
+                        <span class="radio__placeholder"></span>
+                      </div>Someone else is the event director
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group contact-info__event-director-list">
+          <div class="row contact-information__event-director--list">
+            <div class="list list--event-director list--lookup people"></div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-group--host-type">
+        <div class="contact-list contact-info__host-type">
+          <div class="form-group form-group-default contact-info__host-type--container">
+            <div class="row">
+              <div class="col-xs-12 col-sm-8 col-md-6">
+                <div class="input-group contact-info__host-type required">
+                  <label for="selectHostType">Event Host
+                    <span class="icon-help" data-bs-toggle="tooltip" data-bs-placement="top" data-container="body" data-bs-title="The person or organization that is in charge of the event."></span>
+                  </label>
+                  <select name="SelectHostType" class="form-control" id="selectHostType">
+                    <option selected value="-1" disabled>Select a Host Type</option>
+                    <option value="LMSC">LMSC</option>
+                    <option value="Club">USMS Club</option>
+                    <option value="Event Director">Event Director/One Person</option>
+                    <option value="Other Organization">Other Organization</option>
+                  </select>
+                  <span class="help-block help-block--SelectHostType">Please select a host type</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% set modalId = "modalDuplicateOrganization" %}
+        {% set modalModifier = "" %}
+        {% set modalTitle = "Potential Duplicate Organization" %}
+        {% set modalBody %}
+        <p>The address you selected is already in our database. Please select that organization from the organization search box above.</p>
+        {% endset %}
+        {% set modalFooter %}
+        <button type="button" class="btn btn-md btn-default" data-bs-dismiss="modal" id="closeDuplicateOrganization">Continue</button>
+        {% endset %}
+        {% include "components/modal.njk" %}
+      </div>
+      <div class="row">
+        <div class="section__controls">
+          <button class="btn save-section" id="saveContactInfoSection" type="button">Save &amp; Continue</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

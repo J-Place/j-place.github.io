@@ -1,0 +1,148 @@
+<form id="form-event-info">
+  <div class="section section-event-info hasNoData" id="event-information">
+    <h3 class="section__header" data-bs-target="#event-info__content" data-bs-toggle="collapse" aria-controls="event-info__content">
+      <span class="section__number">2</span>Event Details
+    </h3>
+    <span class="section__edit">
+      <button class="section__edit-btn section__edit-btn--name" type="button"></button>
+    </span>
+    <div class="section__content collapse" id="event-info__content" data-bs-parent="#accordion" aria-expanded="true">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group date-select-group has-feedback event-info__start-date--dropdown-start-date-container required">
+            <label for="startDate">Start Date</label>
+            <div class="SingleDatePickerInput SingleDatePickerInput__withBorder">
+              <div class="DateInput">
+                <input type="text" class="DateInput_input" id="startDate" name="startDate" placeholder="MM/DD/YYYY" autocomplete="off">
+              </div>
+            </div>
+            <span class="help-block help-block--startDate">Please select a start date. For one day events, select the same date.</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group date-select-group has-feedback event-info__start-date--dropdown-end-date-container required">
+            <label for="endDate">End Date</label>
+            <div class="SingleDatePickerInput SingleDatePickerInput__withBorder SingleDatePickerInput__disabled">
+              <div class="DateInput DateInput__disabled">
+                <input type="text" class="DateInput_input DateInput_input__disabled" id="endDate" name="endDate" placeholder="MM/DD/YYYY" autocomplete="off" disabled>
+              </div>
+            </div>
+            <span class="help-block help-block--endDate">Please select an end date. For one day events, select the same date.</span>
+          </div>
+        </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-xs-12 col-sm-8">
+          <div class="input-group event-info-details required">
+            <label for="eventInfoDetails">Event Description
+              <span class="icon-help" data-bs-toggle="tooltip" data-bs-placement="top" data-container="body" data-bs-title="This will be displayed to the public and help sell someone on participating in the event. Make sure to include what makes your event unique and why someone would want to attend. Don't just list the date and course again. Your application will not be approved if you use the word Olympic and/or Paralympic."></span>
+            </label>
+            <textarea class="form-control" rows="3" cols="50" name="eventInfoDetails" id="eventInfoDetails" required></textarea>
+            <span class="help-block help-block--eventInfoDetails">Please enter the event details</span>
+          </div>
+        </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-xs-12 col-sm-8">
+          <div class="input-group event-info-image">
+            <label for="EventImage">Upload an image - to appear on the event detail page</label>
+            <span class="help-block help-block--EventImage">Invalid image type</span>
+            <div class="upload-thumbnail">
+              <button type="button" class="club-logo__remove-image" data-bs-toggle="tooltip" data-bs-title="Remove event photo">
+                <i class="fa fa-times"></i>
+              </button>
+            </div>
+            <div class="upload-box">
+              <input type="hidden" name="EventImageUrl" value="">
+              <input type="file" data-file-size="3584000" name="EventImage" id="EventImage" class="inputfile inputEventImage" accept="image/*">
+              <label for="EventImage">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path fill="#FFF" d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
+                <span class="file-stored">Choose File</span>
+              </label>
+            </div>
+            <div class="upload-instructions">
+              <span style="font-size: 10px;">Dimensions: 1200 x 480 pixels</span>
+              <span style="font-size: 10px;">Format: JPG, PNG, GIF</span>
+              <span style="font-size: 10px;">Max file size: 3.5mb</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row form-group event-info-third-party-verification">
+        <div class="col-xs-12 col-sm-8">
+          <div class="input-group radio-group">
+            <div class="input-group-header radio-group-header required">
+              <label for="thirdPartyVerification">Is your event using Club Assistant or RunSignUp for registration?
+                <span class="icon-help" data-bs-toggle="tooltip" data-bs-placement="top" data-container="body" data-bs-title="These companies can automatically verify USMS membership."></span>
+              </label>
+            </div>
+            <span class="help-block help-block--thirdPartyVerification">Please make a selection</span>
+            <label class="radio-label radio-label--inline" for="thirdPartyVerificationYes">
+              <div class="radio-container">
+                <input type="radio" name="thirdPartyVerification" id="thirdPartyVerificationYes" value="Yes">
+                <span class="radio__placeholder"></span>
+              </div>Yes
+            </label>
+            <label class="radio-label radio-label--inline" for="thirdPartyVerificationNo">
+              <div class="radio-container">
+                <input type="radio" name="thirdPartyVerification" id="thirdPartyVerificationNo" value="No">
+                <span class="radio__placeholder"></span>
+              </div>No
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row form-group event-info-list-on-calendar">
+        <div class="col-xs-12 col-sm-8 col-md-5">
+          <div class="input-group radio-group">
+            <div class="input-group-header radio-group-header required">
+              <label for="eventListOnCalendar">List on the public calendar of events?</label>
+            </div>
+            <span class="help-block help-block--eventListOnCalendar">Please make a selection</span>
+            <label class="radio-label radio-label--inline" for="eventListOnCalendarYes">
+              <div class="radio-container">
+                <input type="radio" name="eventListOnCalendar" id="eventListOnCalendarYes" value="Yes" checked>
+                <span class="radio__placeholder"></span>
+              </div>Yes
+            </label>
+            <label class="radio-label radio-label--inline" for="eventListOnCalendarNo">
+              <div class="radio-container">
+                <input type="radio" name="eventListOnCalendar" id="eventListOnCalendarNo" value="No">
+                <span class="radio__placeholder"></span>
+              </div>No
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row form-group event-info-is-championship">
+        <div class="col-xs-12 col-sm-8 col-md-5">
+          <div class="input-group radio-group">
+            <div class="input-group-header radio-group-header required">
+              <label for="championshipEvent">Is this event a championship?</label>
+            </div>
+            <span class="help-block help-block--championshipEvent">Please make a selection</span>
+            <label class="radio-label radio-label--inline" for="isChampionshipYes">
+              <div class="radio-container">
+                <input type="radio" name="championshipEvent" id="isChampionshipYes" value="Yes">
+                <span class="radio__placeholder"></span>
+              </div>Yes
+            </label>
+            <label class="radio-label radio-label--inline" for="isChampionshipNo">
+              <div class="radio-container">
+                <input type="radio" name="championshipEvent" id="isChampionshipNo" value="No" checked>
+                <span class="radio__placeholder"></span>
+              </div>No
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row form-group">
+        <div class="section__controls">
+          <button class="btn save-section" id="saveEventInfo" type="button">Save &amp; Continue</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

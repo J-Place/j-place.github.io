@@ -1,0 +1,141 @@
+---
+permalink: /events/event-central/event-dashboard.html
+title: Event Dashboard | U.S. Masters Swimming
+pageTitle: Event Dashboard
+breadcrumbs:
+  - url: "/home"
+    label: "Home"
+  - url: "/events"
+    label: "Events"
+  - url: "/events/event-central"
+    label: "Event Central"
+breadcrumbTitle: "Event Dashboard"
+---
+{% extends "layouts/base.njk" %}
+
+{% block pageCSS %}
+<link rel="stylesheet" href="https://www.usms.org/styles/sanctions.min.css">
+{% endblock %}
+
+{% block breadcrumb %}
+{% include "partials/Common/Breadcrumb.njk" %}
+{% endblock %}
+
+{% block pageHeader %}
+<div class="section section-full bg-gray p-mh-500">
+  <div class="usms-container p-tb-10">
+    <div class="row">
+      <div class="col-xs-12">
+        <header class="page-title">
+          <h1>Event Dashboard</h1>
+        </header>
+      </div>
+    </div>
+  </div>
+  <div class="usms-container form__header">
+    <div class="row is-flex">
+      <div class="col-xs-12 column-right">
+        <div class="event-logout">
+          <form action="/account/single-sign-out" class="form-signin login-form" method="post">
+            <input type="hidden" name="fhController" value="EventLoginController">
+            <input type="hidden" name="fhAction" value="EventLogout">
+            <div class="form-group">
+              <input type="submit" class="btn btn-ko" value="Logout">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="usms-container form__container p-tb-10">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="usms-container">
+
+          <div class="row event-list__container">
+            <div class="col-xs-12">
+              <p>Here are some helpful pages to get you ready for adding your own event:</p>
+              <ul class="event-sanction-help-links">
+                <li><a href="#">Pool Meet Information</a></li>
+                <li><a href="#">Pool Meet Announcement Information</a></li>
+                <li><a href="#">Open Water Event Information</a></li>
+              </ul>
+              <p>If you do not see your event on your dashboard, please reach out to <a href="mailto:events@usmastersswimming.org">events@usmastersswimming.org</a> to access editing capabilities.</p>
+            </div>
+            <div class="col-xs-12">
+              <div class="button-row__footer">
+                <a class="btn" href="/events/event-central/event-dashboard/event-add">+ Add a New Event</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="row event-list__container my-events-active">
+            <div class="col-xs-12">
+              <h2>Manage My Upcoming Events</h2>
+              <p>Below are all the events you are the event director or event admin for.</p>
+              <ul>
+                <li>"Pending Approval" means the event has been submitted and the sanctions chair has not viewed it yet.</li>
+                <li>"Edits Needed" means the sanctions chair has viewed the event and has made some requested edits for you to make before you event will be approved.</li>
+                <li>"View Event" means your event is approved and you can make edits if needed.</li>
+                <li>"Incomplete" means you have started adding information to your event but did not submit it for approval.</li>
+              </ul>
+
+              <div class="event-card entry-incomplete">
+                <div class="event-card__link">
+                  <a href="#" class="btn btn-md">Incomplete</a>
+                </div>
+                <h3 class="event-card__title">JP Test Pool 260430b</h3>
+              </div>
+
+              <div class="event-card entry-incomplete">
+                <div class="event-card__link">
+                  <a href="#" class="btn btn-md">Incomplete</a>
+                </div>
+                <h3 class="event-card__title">JP test Open Water 32226a</h3>
+              </div>
+
+              <div class="event-card entry-incomplete">
+                <div class="event-card__link">
+                  <a href="#" class="btn btn-md">Incomplete</a>
+                </div>
+                <h3 class="event-card__title">JP Test Event 32026a</h3>
+              </div>
+
+              <div class="event-card entry-incomplete">
+                <div class="event-card__link">
+                  <a href="#" class="btn btn-md">Incomplete</a>
+                </div>
+                <h3 class="event-card__title">JP Test 260430c</h3>
+                <p class="event-card__date">Jun 13-14, 2026</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row event-list__container my-events-past">
+          <div class="col-xs-12">
+            <h2>View My Recent Past or Canceled Events</h2>
+            <p>Showing past 2025 and 2026 events.</p>
+            <div class="event-card">
+              <div class="event-card__link">
+                <a class="btn btn-md btn-outline">View Event</a>
+              </div>
+              <h3 class="event-card__title">JP Test Calendar Listing</h3>
+              <p class="event-card__date">Apr 3-4, 2026</p>
+              <p class="event-card__id">Calendar Listing</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row event-list__container event-list__filters all-events-past">
+          <div class="col-xs-12">
+            <p>Search past events for sample meet announcements or information on <a href="/events/event-central/event-dashboard">Calendar of Events</a>.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
