@@ -1,0 +1,100 @@
+<div class="form-entry-info">
+  <div class="section section-entry-information hasNoData">
+    <h3 class="section__header" data-bs-target="#entry-information__content" data-bs-toggle="collapse" aria-controls="entry-information__content">
+      <span class="section__number">5</span>Entry Information
+    </h3>
+    <span class="section__edit">
+      <button class="section__edit-btn section__edit-btn--name" type="button"></button>
+    </span>
+    <div class="section__content collapse" id="entry-information__content" data-bs-parent="#accordion" aria-expanded="true">
+      <div class="entry-information--container">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="input-group input-group-url-lookup required">
+              <label for="entryInfoWebsiteUrl">Event Website URL</label>
+              <input type="url" class="form-control" name="entryInfoWebsiteUrl" id="entryInfoWebsiteUrl" maxlength="255" value="">
+              <span class="website-url-icon__check"><i class="fa fa-search btn"></i></span>
+              <span class="website-url-icon"><i class="fa"></i></span>
+              <span class="input-instruction">Copy and paste the full URL (including http:// or https:// from a browser). Once input, click the search button and it will indicate whether the site is valid (green check) or not valid (red x).</span>
+              <span class="help-block help-block--entryInfoWebsiteUrl">Please enter a valid website address</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="input-group input-group-url-lookup required">
+              <label for="entryInfoOnlineUrl">Online Entries URL</label>
+              <input type="url" class="form-control" name="entryInfoOnlineUrl" id="entryInfoOnlineUrl" maxlength="255" value="">
+              <span class="website-url-icon__check"><i class="fa fa-search btn"></i></span>
+              <span class="website-url-icon"><i class="fa"></i></span>
+              <span class="input-instruction">Copy and paste the full URL (including http:// or https:// from a browser). Once input, click the search button and it will indicate whether the site is valid (green check) or not valid (red x).</span>
+              <span class="help-block help-block--entryInfoOnlineUrl">Please enter a valid website address for online entries</span>
+            </div>
+          </div>
+        </div>
+        <div class="row date-entries-close">
+          <div class="col-xs-12 col-lg-4">
+            <div class="form-group date-select-group has-feedback entry-info__close-date--date-container required">
+              <label for="dateEntriesClose">Date Entries Close</label>
+              <div class="SingleDatePickerInput SingleDatePickerInput__withBorder SingleDatePickerInput__disabled">
+                <div class="DateInput DateInput__disabled">
+                  <input type="text" class="DateInput_input DateInput_input__disabled" id="dateEntriesClose" name="dateEntriesClose" placeholder="MM/DD/YYYY" autocomplete="off" disabled>
+                </div>
+              </div>
+              <span class="help-block help-block--dateEntriesClose">Please select a date entries close</span>
+            </div>
+          </div>
+        </div>
+        <div class="row number-of-entries-group">
+          <div class="col-xs-12">
+            <div class="input-group entry-info__attendance-previous required">
+              <label for="entryInfoAttendancePrevious">Number of Entries Last Year
+                <span class="icon-help" data-bs-toggle="tooltip" data-bs-placement="top" data-container="body" data-bs-title="If this is a new event enter zero '0'."></span>
+              </label>
+              <span class="help-block help-block--entryInfoAttendancePrevious">Please enter number of entries last year</span>
+              <input type="number" class="form-control" name="entryInfoAttendancePrevious" id="entryInfoAttendancePrevious" value="">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="input-group entry-info__attendance-expected required">
+              <label for="entryInfoAttendanceExpected">Number of Entries Expected</label>
+              <span class="help-block help-block--entryInfoAttendanceExpected">Please enter number of entries expected</span>
+              <input type="number" class="form-control" name="entryInfoAttendanceExpected" id="entryInfoAttendanceExpected" value="">
+            </div>
+          </div>
+        </div>
+        <div class="row comments-to-chair">
+          <div class="col-xs-12 col-sm-8">
+            <div class="input-group entry-info__comments">
+              <label for="entryInfoComments">Comments to the sanction chair</label>
+              <textarea class="form-control" name="entryInfoComments" id="entryInfoComments" maxlength="1000"></textarea>
+              <span class="help-block help-block--entryInfoComments">Note to Sanctions Chair cannot exceed 1000 characters.</span>
+            </div>
+          </div>
+        </div>
+        <div class="row paper-entry">
+          <div class="col-xs-12 col-sm-6">
+            <div class="input-group upload-file entry-info__paper-entry-form">
+              <label for="entryForm">Upload Paper Entry Form (PDF only)</label>
+              <span class="help-block help-block--entryForm">Please upload an entry form</span>
+              <div class="upload-box upload-box--file">
+                <input type="file" data-file-size="3584000" name="entryForm" id="entryForm" class="inputfile input-entryform" data-multiple-caption="{count} files selected" accept="application/pdf">
+                <label for="entryForm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path fill="#FFF" d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
+                  <span class="file-stored">Choose File</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="section__controls">
+          <button class="btn save-section" id="saveEntryInfo" type="button">Save &amp; Continue</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

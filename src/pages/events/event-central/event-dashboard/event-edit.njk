@@ -1,0 +1,71 @@
+---
+permalink: /events/event-central/event-dashboard/event-edit.html
+title: Event Edit | U.S. Masters Swimming
+pageTitle: Add a Sanctioned or Recognized Event
+breadcrumbs:
+  - url: "/home"
+    label: "Home"
+  - url: "/events"
+    label: "Events"
+  - url: "/events/event-central"
+    label: "Event Central"
+  - url: "/events/event-central/event-dashboard.html"
+    label: "Event Dashboard"
+breadcrumbTitle: "Event Edit"
+---
+{% extends "layouts/base.njk" %}
+
+{% block pageCSS %}
+<link rel="stylesheet" href="https://www.usms.org/styles/club2.min.css">
+<link rel="stylesheet" href="https://www.usms.org/styles/sanctions.min.css">
+{% endblock %}
+
+{% block pageJS %}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=GOOGLE_MAPS_API_KEY&libraries=places"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.12/jquery.mask.min.js"></script>
+<script src="https://www.usms.org/scripts/sanctions.min.js"></script>
+{% endblock %}
+
+{% block breadcrumb %}
+{% include "partials/Common/Breadcrumb.njk" %}
+{% endblock %}
+
+{% block pageHeader %}
+<div class="section section-full bg-gray p-mh-500">
+  <div class="usms-container p-tb-10">
+    <div class="row">
+      <div class="col-xs-12">
+        <header class="page-title">
+          <h1>Add a Sanctioned or Recognized Event</h1>
+        </header>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+{% include "partials/Event/EventEdit/GlobalModals.njk" %}
+
+<div class="usms-container form__container p-tb-10 club-edit__container">
+  <div class="row">
+    <div class="col-12">
+      <div class="club-edit event-edit">
+        <div class="accordion-group" id="accordion">
+          {% include "partials/Event/EventEdit/SectionEventName.njk" %}
+          {% include "partials/Event/EventEdit/SectionEventDetails.njk" %}
+          {% include "partials/Event/EventEdit/SectionContactInfo.njk" %}
+          {% include "partials/Event/EventEdit/SectionLocationInfo.njk" %}
+          {% include "partials/Event/EventEdit/SectionEntryInfo.njk" %}
+          <form id="form-meet-announcement"></form>
+          {% include "partials/Event/EventEdit/SectionAcceptSubmit.njk" %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}

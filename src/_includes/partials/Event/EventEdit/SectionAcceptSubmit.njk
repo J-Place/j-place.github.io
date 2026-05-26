@@ -1,0 +1,66 @@
+<div>
+  {% set modalId = "modalSaveEdits" %}
+  {% set modalModifier = "" %}
+  {% set modalTitle = "" %}
+  {% set modalBody %}
+  <p>Thank you for editing your event information. Your event has been sent for approval. You should hear back in no more than 14 days.</p>
+  {% endset %}
+  {% set modalFooter %}
+  <button type="button" class="btn btn-md btn-default" id="confirmSaveEditsModal">Okay</button>
+  {% endset %}
+  {% include "components/modal.njk" %}
+
+  {% set modalId = "modalResubmitted" %}
+  {% set modalBody %}
+  <p>Thank you for editing your event information. Your event has been sent for approval. You should hear back in no more than 14 days.</p>
+  {% endset %}
+  {% set modalFooter %}
+  <button type="button" class="btn btn-md btn-default" id="confirmResubmitModal">Okay</button>
+  {% endset %}
+  {% include "components/modal.njk" %}
+
+  <form id="form-accept-submit">
+    <div class="section section-accept-submit" id="accept-submit">
+      <h3 class="section__header" data-bs-target="#accept-submit__content" data-bs-toggle="collapse" aria-controls="accept-submit__content">
+        Accept Terms and Submit Request
+      </h3>
+      <div class="section__content in" id="accept-submit__content" data-parent="#accordion">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="card liability submit">
+              <div class="form-group agree-terms">
+                <div class="input-group checkbox-group payment-agreement">
+                  <label class="checkbox-label" for="agreeTerms">
+                    <div class="checkbox-container">
+                      <input type="checkbox" name="agreeTerms" id="agreeTerms">
+                      <span class="checkbox__placeholder"></span>
+                    </div>
+                    <span>I agree that all information I'm providing is factual.</span>
+                  </label>
+                  <span class="help-block help-block--agreeTerms">Please agree to the terms</span>
+                </div>
+              </div>
+              <div class="form-group agree-interim-policy">
+                <div class="input-group checkbox-group interim-policy">
+                  <label class="checkbox-label" for="agreeInterimPolicy">
+                    <div class="checkbox-container">
+                      <input type="checkbox" name="agreeInterimPolicy" id="agreeInterimPolicy">
+                      <span class="checkbox__placeholder"></span>
+                    </div>
+                    <span>I acknowledge that the <a href="https://www.usms.org/volunteer-central/policy-and-governance/usms-policies/interim-eligibility-policy">Interim USMS Policy</a> on Participation in the Men's/Open and Women's Competition Category and Eligibility for Official Recognition Programs allows members to participate in the competition category that reflects the sex with which they identify; however, swimmers will not be included in Recognition Programs in the female competition category unless they are swimming in the competition category that aligns with their sex assigned at birth. Anyone participating in the male competition category is eligible for recognition, subject to all other USMS rules and regulations.</span>
+                  </label>
+                  <span class="help-block help-block--agreeInterimPolicy">Please agree to the terms</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="section__controls">
+            <button class="btn save-section" id="submitEdit" type="button">Save &amp; Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

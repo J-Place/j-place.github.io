@@ -1,0 +1,27 @@
+{% set modalId = "modalContentFreeze" %}
+{% set modalTitle = "The Event Cannot Be Edited" %}
+{% set modalBody %}
+<p>The event is 3 days before the start and cannot be edited any longer. You can view your event details on the Calendar of Events or in your event's confirmation email.</p>
+{% endset %}
+{% set modalFooter %}
+<button type="button" class="btn">Event Dashboard</button>
+{% endset %}
+{% include "components/modal.njk" %}
+
+{% set modalId = "modalError" %}
+{% set modalTitle = "There was an error" %}
+{% set modalFooter = "" %}
+{% set modalBody %}
+<p>We are sorry but there was an error.</p>
+{% endset %}
+{% include "components/modal.njk" %}
+
+{% set modalId = "modalUnsavedChanges" %}
+{% set modalTitle = "Unsaved Changes" %}
+{% set modalBody %}
+<p>Please save your changes in Event Details before navigating to another section.</p>
+{% endset %}
+{% set modalFooter %}
+<button type="button" class="btn btn-primary">Go Back</button>
+{% endset %}
+{% include "components/modal.njk" %}
