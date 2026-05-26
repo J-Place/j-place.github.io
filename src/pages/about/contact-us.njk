@@ -1,0 +1,146 @@
+---
+permalink: /about/contact-us.html
+title: Contact U.S. Masters Swimming | U.S. Masters Swimming
+pageTitle: Contact U.S. Masters Swimming
+pageSubtitle: Have questions? We have answers!
+breadcrumbs:
+  - url: "/home"
+    label: "Home"
+breadcrumbTitle: "Contact U.S. Masters Swimming"
+---
+{% extends "layouts/base.njk" %}
+
+{% block pageCSS %}
+<link rel="stylesheet" href="/css/Common/sc-form.css">
+{% endblock %}
+
+{% block breadcrumb %}
+{% include "partials/Common/Breadcrumb.njk" %}
+{% endblock %}
+
+{% block pageHeader %}
+{% include "partials/Event/EventHeader.njk" %}
+{% endblock %}
+
+{% block content %}
+<div class="section section-full p-tb-10">
+  <div class="usms-container contact-form__container p-tb-10">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="form-container">
+          <form action="#" method="post" id="contact-form">
+            <div class="form__container">
+              <div class="sc-form__container">
+                <div class="row">
+                  <div class="sc-form__header">
+                    <p class="sc-form__header--summary">There&#39;s a ton of great stuff here, but if you didn&#39;t find what you&#39;re looking for, or you did but have additional questions, we&#39;re here to help!</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <label for="firstName" class="">First Name</label>
+                    <input id="firstName" name="firstName" class="" type="text" value="" maxlength="255">
+                    <span class="field-validation-valid"></span>
+                  </div>
+                  <div class="col-sm-6">
+                    <label for="lastName" class="">Last Name</label>
+                    <input id="lastName" name="lastName" class="" type="text" value="" maxlength="255">
+                    <span class="field-validation-valid"></span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <label for="email" class="">Email Address</label>
+                      <input id="email" name="email" class="" type="email" value="" maxlength="255">
+                      <span class="field-validation-valid"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-5">
+                    <div class="sc-form__select-group">
+                      <label for="subject" class="">Subject</label>
+                      <select id="subject" name="subject" class="">
+                        <option label=" "></option>
+                        <option value="Membership">Membership</option>
+                        <option value="Coaching">Coaching</option>
+                        <option value="Volunteering">Volunteering</option>
+                        <option value="Competing">Competing</option>
+                        <option value="Content">Content</option>
+                      </select>
+                      <span class="field-validation-valid"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-8">
+                    <label for="message" class="">Message</label>
+                    <textarea id="message" name="message" class="" rows="5" maxlength="1042"></textarea>
+                    <span class="field-validation-valid"></span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="">
+                    <div class="sc-captcha">
+                      <div class="sc-recaptcha-anchor">
+                        <div class="sc-captcha__widget" tabindex="0" aria-label="I'm not a robot">
+                          <span class="goog-inline-block recaptcha-checkbox" role="checkbox" aria-checked="false">
+                            <div class="recaptcha-checkbox-border" role="presentation"></div>
+                            <div class="recaptcha-checkbox-spinner-gif"></div>
+                            <div class="recaptcha-checkbox-spinner" role="presentation">
+                              <div class="recaptcha-checkbox-spinner-overlay"></div>
+                            </div>
+                            <div class="recaptcha-checkbox-checkmark" role="presentation"></div>
+                          </span>
+                        </div>
+                        <div class="sc-recaptcha-content">
+                          <span class="sc-recaptcha-label">I'm not a robot</span>
+                        </div>
+                        <div class="sc-recaptcha-logo">
+                          <div class="sc-recaptcha-logo-icon"></div>
+                          <span class="sc-recaptcha-logo-name">reCAPTCHA</span>
+                          <div class="sc-recaptcha-logo-links">
+                            <a href="#" tabindex="-1" onclick="return false">Privacy</a><span aria-hidden="true"> - </span><a href="#" tabindex="-1" onclick="return false">Terms</a>
+                          </div>
+                        </div>
+                      </div>
+                      <input id="captchaVerified" name="captchaVerified" type="hidden" class="fxt-captcha" data-val="true" data-val-required="Please confirm you are not a robot." aria-required="true" value="">
+                      <span class="field-validation-valid" data-valmsg-for="captchaVerified" data-valmsg-replace="true"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="sc-form__footer">
+                    <input value="Submit" type="submit" class="btn btn-primary btn-large">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="usms-container p-tb-10">
+  <div class="row">
+    <div class="col-xs-12 col-md-6">
+      <div class="html-container">
+        <h3>Address:</h3>
+        <p>U.S. Masters Swimming<br>
+        8388 South Tamiami Trail, Suite 221<br>
+        Sarasota, FL 34238</p>
+      </div>
+    </div>
+    <div class="col-xs-12 col-md-6">
+      <div class="html-container">
+        <h3>Contact Us:</h3>
+        <p>Main: (941) 256-8767<br>
+        Email: <a href="mailto:membership@usmastersswimming.org">membership@usmastersswimming.org</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
