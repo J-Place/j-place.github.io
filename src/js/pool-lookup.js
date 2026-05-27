@@ -1,3 +1,5 @@
+window.initPoolPlaces = function () {};
+
 (function () {
   'use strict';
 
@@ -90,18 +92,11 @@
         var bulkheadTxt = c.bulkhead ? 'Bulkhead' : 'No Bulkhead';
         var certDate = (c.certifiedDate || '').replace(/(\d{2})\/\d{2}(\d{2})$/, '$1/$2');
         var certifiedTxt = c.certified ? 'Certified ' + certDate : 'Not Certified';
+        var detailParts = [escapeHtml(c.length || ''), escapeHtml(lanesTxt), escapeHtml(bulkheadTxt)].filter(Boolean);
         return '<li class="pool-course-item">'
-          + '<span class="pool-course-item__name">'         + escapeHtml(poolName)     + '</span>'
-          + '<br>'
-          + '<span class="pool-course-item__length">'         + escapeHtml(c.length||'') + '</span>'
-          + ', '
-          + '<span class="pool-course-item__lanes">'          + escapeHtml(lanesTxt)     + '</span>'
-          + ', '
-          + '<span class="pool-course-item__bulkhead">'       + escapeHtml(bulkheadTxt)  + '</span>'
-          + '<br>'
-          + '<span class="pool-course-item__certified-date">' + escapeHtml(certifiedTxt) + '</span>'
-          + ' - '
-          + '<span class="pool-course-item__touchpads">'      + escapeHtml(touchpadTxt)  + '</span>'
+          + '<p class="pool-course-item__name">'          + escapeHtml(poolName)                              + '</p>'
+          + '<p class="pool-course-item__details">'       + detailParts.join(', ')                            + '</p>'
+          + '<p class="pool-course-item__certified-date">' + escapeHtml(certifiedTxt) + ' - ' + escapeHtml(touchpadTxt) + '</p>'
           + '</li>';
       }).join('');
       coursesEl.innerHTML = '<ul class="pool-course-list">' + items + '</ul>';
@@ -170,7 +165,7 @@
 
   // ── Google Places Autocomplete ─────────────────────────────────────────────
 
-  window.initPoolPlaces = function () {
+  function initPlaces() {
     if (!locationInput || !window.google) return;
     var ac = new google.maps.places.Autocomplete(locationInput, {
       types: ['(regions)'],
@@ -185,9 +180,11 @@
         userLat = null;
         userLng = null;
       }
-      applyFilters();
+      withLoader(applyFilters);
     });
-  };
+  }
+  window.initPoolPlaces = initPlaces;
+  if (window.google && window.google.maps) initPlaces();
 
   // ── Location text fallback (no Places selection) ───────────────────────────
 
@@ -295,16 +292,28 @@
 
   // ── Event listeners ────────────────────────────────────────────────────────
 
-  submitBtn.addEventListener('click', function () { withLoader(applyFilters); });
-
-  [nameInput, locationInput].forEach(function (input) {
-    if (!input) return;
-    input.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') withLoader(applyFilters);
-    });
+  submitBtn.addEventListener('click', function () {
+    geocodeAddress(locationInput ? locationInput.value : '');
   });
 
+  if (nameInput) {
+    nameInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') withLoader(applyFilters);
+    });
+  }
+
   if (locationInput) {
+    locationInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') geocodeAddress(locationInput.value);
+    });
+  }
+
+  if (locationInput) {
+    locationInput.addEventListener('focus', function () {
+      this.value = '';
+      userLat = null;
+      userLng = null;
+    });
     locationInput.addEventListener('input', function () {
       userLat = null;
       userLng = null;
@@ -320,7 +329,16 @@
   // ── Init ───────────────────────────────────────────────────────────────────
 
   function geocodeAddress(address) {
-    if (!address) { applyFilters(); return; }
+    if (!address) { withLoader(applyFilters); return; }
+    if (loaderEl) loaderEl.style.display = 'flex';
+    var start = Date.now();
+    function done() {
+      var wait = Math.max(0, 1000 - (Date.now() - start));
+      setTimeout(function () {
+        applyFilters();
+        if (loaderEl) loaderEl.style.display = 'none';
+      }, wait);
+    }
     fetch(
       'https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=us&q=' + encodeURIComponent(address),
       { headers: { 'Accept-Language': 'en-US,en' } }
@@ -331,9 +349,9 @@
         userLat = parseFloat(results[0].lat);
         userLng = parseFloat(results[0].lon);
       }
-      applyFilters();
+      done();
     })
-    .catch(function () { applyFilters(); });
+    .catch(function () { done(); });
   }
 
   if (locationInput) locationInput.value = 'Sarasota, FL';
