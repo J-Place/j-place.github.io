@@ -1,8 +1,6 @@
 <div class="form-location-info">
   <div class="section section-location-information hasNoData">
-    <h3 class="section__header" data-bs-target="#location-information__content" data-bs-toggle="collapse" aria-controls="location-information__content">
-      <span class="section__number">4</span>Location Information
-    </h3>
+    <h3 class="section__header" data-bs-target="#location-information__content" data-bs-toggle="collapse" aria-controls="location-information__content"><span class="section__number">4</span>Location Information</h3>
 
     {% set modalId = "modalRemoveLocation" %}
     {% set modalModifier = "" %}
@@ -12,7 +10,7 @@
     {% endset %}
     {% set modalFooter %}
     <button type="button" class="btn btn-md btn-default btn-ko" data-bs-dismiss="modal">Cancel</button>
-    <button type="button" class="btn btn-md btn-default">Continue</button>
+    <button type="button" class="btn btn-md btn-default" id="confirmRemoveLocation">Continue</button>
     {% endset %}
     {% include "components/modal.njk" %}
 
@@ -29,10 +27,11 @@
 
     {% set modalId = "modalCourseSelection" %}
     {% set modalModifier = "pool-configuration" %}
+    {% set modalBodyClass = "modal-body--sm" %}
     {% set modalTitle = "Select a Pool Course" %}
-    {% set modalBody = "" %}
+    {% set modalBody %}<span></span>{% endset %}
     {% set modalFooter %}
-    <button type="button" class="btn btn-primary">Confirm</button>
+    <button type="button" class="btn btn-md btn-primary" id="confirmLocationSelection">Confirm</button>
     {% endset %}
     {% include "components/modal.njk" %}
 
@@ -40,7 +39,9 @@
       <button class="section__edit-btn section__edit-btn--name" type="button"></button>
     </span>
     <div class="section__content collapse" id="location-information__content" data-bs-parent="#accordion" aria-expanded="true">
-      <div>
+
+      {# Search form — hidden once a location is saved #}
+      <div class="location-search-panel">
         <div class="list-control">
           <div class="list-control-search">
             <div class="list-control-search__content form-group is-flex">
@@ -68,7 +69,7 @@
                 <label for="search-filter__location">Search by City, State or Zip</label>
                 <div class="input-group">
                   <span class="help-block help-block--CityStateZip">Please enter a City, State or Zip</span>
-                  <input type="text" class="google-places-input form-control" placeholder="Select State, City or Zip" name="location" id="locationSearch" value="Myakka City, FL" autocomplete="off">
+                  <input type="text" class="google-places-input form-control" placeholder="Select city &amp; state or zip" name="location" id="locationSearch" autocomplete="off">
                   <input type="hidden" class="google-places-input--zip" name="google-places-input--zip">
                   <input type="hidden" class="google-places-input--lat" name="google-places-input--lat">
                   <input type="hidden" class="google-places-input--lng" name="google-places-input--lng">
@@ -81,7 +82,48 @@
               </div>
             </div>
           </div>
+          <div class="list-control-filter">
+            <div class="list-control-filter__content">
+              <div class="form-group is-flex">
+                <div class="check-list check-list--pool-length">
+                  <div class="input-group check-list-item">
+                    <label for="loc-length25y" class="checkbox-label">
+                      <div class="checkbox-container">
+                        <input type="checkbox" id="loc-length25y" name="check-list--searchCourseTypes" value="25y">
+                        <span class="checkbox__placeholder"></span>
+                      </div>Short Course Yards
+                    </label>
+                  </div>
+                  <div class="input-group check-list-item">
+                    <label for="loc-length25m" class="checkbox-label">
+                      <div class="checkbox-container">
+                        <input type="checkbox" id="loc-length25m" name="check-list--searchCourseTypes" value="25m">
+                        <span class="checkbox__placeholder"></span>
+                      </div>Short Course Meters
+                    </label>
+                  </div>
+                  <div class="input-group check-list-item">
+                    <label for="loc-length50m" class="checkbox-label">
+                      <div class="checkbox-container">
+                        <input type="checkbox" id="loc-length50m" name="check-list--searchCourseTypes" value="50m">
+                        <span class="checkbox__placeholder"></span>
+                      </div>Long Course Meters
+                    </label>
+                  </div>
+                  <div class="input-group check-list-item">
+                    <label for="loc-lengthother" class="checkbox-label">
+                      <div class="checkbox-container">
+                        <input type="checkbox" id="loc-lengthother" name="check-list--searchCourseTypes" value="other">
+                        <span class="checkbox__placeholder"></span>
+                      </div>Other
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+
         <div class="row">
           <div class="col-12">
             <div class="section-location--validation">
@@ -90,29 +132,109 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="form-group entry location-info__add-new-location--container">
-        {% set modalId = "modalAddDuplicateOrganization" %}
-        {% set modalModifier = "duplicate-organization-modal" %}
-        {% set modalTitle = "Potential Duplicate Location" %}
-        {% set modalBody %}
-        <p>The address you selected is already in our database. Please select that location from the location search box above.</p>
-        {% endset %}
-        {% set modalFooter %}
-        <button type="button" class="btn btn-md btn-default" data-bs-dismiss="modal">Continue</button>
-        {% endset %}
-        {% include "components/modal.njk" %}
 
-        <div class="location-header location-header__add">
-          <div class="form-group">
-            <div class="row">
-              <div class="col-xs-12">
-                <p>If your location is not listed, contact USMS to have it added: <a href="mailto:events@usmastersswimming.org" class="text-link">events@usmastersswimming.org</a></p>
+        <script type="application/json" id="location-search-data">{{ locations.data.locations | poolLocationsJson | safe }}</script>
+        <div class="list list--lookup locations">
+          <div class="list-control-search__header">
+            <div class="list-control-search--summary">
+              Showing <strong class="summary-count">0</strong> location(s) within <strong class="summary-range">10 Miles</strong> of <strong class="summary-location">Sarasota, FL</strong>
+            </div>
+          </div>
+          <div class="list__container">
+            <div class="row is-flex">
+              <div class="col-xs-12 location-column"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group entry location-info__add-new-location--container">
+          <div class="location-header location-header__add">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-xs-12">
+                  <p>If your location is not listed, contact USMS to have it added: <a href="mailto:events@usmastersswimming.org" class="text-link">events@usmastersswimming.org</a></p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      {# Saved location display — shown after a location is confirmed #}
+      <div class="location-saved-panel" style="display:none">
+        <div class="row locations">
+          <div class="location-header location-header__edit">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <button class="btn btn-small btn-outline" id="editLocationBtn">Edit Location</button>
+                <button class="btn btn-small btn-success" id="doneEditLocationBtn" style="display:none">Done Editing</button>
+                <button class="btn btn-small btn-outline" id="cancelAddLocationBtn" style="display:none">Cancel</button>
+              </div>
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <div class="list locations">
+                    <div class="list__container">
+                      <div class="row is-flex">
+                        <div class="col-xs-12" id="savedLocationItems"></div>
+                        <div class="col-xs-12">
+                          <p style="font-size: 1.7rem; width: 100%;">If you would like to make edits to this location, pool or course, contact USMS: <a href="mailto:events@usmastersswimming.org">events@usmastersswimming.org.</a></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {# Course Description — always visible; content replaced by JS after course is confirmed #}
+      <div class="row course-description">
+        <div class="col-xs-12">
+          <div class="input-group input-footnote">
+            <label>Course Description</label>
+          </div>
+          <div class="list list--result">
+            <div class="list__container">
+              <div class="row is-flex">
+                <div class="col-xs-12" id="courseDescriptionContent">
+                  <div class="list-item list-item-default">
+                    <p class="course-description-link">Once a pool configuration is selected, a course description will be shown. After selection, if you feel this description is not accurate, please contact <a href="mailto:events@usmastersswimming.org">events@usmastersswimming.org</a>.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row form-group timing-system-group">
+        <div class="col-xs-12 col-sm-8 col-md-5">
+          <div class="input-group event-info-lmsc required">
+            <span class="help-block help-block--selectTimingSystem">Please select a timing system.</span>
+            <label for="selectTimingSystem">Timing System</label>
+            <div class="input-group">
+              <select name="selectTimingSystem" id="selectTimingSystem">
+                <option value="-1" disabled selected>Select Timing System</option>
+                <option value="Automatic_with_semiautomatic_backup">Automatic with semi-automatic backup</option>
+                <option value="Semiautomatic_with_manual_backup_of_at_least2valid_watches">Semi-automatic with manual backup of at least 2 valid watches</option>
+                <option value="Semiautomatic_with_manual_backup_of1valid_watch">Semi-automatic with manual backup of 1 valid watch</option>
+                <option value="Manual_with_at_least2valid_watches">Manual with at least 2 valid watches</option>
+                <option value="Manual_with1valid_watch">Manual with 1 valid watch</option>
+                <option value="Automatic_with_manual_backup_of_at_least2valid_watches_only">Automatic with manual backup of at least 2 valid watches only</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12">
+          <div class="timing-system-note">
+            <div class="input-group-header">Timing System Statement</div>
+            <p class="timing-system-text">Please review 103.18.5—103.18.9 in the USMS Rule Book for more information on these statements. They are based on your timing system set up and usage.</p>
+          </div>
+        </div>
+      </div>
+
       <div class="section__controls">
         <button class="btn save-section" type="button" id="saveLocation">Save &amp; Continue</button>
       </div>
