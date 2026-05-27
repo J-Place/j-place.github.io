@@ -10,7 +10,6 @@
                      unset → 500px  (our default, via --bs-modal-width fallback in modal.css)
                      "lg"  → 800px  (≥992px, per modal.css)
                      "xl"  → 800px  (≥992px, per modal.css — same rule as lg)
-    modalCentered  — optional: true to vertically center the dialog
     modalTitleId   — optional: id on the <h5> (useful for aria-labelledby)
     modalTitle     — optional: title text; leave unset for JS-populated titles
 
@@ -23,7 +22,6 @@
   Example:
     {% set modalId = "myModal" %}
     {% set modalSize = "lg" %}
-    {% set modalCentered = true %}
     {% set modalBody %}
       <p>Some content</p>
     {% endset %}
@@ -39,7 +37,7 @@
      role="dialog"
      aria-hidden="true"
      style="display:none;">
-  <div class="modal-dialog{{ (' modal-dialog-centered') if modalCentered }}{{ (' modal-' + modalSize) if modalSize }}">
+  <div class="modal-dialog modal-dialog-centered{{ (' modal-' + modalSize) if modalSize }}">
     <div class="modal-content">
       <div class="modal-header{{ ' modal-header--titled' if modalTitle }}">
         <h5 class="modal-title"{% if modalTitleId %} id="{{ modalTitleId }}"{% endif %}>{{ modalTitle if modalTitle }}</h5>
