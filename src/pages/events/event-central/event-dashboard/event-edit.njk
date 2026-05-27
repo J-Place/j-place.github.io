@@ -18,6 +18,8 @@ breadcrumbTitle: "Event Edit"
 {% block pageCSS %}
 <link rel="stylesheet" href="https://www.usms.org/styles/club2.min.css">
 <link rel="stylesheet" href="https://www.usms.org/styles/sanctions.min.css">
+<link rel="stylesheet" href="/css/Event/location-list-results.css">
+<link rel="stylesheet" href="/css/Common/loading.css">
 {% endblock %}
 
 {% block pageJS %}
@@ -25,9 +27,10 @@ breadcrumbTitle: "Event Edit"
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-xsYw_7sGTv8wWeK-WrAhQb4efLuZ7Bc&libraries=places"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.12/jquery.mask.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI0dfTymf_5IhRI-YuOUKpTf3mEJlDmi8&libraries=places&callback=initEventPlaces" async defer></script>
 <script src="https://www.usms.org/scripts/sanctions.min.js"></script>
+<script src="/js/event-edit-locations.js" defer></script>
 {% endblock %}
 
 {% block breadcrumb %}
@@ -48,6 +51,7 @@ breadcrumbTitle: "Event Edit"
 {% endblock %}
 
 {% block content %}
+{% include "partials/Common/loading.njk" %}
 {% include "partials/Event/EventEdit/GlobalModals.njk" %}
 
 <div class="usms-container form__container p-tb-10 club-edit__container">
