@@ -131,8 +131,10 @@ window.initEventPlaces = function () {};
         + '</label>';
     }).join('');
 
+    var courseCount = courses.length;
     modalBody.innerHTML = '<p>Now that you have selected a location, please select the course of the pool that the event will take place. The courses that have been certified in our database are highlighted. If a course is not certified, the meet\'s times will not count. <a href="https://www.usms.org/volunteer-central/guide-to-local-operations/event-management/top-10-and-records-and-tabulation/pool-length-form-and-measurement-procedures">Learn more here.</a></p>'
       + '<p class="location-name">' + escapeHtml(data.name) + '</p>'
+      + '<p class="location-course-count" id="locationDetailCount">Showing ' + courseCount + ' course' + (courseCount !== 1 ? 's' : '') + '</p>'
       + '<div class="input-group chose-pool-configuration">'
       + '<span class="help-block help-block--chosePoolConfiguration">Please select a configuration</span>'
       + radiosHtml
