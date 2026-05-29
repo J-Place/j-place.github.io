@@ -230,8 +230,33 @@ After a successful build, update `COMPONENTS.md`:
 
 ---
 
-## Step 11 — Report
+## Step 11 — Structural verification
+
+After the build, verify structural fidelity against the production page.
+
+Re-use the production HTML already fetched in Step 4 (or re-fetch if needed). Extract every CSS class referenced in the production page's `<main>` content area:
+
+```bash
+grep -oP '(?<=class=")[^"]+' <(curl -sL "$URL") | tr ' ' '\n' | sort -u
+```
+
+Then check which of those classes are absent from the built `.njk` file(s):
+
+```bash
+comm -23 <(production_classes) <(grep -oP '(?<=class=")[^"]+' built_file.njk | tr ' ' '\n' | sort -u)
+```
+
+For each missing class:
+- **Structural** (layout, component, or BEM block/element class — e.g. `club-location__facility--length`): note as a gap and fix before proceeding to Step 12
+- **Dynamic / noise** (React hydration, GTM, Sitecore, ad slots, `data-react*`): note as expected-absent and skip
+
+Fix any structural gaps, then proceed.
+
+---
+
+## Step 12 — Report
 
 Tell the user:
 - Files created or modified, with paths
 - Which COMPONENTS.md entries were updated and their new status
+- Result of Step 11 structural check: classes fixed, classes expected-absent
