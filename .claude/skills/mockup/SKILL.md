@@ -1,161 +1,262 @@
 ---
 name: mockup
-description: Build a mockup of a production USMS page. Accepts a live URL or pasted HTML. Fetches source, strips production noise, diffs against any existing local version, asks for the target file path, then builds.
-argument-hint: [https://www.usms.org/... | paste markup below]
-allowed-tools: WebFetch Bash(find *) Bash(grep *) Read Write Edit
+description: Build a mockup of a production USMS page. Resolves structure from production JSX, CSS from TDS item files, and labels from a live URL fetch or paste. Always starts in plan mode.
+argument-hint: [https://www.usms.org/... | component or page name]
+allowed-tools: WebFetch Bash(find *) Bash(grep *) Bash(curl *) Read Write Edit EnterPlanMode ExitPlanMode
 ---
 
 You are running the production page mockup workflow for the USMS mockup project.
 
-## What this skill does
-
-Walks through the full "Building Production Page Mockups" process defined in CLAUDE.md:
-1. Obtains the production HTML (fetch or paste)
-2. Determines the target file path in the repo
-3. Strips production-only noise
-4. Diffs against any existing local version
-5. Reports the plan and waits for confirmation before writing anything
+**Call `EnterPlanMode` immediately before doing anything else.**
 
 ---
 
-## Step 1 — Ask for the target file path
+## Overview
 
-Ask the user:
-> "What file path should I create in the repo? (e.g. `src/pages/swimmer-magazine/index.njk`)"
+This skill builds faithful static Nunjucks mockups by reading production source files directly rather than relying on scraped HTML. The three inputs are:
 
-Wait for the answer. Store it as `$TARGET_PATH`.
+| What | Source |
+|---|---|
+| HTML structure, class names, IDs, sub-components | Production JSX `render()` method |
+| CSS files and load order | TDS rendering `.item` files + `Usms.cshtml` base stack |
+| Label text, page title, breadcrumbs | Live URL fetch (curl) or user-supplied JSON blob |
 
----
-
-## Step 2 — Obtain the production HTML
-
-Check `$ARGUMENTS`:
-
-- **If `$ARGUMENTS` starts with `http`** — fetch it automatically:
-  ```
-  WebFetch(url: $ARGUMENTS)
-  ```
-  Confirm to the user: "Fetched `<url>` — `<N>` bytes."
-  Split the fetched HTML internally: everything up to and including `</head>` is `$SOURCE_HEAD`; the unique body content (excluding `<body>`, meganav, and footer) is `$SOURCE_BODY`.
-
-- **If `$ARGUMENTS` is empty or is not a URL** — use a two-paste sequence:
-
-  1. Ask the user:
-     > "Paste the production document head (from `<!DOCTYPE html>` to `</head>`) and send."
-     Wait for the paste. Store it as `$SOURCE_HEAD`.
-
-  2. Then ask:
-     > "Now paste the relevant body content — the unique page markup only. Skip `<body>`, the meganav, and the footer."
-     Wait for the paste. Store it as `$SOURCE_BODY`.
+A live page fetch or paste is only required for label strings and content — never for structure or CSS.
 
 ---
 
-## Step 3 — Check production CSS load order
+## Step 1 — COMPONENTS.md lookup
 
-Extract all `<link rel="stylesheet">` tags from `$SOURCE_HEAD` in DOM order.
+Read `COMPONENTS.md` from the project root.
 
-- If `$ARGUMENTS` was a URL, prefer fetching raw HTML via `curl -sL <url> | grep -i '<link.*stylesheet'` for an accurate head section (WebFetch strips `<head>`).
-- If source was pasted, parse `<link>` tags from `$SOURCE_HEAD`.
+Identify the **page-level view** entry and all **component entries** involved in this page. For each, note:
+- Current status (Covered / Partial / Not Started / Out of Scope)
+- Production JSX path (e.g. `production/src/App/views/Sanctions/SanctionsEditEvent.jsx`)
+- Production TDS rendering item path (search using the JSX path as a key — see Step 2)
 
-List the stylesheet hrefs in order. Then compare against our base stack in `head-css.njk`:
+Report which components were found and their current status.
 
-**Base stack (all pages):**
+If no matching entries are found, note that this is new territory and continue.
+
+---
+
+## Step 2 — Read production JSX files
+
+For each component found in Step 1 that is **Not Started** or **Partial**, read its JSX file from `production/src/App/views/`.
+
+From each JSX file extract:
+
+**Structure** — the `render()` method gives the complete HTML skeleton: div hierarchy, class names, IDs, data attributes.
+
+**Sub-components** — `import` statements at the top list every child component. Read those files too if they are Not Started or Partial.
+
+**Conditional states** — `state` variables and ternary/conditional expressions in `render()` reveal every UI variant (e.g. Pool vs. Open Water, loading vs. loaded, error vs. success). Note which state to represent in the static mockup — default to the primary happy-path state.
+
+**Form fields** — `name`, `id`, and `type` attributes on inputs are declared directly in JSX. Validation method calls (e.g. `ValidateField(document.querySelector('input[name="eventInfoName"]'))`) name every required field.
+
+**Mock data shape** — `PropTypes` declarations define every prop field, its type, and whether it is required. Use these to write realistic mock data for the template.
+
+---
+
+## Step 3 — Read TDS rendering item files for CSS
+
+For each production component, find its TDS rendering `.item` file by searching for the JSX file path it references:
+
+```bash
+grep -rl "ComponentName.jsx" production/src --include="*.item"
+```
+
+From the `.item` file, read the **`Css assets`** field. This is the authoritative list of page-specific CSS files, in the order they will be injected into the page.
+
+The complete CSS load order for this page is:
+
+**Base stack** (from `Usms.cshtml`, always present):
 1. `bootstrap.min.css`
 2. `bootstrap-3-usms-patch.css`
 3. Font Awesome `brands.min.css`
 4. Font Awesome `all.min.css`
 5. `common.min.css`
-6. `usms.min.css`
-7. *(page-specific CSS slots here)*
-8. `print.min.css`
-9. `rteMasters.min.css`
+6. ← **Css assets field injects here** (page-specific files in TDS order)
+7. `print.min.css`
+8. `rteMasters.min.css`
 
-Identify:
-- Any **page-specific CSS files** (those between `usms.min.css` and `print.min.css`) — these need to go in `{% block pageCSS %}` of either the layout or the page template
-- Any **missing files** from our base stack
-- Any **ordering differences** from the base stack
-
-Include these findings in the Step 7 plan report.
+Compile the full ordered list for this page. Page-specific files go in `{% block pageCSS %}` of the layout or page template.
 
 ---
 
-## Step 4 — Check for an existing local file
+## Step 4 — Obtain label text and page content
+
+Label strings (button text, section titles, validation messages, placeholders) and page content (breadcrumb text, page title, rich text body) live only in the Sitecore CMS — they are not in source files. Obtain them using the appropriate path below.
+
+### Path A — Public URL (preferred)
+
+If `$ARGUMENTS` starts with `http`, run:
+
+```bash
+curl -sL "$ARGUMENTS"
+```
+
+From the response, extract:
+
+1. **React data blob** — find the `<script>` tag containing the JSON props object that Sitecore injects to hydrate the React component. It typically looks like:
+   ```html
+   <script>window.__reactData = {...}</script>
+   ```
+   or is embedded as a `data-` attribute on the React mount point. Extract the full JSON object — this contains every label string passed as props.
+
+2. **Page title** — `<h1>` or `.page-title h1` content.
+
+3. **Breadcrumb text** — `.breadcrumb` or `.breadcrumb__title` content.
+
+4. **Any Sitecore-rendered body copy** — rich text regions outside the React mount point.
+
+### Path B — Auth-required or inaccessible page
+
+If the page requires authentication or is not publicly accessible, ask the user:
+
+> "This page requires authentication so I can't fetch it automatically. Please paste either:
+> - The JSON data blob from the page (right-click → View Source, find the `<script>` tag containing the React props object), or
+> - Just the visible label strings you want to use (button text, section titles, etc.)
+>
+> Also paste the `<link rel='stylesheet'>` lines from the page `<head>` to verify CSS load order."
+
+Wait for the response.
+
+### Path C — No URL or content available
+
+If neither a URL nor a paste is provided, proceed with:
+- Label strings inferred from PropType names (e.g. `buttonSaveAndContinue` → "Save and Continue")
+- A note in the plan that labels will need verification against the live page
+
+---
+
+## Step 5 — Check for an existing local file
+
+Determine the target file path `$TARGET_PATH`:
+- If `$ARGUMENTS` was a URL, suggest a path derived from the URL: `src/pages/<path-segments>.njk`
+- Otherwise ask the user for the target path
 
 Run:
-```
-find src -name "<filename from $TARGET_PATH>" 2>/dev/null
+```bash
+find src -name "<filename>" 2>/dev/null
 ```
 
-- **If a file exists at `$TARGET_PATH`:** Read it. Note that a diff will follow.
+- **If a file exists at `$TARGET_PATH`:** Read it. Compare its structure against the JSX-derived structure and note meaningful differences (sections missing or added, class name changes).
 - **If no file exists:** Note that this is a net-new page.
 
 ---
 
-## Step 5 — Strip production-only noise
+## Step 6 — Determine partial structure
 
-From `$SOURCE_BODY`, identify and plan to remove:
-- Google Tag Manager — `<noscript><iframe src="//www.googletagmanager.com/...">` and GTM `<script>` blocks
-- Pingdom RUM — `<script>` blocks referencing `rum-static.pingdom.net`
-- Facebook SDK — `<script>` blocks referencing `connect.facebook.net`
-- Google Ad Manager / DFP — `googletag` script blocks and slot `<div>`s
-- Sitecore server/build HTML comments — `<!-- /Sitecore/...-->`, `<!-- #BeginTemplate -->`, `<!-- #EndEditable -->`
-- React hydration attributes — `data-reactid`, `data-reactroot`, `data-react-checksum`
-- Production inline `<style>` patch blocks added by the CMS at render time
+For each production component that is **Not Started** or **Partial**, decide whether it becomes a new Nunjucks partial or is inlined. This is not a proposal — decide and commit. The plan summary (Step 8) will list the decisions for the user's awareness before building begins.
 
-List what you found and will strip.
+**Create a new partial** if the component:
+- Appears (or is likely to appear) on more than one page
+- Maps to a clearly self-contained, named section of the UI
+- Has its own distinct CSS or JS that would be cleaner in a separate file
 
----
+**Inline into parent** if the component:
+- Is a leaf sub-component always rendered within a single parent
+- Has no realistic reuse candidate across pages
 
-## Step 6 — Diff against existing file (if one exists)
-
-If an existing local file was found in Step 3, compare the cleaned production HTML against it and report:
-- Structural sections present in production but missing locally
-- Structural sections present locally but not in production
-- Notable class or attribute differences
-
-Keep the diff summary concise — call out meaningful differences only, not whitespace or comment noise.
+Path for new partials: `src/_includes/partials/<Group>/<ComponentName>.njk`
 
 ---
 
-## Step 7 — Report plan and confirm
+## Step 7 — Strip production-only noise
 
-Before writing anything, tell the user:
-
-- Target path: `$TARGET_PATH`
-- Production CSS load order: [page-specific files identified in Step 3, in order]
-- Production noise stripped: [list]
-- Diff summary (if applicable): [list]
-- New CSS file: `src/css/<page-or-component>.css` (if page-specific styles are needed)
-- New JS file: `src/js/<page-or-component>.js` (if page-specific scripts are needed)
-- Layout to extend (best guess from page type)
-
-Then ask:
-> "Ready to build? Any adjustments before I start?"
-
-Wait for confirmation before writing any files.
+From any fetched or pasted HTML, identify and plan to remove:
+- Google Tag Manager blocks
+- Pingdom RUM scripts
+- Facebook SDK scripts
+- Google Ad Manager / DFP blocks and slot divs
+- Sitecore server/build comments (`<!-- /Sitecore/...-->`, `<!-- #BeginTemplate -->`)
+- React hydration attributes (`data-reactid`, `data-reactroot`, `data-react-checksum`)
+- Production inline `<style>` patch blocks
 
 ---
 
-## Step 8 — Build the mockup
+## Step 8 — Present the build summary
 
-After confirmation:
+Call `ExitPlanMode` to present the build summary. Frame this as "here is what I'm about to build" — not a proposal. The user can redirect if something looks wrong, but no approval of individual decisions is needed.
 
-1. Write the Nunjucks page template at `$TARGET_PATH`:
+Include:
+
+- **Target path:** `$TARGET_PATH` (new file or updating existing)
+- **Production components involved:** each with current COMPONENTS.md status
+- **CSS load order:** full ordered list for this page (base stack + TDS assets)
+- **Key structural notes from JSX:** which conditional state is being represented, notable class names, accordion/section IDs
+- **Label source:** live fetch / paste / inferred from PropTypes
+- **Diff summary:** (if updating an existing file — sections added, removed, or changed)
+- **Files to be created:**
+  - New partials: path ← JSX source
+  - Page template: path
+  - CSS file (if needed): path
+  - JS file (if needed): path
+- **Inlined components:** component name ← reason (leaf sub-component of X)
+- **COMPONENTS.md entries that will be updated** and their new status
+
+Present this as a concise list. Wait for the user to confirm or redirect before writing any files.
+
+---
+
+## Step 9 — Build
+
+After plan approval:
+
+1. **Create new partials first.** For each partial identified in Step 6, build it using the JSX `render()` output as the structural source and the extracted labels for text content. Reference `src/_includes/partials/<Group>/` for naming.
+
+2. **Write the page template at `$TARGET_PATH`:**
    - Extend the appropriate layout
    - Set `permalink` and other frontmatter
-   - The page shell (doctype, `<html>`, `<head>`, meganav, footer, `<main role="main">` wrapper) comes from our layouts and partials — do NOT reproduce it from production markup
-   - Adapt the cleaned `$SOURCE_BODY` content into the appropriate Nunjucks blocks only
-   - Keep custom dropdown or other interactive components from the local codebase where they exist
-   - Do NOT embed `<style>` or `<script>` tags in the page template
+   - The page shell (doctype, `<html>`, `<head>`, meganav, footer, `<main>` wrapper) comes from layouts — do NOT reproduce it from production markup
+   - Place cleaned content into the appropriate `{% block %}` regions only
+   - Include new partials via `{% include %}` rather than inlining their markup
+   - Do NOT embed `<style>` or `<script>` tags anywhere in templates or partials
 
-2. If page-specific styles are needed, create `src/css/<name>.css` and reference it in `{% block pageCSS %}`.
+3. **CSS:** If page-specific styles are needed beyond what production CSS already provides, create `src/css/<name>.css` and reference it in `{% block pageCSS %}`.
 
-3. If page-specific scripts are needed, create `src/js/<name>.js` and reference it in `{% block pageJS %}`.
-
-4. Reference any new CSS/JS files in the page template's `{% block pageCSS %}` / `{% block pageJS %}` blocks — never inline styles or scripts in the template body.
+4. **JS:** If page-specific scripts are needed, create `src/js/<name>.js` and reference it in `{% block pageJS %}`.
 
 ---
 
-## Step 9 — Report
+## Step 10 — Update COMPONENTS.md
 
-Tell the user what was created or modified, with file paths.
+After a successful build, update `COMPONENTS.md`:
+
+- For components that moved from **Not Started** to built: update status to **Covered** or **Partial** as appropriate, and add the mockup partial path in the table
+- For components that moved from **Partial** to more complete: update to **Covered** if now faithful
+- For any new rows needed (components not previously listed): add them
+
+---
+
+## Step 11 — Structural verification
+
+After the build, verify structural fidelity against the production page.
+
+Re-use the production HTML already fetched in Step 4 (or re-fetch if needed). Extract every CSS class referenced in the production page's `<main>` content area:
+
+```bash
+grep -oP '(?<=class=")[^"]+' <(curl -sL "$URL") | tr ' ' '\n' | sort -u
+```
+
+Then check which of those classes are absent from the built `.njk` file(s):
+
+```bash
+comm -23 <(production_classes) <(grep -oP '(?<=class=")[^"]+' built_file.njk | tr ' ' '\n' | sort -u)
+```
+
+For each missing class:
+- **Structural** (layout, component, or BEM block/element class — e.g. `club-location__facility--length`): note as a gap and fix before proceeding to Step 12
+- **Dynamic / noise** (React hydration, GTM, Sitecore, ad slots, `data-react*`): note as expected-absent and skip
+
+Fix any structural gaps, then proceed.
+
+---
+
+## Step 12 — Report
+
+Tell the user:
+- Files created or modified, with paths
+- Which COMPONENTS.md entries were updated and their new status
+- Result of Step 11 structural check: classes fixed, classes expected-absent

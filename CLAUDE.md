@@ -45,22 +45,14 @@ Do not edit files directly inside `public/` — they will be overwritten the nex
 
 ## Building Production Page Mockups
 
-When asked to build or replicate a production page:
+Use the `/mockup [url]` skill for all production page builds. It handles the full workflow: JSX structure, TDS CSS load order, live label fetch, structural verification. Do not build production pages manually.
 
-1. **Get the source first.** Before writing any markup, ask the user to paste the production HTML, or fetch it from the live site. Do not start building from memory or assumptions.
-2. **Use what was pasted.** If the user pastes production markup in the conversation, that is the source of truth — use it directly. Do not go looking for an alternative source.
-3. **Never use `public/` as a reference.** Files in `public/` are stale Sergey snapshots and may be missing current features. Only open a file in `public/` if the user explicitly asks to work with that specific file.
-4. **Diff before building.** Once you have the production HTML, compare it against any existing local version and list the differences before making changes.
-5. **Production CSS is authoritative.** Before adding custom styles for a component, check what the production stylesheets (`usms.min.css`, `toc.min.css`, etc.) already apply to those classes — many layout and spacing rules come from production CSS and should not be duplicated locally.
-6. **No embedded styles or scripts.** Never put `<style>` or `<script>` blocks directly in a page template. All page-specific CSS goes in `src/css/<name>.css` (referenced via `{% block pageCSS %}`); all page-specific JS goes in `src/js/<name>.js` (referenced via `{% block pageJS %}`). Use a component file if the styles/scripts apply to a shared component; use a page file if they are page-specific.
-7. **Strip production-only noise.** When adapting production HTML, remove elements that have no place in a static mockup:
-   - Google Tag Manager (`<noscript><iframe src="//www.googletagmanager.com/...">`) and GTM `<script>` blocks
-   - Pingdom RUM (`<script>` blocks referencing `rum-static.pingdom.net`)
-   - Facebook SDK (`<script>` blocks referencing `connect.facebook.net`)
-   - Google Ad Manager / DFP (`googletag` script blocks and slot `<div>`s)
-   - Sitecore server/build HTML comments (e.g. `<!-- /Sitecore/...-->`, `<!-- #BeginTemplate -->`)
-   - React hydration attributes on static HTML (`data-reactid`, `data-reactroot`, `data-react-checksum`)
-   - Production inline `<style>` patch blocks added by the CMS at render time
+Key rules that apply project-wide (not just inside the skill):
+
+1. **Never use `public/` as a reference.** Files in `public/` are stale Sergey snapshots. Only open a file in `public/` if the user explicitly asks to work with that specific file.
+2. **Production CSS is authoritative.** Production stylesheets (`usms.min.css`, `clubDetail.min.css`, etc.) load directly from `www.usms.org` in the mockup. Do not add rules to `src/css/` unless the gap is confirmed — remove the local rule and verify the page still looks correct before deciding it's needed. Audit local overrides page by page against the TDS CSS assets for that page.
+3. **No embedded styles or scripts.** Never put `<style>` or `<script>` blocks directly in a page template. All page-specific CSS goes in `src/css/<name>.css` (referenced via `{% block pageCSS %}`); all page-specific JS goes in `src/js/<name>.js` (referenced via `{% block pageJS %}`).
+4. **Faithful vs. intentional.** When a page needs both a faithful production copy and an improved version, snapshot the faithful build first — that snapshot URL is the permanent reference. The live page in `master` is then free to evolve.
 
 ## Key Conventions
 
