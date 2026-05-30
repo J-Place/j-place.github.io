@@ -1,33 +1,47 @@
 /* Sitecore form component — overrides for production common.min.css */
 
-.sc-form__footer {
+/* .sc-form__footer {
     margin-bottom: 0;
-}
+} */
 
 .sc-form__container label {
     font-size: 1.3rem;
-    line-height: 1.6rem;
     font-weight: 700;
-    margin-bottom: 5px;
 }
+.sc-form__container .sc-form__checkbox-group label {
+    font-weight: 700;
+}
+.sc-form__container .sc-form__checkbox-group input[type=checkbox] {
+    top: 3px;
+}
+.sc-form__container .sc-form__radio-inline--label + label,
+.sc-form__container .sc-form__radio-inline--label + label + label {
+    font-weight: 400;
+}
+.sc-form__container .sc-form__radio-inline--label + label input,
+.sc-form__container .sc-form__radio-inline--label + label + label input {
+    position: relative;
+    top: 2px;
+}
+    
 
-.sc-form__container input[type="file"] {
+/* .sc-form__container input[type="file"] {
     border: 0 none;
-}
+} */
 
-.sc-form__select-group {
+/* .sc-form__select-group {
     margin: 0 auto 0.5rem;
-}
+} */
 
-.sc-form__container .upload-file {
+/* .sc-form__container .upload-file {
     margin: 1rem auto 2rem;
-}
+} */
 
 /* ── reCAPTCHA widget shell ────────────────────────────────────────── */
 
 .sc-captcha {
-    margin-top: 3rem;
-    margin-bottom: -1rem;
+    margin-top: 4rem;
+    margin-bottom: 0;
 }
 
 .sc-recaptcha-anchor {
