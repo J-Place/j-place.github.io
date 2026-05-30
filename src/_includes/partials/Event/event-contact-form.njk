@@ -1,0 +1,138 @@
+<div class="usms-container p-tb-10">
+  <div class="row">
+    <div class="col-xs-12 col-md-9">
+
+      <div class="event--title">
+        <h3 class="text-capitalize">Contact the Event Director</h3>
+      </div>
+
+      <div class="loading-form" style="display: none">
+        <img src="/img/loader.gif" alt="loading" />
+      </div>
+
+      <div class="form-container">
+        <form action="#" method="post" id="event-contact-form">
+          <div class="sc-form__container form__container--event-contact">
+
+            <div class="row">
+              <div class="col-sm-6">
+                <label for="firstName">First Name</label>
+                <input id="firstName" name="firstName" type="text" maxlength="255" aria-required="true"
+                  data-val="true" data-val-required="First Name is required.">
+                <span class="field-validation-valid" data-valmsg-for="firstName" data-valmsg-replace="true"></span>
+              </div>
+              <div class="col-sm-6">
+                <label for="lastName">Last Name</label>
+                <input id="lastName" name="lastName" type="text" maxlength="255" aria-required="true"
+                  data-val="true" data-val-required="Last Name is required.">
+                <span class="field-validation-valid" data-valmsg-for="lastName" data-valmsg-replace="true"></span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-10">
+                <label for="email">Email Address</label>
+                <input id="email" name="email" type="email" maxlength="255" aria-required="true"
+                  data-val="true"
+                  data-val-required="Email Address is required."
+                  data-val-regex="Email Address contains an invalid email address."
+                  data-val-regex-pattern="^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,17}$">
+                <span class="field-validation-valid" data-valmsg-for="email" data-valmsg-replace="true"></span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-8">
+                <label for="phone">Phone Number</label>
+                <input id="phone" name="phone" type="tel" maxlength="255"
+                  data-val="true"
+                  data-val-regex="Phone Number contains an invalid telephone number."
+                  data-val-regex-pattern="^\+?\d{3,}">
+                <span class="field-validation-valid" data-valmsg-for="phone" data-valmsg-replace="true"></span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-8 is-member">
+                <label class="sc-form__radio-inline--label">Are you a current USMS member?</label>
+                <label><input type="radio" name="member" value="Yes" aria-required="true" data-val="true" data-val-required="Are you a current USMS member? is required.">Yes</label>
+                <label><input type="radio" name="member" value="No">No</label>
+                <span class="field-validation-valid" data-valmsg-for="member" data-valmsg-replace="true"></span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-10 director-message">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="4" maxlength="512" aria-required="true"
+                  data-val="true" data-val-required="Message is required."></textarea>
+                <span class="field-validation-valid" data-valmsg-for="message" data-valmsg-replace="true"></span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="sc-form__checkbox-group">
+                  <label>
+                    <input type="checkbox" name="emailOptIn" value="true"> Sign up for updates from USMS
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-10">
+                <div class="sc-captcha">
+                  <div class="sc-recaptcha-anchor">
+                    <div class="sc-captcha__widget" tabindex="0" aria-label="I'm not a robot">
+                      <span class="goog-inline-block recaptcha-checkbox" role="checkbox" aria-checked="false">
+                        <div class="recaptcha-checkbox-border" role="presentation"></div>
+                        <div class="recaptcha-checkbox-spinner-gif"></div>
+                        <div class="recaptcha-checkbox-spinner" role="presentation">
+                          <div class="recaptcha-checkbox-spinner-overlay"></div>
+                        </div>
+                        <div class="recaptcha-checkbox-checkmark" role="presentation"></div>
+                      </span>
+                    </div>
+                    <div class="sc-recaptcha-content">
+                      <span class="sc-recaptcha-label">I'm not a robot</span>
+                    </div>
+                    <div class="sc-recaptcha-logo">
+                      <div class="sc-recaptcha-logo-icon"></div>
+                      <span class="sc-recaptcha-logo-name">reCAPTCHA</span>
+                      <div class="sc-recaptcha-logo-links">
+                        <a href="#" tabindex="-1" onclick="return false">Privacy</a><span aria-hidden="true"> - </span><a href="#" tabindex="-1" onclick="return false">Terms</a>
+                      </div>
+                    </div>
+                  </div>
+                  <input id="captchaVerified" name="captchaVerified" type="hidden" class="fxt-captcha"
+                    data-val="true" data-val-required="Please confirm you are not a robot."
+                    aria-required="true" value="">
+                  <span class="field-validation-valid" data-valmsg-for="captchaVerified" data-valmsg-replace="true"></span>
+                </div>
+              </div>
+            </div>
+
+          </div>{# /sc-form__container #}
+
+          <div class="row btn-submit--initial">
+            <div class="sc-form__footer">
+              <input value="Submit" type="submit" class="btn btn-primary btn-large">
+            </div>
+          </div>
+          <div class="row btn-submit--nonmember-row" style="display: none;">
+            <div class="sc-form__footer">
+              <input value="Submit" type="submit" class="btn btn-primary btn-large">
+            </div>
+          </div>
+          <div class="row btn-submit--member-row" style="display: none;">
+            <div class="sc-form__footer">
+              <input value="Submit" type="submit" class="btn btn-primary btn-large">
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

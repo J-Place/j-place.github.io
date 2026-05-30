@@ -1,0 +1,32 @@
+{% extends "layouts/base.njk" %}
+
+{% block pageCSS %}
+<link rel="stylesheet" href="/css/Common/sc-form.css">
+<style>
+.hero-image--event-detail {
+  background-position: center !important;
+}
+</style>
+{% endblock %}
+
+{% block pageJS %}
+<script src="/js/sc-form.js" defer></script>
+{% endblock %}
+
+{% block breadcrumb %}
+{% include "partials/Common/Breadcrumb.njk" %}
+{% endblock %}
+
+{% block content %}
+
+{% block eventHero %}{% endblock %}
+
+<div class="section section-full p-tb-30">
+
+  {% block eventMain %}{% endblock %}
+
+  {% include "partials/Event/event-contact-form.njk" %}
+
+</div>
+
+{% endblock %}
