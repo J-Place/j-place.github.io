@@ -27,7 +27,7 @@ In short: Covered = you could point a designer at the mockup and say "that's the
 | Production page | Mockup page | Status |
 |---|---|---|
 | `Article.jsx` | `src/pages/swimmer-magazine/**` (SWIMMER only) | Partial |
-| `Club.jsx` | `src/pages/clubs/sarasota-y-sharks-536.njk`, `south-end-rowing-club-580.njk`, `swim-fort-lauderdale-1877.njk` | Covered |
+| `Club.jsx` (legacy) / `Feature/Club2.0` Razor views (authoritative) | `src/pages/clubs/sarasota-y-sharks-536.njk`, `south-end-rowing-club-580.njk`, `swim-fort-lauderdale-1877.njk`, `fort-worth-area-swim-team-608.njk` | Covered |
 | `Clubs.jsx` | `src/pages/clubs/index.njk` | Covered |
 | `EmailConfirmation.jsx` | — | Not Started |
 | `Event.jsx` | `src/pages/events/events/2026-bumpy-jones-*` | Covered |

@@ -218,6 +218,12 @@ After plan approval:
 
 4. **JS:** If page-specific scripts are needed, create `src/js/<name>.js` and reference it in `{% block pageJS %}`.
 
+5. **Modal normalization:** Production pages use Bootstrap's `data-bs-toggle="modal"` / `data-bs-target` / `data-bs-dismiss` because they load Bootstrap JS. This project uses a custom `modal.js` instead. For every modal in the production markup:
+   - Convert trigger links from `data-bs-toggle="modal"` + `data-bs-target="#id"` → `data-modal-target="#id"`
+   - Replace the modal element markup with `{% include "components/modal.njk" %}` using the appropriate `modalId`, `modalModifier`, and `modalBody` variables
+   - The `modal.njk` close button uses `.js-modal-close` — do not include `data-bs-dismiss` on close buttons
+   - Modal elements must be included in the same template block where the triggers live, or in a dedicated `{% block modals %}` if the layout supports it — never omit them
+
 ---
 
 ## Step 10 — Update COMPONENTS.md
