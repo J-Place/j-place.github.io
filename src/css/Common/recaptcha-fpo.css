@@ -1,0 +1,137 @@
+/* reCAPTCHA FPO widget — mockup stand-in for the real Google iframe */
+
+/* ── reCAPTCHA widget shell ────────────────────────────────────────── */
+
+.sc-captcha {
+    margin-top: 4rem;
+    margin-bottom: 0;
+}
+
+.sc-recaptcha-anchor {
+    display: flex;
+    align-items: center;
+    width: 304px;
+    height: 78px;
+    background: #f9f9f9;
+    border: 1px solid #d3d3d3;
+    border-radius: 3px;
+    box-shadow: 0 0 4px rgba(0,0,0,0.08);
+    padding: 0 12px 0 8px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.sc-captcha__widget {
+    flex-shrink: 0;
+    cursor: pointer;
+    user-select: none;
+    padding: 4px;
+}
+
+.sc-captcha__widget:focus-visible {
+    outline: 2px solid #4a90e2;
+    outline-offset: 2px;
+}
+
+.sc-recaptcha-content {
+    flex: 1;
+    padding-left: 8px;
+}
+
+.sc-recaptcha-label {
+    font-family: Roboto, helvetica, arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+}
+
+.sc-recaptcha-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 68px;
+    flex-shrink: 0;
+}
+
+.sc-recaptcha-logo-icon {
+    width: 32px;
+    height: 32px;
+    background: url('/img/recaptcha_logo_48.png') center / contain no-repeat;
+    margin-bottom: 2px;
+}
+
+.sc-recaptcha-logo-name {
+    font-family: Roboto, helvetica, arial, sans-serif;
+    font-size: 10px;
+    color: #8b8d8e;
+    letter-spacing: 0.5px;
+    line-height: 1.3;
+}
+
+.sc-recaptcha-logo-links {
+    font-family: Roboto, helvetica, arial, sans-serif;
+    font-size: 8px;
+    color: #8b8d8e;
+    line-height: 1.3;
+}
+
+.sc-recaptcha-logo-links a {
+    color: #8b8d8e;
+    text-decoration: none;
+}
+
+
+/* ── reCAPTCHA checkbox component (production classes) ────────────── */
+
+.goog-inline-block {
+    position: relative;
+    display: inline-block;
+}
+
+.recaptcha-checkbox {
+    border: none;
+    font-size: 1px;
+    height: 28px;
+    margin: 4px;
+    width: 28px;
+    overflow: visible;
+    outline: 0;
+    vertical-align: text-bottom;
+}
+
+.recaptcha-checkbox-border {
+    border-radius: 2px;
+    background-color: #fff;
+    border: 2px solid #444746;
+    height: 24px;
+    left: 2px;
+    position: absolute;
+    top: 2px;
+    width: 24px;
+    z-index: 1;
+}
+
+/* Spinner elements not needed for mockup */
+.recaptcha-checkbox-spinner-gif,
+.recaptcha-checkbox-spinner { display: none; }
+
+.recaptcha-checkbox-checkmark {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACYAAATsCAMAAADb3wBdAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAFBUExURQAAAAAwGgALBgAqFgAWDAABAQAYDQBBIwBIJwA5HwCRTgAXDABuOwAcDwBSLABNKQB7QgCVUAAJBQBxPQAiEgBWLgABAABeMgB6QgA4HgAGAwB2PwBhNABGJgACAQBjNQBmNwADAgBvPABuOwAEAgBtOwB+RAAJBQCDRgANBwBxPQA0HABIJwB4QQBULQBULQB8QwBXLwB9QwBQKwApFgCYUgB2QAAGAwBKKABOKgCARQAHBAAeEAA3HgBXLwAjEwA+IQAFAwBAIwARCQCISQAMBwA1HQAzHAA8IAA/IgCQTgAWDABMKQAZDgCSTgBsOgAPCAAUCwCNTAAOCAASCgAQCQA2HQBRKwAuGQBaMQAtGABSLAAgEQA/IgA4HgCPTQBwPAACAQArFwBgNAATCgAaDgAqFwAIBAAUCwCeVf///4C5DhQAAABpdFJOUwBNEUMjAiZpdVzqJbEthXzG8Q+2N4sBl8VaCr6ccQOgpQWzsgawzA7TFbdUdMKIh8iMyYFC9r8JeH7PDDFZjThkCGgc3BRWU2Fm6SR7KeuuGCHkFx0aV4JKkkiEM2Vb5rQERZseKkQNIKs/1NYAAAABYktHRGolYpUOAAAAKHRFWHRkYXRlOnRpbWVzdGFtcAAyMDI2LTA1LTAzVDIzOjI1OjEwKzAwOjAwYSxGIQAAA1RJREFUeNrt3XlTUlEch/GjLVhJBRkU2o3immxREhbl0qKtlLm0Z7st5/2/gbjONBNxh/ONm7H4PH/4128Ez+V85nh1wBgiIqJIjYwqU/v2K1MHDrKeRBSl2JgydejwEUWk8TgLSkRRRDoqiWTtMUGk4zahmJQ8McHCE1EUkU6mFJGsTbvnkqeac6fdj5qZtFMp4dllznhcSCJEiiLSWbciTZGszZ5zz51vzuV855w/be2FGfdP62XzBWVVvFFeP0SIFEUkWyw5n6CXtdIP4k0Fc2Xn46bS1l5MCstcmcxIF83ndUuItDsiXYopIlWsjblFak7Zy55LpNnml2rSLZJr6pdIVac1iETUnUhXaopIFTtXc4sU+HDVKVKlw55uEanDzv9dpE4+IBJRlK5JU3Xppsd1a0PnWkUK9vSNgluk8H3YLlL4bkUkRKL+ql6RpqytSFM2Py+IFEoSIiESDWYLmjWdbni0KLKoWVP4N1OIhEg0KJV8zRrhzzk7Piz9V2sQCZFoULopnmvq4rnmVh9ag0iIRL3vtmaNdNe3rmzpvrUGkRCJet+dZe30s7IsiWSnEQmREInCrrN2+pEuXnO3CnM7e/ouIiESIlF72jta6H/Tujfkpx9EQiTaze5nNJGUqxfs1jQiIRIiUdc94A4RIiESIvVND+OaSI8amkhFREIkRCJEQiREQiREQqS/Ein+WBHpyaoiknmKSIiESIgURSSzpohkGquKSOsbiIRIiIRIUUQykkjGbAoiGfNsQxDJPF9BJERCJESKItIfU+596Jh64SlTLxWRTAmRCJEQaRCnXo3PClO1Ocma14iESIiESNGm3khTwXdTpoyJJdmziIRIwyKSl9N88HOaD/4MO4gQaVhEms8rIhlTyGs+FDg/ECINjUhlaSq46SG9DVStKn0uoknxGiTaWyKZtDRlUmnt01VT/K5CtMdEKmnW+DntxOIvFbjWRIjU3oJmjYlp1phFrCFCpJBGJJGCf4mTrPHeYg0RIoVUlkQK7voWlW/HXV8iiiDSWkISyUwkJJHMFqcfIgrpnfZG2+8/NDS5j9rDfmLliai9z5pI/hdNJH+MJSWirtv+qs19W9fmtlhSIuq679va3A/xzs8mS0pERES96idvm59U/2NE1QAAAABJRU5ErkJggg==");
+    background-repeat: no-repeat;
+    border: none;
+    height: 30px;
+    left: -5px;
+    outline: 0;
+    position: absolute;
+    top: 0;
+    width: 38px;
+}
+
+/* Checked state — hides border, reveals checkmark sprite */
+.recaptcha-checkbox-checked .recaptcha-checkbox-border,
+.recaptcha-checkbox-checked .recaptcha-checkbox-spinner-gif {
+    visibility: hidden;
+}
+
+.recaptcha-checkbox-checked .recaptcha-checkbox-checkmark {
+    background-position: 0 -600px;
+}
