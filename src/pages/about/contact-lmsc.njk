@@ -102,30 +102,32 @@ breadcrumbTitle: "Contact LMSC"
               </div>
               <div class="row">
                 <div class="col-sm-10">
-                  <div class="sc-captcha">
-                    <div class="sc-recaptcha-anchor">
-                      <div class="sc-captcha__widget" tabindex="0" aria-label="I'm not a robot">
-                        <span class="goog-inline-block recaptcha-checkbox" role="checkbox" aria-checked="false">
-                          <div class="recaptcha-checkbox-border" role="presentation"></div>
-                          <div class="recaptcha-checkbox-spinner-gif"></div>
-                          <div class="recaptcha-checkbox-spinner" role="presentation">
-                            <div class="recaptcha-checkbox-spinner-overlay"></div>
+                  <div>
+                    <div class="sc-captcha" id="CaptchaValue_wrapper" data-val="true" data-val-required="Please confirm you are not a robot.">
+                      <div class="sc-recaptcha-anchor">
+                        <div class="sc-captcha__widget" tabindex="0" aria-label="I'm not a robot">
+                          <span class="goog-inline-block recaptcha-checkbox" role="checkbox" aria-checked="false">
+                            <div class="recaptcha-checkbox-border" role="presentation"></div>
+                            <div class="recaptcha-checkbox-spinner-gif"></div>
+                            <div class="recaptcha-checkbox-spinner" role="presentation">
+                              <div class="recaptcha-checkbox-spinner-overlay"></div>
+                            </div>
+                            <div class="recaptcha-checkbox-checkmark" role="presentation"></div>
+                          </span>
+                        </div>
+                        <div class="sc-recaptcha-content">
+                          <span class="sc-recaptcha-label">I'm not a robot</span>
+                        </div>
+                        <div class="sc-recaptcha-logo">
+                          <div class="sc-recaptcha-logo-icon"></div>
+                          <span class="sc-recaptcha-logo-name">reCAPTCHA</span>
+                          <div class="sc-recaptcha-logo-links">
+                            <a href="#" tabindex="-1" onclick="return false">Privacy</a><span aria-hidden="true"> - </span><a href="#" tabindex="-1" onclick="return false">Terms</a>
                           </div>
-                          <div class="recaptcha-checkbox-checkmark" role="presentation"></div>
-                        </span>
-                      </div>
-                      <div class="sc-recaptcha-content">
-                        <span class="sc-recaptcha-label">I'm not a robot</span>
-                      </div>
-                      <div class="sc-recaptcha-logo">
-                        <div class="sc-recaptcha-logo-icon"></div>
-                        <span class="sc-recaptcha-logo-name">reCAPTCHA</span>
-                        <div class="sc-recaptcha-logo-links">
-                          <a href="#" tabindex="-1" onclick="return false">Privacy</a><span aria-hidden="true"> - </span><a href="#" tabindex="-1" onclick="return false">Terms</a>
                         </div>
                       </div>
+                      <input id="captchaVerified" name="captchaVerified" type="hidden" class="fxt-captcha" data-val="true" data-val-required="Please confirm you are not a robot." aria-required="true" value="">
                     </div>
-                    <input id="captchaVerified" name="captchaVerified" type="hidden" class="fxt-captcha" data-val="true" data-val-required="Please confirm you are not a robot." aria-required="true" value="">
                     <span class="field-validation-valid" data-valmsg-for="captchaVerified" data-valmsg-replace="true"></span>
                   </div>
                 </div>
