@@ -49,7 +49,10 @@ function todayIso() {
 function pageSlug(pagePath) {
   // /events/event-central/usms-measured-pools → usms-measured-pools
   // /public/search/content-hub-2.html → content-hub-2
-  return pagePath.replace(/\/$/, '').split('/').pop().replace(/\.html$/, '');
+  const slug = pagePath.replace(/\/$/, '').split('/').pop().replace(/\.html$/, '');
+  // Netlify alias + "--usms-mockup" must fit in a 63-char DNS label.
+  // "--usms-mockup" = 13 chars; date suffix "-YYMMDD" = 7 chars → slug max = 43 chars.
+  return slug.slice(0, 43).replace(/-+$/, '');
 }
 
 const name = (cliArgs.name || process.env.npm_config_name) || (pageSlug(page) + '-' + todayIso());
