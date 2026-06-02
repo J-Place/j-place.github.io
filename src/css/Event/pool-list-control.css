@@ -279,8 +279,12 @@
     z-index: 1;
   }
 
+  .list-control-filter.show-filters .list-control-filter__content .form-group {
+    flex-direction: column;
+  }
+
   .list-control-filter__content .check-list {
-    flex: 1 1;
+    flex: 3;
     margin-bottom: .5rem;
     opacity: 0;
   }
@@ -299,6 +303,48 @@
   .list-control-filter__content .check-list-item {
     margin-right: 4rem;
     width: auto;
+  }
+
+
+  /* ── LMSC filter ──────────────────────────────────────────────────────── */
+
+  .input-group--lmsc {
+    flex: 2;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .input-group--lmsc label {
+    display: flex;
+    flex: 0;
+    flex-direction: row;
+    margin-right: 12px;
+    font-size: 1.2rem;
+    font-weight: 400;
+  }
+
+  .input-group--lmsc select {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    max-width: 200px;
+    height: 30px;
+    line-height: 30px;
+    border-radius: 5px !important;
+  }
+
+  /* Mobile: stack vertically when the filters panel is open */
+  .list-control-filter__content .input-group--lmsc {
+    margin-top: 1.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .list-control-filter__content .input-group--lmsc label,
+  .list-control-filter__content .input-group--lmsc select {
+    flex-direction: column;
+    margin-bottom: 5px;
   }
 
 
@@ -437,6 +483,15 @@
     .list-control-filter.filters--desktop-toggle.show-filters .list-control-filter__content .check-list {
       opacity: 1;
       transition: all .15s, .3s ease-in;
+    }
+
+    /* Restore inline row layout for LMSC filter on desktop */
+    .list-control-filter__content .input-group--lmsc,
+    .list-control-filter__content .input-group--lmsc label,
+    .list-control-filter__content .input-group--lmsc select {
+      flex-direction: row;
+      align-items: center;
+      margin-top: 0;
     }
 
   } /* end @media 768px */
