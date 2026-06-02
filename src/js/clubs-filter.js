@@ -44,6 +44,7 @@ window.initClubMap = function () {};
   var userLng  = null;
   var mapReady       = false;
   var keepMapView    = false;  // true when Search This Area triggered the search
+  var searchZoom     = null;   // zoom level recorded after each applyFilters
 
   // ── State ──────────────────────────────────────────────────────────────────
 
@@ -311,6 +312,7 @@ window.initClubMap = function () {};
 
     mapReady    = true;
     keepMapView = false;
+    if (map) searchZoom = map.getZoom();
   }
 
   // ── Map ────────────────────────────────────────────────────────────────────
@@ -511,7 +513,9 @@ window.initClubMap = function () {};
       var anyVisible = activeMarkers.some(function (m) {
         return bounds.contains(m.getPosition());
       });
-      searchAreaBtn.style.display = anyVisible ? 'none' : 'block';
+      var zoomedOut = searchZoom !== null && map.getZoom() < searchZoom;
+      var showBtn   = !anyVisible || zoomedOut;
+      searchAreaBtn.style.display = showBtn ? 'block' : 'none';
       if (!anyVisible && locationInput) {
         locationInput.value = '';
       }
