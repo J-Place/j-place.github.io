@@ -92,6 +92,9 @@ module.exports = function(eleventyConfig) {
   // Format a number as a price with always-two decimal places: 110 → "110.00"
   eleventyConfig.addFilter("price", val => parseFloat(val || 0).toFixed(2));
 
+  // Limit an array to n items
+  eleventyConfig.addFilter("limit", (arr, n) => (arr || []).slice(0, n));
+
   // Copy src/js to _site/js
   eleventyConfig.addPassthroughCopy({ "src/js": "js" });
 

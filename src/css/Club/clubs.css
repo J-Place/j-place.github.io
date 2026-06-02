@@ -9,8 +9,50 @@
   background-image: url('/img/icon-toggle-up.png');
 }
 
+.location-ac {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-top: none;
+  box-shadow: 0 4px 8px rgba(0,0,0,.15);
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.location-ac:empty { display: none; }
+
+.location-ac li {
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.location-ac li:last-child { border-bottom: none; }
+
+.location-ac li:hover,
+.location-ac li.is-active { background: #f0f5fb; }
+
+.club-map-new {
+  height: 600px;
+  background: #e8e8e8;
+}
+
+.club-map-new-container {
+  position: sticky;
+  top: 0;
+}
+
 .club-list-new {
-  margin: 20px 0 0;
+  margin-top: 20px !important;
   padding-left: 0;
   max-height: 600px;
   overflow-y: scroll;

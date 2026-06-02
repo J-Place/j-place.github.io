@@ -14,6 +14,12 @@ devSwimmerIds:
 {{ super() }}
 <link rel="stylesheet" href="/css/Common/loading.css">
 {% endblock %}
+{% block pageJS %}
+{{ super() }}
+<script type="application/json" id="clubs-data">{{ clubs.data.clubs | dump | safe }}</script>
+<script src="/js/clubs-filter.js" defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ keys.googleMaps }}&libraries=places&callback=initClubMap" async defer></script>
+{% endblock %}
 {% block content %}
 {% include "partials/Common/loading.njk" %}
 <section class="section section-full bg-gray p-tb-10">
