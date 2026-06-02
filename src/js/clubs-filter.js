@@ -15,6 +15,10 @@ window.initClubMap = function () {};
     return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   }
 
+  function roundCoord(coord) {
+    return Math.floor(Number(coord) * 1000 + 0.5) / 1000;
+  }
+
   // ── Data ───────────────────────────────────────────────────────────────────
 
   var dataEl = document.getElementById('clubs-data');
@@ -33,9 +37,17 @@ window.initClubMap = function () {};
   var submitBtn     = document.getElementById('listSearchSubmit');
   var loaderEl      = document.querySelector('.loading');
   var certBoxes     = document.querySelectorAll('.check-list--certifications input[type="checkbox"]');
+  var facilityBoxes = document.querySelectorAll('.check-list--facility-type input[type="checkbox"]');
+  var poolLenBoxes  = document.querySelectorAll('.check-list--pool-length input[type="checkbox"]');
 
-  var userLat = null;
-  var userLng = null;
+  var userLat  = null;
+  var userLng  = null;
+  var mapReady       = false;
+  var keepMapView    = false;  // true when Search This Area triggered the search
+
+  // ── State ──────────────────────────────────────────────────────────────────
+
+  var lastMatchedClubs = [];
 
   // ── Helpers ────────────────────────────────────────────────────────────────
 
@@ -55,7 +67,7 @@ window.initClubMap = function () {};
   function renderClub(club) {
     var markerImg = club.isGold ? markerOrange : markerBlue;
 
-    var locations = (club.location || []).map(function (loc) {
+    var locations = (club.location || []).map(function (loc, i) {
       var dist = '';
       if (userLat !== null && userLng !== null) {
         var lat = parseFloat(loc.lat);
@@ -68,7 +80,8 @@ window.initClubMap = function () {};
       }
 
       return (
-        '<button type="button" class="club-list-item-new__locations-item">' +
+        '<button type="button" class="club-list-item-new__locations-item"' +
+            ' data-club-id="' + esc(club.id) + '" data-loc-index="' + i + '">' +
           '<div class="row">' +
             '<div class="col-2">' +
               '<div class="club-list-item-new__marker-container">' +
@@ -122,6 +135,7 @@ window.initClubMap = function () {};
   }
 
   function nearestDistance(club) {
+    if (userLat === null || userLng === null) return Infinity;
     var min = Infinity;
     (club.location || []).forEach(function (loc) {
       var lat = parseFloat(loc.lat);
@@ -145,38 +159,124 @@ window.initClubMap = function () {};
     });
   }
 
+  // OR logic: club matches if it satisfies ANY checked cert (matches Algolia facet behavior)
   function clubMatchesCerts(club, checkedValues) {
     if (!checkedValues.length) return true;
     var badgeAlts = (club.badges || []).map(function (b) { return b.alt; });
-    return checkedValues.every(function (val) {
+    return checkedValues.some(function (val) {
       if (val === 'gc')   return club.isGold === true;
       if (val === 'sslf') return club.sslf === true;
       if (val === 'cc')   return badgeAlts.indexOf('USMS-certified-coach') !== -1;
       if (val === 'alts') return badgeAlts.indexOf('USMS-alts-instructor') !== -1;
-      return true;
+      return false;
+    });
+  }
+
+  function clubMatchesFacility(club, checked) {
+    if (!checked.length) return true;
+    var types = club.poolTypes || [];
+    return checked.some(function (val) { return types.indexOf(val) !== -1; });
+  }
+
+  function clubMatchesPoolLen(club, checked) {
+    if (!checked.length) return true;
+    var lengths = club.poolLengths || [];
+    return checked.some(function (val) { return lengths.indexOf(val) !== -1; });
+  }
+
+  // ── URL state ──────────────────────────────────────────────────────────────
+
+  function syncUrl() {
+    var params = new URLSearchParams();
+    var name  = nameInput ? nameInput.value.trim() : '';
+    var place = locationInput ? locationInput.value.trim() : '';
+    var range = rangeSelect ? rangeSelect.value : '25';
+
+    if (name)  params.set('q', name);
+    if (place) params.set('placeText', place);
+    if (userLat !== null) params.set('lat', userLat);
+    if (userLng !== null) params.set('long', userLng);
+    if (range && range !== '25') params.set('r', range);
+
+    var certs = [];
+    certBoxes.forEach(function (cb)     { if (cb.checked) certs.push(cb.value); });
+    var pts   = [];
+    facilityBoxes.forEach(function (cb) { if (cb.checked) pts.push(cb.value); });
+    var lens  = [];
+    poolLenBoxes.forEach(function (cb)  { if (cb.checked) lens.push(cb.value); });
+
+    if (certs.length) params.set('c', certs.join(','));
+    if (pts.length)   params.set('pt', pts.join(','));
+    if (lens.length)  params.set('l', lens.join(','));
+
+    var str = params.toString();
+    history.replaceState({}, '', str ? ('?' + str) : window.location.pathname);
+  }
+
+  function readUrlParams() {
+    if (!document.location.search) return;
+    var params = new URLSearchParams(document.location.search);
+
+    var name = params.get('q');
+    if (name && nameInput) nameInput.value = decodeURIComponent(name);
+
+    var place = params.get('placeText');
+    if (place && locationInput) locationInput.value = decodeURIComponent(place);
+
+    var lat = params.get('lat'), lng = params.get('long');
+    if (lat && lng) { userLat = parseFloat(lat); userLng = parseFloat(lng); }
+
+    var range = params.get('r');
+    if (range && rangeSelect) rangeSelect.value = range;
+
+    var cStr = params.get('c');
+    if (cStr) cStr.split(',').forEach(function (v) {
+      certBoxes.forEach(function (cb) { if (cb.value === v) cb.checked = true; });
+    });
+
+    var ptStr = params.get('pt');
+    if (ptStr) ptStr.split(',').forEach(function (v) {
+      facilityBoxes.forEach(function (cb) { if (cb.value === v) cb.checked = true; });
+    });
+
+    var lStr = params.get('l');
+    if (lStr) lStr.split(',').forEach(function (v) {
+      poolLenBoxes.forEach(function (cb) { if (cb.value === v) cb.checked = true; });
     });
   }
 
   // ── Apply ──────────────────────────────────────────────────────────────────
 
   function applyFilters() {
-    var nameQuery    = nameInput ? nameInput.value.trim().toLowerCase() : '';
-    var rangeMiles   = getRange();
-    var checkedCerts = [];
-    certBoxes.forEach(function (cb) { if (cb.checked) checkedCerts.push(cb.value); });
+    var nameQuery      = nameInput ? nameInput.value.trim().toLowerCase() : '';
+    var rangeMiles     = getRange();
+    var checkedCerts   = [];
+    var checkedFacility = [];
+    var checkedPoolLen  = [];
+    certBoxes.forEach(function (cb)     { if (cb.checked) checkedCerts.push(cb.value); });
+    facilityBoxes.forEach(function (cb) { if (cb.checked) checkedFacility.push(cb.value); });
+    poolLenBoxes.forEach(function (cb)  { if (cb.checked) checkedPoolLen.push(cb.value); });
 
     var matched = allClubs.filter(function (club) {
-      var nameOk = !nameQuery || club.title.toLowerCase().indexOf(nameQuery) !== -1;
-      var distOk = clubMatchesDistance(club, rangeMiles);
-      var certOk = clubMatchesCerts(club, checkedCerts);
-      return nameOk && distOk && certOk;
+      var nameOk     = !nameQuery || club.title.toLowerCase().indexOf(nameQuery) !== -1;
+      var distOk     = clubMatchesDistance(club, rangeMiles);
+      var certOk     = clubMatchesCerts(club, checkedCerts);
+      var facilityOk = clubMatchesFacility(club, checkedFacility);
+      var poolLenOk  = clubMatchesPoolLen(club, checkedPoolLen);
+      return nameOk && distOk && certOk && facilityOk && poolLenOk;
     });
 
+    // Sort by distance first, then float gold clubs to top (matches production)
     if (userLat !== null && userLng !== null) {
-      matched.sort(function (a, b) {
-        return nearestDistance(a) - nearestDistance(b);
-      });
+      matched.sort(function (a, b) { return nearestDistance(a) - nearestDistance(b); });
     }
+    matched.sort(function (a, b) {
+      if (a.isGold && !b.isGold) return -1;
+      if (!a.isGold && b.isGold) return 1;
+      return 0;
+    });
+
+    lastMatchedClubs = matched;
 
     if (matched.length) {
       clubList.className = 'club-list-new list--nostyle';
@@ -201,23 +301,76 @@ window.initClubMap = function () {};
         ' within <strong>' + rangeText + '</strong>';
     }
 
+    syncUrl();
+
     if (matched.length) {
       updateMapMarkers(matched);
     } else {
       clearMarkers();
     }
+
+    mapReady    = true;
+    keepMapView = false;
   }
 
   // ── Map ────────────────────────────────────────────────────────────────────
 
   var map            = null;
   var activeMarkers  = [];
+  var markerMap      = {};  // key: "clubId:locIndex" → google.maps.Marker
   var openInfoWindow = null;
 
   function clearMarkers() {
     activeMarkers.forEach(function (m) { m.setMap(null); });
     activeMarkers = [];
+    markerMap     = {};
     if (openInfoWindow) { openInfoWindow.close(); openInfoWindow = null; }
+  }
+
+  function showInfoWindow(marker, content) {
+    if (openInfoWindow) openInfoWindow.close();
+    openInfoWindow = new google.maps.InfoWindow({ content: content });
+    openInfoWindow.open(map, marker);
+  }
+
+  function buildSingleInfoContent(club, loc) {
+    return (
+      '<div style="max-width:220px;padding:2px 0">' +
+        '<h4 class="club-list-item-new__info-window--club-title" style="margin:0 0 4px;font-size:14px">' + esc(club.title) + '</h4>' +
+        '<p class="club-list-item-new__info-window--location-name" style="margin:0;font-size:12px;color:#666">' + esc(loc.name || '') + '</p>' +
+        '<p class="club-list-item-new__info-window--address" style="margin:2px 0 0;font-size:12px">' + esc(loc.address1 || '') + (loc.address2 ? ' ' + esc(loc.address2) : '') + '</p>' +
+        '<p class="club-list-item-new__info-window--city-state-zip" style="margin:0;font-size:12px">' + esc(loc.city) + ', ' + esc(loc.state) + ' ' + esc(loc.zip) + '</p>' +
+        '<p class="club-list-item-new__info-window--details" style="margin:4px 0 0"><a href="' + esc(club.url) + '" style="font-size:13px">Club Details</a></p>' +
+      '</div>'
+    );
+  }
+
+  function buildSharedInfoContent(sharedClubs, loc) {
+    var links = sharedClubs.map(function (c) {
+      return (
+        '<a class="info-window-shared--link" href="' + esc(c.url) + '" style="display:flex;align-items:center;gap:6px;margin:4px 0;text-decoration:none">' +
+          '<img class="info-window-shared--marker" src="' + (c.isGold ? markerOrange : markerBlue) + '" alt="Map pin" style="width:14px">' +
+          '<h5 class="info-window-shared--club-title" style="margin:0;font-size:13px">' + esc(c.title) + '</h5>' +
+        '</a>'
+      );
+    }).join('');
+    return (
+      '<div style="max-width:220px;padding:2px 0">' +
+        '<p class="info-window-shared--street" style="margin:0 0 2px;font-size:12px"><strong>*Multiple Clubs at this location:</strong></p>' +
+        '<p class="info-window-shared--street" style="margin:0;font-size:12px">' + esc(loc.address1 || '') + '</p>' +
+        '<p class="info-window-shared--city-state-zip" style="margin:0 0 6px;font-size:12px">' + esc(loc.city) + ', ' + esc(loc.state) + ' ' + esc(loc.zip) + '</p>' +
+        links +
+      '</div>'
+    );
+  }
+
+  function getClubsAtPosition(lat, lng) {
+    var rLat = roundCoord(lat), rLng = roundCoord(lng);
+    return lastMatchedClubs.filter(function (club) {
+      return (club.location || []).some(function (loc) {
+        return roundCoord(loc.lat) === rLat && roundCoord(loc.long) === rLng;
+      });
+    });
   }
 
   function updateMapMarkers(clubs) {
@@ -230,49 +383,53 @@ window.initClubMap = function () {};
       return;
     }
 
-    var bounds = new google.maps.LatLngBounds();
-    var markerSize = new google.maps.Size(20, 32);
+    var rangeMiles = getRange();
 
     clubs.forEach(function (club) {
-      (club.location || []).forEach(function (loc) {
+      (club.location || []).forEach(function (loc, locIndex) {
         var lat = parseFloat(loc.lat);
         var lng = parseFloat(loc.long);
         if (isNaN(lat) || isNaN(lng)) return;
+        if (rangeMiles !== null && haversine(userLat, userLng, lat, lng) > rangeMiles) return;
 
         var position = { lat: lat, lng: lng };
         var marker = new google.maps.Marker({
           position: position,
           map: map,
-          icon: {
-            url: club.isGold ? markerOrange : markerBlue,
-            scaledSize: markerSize
-          },
+          icon: club.isGold ? markerOrange : markerBlue,
           title: club.title
         });
 
-        var infoContent =
-          '<div style="max-width:200px;padding:2px 0">' +
-            '<strong>' + esc(club.title) + '</strong>' +
-            (loc.name ? '<br><span style="font-size:12px;color:#666">' + esc(loc.name) + '</span>' : '') +
-            '<br><a href="' + esc(club.url) + '" style="font-size:13px">Club Details &rsaquo;</a>' +
-          '</div>';
+        markerMap[club.id + ':' + locIndex] = marker;
 
-        marker.addListener('click', (function (m, content) {
+        marker.addListener('click', (function (m, c, l) {
           return function () {
-            if (openInfoWindow) openInfoWindow.close();
-            openInfoWindow = new google.maps.InfoWindow({ content: content });
-            openInfoWindow.open(map, m);
+            var shared = getClubsAtPosition(l.lat, l.long);
+            var content = shared.length > 1
+              ? buildSharedInfoContent(shared, l)
+              : buildSingleInfoContent(c, l);
+            showInfoWindow(m, content);
           };
-        }(marker, infoContent)));
+        }(marker, club, loc)));
 
-        bounds.extend(position);
         activeMarkers.push(marker);
       });
     });
 
-    if (activeMarkers.length) {
+    if (keepMapView) {
+      // Search This Area: markers placed but viewport left exactly as-is
+    } else if (activeMarkers.length === 1) {
+      // Single result: zoom to range circle like production
+      var radiusMeters = rangeMiles !== null ? rangeMiles * 1609.34 : 500 * 1609.34;
+      var circle = new google.maps.Circle({
+        center: activeMarkers[0].getPosition(),
+        radius: radiusMeters
+      });
+      map.fitBounds(circle.getBounds());
+    } else if (activeMarkers.length > 1) {
+      var bounds = new google.maps.LatLngBounds();
+      activeMarkers.forEach(function (m) { bounds.extend(m.getPosition()); });
       map.fitBounds(bounds);
-      // Don't zoom in too close for a single result
       google.maps.event.addListenerOnce(map, 'bounds_changed', function () {
         if (map.getZoom() > 13) map.setZoom(13);
       });
@@ -282,6 +439,39 @@ window.initClubMap = function () {};
     }
   }
 
+  // ── List → map click wiring ────────────────────────────────────────────────
+
+  function initListMapLink() {
+    clubList.addEventListener('click', function (e) {
+      var btn = e.target.closest('.club-list-item-new__locations-item[data-club-id]');
+      if (!btn || !map) return;
+      var clubId   = btn.getAttribute('data-club-id');
+      var locIndex = parseInt(btn.getAttribute('data-loc-index'), 10);
+      var key      = clubId + ':' + locIndex;
+      var marker   = markerMap[key];
+      if (!marker) return;
+      map.panTo(marker.getPosition());
+      google.maps.event.trigger(marker, 'click');
+    });
+  }
+
+  // ── No-clubs form ──────────────────────────────────────────────────────────
+
+  function initNoClubsForm() {
+    clubList.addEventListener('click', function (e) {
+      if (e.target && e.target.id === 'noClubSubmit') {
+        var li = e.target.closest('li.club-list-item-new');
+        if (li) {
+          li.innerHTML =
+            '<div style="padding:1rem 0">' +
+              '<h4 style="color:#0070c0">Thank you!</h4>' +
+              '<p>We\'ll notify you when a club opens near you.</p>' +
+            '</div>';
+        }
+      }
+    });
+  }
+
   window.initClubMap = function () {
     var mapEl = document.querySelector('.club-map-new');
     if (!mapEl) return;
@@ -289,6 +479,68 @@ window.initClubMap = function () {};
     map = new google.maps.Map(mapEl, {
       center: { lat: 39.5, lng: -98.35 },
       zoom: 4
+    });
+
+    // ── Search This Area button ──────────────────────────────────────────────
+    var searchAreaBtn = document.createElement('button');
+    searchAreaBtn.type = 'button';
+    searchAreaBtn.textContent = 'Search This Area';
+    searchAreaBtn.style.cssText = [
+      'display:none',
+      'margin:10px',
+      'padding:0 16px',
+      'height:40px',
+      'background:#fff',
+      'color:#1a73e8',
+      'border:1px solid rgba(0,0,0,.12)',
+      'border-radius:2px',
+      'font-size:14px',
+      'font-weight:500',
+      'font-family:Roboto,Arial,sans-serif',
+      'cursor:pointer',
+      'box-shadow:0 1px 4px rgba(0,0,0,.3)',
+      'letter-spacing:.025em',
+      'text-transform:uppercase'
+    ].join(';');
+    map.controls[google.maps.ControlPosition.TOP_CENTER].push(searchAreaBtn);
+
+    map.addListener('idle', function () {
+      if (!mapReady) return;
+      var bounds = map.getBounds();
+      if (!bounds) return;
+      var anyVisible = activeMarkers.some(function (m) {
+        return bounds.contains(m.getPosition());
+      });
+      searchAreaBtn.style.display = anyVisible ? 'none' : 'block';
+      if (!anyVisible && locationInput) {
+        locationInput.value = '';
+      }
+    });
+
+    searchAreaBtn.addEventListener('click', function () {
+      var center = map.getCenter();
+      var bounds = map.getBounds();
+      userLat = center.lat();
+      userLng = center.lng();
+
+      // Snap range select to cover the visible map area so "Search This Area"
+      // returns clubs actually visible in the viewport, not just those within
+      // whatever narrow radius was previously selected.
+      if (bounds && rangeSelect) {
+        var ne = bounds.getNorthEast();
+        var visibleMiles = haversine(userLat, userLng, ne.lat(), ne.lng());
+        var steps = [10, 25, 50, 100, 250];
+        var snapped = null;
+        for (var i = 0; i < steps.length; i++) {
+          if (steps[i] >= visibleMiles) { snapped = steps[i]; break; }
+        }
+        rangeSelect.value = snapped ? String(snapped) : 'max';
+      }
+
+      searchAreaBtn.style.display = 'none';
+      mapReady      = false;
+      keepMapView   = true;
+      withLoader(applyFilters);
     });
 
     // Swap Nominatim dropdown for Google Places Autocomplete
@@ -310,6 +562,12 @@ window.initClubMap = function () {};
         }
         withLoader(applyFilters);
       });
+    }
+
+    // If URL params provided lat/lng, run filter now that map is ready
+    if (userLat !== null) {
+      withLoader(applyFilters);
+      return;
     }
 
     // Seed map and filter from user's IP location
@@ -543,6 +801,9 @@ window.initClubMap = function () {};
 
   // ── Init ───────────────────────────────────────────────────────────────────
 
+  readUrlParams();
   initAutocomplete();
+  initListMapLink();
+  initNoClubsForm();
 
 }());
