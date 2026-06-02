@@ -157,4 +157,5 @@ GitHub Actions deploys `_site/` to `gh-pages` on push to `master`.
 | Mockup | `/mockup [url]` | Build a mockup of a production page. Pass a URL to auto-fetch, or paste markup when prompted. Strips noise, diffs against any existing local version, asks for target path, then builds. |
 | Snapshot | `/snapshot [/path/to/page] [--dev]` | Build and deploy a finished page as an immutable Netlify alias, then update `snapshot-registry.json` and commit. `--dev` includes dev overlays (e.g. login-status). |
 | Link Snapshot | `/link-snapshot [alias]` | Add a link to a snapshot on the site index page (`src/pages/index.njk`). Run after `/snapshot`. Omit alias to use the most recent snapshot. |
+| Audit | `/audit [/path/to/page]` | Bidirectional structural audit of a local Nunjucks page against its production JSX. Finds gaps (production has, we don't), extras (we have, production doesn't), suspect CSS overrides, and JS selector drift. |
 | Commit | `/commit` | Review uncommitted changes, group into logical commits with messages, and commit immediately |
