@@ -15,6 +15,10 @@ breadcrumbTitle: "Contact U.S. Masters Swimming"
 <link rel="stylesheet" href="/css/Common/recaptcha-fpo.css">
 {% endblock %}
 
+{% block pageJS %}
+<script src="/js/sc-form.js" defer></script>
+{% endblock %}
+
 {% block breadcrumb %}
 {% include "partials/Common/Breadcrumb.njk" %}
 {% endblock %}
@@ -28,6 +32,9 @@ breadcrumbTitle: "Contact U.S. Masters Swimming"
   <div class="usms-container contact-form__container p-tb-10">
     <div class="row">
       <div class="col-xs-12">
+        <div class="loading-form" style="display: none">
+          <img src="/img/loader.gif" alt="loading" />
+        </div>
         <div class="form-container">
           <form action="#" method="post" id="contact-form">
             <div class="form__container">
@@ -38,51 +45,51 @@ breadcrumbTitle: "Contact U.S. Masters Swimming"
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-6">
-                    <label for="firstName" class="">First Name</label>
-                    <input id="firstName" name="firstName" class="" type="text" value="" maxlength="255">
-                    <span class="field-validation-valid"></span>
+                  <div class="col-sm-6" data-sc-field-key="">
+                    <label for="firstName">First Name</label>
+                    <input id="firstName" name="firstName" type="text" maxlength="255" aria-required="true" data-val="true" data-val-required="First Name is required.">
+                    <span class="field-validation-valid" data-valmsg-for="firstName" data-valmsg-replace="true"></span>
                   </div>
-                  <div class="col-sm-6">
-                    <label for="lastName" class="">Last Name</label>
-                    <input id="lastName" name="lastName" class="" type="text" value="" maxlength="255">
-                    <span class="field-validation-valid"></span>
+                  <div class="col-sm-6" data-sc-field-key="">
+                    <label for="lastName">Last Name</label>
+                    <input id="lastName" name="lastName" type="text" maxlength="255" aria-required="true" data-val="true" data-val-required="Last Name is required.">
+                    <span class="field-validation-valid" data-valmsg-for="lastName" data-valmsg-replace="true"></span>
                   </div>
                 </div>
                 <div class="row">
                   <div class="row">
-                    <div class="col-sm-8">
-                      <label for="email" class="">Email Address</label>
-                      <input id="email" name="email" class="" type="email" value="" maxlength="255">
-                      <span class="field-validation-valid"></span>
+                    <div class="col-sm-8" data-sc-field-key="">
+                      <label for="email">Email Address</label>
+                      <input id="email" name="email" type="email" maxlength="255" aria-required="true" data-val="true" data-val-required="Email Address is required." data-val-regex="Email Address contains an invalid email address." data-val-regex-pattern="^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,17}$">
+                      <span class="field-validation-valid" data-valmsg-for="email" data-valmsg-replace="true"></span>
                     </div>
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-5">
+                  <div class="col-sm-5" data-sc-field-key="">
                     <div class="sc-form__select-group">
-                      <label for="subject" class="">Subject</label>
-                      <select id="subject" name="subject" class="">
-                        <option label=" "></option>
+                      <label for="subject">Subject</label>
+                      <select id="subject" name="subject" aria-required="true" data-val="true" data-val-required="Subject is required.">
+                        <option value=""></option>
                         <option value="Membership">Membership</option>
                         <option value="Coaching">Coaching</option>
                         <option value="Volunteering">Volunteering</option>
                         <option value="Competing">Competing</option>
                         <option value="Content">Content</option>
                       </select>
-                      <span class="field-validation-valid"></span>
+                      <span class="field-validation-valid" data-valmsg-for="subject" data-valmsg-replace="true"></span>
                     </div>
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-8">
-                    <label for="message" class="">Message</label>
-                    <textarea id="message" name="message" class="" rows="5" maxlength="1042"></textarea>
-                    <span class="field-validation-valid"></span>
+                  <div class="col-sm-8" data-sc-field-key="">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" maxlength="1042" aria-required="true" data-val="true" data-val-required="Message is required."></textarea>
+                    <span class="field-validation-valid" data-valmsg-for="message" data-valmsg-replace="true"></span>
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-sm-10">
+                  <div class="col-sm-10" data-sc-field-key="">
                     <div>
                       <div class="sc-captcha" id="CaptchaValue_wrapper" data-val="true" data-val-required="Please confirm you are not a robot.">
                         <div class="sc-recaptcha-anchor">

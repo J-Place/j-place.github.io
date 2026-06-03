@@ -18,8 +18,8 @@
     position: relative;
     top: 2px;
 }
-.sc-form__container div[id$=CaptchaValue_wrapper]~span.field-validation-error {
-    top: 10px;
+.sc-form__container input[type="file"] {
+    border: 0 none;
 }
 .sc-form__container div:has(input[data-val-required]) > label[for],
 .sc-form__container div:has(textarea[data-val-required]) > label[for],
@@ -36,4 +36,23 @@
     position: absolute;
     top: -2px;
     left: 0;
+}
+
+
+
+
+
+
+
+
+/* 6/3/26 - Check these against production post-deployment */
+
+.sc-form__container [class^=col] {
+    position: relative
+}
+.sc-form__container .field-validation-error {
+    top: -3px;
+}
+.sc-form__container [class^=col] .sc-form__select-group > span.field-validation-error {
+    top: 16px;
 }

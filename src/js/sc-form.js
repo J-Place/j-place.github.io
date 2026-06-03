@@ -2,14 +2,20 @@
 // Reads: data-val="true", data-val-required="msg", data-val-regex="msg", data-val-regex-pattern="pattern"
 // Error display: adds/removes input-validation-error on inputs, field-validation-error/valid on [data-valmsg-for] spans.
 
-document.addEventListener('DOMContentLoaded', function () {
+function initAllScForms() {
   document.querySelectorAll('form .sc-form__container').forEach(function (container) {
     var form = container.closest('form');
     if (!form || form._scFormInit) return;
     form._scFormInit = true;
     initScForm(form);
   });
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initAllScForms);
+} else {
+  initAllScForms();
+}
 
 function initScForm(form) {
 
