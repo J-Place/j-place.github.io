@@ -1,0 +1,6 @@
+<header class="page-header{% if pageHeaderImage %} bg-media page-header__image{% endif %}"{% if pageHeaderImage %} style="background-image: url('{{ pageHeaderImage }}'); background-position: center;"{% endif %}>
+  {% if pageHeaderImage %}<div class="page-header__tint-placeholder"></div>{% endif %}
+  {% if pageTitle %}
+  <h1>{{ pageTitle }}{% if pageSubtitle %}<br><small>{{ pageSubtitle }}</small>{% endif %}</h1>
+  {% endif %}
+</header>

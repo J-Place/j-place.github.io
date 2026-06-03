@@ -1,0 +1,121 @@
+<div class="form-container">
+  <form action="#" method="post">
+    <div class="sc-form__container form__container--lmsc-committee">
+
+      <div class="row">
+        <div class="sc-form__header">
+          <p class="sc-form__header--summary">Contact your LMSC.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-4" data-sc-field-key="">
+          <div class="sc-form__select-group">
+            <label for="selectAnLmsc">Select an LMSC</label>
+            <select id="selectAnLmsc" name="selectAnLmsc">
+              <option value=""></option>
+              <option value="Adirondack">Adirondack</option>
+              <option value="Alaska">Alaska</option>
+              <option value="Allegheny Mountain">Allegheny Mountain</option>
+              <option value="Arizona">Arizona</option>
+            </select>
+            <span class="field-validation-valid" data-valmsg-for="selectAnLmsc" data-valmsg-replace="true"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-5" data-sc-field-key="">
+          <div class="sc-form__select-group">
+            <label for="subject">Subject</label>
+            <select id="subject" name="subject">
+              <option value=""></option>
+              <option value="General Information">General Information</option>
+              <option value="Membership">Membership</option>
+              <option value="Events/Sanctioning">Events/Sanctioning</option>
+              <option value="Results/Records">Results/Records</option>
+            </select>
+            <span class="field-validation-valid" data-valmsg-for="subject" data-valmsg-replace="true"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6" data-sc-field-key="">
+          <label for="firstName">First Name</label>
+          <input id="firstName" name="firstName" type="text" maxlength="255" aria-required="true" data-val="true" data-val-required="First Name is required.">
+          <span class="field-validation-valid" data-valmsg-for="firstName" data-valmsg-replace="true"></span>
+        </div>
+        <div class="col-sm-6" data-sc-field-key="">
+          <label for="lastName">Last Name</label>
+          <input id="lastName" name="lastName" type="text" maxlength="255" aria-required="true" data-val="true" data-val-required="Last Name is required.">
+          <span class="field-validation-valid" data-valmsg-for="lastName" data-valmsg-replace="true"></span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-8" data-sc-field-key="">
+          <label for="emailAddress">Email Address</label>
+          <input id="emailAddress" name="emailAddress" type="email" maxlength="255" aria-required="true" data-val="true" data-val-required="Email Address is required." data-val-regex="Email Address contains an invalid email address." data-val-regex-pattern="^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,17}$">
+          <span class="field-validation-valid" data-valmsg-for="emailAddress" data-valmsg-replace="true"></span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-8" data-sc-field-key="">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" maxlength="1042" aria-required="true" data-val="true" data-val-required="Message is required."></textarea>
+          <span class="field-validation-valid" data-valmsg-for="message" data-valmsg-replace="true"></span>
+        </div>
+      </div>
+
+      <div class="row upload-file">
+        <label for="uploadFile">Upload File</label>
+        <input id="uploadFile" name="uploadFile" type="file">
+        <span class="field-validation-valid" data-valmsg-for="uploadFile" data-valmsg-replace="true"></span>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-10" data-sc-field-key="">
+          <div>
+            <div class="sc-captcha" id="CaptchaValue_wrapper" data-val="true" data-val-required="Please confirm you are not a robot.">
+              <div class="sc-recaptcha-anchor">
+                <div class="sc-captcha__widget" tabindex="0" aria-label="I'm not a robot">
+                  <span class="goog-inline-block recaptcha-checkbox" role="checkbox" aria-checked="false">
+                    <div class="recaptcha-checkbox-border" role="presentation"></div>
+                    <div class="recaptcha-checkbox-spinner-gif"></div>
+                    <div class="recaptcha-checkbox-spinner" role="presentation">
+                      <div class="recaptcha-checkbox-spinner-overlay"></div>
+                    </div>
+                    <div class="recaptcha-checkbox-checkmark" role="presentation"></div>
+                  </span>
+                </div>
+                <div class="sc-recaptcha-content">
+                  <span class="sc-recaptcha-label">I'm not a robot</span>
+                </div>
+                <div class="sc-recaptcha-logo">
+                  <div class="sc-recaptcha-logo-icon"></div>
+                  <span class="sc-recaptcha-logo-name">reCAPTCHA</span>
+                  <div class="sc-recaptcha-logo-links">
+                    <a href="#" tabindex="-1" onclick="return false">Privacy</a><span aria-hidden="true"> - </span><a href="#" tabindex="-1" onclick="return false">Terms</a>
+                  </div>
+                </div>
+              </div>
+              <input id="captchaVerified" name="captchaVerified" type="hidden" class="fxt-captcha"
+                data-val="true" data-val-required="Please confirm you are not a robot."
+                aria-required="true" value="">
+            </div>
+            <span class="field-validation-valid" data-valmsg-for="captchaVerified" data-valmsg-replace="true"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row btn-submit--initial">
+        <div class="sc-form__footer">
+          <input value="Submit" type="submit" class="btn btn-primary btn-large">
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>

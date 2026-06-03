@@ -1,0 +1,122 @@
+/* LMSC detail page — component styles.
+   In prod these will live in /styles/lmsc.min.css, modeled on clubs.min.css. */
+
+/* Page header */
+.page-header h1.lmsc__title { color: #fff; font-size: 3.4rem; font-weight: 700; margin: 0; }
+
+/* Hero section spacing */
+.lmsc__hero-section { padding-bottom: 0 !important; }
+.lmsc__hero-section .page-header { margin-bottom: 0 !important; }
+
+/* Stats bar */
+.lmsc__stats { 
+    background-color: #f6f7f8;
+    background-color: #DDD;
+    /* border-bottom: 1px solid #e6e6e6;  */
+}
+.lmsc__stat { text-align: center; padding: 20px 15px; position: relative; }
+.lmsc__stat + .lmsc__stat::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 50px;
+    background: #AAA;
+}
+.lmsc__stat-number { font-size: 2.8rem; font-weight: 700; color: #132c49; line-height: 1.1; }
+.lmsc__stat-label { font-size: 1.1rem; font-weight: 600; color: #777; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+.lmsc__stat-season { font-size: 1.3rem; color: #666; margin-top: 4px; }
+/* NOTE: LMSC stats have no prod equivalent — sizes chosen to mirror the numeric hierarchy
+   of the original mockup while using rem units that scale with prod's root font. */
+@media (max-width: 767px) {
+    .lmsc__stat + .lmsc__stat::before { display: none; }
+}
+
+/* Officers table */
+.lmsc__officers { width: calc(100% - 5rem); border-collapse: collapse; margin-bottom: 30px; }
+.lmsc__officers tr { border-bottom: 1px solid #eee; }
+.lmsc__officers tr:last-child { border-bottom: none; }
+.lmsc__officers td { padding: 11px 0; vertical-align: middle; }
+.lmsc__officer-name { font-size: 1.5rem; font-weight: 500; color: #111; }
+.lmsc__officer-role { font-size: 1.3rem; color: #777; text-align: right; white-space: nowrap; width: 1%; }
+
+/* Resources list — 2 columns */
+.lmsc__resources--list { columns: 2; column-gap: 30px; padding: 0; margin: 0 0 30px; }
+.lmsc__resources--list li { break-inside: avoid; list-style: none; }
+.lmsc__resources--list a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    color: #111;
+    font-size: 1.4rem;
+    font-weight: 500;
+    text-decoration: none;
+}
+.lmsc__resources--list a:hover { color: #0068ad; text-decoration: none; }
+.lmsc__resources--list a svg { color: #0068ad; opacity: 0.7; flex-shrink: 0; }
+.lmsc__resources--list a:hover svg { opacity: 1; }
+.lmsc__main-section .lmsc__resources--list { margin-right: 5rem; }
+@media (max-width: 767px) {
+    .lmsc__resources--list { columns: 1; }
+}
+
+/* Main column rhythm */
+.lmsc__main-section .club__practice-info { margin-top: 0; padding-top: 1.2rem; margin-bottom: 1.6rem; margin-right: 5rem; }
+.lmsc__stats { padding-top: 0 !important; }
+
+/* Sidebar cards */
+.lmsc__sidebar-card { 
+    /* border: 1px solid #ddd;  */
+    /* border-radius: 6px;  */
+    /* padding: 20px;  */
+    margin-bottom: 20px; 
+    /* background: #fff;  */
+}
+.lmsc__sidebar-card--map { padding: 0; overflow: hidden; }
+.lmsc__sidebar-card--map img { width: 100%; display: block; cursor: zoom-in; }
+.lmsc__sidebar-card--map .lmsc__map-caption { text-align: center; padding: 10px; font-size: 1.2rem; color: #777; margin: 0; border-top: 1px solid #eee; }
+
+/* CTA stack */
+.lmsc__cta-stack .btn { margin-bottom: 10px; }
+.lmsc__cta-stack .btn:last-child { margin-bottom: 0; }
+
+/* Sidebar buttons */
+.lmsc__btn--join { background-color: #cc2030; border: 2px solid #cc2030; color: #fff; font-weight: 700; font-size: 15px; padding: 14px 16px; }
+.lmsc__btn--join:hover, .lmsc__btn--join:focus { background-color: #a81a28; border-color: #a81a28; color: #fff; }
+
+.lmsc__btn--website { background-color: #fff; border: 2px solid #0068ad; color: #0068ad; font-weight: 600; font-size: 14px; padding: 12px 16px; }
+.lmsc__btn--website:hover, .lmsc__btn--website:focus { background-color: #0068ad; color: #fff; }
+
+.lmsc__btn--send { background-color: #0068ad; border: none; color: #fff; font-weight: 700; font-size: 14px; padding: 12px 16px; }
+.lmsc__btn--send:hover, .lmsc__btn--send:focus { background-color: #0c6f97; color: #fff; }
+
+/* Map modal */
+.lmsc__map-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1050;
+    background: rgba(0,0,0,0.85);
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+.lmsc__map-modal.is-open { display: flex; }
+.lmsc__map-modal__img { max-width: 100%; max-height: 100%; display: block; }
+.lmsc__map-modal__close {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    background: transparent;
+    border: 0;
+    color: #fff;
+    font-size: 3.2rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 4px 12px;
+}
+.lmsc__map-modal__close:hover, .lmsc__map-modal__close:focus { color: #ccc; outline: none; }
