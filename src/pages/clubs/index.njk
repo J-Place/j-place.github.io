@@ -18,7 +18,7 @@ devSwimmerIds:
 {{ super() }}
 <script type="application/json" id="clubs-data">{{ clubs.data.clubs | dump | safe }}</script>
 <script src="/js/clubs-filter.js" defer></script>
-<script src="https://maps.googleapis.com/maps/api/js?key={{ keys.googleMaps }}&libraries=places&callback=initClubMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ keys.googleMaps }}&libraries=places&callback=initClubMap" defer></script>
 {% endblock %}
 {% block content %}
 {% include "partials/Common/loading.njk" %}
