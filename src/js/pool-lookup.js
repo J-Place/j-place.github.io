@@ -360,6 +360,9 @@ window.initPoolPlaces = function () {};
 
   if (lmscSelect) {
     lmscSelect.addEventListener('change', function () {
+      if (lmscSelect.value !== 'all' && rangeSelect) {
+        rangeSelect.value = 'max';
+      }
       syncLmscTag();
       withLoader(applyFilters);
     });

@@ -157,6 +157,8 @@
   var locationInput = document.getElementById('locationSearch');
   var courseBoxes   = document.querySelectorAll('input[name="check-list--searchCourseTypes"]');
   var rangeSelect   = document.getElementById('search-filter__range');
+  var lmscSelect    = document.getElementById('search-filter__lmsc');
+  var tagsContainer = document.querySelector('.list-control-search--tags');
   var summaryCount  = document.querySelector('.summary-count');
   var summaryRange  = document.querySelector('.summary-range');
   var summaryLoc    = document.querySelector('.summary-location');
@@ -242,6 +244,36 @@
     });
   }
 
+  // ── LMSC filter ───────────────────────────────────────────────────────────
+
+  function locMatchesLmsc(loc, lmscVal) {
+    if (!lmscVal || lmscVal === 'all') return true;
+    return loc.lmsc === lmscVal;
+  }
+
+  function syncLmscTag() {
+    if (!tagsContainer) return;
+    var existing = tagsContainer.querySelector('.tag-list--item[data-filter-name="lmsc"]');
+    if (existing) tagsContainer.removeChild(existing);
+    if (!lmscSelect || lmscSelect.value === 'all') return;
+    var tag = document.createElement('span');
+    tag.className = 'tag-list--item';
+    tag.textContent = lmscSelect.options[lmscSelect.selectedIndex].text;
+    tag.dataset.filterName  = 'lmsc';
+    tag.dataset.filterValue = lmscSelect.value;
+    tagsContainer.appendChild(tag);
+  }
+
+  if (tagsContainer) {
+    tagsContainer.addEventListener('click', function (e) {
+      var tag = e.target.closest('.tag-list--item[data-filter-name="lmsc"]');
+      if (!tag) return;
+      if (lmscSelect) lmscSelect.value = 'all';
+      syncLmscTag();
+      withLoader(applyFilters);
+    });
+  }
+
   // ── Summary ────────────────────────────────────────────────────────────────
 
   function updateSummary(count) {
@@ -262,13 +294,15 @@
     var parsedLoc     = (userLat === null && locationInput) ? parseLocation(locationInput.value) : null;
     var checkedValues = [];
     courseBoxes.forEach(function (cb) { if (cb.checked) checkedValues.push(cb.value); });
+    var lmscVal = lmscSelect ? lmscSelect.value : 'all';
 
     var matched = allLocations.filter(function (loc) {
       var nameOk   = !nameQuery || (loc.name || '').toLowerCase().includes(nameQuery);
       var distOk   = locMatchesDistance(loc, rangeMiles);
       var locOk    = distOk || locMatchesText(loc, parsedLoc);
       var courseOk = locMatchesCourses(loc, checkedValues);
-      return nameOk && (userLat !== null ? distOk : locOk) && courseOk;
+      var lmscOk   = locMatchesLmsc(loc, lmscVal);
+      return nameOk && (userLat !== null ? distOk : locOk) && courseOk && lmscOk;
     });
 
     if (locationColumn) {
@@ -312,7 +346,20 @@
     rangeSelect.addEventListener('change', function () { withLoader(applyFilters); });
   }
 
-  document.addEventListener('filtersChanged', applyFilters);
+  if (lmscSelect) {
+    lmscSelect.addEventListener('change', function () {
+      if (lmscSelect.value !== 'all' && rangeSelect) {
+        rangeSelect.value = 'max';
+      }
+      syncLmscTag();
+      withLoader(applyFilters);
+    });
+  }
+
+  document.addEventListener('filtersChanged', function () {
+    syncLmscTag();
+    applyFilters();
+  });
 
   // ── Init ───────────────────────────────────────────────────────────────────
 
