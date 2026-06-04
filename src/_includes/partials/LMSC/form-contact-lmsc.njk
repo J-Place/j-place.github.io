@@ -1,20 +1,103 @@
+<div class="loading-form" style="display: none">
+  <img src="/img/loader.gif" alt="loading" />
+</div>
 <div class="form-container">
-  <form action="#" method="post">
-    <div class="sc-form__container form__container--lmsc-committee">
+  <form action="#" method="post" id="contact-lmsc-form">
+    <div class="form__container">
+    <div class="sc-form__container form__container--contact-lmsc">
 
       <div class="row">
         <div class="sc-form__header">
-          <p class="sc-form__header--summary">Contact form summary ...</p>
+          <p class="sc-form__header--summary">There&#39;s a ton of great stuff here, but if you didn&#39;t find what you&#39;re looking for, or you did but have additional questions, we&#39;re here to help!</p>
         </div>
       </div>
 
       <div class="row">
-        <div class="col-sm-6" data-sc-field-key="">
+        <div class="col-sm-4" data-sc-field-key="">
+          <div class="sc-form__select-group">
+            <label for="lmsc">Select an LMSC</label>
+            <select id="lmsc" name="lmsc" aria-required="true" data-val="true" data-val-required="LMSC is required.">
+              <option value=""></option>
+              <option value="Adirondack">Adirondack</option>
+              <option value="Alaska">Alaska</option>
+              <option value="Allegheny Mountain">Allegheny Mountain</option>
+              <option value="Arizona">Arizona</option>
+              <option value="Arkansas">Arkansas</option>
+              <option value="Colorado">Colorado</option>
+              <option value="Connecticut">Connecticut</option>
+              <option value="Delaware Valley">Delaware Valley</option>
+              <option value="Florida">Florida</option>
+              <option value="Florida Gold Coast">Florida Gold Coast</option>
+              <option value="Georgia">Georgia</option>
+              <option value="Gulf">Gulf</option>
+              <option value="Hawaii">Hawaii</option>
+              <option value="Illinois">Illinois</option>
+              <option value="Indiana">Indiana</option>
+              <option value="Inland Northwest">Inland Northwest</option>
+              <option value="Iowa">Iowa</option>
+              <option value="Kentucky">Kentucky</option>
+              <option value="Lake Erie">Lake Erie</option>
+              <option value="Maryland">Maryland</option>
+              <option value="Metropolitan">Metropolitan</option>
+              <option value="Michigan">Michigan</option>
+              <option value="Minnesota">Minnesota</option>
+              <option value="Missouri Valley">Missouri Valley</option>
+              <option value="Montana">Montana</option>
+              <option value="Nebraska">Nebraska</option>
+              <option value="New England">New England</option>
+              <option value="New Jersey">New Jersey</option>
+              <option value="New Mexico">New Mexico</option>
+              <option value="Niagara">Niagara</option>
+              <option value="North Carolina">North Carolina</option>
+              <option value="North Dakota">North Dakota</option>
+              <option value="North Texas">North Texas</option>
+              <option value="Ohio">Ohio</option>
+              <option value="Oklahoma">Oklahoma</option>
+              <option value="Oregon">Oregon</option>
+              <option value="Ozark">Ozark</option>
+              <option value="Pacific">Pacific</option>
+              <option value="Pacific Northwest">Pacific Northwest</option>
+              <option value="Potomac Valley">Potomac Valley</option>
+              <option value="San Diego-Imperial">San Diego-Imperial</option>
+              <option value="Snake River">Snake River</option>
+              <option value="South Carolina">South Carolina</option>
+              <option value="South Dakota">South Dakota</option>
+              <option value="South Texas">South Texas</option>
+              <option value="Southeastern">Southeastern</option>
+              <option value="Southern">Southern</option>
+              <option value="Southern Pacific">Southern Pacific</option>
+              <option value="Utah">Utah</option>
+              <option value="Virginia">Virginia</option>
+              <option value="Wisconsin">Wisconsin</option>
+            </select>
+            <span class="field-validation-valid" data-valmsg-for="lmsc" data-valmsg-replace="true"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-5" data-sc-field-key="">
+          <div class="sc-form__select-group">
+            <label for="subject">Subject</label>
+            <select id="subject" name="subject" aria-required="true" data-val="true" data-val-required="Subject is required.">
+              <option value=""></option>
+              <option value="General Information">General Information</option>
+              <option value="Membership">Membership</option>
+              <option value="Events/Sanctioning">Events/Sanctioning</option>
+              <option value="Results/Records">Results/Records</option>
+            </select>
+            <span class="field-validation-valid" data-valmsg-for="subject" data-valmsg-replace="true"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-5" data-sc-field-key="">
           <label for="firstName">First Name</label>
           <input id="firstName" name="firstName" type="text" maxlength="255" aria-required="true" data-val="true" data-val-required="First Name is required.">
           <span class="field-validation-valid" data-valmsg-for="firstName" data-valmsg-replace="true"></span>
         </div>
-        <div class="col-sm-6" data-sc-field-key="">
+        <div class="col-sm-5" data-sc-field-key="">
           <label for="lastName">Last Name</label>
           <input id="lastName" name="lastName" type="text" maxlength="255" aria-required="true" data-val="true" data-val-required="Last Name is required.">
           <span class="field-validation-valid" data-valmsg-for="lastName" data-valmsg-replace="true"></span>
@@ -22,7 +105,7 @@
       </div>
 
       <div class="row">
-        <div class="col-sm-8" data-sc-field-key="">
+        <div class="col-sm-6" data-sc-field-key="">
           <label for="emailAddress">Email Address</label>
           <input id="emailAddress" name="emailAddress" type="email" maxlength="255" aria-required="true" data-val="true" data-val-required="Email Address is required." data-val-regex="Email Address contains an invalid email address." data-val-regex-pattern="^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,17}$">
           <span class="field-validation-valid" data-valmsg-for="emailAddress" data-valmsg-replace="true"></span>
@@ -35,12 +118,6 @@
           <textarea id="message" name="message" rows="5" maxlength="1042" aria-required="true" data-val="true" data-val-required="Message is required."></textarea>
           <span class="field-validation-valid" data-valmsg-for="message" data-valmsg-replace="true"></span>
         </div>
-      </div>
-
-      <div class="row upload-file">
-        <label for="uploadFile">Upload File</label>
-        <input id="uploadFile" name="uploadFile" type="file">
-        <span class="field-validation-valid" data-valmsg-for="uploadFile" data-valmsg-replace="true"></span>
       </div>
 
       <div class="row">
@@ -84,6 +161,7 @@
         </div>
       </div>
 
+    </div>
     </div>
   </form>
 </div>
