@@ -348,8 +348,11 @@
 
   if (lmscSelect) {
     lmscSelect.addEventListener('change', function () {
-      if (lmscSelect.value !== 'all' && rangeSelect) {
-        rangeSelect.value = 'max';
+      if (lmscSelect.value !== 'all') {
+        if (rangeSelect) rangeSelect.value = 'max';
+        if (locationInput) locationInput.value = '';
+        userLat = null;
+        userLng = null;
       }
       syncLmscTag();
       withLoader(applyFilters);
