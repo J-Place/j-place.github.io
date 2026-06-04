@@ -1,6 +1,66 @@
 const fs   = require('fs');
 const path = require('path');
 
+// ── Pool location helpers ─────────────────────────────────────────────────────
+
+const _stateNameToAbbr = {
+  'Alabama':'AL','Alaska':'AK','Arizona':'AZ','Arkansas':'AR','California':'CA',
+  'Colorado':'CO','Connecticut':'CT','Delaware':'DE','Florida':'FL','Georgia':'GA',
+  'Hawaii':'HI','Idaho':'ID','Illinois':'IL','Indiana':'IN','Iowa':'IA',
+  'Kansas':'KS','Kentucky':'KY','Louisiana':'LA','Maine':'ME','Maryland':'MD',
+  'Massachusetts':'MA','Michigan':'MI','Minnesota':'MN','Mississippi':'MS',
+  'Missouri':'MO','Montana':'MT','Nebraska':'NE','Nevada':'NV',
+  'New Hampshire':'NH','New Jersey':'NJ','New Mexico':'NM','New York':'NY',
+  'North Carolina':'NC','North Dakota':'ND','Ohio':'OH','Oklahoma':'OK',
+  'Oregon':'OR','Pennsylvania':'PA','Rhode Island':'RI','South Carolina':'SC',
+  'South Dakota':'SD','Tennessee':'TN','Texas':'TX','Utah':'UT','Vermont':'VT',
+  'Virginia':'VA','Washington':'WA','West Virginia':'WV','Wisconsin':'WI',
+  'Wyoming':'WY','District of Columbia':'DC'
+};
+
+function _normState(s) {
+  if (!s) return '';
+  s = s.trim();
+  return s.length === 2 ? s.toUpperCase() : (_stateNameToAbbr[s] || s);
+}
+
+function _deriveLmsc(state, lat, lng) {
+  const single = {
+    AK:'Alaska', AL:'Southeastern', AR:'Arkansas', AZ:'Arizona',
+    CO:'Colorado', CT:'Connecticut', DC:'Potomac Valley', DE:'Delaware Valley',
+    GA:'Georgia', HI:'Hawaii', IA:'Iowa', ID:'Snake River',
+    IL:'Illinois', IN:'Indiana', KS:'Missouri Valley', KY:'Kentucky',
+    LA:'Gulf', MA:'New England', MD:'Maryland', ME:'New England',
+    MI:'Michigan', MN:'Minnesota', MO:'Ozark', MS:'Gulf',
+    MT:'Montana', NC:'North Carolina', ND:'North Dakota', NE:'Nebraska',
+    NH:'New England', NM:'New Mexico', NV:'Southern Pacific', OH:'Ohio',
+    OK:'Oklahoma', OR:'Oregon', RI:'New England', SC:'South Carolina',
+    SD:'South Dakota', TN:'Southeastern', UT:'Utah', VT:'New England',
+    WI:'Wisconsin', WV:'Virginia', WY:'Snake River'
+  };
+  if (single[state]) return single[state];
+  lat = parseFloat(lat); lng = parseFloat(lng);
+  switch (state) {
+    case 'FL': return lat < 27.0 ? 'Florida Gold Coast' : 'Florida';
+    case 'CA':
+      if (lat < 33.7) return 'San Diego-Imperial';
+      if (lat > 36.5) return 'Pacific';
+      return 'Southern Pacific';
+    case 'TX': return lat > 31.0 ? 'North Texas' : 'South Texas';
+    case 'NY':
+      if (lng < -77.5) return 'Niagara';
+      if (lat < 42.0) return 'Metropolitan';
+      return 'Adirondack';
+    case 'NJ': return lat > 40.2 ? 'Metropolitan' : 'New Jersey';
+    case 'PA':
+      if (lat > 41.2 && lng < -80.2) return 'Lake Erie';
+      return lng < -78.0 ? 'Allegheny Mountain' : 'Delaware Valley';
+    case 'VA': return lat > 37.5 ? 'Potomac Valley' : 'Virginia';
+    case 'WA': return lng > -119.5 ? 'Inland Northwest' : 'Pacific Northwest';
+    default: return null;
+  }
+}
+
 module.exports = function(eleventyConfig) {
   eleventyConfig.addWatchTarget("src/_data/");
 
@@ -47,16 +107,19 @@ module.exports = function(eleventyConfig) {
 
   // Serialize locations array to JSON for the pool-lookup JS data blob
   eleventyConfig.addFilter("poolLocationsJson", locations =>
-    JSON.stringify((locations || []).map(loc => ({
-      id:      loc.Id,
-      name:    loc.Name,
-      address: loc.Address,
-      city:    loc.City,
-      state:   loc.State,
-      zip:     loc.ZipCode,
-      lat:     loc.Lat,
-      lng:     loc.Lng,
-      courses: (loc.Courses || []).map(c => ({
+    JSON.stringify((locations || []).map(loc => {
+      const state = _normState(loc.State);
+      return {
+        id:      loc.Id,
+        name:    loc.Name,
+        address: loc.Address,
+        city:    loc.City,
+        state:   state,
+        zip:     loc.ZipCode,
+        lat:     loc.Lat,
+        lng:     loc.Lng,
+        lmsc:    _deriveLmsc(state, loc.Lat, loc.Lng),
+        courses: (loc.Courses || []).map(c => ({
         tag:           c.Tag,
         pool:          c.PoolName || c.Name,
         length:        c.Length,
@@ -69,7 +132,8 @@ module.exports = function(eleventyConfig) {
         measured:      c.Measured,
         measuredDate:  c.MeasuredDate
       }))
-    })))
+    };
+  }))
   );
 
   // Slim course objects down to only the fields shown in the pool detail modal
