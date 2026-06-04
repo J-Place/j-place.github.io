@@ -264,13 +264,21 @@ window.initPoolPlaces = function () {};
     tagsContainer.appendChild(tag);
   }
 
+  function restoreInitialParams() {
+    if (rangeSelect)   rangeSelect.value   = initialRange;
+    if (locationInput) locationInput.value = initialLocation;
+    userLat = null;
+    userLng = null;
+    geocodeAddress(initialLocation);
+  }
+
   if (tagsContainer) {
     tagsContainer.addEventListener('click', function (e) {
       var tag = e.target.closest('.tag-list--item[data-filter-name="lmsc"]');
       if (!tag) return;
       if (lmscSelect) lmscSelect.value = 'all';
       syncLmscTag();
-      withLoader(applyFilters);
+      restoreInitialParams();
     });
   }
 
@@ -365,6 +373,10 @@ window.initPoolPlaces = function () {};
         if (locationInput) locationInput.value = '';
         userLat = null;
         userLng = null;
+      } else {
+        syncLmscTag();
+        restoreInitialParams();
+        return;
       }
       syncLmscTag();
       withLoader(applyFilters);
@@ -405,6 +417,8 @@ window.initPoolPlaces = function () {};
   }
 
   if (locationInput) locationInput.value = 'Sarasota, FL';
+  var initialLocation = locationInput ? locationInput.value : '';
+  var initialRange    = rangeSelect    ? rangeSelect.value    : '25';
   geocodeAddress(locationInput ? locationInput.value : '');
 
 }());
