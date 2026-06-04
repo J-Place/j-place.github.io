@@ -26,6 +26,8 @@ In short: Covered = you could point a designer at the mockup and say "that's the
 
 | Production page | Mockup page | Status |
 |---|---|---|
+| *(CMS content — no React component)* Board of Directors | `src/pages/volunteer-central/board-of-directors.njk` | Covered |
+| *(CMS content — no React component)* Board of Directors Assignments | `src/pages/volunteer-central/board-assignments.njk` | Covered |
 | `Article.jsx` | `src/pages/swimmer-magazine/**` (SWIMMER only) | Partial |
 | `Club.jsx` (legacy) / `Feature/Club2.0` Razor views (authoritative) | `src/pages/clubs/sarasota-y-sharks-536.njk`, `south-end-rowing-club-580.njk`, `swim-fort-lauderdale-1877.njk`, `fort-worth-area-swim-team-608.njk` | Covered |
 | `Clubs.jsx` | `src/pages/clubs/index.njk` | Covered |
