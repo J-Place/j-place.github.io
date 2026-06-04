@@ -318,6 +318,9 @@ window.initClubMap = function () {};
       map.setCenter({ lat: 39.5, lng: -98.35 });
       map.setZoom(4);
     }
+
+    var mapDiv = map.getDiv();
+    if (mapDiv.style.visibility === 'hidden') mapDiv.style.visibility = '';
   }
 
   window.initClubMap = function () {
@@ -328,6 +331,7 @@ window.initClubMap = function () {};
       center: { lat: 39.5, lng: -98.35 },
       zoom: 4
     });
+    mapEl.style.visibility = 'hidden';
 
     // Swap Nominatim dropdown for Google Places Autocomplete
     if (locationInput) {
@@ -363,10 +367,6 @@ window.initClubMap = function () {};
           var abbr = stateAbbr[data.region] || data.region;
           locationInput.value = data.city + ', ' + abbr;
         }
-        // Jump map to approximate location immediately so fitBounds has nothing
-        // large to animate — avoids the state-label flash during the zoom-in.
-        map.setCenter({ lat: userLat, lng: userLng });
-        map.setZoom(10);
         withLoader(applyFilters);
       })
       .catch(function () {});
