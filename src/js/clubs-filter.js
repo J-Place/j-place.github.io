@@ -262,6 +262,7 @@ window.initClubMap = function () {};
       return;
     }
 
+    var rangeMiles = nameMode ? null : getRange();
     var bounds = new google.maps.LatLngBounds();
     var markerSize = new google.maps.Size(20, 32);
 
@@ -302,12 +303,14 @@ window.initClubMap = function () {};
       });
     });
 
-    if (activeMarkers.length) {
+    if (nameMode && activeMarkers.length) {
       map.fitBounds(bounds);
-      // Don't zoom in too close for a single result
-      google.maps.event.addListenerOnce(map, 'bounds_changed', function () {
-        if (map.getZoom() > 13) map.setZoom(13);
+    } else if (userLat !== null && rangeMiles !== null) {
+      var rangeCircle = new google.maps.Circle({
+        center: { lat: userLat, lng: userLng },
+        radius: rangeMiles * 1609.34
       });
+      map.fitBounds(rangeCircle.getBounds());
     } else if (userLat !== null) {
       map.setCenter({ lat: userLat, lng: userLng });
       map.setZoom(10);
