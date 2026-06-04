@@ -303,6 +303,13 @@ window.initClubMap = function () {};
       });
     });
 
+    var mapDiv = map.getDiv();
+    if (mapDiv.style.visibility === 'hidden') {
+      google.maps.event.addListenerOnce(map, 'idle', function () {
+        mapDiv.style.visibility = '';
+      });
+    }
+
     if (nameMode && activeMarkers.length) {
       map.fitBounds(bounds);
     } else if (userLat !== null && rangeMiles !== null) {
@@ -318,9 +325,6 @@ window.initClubMap = function () {};
       map.setCenter({ lat: 39.5, lng: -98.35 });
       map.setZoom(4);
     }
-
-    var mapDiv = map.getDiv();
-    if (mapDiv.style.visibility === 'hidden') mapDiv.style.visibility = '';
   }
 
   window.initClubMap = function () {
