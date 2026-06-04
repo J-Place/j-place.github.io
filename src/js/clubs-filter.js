@@ -349,15 +349,16 @@ window.initClubMap = function () {};
     }
 
     // Seed map and filter from user's IP location
-    fetch('https://freeipapi.com/api/json')
+    fetch('https://ipinfo.io/json')
       .then(function (r) { return r.json(); })
       .then(function (data) {
-        if (!data || data.countryCode !== 'US' || !data.latitude) return;
-        userLat = parseFloat(data.latitude);
-        userLng = parseFloat(data.longitude);
-        if (locationInput && data.cityName && data.regionName) {
-          var abbr = stateAbbr[data.regionName] || data.regionName;
-          locationInput.value = data.cityName + ', ' + abbr;
+        if (!data || data.country !== 'US' || !data.loc) return;
+        var coords = data.loc.split(',');
+        userLat = parseFloat(coords[0]);
+        userLng = parseFloat(coords[1]);
+        if (locationInput && data.city && data.region) {
+          var abbr = stateAbbr[data.region] || data.region;
+          locationInput.value = data.city + ', ' + abbr;
         }
         withLoader(applyFilters);
       })
