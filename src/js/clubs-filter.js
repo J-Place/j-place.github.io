@@ -349,10 +349,10 @@ window.initClubMap = function () {};
     }
 
     // Seed map and filter from user's IP location
-    fetch('https://ipapi.co/json/')
+    fetch('https://ipwho.is/')
       .then(function (r) { return r.json(); })
       .then(function (data) {
-        if (!data || data.country_code !== 'US' || !data.latitude) return;
+        if (!data || !data.success || data.country_code !== 'US' || !data.latitude) return;
         userLat = parseFloat(data.latitude);
         userLng = parseFloat(data.longitude);
         if (locationInput && data.city && data.region_code) {
