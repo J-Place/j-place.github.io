@@ -34,8 +34,9 @@ window.initClubMap = function () {};
   var loaderEl      = document.querySelector('.loading');
   var certBoxes     = document.querySelectorAll('.check-list--certifications input[type="checkbox"]');
 
-  var userLat = null;
-  var userLng = null;
+  var userLat  = null;
+  var userLng  = null;
+  var mapCover = null; // opaque div over the map until first position is set
 
   // ── Name mode ──────────────────────────────────────────────────────────────
 
@@ -303,10 +304,12 @@ window.initClubMap = function () {};
       });
     });
 
-    var mapDiv = map.getDiv();
-    if (mapDiv.style.visibility === 'hidden') {
+    if (mapCover) {
       google.maps.event.addListenerOnce(map, 'idle', function () {
-        mapDiv.style.visibility = '';
+        if (mapCover && mapCover.parentNode) {
+          mapCover.parentNode.removeChild(mapCover);
+          mapCover = null;
+        }
       });
     }
 
@@ -335,7 +338,13 @@ window.initClubMap = function () {};
       center: { lat: 39.5, lng: -98.35 },
       zoom: 4
     });
-    mapEl.style.visibility = 'hidden';
+
+    // Cover the map until the first search positions it correctly.
+    // A sibling div is immune to visibility overrides from Google Maps children.
+    mapCover = document.createElement('div');
+    mapCover.style.cssText = 'position:absolute;inset:0;background:#e8e8e8;z-index:1';
+    mapEl.parentNode.style.position = 'relative';
+    mapEl.parentNode.appendChild(mapCover);
 
     // Swap Nominatim dropdown for Google Places Autocomplete
     if (locationInput) {
