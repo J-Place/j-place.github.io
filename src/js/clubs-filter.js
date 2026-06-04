@@ -34,9 +34,8 @@ window.initClubMap = function () {};
   var loaderEl      = document.querySelector('.loading');
   var certBoxes     = document.querySelectorAll('.check-list--certifications input[type="checkbox"]');
 
-  var userLat  = null;
-  var userLng  = null;
-  var mapCover = null; // opaque div over the map until first position is set
+  var userLat = null;
+  var userLng = null;
 
   // ── Name mode ──────────────────────────────────────────────────────────────
 
@@ -304,15 +303,6 @@ window.initClubMap = function () {};
       });
     });
 
-    if (mapCover) {
-      google.maps.event.addListenerOnce(map, 'idle', function () {
-        if (mapCover && mapCover.parentNode) {
-          mapCover.parentNode.removeChild(mapCover);
-          mapCover = null;
-        }
-      });
-    }
-
     if (nameMode && activeMarkers.length) {
       map.fitBounds(bounds);
     } else if (userLat !== null && rangeMiles !== null) {
@@ -334,17 +324,16 @@ window.initClubMap = function () {};
     var mapEl = document.querySelector('.club-map-new');
     if (!mapEl) return;
 
-    map = new google.maps.Map(mapEl, {
-      center: { lat: 39.5, lng: -98.35 },
-      zoom: 4
-    });
+    // Default to Sarasota (USMS HQ) so the map renders correctly on first paint.
+    var defaultLat = 27.3364, defaultLng = -82.5307;
+    userLat = defaultLat;
+    userLng = defaultLng;
+    if (locationInput) locationInput.value = 'Sarasota, FL';
 
-    // Cover the map until the first search positions it correctly.
-    // A sibling div is immune to visibility overrides from Google Maps children.
-    mapCover = document.createElement('div');
-    mapCover.style.cssText = 'position:absolute;inset:0;background:#e8e8e8;z-index:1';
-    mapEl.parentNode.style.position = 'relative';
-    mapEl.parentNode.appendChild(mapCover);
+    map = new google.maps.Map(mapEl, {
+      center: { lat: defaultLat, lng: defaultLng },
+      zoom: 10
+    });
 
     // Swap Nominatim dropdown for Google Places Autocomplete
     if (locationInput) {
@@ -368,7 +357,9 @@ window.initClubMap = function () {};
       });
     }
 
-    // Seed map and filter from user's IP location
+    // Show default location immediately, then update to user's IP location.
+    applyFilters();
+
     fetch('https://ipinfo.io/json')
       .then(function (r) { return r.json(); })
       .then(function (data) {
