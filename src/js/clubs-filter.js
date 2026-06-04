@@ -363,6 +363,10 @@ window.initClubMap = function () {};
           var abbr = stateAbbr[data.region] || data.region;
           locationInput.value = data.city + ', ' + abbr;
         }
+        // Jump map to approximate location immediately so fitBounds has nothing
+        // large to animate — avoids the state-label flash during the zoom-in.
+        map.setCenter({ lat: userLat, lng: userLng });
+        map.setZoom(10);
         withLoader(applyFilters);
       })
       .catch(function () {});
