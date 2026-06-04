@@ -37,6 +37,35 @@ window.initClubMap = function () {};
   var userLat = null;
   var userLng = null;
 
+  // ── Name mode ──────────────────────────────────────────────────────────────
+
+  var nameMode      = false;
+  var savedLocation = null; // { text, lat, lng } captured when name search is committed
+
+  function enterNameMode() {
+    if (nameMode) return;
+    nameMode = true;
+    savedLocation = {
+      text: locationInput ? locationInput.value : '',
+      lat:  userLat,
+      lng:  userLng
+    };
+    if (locationInput) locationInput.value = '';
+    userLat = null;
+    userLng = null;
+  }
+
+  function exitNameMode() {
+    if (!nameMode) return;
+    nameMode = false;
+    if (savedLocation) {
+      if (locationInput) locationInput.value = savedLocation.text;
+      userLat = savedLocation.lat;
+      userLng = savedLocation.lng;
+      savedLocation = null;
+    }
+  }
+
   // ── Helpers ────────────────────────────────────────────────────────────────
 
   var markerOrange = '/img/marker_orange.webp';
@@ -224,7 +253,7 @@ window.initClubMap = function () {};
     if (!map) return;
     clearMarkers();
 
-    if (userLat === null) {
+    if (userLat === null && !nameMode) {
       map.setCenter({ lat: 39.5, lng: -98.35 });
       map.setZoom(4);
       return;
@@ -276,9 +305,12 @@ window.initClubMap = function () {};
       google.maps.event.addListenerOnce(map, 'bounds_changed', function () {
         if (map.getZoom() > 13) map.setZoom(13);
       });
-    } else {
+    } else if (userLat !== null) {
       map.setCenter({ lat: userLat, lng: userLng });
       map.setZoom(10);
+    } else {
+      map.setCenter({ lat: 39.5, lng: -98.35 });
+      map.setZoom(4);
     }
   }
 
@@ -308,6 +340,7 @@ window.initClubMap = function () {};
           userLat = null;
           userLng = null;
         }
+        exitNameMode();
         withLoader(applyFilters);
       });
     }
@@ -441,6 +474,7 @@ window.initClubMap = function () {};
     userLat = parseFloat(item.result.lat);
     userLng = parseFloat(item.result.lon);
     closeAc();
+    exitNameMode();
     withLoader(applyFilters);
   }
 
@@ -517,13 +551,26 @@ window.initClubMap = function () {};
   if (submitBtn) {
     submitBtn.addEventListener('click', function () {
       closeAc();
-      geocodeAndFilter(locationInput ? locationInput.value : '');
+      if (nameInput && nameInput.value.trim().length > 0) {
+        enterNameMode();
+        withLoader(applyFilters);
+      } else {
+        exitNameMode();
+        geocodeAndFilter(locationInput ? locationInput.value : '');
+      }
     });
   }
 
   if (nameInput) {
     nameInput.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') withLoader(applyFilters);
+      if (e.key !== 'Enter') return;
+      if (nameInput.value.trim().length > 0) {
+        enterNameMode();
+        withLoader(applyFilters);
+      } else {
+        exitNameMode();
+        withLoader(applyFilters);
+      }
     });
   }
 
