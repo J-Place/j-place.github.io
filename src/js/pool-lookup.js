@@ -175,6 +175,7 @@ window.initPoolPlaces = function () {};
     });
     ac.addListener('place_changed', function () {
       var place = ac.getPlace();
+      resetFiltersForLocation();
       if (place.geometry && place.geometry.location) {
         userLat = place.geometry.location.lat();
         userLng = place.geometry.location.lng();
@@ -262,6 +263,15 @@ window.initPoolPlaces = function () {};
     tag.dataset.filterName  = 'lmsc';
     tag.dataset.filterValue = lmscSelect.value;
     tagsContainer.appendChild(tag);
+  }
+
+  function resetCourseFilters() {
+    courseBoxes.forEach(function (cb) { cb.checked = false; });
+    if (tagsContainer) {
+      tagsContainer.querySelectorAll('.tag-list--item:not([data-filter-name="lmsc"])').forEach(function (t) {
+        t.parentNode.removeChild(t);
+      });
+    }
   }
 
   function restoreInitialParams() {
@@ -363,7 +373,18 @@ window.initPoolPlaces = function () {};
   }
 
   if (rangeSelect) {
-    rangeSelect.addEventListener('change', function () { withLoader(applyFilters); });
+    rangeSelect.addEventListener('change', function () {
+      if (lmscSelect && lmscSelect.value !== 'all') {
+        lmscSelect.value = 'all';
+        syncLmscTag();
+        if (locationInput) locationInput.value = initialLocation;
+        userLat = null;
+        userLng = null;
+        geocodeAddress(initialLocation);
+      } else {
+        withLoader(applyFilters);
+      }
+    });
   }
 
   if (lmscSelect) {
@@ -373,6 +394,7 @@ window.initPoolPlaces = function () {};
         if (locationInput) locationInput.value = '';
         userLat = null;
         userLng = null;
+        resetCourseFilters();
       } else {
         syncLmscTag();
         restoreInitialParams();
@@ -390,8 +412,21 @@ window.initPoolPlaces = function () {};
 
   // ── Init ───────────────────────────────────────────────────────────────────
 
+  function resetFiltersForLocation() {
+    var lmscWasActive = lmscSelect && lmscSelect.value !== 'all';
+    if (lmscWasActive) {
+      lmscSelect.value = 'all';
+      syncLmscTag();
+      resetCourseFilters();
+    }
+    if (rangeSelect && rangeSelect.value === 'max' && lmscWasActive) {
+      rangeSelect.value = initialRange;
+    }
+  }
+
   function geocodeAddress(address) {
     if (!address) { withLoader(applyFilters); return; }
+    resetFiltersForLocation();
     if (loaderEl) loaderEl.style.display = 'flex';
     var start = Date.now();
     function done() {
