@@ -106,38 +106,42 @@ function initScForm(form) {
   });
 
   // ── Event listeners ─────────────────────────────────────────────────────
+  // Validation runs on submit only. Radio change only updates conditional submit rows.
   var seenNames = new Set();
-
-  form.querySelectorAll('[data-val]').forEach(function (el) {
-    if (el.type === 'hidden') return;
-
-    if (el.type === 'radio') {
-      if (seenNames.has(el.name)) return;
-      seenNames.add(el.name);
-      form.querySelectorAll('[name="' + el.name + '"]').forEach(function (r) {
-        r.addEventListener('change', function () {
-          validateField(el.name);
-          updateSubmitRows();
-        });
-      });
-    } else if (el.type === 'checkbox') {
-      // Captcha checkbox is handled by the widget click above; skip blur wiring
-    } else {
-      el.addEventListener('blur', function () { validateField(el.name); });
-    }
+  form.querySelectorAll('input[type="radio"][data-val]').forEach(function (el) {
+    if (seenNames.has(el.name)) return;
+    seenNames.add(el.name);
+    form.querySelectorAll('[name="' + el.name + '"]').forEach(function (r) {
+      r.addEventListener('change', updateSubmitRows);
+    });
   });
 
   // ── Submit ───────────────────────────────────────────────────────────────
+  var validationShowing = false;
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    var valid = true;
     var validated = new Set();
 
+    if (validationShowing) {
+      form.querySelectorAll('[data-val]').forEach(function (el) {
+        if (el.type === 'hidden' && !el.classList.contains('fxt-captcha')) return;
+        if (validated.has(el.name)) return;
+        validated.add(el.name);
+        clearError(el.name);
+      });
+      validationShowing = false;
+      return;
+    }
+
+    var valid = true;
     form.querySelectorAll('[data-val]').forEach(function (el) {
       if (el.type === 'hidden' && !el.classList.contains('fxt-captcha')) return;
       if (validated.has(el.name)) return;
       validated.add(el.name);
       if (!validateField(el.name)) valid = false;
     });
+
+    if (!valid) validationShowing = true;
   });
 }
