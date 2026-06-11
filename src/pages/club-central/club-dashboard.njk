@@ -58,23 +58,16 @@ breadcrumbs:
             {% for club in clubsLocal.clubs %}
             <div class="club-button-wrapper">
               {% if club.isWog %}
-                {% if club.disabled %}
-                  <div class="disabled-club">
-                    <div class="btn btn-outline club-link-button">{{ club.abbreviation }}</div>
-                    <span>Parent Club Not Registered</span>
-                  </div>
-                {% else %}
-                  <a class="btn btn-outline club-link-button" href="/club-central/club-edit.html?clubId={{ club.id }}&wog={{ club.id }}">{{ club.abbreviation }}</a>
-                {% endif %}
+                <div class="disabled-club">
+                  <div class="btn btn-outline club-link-button">{{ club.abbreviation }}</div>
+                </div>
+              {% elif club.disabled %}
+                <div class="disabled-club">
+                  <div class="btn btn-outline club-link-button">{{ club.abbreviation }}</div>
+                  <span>Club Disabled</span>
+                </div>
               {% else %}
-                {% if club.disabled %}
-                  <div class="disabled-club">
-                    <div class="btn btn-outline club-link-button">{{ club.abbreviation }}</div>
-                    <span>Club Disabled</span>
-                  </div>
-                {% else %}
-                  <a class="btn btn-outline club-link-button" href="/club-central/club-edit.html?clubId={{ club.id }}">{{ club.abbreviation }}</a>
-                {% endif %}
+                <a class="btn btn-outline club-link-button" href="/club-central/club-dashboard/club-manage.html?clubId={{ club.id }}">{{ club.abbreviation }}</a>
               {% endif %}
             </div>
             {% endfor %}

@@ -49,7 +49,7 @@ Last updated: 2026-05-29
 | ✅ Revised | South End Rowing Club 580 | `clubs/south-end-rowing-club-580.njk` |
 | ✅ Revised | Fort Worth Area Swim Team 608 | `clubs/fort-worth-area-swim-team-608.njk` |
 | ✅ Revised | Swim Fort Lauderdale 1877 | `clubs/swim-fort-lauderdale-1877.njk` |
-| ⬜ Not Audited | Club Dashboard | `club-central/club-dashboard.njk` |
+| ✅ Revised | Club Dashboard | `club-central/club-dashboard.njk` |
 
 ## LMSC (1)
 
@@ -100,4 +100,4 @@ Last updated: 2026-05-29
 
 ---
 
-**Totals:** ✅ 4 Revised · ⬜ 32 Not Audited · 🔄 1 In Progress · 3 N/A
+**Totals:** ✅ 5 Revised · ⬜ 31 Not Audited · 🔄 1 In Progress · 3 N/A
