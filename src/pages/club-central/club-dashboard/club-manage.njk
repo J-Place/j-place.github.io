@@ -1,0 +1,79 @@
+---
+permalink: /club-central/club-dashboard/club-manage.html
+title: Manage Club | U.S. Masters Swimming
+pageTitle: Manage Club
+breadcrumbs:
+  - url: "/home"
+    label: "Home"
+  - url: "/club-central"
+    label: "Club Central"
+  - url: "/club-central/club-dashboard.html"
+    label: "Club Dashboard"
+breadcrumbTitle: "Manage Club"
+---
+{% extends "layouts/base.njk" %}
+
+{% block pageCSS %}
+<link rel="stylesheet" href="https://www.usms.org/styles/clubDetail.min.css">
+<link rel="stylesheet" href="/css/Club/club-manage.css">
+{% endblock %}
+
+{% block breadcrumb %}
+{% include "partials/Common/Breadcrumb.njk" %}
+{% endblock %}
+
+{% block content %}
+<script type="application/json" id="clubs-local-data">{{ clubsLocal.clubs | dump | safe }}</script>
+
+<div class="section section-full bg-gray p-tb-10 p-mh-500">
+
+  <div class="usms-container p-tb-10">
+    <div class="row">
+      <div class="col-xs-12">
+        <header class="page-title">
+          <h1>Manage Club</h1>
+        </header>
+      </div>
+    </div>
+  </div>
+
+  <div class="usms-container message__container p-tb-10">
+    <div class="row club-manage-options">
+
+      <div class="col-xs-12">
+        <h3 class="add-club-choice__title" id="club-manage-heading">What would you like to do?</h3>
+      </div>
+
+      <div class="col-xs-12 col-lg-4">
+        <div>
+          <a class="btn btn-md btn-outline" id="btn-club-edit" href="/club-central/club-edit.html">Edit Club Details</a>
+          <h6>Club Profile</h6>
+        </div>
+        <p>Update your club's profile, locations, coaches, and contact information.</p>
+      </div>
+
+      <div class="col-xs-12 col-lg-4">
+        <div>
+          <a class="btn btn-md btn-outline" id="btn-manage-members" href="/club-central/manage-members.html">Manage Members</a>
+          <h6>Current Members</h6>
+        </div>
+        <p>View current members by renewal type, and bulk-register expiring members for the upcoming year.</p>
+      </div>
+
+      <div class="col-xs-12 col-lg-4">
+        <div>
+          <a class="btn btn-md btn-outline" id="btn-manage-non-members" href="/club-central/non-members.html">Manage Potential Members</a>
+          <h6>Potential Members</h6>
+        </div>
+        <p>View trial membership and contact form submissions, and track outreach to expired members and other prospects.</p>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block pageJS %}
+<script src="/js/club-manage.js" defer></script>
+{% endblock %}
