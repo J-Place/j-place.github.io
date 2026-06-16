@@ -1,0 +1,274 @@
+#contactexp-content {
+  width: 100%;
+}
+
+#contactexp-content .contactexp-summary {
+  font-size: 2rem;
+  margin-bottom: 4rem;
+}
+
+/* --- Two-column layout --- */
+
+.contactexp-columns {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.contactexp-col {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  min-width: 0;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  border-right: 1px solid #ccc;
+}
+
+.contactexp-col:first-child {
+  padding-left: 0;
+}
+
+.contactexp-col:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+@media (max-width: 767px) {
+  .contactexp-columns {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+
+  .contactexp-col {
+    padding-left: 0;
+    padding-right: 0;
+    border-right: none;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .contactexp-col:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+}
+
+/* --- Column header --- */
+
+.contactexp-col__header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 0.5rem;
+}
+
+.contactexp-col__title {
+  display: inline;
+  font-size: 2.2rem;
+  font-weight: 600;
+}
+
+h4.contactexp-col__title {
+  font-size: 1.9rem;
+}
+
+p.contactexp-col__subtitle {
+  display: inline;
+  font-size: 1.6rem;
+  font-weight: 300;
+  color: #000;
+  margin-left: 0.6rem;
+  margin-bottom: 0;
+}
+
+p.contactexp-col__subtitle::before {
+  content: ' ';
+}
+
+.contactexp-active-count {
+  font-size: 1.3rem;
+  color: #888;
+  white-space: nowrap;
+  padding-top: 0.4rem;
+  padding-right: 2rem;
+}
+
+/* --- Active list scroll --- */
+
+.contactexp-active {
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .contactexp-active {
+    height: 400px;
+  }
+}
+
+/* --- Contact cards --- */
+
+.contact-card {
+  padding: 0.9rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.contact-card:last-child {
+  border-bottom: none;
+}
+
+.contact-top {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.3rem;
+}
+
+.contact-name {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+
+.contact-name--responded {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.contact-meta {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 1rem;
+  padding-left: 25px;
+}
+
+.contact-email {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  font-size: 1.4rem;
+  color: #555;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.contact-date {
+  font-size: 1.3rem;
+  color: #888;
+  white-space: nowrap;
+}
+
+.contact-resend {
+  font-size: 1.3rem;
+  white-space: nowrap;
+}
+
+.contactexp-responded__list {
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .contactexp-responded__list {
+    height: 400px;
+  }
+}
+
+/* --- Responded section --- */
+
+.contactexp-responded {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #ddd;
+}
+
+.contactexp-responded__header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.contactexp-responded__date-label {
+  font-size: 1.3rem;
+  color: #888;
+  padding-right: 2rem;
+}
+
+.contact-card--responded {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  background-color: aliceblue;
+  border-color: white;
+}
+
+.contact-date--responded {
+  color: #aaa;
+  white-space: nowrap;
+}
+
+/* --- Empty states --- */
+
+.contactexp-empty {
+  font-size: 1.4rem;
+  color: #aaa;
+  padding: 0.5rem 0;
+  margin-bottom: 0;
+}
+
+/* --- Notice (no club) --- */
+
+.contactexp-notice {
+  padding: 3rem 0;
+  font-size: 1.6rem;
+}

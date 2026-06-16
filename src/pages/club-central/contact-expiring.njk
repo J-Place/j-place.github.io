@@ -1,0 +1,95 @@
+---
+permalink: /club-central/contact-expiring.html
+title: Contact Expired Members | U.S. Masters Swimming
+pageTitle: Contact Expired Members
+breadcrumbs:
+  - url: "/home"
+    label: "Home"
+  - url: "/club-central"
+    label: "Club Central"
+  - url: "/club-central/club-dashboard.html"
+    label: "Club Dashboard"
+  - url: "/club-central/club-dashboard/club-manage.html"
+    label: "Manage Club"
+breadcrumbTitle: "Contact Expired Members"
+---
+{% extends "layouts/base.njk" %}
+
+{% block pageCSS %}
+<link rel="stylesheet" href="https://www.usms.org/styles/clubDetail.min.css">
+<link rel="stylesheet" href="/css/Club/contact-expiring.css">
+{% endblock %}
+
+{% block breadcrumb %}
+{% include "partials/Common/Breadcrumb.njk" %}
+{% endblock %}
+
+{% block pageHeader %}
+<div class="section section-full bg-gray">
+  <div class="usms-container p-tb-10">
+    <div class="row">
+      <div class="col-xs-12">
+        <header class="page-title">
+          <h1>Contact Expired Members</h1>
+          <h2 id="contactexp-club-name"></h2>
+        </header>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<script type="application/json" id="potential-local-data">{{ potentialMembersLocal.potentialMembers | dump | safe }}</script>
+<script type="application/json" id="clubs-local-data">{{ clubsLocal.clubs | dump | safe }}</script>
+
+<div class="section section-full bg-gray">
+  <div class="usms-container form__container p-tb-10">
+
+    <div id="contactexp-no-club" class="contactexp-notice" style="display:none;">
+      <p>No club selected. Please return to the <a href="/club-central/club-dashboard.html">Club Dashboard</a>.</p>
+    </div>
+
+    <div id="contactexp-content">
+      <p class="contactexp-summary"><em>Expired Contacts</em> shows members whose memberships are expiring in the next 30 days. After you've responded, check the item off and it will record the contact name and date.</p>
+      <div class="contactexp-columns">
+        <div class="contactexp-col">
+          <div class="contactexp-col__header">
+            <div>
+              <h3 class="contactexp-col__title">Expired Contacts</h3>
+            </div>
+            <span class="contactexp-active-count"><span id="recent-count">0</span> active</span>
+          </div>
+          <div class="contactexp-active" id="recent-active"></div>
+        </div>
+        <div class="contactexp-col">
+          <div class="contactexp-responded__header">
+            <div>
+              <h4 class="contactexp-col__title">Reviewed</h4>
+              <p class="contactexp-col__subtitle">(by Jay Place)</p>
+            </div>
+            <span class="contactexp-responded__date-label">Date</span>
+          </div>
+          <div class="contactexp-responded__list" id="recent-responded-list"></div>
+        </div>
+      </div>
+
+  </div>
+</div>
+
+{% set modalId = "resend-modal" %}
+{% set modalTitle = "Resend Message" %}
+{% set modalBody %}
+<p>Resend the original contact message to:</p>
+<p><strong id="resend-modal-name"></strong><br><span id="resend-modal-email"></span></p>
+{% endset %}
+{% set modalFooter %}
+<button type="button" class="btn btn-md btn-default js-modal-close">Cancel</button>
+<button type="button" class="btn btn-md btn-primary" id="resend-modal-send">Resend</button>
+{% endset %}
+{% include "components/modal.njk" %}
+{% endblock %}
+
+{% block pageJS %}
+<script src="/js/contact-expiring.js" defer></script>
+{% endblock %}
