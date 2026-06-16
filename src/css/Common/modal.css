@@ -8,6 +8,30 @@ body.modal-open { overflow: hidden; }
     padding: 0 12px;
 }
 
+.usms-modal-global .modal-footer .btn-primary:hover,
+.usms-modal-global .modal-footer .btn-primary:focus {
+    color: #fff;
+}
+
+.usms-modal-global .modal-footer .btn-default:hover,
+.usms-modal-global .modal-footer .btn-default:focus {
+    color: #333;
+}
+
+.usms-modal-global .modal-footer .btn[disabled] {
+    opacity: 0.25;
+}
+
+.usms-modal-global .modal-footer .btn-link {
+    text-decoration: none;
+}
+
+.usms-modal-global .modal-footer .btn-link:hover,
+.usms-modal-global .modal-footer .btn-link:focus {
+    color: #0068ad;
+    text-decoration: none;
+}
+
 /* Vertical centering: fires only while .in is present (modal is open) */
 .usms-modal-global.modal.in {
     display: flex !important;
@@ -25,6 +49,12 @@ body.modal-open { overflow: hidden; }
     .usms-modal-global .modal-lg,
     .usms-modal-global .modal-xl {
         --bs-modal-width: 800px;
+    }
+
+    .usms-modal-global .modal-dialog.modal-lg,
+    .usms-modal-global .modal-dialog.modal-xl {
+        max-width: 800px !important;
+        width: 800px;
     }
 }
 
@@ -103,7 +133,7 @@ body.modal-open { overflow: hidden; }
 }
 
 .usms-modal-global .input-group .radio-group {
-    padding-left: 2rem;
+    padding-left: 2rem; 
 }
 
 .usms-modal-global .modal-body--sm p { font-size: 1.4rem; }
