@@ -79,6 +79,7 @@
   function renderRespondedCard(name, email, dateStr) {
     return '<div class="contact-card contact-card--responded">' +
       '<span class="contact-name contact-name--responded">' + name + '</span>' +
+      '<span class="contact-email contact-email--responded">' + email + '</span>' +
       '<span class="contact-date contact-date--responded">' + dateStr + '</span>' +
       '</div>';
   }
@@ -112,10 +113,10 @@
     : emptyResponded();
   olderCountEl.textContent = olderActive.length;
 
-  document.getElementById('nonmembers-content').addEventListener('change', function (e) {
-    if (!e.target.classList.contains('responded-checkbox')) return;
-    var cb = e.target;
-    var card = document.getElementById('card-' + cb.dataset.id);
+  function markResponded(contactId) {
+    var card = document.getElementById('card-' + contactId);
+    if (!card) return;
+    var c = contactMap[contactId];
     var col = card.closest('.nonmembers-col');
     var activeEl = col.querySelector('.nonmembers-active');
     var respondedListEl = col.querySelector('.nonmembers-responded__list');
@@ -131,8 +132,13 @@
     if (emptyMsg) emptyMsg.remove();
 
     var newCard = document.createElement('div');
-    newCard.innerHTML = renderRespondedCard(cb.dataset.name, cb.dataset.email, formatToday());
+    newCard.innerHTML = renderRespondedCard(c.firstName + ' ' + c.lastName, c.email, formatToday());
     respondedListEl.insertBefore(newCard.firstChild, respondedListEl.firstChild);
+  }
+
+  document.getElementById('nonmembers-content').addEventListener('change', function (e) {
+    if (!e.target.classList.contains('responded-checkbox')) return;
+    markResponded(e.target.dataset.id);
   });
 
   var contactMap = {};
@@ -254,6 +260,8 @@
   });
 
   document.getElementById('reply-send-btn').addEventListener('click', function () {
+    var id = currentOriginalId;
     closeReplyModal();
+    markResponded(id);
   });
 })();
