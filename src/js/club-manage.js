@@ -1,8 +1,9 @@
 (function () {
   const params = new URLSearchParams(window.location.search);
-  const clubId = params.get('clubId');
+  const clubId = params.get('clubId') || sessionStorage.getItem('activeClubId');
 
   if (!clubId) return;
+  sessionStorage.setItem('activeClubId', clubId);
 
   const clubs = JSON.parse(document.getElementById('clubs-local-data').textContent);
   const club = clubs.find(function (c) { return c.id === clubId; });
