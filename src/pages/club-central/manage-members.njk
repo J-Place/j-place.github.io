@@ -1,0 +1,175 @@
+---
+permalink: /club-central/manage-members.html
+title: Manage Current Members | U.S. Masters Swimming
+pageTitle: Manage Current Members
+breadcrumbs:
+  - url: "/home"
+    label: "Home"
+  - url: "/club-central"
+    label: "Club Central"
+  - url: "/club-central/club-dashboard.html"
+    label: "Club Dashboard"
+  - url: "/club-central/club-dashboard/club-manage.html"
+    label: "Manage Club"
+breadcrumbTitle: "Manage Current Members"
+---
+{% extends "layouts/base.njk" %}
+
+{% block pageCSS %}
+<link rel="stylesheet" href="https://www.usms.org/styles/clubDetail.min.css">
+<link rel="stylesheet" href="/css/Club/manage-members.css">
+{% endblock %}
+
+{% block breadcrumb %}
+{% include "partials/Common/Breadcrumb.njk" %}
+{% endblock %}
+
+{% block pageHeader %}
+<div class="section section-full bg-gray">
+  <div class="usms-container p-tb-10">
+    <div class="row">
+      <div class="col-xs-12">
+        <header class="page-title">
+          <h1>Manage Current Members</h1>
+          <h2 id="members-club-name"></h2>
+        </header>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<script type="application/json" id="members-local-data">{{ membersLocal.members | dump | safe }}</script>
+<script type="application/json" id="clubs-local-data">{{ clubsLocal.clubs | dump | safe }}</script>
+
+<div class="section section-full bg-gray">
+  <div class="usms-container form__container p-tb-10">
+
+    <div id="members-no-club" class="members-notice" style="display:none;">
+      <p>No club selected. Please return to the <a href="/club-central/club-dashboard.html">Club Dashboard</a>.</p>
+    </div>
+
+    <div id="members-content" class="view-simple">
+
+      <div class="members-view-nav">
+        <div class="members-view-tabs" role="tablist">
+          <button class="members-view-tab is-active" data-view="simple" role="tab" type="button">Column View</button>
+          <button class="members-view-tab" data-view="detail" role="tab" type="button">Detail View</button>
+        </div>
+      </div>
+
+      <div id="members-sections">
+
+      <div class="members-section" id="section-autorenew">
+        <div class="members-section__header">
+          <h3>Auto-Renew <span class="members-count" id="count-autorenew"></span></h3>
+          <p>These members are enrolled in automatic renewal and will renew without action required.</p>
+        </div>
+        <div class="members-detail-view">
+          <div class="table-responsive">
+            <table class="table members-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th><span class="hidden-xs">Swimmer </span>ID</th>
+                  <th><span class="hidden-xs">Membership </span>Type</th>
+                  <th>Expires</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-autorenew"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="simple-col-header">
+          <span class="simple-col-header__name">Name</span>
+          <span class="simple-col-header__id">Swimmer ID</span>
+        </div>
+        <div class="members-simple-view">
+          <div class="row" id="grid-autorenew"></div>
+        </div>
+      </div>
+
+<div class="members-section" id="section-yearplus">
+        <div class="members-section__header">
+          <h3>Year-Plus <span class="members-count" id="count-yearplus"></span></h3>
+          <p>Multi-year members whose memberships are not up for renewal this year.</p>
+        </div>
+        <div class="members-detail-view">
+          <div class="table-responsive">
+            <table class="table members-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th><span class="hidden-xs">Swimmer </span>ID</th>
+                  <th><span class="hidden-xs">Membership </span>Type</th>
+                  <th>Expires</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-yearplus"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="simple-col-header">
+          <span class="simple-col-header__name">Name</span>
+          <span class="simple-col-header__id">Swimmer ID</span>
+        </div>
+        <div class="members-simple-view">
+          <div class="row" id="grid-yearplus"></div>
+        </div>
+      </div>
+
+<div class="members-section" id="section-expiring">
+        <div class="members-section__header">
+          <h3>Expiring <span class="members-count" id="count-expiring"></span></h3>
+          <p>Memberships expire December 31, 2026. Select members to bulk-register for the upcoming year.</p>
+        </div>
+
+        <div class="members-select-all-row">
+          <label class="members-select-all-label"><input type="checkbox" id="select-all-expiring"> Select All</label>
+        </div>
+
+        <div class="members-detail-view">
+          <div class="table-responsive">
+            <table class="table members-table members-table--checkable">
+              <thead>
+                <tr>
+                  <th class="col-checkbox"></th>
+                  <th>Name</th>
+                  <th><span class="hidden-xs">Swimmer </span>ID</th>
+                  <th><span class="hidden-xs">Membership </span>Type</th>
+                  <th>Expires</th>
+                </tr>
+              </thead>
+              <tbody id="tbody-expiring"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="simple-col-header simple-col-header--checkable">
+          <span class="simple-col-header__name">Name</span>
+          <span class="simple-col-header__id">Swimmer ID</span>
+        </div>
+        <div class="members-simple-view">
+          <div class="row" id="grid-expiring"></div>
+        </div>
+
+      </div>
+
+      </div>{# /members-sections #}
+
+      <div class="members-bulk-action">
+        <a class="btn btn-default" href="/club-central/contact-expiring.html">Expired Members</a>
+        <button class="btn btn-primary" id="btn-bulk-register" type="button" disabled>
+          Register Selected (<span id="selected-count">0</span>)
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block pageJS %}
+<script src="/js/manage-members.js" defer></script>
+{% endblock %}
