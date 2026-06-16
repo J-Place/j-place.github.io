@@ -1,0 +1,365 @@
+#nonmembers-content {
+  width: 100%;
+}
+
+#nonmembers-content .nonmembers-summary {
+  font-size: 2rem;
+  margin-bottom: 4rem;
+}
+
+/* --- Two-column layout --- */
+
+.nonmembers-columns {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  gap: 0;
+}
+
+.nonmembers-col {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  min-width: 0;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  border-right: 1px solid #ccc;
+}
+
+.nonmembers-col:first-child {
+  padding-left: 0;
+}
+
+.nonmembers-col:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+@media (max-width: 767px) {
+  .nonmembers-columns {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+
+  .nonmembers-col {
+    padding-left: 0;
+    padding-right: 0;
+    border-right: none;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .nonmembers-col:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+}
+
+/* --- Column header --- */
+
+.nonmembers-col__header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 0.5rem;
+}
+
+.nonmembers-col__title {
+  display: inline;
+  font-size: 2.2rem;
+  font-weight: 600;
+}
+
+h4.nonmembers-col__title {
+  font-size: 1.9rem;
+}
+
+p.nonmembers-col__subtitle {
+  display: inline;
+  font-size: 1.6rem;
+  font-weight: 300;
+  color: #000;
+  margin-left: 0.6rem;
+  margin-bottom: 0;
+}
+
+p.nonmembers-col__subtitle::before {
+  content: ' ';
+}
+
+.nonmembers-active-count {
+  font-size: 1.3rem;
+  color: #888;
+  white-space: nowrap;
+  padding-top: 0.4rem;
+  padding-right: 2rem;
+}
+
+/* --- Active list scroll --- */
+
+.nonmembers-active {
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .nonmembers-active {
+    height: 400px;
+  }
+}
+
+/* --- Contact cards --- */
+
+.contact-card {
+  padding: 0.9rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.contact-card:last-child {
+  border-bottom: none;
+}
+
+.contact-top {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.3rem;
+}
+
+.contact-source {
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin-left: auto;
+  white-space: nowrap;
+  color: #555;
+}
+
+.contact-source__label {
+  font-weight: 400;
+}
+
+.contact-name {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+
+.contact-name--responded {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.contact-meta {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 1rem;
+  padding-left: 25px;
+}
+
+.contact-email {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  font-size: 1.4rem;
+  color: #555;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.contact-date {
+  font-size: 1.3rem;
+  color: #888;
+  white-space: nowrap;
+}
+
+.contact-resend {
+  font-size: 1.3rem;
+  white-space: nowrap;
+}
+
+.nonmembers-responded__list {
+  max-height: 250px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* --- Responded section --- */
+
+.nonmembers-responded {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #ddd;
+}
+
+.nonmembers-responded__header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+
+.nonmembers-responded__date-label {
+  font-size: 1.3rem;
+  color: #888;
+  padding-right: 2rem;
+}
+
+.contact-card--responded {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  background-color: aliceblue;
+  border-color: white;
+}
+
+.contact-date--responded {
+  color: #aaa;
+  white-space: nowrap;
+}
+
+/* --- Empty states --- */
+
+.nonmembers-empty {
+  font-size: 1.4rem;
+  color: #aaa;
+  padding: 0.5rem 0;
+  margin-bottom: 0;
+}
+
+/* --- Modal sizing --- */
+
+#original-modal .modal-body,
+#reply-modal .modal-body {
+  height: 420px;
+  overflow-y: auto;
+}
+
+/* --- Original message modal --- */
+
+.original-msg__row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1.5rem;
+  padding: 0.8rem 0;
+  font-size: 1.5rem;
+}
+
+.original-msg__label {
+  font-weight: 600;
+  color: #555;
+  min-width: 11rem;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.original-msg__value {
+  color: #222;
+}
+
+.original-msg__row--message {
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+}
+
+.original-msg__row--message .original-msg__value {
+  line-height: 1.6;
+}
+
+/* --- Reply modal --- */
+
+.reply-msg__row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1.5rem;
+  padding: 0.8rem 0;
+  font-size: 1.5rem;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.reply-msg__row--field {
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  padding-top: 1rem;
+}
+
+.reply-msg__label {
+  font-weight: 600;
+  color: #555;
+  min-width: 7rem;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  font-size: 1.5rem;
+  padding-top: 0.4rem;
+}
+
+.reply-msg__value {
+  color: #222;
+  font-size: 1.5rem;
+}
+
+.reply-msg__input,
+.reply-msg__textarea {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  font-size: 1.5rem;
+}
+
+/* --- Notice (no club) --- */
+
+.nonmembers-notice {
+  padding: 3rem 0;
+  font-size: 1.6rem;
+}

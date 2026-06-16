@@ -1,0 +1,180 @@
+---
+permalink: /club-central/contact-non-members.html
+title: Manage Potential Members | U.S. Masters Swimming
+pageTitle: Manage Potential Members
+breadcrumbs:
+  - url: "/home"
+    label: "Home"
+  - url: "/club-central"
+    label: "Club Central"
+  - url: "/club-central/club-dashboard.html"
+    label: "Club Dashboard"
+  - url: "/club-central/club-dashboard/club-manage.html"
+    label: "Manage Club"
+breadcrumbTitle: "Manage Potential Members"
+---
+{% extends "layouts/base.njk" %}
+
+{% block pageCSS %}
+<link rel="stylesheet" href="https://www.usms.org/styles/clubDetail.min.css">
+<link rel="stylesheet" href="/css/Club/contact-non-members.css">
+{% endblock %}
+
+{% block breadcrumb %}
+{% include "partials/Common/Breadcrumb.njk" %}
+{% endblock %}
+
+{% block pageHeader %}
+<div class="section section-full bg-gray">
+  <div class="usms-container p-tb-10">
+    <div class="row">
+      <div class="col-xs-12">
+        <header class="page-title">
+          <h1>Manage Potential Members</h1>
+          <h2 id="nonmembers-club-name"></h2>
+        </header>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<script type="application/json" id="potential-local-data">{{ potentialMembersLocal.potentialMembers | dump | safe }}</script>
+<script type="application/json" id="clubs-local-data">{{ clubsLocal.clubs | dump | safe }}</script>
+
+<div class="section section-full bg-gray">
+  <div class="usms-container form__container p-tb-10">
+
+    <div id="nonmembers-no-club" class="nonmembers-notice" style="display:none;">
+      <p>No club selected. Please return to the <a href="/club-central/club-dashboard.html">Club Dashboard</a>.</p>
+    </div>
+
+    <div id="nonmembers-content">
+      <p class="nonmembers-summary"><em>Recent Contacts</em> shows who has contacted USMS within the last 30 days, and the date they contacted so you can find the email, or resend the original. After you've responded, check the item off and it will record the contact name and date. After 30 days a contact will move to the Year list.</p>
+      <div class="nonmembers-columns">
+
+        <div class="nonmembers-col">
+          <div class="nonmembers-col__header">
+            <div>
+              <h3 class="nonmembers-col__title">Recent Contacts</h3>
+              <p class="nonmembers-col__subtitle">(Last 30 days)</p>
+            </div>
+            <span class="nonmembers-active-count"><span id="recent-count">0</span> active</span>
+          </div>
+          <div class="nonmembers-active" id="recent-active"></div>
+          <div class="nonmembers-responded">
+            <div class="nonmembers-responded__header">
+              <div>
+                <h4 class="nonmembers-col__title">Replied to</h4>
+                <p class="nonmembers-col__subtitle">(by Jay Place)</p>
+              </div>
+              <span class="nonmembers-responded__date-label">Date</span>
+            </div>
+            <div class="nonmembers-responded__list" id="recent-responded-list"></div>
+          </div>
+        </div>
+
+        <div class="nonmembers-col">
+          <div class="nonmembers-col__header">
+            <div>
+              <h3 class="nonmembers-col__title">Past Year Contacts</h3>
+              <p class="nonmembers-col__subtitle">(31–365 days ago)</p>
+            </div>
+            <span class="nonmembers-active-count"><span id="older-count">0</span> active</span>
+          </div>
+          <div class="nonmembers-active" id="older-active"></div>
+          <div class="nonmembers-responded">
+            <div class="nonmembers-responded__header">
+              <div>
+                <h4 class="nonmembers-col__title">Replied to</h4>
+                <p class="nonmembers-col__subtitle">(by Jay Place)</p>
+              </div>
+              <span class="nonmembers-responded__date-label">Date</span>
+            </div>
+            <div class="nonmembers-responded__list" id="older-responded-list"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% set modalId = "original-modal" %}
+{% set modalSize = "lg" %}
+{% set modalTitle = "Original Contact Message" %}
+{% set modalBody %}
+<div class="original-msg">
+  <div class="original-msg__row">
+    <span class="original-msg__label">From</span>
+    <span class="original-msg__value" id="orig-name"></span>
+  </div>
+  <div class="original-msg__row">
+    <span class="original-msg__label">Email</span>
+    <span class="original-msg__value" id="orig-email"></span>
+  </div>
+  <div class="original-msg__row" id="orig-phone-row">
+    <span class="original-msg__label">Phone</span>
+    <span class="original-msg__value" id="orig-phone"></span>
+  </div>
+  <div class="original-msg__row">
+    <span class="original-msg__label">USMS Member</span>
+    <span class="original-msg__value" id="orig-member"></span>
+  </div>
+  <div class="original-msg__row">
+    <span class="original-msg__label">Interest</span>
+    <span class="original-msg__value" id="orig-interest"></span>
+  </div>
+  <div class="original-msg__row original-msg__row--message">
+    <span class="original-msg__label">Message</span>
+    <span class="original-msg__value" id="orig-body"></span>
+  </div>
+</div>
+{% endset %}
+{% set modalFooter %}
+<button type="button" class="btn btn-md btn-link js-modal-close">Close</button>
+<button type="button" class="btn btn-md btn-outline" disabled>Original</button>
+<button type="button" class="btn btn-md btn-primary" id="orig-reply-btn">Reply</button>
+{% endset %}
+{% include "components/modal.njk" %}
+
+{% set modalId = "reply-modal" %}
+{% set modalSize = "lg" %}
+{% set modalTitle = "Reply to Contact" %}
+{% set modalBody %}
+<div class="reply-msg">
+  <div class="reply-msg__row">
+    <span class="reply-msg__label">Date</span>
+    <span class="reply-msg__value" id="reply-date"></span>
+  </div>
+  <div class="reply-msg__row">
+    <span class="reply-msg__label">To</span>
+    <span class="reply-msg__value" id="reply-to"></span>
+  </div>
+  <div class="reply-msg__row">
+    <span class="reply-msg__label">From</span>
+    <span class="reply-msg__value" id="reply-from"></span>
+  </div>
+  <div class="reply-msg__row reply-msg__row--field">
+    <label class="reply-msg__label" for="reply-subject">Subject</label>
+    <input type="text" id="reply-subject" class="form-control reply-msg__input">
+  </div>
+  <div class="reply-msg__row reply-msg__row--field reply-msg__row--message">
+    <label class="reply-msg__label" for="reply-body">Message</label>
+    <textarea id="reply-body" class="form-control reply-msg__textarea" rows="6"></textarea>
+  </div>
+</div>
+{% endset %}
+{% set modalFooter %}
+<button type="button" class="btn btn-md btn-link" id="reply-cancel-btn">Cancel</button>
+<button type="button" class="btn btn-md btn-outline" id="reply-back-btn">View Original</button>
+<button type="button" class="btn btn-md btn-primary" id="reply-send-btn" disabled>Send Reply</button>
+{% endset %}
+{% include "components/modal.njk" %}
+{% endblock %}
+
+{% block pageJS %}
+<script src="/js/contact-non-members.js" defer></script>
+{% endblock %}
