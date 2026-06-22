@@ -17,6 +17,8 @@ breadcrumbTitle: "Manage Current Members"
 
 {% block pageCSS %}
 <link rel="stylesheet" href="https://www.usms.org/styles/clubDetail.min.css">
+<link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
+<link rel="stylesheet" href="https://www.usms.org/styles/mastersAddons.min.css">
 <link rel="stylesheet" href="/css/Club/manage-members.css">
 {% endblock %}
 
@@ -46,128 +48,170 @@ breadcrumbTitle: "Manage Current Members"
 <div class="section section-full bg-gray">
   <div class="usms-container form__container p-tb-10">
 
-    <div id="members-no-club" class="members-notice" style="display:none;">
-      <p>No club selected. Please return to the <a href="/club-central/club-dashboard.html">Club Dashboard</a>.</p>
-    </div>
-
-    <div id="members-content" class="view-simple">
-
-      <div class="members-view-nav">
-        <div class="members-view-tabs" role="tablist">
-          <button class="members-view-tab is-active" data-view="simple" role="tab" type="button">Column View</button>
-          <button class="members-view-tab" data-view="detail" role="tab" type="button">Detail View</button>
+        <div id="members-no-club" class="members-notice" style="display:none;">
+          <p>No club selected. Please return to the <a href="/club-central/club-dashboard.html">Club Dashboard</a>.</p>
         </div>
-      </div>
 
-      <div id="members-sections">
+        <div class="members-layout">
+        <div id="members-content" class="view-simple">
 
-      <div class="members-section" id="section-autorenew">
-        <div class="members-section__header">
-          <h3>Auto-Renew <span class="members-count" id="count-autorenew"></span></h3>
-          <p>These members are enrolled in automatic renewal and will renew without action required.</p>
-        </div>
-        <div class="members-detail-view">
-          <div class="table-responsive">
-            <table class="table members-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th><span class="hidden-xs">Swimmer </span>ID</th>
-                  <th><span class="hidden-xs">Membership </span>Type</th>
-                  <th>Expires</th>
-                </tr>
-              </thead>
-              <tbody id="tbody-autorenew"></tbody>
-            </table>
+          <div class="members-view-nav">
+            <div class="members-view-tabs" role="tablist">
+              <button class="members-view-tab is-active" data-view="simple" role="tab" type="button">Column View</button>
+              <button class="members-view-tab" data-view="detail" role="tab" type="button">Detail View</button>
+            </div>
           </div>
-        </div>
-        <div class="simple-col-header">
-          <span class="simple-col-header__name">Name</span>
-          <span class="simple-col-header__id">Swimmer ID</span>
-        </div>
-        <div class="members-simple-view">
-          <div class="row" id="grid-autorenew"></div>
-        </div>
-      </div>
 
-<div class="members-section" id="section-yearplus">
-        <div class="members-section__header">
-          <h3>Year-Plus <span class="members-count" id="count-yearplus"></span></h3>
-          <p>Multi-year members whose memberships are not up for renewal this year.</p>
-        </div>
-        <div class="members-detail-view">
-          <div class="table-responsive">
-            <table class="table members-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th><span class="hidden-xs">Swimmer </span>ID</th>
-                  <th><span class="hidden-xs">Membership </span>Type</th>
-                  <th>Expires</th>
-                </tr>
-              </thead>
-              <tbody id="tbody-yearplus"></tbody>
-            </table>
+          <div id="members-sections">
+
+            <div class="members-section" id="section-autorenew">
+              <div class="members-section__header">
+                <h3>Auto-Renew <span class="members-count" id="count-autorenew"></span></h3>
+                <p>These members are enrolled in automatic renewal and will renew without action required.</p>
+              </div>
+              <div class="members-detail-view">
+                <div class="table-responsive">
+                  <table class="table members-table">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th><span class="hidden-xs">Swimmer </span>ID</th>
+                        <th><span class="hidden-xs">Membership </span>Type</th>
+                        <th>Expires</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbody-autorenew"></tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="simple-col-header">
+                <span class="simple-col-header__name">Name</span>
+                <span class="simple-col-header__id">Swimmer ID</span>
+              </div>
+              <div class="members-simple-view">
+                <div class="row" id="grid-autorenew"></div>
+              </div>
+            </div>
+
+            <div class="members-section" id="section-yearplus">
+              <div class="members-section__header">
+                <h3>Year-Plus <span class="members-count" id="count-yearplus"></span></h3>
+                <p>Multi-year members whose memberships are not up for renewal this year.</p>
+              </div>
+              <div class="members-detail-view">
+                <div class="table-responsive">
+                  <table class="table members-table">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th><span class="hidden-xs">Swimmer </span>ID</th>
+                        <th><span class="hidden-xs">Membership </span>Type</th>
+                        <th>Expires</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbody-yearplus"></tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="simple-col-header">
+                <span class="simple-col-header__name">Name</span>
+                <span class="simple-col-header__id">Swimmer ID</span>
+              </div>
+              <div class="members-simple-view">
+                <div class="row" id="grid-yearplus"></div>
+              </div>
+            </div>
+
+            <div class="members-section" id="section-expiring">
+              <div class="members-section__header">
+                <h3>Expiring <span class="members-count" id="count-expiring"></span></h3>
+                <p>Memberships expire December 31, 2026. Select members to bulk-register for the upcoming year.</p>
+              </div>
+
+              <div class="members-select-all-row">
+                <label class="members-select-all-label"><input type="checkbox" id="select-all-expiring"> Select All</label>
+              </div>
+
+              <div class="members-detail-view">
+                <div class="table-responsive">
+                  <table class="table members-table members-table--checkable">
+                    <thead>
+                      <tr>
+                        <th class="col-checkbox"></th>
+                        <th>Name</th>
+                        <th><span class="hidden-xs">Swimmer </span>ID</th>
+                        <th><span class="hidden-xs">Membership </span>Type</th>
+                        <th>Expires</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbody-expiring"></tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="simple-col-header simple-col-header--checkable">
+                <span class="simple-col-header__name">Name</span>
+                <span class="simple-col-header__id">Swimmer ID</span>
+              </div>
+              <div class="members-simple-view">
+                <div class="row" id="grid-expiring"></div>
+              </div>
+
+            </div>
+
+          </div>{# /members-sections #}
+
+        </div>{# /members-content #}
+
+      <div class="renew__form-body masters-addons" id="payment-section">
+        <form class="form-membership-length form-horizontal">
+          <input type="hidden" name="dataDesc"><input type="hidden" name="dataValue">
+          <h3 class="payment-info___form-header payment-section__heading m-b-30">Enter Payment Details</h3>
+          <div class="card__content addons-payment__fields">
+            <div class="form-group card-name">
+              <div class="col-xs-12">
+                <label for="cardName" class="font-weight-bold">Name on Card</label>
+                <div><span class="help-block help-block--cardName">Please enter a value for cardName</span><input type="text" class="form-control" name="cardName" id="cardName" autocomplete="on" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardName" aria-hidden="true"></span></div>
+              </div>
+            </div>
+            <div class="form-group card-number">
+              <div class="col-xs-12 col-sm-7">
+                <label for="cardNumberID" class="font-weight-bold">Card Number</label>
+                <div><span class="help-block help-block--cardNumberID">Please enter a valid credit card number</span><input type="text" class="form-control" name="cardNumberID" id="cardNumberID" autocomplete="on" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardNumberID" aria-hidden="true"></span></div>
+              </div>
+              <div class="col-xs-5 col-sm-2 form-membership-length__security-code">
+                <label for="cardCodeID" class="font-weight-bold">Security Code</label>
+                <div><span class="help-block help-block--cardCodeID">Please enter a value for Security Code</span><input type="text" class="form-control" name="cardCodeID" id="cardCodeID" autocomplete="on" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardCodeID" aria-hidden="true"></span></div>
+              </div>
+              <div class="col-xs-7 col-sm-3">
+                <label for="expiration" class="font-weight-bold">Expiration (mm/yy)</label>
+                <div><span class="help-block help-block--expiration">Please enter a valid expiration date</span><input type="text" class="form-control" name="expiration" id="expiration" autocomplete="on" maxlength="5" value=""><span class="glyphicon form-control-feedback glyphicon--expiration" aria-hidden="true"></span></div>
+              </div>
+            </div>
+            <div class="form-group card-zip">
+              <div class="col-xs-8 col-sm-4">
+                <label for="cardZipID" class="font-weight-bold">Billing Zip</label>
+                <div><span class="help-block help-block--cardZipID">Please enter a valid billing zip</span><input type="text" class="form-control" name="cardZipID" id="cardZipID" autocomplete="on" maxlength="100" value=""><span class="glyphicon form-control-feedback glyphicon--cardZipID" aria-hidden="true"></span></div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="simple-col-header">
-          <span class="simple-col-header__name">Name</span>
-          <span class="simple-col-header__id">Swimmer ID</span>
-        </div>
-        <div class="members-simple-view">
-          <div class="row" id="grid-yearplus"></div>
-        </div>
-      </div>
-
-<div class="members-section" id="section-expiring">
-        <div class="members-section__header">
-          <h3>Expiring <span class="members-count" id="count-expiring"></span></h3>
-          <p>Memberships expire December 31, 2026. Select members to bulk-register for the upcoming year.</p>
-        </div>
-
-        <div class="members-select-all-row">
-          <label class="members-select-all-label"><input type="checkbox" id="select-all-expiring"> Select All</label>
-        </div>
-
-        <div class="members-detail-view">
-          <div class="table-responsive">
-            <table class="table members-table members-table--checkable">
-              <thead>
-                <tr>
-                  <th class="col-checkbox"></th>
-                  <th>Name</th>
-                  <th><span class="hidden-xs">Swimmer </span>ID</th>
-                  <th><span class="hidden-xs">Membership </span>Type</th>
-                  <th>Expires</th>
-                </tr>
-              </thead>
-              <tbody id="tbody-expiring"></tbody>
-            </table>
+          <div class="form-group agree-terms">
+            <div class="col-xs-12">
+              <span class="help-block help-block--agree-terms">You need to agree to the terms to complete your registration.</span>
+              <label id="agreeTerms__label" class="checkbox-label disabled" for="agreeTerms">
+                <div class="checkbox-container"><input type="checkbox" name="agree-terms" id="agreeTerms" value=""><span class="checkbox__placeholder"></span></div>
+              </label>
+              <span class="font-weight-bold">I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming <a href="/content/privacy" target="_blank">Privacy Policy</a>. I understand that this transaction will take effect immediately and is non-refundable and non-transferable.</span>
+            </div>
           </div>
-        </div>
+          <p id="payment-no-members-error" class="payment-error" style="display:none;">Please select at least one member to register before submitting payment.</p>
+          <button type="button" id="register-button" class="btn btn-primary btn-large text-uppercase pull-left membership-length__submit">Register Selected</button>
+        </form>
+      </div>{# /renew__form-body #}
+        </div>{# /members-layout #}
 
-        <div class="simple-col-header simple-col-header--checkable">
-          <span class="simple-col-header__name">Name</span>
-          <span class="simple-col-header__id">Swimmer ID</span>
-        </div>
-        <div class="members-simple-view">
-          <div class="row" id="grid-expiring"></div>
-        </div>
-
-      </div>
-
-      </div>{# /members-sections #}
-
-      <div class="members-bulk-action">
-        <a class="btn btn-default" href="/club-central/contact-expiring.html">Expired Members</a>
-        <button class="btn btn-primary" id="btn-bulk-register" type="button" disabled>
-          Register Selected (<span id="selected-count">0</span>)
-        </button>
-      </div>
-
-    </div>
-  </div>
-</div>
+  </div>{# /usms-container form__container #}
+</div>{# /section #}
 {% endblock %}
 
 {% block pageJS %}

@@ -124,14 +124,7 @@
   // --- Expiring checkboxes ---
 
   var checkedIds = new Set();
-  var selectedCount = document.getElementById('selected-count');
-  var bulkBtn = document.getElementById('btn-bulk-register');
   var selectAll = document.getElementById('select-all-expiring');
-
-  function updateBulkButton() {
-    selectedCount.textContent = checkedIds.size;
-    bulkBtn.disabled = checkedIds.size === 0;
-  }
 
   function updateSelectAll() {
     selectAll.checked = expiring.length > 0 && checkedIds.size === expiring.length;
@@ -146,7 +139,6 @@
     document.querySelectorAll('.expiring-checkbox').forEach(function (cb) {
       cb.checked = checked;
     });
-    updateBulkButton();
   });
 
   document.getElementById('members-content').addEventListener('change', function (e) {
@@ -159,10 +151,43 @@
       cb.checked = isChecked;
     });
     updateSelectAll();
-    updateBulkButton();
   });
 
-  bulkBtn.addEventListener('click', function () {
-    alert('Bulk registration for ' + checkedIds.size + ' member(s) — flow TBD.');
+  var noMembersError = document.getElementById('payment-no-members-error');
+
+  document.getElementById('register-button').addEventListener('click', function () {
+    var valid = true;
+
+    // Member selection
+    if (checkedIds.size === 0) {
+      noMembersError.style.display = '';
+      valid = false;
+    } else {
+      noMembersError.style.display = 'none';
+    }
+
+    // Required text fields
+    ['cardName', 'cardNumberID', 'cardCodeID', 'expiration', 'cardZipID'].forEach(function (id) {
+      var field = document.getElementById(id);
+      var group = field.closest('.form-group');
+      var helpBlock = group.querySelector('.help-block');
+      if (!field.value.trim()) {
+        if (helpBlock) helpBlock.classList.add('has-error');
+        valid = false;
+      } else {
+        if (helpBlock) helpBlock.classList.remove('has-error');
+      }
+    });
+
+    // Agree-terms checkbox
+    var agreeTerms = document.getElementById('agreeTerms');
+    var agreeGroup = agreeTerms.closest('.form-group');
+    var agreeHelpBlock = agreeGroup.querySelector('.help-block');
+    if (!agreeTerms.checked) {
+      if (agreeHelpBlock) agreeHelpBlock.classList.add('has-error');
+      valid = false;
+    } else {
+      if (agreeHelpBlock) agreeHelpBlock.classList.remove('has-error');
+    }
   });
 })();
