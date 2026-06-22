@@ -42,6 +42,7 @@ breadcrumbTitle: "Manage Potential Members"
 {% block content %}
 <script type="application/json" id="potential-local-data">{{ potentialMembersLocal.potentialMembers | dump | safe }}</script>
 <script type="application/json" id="clubs-local-data">{{ clubsLocal.clubs | dump | safe }}</script>
+<script type="application/json" id="members-local-data">{{ membersLocal.members | dump | safe }}</script>
 
 <div class="section section-full bg-gray">
   <div class="usms-container form__container p-tb-10">
@@ -58,7 +59,7 @@ breadcrumbTitle: "Manage Potential Members"
           <div class="nonmembers-col__header">
             <div>
               <h3 class="nonmembers-col__title">Recent Contacts</h3>
-              <p class="nonmembers-col__subtitle">(Last 30 days)</p>
+              <p class="nonmembers-col__subtitle">(last 30 days)</p>
             </div>
             <span class="nonmembers-active-count"><span id="recent-count">0</span> active</span>
           </div>
@@ -67,8 +68,8 @@ breadcrumbTitle: "Manage Potential Members"
             <div class="nonmembers-responded__header">
               <div>
                 <h4 class="nonmembers-col__title">Replied to</h4>
+                <p class="nonmembers-col__subtitle">(archived after 90 days)</p>
               </div>
-              <span class="nonmembers-responded__date-label">Date</span>
             </div>
             <div class="nonmembers-responded__list" id="recent-responded-list"></div>
           </div>
@@ -77,20 +78,20 @@ breadcrumbTitle: "Manage Potential Members"
         <div class="nonmembers-col">
           <div class="nonmembers-col__header">
             <div>
-              <h3 class="nonmembers-col__title">Past Year Contacts</h3>
-              <p class="nonmembers-col__subtitle">(31–365 days ago)</p>
+              <h3 class="nonmembers-col__title">Expired Members</h3>
+              <p class="nonmembers-col__subtitle">(within last year)</p>
             </div>
-            <span class="nonmembers-active-count"><span id="older-count">0</span> active</span>
+            <span class="nonmembers-active-count"><span id="expired-count">0</span> members</span>
           </div>
-          <div class="nonmembers-active" id="older-active"></div>
+          <div class="nonmembers-active" id="expired-list"></div>
           <div class="nonmembers-responded">
             <div class="nonmembers-responded__header">
               <div>
                 <h4 class="nonmembers-col__title">Replied to</h4>
+                <p class="nonmembers-col__subtitle">(archived after 90 days)</p>
               </div>
-              <span class="nonmembers-responded__date-label">Date</span>
             </div>
-            <div class="nonmembers-responded__list" id="older-responded-list"></div>
+            <div class="nonmembers-responded__list" id="expired-replied-list"></div>
           </div>
         </div>
 
@@ -99,6 +100,39 @@ breadcrumbTitle: "Manage Potential Members"
 
   </div>
 </div>
+
+{% set modalId = "contact-expired-modal" %}
+{% set modalSize = "lg" %}
+{% set modalTitle = "Contact Member" %}
+{% set modalBody %}
+<div class="reply-msg">
+  <div class="reply-msg__row">
+    <span class="reply-msg__label">Date</span>
+    <span class="reply-msg__value" id="contact-exp-date"></span>
+  </div>
+  <div class="reply-msg__row">
+    <span class="reply-msg__label">To</span>
+    <span class="reply-msg__value" id="contact-exp-to"></span>
+  </div>
+  <div class="reply-msg__row">
+    <span class="reply-msg__label">From</span>
+    <span class="reply-msg__value" id="contact-exp-from"></span>
+  </div>
+  <div class="reply-msg__row reply-msg__row--field">
+    <label class="reply-msg__label" for="contact-exp-subject">Subject</label>
+    <input type="text" id="contact-exp-subject" class="form-control reply-msg__input">
+  </div>
+  <div class="reply-msg__row reply-msg__row--field reply-msg__row--message">
+    <label class="reply-msg__label" for="contact-exp-body">Message</label>
+    <textarea id="contact-exp-body" class="form-control reply-msg__textarea" rows="6"></textarea>
+  </div>
+</div>
+{% endset %}
+{% set modalFooter %}
+<button type="button" class="btn btn-md btn-link" id="contact-exp-cancel-btn">Cancel</button>
+<button type="button" class="btn btn-md btn-primary" id="contact-exp-send-btn" disabled>Send</button>
+{% endset %}
+{% include "components/modal.njk" %}
 
 {% set modalId = "original-modal" %}
 {% set modalSize = "lg" %}

@@ -25,6 +25,12 @@
     return;
   }
 
+  var allMembers = JSON.parse(document.getElementById('members-local-data').textContent);
+  var memberData = allMembers.find(function (m) { return m.clubId === clubId; });
+  var allExpired = (memberData && memberData.expired) || [];
+  var expiredActive = allExpired.filter(function (m) { return !m.contacted; });
+  var expiredReplied = allExpired.filter(function (m) { return m.contacted; });
+
   var today = new Date();
   today.setHours(0, 0, 0, 0);
   var MS_PER_DAY = 86400000;
@@ -46,17 +52,12 @@
   var contacts = clubData.contacts || [];
   var recentActive = [];
   var recentResponded = [];
-  var olderActive = [];
-  var olderResponded = [];
 
   contacts.forEach(function (c) {
     var d = daysAgo(c.contactDate);
     if (d >= 0 && d <= 30) {
       if (c.responded) recentResponded.push(c);
       else recentActive.push(c);
-    } else if (d > 30 && d <= 365) {
-      if (c.responded) olderResponded.push(c);
-      else olderActive.push(c);
     }
   });
 
@@ -65,13 +66,17 @@
       '<div class="contact-top">' +
       '<input type="checkbox" class="responded-checkbox" data-id="' + c.id + '" data-email="' + c.email + '" data-name="' + c.firstName + ' ' + c.lastName + '">' +
       '<span class="contact-name">' + c.firstName + ' ' + c.lastName + '</span>' +
-      (c.source ? '<span class="contact-source contact-source--' + c.source.toLowerCase() + '"><span class="contact-source__label">Source: </span><strong>' + c.source + '</strong></span>' : '') +
+      '<div class="contact-top__right">' +
+      (c.source ? '<span class="contact-source contact-source--' + c.source.toLowerCase() + '"><span class="contact-source__label">Source: </span><strong>' + (c.source === 'TMS' ? 'Trial' : c.source === 'CLUB' ? 'Club' : c.source) + '</strong></span>' : '') +
+      '<span class="contact-date">' + formatDate(c.contactDate) + '</span>' +
+      '</div>' +
       '</div>' +
       '<div class="contact-meta">' +
       '<span class="contact-email">' + c.email + '</span>' +
-      '<span class="contact-date">' + formatDate(c.contactDate) + '</span>' +
+      '<div class="contact-meta__actions">' +
       '<a href="#" class="contact-resend" data-id="' + c.id + '">View Original</a>' +
-      '<a href="mailto:' + c.email + '" class="contact-send-email"><i class="fa fa-envelope" aria-hidden="true"></i> Reply</a>' +
+      '<a href="#" class="contact-send-email"><i class="fa fa-envelope" aria-hidden="true"></i> Reply</a>' +
+      '</div>' +
       '</div>' +
       '</div>';
   }
@@ -95,11 +100,9 @@
   var recentActiveEl = document.getElementById('recent-active');
   var recentRespondedListEl = document.getElementById('recent-responded-list');
   var recentCountEl = document.getElementById('recent-count');
-  var olderActiveEl = document.getElementById('older-active');
-  var olderRespondedListEl = document.getElementById('older-responded-list');
-  var olderCountEl = document.getElementById('older-count');
 
   function byDateAsc(a, b) { return a.contactDate < b.contactDate ? -1 : a.contactDate > b.contactDate ? 1 : 0; }
+  function byExpirationAsc(a, b) { return a.expirationDate < b.expirationDate ? -1 : a.expirationDate > b.expirationDate ? 1 : 0; }
 
   recentActiveEl.innerHTML = recentActive.length ? recentActive.sort(byDateAsc).map(renderActiveCard).join('') : emptyActive();
   recentRespondedListEl.innerHTML = recentResponded.length
@@ -107,11 +110,34 @@
     : emptyResponded();
   recentCountEl.textContent = recentActive.length;
 
-  olderActiveEl.innerHTML = olderActive.length ? olderActive.sort(byDateAsc).map(renderActiveCard).join('') : emptyActive();
-  olderRespondedListEl.innerHTML = olderResponded.length
-    ? olderResponded.map(function (c) { return renderRespondedCard(c.firstName + ' ' + c.lastName, c.email, formatDate(c.respondedDate)); }).join('')
+  function renderExpiredCard(m) {
+    return '<div class="contact-card expired-card" data-id="' + m.id + '">' +
+      '<div class="expired-card__row">' +
+      '<span class="contact-name">' + m.firstName + ' ' + m.lastName + '</span>' +
+      '<div class="expired-card__right">' +
+      '<span class="contact-membership-type">' + m.membershipType + '</span>' +
+      '<span class="contact-date">Exp. ' + formatDate(m.expirationDate) + '</span>' +
+      '</div>' +
+      '</div>' +
+      '<div class="expired-card__row">' +
+      '<span class="contact-swimmer-id">#' + m.swimmerId + '</span>' +
+      '<a href="#" class="contact-send-expired"><i class="fa fa-envelope" aria-hidden="true"></i> Contact</a>' +
+      '</div>' +
+      '</div>';
+  }
+
+  var expiredListEl = document.getElementById('expired-list');
+  var expiredCountEl = document.getElementById('expired-count');
+  var expiredRepliedListEl = document.getElementById('expired-replied-list');
+
+  expiredListEl.innerHTML = expiredActive.length
+    ? expiredActive.sort(byExpirationAsc).map(renderExpiredCard).join('')
+    : '<p class="nonmembers-empty">No expired members.</p>';
+  expiredCountEl.textContent = expiredActive.length;
+
+  expiredRepliedListEl.innerHTML = expiredReplied.length
+    ? expiredReplied.map(function (m) { return renderRespondedCard(m.firstName + ' ' + m.lastName, '#' + m.swimmerId, formatDate(m.contactedDate)); }).join('')
     : emptyResponded();
-  olderCountEl.textContent = olderActive.length;
 
   function markResponded(contactId) {
     var card = document.getElementById('card-' + contactId);
@@ -183,9 +209,10 @@
   }
 
   document.getElementById('nonmembers-content').addEventListener('click', function (e) {
-    if (!e.target.classList.contains('contact-resend')) return;
+    var resendLink = e.target.closest('.contact-resend');
+    if (!resendLink) return;
     e.preventDefault();
-    openOriginalModal(e.target.dataset.id);
+    openOriginalModal(resendLink.dataset.id);
   });
 
   document.getElementById('orig-reply-btn').addEventListener('click', function () {
@@ -228,9 +255,10 @@
   }
 
   document.getElementById('nonmembers-content').addEventListener('click', function (e) {
-    if (!e.target.classList.contains('contact-send-email')) return;
+    var replyLink = e.target.closest('.contact-send-email');
+    if (!replyLink) return;
     e.preventDefault();
-    var card = e.target.closest('.contact-card');
+    var card = replyLink.closest('.contact-card');
     var cb = card.querySelector('.responded-checkbox');
     openReplyModal(cb.dataset.id);
   });
@@ -263,5 +291,86 @@
     var id = currentOriginalId;
     closeReplyModal();
     markResponded(id);
+  });
+
+  var expiredMap = {};
+  allExpired.forEach(function (m) { expiredMap[m.id] = m; });
+
+  var contactExpiredModal = document.getElementById('contact-expired-modal');
+  var currentExpiredId = null;
+  var contactExpSubject = document.getElementById('contact-exp-subject');
+  var contactExpBody = document.getElementById('contact-exp-body');
+  var contactExpSendBtn = document.getElementById('contact-exp-send-btn');
+
+  function updateContactExpSendState() {
+    contactExpSendBtn.disabled = !(contactExpSubject.value.trim() && contactExpBody.value.trim());
+  }
+
+  contactExpSubject.addEventListener('input', updateContactExpSendState);
+  contactExpBody.addEventListener('input', updateContactExpSendState);
+
+  function openContactExpiredModal(id) {
+    currentExpiredId = id;
+    var m = expiredMap[id];
+    if (!m) return;
+    contactExpSubject.value = '';
+    contactExpBody.value = '';
+    updateContactExpSendState();
+    document.getElementById('contact-exp-date').textContent = formatToday();
+    document.getElementById('contact-exp-to').textContent = m.firstName + ' ' + m.lastName + ' <' + m.email + '>';
+    document.getElementById('contact-exp-from').textContent = clubEmail;
+    var scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    var backdrop = document.createElement('div');
+    backdrop.className = 'modal-backdrop fade in';
+    document.body.appendChild(backdrop);
+    contactExpiredModal.classList.add('in');
+    contactExpiredModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+    document.body.style.paddingRight = scrollbarWidth + 'px';
+  }
+
+  function closeContactExpiredModal() {
+    contactExpiredModal.style.display = 'none';
+    contactExpiredModal.classList.remove('show', 'in');
+    contactExpiredModal.setAttribute('aria-hidden', 'true');
+    document.querySelectorAll('.modal-backdrop').forEach(function (el) { el.parentNode.removeChild(el); });
+    document.body.classList.remove('modal-open');
+    document.body.style.paddingRight = '';
+  }
+
+  document.getElementById('nonmembers-content').addEventListener('click', function (e) {
+    var contactLink = e.target.closest('.contact-send-expired');
+    if (!contactLink) return;
+    e.preventDefault();
+    var card = contactLink.closest('.contact-card');
+    openContactExpiredModal(card.dataset.id);
+  });
+
+  function markExpiredContacted(id) {
+    var card = expiredListEl.querySelector('[data-id="' + id + '"]');
+    if (!card) return;
+    var m = expiredMap[id];
+    card.remove();
+    var remaining = expiredListEl.querySelectorAll('.contact-card').length;
+    expiredCountEl.textContent = remaining;
+    if (remaining === 0) expiredListEl.innerHTML = '<p class="nonmembers-empty">No expired members.</p>';
+    var emptyMsg = expiredRepliedListEl.querySelector('.nonmembers-empty--responded');
+    if (emptyMsg) emptyMsg.remove();
+    var newCard = document.createElement('div');
+    newCard.innerHTML = renderRespondedCard(m.firstName + ' ' + m.lastName, '#' + m.swimmerId, formatToday());
+    expiredRepliedListEl.insertBefore(newCard.firstChild, expiredRepliedListEl.firstChild);
+  }
+
+  document.getElementById('contact-exp-cancel-btn').addEventListener('click', function () {
+    contactExpSubject.value = '';
+    contactExpBody.value = '';
+    updateContactExpSendState();
+    closeContactExpiredModal();
+  });
+
+  document.getElementById('contact-exp-send-btn').addEventListener('click', function () {
+    var id = currentExpiredId;
+    closeContactExpiredModal();
+    markExpiredContacted(id);
   });
 })();
