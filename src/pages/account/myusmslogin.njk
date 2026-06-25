@@ -1,11 +1,6 @@
 ---
 permalink: /account/myusmslogin/index.html
 title: Log In | U.S. Masters Swimming
-pageTitle: Log In
-breadcrumbs:
-  - url: "/home"
-    label: "Home"
-breadcrumbTitle: "Log In"
 swimmerId: "loggedOut"
 devSwimmerIds:
   - loggedOut
@@ -16,14 +11,14 @@ devSwimmerIds:
 {% extends "layouts/base.njk" %}
 
 {% block pageCSS %}
-<link rel="stylesheet" href="https://www.usms.org/styles/registration.min.css">
+<link rel="stylesheet" href="https://www.usms.org/styles/usms.min.css">
 <link rel="stylesheet" href="/css/Registration/login.css">
-{% endblock %}
-
-{% block breadcrumb %}
-{% include "partials/Common/Breadcrumb.njk" %}
 {% endblock %}
 
 {% block content %}
 {% include "partials/Forms/LoginForm.njk" %}
+{% endblock %}
+
+{% block pageJS %}
+<script src="/js/login.js" defer></script>
 {% endblock %}

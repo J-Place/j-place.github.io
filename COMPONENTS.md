@@ -35,7 +35,7 @@ In short: Covered = you could point a designer at the mockup and say "that's the
 | `Event.jsx` | `src/pages/events/events/2026-bumpy-jones-*` | Covered |
 | `Events.jsx` | `src/pages/events/index.njk` | Covered |
 | `Home.jsx` | `src/pages/home.njk` | Covered |
-| `Login.jsx` | `src/pages/account/myusmslogin.njk` | Partial |
+| `Login.jsx` | `src/pages/account/myusmslogin.njk` | Covered |
 | `NotFound.jsx` | — | Out of Scope |
 | `OpenWater.jsx` | — | Not Started |
 | `Renew.jsx` | `src/pages/join-usms/join-or-renew.njk` | Partial |
