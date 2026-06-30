@@ -1,0 +1,83 @@
+{% set mockLocations = [] %}
+
+<div class="form-location-info">
+<div class="section section-location-information isEdit" id="section-location-information">
+
+    {% set modalId = "modalRemoveLocation" %}
+    {% set modalModifier = "" %}
+    {% set modalTitle = "Remove Location" %}
+    {% set modalBody %}
+    <p>This will remove your saved pool or open water venue. Are you sure you want to continue?</p>
+    {% endset %}
+    {% set modalFooter %}
+    <button type="button" class="btn btn-md btn-default btn-ko">Cancel</button>
+    <button type="button" class="btn btn-md btn-default">Continue</button>
+    {% endset %}
+    {% include "components/modal.njk" %}
+
+    {% set modalId = "modalRemovePool" %}
+    {% set modalModifier = "" %}
+    {% set modalTitle = "Remove Location" %}
+    {% set modalBody %}
+    <p>This will remove your saved pool or open water venue. Are you sure you want to continue?</p>
+    {% endset %}
+    {% set modalFooter %}
+    <button type="button" class="btn btn-md btn-default btn-ko">Cancel</button>
+    <button type="button" class="btn btn-md btn-default">Continue</button>
+    {% endset %}
+    {% include "components/modal.njk" %}
+
+    {% set modalId = "modalCourseSelection" %}
+    {% set modalModifier = "pool-configuration" %}
+    {% set modalTitle = "Select a Pool Course" %}
+    {% set modalBody %}{% endset %}
+    {% set modalFooter %}
+    <button type="button" class="btn btn-primary">Confirm &amp; Continue</button>
+    {% endset %}
+    {% include "components/modal.njk" %}
+
+    <h3 class="section__header" data-target="#location-information__content" data-toggle="collapse" aria-controls="location-information__content">
+        <span class="section__number">5</span>Location Information&nbsp;
+    </h3>
+    <span class="section__edit">
+        <button class="section__edit-btn section__edit-btn--name" type="button"></button>
+    </span>
+    <div class="section__content collapse" id="location-information__content" data-parent="#accordion" aria-expanded="true">
+        {% include "partials/ClubEdit/ClubEditLocationSearch.njk" %}
+
+        {% if mockLocations.length > 0 %}
+        <div class="row locations">
+            <div class="location-header location-header__edit">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <div class="list locations">
+                            <div class="list__container">
+                                <div class="row is-flex">
+                                    <div class="col-xs-12">
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-small btn-outline" id="editLocationBtn">Edit Location</button>
+                                        </div>
+                                        {% for location in mockLocations %}
+                                        {% include "partials/ClubEdit/ClubEditLocationItem.njk" %}
+                                        {% endfor %}
+                                    </div>
+                                    <div class="col-xs-12">
+                                        <p>If you would like to make edits to this location, pool or course, contact USMS: <a href="mailto:events@usmastersswimming.org">events@usmastersswimming.org.</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% include "partials/ClubEdit/ClubEditLocationAdd.njk" %}
+
+        <div class="section__controls">
+            <button class="btn save-section" type="button" id="saveLocation">Save &amp; Continue</button>
+        </div>
+    </div>
+</div>
+</div>

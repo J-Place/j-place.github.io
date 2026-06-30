@@ -1,0 +1,125 @@
+<div class="section section-payment" id="club-payment">
+    <h3 class="section__header">
+        Finish &amp; Pay
+    </h3>
+    <div class="row">
+        <div class="col-sm-8">
+            <p>If you're finished entering your club information please enter your payment information below. You can log in to the Club Dashboard at any time to update your club details.</p>
+        </div>
+    </div>
+    <span class="section__edit"><button class="section__edit-btn" onclick="editPayment()"></button></span>
+    <div class="section__content" id="club-payment__content">
+        <div class="card payment-info clearfix">
+            <input type="hidden" name="clientKey" value="" />
+            <input type="hidden" name="loginId" value="" />
+            <input type="hidden" id="clubItemId" name="clubItemId" />
+            <input type="hidden" name="dataDesc" value="" />
+            <input type="hidden" name="dataValue" value="" />
+            <input type="hidden" name="billingAmount" value="0.00" />
+            <input type="hidden" name="isWog" value="false" />
+            <input type="hidden" name="missingLmsc" value="" />
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="payment-info__information form-horizontal">
+                        <div class="form-group">
+                            <div class="col-xs-12">
+                                <label class="control-label payment-info__price-label">USMS Club Membership Fee:</label>
+                                <p class="form-control-static payment-info__price section-payment__usms-cost">$0.00</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group card-name required">
+                        <div class="row">
+                            <label class="col-xs-12">Cardholder Name</label>
+                            <div class="col-xs-12">
+                                <input type="text" onblur="handleInputBlur(this)" class="form-control" id="cardName" name="cardName" />
+                                <span class="help-block help-block--cardName">Please enter cardholder name</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-7">
+                    <div class="form-group required">
+                        <div class="row">
+                            <label class="col-xs-12">Credit Card Number</label>
+                            <div class="col-xs-12">
+                                <input type="text" class="form-control" onblur="handleInputBlur(this)" id="cardNumber" name="cardNumber" />
+                                <span class="help-block help-block--cardNumber">Please enter a valid credit card number</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-5 col-sm-2">
+                    <div class="form-group required">
+                        <div class="row">
+                            <label class="col-xs-12">CVV</label>
+                            <div class="col-xs-12">
+                                <input type="text" class="form-control" onblur="handleInputBlur(this)" id="cardCode" name="cardCode" />
+                                <span class="help-block help-block--cardCode">Please enter the CVV</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-7 col-sm-3">
+                    <div class="form-group required">
+                        <div class="row">
+                            <label class="col-xs-12">Expiration</label>
+                            <div class="col-xs-12">
+                                <input type="text" class="form-control" onblur="handleInputBlur(this)" id="expiration" pattern="\d{1,2}/\d{1,2}" name="expiration" />
+                                <span class="help-block help-block--expiration">Please enter the expiration date</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-8 col-sm-3">
+                    <div class="form-group card-zip required">
+                        <div class="row">
+                            <label class="control-label col-xs-12">Zip</label>
+                            <div class="col-xs-12">
+                                <input type="text" class="form-control" onblur="handleInputBlur(this)" id="cardZip" name="cardZip" />
+                                <span class="help-block help-block--cardZip">Please enter the billing zip code</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group agree-terms">
+                        <div class="input-group checkbox-group payment-agreement">
+                            <label class="checkbox-label" for="agreeTerms">
+                                <div class="checkbox-container">
+                                    <input name="agree-terms" type="checkbox" id="agreeTerms" onchange="handleAgreementChange()" />
+                                    <span class="checkbox__placeholder"></span>
+                                </div>
+                                I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming Privacy Policy. I understand that this membership is non-refundable, non-transferable, and expires on December 31, <span class="agree-terms--year">2027</span>.
+                            </label>
+                            <span class="help-block help-block--agreeTerms">Please agree to the terms</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% set modalId = "modalPayment" %}
+            {% set modalTitle = "Payment" %}
+            {% set modalBody %}<p></p>{% endset %}
+            {% set modalFooter %}
+            <button type="button" class="btn btn-danger js-modal-close" aria-label="Close">Close</button>
+            {% endset %}
+            {% include "components/modal.njk" %}
+
+            <p class="section-payment__contact-pending" style="display: none;">You cannot submit your club until your new club contact has approved their My Account.</p>
+            <button onclick="submitCreditCard(event)" id="submit-button" class="btn btn-pay btn-large text-uppercase pull-left membership-length__submit">
+                Submit Payment
+            </button>
+        </div>
+    </div>
+</div>

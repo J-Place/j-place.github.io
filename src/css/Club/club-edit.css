@@ -1,0 +1,21 @@
+/* Fix: club2.min.css locks .form__container select.form-control to height:3.4rem at
+   specificity (0,2,1), overriding clubEdit.min.css's .input-group select { height:4.6rem }
+   at (0,1,1). This rule wins at (0,3,1) and also makes the custom arrow self-sufficient. */
+@media (max-width: 767px) {
+  .btn-add + .btn-add {
+    margin-top: 1.5rem;
+  }
+}
+
+.form__container .input-group select.form-control {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url(https://usms-cdn.azureedge.net/-/media/usms/developers/Images/MyUSMS/icon-arrow-down);
+  background-position: right .75rem center;
+  background-repeat: no-repeat;
+  background-size: 16px 12px;
+  box-sizing: border-box;
+  height: 4.6rem;
+  padding: 0;
+}

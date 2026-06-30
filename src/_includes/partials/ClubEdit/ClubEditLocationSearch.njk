@@ -1,0 +1,76 @@
+<div>
+    <div class="list-control">
+        <div class="list-control-search">
+            <div class="list-control-search__content form-group is-flex">
+                <div class="list-control-search__input list-control-search__input--club-name">
+                    <label for="search-filter__club-name">Search by Location Name</label>
+                    <div class="input-group">
+                        <span class="help-block help-block--ClubName">Please Enter a Location Name</span>
+                        <input class="form-control" type="text" name="search-filter__club-name" placeholder="Location Name" />
+                    </div>
+                </div>
+                <div class="list-control-search__input list-control-search__input--range">
+                    <label for="search-filter__range">Select a Range</label>
+                    <div class="input-group">
+                        <select id="search-filter__range" name="search-filter__range">
+                            <option value="1">1 Mile</option>
+                            <option value="5">5 Miles</option>
+                            <option value="10" selected>10 Miles</option>
+                            <option value="25">25 Miles</option>
+                            <option value="50">50 Miles</option>
+                            <option value="nationwide">Nationwide</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="list-control-search__input list-control-search__input--location">
+                    <label for="locationSearch">Search by City, State or Zip</label>
+                    <div class="input-group">
+                        <span class="help-block help-block--CityStateZip">Please enter a City, State or Zip</span>
+                        <input type="text" class="form-control" id="locationSearch" name="location" placeholder="Select State, City or Zip" />
+                    </div>
+                </div>
+                <div class="list-control-search__input list-control-search__input--button align-self-end">
+                    <div class="input-group">
+                        <button type="button" class="btn btn-primary text-uppercase" id="listSearchSubmit">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="list-control-filter">
+            <div class="list-control-filter__content">
+                <div class="form-group is-flex">
+                    <div class="check-list">
+                        <div class="input-group check-list-item">
+                            <label for="searchPool" class="checkbox-label">
+                                <div class="checkbox-container">
+                                    <input type="checkbox" id="searchPool" name="searchType" value="pool" />
+                                    <span class="checkbox__placeholder"></span>
+                                </div>
+                                Pool
+                            </label>
+                        </div>
+                        <div class="input-group check-list-item">
+                            <label for="searchOpenWater" class="checkbox-label">
+                                <div class="checkbox-container">
+                                    <input type="checkbox" id="searchOpenWater" name="searchType" value="openwater" />
+                                    <span class="checkbox__placeholder"></span>
+                                </div>
+                                Open&nbsp;Water
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="section-location--validation">
+                <span class="help-block help-block--selectLocation">Please select a location</span>
+                <span class="help-block help-block--expandSearch">No locations found. Please expand your search.</span>
+            </div>
+        </div>
+    </div>
+</div>

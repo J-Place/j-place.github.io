@@ -1,0 +1,108 @@
+---
+permalink: /club-central/club-edit.html
+title: Club Edit | U.S. Masters Swimming
+pageTitle: Club Edit
+breadcrumbs:
+  - url: "/home"
+    label: "Home"
+  - url: "/club-central"
+    label: "Club Central"
+  - url: "/club-central/club-dashboard.html"
+    label: "Club Dashboard"
+breadcrumbTitle: "Club Edit"
+---
+{% extends "layouts/base.njk" %}
+
+{% block pageCSS %}
+<link rel="stylesheet" href="https://www.usms.org/styles/club2.min.css">
+<link rel="stylesheet" href="https://www.usms.org/styles/clubEdit.min.css">
+<link rel="stylesheet" href="/css/Club/club-edit.css">
+{% endblock %}
+
+{% block pageJS %}
+<script src="/js/club-edit.js" defer></script>
+{% endblock %}
+
+{% block breadcrumb %}
+{% include "partials/Common/Breadcrumb.njk" %}
+{% endblock %}
+
+{% block content %}
+<div class="section section-full bg-gray p-mh-500">
+  <div class="usms-container p-tb-10">
+    <div class="row">
+      <div class="col-xs-12">
+        <header class="page-title">
+          <h1>Register, Renew, or Edit Your Club or Workout Group</h1>
+        </header>
+      </div>
+    </div>
+  </div>
+  <div class="usms-container form__container club-edit__container p-tb-10">
+  <div class="row">
+    <div class="col-xs-12">
+
+    <div class="loading" style="display: none">
+        <img src="/-/media/usms/developers/images/loader.gif" alt="loading" />
+    </div>
+
+    {% set modalId = "modalConfirmation" %}
+    {% set modalTitle = "" %}
+    {% set modalBody %}<p></p>{% endset %}
+    {% set modalFooter %}
+    <button type="button" class="btn btn-success">Continue</button>
+    <button type="button" class="btn btn-danger js-modal-close" onclick="closeConfirmationModal()">Cancel</button>
+    {% endset %}
+    {% include "components/modal.njk" %}
+
+    {% set modalId = "modalMessage" %}
+    {% set modalTitle = "" %}
+    {% set modalBody %}<p></p>{% endset %}
+    {% set modalFooter %}
+    <button type="button" class="btn btn-danger js-modal-close" onclick="closeMessageModal()">Close</button>
+    {% endset %}
+    {% include "components/modal.njk" %}
+
+    {% set modalId = "modalMessageApproval" %}
+    {% set modalTitle = "" %}
+    {% set modalBody %}<p></p>{% endset %}
+    {% set modalFooter %}
+    <button type="button" class="btn btn-danger js-modal-close" onclick="closeApprovalMessageModal()">Ok</button>
+    {% endset %}
+    {% include "components/modal.njk" %}
+
+    {% set modalId = "modalError" %}
+    {% set modalTitle = "Error" %}
+    {% set modalBody %}<p></p>{% endset %}
+    {% set modalFooter %}
+    <button type="button" class="btn btn-danger js-modal-close" onclick="closeErrorModal()">Close</button>
+    {% endset %}
+    {% include "components/modal.njk" %}
+
+    {% set modalId = "modalSaveSection" %}
+    {% set modalTitle = "Unsaved Changes" %}
+    {% set modalBody %}<p class="text-capitalize">You have unsaved changes in this section. Please save or discard your changes before continuing.</p>{% endset %}
+    {% set modalFooter %}
+    <button type="button" class="btn btn-danger js-modal-close" onclick="closeSaveModal(this)">Ok</button>
+    {% endset %}
+    {% include "components/modal.njk" %}
+
+    <p class="club-edit__introduction">Please review your club information in each section below. Clicking Save &amp; Continue will proceed to the next section. Except for the LMSC and Club Abbreviation fields, you can make changes to any section. Be sure to save changes within that section. Once you're finished reviewing and/or updating your club information, click Submit Payment at the bottom of the form.</p>
+
+    <div class="club-edit" id="accordion">
+        {% include "partials/ClubEdit/ClubEditName.njk" %}
+        {% include "partials/ClubEdit/ClubEditDetails.njk" %}
+        {% include "partials/ClubEdit/ClubEditContact.njk" %}
+        {% include "partials/ClubEdit/ClubEditCoach.njk" %}
+        {% include "partials/ClubEdit/ClubEditLocation.njk" %}
+        {% include "partials/ClubEdit/ClubEditGoldClub.njk" %}
+        {% include "partials/ClubEdit/ClubEditPayment.njk" %}
+    </div>
+
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}
+
+

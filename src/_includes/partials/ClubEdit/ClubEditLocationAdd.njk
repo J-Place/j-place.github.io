@@ -1,0 +1,155 @@
+<div class="form-group entry location-info__add-new-location--container">
+
+    {% set modalId = "modalAddDuplicateOrganization" %}
+    {% set modalModifier = "duplicate-organization-modal" %}
+    {% set modalTitle = "Potential Duplicate Location" %}
+    {% set modalBody %}
+    <p>The address you selected is already in our database. Please select that location from the location search box above.</p>
+    {% endset %}
+    {% set modalFooter %}
+    <button type="button" class="btn btn-md btn-default" id="closeDuplicateOrganization">Continue</button>
+    {% endset %}
+    {% include "components/modal.njk" %}
+
+    <div class="location-header location-header__add">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-xs-12">
+                    <p>If your location is not listed, you can add a new one.</p>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <button class="btn btn-small btn-outline btn-add" id="addPoolLocationBtn" name="addPoolLocationBtn" type="button">
+                    Add New Pool Location
+                </button>
+                <button class="btn btn-small btn-outline btn-add" id="addOpenWaterLocationBtn" name="addOpenWaterLocationBtn" type="button">
+                    Add New Open Water Location
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="location-details event-location-details" style="display: none;">
+        <div class="form-group">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="input-group location-name required">
+                        <label for="locationName">
+                            Enter Your Location Name
+                            <span class="icon-help" data-bs-toggle="tooltip" data-bs-placement="top" title="Enter the facility or open water venue name." data-container="body"></span>
+                        </label>
+                        <input type="text" class="form-control" id="locationName" name="locationName" maxlength="80" />
+                        <span class="help-block help-block--locationName">Name required</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="input-group location-address--street required">
+                        <label for="addLocationAddressStreet">
+                            Street Address (must select from the dropdown, do not copy and paste!)
+                        </label>
+                        <span class="help-block help-block--LocationAddressStreet">Must select address from the Google dropdown list</span>
+                        <input type="text" class="form-control" id="addLocationAddressStreet" name="location" placeholder="Enter an address" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="input-group location-type required">
+                        <label for="locationType">Facility Type</label>
+                        <select name="locationType" id="locationType">
+                            <option value="-1" disabled>Select Facility Type</option>
+                            <option value="High School">High School</option>
+                            <option value="JCC">JCC</option>
+                            <option value="Municipal Pool">Municipal Pool</option>
+                            <option value="Open Water">Open Water</option>
+                            <option value="Private Club">Private Club</option>
+                            <option value="Retirement Community">Retirement Community</option>
+                            <option value="University">University</option>
+                            <option value="YMCA">YMCA</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <span class="help-block help-block--locationType">Please select a location type</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-8">
+                <div class="input-group entry-confirm">
+                    <label for="confirmNewFacility" class="list-venue-form__label-save-location">
+                        After you&#39;ve entered your facility information, click the button below to save it as your location.
+                    </label>
+                    <button type="button" class="btn btn-small save-location" id="confirmNewFacility">Continue</button>
+                    <button type="button" class="btn btn-small btn-outline" id="cancelNewFacility">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="display: none;">
+        <div class="col-xs-12 col-sm-6">
+            <div class="list-venue-form">
+                <div class="input-group required">
+                    <label for="venueName">Pool or Open Water Venue Name</label>
+                    <input type="text" class="form-control" id="venueName" name="venueName" maxlength="80" />
+                    <span class="help-block help-block--venueName">Please enter a venue name</span>
+                </div>
+                <div class="input-group input-group--poolType required">
+                    <label for="poolType">Body of Water</label>
+                    <select name="poolType" id="poolType">
+                        <option value="-1">Select Pool Type</option>
+                        <option value="Indoor">Indoor</option>
+                        <option value="Outdoor">Outdoor</option>
+                    </select>
+                    <span class="help-block help-block--poolType">Please enter a pool type</span>
+                </div>
+                <div class="input-group checkbox-group input-group--course input-group--add-new-course">
+                    <span class="help-block help-block--selectCourseType">Please select a course</span>
+                    <label class="checkbox-label" for="course_25y">
+                        <div class="checkbox-container">
+                            <input type="checkbox" name="selectCourseType" value="25y" id="course_25y" />
+                            <span class="checkbox__placeholder"></span>
+                        </div>
+                        Short Course Yards (25y)
+                    </label>
+                    <label class="checkbox-label" for="course_25m">
+                        <div class="checkbox-container">
+                            <input type="checkbox" name="selectCourseType" value="25m" id="course_25m" />
+                            <span class="checkbox__placeholder"></span>
+                        </div>
+                        Short Course Meters (25m)
+                    </label>
+                    <label class="checkbox-label" for="course_50m">
+                        <div class="checkbox-container">
+                            <input type="checkbox" name="selectCourseType" value="50m" id="course_50m" />
+                            <span class="checkbox__placeholder"></span>
+                        </div>
+                        Long Course Meters (50m)
+                    </label>
+                    <label class="checkbox-label" for="course_other">
+                        <div class="checkbox-container">
+                            <input type="checkbox" name="selectCourseType" value="other" id="course_other" />
+                            <span class="checkbox__placeholder"></span>
+                        </div>
+                        Other
+                    </label>
+                </div>
+                <div class="input-group">
+                    <label for="saveFormPool" class="list-venue-form__label-save-location">
+                        Click Confirm &amp; Continue to save your new pool or open water location. After you click, you&#39;ll be able to search for or add a new venue.
+                    </label>
+                    <button type="button" class="btn btn-small" id="saveFormPool">Confirm &amp; Continue</button>
+                    <button type="button" class="btn btn-small btn-outline" id="cancelSaveVenue">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

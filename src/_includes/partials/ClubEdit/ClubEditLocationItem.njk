@@ -1,0 +1,16 @@
+<div class="col-sm-12">
+    <div class="list-item list-item-existing">
+        <p class="location-name text-bold">{{ location.Name }}</p>
+        <p class="location-address-street">{{ location.Address }} | {{ location.City }}, {{ location.State }} {{ location.Zip }}</p>
+        {% for pool in location.Pools %}
+        <div class="venue__list">
+            <div class="venue__list--item selected">
+                <div>
+                    <p class="venue-name selected">{{ pool.Name }}</p>
+                    <p class="venue-type">({{ pool.SubType }})</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
