@@ -33,13 +33,92 @@
 }
 
 @media (max-width: 767px) {
-  .members-table td:last-child,
-  .members-table td:nth-last-child(2) {
-    font-size: 1.3rem;
+  /* Card layout — override table rendering */
+  .members-table {
+    table-layout: auto;
   }
 
-  .members-section .member-id {
-    font-size: 1.3rem;
+  .members-table thead {
+    display: none;
+  }
+
+  .members-table,
+  .members-table tbody,
+  .members-table tr,
+  .members-table td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .members-table tr {
+    padding: 3rem 0 2.5rem;
+    border-top: 1px solid #ddd;
+  }
+
+  .members-table tbody tr:first-child {
+    border-top: none;
+  }
+
+  .members-table td {
+    display: block;
+    padding: 0.25rem 0;
+    border: none !important;
+    font-size: 1.8rem;
+  }
+
+  .members-table td[data-label] {
+    display: grid;
+    grid-template-columns: 68px 1fr;
+    gap: 0 1rem;
+    align-items: baseline;
+  }
+
+  .members-table td[data-label]::before {
+    content: attr(data-label);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #777;
+    text-transform: uppercase;
+  }
+
+  /* Checkbox cell — no label, inline with first data cell */
+  .members-table--checkable td.col-checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: auto;
+    padding-right: 0;
+    border: none !important;
+  }
+
+  .members-table--checkable td.col-checkbox::after {
+    content: "Select";
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #777;
+    text-transform: uppercase;
+  }
+
+  .members-section .members-table td .member-id {
+    font-size: 1.8rem;
+    border: none;
+    /* margin-left: 0; */
+    /* padding-left: 0; */
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .members-table td[data-label="Name"] {
+    position: relative;
+  }
+
+  .members-table td[data-label="Name"] .members-badge {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: 0;
   }
 }
 
@@ -171,6 +250,24 @@
 
 /* --- Detail view tables --- */
 
+.members-table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+/* Name / ID / Type / Expires */
+.members-table:not(.members-table--checkable) th:nth-child(1),
+.members-table--checkable th:nth-child(2) { width: 35%; }
+
+.members-table:not(.members-table--checkable) th:nth-child(2),
+.members-table--checkable th:nth-child(3) { width: 18%; }
+
+.members-table:not(.members-table--checkable) th:nth-child(3),
+.members-table--checkable th:nth-child(4) { width: 30%; }
+
+.members-table:not(.members-table--checkable) th:nth-child(4),
+.members-table--checkable th:nth-child(5) { width: 17%; }
+
 .members-table th {
   font-size: 1.4rem;
   color: #555;
@@ -187,7 +284,14 @@
   vertical-align: middle;
   border-left: none !important;
   border-right: none !important;
+}
 
+@media (min-width: 768px) {
+  .members-table td[data-label="ID"],
+  .members-table td[data-label="Type"],
+  .members-table td[data-label="Expires"] {
+    font-size: 1.5rem;
+  }
 }
 
 
@@ -200,19 +304,27 @@
 }
 
 .col-checkbox {
-  width: 1%;
+  width: 3rem;
   white-space: nowrap;
 }
 
+th.col-checkbox,
 td.col-checkbox {
   padding-right: 1rem;
 }
 
-#section-expiring .members-detail-view .table-responsive,
 .members-simple-view {
   max-height: 300px;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+@media (min-width: 768px) {
+  #section-expiring .members-detail-view .table-responsive {
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 }
 
 /* --- Select All row --- */

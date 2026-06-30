@@ -50,20 +50,20 @@
       ? '<span class="members-badge members-badge--pending">Pending Waiver</span>'
       : '';
     return '<tr>' +
-      '<td>' + member.firstName + ' ' + member.lastName + pendingBadge + '</td>' +
-      '<td><span class="member-id">#' + member.swimmerId + '</span></td>' +
-      '<td>' + formatType(member.membershipType) + '</td>' +
-      '<td>' + formatDate(member.expirationDate) + '</td>' +
+      '<td data-label="Name">' + member.firstName + ' ' + member.lastName + pendingBadge + '</td>' +
+      '<td data-label="ID"><span class="member-id">#' + member.swimmerId + '</span></td>' +
+      '<td data-label="Type">' + formatType(member.membershipType) + '</td>' +
+      '<td data-label="Expires">' + formatDate(member.expirationDate) + '</td>' +
       '</tr>';
   }
 
   function renderCheckableRow(member) {
     return '<tr>' +
       '<td class="col-checkbox"><input type="checkbox" class="expiring-checkbox" data-id="' + member.id + '"></td>' +
-      '<td>' + member.firstName + ' ' + member.lastName + '</td>' +
-      '<td><span class="member-id">#' + member.swimmerId + '</span></td>' +
-      '<td>' + formatType(member.membershipType) + '</td>' +
-      '<td>' + formatDate(member.expirationDate) + '</td>' +
+      '<td data-label="Name">' + member.firstName + ' ' + member.lastName + '</td>' +
+      '<td data-label="ID"><span class="member-id">#' + member.swimmerId + '</span></td>' +
+      '<td data-label="Type">' + formatType(member.membershipType) + '</td>' +
+      '<td data-label="Expires">' + formatDate(member.expirationDate) + '</td>' +
       '</tr>';
   }
 
