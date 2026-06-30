@@ -28,8 +28,9 @@ In short: Covered = you could point a designer at the mockup and say "that's the
 |---|---|---|
 | *(CMS content — no React component)* Board of Directors | `src/pages/volunteer-central/board-of-directors.njk` | Covered |
 | *(CMS content — no React component)* Board of Directors Assignments | `src/pages/volunteer-central/board-assignments.njk` | Covered |
-| `Article.jsx` | `src/pages/swimmer-magazine/**` (SWIMMER only) | Partial |
+| `Article.jsx` | `src/pages/swimmer-magazine/**` (SWIMMER only) · `src/pages/fitness-and-training/articles-and-videos/articles/masters-swimming-training-plan-for-former-competitive-swimmers.njk` | Covered |
 | `Club.jsx` (legacy) / `Feature/Club2.0` Razor views (authoritative) | `src/pages/clubs/sarasota-y-sharks-536.njk`, `south-end-rowing-club-580.njk`, `swim-fort-lauderdale-1877.njk`, `fort-worth-area-swim-team-608.njk` | Covered |
+| *(Razor)* `Feature/Club2.0` ClubEdit views | `src/pages/club-central/club-edit.njk` | Covered |
 | `Clubs.jsx` | `src/pages/clubs/index.njk` | Covered |
 | `EmailConfirmation.jsx` | — | Not Started |
 | `Event.jsx` | `src/pages/events/events/2026-bumpy-jones-*` | Covered |
@@ -58,11 +59,12 @@ In short: Covered = you could point a designer at the mockup and say "that's the
 
 | Production component | Mockup partial | Status |
 |---|---|---|
-| `Article/AboutAuthor.jsx` | — | Not Started |
-| `Article/Author.jsx` | — | Not Started |
-| `Article/Categories.jsx` | — | Not Started |
+| `Article/AboutAuthor.jsx` | `partials/Article/ArticleAboutAuthor.njk` | Covered |
+| `Article/Author.jsx` | `partials/Article/ArticleAuthor.njk` | Covered |
+| `Article/Categories.jsx` | `partials/Article/ArticleCategories.njk` | Covered |
 | `Article/Photos.jsx` | — | Not Started |
-| `Article/Tags.jsx` | — | Not Started |
+| `Article/Tags.jsx` | `partials/Article/ArticleTags.njk` | Covered |
+| *(Razor)* `Feature/Article/ArticleShare.cshtml` | — | Out of Scope (stub — dead code, not used on live pages) |
 
 ---
 
@@ -81,11 +83,17 @@ In short: Covered = you could point a designer at the mockup and say "that's the
 | `Club/ClubList2.jsx` | `partials/Club/ClubList.njk` | Partial |
 | `Club/ClubListAlgolia.jsx` | — | Out of Scope |
 | `Club/ClubListItem.jsx` | inline in `ClubList.njk` | Covered |
-| `Club/ClubEdit/ClubEdit.jsx` | — | Not Started |
-| `Club/ClubEdit/Add.jsx` | — | Not Started |
-| `Club/ClubEdit/Location.jsx` | — | Not Started |
-| `Club/ClubEdit/LocationItem.jsx` | — | Not Started |
-| `Club/ClubEdit/Search.jsx` | — | Not Started |
+| `Club/ClubEdit/ClubEdit.jsx` | `src/pages/club-central/club-edit.njk` | Covered |
+| `Club/ClubEdit/Add.jsx` | `partials/ClubEdit/ClubEditLocationAdd.njk` | Covered |
+| `Club/ClubEdit/Location.jsx` | `partials/ClubEdit/ClubEditLocation.njk` | Covered |
+| `Club/ClubEdit/LocationItem.jsx` | `partials/ClubEdit/ClubEditLocationItem.njk` | Covered |
+| `Club/ClubEdit/Search.jsx` | `partials/ClubEdit/ClubEditLocationSearch.njk` | Covered |
+| *(Razor)* `ClubRegistration/ClubName.cshtml` | `partials/ClubEdit/ClubEditName.njk` | Covered |
+| *(Razor)* `ClubRegistration/ClubDetails.cshtml` | `partials/ClubEdit/ClubEditDetails.njk` | Covered |
+| *(Razor)* `ClubRegistration/ClubContact.cshtml` | `partials/ClubEdit/ClubEditContact.njk` | Covered |
+| *(Razor)* `ClubRegistration/ClubCoach.cshtml` | `partials/ClubEdit/ClubEditCoach.njk` | Covered |
+| *(Razor)* `ClubRegistration/ClubGoldClub.cshtml` | `partials/ClubEdit/ClubEditGoldClub.njk` | Covered |
+| *(Razor)* `ClubRegistration/ClubPayment.cshtml` | `partials/ClubEdit/ClubEditPayment.njk` | Covered |
 
 ---
 
@@ -199,7 +207,7 @@ LaneMate is a separate TMS product (TeamUnify/Active) — Out of Scope for all s
 |---|---|---|
 | `Media/Carousel.jsx` | `partials/Media/Carousel.njk` | Covered |
 | `Media/ImageSlider.jsx` | `partials/Homepage/ImageSlider.njk` | Covered |
-| `Media/HeroImage.jsx` | — | Not Started |
+| `Media/HeroImage.jsx` | `partials/Media/HeroImage.njk` | Covered |
 | `Media/Map.jsx` | — | Not Started |
 | `Media/Photo.jsx` | — | Not Started |
 | `Media/YoutubeVideo.jsx` | — | Not Started |
@@ -245,7 +253,7 @@ All OnlineWorkouts components — Out of Scope (separate feature, not being mock
 | `PageContent/DateCard.jsx` | — | Not Started |
 | `PageContent/GetInTouch.jsx` | — | Not Started |
 | `PageContent/Location.jsx` | — | Not Started |
-| `PageContent/RelatedContent.jsx` | — | Not Started |
+| `PageContent/RelatedContent.jsx` | `partials/PageContent/RelatedContent.njk` | Covered |
 | `PageContent/PageBody.jsx` | — | Out of Scope (content area wrapper) |
 | `PageContent/PageTitle.jsx` | — | Out of Scope (handled in layouts) |
 
@@ -307,7 +315,12 @@ All OnlineWorkouts components — Out of Scope (separate feature, not being mock
 
 ## Social
 
-Social sharing widgets (`Facebook.jsx`, `SocialShare.jsx`, `SocialShareIcons.jsx`, `Subscribe.jsx`) — Out of Scope (rendered inline where needed).
+| Production component | Mockup partial | Status |
+|---|---|---|
+| `Social/SocialShare.jsx` / *(Razor)* `Feature/Social/Share.cshtml` | `partials/Article/ArticleShare.njk` | Covered |
+| `Social/SocialShareIcons.jsx` | — | Out of Scope (footer only, rendered by base layout) |
+| `Facebook.jsx` | — | Out of Scope |
+| `Subscribe.jsx` | — | Out of Scope |
 
 ---
 
