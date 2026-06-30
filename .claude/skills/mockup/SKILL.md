@@ -150,14 +150,16 @@ find src -name "<filename>" 2>/dev/null
 
 For each production component that is **Not Started** or **Partial**, decide whether it becomes a new Nunjucks partial or is inlined. This is not a proposal — decide and commit. The plan summary (Step 8) will list the decisions for the user's awareness before building begins.
 
-**Create a new partial** if the component:
-- Appears (or is likely to appear) on more than one page
-- Maps to a clearly self-contained, named section of the UI
-- Has its own distinct CSS or JS that would be cleaner in a separate file
+**Default rule: match the production model.** If production has a component as a separate file (JSX component or Razor partial), create a corresponding Nunjucks partial. This keeps the mockup's file structure parallel to production, making future audits and diffs easier.
 
-**Inline into parent** if the component:
-- Is a leaf sub-component always rendered within a single parent
-- Has no realistic reuse candidate across pages
+**Create a new partial** if:
+- Production has it as a separate JSX component or Razor partial (primary rule)
+- It appears (or is likely to appear) on more than one page
+- It maps to a clearly self-contained, named section of the UI
+
+**Inline into parent** only if:
+- Production itself inlines the markup (not a separate file)
+- It is truly trivial markup (fewer than ~10 lines) with no structural identity of its own
 
 Path for new partials: `src/_includes/partials/<Group>/<ComponentName>.njk`
 
