@@ -71,14 +71,16 @@ From the `.item` file, read the **`Css assets`** field. This is the authoritativ
 The complete CSS load order for this page is:
 
 **Base stack** (from `Usms.cshtml`, always present):
-1. `bootstrap.min.css`
-2. `bootstrap-3-usms-patch.css`
+1. `bootstrap.min.css` — Bootstrap 3 grid (`col-xs-*`, `col-md-*` etc.)
+2. `bootstrap-3-usms-patch.css` — BS3 patches
 3. Font Awesome `brands.min.css`
 4. Font Awesome `all.min.css`
 5. `common.min.css`
 6. ← **Css assets field injects here** (page-specific files in TDS order)
 7. `print.min.css`
 8. `rteMasters.min.css`
+
+**CSS framework note:** The grid is Bootstrap 3, but `usms.min.css` (and/or `common.min.css`) includes compiled Bootstrap 5 utility classes — `d-flex`, `flex-row`, `justify-content-*`, `align-items-*`, etc. work without loading a separate BS5 file. Use BS3 grid classes for columns, BS5 utility classes for alignment and spacing.
 
 Compile the full ordered list for this page. Page-specific files go in `{% block pageCSS %}` of the layout or page template.
 

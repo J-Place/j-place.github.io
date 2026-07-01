@@ -43,6 +43,15 @@ Pages in `public/` originate from the separate Sergey repo at `~/USMS-Github-JPl
 
 Do not edit files directly inside `public/` — they will be overwritten the next time a Sergey page is synced.
 
+## CSS Framework
+
+The production site uses a **split Bootstrap strategy**:
+
+- **Grid system: Bootstrap 3** — `col-xs-*`, `col-sm-*`, `col-md-*`, `col-lg-*` naming throughout. `bootstrap.min.css` and `bootstrap-3-usms-patch.css` provide this.
+- **Utility classes: Bootstrap 5** — flex utilities (`d-flex`, `flex-row`, `justify-content-*`, `align-items-*`), spacing, and text utilities are compiled into `usms.min.css` (and/or `common.min.css`). No separate BS5 stylesheet is needed — these classes work out of the box.
+
+When writing layout markup: use BS3 grid classes for columns, BS5 utility classes for alignment and spacing. Do not add a Bootstrap 5 CDN link — it is already present via the production bundles.
+
 ## Building Production Page Mockups
 
 Use the `/mockup [url]` skill for all production page builds. It handles the full workflow: JSX structure, TDS CSS load order, live label fetch, structural verification. Do not build production pages manually.
