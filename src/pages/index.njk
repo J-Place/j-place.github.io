@@ -24,56 +24,23 @@ permalink: /index.html
           <li style="padding: 3px 0; font-size: 15px;"><a href="/events/event-central/event-dashboard/event-edit.html">Event Edit</a></li>
           <li style="padding: 3px 0; font-size: 15px;"><a href="/account/myusmslogin/">Log In</a></li>
 
-
           <li style="padding: 3px 0; font-size: 15px;"><a href="/lmsc/florida-lmsc.html">Florida LMSC</a></li>
           <li style="padding: 3px 0; font-size: 15px;"><a href="/volunteer-central/committee-chair-contact.html">Committee Chair Contact</a></li>
           <li style="padding: 3px 0; font-size: 15px;"><a href="/about/contact-lmsc.html">Contact Your LMSC</a></li>
           <li style="padding: 3px 0; font-size: 15px;"><a href="/registration/registration-receipt.html">Registration Receipt</a></li>
           <li style="padding: 3px 0; font-size: 15px;"><a href="/fitness-and-training/articles-and-videos/articles/masters-swimming-training-plan-for-former-competitive-swimmers/">Article — Masters Swimming Training Plan</a></li>
         </ul>
-
       </div>
-      <div class="col-lg-4">
-        <h5>Static Pages</h5>
-        <ul style="margin-top: 1rem; list-style-type: none; padding-left: 0;">
-          <li style="padding: 3px 0; font-size: 15px;"><a href="https://usms-measured-pools-260427--usms-mockup.netlify.app">USMS Measured Pools 04/27/26</a></li>
-          {# <li style="padding: 3px 0; font-size: 15px;"><a href="https://addons-260427--usms-mockup.netlify.app">Add-Ons and Upgrades NCC 04/27/26</a></li> #}
-          {# <li style="padding: 3px 0; font-size: 15px;"><a href="https://my-account-260427--usms-mockup.netlify.app">My Account 04/27/26</a></li> #}
-          <li style="padding: 3px 0; font-size: 15px;"><a href="https://content-hub-2-260428--usms-mockup.netlify.app">Article Search 04/28/26</a></li>
-          <li style="padding: 3px 0; font-size: 15px;"><a href="https://login-to-registration-page-260511--usms-mockup.netlify.app">Login to Registration 05/11/26</a></li>
-          <li style="padding: 3px 0; font-size: 15px;"><a href="https://index-260508--usms-mockup.netlify.app">Registration 05/08/26</a></li>
-          <li style="padding: 3px 0; font-size: 15px;"><a href="https://addons-260511--usms-mockup.netlify.app">Add-Ons and Upgrades 05/11/26</a></li>
-
-          <li style="padding: 3px 0; font-size: 15px;"><a href="https://2026-bumpy-jones-classic-long-course-meet-a-260602--usms-mockup.netlify.app">Event Detail — Bumpy Jones 06/02/26</a></li>
-<li style="padding: 3px 0; font-size: 15px;"><a href="https://swim-fort-lauderdale-1877-260602--usms-mockup.netlify.app">Swim Fort Lauderdale 06/02/26</a></li>
-          <li style="padding: 3px 0; font-size: 15px;"><a href="https://south-end-rowing-club-580-260602--usms-mockup.netlify.app">South End Rowing Club 06/02/26</a></li>
-          <li style="padding: 3px 0; font-size: 15px;"><a href="https://sarasota-y-sharks-536-260602--usms-mockup.netlify.app">Sarasota Sharks Masters 06/02/26</a></li>
-          <li style="padding: 3px 0; font-size: 15px;"><a href="https://fort-worth-area-swim-team-608-260602--usms-mockup.netlify.app">Fort Worth Area Swim Team 06/02/26</a></li>
-          <li style="padding: 3px 0; font-size: 15px;"><a href="https://usms-measured-pools-260609--usms-mockup.netlify.app">Measured Pools LMSC Filter 06/09/26</a></li>
-          <li style="padding: 3px 0; font-size: 15px;"><a href="https://registration-receipt-260610--usms-mockup.netlify.app">Registration Receipt 06/10/26</a></li>
-          <li style="padding: 3px 0; font-size: 15px;"><a href="https://event-dashboard-260610--usms-mockup.netlify.app">Event Dashboard 06/10/26</a></li>
-          <!-- snapshot-links -->
+      <div class="col-lg-8">
+        <h5>Snapshots</h5>
+        <ul style="margin-top: 1rem; list-style-type: none; padding-left: 0; max-height: 480px; overflow-y: auto; padding-right: 1rem;">
+          {% for snap in snapshots %}
+          <li style="padding: 3px 0; font-size: 15px;">
+            <a href="{{ snap.url }}">{{ snap.label }} — {{ snap.displayDate }}</a>{% if snap.notes %} <span style="color: #888; font-size: 13px;">({{ snap.notes }})</span>{% endif %}
+          </li>
+          {% endfor %}
         </ul>
-    </div>
-    <div class="col-lg-4">
-      <h5>Static Pages — Image Credits</h5>
-      <ul style="margin-top: 1rem; list-style-type: none; padding-left: 0;">
-          <li style="padding: 3px 0; font-size: 15px;"><a href="https://home-260521--usms-mockup.netlify.app">Homepage Carousel</a></li>
-          <li style="padding: 3px 0; font-size: 15px;"><a href="https://usms-style-guide-260521--usms-mockup.netlify.app/">USMS Style Guide</a></li>
-          <li style="padding: 3px 0; font-size: 15px;"><a href="https://how-to-do-butterfly-pull-260521--usms-mockup.netlify.app/">SWIMMER Article</a></li>
-          
-        </ul>
-        <h5>Static Pages — Course Modals</h5>
-        <ul style="margin-top: 1rem; list-style-type: none; padding-left: 0;">
-          <li style="padding: 3px 0; font-size: 15px;"><a href="https://event-edit-260527--usms-mockup.netlify.app">Event Location Modal 05/27/26</a></li>
-          <li style="padding: 3px 0; font-size: 15px;"><a href="https://usms-measured-pools-260527--usms-mockup.netlify.app">Measured Pools Modal 05/27/26</a></li>
-        </ul>
-        <h5>Static Pages — Contact Forms</h5>
-        <ul style="margin-top: 1rem; list-style-type: none; padding-left: 0;">
-          <li style="padding: 3px 0; font-size: 15px;"><a href="https://committee-chair-contact-260609--usms-mockup.netlify.app">Committee Chair Contact 06/09/26</a></li>
-          <li style="padding: 3px 0; font-size: 15px;"><a href="https://florida-lmsc-260609--usms-mockup.netlify.app">Florida LMSC 06/09/26</a></li>
-          <li style="padding: 3px 0; font-size: 15px;"><a href="https://contact-lmsc-260609--usms-mockup.netlify.app">Contact LMSC 06/09/26</a></li>
-        </ul>
+      </div>
     </div>
   </div>
 </div>
