@@ -2,7 +2,7 @@
 name: snapshot
 description: Build and deploy an immutable snapshot of a prototype page to Netlify, then update snapshot-registry.json. Use this when delivering a finished page as a permanent Netlify URL.
 argument-hint: [/path/to/page]
-allowed-tools: Bash(npm run deploy:snapshot*) Bash(git *) Read Write Edit
+allowed-tools: Bash(npm run deploy:snapshot*) Bash(netlify deploy*) Bash(git *) Read Write Edit
 ---
 
 You are running the snapshot deployment workflow for the USMS mockup project.
@@ -29,6 +29,16 @@ Wait for the user's response before continuing.
 
 ---
 
+## Step 1b — Short alias for article pages
+
+If the page path contains `/articles-and-videos/articles/`, ask the user:
+
+> "Article page paths produce long Netlify aliases that can exceed the 63-character DNS limit. Provide a short alias for this snapshot (e.g. `training-plan-css-260701`), or leave blank to use the auto-generated one:"
+
+If the user provides a value, store it as `<custom-alias>`. If blank, proceed without a custom alias.
+
+---
+
 ## Step 2 — Capture current branch
 
 Run:
@@ -42,24 +52,40 @@ Record the branch name for the registry entry.
 
 ## Step 3 — Run the deploy
 
-Run the deploy script, capturing all output:
+### If a custom alias was provided (Step 1b):
+
+Run the build and package step **without** deploying:
+
+```
+npm run deploy:snapshot -- --page=<page-path> [--dev]
+```
+
+From the output, extract the auto-generated dist folder name from the line:
+```
+Packaging snapshot "<dist-name>"...
+```
+
+Then deploy manually with the custom alias:
+
+```
+netlify deploy --alias=<custom-alias> --dir=dist/snapshots/<dist-name>
+```
+
+Extract the full URL from the `Draft URL:` line in the output.
+
+### If no custom alias:
+
+Run the deploy script with the `--deploy` flag:
 
 ```
 npm run deploy:snapshot -- --page=<page-path> [--dev] --deploy
 ```
 
-Include `--dev` only if the flag was set in Step 1.
+Extract the full URL from the `Draft URL:` line in the output.
 
-Wait for the command to complete. The Netlify CLI will print a deploy URL in the format:
-```
-Website URL:  https://<name>--usms-mockup.netlify.app
-```
+---
 
-Extract:
-- The **alias name** (the `<name>` segment before `--mockup`)
-- The **full URL**
-
-If the command fails, stop and show the error to the user. Do not continue to the registry step.
+If either command fails, stop and show the error to the user. Do not continue to the registry step.
 
 ---
 
@@ -67,10 +93,14 @@ If the command fails, stop and show the error to the user. Do not continue to th
 
 Read the current contents of `snapshot-registry.json`.
 
-Add a new entry using the alias name as the key:
+The registry key is:
+- `<custom-alias>` if one was provided in Step 1b
+- Otherwise the auto-generated dist folder name from Step 3
+
+Add a new entry:
 
 ```json
-"<alias-name>": {
+"<key>": {
   "page": "<page-path>",
   "url": "<full-url>",
   "date": "<today's date as YYYY-MM-DD>",
