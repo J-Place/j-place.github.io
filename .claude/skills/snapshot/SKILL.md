@@ -82,8 +82,9 @@ Write the updated file. Do not remove existing entries.
 
 ---
 
-## Step 6 — Report
+## Step 5 — Report
 
 Tell the user:
 - The permanent URL
 - The registry key that was written
+- The index page auto-generates from `snapshot-registry.json`, so no `/link-snapshot` step is needed
