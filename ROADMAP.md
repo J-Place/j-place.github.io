@@ -30,6 +30,16 @@ When the pricing matrix arrives:
 
 ---
 
+## Add-ons page: wire ShowMagazineAddOn per persona
+
+**Context:** Production added a server-side gate on the magazine add-on (PR 1610, 2026-07-01). The render condition in `MastersAddOns.jsx` changed to `data.ContactModel.Magazine !== 'Yes' && data.ShowMagazineAddOn` — previously the add-on appeared automatically for anyone without a subscription; now the server must explicitly set `ShowMagazineAddOn: true`.
+
+**What to do:** When next working on the add-ons page, set `showMagazineAddon: true` on personas that should see the magazine offer (non-subscribers), and `false` on personas that already hold a subscription.
+
+**Related:** `src/_data/siteUsers.json`, `src/js/addons.js`, production `MastersAddOns.jsx`, `AddonsModel.cs`.
+
+---
+
 ## Year-Plus and Event License Year-Plus tiles
 
 **Current state:** These tiles (`usmsYearPlus`, and the production `membership-length--competition-nextYear` tile) are present in production Registration markup but hidden by default (`display: none`). They are not currently included in the mockup Registration tier keys.
