@@ -105,14 +105,14 @@
   var dataEl = document.getElementById('dev-swimmers-data');
   var data;
   if (dataEl) {
-    try { data = JSON.parse(dataEl.textContent); } catch (e) {}
+    try { data = JSON.parse(dataEl.textContent); } catch {}
   }
 
   var savedId = sessionStorage.getItem(STORAGE_KEY);
   var defaultIdEl = document.getElementById('dev-default-user');
   var defaultId = null;
   if (defaultIdEl) {
-    try { defaultId = JSON.parse(defaultIdEl.textContent); } catch (e) {}
+    try { defaultId = JSON.parse(defaultIdEl.textContent); } catch {}
   }
   var activeId = savedId || defaultId;
 
@@ -157,6 +157,7 @@
         var loggedIn = siteUser.loggedIn === true;
         loginWrapper.dataset.loggedIn = loggedIn ? 'true' : 'false';
 
+        var loginLabel = loginWrapper.querySelector('label');
         if (loggedIn) {
           // Logged in: remove <a> wrapper if present, update label
           var loginLink = loginWrapper.querySelector('a');
@@ -164,7 +165,6 @@
             while (loginLink.firstChild) loginWrapper.insertBefore(loginLink.firstChild, loginLink);
             loginWrapper.removeChild(loginLink);
           }
-          var loginLabel = loginWrapper.querySelector('label');
           if (loginLabel) loginLabel.textContent = profile ? profile.firstName.substring(0, 7) : '';
         } else {
           // Logged out: wrap content in <a> if not already
@@ -174,7 +174,6 @@
             while (loginWrapper.firstChild) a.appendChild(loginWrapper.firstChild);
             loginWrapper.appendChild(a);
           }
-          var loginLabel = loginWrapper.querySelector('label');
           if (loginLabel) loginLabel.textContent = 'Log In';
         }
       }
@@ -207,7 +206,7 @@
     var filterEl = document.getElementById('dev-swimmer-filter');
     var allowedIds = null;
     if (filterEl) {
-      try { allowedIds = JSON.parse(filterEl.textContent); } catch (e) {}
+      try { allowedIds = JSON.parse(filterEl.textContent); } catch {}
     }
     var userIds = Object.keys(siteUsers);
     if (allowedIds) userIds = userIds.filter(function (id) { return allowedIds.indexOf(id) !== -1; });

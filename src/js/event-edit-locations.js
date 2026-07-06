@@ -20,7 +20,7 @@ window.initEventPlaces = function () {};
   var dataEl = document.getElementById('location-search-data');
   if (!dataEl) return;
   var allLocations = [];
-  try { allLocations = JSON.parse(dataEl.textContent); } catch (e) {}
+  try { allLocations = JSON.parse(dataEl.textContent); } catch {}
 
   // ── DOM refs ───────────────────────────────────────────────────────────────
 
@@ -96,7 +96,7 @@ window.initEventPlaces = function () {};
 
   function populateSelectionModal(data) {
     var courses = [];
-    try { courses = JSON.parse(data.courses || '[]'); } catch (e) {}
+    try { courses = JSON.parse(data.courses || '[]'); } catch {}
 
     var modalBody = document.querySelector('#modalCourseSelection .modal-body');
     if (!modalBody) return;
@@ -151,7 +151,7 @@ window.initEventPlaces = function () {};
 
   function renderSavedLocation(data, selectedCourseIdx) {
     var courses = [];
-    try { courses = JSON.parse(data.courses || '[]'); } catch (e) {}
+    try { courses = JSON.parse(data.courses || '[]'); } catch {}
 
     var selectedCourse = courses[selectedCourseIdx] || null;
     var selectedPool   = selectedCourse ? (selectedCourse.pool || data.name) : null;
@@ -212,7 +212,7 @@ window.initEventPlaces = function () {};
     if (savedItems) savedItems.innerHTML = renderSavedLocation(data, selectedCourseIdx);
 
     var courses = [];
-    try { courses = JSON.parse(data.courses || '[]'); } catch (e) {}
+    try { courses = JSON.parse(data.courses || '[]'); } catch {}
     var selectedCourse = courses[selectedCourseIdx] || null;
 
     searchPanel.style.display = 'none';

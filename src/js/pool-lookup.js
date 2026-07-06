@@ -20,7 +20,7 @@ window.initPoolPlaces = function () {};
   var dataEl = document.getElementById('pool-locations-data');
   if (!dataEl) return;
   var allLocations = [];
-  try { allLocations = JSON.parse(dataEl.textContent); } catch (e) {}
+  try { allLocations = JSON.parse(dataEl.textContent); } catch {}
 
   var locationColumn = document.querySelector('.location-column');
 
@@ -77,7 +77,7 @@ window.initPoolPlaces = function () {};
   function openModal(data) {
     document.getElementById('poolDetailName').textContent = data.name;
     var courses = [];
-    try { courses = JSON.parse(data.courses || '[]'); } catch (e) {}
+    try { courses = JSON.parse(data.courses || '[]'); } catch {}
 
     var countEl = document.getElementById('poolDetailCount');
     if (countEl) countEl.textContent = 'Showing ' + courses.length + ' course' + (courses.length !== 1 ? 's' : '');

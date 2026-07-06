@@ -1,3 +1,4 @@
+/* globals ValidateField, ValidateDob, MakeColumnWithErrorSameHeight */
 (function () {
   // ── User state (set by login-status.js via data attributes) ───────────────
   // TODO: use renew/isLapsed to vary header copy, pre-population mode,

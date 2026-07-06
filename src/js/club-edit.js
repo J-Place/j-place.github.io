@@ -227,7 +227,7 @@ function _isValidUrl(url) {
   return /[-a-zA-Z0-9@:%_+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_+.~#?&//=]*)?/gi.test(url);
 }
 function _isValidEmail(email) {
-  return /^[^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i.test(String(email));
+  return /^[^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i.test(String(email));
 }
 function _isValidPhone(v) { return /^[0-9]{3}-?[0-9]{3}-?[0-9]{4}$/.test(v); }
 function _isValidZip(v) { return /^\d{5}([-\s]\d{4})?$/.test(v); }

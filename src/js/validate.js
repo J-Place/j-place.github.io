@@ -150,6 +150,7 @@ function _validateRadioCheckbox(input) {
 }
 
 // ── Public API ────────────────────────────────────────────────────────────────
+/* exported ValidateField, ValidateDob, BlockDigits, MakeColumnWithErrorSameHeight */
 
 var ValidateField = function (input) {
   if (typeof window === 'undefined') return;
