@@ -93,6 +93,15 @@ Check for these specific attributes in production JSX that are easy to miss:
 
 Report any that are present in production but missing from our templates.
 
+### 3e — Forbidden domain check
+
+Run:
+```bash
+grep -r "cm\.usms\.org" src/
+```
+
+Any result is an error. `cm.usms.org` is the Sitecore CMS origin server — not the CDN — and times out in the browser. Replace the domain with `www-usms-hhgdctfafngha6hr.z01.azurefd.net`; the path and query parameters stay identical.
+
 ---
 
 ## Step 4 — CSS override audit

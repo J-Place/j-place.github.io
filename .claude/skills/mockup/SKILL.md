@@ -177,6 +177,7 @@ From any fetched or pasted HTML, identify and plan to remove:
 - Sitecore server/build comments (`<!-- /Sitecore/...-->`, `<!-- #BeginTemplate -->`)
 - React hydration attributes (`data-reactid`, `data-reactroot`, `data-react-checksum`)
 - Production inline `<style>` patch blocks
+- **`cm.usms.org` image domains** — this is the Sitecore CMS origin, not the CDN; replace with `www-usms-hhgdctfafngha6hr.z01.azurefd.net` (path and query params stay identical)
 
 ---
 
