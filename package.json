@@ -9,7 +9,8 @@
     "build:css:common": "node scripts/build-css.js common",
     "build:snapshot": "node scripts/snapshot.js",
     "deploy:snapshot": "node scripts/snapshot.js --deploy",
-    "deploy:prototype": "npm run build && netlify deploy --dir=_site --prod"
+    "deploy:prototype": "npm run build && netlify deploy --dir=_site --prod",
+    "lint": "eslint src/js/"
   },
   "keywords": [],
   "author": "",
@@ -17,7 +18,10 @@
   "description": "",
   "devDependencies": {
     "@11ty/eleventy": "^3.1.5",
+    "@eslint/js": "^10.0.1",
     "autoprefixer": "^10.5.0",
+    "eslint": "^10.6.0",
+    "globals": "^17.7.0",
     "postcss": "^8.5.10",
     "postcss-calc": "^10.1.1",
     "postcss-custom-media": "^12.0.1",
