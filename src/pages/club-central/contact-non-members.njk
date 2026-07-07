@@ -52,56 +52,45 @@ breadcrumbTitle: "Manage Potential Members"
     </div>
 
     <div id="nonmembers-content">
-      <p class="nonmembers-summary"><em>Recent Contacts</em> shows who has contacted USMS within the last 30 days, and the date they contacted so you can find the email, or resend the original. After you've responded, check the item off and it will record the contact name and date. After 30 days a contact will move to the Year list.</p>
-      <div class="nonmembers-columns">
-
-        <div class="nonmembers-col">
-          <div class="nonmembers-col__header">
-            <div class="nonmembers-col__name">
-              <h3 class="nonmembers-col__title">Recent Contacts</h3>
-              <p class="nonmembers-col__subtitle">(last 30 days)</p>
-            </div>
-            <div class="nonmembers-col__controls">
-              <span class="nonmembers-active-count"><span id="recent-count">0</span> active</span>
-              <select id="recent-sort" class="nonmembers-sort">
-                <option value="" disabled selected>Sort</option>
-                <option value="date">Date</option>
-                <option value="source">Source</option>
-              </select>
-            </div>
+      <p class="nonmembers-summary">Shows everyone who has contacted USMS about your club, plus expired members due for renewal outreach.</p>
+      <div class="nonmembers-col">
+        <div class="nonmembers-col__header">
+          <div class="nonmembers-col__name">
+            <h3 class="nonmembers-col__title">Contact Queue</h3>
+            <p class="nonmembers-col__subtitle">(<span id="recent-count">0</span> active)</p>
           </div>
-          <div class="nonmembers-active" id="recent-active"></div>
-          <div class="nonmembers-responded">
-            <div class="nonmembers-responded__header">
-              <div>
-                <h4 class="nonmembers-col__title">Replied to</h4>
-                <p class="nonmembers-col__subtitle">(archived after 90 days)</p>
-              </div>
+          <div class="nonmembers-col__controls">
+            <div class="nonmembers-filter" role="group" aria-label="Filter inbox">
+              <span class="nonmembers-filter__label">Source:</span>
+              <button class="nonmembers-filter__btn is-active" data-filter="all">All</button>
+              <button class="nonmembers-filter__btn" data-filter="trial">Trial</button>
+              <button class="nonmembers-filter__btn" data-filter="club">Club Page</button>
+              <button class="nonmembers-filter__btn" data-filter="expired">Expired</button>
             </div>
-            <div class="nonmembers-responded__list" id="recent-responded-list"></div>
+            <button id="sort-dir" class="nonmembers-sort-dir" aria-label="Sort ascending">
+              <span class="nonmembers-sort-icon">
+                <i class="fas fa-sort nonmembers-sort-base" aria-hidden="true"></i>
+                <i class="fas fa-sort-up nonmembers-sort-overlay" aria-hidden="true"></i>
+              </span>
+            </button>
           </div>
         </div>
-
-        <div class="nonmembers-col">
-          <div class="nonmembers-col__header">
+        <div class="nonmembers-active" id="recent-active"></div>
+        <div class="nonmembers-responded">
+          <div class="nonmembers-responded__header">
             <div>
-              <h3 class="nonmembers-col__title">Expired Members</h3>
-              <p class="nonmembers-col__subtitle">(within last year)</p>
+              <h4 class="nonmembers-col__title">Replied to</h4>
+              <p class="nonmembers-col__subtitle">(archived after 90 days)</p>
             </div>
-            <span class="nonmembers-active-count"><span id="expired-count">0</span> members</span>
+            <button id="responded-sort-dir" class="nonmembers-sort-dir" aria-label="Sort descending">
+              <span class="nonmembers-sort-icon">
+                <i class="fas fa-sort nonmembers-sort-base" aria-hidden="true"></i>
+                <i class="fas fa-sort-down nonmembers-sort-overlay" aria-hidden="true"></i>
+              </span>
+            </button>
           </div>
-          <div class="nonmembers-active" id="expired-list"></div>
-          <div class="nonmembers-responded">
-            <div class="nonmembers-responded__header">
-              <div>
-                <h4 class="nonmembers-col__title">Replied to</h4>
-                <p class="nonmembers-col__subtitle">(archived after 90 days)</p>
-              </div>
-            </div>
-            <div class="nonmembers-responded__list" id="expired-replied-list"></div>
-          </div>
+          <div class="nonmembers-responded__list" id="recent-responded-list"></div>
         </div>
-
       </div>
     </div>
 
@@ -143,7 +132,7 @@ breadcrumbTitle: "Manage Potential Members"
 
 {% set modalId = "original-modal" %}
 {% set modalSize = "lg" %}
-{% set modalTitle = "Original Contact Message" %}
+{% set modalTitle = "Original Message" %}
 {% set modalBody %}
 <div class="original-msg">
   <div class="original-msg__row">
@@ -173,15 +162,14 @@ breadcrumbTitle: "Manage Potential Members"
 </div>
 {% endset %}
 {% set modalFooter %}
-<button type="button" class="btn btn-md btn-link js-modal-close">Close</button>
-<button type="button" class="btn btn-md btn-outline" disabled>Original</button>
+<button type="button" class="btn btn-md btn-outline" disabled>Message</button>
 <button type="button" class="btn btn-md btn-primary" id="orig-reply-btn">Reply</button>
 {% endset %}
 {% include "components/modal.njk" %}
 
 {% set modalId = "reply-modal" %}
 {% set modalSize = "lg" %}
-{% set modalTitle = "Reply to Contact" %}
+{% set modalTitle = "Reply to Message" %}
 {% set modalBody %}
 <div class="reply-msg">
   <div class="reply-msg__row">
@@ -207,8 +195,7 @@ breadcrumbTitle: "Manage Potential Members"
 </div>
 {% endset %}
 {% set modalFooter %}
-<button type="button" class="btn btn-md btn-link" id="reply-cancel-btn">Cancel</button>
-<button type="button" class="btn btn-md btn-outline" id="reply-back-btn">View Original</button>
+<button type="button" class="btn btn-md btn-outline" id="reply-back-btn">Message</button>
 <button type="button" class="btn btn-md btn-primary" id="reply-send-btn" disabled>Send Reply</button>
 {% endset %}
 {% include "components/modal.njk" %}
