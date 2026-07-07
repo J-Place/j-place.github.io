@@ -57,11 +57,18 @@ breadcrumbTitle: "Manage Potential Members"
 
         <div class="nonmembers-col">
           <div class="nonmembers-col__header">
-            <div>
+            <div class="nonmembers-col__name">
               <h3 class="nonmembers-col__title">Recent Contacts</h3>
               <p class="nonmembers-col__subtitle">(last 30 days)</p>
             </div>
-            <span class="nonmembers-active-count"><span id="recent-count">0</span> active</span>
+            <div class="nonmembers-col__controls">
+              <span class="nonmembers-active-count"><span id="recent-count">0</span> active</span>
+              <select id="recent-sort" class="nonmembers-sort">
+                <option value="" disabled selected>Sort</option>
+                <option value="date">Date</option>
+                <option value="source">Source</option>
+              </select>
+            </div>
           </div>
           <div class="nonmembers-active" id="recent-active"></div>
           <div class="nonmembers-responded">

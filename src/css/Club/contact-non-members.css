@@ -71,9 +71,9 @@
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  -webkit-box-align: flex-start;
-  -ms-flex-align: flex-start;
-  align-items: flex-start;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
   padding-bottom: 1rem;
   border-bottom: 1px solid #ddd;
   margin-bottom: 0.5rem;
@@ -102,12 +102,33 @@ p.nonmembers-col__subtitle::before {
   content: ' ';
 }
 
+.nonmembers-col__controls {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 1rem;
+  padding-right: 2rem;
+}
+
 .nonmembers-active-count {
   font-size: 1.3rem;
   color: #888;
   white-space: nowrap;
-  padding-top: 0.4rem;
-  padding-right: 2rem;
+}
+
+.nonmembers-sort {
+  border: none;
+  background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6.67' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat left 1px top 20px;
+  -webkit-appearance: none;
+  appearance: none;
+  font-size: 1.3rem;
+  color: #888;
+  cursor: pointer;
+  padding: 0 0 0 1.4rem;
+  outline: none;
 }
 
 /* --- Active list scroll --- */
@@ -123,6 +144,12 @@ p.nonmembers-col__subtitle::before {
   .nonmembers-active {
     height: 250px;
   }
+}
+
+#recent-active {
+  max-height: none;
+  height: auto;
+  overflow-y: visible;
 }
 
 /* --- Contact cards --- */

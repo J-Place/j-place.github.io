@@ -67,7 +67,7 @@
       '<input type="checkbox" class="responded-checkbox" data-id="' + c.id + '" data-email="' + c.email + '" data-name="' + c.firstName + ' ' + c.lastName + '">' +
       '<span class="contact-name">' + c.firstName + ' ' + c.lastName + '</span>' +
       '<div class="contact-top__right">' +
-      (c.source ? '<span class="contact-source contact-source--' + c.source.toLowerCase() + '"><span class="contact-source__label">Source: </span><strong>' + (c.source === 'TMS' ? 'Trial' : c.source === 'CLUB' ? 'Club' : c.source) + '</strong></span>' : '') +
+      (c.source ? '<span class="contact-source contact-source--' + c.source.toLowerCase() + '"><span class="contact-source__label">Source: </span><strong>' + (c.source === 'TMS' ? 'Trial' : c.source === 'CLUB' ? 'Club Page' : c.source) + '</strong></span>' : '') +
       '<span class="contact-date">' + formatDate(c.contactDate) + '</span>' +
       '</div>' +
       '</div>' +
@@ -102,9 +102,23 @@
   var recentCountEl = document.getElementById('recent-count');
 
   function byDateAsc(a, b) { return a.contactDate < b.contactDate ? -1 : a.contactDate > b.contactDate ? 1 : 0; }
+  function bySourceAsc(a, b) { var sa = a.source || ''; var sb = b.source || ''; return sa < sb ? -1 : sa > sb ? 1 : 0; }
   function byExpirationAsc(a, b) { return a.expirationDate < b.expirationDate ? -1 : a.expirationDate > b.expirationDate ? 1 : 0; }
 
-  recentActiveEl.innerHTML = recentActive.length ? recentActive.sort(byDateAsc).map(renderActiveCard).join('') : emptyActive();
+  function renderRecentActive(sort) {
+    var sorted = recentActive.slice();
+    if (sort === 'source') sorted.sort(bySourceAsc);
+    else sorted.sort(byDateAsc);
+    recentActiveEl.innerHTML = sorted.length ? sorted.map(renderActiveCard).join('') : emptyActive();
+  }
+
+  renderRecentActive('date');
+
+  var recentSortEl = document.getElementById('recent-sort');
+  if (recentSortEl) {
+    recentSortEl.addEventListener('change', function () { renderRecentActive(this.value); });
+  }
+
   recentRespondedListEl.innerHTML = recentResponded.length
     ? recentResponded.map(function (c) { return renderRespondedCard(c.firstName + ' ' + c.lastName, c.email, formatDate(c.respondedDate)); }).join('')
     : emptyResponded();
