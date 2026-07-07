@@ -40,9 +40,9 @@
 
 @media (max-width: 767px) {
   .nonmembers-col__name p.nonmembers-col__subtitle {
-    display: block;
+    /* display: block; */
     font-size: 1.3rem;
-    margin-left: 0;
+    margin-left: 0.5rem;
     margin-top: 0;
   }
 
@@ -70,10 +70,16 @@
 
   .nonmembers-col__controls {
     padding-right: 0;
+    width: 100%;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    margin-top: 1rem;
   }
 
   .nonmembers-responded__header {
     padding-right: 0;
+    width: 100%;
   }
 
   .nonmembers-col__header {
@@ -106,7 +112,7 @@
   -ms-flex-align: baseline;
   align-items: baseline;
   padding-bottom: 1rem;
-  border-bottom: 1px solid #ddd;
+  /* border-bottom: 1px solid #ddd; */
   margin-bottom: 0.5rem;
 }
 
@@ -267,11 +273,6 @@ p.nonmembers-col__subtitle::before {
     margin-bottom: 0.8rem;
   }
 
-  #recent-active {
-    max-height: none;
-    overflow-y: visible;
-  }
-
   .nonmembers-responded__list {
     max-height: none;
     overflow-y: visible;
@@ -394,9 +395,15 @@ p.nonmembers-col__subtitle::before {
 /* --- Responded section --- */
 
 .nonmembers-responded {
-  margin-top: 2rem;
+  margin-top: 6rem;
   padding-top: 1.5rem;
-  border-top: 1px solid #ddd;
+  /* border-top: 1px solid #ddd; */
+}
+
+@media (min-width: 768px) {
+  .nonmembers-responded {
+    margin-top: 6rem;
+  }
 }
 
 .nonmembers-responded__header {
