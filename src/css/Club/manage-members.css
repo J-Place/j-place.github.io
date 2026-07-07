@@ -144,9 +144,9 @@
 }
 
 .members-view-tab {
-  background: none;
+  background: #f0f0f0;
   border: none;
-  padding: 0 1rem;
+  padding: 0.6rem 1.4rem;
   font-size: 1.3rem;
   color: #888;
   cursor: pointer;
@@ -154,12 +154,25 @@
 }
 
 .members-view-tab:last-child {
-  padding-right: 0;
+  padding-right: 1.4rem;
 }
 
 .members-view-tab.is-active {
+  background: #fff;
   color: #333;
   font-weight: 600;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.members-view-tab.is-active::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: #fff;
 }
 
 /* --- Detail / Simple view switching --- */
@@ -231,9 +244,10 @@
   margin-bottom: 2rem;
 }
 
-.members-section__header h3 {
+.members-section .members-section__header h3 {
   margin-bottom: 0.5rem;
   color: #434343;
+  font-size: 2rem;
 }
 
 .members-section__header p {
@@ -246,6 +260,7 @@
   font-size: 1.6rem;
   font-weight: 400;
   color: #666;
+  margin-left: 0.5rem;
 }
 
 /* --- Detail view tables --- */
