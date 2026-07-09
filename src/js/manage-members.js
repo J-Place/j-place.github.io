@@ -51,7 +51,7 @@
       : '';
     return '<tr>' +
       '<td data-label="Name">' + member.firstName + ' ' + member.lastName + pendingBadge + '</td>' +
-      '<td data-label="ID"><span class="member-id">#' + member.swimmerId + '</span></td>' +
+      '<td data-label="ID"><span class="member-id">' + member.swimmerId.slice(0, 6) + '</span></td>' +
       '<td data-label="Type">' + formatType(member.membershipType) + '</td>' +
       '<td data-label="Expires">' + formatDate(member.expirationDate) + '</td>' +
       '</tr>';
@@ -61,7 +61,7 @@
     return '<tr>' +
       '<td class="col-checkbox"><input type="checkbox" class="expiring-checkbox" data-id="' + member.id + '"></td>' +
       '<td data-label="Name">' + member.firstName + ' ' + member.lastName + '</td>' +
-      '<td data-label="ID"><span class="member-id">#' + member.swimmerId + '</span></td>' +
+      '<td data-label="ID"><span class="member-id">' + member.swimmerId.slice(0, 6) + '</span></td>' +
       '<td data-label="Type">' + formatType(member.membershipType) + '</td>' +
       '<td data-label="Expires">' + formatDate(member.expirationDate) + '</td>' +
       '</tr>';
@@ -76,7 +76,7 @@
     return '<div class="col-xs-12 simple-col">' +
       '<div class="simple-item">' +
       '<span class="simple-name">' + member.firstName + ' ' + member.lastName + pendingBadge + '</span>' +
-      '<span class="simple-date">#' + member.swimmerId + '</span>' +
+      '<span class="simple-date">' + member.swimmerId.slice(0, 6) + '</span>' +
       '</div>' +
       '</div>';
   }
@@ -86,7 +86,7 @@
       '<label class="simple-item simple-item--checkable">' +
       '<input type="checkbox" class="expiring-checkbox" data-id="' + member.id + '">' +
       '<span class="simple-name">' + member.firstName + ' ' + member.lastName + '</span>' +
-      '<span class="simple-date">#' + member.swimmerId + '</span>' +
+      '<span class="simple-date">' + member.swimmerId.slice(0, 6) + '</span>' +
       '</label>' +
       '</div>';
   }

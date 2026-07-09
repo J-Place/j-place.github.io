@@ -169,7 +169,7 @@
     if (dir === 'asc') sorted.reverse();
     recentRespondedListEl.innerHTML = sorted.length
       ? sorted.map(function (item) {
-          if (item._type === 'expired') return renderRespondedCard(item.firstName + ' ' + item.lastName, '#' + item.swimmerId + (item.email ? '  ' + item.email : ''), formatDate(item.contactedDate), 'Expired');
+          if (item._type === 'expired') return renderRespondedCard(item.firstName + ' ' + item.lastName, item.swimmerId.slice(0, 6) + (item.email ? '  ' + item.email : ''), formatDate(item.contactedDate), 'Expired');
           return renderRespondedCard(item.firstName + ' ' + item.lastName, item.email, formatDate(item.respondedDate), item.source === 'TMS' ? 'Trial' : 'Club Page');
         }).join('')
       : emptyResponded();
@@ -195,7 +195,7 @@
       '<div class="contact-card__left">' +
       '<div class="contact-name-row">' +
       '<span class="contact-name">' + m.firstName + ' ' + m.lastName + '</span>' +
-      '<span class="contact-swimmer-id">#' + m.swimmerId + '</span>' +
+      '<span class="contact-swimmer-id">' + m.swimmerId.slice(0, 6) + '</span>' +
       '</div>' +
       '<div class="contact-email">' + (m.email || '') + '</div>' +
       '</div>' +
