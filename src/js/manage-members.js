@@ -123,8 +123,24 @@
 
   // --- Expiring checkboxes ---
 
+  var MEMBER_FEE = 75;
   var checkedIds = new Set();
   var selectAll = document.getElementById('select-all-expiring');
+
+  function formatCurrency(n) {
+    return '$' + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
+  function updatePaymentSummary() {
+    var count = checkedIds.size;
+    var total = count * MEMBER_FEE;
+    var usmsLine = document.getElementById('payment-usms-line');
+    usmsLine.style.display = count > 0 ? '' : 'none';
+    document.getElementById('payment-member-count').textContent = count;
+    document.getElementById('payment-member-unit').textContent = count === 1 ? 'member' : 'members';
+    document.getElementById('payment-subtotal').textContent = formatCurrency(total);
+    document.getElementById('payment-total').textContent = formatCurrency(total);
+  }
 
   function updateSelectAll() {
     selectAll.checked = expiring.length > 0 && checkedIds.size === expiring.length;
@@ -139,6 +155,7 @@
     document.querySelectorAll('.expiring-checkbox').forEach(function (cb) {
       cb.checked = checked;
     });
+    updatePaymentSummary();
   });
 
   document.getElementById('members-content').addEventListener('change', function (e) {
@@ -151,6 +168,7 @@
       cb.checked = isChecked;
     });
     updateSelectAll();
+    updatePaymentSummary();
   });
 
   var noMembersError = document.getElementById('payment-no-members-error');

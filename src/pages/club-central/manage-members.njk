@@ -53,12 +53,12 @@ breadcrumbTitle: "Manage Current Members"
         </div>
 
         <div class="members-layout">
-        <div id="members-content" class="view-simple">
+        <div id="members-content">
 
           <div class="members-view-nav">
             <div class="members-view-tabs" role="tablist">
-              <button class="members-view-tab is-active" data-view="simple" role="tab" type="button">Column View</button>
-              <button class="members-view-tab" data-view="detail" role="tab" type="button">Detail View</button>
+              <button class="members-view-tab is-active" data-view="detail" role="tab" type="button">Detail View</button>
+              <button class="members-view-tab" data-view="simple" role="tab" type="button">Column View</button>
             </div>
           </div>
 
@@ -124,7 +124,7 @@ breadcrumbTitle: "Manage Current Members"
 
             <div class="members-section" id="section-expiring">
               <div class="members-section__header">
-                <h3>Expiring <span class="members-count" id="count-expiring"></span></h3>
+                <h3>Annual <span class="members-count" id="count-expiring"></span></h3>
                 <p>Memberships expire December 31, 2026. Select members to bulk-register for the upcoming year.</p>
               </div>
 
@@ -167,6 +167,15 @@ breadcrumbTitle: "Manage Current Members"
         <form class="form-membership-length form-horizontal">
           <input type="hidden" name="dataDesc"><input type="hidden" name="dataValue">
           <h3 class="payment-info___form-header payment-section__heading m-b-30">Enter Payment Details</h3>
+          <div class="payment-info__form-summary">
+            <p class="payment-info__line-item payment-info__line-item--usms" id="payment-usms-line" style="display:none">
+              <span id="payment-member-count">0</span> <span id="payment-member-unit">members</span> &times; $75.00
+              <span class="payment-info__line-item--price" id="payment-subtotal">$0.00</span>
+            </p>
+            <p class="payment-info__line-item payment-info__line-item--total">
+              Total: <span class="payment-info__line-item--price" id="payment-total">$0.00</span>
+            </p>
+          </div>
           <div class="card__content addons-payment__fields">
             <div class="form-group card-name">
               <div class="col-xs-12">
