@@ -1,0 +1,39 @@
+/* Base overrides — mirrors production /src/App/assets/styles/style.css */
+
+h2.page-title {
+  margin-bottom: 2rem;
+}
+
+/* ── Skip link ─────────────────────────────────────────────────────────────── */
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.skip-link:focus {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  z-index: 9999;
+  padding: 0.5rem 1rem;
+  background: #fff;
+  color: #0068ad;
+  text-decoration: underline;
+  border: 2px solid #0068ad;
+}
+
+/* ── Focus ring default ─────────────────────────────────────────────────────── */
+
+*:focus-visible {
+  outline: 2px solid #0068ad;
+  outline-offset: 2px;
+}
