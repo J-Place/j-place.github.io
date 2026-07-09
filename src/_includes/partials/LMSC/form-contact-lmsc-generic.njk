@@ -9,22 +9,6 @@
       </div>
 
       <div class="row">
-        <div class="col-sm-5" data-sc-field-key="">
-          <div class="sc-form__select-group">
-            <label for="subject">Subject</label>
-            <select id="subject" name="subject" aria-required="true" data-val="true" data-val-required="Subject is required.">
-              <option value=""></option>
-              <option value="General Information">General Information</option>
-              <option value="Membership">Membership</option>
-              <option value="Events/Sanctioning">Events/Sanctioning</option>
-              <option value="Results/Records">Results/Records</option>
-            </select>
-            <span class="field-validation-valid" data-valmsg-for="subject" data-valmsg-replace="true"></span>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
         <div class="col-sm-6" data-sc-field-key="">
           <label for="firstName">First Name</label>
           <input id="firstName" name="firstName" type="text" maxlength="255" aria-required="true" data-val="true" data-val-required="First Name is required.">
@@ -46,10 +30,49 @@
       </div>
 
       <div class="row">
+        <div class="col-sm-5" data-sc-field-key="">
+          <label for="phone">Phone</label>
+          <input id="phone" name="phone" type="tel" maxlength="20">
+          <span class="field-validation-valid" data-valmsg-for="phone" data-valmsg-replace="true"></span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-8" data-sc-field-key="">
+          <label class="sc-form__radio-inline--label">Are you a USMS member?</label>
+          <label><input type="radio" name="isMember" value="Yes">Yes</label>
+          <label><input type="radio" name="isMember" value="No">No</label>
+          <span class="field-validation-valid" data-valmsg-for="isMember" data-valmsg-replace="true"></span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-5" data-sc-field-key="">
+          <div class="sc-form__select-group">
+            <label for="subject">Subject</label>
+            <select id="subject" name="subject" aria-required="true" data-val="true" data-val-required="Subject is required.">
+              <option value=""></option>
+              <option value="General Information">General Information</option>
+              <option value="Membership">Membership</option>
+              <option value="Events/Sanctioning">Events/Sanctioning</option>
+              <option value="Results/Records">Results/Records</option>
+            </select>
+            <span class="field-validation-valid" data-valmsg-for="subject" data-valmsg-replace="true"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
         <div class="col-sm-8" data-sc-field-key="">
           <label for="message">Message</label>
           <textarea id="message" name="message" rows="5" maxlength="1042" aria-required="true" data-val="true" data-val-required="Message is required."></textarea>
           <span class="field-validation-valid" data-valmsg-for="message" data-valmsg-replace="true"></span>
+        </div>
+      </div>
+
+      <div class="row btn-submit--initial">
+        <div class="sc-form__footer">
+          <input value="Submit" type="submit" class="btn btn-primary btn-large">
         </div>
       </div>
 
@@ -85,12 +108,6 @@
             </div>
             <span class="field-validation-valid" data-valmsg-for="captchaVerified" data-valmsg-replace="true"></span>
           </div>
-        </div>
-      </div>
-
-      <div class="row btn-submit--initial">
-        <div class="sc-form__footer">
-          <input value="Submit" type="submit" class="btn btn-primary btn-large">
         </div>
       </div>
 
