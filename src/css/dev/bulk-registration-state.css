@@ -1,0 +1,45 @@
+/* ============================================================
+   DEV ONLY — bulk registration closed state for manage-members
+   ============================================================ */
+
+/* Dev bar — mirrors login-status.css (not loaded on this page) */
+.login-status {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    pointer-events: none;
+}
+.login-status .usms-container {
+    display: flex;
+    justify-content: flex-end;
+}
+@media (min-width: 768px) {
+    .login-status { top: 92px; }
+}
+.login-status__select {
+    pointer-events: auto;
+    font-size: 1.5rem;
+    padding: 2px 8px;
+    border: none;
+    background: transparent;
+    color: #0068ad;
+    cursor: pointer;
+    -webkit-appearance: auto;
+    appearance: auto;
+    text-align: right;
+}
+.login-status__select:focus-visible { outline: none; }
+.login-status__select option { background: transparent; color: #333; }
+
+/* Bulk registration closed state */
+body.bulk-reg-closed .members-select-all-row { display: none !important; }
+
+body.bulk-reg-closed td.col-checkbox,
+body.bulk-reg-closed th.col-checkbox { display: none !important; }
+
+body.bulk-reg-closed .expiring-checkbox { display: none !important; }
+body.bulk-reg-closed .simple-item--checkable { cursor: default; }
+
+body.bulk-reg-closed #payment-section { display: none !important; }
