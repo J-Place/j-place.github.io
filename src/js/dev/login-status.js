@@ -234,6 +234,12 @@
       window.location.reload();
     });
 
+    var existingBar = document.querySelector('.login-status .usms-container');
+    if (existingBar) {
+      existingBar.insertBefore(select, existingBar.firstChild);
+      return;
+    }
+
     var container = document.createElement('div');
     container.className = 'login-status';
 
