@@ -58,8 +58,11 @@
   function renderActiveCard(c) {
     return '<div class="contact-card" id="card-' + c.id + '" data-id="' + c.id + '">' +
       '<div class="contact-card__left">' +
-      '<div class="contact-name">' + c.firstName + ' ' + c.lastName + '</div>' +
-      '<div class="contact-email">' + c.email + '</div>' +
+      '<div class="contact-name-row">' +
+      '<span class="contact-name">' + c.firstName + ' ' + c.lastName + '</span>' +
+      (c.swimmerId ? '<span class="contact-swimmer-id">' + c.swimmerId.slice(0, 6) + '</span>' : '') +
+      (c.email ? '<span class="contact-email">' + c.email + '</span>' : '') +
+      '</div>' +
       '</div>' +
       '<div class="contact-card__right">' +
       (c.source ? '<span class="contact-source"><strong>' + (c.source === 'TMS' ? 'Trial' : c.source === 'CLUB' ? 'Club Page' : c.source) + '</strong></span>' : '') +
@@ -74,8 +77,8 @@
       '<div class="contact-name-row">' +
       '<span class="contact-name">' + m.firstName + ' ' + m.lastName + '</span>' +
       '<span class="contact-swimmer-id">' + m.swimmerId.slice(0, 6) + '</span>' +
+      (m.email ? '<span class="contact-email">' + m.email + '</span>' : '') +
       '</div>' +
-      '<div class="contact-email">' + (m.email || '') + '</div>' +
       '</div>' +
       '<div class="contact-card__right">' +
       '<span class="contact-source"><strong>Expired</strong></span>' +
@@ -112,30 +115,6 @@
   }
 
   renderRecentActive('all', 'asc');
-
-  var filterGroupEl = document.querySelector('.nonmembers-filter');
-  var sortDirBtn = document.getElementById('sort-dir');
-  var sortDirIcon = sortDirBtn ? sortDirBtn.querySelector('.nonmembers-sort-overlay') : null;
-
-  if (filterGroupEl) {
-    filterGroupEl.addEventListener('click', function (e) {
-      var btn = e.target.closest('.nonmembers-filter__btn');
-      if (!btn) return;
-      filterGroupEl.querySelectorAll('.nonmembers-filter__btn').forEach(function (b) { b.classList.remove('is-active'); });
-      btn.classList.add('is-active');
-      activeFilter = btn.dataset.filter;
-      renderRecentActive(activeFilter, sortDir);
-    });
-  }
-
-  if (sortDirBtn) {
-    sortDirBtn.addEventListener('click', function () {
-      sortDir = sortDir === 'asc' ? 'desc' : 'asc';
-      if (sortDirIcon) { sortDirIcon.className = 'fas nonmembers-sort-overlay ' + (sortDir === 'asc' ? 'fa-sort-up' : 'fa-sort-down'); }
-      sortDirBtn.setAttribute('aria-label', sortDir === 'asc' ? 'Sort ascending' : 'Sort descending');
-      renderRecentActive(activeFilter, sortDir);
-    });
-  }
 
   recentCountEl.textContent = allActive.length;
 })();

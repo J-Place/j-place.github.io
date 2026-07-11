@@ -71,8 +71,11 @@
   function renderActiveCard(c) {
     return '<div class="contact-card" id="card-' + c.id + '" data-id="' + c.id + '">' +
       '<div class="contact-card__left">' +
-      '<div class="contact-name">' + c.firstName + ' ' + c.lastName + '</div>' +
-      '<div class="contact-email">' + c.email + '</div>' +
+      '<div class="contact-name-row">' +
+      '<span class="contact-name">' + c.firstName + ' ' + c.lastName + '</span>' +
+      (c.swimmerId ? '<span class="contact-swimmer-id">' + c.swimmerId.slice(0, 6) + '</span>' : '') +
+      (c.email ? '<span class="contact-email">' + c.email + '</span>' : '') +
+      '</div>' +
       '</div>' +
       '<div class="contact-card__right">' +
       (c.source ? '<span class="contact-source"><strong>' + (c.source === 'TMS' ? 'Trial' : c.source === 'CLUB' ? 'Club Page' : c.source) + '</strong></span>' : '') +
@@ -196,8 +199,8 @@
       '<div class="contact-name-row">' +
       '<span class="contact-name">' + m.firstName + ' ' + m.lastName + '</span>' +
       '<span class="contact-swimmer-id">' + m.swimmerId.slice(0, 6) + '</span>' +
+      (m.email ? '<span class="contact-email">' + m.email + '</span>' : '') +
       '</div>' +
-      '<div class="contact-email">' + (m.email || '') + '</div>' +
       '</div>' +
       '<div class="contact-card__right">' +
       '<span class="contact-source"><strong>Expired</strong></span>' +
