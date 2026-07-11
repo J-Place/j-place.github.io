@@ -9,9 +9,9 @@
   }
   sessionStorage.setItem('activeClubId', clubId);
 
-  var manageContactsLink = document.querySelector('a[href*="contact-non-members"]');
+  var manageContactsLink = document.querySelector('a[href*="expired-members"]');
   if (manageContactsLink) {
-    manageContactsLink.href = '/club-central/contact-non-members.html?clubId=' + encodeURIComponent(clubId);
+    manageContactsLink.href = '/club-central/expired-members.html?clubId=' + encodeURIComponent(clubId);
   }
 
   var clubs = JSON.parse(document.getElementById('clubs-local-data').textContent);
@@ -39,92 +39,112 @@
     return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   }
 
-  function setCount(id, count) {
-    document.getElementById(id).textContent = '(' + count + ')';
-  }
-
-  // --- Detail view row renderers ---
-
-  function renderBasicRow(member) {
-    var pendingBadge = member.isPending
-      ? '<span class="members-badge members-badge--pending">Pending Waiver</span>'
-      : '';
-    return '<tr>' +
-      '<td data-label="Name">' + member.firstName + ' ' + member.lastName + pendingBadge + '</td>' +
-      '<td data-label="ID"><span class="member-id">' + member.swimmerId.slice(0, 6) + '</span></td>' +
-      '<td data-label="Type">' + formatType(member.membershipType) + '</td>' +
-      '<td data-label="Expires">' + formatDate(member.expirationDate) + '</td>' +
-      '</tr>';
-  }
-
-  function renderCheckableRow(member) {
-    return '<tr>' +
-      '<td class="col-checkbox"><input type="checkbox" class="expiring-checkbox" data-id="' + member.id + '"></td>' +
-      '<td data-label="Name">' + member.firstName + ' ' + member.lastName + '</td>' +
-      '<td data-label="ID"><span class="member-id">' + member.swimmerId.slice(0, 6) + '</span></td>' +
-      '<td data-label="Type">' + formatType(member.membershipType) + '</td>' +
-      '<td data-label="Expires">' + formatDate(member.expirationDate) + '</td>' +
-      '</tr>';
-  }
-
-  // --- Simple view column renderers ---
-
-  function renderSimpleCol(member) {
-    var pendingBadge = member.isPending
-      ? '<span class="members-badge members-badge--pending">Pending</span>'
-      : '';
-    return '<div class="col-xs-12 simple-col">' +
-      '<div class="simple-item">' +
-      '<span class="simple-name">' + member.firstName + ' ' + member.lastName + pendingBadge + '</span>' +
-      '<span class="simple-date">' + member.swimmerId.slice(0, 6) + '</span>' +
-      '</div>' +
-      '</div>';
-  }
-
-  function renderCheckableCol(member) {
-    return '<div class="col-xs-12 simple-col">' +
-      '<label class="simple-item simple-item--checkable">' +
-      '<input type="checkbox" class="expiring-checkbox" data-id="' + member.id + '">' +
-      '<span class="simple-name">' + member.firstName + ' ' + member.lastName + '</span>' +
-      '<span class="simple-date">' + member.swimmerId.slice(0, 6) + '</span>' +
-      '</label>' +
-      '</div>';
-  }
-
-  // --- Render all sections ---
+  // --- Flatten all members into one list ---
 
   var autoRenew = clubMembers.autoRenew || [];
   var yearPlus = clubMembers.yearPlus || [];
   var expiring = clubMembers.expiring || [];
+  var needsRenewal = expiring.filter(function (m) { return !m.selfRenewed; });
+  var selfRenewed = expiring.filter(function (m) { return m.selfRenewed; });
 
-  document.getElementById('tbody-autorenew').innerHTML = autoRenew.map(renderBasicRow).join('');
-  document.getElementById('tbody-yearplus').innerHTML = yearPlus.map(renderBasicRow).join('');
-  document.getElementById('tbody-expiring').innerHTML = expiring.map(renderCheckableRow).join('');
+  function tag(arr, status, checkable) {
+    return arr.map(function (m) {
+      return { id: m.id, firstName: m.firstName, lastName: m.lastName,
+        swimmerId: m.swimmerId, membershipType: m.membershipType,
+        expirationDate: m.expirationDate, isPending: m.isPending,
+        _status: status, _checkable: checkable };
+    });
+  }
 
-  document.getElementById('grid-autorenew').innerHTML = autoRenew.map(renderSimpleCol).join('');
-  document.getElementById('grid-yearplus').innerHTML = yearPlus.map(renderSimpleCol).join('');
-  document.getElementById('grid-expiring').innerHTML = expiring.map(renderCheckableCol).join('');
+  var flat = tag(needsRenewal, 'Annual', true)
+    .concat(tag(selfRenewed, 'Annual', false))
+    .concat(tag(yearPlus, 'Year-Plus', false))
+    .concat(tag(autoRenew, 'Auto-Renew', false));
 
-  setCount('count-autorenew', autoRenew.length);
-  setCount('count-yearplus', yearPlus.length);
-  setCount('count-expiring', expiring.length);
+  // --- Sort ---
 
-  // --- View toggle ---
+  var sortKey = 'lastName';
+  var sortDir = 'asc';
 
-  document.querySelectorAll('.members-view-tab').forEach(function (btn) {
+  var STATUS_ORDER = { 'Annual': 0, 'Year-Plus': 1, 'Auto-Renew': 2 };
+
+  function getSortVal(m, key) {
+    if (key === 'lastName') return m.lastName;
+    if (key === 'status') return STATUS_ORDER[m._status] !== undefined ? STATUS_ORDER[m._status] : m._status;
+    if (key === 'membershipType') return m.membershipType;
+    if (key === 'expirationDate') return m.expirationDate;
+    return '';
+  }
+
+  function sortedFlat() {
+    var copy = flat.slice();
+    copy.sort(function (a, b) {
+      var va = getSortVal(a, sortKey), vb = getSortVal(b, sortKey);
+      return va < vb ? -1 : va > vb ? 1 : 0;
+    });
+    if (sortDir === 'desc') copy.reverse();
+    return copy;
+  }
+
+  // --- Render ---
+
+  var FEES = { Standard: 75, Competitive: 125 };
+  var checkedIds = new Set();
+
+  function renderRow(m) {
+    var pendingBadge = m.isPending
+      ? '<span class="members-badge members-badge--pending">Pending Waiver</span>'
+      : '';
+    var checkCell = m._checkable
+      ? '<td class="col-checkbox"><input type="checkbox" class="expiring-checkbox" data-id="' + m.id + '"></td>'
+      : '<td class="col-checkbox"></td>';
+    return '<tr>' +
+      checkCell +
+      '<td data-label="Name">' + m.firstName + ' ' + m.lastName + pendingBadge + '</td>' +
+      '<td data-label="ID"><span class="member-id">' + m.swimmerId.slice(0, 6) + '</span></td>' +
+      '<td data-label="Status">' + m._status + '</td>' +
+      '<td data-label="Type">' + formatType(m.membershipType) + '</td>' +
+      '<td data-label="Expires">' + formatDate(m.expirationDate) + '</td>' +
+      '</tr>';
+  }
+
+  function renderTable() {
+    document.getElementById('tbody-members').innerHTML = sortedFlat().map(renderRow).join('');
+    document.querySelectorAll('.expiring-checkbox').forEach(function (cb) {
+      cb.checked = checkedIds.has(cb.dataset.id);
+    });
+  }
+
+  renderTable();
+
+  // --- Sort buttons ---
+
+  document.querySelectorAll('.members-sort-btn').forEach(function (btn) {
     btn.addEventListener('click', function () {
-      var view = btn.dataset.view;
-      document.querySelectorAll('.members-view-tab').forEach(function (b) {
-        b.classList.toggle('is-active', b.dataset.view === view);
+      var key = btn.dataset.sort;
+      if (key === sortKey) {
+        sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+      } else {
+        sortKey = key;
+        sortDir = 'asc';
+      }
+      document.querySelectorAll('.members-sort-btn').forEach(function (b) {
+        var overlay = b.querySelector('.members-sort-overlay');
+        if (b.dataset.sort === sortKey) {
+          b.classList.add('is-active');
+          overlay.className = 'fas members-sort-overlay ' + (sortDir === 'asc' ? 'fa-sort-up' : 'fa-sort-down');
+          b.setAttribute('aria-label', sortDir === 'asc' ? 'Sort A to Z' : 'Sort Z to A');
+        } else {
+          b.classList.remove('is-active');
+          overlay.className = 'fas members-sort-overlay fa-sort-up';
+        }
       });
-      document.getElementById('members-content').classList.toggle('view-simple', view === 'simple');
+      renderTable();
     });
   });
 
-  // --- Expiring checkboxes ---
+  // --- Checkboxes & payment summary ---
 
-  var MEMBER_FEE = 75;
-  var checkedIds = new Set();
   var selectAll = document.getElementById('select-all-expiring');
 
   function formatCurrency(n) {
@@ -132,24 +152,36 @@
   }
 
   function updatePaymentSummary() {
-    var count = checkedIds.size;
-    var total = count * MEMBER_FEE;
-    var usmsLine = document.getElementById('payment-usms-line');
-    usmsLine.style.display = count > 0 ? '' : 'none';
-    document.getElementById('payment-member-count').textContent = count;
-    document.getElementById('payment-member-unit').textContent = count === 1 ? 'member' : 'members';
-    document.getElementById('payment-subtotal').textContent = formatCurrency(total);
+    var standardCount = 0;
+    var competitiveCount = 0;
+    checkedIds.forEach(function (id) {
+      var member = needsRenewal.find(function (m) { return m.id === id; });
+      if (member && member.membershipType === 'Competitive') competitiveCount++;
+      else if (member) standardCount++;
+    });
+    var standardTotal = standardCount * FEES.Standard;
+    var competitiveTotal = competitiveCount * FEES.Competitive;
+    var total = standardTotal + competitiveTotal;
+
+    var stdLine = document.getElementById('payment-standard-line');
+    var cmpLine = document.getElementById('payment-competitive-line');
+    stdLine.style.display = standardCount > 0 ? '' : 'none';
+    document.getElementById('payment-standard-count').textContent = standardCount;
+    document.getElementById('payment-standard-subtotal').textContent = formatCurrency(standardTotal);
+    cmpLine.style.display = competitiveCount > 0 ? '' : 'none';
+    document.getElementById('payment-competitive-count').textContent = competitiveCount;
+    document.getElementById('payment-competitive-subtotal').textContent = formatCurrency(competitiveTotal);
     document.getElementById('payment-total').textContent = formatCurrency(total);
   }
 
   function updateSelectAll() {
-    selectAll.checked = expiring.length > 0 && checkedIds.size === expiring.length;
-    selectAll.indeterminate = checkedIds.size > 0 && checkedIds.size < expiring.length;
+    selectAll.checked = needsRenewal.length > 0 && checkedIds.size === needsRenewal.length;
+    selectAll.indeterminate = checkedIds.size > 0 && checkedIds.size < needsRenewal.length;
   }
 
   selectAll.addEventListener('change', function () {
     var checked = this.checked;
-    expiring.forEach(function (m) {
+    needsRenewal.forEach(function (m) {
       if (checked) checkedIds.add(m.id); else checkedIds.delete(m.id);
     });
     document.querySelectorAll('.expiring-checkbox').forEach(function (cb) {
@@ -163,10 +195,6 @@
     var id = e.target.dataset.id;
     var isChecked = e.target.checked;
     if (isChecked) checkedIds.add(id); else checkedIds.delete(id);
-    // Sync matching checkbox in the other view
-    document.querySelectorAll('.expiring-checkbox[data-id="' + id + '"]').forEach(function (cb) {
-      cb.checked = isChecked;
-    });
     updateSelectAll();
     updatePaymentSummary();
   });
@@ -176,7 +204,6 @@
   document.getElementById('register-button').addEventListener('click', function () {
     var valid = true;
 
-    // Member selection
     if (checkedIds.size === 0) {
       noMembersError.style.display = '';
       valid = false;
@@ -184,7 +211,6 @@
       noMembersError.style.display = 'none';
     }
 
-    // Required text fields
     ['cardName', 'cardNumberID', 'cardCodeID', 'expiration', 'cardZipID'].forEach(function (id) {
       var field = document.getElementById(id);
       var group = field.closest('.form-group');
@@ -197,7 +223,6 @@
       }
     });
 
-    // Agree-terms checkbox
     var agreeTerms = document.getElementById('agreeTerms');
     var agreeGroup = agreeTerms.closest('.form-group');
     var agreeHelpBlock = agreeGroup.querySelector('.help-block');
