@@ -92,7 +92,6 @@
   }
 
   var recentActiveEl = document.getElementById('recent-active');
-  var recentCountEl = document.getElementById('recent-count');
 
   function getItemDate(item) { return item._type === 'expired' ? item.expirationDate : item.contactDate; }
   function byDateAsc(a, b) { var da = getItemDate(a), db = getItemDate(b); return da < db ? -1 : da > db ? 1 : 0; }
@@ -115,6 +114,4 @@
   }
 
   renderRecentActive('all', 'asc');
-
-  recentCountEl.textContent = allActive.length;
 })();
