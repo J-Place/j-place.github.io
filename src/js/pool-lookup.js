@@ -157,6 +157,7 @@ window.initPoolPlaces = function () {};
   var rangeSelect   = document.getElementById('search-filter__range');
   var lmscSelect    = document.getElementById('search-filter__lmsc');
   var tagsContainer = document.querySelector('.list-control-search--tags');
+  var summaryEl     = document.querySelector('.list-control-search--summary');
   var summaryCount  = document.querySelector('.summary-count');
   var summaryRange  = document.querySelector('.summary-range');
   var summaryLoc    = document.querySelector('.summary-location');
@@ -332,13 +333,22 @@ window.initPoolPlaces = function () {};
 
   // ── Loading indicator ──────────────────────────────────────────────────────
 
-  var loaderEl = document.querySelector('.loading');
+  var spinnerEl = document.querySelector('.list-control-search--summary-loading');
+
+  function showSpinner() {
+    if (spinnerEl) spinnerEl.style.display = 'inline-block';
+    if (summaryEl) summaryEl.classList.add('is-loading');
+  }
+  function hideSpinner() {
+    if (spinnerEl) spinnerEl.style.display = 'none';
+    if (summaryEl) summaryEl.classList.remove('is-loading');
+  }
 
   function withLoader(fn) {
-    if (loaderEl) loaderEl.style.display = 'flex';
+    showSpinner();
     setTimeout(function () {
       fn();
-      if (loaderEl) loaderEl.style.display = 'none';
+      hideSpinner();
     }, 1000);
   }
 
@@ -427,13 +437,13 @@ window.initPoolPlaces = function () {};
   function geocodeAddress(address) {
     if (!address) { withLoader(applyFilters); return; }
     resetFiltersForLocation();
-    if (loaderEl) loaderEl.style.display = 'flex';
+    showSpinner();
     var start = Date.now();
     function done() {
       var wait = Math.max(0, 1000 - (Date.now() - start));
       setTimeout(function () {
         applyFilters();
-        if (loaderEl) loaderEl.style.display = 'none';
+        hideSpinner();
       }, wait);
     }
     fetch(
