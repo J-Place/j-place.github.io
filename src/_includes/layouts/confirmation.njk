@@ -1,0 +1,108 @@
+{% extends "layouts/base.njk" %}
+{% block content %}
+<div class="section section-full p-tb-10">
+
+  <div class="usms-container p-b-50">
+    <div class="row is-flex">
+      <div class="col-xs-12">
+        <div class="heading-container">
+          <h1 class="text-center">{% block confirmationH1 %}Purchase Confirmation{% endblock %}</h1>
+        </div>
+        <div class="image-rendering image-left">
+          <a><img src="https://www.usms.org/-/media/usms/non-lightroom%20images/house%20art/welcome-header.png" alt="Welcome to U.S. Masters Swimming" width="1338" height="215"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="usms-container p-b-50">
+
+    {% block confirmationHeader %}{% endblock %}
+
+    <div class="row">
+      {% block confirmationColumns %}{% endblock %}
+    </div>
+
+    {% block confirmationFooter %}{% endblock %}
+
+    {% if showBenefits !== false %}
+    <div class="usms-container p-tb-10">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="confirmation-notes">
+            <div class="row confirmation-benefits-wrapper">
+              <div class="col-xs-12">
+                <h3 class="text-primary">Your Benefits</h3>
+                <div class="confirmation-login-wrapper">
+                  <a href="/myusmslogin">Login to My Account</a>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                <div class="registration-benefit">
+                  <a href="/reg/getcard.php">
+                    <img alt="USMS Card Icon" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-card-pdf.svg">
+                  </a>
+                  <p><a href="/reg/getcard.php">Download Your Membership Card</a></p>
+                </div>
+                <div class="registration-benefit">
+                  <a href="/workout-library">
+                    <img alt="" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-workout-library.svg">
+                  </a>
+                  <p><a href="/workout-library">Get Exclusive Workouts</a></p>
+                </div>
+                <div class="registration-benefit">
+                  <a href="https://www.usms.org/account/my-information">
+                    <img alt="Profile Icon" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-profile.svg">
+                  </a>
+                  <p><a href="https://www.usms.org/account/my-information">Complete Your My Information Page</a></p>
+                </div>
+                <div class="registration-benefit">
+                  <a href="/about/swimmer-magazine">
+                    <img alt="SWIMMER Magazine Icon" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-swimmer-mag.svg">
+                  </a>
+                  <p><a href="/about/swimmer-magazine">Read SWIMMER Magazine</a></p>
+                </div>
+                <div class="registration-benefit">
+                  <a href="/join-usms/membership-discounts">
+                    <img alt="Discounts Icon" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-discounts.svg">
+                  </a>
+                  <p><a href="/join-usms/membership-discounts">Take Advantage of Discounts</a></p>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                <div class="registration-benefit">
+                  <a href="/fitness-and-training/articles-and-videos">
+                    <img alt="Online Learning Icon" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-online-learning.svg">
+                  </a>
+                  <p><a href="/fitness-and-training/articles-and-videos">View the Latest Articles and Videos</a></p>
+                </div>
+                <div class="registration-benefit">
+                  <a href="/events">
+                    <img alt="Events Icon" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-fitness-series.svg">
+                  </a>
+                  <p><a href="/events">Search Upcoming Events</a></p>
+                </div>
+                <div class="registration-benefit">
+                  <a href="/fitness-and-training/workout-tracking/swimcom-integration-information">
+                    <img alt="Swim.com Icon" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-swim.svg">
+                  </a>
+                  <p><a href="/fitness-and-training/workout-tracking/swimcom-integration-information">Link Account with Swim.com</a></p>
+                </div>
+                <div class="registration-benefit">
+                  <a href="/clubs">
+                    <img alt="Club Finder Icon" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-volunteer-central.svg">
+                  </a>
+                  <p><a href="/clubs">Find Nearby Clubs</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+
+</div>
+{% endblock %}
