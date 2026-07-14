@@ -229,11 +229,22 @@ p.nonmembers-col__subtitle::before {
 
 /* --- Active list scroll --- */
 
+body {
+  overflow-x: hidden;
+}
+
 .nonmembers-active {
   max-height: 250px;
   overflow-y: auto;
   overflow-x: hidden;
   padding-right: 1.5rem;
+}
+
+@media (max-width: 767px) {
+  .nonmembers-active {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 #recent-active {
@@ -262,14 +273,21 @@ p.nonmembers-col__subtitle::before {
 
 @media (max-width: 767px) {
   .contact-card {
-    -webkit-box-orient: vertical;
+    -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
-    -ms-flex-direction: column;
-    flex-direction: column;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    min-width: 520px;
   }
 
-  .contact-card__right .contact-actions {
-    margin-bottom: 0.8rem;
+  .contact-card__right {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-align: baseline;
+    -ms-flex-align: baseline;
+    align-items: baseline;
   }
 
   .nonmembers-responded__list {
