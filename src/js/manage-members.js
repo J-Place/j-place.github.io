@@ -100,7 +100,7 @@
       checkCell +
       '<td data-label="Name">' + m.firstName + ' ' + m.lastName + pendingBadge + '</td>' +
       '<td data-label="Permanent ID"><span class="member-id">' + m.swimmerId.slice(0, 5) + '</span></td>' +
-      '<td data-label="Status">' + m._status + '</td>' +
+      '<td data-label="Membership Type">' + m._status + '</td>' +
       '<td data-label="Event License">' + formatType(m.membershipType) + '</td>' +
       '<td data-label="Expires">' + formatDate(m.expirationDate) + '</td>' +
       '</tr>';
