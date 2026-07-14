@@ -58,6 +58,7 @@ breadcrumbTitle: "Manage Current Members"
 
           <div class="members-select-all-row">
             <label class="members-select-all-label"><input type="checkbox" id="select-all-expiring"> Select All</label>
+            <span class="members-pending-legend visible-xs-inline">* Pending Waiver</span>
           </div>
 
           <div class="table-responsive">
@@ -66,9 +67,9 @@ breadcrumbTitle: "Manage Current Members"
                 <tr>
                   <th class="col-checkbox"></th>
                   <th>Name <button class="members-sort-btn is-active" data-sort="lastName" aria-label="Sort A to Z"><span class="members-sort-icon"><i class="fas fa-sort members-sort-base" aria-hidden="true"></i><i class="fas fa-sort-up members-sort-overlay" aria-hidden="true"></i></span></button></th>
-                  <th><span class="hidden-xs">Swimmer </span>ID</th>
+                  <th><span class="hidden-xs">Permanent </span>ID</th>
                   <th>Status <button class="members-sort-btn" data-sort="status" aria-label="Sort A to Z"><span class="members-sort-icon"><i class="fas fa-sort members-sort-base" aria-hidden="true"></i><i class="fas fa-sort-up members-sort-overlay" aria-hidden="true"></i></span></button></th>
-                  <th><span class="hidden-xs">Membership </span>Type <button class="members-sort-btn" data-sort="membershipType" aria-label="Sort A to Z"><span class="members-sort-icon"><i class="fas fa-sort members-sort-base" aria-hidden="true"></i><i class="fas fa-sort-up members-sort-overlay" aria-hidden="true"></i></span></button></th>
+                  <th>Event License <button class="members-sort-btn" data-sort="membershipType" aria-label="Sort A to Z"><span class="members-sort-icon"><i class="fas fa-sort members-sort-base" aria-hidden="true"></i><i class="fas fa-sort-up members-sort-overlay" aria-hidden="true"></i></span></button></th>
                   <th>Expires <button class="members-sort-btn" data-sort="expirationDate" aria-label="Sort A to Z"><span class="members-sort-icon"><i class="fas fa-sort members-sort-base" aria-hidden="true"></i><i class="fas fa-sort-up members-sort-overlay" aria-hidden="true"></i></span></button></th>
                 </tr>
               </thead>
@@ -83,13 +84,9 @@ breadcrumbTitle: "Manage Current Members"
           <input type="hidden" name="dataDesc"><input type="hidden" name="dataValue">
           <h3 class="payment-info___form-header payment-section__heading m-b-30">Enter Payment Details</h3>
           <div class="payment-info__form-summary">
-            <p class="payment-info__line-item payment-info__line-item--usms" id="payment-standard-line" style="display:none">
-              <span id="payment-standard-count">0</span> Standard &times; $75.00
-              <span class="payment-info__line-item--price" id="payment-standard-subtotal">$0.00</span>
-            </p>
-            <p class="payment-info__line-item payment-info__line-item--usms" id="payment-competitive-line" style="display:none">
-              <span id="payment-competitive-count">0</span> Competitive &times; $125.00
-              <span class="payment-info__line-item--price" id="payment-competitive-subtotal">$0.00</span>
+            <p class="payment-info__line-item payment-info__line-item--usms" id="payment-license-line" style="display:none">
+              <span id="payment-license-count">0</span> Standard Membership &times; $75.00
+              <span class="payment-info__line-item--price" id="payment-license-subtotal">$0.00</span>
             </p>
             <p class="payment-info__line-item payment-info__line-item--total">
               Total: <span class="payment-info__line-item--price" id="payment-total">$0.00</span>
@@ -129,7 +126,7 @@ breadcrumbTitle: "Manage Current Members"
               <label id="agreeTerms__label" class="checkbox-label disabled" for="agreeTerms">
                 <div class="checkbox-container"><input type="checkbox" name="agree-terms" id="agreeTerms" value=""><span class="checkbox__placeholder"></span></div>
               </label>
-              <span class="font-weight-bold">I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming <a href="/content/privacy" target="_blank">Privacy Policy</a>. I understand that this transaction will take effect immediately and is non-refundable and non-transferable.</span>
+              <span class="font-weight-bold">I understand that this transaction will take effect immediately and is non-refundable, non-transferable, and these memberships will expire on December 31, 2026.</span>
             </div>
           </div>
           <p id="payment-no-members-error" class="payment-error" style="display:none;">Please select at least one member to register before submitting payment.</p>

@@ -75,22 +75,40 @@
 
 /* --- Table --- */
 
+body {
+  overflow-x: hidden;
+}
+
+.members-layout {
+  display: grid;
+}
+
+#members-content {
+  min-width: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 .members-table {
   table-layout: fixed;
   width: 100%;
+  min-width: 600px;
 }
 
-/* col-checkbox | Name | ID | Status | Type | Expires */
+/* col-checkbox | Name | Permanent ID | Status | Event License | Expires */
 .members-table th:nth-child(1) { width: 3rem; }
-.members-table th:nth-child(2) { width: 28%; }
-.members-table th:nth-child(3) { width: 10%; }
-.members-table th:nth-child(4) { width: 14%; }
-.members-table th:nth-child(5) { width: 18%; }
+.members-table th:nth-child(2) { width: 22%; }
+.members-table th:nth-child(3) { width: 16%; text-align: right; padding-right: 1.5rem; }
+.members-table th:nth-child(4) { width: 18%; text-align: right; padding-right: 1.5rem; }
+.members-table th:nth-child(5) { width: 18%; text-align: right; padding-right: 2rem; position: relative; line-height: 1.2; }
+.members-table th:nth-child(5) .members-sort-btn { position: absolute; right: 0.3rem; bottom: 8px; }
+.members-table th:nth-child(6) { text-align: right; padding-right: 1.5rem; }
 
 .members-table th {
   font-size: 1.4rem;
   color: #555;
   border-bottom: 1px solid #ddd;
+  vertical-align: bottom;
 }
 
 .members-table tbody tr:last-child td {
@@ -98,27 +116,48 @@
 }
 
 .members-table td {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 300;
   vertical-align: middle;
   border-left: none !important;
   border-right: none !important;
 }
 
+.members-table td[data-label="Name"] {
+  white-space: nowrap;
+}
+
+.members-table td[data-label="Permanent ID"],
+.members-table td[data-label="Status"],
+.members-table td[data-label="Event License"],
+.members-table td[data-label="Expires"] {
+  text-align: right;
+  padding-right: 1.5rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 767px) {
+  .member-row--pending td[data-label="Name"] {
+    color: #d96b00;
+    font-weight: 600;
+  }
+  .members-table .members-badge--pending {
+    display: none;
+  }
+}
+
 @media (min-width: 768px) {
-  .members-table td[data-label="ID"],
-  .members-table td[data-label="Status"],
-  .members-table td[data-label="Type"],
-  .members-table td[data-label="Expires"] {
-    font-size: 1.5rem;
+  .members-table td {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
   }
 }
 
 .members-table .member-id {
   font-size: 1.5rem;
   /* overrides border applied to td + td in clubDetail.min.css */
-  margin-left: 0;
-  padding-left: 0;
+  margin: 0 auto;
+  padding: 0;
   border: none;
 }
 
@@ -136,6 +175,9 @@ td.col-checkbox {
 
 .members-select-all-row {
   padding: 0.5rem 0 0.75rem;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
 }
 
 .members-select-all-label {
@@ -152,96 +194,47 @@ td.col-checkbox {
   margin-bottom: 0;
 }
 
+/* --- Pending legend (mobile only) --- */
+
+.members-pending-legend {
+  color: #d96b00;
+  font-size: 1.4rem;
+  position: relative;
+  top: -2px;
+}
+
 /* --- Badges --- */
 
 .members-badge {
   display: inline-block;
-  font-size: 1.1rem;
+  font-size: 0.715rem;
   font-weight: 600;
-  padding: 0.2rem 0.7rem;
+  padding: 0.13rem 0.455rem;
   border-radius: 3px;
-  margin-left: 0.8rem;
+  margin-left: 1rem;
   vertical-align: middle;
 }
 
 .members-badge--pending {
-  background-color: #fff3cd;
-  color: #856404;
-  border: 1px solid #ffc107;
+  background: none;
+  border: none;
+  color: #d96b00;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0;
+  border-radius: 0;
 }
 
-/* --- Mobile card layout --- */
-
-@media (max-width: 767px) {
-  .members-table {
-    table-layout: auto;
-  }
-
-  .members-table thead {
-    display: none;
-  }
-
-  .members-table,
-  .members-table tbody,
-  .members-table tr,
-  .members-table td {
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .members-table tr {
-    padding: 3rem 0 2.5rem;
-    border-top: 1px solid #ddd;
-  }
-
-  .members-table tbody tr:first-child {
-    border-top: none;
-  }
-
-  .members-table td {
-    display: block;
-    padding: 0.25rem 0;
-    border: none !important;
-    font-size: 1.8rem;
-  }
-
-  .members-table td[data-label] {
-    display: grid;
-    grid-template-columns: 72px 1fr;
-    gap: 0 1rem;
-    align-items: baseline;
-  }
-
-  .members-table td[data-label]::before {
-    content: attr(data-label);
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #777;
-    text-transform: uppercase;
-  }
-
-  .members-table td.col-checkbox {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    width: auto;
-    padding-right: 0;
-    border: none !important;
-  }
-
-  .members-table td.col-checkbox:not(:empty)::after {
-    content: "Select";
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #777;
-    text-transform: uppercase;
-  }
-}
 
 /* --- Misc --- */
 
 .members-notice {
   padding: 3rem 0;
   font-size: 1.6rem;
+}
+
+@media (max-width: 767px) {
+  .payment-info__form-summary {
+    padding-right: 2.5rem;
+  }
 }

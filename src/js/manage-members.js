@@ -30,8 +30,7 @@
   }
 
   function formatType(type) {
-    var abbr = type === 'Competitive' ? 'Cmp' : 'Std';
-    return '<span class="hidden-xs">' + type + '</span><span class="visible-xs-inline">' + abbr + '</span>';
+    return type === 'Competitive' ? 'Yes' : 'No';
   }
 
   function formatDate(iso) {
@@ -88,7 +87,6 @@
 
   // --- Render ---
 
-  var FEES = { Standard: 75, Competitive: 125 };
   var checkedIds = new Set();
 
   function renderRow(m) {
@@ -98,12 +96,12 @@
     var checkCell = m._checkable
       ? '<td class="col-checkbox"><input type="checkbox" class="expiring-checkbox" data-id="' + m.id + '"></td>'
       : '<td class="col-checkbox"></td>';
-    return '<tr>' +
+    return '<tr' + (m.isPending ? ' class="member-row--pending"' : '') + '>' +
       checkCell +
       '<td data-label="Name">' + m.firstName + ' ' + m.lastName + pendingBadge + '</td>' +
-      '<td data-label="ID"><span class="member-id">' + m.swimmerId.slice(0, 6) + '</span></td>' +
+      '<td data-label="Permanent ID"><span class="member-id">' + m.swimmerId.slice(0, 5) + '</span></td>' +
       '<td data-label="Status">' + m._status + '</td>' +
-      '<td data-label="Type">' + formatType(m.membershipType) + '</td>' +
+      '<td data-label="Event License">' + formatType(m.membershipType) + '</td>' +
       '<td data-label="Expires">' + formatDate(m.expirationDate) + '</td>' +
       '</tr>';
   }
@@ -152,25 +150,12 @@
   }
 
   function updatePaymentSummary() {
-    var standardCount = 0;
-    var competitiveCount = 0;
-    checkedIds.forEach(function (id) {
-      var member = needsRenewal.find(function (m) { return m.id === id; });
-      if (member && member.membershipType === 'Competitive') competitiveCount++;
-      else if (member) standardCount++;
-    });
-    var standardTotal = standardCount * FEES.Standard;
-    var competitiveTotal = competitiveCount * FEES.Competitive;
-    var total = standardTotal + competitiveTotal;
-
-    var stdLine = document.getElementById('payment-standard-line');
-    var cmpLine = document.getElementById('payment-competitive-line');
-    stdLine.style.display = standardCount > 0 ? '' : 'none';
-    document.getElementById('payment-standard-count').textContent = standardCount;
-    document.getElementById('payment-standard-subtotal').textContent = formatCurrency(standardTotal);
-    cmpLine.style.display = competitiveCount > 0 ? '' : 'none';
-    document.getElementById('payment-competitive-count').textContent = competitiveCount;
-    document.getElementById('payment-competitive-subtotal').textContent = formatCurrency(competitiveTotal);
+    var count = checkedIds.size;
+    var total = count * 75;
+    var licenseLine = document.getElementById('payment-license-line');
+    licenseLine.style.display = count > 0 ? '' : 'none';
+    document.getElementById('payment-license-count').textContent = count;
+    document.getElementById('payment-license-subtotal').textContent = formatCurrency(total);
     document.getElementById('payment-total').textContent = formatCurrency(total);
   }
 
