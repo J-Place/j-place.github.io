@@ -12,11 +12,7 @@
   var clubs = JSON.parse(document.getElementById('clubs-local-data').textContent);
   var club = clubs.find(function (c) { return c.id === clubId; });
   if (club) {
-    var nameEl = document.getElementById('members-club-name');
-    if (nameEl) {
-      nameEl.textContent = club.title;
-      nameEl.style.display = '';
-    }
+    document.title = club.title + ' — Expired Members | U.S. Masters Swimming';
   }
 
   var allMembers = JSON.parse(document.getElementById('members-local-data').textContent);
@@ -37,8 +33,7 @@
       '<td data-label="Name">' + m.firstName + ' ' + m.lastName + '</td>' +
       '<td data-label="Permanent ID">' + m.swimmerId.slice(0, 6) + '</td>' +
       '<td data-label="Email">' + (m.email || '') + '</td>' +
-      '<td data-label="Status">' + (m.renewalType || '') + '</td>' +
-      '<td data-label="Expires">' + formatDate(m.expirationDate) + '</td>' +
+      '<td data-label="Expired">' + formatDate(m.expirationDate) + '</td>' +
       '</tr>';
   }
 
@@ -55,7 +50,7 @@
     });
     tbody.innerHTML = sorted.length
       ? sorted.map(renderRow).join('')
-      : '<tr><td colspan="5" class="members-empty">No expired members.</td></tr>';
+      : '<tr><td colspan="4" class="members-empty">No expired members.</td></tr>';
   }
 
   document.querySelectorAll('.members-sort-btn').forEach(function (btn) {

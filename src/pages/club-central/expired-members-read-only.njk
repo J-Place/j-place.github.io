@@ -31,7 +31,6 @@ breadcrumbTitle: "Expired Members"
       <div class="col-xs-12">
         <header class="page-title">
           <h1>Expired Members</h1>
-          <h2 id="members-club-name" style="display:none"></h2>
         </header>
       </div>
     </div>
@@ -44,7 +43,13 @@ breadcrumbTitle: "Expired Members"
 <script type="application/json" id="members-local-data">{{ membersLocal.members | dump | safe }}</script>
 
 <div class="section section-full bg-gray">
-  <div class="usms-container p-tb-10">
+  <div class="usms-container">
+    <p class="members-lead">These are swimmers who were registered with your club last year and are no longer members.</p>
+  </div>
+</div>
+
+<div class="section section-full bg-gray">
+  <div class="usms-container form__container p-tb-10">
 
     <div id="members-no-club" class="members-notice" style="display:none;">
       <p>No club selected. Please return to the <a href="/club-central/club-dashboard.html">Club Dashboard</a>.</p>
@@ -59,8 +64,7 @@ breadcrumbTitle: "Expired Members"
                 <th>Name <button class="members-sort-btn is-active" data-sort="lastName" aria-label="Sort A to Z"><span class="members-sort-icon"><i class="fas fa-sort members-sort-base" aria-hidden="true"></i><i class="fas fa-sort-up members-sort-overlay" aria-hidden="true"></i></span></button></th>
                 <th><span class="hidden-xs">Permanent </span>ID <button class="members-sort-btn" data-sort="swimmerId" aria-label="Sort A to Z"><span class="members-sort-icon"><i class="fas fa-sort members-sort-base" aria-hidden="true"></i><i class="fas fa-sort-up members-sort-overlay" aria-hidden="true"></i></span></button></th>
                 <th>Email</th>
-                <th>Status <button class="members-sort-btn" data-sort="renewalType" aria-label="Sort A to Z"><span class="members-sort-icon"><i class="fas fa-sort members-sort-base" aria-hidden="true"></i><i class="fas fa-sort-up members-sort-overlay" aria-hidden="true"></i></span></button></th>
-                <th>Expires <button class="members-sort-btn" data-sort="expirationDate" aria-label="Sort A to Z"><span class="members-sort-icon"><i class="fas fa-sort members-sort-base" aria-hidden="true"></i><i class="fas fa-sort-up members-sort-overlay" aria-hidden="true"></i></span></button></th>
+                <th>Expired <button class="members-sort-btn" data-sort="expirationDate" aria-label="Sort A to Z"><span class="members-sort-icon"><i class="fas fa-sort members-sort-base" aria-hidden="true"></i><i class="fas fa-sort-up members-sort-overlay" aria-hidden="true"></i></span></button></th>
               </tr>
             </thead>
             <tbody id="tbody-expired"></tbody>
