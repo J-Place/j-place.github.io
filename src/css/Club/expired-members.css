@@ -1,0 +1,117 @@
+body {
+  overflow-x: hidden;
+}
+
+/* --- Sort button --- */
+
+.members-sort-btn {
+  border: none;
+  background: transparent;
+  color: #888;
+  font-size: 1.04rem;
+  cursor: pointer;
+  padding: 0 0 0 0.4rem;
+  line-height: 1;
+  outline: none;
+  vertical-align: middle;
+}
+
+.members-sort-btn .members-sort-overlay {
+  opacity: 0;
+}
+
+.members-sort-btn.is-active .members-sort-overlay {
+  opacity: 1;
+}
+
+.members-sort-icon {
+  position: relative;
+  display: inline-block;
+  width: 0.6em;
+  height: 1em;
+}
+
+.members-sort-icon i {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.members-sort-base {
+  opacity: 0.3;
+}
+
+/* --- Table --- */
+
+.members-layout {
+  display: grid;
+}
+
+#members-content {
+  min-width: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.members-table {
+  table-layout: fixed;
+  width: 100%;
+  min-width: 600px;
+}
+
+/* Name | Permanent ID | Email | Status | Expires */
+.members-table th:nth-child(1) { width: 20%; }
+.members-table th:nth-child(2) { width: 13%; text-align: right; padding-right: 3.5rem; }
+.members-table th:nth-child(3) { width: 27%; }
+.members-table th:nth-child(4) { width: 13%; text-align: right; padding-right: 1.5rem; }
+.members-table th:nth-child(5) { width: 13%; text-align: right; padding-right: 1.5rem; }
+
+.members-table th {
+  font-size: 1.4rem;
+  color: #555;
+  border-bottom: 1px solid #ddd;
+  vertical-align: bottom;
+}
+
+.members-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table.members-table td {
+  font-size: 1.5rem;
+  font-weight: 300;
+  vertical-align: middle;
+  border-left: none !important;
+  border-right: none !important;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.members-table td[data-label="Name"] {
+  white-space: nowrap;
+}
+
+.members-table td[data-label="Permanent ID"] {
+  text-align: right;
+  padding-right: 3.5rem;
+  white-space: nowrap;
+}
+
+.members-table td[data-label="Status"],
+.members-table td[data-label="Expires"] {
+  text-align: right;
+  padding-right: 1.5rem;
+  white-space: nowrap;
+}
+
+/* --- Misc --- */
+
+.members-notice {
+  padding: 3rem 0;
+  font-size: 1.6rem;
+}
+
+.members-empty {
+  color: #aaa;
+  font-size: 1.4rem;
+}

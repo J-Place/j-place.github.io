@@ -17,7 +17,7 @@ breadcrumbTitle: "Expired Members"
 
 {% block pageCSS %}
 <link rel="stylesheet" href="https://www.usms.org/styles/clubDetail.min.css">
-<link rel="stylesheet" href="/css/Club/contact-non-members.css">
+<link rel="stylesheet" href="/css/Club/expired-members.css">
 {% endblock %}
 
 {% block breadcrumb %}
@@ -31,7 +31,7 @@ breadcrumbTitle: "Expired Members"
       <div class="col-xs-12">
         <header class="page-title">
           <h1>Expired Members</h1>
-          <h2 id="nonmembers-club-name" style="display:none"></h2>
+          <h2 id="members-club-name" style="display:none"></h2>
         </header>
       </div>
     </div>
@@ -40,39 +40,32 @@ breadcrumbTitle: "Expired Members"
 {% endblock %}
 
 {% block content %}
-<script type="application/json" id="potential-local-data">{{ potentialMembersLocal.potentialMembers | dump | safe }}</script>
 <script type="application/json" id="clubs-local-data">{{ clubsLocal.clubs | dump | safe }}</script>
 <script type="application/json" id="members-local-data">{{ membersLocal.members | dump | safe }}</script>
 
 <div class="section section-full bg-gray">
-  <div class="usms-container form__container p-tb-10">
+  <div class="usms-container p-tb-10">
 
-    <div id="nonmembers-no-club" class="nonmembers-notice" style="display:none;">
+    <div id="members-no-club" class="members-notice" style="display:none;">
       <p>No club selected. Please return to the <a href="/club-central/club-dashboard.html">Club Dashboard</a>.</p>
     </div>
 
-    <div id="nonmembers-content">
-      <div class="nonmembers-col">
-        <div class="nonmembers-col__header">
-          <!--
-          <div class="nonmembers-col__controls">
-            <div class="nonmembers-filter" role="group" aria-label="Filter inbox">
-              <span class="nonmembers-filter__label">Source:</span>
-              <button class="nonmembers-filter__btn is-active" data-filter="all">All</button>
-              <button class="nonmembers-filter__btn" data-filter="trial">Trial</button>
-              <button class="nonmembers-filter__btn" data-filter="club">Club Page</button>
-              <button class="nonmembers-filter__btn" data-filter="expired">Expired</button>
-            </div>
-            <button id="sort-dir" class="nonmembers-sort-dir" aria-label="Sort ascending">
-              <span class="nonmembers-sort-icon">
-                <i class="fas fa-sort nonmembers-sort-base" aria-hidden="true"></i>
-                <i class="fas fa-sort-up nonmembers-sort-overlay" aria-hidden="true"></i>
-              </span>
-            </button>
-          </div>
-          -->
+    <div class="members-layout">
+      <div id="members-content">
+        <div class="table-responsive">
+          <table class="table members-table">
+            <thead>
+              <tr>
+                <th>Name <button class="members-sort-btn is-active" data-sort="lastName" aria-label="Sort A to Z"><span class="members-sort-icon"><i class="fas fa-sort members-sort-base" aria-hidden="true"></i><i class="fas fa-sort-up members-sort-overlay" aria-hidden="true"></i></span></button></th>
+                <th><span class="hidden-xs">Permanent </span>ID <button class="members-sort-btn" data-sort="swimmerId" aria-label="Sort A to Z"><span class="members-sort-icon"><i class="fas fa-sort members-sort-base" aria-hidden="true"></i><i class="fas fa-sort-up members-sort-overlay" aria-hidden="true"></i></span></button></th>
+                <th>Email</th>
+                <th>Status <button class="members-sort-btn" data-sort="renewalType" aria-label="Sort A to Z"><span class="members-sort-icon"><i class="fas fa-sort members-sort-base" aria-hidden="true"></i><i class="fas fa-sort-up members-sort-overlay" aria-hidden="true"></i></span></button></th>
+                <th>Expires <button class="members-sort-btn" data-sort="expirationDate" aria-label="Sort A to Z"><span class="members-sort-icon"><i class="fas fa-sort members-sort-base" aria-hidden="true"></i><i class="fas fa-sort-up members-sort-overlay" aria-hidden="true"></i></span></button></th>
+              </tr>
+            </thead>
+            <tbody id="tbody-expired"></tbody>
+          </table>
         </div>
-        <div class="nonmembers-active" id="recent-active"></div>
       </div>
     </div>
 
