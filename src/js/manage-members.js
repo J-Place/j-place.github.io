@@ -50,8 +50,8 @@
     return arr.map(function (m) {
       return { id: m.id, firstName: m.firstName, lastName: m.lastName,
         swimmerId: m.swimmerId, membershipType: m.membershipType,
-        expirationDate: m.expirationDate, isPending: m.isPending,
-        _status: status, _checkable: checkable };
+        expirationDate: m.expirationDate, registrationDate: m.registrationDate,
+        isPending: m.isPending, _status: status, _checkable: checkable };
     });
   }
 
@@ -71,6 +71,7 @@
     if (key === 'lastName') return m.lastName;
     if (key === 'status') return STATUS_ORDER[m._status] !== undefined ? STATUS_ORDER[m._status] : m._status;
     if (key === 'membershipType') return m.membershipType;
+    if (key === 'registrationDate') return m.registrationDate || '';
     if (key === 'expirationDate') return m.expirationDate;
     return '';
   }
@@ -102,7 +103,8 @@
       '<td data-label="Permanent ID"><span class="member-id">' + m.swimmerId.slice(0, 5) + '</span></td>' +
       '<td data-label="Membership Type">' + m._status + '</td>' +
       '<td data-label="Event License">' + formatType(m.membershipType) + '</td>' +
-      '<td data-label="Expires">' + formatDate(m.expirationDate) + '</td>' +
+      '<td data-label="Registered">' + (m.registrationDate ? formatDate(m.registrationDate) : '') + '</td>' +
+      '<td data-label="Expires">' + (m._status === 'Auto-Renew' ? '- -' : formatDate(m.expirationDate)) + '</td>' +
       '</tr>';
   }
 
