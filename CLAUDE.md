@@ -22,7 +22,8 @@ src/
     dev/          # Dev-only JS overlays — not loaded in production
   css/            # Local CSS overrides (clubs.css, events.css, home.css)
     dev/          # Dev-only CSS for overlays — not loaded in production
-public/           # Legacy Sergey mockup files — passthrough copied as-is, do not modify here
+public/           # Legacy Sergey mockup files — passthrough copied as-is
+  college-club/   # EXCEPTION: edit directly here, not in the Sergey project (see below)
 _site/            # Build output (gitignored)
 ```
 
@@ -42,6 +43,12 @@ Pages in `public/` originate from the separate Sergey repo at `~/USMS-Github-JPl
 **Why curl and not `_site/`:** Sergey 0.0.13 only pre-builds `home/` and `index.html` to `_site/`. All other pages are compiled on-the-fly by the dev server as requests come in. Fetching from `localhost:8888` is the reliable way to get fully resolved HTML (all `<sergey-import>` tags expanded) for any page.
 
 Do not edit files directly inside `public/` — they will be overwritten the next time a Sergey page is synced.
+
+### Exception: `public/college-club/`
+
+**Edit `public/college-club/` directly — do not use the Sergey project for college-club pages.**
+
+The college-club section has been graduated from the Sergey workflow. The Sergey source at `/Users/jplace/dev/usms/sergey/college-club/` is no longer the canonical source. If asked to edit college-club files, work in `public/college-club/` directly. The Sergey project path is also `~/dev/usms/sergey/` (not `~/USMS-Github-JPlace/` as listed above).
 
 ## CSS Framework
 

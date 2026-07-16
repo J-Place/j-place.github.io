@@ -81,6 +81,7 @@ module.exports = function(eleventyConfig) {
 
   // Copy public/ to _site/public/ untouched
   eleventyConfig.addPassthroughCopy("public");
+  eleventyConfig.addWatchTarget("public/");
 
   // Also copy public subdirectory CSS folders to root so legacy
   // Sergey pages with root-relative /xxx/css/ paths resolve correctly
