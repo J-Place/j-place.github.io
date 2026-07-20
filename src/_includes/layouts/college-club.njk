@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--[if IE 9]><html lang="en" class="ie9 no-js"><![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+    <title>{{ title | default("College Club Swimming") }}</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="robots" content="noindex">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://usms-cdn.azureedge.net/scripts/common.min.js"></script>
+    <script src="https://usms-cdn.azureedge.net/scripts/home.min.js"></script>
+
+    <link rel="stylesheet" href="https://www.usms.org/styles/bootstrap.min.css">
+    <link rel="stylesheet" href="https://www.usms.org/styles/bootstrap-3-usms-patch.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://www.usms.org/styles/common.min.css">
+    <link rel="stylesheet" href="https://www.usms.org/styles/print.min.css">
+    <link rel="stylesheet" href="https://www.usms.org/styles/rte.min.css">
+    <link rel="stylesheet" href="https://www.usms.org/styles/home.min.css">
+    <link rel="stylesheet" href="/css/college-club/ccs-base.css">
+    <link rel="stylesheet" href="/css/college-club/ccs-typography.css">
+    <link rel="stylesheet" href="/css/college-club/ccs-buttons.css">
+    <link rel="stylesheet" href="/css/college-club/ccs-page-header.css">
+    <link rel="stylesheet" href="/css/college-club/ccs-carousel.css">
+    <link rel="stylesheet" href="/css/college-club/ccs-components.css">
+    <link rel="stylesheet" href="/css/college-club/ccs.css">
+    <link rel="stylesheet" href="/css/college-club/ccs-event-marquee.css">
+    {% block pageCSS %}{% endblock %}
+</head>
+<body class="">
+    <div id="main-container">
+
+        <header class="header-static">
+            {% include "partials/college-club/ccs-nav.njk" %}
+        </header>
+
+        <main role="main">
+            {% block content %}{% endblock %}
+        </main>
+
+        {% include "partials/college-club/ccs-footer.njk" %}
+
+    </div>
+
+    <script src="/js/college-club/ccs-nav.js" defer></script>
+    <script src="/js/college-club/ccs-parallax.js" defer></script>
+    <script src="/js/college-club/ccs-event-marquee.js" defer></script>
+    {% block pageJS %}{% endblock %}
+</body>
+</html>

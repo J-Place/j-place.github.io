@@ -1,0 +1,115 @@
+/* College Club Swimming — global layout fixes and utilities */
+
+/* Temporary: until footer is put into a component */
+header + main + .html-container {
+    padding: 0;
+}
+
+/* Header z-index */
+.header-static {
+    z-index: 999999;
+}
+.header-static.hidden {
+    z-index: -1;
+}
+
+/* Prevent horizontal overflow on mobile */
+html, body {
+    overflow-x: hidden;
+}
+
+/* Override from source — to be removed when fixed upstream */
+@media (max-width: 991px) {
+    .usms-container {
+        width: 100%;
+    }
+}
+
+/* Full-width fluid sections */
+.section.section-full .container-fluid {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.no-scroll {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    overflow-y: scroll;
+}
+
+/* Content container padding */
+@media (max-width: 767px) {
+    .heading-container,
+    .html-container,
+    .button-link__container {
+        padding: 0 1rem;
+    }
+}
+@media (min-width: 768px) {
+    .heading-container,
+    .html-container,
+    .button-link__container {
+        padding: 0;
+    }
+}
+
+/* Utility */
+.m-t-50 {
+    margin-top: 5rem;
+}
+hr {
+    border-top: 1px solid #000;
+}
+
+/* Max width centering for large monitors */
+@media (min-width: 1200px) {
+    body .header-static,
+    body .row.ccs-footer-container {
+        padding-left: calc((100vw - 1100px) / 2);
+        padding-right: calc((100vw - 1100px) / 2);
+    }
+    body nav.admin {
+        right: calc((100vw - 1100px) / 2);
+    }
+    body .usms-container,
+    body .page-header h1 {
+        width: 1100px;
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+}
+@media (min-width: 1400px) {
+    body .header-static,
+    body .row.ccs-footer-container {
+        padding-left: calc((100vw - 1200px) / 2);
+        padding-right: calc((100vw - 1200px) / 2);
+    }
+    body nav.admin {
+        right: calc((100vw - 1200px) / 2);
+    }
+    body .usms-container,
+    body .page-header h1 {
+        width: 1200px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+}
+@media (min-width: 1600px) {
+    body .header-static,
+    body .row.ccs-footer-container {
+        padding-left: calc((100vw - 1400px) / 2);
+        padding-right: calc((100vw - 1400px) / 2);
+    }
+    body nav.admin {
+        right: calc((100vw - 1400px) / 2);
+    }
+    body .usms-container,
+    body .page-header h1 {
+        width: 1400px;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+}
