@@ -407,40 +407,489 @@ function editContact(e) {
   if (e) e.preventDefault();
 }
 
+// ── Mock autocomplete fixture data ───────────────────────────────────────────
+var MOCK_CONTACTS = [
+  { firstName: 'Alice',  lastName: 'Nakamura', city: 'Austin',   state: 'TX', swimmerId: '501A', phone: '512-555-0101', email: 'alice.nakamura@example.org', isMember: true,  validated: true },
+  { firstName: 'Bob',    lastName: 'Nakamura', city: 'Houston',  state: 'TX', swimmerId: '502B', phone: '713-555-0102', email: 'bob.nakamura@example.org',   isMember: true,  validated: true },
+  { firstName: 'Carol',  lastName: 'Nguyen',   city: 'Dallas',   state: 'TX', swimmerId: '',     phone: '214-555-0103', email: 'carol.nguyen@example.org',   isMember: false, validated: false },
+  { firstName: 'David',  lastName: 'Reynolds', city: 'Denver',   state: 'CO', swimmerId: '504D', phone: '303-555-0104', email: 'd.reynolds@example.org',     isMember: true,  validated: false },
+  { firstName: 'Ellen',  lastName: 'Park',     city: 'Portland', state: 'OR', swimmerId: '505E', phone: '503-555-0105', email: 'ellen.park@example.org',     isMember: true,  validated: true },
+  { firstName: 'Frank',  lastName: 'Martinez', city: 'Phoenix',  state: 'AZ', swimmerId: '506F', phone: '602-555-0106', email: 'frank.martinez@example.org', isMember: true,  validated: true },
+  { firstName: 'Grace',  lastName: 'Lee',      city: 'Seattle',  state: 'WA', swimmerId: '507G', phone: '206-555-0107', email: 'grace.lee@example.org',      isMember: true,  validated: true },
+  { firstName: 'Henry',  lastName: 'Thompson', city: 'Chicago',  state: 'IL', swimmerId: '508H', phone: '312-555-0108', email: 'h.thompson@example.org',     isMember: true,  validated: true },
+  { firstName: 'Iris',   lastName: 'Campbell', city: 'Atlanta',  state: 'GA', swimmerId: '',     phone: '404-555-0109', email: 'iris.campbell@example.org',  isMember: false, validated: false },
+  { firstName: 'James',  lastName: 'Wright',   city: 'Boston',   state: 'MA', swimmerId: '510J', phone: '617-555-0110', email: 'james.wright@example.org',   isMember: true,  validated: true },
+];
+var _latestContact = null;
+
+function _debounce(fn, delay) {
+  var timer;
+  return function () {
+    var args = arguments;
+    var ctx = this;
+    clearTimeout(timer);
+    timer = setTimeout(function () { fn.apply(ctx, args); }, delay);
+  };
+}
+
+function _closeAllLists(inp) {
+  var parent = inp ? inp.parentNode : null;
+  if (!parent) return;
+  parent.querySelectorAll('.autocomplete-items').forEach(function (l) {
+    l.parentNode.removeChild(l);
+  });
+}
+
+function setCurrentContact(contact) {
+  _latestContact = contact;
+  var nameEl = document.querySelector('#club-contact .lookup-confirm--name');
+  if (nameEl) nameEl.textContent = 'Add ' + contact.firstName + ' ' + contact.lastName;
+  var confirmDiv = document.querySelector('#club-contact .lookup-confirm');
+  if (confirmDiv) confirmDiv.classList.add('show');
+  var addBtn = document.querySelector('#addAsContact');
+  if (addBtn) addBtn.disabled = false;
+}
+
+function autocompleteContactsByName(inp) {
+  var runSearch = _debounce(function () {
+    var val = inp.value.trim().toLowerCase();
+    _closeAllLists(inp);
+    if (val.length < 3) return;
+
+    var matches = MOCK_CONTACTS.filter(function (c) {
+      var full = (c.firstName + ' ' + c.lastName).toLowerCase();
+      return full.indexOf(val) !== -1 ||
+        c.firstName.toLowerCase().indexOf(val) !== -1 ||
+        c.lastName.toLowerCase().indexOf(val) !== -1;
+    });
+    if (!matches.length) return;
+
+    var listDiv = document.createElement('div');
+    listDiv.id = inp.id + 'autocomplete-list';
+    listDiv.className = 'autocomplete-items';
+    inp.parentNode.appendChild(listDiv);
+
+    matches.forEach(function (contact) {
+      var item = document.createElement('div');
+      var fullName = contact.firstName + ' ' + contact.lastName;
+      var location = contact.city && contact.state ? contact.city + ', ' + contact.state : '';
+      var matchIdx = fullName.toLowerCase().indexOf(val);
+      var boldedName = matchIdx >= 0
+        ? fullName.slice(0, matchIdx) + '<strong>' + fullName.slice(matchIdx, matchIdx + val.length) + '</strong>' + fullName.slice(matchIdx + val.length)
+        : fullName;
+      item.innerHTML = boldedName + (location ? ' <span class="autocomplete-location">' + location + '</span>' : '');
+
+      item.addEventListener('mousedown', function (e) {
+        e.preventDefault();
+        inp.value = fullName;
+        setCurrentContact(contact);
+        _closeAllLists(inp);
+      });
+
+      listDiv.appendChild(item);
+    });
+  }, 300);
+
+  inp.addEventListener('keyup', function (e) {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'Enter') return;
+    runSearch();
+  });
+
+  inp.addEventListener('keydown', function (e) {
+    var list = document.querySelector('#' + inp.id + 'autocomplete-list');
+    if (!list) return;
+    var items = list.querySelectorAll('div');
+    var activeEl = list.querySelector('.autocomplete-active');
+    var activeIdx = -1;
+    items.forEach(function (item, i) { if (item === activeEl) activeIdx = i; });
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (activeEl) activeEl.classList.remove('autocomplete-active');
+      var next = activeIdx < items.length - 1 ? items[activeIdx + 1] : items[0];
+      if (next) next.classList.add('autocomplete-active');
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (activeEl) activeEl.classList.remove('autocomplete-active');
+      var prev = activeIdx > 0 ? items[activeIdx - 1] : items[items.length - 1];
+      if (prev) prev.classList.add('autocomplete-active');
+    } else if (e.key === 'Enter') {
+      if (activeEl) { e.preventDefault(); activeEl.dispatchEvent(new MouseEvent('mousedown')); }
+    }
+  });
+
+  document.addEventListener('click', function () { _closeAllLists(inp); });
+}
+
 function showNewContactInputs() {
+  var lookupInput = document.querySelector('#lookupContactName');
+  if (lookupInput) { lookupInput.value = ''; _closeAllLists(lookupInput); }
+
   var el = document.querySelector('.club-contact__not-member-container');
-  if (el) el.style.display = '';
+  if (el) { el.style.display = 'block'; el.style.visibility = 'visible'; }
+
+  // Hide only the button, not the "Or Add a New Contact" label (matches Event Director pattern)
+  var addNewBtn = document.querySelector('.club-contact__add-new-btn');
+  if (addNewBtn) addNewBtn.style.display = 'none';
+}
+
+function _clearNewContactForm() {
+  ['#newContactFirstName', '#newContactLastName', '#newContactEmailPrimary',
+    '#newContactPhonePrimary', '#newContactCity'].forEach(function (sel) {
+    var input = document.querySelector(sel);
+    if (input) { input.value = ''; input.disabled = false; }
+  });
+  var stateEl = document.querySelector('#newContactState');
+  if (stateEl) stateEl.value = '';
 }
 
 function handleCancelAddContact() {
   var el = document.querySelector('.club-contact__not-member-container');
-  if (el) el.style.display = 'none';
+  if (el) { el.style.display = 'none'; el.style.visibility = 'hidden'; }
+  _clearNewContactForm();
+  var addNewBtn = document.querySelector('.club-contact__add-new-btn');
+  if (addNewBtn) addNewBtn.style.display = '';
 }
 
 function confirmCurrentContact(e) {
   if (e) e.preventDefault();
+  var btn = document.querySelector('#confirmCurrentContact');
+  if (btn) btn.style.display = 'none';
+  var saveBtn = document.querySelector('#saveContact');
+  if (saveBtn) saveBtn.disabled = false;
+  var typeForm = document.querySelector('#club-contact .contact-type-form');
+  if (typeForm) typeForm.style.display = 'none';
+  var listHeader = document.querySelector('#club-contact .contact-list__header');
+  if (listHeader) listHeader.classList.add('show');
+  var listSettings = document.querySelector('#listContactSettings');
+  if (listSettings) listSettings.style.display = '';
+  // Uncheck privacy boxes so user actively chooses (matches production)
+  document.querySelectorAll('#club-contact .club-privacy input[type="checkbox"]').forEach(function (cb) {
+    cb.checked = false;
+  });
+  var privacy = document.querySelector('#club-contact .club-privacy');
+  if (privacy) privacy.style.display = '';
 }
 
 function handleAddContactButton() { }
 
 function handleContactConfirmation(el) { }
 
-function setContactTitle(e) { }
+function setContactTitle(e) {
+  if (e) e.preventDefault();
+  if (!_latestContact) return;
+
+  addContact(_latestContact);
+  _latestContact = null;
+
+  var lookupInput = document.querySelector('#lookupContactName');
+  if (lookupInput) { _closeAllLists(lookupInput); lookupInput.value = ''; }
+  var confirmDiv = document.querySelector('#club-contact .lookup-confirm');
+  if (confirmDiv) confirmDiv.classList.remove('show');
+  var addBtn = document.querySelector('#addAsContact');
+  if (addBtn) addBtn.disabled = true;
+  var nameEl = document.querySelector('#club-contact .lookup-confirm--name');
+  if (nameEl) nameEl.textContent = '';
+
+  var otherContainer = document.querySelector('.club-contact__other-container');
+  if (otherContainer) { otherContainer.style.display = 'none'; otherContainer.style.visibility = 'hidden'; }
+  var addNew = document.querySelector('.club-contact__add-new');
+  if (addNew) addNew.style.display = 'none';
+  var listHeader = document.querySelector('#club-contact .contact-list__header');
+  if (listHeader) listHeader.classList.add('show');
+  var listSettings2 = document.querySelector('#listContactSettings');
+  if (listSettings2) listSettings2.style.display = '';
+  var typeForm = document.querySelector('#club-contact .contact-type-form');
+  if (typeForm) typeForm.style.display = 'none';
+  document.querySelectorAll('#club-contact .club-privacy input[type="checkbox"]').forEach(function (cb) { cb.checked = false; });
+  var privacy = document.querySelector('#club-contact .club-privacy');
+  if (privacy) privacy.style.display = '';
+  var saveBtn = document.querySelector('#saveContact');
+  if (saveBtn) saveBtn.disabled = false;
+}
+
+function removeCurrentContacts() {
+  var row = document.querySelector('.section#club-contact .list__container .row');
+  if (!row) return;
+  while (row.firstChild) row.removeChild(row.firstChild);
+}
+
+// Mirrors production addContact() — builds the contact card DOM and appends it.
+function addContact(contact, headerText, removeCurrent) {
+  if (removeCurrent === undefined) removeCurrent = true;
+  if (removeCurrent) removeCurrentContacts();
+
+  var row = document.querySelector('.section#club-contact .list__container .row');
+  if (!row) return;
+
+  var isMember = contact.isMember === true || contact.isMember === 'true';
+  var isValidated = contact.validated === true || contact.validated === 'true';
+
+  var col = document.createElement('div');
+  col.className = 'col-xs-12 col-sm-6 col-md-4 contact-column';
+
+  var item = document.createElement('div');
+  item.className = 'list-item list-item--fade-out list-item--new';
+
+  var hiddenIsMember = document.createElement('input');
+  hiddenIsMember.type = 'hidden';
+  hiddenIsMember.className = 'contact-isMember';
+  hiddenIsMember.value = String(isMember);
+  item.appendChild(hiddenIsMember);
+
+  var removeBtn = document.createElement('button');
+  removeBtn.type = 'button';
+  removeBtn.className = 'list-item__delete';
+  removeBtn.textContent = 'Remove';
+  item.appendChild(removeBtn);
+
+  if (headerText) {
+    var hdr = document.createElement('div');
+    hdr.className = 'contact-header';
+    hdr.textContent = headerText;
+    item.appendChild(hdr);
+  }
+
+  if (!isValidated) {
+    var pending = document.createElement('div');
+    pending.className = 'coach-validated';
+    pending.textContent = 'Account Pending';
+    item.appendChild(pending);
+  }
+
+  var nameEl = document.createElement('div');
+  nameEl.className = 'contact-name';
+  nameEl.textContent = (contact.firstName || '') + ' ' + (contact.lastName || '');
+  item.appendChild(nameEl);
+
+  if (contact.city && contact.state) {
+    var loc = document.createElement('div');
+    loc.className = 'contact-location';
+    loc.textContent = contact.city + ', ' + contact.state;
+    item.appendChild(loc);
+  }
+
+  var phoneEl = document.createElement('div');
+  phoneEl.className = 'contact-phone';
+  phoneEl.textContent = contact.phone || '';
+  item.appendChild(phoneEl);
+
+  var emailEl = document.createElement('div');
+  emailEl.className = 'contact-email';
+  emailEl.textContent = contact.email || '';
+  item.appendChild(emailEl);
+
+  var idDiv = document.createElement('div');
+  idDiv.className = 'contact-id';
+  if (!isMember) idDiv.style.display = 'none';
+  idDiv.textContent = 'Member ID: ';
+  var idVal = document.createElement('span');
+  idVal.className = 'contact-id__value';
+  idVal.textContent = contact.swimmerId || '';
+  idDiv.appendChild(idVal);
+  item.appendChild(idDiv);
+
+  col.appendChild(item);
+  row.appendChild(col);
+
+  setTimeout(function () { item.classList.remove('list-item--fade-out'); }, 250);
+
+  var awaitingMsg = document.querySelector('#club-contact .contact-list__awaiting__message');
+  if (awaitingMsg) awaitingMsg.style.display = !isValidated ? 'block' : 'none';
+}
+
+// Mirrors production handleContactType() — radio click handler for contact type.
+function handleContactType(e) {
+  var val = e.target.value;
+
+  // Reset lookup/add-new form inputs
+  var lookupInput = document.querySelector('#lookupContactName');
+  if (lookupInput) lookupInput.value = '';
+  ['#newContactFirstName', '#newContactLastName', '#newContactEmailPrimary',
+    '#newContactPhonePrimary', '#newContactCity'].forEach(function (sel) {
+    var el = document.querySelector(sel);
+    if (el) { el.value = ''; el.disabled = false; }
+  });
+  var stateEl = document.querySelector('#newContactState');
+  if (stateEl) stateEl.value = '';
+
+  if (val === 'contactCurrent') {
+    var listHeader = document.querySelector('#club-contact .contact-list__header');
+    if (listHeader) listHeader.classList.remove('show');
+
+    var otherContainer = document.querySelector('.club-contact__other-container');
+    if (otherContainer) { otherContainer.style.display = 'none'; otherContainer.style.visibility = 'hidden'; }
+    var notMemberContainer = document.querySelector('.club-contact__not-member-container');
+    if (notMemberContainer) { notMemberContainer.style.display = 'none'; notMemberContainer.style.visibility = 'hidden'; }
+    var addNew = document.querySelector('.club-contact__add-new');
+    if (addNew) addNew.style.display = 'none';
+
+    var confirmBtn = document.querySelector('#confirmCurrentContact');
+    if (confirmBtn) confirmBtn.style.display = 'block';
+
+    var swimmerIdEl = document.querySelector('#currentSwimmerId');
+    if (!swimmerIdEl || !swimmerIdEl.value) {
+      // Non-member: pre-fill the new-contact form from profile data
+      var map = {
+        '#newContactFirstName': '#currentFirstName',
+        '#newContactLastName': '#currentLastName',
+        '#newContactEmailPrimary': '#currentEmail',
+        '#newContactPhonePrimary': '#currentPhone',
+        '#newContactCity': '#currentCity',
+        '#newContactState': '#currentState'
+      };
+      Object.keys(map).forEach(function (dest) {
+        var src = document.querySelector(map[dest]);
+        var destEl = document.querySelector(dest);
+        if (src && destEl) destEl.value = src.value;
+      });
+      var emailInput = document.querySelector('#newContactEmailPrimary');
+      if (emailInput) emailInput.disabled = true;
+      if (notMemberContainer) { notMemberContainer.style.display = 'block'; notMemberContainer.style.visibility = 'visible'; }
+      return;
+    }
+
+    var contact = {
+      firstName: (document.querySelector('#currentFirstName') || {}).value || '',
+      lastName:  (document.querySelector('#currentLastName')  || {}).value || '',
+      swimmerId: (document.querySelector('#currentSwimmerId') || {}).value || '',
+      email:     (document.querySelector('#currentEmail')     || {}).value || '',
+      phone:     (document.querySelector('#currentPhone')     || {}).value || '',
+      validated: (document.querySelector('#currentValidated') || {}).value || 'true',
+      city:      (document.querySelector('#currentCity')      || {}).value || '',
+      state:     (document.querySelector('#currentState')     || {}).value || '',
+      isMember:  (document.querySelector('#currentIsMember')  || {}).value || 'true',
+    };
+    addContact(contact);
+
+  } else if (val === 'contactOther') {
+    removeCurrentContacts();
+    var otherContainer2 = document.querySelector('.club-contact__other-container');
+    if (otherContainer2) { otherContainer2.style.display = 'block'; otherContainer2.style.visibility = 'visible'; }
+    var notMemberContainer2 = document.querySelector('.club-contact__not-member-container');
+    if (notMemberContainer2) { notMemberContainer2.style.display = 'none'; notMemberContainer2.style.visibility = 'hidden'; }
+    var addNew2 = document.querySelector('.club-contact__add-new');
+    if (addNew2) addNew2.style.display = 'block';
+    var addNewBtn2 = document.querySelector('.club-contact__add-new-btn');
+    if (addNewBtn2) addNewBtn2.style.display = '';
+    var confirmBtn2 = document.querySelector('#confirmCurrentContact');
+    if (confirmBtn2) confirmBtn2.style.display = 'none';
+    var lookupInputEl = document.querySelector('#lookupContactName');
+    if (lookupInputEl) { lookupInputEl.disabled = false; lookupInputEl.focus(); }
+  }
+}
+
+// Mirrors production Contact.js removeContact() — marks ALL list-item__delete
+// parents as fading out, then hides the column wrapper and club-privacy after
+// the CSS transition completes.
+function removeContact(e) {
+  if (e) e.preventDefault();
+  var section = document.querySelector('#club-contact');
+  var listContainer = section.querySelector('.list__container');
+  if (listContainer) listContainer.classList.add('list__container--modified');
+
+  var deleteButtons = section.querySelectorAll('.list-item__delete');
+  for (var i = 0; i < deleteButtons.length; i++) {
+    var contactItem = deleteButtons[i].parentNode; // .list-item
+    contactItem.classList.add('list-item--fade-out');
+    (function (item) {
+      setTimeout(function () {
+        var col = item.parentNode; // .contact-column wrapper
+        if (col) col.style.display = 'none';
+        var privacy = document.querySelector('#club-contact .club-privacy');
+        if (privacy) privacy.style.display = 'none';
+      }, 250);
+    })(contactItem);
+  }
+}
 
 function editContactList() {
-  var section = document.querySelector('#club-contact');
-  if (section) section.classList.add('edit-list');
+  var list = document.querySelector('.section#club-contact .list');
+  if (!list) return;
+  if (list.classList.contains('edit-list')) {
+    list.classList.remove('edit-list');
+    cancelContactList();
+    var saveBtn = document.querySelector('#saveContact');
+    if (saveBtn) saveBtn.disabled = false;
+  } else {
+    list.classList.add('edit-list');
+    var saveBtn2 = document.querySelector('#saveContact');
+    if (saveBtn2) saveBtn2.disabled = true;
+  }
+  // If no contact and type is Other, re-show the search input
+  var contactType = document.querySelector('#club-contact input[name="ContactType"]:checked');
+  var hasContact = document.querySelector('.section#club-contact .list-item') !== null;
+  if (!hasContact && contactType && contactType.value === 'contactOther') {
+    var otherContainer = document.querySelector('.club-contact__other-container');
+    if (otherContainer) { otherContainer.style.display = 'block'; otherContainer.style.visibility = 'visible'; }
+    var lookupInput = document.querySelector('#lookupContactName');
+    if (lookupInput) lookupInput.focus();
+  }
 }
 
 function cancelContactList() {
   var section = document.querySelector('#club-contact');
-  if (section) section.classList.remove('edit-list');
+  var list = section ? section.querySelector('.list') : null;
+  if (!list) return;
+
+  // Capture faded nodes before removing the class (NodeList is static — refs persist)
+  var fadedItems = section.querySelectorAll('.list-item--fade-out');
+  for (var i = 0; i < fadedItems.length; i++) {
+    fadedItems[i].classList.remove('list-item--fade-out');
+  }
+  setTimeout(function () {
+    for (var j = 0; j < fadedItems.length; j++) {
+      var col = fadedItems[j].parentNode;
+      if (col) col.style.display = 'block';
+    }
+    var privacy = document.querySelector('#club-contact .club-privacy');
+    if (privacy) privacy.style.display = '';
+  }, 250);
+
+  list.classList.remove('edit-list');
+  var saveBtn = document.querySelector('#saveContact');
+  if (saveBtn) saveBtn.disabled = false;
 }
 
 function saveContactList(e) {
   if (e) e.preventDefault();
   var section = document.querySelector('#club-contact');
-  if (section) section.classList.remove('edit-list');
+  var list = section ? section.querySelector('.list') : null;
+  if (!list) return;
+
+  // Confirm newly-added items
+  var newItems = section.querySelectorAll('.list-item--new');
+  for (var i = 0; i < newItems.length; i++) {
+    newItems[i].classList.remove('list-item--new');
+  }
+
+  // Remove faded items — item.parentNode is the .contact-column wrapper
+  var fadedItems = section.querySelectorAll('.list-item--fade-out');
+  for (var j = 0; j < fadedItems.length; j++) {
+    var col = fadedItems[j].parentNode;
+    if (col && col.parentNode) col.parentNode.removeChild(col);
+  }
+
+  list.classList.remove('edit-list');
+  var container = list.querySelector('.list__container');
+  if (container) container.classList.remove('list__container--modified');
+
+  var remaining = section.querySelectorAll('.list-item');
+  if (remaining.length > 0) {
+    section.classList.add('hasData');
+  } else {
+    section.classList.remove('hasData');
+    var listHeader = section.querySelector('.contact-list__header');
+    if (listHeader) listHeader.classList.remove('show');
+    var listSettings = section.querySelector('#listContactSettings');
+    if (listSettings) listSettings.style.display = 'none';
+    var radios = section.querySelectorAll('input[name="ContactType"]');
+    for (var k = 0; k < radios.length; k++) radios[k].checked = false;
+    var typeForm = section.querySelector('.contact-type-form');
+    if (typeForm) typeForm.style.display = '';
+  }
+
+  var saveBtn = document.querySelector('#saveContact');
+  if (saveBtn) saveBtn.disabled = false;
 }
 
 function saveContact(e) {
@@ -627,6 +1076,40 @@ document.addEventListener('DOMContentLoaded', function () {
   if (goldYes) {
     var goldSection = document.querySelector('#gold-club');
     if (goldSection) goldSection.classList.add('hasData');
+  }
+
+  // Clicking the Search Contact input while Add New form is open closes and clears the form.
+  var lookupContactNameEl = document.querySelector('#lookupContactName');
+  if (lookupContactNameEl) {
+    lookupContactNameEl.addEventListener('focus', function () {
+      var notMember = document.querySelector('.club-contact__not-member-container');
+      if (notMember && notMember.style.display === 'block') {
+        handleCancelAddContact();
+      }
+    });
+    autocompleteContactsByName(lookupContactNameEl);
+  }
+
+  // Wire up contact-type radio buttons — mirrors production's IIFE addEventListener calls.
+  var radioContactTypeCurrent = document.querySelector('#contactTypeCurrent');
+  var radioContactTypeOther   = document.querySelector('#contactTypeOther');
+  if (radioContactTypeCurrent) radioContactTypeCurrent.addEventListener('click', handleContactType);
+  if (radioContactTypeOther)   radioContactTypeOther.addEventListener('click', handleContactType);
+
+  // Event delegation for Remove buttons in the contact list — mirrors production's
+  // button.addEventListener('click', removeContact) attached per-card in addContact().
+  var contactListContainer = document.querySelector('#club-contact .list__container');
+  if (contactListContainer) {
+    contactListContainer.addEventListener('click', function (e) {
+      var btn = e.target;
+      while (btn && btn !== contactListContainer) {
+        if (btn.classList.contains('list-item__delete')) {
+          removeContact(e);
+          return;
+        }
+        btn = btn.parentNode;
+      }
+    });
   }
 
   // Open Club Name section on load via Bootstrap 3 jQuery API so that the

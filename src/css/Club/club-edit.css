@@ -7,6 +7,77 @@
   }
 }
 
+/* Match Event Director pattern: "Or Add a New Contact" label is bold, same size as form labels */
+.club-contact__add-new p {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+/* Remove button hidden until Edit mode — production has this rule commented out, mockup keeps it */
+#club-contact .list-item__delete {
+  display: none;
+}
+#club-contact .edit-list .list-item__delete {
+  display: inline-block;
+}
+
+/* lookup-confirm: hidden until setCurrentContact() adds .show */
+.lookup-confirm {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+.lookup-confirm.show {
+  max-height: 6rem;
+  opacity: 1;
+}
+
+/* Autocomplete dropdown for Search Contact */
+.lookup-name {
+  position: relative;
+}
+.autocomplete-items {
+  position: absolute;
+  z-index: 99;
+  top: 100%;
+  left: 0;
+  right: 0;
+  border: 1px solid #d4d4d4;
+  border-top: none;
+  background: #fff;
+  max-height: 220px;
+  overflow-y: auto;
+  box-shadow: 0 2px 6px rgba(0,0,0,.15);
+}
+.autocomplete-items div {
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 1.4rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+.autocomplete-items div:last-child {
+  border-bottom: none;
+}
+.autocomplete-items div:hover,
+.autocomplete-items div.autocomplete-active {
+  background-color: #006EB7;
+  color: #fff;
+}
+.autocomplete-items div:hover strong,
+.autocomplete-items div.autocomplete-active strong {
+  color: #fff;
+}
+.autocomplete-location {
+  font-size: 1.2rem;
+  color: #666;
+  margin-left: 4px;
+}
+.autocomplete-items div:hover .autocomplete-location,
+.autocomplete-items div.autocomplete-active .autocomplete-location {
+  color: #cce3f4;
+}
+
 .form__container .input-group select.form-control {
   -webkit-appearance: none;
   -moz-appearance: none;

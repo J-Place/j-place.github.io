@@ -13,15 +13,15 @@
     <h3 class="section__header" data-target="#club-contact__content" data-toggle="collapse" aria-expanded="false" aria-controls="club-contact__content">
         <span class="section__number">3</span>Club Contact
     </h3>
-    <input type="hidden" id="currentFirstName" value="" />
-    <input type="hidden" id="currentLastName" value="" />
-    <input type="hidden" id="currentPhone" value="" />
-    <input type="hidden" id="currentEmail" value="" />
-    <input type="hidden" id="currentSwimmerId" value="" />
-    <input type="hidden" id="currentValidated" value="" />
-    <input type="hidden" id="currentIsMember" value="" />
-    <input type="hidden" id="currentCity" value="" />
-    <input type="hidden" id="currentState" value="" />
+    <input type="hidden" id="currentFirstName" value="Jane" />
+    <input type="hidden" id="currentLastName" value="Smith" />
+    <input type="hidden" id="currentPhone" value="817-555-0100" />
+    <input type="hidden" id="currentEmail" value="jane@example.org" />
+    <input type="hidden" id="currentSwimmerId" value="123T" />
+    <input type="hidden" id="currentValidated" value="true" />
+    <input type="hidden" id="currentIsMember" value="true" />
+    <input type="hidden" id="currentCity" value="Fort Worth" />
+    <input type="hidden" id="currentState" value="TX" />
     <input type="hidden" id="contactSwimmerId" value="" />
     <input type="hidden" id="contactFirstName" value="" />
     <input type="hidden" id="contactLastName" value="" />
@@ -85,7 +85,7 @@
             <div class="row">
                 <div class="col-sm-12 col-md-8">
                     <p>Or Add a New Contact</p>
-                    <div>
+                    <div class="club-contact__add-new-btn">
                         <input class="btn btn-small btn-outline" id="addNewContact" name="addNewContact" type="button" value="Add New" onclick="showNewContactInputs()" />
                     </div>
                 </div>
@@ -243,13 +243,13 @@ Once validated, they will be able to edit this club.
                     <div class="row is-flex">
                     </div>
                 </div>
-                <button class="btn btn-small btn-success" id="confirmCurrentContact" onclick="confirmCurrentContact(event)">Confirm Current Contact</button>
+                <button class="btn btn-small btn-success" id="confirmCurrentContact" onclick="confirmCurrentContact(event)" style="display:none">Confirm</button>
             </div>
         </div>
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="club-privacy">
+                    <div class="club-privacy" style="display:none">
                         <div class="club-privacy__header">Privacy Settings</div>
                         <div class="input-group checkbox-group contact-privacy-name">
                             <label class="checkbox-label" for="privacyName">
@@ -283,7 +283,7 @@ Once validated, they will be able to edit this club.
             </div>
         </div>
         <div class="section__controls">
-            <button class="btn save-section" type="button" id="saveContact" onclick="saveContact(event)">Save &amp; Continue</button>
+            <button class="btn save-section" type="button" id="saveContact" onclick="saveContact(event)">Save</button>
         </div>
     </div>
 </div>
