@@ -13,6 +13,26 @@
   font-weight: 700;
 }
 
+/* Regional Club: reinforce production section--disabled styles with ID specificity */
+.form__container .club-edit #section-location-information.section--disabled .section__header,
+.form__container .club-edit #coach.section--disabled .section__header,
+.form__container .club-edit #club-bundles.section--disabled .section__header {
+  color: lightgray;
+  pointer-events: none;
+  cursor: default;
+}
+.form__container .club-edit #section-location-information.section--disabled .section__header .section__number,
+.form__container .club-edit #coach.section--disabled .section__header .section__number,
+.form__container .club-edit #club-bundles.section--disabled .section__header .section__number {
+  border-color: lightgray;
+  color: lightgray;
+}
+.form__container .club-edit #section-location-information.section--disabled .section__header:after,
+.form__container .club-edit #coach.section--disabled .section__header:after,
+.form__container .club-edit #club-bundles.section--disabled .section__header:after {
+  display: none;
+}
+
 /* Remove button hidden until Edit mode — production has this rule commented out, mockup keeps it */
 #club-contact .list-item__delete {
   display: none;
@@ -78,6 +98,77 @@
   color: #cce3f4;
 }
 
+/* Payment price rows — label right-aligned, price left-aligned (matches add-ons "Review Your Add-Ons" line items) */
+.payment-info__information.form-horizontal {
+  overflow: hidden;
+  padding-bottom: 4rem;
+}
+
+.payment-info__information .form-group {
+  margin-bottom: 4px;
+  text-align: right;
+}
+
+.payment-info__information .form-group .payment-info__price-label {
+  display: inline;
+  text-align: right;
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.8;
+}
+
+.payment-info__information .form-group .payment-info__price {
+  display: inline-block;
+  text-align: right;
+  width: 100px;
+  padding-left: 2rem;
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.8;
+}
+
+/* Total row */
+.payment-info__information .form-group .payment-info__price-label.payment-info__total-label,
+.payment-info__information .form-group .payment-info__price.payment-info__total-price {
+  font-weight: 700;
+}
+
+.form__container .club-edit .bundle-group-header {
+  font-size: 1.7rem;
+}
+
+.form__container .club-edit .input-group-description {
+  font-size: 1.8rem;
+  font-weight: 300;
+  margin-bottom: .125rem;
+}
+
+.form__container .club-edit .club-bundles {
+  margin-bottom: 2rem;
+}
+
+.form__container .club-edit ul.input-group-description {
+  margin-bottom: 2rem;
+  padding-left: 0;
+  list-style: none;
+}
+
+.form__container .club-edit ul.input-group-description li::before {
+  content: "•";
+  margin-right: 4px;
+}
+
+.form__container .club-edit .input-group-description li {
+  font-size: 1.8rem;
+  font-weight: 300;
+  margin-bottom: .5rem;
+}
+
+.upload-instructions {
+  margin-bottom: 1rem;
+}
+
 .form__container .input-group select.form-control {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -89,4 +180,31 @@
   box-sizing: border-box;
   height: 4.6rem;
   padding: 0;
+}
+
+
+.club-edit .club-background label, 
+.club-edit .club-logo label {
+    margin: 0 0 0.5rem;
+}
+
+.agree-usage {
+  font-size: 1rem;
+  line-height: 1.2rem;
+}
+
+#club-bundles__content .col-sm-12 {  
+  border-top: 1px solid #CCC;
+  margin-top: 1rem;
+  padding-top: 3rem;
+}
+
+#club-bundles__content .col-sm-12:first-of-type {
+  border: 0 none;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+#club-bundles__content .col-sm-12:last-of-type {
+  margin-bottom: 4rem;
 }

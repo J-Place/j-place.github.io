@@ -81,22 +81,22 @@
             </div>
             <div class="row">
                 <div class="col-sm-9">
-                    <div class="input-group usa-affiliate">
+                    <div class="input-group membership-required">
                         <div class="input-group-header radio-group-header required">
-                            Are you affiliated with a USA Swimming club?
-                            <label style="display:contents"><span class="icon-help" data-bs-toggle="tooltip" data-bs-placement="top" title="Do you work under or are a component of a USA Swimming club?" data-container="body"></span></label>
+                            Do you require USMS membership?
+                            <label style="display:contents"><span class="icon-help" data-bs-toggle="tooltip" data-bs-placement="top" title="Do you require USMS membership?" data-container="body"></span></label>
                         </div>
-                        <span class="help-block help-block--usaSwimmingClubAffiliation">Please make a selection</span>
-                        <label class="radio-label radio-label--inline" for="usaSwimmingAffiliateAnsweredYes">
+                        <span class="help-block help-block--membershipRequired">Please make a selection</span>
+                        <label class="radio-label radio-label--inline" for="membershipRequiredAnsweredYes">
                             <span class="radio-container">
-                                <input type="radio" name="usaSwimmingClubAffiliation" id="usaSwimmingAffiliateAnsweredYes" value="true" disabled />
+                                <input type="radio" name="membershipRequired" id="membershipRequiredAnsweredYes" value="true" disabled />
                                 <span class="radio__placeholder"></span>
                             </span>
                             Yes
                         </label>
-                        <label class="radio-label radio-label--inline" for="usaSwimmingAffiliateAnsweredNo">
+                        <label class="radio-label radio-label--inline" for="membershipRequiredAnsweredNo">
                             <span class="radio-container">
-                                <input type="radio" name="usaSwimmingClubAffiliation" id="usaSwimmingAffiliateAnsweredNo" value="false" disabled />
+                                <input type="radio" name="membershipRequired" id="membershipRequiredAnsweredNo" value="false" disabled />
                                 <span class="radio__placeholder"></span>
                             </span>
                             No
@@ -108,15 +108,33 @@
 
         <div class="form-group">
             <div class="row">
-                <div class="col-xs-12 col-sm-8 col-md-4">
+                <div class="col-xs-12 col-sm-8">
                     <div class="input-group checkbox-group club-more-info">
                         <div class="input-group-header">Tell us more about your club</div>
-                        <label class="checkbox-label" for="regionalClub">
+                        <label class="checkbox-label" for="requireUsmsOnWebsite">
                             <div class="checkbox-container">
-                                <input type="checkbox" name="regionalClub" id="regionalClub" value="true" disabled><span class="checkbox__placeholder"></span>
+                                <input type="checkbox" name="requireUsmsOnWebsite" id="requireUsmsOnWebsite" value="true" disabled><span class="checkbox__placeholder"></span>
                             </div>
-                            Regional club
-                            <span class="icon-help" data-bs-toggle="tooltip" data-bs-placement="top" title="DO NOT CHECK unless you have talked with someone at the USMS staff. Regional clubs were created for national championship meets and they consist of swimmers from many sub-groups (workout groups) representing a single regional club at nationals. However, at local meets within their LMSC they compete for their sub-group." data-container="body"></span>
+                            We say we require USMS membership on our website or web presence
+                        </label>
+                        <label class="checkbox-label" for="usmsRegistrationLink">
+                            <div class="checkbox-container">
+                                <input type="checkbox" name="usmsRegistrationLink" id="usmsRegistrationLink" value="true" disabled><span class="checkbox__placeholder"></span>
+                            </div>
+                            We have a link to USMS registration on our website or web presence
+                        </label>
+                        <label class="checkbox-label" for="usaSwimmingAffiliated">
+                            <div class="checkbox-container">
+                                <input type="checkbox" name="usaSwimmingAffiliated" id="usaSwimmingAffiliated" value="true" disabled><span class="checkbox__placeholder"></span>
+                            </div>
+                            We are affiliated with a USA Swimming club
+                            <span class="icon-help" data-bs-toggle="tooltip" data-bs-placement="top" title="Select this if your club is officially affiliated with a USA Swimming club." data-container="body"></span>
+                        </label>
+                        <label class="checkbox-label" for="freeTrialMembership">
+                            <div class="checkbox-container">
+                                <input type="checkbox" name="freeTrialMembership" id="freeTrialMembership" value="true" disabled><span class="checkbox__placeholder"></span>
+                            </div>
+                            We offer a free trial membership to new members
                         </label>
                         <label class="checkbox-label" for="moreSwimmerCapacity">
                             <div class="checkbox-container">
@@ -124,24 +142,25 @@
                             </div>
                             Swimmer capacity is limited
                         </label>
-                        <label class="checkbox-label" for="workoutGroups">
-                            <div class="checkbox-container">
-                                <input type="checkbox" name="workoutGroups" id="workoutGroups" value="true" disabled><span class="checkbox__placeholder"></span>
-                            </div>
-                            Workout groups allowed
-                        </label>
-                        <label class="checkbox-label" for="aprilAltsMonth">
-                            <div class="checkbox-container">
-                                <input type="checkbox" name="aprilAltsMonth" id="aprilAltsMonth" value="true" disabled><span class="checkbox__placeholder"></span>
-                            </div>
-                            Participates in April is ALTS Month
-                        </label>
                         <label class="checkbox-label" for="noDisplay">
                             <div class="checkbox-container">
                                 <input type="checkbox" name="noDisplay" id="noDisplay" value="true" disabled><span class="checkbox__placeholder"></span>
                             </div>
                             Do not display on website
                             <span class="caption">(For example, if your club is not a public location)</span>
+                        </label>
+                        <label class="checkbox-label" for="regionalClub">
+                            <div class="checkbox-container">
+                                <input type="checkbox" name="regionalClub" id="regionalClub" value="true" disabled><span class="checkbox__placeholder"></span>
+                            </div>
+                            Regional club
+                            <span class="icon-help" data-bs-toggle="tooltip" data-bs-placement="top" title="DO NOT CHECK unless you have talked with someone at the USMS staff. Regional clubs were created for national championship meets and they consist of swimmers from many sub-groups (workout groups) representing a single regional club at nationals. However, at local meets within their LMSC they compete for their sub-group." data-container="body"></span>
+                        </label>
+                        <label class="checkbox-label" for="workoutGroups">
+                            <div class="checkbox-container">
+                                <input type="checkbox" name="workoutGroups" id="workoutGroups" value="true" disabled><span class="checkbox__placeholder"></span>
+                            </div>
+                            Workout groups allowed
                         </label>
                     </div>
                 </div>
@@ -260,6 +279,9 @@
                         <div class="input-group club-logo">
                             <label for="file-1">Upload Your Club Logo</label>
                             <span class="help-block">Invalid image type</span>
+                            <div class="upload-instructions">
+                                <span>Dimensions: 250 x 180 pixels | Format: JPG, JPEG, PNG, GIF | Max file size: 1.0mb</span>
+                            </div>
                             <div class="upload-thumbnail" style="background-image: url('')">
                                 <button type="button" class="club-logo__remove-image" data-bs-toggle="tooltip" title="Remove club logo" onclick="removeClubPhoto('logo')">
                                     <i class="fa-solid fa-times"></i>
@@ -274,15 +296,13 @@
                                     <span>Choose a file&hellip;</span>
                                 </label>
                             </div>
-                            <div class="upload-instructions">
-                                <span>Dimensions: 250 x 180 pixels</span>
-                                <span>Format: JPG, JPEG, PNG, GIF</span>
-                                <span>Max file size: 1.0mb</span>
-                            </div>
                         </div>
                         <div class="input-group club-background">
                             <label for="file-2">Upload a Background Image - to appear on the Club Finder page</label>
                             <span class="help-block">Invalid image type</span>
+                            <div class="upload-instructions">
+                                <span>Dimensions: 1200 x 480 pixels | Format: JPG, PNG, GIF | Max file size: 3.5mb</span>
+                            </div>
                             <div class="upload-thumbnail" style="background-image: url('')">
                                 <button type="button" class="club-logo__remove-image" data-bs-toggle="tooltip" title="Remove club photo" onclick="removeClubPhoto('photo')">
                                     <i class="fa-solid fa-times"></i>
@@ -296,12 +316,10 @@
                                     </svg>
                                     <span>Choose a file&hellip;</span>
                                 </label>
-                            </div>
-                            <div class="upload-instructions">
-                                <span>Dimensions: 1200 x 480 pixels</span>
-                                <span>Format: JPG, PNG, GIF</span>
-                                <span>Max file size: 3.5mb</span>
-                            </div>
+                                <div class="agree-usage">
+                                    <span style="margin-left: -2px; margin-right: 2px;">*</span>By uploading an image, you agree that you own the rights to this image and that USMS has permission to use it.
+                                </div>
+                            </div>                            
                         </div>
                     </div>
                 </div>

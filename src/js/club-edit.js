@@ -16,8 +16,8 @@ function FindPos(obj) {
 
 function setSectionInputStatus(section, disabled) {
   if (!section) return;
-  // Club Name and Gold Club manage their own disabled state
-  if (section.id === 'club-name__content' || section.id === 'gold-club__content') return;
+  // Club Name and Club Bundles manage their own disabled state
+  if (section.id === 'club-name__content' || section.id === 'club-bundles__content') return;
   section.querySelectorAll('input').forEach(function (el) { el.disabled = disabled; });
   section.querySelectorAll('select').forEach(function (el) { el.disabled = disabled; });
   section.querySelectorAll('textarea').forEach(function (el) { el.disabled = disabled; });
@@ -72,7 +72,7 @@ function sectionSaved(section) {
       break;
     case 'club-name__content':
     case 'club-details__content':
-    case 'gold-club__content':
+    case 'club-bundles__content':
       result = compareSections(section);
       break;
     default:
@@ -309,9 +309,9 @@ $(function () {
   $('#accordion .section__content').on('show.bs.collapse', function (e) {
     var contentEl = e.target;
 
-    // Bootstrap 3 open state is .in (not .show)
+    // Cover both BS3 (.in/.collapsing) and BS5 (.show) open states
     $('#accordion .section__content').filter(function () {
-      return this !== contentEl && ($(this).hasClass('in') || $(this).hasClass('collapsing'));
+      return this !== contentEl && ($(this).hasClass('in') || $(this).hasClass('show') || $(this).hasClass('collapsing'));
     }).collapse('hide');
 
     setTimeout(function () {
@@ -322,7 +322,7 @@ $(function () {
     contentEl.parentElement.classList.add('isEdit');
 
     switch (contentEl.id) {
-      case 'gold-club__content':
+      case 'club-bundles__content':
         setGoldClubFlag();
         break;
       case 'club-name__content':
@@ -379,6 +379,37 @@ function saveName(e) {
 function editDetails() { }
 
 function removeClubPhoto(type) { }
+
+// Mirrors production Details.js setRegionalClubSections() — adds/removes
+// section--disabled on Location, Coach, and Club Bundles when Regional Club is toggled.
+function setRegionalClubSections(enabled) {
+  var sectionsToDisable = [
+    document.querySelector('#section-location-information'),
+    document.querySelector('#coach')
+  ];
+  sectionsToDisable.forEach(function(section) {
+    if (!section) return;
+    if (enabled) {
+      section.classList.add('section--disabled');
+      var content = section.querySelector('.section__content');
+      if (content) $(content).collapse('hide');
+    } else {
+      section.classList.remove('section--disabled');
+    }
+  });
+
+  // Club Bundles: disable/enable independently of its show/hide (controlled by membership required radio)
+  var clubBundles = document.querySelector('#club-bundles');
+  if (clubBundles) {
+    if (enabled) {
+      clubBundles.classList.add('section--disabled');
+      var bundlesContent = clubBundles.querySelector('.section__content');
+      if (bundlesContent) $(bundlesContent).collapse('hide');
+    } else {
+      clubBundles.classList.remove('section--disabled');
+    }
+  }
+}
 
 function saveDetails(e) {
   e.preventDefault();
@@ -973,7 +1004,7 @@ function setGoldClubFlag() {
 
 function saveGold(e) {
   if (e) e.preventDefault();
-  var section = document.querySelector('#gold-club');
+  var section = document.querySelector('#club-bundles');
   if (!section) return;
   var radios = section.querySelectorAll('input[type="radio"]');
   var valid = true;
@@ -997,11 +1028,64 @@ function saveGold(e) {
     $(nextSection.querySelector('.section__content')).collapse('show');
     nextSection = null;
   } else {
-    $(document.querySelector('#gold-club .section__content')).collapse('hide');
+    $(document.querySelector('#club-bundles .section__content')).collapse('hide');
   }
 }
 
 // ── Section — Payment ────────────────────────────────────────────────────────
+
+function _getClubPricingTier(swimmerCount) {
+  var n = parseInt(swimmerCount, 10);
+  if (isNaN(n) || n < 1) return null;
+  if (n < 5)   return 99;
+  if (n < 25)  return 199;
+  if (n < 100) return 299;
+  return 499;
+}
+
+var USMS_CLUB_FEE = 75;
+var CLUB_BUNDLES = ['marketingBundle', 'clubBundleOption2', 'clubBundleOption3'];
+
+function _bundleRow(bundleKey) {
+  return document.querySelector('.section-payment__bundle-row[data-bundle="' + bundleKey + '"]');
+}
+
+function _updateBillingTotal() {
+  var billingInput = document.querySelector('input[name="billingAmount"]');
+  var totalEl = document.querySelector('.section-payment__total');
+  var bundleTotal = 0;
+  CLUB_BUNDLES.forEach(function (bundleKey) {
+    var row = _bundleRow(bundleKey);
+    if (!row || row.style.display === 'none') return;
+    var costEl = row.querySelector('.section-payment__bundle-cost');
+    if (costEl) bundleTotal += parseFloat(costEl.textContent.replace('$', '')) || 0;
+  });
+  var total = (USMS_CLUB_FEE + bundleTotal).toFixed(2);
+  if (billingInput) billingInput.value = total;
+  if (totalEl) totalEl.textContent = '$' + total;
+}
+
+function updateClubPricing() {
+  var swimmerInput = document.querySelector('#totalSwimmers');
+  var tierPrice = _getClubPricingTier(swimmerInput ? swimmerInput.value : '');
+
+  CLUB_BUNDLES.forEach(function (bundleKey) {
+    var row = _bundleRow(bundleKey);
+    var costEl = row && row.querySelector('.section-payment__bundle-cost');
+    if (costEl) costEl.textContent = tierPrice !== null ? '$' + tierPrice + '.00' : '$0.00';
+  });
+  _updateBillingTotal();
+}
+
+function updateBundlePricing(bundleKey) {
+  var yesRadio = document.querySelector('#' + bundleKey + 'Yes');
+  var row = _bundleRow(bundleKey);
+  if (!row) return;
+  var show = yesRadio && yesRadio.checked;
+  row.style.display = show ? '' : 'none';
+  if (show) updateClubPricing();
+  _updateBillingTotal();
+}
 
 function editPayment() { }
 
@@ -1013,9 +1097,73 @@ function handleAgreementChange() {
 
 function submitCreditCard(e) {
   if (e) e.preventDefault();
+
+  var firstError = null;
+
+  function validateRadioGroup(name) {
+    var helpBlock = document.querySelector('.help-block--' + name);
+    if (!helpBlock) return;
+    var answered = !!document.querySelector('input[name="' + name + '"]:checked');
+    if (answered) {
+      helpBlock.classList.remove('has-error');
+    } else {
+      helpBlock.classList.add('has-error');
+      if (!firstError) firstError = helpBlock;
+    }
+  }
+
+  function validateInput(el) {
+    var helpBlock = el.name ? document.querySelector('.help-block--' + el.name) : null;
+    var empty = !el.value || !el.value.trim();
+    if (empty) {
+      el.classList.add('has-error');
+      if (helpBlock) helpBlock.classList.add('has-error');
+      if (!firstError) firstError = helpBlock || el;
+    } else {
+      el.classList.remove('has-error');
+      if (helpBlock) helpBlock.classList.remove('has-error');
+    }
+  }
+
+  // Required radio groups
+  validateRadioGroup('usmsLiabilityInsurance');
+  validateRadioGroup('membershipRequired');
+
+  // Club Bundles — only if the section is visible and not disabled
+  var clubBundles = document.querySelector('#club-bundles');
+  if (clubBundles && clubBundles.style.display !== 'none' && !clubBundles.classList.contains('section--disabled')) {
+    CLUB_BUNDLES.forEach(function (bundleKey) { validateRadioGroup(bundleKey); });
+  }
+
+  // Required text inputs (those whose help-block is present, indicating production requires them)
+  ['clubDescription', 'practiceDetails', 'totalSwimmers'].forEach(function (name) {
+    var el = document.querySelector('[name="' + name + '"]');
+    if (el) validateInput(el);
+  });
+
+  if (firstError) {
+    window.scroll(0, FindPos(firstError));
+  }
 }
 
 // ── Tooltips ─────────────────────────────────────────────────────────────────
+
+function initAccordion() {
+  // Belt-and-suspenders: click listener on section headers closes all other
+  // open sections before BS3/BS5 processes the toggle. Covers the case where
+  // show.bs.collapse doesn't fire reliably due to BS3/BS5 coexistence.
+  document.querySelectorAll('#accordion .section__header[data-toggle="collapse"]').forEach(function (header) {
+    header.addEventListener('click', function () {
+      var targetSelector = this.getAttribute('data-target');
+      var opening = targetSelector ? document.querySelector(targetSelector) : null;
+      document.querySelectorAll('#accordion .section__content').forEach(function (content) {
+        if (content !== opening && (content.classList.contains('in') || content.classList.contains('show'))) {
+          $(content).collapse('hide');
+        }
+      });
+    });
+  });
+}
 
 function initTooltips() {
   if (window.bootstrap && window.bootstrap.Tooltip) {
@@ -1028,6 +1176,8 @@ function initTooltips() {
 // ── DOMContentLoaded init ────────────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', function () {
+  initAccordion();
+
   // Capture initial state from Club Name for change detection
   var clubNameContent = document.querySelector('#club-name__content');
   if (clubNameContent) {
@@ -1072,10 +1222,43 @@ document.addEventListener('DOMContentLoaded', function () {
     if (locationSection) locationSection.classList.add('hasData');
   }
 
-  var goldYes = document.querySelector('#gold-club input[type="radio"]:checked');
-  if (goldYes) {
-    var goldSection = document.querySelector('#gold-club');
-    if (goldSection) goldSection.classList.add('hasData');
+  var bundlesAnswered = document.querySelector('#club-bundles input[type="radio"]:checked');
+  if (bundlesAnswered) {
+    var bundlesSection = document.querySelector('#club-bundles');
+    if (bundlesSection) bundlesSection.classList.add('hasData');
+  }
+
+  // Dynamic pricing — update payment total as swimmer count changes.
+  var totalSwimmersEl = document.querySelector('#totalSwimmers');
+  if (totalSwimmersEl) {
+    totalSwimmersEl.addEventListener('blur', updateClubPricing);
+  }
+
+  CLUB_BUNDLES.forEach(function (bundleKey) {
+    document.querySelectorAll('input[name="' + bundleKey + '"]').forEach(function (r) {
+      r.addEventListener('change', function () { updateBundlePricing(bundleKey); });
+    });
+  });
+
+  // Club Bundles section — show when "No" is selected for USMS membership requirement.
+  function handleMembershipRequired() {
+    var noRadio = document.querySelector('#membershipRequiredAnsweredNo');
+    var clubBundles = document.querySelector('#club-bundles');
+    if (!clubBundles) return;
+    clubBundles.style.display = (noRadio && noRadio.checked) ? '' : 'none';
+  }
+  document.querySelectorAll('input[name="membershipRequired"]').forEach(function (r) {
+    r.addEventListener('change', handleMembershipRequired);
+  });
+  // handleMembershipRequired(); // TODO: re-enable — temporarily disabled while working on Club Bundles UI
+
+  // Regional Club checkbox — disable Location Information section when checked.
+  var regionalClubEl = document.querySelector('#regionalClub');
+  if (regionalClubEl) {
+    regionalClubEl.addEventListener('change', function (e) {
+      setRegionalClubSections(e.target.checked);
+    });
+    setRegionalClubSections(regionalClubEl.checked);
   }
 
   // Clicking the Search Contact input while Add New form is open closes and clears the form.
