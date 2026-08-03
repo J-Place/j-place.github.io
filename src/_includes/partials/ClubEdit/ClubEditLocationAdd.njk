@@ -31,7 +31,7 @@
         </div>
     </div>
 
-    <div class="location-details event-location-details" style="display: none;">
+    <div class="location-details event-location-details">
         <div class="form-group">
             <div class="row">
                 <div class="col-xs-12">
@@ -52,6 +52,7 @@
                     <div class="input-group location-address--street required">
                         <label for="addLocationAddressStreet">
                             Street Address (must select from the dropdown, do not copy and paste!)
+                            <span class="icon-help" data-bs-toggle="tooltip" data-bs-placement="top" title="You must select an address from the dropdown." data-container="body"></span>
                         </label>
                         <span class="help-block help-block--LocationAddressStreet">Must select address from the Google dropdown list</span>
                         <input type="text" class="form-control" id="addLocationAddressStreet" name="location" placeholder="Enter an address" />
@@ -94,7 +95,7 @@
         </div>
     </div>
 
-    <div class="row" style="display: none;">
+    <div class="row venue-form-row" style="display: none;">
         <div class="col-xs-12 col-sm-6">
             <div class="list-venue-form">
                 <div class="input-group required">
@@ -110,6 +111,18 @@
                         <option value="Outdoor">Outdoor</option>
                     </select>
                     <span class="help-block help-block--poolType">Please enter a pool type</span>
+                </div>
+                <div class="input-group required input-group--openWaterType" style="display: none;">
+                    <label for="openWaterType">Body of Water</label>
+                    <select name="openWaterType" class="form-control" id="openWaterType">
+                        <option value="-1">Select Open Water Type</option>
+                        <option value="Lake">Lake</option>
+                        <option value="Ocean/Bay">Ocean/Bay</option>
+                        <option value="River">River</option>
+                        <option value="Reservoir">Reservoir</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <span class="help-block help-block--openWaterType">Please select an open water type</span>
                 </div>
                 <div class="input-group checkbox-group input-group--course input-group--add-new-course">
                     <span class="help-block help-block--selectCourseType">Please select a course</span>

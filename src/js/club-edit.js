@@ -14,6 +14,19 @@ function FindPos(obj) {
   return curtop;
 }
 
+// Closes a section directly via classList rather than jQuery's $.collapse('hide').
+// This page loads both Bootstrap 3 (site-wide) and Bootstrap 5 (club-edit.js's own
+// pageJS bundle) — whichever last registered $.fn.collapse silently no-ops on
+// sections opened with the other version's marker class, so sibling sections were
+// getting stuck open. Manipulating the class directly sidesteps that entirely.
+function _closeSection(contentEl) {
+  if (!contentEl) return;
+  contentEl.classList.remove('in', 'show', 'collapsing');
+  contentEl.style.height = '';
+  setSectionInputStatus(contentEl, true);
+  if (contentEl.parentElement) contentEl.parentElement.classList.remove('isEdit');
+}
+
 function setSectionInputStatus(section, disabled) {
   if (!section) return;
   // Club Name and Club Bundles manage their own disabled state
@@ -310,9 +323,11 @@ $(function () {
     var contentEl = e.target;
 
     // Cover both BS3 (.in/.collapsing) and BS5 (.show) open states
-    $('#accordion .section__content').filter(function () {
-      return this !== contentEl && ($(this).hasClass('in') || $(this).hasClass('show') || $(this).hasClass('collapsing'));
-    }).collapse('hide');
+    document.querySelectorAll('#accordion .section__content').forEach(function (content) {
+      if (content !== contentEl && (content.classList.contains('in') || content.classList.contains('show') || content.classList.contains('collapsing'))) {
+        _closeSection(content);
+      }
+    });
 
     setTimeout(function () {
       window.scroll(0, FindPos(contentEl.parentNode));
@@ -453,6 +468,18 @@ var MOCK_CONTACTS = [
 ];
 var _latestContact = null;
 
+var MOCK_COACHES = [
+  { firstName: 'Marcus',  lastName: 'Ellison',  city: 'Austin',    state: 'TX', swimmerId: '601M', phone: '512-555-0201', email: 'marcus.ellison@example.org',  isMember: true,  validated: true },
+  { firstName: 'Priya',   lastName: 'Rao',      city: 'Houston',   state: 'TX', swimmerId: '602P', phone: '713-555-0202', email: 'priya.rao@example.org',       isMember: true,  validated: true },
+  { firstName: 'Diego',   lastName: 'Salazar',  city: 'Denver',    state: 'CO', swimmerId: '603D', phone: '303-555-0203', email: 'diego.salazar@example.org',   isMember: true,  validated: false },
+  { firstName: 'Naomi',   lastName: 'Fischer',  city: 'Portland',  state: 'OR', swimmerId: '604N', phone: '503-555-0204', email: 'naomi.fischer@example.org',   isMember: true,  validated: true },
+  { firstName: 'Owen',    lastName: 'Whitfield', city: 'Seattle',  state: 'WA', swimmerId: '605O', phone: '206-555-0205', email: 'owen.whitfield@example.org',  isMember: true,  validated: true },
+  { firstName: 'Renata',  lastName: 'Cabral',   city: 'Chicago',   state: 'IL', swimmerId: '606R', phone: '312-555-0206', email: 'renata.cabral@example.org',   isMember: true,  validated: true },
+  { firstName: 'Samuel',  lastName: 'Okafor',   city: 'Atlanta',   state: 'GA', swimmerId: '607S', phone: '404-555-0207', email: 'samuel.okafor@example.org',   isMember: true,  validated: true },
+  { firstName: 'Talia',   lastName: 'Bergman',  city: 'Boston',    state: 'MA', swimmerId: '608T', phone: '617-555-0208', email: 'talia.bergman@example.org',   isMember: true,  validated: false },
+];
+var _latestCoach = null;
+
 function _debounce(fn, delay) {
   var timer;
   return function () {
@@ -481,13 +508,13 @@ function setCurrentContact(contact) {
   if (addBtn) addBtn.disabled = false;
 }
 
-function autocompleteContactsByName(inp) {
+function _autocompleteByName(inp, mockData, onSelect) {
   var runSearch = _debounce(function () {
     var val = inp.value.trim().toLowerCase();
     _closeAllLists(inp);
     if (val.length < 3) return;
 
-    var matches = MOCK_CONTACTS.filter(function (c) {
+    var matches = mockData.filter(function (c) {
       var full = (c.firstName + ' ' + c.lastName).toLowerCase();
       return full.indexOf(val) !== -1 ||
         c.firstName.toLowerCase().indexOf(val) !== -1 ||
@@ -500,10 +527,10 @@ function autocompleteContactsByName(inp) {
     listDiv.className = 'autocomplete-items';
     inp.parentNode.appendChild(listDiv);
 
-    matches.forEach(function (contact) {
+    matches.forEach(function (person) {
       var item = document.createElement('div');
-      var fullName = contact.firstName + ' ' + contact.lastName;
-      var location = contact.city && contact.state ? contact.city + ', ' + contact.state : '';
+      var fullName = person.firstName + ' ' + person.lastName;
+      var location = person.city && person.state ? person.city + ', ' + person.state : '';
       var matchIdx = fullName.toLowerCase().indexOf(val);
       var boldedName = matchIdx >= 0
         ? fullName.slice(0, matchIdx) + '<strong>' + fullName.slice(matchIdx, matchIdx + val.length) + '</strong>' + fullName.slice(matchIdx + val.length)
@@ -513,7 +540,7 @@ function autocompleteContactsByName(inp) {
       item.addEventListener('mousedown', function (e) {
         e.preventDefault();
         inp.value = fullName;
-        setCurrentContact(contact);
+        onSelect(person);
         _closeAllLists(inp);
       });
 
@@ -551,9 +578,28 @@ function autocompleteContactsByName(inp) {
   document.addEventListener('click', function () { _closeAllLists(inp); });
 }
 
-function showNewContactInputs() {
+function autocompleteContactsByName(inp) {
+  _autocompleteByName(inp, MOCK_CONTACTS, setCurrentContact);
+}
+
+function autocompleteCoachesByName(inp) {
+  _autocompleteByName(inp, MOCK_COACHES, setCurrentCoach);
+}
+
+function _resetContactLookup() {
+  _latestContact = null;
   var lookupInput = document.querySelector('#lookupContactName');
-  if (lookupInput) { lookupInput.value = ''; _closeAllLists(lookupInput); }
+  if (lookupInput) { _closeAllLists(lookupInput); lookupInput.value = ''; }
+  var confirmDiv = document.querySelector('#club-contact .lookup-confirm');
+  if (confirmDiv) confirmDiv.classList.remove('show');
+  var addBtn = document.querySelector('#addAsContact');
+  if (addBtn) addBtn.disabled = true;
+  var nameEl = document.querySelector('#club-contact .lookup-confirm--name');
+  if (nameEl) nameEl.textContent = '';
+}
+
+function showNewContactInputs() {
+  _resetContactLookup();
 
   var el = document.querySelector('.club-contact__not-member-container');
   if (el) { el.style.display = 'block'; el.style.visibility = 'visible'; }
@@ -610,16 +656,7 @@ function setContactTitle(e) {
   if (!_latestContact) return;
 
   addContact(_latestContact);
-  _latestContact = null;
-
-  var lookupInput = document.querySelector('#lookupContactName');
-  if (lookupInput) { _closeAllLists(lookupInput); lookupInput.value = ''; }
-  var confirmDiv = document.querySelector('#club-contact .lookup-confirm');
-  if (confirmDiv) confirmDiv.classList.remove('show');
-  var addBtn = document.querySelector('#addAsContact');
-  if (addBtn) addBtn.disabled = true;
-  var nameEl = document.querySelector('#club-contact .lookup-confirm--name');
-  if (nameEl) nameEl.textContent = '';
+  _resetContactLookup();
 
   var otherContainer = document.querySelector('.club-contact__other-container');
   if (otherContainer) { otherContainer.style.display = 'none'; otherContainer.style.visibility = 'hidden'; }
@@ -939,35 +976,281 @@ function saveContact(e) {
 
 function getCurrentCoaches() { }
 
+function setCurrentCoach(coach) {
+  _latestCoach = coach;
+  var nameEl = document.querySelector('#coach .lookup-confirm--name');
+  if (nameEl) nameEl.textContent = coach.firstName + ' ' + coach.lastName;
+  var confirmDiv = document.querySelector('#coach .lookup-confirm');
+  if (confirmDiv) confirmDiv.classList.add('show');
+  var addBtn = document.querySelector('#addAsCoach');
+  if (addBtn) addBtn.disabled = false;
+}
+
+// Mirrors addContact() — builds the coach card DOM and appends it.
+function addCoachCard(coach) {
+  var row = document.querySelector('.section#coach .list__container .row');
+  if (!row) return;
+
+  var isValidated = coach.validated === true || coach.validated === 'true';
+
+  var col = document.createElement('div');
+  col.className = 'col-xs-12 col-sm-6 col-md-4';
+
+  var item = document.createElement('div');
+  item.className = 'list-item list-item--fade-out list-item--new';
+
+  var removeBtn = document.createElement('button');
+  removeBtn.type = 'button';
+  removeBtn.className = 'list-item__delete';
+  removeBtn.textContent = 'Remove';
+  item.appendChild(removeBtn);
+
+  if (!isValidated) {
+    var pending = document.createElement('div');
+    pending.className = 'coach-validated';
+    pending.textContent = 'Account Pending';
+    item.appendChild(pending);
+  }
+
+  var nameEl = document.createElement('div');
+  nameEl.className = 'coach-name';
+  nameEl.textContent = (coach.firstName || '') + ' ' + (coach.lastName || '');
+  item.appendChild(nameEl);
+
+  var isMember = coach.isMember !== false;
+
+  if (isMember && coach.city && coach.state) {
+    var loc = document.createElement('div');
+    loc.className = 'coach-location';
+    loc.textContent = coach.city + ', ' + coach.state;
+    item.appendChild(loc);
+  }
+
+  var phoneEl = document.createElement('div');
+  phoneEl.className = 'coach-phone';
+  phoneEl.textContent = coach.phone || '';
+  item.appendChild(phoneEl);
+
+  var emailEl = document.createElement('div');
+  emailEl.className = 'coach-email';
+  emailEl.textContent = coach.email || '';
+  item.appendChild(emailEl);
+
+  if (isMember) {
+    var idDiv = document.createElement('div');
+    idDiv.className = 'coach-id';
+    idDiv.textContent = 'Member ID: ';
+    var idVal = document.createElement('span');
+    idVal.className = 'coach-id__value';
+    idVal.textContent = coach.swimmerId || '';
+    idDiv.appendChild(idVal);
+    item.appendChild(idDiv);
+  }
+
+  col.appendChild(item);
+  row.appendChild(col);
+
+  setTimeout(function () { item.classList.remove('list-item--fade-out'); }, 250);
+
+  var listHeader = document.querySelector('#coach .coach-list__header');
+  if (listHeader) listHeader.classList.add('show');
+  var settingsBtn = document.querySelector('#listCoachSettings');
+  if (settingsBtn) { settingsBtn.disabled = false; settingsBtn.style.display = ''; }
+  var editBtn = document.querySelector('#editCoachList');
+  if (editBtn) editBtn.disabled = false;
+  var saveBtn = document.querySelector('#saveCoach');
+  if (saveBtn) saveBtn.disabled = false;
+  var section = document.querySelector('#coach');
+  if (section) section.classList.add('hasData');
+}
+
+function removeCoachCard(e) {
+  if (e) e.preventDefault();
+  var item = e.target.closest('.list-item');
+  if (!item) return;
+  var listContainer = document.querySelector('#coach .list__container');
+  if (listContainer) listContainer.classList.add('list__container--modified');
+  item.classList.add('list-item--fade-out');
+  setTimeout(function () {
+    var col = item.parentNode;
+    if (col) col.style.display = 'none';
+  }, 250);
+}
+
+// Once a coach is confirmed (via Lookup or Add New), the Lookup and "Or Add a New
+// Coach" prompts go away, leaving just the Coaches and Instructors list.
+function _hideCoachPrompts() {
+  var lookupSection = document.querySelector('.coach-details');
+  if (lookupSection) lookupSection.style.display = 'none';
+  var addNew = document.querySelector('.club-coach__add-new');
+  if (addNew) addNew.style.display = 'none';
+}
+
+function _resetCoachLookup() {
+  _latestCoach = null;
+  var lookupInput = document.querySelector('#lookupCoachName');
+  if (lookupInput) { _closeAllLists(lookupInput); lookupInput.value = ''; }
+  var confirmDiv = document.querySelector('#coach .lookup-confirm');
+  if (confirmDiv) confirmDiv.classList.remove('show');
+  var addBtn = document.querySelector('#addAsCoach');
+  if (addBtn) addBtn.disabled = true;
+  var nameEl = document.querySelector('#coach .lookup-confirm--name');
+  if (nameEl) nameEl.textContent = '';
+}
+
 function setTitle(e, type) {
   if (e) e.preventDefault();
+  if (!_latestCoach) return;
+
+  addCoachCard(_latestCoach);
+  _resetCoachLookup();
+
+  _hideCoachPrompts();
 }
 
-function handleAddCoachButton() { }
+function handleAddCoachButton() {
+  var fields = ['#newCoachFirstName', '#newCoachLastName', '#newCoachEmailPrimary',
+    '#newCoachPhonePrimary', '#newCoachCity', '#newCoachState']
+    .map(function (sel) { return document.querySelector(sel); });
+
+  var firstError = null;
+  fields.forEach(function (field) {
+    if (!field) return;
+    validateField(field);
+    if (!firstError && field.classList.contains('has-error')) firstError = field;
+  });
+  if (firstError) {
+    window.scroll(0, FindPos(firstError));
+    return;
+  }
+
+  var coach = {
+    firstName: document.querySelector('#newCoachFirstName').value,
+    lastName: document.querySelector('#newCoachLastName').value,
+    email: document.querySelector('#newCoachEmailPrimary').value,
+    phone: document.querySelector('#newCoachPhonePrimary').value,
+    city: document.querySelector('#newCoachCity').value,
+    state: document.querySelector('#newCoachState').value,
+    swimmerId: '',
+    isMember: false,
+    validated: false,
+  };
+  addCoachCard(coach);
+
+  var el = document.querySelector('.club-coach__not-member-container');
+  if (el) { el.style.display = 'none'; el.style.visibility = 'hidden'; }
+  _clearNewCoachForm();
+
+  _hideCoachPrompts();
+}
+
+function _clearNewCoachForm() {
+  ['#newCoachFirstName', '#newCoachLastName', '#newCoachEmailPrimary',
+    '#newCoachPhonePrimary', '#newCoachCity'].forEach(function (sel) {
+    var input = document.querySelector(sel);
+    if (input) { input.value = ''; input.disabled = false; }
+  });
+  var stateEl = document.querySelector('#newCoachState');
+  if (stateEl) stateEl.value = '';
+}
 
 function showNewCoachInputs() {
+  _resetCoachLookup();
+
   var el = document.querySelector('.club-coach__not-member-container');
-  if (el) el.style.display = '';
+  if (el) { el.style.display = 'block'; el.style.visibility = 'visible'; }
+  _clearNewCoachForm();
+
+  // Hide only the button, not the "Or Add a New Coach" label (matches Club Contact pattern)
+  var addNewBtn = document.querySelector('.club-coach__add-new-btn');
+  if (addNewBtn) addNewBtn.style.display = 'none';
 }
 
-function hideCoachLookupInputs() { }
+function hideCoachLookupInputs() {
+  var el = document.querySelector('.club-coach__not-member-container');
+  if (el) { el.style.display = 'none'; el.style.visibility = 'hidden'; }
+  _clearNewCoachForm();
+
+  var addNewBtn = document.querySelector('.club-coach__add-new-btn');
+  if (addNewBtn) addNewBtn.style.display = '';
+}
 
 function showCoachSection() { }
 
 function editCoachList() {
-  var section = document.querySelector('#coach');
-  if (section) section.classList.add('edit-list');
+  var list = document.querySelector('.section#coach .list');
+  if (!list) return;
+  if (list.classList.contains('edit-list')) {
+    list.classList.remove('edit-list');
+    cancelCoachList();
+    var saveBtn = document.querySelector('#saveCoach');
+    if (saveBtn) saveBtn.disabled = false;
+  } else {
+    list.classList.add('edit-list');
+    var saveBtn2 = document.querySelector('#saveCoach');
+    if (saveBtn2) saveBtn2.disabled = true;
+  }
 }
 
 function cancelCoachList() {
   var section = document.querySelector('#coach');
-  if (section) section.classList.remove('edit-list');
+  var list = section ? section.querySelector('.list') : null;
+  if (!list) return;
+
+  var fadedItems = section.querySelectorAll('.list-item--fade-out');
+  for (var i = 0; i < fadedItems.length; i++) {
+    fadedItems[i].classList.remove('list-item--fade-out');
+  }
+  setTimeout(function () {
+    for (var j = 0; j < fadedItems.length; j++) {
+      var col = fadedItems[j].parentNode;
+      if (col) col.style.display = 'block';
+    }
+  }, 250);
+
+  list.classList.remove('edit-list');
+  var saveBtn = document.querySelector('#saveCoach');
+  if (saveBtn) saveBtn.disabled = false;
 }
 
 function saveCoachList(e) {
   if (e) e.preventDefault();
   var section = document.querySelector('#coach');
-  if (section) section.classList.remove('edit-list');
+  var list = section ? section.querySelector('.list') : null;
+  if (!list) return;
+
+  var newItems = section.querySelectorAll('.list-item--new');
+  for (var i = 0; i < newItems.length; i++) {
+    newItems[i].classList.remove('list-item--new');
+  }
+
+  var fadedItems = section.querySelectorAll('.list-item--fade-out');
+  for (var j = 0; j < fadedItems.length; j++) {
+    var col = fadedItems[j].parentNode;
+    if (col && col.parentNode) col.parentNode.removeChild(col);
+  }
+
+  list.classList.remove('edit-list');
+  var container = list.querySelector('.list__container');
+  if (container) container.classList.remove('list__container--modified');
+
+  var remaining = section.querySelectorAll('.list-item');
+  if (remaining.length > 0) {
+    section.classList.add('hasData');
+  } else {
+    section.classList.remove('hasData');
+    var listHeader = section.querySelector('.coach-list__header');
+    if (listHeader) listHeader.classList.remove('show');
+    var settingsBtn = document.querySelector('#listCoachSettings');
+    if (settingsBtn) settingsBtn.style.display = 'none';
+    var lookupSection = document.querySelector('.coach-details');
+    if (lookupSection) lookupSection.style.display = '';
+    var addNew = document.querySelector('.club-coach__add-new');
+    if (addNew) addNew.style.display = '';
+  }
+
+  var saveBtn = document.querySelector('#saveCoach');
+  if (saveBtn) saveBtn.disabled = false;
 }
 
 function saveCoach() {
@@ -984,6 +1267,556 @@ function saveCoach() {
     $(document.querySelector('#location-information__content')).collapse('show');
   }
 }
+
+// ── Section — Location ───────────────────────────────────────────────────────
+
+var _locationMode = null; // 'pool' | 'openwater' — which Add button was clicked
+var _pendingNewLocation = null; // holds step 1 details while step 2 is filled out
+var _locationRemoveTarget = null; // .col-sm-12 card queued for removal
+
+// No live Google Places key in this mockup environment — accept a typed
+// "Street, City, ST 12345" address and fall back to storing the raw text as
+// the street line when it doesn't split cleanly.
+function _parseLocationAddress(raw) {
+  var parts = String(raw || '').split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+  var street = parts[0] || '';
+  var city = parts[1] || '';
+  var state = '';
+  var zip = '';
+  if (parts[2]) {
+    var m = parts[2].match(/([A-Za-z]{2})\s*(\d{5})?/);
+    if (m) {
+      state = m[1].toUpperCase();
+      zip = m[2] || '';
+    }
+  }
+  return { street: street, city: city, state: state, zip: zip };
+}
+
+function _resetLocationStep1Fields() {
+  var nameInput = document.querySelector('#locationName');
+  var addrInput = document.querySelector('#addLocationAddressStreet');
+  if (nameInput) { nameInput.value = ''; nameInput.classList.remove('has-error', 'has-success'); }
+  if (addrInput) { addrInput.value = ''; addrInput.classList.remove('has-error', 'has-success'); }
+  var addrHelp = document.querySelector('.help-block--LocationAddressStreet');
+  if (addrHelp) addrHelp.classList.remove('has-error');
+  var typeSelect = document.querySelector('#locationType');
+  if (typeSelect) typeSelect.classList.remove('has-error', 'has-success');
+}
+
+function _resetLocationStep2Fields() {
+  var venueNameInput = document.querySelector('#venueName');
+  if (venueNameInput) { venueNameInput.value = ''; venueNameInput.classList.remove('has-error', 'has-success'); }
+  var poolTypeSelect = document.querySelector('#poolType');
+  if (poolTypeSelect) { poolTypeSelect.value = '-1'; poolTypeSelect.classList.remove('has-error', 'has-success'); }
+  var openWaterTypeSelect = document.querySelector('#openWaterType');
+  if (openWaterTypeSelect) { openWaterTypeSelect.value = '-1'; openWaterTypeSelect.classList.remove('has-error', 'has-success'); }
+  document.querySelectorAll('input[name="selectCourseType"]').forEach(function (cb) { cb.checked = false; });
+  var courseHelp = document.querySelector('.help-block--selectCourseType');
+  if (courseHelp) courseHelp.classList.remove('has-error');
+}
+
+function handleAddLocationButtonClick(e) {
+  var isPool = e.currentTarget.id === 'addPoolLocationBtn';
+  _locationMode = isPool ? 'pool' : 'openwater';
+
+  var headerAdd = document.querySelector('.location-header__add');
+  if (headerAdd) headerAdd.style.display = 'none';
+
+  var details = document.querySelector('.location-details');
+  if (details) details.classList.add('show');
+
+  var typeSelect = document.querySelector('#locationType');
+  if (typeSelect) {
+    typeSelect.disabled = !isPool;
+    typeSelect.value = isPool ? '-1' : 'Open Water';
+    typeSelect.classList.remove('has-error', 'has-success');
+  }
+
+  var nameInput = document.querySelector('#locationName');
+  if (nameInput) nameInput.focus();
+}
+
+function cancelNewLocationForm() {
+  var headerAdd = document.querySelector('.location-header__add');
+  if (headerAdd) headerAdd.style.display = '';
+  var details = document.querySelector('.location-details');
+  if (details) details.classList.remove('show');
+  _resetLocationStep1Fields();
+  _locationMode = null;
+}
+
+function confirmNewLocationDetails() {
+  var isPool = _locationMode === 'pool';
+  var nameInput = document.querySelector('#locationName');
+  var addrInput = document.querySelector('#addLocationAddressStreet');
+  var typeSelect = document.querySelector('#locationType');
+  var addrHelp = document.querySelector('.help-block--LocationAddressStreet');
+
+  validateField(nameInput);
+
+  var addrValid = !!(addrInput && addrInput.value.trim());
+  setInputStatus(addrInput, addrValid);
+  if (addrHelp) addrHelp.classList.toggle('has-error', !addrValid);
+
+  if (isPool) validateField(typeSelect);
+
+  var invalid = document.querySelector('.location-details input.has-error, .location-details select.has-error, .location-details span.help-block.has-error');
+  if (invalid) {
+    window.scroll(0, FindPos(invalid));
+    return;
+  }
+
+  var parsed = _parseLocationAddress(addrInput.value);
+  var candidate = {
+    name: nameInput.value.trim(),
+    street: parsed.street,
+    city: parsed.city,
+    state: parsed.state,
+    zip: parsed.zip,
+    type: isPool ? typeSelect.value : 'Open Water',
+  };
+
+  var isDuplicate = Array.prototype.some.call(
+    document.querySelectorAll('#locationListContainer .location-address-street'),
+    function (el) { return (el.dataset.street || '').toLowerCase() === candidate.street.toLowerCase(); }
+  );
+  if (isDuplicate) {
+    _openModal('modalAddDuplicateOrganization');
+    return;
+  }
+
+  _pendingNewLocation = candidate;
+
+  var details = document.querySelector('.location-details');
+  if (details) details.classList.remove('show');
+
+  var venueRow = document.querySelector('.venue-form-row');
+  if (venueRow) venueRow.style.display = '';
+
+  var poolGroup = document.querySelector('.input-group--poolType');
+  var courseGroup = document.querySelector('.input-group--course');
+  var openWaterGroup = document.querySelector('.input-group--openWaterType');
+  if (poolGroup) poolGroup.style.display = isPool ? '' : 'none';
+  if (courseGroup) courseGroup.style.display = isPool ? '' : 'none';
+  if (openWaterGroup) openWaterGroup.style.display = isPool ? 'none' : '';
+
+  var venueNameInput = document.querySelector('#venueName');
+  if (venueNameInput) venueNameInput.focus();
+}
+
+function cancelNewVenueForm() {
+  var venueRow = document.querySelector('.venue-form-row');
+  if (venueRow) venueRow.style.display = 'none';
+  _resetLocationStep2Fields();
+  // Back to step 1 — matches production's handleCancelNewVenue, which returns
+  // to the location-details form rather than fully canceling the Add flow.
+  var details = document.querySelector('.location-details');
+  if (details) details.classList.add('show');
+}
+
+function addLocationCard(location, venues) {
+  var container = document.querySelector('#locationListContainer');
+  var listWrap = document.querySelector('#locationsList');
+  if (!container || !listWrap) return;
+
+  var col = document.createElement('div');
+  col.className = 'col-sm-12';
+
+  var item = document.createElement('div');
+  item.className = 'list-item list-item-existing list-item--fade-out';
+
+  // Production mounts .list__controls only while edit=true (a React conditional,
+  // not a CSS rule) — inline display here so visibility doesn't depend on cascade
+  // order between the .edit-list class and unscoped .list__controls rules.
+  var controls = document.createElement('div');
+  controls.className = 'list__controls';
+  controls.style.display = document.querySelector('#locationsList .list.locations').classList.contains('edit-list') ? '' : 'none';
+  var removeBtn = document.createElement('button');
+  removeBtn.type = 'button';
+  removeBtn.className = 'btn btn-link list-item__delete';
+  removeBtn.textContent = 'Remove';
+  controls.appendChild(removeBtn);
+  item.appendChild(controls);
+
+  var nameEl = document.createElement('p');
+  nameEl.className = 'location-name text-bold';
+  nameEl.textContent = location.name;
+  item.appendChild(nameEl);
+
+  var addrEl = document.createElement('p');
+  addrEl.className = 'location-address-street';
+  addrEl.dataset.street = location.street;
+  var cityState = [location.city, [location.state, location.zip].filter(Boolean).join(' ')].filter(Boolean).join(', ');
+  addrEl.textContent = cityState ? (location.street + ' | ' + cityState) : location.street;
+  item.appendChild(addrEl);
+
+  var venueList = document.createElement('div');
+  venueList.className = 'venue__list';
+  (venues || []).forEach(function (venue) {
+    var venueItem = document.createElement('div');
+    venueItem.className = 'venue__list--item selected';
+    var venueText = document.createElement('div');
+    var venueNameEl = document.createElement('p');
+    venueNameEl.className = 'venue-name selected';
+    venueNameEl.textContent = venue.name;
+    var venueTypeEl = document.createElement('p');
+    venueTypeEl.className = 'venue-type';
+    venueTypeEl.textContent = '(' + venue.subType + ')';
+    venueText.appendChild(venueNameEl);
+    venueText.appendChild(venueTypeEl);
+    venueItem.appendChild(venueText);
+    venueList.appendChild(venueItem);
+  });
+  item.appendChild(venueList);
+
+  col.appendChild(item);
+  container.appendChild(col);
+
+  setTimeout(function () { item.classList.remove('list-item--fade-out'); }, 250);
+
+  listWrap.style.display = '';
+
+  var section = document.querySelector('#section-location-information');
+  if (section) section.classList.add('hasData');
+
+  var selectLocationHelp = document.querySelector('.section-location-information .help-block--selectLocation');
+  if (selectLocationHelp) selectLocationHelp.classList.remove('has-error');
+}
+
+function confirmNewVenue() {
+  if (!_pendingNewLocation) return;
+  var isPool = _locationMode === 'pool';
+
+  var venueNameInput = document.querySelector('#venueName');
+  var poolTypeSelect = document.querySelector('#poolType');
+  var openWaterTypeSelect = document.querySelector('#openWaterType');
+  var courseBoxes = document.querySelectorAll('input[name="selectCourseType"]');
+  var courseHelp = document.querySelector('.help-block--selectCourseType');
+
+  validateField(venueNameInput);
+  var valid = venueNameInput.value.trim().length > 0;
+
+  if (isPool) {
+    validateField(poolTypeSelect);
+    var anyCourseChecked = Array.prototype.some.call(courseBoxes, function (cb) { return cb.checked; });
+    if (courseHelp) courseHelp.classList.toggle('has-error', !anyCourseChecked);
+    valid = valid && poolTypeSelect.value !== '-1' && anyCourseChecked;
+  } else {
+    validateField(openWaterTypeSelect);
+    valid = valid && openWaterTypeSelect.value !== '-1';
+  }
+
+  if (!valid) {
+    var invalid = document.querySelector('.list-venue-form input.has-error, .list-venue-form select.has-error, .list-venue-form span.help-block.has-error');
+    if (invalid) window.scroll(0, FindPos(invalid));
+    return;
+  }
+
+  var courseLabels = { '25y': 'SCY', '25m': 'SCM', '50m': 'LCM', other: 'Other' };
+  var checkedCourses = Array.prototype.filter.call(courseBoxes, function (cb) { return cb.checked; })
+    .map(function (cb) { return courseLabels[cb.value] || cb.value; });
+
+  var venue = {
+    name: venueNameInput.value.trim(),
+    subType: isPool ? (poolTypeSelect.value + (checkedCourses.length ? ', ' + checkedCourses.join('/') : '')) : openWaterTypeSelect.value,
+  };
+
+  addLocationCard(_pendingNewLocation, [venue]);
+
+  var venueRow = document.querySelector('.venue-form-row');
+  if (venueRow) venueRow.style.display = 'none';
+
+  _resetLocationStep1Fields();
+  _resetLocationStep2Fields();
+
+  var headerAdd = document.querySelector('.location-header__add');
+  if (headerAdd) headerAdd.style.display = '';
+
+  _pendingNewLocation = null;
+  _locationMode = null;
+}
+
+function toggleLocationEdit(on) {
+  var list = document.querySelector('#locationsList .list.locations');
+  if (list) list.classList.toggle('edit-list', on);
+  document.querySelectorAll('#locationListContainer .list__controls').forEach(function (el) {
+    el.style.display = on ? '' : 'none';
+  });
+  var editBtn = document.querySelector('#editLocationBtn');
+  var doneBtn = document.querySelector('#doneEditLocationBtn');
+  if (editBtn) editBtn.style.display = on ? 'none' : '';
+  if (doneBtn) doneBtn.style.display = on ? '' : 'none';
+}
+
+function saveLocation(e) {
+  if (e) e.preventDefault();
+  var section = document.querySelector('#section-location-information');
+  var hasLocations = document.querySelectorAll('#locationListContainer .list-item').length > 0;
+  var helpBlock = document.querySelector('.section-location-information .help-block--selectLocation');
+  if (!hasLocations) {
+    if (helpBlock) helpBlock.classList.add('has-error');
+    window.scroll(0, FindPos(helpBlock));
+    return;
+  }
+  if (helpBlock) helpBlock.classList.remove('has-error');
+  if (section) section.classList.add('hasData');
+  if (nextSection) {
+    $(nextSection.querySelector('.section__content')).collapse('show');
+    nextSection = null;
+  } else {
+    $(document.querySelector('#club-bundles .section__content')).collapse('show');
+  }
+}
+
+// ── Location Search — prefilled candidate list from range/zip lookup ────────
+// Mirrors event-edit-locations.js: the full locations dataset is baked into
+// the page as inline JSON (no live Google Places key in this mockup), and a
+// default city seeds the initial candidate list on load, same as production
+// hydrating from a real "locations near me" API call.
+
+(function () {
+  var dataEl = document.querySelector('#club-location-search-data');
+  if (!dataEl) return;
+  var allLocations;
+  try { allLocations = JSON.parse(dataEl.textContent); } catch (err) { allLocations = []; }
+
+  var locationColumn = document.querySelector('.section-location-information .location-column');
+  var nameInput       = document.querySelector('.section-location-information input[name="search-filter__club-name"]');
+  var locationInput   = document.querySelector('.section-location-information #locationSearch');
+  var rangeSelect      = document.querySelector('.section-location-information #search-filter__range');
+  var submitBtn        = document.querySelector('.section-location-information #listSearchSubmit');
+  var typeBoxes         = document.querySelectorAll('.section-location-information input[name="searchType"]');
+  var summaryCount     = document.querySelector('.section-location-information .summary-count');
+  var summaryRange     = document.querySelector('.section-location-information .summary-range');
+  var summaryLoc       = document.querySelector('.section-location-information .summary-location');
+  var expandSearchHelp = document.querySelector('.section-location-information .help-block--expandSearch');
+
+  if (!locationColumn) return;
+
+  function escapeHtml(str) {
+    return String(str || '')
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function haversineMiles(lat1, lng1, lat2, lng2) {
+    var R = 3958.8;
+    var d1 = (lat2 - lat1) * Math.PI / 180;
+    var d2 = (lng2 - lng1) * Math.PI / 180;
+    var a = Math.sin(d1 / 2) * Math.sin(d1 / 2)
+      + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180)
+      * Math.sin(d2 / 2) * Math.sin(d2 / 2);
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  }
+
+  var knownPoolTags = ['SCY', 'SCM', 'LCM'];
+
+  function uniqueTags(courses) {
+    var seen = {};
+    var tags = [];
+    (courses || []).forEach(function (c) {
+      if (c.tag && !seen[c.tag]) { seen[c.tag] = true; tags.push(c.tag); }
+    });
+    return tags;
+  }
+
+  function renderCourseTags(courses) {
+    return uniqueTags(courses).map(function (tag) {
+      return '<p class="event-location--course">' + escapeHtml(tag) + '</p>';
+    }).join('');
+  }
+
+  function renderSearchCard(loc) {
+    return '<div class="list-item list-item--location"'
+      + ' data-location-id="' + escapeHtml(loc.id) + '"'
+      + ' data-name="'        + escapeHtml(loc.name) + '"'
+      + ' data-address="'     + escapeHtml(loc.address) + '"'
+      + ' data-city="'        + escapeHtml(loc.city) + '"'
+      + ' data-state="'       + escapeHtml(loc.state) + '"'
+      + ' data-zip="'         + escapeHtml(loc.zip) + '"'
+      + ' data-courses="'     + escapeHtml(JSON.stringify(loc.courses)) + '">'
+      + '<button type="button" class="btn btn-small btn-select-location">Select</button>'
+      + '<p class="event-location__address--name">'   + escapeHtml(loc.name)    + '</p>'
+      + '<p class="event-location__address--street">' + escapeHtml(loc.address) + '</p>'
+      + '<p class="event-location__city-state">'      + escapeHtml(loc.city) + ', ' + escapeHtml(loc.state) + ' ' + escapeHtml(loc.zip) + '</p>'
+      + '<div class="event-location--course-tags">' + renderCourseTags(loc.courses) + '</div>'
+      + '</div>';
+  }
+
+  // ── Filtering ────────────────────────────────────────────────────────────
+
+  var userLat = null;
+  var userLng = null;
+
+  function parseLocationText(raw) {
+    var s = (raw || '').trim();
+    if (!s) return null;
+    if (/^\d{5}$/.test(s)) return { zip: s };
+    if (s.indexOf(',') !== -1) {
+      var parts = s.split(',');
+      return { city: parts[0].trim().toLowerCase(), state: parts[1].trim().toLowerCase() };
+    }
+    if (/^[a-zA-Z]{2}$/.test(s)) return { state: s.toLowerCase() };
+    return { city: s.toLowerCase() };
+  }
+
+  function locMatchesText(loc, parsed) {
+    if (!parsed) return true;
+    if (parsed.zip) return (loc.zip || '') === parsed.zip;
+    var cityOk  = !parsed.city  || (loc.city  || '').toLowerCase().indexOf(parsed.city) !== -1;
+    var stateOk = !parsed.state || (loc.state || '').toLowerCase().indexOf(parsed.state) !== -1;
+    return cityOk && stateOk;
+  }
+
+  function getSelectedRange() {
+    if (!rangeSelect) return null;
+    var val = rangeSelect.value;
+    return val === 'nationwide' ? null : parseFloat(val);
+  }
+
+  function locMatchesDistance(loc, rangeMiles) {
+    if (rangeMiles === null) return true;
+    if (userLat === null || userLng === null) return true;
+    var itemLat = parseFloat(loc.lat);
+    var itemLng = parseFloat(loc.lng);
+    if (isNaN(itemLat) || isNaN(itemLng)) return false;
+    return haversineMiles(userLat, userLng, itemLat, itemLng) <= rangeMiles;
+  }
+
+  function locMatchesType(loc, checkedValues) {
+    if (!checkedValues.length) return true;
+    var isPoolLoc = (loc.courses || []).some(function (c) { return knownPoolTags.indexOf(c.tag) !== -1; });
+    return checkedValues.some(function (val) {
+      return val === 'pool' ? isPoolLoc : !isPoolLoc;
+    });
+  }
+
+  function updateSummary(count) {
+    if (summaryCount) summaryCount.textContent = count;
+    if (summaryRange && rangeSelect) summaryRange.textContent = rangeSelect.options[rangeSelect.selectedIndex].text;
+    if (summaryLoc && locationInput) summaryLoc.textContent = locationInput.value.trim() || 'Nationwide';
+  }
+
+  function applyFilters() {
+    var nameQuery     = nameInput ? nameInput.value.trim().toLowerCase() : '';
+    var rangeMiles    = getSelectedRange();
+    var parsedLoc     = (userLat === null && locationInput) ? parseLocationText(locationInput.value) : null;
+    var checkedValues = [];
+    typeBoxes.forEach(function (cb) { if (cb.checked) checkedValues.push(cb.value); });
+
+    var matched = allLocations.filter(function (loc) {
+      var nameOk   = !nameQuery || (loc.name || '').toLowerCase().indexOf(nameQuery) !== -1;
+      var distOk   = locMatchesDistance(loc, rangeMiles);
+      var locOk    = distOk || locMatchesText(loc, parsedLoc);
+      var typeOk   = locMatchesType(loc, checkedValues);
+      return nameOk && (userLat !== null ? distOk : locOk) && typeOk;
+    });
+
+    locationColumn.innerHTML = matched.map(renderSearchCard).join('');
+    updateSummary(matched.length);
+    if (expandSearchHelp) expandSearchHelp.classList.toggle('has-error', matched.length === 0);
+  }
+
+  function geocodeAddress(address) {
+    if (!address) { applyFilters(); return; }
+    fetch(
+      'https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=us&q=' + encodeURIComponent(address),
+      { headers: { 'Accept-Language': 'en-US,en' } }
+    )
+      .then(function (r) { return r.json(); })
+      .then(function (results) {
+        if (results && results[0]) {
+          userLat = parseFloat(results[0].lat);
+          userLng = parseFloat(results[0].lon);
+        }
+        applyFilters();
+      })
+      .catch(function () { applyFilters(); });
+  }
+
+  // ── Events ───────────────────────────────────────────────────────────────
+
+  if (submitBtn) {
+    submitBtn.addEventListener('click', function () {
+      userLat = null;
+      userLng = null;
+      geocodeAddress(locationInput ? locationInput.value : '');
+    });
+  }
+
+  if (nameInput) {
+    nameInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') applyFilters();
+    });
+  }
+
+  if (locationInput) {
+    locationInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { userLat = null; userLng = null; geocodeAddress(locationInput.value); }
+    });
+  }
+
+  if (rangeSelect) rangeSelect.addEventListener('change', applyFilters);
+  typeBoxes.forEach(function (cb) { cb.addEventListener('change', applyFilters); });
+
+  // ── Select a candidate → add it directly ──────────────────────────────────
+  // Production's Search.jsx calls handleLocationSelect(loc) straight off the
+  // Select button — Location.jsx's modalCourseSelection/showModalCourseSelection
+  // are defined but never called from anywhere, so there's no course-picker
+  // step here. The whole location, with every one of its pools, gets added.
+
+  // Reconstructs distinct pools/venues from the flat courses array (grouped by
+  // pool name), matching how a real API response's Pools array would look.
+  function groupCoursesToVenues(courses, locationName) {
+    var venueMap = {};
+    var order = [];
+    (courses || []).forEach(function (c) {
+      var poolName = c.pool || locationName;
+      if (!venueMap[poolName]) {
+        venueMap[poolName] = { name: poolName, type: c.type, tags: [] };
+        order.push(poolName);
+      }
+      if (c.tag && venueMap[poolName].tags.indexOf(c.tag) === -1) venueMap[poolName].tags.push(c.tag);
+    });
+    return order.map(function (poolName) {
+      var v = venueMap[poolName];
+      return { name: v.name, subType: [v.type, v.tags.join('/')].filter(Boolean).join(', ') };
+    });
+  }
+
+  locationColumn.addEventListener('click', function (e) {
+    var btn = e.target.closest('.btn-select-location');
+    if (!btn) return;
+    var item = btn.closest('.list-item[data-location-id]');
+    if (!item) return;
+
+    var isDuplicate = Array.prototype.some.call(
+      document.querySelectorAll('#locationListContainer .location-address-street'),
+      function (el) { return (el.dataset.street || '').toLowerCase() === (item.dataset.address || '').toLowerCase(); }
+    );
+    if (isDuplicate) {
+      _openModal('modalAddDuplicateOrganization');
+      return;
+    }
+
+    var courses;
+    try { courses = JSON.parse(item.dataset.courses || '[]'); } catch (err) { courses = []; }
+
+    addLocationCard({
+      name: item.dataset.name,
+      street: item.dataset.address,
+      city: item.dataset.city,
+      state: item.dataset.state,
+      zip: item.dataset.zip,
+    }, groupCoursesToVenues(courses, item.dataset.name));
+  });
+
+  // ── Init: seed a default city so a candidate list shows on load ──────────
+
+  if (locationInput) locationInput.value = 'Sarasota, FL';
+  geocodeAddress(locationInput ? locationInput.value : '');
+}());
 
 // ── Section — Gold Club ──────────────────────────────────────────────────────
 
@@ -1095,54 +1928,136 @@ function handleAgreementChange() {
   if (submitBtn) submitBtn.disabled = !(checkbox && checkbox.checked);
 }
 
-function submitCreditCard(e) {
+// Force every accordion section open at once (bypassing the single-open
+// accordion behavior) so Submit Payment can surface errors anywhere in the
+// form, not just the currently-open section. Skips sections Regional Club
+// has disabled, since those are intentionally out of the flow.
+function expandAllSections() {
+  document.querySelectorAll('#accordion .section__content.collapse').forEach(function (content) {
+    var wrapper = content.closest('.section');
+    if (wrapper && wrapper.classList.contains('section--disabled')) return;
+    content.classList.add('in', 'show');
+    content.style.height = '';
+    content.setAttribute('aria-expanded', 'true');
+    setSectionInputStatus(content, false);
+    if (content.parentElement) content.parentElement.classList.add('isEdit');
+  });
+}
+
+function _validateRequiredRadioGroup(name) {
+  var helpBlock = document.querySelector('.help-block--' + name);
+  var answered = !!document.querySelector('input[name="' + name + '"]:checked');
+  if (helpBlock) helpBlock.classList.toggle('has-error', !answered);
+  return answered;
+}
+
+function _validateRequiredCheckbox(el, helpBlockSelector) {
+  var helpBlock = document.querySelector(helpBlockSelector);
+  var checked = !!(el && el.checked);
+  if (helpBlock) helpBlock.classList.toggle('has-error', !checked);
+  return checked;
+}
+
+function _validateRequiredField(selector) {
+  var el = document.querySelector(selector);
+  if (!el) return true;
+  validateField(el);
+  return !el.classList.contains('has-error');
+}
+
+function _validateAtLeastOneItem(containerSelector, helpBlockSelector) {
+  var hasItem = document.querySelector(containerSelector + ' .list-item') !== null;
+  var helpBlock = document.querySelector(helpBlockSelector);
+  if (helpBlock) helpBlock.classList.toggle('has-error', !hasItem);
+  return hasItem;
+}
+
+// Wipes every has-error/has-success flag showValidation may have set, anywhere
+// in the form, so a second click can start clean rather than leaving stale
+// error states on sections that get collapsed back down.
+function _clearAllValidation() {
+  document.querySelectorAll('#accordion .has-error, #accordion .has-success, .payment-info .has-error, .payment-info .has-success').forEach(function (el) {
+    el.classList.remove('has-error', 'has-success');
+  });
+}
+
+var _validationDisplayed = false;
+
+function showValidation(e) {
   if (e) e.preventDefault();
 
-  var firstError = null;
-
-  function validateRadioGroup(name) {
-    var helpBlock = document.querySelector('.help-block--' + name);
-    if (!helpBlock) return;
-    var answered = !!document.querySelector('input[name="' + name + '"]:checked');
-    if (answered) {
-      helpBlock.classList.remove('has-error');
-    } else {
-      helpBlock.classList.add('has-error');
-      if (!firstError) firstError = helpBlock;
+  // Second click — dev-only reset: clear all validation states and collapse
+  // every section back down except Club Name. Closes sections directly via
+  // _closeSection rather than $.collapse('show')'s side effect — Club Name
+  // already carries the 'in'/'show' classes expandAllSections() stamped on
+  // it, so Bootstrap treats it as already shown and never fires
+  // show.bs.collapse (the event the "close siblings" logic depends on).
+  if (_validationDisplayed) {
+    _clearAllValidation();
+    document.querySelectorAll('#accordion .section__content').forEach(function (content) {
+      if (content.id !== 'club-name__content') _closeSection(content);
+    });
+    var clubNameContent = document.querySelector('#club-name__content');
+    if (clubNameContent) {
+      clubNameContent.classList.add('in', 'show');
+      clubNameContent.style.height = '';
+      clubNameContent.setAttribute('aria-expanded', 'true');
+      setSectionInputStatus(clubNameContent, false);
+      if (clubNameContent.parentElement) clubNameContent.parentElement.classList.add('isEdit');
     }
+    _validationDisplayed = false;
+    return;
   }
+  _validationDisplayed = true;
 
-  function validateInput(el) {
-    var helpBlock = el.name ? document.querySelector('.help-block--' + el.name) : null;
-    var empty = !el.value || !el.value.trim();
-    if (empty) {
-      el.classList.add('has-error');
-      if (helpBlock) helpBlock.classList.add('has-error');
-      if (!firstError) firstError = helpBlock || el;
-    } else {
-      el.classList.remove('has-error');
-      if (helpBlock) helpBlock.classList.remove('has-error');
-    }
-  }
+  expandAllSections();
 
-  // Required radio groups
-  validateRadioGroup('usmsLiabilityInsurance');
-  validateRadioGroup('membershipRequired');
+  var allValid = true;
 
-  // Club Bundles — only if the section is visible and not disabled
-  var clubBundles = document.querySelector('#club-bundles');
-  if (clubBundles && clubBundles.style.display !== 'none' && !clubBundles.classList.contains('section--disabled')) {
-    CLUB_BUNDLES.forEach(function (bundleKey) { validateRadioGroup(bundleKey); });
-  }
-
-  // Required text inputs (those whose help-block is present, indicating production requires them)
-  ['clubDescription', 'practiceDetails', 'totalSwimmers'].forEach(function (name) {
-    var el = document.querySelector('[name="' + name + '"]');
-    if (el) validateInput(el);
+  // Club Name
+  ['#selectLmsc', '#clubName', '#clubAbbr'].forEach(function (sel) {
+    if (!_validateRequiredField(sel)) allValid = false;
   });
 
-  if (firstError) {
-    window.scroll(0, FindPos(firstError));
+  // Club Details
+  ['#clubDescription', '#practiceDetails', '#totalSwimmers'].forEach(function (sel) {
+    if (!_validateRequiredField(sel)) allValid = false;
+  });
+  if (!_validateRequiredRadioGroup('usmsLiabilityInsurance')) allValid = false;
+  if (!_validateRequiredRadioGroup('membershipRequired')) allValid = false;
+
+  // Club Contact — requires at least one saved contact
+  var contactSection = document.querySelector('#club-contact');
+  if (contactSection && !contactSection.classList.contains('section--disabled')) {
+    if (!_validateAtLeastOneItem('#club-contact .list__container', '.help-block--ContactType')) allValid = false;
+  }
+
+  // Location — requires at least one saved location (skipped when Regional Club disables the section)
+  var locationSection = document.querySelector('#section-location-information');
+  if (locationSection && !locationSection.classList.contains('section--disabled')) {
+    if (!_validateAtLeastOneItem('#locationListContainer', '.section-location-information .help-block--selectLocation')) allValid = false;
+  }
+
+  // Club Bundles — only if the section is visible and not disabled by Regional Club
+  var clubBundles = document.querySelector('#club-bundles');
+  if (clubBundles && clubBundles.style.display !== 'none' && !clubBundles.classList.contains('section--disabled')) {
+    CLUB_BUNDLES.forEach(function (bundleKey) {
+      if (!_validateRequiredRadioGroup(bundleKey)) allValid = false;
+    });
+  }
+
+  // Payment
+  ['#cardName', '#cardNumber', '#cardCode', '#expiration', '#cardZip'].forEach(function (sel) {
+    if (!_validateRequiredField(sel)) allValid = false;
+  });
+  if (!_validateRequiredCheckbox(document.querySelector('#agreeTerms'), '.help-block--agreeTerms')) allValid = false;
+
+  if (!allValid) {
+    var firstError = document.querySelector(
+      '#accordion span.help-block.has-error, #accordion input.has-error, #accordion select.has-error, '
+      + '.payment-info span.help-block.has-error, .payment-info input.has-error'
+    );
+    if (firstError) window.scroll(0, FindPos(firstError));
   }
 }
 
@@ -1157,8 +2072,8 @@ function initAccordion() {
       var targetSelector = this.getAttribute('data-target');
       var opening = targetSelector ? document.querySelector(targetSelector) : null;
       document.querySelectorAll('#accordion .section__content').forEach(function (content) {
-        if (content !== opening && (content.classList.contains('in') || content.classList.contains('show'))) {
-          $(content).collapse('hide');
+        if (content !== opening && (content.classList.contains('in') || content.classList.contains('show') || content.classList.contains('collapsing'))) {
+          _closeSection(content);
         }
       });
     });
@@ -1216,10 +2131,12 @@ document.addEventListener('DOMContentLoaded', function () {
     if (coachSection) coachSection.classList.add('hasData');
   }
 
-  var locationItem = document.querySelector('#location-information .list-item');
+  var locationItem = document.querySelector('#locationListContainer .list-item');
   if (locationItem) {
-    var locationSection = document.querySelector('#location-information');
+    var locationSection = document.querySelector('#section-location-information');
     if (locationSection) locationSection.classList.add('hasData');
+    var locationsListWrap = document.querySelector('#locationsList');
+    if (locationsListWrap) locationsListWrap.style.display = '';
   }
 
   var bundlesAnswered = document.querySelector('#club-bundles input[type="radio"]:checked');
@@ -1294,6 +2211,97 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   }
+
+  // Clicking the Lookup Coach input while Add New form is open closes and clears the form.
+  var lookupCoachNameEl = document.querySelector('#lookupCoachName');
+  if (lookupCoachNameEl) {
+    lookupCoachNameEl.addEventListener('focus', function () {
+      var notMember = document.querySelector('.club-coach__not-member-container');
+      if (notMember && notMember.style.display === 'block') {
+        hideCoachLookupInputs();
+      }
+    });
+    autocompleteCoachesByName(lookupCoachNameEl);
+  }
+
+  var coachListContainer = document.querySelector('#coach .list__container');
+  if (coachListContainer) {
+    coachListContainer.addEventListener('click', function (e) {
+      var btn = e.target;
+      while (btn && btn !== coachListContainer) {
+        if (btn.classList.contains('list-item__delete')) {
+          removeCoachCard(e);
+          return;
+        }
+        btn = btn.parentNode;
+      }
+    });
+  }
+
+  // Location — Add New Pool / Open Water buttons
+  var addPoolLocationBtn = document.querySelector('#addPoolLocationBtn');
+  var addOpenWaterLocationBtn = document.querySelector('#addOpenWaterLocationBtn');
+  if (addPoolLocationBtn) addPoolLocationBtn.addEventListener('click', handleAddLocationButtonClick);
+  if (addOpenWaterLocationBtn) addOpenWaterLocationBtn.addEventListener('click', handleAddLocationButtonClick);
+
+  var confirmNewFacilityBtn = document.querySelector('#confirmNewFacility');
+  var cancelNewFacilityBtn = document.querySelector('#cancelNewFacility');
+  if (confirmNewFacilityBtn) confirmNewFacilityBtn.addEventListener('click', confirmNewLocationDetails);
+  if (cancelNewFacilityBtn) cancelNewFacilityBtn.addEventListener('click', cancelNewLocationForm);
+
+  var saveFormPoolBtn = document.querySelector('#saveFormPool');
+  var cancelSaveVenueBtn = document.querySelector('#cancelSaveVenue');
+  if (saveFormPoolBtn) saveFormPoolBtn.addEventListener('click', confirmNewVenue);
+  if (cancelSaveVenueBtn) cancelSaveVenueBtn.addEventListener('click', cancelNewVenueForm);
+
+  var closeDuplicateOrganizationBtn = document.querySelector('#closeDuplicateOrganization');
+  if (closeDuplicateOrganizationBtn) {
+    closeDuplicateOrganizationBtn.addEventListener('click', function () {
+      _closeModal('modalAddDuplicateOrganization');
+    });
+  }
+
+  var editLocationBtn = document.querySelector('#editLocationBtn');
+  var doneEditLocationBtn = document.querySelector('#doneEditLocationBtn');
+  if (editLocationBtn) editLocationBtn.addEventListener('click', function () { toggleLocationEdit(true); });
+  if (doneEditLocationBtn) doneEditLocationBtn.addEventListener('click', function () { toggleLocationEdit(false); });
+
+  var locationListContainerEl = document.querySelector('#locationListContainer');
+  if (locationListContainerEl) {
+    locationListContainerEl.addEventListener('click', function (e) {
+      var btn = e.target;
+      while (btn && btn !== locationListContainerEl) {
+        if (btn.classList.contains('list-item__delete')) {
+          _locationRemoveTarget = btn.closest('.col-sm-12');
+          _openModal('modalRemoveLocation');
+          return;
+        }
+        btn = btn.parentNode;
+      }
+    });
+  }
+
+  var confirmRemoveLocationBtn = document.querySelector('#confirmRemoveLocation');
+  if (confirmRemoveLocationBtn) {
+    confirmRemoveLocationBtn.addEventListener('click', function () {
+      if (_locationRemoveTarget && _locationRemoveTarget.parentNode) {
+        _locationRemoveTarget.parentNode.removeChild(_locationRemoveTarget);
+      }
+      _locationRemoveTarget = null;
+      _closeModal('modalRemoveLocation');
+      var remaining = document.querySelectorAll('#locationListContainer .list-item').length;
+      if (remaining === 0) {
+        var listWrap = document.querySelector('#locationsList');
+        if (listWrap) listWrap.style.display = 'none';
+        var locationSection = document.querySelector('#section-location-information');
+        if (locationSection) locationSection.classList.remove('hasData');
+        toggleLocationEdit(false);
+      }
+    });
+  }
+
+  var saveLocationBtn = document.querySelector('#saveLocation');
+  if (saveLocationBtn) saveLocationBtn.addEventListener('click', saveLocation);
 
   // Open Club Name section on load via Bootstrap 3 jQuery API so that the
   // show.bs.collapse listener fires and enables inputs / marks isEdit.

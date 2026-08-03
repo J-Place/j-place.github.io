@@ -86,7 +86,7 @@ In short: Covered = you could point a designer at the mockup and say "that's the
 | `Club/ClubEdit/ClubEdit.jsx` | `src/pages/club-central/club-edit.njk` | Covered |
 | `Club/ClubEdit/Add.jsx` | `partials/ClubEdit/ClubEditLocationAdd.njk` | Covered |
 | `Club/ClubEdit/Location.jsx` | `partials/ClubEdit/ClubEditLocation.njk` | Covered |
-| `Club/ClubEdit/LocationItem.jsx` | `partials/ClubEdit/ClubEditLocationItem.njk` | Covered |
+| `Club/ClubEdit/LocationItem.jsx` | inline via JS in `club-edit.js` | Covered |
 | `Club/ClubEdit/Search.jsx` | `partials/ClubEdit/ClubEditLocationSearch.njk` | Covered |
 | *(Razor)* `ClubRegistration/ClubName.cshtml` | `partials/ClubEdit/ClubEditName.njk` | Covered |
 | *(Razor)* `ClubRegistration/ClubDetails.cshtml` | `partials/ClubEdit/ClubEditDetails.njk` | Covered |
@@ -94,6 +94,7 @@ In short: Covered = you could point a designer at the mockup and say "that's the
 | *(Razor)* `ClubRegistration/ClubCoach.cshtml` | `partials/ClubEdit/ClubEditCoach.njk` | Covered |
 | *(Razor)* `ClubRegistration/ClubGoldClub.cshtml` | `partials/ClubEdit/ClubEditGoldClub.njk` | Covered |
 | *(Razor)* `ClubRegistration/ClubPayment.cshtml` | `partials/ClubEdit/ClubEditPayment.njk` | Covered |
+| *(Razor)* `ClubRegistration/ClubReceipt.cshtml` | `src/pages/club-central/club-dashboard/confirmation.njk` + `partials/ClubEdit/ClubEditReceipt.njk` | Covered |
 
 ---
 

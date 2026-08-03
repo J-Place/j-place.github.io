@@ -2,11 +2,16 @@
     <h3 class="section__header">
         Finish &amp; Pay
     </h3>
+    <div class="section__header--summary">
+        If you're finished entering your club information please enter your payment information below. You can log in to the Club Dashboard at any time to update your club details.
+    </div>
+    <!--
     <div class="row">
         <div class="col-sm-8">
             <p>If you're finished entering your club information please enter your payment information below. You can log in to the Club Dashboard at any time to update your club details.</p>
         </div>
     </div>
+    -->
     <span class="section__edit"><button class="section__edit-btn" onclick="editPayment()"></button></span>
     <div class="section__content" id="club-payment__content">
         <div class="card payment-info clearfix">
@@ -141,7 +146,7 @@
             {% include "components/modal.njk" %}
 
             <p class="section-payment__contact-pending" style="display: none;">You cannot submit your club until your new club contact has approved their My Account.</p>
-            <button onclick="submitCreditCard(event)" id="submit-button" class="btn btn-pay btn-large text-uppercase pull-left membership-length__submit">
+            <button onclick="showValidation(event)" id="submit-button" class="btn btn-pay btn-large text-uppercase pull-left membership-length__submit">
                 Submit Payment
             </button>
         </div>
