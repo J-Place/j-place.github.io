@@ -1,15 +1,15 @@
 <div class="section section-coach" id="coach">
     <h3 class="section__header" data-target="#club-coach__content" data-toggle="collapse" aria-expanded="false" aria-controls="coach__content">
-        <span class="section__number">4</span>Coach
+        <span class="section__number">4</span>Coach/Instructor
     </h3>
     <div class="section__content collapse" id="club-coach__content" data-parent="#accordion">
-        <div class="section__header--summary">In order to appear in this section, the USMS-Certified Coach or ALTS Instructor must be a current USMS member. If your coach does not renew their membership before January 1, your club could lose its Gold Club badge and status.</div>
+        <div class="section__header--summary">Only input active, on-deck coaches for your club.</div>
         <div class="coach-details show">
             <div class="row lookup-inputs show" id="coachLookupFields">
                 <div class="col-sm-5 col-md-6">
                     <div class="input-group lookup-name">
                         <label for="lookupCoachName">Lookup by First and/or Last Name</label>
-                        <input tabindex="0" type="text" class="form-control lookup__input lookup-primary__input" min="3" max="30" name="LookupCoachName" id="lookupCoachName" disabled>
+                        <input tabindex="0" type="text" class="form-control lookup__input lookup-primary__input" min="3" max="30" name="LookupCoachName" id="lookupCoachName" autocomplete="off">
                         <span class="help-block help-block--LookupCoachName">Please enter coach name</span>
                         <div class="lookup__input-spinner lookup__input-spinner--hide">
                             <img src="/-/media/usms/developers/images/loader.gif" alt="loading">
@@ -46,10 +46,10 @@
         <div class="form-group club-coach__add-new">
             <div class="row">
                 <div class="col-sm-12 col-md-8">
-                    <div>
+                    <div class="club-coach__add-new-label">
                         Or Add a New Coach
                     </div>
-                    <div>
+                    <div class="club-coach__add-new-btn">
                         <input id="addNewCoach" name="addNewCoach" class="btn btn-small btn-outline" type="button" value="Add a Coach" onclick="showNewCoachInputs()" />
                     </div>
                 </div>
