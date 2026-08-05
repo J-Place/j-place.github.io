@@ -13,8 +13,10 @@
       'What would you like to do with ' + club.title + '?';
   }
 
-  const suffix = '?clubId=' + encodeURIComponent(clubId);
-  document.getElementById('btn-club-edit').href += suffix;
-  document.getElementById('btn-manage-members').href += suffix;
-  document.getElementById('btn-manage-non-members').href += suffix;
+  ['btn-club-edit', 'btn-manage-members', 'btn-manage-non-members'].forEach(function (id) {
+    const link = document.getElementById(id);
+    const url = new URL(link.href, window.location.origin);
+    url.searchParams.set('clubId', clubId);
+    link.href = url.pathname + url.search;
+  });
 })();

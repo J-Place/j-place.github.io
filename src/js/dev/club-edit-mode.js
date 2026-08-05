@@ -15,7 +15,16 @@
     { value: 'edit',   label: 'Edit Club' }
   ];
 
-  var saved = sessionStorage.getItem(STORAGE_KEY) || 'create';
+  // A real nav click (club-manage's "Manage Club" vs. club-dashboard's "Add a
+  // New Club") always declares ?mode= explicitly, so it should win over
+  // whatever mode was last left in sessionStorage from a previous visit —
+  // otherwise "Add a New Club" could still load pre-filled if "Edit Club" was
+  // last selected via the dropdown below.
+  var modeFromUrl = new URLSearchParams(window.location.search).get('mode');
+  var saved = (modeFromUrl === 'create' || modeFromUrl === 'edit')
+    ? modeFromUrl
+    : sessionStorage.getItem(STORAGE_KEY) || 'create';
+  sessionStorage.setItem(STORAGE_KEY, saved);
 
   // Reuses the same personas already used elsewhere in this mockup
   // (ClubEditReceipt.njk's Bay Area Masters/Kevin Brown, club-edit.js's own
@@ -162,7 +171,10 @@
 
     select.addEventListener('change', function () {
       sessionStorage.setItem(STORAGE_KEY, this.value);
-      window.location.reload();
+      // Drop ?mode= so it can't re-win over this manual choice on the next load.
+      var url = new URL(window.location.href);
+      url.searchParams.delete('mode');
+      window.location.href = url.pathname + url.search;
     });
 
     var bar = document.querySelector('.login-status .usms-container');
