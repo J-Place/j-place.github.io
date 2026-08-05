@@ -7,9 +7,8 @@
   }
 }
 
-/* Match Event Director pattern: "Or Add a New Contact/Coach" label is bold, same size as form labels */
-#club-contact__content .club-contact__add-new p,
-.club-coach__add-new-label {
+/* Match Event Director pattern: "Or Add a New Contact" label is bold, same size as form labels */
+#club-contact__content .club-contact__add-new p {
   font-size: 1.4rem;
   font-weight: 700;
 }
@@ -22,9 +21,6 @@
   margin-bottom: 0;
 }
 
-/* Production gives .club-contact__not-member-container less top padding (5px) than
-   .club-coach__not-member-container (20px), so "First Name" sits closer to the box's
-   top edge on Contact than "First Name"/"Last Name" does on Coach. Match Coach's padding. */
 #club-contact__content .club-contact__not-member-container {
   padding: 20px 20px 10px;
 }
@@ -242,8 +238,11 @@
     color: red;
 }
 
-.club-edit .club-coach__not-member-container span.help-block.help-block.has-error, 
-.club-edit .club-contact__not-member-container span.help-block.help-block.has-error, 
+.club-edit .club-description textarea, .club-edit .practice-details textarea {
+  line-height: 150%;
+}
+
+.club-edit .club-contact__not-member-container span.help-block.help-block.has-error,
 .club-edit .list-configuration-form span.help-block.help-block.has-error, 
 .club-edit .list-venue-form span.help-block.help-block.has-error, 
 .club-edit .location-details.show span.help-block.help-block.has-error {
@@ -284,7 +283,6 @@
 }
 
 
-.club-edit #addNewContact,
-.club-edit #addNewCoach {
+.club-edit #addNewContact {
     margin: 1rem 0;
 }

@@ -14,6 +14,7 @@
     { value: 'create', label: 'Create Club' },
     { value: 'edit',   label: 'Edit Club' }
   ];
+
   var saved = sessionStorage.getItem(STORAGE_KEY) || 'create';
 
   // Reuses the same personas already used elsewhere in this mockup
@@ -82,8 +83,6 @@
   function hideCoachPrompts() {
     var lookupSection = document.querySelector('.coach-details');
     if (lookupSection) lookupSection.style.display = 'none';
-    var addNew = document.querySelector('.club-coach__add-new');
-    if (addNew) addNew.style.display = 'none';
   }
 
   // Runs after club-edit.js (deferred) has defined addContact/addCoachCard/

@@ -477,6 +477,7 @@ var MOCK_COACHES = [
   { firstName: 'Renata',  lastName: 'Cabral',   city: 'Chicago',   state: 'IL', swimmerId: '606R', phone: '312-555-0206', email: 'renata.cabral@example.org',   isMember: true,  validated: true },
   { firstName: 'Samuel',  lastName: 'Okafor',   city: 'Atlanta',   state: 'GA', swimmerId: '607S', phone: '404-555-0207', email: 'samuel.okafor@example.org',   isMember: true,  validated: true },
   { firstName: 'Talia',   lastName: 'Bergman',  city: 'Boston',    state: 'MA', swimmerId: '608T', phone: '617-555-0208', email: 'talia.bergman@example.org',   isMember: true,  validated: false },
+  { firstName: 'Kenji',   lastName: 'Nakamura', city: 'San Diego', state: 'CA', swimmerId: '609K', phone: '619-555-0209', email: 'kenji.nakamura@example.org',  isMember: true,  validated: true },
 ];
 var _latestCoach = null;
 
@@ -647,10 +648,10 @@ function confirmCurrentContact(e) {
   if (privacy) privacy.style.display = '';
 }
 
-// Mirrors handleAddCoachButton()'s mock-level simplicity (validate, build,
-// add card, clear form) plus the section-finalization steps setContactTitle()
-// already does — addContact(), unlike addCoachCard(), doesn't show the list
-// header / hide the type-form itself, so that has to happen here too.
+// Validates, builds, and adds the contact card, plus the section-finalization
+// steps setContactTitle() already does — addContact(), unlike addCoachCard(),
+// doesn't show the list header / hide the type-form itself, so that has to
+// happen here too.
 function handleAddContactButton() {
   var fields = ['#newContactFirstName', '#newContactLastName', '#newContactEmailPrimary',
     '#newContactPhonePrimary', '#newContactCity', '#newContactState']
@@ -1186,68 +1187,6 @@ function setTitle(e, type) {
   _resetCoachLookup();
 }
 
-function handleAddCoachButton() {
-  var fields = ['#newCoachFirstName', '#newCoachLastName', '#newCoachEmailPrimary',
-    '#newCoachPhonePrimary', '#newCoachCity', '#newCoachState']
-    .map(function (sel) { return document.querySelector(sel); });
-
-  var firstError = null;
-  fields.forEach(function (field) {
-    if (!field) return;
-    validateField(field);
-    if (!firstError && field.classList.contains('has-error')) firstError = field;
-  });
-  if (firstError) {
-    window.scroll(0, FindPos(firstError));
-    return;
-  }
-
-  var coach = {
-    firstName: document.querySelector('#newCoachFirstName').value,
-    lastName: document.querySelector('#newCoachLastName').value,
-    email: document.querySelector('#newCoachEmailPrimary').value,
-    phone: document.querySelector('#newCoachPhonePrimary').value,
-    city: document.querySelector('#newCoachCity').value,
-    state: document.querySelector('#newCoachState').value,
-    swimmerId: '',
-    isMember: false,
-    validated: false,
-  };
-  addCoachCard(coach);
-
-  var el = document.querySelector('.club-coach__not-member-container');
-  if (el) { el.style.display = 'none'; el.style.visibility = 'hidden'; }
-  _clearNewCoachForm();
-}
-
-function _clearNewCoachForm() {
-  ['#newCoachFirstName', '#newCoachLastName', '#newCoachEmailPrimary',
-    '#newCoachPhonePrimary', '#newCoachCity'].forEach(function (sel) {
-    var input = document.querySelector(sel);
-    if (input) { input.value = ''; input.disabled = false; }
-  });
-  var stateEl = document.querySelector('#newCoachState');
-  if (stateEl) stateEl.value = '';
-}
-
-// Unlike Contact (one contact, ever), a club can have multiple coaches, so
-// production's showNewCoachInputs()/Coach.js never hides the "Add a Coach"
-// button itself — only the not-member form toggles. Leaving it visible lets
-// the user add another coach right after the last one without extra clicks.
-function showNewCoachInputs() {
-  _resetCoachLookup();
-
-  var el = document.querySelector('.club-coach__not-member-container');
-  if (el) { el.style.display = 'block'; el.style.visibility = 'visible'; }
-  _clearNewCoachForm();
-}
-
-function hideCoachLookupInputs() {
-  var el = document.querySelector('.club-coach__not-member-container');
-  if (el) { el.style.display = 'none'; el.style.visibility = 'hidden'; }
-  _clearNewCoachForm();
-}
-
 function showCoachSection() { }
 
 function editCoachList() {
@@ -1323,8 +1262,6 @@ function saveCoachList(e) {
     if (settingsBtn) settingsBtn.style.display = 'none';
     var lookupSection = document.querySelector('.coach-details');
     if (lookupSection) lookupSection.style.display = '';
-    var addNew = document.querySelector('.club-coach__add-new');
-    if (addNew) addNew.style.display = '';
   }
 
   var saveBtn = document.querySelector('#saveCoach');
@@ -2294,17 +2231,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Clicking the Lookup Coach input while Add New form is open closes and
-  // clears the form. mousedown, not focus — see the matching Contact comment
-  // above for why (browser autofill can silently focus this field too).
   var lookupCoachNameEl = document.querySelector('#lookupCoachName');
   if (lookupCoachNameEl) {
-    lookupCoachNameEl.addEventListener('mousedown', function () {
-      var notMember = document.querySelector('.club-coach__not-member-container');
-      if (notMember && notMember.style.display === 'block') {
-        hideCoachLookupInputs();
-      }
-    });
     autocompleteCoachesByName(lookupCoachNameEl);
   }
 
