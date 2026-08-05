@@ -647,7 +647,59 @@ function confirmCurrentContact(e) {
   if (privacy) privacy.style.display = '';
 }
 
-function handleAddContactButton() { }
+// Mirrors handleAddCoachButton()'s mock-level simplicity (validate, build,
+// add card, clear form) plus the section-finalization steps setContactTitle()
+// already does — addContact(), unlike addCoachCard(), doesn't show the list
+// header / hide the type-form itself, so that has to happen here too.
+function handleAddContactButton() {
+  var fields = ['#newContactFirstName', '#newContactLastName', '#newContactEmailPrimary',
+    '#newContactPhonePrimary', '#newContactCity', '#newContactState']
+    .map(function (sel) { return document.querySelector(sel); });
+
+  var firstError = null;
+  fields.forEach(function (field) {
+    if (!field) return;
+    validateField(field);
+    if (!firstError && field.classList.contains('has-error')) firstError = field;
+  });
+  if (firstError) {
+    window.scroll(0, FindPos(firstError));
+    return;
+  }
+
+  var contact = {
+    firstName: document.querySelector('#newContactFirstName').value,
+    lastName: document.querySelector('#newContactLastName').value,
+    email: document.querySelector('#newContactEmailPrimary').value,
+    phone: document.querySelector('#newContactPhonePrimary').value,
+    city: document.querySelector('#newContactCity').value,
+    state: document.querySelector('#newContactState').value,
+    swimmerId: '',
+    isMember: false,
+    validated: false,
+  };
+  addContact(contact);
+
+  var el = document.querySelector('.club-contact__not-member-container');
+  if (el) { el.style.display = 'none'; el.style.visibility = 'hidden'; }
+  _clearNewContactForm();
+
+  var otherContainer = document.querySelector('.club-contact__other-container');
+  if (otherContainer) { otherContainer.style.display = 'none'; otherContainer.style.visibility = 'hidden'; }
+  var addNew = document.querySelector('.club-contact__add-new');
+  if (addNew) addNew.style.display = 'none';
+  var typeForm = document.querySelector('#club-contact .contact-type-form');
+  if (typeForm) typeForm.style.display = 'none';
+  var listHeader = document.querySelector('#club-contact .contact-list__header');
+  if (listHeader) listHeader.classList.add('show');
+  var listSettings = document.querySelector('#listContactSettings');
+  if (listSettings) listSettings.style.display = '';
+  document.querySelectorAll('#club-contact .club-privacy input[type="checkbox"]').forEach(function (cb) { cb.checked = false; });
+  var privacy = document.querySelector('#club-contact .club-privacy');
+  if (privacy) privacy.style.display = '';
+  var saveBtn = document.querySelector('#saveContact');
+  if (saveBtn) saveBtn.disabled = false;
+}
 
 function handleContactConfirmation(el) { }
 
@@ -911,6 +963,11 @@ function cancelContactList() {
     }
     var privacy = document.querySelector('#club-contact .club-privacy');
     if (privacy) privacy.style.display = '';
+
+    if (fadedItems.length > 0) {
+      var listHeader = section.querySelector('.contact-list__header');
+      if (listHeader) listHeader.classList.add('show');
+    }
   }, 250);
 
   list.classList.remove('edit-list');
@@ -992,6 +1049,7 @@ function addCoachCard(coach) {
   if (!row) return;
 
   var isValidated = coach.validated === true || coach.validated === 'true';
+  var isMember = coach.isMember !== false;
 
   var col = document.createElement('div');
   col.className = 'col-xs-12 col-sm-6 col-md-4';
@@ -1005,6 +1063,26 @@ function addCoachCard(coach) {
   removeBtn.textContent = 'Remove';
   item.appendChild(removeBtn);
 
+  // Head Coach radio — shares the literal name "Head Coach" across every
+  // card so only one can be checked at a time, matching production exactly.
+  var headCoachInput = null;
+  var titleEl = null;
+  if (isMember) {
+    var headCoachSelect = document.createElement('div');
+    headCoachSelect.className = 'head-coach__select';
+    var headCoachLabel = document.createElement('label');
+    headCoachLabel.className = 'radio-label--coach-list';
+    headCoachLabel.textContent = 'Head Coach';
+    headCoachInput = document.createElement('input');
+    headCoachInput.type = 'radio';
+    headCoachInput.name = 'Head Coach';
+    headCoachInput.className = 'radio-input--coach-list';
+    headCoachInput.checked = !!coach.headCoach;
+    headCoachLabel.appendChild(headCoachInput);
+    headCoachSelect.appendChild(headCoachLabel);
+    item.appendChild(headCoachSelect);
+  }
+
   if (!isValidated) {
     var pending = document.createElement('div');
     pending.className = 'coach-validated';
@@ -1017,15 +1095,6 @@ function addCoachCard(coach) {
   nameEl.textContent = (coach.firstName || '') + ' ' + (coach.lastName || '');
   item.appendChild(nameEl);
 
-  var isMember = coach.isMember !== false;
-
-  if (isMember && coach.city && coach.state) {
-    var loc = document.createElement('div');
-    loc.className = 'coach-location';
-    loc.textContent = coach.city + ', ' + coach.state;
-    item.appendChild(loc);
-  }
-
   var phoneEl = document.createElement('div');
   phoneEl.className = 'coach-phone';
   phoneEl.textContent = coach.phone || '';
@@ -1036,6 +1105,13 @@ function addCoachCard(coach) {
   emailEl.textContent = coach.email || '';
   item.appendChild(emailEl);
 
+  if (isMember && coach.city && coach.state) {
+    var loc = document.createElement('div');
+    loc.className = 'coach-location';
+    loc.textContent = coach.city + ', ' + coach.state;
+    item.appendChild(loc);
+  }
+
   if (isMember) {
     var idDiv = document.createElement('div');
     idDiv.className = 'coach-id';
@@ -1045,6 +1121,19 @@ function addCoachCard(coach) {
     idVal.textContent = coach.swimmerId || '';
     idDiv.appendChild(idVal);
     item.appendChild(idDiv);
+  }
+
+  // HEAD COACH / COACH badge — always present, mirrors the radio above.
+  titleEl = document.createElement('div');
+  titleEl.className = 'coach-title';
+  titleEl.textContent = coach.headCoach ? 'HEAD COACH' : 'COACH';
+  item.appendChild(titleEl);
+
+  if (headCoachInput) {
+    headCoachInput.addEventListener('change', function (e) {
+      document.querySelectorAll('#coach .list-item .coach-title').forEach(function (t) { t.textContent = 'COACH'; });
+      if (e.target.checked) titleEl.textContent = 'HEAD COACH';
+    });
   }
 
   col.appendChild(item);
@@ -1077,15 +1166,6 @@ function removeCoachCard(e) {
   }, 250);
 }
 
-// Once a coach is confirmed (via Lookup or Add New), the Lookup and "Or Add a New
-// Coach" prompts go away, leaving just the Coaches and Instructors list.
-function _hideCoachPrompts() {
-  var lookupSection = document.querySelector('.coach-details');
-  if (lookupSection) lookupSection.style.display = 'none';
-  var addNew = document.querySelector('.club-coach__add-new');
-  if (addNew) addNew.style.display = 'none';
-}
-
 function _resetCoachLookup() {
   _latestCoach = null;
   var lookupInput = document.querySelector('#lookupCoachName');
@@ -1104,8 +1184,6 @@ function setTitle(e, type) {
 
   addCoachCard(_latestCoach);
   _resetCoachLookup();
-
-  _hideCoachPrompts();
 }
 
 function handleAddCoachButton() {
@@ -1140,8 +1218,6 @@ function handleAddCoachButton() {
   var el = document.querySelector('.club-coach__not-member-container');
   if (el) { el.style.display = 'none'; el.style.visibility = 'hidden'; }
   _clearNewCoachForm();
-
-  _hideCoachPrompts();
 }
 
 function _clearNewCoachForm() {
@@ -1154,25 +1230,22 @@ function _clearNewCoachForm() {
   if (stateEl) stateEl.value = '';
 }
 
+// Unlike Contact (one contact, ever), a club can have multiple coaches, so
+// production's showNewCoachInputs()/Coach.js never hides the "Add a Coach"
+// button itself — only the not-member form toggles. Leaving it visible lets
+// the user add another coach right after the last one without extra clicks.
 function showNewCoachInputs() {
   _resetCoachLookup();
 
   var el = document.querySelector('.club-coach__not-member-container');
   if (el) { el.style.display = 'block'; el.style.visibility = 'visible'; }
   _clearNewCoachForm();
-
-  // Hide only the button, not the "Or Add a New Coach" label (matches Club Contact pattern)
-  var addNewBtn = document.querySelector('.club-coach__add-new-btn');
-  if (addNewBtn) addNewBtn.style.display = 'none';
 }
 
 function hideCoachLookupInputs() {
   var el = document.querySelector('.club-coach__not-member-container');
   if (el) { el.style.display = 'none'; el.style.visibility = 'hidden'; }
   _clearNewCoachForm();
-
-  var addNewBtn = document.querySelector('.club-coach__add-new-btn');
-  if (addNewBtn) addNewBtn.style.display = '';
 }
 
 function showCoachSection() { }
@@ -1205,6 +1278,11 @@ function cancelCoachList() {
     for (var j = 0; j < fadedItems.length; j++) {
       var col = fadedItems[j].parentNode;
       if (col) col.style.display = 'block';
+    }
+
+    if (fadedItems.length > 0) {
+      var listHeader = section.querySelector('.coach-list__header');
+      if (listHeader) listHeader.classList.add('show');
     }
   }, 250);
 
@@ -2178,10 +2256,14 @@ document.addEventListener('DOMContentLoaded', function () {
     setRegionalClubSections(regionalClubEl.checked);
   }
 
-  // Clicking the Search Contact input while Add New form is open closes and clears the form.
+  // Clicking the Search Contact input while Add New form is open closes and
+  // clears the form. Uses mousedown rather than focus — browser autofill can
+  // programmatically focus this field as a side effect of filling out the
+  // Add New form (it shares "name"-like field naming), which was closing the
+  // form out from under the user; a real user click still fires mousedown.
   var lookupContactNameEl = document.querySelector('#lookupContactName');
   if (lookupContactNameEl) {
-    lookupContactNameEl.addEventListener('focus', function () {
+    lookupContactNameEl.addEventListener('mousedown', function () {
       var notMember = document.querySelector('.club-contact__not-member-container');
       if (notMember && notMember.style.display === 'block') {
         handleCancelAddContact();
@@ -2212,10 +2294,12 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Clicking the Lookup Coach input while Add New form is open closes and clears the form.
+  // Clicking the Lookup Coach input while Add New form is open closes and
+  // clears the form. mousedown, not focus — see the matching Contact comment
+  // above for why (browser autofill can silently focus this field too).
   var lookupCoachNameEl = document.querySelector('#lookupCoachName');
   if (lookupCoachNameEl) {
-    lookupCoachNameEl.addEventListener('focus', function () {
+    lookupCoachNameEl.addEventListener('mousedown', function () {
       var notMember = document.querySelector('.club-coach__not-member-container');
       if (notMember && notMember.style.display === 'block') {
         hideCoachLookupInputs();
