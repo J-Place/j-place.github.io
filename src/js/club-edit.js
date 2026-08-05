@@ -2182,7 +2182,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('input[name="membershipRequired"]').forEach(function (r) {
     r.addEventListener('change', handleMembershipRequired);
   });
-  // handleMembershipRequired(); // TODO: re-enable — temporarily disabled while working on Club Bundles UI
+  handleMembershipRequired();
 
   // Regional Club checkbox — disable Location Information section when checked.
   var regionalClubEl = document.querySelector('#regionalClub');
