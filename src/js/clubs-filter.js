@@ -178,7 +178,6 @@ window.initClubMap = function () {};
     if (!checkedValues.length) return true;
     var badgeAlts = (club.badges || []).map(function (b) { return b.alt; });
     return checkedValues.every(function (val) {
-      if (val === 'gc')   return club.isGold === true;
       if (val === 'sslf') return club.sslf === true;
       if (val === 'cc')   return badgeAlts.indexOf('USMS-certified-coach') !== -1;
       if (val === 'alts') return badgeAlts.indexOf('USMS-alts-instructor') !== -1;
@@ -204,11 +203,6 @@ window.initClubMap = function () {};
     if (userLat !== null && userLng !== null) {
       matched.sort(function (a, b) { return nearestDistance(a) - nearestDistance(b); });
     }
-    matched.sort(function (a, b) {
-      if (a.isGold && !b.isGold) return -1;
-      if (!a.isGold && b.isGold) return 1;
-      return 0;
-    });
 
     if (matched.length) {
       clubList.className = 'club-list-new list--nostyle';
