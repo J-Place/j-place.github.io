@@ -9,6 +9,10 @@ npm run dev     # dev server at http://localhost:8080
 npm run build   # build to _site/
 ```
 
+## Browser Verification
+
+Do not install Playwright, Chromium, or any other browser-automation tooling on your own initiative (e.g. `npm install playwright`, `npx playwright install`) to visually verify a change. No such tooling is configured for this project. If visual verification in a real browser is needed and no browser tool is already available in the session, say so and ask the user rather than provisioning one — installing a browser is slow (large download, repeated per session since the scratchpad is ephemeral) and should be an explicit decision, not a fallback.
+
 ## Project Structure
 
 ```
