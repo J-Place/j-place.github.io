@@ -1882,13 +1882,40 @@ function saveGold(e) {
 
 // ── Section — Payment ────────────────────────────────────────────────────────
 
-function _getClubPricingTier(swimmerCount) {
+function _getClubTierIndex(swimmerCount) {
   var n = parseInt(swimmerCount, 10);
   if (isNaN(n) || n < 1) return null;
-  if (n < 5)   return 99;
-  if (n < 25)  return 199;
-  if (n < 100) return 299;
-  return 499;
+  if (n < 5)   return 1;
+  if (n < 25)  return 2;
+  if (n < 100) return 3;
+  return 4;
+}
+
+var CLUB_TIER_PRICES = { 1: 99, 2: 199, 3: 299, 4: 499 };
+var CLUB_TIER_INFO = {
+  1: { label: 'Tier 1', range: '(< 5 swimmers)', price: '$99/yr' },
+  2: { label: 'Tier 2', range: '(5—24 swimmers)', price: '$199/yr' },
+  3: { label: 'Tier 3', range: '(25—99 swimmers)', price: '$299/yr' },
+  4: { label: 'Tier 4', range: '(100+ swimmers)', price: '$499/yr' }
+};
+
+function _renderMarketingBundleTier(tier) {
+  var el = document.querySelector('#marketingBundleTierPrice');
+  if (!el) return;
+  var info = CLUB_TIER_INFO[tier] || CLUB_TIER_INFO[1];
+  el.innerHTML = '';
+  var label = document.createElement('span');
+  label.className = 'bundle-tier-name';
+  label.textContent = info.label;
+  var range = document.createElement('span');
+  range.className = 'bundle-tier-swimmer-count';
+  range.textContent = info.range;
+  var price = document.createElement('span');
+  price.className = 'bundle-tier-price';
+  price.textContent = info.price;
+  el.appendChild(label);
+  el.appendChild(price);
+  el.appendChild(range);
 }
 
 var USMS_CLUB_FEE = 75;
@@ -1901,6 +1928,8 @@ function _bundleRow(bundleKey) {
 function _updateBillingTotal() {
   var billingInput = document.querySelector('input[name="billingAmount"]');
   var totalEl = document.querySelector('.section-payment__total');
+  var clubFeeRow = document.querySelector('.section-payment__club-fee-row');
+  var clubFee = (!clubFeeRow || clubFeeRow.style.display !== 'none') ? USMS_CLUB_FEE : 0;
   var bundleTotal = 0;
   CLUB_BUNDLES.forEach(function (bundleKey) {
     var row = _bundleRow(bundleKey);
@@ -1908,20 +1937,24 @@ function _updateBillingTotal() {
     var costEl = row.querySelector('.section-payment__bundle-cost');
     if (costEl) bundleTotal += parseFloat(costEl.textContent.replace('$', '')) || 0;
   });
-  var total = (USMS_CLUB_FEE + bundleTotal).toFixed(2);
+  var total = (clubFee + bundleTotal).toFixed(2);
   if (billingInput) billingInput.value = total;
   if (totalEl) totalEl.textContent = '$' + total;
 }
 
 function updateClubPricing() {
   var swimmerInput = document.querySelector('#totalSwimmers');
-  var tierPrice = _getClubPricingTier(swimmerInput ? swimmerInput.value : '');
+  var tier = _getClubTierIndex(swimmerInput ? swimmerInput.value : '');
+  var tierPrice = tier ? CLUB_TIER_PRICES[tier] : null;
 
   CLUB_BUNDLES.forEach(function (bundleKey) {
     var row = _bundleRow(bundleKey);
     var costEl = row && row.querySelector('.section-payment__bundle-cost');
     if (costEl) costEl.textContent = tierPrice !== null ? '$' + tierPrice + '.00' : '$0.00';
   });
+
+  _renderMarketingBundleTier(tier || 1);
+
   _updateBillingTotal();
 }
 
@@ -2120,6 +2153,20 @@ document.addEventListener('DOMContentLoaded', function () {
   var clubAbbr = document.querySelector('#clubAbbr');
   if (lmsc && lmsc.value) lmsc.disabled = true;
   if (clubAbbr && clubAbbr.value) clubAbbr.disabled = true;
+
+  // Club Bundles — an existing club that already accepted a bundle can't back
+  // out of it, so lock both radios once "Yes" comes in pre-selected. A bundle
+  // that was previously declined ("No") stays open so the club can still
+  // upgrade into it. New clubs (Create) have neither radio checked, so this
+  // is a no-op for them.
+  CLUB_BUNDLES.forEach(function (bundleKey) {
+    var yesRadio = document.querySelector('#' + bundleKey + 'Yes');
+    var noRadio = document.querySelector('#' + bundleKey + 'No');
+    if (!yesRadio || !noRadio) return;
+    var locked = yesRadio.checked;
+    yesRadio.disabled = locked;
+    noRadio.disabled = locked;
+  });
 
   // Mark sections with pre-populated data
   var clubName = document.querySelector('#clubName');
