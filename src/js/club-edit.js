@@ -2327,11 +2327,31 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   handleMembershipRequired();
 
-  // Regional Club checkbox — disable Location Information section when checked.
+  // Regional Club checkbox — disable Location Information section when checked,
+  // and warn the user with a confirmation modal (mirrors production Details.js
+  // handleRegionalClubChange(), which only shows the modal on check, not uncheck).
   var regionalClubEl = document.querySelector('#regionalClub');
   if (regionalClubEl) {
     regionalClubEl.addEventListener('change', function (e) {
       setRegionalClubSections(e.target.checked);
+      if (e.target.checked) {
+        var modalEl = document.querySelector('#modalClubDetails');
+        if (modalEl) {
+          // Mirrors modal.js's own [data-modal-target] click handler — this
+          // codebase's modal system is self-contained (no BS3/BS5 JS), so
+          // opening it via bootstrap.Modal here left an inline
+          // body.style.overflow that handleCancelModal's class-based
+          // cleanup (matching modal.js's close branch) never clears.
+          var scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+          var backdrop = document.createElement('div');
+          backdrop.className = 'modal-backdrop fade in';
+          document.body.appendChild(backdrop);
+          modalEl.classList.add('in');
+          modalEl.setAttribute('aria-hidden', 'false');
+          document.body.classList.add('modal-open');
+          document.body.style.paddingRight = scrollbarWidth + 'px';
+        }
+      }
     });
     setRegionalClubSections(regionalClubEl.checked);
   }
