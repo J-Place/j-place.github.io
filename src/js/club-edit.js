@@ -232,8 +232,10 @@ function handleCancelModal(el) {
 
 function setInputStatus(input, isValid) {
   input.classList.remove('has-success', 'has-error');
-  var helpBlock = document.querySelector('span.help-block--' + input.name);
   try {
+    // File inputs use the positional lookup below instead — their name
+    // (e.g. "file-1[]") isn't a valid selector fragment.
+    var helpBlock = input.type === 'file' ? null : document.querySelector('span.help-block--' + input.name);
     if (isValid) {
       input.classList.add('has-success');
       if (input.parentNode.classList.contains('form-group')) {
@@ -417,7 +419,16 @@ function saveName(e) {
 
 function editDetails() { }
 
-function removeClubPhoto(type) { }
+// Mirrors production Details.js removeClubPhoto() minus the AJAX call to
+// /apis/v1/imageweb/remove/photo — this mockup has no backend to receive it,
+// so just clear the thumbnail and reset the file input locally.
+function removeClubPhoto(type) {
+  var input = document.querySelector(type === 'logo' ? '#file-1' : '#file-2');
+  if (!input) return;
+  var thumbnail = input.parentNode.parentNode.querySelector('.upload-thumbnail');
+  if (thumbnail) thumbnail.style.backgroundImage = '';
+  input.value = '';
+}
 
 // Mirrors production Details.js setRegionalClubSections() — adds/removes
 // section--disabled on Location, Coach, and Club Bundles when Regional Club is toggled.
