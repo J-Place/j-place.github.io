@@ -3,6 +3,14 @@ var nextSection = null;
 var currentSectionState = null;
 var currentCallback = null;
 
+// Snapshot of whether membershipRequired came in pre-answered on page load
+// (an existing, already-saved club) — set once in the DOMContentLoaded
+// handler below, before the user can touch the radios. A brand-new club
+// answering this question for the first time during Create must NOT lock
+// it, so the lock has to key off this load-time snapshot rather than a live
+// "is it checked right now" check re-run every time the section reopens.
+var membershipRequiredLocked = false;
+
 // ── Utilities ────────────────────────────────────────────────────────────────
 
 function FindPos(obj) {
@@ -27,6 +35,20 @@ function _closeSection(contentEl) {
   if (contentEl.parentElement) contentEl.parentElement.classList.remove('isEdit');
 }
 
+// Membership Requirement — an existing, already-saved club's Member/Affiliate
+// status can't be flipped later via Edit, so lock both radios once the
+// load-time snapshot says it came in pre-answered. A brand-new club
+// answering this for the first time during Create stays editable even after
+// its section is saved and reopened, since membershipRequiredLocked stays
+// false for the whole session in that case.
+function lockMembershipRequiredIfAnswered() {
+  if (membershipRequiredLocked) {
+    document.querySelectorAll('input[name="membershipRequired"]').forEach(function (r) {
+      r.disabled = true;
+    });
+  }
+}
+
 function setSectionInputStatus(section, disabled) {
   if (!section) return;
   // Club Name and Club Bundles manage their own disabled state
@@ -39,6 +61,8 @@ function setSectionInputStatus(section, disabled) {
       el.disabled = disabled;
     }
   });
+  // The blanket enabling above would otherwise clobber the membership-required lock.
+  lockMembershipRequiredIfAnswered();
 }
 
 function saveSectionState(section) {
@@ -1958,6 +1982,26 @@ function updateClubPricing() {
   _updateBillingTotal();
 }
 
+// Marketing Bundle radios/price depend on knowing the club's swimmer count
+// (that's what the tier/price is based on), so keep them disabled/hidden
+// until totalSwimmers has a value. An already-accepted bundle stays locked
+// regardless — see the CLUB_BUNDLES lock in the DOMContentLoaded handler —
+// so this never re-enables a radio that lock intentionally disabled.
+function _syncMarketingBundleAvailability() {
+  var yesRadio = document.querySelector('#marketingBundleYes');
+  var noRadio = document.querySelector('#marketingBundleNo');
+  var priceEl = document.querySelector('#marketingBundleTierPrice');
+  if (!yesRadio || !noRadio) return;
+  var locked = yesRadio.checked;
+  var swimmerInput = document.querySelector('#totalSwimmers');
+  var hasSwimmerCount = !!(swimmerInput && swimmerInput.value);
+  if (!locked) {
+    yesRadio.disabled = !hasSwimmerCount;
+    noRadio.disabled = !hasSwimmerCount;
+  }
+  if (priceEl) priceEl.style.display = hasSwimmerCount ? '' : 'none';
+}
+
 function updateBundlePricing(bundleKey) {
   var yesRadio = document.querySelector('#' + bundleKey + 'Yes');
   var row = _bundleRow(bundleKey);
@@ -2197,6 +2241,9 @@ document.addEventListener('DOMContentLoaded', function () {
     noRadio.disabled = locked;
   });
 
+  membershipRequiredLocked = !!document.querySelector('input[name="membershipRequired"]:checked');
+  lockMembershipRequiredIfAnswered();
+
   // Mark sections with pre-populated data
   var clubName = document.querySelector('#clubName');
   if (lmsc && lmsc.value && clubName && clubName.value && clubAbbr && clubAbbr.value) {
@@ -2240,7 +2287,9 @@ document.addEventListener('DOMContentLoaded', function () {
   var totalSwimmersEl = document.querySelector('#totalSwimmers');
   if (totalSwimmersEl) {
     totalSwimmersEl.addEventListener('blur', updateClubPricing);
+    totalSwimmersEl.addEventListener('input', _syncMarketingBundleAvailability);
   }
+  _syncMarketingBundleAvailability();
 
   CLUB_BUNDLES.forEach(function (bundleKey) {
     document.querySelectorAll('input[name="' + bundleKey + '"]').forEach(function (r) {
@@ -2253,7 +2302,25 @@ document.addEventListener('DOMContentLoaded', function () {
     var noRadio = document.querySelector('#membershipRequiredAnsweredNo');
     var clubBundles = document.querySelector('#club-bundles');
     if (!clubBundles) return;
-    clubBundles.style.display = (noRadio && noRadio.checked) ? '' : 'none';
+    var requiresBundle = !!(noRadio && noRadio.checked);
+    clubBundles.style.display = requiresBundle ? '' : 'none';
+
+    if (requiresBundle) {
+      _syncMarketingBundleAvailability();
+    } else {
+      // Membership is required again, so no bundle applies — clear any answer
+      // (unless it's a locked, already-accepted bundle) and drop its line
+      // item from the payment total.
+      CLUB_BUNDLES.forEach(function (bundleKey) {
+        var yesRadio = document.querySelector('#' + bundleKey + 'Yes');
+        var noBundleRadio = document.querySelector('#' + bundleKey + 'No');
+        if (yesRadio && yesRadio.disabled) return;
+        if (yesRadio) yesRadio.checked = false;
+        if (noBundleRadio) noBundleRadio.checked = false;
+        updateBundlePricing(bundleKey);
+      });
+      clubBundles.classList.remove('hasData');
+    }
   }
   document.querySelectorAll('input[name="membershipRequired"]').forEach(function (r) {
     r.addEventListener('change', handleMembershipRequired);
