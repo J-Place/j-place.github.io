@@ -31,8 +31,30 @@ function _closeSection(contentEl) {
   if (!contentEl) return;
   contentEl.classList.remove('in', 'show', 'collapsing');
   contentEl.style.height = '';
+  contentEl.setAttribute('aria-expanded', 'false');
+  var header = document.querySelector('[data-target="#' + contentEl.id + '"]');
+  if (header) header.setAttribute('aria-expanded', 'false');
   setSectionInputStatus(contentEl, true);
   if (contentEl.parentElement) contentEl.parentElement.classList.remove('isEdit');
+}
+
+// Opens a section directly via classList rather than jQuery's $.collapse('show'),
+// for the same BS3/BS5 coexistence reason _closeSection exists. jQuery's
+// animated .collapse('show') leaves the section in a mid-transition
+// '.collapsing' state for ~350ms, during which BS3's internal "transitioning"
+// guard silently ignores any .collapse('hide')/toggle call — so a header
+// click to close the section lands and does nothing if it arrives before
+// the open animation finishes, leaving the content rendered and overlapping
+// the sections below it.
+function _openSection(contentEl) {
+  if (!contentEl) return;
+  contentEl.classList.add('in', 'show');
+  contentEl.style.height = '';
+  contentEl.setAttribute('aria-expanded', 'true');
+  var header = document.querySelector('[data-target="#' + contentEl.id + '"]');
+  if (header) header.setAttribute('aria-expanded', 'true');
+  setSectionInputStatus(contentEl, false);
+  if (contentEl.parentElement) contentEl.parentElement.classList.add('isEdit');
 }
 
 // Membership Requirement — an existing, already-saved club's Member/Affiliate
@@ -2169,18 +2191,58 @@ function showValidation(e) {
 // ── Tooltips ─────────────────────────────────────────────────────────────────
 
 function initAccordion() {
-  // Belt-and-suspenders: click listener on section headers closes all other
-  // open sections before BS3/BS5 processes the toggle. Covers the case where
-  // show.bs.collapse doesn't fire reliably due to BS3/BS5 coexistence.
+  // Fully owns open/close instead of leaning on Bootstrap 3's data-api
+  // handler. BS3's collapse Plugin() takes a different code path the first
+  // time it processes a section (constructing a Collapse instance, whose
+  // constructor auto-toggles based on the current 'in' class) than on every
+  // click after that (a plain instance.toggle() call) — for a section
+  // opened by our own _openSection() rather than jQuery's $.collapse('show'),
+  // no instance exists yet, so the first click's construct-and-toggle and
+  // the second click's plain toggle disagreed with each other, leaving the
+  // section stuck mid-collapse and overlapping the sections below it.
+  // stopPropagation keeps BS3's document-level data-api listener (bound in
+  // site-wide bootstrap.min.js) from ever seeing the click, so this is the
+  // only code path handling these headers.
   document.querySelectorAll('#accordion .section__header[data-toggle="collapse"]').forEach(function (header) {
-    header.addEventListener('click', function () {
+    header.addEventListener('click', function (e) {
+      e.stopPropagation();
+
       var targetSelector = this.getAttribute('data-target');
-      var opening = targetSelector ? document.querySelector(targetSelector) : null;
+      var target = targetSelector ? document.querySelector(targetSelector) : null;
+      if (!target) return;
+
+      var wasOpen = target.classList.contains('in') || target.classList.contains('show') || target.classList.contains('collapsing');
+
       document.querySelectorAll('#accordion .section__content').forEach(function (content) {
-        if (content !== opening && (content.classList.contains('in') || content.classList.contains('show') || content.classList.contains('collapsing'))) {
+        if (content !== target && (content.classList.contains('in') || content.classList.contains('show') || content.classList.contains('collapsing'))) {
           _closeSection(content);
         }
       });
+
+      if (wasOpen) {
+        _closeSection(target);
+        return;
+      }
+
+      _openSection(target);
+
+      setTimeout(function () {
+        window.scroll(0, FindPos(target.parentNode));
+      }, 450);
+
+      switch (target.id) {
+        case 'club-bundles__content':
+          setGoldClubFlag();
+          break;
+        case 'club-name__content':
+        case 'club-details__content':
+        case 'club-contact__content':
+        case 'location-information__content':
+          currentSectionState = saveSectionState(target);
+          break;
+        default:
+          break;
+      }
     });
   });
 }
@@ -2491,11 +2553,16 @@ document.addEventListener('DOMContentLoaded', function () {
   var saveLocationBtn = document.querySelector('#saveLocation');
   if (saveLocationBtn) saveLocationBtn.addEventListener('click', saveLocation);
 
-  // Open Club Name section on load via Bootstrap 3 jQuery API so that the
-  // show.bs.collapse listener fires and enables inputs / marks isEdit.
+  // Open Club Name section on load directly via _openSection rather than
+  // jQuery's $.collapse('show') — see _openSection for why: an early click
+  // to close it during the animated open transition was being silently
+  // swallowed by BS3's "already transitioning" guard.
   setTimeout(function () {
     var clubNameContent = document.querySelector('#club-name__content');
-    if (clubNameContent) $(clubNameContent).collapse('show');
+    if (clubNameContent) {
+      _openSection(clubNameContent);
+      currentSectionState = saveSectionState(clubNameContent);
+    }
   }, 150);
 
   initTooltips();
