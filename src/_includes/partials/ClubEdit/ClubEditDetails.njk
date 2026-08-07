@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-5">
+                <div class="col-xs-12 col-sm-6">
                     <div class="input-group new-member-notification">
                         <label for="newMemberNotification" class="label-large">
                             Email address to receive new member notifications
@@ -281,22 +281,16 @@
             <div class="row">
                 <div class="form-group-header">Customize Your Club Listing</div>
                 <div class="input-group club-branding">
-                    <div class="col-sm-6">
+                    <div class="col-lg-6">
                         <label for="clubWebsite">Enter the URL for your club website. Copy and paste the full URL (including http:// or https:// from a browser). Once input, click the search button and it will indicate whether the site is valid (green check) or not valid (red x).</label>
                         <div class="input-group club-website">
-                            <div class="row">
-                                <div class="col-xs-10">
-                                    <input type="url" class="form-control" onblur="validateWebsiteUrl()" name="clubWebsite" id="clubWebsite" placeholder="https://www.yourclub.com" value="" maxlength="255">
-                                </div>
-                                <div class="col-xs-2">
-                                    <span class="club-website__check">
-                                        <i class="fa-solid fa-search btn" onclick="validateWebsiteUrl()"></i>
-                                    </span>
-                                    <span class="clubWebsite-icon">
-                                        <i class="fa"></i>
-                                    </span>
-                                </div>
-                            </div>
+                            <input type="url" class="form-control" onblur="validateWebsiteUrl()" name="clubWebsite" id="clubWebsite" placeholder="https://www.yourclub.com" value="" maxlength="255">
+                            <span class="club-website__check">
+                                <i class="fa-solid fa-search btn" onclick="mockWebsiteCheckCycle()"></i>
+                            </span>
+                            <span class="clubWebsite-icon">
+                                <i class="fa"></i>
+                            </span>
                         </div>
                         <span class="help-block help-block--clubWebsite">Please enter a valid website address.</span>
                         <div class="social-links">
@@ -318,7 +312,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-5 offset-sm-1">
+                    <div class="col-lg-5 offset-lg-1">
                         <div class="input-group club-logo">
                             <label for="file-1">Upload Your Club Logo</label>
                             <span class="help-block">Invalid image type</span>
