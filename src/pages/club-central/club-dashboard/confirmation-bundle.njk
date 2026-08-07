@@ -1,0 +1,15 @@
+---
+permalink: /club-central/club-dashboard/confirmation-bundle.html
+title: Purchase Confirmation | U.S. Masters Swimming
+showBenefits: false
+---
+{% extends "layouts/confirmation.njk" %}
+
+{% block confirmationH1 %}Purchase Confirmation{% endblock %}
+
+{% block confirmationColumns %}
+{% set paymentDate = "07/01/2026" %}
+{% set showClubFee = false %}
+{% set totalAmount = "$199.00" %}
+{% include "partials/ClubEdit/ClubEditReceiptV2.njk" %}
+{% endblock %}

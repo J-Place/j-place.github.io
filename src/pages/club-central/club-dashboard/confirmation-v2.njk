@@ -10,25 +10,14 @@ showBenefits: false
 {% block confirmationHeader %}
 <div class="row">
   <div class="col-xs-12">
-    <p class="text-center">Your Club has been successfully registered for USMS for 2026. We recommend printing this page for your records.</p>
+    <p class="text-center">Your Club has been successfully registered for USMS for 2026. Your club should appear in Club Finder within three business days.</p>
   </div>
 </div>
 {% endblock %}
 
 {% block confirmationColumns %}
+{% set paymentDate = "04/03/2026" %}
+{% set showClubFee = true %}
+{% set totalAmount = "$274.00" %}
 {% include "partials/ClubEdit/ClubEditReceiptV2.njk" %}
-{% endblock %}
-
-{% block confirmationFooter %}
-<div class="row">
-  <div class="col-xs-12">
-    <h3 class="text-primary">Important Information</h3>
-    <ul>
-      <li>All club registrations expire on December 31, 2026</li>
-      <li>All sales are final</li>
-      <li>Credit card charge will read "U.S. Masters Swimming"</li>
-      <li>Your club should appear in Club Finder within three business days</li>
-    </ul>
-  </div>
-</div>
 {% endblock %}

@@ -13,20 +13,22 @@
     <p>kevin.brown@example.com</p>
     <p class="confirmation-membership-label">Phone:</p>
     <p>(555) 123-4567</p>
-    <p class="confirmation-membership-label">Registration Year:</p>
-    <p>2026</p>
-    <p class="confirmation-membership-label">Date of Payment:</p>
-    <p>07/11/2026</p>
   </div>
 </div>
 <div class="col-xs-12 col-sm-6">
   <div class="confirmation-charges">
     <h3>Payment Summary</h3>
+    <p class="confirmation-membership-label">Registration Year:</p>
+    <p>2026</p>
+    <p class="confirmation-membership-label">Date of Payment:</p>
+    <p>{{ paymentDate }}</p>
+    {% if showClubFee %}
     <p class="confirmation-membership-label">2026 USMS Club Fee:</p>
     <p>$75.00</p>
+    {% endif %}
     <p class="confirmation-membership-label">Marketing Bundle:</p>
     <p>$199.00</p>
     <p class="confirmation-membership-label">Total:</p>
-    <p>$274.00</p>
+    <p>{{ totalAmount }}</p>
   </div>
 </div>
