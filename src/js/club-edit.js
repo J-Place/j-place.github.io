@@ -2116,6 +2116,8 @@ function showValidation(e) {
     if (!_validateRequiredField(sel)) allValid = false;
   });
   if (!_validateRequiredRadioGroup('usmsLiabilityInsurance')) allValid = false;
+  if (!_validateRequiredRadioGroup('usaSwimmingAffiliation')) allValid = false;
+  if (!_validateRequiredRadioGroup('clubTrialMembership')) allValid = false;
   if (!_validateRequiredRadioGroup('membershipRequired')) allValid = false;
 
   // Club Contact — requires at least one saved contact
