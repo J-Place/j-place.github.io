@@ -2134,6 +2134,35 @@ function initTooltips() {
       new window.bootstrap.Tooltip(el, { strategy: 'fixed' });
     });
   }
+  // Tooltip icons sit inside a <label> next to their field (or, for checkboxes,
+  // inside the same label as the checkbox itself). Clicking them would otherwise
+  // trigger the label's native click-forwarding to that field/checkbox, which either
+  // steals focus and closes the tooltip immediately, or toggles a checkbox the user
+  // never meant to touch. stopPropagation keeps the click from ever reaching the
+  // label's own click handling, so neither happens.
+  document.querySelectorAll('.icon-help[data-bs-toggle="tooltip"]').forEach(function (el) {
+    // Track shown/hidden state so a click can tell "just opened via this
+    // click's own focus" (case A) apart from "was already open" (case B).
+    el.addEventListener('shown.bs.tooltip', function () { el.dataset.tooltipOpen = 'true'; });
+    el.addEventListener('hidden.bs.tooltip', function () { el.dataset.tooltipOpen = 'false'; });
+
+    var wasOpenBeforeThisClick = false;
+    el.addEventListener('mousedown', function () {
+      // Runs before the browser shifts focus, so this still reflects the
+      // pre-click state.
+      wasOpenBeforeThisClick = el.dataset.tooltipOpen === 'true';
+    });
+
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (wasOpenBeforeThisClick) {
+        // Icon was already focused/open — this click means "close it."
+        // Blurring lets the existing focus-trigger handle the hide.
+        el.blur();
+      }
+    });
+  });
 }
 
 // ── DOMContentLoaded init ────────────────────────────────────────────────────
