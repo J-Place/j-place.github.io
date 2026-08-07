@@ -2117,10 +2117,13 @@ function showValidation(e) {
   // already carries the 'in'/'show' classes expandAllSections() stamped on
   // it, so Bootstrap treats it as already shown and never fires
   // show.bs.collapse (the event the "close siblings" logic depends on).
+  // Payment isn't a collapsible accordion section — it has no header toggle
+  // and is always visible — so _closeSection would disable its inputs with
+  // no way to re-enable them; skip it along with Club Name.
   if (_validationDisplayed) {
     _clearAllValidation();
     document.querySelectorAll('#accordion .section__content').forEach(function (content) {
-      if (content.id !== 'club-name__content') _closeSection(content);
+      if (content.id !== 'club-name__content' && content.id !== 'club-payment__content') _closeSection(content);
     });
     var clubNameContent = document.querySelector('#club-name__content');
     if (clubNameContent) {
