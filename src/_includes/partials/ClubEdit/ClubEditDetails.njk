@@ -60,7 +60,7 @@
             <div class="row">
                 <div class="col-sm-9">
                     <div class="input-group club-insurance">
-                        <div class="input-group-header radio-group-header required">Do you currently use or plan on using USMS&#39; liability insurance?</div>
+                        <div class="input-group-header radio-group-header required">Does your club currently use or plan on using USMS&#39; liability insurance?</div>
                         <span class="help-block help-block--usmsLiabilityInsurance">Please make a selection</span>
                         <label class="radio-label radio-label--inline" for="usmsLiabilityInsuranceAnsweredYes">
                             <span class="radio-container">
@@ -83,7 +83,7 @@
                 <div class="col-sm-9">
                     <div class="input-group membership-required">
                         <div class="input-group-header radio-group-header required">
-                            Do you require USMS membership?
+                            Does your club require USMS membership?
                             <label style="display:contents"><a tabindex="0" role="button" class="icon-help" data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-placement="top" data-bs-container="body" title="Requiring USMS membership gives you free benefits as a Member Club. Not requiring USMS membership makes you an Affiliate Club."></a></label>
                         </div>
                         <span class="help-block help-block--membershipRequired">Please make a selection</span>
@@ -108,7 +108,8 @@
                 <div class="col-sm-9">
                     <div class="input-group usa-swimming-affiliation">
                         <div class="input-group-header radio-group-header required">
-                            Are you affiliated with a USA Swimming club?
+                            Is your club affiliated with a USA Swimming club?
+                            <label style="display:contents"><a tabindex="0" role="button" class="icon-help" data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-placement="top" data-bs-container="body" title="Select this if your club is officially affiliated with a USA Swimming club."></a></label>
                         </div>
                         <span class="help-block help-block--usaSwimmingAffiliation">Please make a selection</span>
                         <label class="radio-label radio-label--inline" for="usaSwimmingAffiliationYes">
@@ -128,14 +129,43 @@
                     </div>
                 </div>
             </div>
-
+            <div class="row">
+                <div class="col-sm-9">
+                    <div class="input-group club-trial-membership">
+                        <div class="input-group-header radio-group-header required">
+                            Does your club offer a free trial membership to new members?
+                        </div>
+                        <span class="help-block help-block--clubTrialMembership">Please make a selection</span>
+                        <label class="radio-label radio-label--inline" for="clubTrialMembershipYes">
+                            <span class="radio-container">
+                                <input type="radio" name="membershipRequired" id="clubTrialMembershipYes" value="true" />
+                                <span class="radio__placeholder"></span>
+                            </span>
+                            Yes
+                        </label>
+                        <label class="radio-label radio-label--inline" for="clubTrialMembershipNo">
+                            <span class="radio-container">
+                                <input type="radio" name="membershipRequired" id="clubTrialMembershipNo" value="false" />
+                                <span class="radio__placeholder"></span>
+                            </span>
+                            No
+                        </label>
+                    </div>
+                </div>
+            </div>
         </div>
-
         <div class="form-group">
             <div class="row">
                 <div class="col-xs-12 col-sm-8">
                     <div class="input-group checkbox-group club-more-info">
                         <div class="input-group-header">Tell us more about your club</div>
+                        <label class="checkbox-label" for="bulkRegistration">
+                            <div class="checkbox-container">
+                                <input type="checkbox" name="bulkRegistration" id="bulkRegistration" value="true" disabled><span class="checkbox__placeholder"></span>
+                            </div>
+                            We are interested in bulk registering our members in November and December each year
+                            <a tabindex="0" role="button" class="icon-help" data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-placement="top" data-bs-container="body" title="Bulk registration would be done by the club contact in the club dashboard and give them the ability to select any active member and pay for their next year's registration all at once."></a>
+                        </label>
                         <label class="checkbox-label" for="requireUsmsOnWebsite">
                             <div class="checkbox-container">
                                 <input type="checkbox" name="requireUsmsOnWebsite" id="requireUsmsOnWebsite" value="true" disabled><span class="checkbox__placeholder"></span>
@@ -147,19 +177,6 @@
                                 <input type="checkbox" name="usmsRegistrationLink" id="usmsRegistrationLink" value="true" disabled><span class="checkbox__placeholder"></span>
                             </div>
                             Join USMS link is clearly displayed on our website or web presence
-                        </label>
-                        <label class="checkbox-label" for="usaSwimmingAffiliated">
-                            <div class="checkbox-container">
-                                <input type="checkbox" name="usaSwimmingAffiliated" id="usaSwimmingAffiliated" value="true" disabled><span class="checkbox__placeholder"></span>
-                            </div>
-                            We are affiliated with a USA Swimming club
-                            <a tabindex="0" role="button" class="icon-help" data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-placement="top" data-bs-container="body" title="Select this if your club is officially affiliated with a USA Swimming club."></a>
-                        </label>
-                        <label class="checkbox-label" for="freeTrialMembership">
-                            <div class="checkbox-container">
-                                <input type="checkbox" name="freeTrialMembership" id="freeTrialMembership" value="true" disabled><span class="checkbox__placeholder"></span>
-                            </div>
-                            We offer a free trial membership to new members
                         </label>
                         <label class="checkbox-label" for="moreSwimmerCapacity">
                             <div class="checkbox-container">
