@@ -2083,42 +2083,15 @@ function _validateRequiredRadioGroup(name, force) {
   return answered;
 }
 
-function _validateRequiredCheckbox(el, helpBlockSelector, force) {
-  var helpBlock = document.querySelector(helpBlockSelector);
-  var checked = force ? false : !!(el && el.checked);
-  if (helpBlock) helpBlock.classList.toggle('has-error', !checked);
-  return checked;
-}
-
-function _validateRequiredField(selector, force) {
-  var el = document.querySelector(selector);
-  if (!el) return true;
-  if (force) {
-    setInputStatus(el, false);
-    return false;
-  }
-  validateField(el);
-  return !el.classList.contains('has-error');
-}
-
-function _validateAtLeastOneItem(containerSelector, helpBlockSelector, force) {
-  var hasItem = force ? false : document.querySelector(containerSelector + ' .list-item') !== null;
-  var helpBlock = document.querySelector(helpBlockSelector);
-  if (helpBlock) helpBlock.classList.toggle('has-error', !hasItem);
-  return hasItem;
-}
-
-// Wipes every has-error/has-success flag showValidation may have set, anywhere
-// in the form, so a second click can start clean rather than leaving stale
-// error states on sections that get collapsed back down.
-function _clearAllValidation() {
-  document.querySelectorAll('#accordion .has-error, #accordion .has-success, .payment-info .has-error, .payment-info .has-success').forEach(function (el) {
-    el.classList.remove('has-error', 'has-success');
-  });
-}
-
 var _validationDisplayed = false;
 
+// Dev-only: unconditionally render has-error on every required field so
+// label positioning/content can be reviewed — this does not check whether
+// fields are actually filled in correctly. Click Submit Payment again to
+// clear. The actual scan lives in validation-preview.js, shared with Event
+// Edit's equivalent trigger — this function only owns Club Edit's specific
+// accordion open/close mechanics and the two "at least one item" sections
+// that can't be discovered from markup.
 function showValidation(e) {
   if (e) e.preventDefault();
 
@@ -2132,7 +2105,7 @@ function showValidation(e) {
   // and is always visible — so _closeSection would disable its inputs with
   // no way to re-enable them; skip it along with Club Name.
   if (_validationDisplayed) {
-    _clearAllValidation();
+    window.clearValidationPreview({ root: '#accordion' });
     document.querySelectorAll('#accordion .section__content').forEach(function (content) {
       if (content.id !== 'club-name__content' && content.id !== 'club-payment__content') _closeSection(content);
     });
@@ -2151,50 +2124,13 @@ function showValidation(e) {
 
   expandAllSections();
 
-  // Dev-only: unconditionally render has-error on every required field so
-  // label positioning/content can be reviewed — this does not check whether
-  // fields are actually filled in correctly. Click Submit Payment again to
-  // clear (see the _validationDisplayed branch above).
-
-  // Club Name
-  ['#selectLmsc', '#clubName', '#clubAbbr'].forEach(function (sel) {
-    _validateRequiredField(sel, true);
+  window.runValidationPreview({
+    root: '#accordion',
+    atLeastOne: [
+      { container: '#club-contact .list__container', helpBlock: '.help-block--ContactType' },
+      { container: '#locationListContainer', helpBlock: '.help-block--selectLocation' }
+    ]
   });
-
-  // Club Details
-  ['#clubDescription', '#practiceDetails', '#totalSwimmers'].forEach(function (sel) {
-    _validateRequiredField(sel, true);
-  });
-  _validateRequiredRadioGroup('usmsLiabilityInsurance', true);
-  _validateRequiredRadioGroup('usaSwimmingAffiliation', true);
-  _validateRequiredRadioGroup('clubTrialMembership', true);
-  _validateRequiredRadioGroup('membershipRequired', true);
-
-  // Club Contact
-  var contactSection = document.querySelector('#club-contact');
-  if (contactSection && !contactSection.classList.contains('section--disabled')) {
-    _validateAtLeastOneItem('#club-contact .list__container', '.help-block--ContactType', true);
-  }
-
-  // Location — skipped when Regional Club disables the section
-  var locationSection = document.querySelector('#section-location-information');
-  if (locationSection && !locationSection.classList.contains('section--disabled')) {
-    _validateAtLeastOneItem('#locationListContainer', '.section-location-information .help-block--selectLocation', true);
-  }
-
-  // Club Bundles — only if the section is visible and not disabled by Regional Club
-  var clubBundles = document.querySelector('#club-bundles');
-  if (clubBundles && clubBundles.style.display !== 'none' && !clubBundles.classList.contains('section--disabled')) {
-    CLUB_BUNDLES.forEach(function (bundleKey) {
-      _validateRequiredRadioGroup(bundleKey, true);
-    });
-  }
-
-  // Payment
-  ['#cardName', '#cardNumber', '#cardCode', '#expiration', '#cardZip'].forEach(function (sel) {
-    _validateRequiredField(sel, true);
-  });
-  _validateRequiredCheckbox(document.querySelector('#agreeTerms'), '.help-block--agreeTerms', true);
 }
 
 // ── Tooltips ─────────────────────────────────────────────────────────────────
