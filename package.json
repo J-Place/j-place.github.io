@@ -10,7 +10,10 @@
     "build:snapshot": "node scripts/snapshot.js",
     "deploy:snapshot": "node scripts/snapshot.js --deploy",
     "deploy:prototype": "npm run build && netlify deploy --dir=_site --prod",
-    "lint": "eslint src/js/"
+    "lint": "eslint src/js/",
+    "test:visual": "playwright test",
+    "test:visual:update": "playwright test --update-snapshots",
+    "test:visual:report": "playwright show-report"
   },
   "keywords": [],
   "author": "",
@@ -18,7 +21,9 @@
   "description": "",
   "devDependencies": {
     "@11ty/eleventy": "^3.1.5",
+    "@axe-core/playwright": "^4.13.0",
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.62.1",
     "autoprefixer": "^10.5.0",
     "eslint": "^10.6.0",
     "globals": "^17.7.0",

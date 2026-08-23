@@ -5,13 +5,20 @@ Static prototype site for U.S. Masters Swimming, built with Eleventy (Nunjucks t
 ## Commands
 
 ```bash
-npm run dev     # dev server at http://localhost:8080
-npm run build   # build to _site/
+npm run dev              # dev server at http://localhost:8080
+npm run build            # build to _site/
+npm run test:visual      # Playwright visual regression — manual only, see below
+npm run test:visual:update  # accept new baselines
+npm run test:visual:report  # open the HTML diff viewer for the last run
 ```
 
 ## Browser Verification
 
-Do not install Playwright, Chromium, or any other browser-automation tooling on your own initiative (e.g. `npm install playwright`, `npx playwright install`) to visually verify a change. No such tooling is configured for this project. If visual verification in a real browser is needed and no browser tool is already available in the session, say so and ask the user rather than provisioning one — installing a browser is slow (large download, repeated per session since the scratchpad is ephemeral) and should be an explicit decision, not a fallback.
+Playwright is configured for visual regression testing (`playwright.config.js`, `tests/visual/`) — see `tests/visual/screenshots.spec.js` for how pages are captured (clock frozen, images awaited, Google Maps embeds masked) and `tests/visual/pages.js` for the page list.
+
+**This is a manual-only process.** It does not run on `npm run build`, in the GitHub Actions deploy workflow, or anywhere else automatically — it only runs when someone explicitly invokes `npm run test:visual` (or `npx playwright test`). If that ever changes (e.g. wired into CI), update this note.
+
+Do not install Playwright, Chromium, or any other browser-automation tooling beyond what's already configured here on your own initiative (e.g. `npm install playwright`, `npx playwright install`) just to visually verify a change. If visual verification in a real browser is needed for something the existing Playwright setup doesn't cover, and no browser tool is already available in the session, say so and ask the user rather than provisioning one — installing a browser is slow (large download, repeated per session since the scratchpad is ephemeral) and should be an explicit decision, not a fallback.
 
 ## Project Structure
 
