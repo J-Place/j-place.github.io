@@ -114,6 +114,14 @@ For each rule, assess:
 - **Suspect** — overrides something production CSS likely already handles; may be masking a structural error rather than filling a real gap
 - **`!important`** — flag every use; note whether it is fighting a specificity battle that a structural fix would resolve
 
+### 4a — Trace each override to its production source file
+
+Compiled bundles (`club2.min.css`, `sanctions.min.css`, etc.) merge many per-component production source files, and the same component file can feed more than one bundle. For every "justified" rule that overrides or restates something production also defines, `grep` the selector across `production/` (e.g. `grep -rn "<selector>" production/src`) to find the exact source file + line, and check:
+
+- **Traceable** — the local file's path/name mirrors the production source file it overrides (per CLAUDE.md rule 5 under "Building Production Page Mockups"). Note the production file + line either way.
+- **Mislabeled** — the override lives in a local file named after our page or an unrelated component (a grab-bag file like `location-list-results.css` holding rules from multiple, unrelated production sources) rather than the production file it actually traces to. Flag this as a finding and suggest the correctly-named/located file.
+- **Shared-file risk** — if the local file is loaded on more than one of our pages, confirm the selector doesn't also match markup on the other page(s) in an unintended way — this is exactly how a spillover bug hides.
+
 ---
 
 ## Step 5 — JS selector audit
@@ -144,6 +152,7 @@ We have → production doesn't. For each:
 For each local rule:
 - Selector + property
 - Assessment: **justified** | **suspect** | **uses !important (note why)**
+- Production source: file + line (if traced), and **traceable** | **mislabeled** | **shared-file risk**
 
 ### JS selector drift
 For each mismatched selector:
