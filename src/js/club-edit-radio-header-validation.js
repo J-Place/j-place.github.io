@@ -21,9 +21,9 @@
 
   var defaultValidateRequiredRadioGroup = window._validateRequiredRadioGroup;
 
-  window._validateRequiredRadioGroup = function (name) {
+  window._validateRequiredRadioGroup = function (name, force) {
     if (HEADER_ERROR_GROUPS.indexOf(name) === -1) {
-      return defaultValidateRequiredRadioGroup(name);
+      return defaultValidateRequiredRadioGroup(name, force);
     }
 
     var radio = document.querySelector('input[name="' + name + '"]');
@@ -31,7 +31,7 @@
     var header = inputGroup
       ? inputGroup.querySelector('.input-group-header.radio-group-header.required')
       : null;
-    var answered = !!document.querySelector('input[name="' + name + '"]:checked');
+    var answered = force ? false : !!document.querySelector('input[name="' + name + '"]:checked');
 
     if (header) header.classList.toggle('has-error', !answered);
 

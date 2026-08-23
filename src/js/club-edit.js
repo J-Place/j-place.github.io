@@ -491,8 +491,11 @@ function saveDetails(e) {
   var practice = section.querySelector('#practiceDetails');
   if (desc) validateField(desc);
   if (practice) validateField(practice);
-  if (section.querySelector('span.has-error')) {
-    window.scroll(0, FindPos(section.querySelector('span.help-block.has-error')));
+  _validateRequiredRadioGroup('usmsLiabilityInsurance');
+  _validateRequiredRadioGroup('membershipRequired');
+  var firstError = section.querySelector('span.has-error, .input-group-header.has-error');
+  if (firstError) {
+    window.scroll(0, FindPos(firstError));
     return;
   }
   section.classList.add('hasData');
@@ -2069,29 +2072,37 @@ function expandAllSections() {
   });
 }
 
-function _validateRequiredRadioGroup(name) {
+// force=true skips the actual check and unconditionally marks the field as
+// errored — used by showValidation()'s Submit Payment button, which only
+// needs to render the has-error state for reviewing label positioning/
+// content, not determine whether fields are actually filled in correctly.
+function _validateRequiredRadioGroup(name, force) {
   var helpBlock = document.querySelector('.help-block--' + name);
-  var answered = !!document.querySelector('input[name="' + name + '"]:checked');
+  var answered = force ? false : !!document.querySelector('input[name="' + name + '"]:checked');
   if (helpBlock) helpBlock.classList.toggle('has-error', !answered);
   return answered;
 }
 
-function _validateRequiredCheckbox(el, helpBlockSelector) {
+function _validateRequiredCheckbox(el, helpBlockSelector, force) {
   var helpBlock = document.querySelector(helpBlockSelector);
-  var checked = !!(el && el.checked);
+  var checked = force ? false : !!(el && el.checked);
   if (helpBlock) helpBlock.classList.toggle('has-error', !checked);
   return checked;
 }
 
-function _validateRequiredField(selector) {
+function _validateRequiredField(selector, force) {
   var el = document.querySelector(selector);
   if (!el) return true;
+  if (force) {
+    setInputStatus(el, false);
+    return false;
+  }
   validateField(el);
   return !el.classList.contains('has-error');
 }
 
-function _validateAtLeastOneItem(containerSelector, helpBlockSelector) {
-  var hasItem = document.querySelector(containerSelector + ' .list-item') !== null;
+function _validateAtLeastOneItem(containerSelector, helpBlockSelector, force) {
+  var hasItem = force ? false : document.querySelector(containerSelector + ' .list-item') !== null;
   var helpBlock = document.querySelector(helpBlockSelector);
   if (helpBlock) helpBlock.classList.toggle('has-error', !hasItem);
   return hasItem;
@@ -2140,55 +2151,50 @@ function showValidation(e) {
 
   expandAllSections();
 
-  var allValid = true;
+  // Dev-only: unconditionally render has-error on every required field so
+  // label positioning/content can be reviewed — this does not check whether
+  // fields are actually filled in correctly. Click Submit Payment again to
+  // clear (see the _validationDisplayed branch above).
 
   // Club Name
   ['#selectLmsc', '#clubName', '#clubAbbr'].forEach(function (sel) {
-    if (!_validateRequiredField(sel)) allValid = false;
+    _validateRequiredField(sel, true);
   });
 
   // Club Details
   ['#clubDescription', '#practiceDetails', '#totalSwimmers'].forEach(function (sel) {
-    if (!_validateRequiredField(sel)) allValid = false;
+    _validateRequiredField(sel, true);
   });
-  if (!_validateRequiredRadioGroup('usmsLiabilityInsurance')) allValid = false;
-  if (!_validateRequiredRadioGroup('usaSwimmingAffiliation')) allValid = false;
-  if (!_validateRequiredRadioGroup('clubTrialMembership')) allValid = false;
-  if (!_validateRequiredRadioGroup('membershipRequired')) allValid = false;
+  _validateRequiredRadioGroup('usmsLiabilityInsurance', true);
+  _validateRequiredRadioGroup('usaSwimmingAffiliation', true);
+  _validateRequiredRadioGroup('clubTrialMembership', true);
+  _validateRequiredRadioGroup('membershipRequired', true);
 
-  // Club Contact — requires at least one saved contact
+  // Club Contact
   var contactSection = document.querySelector('#club-contact');
   if (contactSection && !contactSection.classList.contains('section--disabled')) {
-    if (!_validateAtLeastOneItem('#club-contact .list__container', '.help-block--ContactType')) allValid = false;
+    _validateAtLeastOneItem('#club-contact .list__container', '.help-block--ContactType', true);
   }
 
-  // Location — requires at least one saved location (skipped when Regional Club disables the section)
+  // Location — skipped when Regional Club disables the section
   var locationSection = document.querySelector('#section-location-information');
   if (locationSection && !locationSection.classList.contains('section--disabled')) {
-    if (!_validateAtLeastOneItem('#locationListContainer', '.section-location-information .help-block--selectLocation')) allValid = false;
+    _validateAtLeastOneItem('#locationListContainer', '.section-location-information .help-block--selectLocation', true);
   }
 
   // Club Bundles — only if the section is visible and not disabled by Regional Club
   var clubBundles = document.querySelector('#club-bundles');
   if (clubBundles && clubBundles.style.display !== 'none' && !clubBundles.classList.contains('section--disabled')) {
     CLUB_BUNDLES.forEach(function (bundleKey) {
-      if (!_validateRequiredRadioGroup(bundleKey)) allValid = false;
+      _validateRequiredRadioGroup(bundleKey, true);
     });
   }
 
   // Payment
   ['#cardName', '#cardNumber', '#cardCode', '#expiration', '#cardZip'].forEach(function (sel) {
-    if (!_validateRequiredField(sel)) allValid = false;
+    _validateRequiredField(sel, true);
   });
-  if (!_validateRequiredCheckbox(document.querySelector('#agreeTerms'), '.help-block--agreeTerms')) allValid = false;
-
-  if (!allValid) {
-    var firstError = document.querySelector(
-      '#accordion span.help-block.has-error, #accordion input.has-error, #accordion select.has-error, '
-      + '.payment-info span.help-block.has-error, .payment-info input.has-error'
-    );
-    if (firstError) window.scroll(0, FindPos(firstError));
-  }
+  _validateRequiredCheckbox(document.querySelector('#agreeTerms'), '.help-block--agreeTerms', true);
 }
 
 // ── Tooltips ─────────────────────────────────────────────────────────────────
