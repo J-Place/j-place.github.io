@@ -14,6 +14,17 @@ You are running the snapshot deployment workflow for the USMS mockup project.
 3. Reads the resulting deploy URL from CLI output
 4. Updates `snapshot-registry.json` with the new entry
 
+## Immutability: all CSS is vendored, none is left live
+
+Snapshots are meant to be permanent, unchanging references. `scripts/snapshot.js` enforces this for CSS automatically — no manual step needed:
+
+- Every `<link rel="stylesheet">` pointing at an external URL (`www.usms.org`, `usms-cdn.azureedge.net`, `cdnjs.cloudflare.com`, etc.) is fetched at snapshot time, saved into `vendor/css/` inside the snapshot's output directory, and the HTML is rewritten to reference the local copy instead.
+- `url(...)` references inside vendored CSS (fonts, background images) are rewritten to absolute production URLs, since those referenced assets are not themselves vendored — only the stylesheet text is frozen.
+- Local project CSS (`src/css/`) is already copied into the snapshot as before; this step covers the *production-hosted* stylesheets that mockup pages normally link to live.
+- If a fetch fails (e.g. offline), the script logs a warning and leaves that one stylesheet pointing at the live URL rather than failing the whole build — check the build output for `! Failed to vendor CSS from ...` warnings after a snapshot and re-run if any appear.
+
+This is a deliberate exception to the project-wide rule of never vendoring production CSS (see CLAUDE.md) — that rule is about authoring pages against live production styles so drift is visible; snapshots are the opposite case; a frozen record must not drift.
+
 ---
 
 ## Step 1 — Determine the page path and dev flag

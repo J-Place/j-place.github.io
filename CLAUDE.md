@@ -81,6 +81,7 @@ Key rules that apply project-wide (not just inside the skill):
 - Page-specific CSS/JS goes in `{% block pageCSS %}` / `{% block pageJS %}`.
 - Page headers (breadcrumbs + hero) go in `{% block pageHeader %}` via the appropriate partial.
 - Production USMS styles and scripts are loaded from `www.usms.org` and `usms-cdn.azureedge.net` — do not copy or vendor these. Local files in `src/css/` and `src/js/` are overrides and additions only.
+  - Exception: the `/snapshot` workflow vendors a frozen copy of every referenced production stylesheet automatically at snapshot time (see `.claude/skills/snapshot/SKILL.md`), so a deployed snapshot's appearance can't drift if production CSS changes later. This applies only to built snapshot output, never to source templates.
 
 ## Layouts
 
