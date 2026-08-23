@@ -11,15 +11,14 @@
                     <label for="selectLmsc">
                         Select Your Local Chapter (LMSC)
                         <a tabindex="0"
-                           class="popover-link"
                            role="button"
+                           class="icon-help"
                            data-bs-toggle="tooltip"
                            data-bs-trigger="focus"
                            data-bs-html="true"
                            data-bs-placement="top"
-                           title="Your LMSC is a regional governing body that provides certain benefits to USMS members, a map of USMS LMSC&#39;s can be found &lt;a href=&quot;https://www.usms.org/lmsc/&quot;&gt;here&lt;/a&gt;">
-                             <span class="icon-help"></span>
-                        </a>
+                           data-bs-container="body"
+                           title="Your LMSC is a regional governing body that provides certain benefits to USMS members, a map of USMS LMSC&#39;s can be found &lt;a href=&quot;https://www.usms.org/lmsc/&quot;&gt;here&lt;/a&gt;"></a>
                     </label>
                     <select class="form-control" id="selectLmsc" name="SelectedLmscSFId" required>
                         <option value="">Select LMSC</option>
@@ -84,11 +83,14 @@
                 <div class="input-group club-name required">
                     <label for="clubName">
                         Club Name
-                        <span class="icon-help"
-                              data-bs-toggle="tooltip"
-                              data-bs-placement="top"
-                              title=""
-                              data-bs-container="body"></span>
+                        <a tabindex="0"
+                           role="button"
+                           class="icon-help"
+                           data-bs-toggle="tooltip"
+                           data-bs-trigger="focus"
+                           data-bs-placement="top"
+                           title="Enter your club's official name. This will be displayed publicly on Club Finder."
+                           data-bs-container="body"></a>
                     </label>
                     <input class="form-control club-name__input" id="clubName" maxlength="80" minlength="3" name="ClubName" required type="text" value="" />
                     <span class="help-block help-block--ClubName">Club name is required.</span>
@@ -100,7 +102,7 @@
                 <div class="input-group club-abbr required">
                     <label for="clubAbbr">
                         Club Abbreviation
-                        <span class="icon-help" data-bs-toggle="tooltip" data-bs-placement="top" title="Select a club abbreviation that is 2 to 5 characters. The abbreviation must be unique. If the abbreviation you selected is not available, you will be prompted to select another one." data-container="body"></span>
+                        <a tabindex="0" role="button" class="icon-help" data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-placement="top" data-bs-container="body" title="Select a club abbreviation that is 2 to 5 characters. The abbreviation must be unique. If the abbreviation you selected is not available, you will be prompted to select another one."></a>
                     </label>
                     <input class="form-control club-name__input text-uppercase" id="clubAbbr" maxlength="5" minlength="2" name="ClubAbbr" pattern="[A-Za-z]" required type="text" value="" />
                     <span class="help-block help-block--ClubAbbr">Club abbreviation is required</span>

@@ -3,6 +3,14 @@ var nextSection = null;
 var currentSectionState = null;
 var currentCallback = null;
 
+// Snapshot of whether membershipRequired came in pre-answered on page load
+// (an existing, already-saved club) — set once in the DOMContentLoaded
+// handler below, before the user can touch the radios. A brand-new club
+// answering this question for the first time during Create must NOT lock
+// it, so the lock has to key off this load-time snapshot rather than a live
+// "is it checked right now" check re-run every time the section reopens.
+var membershipRequiredLocked = false;
+
 // ── Utilities ────────────────────────────────────────────────────────────────
 
 function FindPos(obj) {
@@ -14,10 +22,59 @@ function FindPos(obj) {
   return curtop;
 }
 
+// Closes a section directly via classList rather than jQuery's $.collapse('hide').
+// This page loads both Bootstrap 3 (site-wide) and Bootstrap 5 (club-edit.js's own
+// pageJS bundle) — whichever last registered $.fn.collapse silently no-ops on
+// sections opened with the other version's marker class, so sibling sections were
+// getting stuck open. Manipulating the class directly sidesteps that entirely.
+function _closeSection(contentEl) {
+  if (!contentEl) return;
+  contentEl.classList.remove('in', 'show', 'collapsing');
+  contentEl.style.height = '';
+  contentEl.setAttribute('aria-expanded', 'false');
+  var header = document.querySelector('[data-target="#' + contentEl.id + '"]');
+  if (header) header.setAttribute('aria-expanded', 'false');
+  setSectionInputStatus(contentEl, true);
+  if (contentEl.parentElement) contentEl.parentElement.classList.remove('isEdit');
+}
+
+// Opens a section directly via classList rather than jQuery's $.collapse('show'),
+// for the same BS3/BS5 coexistence reason _closeSection exists. jQuery's
+// animated .collapse('show') leaves the section in a mid-transition
+// '.collapsing' state for ~350ms, during which BS3's internal "transitioning"
+// guard silently ignores any .collapse('hide')/toggle call — so a header
+// click to close the section lands and does nothing if it arrives before
+// the open animation finishes, leaving the content rendered and overlapping
+// the sections below it.
+function _openSection(contentEl) {
+  if (!contentEl) return;
+  contentEl.classList.add('in', 'show');
+  contentEl.style.height = '';
+  contentEl.setAttribute('aria-expanded', 'true');
+  var header = document.querySelector('[data-target="#' + contentEl.id + '"]');
+  if (header) header.setAttribute('aria-expanded', 'true');
+  setSectionInputStatus(contentEl, false);
+  if (contentEl.parentElement) contentEl.parentElement.classList.add('isEdit');
+}
+
+// Membership Requirement — an existing, already-saved club's Member/Affiliate
+// status can't be flipped later via Edit, so lock both radios once the
+// load-time snapshot says it came in pre-answered. A brand-new club
+// answering this for the first time during Create stays editable even after
+// its section is saved and reopened, since membershipRequiredLocked stays
+// false for the whole session in that case.
+function lockMembershipRequiredIfAnswered() {
+  if (membershipRequiredLocked) {
+    document.querySelectorAll('input[name="membershipRequired"]').forEach(function (r) {
+      r.disabled = true;
+    });
+  }
+}
+
 function setSectionInputStatus(section, disabled) {
   if (!section) return;
-  // Club Name and Gold Club manage their own disabled state
-  if (section.id === 'club-name__content' || section.id === 'gold-club__content') return;
+  // Club Name and Club Bundles manage their own disabled state
+  if (section.id === 'club-name__content' || section.id === 'club-bundles__content') return;
   section.querySelectorAll('input').forEach(function (el) { el.disabled = disabled; });
   section.querySelectorAll('select').forEach(function (el) { el.disabled = disabled; });
   section.querySelectorAll('textarea').forEach(function (el) { el.disabled = disabled; });
@@ -26,6 +83,8 @@ function setSectionInputStatus(section, disabled) {
       el.disabled = disabled;
     }
   });
+  // The blanket enabling above would otherwise clobber the membership-required lock.
+  lockMembershipRequiredIfAnswered();
 }
 
 function saveSectionState(section) {
@@ -72,7 +131,7 @@ function sectionSaved(section) {
       break;
     case 'club-name__content':
     case 'club-details__content':
-    case 'gold-club__content':
+    case 'club-bundles__content':
       result = compareSections(section);
       break;
     default:
@@ -195,8 +254,10 @@ function handleCancelModal(el) {
 
 function setInputStatus(input, isValid) {
   input.classList.remove('has-success', 'has-error');
-  var helpBlock = document.querySelector('span.help-block--' + input.name);
   try {
+    // File inputs use the positional lookup below instead — their name
+    // (e.g. "file-1[]") isn't a valid selector fragment.
+    var helpBlock = input.type === 'file' ? null : document.querySelector('span.help-block--' + input.name);
     if (isValid) {
       input.classList.add('has-success');
       if (input.parentNode.classList.contains('form-group')) {
@@ -309,10 +370,12 @@ $(function () {
   $('#accordion .section__content').on('show.bs.collapse', function (e) {
     var contentEl = e.target;
 
-    // Bootstrap 3 open state is .in (not .show)
-    $('#accordion .section__content').filter(function () {
-      return this !== contentEl && ($(this).hasClass('in') || $(this).hasClass('collapsing'));
-    }).collapse('hide');
+    // Cover both BS3 (.in/.collapsing) and BS5 (.show) open states
+    document.querySelectorAll('#accordion .section__content').forEach(function (content) {
+      if (content !== contentEl && (content.classList.contains('in') || content.classList.contains('show') || content.classList.contains('collapsing'))) {
+        _closeSection(content);
+      }
+    });
 
     setTimeout(function () {
       window.scroll(0, FindPos(contentEl.parentNode));
@@ -322,7 +385,7 @@ $(function () {
     contentEl.parentElement.classList.add('isEdit');
 
     switch (contentEl.id) {
-      case 'gold-club__content':
+      case 'club-bundles__content':
         setGoldClubFlag();
         break;
       case 'club-name__content':
@@ -378,7 +441,47 @@ function saveName(e) {
 
 function editDetails() { }
 
-function removeClubPhoto(type) { }
+// Mirrors production Details.js removeClubPhoto() minus the AJAX call to
+// /apis/v1/imageweb/remove/photo — this mockup has no backend to receive it,
+// so just clear the thumbnail and reset the file input locally.
+function removeClubPhoto(type) {
+  var input = document.querySelector(type === 'logo' ? '#file-1' : '#file-2');
+  if (!input) return;
+  var thumbnail = input.parentNode.parentNode.querySelector('.upload-thumbnail');
+  if (thumbnail) thumbnail.style.backgroundImage = '';
+  input.value = '';
+}
+
+// Mirrors production Details.js setRegionalClubSections() — adds/removes
+// section--disabled on Location, Coach, and Club Bundles when Regional Club is toggled.
+function setRegionalClubSections(enabled) {
+  var sectionsToDisable = [
+    document.querySelector('#section-location-information'),
+    document.querySelector('#coach')
+  ];
+  sectionsToDisable.forEach(function(section) {
+    if (!section) return;
+    if (enabled) {
+      section.classList.add('section--disabled');
+      var content = section.querySelector('.section__content');
+      if (content) $(content).collapse('hide');
+    } else {
+      section.classList.remove('section--disabled');
+    }
+  });
+
+  // Club Bundles: disable/enable independently of its show/hide (controlled by membership required radio)
+  var clubBundles = document.querySelector('#club-bundles');
+  if (clubBundles) {
+    if (enabled) {
+      clubBundles.classList.add('section--disabled');
+      var bundlesContent = clubBundles.querySelector('.section__content');
+      if (bundlesContent) $(bundlesContent).collapse('hide');
+    } else {
+      clubBundles.classList.remove('section--disabled');
+    }
+  }
+}
 
 function saveDetails(e) {
   e.preventDefault();
@@ -388,8 +491,11 @@ function saveDetails(e) {
   var practice = section.querySelector('#practiceDetails');
   if (desc) validateField(desc);
   if (practice) validateField(practice);
-  if (section.querySelector('span.has-error')) {
-    window.scroll(0, FindPos(section.querySelector('span.help-block.has-error')));
+  _validateRequiredRadioGroup('usmsLiabilityInsurance');
+  _validateRequiredRadioGroup('membershipRequired');
+  var firstError = section.querySelector('span.has-error, .input-group-header.has-error');
+  if (firstError) {
+    window.scroll(0, FindPos(firstError));
     return;
   }
   section.classList.add('hasData');
@@ -422,6 +528,19 @@ var MOCK_CONTACTS = [
 ];
 var _latestContact = null;
 
+var MOCK_COACHES = [
+  { firstName: 'Marcus',  lastName: 'Ellison',  city: 'Austin',    state: 'TX', swimmerId: '601M', phone: '512-555-0201', email: 'marcus.ellison@example.org',  isMember: true,  validated: true },
+  { firstName: 'Priya',   lastName: 'Rao',      city: 'Houston',   state: 'TX', swimmerId: '602P', phone: '713-555-0202', email: 'priya.rao@example.org',       isMember: true,  validated: true },
+  { firstName: 'Diego',   lastName: 'Salazar',  city: 'Denver',    state: 'CO', swimmerId: '603D', phone: '303-555-0203', email: 'diego.salazar@example.org',   isMember: true,  validated: false },
+  { firstName: 'Naomi',   lastName: 'Fischer',  city: 'Portland',  state: 'OR', swimmerId: '604N', phone: '503-555-0204', email: 'naomi.fischer@example.org',   isMember: true,  validated: true },
+  { firstName: 'Owen',    lastName: 'Whitfield', city: 'Seattle',  state: 'WA', swimmerId: '605O', phone: '206-555-0205', email: 'owen.whitfield@example.org',  isMember: true,  validated: true },
+  { firstName: 'Renata',  lastName: 'Cabral',   city: 'Chicago',   state: 'IL', swimmerId: '606R', phone: '312-555-0206', email: 'renata.cabral@example.org',   isMember: true,  validated: true },
+  { firstName: 'Samuel',  lastName: 'Okafor',   city: 'Atlanta',   state: 'GA', swimmerId: '607S', phone: '404-555-0207', email: 'samuel.okafor@example.org',   isMember: true,  validated: true },
+  { firstName: 'Talia',   lastName: 'Bergman',  city: 'Boston',    state: 'MA', swimmerId: '608T', phone: '617-555-0208', email: 'talia.bergman@example.org',   isMember: true,  validated: false },
+  { firstName: 'Kenji',   lastName: 'Nakamura', city: 'San Diego', state: 'CA', swimmerId: '609K', phone: '619-555-0209', email: 'kenji.nakamura@example.org',  isMember: true,  validated: true },
+];
+var _latestCoach = null;
+
 function _debounce(fn, delay) {
   var timer;
   return function () {
@@ -450,13 +569,13 @@ function setCurrentContact(contact) {
   if (addBtn) addBtn.disabled = false;
 }
 
-function autocompleteContactsByName(inp) {
+function _autocompleteByName(inp, mockData, onSelect) {
   var runSearch = _debounce(function () {
     var val = inp.value.trim().toLowerCase();
     _closeAllLists(inp);
     if (val.length < 3) return;
 
-    var matches = MOCK_CONTACTS.filter(function (c) {
+    var matches = mockData.filter(function (c) {
       var full = (c.firstName + ' ' + c.lastName).toLowerCase();
       return full.indexOf(val) !== -1 ||
         c.firstName.toLowerCase().indexOf(val) !== -1 ||
@@ -469,10 +588,10 @@ function autocompleteContactsByName(inp) {
     listDiv.className = 'autocomplete-items';
     inp.parentNode.appendChild(listDiv);
 
-    matches.forEach(function (contact) {
+    matches.forEach(function (person) {
       var item = document.createElement('div');
-      var fullName = contact.firstName + ' ' + contact.lastName;
-      var location = contact.city && contact.state ? contact.city + ', ' + contact.state : '';
+      var fullName = person.firstName + ' ' + person.lastName;
+      var location = person.city && person.state ? person.city + ', ' + person.state : '';
       var matchIdx = fullName.toLowerCase().indexOf(val);
       var boldedName = matchIdx >= 0
         ? fullName.slice(0, matchIdx) + '<strong>' + fullName.slice(matchIdx, matchIdx + val.length) + '</strong>' + fullName.slice(matchIdx + val.length)
@@ -482,7 +601,7 @@ function autocompleteContactsByName(inp) {
       item.addEventListener('mousedown', function (e) {
         e.preventDefault();
         inp.value = fullName;
-        setCurrentContact(contact);
+        onSelect(person);
         _closeAllLists(inp);
       });
 
@@ -520,9 +639,28 @@ function autocompleteContactsByName(inp) {
   document.addEventListener('click', function () { _closeAllLists(inp); });
 }
 
-function showNewContactInputs() {
+function autocompleteContactsByName(inp) {
+  _autocompleteByName(inp, MOCK_CONTACTS, setCurrentContact);
+}
+
+function autocompleteCoachesByName(inp) {
+  _autocompleteByName(inp, MOCK_COACHES, setCurrentCoach);
+}
+
+function _resetContactLookup() {
+  _latestContact = null;
   var lookupInput = document.querySelector('#lookupContactName');
-  if (lookupInput) { lookupInput.value = ''; _closeAllLists(lookupInput); }
+  if (lookupInput) { _closeAllLists(lookupInput); lookupInput.value = ''; }
+  var confirmDiv = document.querySelector('#club-contact .lookup-confirm');
+  if (confirmDiv) confirmDiv.classList.remove('show');
+  var addBtn = document.querySelector('#addAsContact');
+  if (addBtn) addBtn.disabled = true;
+  var nameEl = document.querySelector('#club-contact .lookup-confirm--name');
+  if (nameEl) nameEl.textContent = '';
+}
+
+function showNewContactInputs() {
+  _resetContactLookup();
 
   var el = document.querySelector('.club-contact__not-member-container');
   if (el) { el.style.display = 'block'; el.style.visibility = 'visible'; }
@@ -570,7 +708,59 @@ function confirmCurrentContact(e) {
   if (privacy) privacy.style.display = '';
 }
 
-function handleAddContactButton() { }
+// Validates, builds, and adds the contact card, plus the section-finalization
+// steps setContactTitle() already does — addContact(), unlike addCoachCard(),
+// doesn't show the list header / hide the type-form itself, so that has to
+// happen here too.
+function handleAddContactButton() {
+  var fields = ['#newContactFirstName', '#newContactLastName', '#newContactEmailPrimary',
+    '#newContactPhonePrimary', '#newContactCity', '#newContactState']
+    .map(function (sel) { return document.querySelector(sel); });
+
+  var firstError = null;
+  fields.forEach(function (field) {
+    if (!field) return;
+    validateField(field);
+    if (!firstError && field.classList.contains('has-error')) firstError = field;
+  });
+  if (firstError) {
+    window.scroll(0, FindPos(firstError));
+    return;
+  }
+
+  var contact = {
+    firstName: document.querySelector('#newContactFirstName').value,
+    lastName: document.querySelector('#newContactLastName').value,
+    email: document.querySelector('#newContactEmailPrimary').value,
+    phone: document.querySelector('#newContactPhonePrimary').value,
+    city: document.querySelector('#newContactCity').value,
+    state: document.querySelector('#newContactState').value,
+    swimmerId: '',
+    isMember: false,
+    validated: false,
+  };
+  addContact(contact);
+
+  var el = document.querySelector('.club-contact__not-member-container');
+  if (el) { el.style.display = 'none'; el.style.visibility = 'hidden'; }
+  _clearNewContactForm();
+
+  var otherContainer = document.querySelector('.club-contact__other-container');
+  if (otherContainer) { otherContainer.style.display = 'none'; otherContainer.style.visibility = 'hidden'; }
+  var addNew = document.querySelector('.club-contact__add-new');
+  if (addNew) addNew.style.display = 'none';
+  var typeForm = document.querySelector('#club-contact .contact-type-form');
+  if (typeForm) typeForm.style.display = 'none';
+  var listHeader = document.querySelector('#club-contact .contact-list__header');
+  if (listHeader) listHeader.classList.add('show');
+  var listSettings = document.querySelector('#listContactSettings');
+  if (listSettings) listSettings.style.display = '';
+  document.querySelectorAll('#club-contact .club-privacy input[type="checkbox"]').forEach(function (cb) { cb.checked = false; });
+  var privacy = document.querySelector('#club-contact .club-privacy');
+  if (privacy) privacy.style.display = '';
+  var saveBtn = document.querySelector('#saveContact');
+  if (saveBtn) saveBtn.disabled = false;
+}
 
 function handleContactConfirmation(el) { }
 
@@ -579,16 +769,7 @@ function setContactTitle(e) {
   if (!_latestContact) return;
 
   addContact(_latestContact);
-  _latestContact = null;
-
-  var lookupInput = document.querySelector('#lookupContactName');
-  if (lookupInput) { _closeAllLists(lookupInput); lookupInput.value = ''; }
-  var confirmDiv = document.querySelector('#club-contact .lookup-confirm');
-  if (confirmDiv) confirmDiv.classList.remove('show');
-  var addBtn = document.querySelector('#addAsContact');
-  if (addBtn) addBtn.disabled = true;
-  var nameEl = document.querySelector('#club-contact .lookup-confirm--name');
-  if (nameEl) nameEl.textContent = '';
+  _resetContactLookup();
 
   var otherContainer = document.querySelector('.club-contact__other-container');
   if (otherContainer) { otherContainer.style.display = 'none'; otherContainer.style.visibility = 'hidden'; }
@@ -843,6 +1024,11 @@ function cancelContactList() {
     }
     var privacy = document.querySelector('#club-contact .club-privacy');
     if (privacy) privacy.style.display = '';
+
+    if (fadedItems.length > 0) {
+      var listHeader = section.querySelector('.contact-list__header');
+      if (listHeader) listHeader.classList.add('show');
+    }
   }, 250);
 
   list.classList.remove('edit-list');
@@ -908,35 +1094,238 @@ function saveContact(e) {
 
 function getCurrentCoaches() { }
 
+function setCurrentCoach(coach) {
+  _latestCoach = coach;
+  var nameEl = document.querySelector('#coach .lookup-confirm--name');
+  if (nameEl) nameEl.textContent = coach.firstName + ' ' + coach.lastName;
+  var confirmDiv = document.querySelector('#coach .lookup-confirm');
+  if (confirmDiv) confirmDiv.classList.add('show');
+  var addBtn = document.querySelector('#addAsCoach');
+  if (addBtn) addBtn.disabled = false;
+}
+
+// Mirrors addContact() — builds the coach card DOM and appends it.
+function addCoachCard(coach) {
+  var row = document.querySelector('.section#coach .list__container .row');
+  if (!row) return;
+
+  var isValidated = coach.validated === true || coach.validated === 'true';
+  var isMember = coach.isMember !== false;
+
+  var col = document.createElement('div');
+  col.className = 'col-xs-12 col-sm-6 col-md-4';
+
+  var item = document.createElement('div');
+  item.className = 'list-item list-item--fade-out list-item--new';
+
+  var removeBtn = document.createElement('button');
+  removeBtn.type = 'button';
+  removeBtn.className = 'list-item__delete';
+  removeBtn.textContent = 'Remove';
+  item.appendChild(removeBtn);
+
+  // Head Coach radio — shares the literal name "Head Coach" across every
+  // card so only one can be checked at a time, matching production exactly.
+  var headCoachInput = null;
+  var titleEl = null;
+  if (isMember) {
+    var headCoachSelect = document.createElement('div');
+    headCoachSelect.className = 'head-coach__select';
+    var headCoachLabel = document.createElement('label');
+    headCoachLabel.className = 'radio-label--coach-list';
+    headCoachLabel.textContent = 'Head Coach';
+    headCoachInput = document.createElement('input');
+    headCoachInput.type = 'radio';
+    headCoachInput.name = 'Head Coach';
+    headCoachInput.className = 'radio-input--coach-list';
+    headCoachInput.checked = !!coach.headCoach;
+    headCoachLabel.appendChild(headCoachInput);
+    headCoachSelect.appendChild(headCoachLabel);
+    item.appendChild(headCoachSelect);
+  }
+
+  if (!isValidated) {
+    var pending = document.createElement('div');
+    pending.className = 'coach-validated';
+    pending.textContent = 'Account Pending';
+    item.appendChild(pending);
+  }
+
+  var nameEl = document.createElement('div');
+  nameEl.className = 'coach-name';
+  nameEl.textContent = (coach.firstName || '') + ' ' + (coach.lastName || '');
+  item.appendChild(nameEl);
+
+  var phoneEl = document.createElement('div');
+  phoneEl.className = 'coach-phone';
+  phoneEl.textContent = coach.phone || '';
+  item.appendChild(phoneEl);
+
+  var emailEl = document.createElement('div');
+  emailEl.className = 'coach-email';
+  emailEl.textContent = coach.email || '';
+  item.appendChild(emailEl);
+
+  if (isMember && coach.city && coach.state) {
+    var loc = document.createElement('div');
+    loc.className = 'coach-location';
+    loc.textContent = coach.city + ', ' + coach.state;
+    item.appendChild(loc);
+  }
+
+  if (isMember) {
+    var idDiv = document.createElement('div');
+    idDiv.className = 'coach-id';
+    idDiv.textContent = 'Member ID: ';
+    var idVal = document.createElement('span');
+    idVal.className = 'coach-id__value';
+    idVal.textContent = coach.swimmerId || '';
+    idDiv.appendChild(idVal);
+    item.appendChild(idDiv);
+  }
+
+  // HEAD COACH / COACH badge — always present, mirrors the radio above.
+  titleEl = document.createElement('div');
+  titleEl.className = 'coach-title';
+  titleEl.textContent = coach.headCoach ? 'HEAD COACH' : 'COACH';
+  item.appendChild(titleEl);
+
+  if (headCoachInput) {
+    headCoachInput.addEventListener('change', function (e) {
+      document.querySelectorAll('#coach .list-item .coach-title').forEach(function (t) { t.textContent = 'COACH'; });
+      if (e.target.checked) titleEl.textContent = 'HEAD COACH';
+    });
+  }
+
+  col.appendChild(item);
+  row.appendChild(col);
+
+  setTimeout(function () { item.classList.remove('list-item--fade-out'); }, 250);
+
+  var listHeader = document.querySelector('#coach .coach-list__header');
+  if (listHeader) listHeader.classList.add('show');
+  var settingsBtn = document.querySelector('#listCoachSettings');
+  if (settingsBtn) { settingsBtn.disabled = false; settingsBtn.style.display = ''; }
+  var editBtn = document.querySelector('#editCoachList');
+  if (editBtn) editBtn.disabled = false;
+  var saveBtn = document.querySelector('#saveCoach');
+  if (saveBtn) saveBtn.disabled = false;
+  var section = document.querySelector('#coach');
+  if (section) section.classList.add('hasData');
+}
+
+function removeCoachCard(e) {
+  if (e) e.preventDefault();
+  var item = e.target.closest('.list-item');
+  if (!item) return;
+  var listContainer = document.querySelector('#coach .list__container');
+  if (listContainer) listContainer.classList.add('list__container--modified');
+  item.classList.add('list-item--fade-out');
+  setTimeout(function () {
+    var col = item.parentNode;
+    if (col) col.style.display = 'none';
+  }, 250);
+}
+
+function _resetCoachLookup() {
+  _latestCoach = null;
+  var lookupInput = document.querySelector('#lookupCoachName');
+  if (lookupInput) { _closeAllLists(lookupInput); lookupInput.value = ''; }
+  var confirmDiv = document.querySelector('#coach .lookup-confirm');
+  if (confirmDiv) confirmDiv.classList.remove('show');
+  var addBtn = document.querySelector('#addAsCoach');
+  if (addBtn) addBtn.disabled = true;
+  var nameEl = document.querySelector('#coach .lookup-confirm--name');
+  if (nameEl) nameEl.textContent = '';
+}
+
 function setTitle(e, type) {
   if (e) e.preventDefault();
+  if (!_latestCoach) return;
+
+  addCoachCard(_latestCoach);
+  _resetCoachLookup();
 }
-
-function handleAddCoachButton() { }
-
-function showNewCoachInputs() {
-  var el = document.querySelector('.club-coach__not-member-container');
-  if (el) el.style.display = '';
-}
-
-function hideCoachLookupInputs() { }
 
 function showCoachSection() { }
 
 function editCoachList() {
-  var section = document.querySelector('#coach');
-  if (section) section.classList.add('edit-list');
+  var list = document.querySelector('.section#coach .list');
+  if (!list) return;
+  if (list.classList.contains('edit-list')) {
+    list.classList.remove('edit-list');
+    cancelCoachList();
+    var saveBtn = document.querySelector('#saveCoach');
+    if (saveBtn) saveBtn.disabled = false;
+  } else {
+    list.classList.add('edit-list');
+    var saveBtn2 = document.querySelector('#saveCoach');
+    if (saveBtn2) saveBtn2.disabled = true;
+  }
 }
 
 function cancelCoachList() {
   var section = document.querySelector('#coach');
-  if (section) section.classList.remove('edit-list');
+  var list = section ? section.querySelector('.list') : null;
+  if (!list) return;
+
+  var fadedItems = section.querySelectorAll('.list-item--fade-out');
+  for (var i = 0; i < fadedItems.length; i++) {
+    fadedItems[i].classList.remove('list-item--fade-out');
+  }
+  setTimeout(function () {
+    for (var j = 0; j < fadedItems.length; j++) {
+      var col = fadedItems[j].parentNode;
+      if (col) col.style.display = 'block';
+    }
+
+    if (fadedItems.length > 0) {
+      var listHeader = section.querySelector('.coach-list__header');
+      if (listHeader) listHeader.classList.add('show');
+    }
+  }, 250);
+
+  list.classList.remove('edit-list');
+  var saveBtn = document.querySelector('#saveCoach');
+  if (saveBtn) saveBtn.disabled = false;
 }
 
 function saveCoachList(e) {
   if (e) e.preventDefault();
   var section = document.querySelector('#coach');
-  if (section) section.classList.remove('edit-list');
+  var list = section ? section.querySelector('.list') : null;
+  if (!list) return;
+
+  var newItems = section.querySelectorAll('.list-item--new');
+  for (var i = 0; i < newItems.length; i++) {
+    newItems[i].classList.remove('list-item--new');
+  }
+
+  var fadedItems = section.querySelectorAll('.list-item--fade-out');
+  for (var j = 0; j < fadedItems.length; j++) {
+    var col = fadedItems[j].parentNode;
+    if (col && col.parentNode) col.parentNode.removeChild(col);
+  }
+
+  list.classList.remove('edit-list');
+  var container = list.querySelector('.list__container');
+  if (container) container.classList.remove('list__container--modified');
+
+  var remaining = section.querySelectorAll('.list-item');
+  if (remaining.length > 0) {
+    section.classList.add('hasData');
+  } else {
+    section.classList.remove('hasData');
+    var listHeader = section.querySelector('.coach-list__header');
+    if (listHeader) listHeader.classList.remove('show');
+    var settingsBtn = document.querySelector('#listCoachSettings');
+    if (settingsBtn) settingsBtn.style.display = 'none';
+    var lookupSection = document.querySelector('.coach-details');
+    if (lookupSection) lookupSection.style.display = '';
+  }
+
+  var saveBtn = document.querySelector('#saveCoach');
+  if (saveBtn) saveBtn.disabled = false;
 }
 
 function saveCoach() {
@@ -953,6 +1342,556 @@ function saveCoach() {
     $(document.querySelector('#location-information__content')).collapse('show');
   }
 }
+
+// ── Section — Location ───────────────────────────────────────────────────────
+
+var _locationMode = null; // 'pool' | 'openwater' — which Add button was clicked
+var _pendingNewLocation = null; // holds step 1 details while step 2 is filled out
+var _locationRemoveTarget = null; // .col-sm-12 card queued for removal
+
+// No live Google Places key in this mockup environment — accept a typed
+// "Street, City, ST 12345" address and fall back to storing the raw text as
+// the street line when it doesn't split cleanly.
+function _parseLocationAddress(raw) {
+  var parts = String(raw || '').split(',').map(function (s) { return s.trim(); }).filter(Boolean);
+  var street = parts[0] || '';
+  var city = parts[1] || '';
+  var state = '';
+  var zip = '';
+  if (parts[2]) {
+    var m = parts[2].match(/([A-Za-z]{2})\s*(\d{5})?/);
+    if (m) {
+      state = m[1].toUpperCase();
+      zip = m[2] || '';
+    }
+  }
+  return { street: street, city: city, state: state, zip: zip };
+}
+
+function _resetLocationStep1Fields() {
+  var nameInput = document.querySelector('#locationName');
+  var addrInput = document.querySelector('#addLocationAddressStreet');
+  if (nameInput) { nameInput.value = ''; nameInput.classList.remove('has-error', 'has-success'); }
+  if (addrInput) { addrInput.value = ''; addrInput.classList.remove('has-error', 'has-success'); }
+  var addrHelp = document.querySelector('.help-block--LocationAddressStreet');
+  if (addrHelp) addrHelp.classList.remove('has-error');
+  var typeSelect = document.querySelector('#locationType');
+  if (typeSelect) typeSelect.classList.remove('has-error', 'has-success');
+}
+
+function _resetLocationStep2Fields() {
+  var venueNameInput = document.querySelector('#venueName');
+  if (venueNameInput) { venueNameInput.value = ''; venueNameInput.classList.remove('has-error', 'has-success'); }
+  var poolTypeSelect = document.querySelector('#poolType');
+  if (poolTypeSelect) { poolTypeSelect.value = '-1'; poolTypeSelect.classList.remove('has-error', 'has-success'); }
+  var openWaterTypeSelect = document.querySelector('#openWaterType');
+  if (openWaterTypeSelect) { openWaterTypeSelect.value = '-1'; openWaterTypeSelect.classList.remove('has-error', 'has-success'); }
+  document.querySelectorAll('input[name="selectCourseType"]').forEach(function (cb) { cb.checked = false; });
+  var courseHelp = document.querySelector('.help-block--selectCourseType');
+  if (courseHelp) courseHelp.classList.remove('has-error');
+}
+
+function handleAddLocationButtonClick(e) {
+  var isPool = e.currentTarget.id === 'addPoolLocationBtn';
+  _locationMode = isPool ? 'pool' : 'openwater';
+
+  var headerAdd = document.querySelector('.location-header__add');
+  if (headerAdd) headerAdd.style.display = 'none';
+
+  var details = document.querySelector('.location-details');
+  if (details) details.classList.add('show');
+
+  var typeSelect = document.querySelector('#locationType');
+  if (typeSelect) {
+    typeSelect.disabled = !isPool;
+    typeSelect.value = isPool ? '-1' : 'Open Water';
+    typeSelect.classList.remove('has-error', 'has-success');
+  }
+
+  var nameInput = document.querySelector('#locationName');
+  if (nameInput) nameInput.focus();
+}
+
+function cancelNewLocationForm() {
+  var headerAdd = document.querySelector('.location-header__add');
+  if (headerAdd) headerAdd.style.display = '';
+  var details = document.querySelector('.location-details');
+  if (details) details.classList.remove('show');
+  _resetLocationStep1Fields();
+  _locationMode = null;
+}
+
+function confirmNewLocationDetails() {
+  var isPool = _locationMode === 'pool';
+  var nameInput = document.querySelector('#locationName');
+  var addrInput = document.querySelector('#addLocationAddressStreet');
+  var typeSelect = document.querySelector('#locationType');
+  var addrHelp = document.querySelector('.help-block--LocationAddressStreet');
+
+  validateField(nameInput);
+
+  var addrValid = !!(addrInput && addrInput.value.trim());
+  setInputStatus(addrInput, addrValid);
+  if (addrHelp) addrHelp.classList.toggle('has-error', !addrValid);
+
+  if (isPool) validateField(typeSelect);
+
+  var invalid = document.querySelector('.location-details input.has-error, .location-details select.has-error, .location-details span.help-block.has-error');
+  if (invalid) {
+    window.scroll(0, FindPos(invalid));
+    return;
+  }
+
+  var parsed = _parseLocationAddress(addrInput.value);
+  var candidate = {
+    name: nameInput.value.trim(),
+    street: parsed.street,
+    city: parsed.city,
+    state: parsed.state,
+    zip: parsed.zip,
+    type: isPool ? typeSelect.value : 'Open Water',
+  };
+
+  var isDuplicate = Array.prototype.some.call(
+    document.querySelectorAll('#locationListContainer .location-address-street'),
+    function (el) { return (el.dataset.street || '').toLowerCase() === candidate.street.toLowerCase(); }
+  );
+  if (isDuplicate) {
+    _openModal('modalAddDuplicateOrganization');
+    return;
+  }
+
+  _pendingNewLocation = candidate;
+
+  var details = document.querySelector('.location-details');
+  if (details) details.classList.remove('show');
+
+  var venueRow = document.querySelector('.venue-form-row');
+  if (venueRow) venueRow.style.display = '';
+
+  var poolGroup = document.querySelector('.input-group--poolType');
+  var courseGroup = document.querySelector('.input-group--course');
+  var openWaterGroup = document.querySelector('.input-group--openWaterType');
+  if (poolGroup) poolGroup.style.display = isPool ? '' : 'none';
+  if (courseGroup) courseGroup.style.display = isPool ? '' : 'none';
+  if (openWaterGroup) openWaterGroup.style.display = isPool ? 'none' : '';
+
+  var venueNameInput = document.querySelector('#venueName');
+  if (venueNameInput) venueNameInput.focus();
+}
+
+function cancelNewVenueForm() {
+  var venueRow = document.querySelector('.venue-form-row');
+  if (venueRow) venueRow.style.display = 'none';
+  _resetLocationStep2Fields();
+  // Back to step 1 — matches production's handleCancelNewVenue, which returns
+  // to the location-details form rather than fully canceling the Add flow.
+  var details = document.querySelector('.location-details');
+  if (details) details.classList.add('show');
+}
+
+function addLocationCard(location, venues) {
+  var container = document.querySelector('#locationListContainer');
+  var listWrap = document.querySelector('#locationsList');
+  if (!container || !listWrap) return;
+
+  var col = document.createElement('div');
+  col.className = 'col-sm-12';
+
+  var item = document.createElement('div');
+  item.className = 'list-item list-item-existing list-item--fade-out';
+
+  // Production mounts .list__controls only while edit=true (a React conditional,
+  // not a CSS rule) — inline display here so visibility doesn't depend on cascade
+  // order between the .edit-list class and unscoped .list__controls rules.
+  var controls = document.createElement('div');
+  controls.className = 'list__controls';
+  controls.style.display = document.querySelector('#locationsList .list.locations').classList.contains('edit-list') ? '' : 'none';
+  var removeBtn = document.createElement('button');
+  removeBtn.type = 'button';
+  removeBtn.className = 'btn btn-link list-item__delete';
+  removeBtn.textContent = 'Remove';
+  controls.appendChild(removeBtn);
+  item.appendChild(controls);
+
+  var nameEl = document.createElement('p');
+  nameEl.className = 'location-name text-bold';
+  nameEl.textContent = location.name;
+  item.appendChild(nameEl);
+
+  var addrEl = document.createElement('p');
+  addrEl.className = 'location-address-street';
+  addrEl.dataset.street = location.street;
+  var cityState = [location.city, [location.state, location.zip].filter(Boolean).join(' ')].filter(Boolean).join(', ');
+  addrEl.textContent = cityState ? (location.street + ' | ' + cityState) : location.street;
+  item.appendChild(addrEl);
+
+  var venueList = document.createElement('div');
+  venueList.className = 'venue__list';
+  (venues || []).forEach(function (venue) {
+    var venueItem = document.createElement('div');
+    venueItem.className = 'venue__list--item selected';
+    var venueText = document.createElement('div');
+    var venueNameEl = document.createElement('p');
+    venueNameEl.className = 'venue-name selected';
+    venueNameEl.textContent = venue.name;
+    var venueTypeEl = document.createElement('p');
+    venueTypeEl.className = 'venue-type';
+    venueTypeEl.textContent = '(' + venue.subType + ')';
+    venueText.appendChild(venueNameEl);
+    venueText.appendChild(venueTypeEl);
+    venueItem.appendChild(venueText);
+    venueList.appendChild(venueItem);
+  });
+  item.appendChild(venueList);
+
+  col.appendChild(item);
+  container.appendChild(col);
+
+  setTimeout(function () { item.classList.remove('list-item--fade-out'); }, 250);
+
+  listWrap.style.display = '';
+
+  var section = document.querySelector('#section-location-information');
+  if (section) section.classList.add('hasData');
+
+  var selectLocationHelp = document.querySelector('.section-location-information .help-block--selectLocation');
+  if (selectLocationHelp) selectLocationHelp.classList.remove('has-error');
+}
+
+function confirmNewVenue() {
+  if (!_pendingNewLocation) return;
+  var isPool = _locationMode === 'pool';
+
+  var venueNameInput = document.querySelector('#venueName');
+  var poolTypeSelect = document.querySelector('#poolType');
+  var openWaterTypeSelect = document.querySelector('#openWaterType');
+  var courseBoxes = document.querySelectorAll('input[name="selectCourseType"]');
+  var courseHelp = document.querySelector('.help-block--selectCourseType');
+
+  validateField(venueNameInput);
+  var valid = venueNameInput.value.trim().length > 0;
+
+  if (isPool) {
+    validateField(poolTypeSelect);
+    var anyCourseChecked = Array.prototype.some.call(courseBoxes, function (cb) { return cb.checked; });
+    if (courseHelp) courseHelp.classList.toggle('has-error', !anyCourseChecked);
+    valid = valid && poolTypeSelect.value !== '-1' && anyCourseChecked;
+  } else {
+    validateField(openWaterTypeSelect);
+    valid = valid && openWaterTypeSelect.value !== '-1';
+  }
+
+  if (!valid) {
+    var invalid = document.querySelector('.list-venue-form input.has-error, .list-venue-form select.has-error, .list-venue-form span.help-block.has-error');
+    if (invalid) window.scroll(0, FindPos(invalid));
+    return;
+  }
+
+  var courseLabels = { '25y': 'SCY', '25m': 'SCM', '50m': 'LCM', other: 'Other' };
+  var checkedCourses = Array.prototype.filter.call(courseBoxes, function (cb) { return cb.checked; })
+    .map(function (cb) { return courseLabels[cb.value] || cb.value; });
+
+  var venue = {
+    name: venueNameInput.value.trim(),
+    subType: isPool ? (poolTypeSelect.value + (checkedCourses.length ? ', ' + checkedCourses.join('/') : '')) : openWaterTypeSelect.value,
+  };
+
+  addLocationCard(_pendingNewLocation, [venue]);
+
+  var venueRow = document.querySelector('.venue-form-row');
+  if (venueRow) venueRow.style.display = 'none';
+
+  _resetLocationStep1Fields();
+  _resetLocationStep2Fields();
+
+  var headerAdd = document.querySelector('.location-header__add');
+  if (headerAdd) headerAdd.style.display = '';
+
+  _pendingNewLocation = null;
+  _locationMode = null;
+}
+
+function toggleLocationEdit(on) {
+  var list = document.querySelector('#locationsList .list.locations');
+  if (list) list.classList.toggle('edit-list', on);
+  document.querySelectorAll('#locationListContainer .list__controls').forEach(function (el) {
+    el.style.display = on ? '' : 'none';
+  });
+  var editBtn = document.querySelector('#editLocationBtn');
+  var doneBtn = document.querySelector('#doneEditLocationBtn');
+  if (editBtn) editBtn.style.display = on ? 'none' : '';
+  if (doneBtn) doneBtn.style.display = on ? '' : 'none';
+}
+
+function saveLocation(e) {
+  if (e) e.preventDefault();
+  var section = document.querySelector('#section-location-information');
+  var hasLocations = document.querySelectorAll('#locationListContainer .list-item').length > 0;
+  var helpBlock = document.querySelector('.section-location-information .help-block--selectLocation');
+  if (!hasLocations) {
+    if (helpBlock) helpBlock.classList.add('has-error');
+    window.scroll(0, FindPos(helpBlock));
+    return;
+  }
+  if (helpBlock) helpBlock.classList.remove('has-error');
+  if (section) section.classList.add('hasData');
+  if (nextSection) {
+    $(nextSection.querySelector('.section__content')).collapse('show');
+    nextSection = null;
+  } else {
+    $(document.querySelector('#club-bundles .section__content')).collapse('show');
+  }
+}
+
+// ── Location Search — prefilled candidate list from range/zip lookup ────────
+// Mirrors event-edit-locations.js: the full locations dataset is baked into
+// the page as inline JSON (no live Google Places key in this mockup), and a
+// default city seeds the initial candidate list on load, same as production
+// hydrating from a real "locations near me" API call.
+
+(function () {
+  var dataEl = document.querySelector('#club-location-search-data');
+  if (!dataEl) return;
+  var allLocations;
+  try { allLocations = JSON.parse(dataEl.textContent); } catch (err) { allLocations = []; }
+
+  var locationColumn = document.querySelector('.section-location-information .location-column');
+  var nameInput       = document.querySelector('.section-location-information input[name="search-filter__club-name"]');
+  var locationInput   = document.querySelector('.section-location-information #locationSearch');
+  var rangeSelect      = document.querySelector('.section-location-information #search-filter__range');
+  var submitBtn        = document.querySelector('.section-location-information #listSearchSubmit');
+  var typeBoxes         = document.querySelectorAll('.section-location-information input[name="searchType"]');
+  var summaryCount     = document.querySelector('.section-location-information .summary-count');
+  var summaryRange     = document.querySelector('.section-location-information .summary-range');
+  var summaryLoc       = document.querySelector('.section-location-information .summary-location');
+  var expandSearchHelp = document.querySelector('.section-location-information .help-block--expandSearch');
+
+  if (!locationColumn) return;
+
+  function escapeHtml(str) {
+    return String(str || '')
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function haversineMiles(lat1, lng1, lat2, lng2) {
+    var R = 3958.8;
+    var d1 = (lat2 - lat1) * Math.PI / 180;
+    var d2 = (lng2 - lng1) * Math.PI / 180;
+    var a = Math.sin(d1 / 2) * Math.sin(d1 / 2)
+      + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180)
+      * Math.sin(d2 / 2) * Math.sin(d2 / 2);
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  }
+
+  var knownPoolTags = ['SCY', 'SCM', 'LCM'];
+
+  function uniqueTags(courses) {
+    var seen = {};
+    var tags = [];
+    (courses || []).forEach(function (c) {
+      if (c.tag && !seen[c.tag]) { seen[c.tag] = true; tags.push(c.tag); }
+    });
+    return tags;
+  }
+
+  function renderCourseTags(courses) {
+    return uniqueTags(courses).map(function (tag) {
+      return '<p class="event-location--course">' + escapeHtml(tag) + '</p>';
+    }).join('');
+  }
+
+  function renderSearchCard(loc) {
+    return '<div class="list-item list-item--location"'
+      + ' data-location-id="' + escapeHtml(loc.id) + '"'
+      + ' data-name="'        + escapeHtml(loc.name) + '"'
+      + ' data-address="'     + escapeHtml(loc.address) + '"'
+      + ' data-city="'        + escapeHtml(loc.city) + '"'
+      + ' data-state="'       + escapeHtml(loc.state) + '"'
+      + ' data-zip="'         + escapeHtml(loc.zip) + '"'
+      + ' data-courses="'     + escapeHtml(JSON.stringify(loc.courses)) + '">'
+      + '<button type="button" class="btn btn-small btn-select-location">Select</button>'
+      + '<p class="event-location__address--name">'   + escapeHtml(loc.name)    + '</p>'
+      + '<p class="event-location__address--street">' + escapeHtml(loc.address) + '</p>'
+      + '<p class="event-location__city-state">'      + escapeHtml(loc.city) + ', ' + escapeHtml(loc.state) + ' ' + escapeHtml(loc.zip) + '</p>'
+      + '<div class="event-location--course-tags">' + renderCourseTags(loc.courses) + '</div>'
+      + '</div>';
+  }
+
+  // ── Filtering ────────────────────────────────────────────────────────────
+
+  var userLat = null;
+  var userLng = null;
+
+  function parseLocationText(raw) {
+    var s = (raw || '').trim();
+    if (!s) return null;
+    if (/^\d{5}$/.test(s)) return { zip: s };
+    if (s.indexOf(',') !== -1) {
+      var parts = s.split(',');
+      return { city: parts[0].trim().toLowerCase(), state: parts[1].trim().toLowerCase() };
+    }
+    if (/^[a-zA-Z]{2}$/.test(s)) return { state: s.toLowerCase() };
+    return { city: s.toLowerCase() };
+  }
+
+  function locMatchesText(loc, parsed) {
+    if (!parsed) return true;
+    if (parsed.zip) return (loc.zip || '') === parsed.zip;
+    var cityOk  = !parsed.city  || (loc.city  || '').toLowerCase().indexOf(parsed.city) !== -1;
+    var stateOk = !parsed.state || (loc.state || '').toLowerCase().indexOf(parsed.state) !== -1;
+    return cityOk && stateOk;
+  }
+
+  function getSelectedRange() {
+    if (!rangeSelect) return null;
+    var val = rangeSelect.value;
+    return val === 'nationwide' ? null : parseFloat(val);
+  }
+
+  function locMatchesDistance(loc, rangeMiles) {
+    if (rangeMiles === null) return true;
+    if (userLat === null || userLng === null) return true;
+    var itemLat = parseFloat(loc.lat);
+    var itemLng = parseFloat(loc.lng);
+    if (isNaN(itemLat) || isNaN(itemLng)) return false;
+    return haversineMiles(userLat, userLng, itemLat, itemLng) <= rangeMiles;
+  }
+
+  function locMatchesType(loc, checkedValues) {
+    if (!checkedValues.length) return true;
+    var isPoolLoc = (loc.courses || []).some(function (c) { return knownPoolTags.indexOf(c.tag) !== -1; });
+    return checkedValues.some(function (val) {
+      return val === 'pool' ? isPoolLoc : !isPoolLoc;
+    });
+  }
+
+  function updateSummary(count) {
+    if (summaryCount) summaryCount.textContent = count;
+    if (summaryRange && rangeSelect) summaryRange.textContent = rangeSelect.options[rangeSelect.selectedIndex].text;
+    if (summaryLoc && locationInput) summaryLoc.textContent = locationInput.value.trim() || 'Nationwide';
+  }
+
+  function applyFilters() {
+    var nameQuery     = nameInput ? nameInput.value.trim().toLowerCase() : '';
+    var rangeMiles    = getSelectedRange();
+    var parsedLoc     = (userLat === null && locationInput) ? parseLocationText(locationInput.value) : null;
+    var checkedValues = [];
+    typeBoxes.forEach(function (cb) { if (cb.checked) checkedValues.push(cb.value); });
+
+    var matched = allLocations.filter(function (loc) {
+      var nameOk   = !nameQuery || (loc.name || '').toLowerCase().indexOf(nameQuery) !== -1;
+      var distOk   = locMatchesDistance(loc, rangeMiles);
+      var locOk    = distOk || locMatchesText(loc, parsedLoc);
+      var typeOk   = locMatchesType(loc, checkedValues);
+      return nameOk && (userLat !== null ? distOk : locOk) && typeOk;
+    });
+
+    locationColumn.innerHTML = matched.map(renderSearchCard).join('');
+    updateSummary(matched.length);
+    if (expandSearchHelp) expandSearchHelp.classList.toggle('has-error', matched.length === 0);
+  }
+
+  function geocodeAddress(address) {
+    if (!address) { applyFilters(); return; }
+    fetch(
+      'https://nominatim.openstreetmap.org/search?format=json&limit=1&countrycodes=us&q=' + encodeURIComponent(address),
+      { headers: { 'Accept-Language': 'en-US,en' } }
+    )
+      .then(function (r) { return r.json(); })
+      .then(function (results) {
+        if (results && results[0]) {
+          userLat = parseFloat(results[0].lat);
+          userLng = parseFloat(results[0].lon);
+        }
+        applyFilters();
+      })
+      .catch(function () { applyFilters(); });
+  }
+
+  // ── Events ───────────────────────────────────────────────────────────────
+
+  if (submitBtn) {
+    submitBtn.addEventListener('click', function () {
+      userLat = null;
+      userLng = null;
+      geocodeAddress(locationInput ? locationInput.value : '');
+    });
+  }
+
+  if (nameInput) {
+    nameInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') applyFilters();
+    });
+  }
+
+  if (locationInput) {
+    locationInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { userLat = null; userLng = null; geocodeAddress(locationInput.value); }
+    });
+  }
+
+  if (rangeSelect) rangeSelect.addEventListener('change', applyFilters);
+  typeBoxes.forEach(function (cb) { cb.addEventListener('change', applyFilters); });
+
+  // ── Select a candidate → add it directly ──────────────────────────────────
+  // Production's Search.jsx calls handleLocationSelect(loc) straight off the
+  // Select button — Location.jsx's modalCourseSelection/showModalCourseSelection
+  // are defined but never called from anywhere, so there's no course-picker
+  // step here. The whole location, with every one of its pools, gets added.
+
+  // Reconstructs distinct pools/venues from the flat courses array (grouped by
+  // pool name), matching how a real API response's Pools array would look.
+  function groupCoursesToVenues(courses, locationName) {
+    var venueMap = {};
+    var order = [];
+    (courses || []).forEach(function (c) {
+      var poolName = c.pool || locationName;
+      if (!venueMap[poolName]) {
+        venueMap[poolName] = { name: poolName, type: c.type, tags: [] };
+        order.push(poolName);
+      }
+      if (c.tag && venueMap[poolName].tags.indexOf(c.tag) === -1) venueMap[poolName].tags.push(c.tag);
+    });
+    return order.map(function (poolName) {
+      var v = venueMap[poolName];
+      return { name: v.name, subType: [v.type, v.tags.join('/')].filter(Boolean).join(', ') };
+    });
+  }
+
+  locationColumn.addEventListener('click', function (e) {
+    var btn = e.target.closest('.btn-select-location');
+    if (!btn) return;
+    var item = btn.closest('.list-item[data-location-id]');
+    if (!item) return;
+
+    var isDuplicate = Array.prototype.some.call(
+      document.querySelectorAll('#locationListContainer .location-address-street'),
+      function (el) { return (el.dataset.street || '').toLowerCase() === (item.dataset.address || '').toLowerCase(); }
+    );
+    if (isDuplicate) {
+      _openModal('modalAddDuplicateOrganization');
+      return;
+    }
+
+    var courses;
+    try { courses = JSON.parse(item.dataset.courses || '[]'); } catch (err) { courses = []; }
+
+    addLocationCard({
+      name: item.dataset.name,
+      street: item.dataset.address,
+      city: item.dataset.city,
+      state: item.dataset.state,
+      zip: item.dataset.zip,
+    }, groupCoursesToVenues(courses, item.dataset.name));
+  });
+
+  // ── Init: seed a default city so a candidate list shows on load ──────────
+
+  if (locationInput) locationInput.value = 'Sarasota, FL';
+  geocodeAddress(locationInput ? locationInput.value : '');
+}());
 
 // ── Section — Gold Club ──────────────────────────────────────────────────────
 
@@ -973,7 +1912,7 @@ function setGoldClubFlag() {
 
 function saveGold(e) {
   if (e) e.preventDefault();
-  var section = document.querySelector('#gold-club');
+  var section = document.querySelector('#club-bundles');
   if (!section) return;
   var radios = section.querySelectorAll('input[type="radio"]');
   var valid = true;
@@ -997,11 +1936,117 @@ function saveGold(e) {
     $(nextSection.querySelector('.section__content')).collapse('show');
     nextSection = null;
   } else {
-    $(document.querySelector('#gold-club .section__content')).collapse('hide');
+    $(document.querySelector('#club-bundles .section__content')).collapse('hide');
   }
 }
 
 // ── Section — Payment ────────────────────────────────────────────────────────
+
+function _getClubTierIndex(swimmerCount) {
+  var n = parseInt(swimmerCount, 10);
+  if (isNaN(n) || n < 1) return null;
+  if (n < 5)   return 1;
+  if (n < 25)  return 2;
+  if (n < 100) return 3;
+  return 4;
+}
+
+var CLUB_TIER_PRICES = { 1: 99, 2: 199, 3: 299, 4: 499 };
+var CLUB_TIER_INFO = {
+  1: { label: 'Tier 1', range: '(< 5 swimmers)', price: '$99/yr' },
+  2: { label: 'Tier 2', range: '(5—24 swimmers)', price: '$199/yr' },
+  3: { label: 'Tier 3', range: '(25—99 swimmers)', price: '$299/yr' },
+  4: { label: 'Tier 4', range: '(100+ swimmers)', price: '$499/yr' }
+};
+
+function _renderMarketingBundleTier(tier) {
+  var el = document.querySelector('#marketingBundleTierPrice');
+  if (!el) return;
+  var info = CLUB_TIER_INFO[tier] || CLUB_TIER_INFO[1];
+  el.innerHTML = '';
+  var label = document.createElement('span');
+  label.className = 'bundle-tier-name';
+  label.textContent = info.label;
+  var range = document.createElement('span');
+  range.className = 'bundle-tier-swimmer-count';
+  range.textContent = info.range;
+  var price = document.createElement('span');
+  price.className = 'bundle-tier-price';
+  price.textContent = info.price;
+  el.appendChild(label);
+  el.appendChild(price);
+  el.appendChild(range);
+}
+
+var USMS_CLUB_FEE = 75;
+var CLUB_BUNDLES = ['marketingBundle', 'clubBundleOption2', 'clubBundleOption3'];
+
+function _bundleRow(bundleKey) {
+  return document.querySelector('.section-payment__bundle-row[data-bundle="' + bundleKey + '"]');
+}
+
+function _updateBillingTotal() {
+  var billingInput = document.querySelector('input[name="billingAmount"]');
+  var totalEl = document.querySelector('.section-payment__total');
+  var clubFeeRow = document.querySelector('.section-payment__club-fee-row');
+  var clubFee = (!clubFeeRow || clubFeeRow.style.display !== 'none') ? USMS_CLUB_FEE : 0;
+  var bundleTotal = 0;
+  CLUB_BUNDLES.forEach(function (bundleKey) {
+    var row = _bundleRow(bundleKey);
+    if (!row || row.style.display === 'none') return;
+    var costEl = row.querySelector('.section-payment__bundle-cost');
+    if (costEl) bundleTotal += parseFloat(costEl.textContent.replace('$', '')) || 0;
+  });
+  var total = (clubFee + bundleTotal).toFixed(2);
+  if (billingInput) billingInput.value = total;
+  if (totalEl) totalEl.textContent = '$' + total;
+}
+
+function updateClubPricing() {
+  var swimmerInput = document.querySelector('#totalSwimmers');
+  var tier = _getClubTierIndex(swimmerInput ? swimmerInput.value : '');
+  var tierPrice = tier ? CLUB_TIER_PRICES[tier] : null;
+
+  CLUB_BUNDLES.forEach(function (bundleKey) {
+    var row = _bundleRow(bundleKey);
+    var costEl = row && row.querySelector('.section-payment__bundle-cost');
+    if (costEl) costEl.textContent = tierPrice !== null ? '$' + tierPrice + '.00' : '$0.00';
+  });
+
+  _renderMarketingBundleTier(tier || 1);
+
+  _updateBillingTotal();
+}
+
+// Marketing Bundle radios/price depend on knowing the club's swimmer count
+// (that's what the tier/price is based on), so keep them disabled/hidden
+// until totalSwimmers has a value. An already-accepted bundle stays locked
+// regardless — see the CLUB_BUNDLES lock in the DOMContentLoaded handler —
+// so this never re-enables a radio that lock intentionally disabled.
+function _syncMarketingBundleAvailability() {
+  var yesRadio = document.querySelector('#marketingBundleYes');
+  var noRadio = document.querySelector('#marketingBundleNo');
+  var priceEl = document.querySelector('#marketingBundleTierPrice');
+  if (!yesRadio || !noRadio) return;
+  var locked = yesRadio.checked;
+  var swimmerInput = document.querySelector('#totalSwimmers');
+  var hasSwimmerCount = !!(swimmerInput && swimmerInput.value);
+  if (!locked) {
+    yesRadio.disabled = !hasSwimmerCount;
+    noRadio.disabled = !hasSwimmerCount;
+  }
+  if (priceEl) priceEl.style.display = hasSwimmerCount ? '' : 'none';
+}
+
+function updateBundlePricing(bundleKey) {
+  var yesRadio = document.querySelector('#' + bundleKey + 'Yes');
+  var row = _bundleRow(bundleKey);
+  if (!row) return;
+  var show = yesRadio && yesRadio.checked;
+  row.style.display = show ? '' : 'none';
+  if (show) updateClubPricing();
+  _updateBillingTotal();
+}
 
 function editPayment() { }
 
@@ -1011,11 +2056,205 @@ function handleAgreementChange() {
   if (submitBtn) submitBtn.disabled = !(checkbox && checkbox.checked);
 }
 
-function submitCreditCard(e) {
+// Force every accordion section open at once (bypassing the single-open
+// accordion behavior) so Submit Payment can surface errors anywhere in the
+// form, not just the currently-open section. Skips sections Regional Club
+// has disabled, since those are intentionally out of the flow.
+function expandAllSections() {
+  document.querySelectorAll('#accordion .section__content.collapse').forEach(function (content) {
+    var wrapper = content.closest('.section');
+    if (wrapper && wrapper.classList.contains('section--disabled')) return;
+    content.classList.add('in', 'show');
+    content.style.height = '';
+    content.setAttribute('aria-expanded', 'true');
+    setSectionInputStatus(content, false);
+    if (content.parentElement) content.parentElement.classList.add('isEdit');
+  });
+}
+
+// force=true skips the actual check and unconditionally marks the field as
+// errored — used by showValidation()'s Submit Payment button, which only
+// needs to render the has-error state for reviewing label positioning/
+// content, not determine whether fields are actually filled in correctly.
+function _validateRequiredRadioGroup(name, force) {
+  var helpBlock = document.querySelector('.help-block--' + name);
+  var answered = force ? false : !!document.querySelector('input[name="' + name + '"]:checked');
+  if (helpBlock) helpBlock.classList.toggle('has-error', !answered);
+  return answered;
+}
+
+function _validateRequiredCheckbox(el, helpBlockSelector, force) {
+  var helpBlock = document.querySelector(helpBlockSelector);
+  var checked = force ? false : !!(el && el.checked);
+  if (helpBlock) helpBlock.classList.toggle('has-error', !checked);
+  return checked;
+}
+
+function _validateRequiredField(selector, force) {
+  var el = document.querySelector(selector);
+  if (!el) return true;
+  if (force) {
+    setInputStatus(el, false);
+    return false;
+  }
+  validateField(el);
+  return !el.classList.contains('has-error');
+}
+
+function _validateAtLeastOneItem(containerSelector, helpBlockSelector, force) {
+  var hasItem = force ? false : document.querySelector(containerSelector + ' .list-item') !== null;
+  var helpBlock = document.querySelector(helpBlockSelector);
+  if (helpBlock) helpBlock.classList.toggle('has-error', !hasItem);
+  return hasItem;
+}
+
+// Wipes every has-error/has-success flag showValidation may have set, anywhere
+// in the form, so a second click can start clean rather than leaving stale
+// error states on sections that get collapsed back down.
+function _clearAllValidation() {
+  document.querySelectorAll('#accordion .has-error, #accordion .has-success, .payment-info .has-error, .payment-info .has-success').forEach(function (el) {
+    el.classList.remove('has-error', 'has-success');
+  });
+}
+
+var _validationDisplayed = false;
+
+function showValidation(e) {
   if (e) e.preventDefault();
+
+  // Second click — dev-only reset: clear all validation states and collapse
+  // every section back down except Club Name. Closes sections directly via
+  // _closeSection rather than $.collapse('show')'s side effect — Club Name
+  // already carries the 'in'/'show' classes expandAllSections() stamped on
+  // it, so Bootstrap treats it as already shown and never fires
+  // show.bs.collapse (the event the "close siblings" logic depends on).
+  // Payment isn't a collapsible accordion section — it has no header toggle
+  // and is always visible — so _closeSection would disable its inputs with
+  // no way to re-enable them; skip it along with Club Name.
+  if (_validationDisplayed) {
+    _clearAllValidation();
+    document.querySelectorAll('#accordion .section__content').forEach(function (content) {
+      if (content.id !== 'club-name__content' && content.id !== 'club-payment__content') _closeSection(content);
+    });
+    var clubNameContent = document.querySelector('#club-name__content');
+    if (clubNameContent) {
+      clubNameContent.classList.add('in', 'show');
+      clubNameContent.style.height = '';
+      clubNameContent.setAttribute('aria-expanded', 'true');
+      setSectionInputStatus(clubNameContent, false);
+      if (clubNameContent.parentElement) clubNameContent.parentElement.classList.add('isEdit');
+    }
+    _validationDisplayed = false;
+    return;
+  }
+  _validationDisplayed = true;
+
+  expandAllSections();
+
+  // Dev-only: unconditionally render has-error on every required field so
+  // label positioning/content can be reviewed — this does not check whether
+  // fields are actually filled in correctly. Click Submit Payment again to
+  // clear (see the _validationDisplayed branch above).
+
+  // Club Name
+  ['#selectLmsc', '#clubName', '#clubAbbr'].forEach(function (sel) {
+    _validateRequiredField(sel, true);
+  });
+
+  // Club Details
+  ['#clubDescription', '#practiceDetails', '#totalSwimmers'].forEach(function (sel) {
+    _validateRequiredField(sel, true);
+  });
+  _validateRequiredRadioGroup('usmsLiabilityInsurance', true);
+  _validateRequiredRadioGroup('usaSwimmingAffiliation', true);
+  _validateRequiredRadioGroup('clubTrialMembership', true);
+  _validateRequiredRadioGroup('membershipRequired', true);
+
+  // Club Contact
+  var contactSection = document.querySelector('#club-contact');
+  if (contactSection && !contactSection.classList.contains('section--disabled')) {
+    _validateAtLeastOneItem('#club-contact .list__container', '.help-block--ContactType', true);
+  }
+
+  // Location — skipped when Regional Club disables the section
+  var locationSection = document.querySelector('#section-location-information');
+  if (locationSection && !locationSection.classList.contains('section--disabled')) {
+    _validateAtLeastOneItem('#locationListContainer', '.section-location-information .help-block--selectLocation', true);
+  }
+
+  // Club Bundles — only if the section is visible and not disabled by Regional Club
+  var clubBundles = document.querySelector('#club-bundles');
+  if (clubBundles && clubBundles.style.display !== 'none' && !clubBundles.classList.contains('section--disabled')) {
+    CLUB_BUNDLES.forEach(function (bundleKey) {
+      _validateRequiredRadioGroup(bundleKey, true);
+    });
+  }
+
+  // Payment
+  ['#cardName', '#cardNumber', '#cardCode', '#expiration', '#cardZip'].forEach(function (sel) {
+    _validateRequiredField(sel, true);
+  });
+  _validateRequiredCheckbox(document.querySelector('#agreeTerms'), '.help-block--agreeTerms', true);
 }
 
 // ── Tooltips ─────────────────────────────────────────────────────────────────
+
+function initAccordion() {
+  // Fully owns open/close instead of leaning on Bootstrap 3's data-api
+  // handler. BS3's collapse Plugin() takes a different code path the first
+  // time it processes a section (constructing a Collapse instance, whose
+  // constructor auto-toggles based on the current 'in' class) than on every
+  // click after that (a plain instance.toggle() call) — for a section
+  // opened by our own _openSection() rather than jQuery's $.collapse('show'),
+  // no instance exists yet, so the first click's construct-and-toggle and
+  // the second click's plain toggle disagreed with each other, leaving the
+  // section stuck mid-collapse and overlapping the sections below it.
+  // stopPropagation keeps BS3's document-level data-api listener (bound in
+  // site-wide bootstrap.min.js) from ever seeing the click, so this is the
+  // only code path handling these headers.
+  document.querySelectorAll('#accordion .section__header[data-toggle="collapse"]').forEach(function (header) {
+    header.addEventListener('click', function (e) {
+      e.stopPropagation();
+
+      var targetSelector = this.getAttribute('data-target');
+      var target = targetSelector ? document.querySelector(targetSelector) : null;
+      if (!target) return;
+
+      var wasOpen = target.classList.contains('in') || target.classList.contains('show') || target.classList.contains('collapsing');
+
+      document.querySelectorAll('#accordion .section__content').forEach(function (content) {
+        if (content !== target && (content.classList.contains('in') || content.classList.contains('show') || content.classList.contains('collapsing'))) {
+          _closeSection(content);
+        }
+      });
+
+      if (wasOpen) {
+        _closeSection(target);
+        return;
+      }
+
+      _openSection(target);
+
+      setTimeout(function () {
+        window.scroll(0, FindPos(target.parentNode));
+      }, 450);
+
+      switch (target.id) {
+        case 'club-bundles__content':
+          setGoldClubFlag();
+          break;
+        case 'club-name__content':
+        case 'club-details__content':
+        case 'club-contact__content':
+        case 'location-information__content':
+          currentSectionState = saveSectionState(target);
+          break;
+        default:
+          break;
+      }
+    });
+  });
+}
 
 function initTooltips() {
   if (window.bootstrap && window.bootstrap.Tooltip) {
@@ -1023,11 +2262,42 @@ function initTooltips() {
       new window.bootstrap.Tooltip(el, { strategy: 'fixed' });
     });
   }
+  // Tooltip icons sit inside a <label> next to their field (or, for checkboxes,
+  // inside the same label as the checkbox itself). Clicking them would otherwise
+  // trigger the label's native click-forwarding to that field/checkbox, which either
+  // steals focus and closes the tooltip immediately, or toggles a checkbox the user
+  // never meant to touch. stopPropagation keeps the click from ever reaching the
+  // label's own click handling, so neither happens.
+  document.querySelectorAll('.icon-help[data-bs-toggle="tooltip"]').forEach(function (el) {
+    // Track shown/hidden state so a click can tell "just opened via this
+    // click's own focus" (case A) apart from "was already open" (case B).
+    el.addEventListener('shown.bs.tooltip', function () { el.dataset.tooltipOpen = 'true'; });
+    el.addEventListener('hidden.bs.tooltip', function () { el.dataset.tooltipOpen = 'false'; });
+
+    var wasOpenBeforeThisClick = false;
+    el.addEventListener('mousedown', function () {
+      // Runs before the browser shifts focus, so this still reflects the
+      // pre-click state.
+      wasOpenBeforeThisClick = el.dataset.tooltipOpen === 'true';
+    });
+
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      if (wasOpenBeforeThisClick) {
+        // Icon was already focused/open — this click means "close it."
+        // Blurring lets the existing focus-trigger handle the hide.
+        el.blur();
+      }
+    });
+  });
 }
 
 // ── DOMContentLoaded init ────────────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', function () {
+  initAccordion();
+
   // Capture initial state from Club Name for change detection
   var clubNameContent = document.querySelector('#club-name__content');
   if (clubNameContent) {
@@ -1040,6 +2310,23 @@ document.addEventListener('DOMContentLoaded', function () {
   var clubAbbr = document.querySelector('#clubAbbr');
   if (lmsc && lmsc.value) lmsc.disabled = true;
   if (clubAbbr && clubAbbr.value) clubAbbr.disabled = true;
+
+  // Club Bundles — an existing club that already accepted a bundle can't back
+  // out of it, so lock both radios once "Yes" comes in pre-selected. A bundle
+  // that was previously declined ("No") stays open so the club can still
+  // upgrade into it. New clubs (Create) have neither radio checked, so this
+  // is a no-op for them.
+  CLUB_BUNDLES.forEach(function (bundleKey) {
+    var yesRadio = document.querySelector('#' + bundleKey + 'Yes');
+    var noRadio = document.querySelector('#' + bundleKey + 'No');
+    if (!yesRadio || !noRadio) return;
+    var locked = yesRadio.checked;
+    yesRadio.disabled = locked;
+    noRadio.disabled = locked;
+  });
+
+  membershipRequiredLocked = !!document.querySelector('input[name="membershipRequired"]:checked');
+  lockMembershipRequiredIfAnswered();
 
   // Mark sections with pre-populated data
   var clubName = document.querySelector('#clubName');
@@ -1066,22 +2353,101 @@ document.addEventListener('DOMContentLoaded', function () {
     if (coachSection) coachSection.classList.add('hasData');
   }
 
-  var locationItem = document.querySelector('#location-information .list-item');
+  var locationItem = document.querySelector('#locationListContainer .list-item');
   if (locationItem) {
-    var locationSection = document.querySelector('#location-information');
+    var locationSection = document.querySelector('#section-location-information');
     if (locationSection) locationSection.classList.add('hasData');
+    var locationsListWrap = document.querySelector('#locationsList');
+    if (locationsListWrap) locationsListWrap.style.display = '';
   }
 
-  var goldYes = document.querySelector('#gold-club input[type="radio"]:checked');
-  if (goldYes) {
-    var goldSection = document.querySelector('#gold-club');
-    if (goldSection) goldSection.classList.add('hasData');
+  var bundlesAnswered = document.querySelector('#club-bundles input[type="radio"]:checked');
+  if (bundlesAnswered) {
+    var bundlesSection = document.querySelector('#club-bundles');
+    if (bundlesSection) bundlesSection.classList.add('hasData');
   }
 
-  // Clicking the Search Contact input while Add New form is open closes and clears the form.
+  // Dynamic pricing — update payment total as swimmer count changes.
+  var totalSwimmersEl = document.querySelector('#totalSwimmers');
+  if (totalSwimmersEl) {
+    totalSwimmersEl.addEventListener('blur', updateClubPricing);
+    totalSwimmersEl.addEventListener('input', _syncMarketingBundleAvailability);
+  }
+  _syncMarketingBundleAvailability();
+
+  CLUB_BUNDLES.forEach(function (bundleKey) {
+    document.querySelectorAll('input[name="' + bundleKey + '"]').forEach(function (r) {
+      r.addEventListener('change', function () { updateBundlePricing(bundleKey); });
+    });
+  });
+
+  // Club Bundles section — show when "No" is selected for USMS membership requirement.
+  function handleMembershipRequired() {
+    var noRadio = document.querySelector('#membershipRequiredAnsweredNo');
+    var clubBundles = document.querySelector('#club-bundles');
+    if (!clubBundles) return;
+    var requiresBundle = !!(noRadio && noRadio.checked);
+    clubBundles.style.display = requiresBundle ? '' : 'none';
+
+    if (requiresBundle) {
+      _syncMarketingBundleAvailability();
+    } else {
+      // Membership is required again, so no bundle applies — clear any answer
+      // (unless it's a locked, already-accepted bundle) and drop its line
+      // item from the payment total.
+      CLUB_BUNDLES.forEach(function (bundleKey) {
+        var yesRadio = document.querySelector('#' + bundleKey + 'Yes');
+        var noBundleRadio = document.querySelector('#' + bundleKey + 'No');
+        if (yesRadio && yesRadio.disabled) return;
+        if (yesRadio) yesRadio.checked = false;
+        if (noBundleRadio) noBundleRadio.checked = false;
+        updateBundlePricing(bundleKey);
+      });
+      clubBundles.classList.remove('hasData');
+    }
+  }
+  document.querySelectorAll('input[name="membershipRequired"]').forEach(function (r) {
+    r.addEventListener('change', handleMembershipRequired);
+  });
+  handleMembershipRequired();
+
+  // Regional Club checkbox — disable Location Information section when checked,
+  // and warn the user with a confirmation modal (mirrors production Details.js
+  // handleRegionalClubChange(), which only shows the modal on check, not uncheck).
+  var regionalClubEl = document.querySelector('#regionalClub');
+  if (regionalClubEl) {
+    regionalClubEl.addEventListener('change', function (e) {
+      setRegionalClubSections(e.target.checked);
+      if (e.target.checked) {
+        var modalEl = document.querySelector('#modalClubDetails');
+        if (modalEl) {
+          // Mirrors modal.js's own [data-modal-target] click handler — this
+          // codebase's modal system is self-contained (no BS3/BS5 JS), so
+          // opening it via bootstrap.Modal here left an inline
+          // body.style.overflow that handleCancelModal's class-based
+          // cleanup (matching modal.js's close branch) never clears.
+          var scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+          var backdrop = document.createElement('div');
+          backdrop.className = 'modal-backdrop fade in';
+          document.body.appendChild(backdrop);
+          modalEl.classList.add('in');
+          modalEl.setAttribute('aria-hidden', 'false');
+          document.body.classList.add('modal-open');
+          document.body.style.paddingRight = scrollbarWidth + 'px';
+        }
+      }
+    });
+    setRegionalClubSections(regionalClubEl.checked);
+  }
+
+  // Clicking the Search Contact input while Add New form is open closes and
+  // clears the form. Uses mousedown rather than focus — browser autofill can
+  // programmatically focus this field as a side effect of filling out the
+  // Add New form (it shares "name"-like field naming), which was closing the
+  // form out from under the user; a real user click still fires mousedown.
   var lookupContactNameEl = document.querySelector('#lookupContactName');
   if (lookupContactNameEl) {
-    lookupContactNameEl.addEventListener('focus', function () {
+    lookupContactNameEl.addEventListener('mousedown', function () {
       var notMember = document.querySelector('.club-contact__not-member-container');
       if (notMember && notMember.style.display === 'block') {
         handleCancelAddContact();
@@ -1112,11 +2478,100 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Open Club Name section on load via Bootstrap 3 jQuery API so that the
-  // show.bs.collapse listener fires and enables inputs / marks isEdit.
+  var lookupCoachNameEl = document.querySelector('#lookupCoachName');
+  if (lookupCoachNameEl) {
+    autocompleteCoachesByName(lookupCoachNameEl);
+  }
+
+  var coachListContainer = document.querySelector('#coach .list__container');
+  if (coachListContainer) {
+    coachListContainer.addEventListener('click', function (e) {
+      var btn = e.target;
+      while (btn && btn !== coachListContainer) {
+        if (btn.classList.contains('list-item__delete')) {
+          removeCoachCard(e);
+          return;
+        }
+        btn = btn.parentNode;
+      }
+    });
+  }
+
+  // Location — Add New Pool / Open Water buttons
+  var addPoolLocationBtn = document.querySelector('#addPoolLocationBtn');
+  var addOpenWaterLocationBtn = document.querySelector('#addOpenWaterLocationBtn');
+  if (addPoolLocationBtn) addPoolLocationBtn.addEventListener('click', handleAddLocationButtonClick);
+  if (addOpenWaterLocationBtn) addOpenWaterLocationBtn.addEventListener('click', handleAddLocationButtonClick);
+
+  var confirmNewFacilityBtn = document.querySelector('#confirmNewFacility');
+  var cancelNewFacilityBtn = document.querySelector('#cancelNewFacility');
+  if (confirmNewFacilityBtn) confirmNewFacilityBtn.addEventListener('click', confirmNewLocationDetails);
+  if (cancelNewFacilityBtn) cancelNewFacilityBtn.addEventListener('click', cancelNewLocationForm);
+
+  var saveFormPoolBtn = document.querySelector('#saveFormPool');
+  var cancelSaveVenueBtn = document.querySelector('#cancelSaveVenue');
+  if (saveFormPoolBtn) saveFormPoolBtn.addEventListener('click', confirmNewVenue);
+  if (cancelSaveVenueBtn) cancelSaveVenueBtn.addEventListener('click', cancelNewVenueForm);
+
+  var closeDuplicateOrganizationBtn = document.querySelector('#closeDuplicateOrganization');
+  if (closeDuplicateOrganizationBtn) {
+    closeDuplicateOrganizationBtn.addEventListener('click', function () {
+      _closeModal('modalAddDuplicateOrganization');
+    });
+  }
+
+  var editLocationBtn = document.querySelector('#editLocationBtn');
+  var doneEditLocationBtn = document.querySelector('#doneEditLocationBtn');
+  if (editLocationBtn) editLocationBtn.addEventListener('click', function () { toggleLocationEdit(true); });
+  if (doneEditLocationBtn) doneEditLocationBtn.addEventListener('click', function () { toggleLocationEdit(false); });
+
+  var locationListContainerEl = document.querySelector('#locationListContainer');
+  if (locationListContainerEl) {
+    locationListContainerEl.addEventListener('click', function (e) {
+      var btn = e.target;
+      while (btn && btn !== locationListContainerEl) {
+        if (btn.classList.contains('list-item__delete')) {
+          _locationRemoveTarget = btn.closest('.col-sm-12');
+          _openModal('modalRemoveLocation');
+          return;
+        }
+        btn = btn.parentNode;
+      }
+    });
+  }
+
+  var confirmRemoveLocationBtn = document.querySelector('#confirmRemoveLocation');
+  if (confirmRemoveLocationBtn) {
+    confirmRemoveLocationBtn.addEventListener('click', function () {
+      if (_locationRemoveTarget && _locationRemoveTarget.parentNode) {
+        _locationRemoveTarget.parentNode.removeChild(_locationRemoveTarget);
+      }
+      _locationRemoveTarget = null;
+      _closeModal('modalRemoveLocation');
+      var remaining = document.querySelectorAll('#locationListContainer .list-item').length;
+      if (remaining === 0) {
+        var listWrap = document.querySelector('#locationsList');
+        if (listWrap) listWrap.style.display = 'none';
+        var locationSection = document.querySelector('#section-location-information');
+        if (locationSection) locationSection.classList.remove('hasData');
+        toggleLocationEdit(false);
+      }
+    });
+  }
+
+  var saveLocationBtn = document.querySelector('#saveLocation');
+  if (saveLocationBtn) saveLocationBtn.addEventListener('click', saveLocation);
+
+  // Open Club Name section on load directly via _openSection rather than
+  // jQuery's $.collapse('show') — see _openSection for why: an early click
+  // to close it during the animated open transition was being silently
+  // swallowed by BS3's "already transitioning" guard.
   setTimeout(function () {
     var clubNameContent = document.querySelector('#club-name__content');
-    if (clubNameContent) $(clubNameContent).collapse('show');
+    if (clubNameContent) {
+      _openSection(clubNameContent);
+      currentSectionState = saveSectionState(clubNameContent);
+    }
   }, 150);
 
   initTooltips();

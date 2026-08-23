@@ -1,0 +1,23 @@
+---
+permalink: /club-central/club-dashboard/confirmation-v2.html
+title: Club Registration Confirmation | U.S. Masters Swimming
+showBenefits: false
+---
+{% extends "layouts/confirmation.njk" %}
+
+{% block confirmationH1 %}Club Registration Confirmation{% endblock %}
+
+{% block confirmationHeader %}
+<div class="row">
+  <div class="col-xs-12">
+    <p class="text-center">Your Club has been successfully registered for USMS for 2026. Your club should appear in Club Finder within three business days.</p>
+  </div>
+</div>
+{% endblock %}
+
+{% block confirmationColumns %}
+{% set paymentDate = "04/03/2026" %}
+{% set showClubFee = true %}
+{% set totalAmount = "$274.00" %}
+{% include "partials/ClubEdit/ClubEditReceiptV2.njk" %}
+{% endblock %}

@@ -8,16 +8,50 @@
 }
 
 /* Match Event Director pattern: "Or Add a New Contact" label is bold, same size as form labels */
-.club-contact__add-new p {
+#club-contact__content .club-contact__add-new p {
   font-size: 1.4rem;
   font-weight: 700;
 }
 
-/* Remove button hidden until Edit mode — production has this rule commented out, mockup keeps it */
-#club-contact .list-item__delete {
+/* Production's #club-contact__content p rule sets margin: -1.5rem auto 1.5rem — the
+   negative top margin gives the right gap above the label, but the 1.5rem bottom
+   margin doubles up with .club-contact__add-new's own form-group margin. Zero only
+   the bottom so it matches the Coach section's tighter spacing. */
+#club-contact__content .club-contact__add-new p {
+  margin-bottom: 0;
+}
+
+#club-contact__content .club-contact__not-member-container {
+  padding: 20px 20px 10px;
+}
+
+/* Regional Club: reinforce production section--disabled styles with ID specificity */
+.form__container .club-edit #section-location-information.section--disabled .section__header,
+.form__container .club-edit #coach.section--disabled .section__header,
+.form__container .club-edit #club-bundles.section--disabled .section__header {
+  color: lightgray;
+  pointer-events: none;
+  cursor: default;
+}
+.form__container .club-edit #section-location-information.section--disabled .section__header .section__number,
+.form__container .club-edit #coach.section--disabled .section__header .section__number,
+.form__container .club-edit #club-bundles.section--disabled .section__header .section__number {
+  border-color: lightgray;
+  color: lightgray;
+}
+.form__container .club-edit #section-location-information.section--disabled .section__header:after,
+.form__container .club-edit #coach.section--disabled .section__header:after,
+.form__container .club-edit #club-bundles.section--disabled .section__header:after {
   display: none;
 }
-#club-contact .edit-list .list-item__delete {
+
+/* Remove button hidden until Edit mode — production has this rule commented out, mockup keeps it */
+#club-contact .list-item__delete,
+#coach .list-item__delete {
+  display: none;
+}
+#club-contact .edit-list .list-item__delete,
+#coach .edit-list .list-item__delete {
   display: inline-block;
 }
 
@@ -78,6 +112,61 @@
   color: #cce3f4;
 }
 
+/* Payment price rows — label right-aligned, price left-aligned (matches add-ons "Review Your Add-Ons" line items) */
+.payment-info__information.form-horizontal {
+  overflow: hidden;
+  padding-bottom: 4rem;
+}
+
+.payment-info__information .form-group {
+  margin-bottom: 4px;
+  text-align: right;
+}
+
+.payment-info__information .form-group .payment-info__price-label {
+  display: inline;
+  text-align: right;
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.8;
+}
+
+.payment-info__information .form-group .payment-info__price {
+  display: inline-block;
+  text-align: right;
+  width: 100px;
+  padding-left: 2rem;
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.8;
+}
+
+/* Total row */
+.payment-info__information .form-group .payment-info__price-label.payment-info__total-label,
+.payment-info__information .form-group .payment-info__price.payment-info__total-price {
+  font-weight: 700;
+}
+
+.form__container .club-edit .bundle-group-header {
+  font-size: 1.7rem;
+  margin-top: 0.5rem;
+}
+
+.form__container .club-edit .input-group-description {
+  font-size: 1.7rem;
+  font-weight: 300;
+  margin-bottom: .125rem;
+}
+
+.form__container .club-edit .club-bundles {
+  margin-bottom: 2rem;
+}
+
+.upload-instructions {
+  margin-bottom: 1rem;
+}
+
 .form__container .input-group select.form-control {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -89,4 +178,210 @@
   box-sizing: border-box;
   height: 4.6rem;
   padding: 0;
+}
+
+.input-group .icon-help {
+  margin-left: 0;
+}
+
+.contact-type-form .help-block {
+  top: -23px !important;
+}
+
+.club-bundles .radio-label {
+  margin-bottom: 2rem;
+}
+
+.section-payment .section__header--summary {
+  max-width: 500px;
+  margin: 0 0 4rem 0 !important;
+}
+
+.form__container .club-edit .help-block.has-error {
+  height: 23px;
+}
+
+.contact-type-form .help-block {
+  top: -23px;
+}
+
+.club-edit .list-item {
+  /* margin-bottom: 0; */
+}
+
+.club-edit  #club-contact .list__container {
+  margin-bottom: 0;
+}
+
+.coach-validated {
+    color: red;
+}
+
+.club-edit .club-description textarea, .club-edit .practice-details textarea {
+  line-height: 150%;
+}
+
+.club-edit .club-contact__not-member-container span.help-block.help-block.has-error,
+.club-edit .list-configuration-form span.help-block.help-block.has-error, 
+.club-edit .list-venue-form span.help-block.help-block.has-error, 
+.club-edit .location-details.show span.help-block.help-block.has-error {
+  background-color: #f4f4f4;
+  line-height: 100%;
+  top: -2px;
+}
+
+.input-group.club-insurance .input-group-header.required,
+.input-group.membership-required .input-group-header.required {
+  padding-left: 1rem;
+}
+
+.club-edit .club-background label, 
+.club-edit .club-logo label {
+    margin: 0 0 0.5rem;
+}
+
+.agree-usage {
+  font-size: 1rem;
+  line-height: 1.2rem;
+}
+
+#club-bundles__content .col-sm-12 {  
+  border-top: 1px solid #CCC;
+  margin-top: 1rem;
+  padding-top: 3rem;
+}
+
+#club-bundles__content .col-sm-12:first-of-type {
+  border: 0 none;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+#club-bundles__content .col-sm-12:last-of-type {
+  margin-bottom: 4rem;
+}
+
+
+#marketingBundleTierPrice {
+  border-top: 1px solid #CCC;
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.bundle-tier-name {
+  font-weight: 600;
+  margin-right: 1rem;
+}
+
+.bundle-tier-price {
+  margin-right: 1rem;
+}
+
+.bundle-tier-price:before {
+  content: "|";
+  margin-right: 1rem;
+}
+
+.bundle-tier-swimmer-count {
+  font-size: 1.5rem;
+}
+
+.bundle-tier-swimmer-count:before {
+  content: "|";
+  margin-right: 1rem;
+}
+
+.club-edit #addNewContact {
+    margin: 1rem 0;
+}
+
+.club-edit .social-links .input-group-header {
+  font-weight: 600;
+}
+
+.club-edit .social-links .input-group label {
+  font-weight: 400;
+}
+
+.form__container .club-edit .agree-terms .help-block.has-error {
+  top: -23px;
+}
+
+.input-group.club-insurance .input-group-header.required.has-error,
+.input-group.membership-required .input-group-header.required.has-error,
+.input-group.usa-swimming-affiliation .input-group-header.required.has-error,
+.input-group.club-trial-membership .input-group-header.required.has-error{
+  color: #c62030;
+}
+
+/* Website URL check — ported from event-edit's .input-group-url-lookup pattern
+   (production SectionEntryInformation/sectionEntryInformation.css) so the
+   input, search button, and status icon flow inline with room to spare on
+   mobile, instead of the col-xs-10/col-xs-2 split that squeezed both icons
+   into a 17%-wide column. Flattening the markup (see ClubEditDetails.njk)
+   also means clubEdit.min.css's own input#clubWebsite+span.clubWebsite-icon
+   absolute-overlay rule no longer matches (span.club-website__check now sits
+   between them), so no conflict to override. */
+
+.input-group.club-branding label[for="clubWebsite"] {
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+.form__container .club-edit .club-website input#clubWebsite {
+  display: inline;
+  width: 190px;
+  margin-right: 1rem;
+}
+@media (min-width: 520px) {
+  .form__container .club-edit .club-website input#clubWebsite {
+    width: 310px;
+  }
+}
+@media (min-width: 768px) {
+  .form__container .club-edit .club-website input#clubWebsite {
+    width: 350px;
+  }
+}
+@media (min-width: 992px) {
+  .form__container .club-edit .club-website input#clubWebsite {
+    width: 250px;
+  }
+}
+@media (min-width: 1200px) {
+  .form__container .club-edit .club-website input#clubWebsite {
+    width: 310px;
+  }
+}
+@media (min-width: 1400px) {
+  .form__container .club-edit .club-website input#clubWebsite {
+    width: 350px;
+  }
+}
+
+.form__container .club-edit .club-website .club-website__check .btn {
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  margin-right: 0.5rem;
+  margin-top: -4px;
+}
+
+.club-edit .club-website input#clubWebsite + span.club-website__check {
+  display: inline;
+}
+
+.club-edit .club-website input#clubWebsite + span.club-website__check + span.clubWebsite-icon {
+  display: none;
+  -webkit-text-stroke: 1.5px;
+  font-size: 2rem;
+}
+
+.club-edit .club-website input#clubWebsite.has-error + span.club-website__check + span.clubWebsite-icon {
+  color: #d9534f;
+  display: inline;
+}
+
+.club-edit .club-website input#clubWebsite.has-success + span.club-website__check + span.clubWebsite-icon {
+  color: #3e8f3e;
+  display: inline;
 }

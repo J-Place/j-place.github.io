@@ -31,14 +31,14 @@
         </div>
     </div>
 
-    <div class="location-details event-location-details" style="display: none;">
+    <div class="location-details event-location-details">
         <div class="form-group">
             <div class="row">
                 <div class="col-xs-12">
                     <div class="input-group location-name required">
                         <label for="locationName">
                             Enter Your Location Name
-                            <span class="icon-help" data-bs-toggle="tooltip" data-bs-placement="top" title="Enter the facility or open water venue name." data-container="body"></span>
+                            <a tabindex="0" role="button" class="icon-help" data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-placement="top" data-bs-container="body" title="Enter the facility or open water venue name."></a>
                         </label>
                         <input type="text" class="form-control" id="locationName" name="locationName" maxlength="80" />
                         <span class="help-block help-block--locationName">Name required</span>
@@ -52,6 +52,7 @@
                     <div class="input-group location-address--street required">
                         <label for="addLocationAddressStreet">
                             Street Address (must select from the dropdown, do not copy and paste!)
+                            <a tabindex="0" role="button" class="icon-help" data-bs-toggle="tooltip" data-bs-trigger="focus" data-bs-placement="top" data-bs-container="body" title="You must select an address from the dropdown."></a>
                         </label>
                         <span class="help-block help-block--LocationAddressStreet">Must select address from the Google dropdown list</span>
                         <input type="text" class="form-control" id="addLocationAddressStreet" name="location" placeholder="Enter an address" />
@@ -94,7 +95,7 @@
         </div>
     </div>
 
-    <div class="row" style="display: none;">
+    <div class="row venue-form-row" style="display: none;">
         <div class="col-xs-12 col-sm-6">
             <div class="list-venue-form">
                 <div class="input-group required">
@@ -111,6 +112,18 @@
                     </select>
                     <span class="help-block help-block--poolType">Please enter a pool type</span>
                 </div>
+                <div class="input-group required input-group--openWaterType" style="display: none;">
+                    <label for="openWaterType">Body of Water</label>
+                    <select name="openWaterType" class="form-control" id="openWaterType">
+                        <option value="-1">Select Open Water Type</option>
+                        <option value="Lake">Lake</option>
+                        <option value="Ocean/Bay">Ocean/Bay</option>
+                        <option value="River">River</option>
+                        <option value="Reservoir">Reservoir</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <span class="help-block help-block--openWaterType">Please select an open water type</span>
+                </div>
                 <div class="input-group checkbox-group input-group--course input-group--add-new-course">
                     <span class="help-block help-block--selectCourseType">Please select a course</span>
                     <label class="checkbox-label" for="course_25y">
@@ -118,21 +131,21 @@
                             <input type="checkbox" name="selectCourseType" value="25y" id="course_25y" />
                             <span class="checkbox__placeholder"></span>
                         </div>
-                        Short Course Yards (25y)
+                        Short Course Yards
                     </label>
                     <label class="checkbox-label" for="course_25m">
                         <div class="checkbox-container">
                             <input type="checkbox" name="selectCourseType" value="25m" id="course_25m" />
                             <span class="checkbox__placeholder"></span>
                         </div>
-                        Short Course Meters (25m)
+                        Short Course Meters
                     </label>
                     <label class="checkbox-label" for="course_50m">
                         <div class="checkbox-container">
                             <input type="checkbox" name="selectCourseType" value="50m" id="course_50m" />
                             <span class="checkbox__placeholder"></span>
                         </div>
-                        Long Course Meters (50m)
+                        Long Course Meters
                     </label>
                     <label class="checkbox-label" for="course_other">
                         <div class="checkbox-container">

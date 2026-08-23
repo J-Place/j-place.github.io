@@ -16,11 +16,16 @@ breadcrumbTitle: "Club Edit"
 {% block pageCSS %}
 <link rel="stylesheet" href="https://www.usms.org/styles/club2.min.css">
 <link rel="stylesheet" href="https://www.usms.org/styles/clubEdit.min.css">
+<link rel="stylesheet" href="/css/Event/location-list-results.css">
 <link rel="stylesheet" href="/css/Club/club-edit.css">
 {% endblock %}
 
 {% block pageJS %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="/js/club-edit.js" defer></script>
+<script src="/js/club-edit-radio-header-validation.js" defer></script>
+<script src="/js/club-edit-website-check-mock.js" defer></script>
+<script src="/js/club-edit-photo-upload.js" defer></script>
 {% endblock %}
 
 {% block breadcrumb %}
@@ -95,7 +100,7 @@ breadcrumbTitle: "Club Edit"
         {% include "partials/ClubEdit/ClubEditContact.njk" %}
         {% include "partials/ClubEdit/ClubEditCoach.njk" %}
         {% include "partials/ClubEdit/ClubEditLocation.njk" %}
-        {% include "partials/ClubEdit/ClubEditGoldClub.njk" %}
+        {% include "partials/ClubEdit/ClubEditMarketingBundle.njk" %}
         {% include "partials/ClubEdit/ClubEditPayment.njk" %}
     </div>
 
