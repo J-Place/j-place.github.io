@@ -38,6 +38,15 @@
     }
   }
 
+  // Exposed for the visual-regression suite
+  // (tests/usms-visual-regression-screenshots/screenshots.spec.js), which
+  // calls window.expandAllSections() before capturing this page so every
+  // section's inputs are visible in the baseline — same global name Club Edit
+  // exposes for the same purpose, no validation flagging involved here.
+  window.expandAllSections = function () {
+    accordionSections().forEach(openSection);
+  };
+
   function previewEventValidation(e) {
     if (e) e.preventDefault();
 

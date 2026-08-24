@@ -2059,7 +2059,11 @@ function handleAgreementChange() {
 // Force every accordion section open at once (bypassing the single-open
 // accordion behavior) so Submit Payment can surface errors anywhere in the
 // form, not just the currently-open section. Skips sections Regional Club
-// has disabled, since those are intentionally out of the flow.
+// has disabled, since those are intentionally out of the flow. Also called
+// directly (no validation) by the visual-regression suite
+// (tests/usms-visual-regression-screenshots/screenshots.spec.js) via
+// window.expandAllSections() before capturing this page, so every
+// section's inputs are visible in the baseline.
 function expandAllSections() {
   document.querySelectorAll('#accordion .section__content.collapse').forEach(function (content) {
     var wrapper = content.closest('.section');

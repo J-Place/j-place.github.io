@@ -1,7 +1,7 @@
 const { defineConfig, devices } = require('@playwright/test');
 
 module.exports = defineConfig({
-  testDir: './tests/visual',
+  testDir: './tests/usms-visual-regression-screenshots',
   fullyParallel: true,
   // Testing against a live network target (GitHub Pages, third-party CDNs/Maps),
   // so allow one retry for timing-based flakiness before treating it as a real diff.

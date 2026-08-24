@@ -14,7 +14,7 @@ npm run test:visual:report  # open the HTML diff viewer for the last run
 
 ## Browser Verification
 
-Playwright is configured for visual regression testing (`playwright.config.js`, `tests/visual/`) — see `tests/visual/screenshots.spec.js` for how pages are captured (clock frozen, images awaited, Google Maps embeds masked) and `tests/visual/pages.js` for the page list.
+Playwright is configured for visual regression testing (`playwright.config.js`, `tests/usms-visual-regression-screenshots/`) — see `tests/usms-visual-regression-screenshots/screenshots.spec.js` for how pages are captured (clock frozen, images awaited, Google Maps embeds masked) and `tests/usms-visual-regression-screenshots/pages.js` for the page list.
 
 **This is a manual-only process.** It does not run on `npm run build`, in the GitHub Actions deploy workflow, or anywhere else automatically — it only runs when someone explicitly invokes `npm run test:visual` (or `npx playwright test`). If that ever changes (e.g. wired into CI), update this note.
 
