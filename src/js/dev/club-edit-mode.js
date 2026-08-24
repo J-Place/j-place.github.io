@@ -138,12 +138,13 @@
     if (radio) radio.checked = true;
   }
 
-  // addContact()/addCoachCard() only build the card — the Lookup/Add New UI
-  // is hidden by whatever *called* them (setContactTitle()/confirmCurrentContact()
-  // for Contact, setTitle()/_hideCoachPrompts() for Coach), none of which we can
-  // call directly since they depend on private lookup state we're bypassing.
-  // Mirror just the hide/show part here instead, so a populated "Edit Club"
-  // load looks the same as one a real user just added a contact/coach to.
+  // addContact() only builds the card — the Lookup/Add New UI is hidden by
+  // whatever *called* it (setContactTitle()/confirmCurrentContact()), which we
+  // can't call directly since it depends on private lookup state we're
+  // bypassing. Mirror just the hide/show part here instead, so a populated
+  // "Edit Club" load looks the same as one a real user just added a contact to.
+  // (Coach has no equivalent — the coach lookup fields stay visible even once
+  // a coach card exists, so an edit-mode reviewer can still see/use them.)
   function hideContactPrompts() {
     var otherContainer = document.querySelector('.club-contact__other-container');
     if (otherContainer) { otherContainer.style.display = 'none'; otherContainer.style.visibility = 'hidden'; }
@@ -155,11 +156,6 @@
     if (listHeader) listHeader.classList.add('show');
     var listSettings = document.querySelector('#listContactSettings');
     if (listSettings) listSettings.style.display = '';
-  }
-
-  function hideCoachPrompts() {
-    var lookupSection = document.querySelector('.coach-details');
-    if (lookupSection) lookupSection.style.display = 'none';
   }
 
   // Bundles the club had already accepted before this session (snapshotted
@@ -195,7 +191,6 @@
     }
     if (typeof window.addCoachCard === 'function') {
       window.addCoachCard(MOCK_EXISTING_CLUB.coach);
-      hideCoachPrompts();
     }
     if (typeof window.addLocationCard === 'function') {
       var loc = MOCK_EXISTING_CLUB.location;

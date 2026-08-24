@@ -11,6 +11,13 @@ var currentCallback = null;
 // "is it checked right now" check re-run every time the section reopens.
 var membershipRequiredLocked = false;
 
+// Snapshot of whether totalSwimmers came in pre-populated on page load (an
+// existing, already-saved club) — same load-time-snapshot reasoning as
+// membershipRequiredLocked above. A brand-new club filling this in for the
+// first time during Create must stay editable even after its section is
+// saved and reopened.
+var totalSwimmersLocked = false;
+
 // ── Utilities ────────────────────────────────────────────────────────────────
 
 function FindPos(obj) {
@@ -71,6 +78,16 @@ function lockMembershipRequiredIfAnswered() {
   }
 }
 
+// Total Swimmers — an existing club's swimmer count is locked once it comes
+// in pre-populated, same rule as Membership Requirement above: it can still
+// be seen, just not edited via Edit Club.
+function lockTotalSwimmersIfAnswered() {
+  if (totalSwimmersLocked) {
+    var el = document.querySelector('#totalSwimmers');
+    if (el) el.disabled = true;
+  }
+}
+
 function setSectionInputStatus(section, disabled) {
   if (!section) return;
   // Club Name and Club Bundles manage their own disabled state
@@ -83,8 +100,10 @@ function setSectionInputStatus(section, disabled) {
       el.disabled = disabled;
     }
   });
-  // The blanket enabling above would otherwise clobber the membership-required lock.
+  // The blanket enabling above would otherwise clobber the membership-required
+  // and total-swimmers locks.
   lockMembershipRequiredIfAnswered();
+  lockTotalSwimmersIfAnswered();
 }
 
 function saveSectionState(section) {
@@ -2267,6 +2286,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   membershipRequiredLocked = !!document.querySelector('input[name="membershipRequired"]:checked');
   lockMembershipRequiredIfAnswered();
+
+  var totalSwimmersInit = document.querySelector('#totalSwimmers');
+  totalSwimmersLocked = !!(totalSwimmersInit && totalSwimmersInit.value);
+  lockTotalSwimmersIfAnswered();
 
   // Mark sections with pre-populated data
   var clubName = document.querySelector('#clubName');
