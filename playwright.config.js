@@ -13,7 +13,13 @@ module.exports = defineConfig({
   expect: {
     timeout: 10000,
     toHaveScreenshot: {
-      maxDiffPixelRatio: 0.01,
+      // Fixed pixel budget rather than maxDiffPixelRatio — a ratio scales with
+      // page height, so the same real layout shift gets more slack on long
+      // pages (e.g. Club Edit/Event Edit at ~6800px) than short ones. Measured
+      // a 1rem margin change at 977 differing pixels on Event Edit; identical
+      // re-captures (localhost and live) measured 0. 100px gives headroom over
+      // that zero-noise floor while staying well under a real visible change.
+      maxDiffPixels: 100,
       animations: 'disabled',
     },
   },
