@@ -7,7 +7,8 @@
     <title>{{ title | default("College Club Swimming") }}</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    {# Accessibility fix (ACCESSIBILITY-AUDIT.md #1): see head-meta.njk for rationale #}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -30,6 +31,7 @@
     <link rel="stylesheet" href="/css/college-club/ccs-components.css">
     <link rel="stylesheet" href="/css/college-club/ccs.css">
     <link rel="stylesheet" href="/css/college-club/ccs-event-marquee.css">
+    <link rel="stylesheet" href="/css/Common/Html.css">
     {% block pageCSS %}{% endblock %}
 </head>
 <body class="">

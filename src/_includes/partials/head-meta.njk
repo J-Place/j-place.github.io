@@ -2,7 +2,11 @@
 <link rel="icon" href="https://www.usms.org/favicon.ico">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+{# Accessibility fix (ACCESSIBILITY-AUDIT.md #1): production disables pinch-zoom here
+   (maximum-scale=1.0, user-scalable=0) to hide horizontal-scroll bugs from RTE tables
+   rather than fixing them — that's a WCAG 1.4.4/1.4.10 violation. Zoom re-enabled;
+   the actual overflow is contained in src/css/Common/Html.css instead. #}
+<meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <meta name="twitter:card" content="" />
 <meta property="og:title" content="" />
 <meta property="og:image" content="" />

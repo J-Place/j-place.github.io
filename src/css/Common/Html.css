@@ -1,0 +1,12 @@
+/* Accessibility fix: production's RTE wrapper (production/src/App/views/Common/Html.css,
+   the CSS for production/src/App/views/Common/Html.jsx) has no table-overflow handling.
+   Production instead hides the resulting horizontal scroll with `body { overflow-x: hidden; }`
+   (production/src/App/rteMasters.css:90-99, production/src/App/assets/styles/style.css:3-7)
+   and disables pinch-zoom in the viewport meta tag so the clipped content is never revealed —
+   masking the bug instead of fixing it, at the cost of blocking zoom for every user on every
+   page. A CMS-authored table that's wider than its column should scroll within its own box
+   instead of forcing the whole viewport wider. */
+.html-container table {
+   display: block;
+   overflow-x: auto;
+}

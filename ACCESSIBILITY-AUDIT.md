@@ -101,7 +101,19 @@ _Not yet audited — pending baseline run. Expect the same accordion-keyboard-op
 
 ### Homepage
 
-_Not yet audited — pending baseline run._
+| # | Issue | Detail |
+|---|---|---|
+| 14 | 2 image-slider buttons with no accessible name | `button.image-slider__button-previous` / `button.image-slider__button-next` in the "Latest Content" carousel — screen reader users hear "button" with no indication of what it does |
+| 15 | 6 related-content thumbnail links with no accessible name | `.latest-content-event__image-container > a` and `.latest-content__image-container > a` (5 instances) — image-only links wrapping a photo with no alt text, aria-label, or visible text |
+
+Found via WAVE + Lighthouse against `https://j-place.github.io/home/` (2026-08-29) while verifying the meganav fixes — not yet triaged for a fix.
+
+### [1] — Mobile viewport zoom disabled to hide RTE table overflow
+**Date:** 2026-08-29
+**Files changed:** `src/_includes/partials/head-meta.njk`, `src/_includes/layouts/college-club.njk`, `src/css/Common/Html.css` (new), `src/_includes/layouts/base.njk`
+**What changed:** The `<meta viewport>` tag disabled pinch-zoom (`maximum-scale=1.0, user-scalable=0`) site-wide — inherited verbatim from production (`Usms.cshtml:34`), not something specific to this mockup. Per institutional knowledge, this was a workaround for tables authored in rich-text (RTE) content breaking the mobile viewport's bounds and causing horizontal scroll. Investigated production's own RTE component (`Html.jsx`/`Html.css`) and its site-wide `body { overflow-x: hidden; }` (`rteMasters.css:90-99`, `style.css:3-7`) — production never actually fixed the overflow; it clips it at the body level and blocks zoom so the clipping is never visible. Removed the zoom restriction and added `.html-container table { display: block; overflow-x: auto; }` so an oversized table scrolls within its own box instead of forcing the whole viewport wider.
+**Why:** Disabling zoom is itself a WCAG 1.4.4 (Resize Text) / 1.4.10 (Reflow) violation, regardless of the reason — it trades a symptom (horizontal scroll on some content) for blocking every low-vision user from zooming any page, including ones with no table at all.
+**Verified by:** Build output inspection — confirmed `maximum-scale`/`user-scalable` removed from the rendered `<meta viewport>` on both layouts, and the new CSS rule compiled and linked correctly. No page currently in the mockup contains an RTE-authored table, so the containment rule couldn't be exercised against real content this round — flag for a visual check if/when such a page is built.
 
 ### Deprioritized (not in scope for this pass)
 
