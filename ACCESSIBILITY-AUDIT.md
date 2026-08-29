@@ -125,4 +125,23 @@ Template for each entry:
 **Verified by:** WAVE / Lighthouse / manual keyboard test — page(s), before/after score or specific check
 -->
 
-_(none yet — fixes not started)_
+### [2, 6] — Meganav dropdown triggers: keyboard and screen-reader access
+**Date:** 2026-08-28
+**Files changed:** `src/_includes/partials/Navigation/MegaMainMenu.njk`, `src/js/megamenu.js`, `src/css/Navigation/MegaMainMenu.css` (new), `src/_includes/layouts/base.njk`
+**What changed:** The Training / Events / About Us dropdown triggers were a non-interactive `<li>`/`<span>` with a click-only handler — no `tabindex`, no ARIA. Converted them to native `<button>` elements with `aria-expanded`, `aria-haspopup="true"`, and `aria-controls="mega-menu-overlay"`; added an `Escape` handler that closes the open panel and returns focus to its trigger. Existing hover/click behavior for mouse users is unchanged — the same open/close logic just moved from the `<li>` onto the nested `<button>`.
+**Why:** Keyboard and screen-reader users could not reach or operate 3 of the site's 6 primary nav menus — the triggers weren't part of the tab order and had no announced state.
+**Verified by:** Manual keyboard walkthrough (Chromium via Playwright, driven against `npm run dev`): Tab reaches the button, Enter opens the panel (`aria-expanded` flips to `true`, overlay populates), Escape closes it (`aria-expanded` flips back to `false`) and returns focus to the trigger.
+
+### [3] — Meganav search toggle: keyboard access
+**Date:** 2026-08-28
+**Files changed:** `src/_includes/partials/Navigation/MegaMainMenu.njk`, `src/js/megamenu.js`, `src/css/Navigation/MegaMainMenu.css`
+**What changed:** The search toggle was a click-only `<div>`. Converted it to a native `<button>` with `aria-expanded` and `aria-controls="mega-main-menu-search"` (new id on the search panel), and added an `Escape` handler that closes the panel and returns focus to the button. Mouse/click behavior unchanged.
+**Why:** Keyboard users had no way to open the search box at all.
+**Verified by:** Manual keyboard walkthrough: Tab reaches the button, Enter opens the panel (`aria-expanded` → `true`, panel opacity → `1`, focus moves into the search input — pre-existing behavior, unchanged), Escape closes it (`aria-expanded` → `false`) and returns focus to the button.
+
+### [4] — Mobile submenu accordions: keyboard access
+**Date:** 2026-08-28
+**Files changed:** `src/_includes/partials/Navigation/MegaMainMenu.njk`, `src/js/megamenu.js`, `src/css/Navigation/MobileMenuOverlayItem.css` (new)
+**What changed:** The Training/Events/About Us mobile accordion triggers were click-only `<div>`s. Converted to native `<button>` elements with `aria-expanded` and `aria-controls` pointing at their submenu container's new `id`. Leaf items with no submenu (Club Finder, Workout Library, Join) were left as-is since they already use a real `<a>`. Existing click/animation behavior unchanged.
+**Why:** Keyboard and screen-reader users could not expand any of the 3 mobile nav submenus.
+**Verified by:** Manual keyboard walkthrough at a mobile viewport: Tab reaches the button, Enter expands it (`aria-expanded` → `true`, submenu `max-height` opens), Enter again collapses it (`aria-expanded` → `false`, `max-height` → `0px`).

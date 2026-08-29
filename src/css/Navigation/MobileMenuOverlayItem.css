@@ -1,0 +1,21 @@
+/* Accessibility fix: production's mobile submenu accordion trigger is a
+   non-interactive <div> (production/src/App/views/Navigation/
+   MobileMenuOverlayItem.css:38-43 styles `.mobile-menu-overlay__item-content`
+   directly, with display:flex/padding/font-weight that a <button> already
+   inherits from that shared class rule). Ours is a native <button> for the
+   3 items that open a submenu — only the browser's default button chrome
+   needs resetting here; leaf items (no submenu) keep the original <div>. */
+button.mobile-menu-overlay__item-content {
+   background: none;
+   border: none;
+   margin: 0;
+   font: inherit;
+   color: inherit;
+   width: 100%;
+   cursor: pointer;
+}
+
+button.mobile-menu-overlay__item-content:focus-visible {
+   outline: 2px solid var(--color-primary, #0068ad);
+   outline-offset: -2px;
+}

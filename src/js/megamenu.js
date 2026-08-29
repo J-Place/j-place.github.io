@@ -66,9 +66,17 @@
       return document.querySelector('.mega-main-menu__items > li.active');
     }
 
+    function getTrigger(item) {
+      return item.querySelector('.mega-main-menu__item-trigger');
+    }
+
     function closeMenu() {
       var active = getActiveItem();
-      if (active) active.classList.remove('active');
+      if (active) {
+        active.classList.remove('active');
+        var trigger = getTrigger(active);
+        if (trigger) trigger.setAttribute('aria-expanded', 'false');
+      }
       overlay.style.display = 'none';
     }
 
@@ -108,6 +116,8 @@
       closeLogin();
       if (!populateOverlay(item)) return;
       item.classList.add('active');
+      var trigger = getTrigger(item);
+      if (trigger) trigger.setAttribute('aria-expanded', 'true');
       setOverlayTop();
       overlay.style.display = 'flex';
     }
@@ -129,7 +139,9 @@
     overlay.addEventListener('mouseleave', closeMenu);
 
     items.forEach(function (item) {
-      item.addEventListener('click', function (e) {
+      var trigger = getTrigger(item);
+      if (!trigger) return;
+      trigger.addEventListener('click', function (e) {
         e.stopPropagation();
         item.classList.contains('active') ? closeMenu() : openMenu(item);
       });
@@ -137,6 +149,16 @@
 
     document.addEventListener('click', function (e) {
       if (!nav.contains(e.target)) closeMenu();
+    });
+
+    // Escape closes the open dropdown and returns focus to its trigger button.
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape') return;
+      var active = getActiveItem();
+      if (!active) return;
+      var trigger = getTrigger(active);
+      closeMenu();
+      if (trigger) trigger.focus();
     });
 
     window.addEventListener('resize', function () {
@@ -194,6 +216,7 @@
     function closeSearch() {
       if (!searchWrapper || !searchForm) return;
       searchWrapper.classList.remove('search--active');
+      searchWrapper.setAttribute('aria-expanded', 'false');
       searchForm.style.opacity = '0';
       searchForm.style.zIndex  = '-1';
     }
@@ -201,6 +224,7 @@
     if (searchWrapper && searchForm) {
       searchWrapper.addEventListener('click', function () {
         var isActive = searchWrapper.classList.toggle('search--active');
+        searchWrapper.setAttribute('aria-expanded', String(isActive));
         searchForm.style.opacity  = isActive ? '1' : '0';
         searchForm.style.zIndex   = isActive ? '1' : '-1';
         if (isActive) {
@@ -217,6 +241,12 @@
         if (!searchWrapper.contains(e.target) && !searchForm.contains(e.target)) {
           closeSearch();
         }
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Escape' || !searchWrapper.classList.contains('search--active')) return;
+        closeSearch();
+        searchWrapper.focus();
       });
     }
 
@@ -280,6 +310,7 @@
             container.style.maxHeight = container.scrollHeight + 'px';
             chevron.classList.add('fa--rotate');
           }
+          content.setAttribute('aria-expanded', String(!isOpen));
         });
       });
     }

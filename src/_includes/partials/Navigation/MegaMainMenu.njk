@@ -27,7 +27,7 @@
                    </li>
                 </ul>
              </div>
-             <div class="search" style="transition: ease-in-out; transform: translateX(0px); opacity: 0; z-index: -1;">
+             <div class="search" id="mega-main-menu-search" style="transition: ease-in-out; transform: translateX(0px); opacity: 0; z-index: -1;">
              {# <form method="GET" action="/search" class="search" style="transition:all 0ms ease-in-out;transform:translateX(0px);opacity:0;z-index:-1;"> #}
                 {# <div class="input-group">
                    <input type="text" name="filter" class="form-control search__input" placeholder="Search USMS" aria-describedby="basic-addon">
@@ -42,10 +42,14 @@
             <div class="mega-main-menu__items-container">
                <ul class="mega-main-menu__items list--nostyle" style="width:auto;">
                   <li class="has--children" id="menu-item-0" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                     <span class="fa-solid fa-chevron-right"></span>Training
+                     <button type="button" class="mega-main-menu__item-trigger" aria-expanded="false" aria-haspopup="true" aria-controls="mega-menu-overlay">
+                        <span class="fa-solid fa-chevron-right"></span>Training
+                     </button>
                   </li>
                   <li class="has--children" id="menu-item-1" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                     <span class="fa-solid fa-chevron-right"></span>Events
+                     <button type="button" class="mega-main-menu__item-trigger" aria-expanded="false" aria-haspopup="true" aria-controls="mega-menu-overlay">
+                        <span class="fa-solid fa-chevron-right"></span>Events
+                     </button>
                   </li>
                   <li id="menu-item-2" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
                      <a href="/clubs/">Club Finder</a>
@@ -54,7 +58,9 @@
                      <a href="#0">Workout Library</a>
                   </li>
                   <li class="has--children" id="menu-item-4" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-                     <span class="fa-solid fa-chevron-right"></span>About Us
+                     <button type="button" class="mega-main-menu__item-trigger" aria-expanded="false" aria-haspopup="true" aria-controls="mega-menu-overlay">
+                        <span class="fa-solid fa-chevron-right"></span>About Us
+                     </button>
                   </li>
                   <li id="menu-item-5" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
                      <a href="/join-usms/join-or-renew/">Join</a>
@@ -63,7 +69,7 @@
 
                </ul>
             </div>
-            <div class="mega-menu-overlay" style="top: 78px; display: none;">
+            <div class="mega-menu-overlay" id="mega-menu-overlay" style="top: 78px; display: none;">
                <div class="mega-menu-overlay__menu-container">
                   <h4 class="mega-menu-overlay__title text-primary"><strong></strong></h4>
                   <div class="mega-menu-overlay__content">
@@ -79,11 +85,11 @@
             </div>
 
             <div class="mega-main-menu__actions">
-               <div class="mega-main-menu__actions-search--wrapper">
+               <button type="button" class="mega-main-menu__actions-search--wrapper" aria-expanded="false" aria-controls="mega-main-menu-search">
                   <i class="search--icon">
                   </i>
                   <label>Search</label>
-               </div>
+               </button>
                <div class="mega-main-menu__actions-login--wrapper" aria-hidden="true" data-logged-in="{{ 'true' if currentUser and currentUser.loggedIn else 'false' }}">
                   <a href="/account/myusmslogin">
                      <i class="login--icon"></i>
@@ -116,10 +122,10 @@
             <div class="mobile-menu-overlay">
                <ul class="mobile-menu-overlay__items list--nostyle">
                   <li class="mobile-menu-overlay__item text-capitalize">
-                     <div class="mobile-menu-overlay__item-content">
+                     <button type="button" class="mobile-menu-overlay__item-content" aria-expanded="false" aria-controls="mobile-submenu-training">
                         <i class="fa-solid fa-chevron-right "></i>Training
-                     </div>
-                     <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+                     </button>
+                     <div class="mobile-menu-overlay__submenu-container" id="mobile-submenu-training" style="max-height:0px;">
                         <ul class="mobile-menu-overlay__submenu list--nostyle">
                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
                               <a href="#0">Workout Library</a>
@@ -143,10 +149,10 @@
                      </div>
                   </li>
                   <li class="mobile-menu-overlay__item text-capitalize">
-                     <div class="mobile-menu-overlay__item-content">
+                     <button type="button" class="mobile-menu-overlay__item-content" aria-expanded="false" aria-controls="mobile-submenu-events">
                         <i class="fa-solid fa-chevron-right "></i>Events
-                     </div>
-                     <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+                     </button>
+                     <div class="mobile-menu-overlay__submenu-container" id="mobile-submenu-events" style="max-height:0px;">
                         <ul class="mobile-menu-overlay__submenu list--nostyle">
                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
                               <a href="/events/">Calendar of Events</a>
@@ -192,10 +198,10 @@
                      </div>
                   </li>
                   <li class="mobile-menu-overlay__item text-capitalize">
-                     <div class="mobile-menu-overlay__item-content">
+                     <button type="button" class="mobile-menu-overlay__item-content" aria-expanded="false" aria-controls="mobile-submenu-about-us">
                         <i class="fa-solid fa-chevron-right "></i>About Us
-                     </div>
-                     <div class="mobile-menu-overlay__submenu-container" style="max-height:0px;">
+                     </button>
+                     <div class="mobile-menu-overlay__submenu-container" id="mobile-submenu-about-us" style="max-height:0px;">
                         <ul class="mobile-menu-overlay__submenu list--nostyle">
                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
                               <a href="#0">What is Masters Swimming?</a>
