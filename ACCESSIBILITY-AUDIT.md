@@ -151,6 +151,20 @@ Template for each entry:
 **Why:** Keyboard users had no way to open the search box at all.
 **Verified by:** Manual keyboard walkthrough: Tab reaches the button, Enter opens the panel (`aria-expanded` → `true`, panel opacity → `1`, focus moves into the search input — pre-existing behavior, unchanged), Escape closes it (`aria-expanded` → `false`) and returns focus to the button.
 
+### [14] — Homepage image-slider buttons: no accessible name
+**Date:** 2026-08-29
+**Files changed:** `src/_includes/partials/Homepage/ImageSlider.njk`
+**What changed:** Added `aria-label="Previous partner logo"` / `aria-label="Next partner logo"` to the partner-logo carousel's prev/next buttons, which previously contained only a decorative icon with no text. This matches production (`production/src/App/views/Media/ImageSlider.jsx`), which has the identical bug — no aria-label there either, so there was no production pattern to copy.
+**Why:** Screen reader users heard "button" with no indication of what either control did.
+**Verified by:** axe-core (`@axe-core/playwright`) against `http://localhost:8080/home/`, `button-name` rule: 0 violations (previously 2).
+
+### [15] — Homepage/Related-Articles thumbnail links: no accessible name
+**Date:** 2026-08-29
+**Files changed:** `src/_includes/partials/Homepage/Latest.njk` (6 instances), `src/_includes/partials/PageContent/RelatedContent.njk` (1 templated instance, applies per rendered article)
+**What changed:** Each "Latest from USMS" / "Related Articles" card wraps its thumbnail image in an `<a>` with no `alt`/label (images are CSS `background-image` divs, not `<img>`), immediately followed by a second `<a>` to the identical URL with visible text (the title, or "More Live Coverage"). Same bug in production's `LatestContentArticle.jsx` and `LatestContentEvent.jsx` — no production pattern to copy. Rather than inventing a duplicate label, added `aria-hidden="true" tabindex="-1"` to the image-only link so it's removed from the tab order and the accessibility tree; the adjacent, already-labeled text link provides full access to the same destination. This is the standard remediation for a redundant image+text link pair, not a workaround.
+**Why:** Screen reader/keyboard users hit an unlabeled stop with no indication of its destination immediately before reaching a properly labeled link to the same place.
+**Verified by:** axe-core against `http://localhost:8080/home/`, `link-name` rule: 0 violations (previously 6). `RelatedContent.njk` shares the same production component (`LatestContentArticle`) but wasn't itself flagged by WAVE/Lighthouse on the homepage — fixed anyway since it's the same underlying bug, not yet independently verified live (no page currently renders `RelatedContent.njk` with real data in the sampled scans).
+
 ### [4] — Mobile submenu accordions: keyboard access
 **Date:** 2026-08-28
 **Files changed:** `src/_includes/partials/Navigation/MegaMainMenu.njk`, `src/js/megamenu.js`, `src/css/Navigation/MobileMenuOverlayItem.css` (new)
