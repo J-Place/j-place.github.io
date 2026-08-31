@@ -1,0 +1,12 @@
+/* Accessibility fix (ACCESSIBILITY-AUDIT.md #16): production's #999 (2.85:1 on white)
+   fails the 4.5:1 AA minimum for body text. production/src/App/views/PageContent/LatestContentArticle.css:61,69-70
+   sets these to #999 — darkened to #707070 (4.95:1) here. Selectors and declarations
+   otherwise unchanged. */
+.latest-content__author p {
+  color: #707070;
+}
+
+.related-content__container .latest-content__author .latest-content__author-name,
+.latest-content__container .latest-content__author .latest-content__author-name {
+  color: #707070;
+}

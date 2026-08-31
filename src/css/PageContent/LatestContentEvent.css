@@ -1,0 +1,15 @@
+/* Accessibility fix (ACCESSIBILITY-AUDIT.md #16): production's static color #30a0ce
+   (production/src/App/views/PageContent/LatestContentEvent.css:77-81) fails 4.5:1 on white
+   (2.98:1). The link already had a generic `a:hover { color: var(--bs-link-hover-color) }`
+   rule resolving to #0c6f97 (bootstrap-3-usms-patch.css, loads after bootstrap.min.css's
+   #0a58ca and wins the cascade) which passes at 5.62:1 — so static and hover are swapped:
+   #0c6f97 becomes the resting color, #30a0ce becomes the hover-only color. Hover is a
+   transient, mouse-only state that most keyboard/AT users never trigger, so this prioritizes
+   the always-visible resting state. */
+.latest-content-event__detail-link {
+  color: #0c6f97;
+}
+
+.latest-content-event__detail-link:hover {
+  color: #30a0ce;
+}

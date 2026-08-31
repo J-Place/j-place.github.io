@@ -1,0 +1,12 @@
+/* Accessibility fix (ACCESSIBILITY-AUDIT.md #16): production/src/App/views/Navigation/Footer.css:48
+   sets .footer-right { opacity: 0.8 }. That ancestor opacity composites every descendant color
+   toward the dark background behind it, so the "Join Now" button's white-on-#0068ad (5.86:1 on
+   its own) renders on screen as ~#dae2e9-on-#0e69a8 (4.44:1, failing) — confirmed both on our
+   build and on the live production site via axe-core's pixel-sampled contrast check, which
+   catches this where a plain computed-style check does not. Rather than remove the opacity
+   (would change the whole panel's look), darken just this button's background enough that it
+   still passes 4.5:1 after the 0.8 blend (verified ~7.86:1 composited). Scoped to .subscribe
+   so the unrelated, already-passing hero "JOIN NOW" button (site-wide .btn-primary) is untouched. */
+.subscribe a.btn-primary {
+  background-color: #003a5c;
+}
