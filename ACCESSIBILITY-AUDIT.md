@@ -108,6 +108,13 @@ _Not yet audited — pending baseline run. Expect the same accordion-keyboard-op
 
 Found via WAVE + Lighthouse against `https://j-place.github.io/home/` (2026-08-29) while verifying the meganav fixes — not yet triaged for a fix.
 
+### [7] — Empty footer subscribe heading/paragraph
+**Date:** 2026-08-31
+**Files changed:** `src/_includes/partials/Navigation/Footer.njk`, `src/_includes/layouts/lmsc.njk`
+**What changed:** Confirmed intent by checking production's real component (`production/src/App/views/Social/Subscribe.jsx:10-11`): the `<h4 class="subscribe__header">` and following `<p>` have real, hardcoded copy in production ("Subscribe To See More" / "Send us you email to see more articles and track your Fitness Logs.") — our mockup dropped that text entirely when the markup was first built. This was a faithful-reproduction gap, not an ambiguous design decision, so restored the text verbatim. Left the button (`Join Now` → `/login-to-registration-page/`) untouched, since that was already an intentional adaptation for this mockup — production's own button here ("subscribe" → `/en`) looks like unrelated placeholder content in production itself.
+**Why:** A heading with no text prevents screen reader users from getting any information about the section's structure at that point.
+**Verified by:** axe-core (`empty-heading`) against both `http://localhost:8080/home/` (uses `Footer.njk`) and `http://localhost:8080/lmsc/ohio-masters-swimming/` (uses `lmsc.njk`): 0 violations on both, previously failing on both.
+
 ### [1] — Mobile viewport zoom disabled to hide RTE table overflow
 **Date:** 2026-08-29
 **Files changed:** `src/_includes/partials/head-meta.njk`, `src/_includes/layouts/college-club.njk`, `src/css/Common/Html.css` (new), `src/_includes/layouts/base.njk`
