@@ -92,6 +92,8 @@
       if (ll) ll.classList.remove('login--shown');
       var lc = document.querySelector('.login__items-container');
       if (lc) lc.style.zIndex = '';
+      var lt = document.querySelector('.mega-main-menu__actions-login-trigger');
+      if (lt) lt.setAttribute('aria-expanded', 'false');
       setDevSelectPointerEvents('');
     }
 
@@ -184,6 +186,7 @@
         if (loginWrapper.dataset.loggedIn !== 'true') return;
         e.preventDefault();
         e.stopPropagation();
+        var loginTrigger = loginWrapper.querySelector('.mega-main-menu__actions-login-trigger');
         if (loginWrapper.classList.contains('login--active')) {
           closeLogin();
         } else {
@@ -191,6 +194,7 @@
           closeSearch();
           loginWrapper.classList.add('login--active');
           loginList.classList.add('login--shown');
+          if (loginTrigger) loginTrigger.setAttribute('aria-expanded', 'true');
           if (loginContainer) loginContainer.style.zIndex = '10000';
           setDevSelectPointerEvents('none');
         }
@@ -206,6 +210,13 @@
         if (!loginWrapper.contains(e.target) && !loginList.contains(e.target)) {
           closeLogin();
         }
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Escape' || !loginWrapper.classList.contains('login--active')) return;
+        var loginTrigger = loginWrapper.querySelector('.mega-main-menu__actions-login-trigger');
+        closeLogin();
+        if (loginTrigger) loginTrigger.focus();
       });
     }
 

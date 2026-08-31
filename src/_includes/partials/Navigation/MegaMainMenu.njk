@@ -12,7 +12,7 @@
 
           <div class="mega-main-menu__nav-search-container">
              <div class="login__items-container">
-                <ul class="login__list">
+                <ul class="login__list" id="login-list">
                    <li class="login__list-item">
                       <a href="/account/my-account">My USMS</a>
                    </li>
@@ -90,15 +90,18 @@
                   </i>
                   <label>Search</label>
                </button>
-               <div class="mega-main-menu__actions-login--wrapper" aria-hidden="true" data-logged-in="{{ 'true' if currentUser and currentUser.loggedIn else 'false' }}">
+               <div class="mega-main-menu__actions-login--wrapper" data-logged-in="{{ 'true' if currentUser and currentUser.loggedIn else 'false' }}">
+                  {% if currentUser and currentUser.loggedIn %}
+                  <button type="button" class="mega-main-menu__actions-login-trigger" aria-expanded="false" aria-haspopup="true" aria-controls="login-list">
+                     <i class="login--icon"></i>
+                     <label>{{ swimmer.firstName | truncate(7, false, '') if swimmer }}</label>
+                  </button>
+                  {% else %}
                   <a href="/account/myusmslogin">
                      <i class="login--icon"></i>
-                     {% if currentUser and currentUser.loggedIn %}
-                     <label>{{ swimmer.firstName | truncate(7, false, '') if swimmer }}</label>
-                     {% else %}
                      <label>Log In</label>
-                     {% endif %}
                   </a>
+                  {% endif %}
                </div>
             </div>
          </div>

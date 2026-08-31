@@ -46,3 +46,25 @@
    outline: 2px solid var(--color-primary, #0068ad);
    outline-offset: 2px;
 }
+
+/* Accessibility fix: production's logged-in account trigger is a non-interactive
+   <div onClick> with aria-hidden (production/src/App/views/Navigation/MegaMainMenu.jsx:380-390) —
+   hidden from the accessibility tree entirely, with no keyboard access. No production
+   CSS targets an anchor/button directly inside `.mega-main-menu__actions-login--wrapper`
+   (only the wrapper itself and descendant `label`s are styled), so this native <button>
+   needs only a generic chrome reset, not layout-specific overrides. */
+.mega-main-menu__actions-login-trigger {
+   display: inline-block;
+   background: none;
+   border: none;
+   margin: 0;
+   padding: 0;
+   font: inherit;
+   color: inherit;
+   cursor: pointer;
+}
+
+.mega-main-menu__actions-login-trigger:focus-visible {
+   outline: 2px solid var(--color-primary, #0068ad);
+   outline-offset: 2px;
+}

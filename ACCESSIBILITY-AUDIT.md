@@ -151,6 +151,14 @@ Template for each entry:
 **Why:** Keyboard users had no way to open the search box at all.
 **Verified by:** Manual keyboard walkthrough: Tab reaches the button, Enter opens the panel (`aria-expanded` → `true`, panel opacity → `1`, focus moves into the search input — pre-existing behavior, unchanged), Escape closes it (`aria-expanded` → `false`) and returns focus to the button.
 
+### [5, 6] — Meganav account trigger: keyboard and screen-reader access
+**Date:** 2026-08-30
+**Files changed:** `src/_includes/partials/Navigation/MegaMainMenu.njk`, `src/js/megamenu.js`, `src/css/Navigation/MegaMainMenu.css`
+**What changed:** Investigated production's actual two-state design (`MegaMainMenu.jsx:373-390`) rather than assuming a single shared bug: production's **logged-out** state is a plain `<a href>` with no `aria-hidden` — already fine — but its **logged-in** state is a non-interactive `<div onClick>` with `aria-hidden` and no anchor at all, opening the account dropdown with no keyboard access whatsoever. Our mockup had merged both states into one always-`aria-hidden="true"` wrapper, so the bug leaked into the logged-out state too, which is what WAVE/Lighthouse actually flagged (tested against `data-logged-in="false"`). Fixed by branching the markup to match production's real logic: logged-out keeps its already-fine `<a>`; logged-in becomes a native `<button>` with `aria-expanded`/`aria-haspopup="true"`/`aria-controls="login-list"` (new id added to `.login__list`), matching the established meganav-trigger pattern. Added an `Escape` handler that closes the dropdown and returns focus to the trigger.
+**Why:** Keyboard and screen-reader users who are logged in had no way to reach their account menu at all — the entire control was hidden from the accessibility tree.
+**Verified by:** Rebuilt with `home.njk`'s test fixture temporarily switched to a logged-in user (`swimmerId: "standardCurrent"`), then reverted. axe-core (`aria-hidden-focus`): 0 violations in both the logged-out and logged-in renders (previously failing). Manual keyboard walkthrough on the logged-in render: Tab reaches the button, Enter opens the dropdown (`aria-expanded` → `true`), Escape closes it (`aria-expanded` → `false`) and returns focus to the button.
+**Before reference:** `home-loggedin-pre-wcag` snapshot (see `snapshot-registry.json`) — the logged-in homepage built from `master` (i.e. with none of this branch's fixes), frozen for a future WAVE/Lighthouse before/after comparison specific to this finding.
+
 ### [14] — Homepage image-slider buttons: no accessible name
 **Date:** 2026-08-29
 **Files changed:** `src/_includes/partials/Homepage/ImageSlider.njk`
