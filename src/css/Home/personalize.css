@@ -79,12 +79,18 @@
   margin: 0 auto;
 }
 
-.personalize__content-column h4,
+/* Accessibility fix (ACCESSIBILITY-AUDIT.md #17): these were <h4>, jumping straight from
+   the hero's <h1> and skipping h2/h3 (production/src/App/views/PageContent/Personalize.css:250-259
+   is the same rule, also targeting h4 — production's real Personalize widget is a much more
+   complex, dynamic persona-picker with its own intervening headings that doesn't map cleanly
+   to our simplified static 4-card version, so this is a pragmatic level-fix, not a faithful copy).
+   Selector retargeted from h4 to h2 to match the markup change; declarations unchanged. */
+.personalize__content-column h2,
 .personalize__content-column p {
   color: #1E3666;
 }
 
-.personalize__content-column h4 {
+.personalize__content-column h2 {
   margin: 0 auto 10px;
   font-size: 1.8rem;
   line-height: 1.1em;

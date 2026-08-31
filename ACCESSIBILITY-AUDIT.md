@@ -108,12 +108,33 @@ _Not yet audited — pending baseline run. Expect the same accordion-keyboard-op
 
 Found via WAVE + Lighthouse against `https://j-place.github.io/home/` (2026-08-29) while verifying the meganav fixes — not yet triaged for a fix.
 
+| # | Issue | Detail | Resolution |
+|---|---|---|---|
+| 16 | Color contrast, 6 instances | "View More" article link (2.98:1), 4× author-name text (2.84:1), footer "JOIN NOW" button (4.44:1) — all below the 4.5:1 AA threshold. Same in production's own live CSS, not fixed this pass. | Open |
+| 17 | Heading order | `<h4>` "Workout Library" in the personalize section is out of sequence, skipping a level. | Open |
+| 18 | Touch target size, 2 instances | Hero carousel nav dots are 10×10px with minimal spacing (WCAG 2.5.8 wants ≥24×24px). | Open |
+| 19 | Hero carousel background video has no captions (Lighthouse `video-caption`, informative/manual) | `production/src/App/views/Media/Carousel.jsx:188-190` — video is `autoplay loop muted`, no `controls`, no `<track>` in production either. Confirmed by ear: no audio track, purely decorative — functions as a background image, not meaningful video content. | **Fixed** — added `aria-hidden="true"` to the `<video>` element (`src/_includes/partials/Media/Carousel.njk`), the standard technique for marking decorative embedded media (equivalent to `alt=""` on a decorative image). Makes the "no captions needed" conclusion explicit in markup for screen readers and future automated scans, rather than only living in this doc. Safe with no `tabindex` pairing since the video has no `controls` and isn't in the tab order to begin with. Verified with axe-core: 0 new violations, `aria-hidden-focus` unaffected. |
+
 ### [7] — Empty footer subscribe heading/paragraph
 **Date:** 2026-08-31
 **Files changed:** `src/_includes/partials/Navigation/Footer.njk`, `src/_includes/layouts/lmsc.njk`
 **What changed:** Confirmed intent by checking production's real component (`production/src/App/views/Social/Subscribe.jsx:10-11`): the `<h4 class="subscribe__header">` and following `<p>` have real, hardcoded copy in production ("Subscribe To See More" / "Send us you email to see more articles and track your Fitness Logs.") — our mockup dropped that text entirely when the markup was first built. This was a faithful-reproduction gap, not an ambiguous design decision, so restored the text verbatim. Left the button (`Join Now` → `/login-to-registration-page/`) untouched, since that was already an intentional adaptation for this mockup — production's own button here ("subscribe" → `/en`) looks like unrelated placeholder content in production itself.
 **Why:** A heading with no text prevents screen reader users from getting any information about the section's structure at that point.
 **Verified by:** axe-core (`empty-heading`) against both `http://localhost:8080/home/` (uses `Footer.njk`) and `http://localhost:8080/lmsc/ohio-masters-swimming/` (uses `lmsc.njk`): 0 violations on both, previously failing on both.
+
+### [19] — Hero carousel video marked decorative
+**Date:** 2026-08-31
+**Files changed:** `src/_includes/partials/Media/Carousel.njk`
+**What changed:** Lighthouse flags the hero banner's background video for missing captions (`video-caption`, informative/manual — automated tools can't determine whether captions are actually needed). Listened to the source file directly: it's audio-free and purely decorative, functioning as a background image rather than meaningful video content — no `controls`, `autoplay loop muted`. Added `aria-hidden="true"` to the `<video>` element, the standard technique for marking decorative embedded media, so the "no captions needed" conclusion is explicit in markup rather than only recorded in this doc.
+**Why:** Without an explicit signal, a screen reader user or a future automated scan has no way to tell "decorative, intentionally silent" apart from "developer forgot captions."
+**Verified by:** axe-core against `http://localhost:8080/home/`: 0 new violations; `aria-hidden-focus` unaffected since the video has no `controls` and wasn't in the tab order to begin with.
+
+### [17] — Homepage personalize cards: heading order
+**Date:** 2026-08-31
+**Files changed:** `src/_includes/partials/Homepage/Personalize.njk`, `src/css/Home/personalize.css`
+**What changed:** The four CTA cards ("Workout Library", "Calendar of Events", "Club Finder", "Training and Technique") were `<h4>`, immediately following the hero's `<h1>` — skipping h2 and h3 entirely. The checked-out `production/` repo's `PersonalizeContentItem.jsx:158` shows an intervening `<h3 className="personalize__form-header">` section title, which would have made this a "faithful copy of a more complex widget" situation — but that checkout turned out to be stale/not reflective of current behavior: fetching the live site directly (`curl https://www.usms.org/`) shows the exact same heading sequence as ours, h1 straight to four `h4.personalize__content-column-header` cards, with `personalize__form-header` absent from the live HTML entirely. Production has the identical bug live right now — same category as #1/#2–6/#5, not a simplification tradeoff. Promoted the four cards from `<h4>` to `<h2>` — a valid one-level descent from the hero's `<h1>`, and semantically accurate since these are the primary content sections following it. Retargeted the matching CSS selector (`.personalize__content-column h4` → `h2`) in the local override that duplicates production's bare-element-selector styling; declarations unchanged.
+**Why:** Screen reader users navigating by heading level get a page outline that skips levels, which is confusing regardless of visual layout.
+**Verified by:** Full heading sequence extracted from the built homepage: now `h1 → h1 → h2×4 → h3×15 → h4`, fully sequential. axe-core (`heading-order`): 0 violations (previously 1). Computed styles confirmed pixel-identical before/after (font-size, color, margin) — only the tag name changed.
 
 ### [1] — Mobile viewport zoom disabled to hide RTE table overflow
 **Date:** 2026-08-29
