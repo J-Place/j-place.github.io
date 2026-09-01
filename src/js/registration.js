@@ -1,11 +1,81 @@
 /* globals ValidateField, ValidateDob, MakeColumnWithErrorSameHeight */
 (function () {
   // ── User state (set by login-status.js via data attributes) ───────────────
-  // TODO: use renew/isLapsed to vary header copy, pre-population mode,
-  // and any flow differences between new, renewing-current, and lapsed paths.
   var formWrapper = document.querySelector('.full-registration-form');
   var renew    = formWrapper && formWrapper.dataset.renew    === 'true';
   var isLapsed = formWrapper && formWrapper.dataset.isLapsed === 'true';
+
+  // ── Renewal mode ────────────────────────────────────────────────────────
+  // Simulates production's server-seeded RegistrationSession/IsRenewal flag
+  // (see MembershipRepository.FillRegistrationDataForRenewal in production) —
+  // same URL for new and renewing members either way, just seeded
+  // differently before this page renders. Since this mockup has no real
+  // login/session backend, the Renew/Create buttons on
+  // login-to-registration-page/ set this sessionStorage flag immediately
+  // before navigating here (both link to the same /registration/ URL).
+  // Consumed once and cleared so a plain reload doesn't stay stuck in
+  // renewal mode.
+  (function applyRenewalMode() {
+    var mode = sessionStorage.getItem('registrationMode');
+    sessionStorage.removeItem('registrationMode');
+    if (mode !== 'renew') return;
+
+    var dataEl = document.getElementById('renewal-swimmer-data');
+    if (!dataEl) return;
+    var swimmer;
+    try { swimmer = JSON.parse(dataEl.textContent); } catch (e) { return; }
+    if (!swimmer) return;
+
+    if (formWrapper) {
+      formWrapper.dataset.renew = 'true';
+      formWrapper.dataset.isLapsed = 'true';
+    }
+    renew = true;
+    isLapsed = true;
+
+    function setVal(id, val) {
+      var el = document.getElementById(id);
+      if (el && val != null) el.value = val;
+    }
+    function disable(id) {
+      var el = document.getElementById(id);
+      if (el) el.disabled = true;
+    }
+    function setPreselect(id, val) {
+      var el = document.getElementById(id);
+      if (el) el.dataset.preselect = val || '';
+    }
+
+    // Contact info already on file — prefilled, and (matching production's
+    // disabled={IsRenewal} on Email/DOB) locked against editing.
+    setVal('firstName', swimmer.firstName);
+    setVal('lastName', swimmer.lastName);
+    setVal('email', swimmer.email);
+    setVal('phone', swimmer.phone);
+    setVal('address', swimmer.address);
+    setVal('city', swimmer.city);
+    setVal('zipUs', swimmer.zip);
+    setPreselect('Gender', swimmer.gender);
+    setPreselect('SelectedState', swimmer.state);
+
+    if (swimmer.birthDate) {
+      var bd = swimmer.birthDate.split('/');
+      setPreselect('BirthMonth', bd[0]);
+      setPreselect('BirthDay', bd[1]);
+      setPreselect('BirthYear', bd[2]);
+    }
+
+    if (swimmer.lmsc) {
+      setPreselect('selectedLmsc', swimmer.lmsc.toLowerCase());
+      var lmscEl = document.getElementById('selectedLmsc');
+      if (lmscEl && swimmer.club) lmscEl.dataset.preselectClub = swimmer.club;
+    }
+
+    disable('email');
+    disable('BirthMonth');
+    disable('BirthDay');
+    disable('BirthYear');
+  })();
 
   // ── Selectors ─────────────────────────────────────────────────────────────
   var membershipContainer = document.querySelector('.membership-length--container');
@@ -32,8 +102,17 @@
     var el = document.getElementById(id);
     if (!el || !el.dataset.preselect) return;
     var val = el.dataset.preselect;
+    // Numeric fallback: birthDate.split('/') keeps zero-padded months/days
+    // ("05"), but option values aren't zero-padded ("5") — a plain string
+    // comparison would never match those, so compare numerically too when
+    // both sides parse as numbers.
+    var valNum = parseInt(val, 10);
     for (var i = 0; i < el.options.length; i++) {
-      if (el.options[i].value == val) { el.selectedIndex = i; return; }
+      var optVal = el.options[i].value;
+      if (optVal == val || (!isNaN(valNum) && parseInt(optVal, 10) === valNum)) {
+        el.selectedIndex = i;
+        return;
+      }
     }
   }
 
@@ -838,10 +917,13 @@
     if (!lmsc || !lmsc.dataset.preselect) return;
     preselectByDataAttr('selectedLmsc');
     lmsc.dispatchEvent(new Event('change'));
+    // Matched by club code (e.g. "SRQM", as stored on swimmer records) found in the
+    // option's display text "Club Name (CODE)" — CLUBS' option values are opaque
+    // Salesforce IDs, not the short code, so a direct value match won't work here.
     var preselectClub = lmsc.dataset.preselectClub;
     if (preselectClub && club) {
       for (var i = 0; i < club.options.length; i++) {
-        if (club.options[i].value === preselectClub) { club.selectedIndex = i; break; }
+        if (club.options[i].textContent.indexOf('(' + preselectClub + ')') !== -1) { club.selectedIndex = i; break; }
       }
     }
   })();
