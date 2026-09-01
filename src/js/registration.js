@@ -51,6 +51,12 @@
       if (el) el.dataset.preselect = val || '';
     }
 
+    // Header greeting — Nunjucks already renders this for the default
+    // new-member persona at build time; renewal's name is only known at
+    // runtime (sessionStorage + the embedded JSON), so update it here too.
+    var headerName = document.getElementById('renewHeaderFirstName');
+    if (headerName && swimmer.firstName) headerName.textContent = swimmer.firstName;
+
     // Contact info already on file — prefilled, and (matching production's
     // disabled={IsRenewal} on Email/DOB) locked against editing.
     setVal('firstName', swimmer.firstName);
