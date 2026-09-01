@@ -1,0 +1,23 @@
+---
+permalink: /visual-regression-gallery.html
+---
+{% extends "layouts/base.njk" %}
+{% set title = "Visual Regression Screenshot List" %}
+{% block content %}
+<main>
+<div class="section section-full">
+  <div class="usms-container" style="margin: 4rem auto 6rem;">
+    <h5>Visual Regression Screenshot List</h5>
+    <p style="margin-top: 1rem;">Current baseline screenshots from the Playwright visual-regression suite. Click a link to open the full-size image in a new tab.</p>
+    {% for group in visualBaselines %}
+    <h4 style="margin-top: 2rem;"><a href="{{ group.pagePath }}">{{ group.pagePath }}</a></h4>
+    <ul style="margin-top: 0.5rem; list-style-type: none; padding-left: 0;">
+      {% for item in group.items %}
+      <li style="padding: 3px 0; font-size: 15px;"><a href="/{{ item.path }}" target="_blank">{{ item.label }}</a></li>
+      {% endfor %}
+    </ul>
+    {% endfor %}
+  </div>
+</div>
+</main>
+{% endblock %}
