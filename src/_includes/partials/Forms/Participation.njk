@@ -55,43 +55,25 @@
 			      data-container="body"
 			      title="These are national competitive awards and rankings. They consist of the publication of USMS records and annual Top 10 times and the naming of All-Stars and All-Americans."></span>
 		</label>
-		<div class="col-xs-12"><span class="help-block help-block--nationalRecognition">Please select an option</span></div>
 		<div class="col-xs-12">
-			<label class="radio-label" for="nationalRecognitionYes" style="cursor:pointer;">
-				<div class="radio-container">
-					<input type="radio" name="nationalRecognition" id="nationalRecognitionYes" value="yes">
-					<span class="radio__placeholder"></span>
+			<label class="checkbox-label" for="nationalRecognitionYes" style="cursor:pointer;">
+				<div class="checkbox-container">
+					<input type="checkbox" name="nationalRecognition" id="nationalRecognitionYes" value="yes">
+					<span class="checkbox__placeholder"></span>
 				</div>
 				Yes
-			</label>
-			<label class="radio-label" for="nationalRecognitionNo" style="cursor:pointer;">
-				<div class="radio-container">
-					<input type="radio" name="nationalRecognition" id="nationalRecognitionNo" value="no">
-					<span class="radio__placeholder"></span>
-				</div>
-				No
 			</label>
 		</div>
 	</div>
 
 	<div class="form-group competition-certification" style="display:none;">
 		<label class="control-label font-weight-bold col-xs-12">Certification of Competition Category</label>
-		<div class="col-xs-12">
-			<span class="help-block help-block--CompetitionMembership">Please select certification of competition category option</span>
-		</div>
-		<label class="radio-label radio-label--inline col-xs-12" for="competitionMembershipYesInput" style="cursor:pointer;">
-			<div class="radio-container">
-				<input type="radio" name="CompetitionMembership" id="competitionMembershipYesInput" value="yes">
-				<span class="radio__placeholder"></span>
+		<label class="checkbox-label col-xs-12" for="competitionMembershipYesInput" style="cursor:pointer;">
+			<div class="checkbox-container">
+				<input type="checkbox" name="CompetitionMembership" id="competitionMembershipYesInput" value="yes">
+				<span class="checkbox__placeholder"></span>
 			</div>
 			I certify that my sex assigned at birth corresponds with the competition category selected.
-		</label>
-		<label class="radio-label radio-label--inline col-xs-12" for="competitionMembershipNoInput" style="cursor:pointer;">
-			<div class="radio-container">
-				<input type="radio" name="CompetitionMembership" id="competitionMembershipNoInput" value="no">
-				<span class="radio__placeholder"></span>
-			</div>
-			<div>I DO NOT certify that my sex assigned at birth corresponds with the competition category selected. (A USMS representative will contact you to discuss participation and eligibility procedures.)</div>
 		</label>
 	</div>
 
@@ -108,13 +90,3 @@
 		</div>
 	</div>
 </div>
-
-{% set modalId = "modalCompetitionNotCertify" %}
-{% set modalTitle = "We Will Contact You" %}
-{% set modalBody %}
-<p>A USMS representative will contact you within a week to discuss participation and eligibility procedures. Please go ahead and finish your registration.</p>
-{% endset %}
-{% set modalFooter %}
-<button type="button" class="btn btn-md btn-primary" id="confirmCompetitionNotCertify">Okay</button>
-{% endset %}
-{% include "components/modal.njk" %}
