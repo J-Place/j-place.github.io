@@ -413,6 +413,12 @@
       } else {
         var group = document.querySelector('.national-recognition');
         if (group) group.style.display = '';
+        // National Recognition is now a single opt-in checkbox (no "no"
+        // option) — its unchecked default behaves like the removed "no"
+        // radio used to: go straight to the agreement. Checking it swaps
+        // this for the certification step instead (see that handler below).
+        var agreeBlock = document.querySelector('.agree-terms-competition');
+        if (agreeBlock) agreeBlock.style.display = '';
       }
     });
   });
@@ -445,53 +451,40 @@
     if (autoRenew) autoRenew.checked = true;
   }
 
-  // ── National Recognition radio ────────────────────────────────────────────
-  document.querySelectorAll('input[name="nationalRecognition"]').forEach(function (radio) {
-    radio.addEventListener('change', function () {
+  // ── National Recognition checkbox ─────────────────────────────────────────
+  // Single opt-in checkbox (the "no" radio option was removed) — checking it
+  // requires the additional certification step below; unchecked (the
+  // default) behaves like the old "no" radio and goes straight to the
+  // agreement.
+  document.querySelectorAll('input[name="nationalRecognition"]').forEach(function (checkbox) {
+    checkbox.addEventListener('change', function () {
       resetCompetitionCertification();
-      if (this.value === 'no') {
-        var block = document.querySelector('.agree-terms-competition');
-        if (block) block.style.display = '';
-      } else {
+      if (this.checked) {
         var group = document.querySelector('.competition-certification');
         if (group) group.style.display = '';
+      } else {
+        var block = document.querySelector('.agree-terms-competition');
+        if (block) block.style.display = '';
       }
     });
   });
 
-  // ── Competition Certification radio ───────────────────────────────────────
-  var certModal     = document.getElementById('modalCompetitionNotCertify');
-  var certBackdrop  = document.createElement('div');
-  certBackdrop.className = 'modal-backdrop fade in';
-
-  function openCertModal() {
-    if (!certModal) return;
-    document.body.appendChild(certBackdrop);
-    certModal.style.display = 'block';
-    certModal.classList.add('show');
-    certModal.removeAttribute('aria-hidden');
-    document.body.classList.add('modal-open');
-  }
-
-  function closeCertModal() {
-    if (!certModal) return;
-    certModal.style.display = 'none';
-    certModal.classList.remove('show');
-    certModal.setAttribute('aria-hidden', 'true');
-    if (certBackdrop.parentNode) certBackdrop.parentNode.removeChild(certBackdrop);
-    document.body.classList.remove('modal-open');
-  }
-
-  var certConfirmBtn = document.getElementById('confirmCompetitionNotCertify');
-  if (certConfirmBtn) certConfirmBtn.addEventListener('click', closeCertModal);
-
-  document.querySelectorAll('input[name="CompetitionMembership"]').forEach(function (radio) {
-    radio.addEventListener('change', function () {
+  // ── Competition Certification checkbox ────────────────────────────────────
+  // Single required-affirmation checkbox — the "I DO NOT certify" option
+  // (and the "we'll contact you" modal it used to open) was removed
+  // entirely, since there's no negative path to handle anymore. Checking it
+  // reveals the agreement; unchecking hides it again and resets any
+  // agreement already given.
+  document.querySelectorAll('input[name="CompetitionMembership"]').forEach(function (checkbox) {
+    checkbox.addEventListener('change', function () {
       var block = document.querySelector('.agree-terms-competition');
-      if (block) block.style.display = '';
       var cb = document.getElementById('agree-terms-competition');
-      if (cb && cb.checked) { cb.checked = false; cb.dispatchEvent(new Event('change')); }
-      if (this.value === 'no') openCertModal();
+      if (this.checked) {
+        if (block) block.style.display = '';
+      } else {
+        if (block) block.style.display = 'none';
+        if (cb && cb.checked) { cb.checked = false; cb.dispatchEvent(new Event('change')); }
+      }
     });
   });
 
@@ -767,22 +760,9 @@
       },
       watch: [{ sel: 'input[name="competitionCategory"]', ev: 'change' }]
     },
-    {
-      span: 'help-block--nationalRecognition',
-      check: function () {
-        if (!isVisible(document.querySelector('.national-recognition'))) return true;
-        return !!document.querySelector('input[name="nationalRecognition"]:checked');
-      },
-      watch: [{ sel: 'input[name="nationalRecognition"]', ev: 'change' }]
-    },
-    {
-      span: 'help-block--CompetitionMembership',
-      check: function () {
-        if (!isVisible(document.querySelector('.competition-certification'))) return true;
-        return !!document.querySelector('input[name="CompetitionMembership"]:checked');
-      },
-      watch: [{ sel: 'input[name="CompetitionMembership"]', ev: 'change' }]
-    },
+    // National Recognition and Competition Certification are now optional
+    // opt-in checkboxes (not a forced either/or radio choice), so there's no
+    // "please select an option" invalid state to validate here anymore.
     // Membership tier
     {
       span: 'help-block--length',
