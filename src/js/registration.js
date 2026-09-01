@@ -5,6 +5,11 @@
   var renew    = formWrapper && formWrapper.dataset.renew    === 'true';
   var isLapsed = formWrapper && formWrapper.dataset.isLapsed === 'true';
 
+  // Set by applyRenewalMode() below, consumed later by
+  // applyRenewalParticipationDefaults() once the participationInfo/
+  // competitionCategory listeners it needs to trigger actually exist.
+  var renewalSwimmer = null;
+
   // ── Renewal mode ────────────────────────────────────────────────────────
   // Simulates production's server-seeded RegistrationSession/IsRenewal flag
   // (see MembershipRepository.FillRegistrationDataForRenewal in production) —
@@ -76,35 +81,17 @@
     disable('BirthDay');
     disable('BirthYear');
 
-    // Coach status — mirrors src/js/dev/login-status.js's populateCoachInterests(),
-    // the dev-only swimmer-switcher's existing version of this same prefill.
-    if (swimmer.coachSelfIdentified != null) {
-      var coachVal = swimmer.coachSelfIdentified ? 'true' : 'false';
-      var coachRadio = document.querySelector('input[name="checkbox-interests-self-identified-coach"][value="' + coachVal + '"]');
-      if (coachRadio) {
-        coachRadio.checked = true;
-        coachRadio.dispatchEvent(new Event('change'));
-      }
-    }
+    // Coach status, Liability, Membership type, add-ons (VSA/donations),
+    // Payment details, and Acknowledgment are intentionally left blank on
+    // renewal — confirmed out of scope, re-affirmed/re-chosen every cycle
+    // regardless of membership history.
 
-    // Competition category / national recognition — set silently (no change
-    // event) since both sections start hidden pending the fresh-each-time
-    // "do you plan on participating in events?" answer, and the reveal
-    // cascade below (participationInfo/competitionCategory change handlers)
-    // unconditionally clears these radios before showing the next section.
-    // KNOWN GAP: that means these prefilled values are wiped the moment the
-    // member answers participationInfo/competitionCategory, not just
-    // previewed — the reset*() functions would need to restore from
-    // `swimmer` instead of blanking if these should actually survive.
-    // Flagged for review rather than silently changing that shared reset
-    // behavior here.
-    function setChecked(name, val) {
-      if (val == null) return;
-      var radio = document.querySelector('input[name="' + name + '"][value="' + val + '"]');
-      if (radio) radio.checked = true;
-    }
-    setChecked('competitionCategory', swimmer.competitionCategory);
-    setChecked('nationalRecognition', swimmer.nationalRecognition);
+    // Participation defaults and the auto-renew checkbox need listeners
+    // registered further down in this file to exist first (dispatching
+    // participationInfo/competitionCategory's change events is how their
+    // reveal cascade runs) — stash the swimmer record for
+    // applyRenewalParticipationDefaults() to pick up once those are wired.
+    renewalSwimmer = swimmer;
   })();
 
   // ── Selectors ─────────────────────────────────────────────────────────────
@@ -423,6 +410,34 @@
       }
     });
   });
+
+  // ── Renewal mode: participation defaults (2027 policy update) ─────────────
+  // Event participation now defaults to yes for renewing members, with their
+  // on-file competition category carried forward — unlike the coach/add-on/
+  // payment fields above, these two are meant to survive being set here,
+  // so they're triggered via the real change events (not silently) to run
+  // through the same reveal cascade a manual click would, landing on
+  // whichever downstream section that category implies (agree-terms for
+  // mens-open, national-recognition otherwise) — left for the member to
+  // answer fresh either way.
+  if (renewalSwimmer) {
+    var participationYes = document.getElementById('participationInfoYes');
+    if (participationYes) {
+      participationYes.checked = true;
+      participationYes.dispatchEvent(new Event('change'));
+    }
+    if (renewalSwimmer.competitionCategory) {
+      var compCategoryRadio = document.querySelector('input[name="competitionCategory"][value="' + renewalSwimmer.competitionCategory + '"]');
+      if (compCategoryRadio) {
+        compCategoryRadio.checked = true;
+        compCategoryRadio.dispatchEvent(new Event('change'));
+      }
+    }
+    // Automatic renewal defaults to yes (2027 policy update) — the rest of
+    // the Payment section (card details, terms acknowledgment) stays blank.
+    var autoRenew = document.getElementById('signup');
+    if (autoRenew) autoRenew.checked = true;
+  }
 
   // ── National Recognition radio ────────────────────────────────────────────
   document.querySelectorAll('input[name="nationalRecognition"]').forEach(function (radio) {
