@@ -75,6 +75,36 @@
     disable('BirthMonth');
     disable('BirthDay');
     disable('BirthYear');
+
+    // Coach status — mirrors src/js/dev/login-status.js's populateCoachInterests(),
+    // the dev-only swimmer-switcher's existing version of this same prefill.
+    if (swimmer.coachSelfIdentified != null) {
+      var coachVal = swimmer.coachSelfIdentified ? 'true' : 'false';
+      var coachRadio = document.querySelector('input[name="checkbox-interests-self-identified-coach"][value="' + coachVal + '"]');
+      if (coachRadio) {
+        coachRadio.checked = true;
+        coachRadio.dispatchEvent(new Event('change'));
+      }
+    }
+
+    // Competition category / national recognition — set silently (no change
+    // event) since both sections start hidden pending the fresh-each-time
+    // "do you plan on participating in events?" answer, and the reveal
+    // cascade below (participationInfo/competitionCategory change handlers)
+    // unconditionally clears these radios before showing the next section.
+    // KNOWN GAP: that means these prefilled values are wiped the moment the
+    // member answers participationInfo/competitionCategory, not just
+    // previewed — the reset*() functions would need to restore from
+    // `swimmer` instead of blanking if these should actually survive.
+    // Flagged for review rather than silently changing that shared reset
+    // behavior here.
+    function setChecked(name, val) {
+      if (val == null) return;
+      var radio = document.querySelector('input[name="' + name + '"][value="' + val + '"]');
+      if (radio) radio.checked = true;
+    }
+    setChecked('competitionCategory', swimmer.competitionCategory);
+    setChecked('nationalRecognition', swimmer.nationalRecognition);
   })();
 
   // ── Selectors ─────────────────────────────────────────────────────────────
