@@ -26,7 +26,10 @@ module.exports = defineConfig({
   projects: [
     {
       name: 'Desktop',
-      use: { ...devices['Desktop Chrome'], viewport: { width: 1280, height: 800 } },
+      // 1512x982 is the default logical resolution of a 14" MacBook Pro (2x Retina,
+      // native 3024x1964). Height kept at 800 (full-page screenshots capture the
+      // actual page height regardless).
+      use: { ...devices['Desktop Chrome'], viewport: { width: 1512, height: 800 } },
     },
     {
       name: 'Mobile',
