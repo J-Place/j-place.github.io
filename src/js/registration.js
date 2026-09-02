@@ -450,40 +450,74 @@
   }
 
   // ── National Recognition radio ────────────────────────────────────────────
-  // Reverted back to a forced yes/no radio choice (Certification stays a
-  // checkbox — that part wasn't reverted): "yes" reveals Certification,
-  // "no" skips straight to the Agreement.
+  // "yes" reveals Certification and the Agreement together (Certification
+  // no longer gates the Agreement's visibility — see below). "no" opens a
+  // confirmation modal explaining the eligibility tradeoff before deciding
+  // what to reveal (see the modal handler further down).
   document.querySelectorAll('input[name="nationalRecognition"]').forEach(function (radio) {
     radio.addEventListener('change', function () {
       resetCompetitionCertification();
       if (this.value === 'no') {
-        var block = document.querySelector('.agree-terms-competition');
-        if (block) block.style.display = '';
+        openModal(document.getElementById('modalNationalRecognitionDecline'));
       } else {
         var group = document.querySelector('.competition-certification');
         if (group) group.style.display = '';
+        var block = document.querySelector('.agree-terms-competition');
+        if (block) block.style.display = '';
       }
     });
   });
 
+  // ── National Recognition "no" confirmation modal ──────────────────────────
+  // Mirrors modal.js's own open sequence (that file only listens for clicks
+  // on [data-modal-target] elements, so opening programmatically needs its
+  // own copy of the same steps rather than a user click to react to).
+  function openModal(modal) {
+    if (!modal) return;
+    var scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    var backdrop = document.createElement('div');
+    backdrop.className = 'modal-backdrop fade in';
+    document.body.appendChild(backdrop);
+    modal.classList.add('in');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+    document.body.style.paddingRight = scrollbarWidth + 'px';
+  }
+
+  (function () {
+    var modal = document.getElementById('modalNationalRecognitionDecline');
+    if (!modal) return;
+
+    function showOnlyAgreement() {
+      var cert = document.querySelector('.competition-certification');
+      var agree = document.querySelector('.agree-terms-competition');
+      if (cert) cert.style.display = 'none';
+      if (agree) agree.style.display = '';
+    }
+
+    function showBoth() {
+      var cert = document.querySelector('.competition-certification');
+      var agree = document.querySelector('.agree-terms-competition');
+      if (cert) cert.style.display = '';
+      if (agree) agree.style.display = '';
+    }
+
+    var confirmBtn = document.getElementById('nationalRecognitionDeclineConfirm');
+    if (confirmBtn) confirmBtn.addEventListener('click', showOnlyAgreement);
+
+    // Cancel and the modal's built-in "X" close button both back out of the
+    // decline to the same "show both" state, rather than being a third
+    // distinct outcome.
+    var cancelBtn = document.getElementById('nationalRecognitionDeclineCancel');
+    if (cancelBtn) cancelBtn.addEventListener('click', showBoth);
+    var closeX = modal.querySelector('.btn-close');
+    if (closeX) closeX.addEventListener('click', showBoth);
+  })();
+
   // ── Competition Certification checkbox ────────────────────────────────────
-  // Single required-affirmation checkbox — the "I DO NOT certify" option
-  // (and the "we'll contact you" modal it used to open) was removed
-  // entirely, since there's no negative path to handle anymore. Checking it
-  // reveals the agreement; unchecking hides it again and resets any
-  // agreement already given.
-  document.querySelectorAll('input[name="CompetitionMembership"]').forEach(function (checkbox) {
-    checkbox.addEventListener('change', function () {
-      var block = document.querySelector('.agree-terms-competition');
-      var cb = document.getElementById('agree-terms-competition');
-      if (this.checked) {
-        if (block) block.style.display = '';
-      } else {
-        if (block) block.style.display = 'none';
-        if (cb && cb.checked) { cb.checked = false; cb.dispatchEvent(new Event('change')); }
-      }
-    });
-  });
+  // Purely informational now — no longer gates the Agreement's visibility
+  // (previously checking/unchecking this showed/hid it; that script has
+  // been removed so both can be visible at the same time).
 
   // ── Competition agreement — gates event tier display ──────────────────────
   var competitionAgree = document.getElementById('agree-terms-competition');
