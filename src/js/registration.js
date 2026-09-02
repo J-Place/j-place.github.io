@@ -449,15 +449,17 @@
     if (autoRenew) autoRenew.checked = true;
   }
 
-  // ── National Recognition checkbox ─────────────────────────────────────────
-  // Single opt-in checkbox (the "no" radio option was removed) — progressive
-  // disclosure: checking it reveals Certification; unchecking hides it (and
-  // the Agreement, via resetCompetitionCertification's cascade) again,
-  // leaving nothing else auto-revealed.
-  document.querySelectorAll('input[name="nationalRecognition"]').forEach(function (checkbox) {
-    checkbox.addEventListener('change', function () {
+  // ── National Recognition radio ────────────────────────────────────────────
+  // Reverted back to a forced yes/no radio choice (Certification stays a
+  // checkbox — that part wasn't reverted): "yes" reveals Certification,
+  // "no" skips straight to the Agreement.
+  document.querySelectorAll('input[name="nationalRecognition"]').forEach(function (radio) {
+    radio.addEventListener('change', function () {
       resetCompetitionCertification();
-      if (this.checked) {
+      if (this.value === 'no') {
+        var block = document.querySelector('.agree-terms-competition');
+        if (block) block.style.display = '';
+      } else {
         var group = document.querySelector('.competition-certification');
         if (group) group.style.display = '';
       }
@@ -755,9 +757,17 @@
       },
       watch: [{ sel: 'input[name="competitionCategory"]', ev: 'change' }]
     },
-    // National Recognition and Competition Certification are now optional
-    // opt-in checkboxes (not a forced either/or radio choice), so there's no
-    // "please select an option" invalid state to validate here anymore.
+    {
+      span: 'help-block--nationalRecognition',
+      check: function () {
+        if (!isVisible(document.querySelector('.national-recognition'))) return true;
+        return !!document.querySelector('input[name="nationalRecognition"]:checked');
+      },
+      watch: [{ sel: 'input[name="nationalRecognition"]', ev: 'change' }]
+    },
+    // Competition Certification is still an optional opt-in checkbox (not
+    // reverted), so there's no "please select an option" invalid state for
+    // it to validate.
     // Membership tier
     {
       span: 'help-block--length',
