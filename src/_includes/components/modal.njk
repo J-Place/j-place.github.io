@@ -12,6 +12,8 @@
                      "xl"  → 800px  (≥992px, per modal.css — same rule as lg)
     modalTitleId   — optional: id on the <h5> (useful for aria-labelledby)
     modalTitle     — optional: title text; leave unset for JS-populated titles
+    modalHideCloseButton — optional: true to omit the top-right X (forces the
+                     user to resolve the modal via its own body/footer controls)
 
     modalBody      — optional: body HTML
                      {% set modalBody %}...{% endset %}
@@ -41,7 +43,9 @@
     <div class="modal-content">
       <div class="modal-header{{ ' modal-header--titled' if modalTitle }}">
         <h5 class="modal-title"{% if modalTitleId %} id="{{ modalTitleId }}"{% endif %}>{{ modalTitle if modalTitle }}</h5>
+        {% if not modalHideCloseButton %}
         <button type="button" class="btn-close js-modal-close" aria-label="Close"></button>
+        {% endif %}
         {% if modalHeaderExtra %}{{ modalHeaderExtra | safe }}{% endif %}
       </div>
       {% if modalBody %}
