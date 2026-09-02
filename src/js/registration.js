@@ -502,16 +502,37 @@
       if (agree) agree.style.display = '';
     }
 
-    var confirmBtn = document.getElementById('nationalRecognitionDeclineConfirm');
-    if (confirmBtn) confirmBtn.addEventListener('click', showOnlyAgreement);
+    // Radios only stage a choice — Continue is what applies it and closes
+    // the modal (see modal.njk's modalHideCloseButton; there's no X or
+    // Cancel, so Continue is the only way out). "Yes, opt out" behaves like
+    // the old "I understand" confirm; "No, remain eligible" behaves like
+    // the old Cancel.
+    var continueBtn = document.getElementById('nationalRecognitionDeclineContinue');
+    modal.querySelectorAll('input[name="nationalRecognitionDeclineChoice"]').forEach(function (radio) {
+      radio.addEventListener('change', function () {
+        if (continueBtn) continueBtn.disabled = false;
+      });
+    });
 
-    // Cancel and the modal's built-in "X" close button both back out of the
-    // decline to the same "show both" state, rather than being a third
-    // distinct outcome.
-    var cancelBtn = document.getElementById('nationalRecognitionDeclineCancel');
-    if (cancelBtn) cancelBtn.addEventListener('click', showBoth);
-    var closeX = modal.querySelector('.btn-close');
-    if (closeX) closeX.addEventListener('click', showBoth);
+    if (continueBtn) {
+      continueBtn.addEventListener('click', function () {
+        var choice = modal.querySelector('input[name="nationalRecognitionDeclineChoice"]:checked');
+        if (!choice) return;
+        if (choice.value === 'yes') {
+          showOnlyAgreement();
+        } else {
+          // "No, remain eligible" reverses the opt-out — flip the main
+          // question's radio back to Yes so it reflects that choice, rather
+          // than leaving it stuck on "No" while showing the Yes-shaped view.
+          var mainYesRadio = document.getElementById('nationalRecognitionYes');
+          if (mainYesRadio) {
+            mainYesRadio.checked = true;
+            mainYesRadio.dispatchEvent(new Event('change'));
+          }
+          showBoth();
+        }
+      });
+    }
   })();
 
   // ── Competition Certification checkbox ────────────────────────────────────

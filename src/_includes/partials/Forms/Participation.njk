@@ -102,12 +102,31 @@
 {% set modalId = "modalNationalRecognitionDecline" %}
 {% set modalSize = "lg" %}
 {% set modalTitle = "National Recognition Eligibility" %}
+{% set modalHideCloseButton = true %}
 {% set modalBody %}
 <p>You've indicated that you do not want to be included in USMS National Recognition Programs. You may still participate in the women's competition category at USMS-sanctioned events. However, under the interim eligibility policy, you will not be eligible for national recognition — including records, Top 10 lists, and scoring points at meets. Your swims at sanctioned meets will count as exhibition for national recognition purposes.</p>
 <p>You will remain eligible for local recognition programs at events held in a jurisdiction or facility with nondiscrimination laws covering gender identity.</p>
+<p class="national-recognition-decline__question">Do you still wish to opt out of national recognition?</p>
+<div class="form-group national-recognition-decline__choices">
+	<div class="col-xs-12">
+		<label class="radio-label" for="nationalRecognitionDeclineYes" style="cursor:pointer;">
+			<div class="radio-container">
+				<input type="radio" name="nationalRecognitionDeclineChoice" id="nationalRecognitionDeclineYes" value="yes">
+				<span class="radio__placeholder"></span>
+			</div>
+			Yes, opt out of national recognition
+		</label>
+		<label class="radio-label" for="nationalRecognitionDeclineNo" style="cursor:pointer;">
+			<div class="radio-container">
+				<input type="radio" name="nationalRecognitionDeclineChoice" id="nationalRecognitionDeclineNo" value="no">
+				<span class="radio__placeholder"></span>
+			</div>
+			No, remain eligible for national recognition
+		</label>
+	</div>
+</div>
 {% endset %}
 {% set modalFooter %}
-<button type="button" class="btn btn-md btn-outline js-modal-close" id="nationalRecognitionDeclineCancel">Cancel</button>
-<button type="button" class="btn btn-md btn-primary js-modal-close" id="nationalRecognitionDeclineConfirm">I understand</button>
+<button type="button" class="btn btn-md btn-primary js-modal-close" id="nationalRecognitionDeclineContinue" disabled>Continue</button>
 {% endset %}
 {% include "components/modal.njk" %}

@@ -87,6 +87,35 @@
     }
 }
 
+/* ── National Recognition decline modal ──────────────────────
+   Not a production pattern (see feedback_modal_pattern memory — modals
+   always normalize to our modal.njk, so there's no production source to
+   trace these rules to). .modal-body p renders at 1.8rem here (no
+   modalBodyClass set); .radio-label defaults to 1.4rem/inline-block per
+   production's Common/Radio.css, so both are overridden to read as one
+   voice and stack instead of sitting side by side. */
+/* Two classes to outrank production's usms.min.css .usms-container p rule
+   (font-weight: 300 at 0,1,1 specificity) which otherwise wins over a bare
+   class selector despite loading first. */
+.usms-modal-global .national-recognition-decline__question {
+    font-weight: 500;
+}
+
+.renew__form-body .form-group.national-recognition-decline__choices {
+    margin-bottom: 3rem;
+}
+
+.national-recognition-decline__choices .col-xs-12 {
+    display: flex;
+    flex-direction: column;
+}
+
+.national-recognition-decline__choices .radio-label {
+    font-size: 1.8rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+}
+
 /* ── Interests card — centered to match participation card ─── */
 
 .card.interests .form-group {
