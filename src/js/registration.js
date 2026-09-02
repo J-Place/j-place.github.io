@@ -103,6 +103,7 @@
   // ── Selectors ─────────────────────────────────────────────────────────────
   var membershipContainer = document.querySelector('.membership-length--container');
   var paymentFields      = document.querySelector('.registration-payment__fields');
+  var autoRenewGroup     = document.querySelector('.form-group.auto-renew');
   var paymentSummary     = document.querySelector('.js-payment-summary');
   var membershipTotalEl  = document.querySelector('.membership-length--total');
   var vsaTotalEl         = document.querySelector('.video-stroke-analysis--total');
@@ -152,6 +153,24 @@
 
   function setPaymentVisible(visible) {
     if (paymentFields) paymentFields.style.display = visible ? '' : 'none';
+  }
+
+  // Auto Renew is only offered on the Standard (currentYear), Event
+  // License Standard (competition), and USMS+ (usmsPlus) tiers — matches
+  // production's Payment.jsx getAutoRenew(radio.id) enableFor list. The id
+  // lives on the tile's radio input, not on the .membership-length--option
+  // container itself.
+  function updateAutoRenewVisibility() {
+    if (!autoRenewGroup) return;
+    var tile   = selectedTile();
+    var radio  = tile && tile.querySelector('input[type="radio"]');
+    var id     = radio ? radio.id : '';
+    var active = id === 'currentYear' || id === 'competition' || id === 'usmsPlus';
+    autoRenewGroup.style.display = active ? '' : 'none';
+    if (!active) {
+      var cb = autoRenewGroup.querySelector('#signup');
+      if (cb) cb.checked = false;
+    }
   }
 
   // ── Variable terms ────────────────────────────────────────────────────────
@@ -306,6 +325,7 @@
     if (membershipTotalEl) membershipTotalEl.textContent = '$0.00';
     document.querySelectorAll('input[name="CompetitionMembership"]').forEach(function (r) { r.checked = false; });
     updateVariableTerms();
+    updateAutoRenewVisibility();
     setPaymentVisible(false);
   }
 
@@ -335,6 +355,7 @@
     }
 
     updateVariableTerms();
+    updateAutoRenewVisibility();
     buildPaymentSummary();
     setPaymentVisible(hasPayableSelection());
     updateAgreement();
