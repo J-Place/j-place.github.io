@@ -925,7 +925,10 @@
     });
   })();
 
-  setPaymentVisible(false);
+  // Payment fields (auto-renew checkbox + card details) are visible from
+  // page load for both new and renewing members, not gated behind
+  // selecting a membership tile first — matches production's real layout.
+  setPaymentVisible(true);
   buildPaymentSummary();
 
   $('[data-toggle="tooltip"]').tooltip();
