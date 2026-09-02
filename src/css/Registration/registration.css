@@ -32,25 +32,26 @@
     white-space: normal;
 }
 
-/* National Recognition, Competition Certification, and Agreement are all a
-   single opt-in checkbox now (previously two of these were radios/had a
-   much wider dedicated column — see git history). Production's and this
-   file's own now-stale per-section rules for those old shapes (a
-   350px/20rem-padded column for agree-terms-competition, absolutely-
-   positioned .radio-container offsets for competition-certification) have
-   been removed rather than adapted, so all three fall back to the same
-   plain .form-group/.checkbox-label/.checkbox-container defaults and their
-   checkboxes line up on the same left edge.
+/* Competition Certification and Agreement are still a single opt-in
+   checkbox each (National Recognition was reverted back to Yes/No radios —
+   see git history — so it's back to the plain .form-group/.control-label/
+   .radio-label styling shared with "Do you plan on participating in
+   events?" and "Competition Category" above, no special override needed).
+   Production's and this file's own prior per-section rules for the old
+   shapes (a 350px/20rem-padded column for agree-terms-competition,
+   absolutely-positioned .radio-container offsets for competition-
+   certification's old radio) have been removed rather than adapted, so
+   both fall back to the same plain .checkbox-label/.checkbox-container
+   defaults and their checkboxes line up on the same left edge.
    #cardParticipationInfo is itself a column-direction flex container, and
    (per registration.min.css's unscoped `.form-group{display:flex}`, a rule
    apparently meant for a different section) each .form-group is ALSO its
    own flex container — between the two, each one's cross-axis (width) was
    shrink-to-fit sized off its own content length and then auto-centered,
-   giving three different checkbox text lengths three different left
-   offsets. Neither align-self: stretch nor a plain width override was
-   enough to beat that combination, so this forces the actual box model
-   directly: full width, block layout, no auto-margin. */
-.card.participation-info .form-group.national-recognition,
+   giving different checkbox text lengths different left offsets. Neither
+   align-self: stretch nor a plain width override was enough to beat that
+   combination, so this forces the actual box model directly: full width,
+   block layout, no auto-margin. */
 .card.participation-info .form-group.competition-certification,
 .card.participation-info .form-group.agree-terms-competition {
     display: block;
@@ -63,16 +64,14 @@
    padding-left: 20rem (vs. the generic .form-group's 4rem) at this same
    breakpoint — only visible once viewports get wide enough to reach it,
    which is why this one needed its own explicit, higher-specificity
-   override to match the other two's padding-left: 4rem. */
+   override to match competition-certification's plain layout. */
 @media (min-width: 1200px) {
-    .card.participation-info .form-group.national-recognition,
     .card.participation-info .form-group.competition-certification,
     .card.participation-info .form-group.agree-terms-competition {
         max-width: 600px;
         margin: 0 auto 2rem;
     }
 }
-.card.participation-info .form-group.national-recognition label.checkbox-label,
 .card.participation-info .form-group.competition-certification label.checkbox-label,
 .card.participation-info .form-group.agree-terms-competition label.checkbox-label {
     margin: 0 0 0 28px;
