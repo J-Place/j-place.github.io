@@ -58,6 +58,18 @@
     margin-left: 0 !important;
     padding-right: 0;
 }
+/* Production also sets .agree-terms-competition specifically to
+   padding-left: 20rem (vs. the generic .form-group's 4rem) at this same
+   breakpoint — only visible once viewports get wide enough to reach it,
+   which is why this one needed its own explicit, higher-specificity
+   override to match the other two's padding-left: 4rem. */
+@media (min-width: 1200px) {
+    .card.participation-info .form-group.national-recognition,
+    .card.participation-info .form-group.competition-certification,
+    .card.participation-info .form-group.agree-terms-competition {
+        padding-left: 4rem !important;
+    }
+}
 .card.participation-info .form-group.national-recognition label.checkbox-label,
 .card.participation-info .form-group.competition-certification label.checkbox-label,
 .card.participation-info .form-group.agree-terms-competition label.checkbox-label {

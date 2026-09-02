@@ -411,14 +411,12 @@
         var block = document.querySelector('.agree-terms-competition');
         if (block) block.style.display = '';
       } else {
+        // Progressive disclosure: only reveal National Recognition here.
+        // Certification and the Agreement stay hidden until each preceding
+        // checkbox is actually checked (see those handlers below) — no more
+        // "unchecked defaults to showing the agreement anyway."
         var group = document.querySelector('.national-recognition');
         if (group) group.style.display = '';
-        // National Recognition is now a single opt-in checkbox (no "no"
-        // option) — its unchecked default behaves like the removed "no"
-        // radio used to: go straight to the agreement. Checking it swaps
-        // this for the certification step instead (see that handler below).
-        var agreeBlock = document.querySelector('.agree-terms-competition');
-        if (agreeBlock) agreeBlock.style.display = '';
       }
     });
   });
@@ -452,19 +450,16 @@
   }
 
   // ── National Recognition checkbox ─────────────────────────────────────────
-  // Single opt-in checkbox (the "no" radio option was removed) — checking it
-  // requires the additional certification step below; unchecked (the
-  // default) behaves like the old "no" radio and goes straight to the
-  // agreement.
+  // Single opt-in checkbox (the "no" radio option was removed) — progressive
+  // disclosure: checking it reveals Certification; unchecking hides it (and
+  // the Agreement, via resetCompetitionCertification's cascade) again,
+  // leaving nothing else auto-revealed.
   document.querySelectorAll('input[name="nationalRecognition"]').forEach(function (checkbox) {
     checkbox.addEventListener('change', function () {
       resetCompetitionCertification();
       if (this.checked) {
         var group = document.querySelector('.competition-certification');
         if (group) group.style.display = '';
-      } else {
-        var block = document.querySelector('.agree-terms-competition');
-        if (block) block.style.display = '';
       }
     });
   });
