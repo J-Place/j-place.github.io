@@ -717,36 +717,12 @@
   // which in turn uses validator.js for email, credit card, and length checks.
   var RULES = [
     // Contact
-    {
-      span: 'help-block--FirstName',
-      check: function () { var e = document.getElementById('firstName'); return e && !!e.value.trim(); },
-      watch: [{ sel: '#firstName', ev: 'input' }]
-    },
-    {
-      span: 'help-block--LastName',
-      check: function () { var e = document.getElementById('lastName'); return e && !!e.value.trim(); },
-      watch: [{ sel: '#lastName', ev: 'input' }]
-    },
-    {
-      span: 'help-block--Gender',
-      check: function () { var e = document.getElementById('Gender'); return e && e.value !== '-1'; },
-      watch: [{ sel: '#Gender', ev: 'change' }]
-    },
-    {
-      span: 'help-block--BirthMonth',
-      check: function () { var e = document.getElementById('BirthMonth'); return e && e.value !== '-1'; },
-      watch: [{ sel: '#BirthMonth', ev: 'change' }]
-    },
-    {
-      span: 'help-block--BirthDay',
-      check: function () { var e = document.getElementById('BirthDay'); return e && e.value !== '-1'; },
-      watch: [{ sel: '#BirthDay', ev: 'change' }]
-    },
-    {
-      span: 'help-block--BirthYear',
-      check: function () { var e = document.getElementById('BirthYear'); return e && e.value !== '-1'; },
-      watch: [{ sel: '#BirthYear', ev: 'change' }]
-    },
+    // FirstName, LastName, Gender, and BirthMonth/Day/Year are intentionally
+    // not validated here. In production these arrive already filled in from
+    // the account-creation step (login-to-registration page) and can't be
+    // empty by the time this page is reached — this mockup doesn't replicate
+    // that handoff, but the validation UI should still mimic the real
+    // (always-valid) state rather than show errors that can't occur in prod.
     {
       span: 'help-block--date-of-birth',
       check: function () {
@@ -776,23 +752,33 @@
     },
     {
       span: 'help-block--SelectedCountry',
-      check: function () { var e = document.getElementById('SelectedCountry'); return e && e.value !== '-1'; },
+      check: function () { var e = document.getElementById('SelectedCountry'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
       watch: [{ sel: '#SelectedCountry', ev: 'change' }]
     },
     {
       span: 'help-block--Address',
-      check: function () { var e = document.getElementById('address'); return e && !!e.value.trim(); },
+      check: function () { var e = document.getElementById('address'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
       watch: [{ sel: '#address', ev: 'input' }]
     },
     {
       span: 'help-block--City',
-      check: function () { var e = document.getElementById('city'); return e && !!e.value.trim(); },
+      check: function () { var e = document.getElementById('city'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
       watch: [{ sel: '#city', ev: 'input' }]
     },
     {
       span: 'help-block--SelectedState',
-      check: function () { var e = document.getElementById('SelectedState'); return e && e.value !== '-1'; },
+      check: function () { var e = document.getElementById('SelectedState'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
       watch: [{ sel: '#SelectedState', ev: 'change' }]
+    },
+    {
+      span: 'help-block--selectedLmsc',
+      check: function () { var e = document.getElementById('selectedLmsc'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
+      watch: [{ sel: '#selectedLmsc', ev: 'change' }]
+    },
+    {
+      span: 'help-block--selectedClub',
+      check: function () { var e = document.getElementById('selectedClub'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
+      watch: [{ sel: '#selectedClub', ev: 'change' }]
     },
     {
       span: 'help-block--ZipUs',
