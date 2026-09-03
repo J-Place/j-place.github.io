@@ -3,3 +3,22 @@
 .payment-info__form-summary {
   margin-bottom: 2rem;
 }
+
+/* .donation--shff / .donation--lmsc are display:flex in production, but
+   something else in the compiled bundle sets align-items to "end" rather
+   than "center" — confirmed via inspector, not visible in the raw source
+   grep. Force center so the label lines up with the (taller) input. */
+.form-group.donation.donation--shff,
+.form-group.donation.donation--lmsc {
+  align-items: center;
+}
+
+.form-group.donation.donation--shff input,
+.form-group.donation.donation--lmsc input {
+  margin-bottom: 0;
+}
+
+.donation.donation--lmsc .control-label,
+.donation.donation--shff .control-label {
+  line-height: unset;
+}
