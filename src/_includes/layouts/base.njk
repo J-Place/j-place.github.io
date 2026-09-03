@@ -1,4 +1,5 @@
-{% set currentUser = siteUsers[swimmerId] if swimmerId else null %}
+{% set effectiveSwimmerId = dev.forceSwimmerId if (dev.env === "dev" and dev.forceSwimmerId) else swimmerId %}
+{% set currentUser = siteUsers[effectiveSwimmerId] if effectiveSwimmerId else null %}
 {% set swimmer = swimmers[currentUser.swimmerId] if currentUser and currentUser.swimmerId else null %}
 <!DOCTYPE html>
 <!--[if IE 9]><html lang="en" class="ie9 no-js"><![endif]-->
@@ -17,15 +18,17 @@
   <link rel="stylesheet" href="/css/Common/buttons.css">
   <link rel="stylesheet" href="/css/Common/form-container.css">
   <link rel="stylesheet" href="/css/Common/modal.css">
+  <link rel="stylesheet" href="/css/Common/membership-renewal-ribbon.css">
   {% block localCSS %}{% endblock %}
   {% if dev.env === "dev" %}{% for name, overlay in devOverlays %}{% if permalink in overlay.pages %}<link rel="stylesheet" href="{{ overlay.css }}">{% endif %}{% endfor %}{% endif %}
   {% if dev.env === "dev" %}<script type="application/json" id="dev-swimmers-data">{{ { "siteUsers": siteUsers, "swimmers": swimmers, "membershipTiers": membershipTiers } | dump | safe }}</script>{% endif %}
   {% if dev.env === "dev" and devSwimmerIds %}<script type="application/json" id="dev-swimmer-filter">{{ devSwimmerIds | dump | safe }}</script>{% endif %}
-  {% if dev.env === "dev" and swimmerId %}<script type="application/json" id="dev-default-user">{{ swimmerId | dump | safe }}</script>{% endif %}
+  {% if dev.env === "dev" and effectiveSwimmerId %}<script type="application/json" id="dev-default-user">{{ effectiveSwimmerId | dump | safe }}</script>{% endif %}
 </head>
 <body class="">
   <div id="main-container">
     <header class="header-static">
+      {% include "partials/membership-renewal-ribbon.njk" %}
       {% block siteNav %}
       {% include "partials/Navigation/MegaMainMenu.njk" %}
       {% endblock %}
