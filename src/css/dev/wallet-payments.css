@@ -1,0 +1,220 @@
+/* ============================================================
+   EXPERIMENTAL / DEV ONLY — Apple Pay / Google Pay mockup.
+   Isolated per src/_data/devOverlays/wallet-payments.json — safe to
+   delete alongside that file + wallet-payments.js if this doesn't
+   get adopted.
+   ============================================================ */
+
+.wallet-payment-options__buttons {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.btn-wallet-pay {
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 44px;
+  border-radius: 6px;
+  font-size: 1.6rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity .15s ease;
+}
+
+.btn-wallet-pay:hover {
+  opacity: .85;
+}
+
+.btn-apple-pay {
+  background: #000;
+  color: #fff;
+  border: 1px solid #000;
+}
+
+.btn-google-pay {
+  background: #fff;
+  color: #3c4043;
+  border: 1px solid #dadce0;
+}
+
+.wallet-payment-options__divider {
+  position: relative;
+  text-align: center;
+  margin: 16px 0;
+  color: #767676;
+  font-size: 1.3rem;
+}
+
+.wallet-payment-options__divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  border-top: 1px solid #e5e5e5;
+}
+
+.wallet-payment-options__divider span {
+  position: relative;
+  background: #fff;
+  padding: 0 10px;
+}
+
+.wallet-payment-selected {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 15px;
+  margin-bottom: 16px;
+  background: #f4f8f4;
+  border: 1px solid #cfe4cf;
+  border-radius: 6px;
+  font-size: 1.4rem;
+}
+
+.wallet-payment-selected__check {
+  color: #1a7d1a;
+  font-weight: 700;
+}
+
+.wallet-payment-selected .js-wallet-payment-selected-label {
+  flex: 1 1 auto;
+  font-weight: 600;
+}
+
+/* ── Shared sheet content (line items reuse .payment-info__line-item) ── */
+
+.wallet-sheet__merchant {
+  font-weight: 700;
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+}
+
+.wallet-sheet__card,
+.wallet-sheet__card-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #e5e5e5;
+  font-size: 1.4rem;
+}
+
+.wallet-sheet__card-row {
+  cursor: default;
+}
+
+.wallet-sheet__card-chip {
+  display: inline-block;
+  width: 22px;
+  height: 16px;
+  border-radius: 3px;
+  background: linear-gradient(135deg, #d8d8d8, #b8b8b8);
+}
+
+.wallet-sheet__add-card {
+  padding: 10px 0;
+  color: #1a73e8;
+  font-size: 1.3rem;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.wallet-sheet__line-items {
+  margin-top: 12px;
+}
+
+.wallet-sheet__line-items .payment-info__line-item {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 6px 0;
+  font-size: 1.4rem;
+}
+
+.wallet-sheet__line-items .payment-info__line-item--total {
+  border-top: 1px solid #e5e5e5;
+  margin-top: 6px;
+  padding-top: 10px;
+  font-weight: 700;
+}
+
+.btn-wallet-confirm {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 46px;
+  border-radius: 23px;
+  border: 0;
+  font-size: 1.6rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ── Apple Pay skin ── */
+
+.modal--apple-pay-sheet .modal-dialog,
+.modal--google-pay-sheet .modal-dialog {
+  width: 100%;
+  max-width: 500px;
+}
+
+.modal--apple-pay-sheet .modal-content {
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.modal--apple-pay-sheet .modal-header {
+  background: #000;
+  color: #fff;
+  justify-content: space-between;
+  border-radius: 0;
+}
+
+.modal--apple-pay-sheet .wallet-sheet__brand {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.modal--apple-pay-sheet .btn-close {
+  filter: invert(1);
+}
+
+.btn-apple-pay-confirm {
+  background: #000;
+  color: #fff;
+}
+
+/* ── Google Pay skin ── */
+
+.modal--google-pay-sheet .modal-content {
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.modal--google-pay-sheet .modal-header {
+  background: #fff;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.modal--google-pay-sheet .wallet-sheet__brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: #3c4043;
+}
+
+.btn-google-pay-confirm {
+  background: #1a73e8;
+  color: #fff;
+}
