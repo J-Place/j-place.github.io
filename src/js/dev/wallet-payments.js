@@ -147,7 +147,10 @@
     // registration.js's own validate() stop requiring the card inputs —
     // its rules already skip fields inside a hidden paymentFields
     // container, so no changes to registration.js are needed.
+    var walletSelected = false;
+
     function selectWallet(method) {
+      walletSelected = true;
       paymentFields.style.display = 'none';
       optionsEl.style.display = 'none';
       selectedEl.querySelector('.js-wallet-payment-selected-label').textContent = 'Paying with ' + method;
@@ -162,9 +165,22 @@
     });
 
     selectedEl.querySelector('.js-wallet-payment-change').addEventListener('click', function () {
+      walletSelected = false;
       paymentFields.style.display = '';
       optionsEl.style.display = '';
       selectedEl.style.display = 'none';
     });
+
+    // registration.js hides .registration-payment__fields from several
+    // places unrelated to wallet selection (event-participation Yes/No,
+    // donation totals, membership tile changes, ...). Mirror that with a
+    // MutationObserver rather than hooking every call site, so the wallet
+    // buttons stay in sync without registration.js knowing this overlay
+    // exists. Only mirrors while no wallet is selected — the selected/change
+    // flow above owns visibility once a wallet's been confirmed.
+    new MutationObserver(function () {
+      if (walletSelected) return;
+      optionsEl.style.display = paymentFields.style.display === 'none' ? 'none' : '';
+    }).observe(paymentFields, { attributes: true, attributeFilter: ['style'] });
   });
 })();
