@@ -102,6 +102,7 @@
 
   // ── Selectors ─────────────────────────────────────────────────────────────
   var membershipContainer = document.querySelector('.membership-length--container');
+  var membershipCard      = document.querySelector('.card.membership-length');
   var paymentFields      = document.querySelector('.registration-payment__fields');
   var autoRenewGroup     = document.querySelector('.form-group.auto-renew');
   var paymentSummary     = document.querySelector('.js-payment-summary');
@@ -201,19 +202,14 @@
   }
 
   // ── Agreement / submit ────────────────────────────────────────────────────
+  // Matches production (Payment.jsx) — the Register button is only ever
+  // disabled while a submission is actively processing, never based on form
+  // completeness. Validation runs on click via validate(), which scrolls to
+  // the first error instead of pre-disabling the button.
   function updateAgreement() {
     var hasTile = selectedTile() !== null;
     if (agreeLabel)    agreeLabel.classList.toggle('disabled', !hasTile);
     if (agreeCheckbox) { agreeCheckbox.disabled = !hasTile; if (!hasTile) agreeCheckbox.checked = false; }
-
-    var allChecked = (function () {
-      if (!agreeCheckbox || !agreeCheckbox.checked) return false;
-      var varChecks = Object.values(termsBlocks).filter(function (b) {
-        return b && b.style.display !== 'none';
-      }).map(function (b) { return b.querySelector('input[type="checkbox"]'); }).filter(Boolean);
-      return Array.from(varChecks).every(function (cb) { return cb.checked; });
-    })();
-    if (registerBtn) registerBtn.disabled = !(hasTile && allChecked);
   }
 
   var paymentCard = document.querySelector('.card.payment-info');
@@ -323,7 +319,6 @@
     document.querySelectorAll('.membership-length--option').forEach(function (t) { t.classList.remove('selected'); });
     document.querySelectorAll('input[name="length"]').forEach(function (r) { r.checked = false; });
     if (membershipTotalEl) membershipTotalEl.textContent = '$0.00';
-    document.querySelectorAll('input[name="CompetitionMembership"]').forEach(function (r) { r.checked = false; });
     updateVariableTerms();
     updateAutoRenewVisibility();
     setPaymentVisible(false);
@@ -368,6 +363,7 @@
     if (block) block.style.display = 'none';
     if (cb)   cb.checked = false;
     if (membershipContainer) membershipContainer.classList.add('disabled');
+    if (membershipCard) membershipCard.style.display = 'none';
     // Restore cols to initial load state
     document.querySelectorAll('.membership-length--option').forEach(function (tile) {
       tile.parentElement.style.display = tile.dataset.initialDisplay || 'flex';
@@ -408,8 +404,11 @@
         var group = document.querySelector('.competition-category');
         if (group) group.style.display = '';
       } else {
-        // No: show only the standard (no-events) tier
+        // No: show only the standard (no-events) tier — no agreement/
+        // certification gates this path, so Membership Options reappears
+        // immediately rather than waiting on a checkbox.
         if (membershipContainer) membershipContainer.classList.remove('disabled');
+        if (membershipCard) membershipCard.style.display = '';
         document.querySelectorAll('.membership-length--option').forEach(function (tile) {
           var col = tile.parentElement;
           if (tile.dataset.noEventsDefault === 'true') {
@@ -552,6 +551,12 @@
           }
           showBoth();
         }
+
+        // Reset the modal's own choice back to blank so a later reopen
+        // (e.g. toggling the main question again) starts fresh instead of
+        // showing whatever was picked last time.
+        modal.querySelectorAll('input[name="nationalRecognitionDeclineChoice"]').forEach(function (r) { r.checked = false; });
+        if (continueBtn) continueBtn.disabled = true;
       });
     }
   })();
@@ -561,35 +566,51 @@
   // (previously checking/unchecking this showed/hid it; that script has
   // been removed so both can be visible at the same time).
 
-  // ── Competition agreement — gates event tier display ──────────────────────
-  var competitionAgree = document.getElementById('agree-terms-competition');
-  if (competitionAgree) {
-    competitionAgree.addEventListener('change', function () {
-      if (this.checked) {
-        if (membershipContainer) membershipContainer.classList.remove('disabled');
-        document.querySelectorAll('.membership-length--option').forEach(function (tile) {
-          var col = tile.parentElement;
-          if (tile.dataset.competitionEligible === 'true') {
-            col.style.display = 'flex';
-            activateTile(col);
-          } else {
-            col.style.display = 'none';
-            deactivateTile(col);
-          }
-        });
-      } else {
-        if (membershipContainer) membershipContainer.classList.add('disabled');
-        // Restore cols to initial load state
-        document.querySelectorAll('.membership-length--option').forEach(function (tile) {
-          tile.parentElement.style.display = tile.dataset.initialDisplay || 'flex';
-          deactivateTile(tile.parentElement);
-        });
-        resetMembershipSelection();
-        resetVsa();
-        buildPaymentSummary();
-      }
-    });
+  // ── Competition agreement + certification — gates event tier display ─────
+  // Membership Options only unlock once the Agreement is checked, and — when
+  // the "I certify" checkbox is showing (women's category, national
+  // recognition opted in) — that's checked too. Either checkbox changing
+  // re-evaluates the gate, matching the "I acknowledge" pattern applied to
+  // both fields instead of just one.
+  var competitionAgree   = document.getElementById('agree-terms-competition');
+  var competitionCertify = document.getElementById('competitionMembershipYesInput');
+
+  function competitionGatePassed() {
+    if (!competitionAgree || !competitionAgree.checked) return false;
+    if (isVisible(document.querySelector('.competition-certification')) && (!competitionCertify || !competitionCertify.checked)) return false;
+    return true;
   }
+
+  function updateCompetitionGate() {
+    if (competitionGatePassed()) {
+      if (membershipContainer) membershipContainer.classList.remove('disabled');
+      if (membershipCard) membershipCard.style.display = '';
+      document.querySelectorAll('.membership-length--option').forEach(function (tile) {
+        var col = tile.parentElement;
+        if (tile.dataset.competitionEligible === 'true') {
+          col.style.display = 'flex';
+          activateTile(col);
+        } else {
+          col.style.display = 'none';
+          deactivateTile(col);
+        }
+      });
+    } else {
+      if (membershipContainer) membershipContainer.classList.add('disabled');
+      if (membershipCard) membershipCard.style.display = 'none';
+      // Restore cols to initial load state
+      document.querySelectorAll('.membership-length--option').forEach(function (tile) {
+        tile.parentElement.style.display = tile.dataset.initialDisplay || 'flex';
+        deactivateTile(tile.parentElement);
+      });
+      resetMembershipSelection();
+      resetVsa();
+      buildPaymentSummary();
+    }
+  }
+
+  if (competitionAgree)   competitionAgree.addEventListener('change', updateCompetitionGate);
+  if (competitionCertify) competitionCertify.addEventListener('change', updateCompetitionGate);
 
   // ── Coach interest ────────────────────────────────────────────────────────
   var coachInterestDiv = document.querySelector('.order-4.col-xs-12');
@@ -827,9 +848,14 @@
       },
       watch: [{ sel: 'input[name="nationalRecognition"]', ev: 'change' }]
     },
-    // Competition Certification is still an optional opt-in checkbox (not
-    // reverted), so there's no "please select an option" invalid state for
-    // it to validate.
+    {
+      span: 'help-block--competitionCertification',
+      check: function () {
+        if (!isVisible(document.querySelector('.competition-certification'))) return true;
+        var e = document.getElementById('competitionMembershipYesInput'); return e && e.checked;
+      },
+      watch: [{ sel: '#competitionMembershipYesInput', ev: 'change' }]
+    },
     // Membership tier
     {
       span: 'help-block--length',
