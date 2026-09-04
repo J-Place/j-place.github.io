@@ -102,7 +102,6 @@
 
   // ── Selectors ─────────────────────────────────────────────────────────────
   var membershipContainer = document.querySelector('.membership-length--container');
-  var membershipCard      = document.querySelector('.card.membership-length');
   var paymentFields      = document.querySelector('.registration-payment__fields');
   var autoRenewGroup     = document.querySelector('.form-group.auto-renew');
   var paymentSummary     = document.querySelector('.js-payment-summary');
@@ -245,6 +244,19 @@
   // the error) — not replicated here, since this mockup only mimics
   // validation at Register-click time everywhere else, and wiring live
   // validation onto just this one field would be inconsistent with that.
+
+  // ── Card expiration auto-slash ────────────────────────────────────────────
+  // Matches production (Payment.jsx componentDidMount:
+  // $('input[name="expiration"]').mask('09/09')) — that's jQuery's
+  // maskedinput plugin, which isn't loaded here, so this reproduces the same
+  // user-facing behavior (digits only, "/" auto-inserted after mm) directly.
+  var expirationInput = document.getElementById('expiration');
+  if (expirationInput) {
+    expirationInput.addEventListener('input', function () {
+      var digits = this.value.replace(/\D/g, '').slice(0, 4);
+      this.value = digits.length > 2 ? digits.slice(0, 2) + '/' + digits.slice(2) : digits;
+    });
+  }
 
   // ── Payment summary (subtotals) ───────────────────────────────────────────
   function buildPaymentSummary() {
@@ -428,12 +440,13 @@
         var group = document.querySelector('.competition-category');
         if (group) group.style.display = '';
       } else {
-        // No: show only the standard (no-events) tier — no agreement/
-        // certification gates this path.
+        // No: show the standard (no-events) tiers — Standard Membership and
+        // Year-Plus — no agreement/certification gates this path.
         if (membershipContainer) membershipContainer.classList.remove('disabled');
         document.querySelectorAll('.membership-length--option').forEach(function (tile) {
           var col = tile.parentElement;
-          if (tile.dataset.noEventsDefault === 'true') {
+          var radio = tile.querySelector('input[type="radio"]');
+          if (tile.dataset.noEventsDefault === 'true' || (radio && radio.id === 'nextYear')) {
             col.style.display = 'flex';
             activateTile(col);
           } else {
@@ -608,10 +621,13 @@
   function updateCompetitionGate() {
     if (competitionGatePassed()) {
       if (membershipContainer) membershipContainer.classList.remove('disabled');
-      if (membershipCard) membershipCard.style.display = '';
       document.querySelectorAll('.membership-length--option').forEach(function (tile) {
         var col = tile.parentElement;
-        if (tile.dataset.competitionEligible === 'true') {
+        var radio = tile.querySelector('input[type="radio"]');
+        // Event License USMS+ is excluded here on purpose — only Event
+        // License Standard and Event License Year-Plus should enable once
+        // the agreement/certification gate passes.
+        if (tile.dataset.competitionEligible === 'true' && radio && radio.id !== 'usmsPlus') {
           col.style.display = 'flex';
           activateTile(col);
         } else {
@@ -621,7 +637,6 @@
       });
     } else {
       if (membershipContainer) membershipContainer.classList.add('disabled');
-      if (membershipCard) membershipCard.style.display = 'none';
       // Restore cols to initial load state
       document.querySelectorAll('.membership-length--option').forEach(function (tile) {
         tile.parentElement.style.display = tile.dataset.initialDisplay || 'flex';
