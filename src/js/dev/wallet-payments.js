@@ -155,6 +155,17 @@
       optionsEl.style.display = 'none';
       selectedEl.querySelector('.js-wallet-payment-selected-label').textContent = 'Paying with ' + method;
       selectedEl.style.display = '';
+
+      // Clear any card details already typed in — if the user goes back to
+      // card payment later via "Change payment method", they should have
+      // to re-enter it rather than find their old input still sitting there
+      // under a wallet payment that's since replaced it.
+      ['cardName', 'cardNumberID', 'cardCodeID', 'expiration', 'cardZipID'].forEach(function (id) {
+        var field = document.getElementById(id);
+        if (!field) return;
+        field.value = '';
+        field.classList.remove('has-error', 'has-success');
+      });
     }
 
     document.getElementById('walletApplePayConfirm').addEventListener('click', function () {
@@ -169,17 +180,35 @@
       paymentFields.style.display = '';
       optionsEl.style.display = '';
       selectedEl.style.display = 'none';
+
+      // Reset Auto Renew — dispatching a real change event runs
+      // registration.js's own updateAgreeTermsVariant() listener, which
+      // also resets the terms-of-agreement checkbox (#agreeTerms) and
+      // clears its error state as part of the same swap-back logic, so
+      // both reset together without duplicating that logic here.
+      var autoRenewCheckbox = document.getElementById('signup');
+      if (autoRenewCheckbox) {
+        autoRenewCheckbox.checked = false;
+        autoRenewCheckbox.dispatchEvent(new Event('change'));
+      }
     });
 
-    // registration.js hides .registration-payment__fields from several
+    // registration.js shows/hides .registration-payment__fields from several
     // places unrelated to wallet selection (event-participation Yes/No,
-    // donation totals, membership tile changes, ...). Mirror that with a
-    // MutationObserver rather than hooking every call site, so the wallet
-    // buttons stay in sync without registration.js knowing this overlay
-    // exists. Only mirrors while no wallet is selected — the selected/change
-    // flow above owns visibility once a wallet's been confirmed.
+    // donation totals, membership tile changes, ...) — including re-showing
+    // it on a new tile selection, which would otherwise resurrect the card
+    // fields out from under an already-confirmed wallet choice. A
+    // MutationObserver catches all of that generically rather than hooking
+    // every call site, so this stays in sync without registration.js
+    // knowing this overlay exists.
     new MutationObserver(function () {
-      if (walletSelected) return;
+      if (walletSelected) {
+        // Once a wallet's confirmed, card fields stay hidden no matter what
+        // else touches their display — only "Change payment method" (above)
+        // is allowed to bring them back.
+        if (paymentFields.style.display !== 'none') paymentFields.style.display = 'none';
+        return;
+      }
       optionsEl.style.display = paymentFields.style.display === 'none' ? 'none' : '';
     }).observe(paymentFields, { attributes: true, attributeFilter: ['style'] });
   });
