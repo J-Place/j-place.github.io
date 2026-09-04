@@ -170,14 +170,15 @@
       optionsEl.style.display = '';
       selectedEl.style.display = 'none';
 
-      // Reset Auto Renew — dispatching a real change event runs
-      // registration.js's own updateAgreeTermsVariant() listener, which
-      // also resets the terms-of-agreement checkbox (#agreeTerms) and
-      // clears its error state as part of the same swap-back logic, so
-      // both reset together without duplicating that logic here.
+      // Auto Renew's own checked state is left as-is — it should only
+      // change from the user's own explicit action, not as a side effect of
+      // switching payment method. Still dispatch a real change event so
+      // registration.js's updateAgreeTermsVariant() re-syncs the agreement
+      // caption/position to whatever that (preserved) state actually is,
+      // and resets the terms-of-agreement checkbox (#agreeTerms) + its
+      // error state as part of that same swap logic.
       var autoRenewCheckbox = document.getElementById('signup');
       if (autoRenewCheckbox) {
-        autoRenewCheckbox.checked = false;
         autoRenewCheckbox.dispatchEvent(new Event('change'));
       }
     });
