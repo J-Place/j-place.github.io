@@ -155,17 +155,6 @@
       optionsEl.style.display = 'none';
       selectedEl.querySelector('.js-wallet-payment-selected-label').textContent = 'Paying with ' + method;
       selectedEl.style.display = '';
-
-      // Clear any card details already typed in — if the user goes back to
-      // card payment later via "Change payment method", they should have
-      // to re-enter it rather than find their old input still sitting there
-      // under a wallet payment that's since replaced it.
-      ['cardName', 'cardNumberID', 'cardCodeID', 'expiration', 'cardZipID'].forEach(function (id) {
-        var field = document.getElementById(id);
-        if (!field) return;
-        field.value = '';
-        field.classList.remove('has-error', 'has-success');
-      });
     }
 
     document.getElementById('walletApplePayConfirm').addEventListener('click', function () {
