@@ -166,8 +166,16 @@
     var id     = radio ? radio.id : '';
     var active = id === 'currentYear' || id === 'competition' || id === 'usmsPlus';
     autoRenewGroup.style.display = active ? '' : 'none';
-    if (!active) {
-      var cb = autoRenewGroup.querySelector('#signup');
+    var cb = autoRenewGroup.querySelector('#signup');
+    if (active) {
+      // Default to checked whenever Auto Renew becomes available — dispatch
+      // a real change event so updateAgreeTermsVariant() swaps the
+      // agreement to its auto-renew caption/position, same as a manual click.
+      if (cb && !cb.checked) {
+        cb.checked = true;
+        cb.dispatchEvent(new Event('change'));
+      }
+    } else {
       if (cb) cb.checked = false;
       updateAgreeTermsVariant();
     }
