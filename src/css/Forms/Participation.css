@@ -1,0 +1,25 @@
+/* Participation form overrides — production component: production/src/App/views/Forms/Participation.css */
+
+/* National recognition decline modal — matches production's own
+   .modal-container radio variant (Common/Radio.css:59-70), scoped to our
+   modal wrapper instead. The visible circle (.radio__placeholder) is
+   position:absolute relative to .radio-label itself — not flex-aligned —
+   so centering it against the text is a top offset, not align-items.
+   .radio-container only reserves horizontal space (min-width) for the
+   wrapping text to indent past. */
+#modalNationalRecognitionDecline .radio-label {
+  display: flex;
+}
+
+/* 38px = the circle's 10px left offset + its 20px width + production's
+   usual 8px gap (see the base, non-modal .radio-container margin-right)
+   — the modal variant's own numbers don't carry that gap through since
+   the circle's left offset isn't 0 here. */
+#modalNationalRecognitionDecline .radio-container {
+  min-width: 38px;
+}
+
+#modalNationalRecognitionDecline .radio__placeholder {
+  left: 10px;
+  top: 0;
+}
