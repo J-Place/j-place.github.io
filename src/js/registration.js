@@ -110,7 +110,6 @@
   var vsaTotalEl         = document.querySelector('.video-stroke-analysis--total');
   var donationTotalEl    = document.querySelector('.total-donations');
   var agreeCheckbox      = document.getElementById('agreeTerms');
-  var agreeLabel         = document.getElementById('agreeTerms__label');
   var registerBtn        = document.getElementById('register-button');
   var strokeFocusDiv     = document.querySelector('.select-stroke-focus');
   var strokeSelect       = document.getElementById('stroke-video-analysis__focus');
@@ -171,8 +170,42 @@
     if (!active) {
       var cb = autoRenewGroup.querySelector('#signup');
       if (cb) cb.checked = false;
+      updateAgreeTermsVariant();
     }
   }
+
+  // ── Agreement swap — Auto Renew replaces the general agreement ───────────
+  // Matches production (Payment.jsx): the same #agreeTerms checkbox swaps
+  // its caption/validation text and relocates to after the USMS+ block when
+  // Auto Renew is checked (showSignUpAgreement), reverting to its original
+  // position above USMS+ when unchecked — never a second checkbox. React
+  // mounts a fresh uncontrolled checkbox on each swap (always unchecked);
+  // mirrored here by explicitly unchecking + clearing error state.
+  var GENERAL_AGREEMENT_HELP = 'You need to agree to the terms to complete your registration.';
+  var AUTO_RENEW_AGREEMENT_HELP = 'You need to agree to the auto renew terms to complete your registration.';
+  var GENERAL_AGREEMENT_HTML = 'I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming <a href="/content/privacy" target="_blank">Privacy Policy</a>. I understand that this membership will take effect immediately and is non-refundable, non-transferable, and expires on December 31, 2026.';
+  var AUTO_RENEW_AGREEMENT_HTML = 'I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming <a href="/content/privacy" target="_blank">Privacy Policy</a>. I understand that I am opting in to automatically continuing my membership until I cancel. I understand that I can cancel at any time in My Account. I understand my credit or debit card will be stored in My Account. I understand that this membership will take effect immediately and is non-refundable, non-transferable, and expires on December 31, 2026.';
+
+  var agreeTermsBlock   = document.querySelector('.form-group.agree-terms');
+  var agreeTermsHelp    = document.querySelector('.help-block--agree-terms');
+  var agreeTermsCaption = document.querySelector('.js-agree-terms-caption');
+  var agreeUsmsPlusBlock = document.querySelector('.agree-usmsplus-terms');
+
+  function updateAgreeTermsVariant() {
+    if (!agreeTermsBlock || !agreeUsmsPlusBlock) return;
+    var signup = document.getElementById('signup');
+    var autoRenew = !!(signup && signup.checked);
+
+    if (agreeTermsHelp)    agreeTermsHelp.textContent = autoRenew ? AUTO_RENEW_AGREEMENT_HELP : GENERAL_AGREEMENT_HELP;
+    if (agreeTermsCaption) agreeTermsCaption.innerHTML = autoRenew ? AUTO_RENEW_AGREEMENT_HTML : GENERAL_AGREEMENT_HTML;
+    agreeUsmsPlusBlock.insertAdjacentElement(autoRenew ? 'afterend' : 'beforebegin', agreeTermsBlock);
+
+    if (agreeCheckbox) agreeCheckbox.checked = false;
+    if (agreeTermsHelp) agreeTermsHelp.classList.remove('has-error');
+    if (agreeCheckbox) agreeCheckbox.classList.remove('has-error');
+  }
+  var signupCheckbox = document.getElementById('signup');
+  if (signupCheckbox) signupCheckbox.addEventListener('change', updateAgreeTermsVariant);
 
   // ── Variable terms ────────────────────────────────────────────────────────
   // Tier tiles carry data-terms-keys="key1,key2" — JS shows matching
@@ -202,22 +235,16 @@
   }
 
   // ── Agreement / submit ────────────────────────────────────────────────────
-  // Matches production (Payment.jsx) — the Register button is only ever
-  // disabled while a submission is actively processing, never based on form
-  // completeness. Validation runs on click via validate(), which scrolls to
-  // the first error instead of pre-disabling the button.
-  function updateAgreement() {
-    var hasTile = selectedTile() !== null;
-    if (agreeLabel)    agreeLabel.classList.toggle('disabled', !hasTile);
-    if (agreeCheckbox) { agreeCheckbox.disabled = !hasTile; if (!hasTile) agreeCheckbox.checked = false; }
-  }
-
-  var paymentCard = document.querySelector('.card.payment-info');
-  if (paymentCard) {
-    paymentCard.addEventListener('change', function (e) {
-      if (e.target.type === 'checkbox') updateAgreement();
-    });
-  }
+  // Matches production (Payment.jsx) — neither the Register button nor the
+  // agree-terms checkbox is ever disabled based on form completeness (the
+  // Checkbox usages for #agreeTerms pass no `disabled` prop, so it's always
+  // clickable, even before a membership option is selected). Validation
+  // runs on click via validate(), which scrolls to the first error instead
+  // of pre-disabling anything. Note: production also live-validates
+  // #agreeTerms on every change (checking then unchecking immediately shows
+  // the error) — not replicated here, since this mockup only mimics
+  // validation at Register-click time everywhere else, and wiring live
+  // validation onto just this one field would be inconsistent with that.
 
   // ── Payment summary (subtotals) ───────────────────────────────────────────
   function buildPaymentSummary() {
@@ -321,7 +348,6 @@
     if (membershipTotalEl) membershipTotalEl.textContent = '$0.00';
     updateVariableTerms();
     updateAutoRenewVisibility();
-    setPaymentVisible(false);
   }
 
   // ── Membership tile selection ─────────────────────────────────────────────
@@ -353,7 +379,6 @@
     updateAutoRenewVisibility();
     buildPaymentSummary();
     setPaymentVisible(hasPayableSelection());
-    updateAgreement();
   });
 
   // ── Competition flow helpers (cascade reset downward) ────────────────────
@@ -363,7 +388,6 @@
     if (block) block.style.display = 'none';
     if (cb)   cb.checked = false;
     if (membershipContainer) membershipContainer.classList.add('disabled');
-    if (membershipCard) membershipCard.style.display = 'none';
     // Restore cols to initial load state
     document.querySelectorAll('.membership-length--option').forEach(function (tile) {
       tile.parentElement.style.display = tile.dataset.initialDisplay || 'flex';
@@ -405,10 +429,8 @@
         if (group) group.style.display = '';
       } else {
         // No: show only the standard (no-events) tier — no agreement/
-        // certification gates this path, so Membership Options reappears
-        // immediately rather than waiting on a checkbox.
+        // certification gates this path.
         if (membershipContainer) membershipContainer.classList.remove('disabled');
-        if (membershipCard) membershipCard.style.display = '';
         document.querySelectorAll('.membership-length--option').forEach(function (tile) {
           var col = tile.parentElement;
           if (tile.dataset.noEventsDefault === 'true') {
@@ -441,21 +463,23 @@
     });
   });
 
-  // ── Renewal mode: participation defaults (2027 policy update) ─────────────
-  // Event participation now defaults to yes for renewing members, with their
-  // on-file competition category carried forward — unlike the coach/add-on/
-  // payment fields above, these two are meant to survive being set here,
-  // so they're triggered via the real change events (not silently) to run
-  // through the same reveal cascade a manual click would, landing on
-  // whichever downstream section that category implies (agree-terms for
-  // mens-open, national-recognition otherwise) — left for the member to
-  // answer fresh either way.
+  // ── Participation default (2027 policy update) ────────────────────────────
+  // Event participation defaults to Yes on load for every persona, which
+  // reveals Competition Category (left unselected) — triggered via the real
+  // change event so it runs through the same reveal cascade a manual click
+  // would, rather than silently setting display styles.
+  var participationYesDefault = document.getElementById('participationInfoYes');
+  if (participationYesDefault) {
+    participationYesDefault.checked = true;
+    participationYesDefault.dispatchEvent(new Event('change'));
+  }
+
+  // ── Renewal mode: carry forward on-file competition category + auto-renew ──
+  // Unlike the coach/add-on/payment fields above, these are meant to survive
+  // being set here, landing on whichever downstream section that category
+  // implies (agree-terms for mens-open, national-recognition otherwise) —
+  // left for the member to answer fresh either way.
   if (renewalSwimmer) {
-    var participationYes = document.getElementById('participationInfoYes');
-    if (participationYes) {
-      participationYes.checked = true;
-      participationYes.dispatchEvent(new Event('change'));
-    }
     if (renewalSwimmer.competitionCategory) {
       var compCategoryRadio = document.querySelector('input[name="competitionCategory"][value="' + renewalSwimmer.competitionCategory + '"]');
       if (compCategoryRadio) {
@@ -1012,9 +1036,19 @@
       }
     });
 
-    // Hide event-license tiers until the user opts into competition.
-    document.querySelectorAll('.membership-length--option[data-competition-eligible="true"]').forEach(function (tile) {
-      tile.parentElement.style.display = 'none';
+    // DEV/TESTING DEFAULT — not a production rule: only show the two Event
+    // License tiers (Event License USMS+ / usmsPlus, Event License Standard
+    // / competition) on load, for convenience testing the Event
+    // Participation "Yes" default. Standard Membership and Year-Plus are
+    // hidden here rather than via any eligibility logic. The whole
+    // Membership Options container stays .disabled (see
+    // MembershipOptions.njk's default class + the participation reset
+    // cascade re-adding it) until the agreement gate passes, so these two
+    // show up locked rather than fully hidden.
+    document.querySelectorAll('.membership-length--option').forEach(function (tile) {
+      var radio = tile.querySelector('input[type="radio"]');
+      var showByDefault = radio && (radio.id === 'usmsPlus' || radio.id === 'competition' || radio.id === 'competition-nextYear');
+      if (!showByDefault) tile.parentElement.style.display = 'none';
     });
 
     // Snapshot each col's display after all init logic so resets can restore it.

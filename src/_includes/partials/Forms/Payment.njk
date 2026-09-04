@@ -65,17 +65,22 @@
 		</div>
 	</div>
 
-	{# Standard terms — always shown once a membership is selected #}
+	{# Agreement — swaps caption + position when Auto Renew is checked, rather
+	   than adding a second checkbox. Matches production (Payment.jsx): the
+	   same #agreeTerms checkbox conditionally renders either above or below
+	   the USMS+ block (showSignUpAgreement), never both — handled here by
+	   registration.js moving this one node and swapping its text instead of
+	   duplicating the checkbox. #}
 	<div class="form-group agree-terms">
 		<div class="col-xs-12">
 			<span class="help-block help-block--agree-terms">You need to agree to the terms to complete your registration.</span>
-			<label id="agreeTerms__label" class="checkbox-label disabled" for="agreeTerms">
+			<label id="agreeTerms__label" class="checkbox-label" for="agreeTerms">
 				<div class="checkbox-container">
 					<input type="checkbox" name="agree-terms" id="agreeTerms" value="">
 					<span class="checkbox__placeholder"></span>
 				</div>
 			</label>
-			<span class="font-weight-bold">I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming <a href="/content/privacy" target="_blank">Privacy Policy</a>. I understand that this membership will take effect immediately and is non-refundable, non-transferable, and expires on</span><span class="font-weight-bold"> December 31, </span><span class="agree-terms--year font-weight-bold">2026</span><span class="font-weight-bold">.</span>
+			<span class="font-weight-bold js-agree-terms-caption">I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming <a href="/content/privacy" target="_blank">Privacy Policy</a>. I understand that this membership will take effect immediately and is non-refundable, non-transferable, and expires on December 31, 2026.</span>
 		</div>
 	</div>
 
