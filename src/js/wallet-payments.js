@@ -1,6 +1,7 @@
 // ============================================================
-// EXPERIMENTAL / DEV ONLY — do not load in production
 // Apple Pay / Google Pay mockup for the registration payment section.
+// Loaded on the registration page via {% block pageJS %} in
+// src/pages/registration.njk (paired with src/css/Forms/wallet-payments.css).
 //
 // Neither real payment sheet is markup we can build — Apple Pay is a
 // native Safari/OS sheet, Google Pay is a Google-hosted overlay. This
@@ -10,11 +11,9 @@
 // (data-modal-target / .js-modal-close) just works on it with no changes
 // to modal.js itself.
 //
-// Isolated entirely in this dev overlay (see
-// src/_data/devOverlays/wallet-payments.json) — Payment.njk and
-// registration.js are untouched, so this can be pruned by deleting
-// this file + wallet-payments.css + the overlay JSON if the feature
-// doesn't get adopted.
+// Self-contained: Payment.njk and registration.js are untouched. It reads
+// the live .js-payment-summary and toggles .registration-payment__fields
+// visibility, which registration.js's validate() already respects.
 // ============================================================
 (function () {
   'use strict';
