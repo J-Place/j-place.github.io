@@ -43,8 +43,19 @@
   // calls window.expandAllSections() before capturing this page so every
   // section's inputs are visible in the baseline — same global name Club Edit
   // exposes for the same purpose, no validation flagging involved here.
+  //
+  // Sets the `show` class directly rather than going through
+  // bootstrap.Collapse.show(): with data-bs-parent="#accordion", each
+  // programmatic .show() closes its siblings, so iterating leaves only the
+  // last section open (or, depending on the live sanctions.min.js collapse
+  // handlers, the first section closed). Stamping the class on every section
+  // at once — the way club-edit.js does it — sidesteps that entirely.
   window.expandAllSections = function () {
-    accordionSections().forEach(openSection);
+    accordionSections().forEach(function (content) {
+      content.classList.add('show');
+      content.style.height = '';
+      content.setAttribute('aria-expanded', 'true');
+    });
   };
 
   function previewEventValidation(e) {
