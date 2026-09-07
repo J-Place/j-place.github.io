@@ -2,20 +2,24 @@ const { test, expect } = require('@playwright/test');
 const pages = require('./pages');
 
 function slug(pagePath) {
-  return pagePath
+  const [path, query] = pagePath.split('?');
+  const base = path
     .replace(/^\//, '')
     .replace(/\/$/, '')
     .replace(/\.html$/, '')
     .replace(/\//g, '--') || 'root';
+  return query ? `${base}--${query.replace(/[&=]/g, '-')}` : base;
 }
 
-// Pages whose accordion sections should be forced open (no validation) before
-// capture, via window.expandAllSections() — exposed by club-edit.js and
-// event-edit.js for this purpose — so every input is visible in the baseline
-// instead of just whichever section happens to be open by default.
+// Pages whose sections should be forced open (no validation) before capture,
+// via window.expandAllSections() — exposed by club-edit.js, event-edit.js,
+// and registration.js for this purpose — so every input is visible in the
+// baseline instead of just whichever section happens to be open/selected by
+// default.
 const EXPAND_ALL_SECTIONS = new Set([
-  '/club-central/club-edit.html',
+  '/club-central/club-edit.html?mode=edit&clubId=local-001',
   '/events/event-central/event-dashboard/event-edit.html',
+  '/registration/index.html',
 ]);
 
 // [project name]: [page path] pairs to skip. Document the reason inline.

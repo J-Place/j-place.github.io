@@ -1126,4 +1126,53 @@
     }
     preselectByDataAttr('BirthYear');
   })();
+
+  // Forces the deepest reachable state of the page open in one shot: the
+  // Competitive participation path (womens category — not mens-open, which
+  // skips National Recognition entirely — so this reaches one more reveal
+  // step) through the certification/agreement gate to an Event License
+  // Standard selection, plus VSA, a donation amount, and the coach-interest
+  // follow-up. Event License USMS+ is deliberately never selected here:
+  // updateCompetitionGate() excludes it once the gate passes (see that
+  // function above), so it can't actually be reached through this page's own
+  // UI regardless of which competition-category/national-recognition answers
+  // are given — it only ever appears locked, as an upsell preview. Called
+  // directly (no validation) by the visual-regression suite
+  // (tests/usms-visual-regression-screenshots/screenshots.spec.js) via
+  // window.expandAllSections() before capturing this page, so every
+  // conditional section's markup is visible in the baseline.
+  window.expandAllSections = function () {
+    function check(id) {
+      var el = document.getElementById(id);
+      if (!el) return null;
+      el.checked = true;
+      el.dispatchEvent(new Event('change'));
+      return el;
+    }
+
+    check('participationInfoYes');
+    check('competitionCategoryWomens');
+    check('nationalRecognitionYes');
+    check('competitionMembershipYesInput');
+    check('agree-terms-competition');
+
+    // The gate passing above enables the Event License tiles — select
+    // Event License Standard (id="competition") now that its tile is no
+    // longer disabled. Found by radio id, not by class: the Year-Plus tile
+    // reuses "membership-length--competition" as an *extra* class (shared
+    // styling hook), so a class selector alone matches both tiles.
+    var tileRadio = document.getElementById('competition');
+    var tile = tileRadio && tileRadio.closest('.membership-length--option');
+    if (tile && !tile.hasAttribute('disabled')) check('competition');
+
+    // VSA radios are enabled by the membershipTierSelected handler above.
+    check('videoStrokeAnalysisYes');
+    var strokeSelect = document.getElementById('stroke-video-analysis__focus');
+    if (strokeSelect) { strokeSelect.value = 'Freestyle'; strokeSelect.dispatchEvent(new Event('change')); }
+
+    // A non-zero donation surfaces the "Total Donations" payment-summary line.
+    if (sslInput) { sslInput.value = '30'; sslInput.dispatchEvent(new Event('change')); }
+
+    check('checkbox-interests-self-identified-coach--false');
+  };
 })();
