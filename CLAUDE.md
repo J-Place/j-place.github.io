@@ -20,6 +20,8 @@ Playwright is configured for visual regression testing (`playwright.config.js`, 
 
 Do not install Playwright, Chromium, or any other browser-automation tooling beyond what's already configured here on your own initiative (e.g. `npm install playwright`, `npx playwright install`) just to visually verify a change. If visual verification in a real browser is needed for something the existing Playwright setup doesn't cover, and no browser tool is already available in the session, say so and ask the user rather than provisioning one — installing a browser is slow (large download, repeated per session since the scratchpad is ephemeral) and should be an explicit decision, not a fallback.
 
+**Reporting results.** Whenever you run the visual test, report the outcome for **every** page in `pages.js`, each as pass / fail / skipped (both the Desktop and Mobile project) — a full enumeration, never just a summary count like "22 failed, 2 passed". The `list` reporter in `playwright.config.js` prints this per-test; keep it enabled. For any failure, note the pixel-diff magnitude and, if known, the likely cause. Do not run `npm run test:visual:update` / `--update-snapshots` without explicit user agreement, even when a diff looks self-evidently correct.
+
 ## Project Structure
 
 ```
