@@ -14,13 +14,6 @@
  * no BS3 coexistence conflict, so opening/closing sections here goes through
  * the real bootstrap.Collapse API instead of club-edit's manual class
  * toggling workaround.
- *
- * On load, opens the first incomplete accordion section — a faithful port of
- * production's setInitialSectionState (SanctionsEditEvent.jsx ~line 543),
- * which React runs on window.onload + 250ms. React never mounts on our static
- * DOM, so that code never fires here; this reproduces it. Every section
- * partial ships with `hasNoData`, so on the add-event flow this lands on
- * section 1 (Event Name), matching production.
  */
 (function () {
   var _validationDisplayed = false;
@@ -80,31 +73,8 @@
     });
   }
 
-  // Faithful port of production's setInitialSectionState (see file header):
-  // window.onload + 250ms, open the first incomplete section, scroll its
-  // header into view, focus its first text input.
-  function openFirstIncompleteSection() {
-    var section = document.querySelector(
-      '.accordion-group#accordion .section.hasNoData:not(.section--disabled)'
-    );
-    if (!section) return;
-    var content = section.querySelector('.section__content.collapse');
-    if (!content) return;
-    openSection(content);
-    var h3 = section.querySelector('h3');
-    if (h3) h3.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    var firstInput = section.querySelector(
-      'input:not([type="hidden"]):not([type="radio"]):not([type="checkbox"])'
-    );
-    if (firstInput) firstInput.focus();
-  }
-
   document.addEventListener('DOMContentLoaded', function () {
     var submitBtn = document.getElementById('submitEdit');
     if (submitBtn) submitBtn.addEventListener('click', previewEventValidation);
-  });
-
-  window.addEventListener('load', function () {
-    setTimeout(openFirstIncompleteSection, 250);
   });
 }());
