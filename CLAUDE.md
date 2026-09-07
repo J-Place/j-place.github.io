@@ -22,6 +22,8 @@ Do not install Playwright, Chromium, or any other browser-automation tooling bey
 
 **Reporting results.** Whenever you run the visual test, report the outcome for **every** page in `pages.js`, each as pass / fail / skipped (both the Desktop and Mobile project) — a full enumeration, never just a summary count like "22 failed, 2 passed". The `list` reporter in `playwright.config.js` prints this per-test; keep it enabled. For any failure, note the pixel-diff magnitude and, if known, the likely cause. Do not run `npm run test:visual:update` / `--update-snapshots` without explicit user agreement, even when a diff looks self-evidently correct.
 
+**Reference captures.** Every run writes a full-page, unmasked screenshot of each page (pass or fail) to `visual-captures/<slug>--<project>.png` (gitignored, overwritten each run) and attaches it to the HTML report, so passing pages can be eyeballed too — not just failures' `-actual`/`-diff` pairs. This is separate from the baseline comparison; keep it in the spec.
+
 ## Project Structure
 
 ```

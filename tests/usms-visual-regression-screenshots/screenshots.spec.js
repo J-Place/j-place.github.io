@@ -1,5 +1,16 @@
 const { test, expect } = require('@playwright/test');
+const fs = require('fs');
+const path = require('path');
 const pages = require('./pages');
+
+// Full-page reference capture of every page, every run — pass or fail.
+// toHaveScreenshot only keeps an image on failure (the -actual/-diff pair),
+// so passing pages leave no artifact to eyeball. These go to
+// visual-captures/<slug>--<project>.png (gitignored, overwritten each run)
+// and are also attached to the HTML report so every test row has a preview.
+// Unmasked on purpose: this is a reference of what the page actually looks
+// like, not a comparison input, so the real Google Maps tiles are useful.
+const CAPTURE_DIR = path.join(__dirname, '..', '..', 'visual-captures');
 
 function slug(pagePath) {
   const [path, query] = pagePath.split('?');
@@ -58,6 +69,15 @@ for (const pagePath of pages) {
     // out of the pixel comparison rather than chase determinism a live
     // third-party map can't offer.
     const mapEl = page.locator('#club-detail-map, .club-map-new');
+
+    // Reference capture — before the assertion, so it is written even when
+    // the comparison below fails.
+    const captureName = `${slug(pagePath)}--${testInfo.project.name}.png`;
+    const captureBuf = await page.screenshot({ fullPage: true });
+    fs.mkdirSync(CAPTURE_DIR, { recursive: true });
+    fs.writeFileSync(path.join(CAPTURE_DIR, captureName), captureBuf);
+    await testInfo.attach('reference', { body: captureBuf, contentType: 'image/png' });
+
     await expect(page).toHaveScreenshot(`${slug(pagePath)}.png`, {
       fullPage: true,
       mask: (await mapEl.count()) ? [mapEl] : [],
