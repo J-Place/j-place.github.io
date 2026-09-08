@@ -26,6 +26,8 @@ Do not install Playwright, Chromium, or any other browser-automation tooling bey
 
 **Reference captures.** Every run writes a full-page, unmasked screenshot of each page (pass or fail) to `visual-captures/<slug>--<project>.png` (gitignored, overwritten each run) and attaches it to the HTML report, so passing pages can be eyeballed too — not just failures' `-actual`/`-diff` pairs. This is separate from the baseline comparison; keep it in the spec.
 
+**Club Finder location is pinned to Sarasota, FL.** `clubs-filter.js` opens Club Finder at "Sarasota, FL" (USMS HQ) then overrides it with the runner's IP-based city via an `ipinfo.io` fetch — non-deterministic per machine/network. The spec aborts every `ipinfo.io` request so Club Finder is always captured at the Sarasota default (2 Sarasota clubs, 25 mi). Keep that route block; only `clubs-filter.js` calls `ipinfo.io`.
+
 ## Project Structure
 
 ```
