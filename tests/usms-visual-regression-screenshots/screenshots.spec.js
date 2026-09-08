@@ -28,7 +28,7 @@ function slug(pagePath) {
 // baseline instead of just whichever section happens to be open/selected by
 // default.
 const EXPAND_ALL_SECTIONS = new Set([
-  '/club-central/club-edit.html?mode=edit&clubId=local-001',
+  '/club-central/club-edit.html',
   '/events/event-central/event-dashboard/event-edit.html',
   '/registration/index.html',
 ]);

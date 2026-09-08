@@ -13,7 +13,11 @@ module.exports = [
   '/clubs/sarasota-y-sharks-536.html',
   '/login-to-registration-page/index.html',
   '/registration/index.html',
-  '/club-central/club-edit.html?mode=edit&clubId=local-001',
+  // Add-a-new-club mode (blank form) — the default. Do not add ?mode=edit
+  // here: "edit an existing club" is a dev-overlay-only scenario
+  // (club-edit-mode.js), so it can't be captured with dev off and it drags
+  // in a populated club persona. Club Edit is always tested in add mode.
+  '/club-central/club-edit.html',
   '/search/index.html',
   '/events/event-central/event-dashboard/event-edit.html',
 ];
