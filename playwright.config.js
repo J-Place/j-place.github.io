@@ -6,6 +6,13 @@ module.exports = defineConfig({
   // Testing against a live network target (GitHub Pages, third-party CDNs/Maps),
   // so allow one retry for timing-based flakiness before treating it as a real diff.
   retries: 1,
+  // The default 30s per-test budget is too tight against the live target — the
+  // heavier pages (home, with its hero + sponsor-logo carousels and article
+  // imagery) routinely spend 20-30s just reaching networkidle + awaiting
+  // images before the screenshot compare even starts, and intermittently time
+  // out. A genuinely broken page still fails the pixel comparison; this just
+  // buys patience for slow networks.
+  timeout: 60000,
   // 'list' prints every test (each page × project) with its pass/fail/skip
   // status to the console — always show the full page-by-page result, not
   // just a summary count. 'html' keeps the diff viewer for failures.
