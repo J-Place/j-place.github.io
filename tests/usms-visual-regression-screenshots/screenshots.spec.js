@@ -77,17 +77,35 @@ for (const pagePath of pages) {
     // third-party map can't offer.
     const mapEl = page.locator('#club-detail-map, .club-map-new');
 
-    // Reference capture — before the assertion, so it is written even when
-    // the comparison below fails.
-    const captureName = `${slug(pagePath)}--${testInfo.project.name}.png`;
+    // Reference capture. Write the file before the assertion so it survives a
+    // timeout; attach it to the report after. The attachment name ends in
+    // "-actual" because the HTML report only renders a test-row thumbnail for
+    // image attachments whose name matches /-(expected|actual|diff)/ — that's
+    // why failures get a thumbnail and plain passes don't. With no matching
+    // "-expected", the report drops it from the diff viewer and just lists it
+    // as a screenshot, so passing rows get a thumbnail without a broken diff
+    // UI. On a failure, toHaveScreenshot's own -expected/-actual/-diff are
+    // attached first and keep the thumbnail + diff viewer.
     const captureBuf = await page.screenshot({ fullPage: true });
     fs.mkdirSync(CAPTURE_DIR, { recursive: true });
-    fs.writeFileSync(path.join(CAPTURE_DIR, captureName), captureBuf);
-    await testInfo.attach('reference', { body: captureBuf, contentType: 'image/png' });
+    fs.writeFileSync(
+      path.join(CAPTURE_DIR, `${slug(pagePath)}--${testInfo.project.name}.png`),
+      captureBuf,
+    );
 
-    await expect(page).toHaveScreenshot(`${slug(pagePath)}.png`, {
-      fullPage: true,
-      mask: (await mapEl.count()) ? [mapEl] : [],
+    let assertionError;
+    try {
+      await expect(page).toHaveScreenshot(`${slug(pagePath)}.png`, {
+        fullPage: true,
+        mask: (await mapEl.count()) ? [mapEl] : [],
+      });
+    } catch (err) {
+      assertionError = err;
+    }
+    await testInfo.attach(`${slug(pagePath)}--${testInfo.project.name}-actual.png`, {
+      body: captureBuf,
+      contentType: 'image/png',
     });
+    if (assertionError) throw assertionError;
   });
 }
