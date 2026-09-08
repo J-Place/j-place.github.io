@@ -50,6 +50,13 @@ for (const pagePath of pages) {
     // Freeze JS timers so setInterval-driven carousels (carousel.js, image-slider.js)
     // can't advance between page load and screenshot capture.
     await page.clock.install();
+    // Club Finder (clubs-filter.js) opens at "Sarasota, FL" (USMS HQ) then
+    // overrides it with the runner's IP-based city via an ipinfo.io fetch —
+    // which makes the location field, map centre, and filtered results list
+    // non-deterministic across machines/networks. Block that fetch so every
+    // run captures Club Finder at the Sarasota, FL default. Only clubs-filter.js
+    // calls ipinfo.io, so a blanket abort is safe for every page.
+    await page.route(/ipinfo\.io/, (route) => route.abort());
     await page.goto(pagePath, { waitUntil: 'networkidle' });
     if (EXPAND_ALL_SECTIONS.has(pagePath)) {
       await page.evaluate(() => window.expandAllSections());
