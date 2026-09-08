@@ -28,6 +28,8 @@ Do not install Playwright, Chromium, or any other browser-automation tooling bey
 
 **Club Finder location is pinned to Sarasota, FL.** `clubs-filter.js` opens Club Finder at "Sarasota, FL" (USMS HQ) then overrides it with the runner's IP-based city via an `ipinfo.io` fetch — non-deterministic per machine/network. The spec aborts every `ipinfo.io` request so Club Finder is always captured at the Sarasota default (2 Sarasota clubs, 25 mi). Keep that route block; only `clubs-filter.js` calls `ipinfo.io`.
 
+**Club Edit is always tested in "add a new club" mode.** Use the bare `/club-central/club-edit.html` in `pages.js` — never `?mode=edit`. "Edit an existing club" (populated form, Submit-for-Approval instead of Finish & Pay) is a dev-overlay-only scenario (`club-edit-mode.js`), so it can't render with dev off and it pulls in a mock club persona. The bare URL gives add mode in both env states (a fresh Playwright context has no `sessionStorage` for the overlay to read).
+
 ## Project Structure
 
 ```
