@@ -25,10 +25,10 @@ function slug(pagePath) {
 // Not produced by the automated slug-based naming convention, so mapped by hand.
 const MANUAL_VARIANTS = {
   '/club-central/club-edit.html': [
-    { file: 'club-edit-validation-baseline.png', label: 'Validation (manual variant)' },
+    { file: 'club-edit-validation-baseline.png', label: 'Validation' },
   ],
   '/events/event-central/event-dashboard/event-edit.html': [
-    { file: 'event-edit-validation-after.png', label: 'Validation (manual variant)' },
+    { file: 'event-edit-validation-after.png', label: 'Validation' },
   ],
 };
 
