@@ -168,6 +168,17 @@ module.exports = function(eleventyConfig) {
 
   eleventyConfig.addPassthroughCopy({ "src/img": "img" });
 
+  // Visual-regression dashboard: publish the latest report + baseline screenshots
+  eleventyConfig.addPassthroughCopy({ "reports/visual-regression": "reports/visual-regression" });
+  eleventyConfig.addWatchTarget("reports/visual-regression");
+  eleventyConfig.addPassthroughCopy({
+    "tests/usms-visual-regression-screenshots/screenshots.spec.js-snapshots/*.png": "visual-regression-baselines"
+  });
+  eleventyConfig.addPassthroughCopy({
+    "tests/usms-visual-regression-screenshots/manual-baselines/*.png": "visual-regression-baselines/manual"
+  });
+  eleventyConfig.addWatchTarget("tests/usms-visual-regression-screenshots");
+
   return {
     dir: {
       input: "src",
