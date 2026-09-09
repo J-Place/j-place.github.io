@@ -14,6 +14,28 @@ You are running the snapshot deployment workflow for the USMS mockup project.
 3. Reads the resulting deploy URL from CLI output
 4. Updates `snapshot-registry.json` with the new entry
 
+## Immutability: deploys are locked, and all CSS is vendored
+
+`scripts/snapshot.js` **locks every deploy** it makes: right after `netlify deploy`
+it runs `netlify api lockDeploy` and then verifies with `getDeploy` (the lock call
+can report success while the lock silently fails to take), retrying up to 4×.
+
+Netlify's **deploy retention** deletes old *unlocked* non-production deploys —
+90 days on this team, 30 days on newer Free/Starter teams, and **not raisable
+without an Enterprise plan** (the `deploy_retention_in_days` API field rejects a
+higher value with 422). Locking is the only way to keep a snapshot permanently.
+An expired deploy silently 404s its alias URL: this pruned the entire `260601`
+club/contact batch plus ~10 older snapshots, all rebuilt and redeployed to their
+original aliases (and locked) on 2026-09-08.
+
+If you deploy a snapshot by hand (custom-alias path, Step 3), lock it yourself and
+confirm:
+
+```
+netlify api lockDeploy --data '{"deploy_id":"<deploy_id>"}'
+netlify api getDeploy  --data '{"deploy_id":"<deploy_id>"}'   # expect "locked": true
+```
+
 ## Immutability: all CSS is vendored, none is left live
 
 Snapshots are meant to be permanent, unchanging references. `scripts/snapshot.js` enforces this for CSS automatically — no manual step needed:
@@ -76,13 +98,19 @@ From the output, extract the auto-generated dist folder name from the line:
 Packaging snapshot "<dist-name>"...
 ```
 
-Then deploy manually with the custom alias:
+Then deploy manually with the custom alias, capturing the deploy id, and **lock the deploy**:
 
 ```
-netlify deploy --alias=<custom-alias> --dir=dist/snapshots/<dist-name>
+netlify deploy --alias=<custom-alias> --dir=dist/snapshots/<dist-name> --json
 ```
 
-Extract the full URL from the `Draft URL:` line in the output.
+Extract the full URL from the `deploy_url` field and the id from `deploy_id`, then:
+
+```
+netlify api lockDeploy --data '{"deploy_id":"<deploy_id>"}'
+```
+
+Locking is required — Netlify auto-deletes old unlocked deploys, which 404s the alias.
 
 ### If no custom alias:
 
@@ -92,7 +120,8 @@ Run the deploy script with the `--deploy` flag:
 npm run deploy:snapshot -- --page=<page-path> [--dev] --deploy
 ```
 
-Extract the full URL from the `Draft URL:` line in the output.
+Extract the full URL from the `Deployed:` line in the output. The script locks the
+deploy automatically (look for `Deploy locked.`).
 
 ---
 
