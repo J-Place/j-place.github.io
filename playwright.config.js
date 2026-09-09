@@ -27,14 +27,18 @@ module.exports = defineConfig({
   expect: {
     timeout: 10000,
     toHaveScreenshot: {
+      // Capture at full device-pixel resolution (2x on Desktop via
+      // deviceScaleFactor below, ~2.6x on Mobile from the Pixel 7 profile)
+      // rather than downsampling to CSS pixels — sharp text and no upscaling
+      // blur when a baseline is viewed on a HiDPI display or zoomed.
+      scale: 'device',
       // Fixed pixel budget rather than maxDiffPixelRatio — a ratio scales with
       // page height, so the same real layout shift gets more slack on long
-      // pages (e.g. Club Edit/Event Edit at ~6800px) than short ones. Measured
-      // a 1rem margin change at 977 differing pixels on Event Edit; identical
-      // re-captures (localhost and live) measured 0. 100px gives headroom over
-      // that zero-noise floor while staying well under a real visible change
-      // (a 5px margin shift still lands around ~300px at this same scale).
-      maxDiffPixels: 100,
+      // pages (e.g. Club Edit/Event Edit at ~6800px) than short ones. Identical
+      // re-captures measure 0 differing pixels; 400 gives headroom over that
+      // zero-noise floor while staying well under a real visible change (at
+      // this 2x scale a 5px margin shift lands around ~1200px).
+      maxDiffPixels: 400,
       // Per-pixel color-difference tolerance passed to pixelmatch (0 = strict,
       // 1 = lax; default 0.2) — separate from maxDiffPixels above, which caps
       // the *count* of differing pixels. Text anti-aliasing produces lots of
@@ -52,8 +56,14 @@ module.exports = defineConfig({
       name: 'Desktop',
       // 1512x982 is the default logical resolution of a 14" MacBook Pro (2x Retina,
       // native 3024x1964). Height kept at 800 (full-page screenshots capture the
-      // actual page height regardless).
-      use: { ...devices['Desktop Chrome'], viewport: { width: 1512, height: 800 } },
+      // actual page height regardless). deviceScaleFactor: 2 matches the Retina
+      // panel — combined with scale: 'device' above, Desktop baselines are
+      // captured at 3024px wide.
+      use: {
+        ...devices['Desktop Chrome'],
+        viewport: { width: 1512, height: 800 },
+        deviceScaleFactor: 2,
+      },
     },
     {
       name: 'Mobile',
