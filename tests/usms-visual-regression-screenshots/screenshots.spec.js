@@ -71,11 +71,20 @@ for (const pagePath of pages) {
           img.addEventListener('error', resolve, { once: true });
         }))
     ));
-    // Google Maps embeds (#club-detail-map, .club-map-new) render live tiles over
-    // the network with inherently non-deterministic timing/imagery — mask them
-    // out of the pixel comparison rather than chase determinism a live
-    // third-party map can't offer.
-    const mapEl = page.locator('#club-detail-map, .club-map-new');
+    // Regions excluded from the pixel comparison — each is live or animated in
+    // a way the frozen clock and image-await can't make deterministic, and each
+    // has a fixed height so masking it doesn't shift page layout:
+    //   #club-detail-map, .club-map-new  Google Maps embeds — live tiles
+    //   .carousel-container              home hero carousel — carousel.js
+    //                                    rotates slides (image vs autoplay
+    //                                    video); which slide/frame shows on
+    //                                    capture isn't pinnable
+    //   .image-slider                    home partner-logo strip —
+    //                                    image-slider.js scrolls it and the
+    //                                    logos load from a CDN
+    const maskEl = page.locator(
+      '#club-detail-map, .club-map-new, .carousel-container, .image-slider',
+    );
 
     // Reference capture. Write the file before the assertion so it survives a
     // timeout; attach it to the report after. The attachment name ends in
@@ -97,7 +106,7 @@ for (const pagePath of pages) {
     try {
       await expect(page).toHaveScreenshot(`${slug(pagePath)}.png`, {
         fullPage: true,
-        mask: (await mapEl.count()) ? [mapEl] : [],
+        mask: (await maskEl.count()) ? [maskEl] : [],
       });
     } catch (err) {
       assertionError = err;
