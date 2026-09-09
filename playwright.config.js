@@ -3,16 +3,20 @@ const { defineConfig, devices } = require('@playwright/test');
 module.exports = defineConfig({
   testDir: './tests/usms-visual-regression-screenshots',
   fullyParallel: true,
+  // Cap parallelism: fully-parallel workers all pulling multi-MB pages
+  // (swimmer-magazine articles run 5-8 MB, home ~7 MB) from the live target at
+  // once saturates bandwidth and pushes every in-flight test past its timeout
+  // together. 3 workers keeps the suite fast without the pile-up.
+  workers: 3,
   // Testing against a live network target (GitHub Pages, third-party CDNs/Maps),
   // so allow one retry for timing-based flakiness before treating it as a real diff.
   retries: 1,
-  // The default 30s per-test budget is too tight against the live target — the
-  // heavier pages (home, with its hero + sponsor-logo carousels and article
-  // imagery) routinely spend 20-30s just reaching networkidle + awaiting
-  // images before the screenshot compare even starts, and intermittently time
-  // out. A genuinely broken page still fails the pixel comparison; this just
-  // buys patience for slow networks.
-  timeout: 60000,
+  // The default 30s per-test budget is far too tight against the live target —
+  // the heavier pages spend most of a minute just reaching networkidle +
+  // awaiting images before the screenshot compare even starts. A genuinely
+  // broken page still fails the pixel comparison; this just buys patience for
+  // slow networks.
+  timeout: 120000,
   // 'list' prints every test (each page × project) with its pass/fail/skip
   // status to the console — always show the full page-by-page result, not
   // just a summary count. 'html' keeps the diff viewer for failures.
