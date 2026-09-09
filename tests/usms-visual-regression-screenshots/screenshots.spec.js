@@ -118,7 +118,7 @@ for (const pagePath of pages) {
     // as a screenshot, so passing rows get a thumbnail without a broken diff
     // UI. On a failure, toHaveScreenshot's own -expected/-actual/-diff are
     // attached first and keep the thumbnail + diff viewer.
-    const captureBuf = await page.screenshot({ fullPage: true });
+    const captureBuf = await page.screenshot({ fullPage: true, scale: 'device' });
     fs.mkdirSync(CAPTURE_DIR, { recursive: true });
     fs.writeFileSync(
       path.join(CAPTURE_DIR, `${slug(pagePath)}--${testInfo.project.name}.png`),
