@@ -3,19 +3,25 @@ permalink: /visual-regression-gallery.html
 ---
 {% extends "layouts/base.njk" %}
 {% set title = "Visual Regression Screenshot List" %}
+{% block pageCSS %}
+<link rel="stylesheet" href="/css/visual-regression-gallery.css">
+{% endblock %}
 {% block content %}
 <main>
 <div class="section section-full">
-  <div class="usms-container" style="margin: 4rem auto 6rem;">
+  <div class="usms-container vrg" style="margin: 3rem auto 6rem;">
     <h5>Visual Regression Screenshot List</h5>
-    <p style="margin-top: 1rem;">Current baseline screenshots from the Playwright visual-regression suite. Click a link to open the full-size image in a new tab.</p>
+    <p class="vrg__intro">Current baseline screenshots from the Playwright visual-regression suite. Click a viewport to open the full-size image in a new tab.</p>
     {% for group in visualBaselines %}
-    <h4 style="margin-top: 2rem;"><a href="{{ group.pagePath }}">{{ group.pagePath }}</a></h4>
-    <ul style="margin-top: 0.5rem; list-style-type: none; padding-left: 0;">
-      {% for item in group.items %}
-      <li style="padding: 3px 0; font-size: 15px;"><a href="/{{ item.path }}" target="_blank">{{ item.label }}</a></li>
-      {% endfor %}
-    </ul>
+    <div class="vrg__row">
+      <a class="vrg__page" href="{{ group.pagePath }}">{{ group.pagePath }}</a>
+      <span class="vrg__shots">
+        {%- for item in group.items -%}
+          {%- if not loop.first %} <span class="vrg__sep">|</span> {% endif -%}
+          <a href="/{{ item.path }}" target="_blank">{{ item.label }}</a>
+        {%- endfor -%}
+      </span>
+    </div>
     {% endfor %}
   </div>
 </div>
