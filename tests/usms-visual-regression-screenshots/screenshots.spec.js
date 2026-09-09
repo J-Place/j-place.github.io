@@ -1,16 +1,5 @@
 const { test, expect } = require('@playwright/test');
-const fs = require('fs');
-const path = require('path');
 const pages = require('./pages');
-
-// Full-page reference capture of every page, every run — pass or fail.
-// toHaveScreenshot only keeps an image on failure (the -actual/-diff pair),
-// so passing pages leave no artifact to eyeball. These go to
-// visual-captures/<slug>--<project>.png (gitignored, overwritten each run)
-// and are also attached to the HTML report so every test row has a preview.
-// Unmasked on purpose: this is a reference of what the page actually looks
-// like, not a comparison input, so the real Google Maps tiles are useful.
-const CAPTURE_DIR = path.join(__dirname, '..', '..', 'visual-captures');
 
 function slug(pagePath) {
   const [path, query] = pagePath.split('?');
@@ -109,35 +98,9 @@ for (const pagePath of pages) {
       '#club-detail-map, .club-map-new, .carousel-container, .image-slider',
     );
 
-    // Reference capture. Write the file before the assertion so it survives a
-    // timeout; attach it to the report after. The attachment name ends in
-    // "-actual" because the HTML report only renders a test-row thumbnail for
-    // image attachments whose name matches /-(expected|actual|diff)/ — that's
-    // why failures get a thumbnail and plain passes don't. With no matching
-    // "-expected", the report drops it from the diff viewer and just lists it
-    // as a screenshot, so passing rows get a thumbnail without a broken diff
-    // UI. On a failure, toHaveScreenshot's own -expected/-actual/-diff are
-    // attached first and keep the thumbnail + diff viewer.
-    const captureBuf = await page.screenshot({ fullPage: true, scale: 'device' });
-    fs.mkdirSync(CAPTURE_DIR, { recursive: true });
-    fs.writeFileSync(
-      path.join(CAPTURE_DIR, `${slug(pagePath)}--${testInfo.project.name}.png`),
-      captureBuf,
-    );
-
-    let assertionError;
-    try {
-      await expect(page).toHaveScreenshot(`${slug(pagePath)}.png`, {
-        fullPage: true,
-        mask: (await maskEl.count()) ? [maskEl] : [],
-      });
-    } catch (err) {
-      assertionError = err;
-    }
-    await testInfo.attach(`${slug(pagePath)}--${testInfo.project.name}-actual.png`, {
-      body: captureBuf,
-      contentType: 'image/png',
+    await expect(page).toHaveScreenshot(`${slug(pagePath)}.png`, {
+      fullPage: true,
+      mask: (await maskEl.count()) ? [maskEl] : [],
     });
-    if (assertionError) throw assertionError;
   });
 }
