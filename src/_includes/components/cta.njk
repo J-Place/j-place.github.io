@@ -1,0 +1,12 @@
+{# CTA card — production source: Feature/CallToAction/code/Views/CallToAction/CallToAction.cshtml
+   Tint modifier comes from a Sitecore "Class" item (rendering.GetCtaTintClass()); observed
+   values are cta--tint-medium and cta--tint-light. When no image is set production falls
+   back to background-color:#0060a7. #}
+{% macro cta(href, title, image, tint="medium", button="", target="") %}
+<a href="{{ href }}" class="cta{% if tint %} cta--tint-{{ tint }}{% endif %}" target="{{ target }}">
+  <div class="tint-placeholder"></div>
+  <div class="cta__image" style="{% if image %}background: url('{{ image }}') no-repeat center center; background-size: cover;{% else %}background-color: #0060a7;{% endif %}"></div>
+  <h2 class="cta__title text-uppercase text-center"><strong>{{ title }}</strong></h2>
+  {% if button %}<span class="cta__button text-uppercase"><strong>{{ button }}</strong></span>{% endif %}
+</a>
+{% endmacro %}

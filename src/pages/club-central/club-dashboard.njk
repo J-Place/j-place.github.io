@@ -54,30 +54,15 @@ breadcrumbs:
 
         <form class="form-horizontal">
 
-          {% if clubsLocal.clubs | length > 0 %}
-          <div class="button-row__content club-dashboard align-center">
+          {# Club list is populated by club-dashboard.js from ?club=<abbr> — hidden
+             until a club is present. No param → nothing here, just "Add a New Club". #}
+          <div class="button-row__content club-dashboard align-center" id="dashboard-club-list" style="display: none;">
             <h3>Select Your Club or Workout Group</h3>
-            {% for club in clubsLocal.clubs %}
-            <div class="club-button-wrapper">
-              {% if club.isWog %}
-                <div class="disabled-club">
-                  <div class="btn btn-outline club-link-button">{{ club.abbreviation }}</div>
-                </div>
-              {% elif club.disabled %}
-                <div class="disabled-club">
-                  <div class="btn btn-outline club-link-button">{{ club.abbreviation }}</div>
-                  <span>Club Disabled</span>
-                </div>
-              {% else %}
-                <a class="btn btn-outline club-link-button" href="/club-central/club-dashboard/club-manage.html?clubId={{ club.id }}">{{ club.abbreviation }}</a>
-              {% endif %}
-            </div>
-            {% endfor %}
+            <div class="club-button-wrapper" id="dashboard-club-slot"></div>
           </div>
-          {% endif %}
 
           <div class="button-row__footer">
-            <a class="btn" href="/club-central/club-edit.html?mode=create">+ Add a New Club or Workout Group</a>
+            <a class="btn" href="/club-central/club-edit.html">+ Add a New Club or Workout Group</a>
           </div>
 
         </form>
@@ -86,4 +71,10 @@ breadcrumbs:
     </div>
   </div>
 </div>
+
+<script type="application/json" id="clubs-local-data">{{ clubsLocal.clubs | dump | safe }}</script>
+{% endblock %}
+
+{% block pageJS %}
+<script src="/js/club-dashboard.js" defer></script>
 {% endblock %}

@@ -22,6 +22,7 @@ breadcrumbTitle: "Club Edit"
 
 {% block pageJS %}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/club-edit-mode.js"></script>
 <script src="/js/club-edit.js" defer></script>
 <script src="/js/club-edit-radio-header-validation.js" defer></script>
 <script src="/js/club-edit-website-check-mock.js" defer></script>
@@ -34,6 +35,7 @@ breadcrumbTitle: "Club Edit"
 {% endblock %}
 
 {% block content %}
+<script type="application/json" id="clubs-local-data">{{ clubsLocal.clubs | dump | safe }}</script>
 <div class="section section-full bg-gray p-mh-500">
   <div class="usms-container p-tb-10">
     <div class="row">

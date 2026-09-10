@@ -1,0 +1,23 @@
+{# Production source: Feature/Club2.0/code/Views/ClubLogin/LoginBegin.cshtml
+   Controller rendering: ClubLoginController.LoginBegin — left column of /club-central/club-login #}
+<div class="">
+  <form action="/club-central/club-login" class="login-form" method="post">
+    <input type="hidden" name="fhController" value="ClubLoginController">
+    <input type="hidden" name="fhAction" value="LoginBegin">
+    <input id="ReturnUrl" name="ReturnUrl" type="hidden" value="">
+    <div class="form-group">
+      <input class="form-control" id="loginEmail" name="Email" onchange="validateField(this)" placeholder="Email Address" type="email" value="">
+      <span class="help-block help-block--Email">Please type a valid email address</span>
+    </div>
+    <div class="form-group">
+      <input class="form-control" id="loginPassword" name="Password" placeholder="Password" type="password">
+    </div>
+    <div class="form-group">
+      <input type="submit" class="btn btn-primary text-uppercase login-form__submit" value="GO!">
+    </div>
+    <div class="form-group">
+      <a href="https://www.usms.org/account/forgotpassword?entity=club">Forgot/Reset Password</a>
+    </div>
+    <div class="form-group form-group__footnote"></div>
+  </form>
+</div>

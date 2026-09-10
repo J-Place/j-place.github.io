@@ -1,0 +1,67 @@
+---
+permalink: /club-central/club-login.html
+title: Club Login | U.S. Masters Swimming
+pageTitle: Club Login
+breadcrumbs:
+  - url: "/home"
+    label: "Home"
+  - url: "/club-central"
+    label: "Club Central"
+breadcrumbTitle: "Club Login"
+---
+{% extends "layouts/base.njk" %}
+
+{% block pageCSS %}
+<link rel="stylesheet" href="/css/Club2/clubLogin.css">
+{% endblock %}
+
+{% block pageJS %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.12/jquery.mask.min.js"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="/js/club-login.js" defer></script>
+{% endblock %}
+
+{% block breadcrumb %}
+{% include "partials/Common/Breadcrumb.njk" %}
+{% endblock %}
+
+{% block content %}
+<div class="section section-full bg-gray p-mh-500">
+  <div class="usms-container p-tb-10">
+    <div class="row">
+      <div class="col-xs-12">
+        <header class="page-title">
+          <h1>Club Login</h1>
+          <h2>Register, Renew, or Update My USMS Club Listing</h2>
+        </header>
+      </div>
+    </div>
+  </div>
+
+  <div class="usms-container form__container p-tb-10">
+    <div class="row">
+
+      <div class="col-xs-12 col-md-6">
+        <div class="html-container">
+          <div class="form-col__header">
+            <h3>Login to My Account</h3>
+            <p>I'm a club contact and have a USMS My Account login.</p>
+          </div>
+        </div>
+        {% include "partials/ClubLogin/ClubLoginBegin.njk" %}
+      </div>
+
+      <div class="col-xs-12 col-md-6">
+        <div class="html-container">
+          <div class="form-col__header">
+            <h3>Create a My Account Login</h3>
+            <p>I don't have a USMS My Account and need to create one.</p>
+          </div>
+        </div>
+        {% include "partials/ClubLogin/ClubLoginCreateAccount.njk" %}
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

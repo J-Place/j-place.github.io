@@ -1,0 +1,18 @@
+/* /club-central/club-login
+ *
+ * There is no production stylesheet for this page — its CSS load order is just the
+ * base stack (bootstrap 3 + patch, Font Awesome, common.min.css, usms.min.css).
+ * The two-column layout (.form__container, .form-col__header, .html-container) and
+ * form styling all come from common.min.css / usms.min.css.
+ *
+ * The only page-specific rule is an inline <style> block authored into the Sitecore
+ * page content (sits just above the login form on the live page):
+ *
+ *     .login-form__submit, .register-form__submit { width: 100px !important; }
+ *
+ * Both "GO!" submit buttons carry the .login-form__submit class in production markup.
+ */
+.login-form__submit,
+.register-form__submit {
+  width: 100px !important;
+}
