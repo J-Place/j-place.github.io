@@ -94,8 +94,15 @@ for (const pagePath of pages) {
     //   .image-slider                    home partner-logo strip —
     //                                    image-slider.js scrolls it and the
     //                                    logos load from a CDN
+    //   .articleStepper                  SWIMMER "Also in this Issue" strip —
+    //                                    slick-carousel (init'd by production
+    //                                    swimmerMagazine.min.js) autoplays; which
+    //                                    related-article slide shows on capture
+    //                                    isn't pinnable, and the slide images
+    //                                    load from a CDN. Fixed height, so
+    //                                    masking it doesn't shift layout.
     const maskEl = page.locator(
-      '#club-detail-map, .club-map-new, .carousel-container, .image-slider',
+      '#club-detail-map, .club-map-new, .carousel-container, .image-slider, .articleStepper',
     );
 
     await expect(page).toHaveScreenshot(`${slug(pagePath)}.png`, {
