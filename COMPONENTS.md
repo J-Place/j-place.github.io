@@ -28,9 +28,13 @@ In short: Covered = you could point a designer at the mockup and say "that's the
 |---|---|---|
 | *(CMS content — no React component)* Board of Directors | `src/pages/volunteer-central/board-of-directors.njk` | Covered |
 | *(CMS content — no React component)* Board of Directors Assignments | `src/pages/volunteer-central/board-assignments.njk` | Covered |
+| *(CMS content — no React component)* Club Central landing page | `src/pages/club-central/index.njk` | Covered |
+| *(Razor)* `Feature/CallToAction/…/CallToAction.cshtml` (CTA card) | `components/cta.njk` macro (used by `club-central/index.njk`; other pages still inline `.cta`) | Partial |
 | `Article.jsx` | `src/pages/swimmer-magazine/**` (SWIMMER only) · `src/pages/fitness-and-training/articles-and-videos/articles/masters-swimming-training-plan-for-former-competitive-swimmers.njk` | Covered |
 | `Club.jsx` (legacy) / `Feature/Club2.0` Razor views (authoritative) | `src/pages/clubs/sarasota-y-sharks-536.njk`, `south-end-rowing-club-580.njk`, `swim-fort-lauderdale-1877.njk`, `fort-worth-area-swim-team-608.njk` | Covered |
 | *(Razor)* `Feature/Club2.0` ClubEdit views | `src/pages/club-central/club-edit.njk` | Covered |
+| *(Razor)* `Feature/Club2.0` ClubLogin views (`LoginBegin.cshtml` + `CreateAccount.cshtml`) | `src/pages/club-central/club-login.njk` + `partials/ClubLogin/ClubLoginBegin.njk` + `partials/ClubLogin/ClubLoginCreateAccount.njk` | Covered |
+| *(Razor)* `ClubLogin/ConvertClubMember.cshtml`, `ClubLogin/ClubLogout.cshtml` | — (separate post-login pages, not part of `/club-central/club-login`) | Not Started |
 | `Clubs.jsx` | `src/pages/clubs/index.njk` | Covered |
 | `EmailConfirmation.jsx` | — | Not Started |
 | `Event.jsx` | `src/pages/events/events/2026-bumpy-jones-*` | Covered |

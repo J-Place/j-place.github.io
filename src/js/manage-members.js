@@ -1,23 +1,23 @@
 (function () {
   var params = new URLSearchParams(window.location.search);
-  var clubId = params.get('clubId') || sessionStorage.getItem('activeClubId');
+  var clubId = params.get('club') || sessionStorage.getItem('activeClub');
 
   if (!clubId) {
     document.getElementById('members-no-club').style.display = '';
     document.getElementById('members-content').style.display = 'none';
     return;
   }
-  sessionStorage.setItem('activeClubId', clubId);
+  sessionStorage.setItem('activeClub', clubId);
 
   var manageContactsLink = document.querySelector('a[href*="expired-members"]');
   if (manageContactsLink) {
-    manageContactsLink.href = '/club-central/expired-members.html?clubId=' + encodeURIComponent(clubId);
+    manageContactsLink.href = '/club-central/expired-members.html?club=' + encodeURIComponent(clubId);
   }
 
   var clubs = JSON.parse(document.getElementById('clubs-local-data').textContent);
-  var club = clubs.find(function (c) { return c.id === clubId; });
+  var club = clubs[clubId];
   if (club) {
-    document.getElementById('members-club-name').textContent = club.title;
+    document.getElementById('members-club-name').textContent = club.name;
   }
 
   var allMembers = JSON.parse(document.getElementById('members-local-data').textContent);
