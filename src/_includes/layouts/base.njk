@@ -1,6 +1,5 @@
-{% set effectiveSwimmerId = dev.forceSwimmerId if (dev.env === "dev" and dev.forceSwimmerId) else swimmerId %}
-{% set currentUser = siteUsers[effectiveSwimmerId] if effectiveSwimmerId else null %}
-{% set swimmer = swimmers[currentUser.swimmerId] if currentUser and currentUser.swimmerId else null %}
+{% set currentUser = swimmers[swimmerId] if swimmerId else null %}
+{% set swimmer = currentUser %}
 <!DOCTYPE html>
 <!--[if IE 9]><html lang="en" class="ie9 no-js"><![endif]-->
 <!--[if !IE]><!-->
@@ -21,9 +20,7 @@
   <link rel="stylesheet" href="/css/Common/membership-renewal-ribbon.css">
   {% block localCSS %}{% endblock %}
   {% if dev.env === "dev" %}{% for name, overlay in devOverlays %}{% if permalink in overlay.pages %}<link rel="stylesheet" href="{{ overlay.css }}">{% endif %}{% endfor %}{% endif %}
-  {% if dev.env === "dev" %}<script type="application/json" id="dev-swimmers-data">{{ { "siteUsers": siteUsers, "swimmers": swimmers, "membershipTiers": membershipTiers } | dump | safe }}</script>{% endif %}
-  {% if dev.env === "dev" and devSwimmerIds %}<script type="application/json" id="dev-swimmer-filter">{{ devSwimmerIds | dump | safe }}</script>{% endif %}
-  {% if dev.env === "dev" and effectiveSwimmerId %}<script type="application/json" id="dev-default-user">{{ effectiveSwimmerId | dump | safe }}</script>{% endif %}
+  <script type="application/json" id="site-users-data">{{ { "swimmers": swimmers, "membershipTiers": membershipTiers } | dump | safe }}</script>
 </head>
 <body class="">
   <div id="main-container">
@@ -47,6 +44,7 @@
   <script src="/js/megamenu.js" defer></script>
   {% endblock %}
   {% block pageJS %}{% endblock %}
+  <script src="/js/current-user.js"></script>
   {% if dev.env === "dev" %}
   {% for name, overlay in devOverlays %}{% if permalink in overlay.pages %}
   {% if overlay.defer === false %}<script src="{{ overlay.js }}"></script>{% else %}<script src="{{ overlay.js }}" defer></script>{% endif %}
