@@ -1043,21 +1043,21 @@
   // ── Init ──────────────────────────────────────────────────────────────────
 
   // Hide tiers outside their availability window based on today's date, or a
-  // simulated date via ?asOf=YYYY-MM-DD in the URL (falls back to
+  // simulated date via ?date=YYYY-MM-DD in the URL (falls back to
   // sessionStorage so it carries forward across navigation, same pattern as
   // ?user= in current-user.js and ?club= in club-edit-mode.js).
   (function () {
-    var ASOF_KEY  = 'activeAsOf';
-    var asOfParam = new URLSearchParams(window.location.search).get('asOf');
-    var asOf = null;
-    if (asOfParam && /^\d{4}-\d{2}-\d{2}$/.test(asOfParam)) {
-      asOf = asOfParam;
-      sessionStorage.setItem(ASOF_KEY, asOf);
+    var DATE_KEY   = 'activeDate';
+    var dateParam  = new URLSearchParams(window.location.search).get('date');
+    var simDate = null;
+    if (dateParam && /^\d{4}-\d{2}-\d{2}$/.test(dateParam)) {
+      simDate = dateParam;
+      sessionStorage.setItem(DATE_KEY, simDate);
     } else {
-      var savedAsOf = sessionStorage.getItem(ASOF_KEY);
-      if (savedAsOf && /^\d{4}-\d{2}-\d{2}$/.test(savedAsOf)) asOf = savedAsOf;
+      var savedDate = sessionStorage.getItem(DATE_KEY);
+      if (savedDate && /^\d{4}-\d{2}-\d{2}$/.test(savedDate)) simDate = savedDate;
     }
-    var now   = asOf ? new Date(asOf + 'T12:00:00') : new Date();
+    var now   = simDate ? new Date(simDate + 'T12:00:00') : new Date();
     var today = (now.getMonth() + 1) * 100 + now.getDate(); // e.g. July 15 → 715
     function md(str) { var p = str.split('-'); return parseInt(p[0], 10) * 100 + parseInt(p[1], 10); }
     document.querySelectorAll('.membership-length--option[data-avail-start]').forEach(function (tile) {

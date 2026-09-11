@@ -194,7 +194,7 @@ To add a new overlay: create the JS, CSS, and JSON config files — no changes t
 
 `base.njk` always embeds `swimmers`/`membershipTiers` as a JSON data island (`#site-users-data`) and always loads `src/js/current-user.js`, unconditionally in both dev and prod — same pattern as Club Central's `?club=` (see `club-edit-mode.js`). Each swimmer record in `src/_data/swimmers.json` carries both profile fields (name, DOB, club, …) and status facts (`loggedIn`, `usmsMember`, `membershipTier`, `clubAdmin`, `renew`, `isLapsed`, `cardExpired`) — there's no separate persona file. Each page's `swimmerId` frontmatter sets its default swimmer at build time (`currentUser`/`swimmer` in Nunjucks, both the same object); to preview a different one at runtime, append `?user=<swimmers.json key>` to the URL (e.g. `?user=COACH`). The resolved id is written to `sessionStorage.activeUser` so it carries forward across normal navigation in the same tab without repeating the param on every link; an invalid or absent param falls back to sessionStorage, then to the page's baked-in default. There is no visible switcher UI — change persona by editing/sharing the URL.
 
-`/registration/index.html`'s membership-tier date-availability windows work the same way: append `?asOf=YYYY-MM-DD` (e.g. `?asOf=2026-07-15`) to simulate a date; omit it to use the real current date. Resolved in `registration.js`'s init, also carried forward via `sessionStorage.activeAsOf`.
+`/registration/index.html`'s membership-tier date-availability windows work the same way: append `?date=YYYY-MM-DD` (e.g. `?date=2026-07-15`) to simulate a date; omit it to use the real current date. Resolved in `registration.js`'s init, also carried forward via `sessionStorage.activeDate`.
 
 ## Deployment
 
