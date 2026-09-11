@@ -188,11 +188,13 @@ Each config file defines which pages the overlay loads on:
 
 To add a new overlay: create the JS, CSS, and JSON config files — no changes to `base.njk` or any page template needed.
 
-**Current overlays:**
+**Current overlays:** `bulk-registration-state` (club-central manage-members) and `measured-pools-location-preview`. Simulating the current logged-in user or a specific date is *not* an overlay — see below.
 
-| Overlay | Pages | Purpose |
-|---|---|---|
-| `login-status` | addons, addons-ncc | Shows current swimmer ID and membership tier in the breadcrumb bar |
+### Simulating the current user and date
+
+`base.njk` always embeds `swimmers`/`membershipTiers` as a JSON data island (`#site-users-data`) and always loads `src/js/current-user.js`, unconditionally in both dev and prod — same pattern as Club Central's `?club=` (see `club-edit-mode.js`). Each swimmer record in `src/_data/swimmers.json` carries both profile fields (name, DOB, club, …) and status facts (`loggedIn`, `usmsMember`, `membershipTier`, `clubAdmin`, `renew`, `isLapsed`, `cardExpired`) — there's no separate persona file. Each page's `swimmerId` frontmatter sets its default swimmer at build time (`currentUser`/`swimmer` in Nunjucks, both the same object); to preview a different one at runtime, append `?user=<swimmers.json key>` to the URL (e.g. `?user=COACH`). The resolved id is written to `sessionStorage.activeUser` so it carries forward across normal navigation in the same tab without repeating the param on every link; an invalid or absent param falls back to sessionStorage, then to the page's baked-in default. There is no visible switcher UI — change persona by editing/sharing the URL.
+
+`/registration/index.html`'s membership-tier date-availability windows work the same way: append `?asOf=YYYY-MM-DD` (e.g. `?asOf=2026-07-15`) to simulate a date; omit it to use the real current date. Resolved in `registration.js`'s init, also carried forward via `sessionStorage.activeAsOf`.
 
 ## Deployment
 
@@ -203,7 +205,7 @@ GitHub Actions deploys `_site/` to `gh-pages` on push to `master`.
 | Skill | Command | Purpose |
 |---|---|---|
 | Mockup | `/mockup [url]` | Build a mockup of a production page. Pass a URL to auto-fetch, or paste markup when prompted. Strips noise, diffs against any existing local version, asks for target path, then builds. |
-| Snapshot | `/snapshot [/path/to/page] [--dev]` | Build and deploy a finished page as an immutable Netlify alias, then update `snapshot-registry.json` and commit. `--dev` includes dev overlays (e.g. login-status). The index page auto-generates from the registry — no separate link step needed. |
+| Snapshot | `/snapshot [/path/to/page] [--dev]` | Build and deploy a finished page as an immutable Netlify alias, then update `snapshot-registry.json` and commit. `--dev` includes dev overlays. The index page auto-generates from the registry — no separate link step needed. |
 | Audit | `/audit [/path/to/page]` | Bidirectional structural audit of a local Nunjucks page against its production JSX. Finds gaps (production has, we don't), extras (we have, production doesn't), suspect CSS overrides, and JS selector drift. |
 | Compare | `/compare [path-a] [path-b]` | Bidirectional structural diff between two local mockup pages. Finds class, attribute, and hierarchy differences without a production source of truth. |
 | Commit | `/commit` | Review uncommitted changes, group into logical commits with messages, and commit immediately |
