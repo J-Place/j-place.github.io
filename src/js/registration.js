@@ -1,10 +1,5 @@
 /* globals ValidateField, ValidateDob, MakeColumnWithErrorSameHeight */
 (function () {
-  // ── User state (set by current-user.js via data attributes) ────────────────
-  var formWrapper = document.querySelector('.full-registration-form');
-  var renew    = formWrapper && formWrapper.dataset.renew    === 'true';
-  var isLapsed = formWrapper && formWrapper.dataset.isLapsed === 'true';
-
   // Set by applyRenewalMode() below, consumed later by
   // applyRenewalParticipationDefaults() once the participationInfo/
   // competitionCategory listeners it needs to trigger actually exist.
@@ -30,13 +25,6 @@
     var swimmer;
     try { swimmer = JSON.parse(dataEl.textContent); } catch (e) { return; }
     if (!swimmer) return;
-
-    if (formWrapper) {
-      formWrapper.dataset.renew = 'true';
-      formWrapper.dataset.isLapsed = 'true';
-    }
-    renew = true;
-    isLapsed = true;
 
     function setVal(id, val) {
       var el = document.getElementById(id);
