@@ -1,0 +1,116 @@
+---
+permalink: /clubs/indy-aquatic-masters-1745.html
+title: Indy Aquatic Masters | Club Finder | U.S. Masters Swimming
+clubUrl: /clubs/indy-aquatic-masters-1745
+locationFacilities:
+  "Center Grove High School":
+    - name: Center Grove High School
+      environment: Indoor
+      lengths: [LCM]
+  "Brownsburg High School":
+    - name: Brownsburg High School
+      environment: Indoor
+      lengths: []
+  "IU Natatorium at IU Indianapolis":
+    - name: IU Natatorium at IU Indianapolis
+      environment: Indoor
+      lengths: [LCM, SCM]
+  "The Riviera Club":
+    - name: The Riviera Club
+      environment: Outdoor
+      lengths: [LCM]
+  "Lawrence North High School Natatorium":
+    - name: Lawrence North High School Natatorium
+      environment: Indoor
+      lengths: [LCM, SCY]
+  "North Central High School":
+    - name: North Central High School
+      environment: Indoor
+      lengths: [SCY]
+  "Carmel Swim Academy":
+    - name: Carmel Swim Academy
+      environment: Indoor
+      lengths: []
+  "Carmel High School":
+    - name: Carmel High School
+      environment: Indoor
+      lengths: []
+  "Westfield Washington Schools Aquatic Center":
+    - name: Westfield Washington Schools Aquatic Center
+      environment: Indoor
+      lengths: []
+  "Lawrence Central High School":
+    - name: Lawrence Central High School
+      environment: Indoor
+      lengths: []
+  "Kaiserman JCC":
+    - name: Kaiserman JCC
+      environment: Indoor
+      lengths: []
+breadcrumbs:
+  - url: "/"
+    label: "Home"
+  - url: "/clubs/index.html"
+    label: "Club Finder"
+breadcrumbTitle: "Indy Aquatic Masters"
+---
+{% extends "layouts/club-detail.njk" %}
+{% set club = clubs.data.clubs | findClub(clubUrl) %}
+
+{% block pageJS %}
+{{ super() }}
+<script src="/js/club-detail-map.js" defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ keys.googleMaps }}&callback=initClubDetailMap" async defer></script>
+{% endblock %}
+
+{% block heroSection %}
+<div class="section section-full p-b-10">
+  <a href="#" class="btn-hero-modal" data-modal-target="#modalImage">+ View Full Image</a>
+  <div class="hero-image hero-image--club-detail2" style="background-image: url('https://usmsfiles.blob.core.windows.net/club-cdn/a0w3h000001KE7oAAG-photo-TEAM%20IAM%202024%20GRIN%20STATE.jpg'); height: 350px; background-position: center"></div>
+
+  {% set modalId = "modalImage" %}
+  {% set modalModifier = "club-detail-modal" %}
+  {% set modalSize = "lg" %}
+  {% set modalBody %}
+  <div class="club-detail--full-image">
+    <img style="width:100%;" src="https://usmsfiles.blob.core.windows.net/club-cdn/a0w3h000001KE7oAAG-photo-TEAM%20IAM%202024%20GRIN%20STATE.jpg" alt="" />
+  </div>
+  {% endset %}
+  {% include "components/modal.njk" %}
+</div>
+{% endblock %}
+
+{% block clubMain %}
+{% include "partials/Club/club-detail-content.njk" %}
+{% endblock %}
+
+{% block clubSidebar %}
+<button class="btn btn-usms btn-large club__join-now">Join USMS Now</button>
+<div class="club-contact">
+  <h4 class="club-contact__header">Club Contact</h4>
+  <div class="club-contact__content">
+    <p>Michelle Harter</p>
+  </div>
+</div>
+<div class="club-website">
+  <a href="http://www.indyaquaticmasters.com" class="btn btn-link" target="_blank">Visit Club Website</a>
+</div>
+{% include "partials/Club/club-detail-badges.njk" %}
+<div class="club-social-links">
+  <h4 class="club-social-links__header">Connect With Us</h4>
+  <div class="club-social-links__content">
+    <ul class="social-share-icons list--nostyle">
+      <li class="social-share-icons__item">
+        <a href="https://www.facebook.com/IndyAquaticMasters" target="_blank" title="Facebook">
+          <i class="fa-brands fa-facebook-f"></i>
+        </a>
+      </li>
+      <li class="social-share-icons__item">
+        <a href="https://www.instagram.com/indyaquaticmasters" target="_blank" title="Instagram">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+{% endblock %}

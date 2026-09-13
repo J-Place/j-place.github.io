@@ -1,0 +1,46 @@
+{% set badgeCount = (1 if club.isMember else 0) + (1 if club.sslf else 0) %}
+{% for badge in club.badges %}
+  {% if badge.alt == "USMS-certified-coach" or badge.alt == "USMS-alts-instructor" %}
+    {% set badgeCount = badgeCount + 1 %}
+  {% endif %}
+{% endfor %}
+{% if badgeCount %}
+<div class="club-detail2__badges">
+  <h4 class="club-detail2__badges--header">Club Designations</h4>
+  <ul class="club-detail2__badges-list list--nostyle{{ ' club-detail2__badges-list--stack-2' if badgeCount == 4 }}">
+    {% if club.isMember %}
+    <li class="club-detail2__badges-item">
+      <a href="#" data-modal-target="#badgeMember">
+        <img src="/img/club-badge-member.png" alt="U.S. Masters Swimming Member Club Designation">
+        <p>USMS Member Club</p>
+      </a>
+    </li>
+    {% endif %}
+    {% for badge in club.badges %}
+      {% if badge.alt == "USMS-certified-coach" %}
+      <li class="club-detail2__badges-item">
+        <a href="#" data-modal-target="#badgeCoach">
+          <img src="{{ badge.src }}">
+          <p>USMS Certified Coach</p>
+        </a>
+      </li>
+      {% elif badge.alt == "USMS-alts-instructor" %}
+      <li class="club-detail2__badges-item">
+        <a href="#" data-modal-target="#badgeAlts">
+          <img src="{{ badge.src }}">
+          <p>USMS Certified ALTS Instructor</p>
+        </a>
+      </li>
+      {% endif %}
+    {% endfor %}
+    {% if club.sslf %}
+    <li class="club-detail2__badges-item">
+      <a href="#" data-modal-target="#badgeSslf">
+        <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/non-lightroom%20images/usms%20logos/usa%20swimming%20foundation/usa%20swimming%20foundation%20vertical-full%20color.png">
+        <p>Swimming Saves Lives Foundation</p>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+</div>
+{% endif %}
