@@ -137,8 +137,6 @@
     var regWrapper = document.querySelector('.full-registration-form');
     if (regWrapper) {
       regWrapper.dataset.membershipLevel = resolved.membershipTier || '';
-      regWrapper.dataset.renew     = resolved.renew     ? 'true' : 'false';
-      regWrapper.dataset.isLapsed  = resolved.isLapsed  ? 'true' : 'false';
     }
 
     // Patch hidden swimmerId input
