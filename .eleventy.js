@@ -160,6 +160,27 @@ module.exports = function(eleventyConfig) {
   // Limit an array to n items
   eleventyConfig.addFilter("limit", (arr, n) => (arr || []).slice(0, n));
 
+  // Find a club by its production URL slug (e.g. "/clubs/sarasota-y-sharks-536")
+  eleventyConfig.addFilter("findClub", (clubs, slug) =>
+    (clubs || []).find(c => c.url === slug) || null
+  );
+
+  // Escape a string and convert line breaks to <br> tags
+  eleventyConfig.addFilter("nl2br", value =>
+    String(value || "")
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;")
+      .replace(/\r\n|\r|\n/g, "<br>")
+  );
+
+  // Serialize club locations to the [{lat, lng, icon}] shape club-detail-map.js expects
+  eleventyConfig.addFilter("clubMapLocationsJson", (locations, isMember) =>
+    JSON.stringify((locations || []).map(loc => ({
+      lat:  parseFloat(loc.lat),
+      lng:  parseFloat(loc.long),
+      icon: isMember ? "/img/marker_orange.webp" : "/img/marker_blue.webp"
+    })))
+  );
+
   // Copy src/js to _site/js
   eleventyConfig.addPassthroughCopy({ "src/js": "js" });
 

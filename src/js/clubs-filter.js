@@ -82,7 +82,7 @@ window.initClubMap = function () {};
   // ── Render ─────────────────────────────────────────────────────────────────
 
   function renderClub(club) {
-    var markerImg = club.isGold ? markerOrange : markerBlue;
+    var markerImg = club.isMember ? markerOrange : markerBlue;
 
     var locations = (club.location || []).map(function (loc) {
       var dist = '';
@@ -118,7 +118,20 @@ window.initClubMap = function () {};
       );
     }).join('');
 
-    var badges = (club.badges || []).slice(0, 3).map(function (badge) {
+    // USMS is retiring "Gold Club" in favor of "USMS Member Club" — drop the raw
+    // GoldClubBadge entry the API still sends and render our own instead.
+    var displayBadges = (club.badges || []).filter(function (b) {
+      return b.alt !== 'GoldClubBadge';
+    });
+    if (club.isMember) {
+      displayBadges = [{
+        src:   '/img/club-badge-member.png',
+        alt:   'USMS Member Club Designation',
+        label: 'USMS Member Club'
+      }].concat(displayBadges);
+    }
+
+    var badges = displayBadges.slice(0, 3).map(function (badge) {
       return (
         '<div class="club-list-item-new__badge-item">' +
           '<img class="club-list-item-new__badge" src="' + esc(badge.src) + '" alt="' + esc(badge.alt) + '">' +
@@ -271,7 +284,7 @@ window.initClubMap = function () {};
           position: position,
           map: map,
           icon: {
-            url: club.isGold ? markerOrange : markerBlue,
+            url: club.isMember ? markerOrange : markerBlue,
             scaledSize: markerSize
           },
           title: club.title

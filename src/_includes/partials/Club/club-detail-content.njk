@@ -1,0 +1,42 @@
+<div class="club__description">
+  <h1 class="club__header">{{ club.title }}</h1>
+  <p>{{ club.description | nl2br | safe }}</p>
+  <h3 class="club__practice-info">Practice Information</h3>
+  <p>{{ club.practiceTimes | nl2br | safe }}</p>
+</div>
+
+<div class="club__locations">
+  {% for loc in club.location %}
+  {% set facilities = locationFacilities[loc.name] %}
+  <div class="club-location">
+    <div class="club-location__left-container">
+      <div class="club-location__map-pin">
+        <img src="{{ '/img/marker_orange.webp' if club.isMember else '/img/marker_blue.webp' }}">
+      </div>
+    </div>
+    <div class="club-location__right-container">
+      <div class="club-location__address">
+        <a href="https://maps.google.com/?q={{ '{' }}{{ loc.address1 }}{{ '}' }}{{ '{' }}{{ loc.zip }}{{ '}' }}" target="_blank">
+          <h5 class="club-location__address--name">{{ loc.name }}</h5>
+          <p class="club-location__address--street">{{ loc.address1 }}</p>
+          {% if loc.address2 %}<p class="club-location__address--street">{{ loc.address2 }}</p>{% endif %}
+          <p class="club-location__address--city-state-zip">{{ loc.city }}, {{ loc.state }} {{ loc.zip }}</p>
+        </a>
+      </div>
+      {% if facilities %}
+      <div class="club-location__facilities">
+        {% for facility in facilities %}
+        <div class="club-location__facility">
+          <div class="club-location__facility--name">{{ facility.name }}</div>
+          <div class="club-location__facility--environment">{{ facility.environment }}</div>
+          {% for length in facility.lengths %}
+          <div class="club-location__facility--length">{{ length }}</div>
+          {% endfor %}
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
