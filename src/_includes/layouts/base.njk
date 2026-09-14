@@ -1,4 +1,4 @@
-{% set currentUser = swimmers[swimmerId] if swimmerId else null %}
+{% set currentUser = users[swimmerId] if swimmerId else null %}
 {% set swimmer = currentUser %}
 <!DOCTYPE html>
 <!--[if IE 9]><html lang="en" class="ie9 no-js"><![endif]-->
@@ -20,7 +20,7 @@
   <link rel="stylesheet" href="/css/Common/membership-renewal-ribbon.css">
   {% block localCSS %}{% endblock %}
   {% if dev.env === "dev" %}{% for name, overlay in devOverlays %}{% if permalink in overlay.pages %}<link rel="stylesheet" href="{{ overlay.css }}">{% endif %}{% endfor %}{% endif %}
-  <script type="application/json" id="site-users-data">{{ { "swimmers": swimmers, "membershipTiers": membershipTiers } | dump | safe }}</script>
+  <script type="application/json" id="site-users-data">{{ { "users": users, "membershipTiers": membershipTiers } | dump | safe }}</script>
 </head>
 <body class="">
   <div id="main-container">

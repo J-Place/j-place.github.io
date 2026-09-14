@@ -54,11 +54,13 @@ breadcrumbs:
 
         <form class="form-horizontal">
 
-          {# Club list is populated by club-dashboard.js from ?club=<abbr> — hidden
-             until a club is present. No param → nothing here, just "Add a New Club". #}
+          {# Club list is populated by club-dashboard.js — one button per club whose
+             contact.userKey matches the active ?user=/sessionStorage persona (or a
+             single club via explicit ?club=<abbr> override) — hidden until at least
+             one club is present. No match → nothing here, just "Add a New Club". #}
           <div class="button-row__content club-dashboard align-center" id="dashboard-club-list" style="display: none;">
             <h3>Select Your Club or Workout Group</h3>
-            <div class="club-button-wrapper" id="dashboard-club-slot"></div>
+            <div id="dashboard-club-slot"></div>
           </div>
 
           <div class="button-row__footer">
