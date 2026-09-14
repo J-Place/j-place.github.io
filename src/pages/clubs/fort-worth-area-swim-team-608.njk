@@ -1,6 +1,31 @@
 ---
 permalink: /clubs/fort-worth-area-swim-team-608.html
 title: Fort Worth Area Swim Team | Club Finder | U.S. Masters Swimming
+clubUrl: /clubs/fort-worth-area-swim-team-608
+locationFacilities:
+  "Wilkerson-Greines Activity Center":
+    - name: Wilkerson-Greines Activity Center
+      environment: Indoor
+      lengths: [SCY, LCM]
+  "Forest Park Pool":
+    - name: Forest Park Pool
+      environment: Outdoor
+      lengths: [LCM]
+  "Waco Family YMCA":
+    - name: Waco Family YMCA
+      environment: Indoor
+      lengths: [SCY]
+  "Cleburne Splash Station":
+    - name: Cleburne Splash Station
+      environment: Outdoor
+      lengths: [SCY]
+    - name: Cleburne Splash Station
+      environment: Indoor
+      lengths: [SCY]
+  "Texas Wesleyan University":
+    - name: Texas Wesleyan University
+      environment: Indoor
+      lengths: [SCY]
 breadcrumbs:
   - url: "/"
     label: "Home"
@@ -9,6 +34,13 @@ breadcrumbs:
 breadcrumbTitle: "Fort Worth Area Swim Team"
 ---
 {% extends "layouts/club-detail.njk" %}
+{% set club = clubs.data.clubs | findClub(clubUrl) %}
+
+{% block pageJS %}
+{{ super() }}
+<script src="/js/club-detail-map.js" defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ keys.googleMaps }}&callback=initClubDetailMap" async defer></script>
+{% endblock %}
 
 {% block heroSection %}
 <div class="section section-full p-b-10">
@@ -28,145 +60,7 @@ breadcrumbTitle: "Fort Worth Area Swim Team"
 {% endblock %}
 
 {% block clubMain %}
-<div class="club__description">
-  <h1 class="club__header">Fort Worth Area Swim Team</h1>
-  <p>FAST-Sigma Masters swimming is a successful blend of fitness and competitive swim for adults of all ages and skill levels. We work on stroke technique, stroke efficiency, fitness/conditioning, competition (optional), and FUN!</p>
-  <h3 class="club__practice-info">Practice Information</h3>
-  <p>Times will vary by location and part of the year. We offer morning and evening options depending on the location. Please contact us to find out more!</p>
-</div>
-
-<div class="club__locations">
-  <div class="club-location">
-    <div class="club-location__left-container">
-      <div class="club-location__map-pin">
-        <img src="/img/marker_orange.webp">
-        <p class="club-location__map-pin--distance">976</p>
-      </div>
-    </div>
-    <div class="club-location__right-container">
-      <div class="club-location__address">
-        <a href="https://maps.google.com/?q={5100 C.A. Roberson Boulevard}{76119}" target="_blank">
-          <h5 class="club-location__address--name">Wilkerson-Greines Activity Center</h5>
-          <p class="club-location__address--street">5100 C.A. Roberson Boulevard</p>
-          <p class="club-location__address--city-state-zip">Fort Worth, TX 76119</p>
-        </a>
-      </div>
-      <div class="club-location__facilities">
-        <div class="club-location__facility">
-          <div class="club-location__facility--name">Wilkerson-Greines Activity Center</div>
-          <div class="club-location__facility--environment">Indoor</div>
-          <div class="club-location__facility--length">SCY</div>
-          <div class="club-location__facility--length">LCM</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="club-location">
-    <div class="club-location__left-container">
-      <div class="club-location__map-pin">
-        <img src="/img/marker_orange.webp">
-        <p class="club-location__map-pin--distance">981</p>
-      </div>
-    </div>
-    <div class="club-location__right-container">
-      <div class="club-location__address">
-        <a href="https://maps.google.com/?q={2850 Park Place Avenue}{76110}" target="_blank">
-          <h5 class="club-location__address--name">Forest Park Pool</h5>
-          <p class="club-location__address--street">2850 Park Place Avenue</p>
-          <p class="club-location__address--city-state-zip">Fort Worth, TX 76110</p>
-        </a>
-      </div>
-      <div class="club-location__facilities">
-        <div class="club-location__facility">
-          <div class="club-location__facility--name">Forest Park Pool</div>
-          <div class="club-location__facility--environment">Outdoor</div>
-          <div class="club-location__facility--length">LCM</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="club-location">
-    <div class="club-location__left-container">
-      <div class="club-location__map-pin">
-        <img src="/img/marker_orange.webp">
-        <p class="club-location__map-pin--distance">950</p>
-      </div>
-    </div>
-    <div class="club-location__right-container">
-      <div class="club-location__address">
-        <a href="https://maps.google.com/?q={6800 Harvey Drive}{76710}" target="_blank">
-          <h5 class="club-location__address--name">Waco Family YMCA</h5>
-          <p class="club-location__address--street">6800 Harvey Drive</p>
-          <p class="club-location__address--city-state-zip">Waco, TX 76710</p>
-        </a>
-      </div>
-      <div class="club-location__facilities">
-        <div class="club-location__facility">
-          <div class="club-location__facility--name">Waco Family YMCA</div>
-          <div class="club-location__facility--environment">Indoor</div>
-          <div class="club-location__facility--length">SCY</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="club-location">
-    <div class="club-location__left-container">
-      <div class="club-location__map-pin">
-        <img src="/img/marker_orange.webp">
-        <p class="club-location__map-pin--distance">975</p>
-      </div>
-    </div>
-    <div class="club-location__right-container">
-      <div class="club-location__address">
-        <a href="https://maps.google.com/?q={1010 Hillsboro Street}{76033}" target="_blank">
-          <h5 class="club-location__address--name">Cleburne Splash Station</h5>
-          <p class="club-location__address--street">1010 Hillsboro Street</p>
-          <p class="club-location__address--city-state-zip">Cleburne, TX 76033</p>
-        </a>
-      </div>
-      <div class="club-location__facilities">
-        <div class="club-location__facility">
-          <div class="club-location__facility--name">Cleburne Splash Station</div>
-          <div class="club-location__facility--environment">Outdoor</div>
-          <div class="club-location__facility--length">SCY</div>
-        </div>
-        <div class="club-location__facility">
-          <div class="club-location__facility--name">Cleburne Splash Station</div>
-          <div class="club-location__facility--environment">Indoor</div>
-          <div class="club-location__facility--length">SCY</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="club-location">
-    <div class="club-location__left-container">
-      <div class="club-location__map-pin">
-        <img src="/img/marker_orange.webp">
-        <p class="club-location__map-pin--distance">977</p>
-      </div>
-    </div>
-    <div class="club-location__right-container">
-      <div class="club-location__address">
-        <a href="https://maps.google.com/?q={1100 Collard Street}{76105}" target="_blank">
-          <h5 class="club-location__address--name">Texas Wesleyan University</h5>
-          <p class="club-location__address--street">1100 Collard Street</p>
-          <p class="club-location__address--city-state-zip">Fort Worth, TX 76105</p>
-        </a>
-      </div>
-      <div class="club-location__facilities">
-        <div class="club-location__facility">
-          <div class="club-location__facility--name">Texas Wesleyan University</div>
-          <div class="club-location__facility--environment">Indoor</div>
-          <div class="club-location__facility--length">SCY</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+{% include "partials/Club/club-detail-content.njk" %}
 {% endblock %}
 
 {% block clubSidebar %}
@@ -182,29 +76,7 @@ breadcrumbTitle: "Fort Worth Area Swim Team"
 <div class="club-website">
   <a href="https://www.sigmaswim.org/" class="btn btn-link" target="_blank">Visit Club Website</a>
 </div>
-<div class="club-detail2__badges">
-  <h4 class="club-detail2__badges--header">Club Designations</h4>
-  <ul class="club-detail2__badges-list list--nostyle">
-    <li class="club-detail2__badges-item">
-      <a href="#" data-modal-target="#badgeGold">
-        <img src="/img/club-badge-member.png" alt="U.S. Masters Swimming Member Club Designation" />
-        <p>USMS Member Club</p>
-      </a>
-    </li>
-    <li class="club-detail2__badges-item">
-      <a href="#" data-modal-target="#badgeCoach">
-        <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club%20detail/club-badge-coach.png?h=321&w=350&rev=635d566be36d4cdcadc27626fde72b68&hash=82DC6C945E565F72016697C779170E0D" />
-        <p>USMS Certified Coach</p>
-      </a>
-    </li>
-    <li class="club-detail2__badges-item">
-      <a href="#" data-modal-target="#badgeAlts">
-        <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club%20detail/club-badge-alts.png?h=321&w=350&rev=3b08e5ab609141ad9a924f61da33bc96&hash=CEA3F6989ED4F63208DFA8A8AC32352B" />
-        <p>USMS Certified ALTS Instructor</p>
-      </a>
-    </li>
-  </ul>
-</div>
+{% include "partials/Club/club-detail-badges.njk" %}
 <div class="club-social-links">
   <h4 class="club-social-links__header">Connect With Us</h4>
   <div class="club-social-links__content">
