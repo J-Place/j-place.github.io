@@ -17,6 +17,7 @@ module.exports = [
   '/events/events/2026-bumpy-jones-classic-long-course-meet-a1jpo00000abjhf2a3/index.html',
   '/clubs/index.html',
   '/clubs/sarasota-y-sharks-536.html',
+  '/clubs/indy-aquatic-masters-1745.html',
   '/join-usms/join-or-renew/index.html',
   '/login-to-registration-page/index.html',
   '/registration/index.html',
