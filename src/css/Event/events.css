@@ -13,9 +13,20 @@
 .events-summary-content .list-control-view button {    
     color: #0068ad;
 }
-.toggle-grid.active, 
-.toggle-grid.active button, 
-.toggle-list.active, 
+.toggle-grid.active,
+.toggle-grid.active button,
+.toggle-list.active,
 .toggle-list.active button {
     pointer-events: none;
+}
+
+/* Production pre-crops event card images server-side to an exact 360x270 via
+   a signed Sitecore media URL (cw/ch + a hash tied to those exact dimensions)
+   we can't reproduce client-side — reusing their hash with our own crop params
+   silently drops the crop and serves the original image. We hotlink that
+   original (varying aspect ratio) instead, so it needs a client-side fit rule
+   production's own CSS never needed. */
+.results-list__item-image {
+    background-size: cover;
+    background-position: center;
 }

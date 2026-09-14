@@ -160,6 +160,9 @@ module.exports = function(eleventyConfig) {
   // Limit an array to n items
   eleventyConfig.addFilter("limit", (arr, n) => (arr || []).slice(0, n));
 
+  // Drop virtual events — hidden by default until "Show Virtual Events" is checked
+  eleventyConfig.addFilter("rejectVirtual", arr => (arr || []).filter(item => !item.virtual));
+
   // Find a club by its production URL slug (e.g. "/clubs/sarasota-y-sharks-536")
   eleventyConfig.addFilter("findClub", (clubs, slug) =>
     (clubs || []).find(c => c.url === slug) || null

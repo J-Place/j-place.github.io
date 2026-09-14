@@ -1,5 +1,6 @@
 const { test, expect } = require('@playwright/test');
 const pages = require('./pages');
+const liveEventsFixture = require('../../src/_data/events.json');
 
 function slug(pagePath) {
   const [path, query] = pagePath.split('?');
@@ -47,13 +48,23 @@ for (const pagePath of pages) {
     // Freeze JS timers so setInterval-driven carousels (carousel.js, image-slider.js)
     // can't advance between page load and screenshot capture.
     await page.clock.install();
-    // Club Finder (clubs-filter.js) opens at "Sarasota, FL" (USMS HQ) then
-    // overrides it with the runner's IP-based city via an ipinfo.io fetch —
-    // which makes the location field, map centre, and filtered results list
-    // non-deterministic across machines/networks. Block that fetch so every
-    // run captures Club Finder at the Sarasota, FL default. Only clubs-filter.js
-    // calls ipinfo.io, so a blanket abort is safe for every page.
+    // Club Finder (clubs-filter.js) and Calendar of Events (events-filter.js)
+    // both open at "Sarasota, FL" (USMS HQ) then override it with the runner's
+    // IP-based city via an ipinfo.io fetch — which makes the location field,
+    // map centre / distance sort, and filtered results list non-deterministic
+    // across machines/networks. Block that fetch so every run captures both
+    // pages at the Sarasota, FL default. Only those two files call ipinfo.io,
+    // so a blanket abort is safe for every page.
     await page.route(/ipinfo\.io/, (route) => route.abort());
+    // events-filter.js also fetches production's live event search API at
+    // runtime (so the event list tracks production instead of a stale build-time
+    // scrape) — production's real list changes daily, which would make the
+    // Events baseline non-deterministic. Fulfill it from our committed scrape
+    // (src/_data/events.json) instead so every run sees the same list. Only
+    // events-filter.js calls this endpoint.
+    await page.route(/\/apis\/v1\/ctsearch/, (route) =>
+      route.fulfill({ contentType: 'application/json', body: JSON.stringify(liveEventsFixture) })
+    );
     await page.goto(pagePath, { waitUntil: 'networkidle' });
     if (EXPAND_ALL_SECTIONS.has(pagePath)) {
       await page.evaluate(() => window.expandAllSections());
