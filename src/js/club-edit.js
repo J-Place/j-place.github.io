@@ -405,7 +405,7 @@ $(function () {
 
     switch (contentEl.id) {
       case 'club-bundles__content':
-        setGoldClubFlag();
+        syncCertifiedCoachStatus();
         break;
       case 'club-name__content':
       case 'club-details__content':
@@ -1912,24 +1912,22 @@ function saveLocation(e) {
   geocodeAddress(locationInput ? locationInput.value : '');
 }());
 
-// ── Section — Gold Club ──────────────────────────────────────────────────────
+// ── Section — Club Bundles ───────────────────────────────────────────────────
 
 // In production this calls the API to check for certified coaches and updates
 // the certifiedCoach radio accordingly. In the mockup the coach is pre-populated
 // so we assume certification is present and set Yes.
-function setGoldClubFlag() {
+function syncCertifiedCoachStatus() {
   var yes = document.querySelector('#certifiedCoachYes');
   var no = document.querySelector('#certifiedCoachNo');
   var addCoachNote = document.querySelector('.help-block--addCoach');
-  var addCoachBtn = document.querySelector('#goldClubAddCoach');
   var hasCoach = document.querySelector('#coach .list-item') !== null;
   if (yes) yes.checked = hasCoach;
   if (no) no.checked = !hasCoach;
   if (addCoachNote) addCoachNote.style.display = hasCoach ? 'none' : '';
-  if (addCoachBtn) addCoachBtn.style.display = hasCoach ? 'none' : '';
 }
 
-function saveGold(e) {
+function saveClubBundles(e) {
   if (e) e.preventDefault();
   var section = document.querySelector('#club-bundles');
   if (!section) return;
@@ -2200,7 +2198,7 @@ function initAccordion() {
 
       switch (target.id) {
         case 'club-bundles__content':
-          setGoldClubFlag();
+          syncCertifiedCoachStatus();
           break;
         case 'club-name__content':
         case 'club-details__content':
