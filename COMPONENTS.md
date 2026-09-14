@@ -154,7 +154,7 @@ All Demo components are Sitecore experience data tooling — Out of Scope.
 |---|---|---|
 | `Forms/FullRegistrationForm.jsx` | `partials/Forms/FullRegistrationForm.njk` | Covered |
 | `Forms/RegistrationForm.jsx` | `partials/Forms/FullRegistrationForm.njk` | Partial (older entry point) |
-| `Forms/SignUp.jsx` | `partials/Forms/SignUp.njk` | Covered |
+| `Forms/SignUp.jsx` | `partials/Forms/NewsletterSignUp.njk` | Covered — the checked-in JSX (two-column `Column xs sm` layout) is stale; the actual live markup (confirmed identical on two production pages) wraps a single `col-xs-12` with `sign-up__container`/`sign-up__text`, plus validation/confirmation messages, which is what this partial matches. `partials/Forms/SignUp.njk` is a **pre-existing mislabeling** — it's really the `join-usms/join-or-renew-tms.njk` "Enhance Your Swimming" landing content, not this component; left as-is (not renamed) since fixing that wasn't part of the task that found it. |
 | `Forms/ContactInformation.jsx` | `partials/Forms/ContactInformation.njk` | Covered |
 | `Forms/ClubInformation.jsx` | `partials/Forms/ClubInformation.njk` | Covered |
 | `Forms/Interests.jsx` | `partials/Forms/Interests.njk` | Covered |
