@@ -6,147 +6,20 @@
                <div class="footer-left">
                   <div class="footer-left__menu">
                      <div class="row">
+                        {% for column in footer.Items | footerColumns %}
                         <div class="col-xs-6 col-md-3">
+                           {% for section in column %}
                            <div class="footer-menu">
-                              <h3 class="footer-menu__header">About USMS</h3>
+                              <h3 class="footer-menu__header">{{ section.Title }}</h3>
                               <ul class="footer-menu__list list--nostyle">
-                                 <li class="footer-menu__list-item"><a href="#0">What is Masters Swimming?</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Mission Vision Values</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Development Programs</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Organizational Structure</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Staff</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">National Committees and Assignments</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Local Masters Swimming Committees</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">USMS History</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Partners</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Diversity &amp; Inclusion</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">College Club Swimming</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Grown-Up Swimming</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Logo Merchandise</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Donate to ALTS Grants</a></li>
-                                 <li class="footer-menu__list-item"><a href="/about/swimmer-magazine/" title="SWIMMER magazine">SWIMMER magazine</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">STREAMLINES Newsletters</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Community</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Try Masters Swimming</a></li>
+                                 {% for child in section.Children %}
+                                 <li class="footer-menu__list-item"><a href="{{ child.Url | footerHref(child.Title) }}">{{ child.Title }}</a></li>
+                                 {% endfor %}
                               </ul>
                            </div>
+                           {% endfor %}
                         </div>
-                        <div class="col-xs-6 col-md-3">
-                           <div class="footer-menu">
-                              <h3 class="footer-menu__header">Join</h3>
-                              <ul class="footer-menu__list list--nostyle">
-                                 <li class="footer-menu__list-item"><a href="/join-usms/join-or-renew/" title="Join or Renew">Join or Renew</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Membership Benefits</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Trial Membership Form</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">USMS+</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Membership Comparison</a></li>
-                              </ul>
-                           </div>
-                           <div class="footer-menu">
-                              <h3 class="footer-menu__header">Pool and Open Water Events</h3>
-                              <ul class="footer-menu__list list--nostyle">
-                                 <li class="footer-menu__list-item"><a href="/events/" title="Calendar of Events">Calendar of Events</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Event Development Program</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Sanction an Event</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Open Water Central</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Fitness Events</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">National Championships</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Event Results</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Rankings</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Records</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Top 10</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">All-American</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">All-Stars</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">World Aquatics Masters Championships</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Pan Am Masters Championships</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Stroke Development Clinic</a></li>
-                              </ul>
-                           </div>
-                        </div>
-                        <div class="col-xs-6 col-md-3">
-                           <div class="footer-menu">
-                              <h3 class="footer-menu__header">Club Central</h3>
-                              <ul class="footer-menu__list list--nostyle">
-                                 <li class="footer-menu__list-item"><a href="#0">Club Central</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">How to Start a Club</a></li>
-                                 <li class="footer-menu__list-item"><a href="/club-central/club-login.html">Register - Renew - Update Club</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Club Resources</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Gold Club Designation</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Insurance</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Club Development Program</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Membership Lists</a></li>
-                              </ul>
-                           </div>
-                           <div class="footer-menu">
-                              <h3 class="footer-menu__header">Coach Central</h3>
-                              <ul class="footer-menu__list list--nostyle">
-                                 <li class="footer-menu__list-item"><a href="#0">Coach Central</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Become a Coach</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">National Coaches Clinic</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Coach Certification</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Certified Coaches</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Designated Coach Resources</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Continuing Education</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Mentor Coach Program</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Coaching Jobs</a></li>
-                              </ul>
-                           </div>
-                           <div class="footer-menu">
-                              <h3 class="footer-menu__header">ALTS Central</h3>
-                              <ul class="footer-menu__list list--nostyle">
-                                 <li class="footer-menu__list-item"><a href="#0">ALTS Central</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">April Is Adult Learn-to-Swim Month</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Donate to ALTS Grants</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">ALTS Grants</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">How to Apply for a Grant</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Adult Learn-to-Swim Initiatives</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Instructor Certification</a></li>
-                              </ul>
-                           </div>
-                        </div>
-                        <div class="col-xs-6 col-md-3">
-                           <div class="footer-menu">
-                              <h3 class="footer-menu__header">Fitness and Training</h3>
-                              <ul class="footer-menu__list list--nostyle">
-                                 <li class="footer-menu__list-item"><a href="/clubs/" title="Club Finder">Club Finder</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Freestyle Guide</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Workout Library</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Training Plans</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Fitness Logs</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Swim.com Integration</a></li>
-                                 <li class="footer-menu__list-item"><a href="/fitness-and-training/articles-and-videos/" title="Articles and Videos">Articles and Videos</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Swimming 101</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Learn to Swim</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Triathletes</a></li>
-                              </ul>
-                           </div>
-                           <div class="footer-menu">
-                              <h3 class="footer-menu__header">Governance</h3>
-                              <ul class="footer-menu__list list--nostyle">
-                                 <li class="footer-menu__list-item"><a href="#0">Rule Book</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Organizational Policies</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Guidelines, Procedures, and Forms</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Event Management and Sanctioning</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">LMSC Operations and Resources</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Meeting Minutes</a></li>
-                              </ul>
-                           </div>
-                           <div class="footer-menu">
-                              <h3 class="footer-menu__header">Volunteers</h3>
-                              <ul class="footer-menu__list list--nostyle">
-                                 <li class="footer-menu__list-item"><a href="#0">Volunteer Central</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Annual Meeting</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Volunteer Relay</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Elections</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Committee Assignments</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Officials</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Guide to Local Operations</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">LMSC Resources</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Awards</a></li>
-                                 <li class="footer-menu__list-item"><a href="#0">Meeting Minutes</a></li>
-                              </ul>
-                           </div>
-                        </div>
+                        {% endfor %}
                      </div>
                   </div>
                </div>
