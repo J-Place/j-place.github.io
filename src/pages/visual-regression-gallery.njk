@@ -17,7 +17,7 @@ permalink: /visual-regression-gallery.html
       <span class="vrg__shots">
         {%- for item in group.items -%}
           {%- if not loop.first %} <span class="vrg__sep">|</span> {% endif -%}
-          <a href="/{{ item.path }}" target="_blank">{{ item.label }}</a>
+          <a href="/visual-regression-viewer.html?src=/{{ item.path }}&viewport={{ item.label }}" target="_blank">{{ item.label }}</a>
         {%- endfor -%}
       </span>
     </div>
