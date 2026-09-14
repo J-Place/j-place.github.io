@@ -1,6 +1,12 @@
 ---
 permalink: /clubs/south-end-rowing-club-580.html
 title: South End Rowing Club | Club Finder | U.S. Masters Swimming
+clubUrl: /clubs/south-end-rowing-club-580
+locationFacilities:
+  "South End Rowing Club":
+    - name: Aquatic Park
+      environment: Open Water
+      lengths: [Ocean]
 breadcrumbs:
   - url: "/"
     label: "Home"
@@ -9,6 +15,13 @@ breadcrumbs:
 breadcrumbTitle: "South End Rowing Club"
 ---
 {% extends "layouts/club-detail.njk" %}
+{% set club = clubs.data.clubs | findClub(clubUrl) %}
+
+{% block pageJS %}
+{{ super() }}
+<script src="/js/club-detail-map.js" defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ keys.googleMaps }}&callback=initClubDetailMap" async defer></script>
+{% endblock %}
 
 {% block heroSection %}
 <div class="section section-full p-b-10">
@@ -28,39 +41,7 @@ breadcrumbTitle: "South End Rowing Club"
 {% endblock %}
 
 {% block clubMain %}
-<div class="club__description">
-  <h1 class="club__header">South End Rowing Club</h1>
-  <p>Open water swimming in the San Francisco Bay</p>
-  <h3 class="club__practice-info">Practice Information</h3>
-  <p>Monday-Sunday</p>
-</div>
-
-<div class="club__locations">
-  <div class="club-location">
-    <div class="club-location__left-container">
-      <div class="club-location__map-pin">
-        <img src="/img/marker_blue.webp">
-        <p class="club-location__map-pin--distance">2434</p>
-      </div>
-    </div>
-    <div class="club-location__right-container">
-      <div class="club-location__address">
-        <a href="https://maps.google.com/?q={500 Jefferson Street}{94109}" target="_blank">
-          <h5 class="club-location__address--name">South End Rowing Club</h5>
-          <p class="club-location__address--street">500 Jefferson Street</p>
-          <p class="club-location__address--city-state-zip">San Francisco, CA 94109</p>
-        </a>
-      </div>
-      <div class="club-location__facilities">
-        <div class="club-location__facility">
-          <div class="club-location__facility--name">Aquatic Park</div>
-          <div class="club-location__facility--environment">Open Water</div>
-          <div class="club-location__facility--length">Ocean</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+{% include "partials/Club/club-detail-content.njk" %}
 {% endblock %}
 
 {% block clubSidebar %}
@@ -68,6 +49,7 @@ breadcrumbTitle: "South End Rowing Club"
 <div class="club-website">
   <a href="https://www.serc.com" class="btn btn-link" target="_blank">Visit Club Website</a>
 </div>
+{% include "partials/Club/club-detail-badges.njk" %}
 <div class="club-social-links">
   <h4 class="club-social-links__header">Connect With Us</h4>
   <div class="club-social-links__content">
