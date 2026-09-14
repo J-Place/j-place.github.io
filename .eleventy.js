@@ -163,6 +163,46 @@ module.exports = function(eleventyConfig) {
   // Drop virtual events — hidden by default until "Show Virtual Events" is checked
   eleventyConfig.addFilter("rejectVirtual", arr => (arr || []).filter(item => !item.virtual));
 
+  // Production's real footer column grouping (parsed from the live DOM — it
+  // balances total link count per column, not section count, so it can't be
+  // derived generically). Any section not listed here (e.g. a new one added
+  // upstream) is appended round-robin so a future data refresh doesn't drop it.
+  const footerColumnLayout = [
+    ["About USMS"],
+    ["Join", "Pool and Open Water Events"],
+    ["Club Central", "Coach Central", "ALTS Central"],
+    ["Fitness and Training", "Governance", "Volunteers"]
+  ];
+  eleventyConfig.addFilter("footerColumns", items => {
+    const byTitle = {};
+    (items || []).forEach(s => { byTitle[s.Title] = s; });
+    const columns = footerColumnLayout.map(titles => titles.map(t => byTitle[t]).filter(Boolean));
+    const known = new Set(footerColumnLayout.flat());
+    (items || []).forEach((s, i) => {
+      if (!known.has(s.Title)) columns[i % columns.length].push(s);
+    });
+    return columns;
+  });
+
+  // Resolve a footer link's production URL to a local mockup page, or "#0" if we
+  // don't have one. A couple of entries are matched by title instead of URL where
+  // the production target doesn't correspond to how this mockup is organized.
+  const footerHrefsByUrl = {
+    "/about/swimmer-magazine":                  "/about/swimmer-magazine/index.html",
+    "/events":                                  "/events/index.html",
+    "/join-usms/join-or-renew":                 "/join-usms/join-or-renew/index.html",
+    "/club-central":                            "/club-central/index.html",
+    "/club-central/club-login":                 "/club-central/club-login.html",
+    "/fitness-and-training/articles-and-videos": "/fitness-and-training/articles-and-videos/index.html"
+  };
+  const footerHrefsByTitle = {
+    "Club Finder": "/clubs/index.html"
+  };
+  eleventyConfig.addFilter("footerHref", (url, title) => {
+    if (footerHrefsByTitle[title]) return footerHrefsByTitle[title];
+    return footerHrefsByUrl[(url || "").replace(/\/$/, "")] || "#0";
+  });
+
   // Find a club by its production URL slug (e.g. "/clubs/sarasota-y-sharks-536")
   eleventyConfig.addFilter("findClub", (clubs, slug) =>
     (clubs || []).find(c => c.url === slug) || null
