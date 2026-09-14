@@ -1,8 +1,8 @@
 // ============================================================
 // Loaded on every page, both dev and prod env (like club-edit-mode.js).
-// Resolves the simulated "current user" from ?user=<swimmerId> in the URL,
+// Resolves the simulated "current user" from ?user=<userId> in the URL,
 // falling back to sessionStorage, falling back to the page's own
-// server-rendered default (swimmers[swimmerId] baked in by base.njk) —
+// server-rendered default (users[swimmerId] baked in by base.njk) —
 // same URL-param-first / sessionStorage-carry-forward pattern as
 // ?club= (see club-edit-mode.js, club-manage.js).
 // ============================================================
@@ -107,17 +107,17 @@
 
   var userFromUrl = new URLSearchParams(window.location.search).get('user');
   var activeId = null;
-  if (data && userFromUrl && data.swimmers[userFromUrl]) {
+  if (data && userFromUrl && data.users[userFromUrl]) {
     activeId = userFromUrl;
     sessionStorage.setItem(STORAGE_KEY, activeId);
   } else if (data) {
     var saved = sessionStorage.getItem(STORAGE_KEY);
-    if (saved && data.swimmers[saved]) activeId = saved;
+    if (saved && data.users[saved]) activeId = saved;
   }
 
   // No valid override — leave the page's server-rendered default as-is.
   if (data && activeId) {
-    var resolved = data.swimmers[activeId];
+    var resolved = data.users[activeId];
     var tier = data.membershipTiers[resolved.membershipTier] || {};
     var swimmerName = (resolved.firstName || resolved.lastName)
       ? (resolved.firstName || '') + ' ' + (resolved.lastName || '')
@@ -176,6 +176,14 @@
         if (loginLabel) loginLabel.textContent = 'Log In';
       }
     }
+
+    // Patch Join button (desktop + mobile overlay) — matches production's
+    // ShowLogin: hidden only for a logged-in swimmer with a current,
+    // non-lapsed membership; shown for logged-out or lapsed swimmers.
+    var showJoin = !(resolved.loggedIn === true && resolved.isLapsed === false);
+    document.querySelectorAll('.menu-item-login-button').forEach(function (el) {
+      el.classList.toggle('menu-item-login-button--hidden', !showJoin);
+    });
 
     // Pre-populate registration form fields (all except BirthYear)
     populateRegistrationFields(resolved);
