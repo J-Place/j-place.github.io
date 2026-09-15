@@ -1,0 +1,634 @@
+---
+permalink: /join-usms/membership-comparison.html
+title: Membership Comparison | U.S. Masters Swimming
+pageTitle: Membership Comparison
+pageHeaderImage: "https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/venue-flags-usms-summer-nats-2017 0661.jpg?rev=6afb08ce9b4649e781b74c3a400b115d&cx=0.5&cy=0.5&cw=1000&ch=500&hash=A80BA16F9676F2497A4FF591D0807F08"
+breadcrumbs:
+  - url: "/"
+    label: "Home"
+breadcrumbTitle: "Membership Comparison"
+---
+{% extends "layouts/base.njk" %}
+
+{% block breadcrumb %}
+{% include "partials/Common/Breadcrumb.njk" %}
+{% endblock %}
+
+{% block pageHeader %}
+{% include "partials/Common/PageHeader.njk" %}
+{% endblock %}
+
+{% block content %}
+<div class="section section-full p-mh-500">
+  <div class="usms-container p-tb-10">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="html-container">
+          <div id="membershipOverview" class="membership-overview row">
+            <div class="col-sm-6 standard">
+              <div class="membership-option">
+                <p class="ribbon ribbon-most-popular">Most Popular</p>
+                <p class="type">Standard</p>
+                <p class="duration">Offered all year long</p>
+                <p class="price">$75</p>
+                <p class="savings">&nbsp;</p>
+              </div>
+              <div class="membership-option-list">
+                <p class="list-header">Standard benefits include:</p>
+                <ul>
+                  <li>Swim with a USMS club</li>
+                  <li>Over 400 events</li>
+                  <li>Searchable Workout Library</li>
+                  <li><em>SWIMMER</em> magazine</li>
+                  <li>Articles and videos</li>
+                  <li>Online Community</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-sm-6 usms-plus">
+              <div class="membership-option">
+                <p class="ribbon ribbon-best-value">Best Value</p>
+                <p class="type">USMS+</p>
+                <p class="duration">Offered from Nov. 1-Jun. 30</p>
+                <p class="price">$249</p>
+                <p class="savings">(Save $126)</p>
+              </div>
+              <div class="membership-option-list">
+                <p class="list-header">All Standard benefits plus:</p>
+                <ul>
+                  <li>Exclusive welcome package</li>
+                  <li>Free entry to virtual events</li>
+                  <li>One free Video Stroke Analysis</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="html-container">
+          <style>
+            .membership-option {
+              font-size: 14px;
+              line-height: 16px;
+              margin: 4rem 2rem 0;
+              padding: 0 3rem;
+              vertical-align: bottom;
+              height: auto;
+            }
+            .membership-option p {
+              margin: 0 auto;
+              padding: 0;
+              line-height: 120%;
+              font-weight: normal;
+              text-align: left;
+            }
+            .membership-option p.ribbon {
+              margin: 0 0 1.5rem;
+              padding: 0.25rem;
+              font-size: 1.3rem;
+              text-align: center;
+              border-radius: 3px;
+              color: #FFF;
+              display: none;
+            }
+            .membership-option p.ribbon.ribbon-most-popular {
+              display: block;
+              width: 100px;
+              background-color: rgb(101, 182, 76);
+            }
+            .membership-option p.ribbon.ribbon-best-value {
+              display: block;
+              width: 85px;
+              background-color: rgb(0, 133, 29);
+            }
+            .membership-option p.type {
+              font-size: 2.3rem;
+              font-weight: bold;
+              margin: 1rem auto 0;
+            }
+            .membership-option p.price {
+              margin: 0.75rem auto 0.5rem;
+              font-size: 2.2rem;
+            }
+            .membership-option p.savings {
+              margin: 0 auto;
+              font-size: 1.3rem;
+              font-style: italic;
+            }
+            .standard .membership-option p.savings {
+              display: none;
+            }
+            .membership-option p.duration {
+              font-size: 1.2rem;
+              margin: 0;
+              padding-bottom: 1rem;
+            }
+            .membership-option-list {
+              font-size: 14px;
+              line-height: 16px;
+              margin: 0 2rem;
+              padding: 0 3rem 3rem;
+              border-bottom: 1px solid #CCC;
+            }
+            .usms-plus .membership-option-list {
+              border-bottom: 0 none;
+            }
+            .membership-option-list .list-header {
+              text-align: left;
+              margin: 1.25rem auto;
+              font-weight: bold;
+            }
+            .membership-option-list ul {
+              margin-left: -2rem;
+            }
+            .membership-option-list li {
+              margin: 0 auto .75rem;
+            }
+
+            /* Compare Details Table */
+            .membership-comparison {
+              margin-bottom: 5rem;
+              overflow: hidden;
+              transition: height 0.5s ease, opacity 2.0s ease;
+              height: 0;
+              opacity: 0;
+            }
+            .membership-comparison.show {
+              transition: height 2.0s ease, opacity 0.5s ease;
+              height: 100%;
+              opacity: 1;
+              overflow-x: scroll;
+            }
+            .compare-details {
+              width: 100%;
+              background-color: #FFF;
+            }
+            .compare-details > tbody > tr:nth-of-type(odd) {
+              background-color: #f9f9f9;
+            }
+            .compare-details td {
+              border: 0 none;
+              padding-top: 11px;
+              padding-bottom: 11px;
+              padding-left: 10px;
+              text-align: left;
+              min-width: 90px;
+              height: 40px;
+              font-size: 15px;
+              line-height: 17px;
+              text-align: center;
+              width: 10%;
+            }
+            .compare-details td:first-child {
+              text-align: left;
+              width: 30%;
+              min-width: 200px;
+            }
+            .compare-details td.feature {
+              padding-left: 20px;
+              padding-right: 10px;
+              position: sticky;
+              z-index: 999;
+              left: 0;
+            }
+            .compare-details .table-section td {
+              background-color: #CCC;
+              border-top: 50px solid #FFF;
+              font-size: 1.3rem;
+            }
+            .compare-details .table-section td:first-child {
+              text-align: left;
+              font-size: 1.5rem;
+              font-weight: bold;
+              padding-right: 3rem;
+              position: sticky;
+              z-index: 999;
+              left: 0;
+              background-color: #CCC;
+            }
+            .compare-details td img {
+              width: 20px;
+            }
+            .compare-details > tbody > tr.price-row {
+              background-color: #FFF;
+              border-top: 2px solid;
+              font-weight: bold !important;
+            }
+            .compare-details .price-row td {
+              padding-top: 30px;
+            }
+            .comparison-tooltip {
+              text-decoration: none;
+              margin-left: -15px;
+              color: #333;
+            }
+            .comparison-tooltip:hover,
+            .comparison-tooltip:focus {
+              text-decoration: none;
+              color: #333;
+            }
+            .comparison-tooltip:focus {
+              outline: none;
+            }
+            .comparison-tooltip:before {
+              content: "";
+              background-image: url("https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club/icon-help.png");
+              background-position: center;
+              background-size: 100%;
+              background-repeat: no-repeat;
+              display: inline-block;
+              position: relative;
+              width: 1.2rem;
+              height: 1.2rem;
+              cursor: pointer;
+            }
+            .popover {
+              left: 0px !important;
+              text-align: left !important;
+            }
+            .show-details {
+              width: 100%;
+              text-align: center;
+            }
+            #compareDetailsBtn,
+            .show-details .btn,
+            .show-details .btn:active,
+            .show-details .btn:hover {
+              color: #FFF !important;
+            }
+            .show-details .btn {
+              margin: 7rem auto;
+            }
+            .show-details .btn:before {
+              content: "+";
+              margin: 0 5px 0 0px;
+              top: -1px;
+              position: relative;
+              width: 15px;
+              font-size: 2rem;
+              line-height: 18px;
+            }
+            .show-details .btn.open:before {
+              content: "-";
+              margin: 0 6px 0 3px;
+              width: 15px;
+              position: relative;
+              font-size: 2rem;
+              line-height: 18px;
+            }
+            @media (min-width: 720px) {
+              .compare-details .table-section td:nth-child(2):after {
+                content: "";
+              }
+              .compare-details td.feature {
+                padding-left: 40px;
+                padding-right: 60px;
+              }
+              .membership-option p.ribbon {
+                display: block;
+                margin: 0 auto 1.5rem;
+              }
+              .membership-option p {
+                text-align: center;
+              }
+              .membership-option p.duration {
+                font-size: 1.2rem;
+                border-bottom: 1px solid #CCC;
+                margin: 0.25rem 4.5rem 0;
+                padding-bottom: 1rem;
+              }
+              .standard .membership-option p.savings {
+                display: block;
+              }
+              .membership-option-list {
+                border: 0 none;
+                padding: 2rem 2rem 0 10rem;
+              }
+              .show-details .btn {
+                margin: 3.5rem auto 1rem;
+              }
+              #membershipOverview,
+              .membership-comparison {
+                margin: 0 auto;
+                min-width: 840px;
+              }
+              .membership-comparison {
+                margin-bottom: 6rem;
+              }
+              .membership-comparison.show {
+                overflow-x: initial;
+                overflow: hidden;
+              }
+            }
+          </style>
+
+          <div id="showDetails" class="show-details">
+            <button id="compareDetailsBtn" class="btn bg-primary btn-lg open">Compare Membership Details</button>
+          </div>
+          <div id="membershipComparison" class="membership-comparison show">
+            <table id="compareDetails" class="compare-details">
+              <tbody>
+                <tr class="table-section">
+                  <td>General</td>
+                  <td>Standard</td>
+                  <td>USMS+</td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Ability to swim with a registered club"> Swim with a USMS club</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Online portal for all your membership benefits"> My Account</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Search 1,000s of workouts or subscribe to new ones weekly"> Workout Library</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Discussion forums, digital badges, and online profile"> Online Community</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Up to 50% off swim gear and a variety of other goods and services"> Discount to partner products</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Connect your Swim.com and USMS accounts to get access to challenges, online swim meets, customization of workouts, and more"> Swim.com integration</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Calendar of activities to keep track of yearly goals and distances"> Digital Fitness Logs</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Includes a free premium branded item, USMS latex cap, USMS sticker, durable membership card, and other USMS-branded items"> Mailed welcome package</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-no.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr class="table-section">
+                  <td>Content</td>
+                  <td>Standard</td>
+                  <td>USMS+</td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Bimonthy print and digital magazine"> <em>SWIMMER</em> magazine</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Monthly digital newsletter"> <em>STREAMLINES</em> newsletter</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="1,000s of searchable training and techique videos and articles"> Articles and videos</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Access to new and archived training and technique webinars and e-books"> Webinars and e-books</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr class="table-section">
+                  <td>Event Access</td>
+                  <td>Standard</td>
+                  <td>USMS+</td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Over 300 pool events annually. Must have an event license."> Pool meets</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Over 50 open water events annually. Must have an event license."> Open water events</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Over 10 virtual events annually. Must have an event license."> Virtual events</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="In-person stroke development clinics"> Clinics</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Tracking official times for each event through the years"> Event results database</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Will recognize the 10 best times in each event every season"> National Top 10 ranking</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Will recognize the fastest time in each event every season"> All-American recognition</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Once you achieve All-American status, we'll mail your patch for free"> Free All-American patch</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-no.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Using the Fitness Logs, track your yearly distance and compare to others"> Go the Distance</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Once you achieve 50 miles in Go the Distance, we'll mail your 50-mile silicon cap for free"> Free Go the Distance cap</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-no.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Numerous fun distances and challenges in which you can rank against others"> Swim.com virtual events</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Free entry to the 5 events offered yearly (1-Hour, 3000/6000-Yard, 5K/10K)"> Free Virtual Championships</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-no.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Free entry to swim meets hosted online"> Free virtual swim meets</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-no.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Free entry to the 3 fun challenges offered yearly (30 minute, 2K, 1 mile)"> Free Fitness Series events</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-no.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr class="table-section">
+                  <td>Video Stroke Analysis</td>
+                  <td>Standard</td>
+                  <td>USMS+</td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="You will interact with a coach online via email and a website"> Add-On Video Stroke Analysis</a>
+                  </td>
+                  <td>$110</td>
+                  <td>FREE</td>
+                </tr>
+                <tr class="table-section">
+                  <td>Education Opportunities</td>
+                  <td>Standard</td>
+                  <td>USMS+</td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Access to Levels 1, 2, and 3 coach certification classes"> Coach Certification</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Learn how to run your own clinics"> Clinic Course for Coaches</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Access to Adult Learn-to-Swim instructor certification classes"> ALTS Instructor Certification</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr class="table-section">
+                  <td>Membership Length</td>
+                  <td>Standard</td>
+                  <td>USMS+</td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Year-Plus membership starts on July 1 and offers the rest of the current year and all of the next year for a discounted rate"> Year&#8209;Plus available</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-no.png"></td>
+                </tr>
+                <tr class="table-section">
+                  <td>Insurance Coverage</td>
+                  <td>Standard</td>
+                  <td>USMS+</td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Benefit up to $25,000 for medical and dental"> Excess accident</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Benefit up to $10,000"> Accidental death</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Weekly benefits"> Temporary disability</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td colspan="5"></td>
+                </tr>
+                <tr class="price-row">
+                  <td>Membership Cost Annually</td>
+                  <td>$75</td>
+                  <td>$249</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="button-link__container button-link--center">
+            <a class="btn btn-danger btn-lg" href="/join-usms/join-or-renew">Join USMS</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% include "partials/Advertising/Ad.njk" %}
+
+{% include "partials/Forms/NewsletterSignUp.njk" %}
+
+{% include "partials/PageContent/Sponsors.njk" %}
+{% endblock %}
+
+{% block pageJS %}
+<script src="/js/membership-comparison.js" defer></script>
+{% endblock %}
