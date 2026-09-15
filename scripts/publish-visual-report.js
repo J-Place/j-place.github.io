@@ -35,7 +35,7 @@ fs.cpSync(sourceDir, destDir, { recursive: true });
 // itself used, so it stays correct if PW_BASE_URL is ever overridden.
 const ranAt = fs.statSync(path.join(sourceDir, 'index.html')).mtime;
 const target = require(path.join(root, 'playwright.config.js')).use.baseURL;
-const stamp = `Last run: ${ranAt.toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })} — against ${target}`;
+const stamp = `Last run: ${ranAt.toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit', hour: 'numeric', minute: '2-digit' })} — against ${target}`;
 
 const banner = `<div style="position:sticky;top:0;z-index:9999;padding:6px 16px;background:#fff3cd;color:#664d03;border-bottom:1px solid #ffe69c;font:13px -apple-system,BlinkMacSystemFont,sans-serif;">${stamp} — published snapshot, not live</div>`;
 const html = fs.readFileSync(indexFile, 'utf8').replace(/<body([^>]*)>/, `<body$1>${banner}`);
