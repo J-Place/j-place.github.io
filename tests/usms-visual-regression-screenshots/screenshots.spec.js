@@ -48,13 +48,16 @@ for (const pagePath of pages) {
     // Freeze JS timers so setInterval-driven carousels (carousel.js, image-slider.js)
     // can't advance between page load and screenshot capture.
     await page.clock.install();
-    // Club Finder (clubs-filter.js) and Calendar of Events (events-filter.js)
-    // both open at "Sarasota, FL" (USMS HQ) then override it with the runner's
-    // IP-based city via an ipinfo.io fetch — which makes the location field,
-    // map centre / distance sort, and filtered results list non-deterministic
-    // across machines/networks. Block that fetch so every run captures both
-    // pages at the Sarasota, FL default. Only those two files call ipinfo.io,
-    // so a blanket abort is safe for every page.
+    // Club Finder (clubs-filter.js), Calendar of Events (events-filter.js),
+    // and Club Detail's distance-to-me display (club-detail-map.js) all
+    // resolve the viewer's location the same way — via the shared
+    // src/js/lib/geo.js — opening at "Sarasota, FL" (USMS HQ) then
+    // overriding it with the runner's IP-based city via an ipinfo.io fetch.
+    // That makes the location field, map centre / distance sort, filtered
+    // results list, and club-detail distance figures non-deterministic
+    // across machines/networks. Block that fetch so every run captures at
+    // the Sarasota, FL default. Only geo.js calls ipinfo.io (all three
+    // pages funnel through it), so a blanket abort is safe for every page.
     await page.route(/ipinfo\.io/, (route) => route.abort());
     // events-filter.js also fetches production's live event search API at
     // runtime (so the event list tracks production instead of a stale build-time

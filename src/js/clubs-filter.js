@@ -3,17 +3,8 @@ window.initClubMap = function () {};
 (function () {
   'use strict';
 
-  // ── Haversine distance (miles) ─────────────────────────────────────────────
-
-  function haversine(lat1, lng1, lat2, lng2) {
-    var R  = 3958.8;
-    var d1 = (lat2 - lat1) * Math.PI / 180;
-    var d2 = (lng2 - lng1) * Math.PI / 180;
-    var a  = Math.sin(d1 / 2) * Math.sin(d1 / 2)
-           + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180)
-           * Math.sin(d2 / 2) * Math.sin(d2 / 2);
-    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  }
+  // Great-circle distance (miles) — shared with club-detail-map.js via geo.js.
+  var haversine = window.UsmsGeo.haversineMiles;
 
   // ── Data ───────────────────────────────────────────────────────────────────
 
@@ -331,14 +322,8 @@ window.initClubMap = function () {};
     var mapEl = document.querySelector('.club-map-new');
     if (!mapEl) return;
 
-    // Default to Sarasota (USMS HQ) so the map renders correctly on first paint.
-    var defaultLat = 27.3364, defaultLng = -82.5307;
-    userLat = defaultLat;
-    userLng = defaultLng;
-    if (locationInput) locationInput.value = 'Sarasota, FL';
-
     map = new google.maps.Map(mapEl, {
-      center: { lat: defaultLat, lng: defaultLng },
+      center: { lat: window.UsmsGeo.DEFAULT_LAT, lng: window.UsmsGeo.DEFAULT_LNG },
       zoom: 10
     });
 
@@ -365,22 +350,20 @@ window.initClubMap = function () {};
     }
 
     // Show default location immediately, then update to user's IP location.
-    applyFilters();
-
-    fetch('https://ipinfo.io/json')
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
-        if (!data || data.country !== 'US' || !data.loc) return;
-        var coords = data.loc.split(',');
-        userLat = parseFloat(coords[0]);
-        userLng = parseFloat(coords[1]);
-        if (locationInput && data.city && data.region) {
-          var abbr = stateAbbr[data.region] || data.region;
-          locationInput.value = data.city + ', ' + abbr;
-        }
-        withLoader(applyFilters);
-      })
-      .catch(function () {});
+    window.UsmsGeo.locate(function (lat, lng) {
+      userLat = lat;
+      userLng = lng;
+      if (locationInput) locationInput.value = window.UsmsGeo.DEFAULT_CITY_STATE;
+      applyFilters();
+    }, function (lat, lng, data) {
+      userLat = lat;
+      userLng = lng;
+      if (locationInput && data.city && data.region) {
+        var abbr = stateAbbr[data.region] || data.region;
+        locationInput.value = data.city + ', ' + abbr;
+      }
+      withLoader(applyFilters);
+    });
   };
 
   // ── Geocode via Nominatim (Submit fallback) ────────────────────────────────
