@@ -20,7 +20,12 @@ module.exports = [
   '/clubs/indy-aquatic-masters-1745.html',
   '/join-usms/join-or-renew/index.html',
   '/login-to-registration-page/index.html',
-  '/registration/index.html',
+  // Pinned to the new-member persona explicitly (same default the page's own
+  // frontmatter already sets), same pattern as the ?club= pin used
+  // elsewhere in this project — keeps the baseline anchored to a named
+  // persona regardless of sessionStorage.activeUser leftover from earlier
+  // navigation or future frontmatter changes.
+  '/registration/index.html?user=NEW',
   '/club-central/club-edit.html',
   '/events/event-central/event-dashboard/event-edit.html',
 ];
