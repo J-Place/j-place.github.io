@@ -234,14 +234,64 @@ try {
 
   if (deploy) {
     console.log(`\nDeploying to Netlify as alias "${name}"...`);
-    execSync(
-      `netlify deploy --dir="${outDir}" --alias="${name}" --message="${name}"`,
-      { cwd: root, stdio: 'inherit' }
+    const deployOut = execSync(
+      `netlify deploy --dir="${outDir}" --alias="${name}" --message="${name}" --json`,
+      { cwd: root, encoding: 'utf8', stdio: ['inherit', 'pipe', 'inherit'] }
     );
+
+    let deployId, deployUrl;
+    try {
+      const parsed = JSON.parse(deployOut);
+      deployId  = parsed.deploy_id;
+      deployUrl = parsed.deploy_url || parsed.url;
+    } catch {
+      console.warn('  ! Could not parse `netlify deploy --json` output:');
+      console.log(deployOut);
+    }
+    if (deployUrl) console.log(`\nDeployed: ${deployUrl}`);
+
+    // Lock the deploy. Netlify's deploy retention (90 days, and only 30 on newer
+    // Free/Starter teams — not raisable below Enterprise) deletes old *unlocked*
+    // deploys, which silently 404s snapshot URLs (it wiped the entire 260601
+    // batch; see snapshot-registry.json git history). Locking exempts a deploy
+    // from that cleanup, which is exactly what an immutable snapshot needs.
+    //
+    // `netlify api lockDeploy` can report success while the lock does not take
+    // (transient API flakiness), so verify with getDeploy and retry.
+    if (deployId) {
+      const lockData = `'{"deploy_id":"${deployId}"}'`;
+      let locked = false;
+      for (let attempt = 1; attempt <= 4 && !locked; attempt++) {
+        try {
+          execSync(`netlify api lockDeploy --data ${lockData}`, { cwd: root, stdio: 'ignore' });
+          const got = execSync(`netlify api getDeploy --data ${lockData}`, { cwd: root, encoding: 'utf8' });
+          locked = JSON.parse(got).locked === true;
+        } catch { /* retry */ }
+        if (!locked && attempt < 4) execSync('sleep 2');
+      }
+      if (locked) {
+        console.log(`Deploy ${deployId} locked (exempt from Netlify's retention cleanup).`);
+      } else {
+        console.warn(
+          `  ! Could not confirm the lock on deploy ${deployId} after 4 attempts.\n` +
+          `    Lock it manually and verify:\n` +
+          `    netlify api lockDeploy --data ${lockData}\n` +
+          `    netlify api getDeploy  --data ${lockData}   # expect "locked": true`
+        );
+      }
+    } else {
+      console.warn(
+        `  ! No deploy id captured — the snapshot is deployed but NOT locked.\n` +
+        `    Lock it manually so Netlify does not prune it later:\n` +
+        `    netlify api lockDeploy --data '{"deploy_id":"<id>"}'`
+      );
+    }
   } else {
     console.log(`\nTo deploy:`);
     console.log(`  netlify deploy --dir=dist/snapshots/${name} --alias=${name} --message=${name}`);
     console.log(`  → https://${name}--usms-mockup.netlify.app`);
+    console.log(`\nThen lock the deploy so Netlify never auto-prunes it:`);
+    console.log(`  netlify api lockDeploy --data '{"deploy_id":"<deploy_id from above>"}'`);
   }
 
 } finally {

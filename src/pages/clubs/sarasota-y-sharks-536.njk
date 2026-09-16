@@ -1,6 +1,12 @@
 ---
 permalink: /clubs/sarasota-y-sharks-536.html
 title: Sarasota Sharks Masters | Club Finder | U.S. Masters Swimming
+clubUrl: /clubs/sarasota-y-sharks-536
+locationFacilities:
+  "Selby Aquatic Center":
+    - name: Selby Aquatic Center
+      environment: Outdoor
+      lengths: [LCM, SCY, SCM]
 breadcrumbs:
   - url: "/"
     label: "Home"
@@ -9,6 +15,7 @@ breadcrumbs:
 breadcrumbTitle: "Sarasota Sharks Masters"
 ---
 {% extends "layouts/club-detail.njk" %}
+{% set club = clubs.data.clubs | findClub(clubUrl) %}
 
 {% block pageJS %}
 {{ super() }}
@@ -19,47 +26,13 @@ breadcrumbTitle: "Sarasota Sharks Masters"
 {% block heroSection %}
 <div class="section section-full p-b-10">
   <div id="club-detail-map"
-    data-locations='[{"lat":27.2526,"lng":-82.4695,"icon":"/img/marker_orange.webp"}]'
+    data-locations='{{ club.location | clubMapLocationsJson(club.isMember) | safe }}'
     style="height: 350px; width: 100%;"></div>
 </div>
 {% endblock %}
 
 {% block clubMain %}
-<div class="club__description">
-  <h1 class="club__header">Sarasota Sharks Masters</h1>
-  <p>The Sharks provide organized workouts, competitions, clinics, and workshops for adults aged 18 and over. We currently have more than 350 members. We welcome ALL adult swimmers (fitness, triathlete, competitive, noncompetitive, open water). We're all about helping swimmers improve fitness, train for specific goals, and providing active support for a healthy lifestyle through friendship and camaraderie.</p>
-  <h3 class="club__practice-info">Practice Information</h3>
-  <p>Visit the club website for workout info</p>
-</div>
-
-<div class="club__locations">
-  <div class="club-location">
-    <div class="club-location__left-container">
-      <div class="club-location__map-pin">
-        <img src="/img/marker_orange.webp">
-        <p class="club-location__map-pin--distance">8</p>
-      </div>
-    </div>
-    <div class="club-location__right-container">
-      <div class="club-location__address">
-        <a href="https://maps.google.com/?q={8501 Potter Park Drive}{34238}" target="_blank">
-          <h5 class="club-location__address--name">Selby Aquatic Center</h5>
-          <p class="club-location__address--street">8501 Potter Park Drive</p>
-          <p class="club-location__address--city-state-zip">Sarasota, FL 34238</p>
-        </a>
-      </div>
-      <div class="club-location__facilities">
-        <div class="club-location__facility">
-          <div class="club-location__facility--name">Selby Aquatic Center</div>
-          <div class="club-location__facility--environment">Outdoor</div>
-          <div class="club-location__facility--length">LCM</div>
-          <div class="club-location__facility--length">SCY</div>
-          <div class="club-location__facility--length">SCM</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+{% include "partials/Club/club-detail-content.njk" %}
 {% endblock %}
 
 {% block clubSidebar %}
@@ -67,29 +40,7 @@ breadcrumbTitle: "Sarasota Sharks Masters"
 <div class="club-website">
   <a href="https://www.gomotionapp.com/team/flsysst/page/lesson-registration/practicescheduleworkouts" class="btn btn-link" target="_blank">Visit Club Website</a>
 </div>
-<div class="club-detail2__badges">
-  <h4 class="club-detail2__badges--header">Club Designations</h4>
-  <ul class="club-detail2__badges-list list--nostyle">
-    <li class="club-detail2__badges-item">
-      <a href="#" data-modal-target="#badgeGold">
-        <img src="/img/club-badge-member.png" alt="U.S. Masters Swimming Member Club Designation">
-        <p>USMS Member Club</p>
-      </a>
-    </li>
-    <li class="club-detail2__badges-item">
-      <a href="#" data-modal-target="#badgeCoach">
-        <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club%20detail/club-badge-coach.png?h=321&w=350&rev=635d566be36d4cdcadc27626fde72b68&hash=82DC6C945E565F72016697C779170E0D">
-        <p>USMS Certified Coach</p>
-      </a>
-    </li>
-    <li class="club-detail2__badges-item">
-      <a href="#" data-modal-target="#badgeAlts">
-        <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club%20detail/club-badge-alts.png?h=321&w=350&rev=3b08e5ab609141ad9a924f61da33bc96&hash=CEA3F6989ED4F63208DFA8A8AC32352B">
-        <p>USMS Certified ALTS Instructor</p>
-      </a>
-    </li>
-  </ul>
-</div>
+{% include "partials/Club/club-detail-badges.njk" %}
 <div class="club-social-links">
   <h4 class="club-social-links__header">Connect With Us</h4>
   <div class="club-social-links__content">

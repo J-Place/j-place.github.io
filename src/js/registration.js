@@ -1,21 +1,102 @@
 /* globals ValidateField, ValidateDob, MakeColumnWithErrorSameHeight */
 (function () {
-  // ── User state (set by login-status.js via data attributes) ───────────────
-  // TODO: use renew/isLapsed to vary header copy, pre-population mode,
-  // and any flow differences between new, renewing-current, and lapsed paths.
-  var formWrapper = document.querySelector('.full-registration-form');
-  var renew    = formWrapper && formWrapper.dataset.renew    === 'true';
-  var isLapsed = formWrapper && formWrapper.dataset.isLapsed === 'true';
+  // Set by applyRenewalMode() below, consumed later by
+  // applyRenewalParticipationDefaults() once the participationInfo/
+  // competitionCategory listeners it needs to trigger actually exist.
+  var renewalSwimmer = null;
+
+  // ── Renewal mode ────────────────────────────────────────────────────────
+  // Simulates production's server-seeded RegistrationSession/IsRenewal flag
+  // (see MembershipRepository.FillRegistrationDataForRenewal in production) —
+  // same URL for new and renewing members either way, just seeded
+  // differently before this page renders. Since this mockup has no real
+  // login/session backend, the Renew/Create buttons on
+  // login-to-registration-page/ set this sessionStorage flag immediately
+  // before navigating here (both link to the same /registration/ URL).
+  // Consumed once and cleared so a plain reload doesn't stay stuck in
+  // renewal mode.
+  (function applyRenewalMode() {
+    var mode = sessionStorage.getItem('registrationMode');
+    sessionStorage.removeItem('registrationMode');
+    if (mode !== 'renew') return;
+
+    var dataEl = document.getElementById('renewal-swimmer-data');
+    if (!dataEl) return;
+    var swimmer;
+    try { swimmer = JSON.parse(dataEl.textContent); } catch (e) { return; }
+    if (!swimmer) return;
+
+    function setVal(id, val) {
+      var el = document.getElementById(id);
+      if (el && val != null) el.value = val;
+    }
+    function disable(id) {
+      var el = document.getElementById(id);
+      if (el) el.disabled = true;
+    }
+    function setPreselect(id, val) {
+      var el = document.getElementById(id);
+      if (el) el.dataset.preselect = val || '';
+    }
+
+    // Header greeting — Nunjucks already renders this for the default
+    // new-member persona at build time; renewal's name is only known at
+    // runtime (sessionStorage + the embedded JSON), so update it here too.
+    var headerName = document.getElementById('renewHeaderFirstName');
+    if (headerName && swimmer.firstName) headerName.textContent = swimmer.firstName;
+
+    // Contact info already on file — prefilled, and (matching production's
+    // disabled={IsRenewal} on Email/DOB) locked against editing.
+    setVal('firstName', swimmer.firstName);
+    setVal('lastName', swimmer.lastName);
+    setVal('email', swimmer.email);
+    setVal('phone', swimmer.phone);
+    setVal('address', swimmer.address);
+    setVal('city', swimmer.city);
+    setVal('zipUs', swimmer.zip);
+    setPreselect('Gender', swimmer.gender);
+    setPreselect('SelectedState', swimmer.state);
+
+    if (swimmer.birthDate) {
+      var bd = swimmer.birthDate.split('/');
+      setPreselect('BirthMonth', bd[0]);
+      setPreselect('BirthDay', bd[1]);
+      setPreselect('BirthYear', bd[2]);
+    }
+
+    if (swimmer.lmsc) {
+      setPreselect('selectedLmsc', swimmer.lmsc.toLowerCase());
+      var lmscEl = document.getElementById('selectedLmsc');
+      if (lmscEl && swimmer.club) lmscEl.dataset.preselectClub = swimmer.club;
+    }
+
+    disable('email');
+    disable('BirthMonth');
+    disable('BirthDay');
+    disable('BirthYear');
+
+    // Coach status, Liability, Membership type, add-ons (VSA/donations),
+    // Payment details, and Acknowledgment are intentionally left blank on
+    // renewal — confirmed out of scope, re-affirmed/re-chosen every cycle
+    // regardless of membership history.
+
+    // Participation defaults and the auto-renew checkbox need listeners
+    // registered further down in this file to exist first (dispatching
+    // participationInfo/competitionCategory's change events is how their
+    // reveal cascade runs) — stash the swimmer record for
+    // applyRenewalParticipationDefaults() to pick up once those are wired.
+    renewalSwimmer = swimmer;
+  })();
 
   // ── Selectors ─────────────────────────────────────────────────────────────
   var membershipContainer = document.querySelector('.membership-length--container');
   var paymentFields      = document.querySelector('.registration-payment__fields');
+  var autoRenewGroup     = document.querySelector('.form-group.auto-renew');
   var paymentSummary     = document.querySelector('.js-payment-summary');
   var membershipTotalEl  = document.querySelector('.membership-length--total');
   var vsaTotalEl         = document.querySelector('.video-stroke-analysis--total');
   var donationTotalEl    = document.querySelector('.total-donations');
   var agreeCheckbox      = document.getElementById('agreeTerms');
-  var agreeLabel         = document.getElementById('agreeTerms__label');
   var registerBtn        = document.getElementById('register-button');
   var strokeFocusDiv     = document.querySelector('.select-stroke-focus');
   var strokeSelect       = document.getElementById('stroke-video-analysis__focus');
@@ -32,8 +113,17 @@
     var el = document.getElementById(id);
     if (!el || !el.dataset.preselect) return;
     var val = el.dataset.preselect;
+    // Numeric fallback: birthDate.split('/') keeps zero-padded months/days
+    // ("05"), but option values aren't zero-padded ("5") — a plain string
+    // comparison would never match those, so compare numerically too when
+    // both sides parse as numbers.
+    var valNum = parseInt(val, 10);
     for (var i = 0; i < el.options.length; i++) {
-      if (el.options[i].value == val) { el.selectedIndex = i; return; }
+      var optVal = el.options[i].value;
+      if (optVal == val || (!isNaN(valNum) && parseInt(optVal, 10) === valNum)) {
+        el.selectedIndex = i;
+        return;
+      }
     }
   }
 
@@ -51,6 +141,66 @@
   function setPaymentVisible(visible) {
     if (paymentFields) paymentFields.style.display = visible ? '' : 'none';
   }
+
+  // Auto Renew is only offered on the Standard (currentYear), Event
+  // License Standard (competition), and USMS+ (usmsPlus) tiers — matches
+  // production's Payment.jsx getAutoRenew(radio.id) enableFor list. The id
+  // lives on the tile's radio input, not on the .membership-length--option
+  // container itself.
+  function updateAutoRenewVisibility() {
+    if (!autoRenewGroup) return;
+    var tile   = selectedTile();
+    var radio  = tile && tile.querySelector('input[type="radio"]');
+    var id     = radio ? radio.id : '';
+    var active = id === 'currentYear' || id === 'competition' || id === 'usmsPlus';
+    autoRenewGroup.style.display = active ? '' : 'none';
+    var cb = autoRenewGroup.querySelector('#signup');
+    if (active) {
+      // Default to checked whenever Auto Renew becomes available — dispatch
+      // a real change event so updateAgreeTermsVariant() swaps the
+      // agreement to its auto-renew caption/position, same as a manual click.
+      if (cb && !cb.checked) {
+        cb.checked = true;
+        cb.dispatchEvent(new Event('change'));
+      }
+    } else {
+      if (cb) cb.checked = false;
+      updateAgreeTermsVariant();
+    }
+  }
+
+  // ── Agreement swap — Auto Renew replaces the general agreement ───────────
+  // Matches production (Payment.jsx): the same #agreeTerms checkbox swaps
+  // its caption/validation text and relocates to after the USMS+ block when
+  // Auto Renew is checked (showSignUpAgreement), reverting to its original
+  // position above USMS+ when unchecked — never a second checkbox. React
+  // mounts a fresh uncontrolled checkbox on each swap (always unchecked);
+  // mirrored here by explicitly unchecking + clearing error state.
+  var GENERAL_AGREEMENT_HELP = 'You need to agree to the terms to complete your registration.';
+  var AUTO_RENEW_AGREEMENT_HELP = 'You need to agree to the auto renew terms to complete your registration.';
+  var GENERAL_AGREEMENT_HTML = 'I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming <a href="/content/privacy" target="_blank">Privacy Policy</a>. I understand that this membership will take effect immediately and is non-refundable, non-transferable, and expires on December 31, 2026.';
+  var AUTO_RENEW_AGREEMENT_HTML = 'I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming <a href="/content/privacy" target="_blank">Privacy Policy</a>. I understand that I am opting in to automatically continuing my membership until I cancel. I understand that I can cancel at any time in My Account. I understand my credit or debit card will be stored in My Account. I understand that this membership will take effect immediately and is non-refundable, non-transferable, and expires on December 31, 2026.';
+
+  var agreeTermsBlock   = document.querySelector('.form-group.agree-terms');
+  var agreeTermsHelp    = document.querySelector('.help-block--agree-terms');
+  var agreeTermsCaption = document.querySelector('.js-agree-terms-caption');
+  var agreeUsmsPlusBlock = document.querySelector('.agree-usmsplus-terms');
+
+  function updateAgreeTermsVariant() {
+    if (!agreeTermsBlock || !agreeUsmsPlusBlock) return;
+    var signup = document.getElementById('signup');
+    var autoRenew = !!(signup && signup.checked);
+
+    if (agreeTermsHelp)    agreeTermsHelp.textContent = autoRenew ? AUTO_RENEW_AGREEMENT_HELP : GENERAL_AGREEMENT_HELP;
+    if (agreeTermsCaption) agreeTermsCaption.innerHTML = autoRenew ? AUTO_RENEW_AGREEMENT_HTML : GENERAL_AGREEMENT_HTML;
+    agreeUsmsPlusBlock.insertAdjacentElement(autoRenew ? 'afterend' : 'beforebegin', agreeTermsBlock);
+
+    if (agreeCheckbox) agreeCheckbox.checked = false;
+    if (agreeTermsHelp) agreeTermsHelp.classList.remove('has-error');
+    if (agreeCheckbox) agreeCheckbox.classList.remove('has-error');
+  }
+  var signupCheckbox = document.getElementById('signup');
+  if (signupCheckbox) signupCheckbox.addEventListener('change', updateAgreeTermsVariant);
 
   // ── Variable terms ────────────────────────────────────────────────────────
   // Tier tiles carry data-terms-keys="key1,key2" — JS shows matching
@@ -80,25 +230,27 @@
   }
 
   // ── Agreement / submit ────────────────────────────────────────────────────
-  function updateAgreement() {
-    var hasTile = selectedTile() !== null;
-    if (agreeLabel)    agreeLabel.classList.toggle('disabled', !hasTile);
-    if (agreeCheckbox) { agreeCheckbox.disabled = !hasTile; if (!hasTile) agreeCheckbox.checked = false; }
+  // Matches production (Payment.jsx) — neither the Register button nor the
+  // agree-terms checkbox is ever disabled based on form completeness (the
+  // Checkbox usages for #agreeTerms pass no `disabled` prop, so it's always
+  // clickable, even before a membership option is selected). Validation
+  // runs on click via validate(), which scrolls to the first error instead
+  // of pre-disabling anything. Note: production also live-validates
+  // #agreeTerms on every change (checking then unchecking immediately shows
+  // the error) — not replicated here, since this mockup only mimics
+  // validation at Register-click time everywhere else, and wiring live
+  // validation onto just this one field would be inconsistent with that.
 
-    var allChecked = (function () {
-      if (!agreeCheckbox || !agreeCheckbox.checked) return false;
-      var varChecks = Object.values(termsBlocks).filter(function (b) {
-        return b && b.style.display !== 'none';
-      }).map(function (b) { return b.querySelector('input[type="checkbox"]'); }).filter(Boolean);
-      return Array.from(varChecks).every(function (cb) { return cb.checked; });
-    })();
-    if (registerBtn) registerBtn.disabled = !(hasTile && allChecked);
-  }
-
-  var paymentCard = document.querySelector('.card.payment-info');
-  if (paymentCard) {
-    paymentCard.addEventListener('change', function (e) {
-      if (e.target.type === 'checkbox') updateAgreement();
+  // ── Card expiration auto-slash ────────────────────────────────────────────
+  // Matches production (Payment.jsx componentDidMount:
+  // $('input[name="expiration"]').mask('09/09')) — that's jQuery's
+  // maskedinput plugin, which isn't loaded here, so this reproduces the same
+  // user-facing behavior (digits only, "/" auto-inserted after mm) directly.
+  var expirationInput = document.getElementById('expiration');
+  if (expirationInput) {
+    expirationInput.addEventListener('input', function () {
+      var digits = this.value.replace(/\D/g, '').slice(0, 4);
+      this.value = digits.length > 2 ? digits.slice(0, 2) + '/' + digits.slice(2) : digits;
     });
   }
 
@@ -202,9 +354,8 @@
     document.querySelectorAll('.membership-length--option').forEach(function (t) { t.classList.remove('selected'); });
     document.querySelectorAll('input[name="length"]').forEach(function (r) { r.checked = false; });
     if (membershipTotalEl) membershipTotalEl.textContent = '$0.00';
-    document.querySelectorAll('input[name="CompetitionMembership"]').forEach(function (r) { r.checked = false; });
     updateVariableTerms();
-    setPaymentVisible(false);
+    updateAutoRenewVisibility();
   }
 
   // ── Membership tile selection ─────────────────────────────────────────────
@@ -233,9 +384,9 @@
     }
 
     updateVariableTerms();
+    updateAutoRenewVisibility();
     buildPaymentSummary();
     setPaymentVisible(hasPayableSelection());
-    updateAgreement();
   });
 
   // ── Competition flow helpers (cascade reset downward) ────────────────────
@@ -285,11 +436,13 @@
         var group = document.querySelector('.competition-category');
         if (group) group.style.display = '';
       } else {
-        // No: show only the standard (no-events) tier
+        // No: show the standard (no-events) tiers — Standard Membership and
+        // Year-Plus — no agreement/certification gates this path.
         if (membershipContainer) membershipContainer.classList.remove('disabled');
         document.querySelectorAll('.membership-length--option').forEach(function (tile) {
           var col = tile.parentElement;
-          if (tile.dataset.noEventsDefault === 'true') {
+          var radio = tile.querySelector('input[type="radio"]');
+          if (tile.dataset.noEventsDefault === 'true' || (radio && radio.id === 'nextYear')) {
             col.style.display = 'flex';
             activateTile(col);
           } else {
@@ -309,91 +462,190 @@
         var block = document.querySelector('.agree-terms-competition');
         if (block) block.style.display = '';
       } else {
+        // Progressive disclosure: only reveal National Recognition here.
+        // Certification and the Agreement stay hidden until each preceding
+        // checkbox is actually checked (see those handlers below) — no more
+        // "unchecked defaults to showing the agreement anyway."
         var group = document.querySelector('.national-recognition');
         if (group) group.style.display = '';
       }
     });
   });
 
+  // ── Participation default (2027 policy update) ────────────────────────────
+  // Event participation defaults to Yes on load for every persona, which
+  // reveals Competition Category (left unselected) — triggered via the real
+  // change event so it runs through the same reveal cascade a manual click
+  // would, rather than silently setting display styles.
+  var participationYesDefault = document.getElementById('participationInfoYes');
+  if (participationYesDefault) {
+    participationYesDefault.checked = true;
+    participationYesDefault.dispatchEvent(new Event('change'));
+  }
+
+  // ── Renewal mode: carry forward on-file competition category + auto-renew ──
+  // Unlike the coach/add-on/payment fields above, these are meant to survive
+  // being set here, landing on whichever downstream section that category
+  // implies (agree-terms for mens-open, national-recognition otherwise) —
+  // left for the member to answer fresh either way.
+  if (renewalSwimmer) {
+    if (renewalSwimmer.competitionCategory) {
+      var compCategoryRadio = document.querySelector('input[name="competitionCategory"][value="' + renewalSwimmer.competitionCategory + '"]');
+      if (compCategoryRadio) {
+        compCategoryRadio.checked = true;
+        compCategoryRadio.dispatchEvent(new Event('change'));
+      }
+    }
+    // Automatic renewal defaults to yes (2027 policy update) — the rest of
+    // the Payment section (card details, terms acknowledgment) stays blank.
+    var autoRenew = document.getElementById('signup');
+    if (autoRenew) autoRenew.checked = true;
+  }
+
   // ── National Recognition radio ────────────────────────────────────────────
+  // "yes" reveals Certification and the Agreement together (Certification
+  // no longer gates the Agreement's visibility — see below). "no" opens a
+  // confirmation modal explaining the eligibility tradeoff before deciding
+  // what to reveal (see the modal handler further down).
   document.querySelectorAll('input[name="nationalRecognition"]').forEach(function (radio) {
     radio.addEventListener('change', function () {
       resetCompetitionCertification();
       if (this.value === 'no') {
-        var block = document.querySelector('.agree-terms-competition');
-        if (block) block.style.display = '';
+        openModal(document.getElementById('modalNationalRecognitionDecline'));
       } else {
         var group = document.querySelector('.competition-certification');
         if (group) group.style.display = '';
+        var block = document.querySelector('.agree-terms-competition');
+        if (block) block.style.display = '';
       }
     });
   });
 
-  // ── Competition Certification radio ───────────────────────────────────────
-  var certModal     = document.getElementById('modalCompetitionNotCertify');
-  var certBackdrop  = document.createElement('div');
-  certBackdrop.className = 'modal-backdrop fade in';
-
-  function openCertModal() {
-    if (!certModal) return;
-    document.body.appendChild(certBackdrop);
-    certModal.style.display = 'block';
-    certModal.classList.add('show');
-    certModal.removeAttribute('aria-hidden');
+  // ── National Recognition "no" confirmation modal ──────────────────────────
+  // Mirrors modal.js's own open sequence (that file only listens for clicks
+  // on [data-modal-target] elements, so opening programmatically needs its
+  // own copy of the same steps rather than a user click to react to).
+  function openModal(modal) {
+    if (!modal) return;
+    var scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    var backdrop = document.createElement('div');
+    backdrop.className = 'modal-backdrop fade in';
+    document.body.appendChild(backdrop);
+    modal.classList.add('in');
+    modal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('modal-open');
+    document.body.style.paddingRight = scrollbarWidth + 'px';
   }
 
-  function closeCertModal() {
-    if (!certModal) return;
-    certModal.style.display = 'none';
-    certModal.classList.remove('show');
-    certModal.setAttribute('aria-hidden', 'true');
-    if (certBackdrop.parentNode) certBackdrop.parentNode.removeChild(certBackdrop);
-    document.body.classList.remove('modal-open');
-  }
+  (function () {
+    var modal = document.getElementById('modalNationalRecognitionDecline');
+    if (!modal) return;
 
-  var certConfirmBtn = document.getElementById('confirmCompetitionNotCertify');
-  if (certConfirmBtn) certConfirmBtn.addEventListener('click', closeCertModal);
+    function showOnlyAgreement() {
+      var cert = document.querySelector('.competition-certification');
+      var agree = document.querySelector('.agree-terms-competition');
+      if (cert) cert.style.display = 'none';
+      if (agree) agree.style.display = '';
+    }
 
-  document.querySelectorAll('input[name="CompetitionMembership"]').forEach(function (radio) {
-    radio.addEventListener('change', function () {
-      var block = document.querySelector('.agree-terms-competition');
-      if (block) block.style.display = '';
-      var cb = document.getElementById('agree-terms-competition');
-      if (cb && cb.checked) { cb.checked = false; cb.dispatchEvent(new Event('change')); }
-      if (this.value === 'no') openCertModal();
+    function showBoth() {
+      var cert = document.querySelector('.competition-certification');
+      var agree = document.querySelector('.agree-terms-competition');
+      if (cert) cert.style.display = '';
+      if (agree) agree.style.display = '';
+    }
+
+    // Radios only stage a choice — Continue is what applies it and closes
+    // the modal (see modal.njk's modalHideCloseButton; there's no X or
+    // Cancel, so Continue is the only way out). "Yes, opt out" behaves like
+    // the old "I understand" confirm; "No, remain eligible" behaves like
+    // the old Cancel.
+    var continueBtn = document.getElementById('nationalRecognitionDeclineContinue');
+    modal.querySelectorAll('input[name="nationalRecognitionDeclineChoice"]').forEach(function (radio) {
+      radio.addEventListener('change', function () {
+        if (continueBtn) continueBtn.disabled = false;
+      });
     });
-  });
 
-  // ── Competition agreement — gates event tier display ──────────────────────
-  var competitionAgree = document.getElementById('agree-terms-competition');
-  if (competitionAgree) {
-    competitionAgree.addEventListener('change', function () {
-      if (this.checked) {
-        if (membershipContainer) membershipContainer.classList.remove('disabled');
-        document.querySelectorAll('.membership-length--option').forEach(function (tile) {
-          var col = tile.parentElement;
-          if (tile.dataset.competitionEligible === 'true') {
-            col.style.display = 'flex';
-            activateTile(col);
-          } else {
-            col.style.display = 'none';
-            deactivateTile(col);
+    if (continueBtn) {
+      continueBtn.addEventListener('click', function () {
+        var choice = modal.querySelector('input[name="nationalRecognitionDeclineChoice"]:checked');
+        if (!choice) return;
+        if (choice.value === 'yes') {
+          showOnlyAgreement();
+        } else {
+          // "No, remain eligible" reverses the opt-out — flip the main
+          // question's radio back to Yes so it reflects that choice, rather
+          // than leaving it stuck on "No" while showing the Yes-shaped view.
+          var mainYesRadio = document.getElementById('nationalRecognitionYes');
+          if (mainYesRadio) {
+            mainYesRadio.checked = true;
+            mainYesRadio.dispatchEvent(new Event('change'));
           }
-        });
-      } else {
-        if (membershipContainer) membershipContainer.classList.add('disabled');
-        // Restore cols to initial load state
-        document.querySelectorAll('.membership-length--option').forEach(function (tile) {
-          tile.parentElement.style.display = tile.dataset.initialDisplay || 'flex';
-          deactivateTile(tile.parentElement);
-        });
-        resetMembershipSelection();
-        resetVsa();
-        buildPaymentSummary();
-      }
-    });
+          showBoth();
+        }
+
+        // Reset the modal's own choice back to blank so a later reopen
+        // (e.g. toggling the main question again) starts fresh instead of
+        // showing whatever was picked last time.
+        modal.querySelectorAll('input[name="nationalRecognitionDeclineChoice"]').forEach(function (r) { r.checked = false; });
+        if (continueBtn) continueBtn.disabled = true;
+      });
+    }
+  })();
+
+  // ── Competition Certification checkbox ────────────────────────────────────
+  // Purely informational now — no longer gates the Agreement's visibility
+  // (previously checking/unchecking this showed/hid it; that script has
+  // been removed so both can be visible at the same time).
+
+  // ── Competition agreement + certification — gates event tier display ─────
+  // Membership Options only unlock once the Agreement is checked, and — when
+  // the "I certify" checkbox is showing (women's category, national
+  // recognition opted in) — that's checked too. Either checkbox changing
+  // re-evaluates the gate, matching the "I acknowledge" pattern applied to
+  // both fields instead of just one.
+  var competitionAgree   = document.getElementById('agree-terms-competition');
+  var competitionCertify = document.getElementById('competitionMembershipYesInput');
+
+  function competitionGatePassed() {
+    if (!competitionAgree || !competitionAgree.checked) return false;
+    if (isVisible(document.querySelector('.competition-certification')) && (!competitionCertify || !competitionCertify.checked)) return false;
+    return true;
   }
+
+  function updateCompetitionGate() {
+    if (competitionGatePassed()) {
+      if (membershipContainer) membershipContainer.classList.remove('disabled');
+      document.querySelectorAll('.membership-length--option').forEach(function (tile) {
+        var col = tile.parentElement;
+        var radio = tile.querySelector('input[type="radio"]');
+        // Event License USMS+ is excluded here on purpose — only Event
+        // License Standard and Event License Year-Plus should enable once
+        // the agreement/certification gate passes.
+        if (tile.dataset.competitionEligible === 'true' && radio && radio.id !== 'usmsPlus') {
+          col.style.display = 'flex';
+          activateTile(col);
+        } else {
+          col.style.display = 'none';
+          deactivateTile(col);
+        }
+      });
+    } else {
+      if (membershipContainer) membershipContainer.classList.add('disabled');
+      // Restore cols to initial load state
+      document.querySelectorAll('.membership-length--option').forEach(function (tile) {
+        tile.parentElement.style.display = tile.dataset.initialDisplay || 'flex';
+        deactivateTile(tile.parentElement);
+      });
+      resetMembershipSelection();
+      resetVsa();
+      buildPaymentSummary();
+    }
+  }
+
+  if (competitionAgree)   competitionAgree.addEventListener('change', updateCompetitionGate);
+  if (competitionCertify) competitionCertify.addEventListener('change', updateCompetitionGate);
 
   // ── Coach interest ────────────────────────────────────────────────────────
   var coachInterestDiv = document.querySelector('.order-4.col-xs-12');
@@ -521,36 +773,12 @@
   // which in turn uses validator.js for email, credit card, and length checks.
   var RULES = [
     // Contact
-    {
-      span: 'help-block--FirstName',
-      check: function () { var e = document.getElementById('firstName'); return e && !!e.value.trim(); },
-      watch: [{ sel: '#firstName', ev: 'input' }]
-    },
-    {
-      span: 'help-block--LastName',
-      check: function () { var e = document.getElementById('lastName'); return e && !!e.value.trim(); },
-      watch: [{ sel: '#lastName', ev: 'input' }]
-    },
-    {
-      span: 'help-block--Gender',
-      check: function () { var e = document.getElementById('Gender'); return e && e.value !== '-1'; },
-      watch: [{ sel: '#Gender', ev: 'change' }]
-    },
-    {
-      span: 'help-block--BirthMonth',
-      check: function () { var e = document.getElementById('BirthMonth'); return e && e.value !== '-1'; },
-      watch: [{ sel: '#BirthMonth', ev: 'change' }]
-    },
-    {
-      span: 'help-block--BirthDay',
-      check: function () { var e = document.getElementById('BirthDay'); return e && e.value !== '-1'; },
-      watch: [{ sel: '#BirthDay', ev: 'change' }]
-    },
-    {
-      span: 'help-block--BirthYear',
-      check: function () { var e = document.getElementById('BirthYear'); return e && e.value !== '-1'; },
-      watch: [{ sel: '#BirthYear', ev: 'change' }]
-    },
+    // FirstName, LastName, Gender, and BirthMonth/Day/Year are intentionally
+    // not validated here. In production these arrive already filled in from
+    // the account-creation step (login-to-registration page) and can't be
+    // empty by the time this page is reached — this mockup doesn't replicate
+    // that handoff, but the validation UI should still mimic the real
+    // (always-valid) state rather than show errors that can't occur in prod.
     {
       span: 'help-block--date-of-birth',
       check: function () {
@@ -580,23 +808,33 @@
     },
     {
       span: 'help-block--SelectedCountry',
-      check: function () { var e = document.getElementById('SelectedCountry'); return e && e.value !== '-1'; },
+      check: function () { var e = document.getElementById('SelectedCountry'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
       watch: [{ sel: '#SelectedCountry', ev: 'change' }]
     },
     {
       span: 'help-block--Address',
-      check: function () { var e = document.getElementById('address'); return e && !!e.value.trim(); },
+      check: function () { var e = document.getElementById('address'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
       watch: [{ sel: '#address', ev: 'input' }]
     },
     {
       span: 'help-block--City',
-      check: function () { var e = document.getElementById('city'); return e && !!e.value.trim(); },
+      check: function () { var e = document.getElementById('city'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
       watch: [{ sel: '#city', ev: 'input' }]
     },
     {
       span: 'help-block--SelectedState',
-      check: function () { var e = document.getElementById('SelectedState'); return e && e.value !== '-1'; },
+      check: function () { var e = document.getElementById('SelectedState'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
       watch: [{ sel: '#SelectedState', ev: 'change' }]
+    },
+    {
+      span: 'help-block--selectedLmsc',
+      check: function () { var e = document.getElementById('selectedLmsc'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
+      watch: [{ sel: '#selectedLmsc', ev: 'change' }]
+    },
+    {
+      span: 'help-block--selectedClub',
+      check: function () { var e = document.getElementById('selectedClub'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
+      watch: [{ sel: '#selectedClub', ev: 'change' }]
     },
     {
       span: 'help-block--ZipUs',
@@ -646,12 +884,12 @@
       watch: [{ sel: 'input[name="nationalRecognition"]', ev: 'change' }]
     },
     {
-      span: 'help-block--CompetitionMembership',
+      span: 'help-block--competitionCertification',
       check: function () {
         if (!isVisible(document.querySelector('.competition-certification'))) return true;
-        return !!document.querySelector('input[name="CompetitionMembership"]:checked');
+        var e = document.getElementById('competitionMembershipYesInput'); return e && e.checked;
       },
-      watch: [{ sel: 'input[name="CompetitionMembership"]', ev: 'change' }]
+      watch: [{ sel: '#competitionMembershipYesInput', ev: 'change' }]
     },
     // Membership tier
     {
@@ -792,10 +1030,22 @@
 
   // ── Init ──────────────────────────────────────────────────────────────────
 
-  // Hide tiers outside their availability window based on today's date (or a
-  // dev-injected mock date via window.USMS_MOCK_DATE set by registration-date.js).
+  // Hide tiers outside their availability window based on today's date, or a
+  // simulated date via ?date=YYYY-MM-DD in the URL (falls back to
+  // sessionStorage so it carries forward across navigation, same pattern as
+  // ?user= in current-user.js and ?club= in club-edit-mode.js).
   (function () {
-    var now   = window.USMS_MOCK_DATE ? new Date(window.USMS_MOCK_DATE + 'T12:00:00') : new Date();
+    var DATE_KEY   = 'activeDate';
+    var dateParam  = new URLSearchParams(window.location.search).get('date');
+    var simDate = null;
+    if (dateParam && /^\d{4}-\d{2}-\d{2}$/.test(dateParam)) {
+      simDate = dateParam;
+      sessionStorage.setItem(DATE_KEY, simDate);
+    } else {
+      var savedDate = sessionStorage.getItem(DATE_KEY);
+      if (savedDate && /^\d{4}-\d{2}-\d{2}$/.test(savedDate)) simDate = savedDate;
+    }
+    var now   = simDate ? new Date(simDate + 'T12:00:00') : new Date();
     var today = (now.getMonth() + 1) * 100 + now.getDate(); // e.g. July 15 → 715
     function md(str) { var p = str.split('-'); return parseInt(p[0], 10) * 100 + parseInt(p[1], 10); }
     document.querySelectorAll('.membership-length--option[data-avail-start]').forEach(function (tile) {
@@ -809,9 +1059,19 @@
       }
     });
 
-    // Hide event-license tiers until the user opts into competition.
-    document.querySelectorAll('.membership-length--option[data-competition-eligible="true"]').forEach(function (tile) {
-      tile.parentElement.style.display = 'none';
+    // DEV/TESTING DEFAULT — not a production rule: only show the two Event
+    // License tiers (Event License USMS+ / usmsPlus, Event License Standard
+    // / competition) on load, for convenience testing the Event
+    // Participation "Yes" default. Standard Membership and Year-Plus are
+    // hidden here rather than via any eligibility logic. The whole
+    // Membership Options container stays .disabled (see
+    // MembershipOptions.njk's default class + the participation reset
+    // cascade re-adding it) until the agreement gate passes, so these two
+    // show up locked rather than fully hidden.
+    document.querySelectorAll('.membership-length--option').forEach(function (tile) {
+      var radio = tile.querySelector('input[type="radio"]');
+      var showByDefault = radio && (radio.id === 'usmsPlus' || radio.id === 'competition' || radio.id === 'competition-nextYear');
+      if (!showByDefault) tile.parentElement.style.display = 'none';
     });
 
     // Snapshot each col's display after all init logic so resets can restore it.
@@ -820,7 +1080,10 @@
     });
   })();
 
-  setPaymentVisible(false);
+  // Payment fields (auto-renew checkbox + card details) are visible from
+  // page load for both new and renewing members, not gated behind
+  // selecting a membership tile first — matches production's real layout.
+  setPaymentVisible(true);
   buildPaymentSummary();
 
   $('[data-toggle="tooltip"]').tooltip();
@@ -838,10 +1101,13 @@
     if (!lmsc || !lmsc.dataset.preselect) return;
     preselectByDataAttr('selectedLmsc');
     lmsc.dispatchEvent(new Event('change'));
+    // Matched by club code (e.g. "SRQM", as stored on swimmer records) found in the
+    // option's display text "Club Name (CODE)" — CLUBS' option values are opaque
+    // Salesforce IDs, not the short code, so a direct value match won't work here.
     var preselectClub = lmsc.dataset.preselectClub;
     if (preselectClub && club) {
       for (var i = 0; i < club.options.length; i++) {
-        if (club.options[i].value === preselectClub) { club.selectedIndex = i; break; }
+        if (club.options[i].textContent.indexOf('(' + preselectClub + ')') !== -1) { club.selectedIndex = i; break; }
       }
     }
   })();
@@ -860,4 +1126,53 @@
     }
     preselectByDataAttr('BirthYear');
   })();
+
+  // Forces the deepest reachable state of the page open in one shot: the
+  // Competitive participation path (womens category — not mens-open, which
+  // skips National Recognition entirely — so this reaches one more reveal
+  // step) through the certification/agreement gate to an Event License
+  // Standard selection, plus VSA, a donation amount, and the coach-interest
+  // follow-up. Event License USMS+ is deliberately never selected here:
+  // updateCompetitionGate() excludes it once the gate passes (see that
+  // function above), so it can't actually be reached through this page's own
+  // UI regardless of which competition-category/national-recognition answers
+  // are given — it only ever appears locked, as an upsell preview. Called
+  // directly (no validation) by the visual-regression suite
+  // (tests/usms-visual-regression-screenshots/screenshots.spec.js) via
+  // window.expandAllSections() before capturing this page, so every
+  // conditional section's markup is visible in the baseline.
+  window.expandAllSections = function () {
+    function check(id) {
+      var el = document.getElementById(id);
+      if (!el) return null;
+      el.checked = true;
+      el.dispatchEvent(new Event('change'));
+      return el;
+    }
+
+    check('participationInfoYes');
+    check('competitionCategoryWomens');
+    check('nationalRecognitionYes');
+    check('competitionMembershipYesInput');
+    check('agree-terms-competition');
+
+    // The gate passing above enables the Event License tiles — select
+    // Event License Standard (id="competition") now that its tile is no
+    // longer disabled. Found by radio id, not by class: the Year-Plus tile
+    // reuses "membership-length--competition" as an *extra* class (shared
+    // styling hook), so a class selector alone matches both tiles.
+    var tileRadio = document.getElementById('competition');
+    var tile = tileRadio && tileRadio.closest('.membership-length--option');
+    if (tile && !tile.hasAttribute('disabled')) check('competition');
+
+    // VSA radios are enabled by the membershipTierSelected handler above.
+    check('videoStrokeAnalysisYes');
+    var strokeSelect = document.getElementById('stroke-video-analysis__focus');
+    if (strokeSelect) { strokeSelect.value = 'Freestyle'; strokeSelect.dispatchEvent(new Event('change')); }
+
+    // A non-zero donation surfaces the "Total Donations" payment-summary line.
+    if (sslInput) { sslInput.value = '30'; sslInput.dispatchEvent(new Event('change')); }
+
+    check('checkbox-interests-self-identified-coach--false');
+  };
 })();

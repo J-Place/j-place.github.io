@@ -13,7 +13,7 @@
             <div class="list-control-search__input list-control-search__input--club-name">
               <label for="filter-name">Search by Event Name</label>
               <div class="input-group">
-                <span class="help-block help-block--ClubName">Please enter a valid event name.</span>
+                <span class="help-block help-block--ClubName">Please Enter an Event Name</span>
                 <input type="text" class="form-control" name="filter-name" value="">
               </div>
             </div>
@@ -21,23 +21,22 @@
               <label for="search-filter__range">Select a Range</label>
               <div class="input-group">
                 <select id="search-filter__range" name="search-filter__range">
-                  <option value="10">10 Miles</option>
                   <option value="25">25 Miles</option>
-                  <option value="50" selected>50 Miles</option>
+                  <option value="50">50 Miles</option>
                   <option value="100">100 Miles</option>
-                  <option value="200">200 Miles</option>
+                  <option value="250" selected>250 Miles</option>
                   <option value="500">500 Miles</option>
-                  <option value="all">All</option>
+                  <option value="max">Nationwide</option>
                 </select>
               </div>
             </div>
             <div class="list-control-search__input list-control-search__input--location">
-              <label for="location">City, State or Zip</label>
+              <label for="search-filter__location">Search by City, State or Zip</label>
               <div class="input-group">
-                <span class="help-block help-block--CityStateZip">Please enter a valid city, state or zip.</span>
+                <span class="help-block help-block--CityStateZip">Please enter a City, State or Zip</span>
                 <div>
                   <div class="map" style="display:none;"></div>
-                  <input type="text" class="google-places-input form-control" placeholder="City, State or Zip" name="location" id="location" autocomplete="off">
+                  <input type="text" class="google-places-input form-control" placeholder="Select city &amp; state or zip" name="location" id="location" autocomplete="off">
                   <input type="hidden" class="google-places-input--zip" name="google-places-input--zip" value="">
                   <input type="hidden" class="google-places-input--lat" name="google-places-input--lat" value="">
                   <input type="hidden" class="google-places-input--lng" name="google-places-input--lng" value="">
@@ -46,7 +45,7 @@
             </div>
             <div class="list-control-search__input list-control-search__input--button align-self-end">
               <div class="input-group">
-                <button type="button" class="btn btn-primary" id="listSearchSubmit">Search</button>
+                <button type="button" class="btn btn-primary" id="listSearchSubmit">Submit</button>
               </div>
             </div>
           </div>
@@ -101,9 +100,9 @@
                 <div class="events-filter-form__dropdown-event-filter">
                   <div class="check-list check-list--other-event-details">
                     {% set otherDetails = [
-                      { label: "Has Results", value: "hasResults" },
-                      { label: "Accepts Entries", value: "acceptsEntries" },
-                      { label: "Has Heat Sheets", value: "hasHeatSheets" }
+                      { label: "Championship", value: "Championship" },
+                      { label: "International Event", value: "InternationalEvent" },
+                      { label: "Clinic", value: "Clinic" }
                     ] %}
                     {% for detail in otherDetails %}
                     <div class="input-group check-list-item">
@@ -124,15 +123,16 @@
                 <div class="events-filter-form__dropdown-event-filter">
                   <div class="check-list check-list--sanction-type">
                     {% set sanctionTypes = [
-                      { label: "Sanctioned", value: "Sanctioned" },
-                      { label: "Recognized", value: "Recognized" },
-                      { label: "Approved", value: "Approved" }
+                      { label: "Not Sanctioned Recognized", value: "NotSanctionedRecognized", filterValue: "Not sanctioned" },
+                      { label: "Recognized", value: "Recognized", filterValue: "Recognized" },
+                      { label: "Sanctioned", value: "Sanctioned", filterValue: "Sanctioned" },
+                      { label: "Sanctioned by Other NGB", value: "SanctionedbyOtherNGB", filterValue: "Another" }
                     ] %}
                     {% for sanction in sanctionTypes %}
                     <div class="input-group check-list-item">
                       <label id="{{ sanction.value }}__label" class="checkbox-label" for="{{ sanction.value }}">
                         <div class="checkbox-container">
-                          <input type="checkbox" data-filter-label="{{ sanction.label }}" name="checkbox-filter-sanction-{{ sanction.value }}" id="{{ sanction.value }}" value="{{ sanction.value }}">
+                          <input type="checkbox" data-filter-label="{{ sanction.label }}" name="checkbox-filter-sanction-{{ sanction.value }}" id="{{ sanction.value }}" value="{{ sanction.filterValue }}">
                           <span class="checkbox__placeholder"></span>
                         </div>
                         {{ sanction.label }}
@@ -152,12 +152,12 @@
                 <h5 class="events-filter-form__dropdown-title text-capitalize">Virtual Events</h5>
                 <div class="check-list check-list--extra">
                   <div class="input-group check-list-item">
-                    <label id="VirtualEvents__label" class="checkbox-label" for="VirtualEvents">
+                    <label id="ShowVirtualEvents__label" class="checkbox-label" for="ShowVirtualEvents">
                       <div class="checkbox-container">
-                        <input type="checkbox" data-filter-label="Virtual Events" name="checkbox-filter-details-VirtualEvents" id="VirtualEvents" value="virtual">
+                        <input type="checkbox" data-filter-label="Show Virtual Events" name="checkbox-filter-details-ShowVirtualEvents" id="ShowVirtualEvents" value="virtual">
                         <span class="checkbox__placeholder"></span>
                       </div>
-                      Virtual Events
+                      Show Virtual Events
                     </label>
                   </div>
                 </div>

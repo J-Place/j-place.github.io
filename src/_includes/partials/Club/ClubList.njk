@@ -15,7 +15,7 @@
           <div class="col-2">
             <div class="club-list-item-new__marker-container">
               <div class="club-list-item-new__marker">
-                <img src="{{ markerOrange if club.isGold else markerBlue }}" alt="Map pin">
+                <img src="{{ markerOrange if club.isMember else markerBlue }}" alt="Map pin">
               </div>
               {% if location.distance %}
               <p class="club-list-item-new__distance text-center">{{ location.distance | int }} mi.</p>

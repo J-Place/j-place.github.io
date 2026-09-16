@@ -2,11 +2,11 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<div class="renew__header">
-				<p>Welcome to U.S. Masters Swimming. Let's finish your registration.</p>
+				<p><span id="renewHeaderFirstName">{{ swimmer.firstName if swimmer else '' }}</span>, welcome to U.S. Masters Swimming. Let's finish your registration.</p>
 			</div>
 			<div class="renew__form-body">
 				<div id="registration_form">
-					<div class="full-registration-form" data-membership-level="{{ currentUser.membershipTier if currentUser else '' }}" data-renew="{{ 'true' if currentUser and currentUser.renew else 'false' }}" data-is-lapsed="{{ 'true' if currentUser and currentUser.isLapsed else 'false' }}">
+					<div class="full-registration-form" data-membership-level="{{ currentUser.membershipTier if currentUser else '' }}">
 
 						{% include "partials/Forms/ContactInformation.njk" %}
 

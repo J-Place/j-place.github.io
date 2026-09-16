@@ -1,0 +1,28 @@
+---
+permalink: /visual-regression-gallery.html
+---
+{% extends "layouts/base.njk" %}
+{% set title = "Visual Regression Screenshot List" %}
+{% block pageCSS %}
+<link rel="stylesheet" href="/css/visual-regression-gallery.css">
+{% endblock %}
+{% block content %}
+<main>
+<div class="section section-full">
+  <div class="usms-container vrg" style="margin: 3rem auto 6rem;">
+    <h5>Visual Regression Screenshot List</h5>
+    {% for group in visualBaselines %}
+    <div class="vrg__row">
+      <a class="vrg__page" href="{{ group.pagePath }}">{{ group.pagePath }}</a>
+      <span class="vrg__shots">
+        {%- for item in group.items -%}
+          {%- if not loop.first %} <span class="vrg__sep">|</span> {% endif -%}
+          <a href="/visual-regression-viewer.html?src=/{{ item.path }}&viewport={{ item.label }}" target="_blank">{{ item.label }}</a>
+        {%- endfor -%}
+      </span>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+</main>
+{% endblock %}

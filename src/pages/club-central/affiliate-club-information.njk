@@ -1,0 +1,376 @@
+---
+permalink: /club-central/affiliate-club-information.html
+title: Affiliate USMS Club Information | U.S. Masters Swimming
+pageTitle: Member and Affiliate Club Information
+pageSubtitle: Two different club types and the services/bundles offered to them
+breadcrumbs:
+  - url: "/"
+    label: "Home"
+  - url: "/club-central"
+    label: "Club Central"
+breadcrumbTitle: "Member and Affiliate Club Information"
+---
+{% extends "layouts/base.njk" %}
+
+{% block breadcrumb %}
+{% include "partials/Common/Breadcrumb.njk" %}
+{% endblock %}
+
+{% block pageHeader %}
+{% include "partials/Common/PageHeader.njk" %}
+{% endblock %}
+
+{% block content %}
+<div class="section section-full p-mh-500">
+  <div class="usms-container p-tb-10">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="html-container">
+          <p>To better serve our members and clubs, and to protect our organization, we created <strong>two club types based on USMS membership requirements</strong> <span>(this applies to workout groups as well, but we just use the word "club" to describe both structures)</span>. The base club registration fee for both types will be $75. The difference will be in the services provided for each type. See the comparison chart below.</p>
+          <ul>
+            <li><strong>Member clubs</strong> require USMS membership and receive all of the services USMS offers to clubs.</li>
+            <li><strong>Affiliate clubs</strong> do not require USMS membership. They can purchase additional services through service bundles during club registration and while managing their club in the <a href="/club-central/club-dashboard.html" style="color: #0068ad;">Club Dashboard</a>.</li>
+          </ul>
+          <p><strong>Affiliate clubs were never covered by USMS general liability insurance</strong>, but we're clarifying that distinction.</p>
+          <p>Affiliate clubs will still benefit from USMS marketing that directs to <a href="/clubs" style="color: #0068ad;">Club Finder</a>, but they won't receive direct club marketing initiatives available to member clubs. More information about the marketing service bundle offered during the 2027 registration year is at the bottom of this page.</p>
+          <p><em>NOTE: If you were a club that required membership in previous years, nothing is changing for you.</em></p>
+        </div>
+
+        <div class="html-container">
+          <style>
+            .club-comparison {
+              margin-bottom: 5rem;
+              overflow: hidden;
+              transition: height 0.5s ease, opacity 2.0s ease;
+              height: 0;
+              opacity: 0;
+            }
+            .club-comparison.show {
+              transition: height 2.0s ease, opacity 0.5s ease;
+              height: 100%;
+              opacity: 1;
+              overflow-x: scroll;
+            }
+            .compare-details table {
+              width: 100%;
+              background-color: #FFF;
+            }
+            .compare-details > tbody > tr:nth-of-type(odd) {
+              background-color: #f9f9f9;
+            }
+            .compare-details td {
+              border: 0 none;
+              padding-top: 11px;
+              padding-bottom: 11px;
+              padding-left: 10px;
+              text-align: left;
+              min-width: 90px;
+              height: 40px;
+              font-size: 15px;
+              line-height: 17px;
+              text-align: center;
+              width: 10%;
+            }
+            .compare-details td:first-child {
+              text-align: left;
+              width: 30%;
+              min-width: 200px;
+            }
+            .compare-details td.feature {
+              padding-left: 20px;
+              padding-right: 10px;
+              position: sticky;
+              z-index: 999;
+              left: 0;
+            }
+            .compare-details .table-section td {
+              background-color: #CCC;
+              border-top: 50px solid #FFF;
+              font-size: 1.3rem;
+            }
+            .compare-details .table-section td:first-child {
+              text-align: left;
+              font-size: 1.5rem;
+              font-weight: bold;
+              padding-right: 3rem;
+              position: sticky;
+              z-index: 999;
+              left: 0;
+              background-color: #CCC;
+            }
+            .compare-details td img {
+              width: 20px;
+            }
+            .compare-details > tbody > tr.price-row {
+              background-color: #FFF;
+              border-top: 2px solid;
+              font-weight: bold !important;
+            }
+            .compare-details .price-row td {
+              padding-top: 30px;
+            }
+            .comparison-tooltip {
+              text-decoration: none;
+              margin-left: -15px;
+              color: #333;
+            }
+            .comparison-tooltip:hover,
+            .comparison-tooltip:focus {
+              text-decoration: none;
+              color: #333;
+            }
+            .comparison-tooltip:focus {
+              outline: none;
+            }
+            .comparison-tooltip:before {
+              content: "";
+              background-image: url("https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/club/icon-help.png");
+              background-position: center;
+              background-size: 100%;
+              background-repeat: no-repeat;
+              display: inline-block;
+              position: relative;
+              width: 1.2rem;
+              height: 1.2rem;
+              cursor: pointer;
+            }
+            .popover {
+              left: 0px !important;
+              text-align: left !important;
+            }
+
+            .show-details {
+              width: 100%;
+              text-align: center;
+            }
+
+            #compareDetailsBtn,
+            .show-details .btn,
+            .show-details .btn:active,
+            .show-details .btn:hover {
+              color: #FFF !important;
+            }
+
+            .show-details .btn {
+              margin: 7rem auto;
+            }
+
+            .show-details .btn:before {
+              content: "+";
+              margin: 0 5px 0 0px;
+              top: -1px;
+              position: relative;
+              width: 15px;
+              font-size: 2rem;
+              line-height: 18px;
+            }
+
+            .show-details .btn.open:before {
+              content: "-";
+              margin: 0 6px 0 3px;
+              width: 15px;
+              position: relative;
+              font-size: 2rem;
+              line-height: 18px;
+            }
+            @media (min-width: 720px) {
+              .compare-details .table-section td:nth-child(2):after {
+                content: "";
+              }
+              .compare-details td.feature {
+                padding-left: 40px;
+                padding-right: 60px;
+              }
+              .club-comparison {
+                margin: 0 auto 6rem;
+                min-width: 840px;
+              }
+              .club-comparison.show {
+                overflow-x: initial;
+                overflow: hidden;
+              }
+              .show-details .btn {
+                margin: 3.5rem auto 1rem;
+              }
+            }
+          </style>
+
+          <div id="showDetails" class="show-details">
+            <button id="compareDetailsBtn" class="btn bg-primary btn-lg open">Compare Club Types</button>
+          </div>
+          <div id="clubComparison" class="club-comparison show">
+            <table id="compareClubDetails" class="compare-details">
+              <tbody>
+                <tr class="table-section">
+                  <td>USMS Membership Requirement</td>
+                  <td>Member club</td>
+                  <td>Affiliated club</td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Every club swimmer is also a USMS member"> Club requires USMS membership</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-no.png"></td>
+                </tr>
+                <tr class="table-section">
+                  <td>Marketing Services</td>
+                  <td>Member club</td>
+                  <td>Affiliated club</td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Nationwide search database for all adult clubs"> Club Finder listing</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="A dedicated webpage for each club with SEO optimization"> Club detail page</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="A member club badge as well as a gold pin to set these clubs apart"> Enhanced Club Finder and detail page</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-no.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="If a club offers a free trial membership, we will include them in our simple digital form that connects right to the club's coach"> Digital trial membership form</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="6'x3' vinyl banner shipped to your facility that includes your club's logo as well as the USMS logo"> Co-branded club banner</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-no.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Inclusion in nationwide advertising campaigns on Meta, Google, or other platforms"> Digital advertising</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-no.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Social media shareables, club progress, and other helpful club templates to help engage and grow your club"> Club template toolbox</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-no.png"></td>
+                </tr>
+                <tr class="table-section">
+                  <td>Club Management</td>
+                  <td>Member club</td>
+                  <td>Affiliated club</td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Ability to update club information that appears on Club Finder at anytime of year"> Club management portal</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Access to lists showing current members, with the ability to opt-in to bulk member registration, as well as a list of expired (unrenewed) members"> Currrent and expired member list</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr class="table-section">
+                  <td>Insurance Eligibility</td>
+                  <td>Member club</td>
+                  <td>Affiliated club</td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Certificate of liability insurance for practices and other approved activities your club puts on"> COI for practices/facilities/coaches</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-no.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Certificate of liability insurance for USMS-sanctioned events hosted by your club"> COI for USMS-sanctioned events</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr class="table-section">
+                  <td>Grant Eligibility</td>
+                  <td>Member club</td>
+                  <td>Affiliated club</td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Support to help your club grow and expand through information and money."> Club development program/grants</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-no.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature">
+                    <a tabindex="0" class="comparison-tooltip" role="button" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Support to help your event grow through information and money. This only applies to USMS-sanctioned meets and open water events."> Event development program/grants</a>
+                  </td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                  <td><img alt="checkmark" src="https://usms-cdn.azureedge.net/-/media/usms/developers/images/membership%20comparison/icon-compare-yes.png"></td>
+                </tr>
+                <tr>
+                  <td class="feature"></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr class="price-row">
+                  <td>2027 Club Fee</td>
+                  <td>$75</td>
+                  <td>$75</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="html-container">
+          <h2>Club Bundles</h2>
+          <p>Member clubs receive these services for free. Affiliate clubs will be offered these services during club registration and then while managing their club in the Club Dashboard.</p>
+          <h3>Marketing Services Bundle</h3>
+          <p>Available starting Oct. 1, 2026</p>
+          <ul>
+            <li>Paid digital advertising (included in national campaigns)</li>
+            <li>6x4 vinyl co-branded banner</li>
+            <li>Downloadable promotional assets and templates</li>
+            <li>Enhanced Club Finder listing</li>
+            <li>Can apply for <a href="/club-central/club-development-program" style="color: #0068ad;">club grants</a></li>
+          </ul>
+          <p><strong><br>Pricing Tiers<br></strong>Affiliate clubs will be broken into four tiers based on the club's number of swimmers. Here are the tiers and prices available:</p>
+          <ul>
+            <li><strong>0-4</strong> swimmers - $99</li>
+            <li><strong>5-24</strong> swimmers - $199</li>
+            <li><strong>25-99</strong> swimmers - $299</li>
+            <li><strong>100+</strong> swimmers - $499</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% include "partials/Advertising/Ad.njk" %}
+
+{% include "partials/Forms/NewsletterSignUp.njk" %}
+
+{% include "partials/PageContent/Sponsors.njk" %}
+{% endblock %}
+
+{% block pageJS %}
+<script src="/js/affiliate-club-information.js" defer></script>
+{% endblock %}

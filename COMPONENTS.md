@@ -28,9 +28,13 @@ In short: Covered = you could point a designer at the mockup and say "that's the
 |---|---|---|
 | *(CMS content — no React component)* Board of Directors | `src/pages/volunteer-central/board-of-directors.njk` | Covered |
 | *(CMS content — no React component)* Board of Directors Assignments | `src/pages/volunteer-central/board-assignments.njk` | Covered |
+| *(CMS content — no React component)* Club Central landing page | `src/pages/club-central/index.njk` | Covered |
+| *(Razor)* `Feature/CallToAction/…/CallToAction.cshtml` (CTA card) | `components/cta.njk` macro (used by `club-central/index.njk`; other pages still inline `.cta`) | Partial |
 | `Article.jsx` | `src/pages/swimmer-magazine/**` (SWIMMER only) · `src/pages/fitness-and-training/articles-and-videos/articles/masters-swimming-training-plan-for-former-competitive-swimmers.njk` | Covered |
 | `Club.jsx` (legacy) / `Feature/Club2.0` Razor views (authoritative) | `src/pages/clubs/sarasota-y-sharks-536.njk`, `south-end-rowing-club-580.njk`, `swim-fort-lauderdale-1877.njk`, `fort-worth-area-swim-team-608.njk` | Covered |
 | *(Razor)* `Feature/Club2.0` ClubEdit views | `src/pages/club-central/club-edit.njk` | Covered |
+| *(Razor)* `Feature/Club2.0` ClubLogin views (`LoginBegin.cshtml` + `CreateAccount.cshtml`) | `src/pages/club-central/club-login.njk` + `partials/ClubLogin/ClubLoginBegin.njk` + `partials/ClubLogin/ClubLoginCreateAccount.njk` | Covered |
+| *(Razor)* `ClubLogin/ConvertClubMember.cshtml`, `ClubLogin/ClubLogout.cshtml` | — (separate post-login pages, not part of `/club-central/club-login`) | Not Started |
 | `Clubs.jsx` | `src/pages/clubs/index.njk` | Covered |
 | `EmailConfirmation.jsx` | — | Not Started |
 | `Event.jsx` | `src/pages/events/events/2026-bumpy-jones-*` | Covered |
@@ -150,7 +154,7 @@ All Demo components are Sitecore experience data tooling — Out of Scope.
 |---|---|---|
 | `Forms/FullRegistrationForm.jsx` | `partials/Forms/FullRegistrationForm.njk` | Covered |
 | `Forms/RegistrationForm.jsx` | `partials/Forms/FullRegistrationForm.njk` | Partial (older entry point) |
-| `Forms/SignUp.jsx` | `partials/Forms/SignUp.njk` | Covered |
+| `Forms/SignUp.jsx` | `partials/Forms/NewsletterSignUp.njk` | Covered — the checked-in JSX (two-column `Column xs sm` layout) is stale; the actual live markup (confirmed identical on two production pages) wraps a single `col-xs-12` with `sign-up__container`/`sign-up__text`, plus validation/confirmation messages, which is what this partial matches. `partials/Forms/SignUp.njk` is a **pre-existing mislabeling** — it's really the `join-usms/join-or-renew-tms.njk` "Enhance Your Swimming" landing content, not this component; left as-is (not renamed) since fixing that wasn't part of the task that found it. |
 | `Forms/ContactInformation.jsx` | `partials/Forms/ContactInformation.njk` | Covered |
 | `Forms/ClubInformation.jsx` | `partials/Forms/ClubInformation.njk` | Covered |
 | `Forms/Interests.jsx` | `partials/Forms/Interests.njk` | Covered |

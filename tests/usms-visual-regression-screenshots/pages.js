@@ -2,60 +2,46 @@
 
 // Every page permalink built by Eleventy, mirrored from src/pages/**/*.njk frontmatter.
 // Update this list when pages are added/removed/renamed — it is not auto-generated.
+//
+// Deliberately a small, hand-picked starting set (not one-per-page-in-the-site) — add more
+// pages here one at a time as they're worth covering, rather than letting this re-accumulate
+// near-duplicate coverage of the same template/component.
 module.exports = [
-  '/index.html',
   '/home/index.html',
-  '/registration/index.html',
-  '/registration/confirmation-club-bulk.html',
-  '/login-to-registration-page/index.html',
-  '/registration/confirmation-add-on-competition.html',
-  '/clubs/fort-worth-area-swim-team-608.html',
-  '/registration/registration-receipt.html',
-  '/clubs/sarasota-y-sharks-536.html',
-  '/clubs/index.html',
-  '/about/contact-lmsc.html',
-  '/lmsc/florida-lmsc.html',
-  '/lmsc/ohio-masters-swimming/',
-  '/about/swimmer-magazine/index.html',
-  '/clubs/south-end-rowing-club-580.html',
-  '/search/index.html',
-  '/clubs/swim-fort-lauderdale-1877.html',
-  '/about/usms-style-guide.html',
-  '/club-central/club-edit.html',
-  '/club-central/expired-members-read-only.html',
-  '/club-central/contact-expiring.html',
-  '/club-central/club-dashboard.html',
-  '/about/contact-us.html',
-  '/club-central/club-dashboard/confirmation.html',
-  '/club-central/club-dashboard/confirmation-v2.html',
-  '/club-central/club-dashboard/confirmation-bundle.html',
   '/fitness-and-training/articles-and-videos/index.html',
-  '/volunteer-central/board-of-directors.html',
-  '/club-central/expired-members.html',
   '/fitness-and-training/articles-and-videos/articles/masters-swimming-training-plan-for-former-competitive-swimmers/index.html',
-  '/volunteer-central/board-and-committees/board-of-directors/board-assignments.html',
-  '/account/addons-ncc.html',
-  '/account/addons.html',
-  '/account/myusmslogin/index.html',
-  '/club-central/manage-members.html',
-  '/events/index.html',
-  '/account/my-account.html',
-  '/events/event-central/usms-measured-pools-alt/index.html',
-  '/club-central/club-dashboard/club-manage.html',
-  '/events/event-central/event-dashboard/event-add.html',
-  '/events/event-central/event-dashboard.html',
-  '/swimmer-magazine/mar-apr-2026/4-wrong-ways-to-swim-that-might-be-right-for-you/index.html',
-  '/volunteer-central/committee-chair-contact.html',
   '/swimmer-magazine/index.html',
-  '/join-usms/join-or-renew/index.html',
-  '/account/addons-all.html',
-  '/events/event-central/usms-measured-pools/index.html',
-  '/events/event-central/event-dashboard/event-edit.html',
-  '/swimmer-magazine/mar-apr-2026/index.html',
-  '/event-results/swimmer/index.html',
-  '/events/events/2026-bumpy-jones-classic-long-course-meet-a1jpo00000abjhf2a3/index.html',
-  '/swimmer-magazine/may-jun-2026/how-to-do-butterfly-pull/index.html',
   '/swimmer-magazine/may-jun-2026/index.html',
-  '/college-club/index.html',
-  '/join-usms/join-or-renew-tms/index.html',
+  '/swimmer-magazine/may-jun-2026/how-to-do-butterfly-pull/index.html',
+  '/events/index.html',
+  '/events/events/2026-bumpy-jones-classic-long-course-meet-a1jpo00000abjhf2a3/index.html',
+  // All three club pages below are pinned via ?lat=&long= for the same
+  // reason: on the live site every one of them resolves a real visitor's
+  // location through geo.js -> ipinfo.io (falling back to the Sarasota
+  // default only if that lookup fails) — nothing here changes that, since
+  // this query string only ever appears in this test fixture list, never in
+  // a real link anywhere on the site. Pinning it explicitly here just makes
+  // every page's test determinism the same mechanism instead of two of them
+  // depending on the ipinfo.io route block below staying in place.
+  //
+  // Club Finder and Sarasota Sharks are pinned to geo.js's own Sarasota HQ
+  // default (UsmsGeo.DEFAULT_LAT/DEFAULT_LNG, matching production's
+  // GeoService.GetDefaultGeo()) — a no-op vs. the old bare URLs.
+  '/clubs/index.html?lat=27.3288505&long=-82.5368164',
+  '/clubs/sarasota-y-sharks-536.html?lat=27.3288505&long=-82.5368164',
+  // Indy Aquatic Masters is pinned to a real Indianapolis coordinate
+  // (verified against production's own Club Finder result for this exact
+  // location) instead of the Sarasota default, which would show a ~900 mi
+  // distance for every location — not a meaningful baseline.
+  '/clubs/indy-aquatic-masters-1745.html?lat=39.76909&long=-86.158018',
+  '/join-usms/join-or-renew/index.html',
+  '/login-to-registration-page/index.html',
+  // Pinned to the new-member persona explicitly (same default the page's own
+  // frontmatter already sets), same pattern as the ?lat=&long=/?club= pins
+  // above — keeps the baseline anchored to a named persona regardless of
+  // sessionStorage.activeUser leftover from earlier navigation or future
+  // frontmatter changes.
+  '/registration/index.html?user=NEW',
+  '/club-central/club-edit.html',
+  '/events/event-central/event-dashboard/event-edit.html',
 ];

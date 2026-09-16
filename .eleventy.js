@@ -160,6 +160,70 @@ module.exports = function(eleventyConfig) {
   // Limit an array to n items
   eleventyConfig.addFilter("limit", (arr, n) => (arr || []).slice(0, n));
 
+  // Drop virtual events — hidden by default until "Show Virtual Events" is checked
+  eleventyConfig.addFilter("rejectVirtual", arr => (arr || []).filter(item => !item.virtual));
+
+  // Production's real footer column grouping (parsed from the live DOM — it
+  // balances total link count per column, not section count, so it can't be
+  // derived generically). Any section not listed here (e.g. a new one added
+  // upstream) is appended round-robin so a future data refresh doesn't drop it.
+  const footerColumnLayout = [
+    ["About USMS"],
+    ["Join", "Pool and Open Water Events"],
+    ["Club Central", "Coach Central", "ALTS Central"],
+    ["Fitness and Training", "Governance", "Volunteers"]
+  ];
+  eleventyConfig.addFilter("footerColumns", items => {
+    const byTitle = {};
+    (items || []).forEach(s => { byTitle[s.Title] = s; });
+    const columns = footerColumnLayout.map(titles => titles.map(t => byTitle[t]).filter(Boolean));
+    const known = new Set(footerColumnLayout.flat());
+    (items || []).forEach((s, i) => {
+      if (!known.has(s.Title)) columns[i % columns.length].push(s);
+    });
+    return columns;
+  });
+
+  // Resolve a footer link's production URL to a local mockup page, or "#0" if we
+  // don't have one. A couple of entries are matched by title instead of URL where
+  // the production target doesn't correspond to how this mockup is organized.
+  const footerHrefsByUrl = {
+    "/about/swimmer-magazine":                  "/about/swimmer-magazine/index.html",
+    "/events":                                  "/events/index.html",
+    "/join-usms/join-or-renew":                 "/join-usms/join-or-renew/index.html",
+    "/club-central":                            "/club-central/index.html",
+    "/club-central/club-login":                 "/club-central/club-login.html",
+    "/fitness-and-training/articles-and-videos": "/fitness-and-training/articles-and-videos/index.html"
+  };
+  const footerHrefsByTitle = {
+    "Club Finder": "/clubs/index.html"
+  };
+  eleventyConfig.addFilter("footerHref", (url, title) => {
+    if (footerHrefsByTitle[title]) return footerHrefsByTitle[title];
+    return footerHrefsByUrl[(url || "").replace(/\/$/, "")] || "#0";
+  });
+
+  // Find a club by its production URL slug (e.g. "/clubs/sarasota-y-sharks-536")
+  eleventyConfig.addFilter("findClub", (clubs, slug) =>
+    (clubs || []).find(c => c.url === slug) || null
+  );
+
+  // Escape a string and convert line breaks to <br> tags
+  eleventyConfig.addFilter("nl2br", value =>
+    String(value || "")
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;")
+      .replace(/\r\n|\r|\n/g, "<br>")
+  );
+
+  // Serialize club locations to the [{lat, lng, icon}] shape club-detail-map.js expects
+  eleventyConfig.addFilter("clubMapLocationsJson", (locations, isMember) =>
+    JSON.stringify((locations || []).map(loc => ({
+      lat:  parseFloat(loc.lat),
+      lng:  parseFloat(loc.long),
+      icon: isMember ? "/img/marker_orange.webp" : "/img/marker_blue.webp"
+    })))
+  );
+
   // Copy src/js to _site/js
   eleventyConfig.addPassthroughCopy({ "src/js": "js" });
 
@@ -167,6 +231,17 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/css": "css" });
 
   eleventyConfig.addPassthroughCopy({ "src/img": "img" });
+
+  // Visual-regression dashboard: publish the latest report + baseline screenshots
+  eleventyConfig.addPassthroughCopy({ "reports/visual-regression": "reports/visual-regression" });
+  eleventyConfig.addWatchTarget("reports/visual-regression");
+  eleventyConfig.addPassthroughCopy({
+    "tests/usms-visual-regression-screenshots/screenshots.spec.js-snapshots/*.png": "visual-regression-baselines"
+  });
+  eleventyConfig.addPassthroughCopy({
+    "tests/usms-visual-regression-screenshots/manual-baselines/*.png": "visual-regression-baselines/manual"
+  });
+  eleventyConfig.addWatchTarget("tests/usms-visual-regression-screenshots");
 
   return {
     dir: {

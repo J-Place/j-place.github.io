@@ -1,6 +1,18 @@
 ---
 permalink: /clubs/swim-fort-lauderdale-1877.html
 title: Swim Fort Lauderdale | Club Finder | U.S. Masters Swimming
+clubUrl: /clubs/swim-fort-lauderdale-1877
+locationFacilities:
+  "Fort Lauderdale Aquatic Center":
+    - name: Competition Pool
+      environment: Outdoor
+      lengths: [LCM, SCM, SCY]
+    - name: East Competition Pool
+      environment: Outdoor
+      lengths: [LCM, SCM, SCY]
+    - name: Warmup/Training Pool
+      environment: Outdoor
+      lengths: [SCY]
 breadcrumbs:
   - url: "/"
     label: "Home"
@@ -9,6 +21,13 @@ breadcrumbs:
 breadcrumbTitle: "Swim Fort Lauderdale"
 ---
 {% extends "layouts/club-detail.njk" %}
+{% set club = clubs.data.clubs | findClub(clubUrl) %}
+
+{% block pageJS %}
+{{ super() }}
+<script src="/js/club-detail-map.js" defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ keys.googleMaps }}&callback=initClubDetailMap" async defer></script>
+{% endblock %}
 
 {% block heroSection %}
 <div class="section section-full p-b-10">
@@ -28,57 +47,7 @@ breadcrumbTitle: "Swim Fort Lauderdale"
 {% endblock %}
 
 {% block clubMain %}
-<div class="club__description">
-  <h1 class="club__header">Swim Fort Lauderdale</h1>
-  <p>Swim Fort Lauderdale (SFTL) Masters is 400+ Member USMS Program in Broward County, Florida. SFTL Masters is open to all swimmers from your novice swimmer all the way to the competitive swimmer. SFTL members are extremely active in local, national and international competitions (pool, open water &amp; triathlon.) As well as a strong supporter of Swim Across America!<br>Main Training location is at Fort Lauderdale Aquatic Center, Home to the International Swimming Hall of Fame.</p>
-  <h3 class="club__practice-info">Practice Information</h3>
-  <p>Monday(1hr): 5:30am, 6:45am, 12:00pm, &amp; 6:30pm<br>Tuesday(1hr): 5:30am, 6:45am, 12:00pm, 6:30pm<br>Wednesday(1hr): 5:30am, 6:45am, 12:00pm, 6:30pm<br>Thursday(1hr): 5:30am, 6:45am, 12:00pm, 6:30pm<br>Friday(1hr): 5:30am, 6:45am, 12:00pm<br>Saturday(1.5hr): 6:30am, 8:15am<br>USMS Registration is required to participate in any of our workouts!</p>
-</div>
-
-<div class="club__locations">
-  <div class="club-location">
-    <div class="club-location__left-container">
-      <div class="club-location__map-pin">
-        <img src="/img/marker_blue.webp">
-        <p class="club-location__map-pin--distance">172</p>
-      </div>
-    </div>
-    <div class="club-location__right-container">
-      <div class="club-location__address">
-        <a href="https://maps.google.com/?q={501 Seabreeze Boulevard}{33316}" target="_blank">
-          <h5 class="club-location__address--name">Fort Lauderdale Aquatic Center</h5>
-          <p class="club-location__address--street">501 Seabreeze Boulevard</p>
-          <p class="club-location__address--city-state-zip">Fort Lauderdale, FL 33316</p>
-        </a>
-      </div>
-      <div class="club-location__facilities">
-        <div class="club-location__facility">
-          <div class="club-location__facility--name">Competition Pool</div>
-          <div class="club-location__facility--environment">Outdoor</div>
-          <div class="club-location__facility--length">LCM</div>
-          <div class="club-location__facility--length">SCM</div>
-          <div class="club-location__facility--length">SCY</div>
-        </div>
-      </div>
-      <div class="club-location__facilities">
-        <div class="club-location__facility">
-          <div class="club-location__facility--name">East Competition Pool</div>
-          <div class="club-location__facility--environment">Outdoor</div>
-          <div class="club-location__facility--length">LCM</div>
-          <div class="club-location__facility--length">SCM</div>
-          <div class="club-location__facility--length">SCY</div>
-        </div>
-      </div>
-      <div class="club-location__facilities">
-        <div class="club-location__facility">
-          <div class="club-location__facility--name">Warmup/Training Pool</div>
-          <div class="club-location__facility--environment">Outdoor</div>
-          <div class="club-location__facility--length">SCY</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+{% include "partials/Club/club-detail-content.njk" %}
 {% endblock %}
 
 {% block clubSidebar %}
@@ -94,6 +63,7 @@ breadcrumbTitle: "Swim Fort Lauderdale"
 <div class="club-website">
   <a href="https://www.teamunify.com/Home.jsp?team=fgflac" class="btn btn-link" target="_blank">Visit Club Website</a>
 </div>
+{% include "partials/Club/club-detail-badges.njk" %}
 <div class="club-social-links">
   <div class="club-social-links__content">
     <ul class="social-share-icons list--nostyle"></ul>

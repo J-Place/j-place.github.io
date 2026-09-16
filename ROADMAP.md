@@ -40,8 +40,26 @@ When the pricing matrix arrives:
 
 ---
 
-## Year-Plus and Event License Year-Plus tiles
+## Membership tile date-availability windows — site-wide, not just Registration
 
-**Current state:** These tiles (`usmsYearPlus`, and the production `membership-length--competition-nextYear` tile) are present in production Registration markup but hidden by default (`display: none`). They are not currently included in the mockup Registration tier keys.
+**Data model:** Each file in `src/_data/membershipTiers/` carries an `availStart`/`availEnd` (month/day) window. `MembershipOptions.njk` renders these generically as `data-avail-start`/`data-avail-end` on every tile regardless of which page includes it — the markup is already page-agnostic.
 
-**Pending:** Confirm with product/dev whether these tiers are still offered in 2026 and under what conditions they should appear. Add to `registration.njk` `membershipTierKeys` and implement show/hide logic if needed.
+| Tier | key | Price | Window | Competition eligible |
+|---|---|---|---|---|
+| Standard Membership | `usmsStandard` | $75 | Jan 1 – Dec 31 | No |
+| Event License Standard | `usmsStandardEventLicense` | $75 | Jan 1 – Dec 31 | Yes |
+| Event License Standard (standalone add-on) | `eventLicenseUpgrade` | $0 | Jan 1 – Dec 31 | Yes |
+| USMS+ | `usmsPlus` | $249 (+$149 addon) | Jan 1 – Jun 30 | Yes |
+| Year-Plus Membership | `usmsYearPlus` | $125 | Jul 1 – Dec 31 | No |
+| Event License Year-Plus | `usmsYearPlusEventLicense` | $125 | Jul 1 – Dec 31 | Yes |
+
+USMS+ (H1) and the Year-Plus pair (H2) are the seasonal counterparts of each other — a member should see one or the other depending on the date, never neither.
+
+**Current implementation is inconsistent across pages:**
+
+- **Registration (`registration.njk`):** All five tiers are in `membershipTierKeys`, and `registration.js`'s init IIFE reads `data-avail-start`/`data-avail-end` to hide out-of-window tiles based on real/simulated (`?date=YYYY-MM-DD`) today. Fully wired.
+- **Add-Ons (`account/addons.njk`):** `membershipTierKeys` only lists `usmsPlus` and `eventLicenseUpgrade` — no Year-Plus/Event-License-Year-Plus counterpart exists on this page at all, so there's no H2 equivalent to USMS+. `addons.js` also has no date-availability init block, so even the `usmsPlus` tile it does show is never hidden outside Jan–Jun.
+
+**Pending:** Confirm with product/dev whether Year-Plus tiers should appear on Add-Ons too, then (a) add `usmsYearPlusEventLicense` to `addons.njk`'s `membershipTierKeys`, and (b) port the date-availability filtering logic out of `registration.js` into a shared helper both pages can call, rather than duplicating the IIFE.
+
+**Related:** `src/_data/membershipTiers/`, `src/_includes/partials/Forms/MembershipOptions.njk`, `src/js/registration.js`, `src/js/addons.js`, `src/pages/registration.njk`, `src/pages/account/addons.njk`.

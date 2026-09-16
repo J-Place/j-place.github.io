@@ -62,7 +62,7 @@
                         <span class="fa-solid fa-chevron-right"></span>About Us
                      </button>
                   </li>
-                  <li id="menu-item-5" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                  <li id="menu-item-5" class="menu-item-login-button{{ ' menu-item-login-button--hidden' if currentUser and currentUser.loggedIn and not currentUser.isLapsed }}" style="touch-action: pan-y; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
                      <a href="/join-usms/join-or-renew/">Join</a>
                   </li>
 
@@ -222,7 +222,7 @@
                               <a href="#0">Open Water Central</a>
                            </li>
                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
-                              <a href="#0">Club Central</a>
+                              <a href="/club-central">Club Central</a>
                            </li>
                            <li class="mobile-menu-overlay__submenu-items text-capitalize">
                               <a href="#0">Coach Central</a>
@@ -236,7 +236,7 @@
                         </ul>
                      </div>
                   </li>
-                  <li class="mobile-menu-overlay__item text-capitalize">
+                  <li class="mobile-menu-overlay__item text-capitalize menu-item-login-button{{ ' menu-item-login-button--hidden' if currentUser and currentUser.loggedIn and not currentUser.isLapsed }}">
                      <div class="mobile-menu-overlay__item-content">
                         <i class=""></i>
                         <a href="/join-usms/join-or-renew/" style="text-decoration:none;">Join</a>

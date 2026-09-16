@@ -29,3 +29,15 @@
     padding: 0 .3rem;
     position: relative;
 }
+
+/* Intentional deviation from production/src/App/pages/Club.css:477 (.club-detail2__badges-item
+   flex:2 1; max-width:125px at 768px+), which lets 4 badges wrap 3-over-1. When there are
+   exactly 4 badges, stack them 2-over-2 instead by keeping the mobile 50%-width layout at
+   desktop widths too. */
+@media (min-width: 768px) {
+    .club-detail2__badges-list--stack-2 .club-detail2__badges-item {
+        flex: none;
+        max-width: none;
+        width: 50%;
+    }
+}

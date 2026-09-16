@@ -55,7 +55,6 @@
 			      data-container="body"
 			      title="These are national competitive awards and rankings. They consist of the publication of USMS records and annual Top 10 times and the naming of All-Stars and All-Americans."></span>
 		</label>
-		<div class="col-xs-12"><span class="help-block help-block--nationalRecognition">Please select an option</span></div>
 		<div class="col-xs-12">
 			<label class="radio-label" for="nationalRecognitionYes" style="cursor:pointer;">
 				<div class="radio-container">
@@ -69,52 +68,65 @@
 					<input type="radio" name="nationalRecognition" id="nationalRecognitionNo" value="no">
 					<span class="radio__placeholder"></span>
 				</div>
-				No
+				No (Not common)
 			</label>
 		</div>
 	</div>
 
 	<div class="form-group competition-certification" style="display:none;">
-		<label class="control-label font-weight-bold col-xs-12">Certification of Competition Category</label>
 		<div class="col-xs-12">
-			<span class="help-block help-block--CompetitionMembership">Please select certification of competition category option</span>
+			<span class="help-block help-block--competitionCertification">You need to certify assigned sex to continue.</span>
+			<label class="checkbox-label font-weight-bold" for="competitionMembershipYesInput" style="cursor:pointer;">
+				<div class="checkbox-container">
+					<input type="checkbox" name="CompetitionMembership" id="competitionMembershipYesInput" value="yes">
+					<span class="checkbox__placeholder"></span>
+				</div>
+				I certify that my sex assigned at birth corresponds with the competition category selected.
+			</label>
 		</div>
-		<label class="radio-label radio-label--inline col-xs-12" for="competitionMembershipYesInput" style="cursor:pointer;">
-			<div class="radio-container">
-				<input type="radio" name="CompetitionMembership" id="competitionMembershipYesInput" value="yes">
-				<span class="radio__placeholder"></span>
-			</div>
-			I certify that my sex assigned at birth corresponds with the competition category selected.
-		</label>
-		<label class="radio-label radio-label--inline col-xs-12" for="competitionMembershipNoInput" style="cursor:pointer;">
-			<div class="radio-container">
-				<input type="radio" name="CompetitionMembership" id="competitionMembershipNoInput" value="no">
-				<span class="radio__placeholder"></span>
-			</div>
-			<div>I DO NOT certify that my sex assigned at birth corresponds with the competition category selected. (A USMS representative will contact you to discuss participation and eligibility procedures.)</div>
-		</label>
 	</div>
 
 	<div class="form-group agree-terms-competition" style="display:none;">
 		<div class="col-xs-12">
 			<span class="help-block help-block--agree-terms-competition">You need to agree to the terms to continue.</span>
-			<label id="agree-terms-competition__label" class="checkbox-label" for="agree-terms-competition">
+			<label id="agree-terms-competition__label" class="checkbox-label font-weight-bold" for="agree-terms-competition" style="cursor:pointer;">
 				<div class="checkbox-container">
 					<input type="checkbox" name="agree-terms-competition" id="agree-terms-competition" value="">
 					<span class="checkbox__placeholder"></span>
 				</div>
+				I acknowledge that the <a href="~/link.aspx?_id=B1745ABEA65D4D65AC6F848A0E3E413A&amp;_z=z">Interim USMS Policy on Participation in the Men's/Open and Women's Competition Category and Eligibility for Official Recognition Programs</a>&nbsp;allows members to participate in the competition category that reflects the sex with which they identify; however, members will not be included in Recognition Programs in the female competition category unless their sex assigned at birth is also female. Members participating in the Men's/Open competition category will be eligible for recognition. Eligibility is subject to all other USMS rules and regulations.
 			</label>
-			<span class="font-weight-bold">I acknowledge that the <a href="~/link.aspx?_id=B1745ABEA65D4D65AC6F848A0E3E413A&amp;_z=z">Interim USMS Policy on Participation in the Men's/Open and Women's Competition Category and Eligibility for Official Recognition Programs</a>&nbsp;allows members to participate in the competition category that reflects the sex with which they identify; however, members will not be included in Recognition Programs in the female competition category unless their sex assigned at birth is also female. Members participating in the Men's/Open competition category will be eligible for recognition. Eligibility is subject to all other USMS rules and regulations.</span>
 		</div>
 	</div>
 </div>
 
-{% set modalId = "modalCompetitionNotCertify" %}
-{% set modalTitle = "We Will Contact You" %}
+{% set modalId = "modalNationalRecognitionDecline" %}
+{% set modalSize = "lg" %}
+{% set modalTitle = "Do you want your times to count in the USMS database?" %}
+{% set modalHideCloseButton = true %}
 {% set modalBody %}
-<p>A USMS representative will contact you within a week to discuss participation and eligibility procedures. Please go ahead and finish your registration.</p>
+<p>You've indicated that you do not want to be included in USMS National Recognition Programs. You may still participate in the women's competition category at USMS-sanctioned events. However, under the interim eligibility policy, you will not be eligible for national recognition — including records, Top 10 lists, and scoring points at meets. Your swims at sanctioned meets will count as exhibition for national recognition purposes.</p>
+<p>You will remain eligible for local recognition programs at events held in a jurisdiction or facility with nondiscrimination laws covering gender identity.</p>
+<div class="form-group national-recognition-decline__choices">
+	<div class="col-xs-12">
+		<label class="radio-label" for="nationalRecognitionDeclineNo" style="cursor:pointer;">
+			<div class="radio-container">
+				<input type="radio" name="nationalRecognitionDeclineChoice" id="nationalRecognitionDeclineNo" value="no">
+				<span class="radio__placeholder"></span>
+			</div>
+			Yes, remain eligible for national recognition
+		</label>
+		<label class="radio-label" for="nationalRecognitionDeclineYes" style="cursor:pointer;">
+			<div class="radio-container">
+				<input type="radio" name="nationalRecognitionDeclineChoice" id="nationalRecognitionDeclineYes" value="yes">
+				<span class="radio__placeholder"></span>
+			</div>
+			No, opt out of national recognition
+		</label>
+	</div>
+</div>
 {% endset %}
 {% set modalFooter %}
-<button type="button" class="btn btn-md btn-primary" id="confirmCompetitionNotCertify">Okay</button>
+<button type="button" class="btn btn-md btn-primary js-modal-close" id="nationalRecognitionDeclineContinue" disabled>Continue</button>
 {% endset %}
 {% include "components/modal.njk" %}
