@@ -1,0 +1,34 @@
+name: Deploy Development Preview
+
+on:
+  push:
+    branches: [development]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: netlify-development
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: netlify-development
+      url: https://development--usms-mockup.netlify.app
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+      - run: npm install
+      - name: Write keys.json
+        run: echo '{"googleMaps":"${{ secrets.GOOGLE_MAPS_API_KEY }}"}' > src/_data/keys.json
+      - run: npm run build
+      - name: Deploy to Netlify (development branch preview)
+        run: |
+          npm install -g netlify-cli
+          netlify deploy --dir=_site --alias=development --message="development @ ${{ github.sha }}" --site=2881d06e-8a90-4014-8145-812788094c76 --json
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
