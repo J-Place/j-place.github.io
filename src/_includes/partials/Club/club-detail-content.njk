@@ -10,7 +10,7 @@
   {% set facilities = locationFacilities[loc.name] %}
   <div class="club-location">
     <div class="club-location__left-container">
-      <div class="club-location__map-pin">
+      <div class="club-location__map-pin" data-lat="{{ loc.lat }}" data-lng="{{ loc.long }}">
         <img src="{{ '/img/marker_orange.webp' if club.isMember else '/img/marker_blue.webp' }}">
       </div>
     </div>
