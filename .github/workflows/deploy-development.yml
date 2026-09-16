@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: netlify-development
-      url: https://development--usms-mockup.netlify.app
+      url: https://usms-mockup-dev.netlify.app
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v6
@@ -29,6 +29,6 @@ jobs:
       - name: Deploy to Netlify (development branch preview)
         run: |
           npm install -g netlify-cli
-          netlify deploy --dir=_site --alias=development --message="development @ ${{ github.sha }}" --site=2881d06e-8a90-4014-8145-812788094c76 --json
+          netlify deploy --dir=_site --prod --message="development @ ${{ github.sha }}" --site=ccd2bd96-1a67-4d15-b94a-8599aff0127a --json
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
