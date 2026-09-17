@@ -1,0 +1,34 @@
+name: Deploy WCAG Preview
+
+on:
+  push:
+    branches: [wcag-updates]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: netlify-wcag
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: netlify-wcag
+      url: https://wcag-updates--usms-mockup-dev.netlify.app
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+      - run: npm install
+      - name: Write keys.json
+        run: echo '{"googleMaps":"${{ secrets.GOOGLE_MAPS_API_KEY }}"}' > src/_data/keys.json
+      - run: npm run build
+      - name: Deploy to Netlify (wcag-updates branch preview)
+        run: |
+          npm install -g netlify-cli
+          netlify deploy --dir=_site --alias=wcag-updates --message="wcag-updates @ ${{ github.sha }}" --site=ccd2bd96-1a67-4d15-b94a-8599aff0127a --json
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
