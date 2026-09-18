@@ -21,28 +21,12 @@
 		</div>
 	</div>
 
-	{# Agreement — swaps caption + position when Auto Renew is checked, rather
-	   than adding a second checkbox. Matches production (Payment.jsx): the
-	   same #agreeTerms checkbox conditionally renders either above or below
-	   the USMS+ block (showSignUpAgreement), never both — handled here by
-	   registration.js moving this one node and swapping its text instead of
-	   duplicating the checkbox. #}
-	<div class="form-group agree-terms">
-		<div class="col-xs-12">
-			<span class="help-block help-block--agree-terms">You need to agree to the terms to complete your registration.</span>
-			<label id="agreeTerms__label" class="checkbox-label" for="agreeTerms">
-				<div class="checkbox-container">
-					<input type="checkbox" name="agree-terms" id="agreeTerms" value="">
-					<span class="checkbox__placeholder"></span>
-				</div>
-			</label>
-			<span class="font-weight-bold js-agree-terms-caption">I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming <a href="/content/privacy" target="_blank">Privacy Policy</a>. I understand that this membership will take effect immediately and is non-refundable, non-transferable, and expires on December 31, 2026.</span>
-		</div>
-	</div>
-
 	{# Variable terms — shown/hidden by registration.js based on selected membership tier #}
 
-	{# USMS+ terms — shown when a USMS+ tier is selected #}
+	{# USMS+ terms — shown when a USMS+ tier is selected. Always rendered
+	   before the general agreement checkbox below, and stays there
+	   regardless of Auto Renew — registration.js no longer repositions
+	   either block, only swaps the general agreement's caption text. #}
 	<div class="form-group agree-usmsplus-terms" style="display:none;">
 		<div class="col-xs-12">
 			<span class="help-block help-block--agree-usmsplus-terms">You need to agree to the USMS+ terms and conditions to complete your registration.</span>
@@ -53,6 +37,28 @@
 				</div>
 			</label>
 			<span class="font-weight-bold">By selecting the USMS+ membership, I agree that USMS may share my information with the USA Swimming Foundation and USA Swimming in accordance with the USMS Privacy Policy, linked below (you may still opt out at any time).</span>
+		</div>
+	</div>
+
+	{# Agreement — swaps caption only when Auto Renew is checked, rather than
+	   adding a second checkbox. Matches production (Payment.jsx) in that the
+	   same #agreeTerms checkbox conditionally carries either wording
+	   (showSignUpAgreement), never both — handled here by registration.js
+	   swapping its text instead of duplicating the checkbox. Deviates from
+	   production's actual DOM order (which also relocates this block above
+	   USMS+ terms when Auto Renew is checked): USMS+ terms always stays
+	   first regardless of Auto Renew, so the two checkboxes don't swap
+	   position on the user. #}
+	<div class="form-group agree-terms">
+		<div class="col-xs-12">
+			<span class="help-block help-block--agree-terms">You need to agree to the terms to complete your registration.</span>
+			<label id="agreeTerms__label" class="checkbox-label" for="agreeTerms">
+				<div class="checkbox-container">
+					<input type="checkbox" name="agree-terms" id="agreeTerms" value="">
+					<span class="checkbox__placeholder"></span>
+				</div>
+			</label>
+			<span class="font-weight-bold js-agree-terms-caption">I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming <a href="/content/privacy" target="_blank">Privacy Policy</a>. I understand that this membership will take effect immediately and is non-refundable, non-transferable, and expires on December 31, 2026.</span>
 		</div>
 	</div>
 
