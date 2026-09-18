@@ -3,41 +3,6 @@
    ============================================================ */
 
 
-/* ── Bootstrap grid restoration for multi-column rows ────────
-   production/src/App/pages/Renew.css:125-131 sets
-   .renew__form-body .form-group { display: flex; flex-wrap: wrap;
-   flex-direction: row; align-items: end; } for the renewal flow, but our
-   shared FullRegistrationForm.njk wrapper applies .renew__form-body to
-   every registration (new-member included), so these multi-column rows
-   lose their normal float grid and end up misaligned. Restore
-   display: block so the existing float grid takes over again, same as
-   every .form-group outside .renew__form-body.
-
-   Clearing those floats relies on an explicit .clearfix class on the row
-   itself (Bootstrap's own .clearfix:after { content:""; display:table;
-   clear:both }), not an ambient .form-group rule — confirmed via computed
-   styles, there is no such ambient clearfix. first-last/gender/
-   email-phone/city-state-zip already carry .clearfix in production's own
-   markup (ContactInformation.jsx) — a clearfix is inert on a flex
-   container, which confirms these rows were built as float-based grids,
-   not flex rows. card-number and ClubInformation's LMSC/Club/Workout row
-   never had a .clearfix class (nothing needed one while flex sized them
-   automatically), so that class was added alongside this display:block
-   fix directly in their markup (Payment.njk, ClubInformation.njk) —
-   without it the row collapses to 0 height and the next sibling
-   (.card-zip) slides up into its leftover float space.
-   club-information__row is a local-only hook class (ClubInformation.njk)
-   — production's own equivalent row has no distinguishing class to
-   target. */
-.renew__form-body .form-group.first-last,
-.renew__form-body .form-group.gender,
-.renew__form-body .form-group.email-phone,
-.renew__form-body .form-group.city-state-zip,
-.renew__form-body .form-group.club-information__row,
-.renew__form-body .form-group.card-number {
-    display: block;
-}
-
 /* ── Participation card — competition terms fixes ──────────── */
 /* Production applies width: 350px at ≥1200px and radio-specific label
    styles (margin, text-indent, padding-left) to all labels in this card.
