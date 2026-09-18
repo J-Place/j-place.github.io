@@ -195,217 +195,22 @@
     if (agreeTermsCaption) agreeTermsCaption.innerHTML = autoRenew ? AUTO_RENEW_AGREEMENT_HTML : GENERAL_AGREEMENT_HTML;
     agreeUsmsPlusBlock.insertAdjacentElement(autoRenew ? 'afterend' : 'beforebegin', agreeTermsBlock);
 
-    if (agreeCheckbox) agreeCheckbox.checked = false;
-    if (agreeTermsHelp) agreeTermsHelp.classList.remove('has-error');
-    if (agreeCheckbox) agreeCheckbox.classList.remove('has-error');
-    updatePaymentGating();
+    // Only reset when switching TO the auto-renew variant — its wording adds
+    // real commitments (opting into automatic charges, storing the card)
+    // beyond the general terms, so the user needs to explicitly agree to
+    // THAT text (matches production: React mounts a fresh uncontrolled
+    // checkbox on this swap). Switching back to the plain general variant
+    // only REMOVES those extra commitments, so an existing "I agree" still
+    // covers it — resetting there too would force a needless re-check every
+    // time Auto Renew is turned off.
+    if (autoRenew) {
+      if (agreeCheckbox) agreeCheckbox.checked = false;
+      if (agreeTermsHelp) agreeTermsHelp.classList.remove('has-error');
+      if (agreeCheckbox) agreeCheckbox.classList.remove('has-error');
+    }
   }
   var signupCheckbox = document.getElementById('signup');
   if (signupCheckbox) signupCheckbox.addEventListener('change', updateAgreeTermsVariant);
-
-  // ── Payment gating — lock payment interactions until agreement checked ───
-  // Card fields are readonly (can't be filled in) until every required field
-  // above and the agreement are satisfied — not `disabled`, since a real
-  // disabled control never fires click/focus at all (bubbled or otherwise),
-  // which would make it impossible to catch and surface validation on a
-  // locked interaction. Register and the wallet-pay buttons apply the same
-  // logic by never being `disabled` in the first place — real, live elements
-  // just styled to look locked (see updatePaymentGating()).
-  var CARD_FIELD_IDS = ['cardName', 'cardNumberID', 'cardCodeID', 'expiration', 'cardZipID'];
-
-  function agreementSatisfied() {
-    if (!agreeCheckbox || !agreeCheckbox.checked) return false;
-    if (isVisible(agreeUsmsPlusBlock)) {
-      var usmsPlusCb = document.getElementById('agreeUsmsPlusTerms');
-      if (!usmsPlusCb || !usmsPlusCb.checked) return false;
-    }
-    return true;
-  }
-
-  // Mirrors REQUIRED_FIELD_RULES' shape (span + check) but for the agreement
-  // checkbox(es) themselves — used when a Register/wallet-pay click is
-  // blocked with every required field above already valid, so there's
-  // nothing else to point the user at except "you still need to check this".
-  var AGREEMENT_FIELD_RULES = [
-    {
-      span: 'help-block--agree-terms',
-      check: function () { return !!(agreeCheckbox && agreeCheckbox.checked); }
-    },
-    {
-      span: 'help-block--agree-usmsplus-terms',
-      check: function () {
-        if (!isVisible(agreeUsmsPlusBlock)) return true;
-        var e = document.getElementById('agreeUsmsPlusTerms');
-        return !!(e && e.checked);
-      }
-    }
-  ];
-
-  function validateAgreementFields(scrollToFirst) {
-    var firstErrorSpan = null;
-    AGREEMENT_FIELD_RULES.forEach(function (rule) {
-      var span = document.querySelector('.' + rule.span);
-      if (!span) return;
-      var valid = rule.check();
-      span.classList.toggle('has-error', !valid);
-      if (!valid && !firstErrorSpan) firstErrorSpan = span;
-    });
-    MakeColumnWithErrorSameHeight();
-    if (scrollToFirst && firstErrorSpan) firstErrorSpan.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    return firstErrorSpan;
-  }
-
-  // Single entry point for "a Register/wallet-pay click landed while
-  // locked" — checks required fields above first (they read top-to-bottom
-  // before Payment, so they take scroll priority), then the agreement
-  // checkbox(es) themselves. Covers the case this was built for: every
-  // required field already valid, agreement still unchecked — there'd be no
-  // required-field error to scroll to otherwise, and the click would
-  // silently do nothing.
-  function validateOnLockedPaymentClick() {
-    if (!paymentLocked()) return false;
-    var firstRequiredError = runRequiredFieldsValidation(true);
-    // Only reached (and only shown) when every required field above already
-    // passes — otherwise this would flag the agreement as a second, unrelated
-    // problem alongside whatever's actually still incomplete above it.
-    if (!firstRequiredError) validateAgreementFields(true);
-    return true;
-  }
-
-  function checkCardField(id) {
-    if (!isVisible(paymentFields)) return true;
-    var e = document.getElementById(id);
-    if (!e) return false;
-    ValidateField(e);
-    return !e.classList.contains('has-error');
-  }
-
-  var watchedCardFields = new Set();
-  function attachCardFieldWatcher(id) {
-    if (watchedCardFields.has(id)) return;
-    watchedCardFields.add(id);
-    var el = document.getElementById(id);
-    if (!el) return;
-    el.addEventListener('input', function () {
-      var span = document.querySelector('.help-block--' + id);
-      var valid = checkCardField(id);
-      if (span) span.classList.toggle('has-error', !valid);
-      MakeColumnWithErrorSameHeight();
-    });
-  }
-
-  // Register-only, submit-time check of the credit-card fields — separate
-  // from the required-fields-above / agreement checks that gate whether
-  // Register is clickable in the first place. This only runs once the
-  // button is already unlocked: "the actual thing you're about to submit
-  // should be valid before it submits." Skips entirely when the card-fields
-  // section itself is hidden (an Apple/Google Pay method was picked instead
-  // — see wallet-payments.js), same as the old pre-removal validation did.
-  // Apple/Google Pay themselves never run this — there's no card to check.
-  function validateCardFields(scrollToFirst) {
-    var firstErrorSpan = null;
-    CARD_FIELD_IDS.forEach(function (id) {
-      var span = document.querySelector('.help-block--' + id);
-      var valid = checkCardField(id);
-      if (span) span.classList.toggle('has-error', !valid);
-      attachCardFieldWatcher(id);
-      if (!valid && !firstErrorSpan) firstErrorSpan = span;
-    });
-    MakeColumnWithErrorSameHeight();
-    if (scrollToFirst && firstErrorSpan) firstErrorSpan.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    return firstErrorSpan;
-  }
-
-  // Fires when a required field ABOVE Payment regresses (goes from valid to
-  // invalid) while the payment section is already unlocked — see the
-  // required-field watcher further down. Whatever was entered for the
-  // credit card, and the fact the agreement was checked, no longer apply
-  // once something above it isn't actually complete anymore: clear the card
-  // fields entirely (a stale value behind a re-disabled field would read as
-  // "still on file") and uncheck the agreement(s) rather than leaving them
-  // checked against a form that's gone invalid again.
-  function resetPaymentSectionForRegression() {
-    CARD_FIELD_IDS.forEach(function (id) {
-      var el = document.getElementById(id);
-      if (!el) return;
-      el.value = '';
-      el.classList.remove('has-error', 'has-success');
-    });
-    document.querySelectorAll('.registration-payment__fields .help-block').forEach(function (span) {
-      span.classList.remove('has-error');
-    });
-    // Set directly rather than via .click()/dispatching 'change' — this is
-    // an automatic reset the user didn't initiate, so it shouldn't
-    // recursively trigger the checkbox's own change handler (which would
-    // re-run required-fields validation and scroll to boot).
-    if (agreeCheckbox) agreeCheckbox.checked = false;
-    var usmsPlusCb = document.getElementById('agreeUsmsPlusTerms');
-    if (usmsPlusCb) usmsPlusCb.checked = false;
-  }
-
-  function updatePaymentGating() {
-    // paymentLocked() (defined further down, alongside requiredFieldsSatisfied())
-    // is a cheap cached-state read — it does NOT re-run validation, so calling
-    // updatePaymentGating() from unrelated places (tile selection, donation
-    // totals, ...) never triggers a surprise validation pass on its own.
-    var locked = paymentLocked();
-    // readOnly, not disabled — a disabled control never fires click/focus at
-    // all (bubbled or otherwise), which would leave no way to catch a locked
-    // click/tab-into on these fields the way Register/wallet-pay already do
-    // by staying real, live elements. readonly blocks editing just the same,
-    // and production's own CSS (bootstrap-3-usms-patch.css,
-    // ContactInformation.css) already styles [readonly] identically to
-    // [disabled] on .form-control, so the look doesn't change either.
-    CARD_FIELD_IDS.forEach(function (id) {
-      var el = document.getElementById(id);
-      if (el) el.readOnly = locked;
-    });
-    // Scoped to .registration-payment__fields so only the card-field labels
-    // gray out — agree-terms/auto-renew/USMS+ live outside this container.
-    if (paymentFields) paymentFields.classList.toggle('registration-payment__fields--locked', locked);
-    if (registerBtn) registerBtn.classList.toggle('btn--payment-locked', locked);
-    document.querySelectorAll('.btn-wallet-pay').forEach(function (btn) {
-      btn.classList.toggle('btn--payment-locked', locked);
-    });
-  }
-
-  // The agreement checkbox(es) are what trigger the "check all required
-  // fields above" pass (runRequiredFieldsValidation(), defined further down)
-  // — not Register, and not any of the unrelated calls to
-  // updatePaymentGating() elsewhere on the page. Checking either one (when
-  // USMS+ is active, either of the two) only succeeds if every required
-  // field above is already valid — if not, the checkbox is immediately
-  // reverted to unchecked (synchronously, before any repaint, so it never
-  // visibly renders as checked) and the page scrolls to the first invalid
-  // field, same as a locked Register/wallet-pay click. Unchecking is always
-  // allowed and doesn't re-validate or scroll — that's not someone trying to
-  // move forward.
-  [agreeCheckbox, document.getElementById('agreeUsmsPlusTerms')].forEach(function (el) {
-    if (el) el.addEventListener('change', function () {
-      var cb = this;
-      if (cb.checked) {
-        var firstRequiredError = runRequiredFieldsValidation(true);
-        if (firstRequiredError) {
-          // Required fields are the actual blocker here, already shown and
-          // scrolled to above — bounce the checkbox back without ALSO
-          // flagging it as "required". Showing both at once reads as two
-          // contradictory messages ("check this" + "you can't check this")
-          // for an attempt that was reasonable, just early.
-          cb.checked = false;
-          updatePaymentGating();
-          return;
-        }
-      }
-      // Reaching here means every required field above is already
-      // satisfied — so if either agreement checkbox is still unchecked
-      // (this one, or its USMS+ counterpart), that's genuinely the one
-      // remaining thing, and it's safe to reflect that. No scroll here —
-      // this is a direct interaction with the checkbox itself, not a
-      // blocked attempt to move past it.
-      validateAgreementFields(false);
-      updatePaymentGating();
-    });
-  });
 
   // ── Variable terms ────────────────────────────────────────────────────────
   // Tier tiles carry data-terms-keys="key1,key2" — JS shows matching
@@ -432,20 +237,16 @@
       if (cb)  { cb.disabled = !active; if (!active) cb.checked = false; }
       if (lbl) lbl.classList.toggle('disabled', !active);
     });
-
-    updatePaymentGating();
   }
 
   // ── Agreement / submit ────────────────────────────────────────────────────
-  // The agree-terms checkbox itself is never disabled based on form
-  // completeness, matching production (Payment.jsx) — the Checkbox usage for
-  // #agreeTerms passes no `disabled` prop, so it's always clickable, even
-  // before a membership option is selected. Register and the card
-  // fields/wallet buttons it gates ARE locked until it's checked (see
-  // updatePaymentGating() above) — a deviation from production, which never
-  // disables Register on form completeness either. Register's click handler
-  // is currently a no-op with the mock validate() removed (see below), so
-  // there's no error-highlighting to describe here yet.
+  // Matches production (Payment.jsx) — neither the Register button nor the
+  // agree-terms checkbox is ever disabled based on form completeness (the
+  // Checkbox usages for #agreeTerms pass no `disabled` prop, so it's always
+  // clickable, even before a membership option is selected). Validation
+  // runs on click via validate() (see the RULES array further down), which
+  // scrolls to the first error and pops the same error-summary modal
+  // production shows on a failed submit, instead of pre-disabling anything.
 
   // ── Card expiration auto-slash ────────────────────────────────────────────
   // Matches production (Payment.jsx componentDidMount:
@@ -597,20 +398,15 @@
     // membershipTierSelected only ever fires once .selected is genuinely
     // applied (selectMembershipTier() dispatches it right after setting the
     // class), unlike the "please select a membership option" rule's own
-    // click-based watcher — clicking a tile's label/radio area fires `click`
-    // on the tile (which that watcher listens for) BEFORE the radio's
-    // `change` event actually applies .selected, so that watcher can
-    // momentarily validate against a not-yet-selected state. Re-running the
-    // full required-fields check here, after selection is definitely
-    // applied, is what actually clears help-block--length reliably — and it
-    // also catches the same kind of cascading dependency the VSA fix did (a
-    // tile switch can change which sub-fields are required, e.g. USMS+
-    // terms). Only resets the payment section if this specific change is
-    // what made it invalid while it was already unlocked.
-    var wasUnlocked = !paymentLocked();
-    runRequiredFieldsValidation(false);
-    if (wasUnlocked && !requiredFieldsSatisfied()) resetPaymentSectionForRegression();
-    updatePaymentGating();
+    // live-recheck watcher (attached only once that rule has already failed
+    // at least once) — clicking a tile's label/radio area fires `click` on
+    // the tile (which that watcher listens for) BEFORE the radio's `change`
+    // event actually applies .selected, so that watcher can fire against a
+    // not-yet-selected state with nothing to correct it afterward.
+    // Re-checking help-block--length here, once selection is definitely
+    // applied, is what actually clears it reliably.
+    var lengthSpan = document.querySelector('.help-block--length');
+    if (lengthSpan) lengthSpan.classList.toggle('has-error', selectedTile() === null);
   });
 
   // ── Competition flow helpers (cascade reset downward) ────────────────────
@@ -759,6 +555,49 @@
     modal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('modal-open');
     document.body.style.paddingRight = scrollbarWidth + 'px';
+  }
+
+  // ── Validation error summary + precise scroll — matches production ───────
+  // Production (Payment.jsx handleSubmit / utils/forms.js) does two things
+  // together on a failed submit: pops a modal listing every currently-
+  // failing field's message (getFormErrors() scrapes span.help-block.has-
+  // error, joins them), and jumps the page so the first error sits flush
+  // against the viewport's top edge (window.scroll(0, FindPos(el)) — an
+  // instant, exact scroll to the element's absolute document Y position, not
+  // scrollIntoView's approximate "somewhere near center"). Reused here
+  // verbatim as findPos(), since it's the actual source of that pixel-tight
+  // alignment, not an approximation of it.
+  function findPos(el) {
+    var top = 0;
+    while (el) {
+      top += el.offsetTop || 0;
+      el = el.offsetParent;
+    }
+    return top;
+  }
+
+  function preciseScrollTo(el) {
+    if (el) window.scroll(0, findPos(el));
+  }
+
+  // Only ever called from validate() (Register/Apple/Google Pay's shared
+  // submit-time check) — matches production, where this modal is
+  // submit-triggered, not something that pops on every field edit.
+  function showValidationErrorModal() {
+    var spans = document.querySelectorAll('.help-block.has-error');
+    if (!spans.length) return;
+    var container = document.querySelector('.js-registration-validation-errors');
+    if (container) {
+      container.innerHTML = '';
+      spans.forEach(function (span) {
+        var text = span.textContent.trim();
+        if (!text) return;
+        var p = document.createElement('p');
+        p.textContent = text;
+        container.appendChild(p);
+      });
+    }
+    openModal(document.getElementById('registrationValidationErrors'));
   }
 
   (function () {
@@ -990,18 +829,15 @@
     return el.offsetParent !== null;
   }
 
-  // Declarative rules for every required field ABOVE the Payment section
-  // (Contact Information through Donations) — everything the agreement
-  // checkbox(es) gate. Deliberately excludes the credit-card fields (their
-  // own visibility/disabled state already skips them, and they live inside
-  // the section this engine is gating, not above it) and the agree-terms /
-  // agree-usmsplus-terms checkboxes themselves (they're the trigger, not a
-  // field being checked). agree-terms-competition IS included — it's a
-  // required field in the Participation flow, above Payment.
-  // Rules marked with ValidateField delegate to validate.js (extracted from
-  // production) which in turn uses validator.js for email, credit card, and
-  // length checks — same pattern the old Register-click validation used.
-  var REQUIRED_FIELD_RULES = [
+  // Declarative rules: span class, validity check, and fields to watch for live re-check.
+  // watch entries use CSS selectors — querySelectorAll is used so radio groups get one
+  // listener per input. Covers every required field on the page, in the order it appears
+  // — Contact Information through Donations, both agreement checkboxes, then the credit
+  // card fields — matching production's own flat, single-pass validation (Payment.jsx's
+  // ValidateForm() validates the whole form at once; nothing is gated/disabled beforehand).
+  // Rules marked with ValidateField delegate to validate.js (extracted from production)
+  // which in turn uses validator.js for email, credit card, and length checks.
+  var RULES = [
     // Contact
     // FirstName, LastName, Gender, and BirthMonth/Day/Year are intentionally
     // not validated here. In production these arrive already filled in from
@@ -1028,46 +864,55 @@
     },
     {
       span: 'help-block--Email',
+      liveValidate: true,
       check: function () { var e = document.getElementById('email'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
       watch: [{ sel: '#email', ev: 'input' }]
     },
     {
       span: 'help-block--Phone',
+      liveValidate: true,
       check: function () { var e = document.getElementById('phone'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
       watch: [{ sel: '#phone', ev: 'input' }, { sel: '#SelectedCountry', ev: 'change' }]
     },
     {
       span: 'help-block--SelectedCountry',
+      liveValidate: true,
       check: function () { var e = document.getElementById('SelectedCountry'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
       watch: [{ sel: '#SelectedCountry', ev: 'change' }]
     },
     {
       span: 'help-block--Address',
+      liveValidate: true,
       check: function () { var e = document.getElementById('address'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
       watch: [{ sel: '#address', ev: 'input' }]
     },
     {
       span: 'help-block--City',
+      liveValidate: true,
       check: function () { var e = document.getElementById('city'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
       watch: [{ sel: '#city', ev: 'input' }]
     },
     {
       span: 'help-block--SelectedState',
+      liveValidate: true,
       check: function () { var e = document.getElementById('SelectedState'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
       watch: [{ sel: '#SelectedState', ev: 'change' }]
     },
     {
       span: 'help-block--selectedLmsc',
+      liveValidate: true,
       check: function () { var e = document.getElementById('selectedLmsc'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
       watch: [{ sel: '#selectedLmsc', ev: 'change' }]
     },
     {
       span: 'help-block--selectedClub',
+      liveValidate: true,
       check: function () { var e = document.getElementById('selectedClub'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
       watch: [{ sel: '#selectedClub', ev: 'change' }]
     },
     {
       span: 'help-block--ZipUs',
+      liveValidate: true,
       check: function () { var e = document.getElementById('zipUs'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
       watch: [{ sel: '#zipUs', ev: 'input' }, { sel: '#SelectedCountry', ev: 'change' }]
     },
@@ -1164,133 +1009,172 @@
       span: 'help-block--lmsc',
       check: function () { var v = parseFloat(lmscInput && lmscInput.value) || 0; return v === 0 || v >= 5; },
       watch: [{ sel: "input[name='lmsc']", ev: 'input' }]
+    },
+    // Terms — matches production (Payment.jsx): neither Register nor the
+    // agree-terms checkbox is ever disabled based on form completeness, so
+    // both are just ordinary required fields here, validated (like
+    // everything above) only when Register is actually clicked.
+    {
+      span: 'help-block--agree-terms',
+      check: function () { return !!(agreeCheckbox && agreeCheckbox.checked); },
+      watch: [{ sel: '#agreeTerms', ev: 'change' }]
+    },
+    {
+      span: 'help-block--agree-usmsplus-terms',
+      check: function () {
+        if (!isVisible(agreeUsmsPlusBlock)) return true;
+        var e = document.getElementById('agreeUsmsPlusTerms');
+        return !!(e && e.checked);
+      },
+      watch: [{ sel: '#agreeUsmsPlusTerms', ev: 'change' }]
+    },
+    // Payment fields (conditional) — skipped while the card-fields section
+    // itself is hidden (an Apple/Google Pay method was picked instead — see
+    // wallet-payments.js), since there's no card to validate in that case.
+    // Also flagged cardField: true so validate(true) (Apple/Google Pay's own
+    // click — see below and wallet-payments.js) can skip them outright: a
+    // wallet-pay click never submits these fields, so they shouldn't block
+    // it even while the card-fields section still happens to be visible
+    // (nobody's picked a payment method yet).
+    {
+      span: 'help-block--cardName',
+      cardField: true,
+      liveValidate: true,
+      check: function () { if (!isVisible(paymentFields)) return true; var e = document.getElementById('cardName'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
+      watch: [{ sel: '#cardName', ev: 'input' }]
+    },
+    {
+      span: 'help-block--cardNumberID',
+      cardField: true,
+      liveValidate: true,
+      check: function () { if (!isVisible(paymentFields)) return true; var e = document.getElementById('cardNumberID'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
+      watch: [{ sel: '#cardNumberID', ev: 'input' }]
+    },
+    {
+      span: 'help-block--cardCodeID',
+      cardField: true,
+      liveValidate: true,
+      check: function () { if (!isVisible(paymentFields)) return true; var e = document.getElementById('cardCodeID'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
+      watch: [{ sel: '#cardCodeID', ev: 'input' }]
+    },
+    {
+      span: 'help-block--expiration',
+      cardField: true,
+      liveValidate: true,
+      check: function () { if (!isVisible(paymentFields)) return true; var e = document.getElementById('expiration'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
+      watch: [{ sel: '#expiration', ev: 'input' }]
+    },
+    {
+      span: 'help-block--cardZipID',
+      cardField: true,
+      liveValidate: true,
+      check: function () { if (!isVisible(paymentFields)) return true; var e = document.getElementById('cardZipID'); if (!e) return false; ValidateField(e); return !e.classList.contains('has-error'); },
+      watch: [{ sel: '#cardZipID', ev: 'input' }]
     }
   ];
 
-  // failingRequiredFields tracks which rules are currently showing an error,
-  // so requiredFieldsSatisfied() (read by updatePaymentGating(), which runs
-  // from many unrelated call sites — tile selection, donation totals, etc.)
-  // is a cheap, side-effect-free lookup rather than something that
-  // re-validates and re-displays errors on every one of those calls. Actual
-  // validation only ever runs from runRequiredFieldsValidation() below,
-  // which is wired solely to the agreement checkbox(es) — that's the
-  // intended trigger, not incidental page activity.
-  var failingRequiredFields = new Set();
-  var watchedRequiredFields = new Set();
+  var liveRulesAttached = new Set();
 
-  function evaluateRequiredField(rule) {
+  function attachLiveCheck(rule) {
+    if (liveRulesAttached.has(rule.span)) return;
+    liveRulesAttached.add(rule.span);
     var span = document.querySelector('.' + rule.span);
-    if (!span) return true;
-    var valid = rule.check();
-    span.classList.toggle('has-error', !valid);
-    if (valid) failingRequiredFields.delete(rule.span);
-    else failingRequiredFields.add(rule.span);
-    return valid;
-  }
-
-  // Watches every required field, not just the ones currently failing, so a
-  // field that regresses after the section unlocks (e.g. a downstream reset
-  // clears a radio that was already answered) re-locks it rather than
-  // leaving Register/wallet-pay enabled against a form that's gone invalid
-  // again.
-  function attachRequiredFieldWatcher(rule) {
-    if (watchedRequiredFields.has(rule.span)) return;
-    watchedRequiredFields.add(rule.span);
+    if (!span) return;
     rule.watch.forEach(function (w) {
       document.querySelectorAll(w.sel).forEach(function (el) {
         el.addEventListener(w.ev, function () {
-          // Captured before re-evaluating: if the section was unlocked going
-          // into this change and something just made it invalid, that's a
-          // regression — reset the payment section rather than just quietly
-          // re-locking it (see resetPaymentSectionForRegression() above).
-          //
-          // Re-evaluates every required field, not just this rule's own —
-          // several rules are conditionally required based on a DIFFERENT
-          // field's value (e.g. the stroke-focus select only becomes
-          // required once Video Stroke Analysis is set to "yes"; national
-          // recognition/certification/agree-terms-competition cascade off
-          // participation and competition-category the same way). Re-
-          // checking only the field that fired misses those — choosing VSA
-          // "yes" would leave the newly-required stroke-focus select
-          // unvalidated since ITS OWN watched event never fires just from
-          // becoming visible. Re-running the full set catches all of that
-          // generically instead of hand-wiring each cross-dependency.
-          var wasUnlocked = !paymentLocked();
-          runRequiredFieldsValidation(false);
-          if (wasUnlocked && !requiredFieldsSatisfied()) resetPaymentSectionForRegression();
-          updatePaymentGating();
+          var valid = rule.check();
+          span.classList.toggle('has-error', !valid);
+          MakeColumnWithErrorSameHeight();
         });
       });
     });
   }
 
-  // The actual "check all required fields above" pass — runs on every
-  // agreement-checkbox change (see the payment-gating section above) and on
-  // a locked Register/wallet-pay click (see below), evaluating and
-  // displaying has-error on every rule, then watching all of them going
-  // forward. scrollToFirst is on for the click path (an explicit "let me
-  // pay" action should immediately show why it can't proceed) and off for
-  // the checkbox path (already at the bottom of the page; errors are above).
-  function runRequiredFieldsValidation(scrollToFirst) {
-    var firstErrorSpan = null;
-    REQUIRED_FIELD_RULES.forEach(function (rule) {
-      var valid = evaluateRequiredField(rule);
-      attachRequiredFieldWatcher(rule);
-      if (!valid && !firstErrorSpan) firstErrorSpan = document.querySelector('.' + rule.span);
+  // Matches production: its shared Input component validates on BLUR
+  // (Forms/Input.jsx's handleInputBlur calls ValidateField on every text
+  // field, including the credit-card ones in Payment.jsx) and its shared
+  // Select component validates on CHANGE (Select.jsx's handleChange) —
+  // both completely independent of Register/submit. attachLiveCheck() above
+  // only ever engages AFTER a rule has failed in a full validate() pass;
+  // this instead runs unconditionally from page load for every
+  // liveValidate-flagged rule (the ones whose check() calls ValidateField),
+  // so e.g. blurring an empty Email field shows its error immediately, with
+  // no Register click involved. Reuses each rule's own watch[0] — the
+  // field's own selector — swapping 'input' for 'blur' to match Input.jsx's
+  // trigger; 'change' (Select.jsx's own trigger) is used as-is.
+  function attachIndependentValidation(rule) {
+    var own = rule.watch[0];
+    if (!own) return;
+    var event = own.ev === 'input' ? 'blur' : own.ev;
+    document.querySelectorAll(own.sel).forEach(function (el) {
+      el.addEventListener(event, function () {
+        var span = document.querySelector('.' + rule.span);
+        var valid = rule.check();
+        if (span) span.classList.toggle('has-error', !valid);
+        MakeColumnWithErrorSameHeight();
+      });
     });
-    MakeColumnWithErrorSameHeight();
-    if (scrollToFirst && firstErrorSpan) {
-      firstErrorSpan.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-    return firstErrorSpan;
   }
 
-  // Cheap getter for updatePaymentGating() — see failingRequiredFields above.
-  function requiredFieldsSatisfied() {
-    return failingRequiredFields.size === 0;
-  }
+  RULES.forEach(function (rule) {
+    if (rule.liveValidate) attachIndependentValidation(rule);
+  });
 
-  function paymentLocked() {
-    return !agreementSatisfied() || !requiredFieldsSatisfied();
-  }
-
-  // A locked Register click fires validateOnLockedPaymentClick() — the same
-  // thing a locked wallet-pay click does (see wallet-payments.js) — instead
-  // of being a silent no-op. Matches how a real disabled control would still
-  // need *some* way to tell the user what's missing, just without the
-  // `disabled` attribute's built-in refusal to fire `click` at all.
+  // Runs the whole form's validation in one pass, matching production
+  // (Payment.jsx handleSubmit / utils/forms.js ValidateForm) — nothing on
+  // this page is ever disabled or gated ahead of time; Register (and, via
+  // window.registrationValidate, Apple/Google Pay — see wallet-payments.js)
+  // simply refuses to proceed if this finds anything wrong. Live-recheck is
+  // only attached to a rule once it's actually failed once, so fixing it
+  // clears the error without needing to click Register again.
   //
-  // Once unlocked (agreement checked, everything above valid), a Register
-  // click runs one more pass — validateCardFields() — since Register is the
-  // only button that actually submits the credit-card fields; Apple/Google
-  // Pay bypass them entirely, so they never need this second check.
+  // skipCardFields is true for Apple/Google Pay: a wallet-pay click never
+  // submits the credit-card fields (Register is the only button that does),
+  // so they shouldn't block it — including while the card-fields section is
+  // still visible because nobody's picked a payment method yet, which is
+  // exactly the moment a wallet button gets clicked.
+  function validate(skipCardFields) {
+    document.querySelectorAll('.help-block.has-error').forEach(function (el) {
+      el.classList.remove('has-error');
+    });
+    document.querySelectorAll('.form-control.has-error, .form-control.has-success').forEach(function (el) {
+      el.classList.remove('has-error', 'has-success');
+    });
+
+    var firstError = null;
+
+    RULES.forEach(function (rule) {
+      if (skipCardFields && rule.cardField) return;
+      if (!rule.check()) {
+        var span = document.querySelector('.' + rule.span);
+        if (span) {
+          span.classList.add('has-error');
+          if (!firstError) firstError = span;
+        }
+        attachLiveCheck(rule);
+      }
+    });
+
+    MakeColumnWithErrorSameHeight();
+    if (firstError) {
+      // Pops the same error-summary modal production shows on a failed
+      // submit (see showValidationErrorModal() above), then jumps to the
+      // first error with the same pixel-precise scroll production uses
+      // (preciseScrollTo()/findPos(), also above) instead of an approximate
+      // scrollIntoView().
+      showValidationErrorModal();
+      preciseScrollTo(firstError);
+    }
+    return !firstError;
+  }
+
   if (registerBtn) {
     registerBtn.addEventListener('click', function (e) {
       e.preventDefault();
-      if (validateOnLockedPaymentClick()) return;
-      validateCardFields(true);
+      validate();
     });
   }
-
-  // The card fields are readonly rather than disabled while locked (see
-  // updatePaymentGating()) specifically so they stay real, live elements
-  // that still fire click/focus — a click or a tab-into on one of them while
-  // locked runs the same validation a locked Register/wallet-pay click does.
-  // focus is included alongside click so keyboard users tabbing into a
-  // locked field (readonly fields, unlike disabled ones, stay in the tab
-  // order) get the same feedback a mouse click gets, rather than landing on
-  // a field with no explanation for why it won't accept input. Rounds out
-  // "interacting with anything in Payment while it's locked runs validation"
-  // across all three surfaces (Register, wallet-pay, card fields).
-  CARD_FIELD_IDS.forEach(function (id) {
-    var el = document.getElementById(id);
-    if (!el) return;
-    ['click', 'focus'].forEach(function (ev) {
-      el.addEventListener(ev, function () {
-        validateOnLockedPaymentClick();
-      });
-    });
-  });
 
   // ── Init ──────────────────────────────────────────────────────────────────
 
@@ -1349,7 +1233,6 @@
   // selecting a membership tile first — matches production's real layout.
   setPaymentVisible(true);
   buildPaymentSummary();
-  updatePaymentGating();
 
   $('[data-toggle="tooltip"]').tooltip();
 
@@ -1441,20 +1324,11 @@
     check('checkbox-interests-self-identified-coach--false');
   };
 
-  // Exposed for wallet-payments.js, which builds the Apple/Google Pay
-  // buttons after this script has already run its initial
-  // updatePaymentGating() pass — it calls registrationUpdatePaymentGating()
-  // once those buttons exist so they pick up the current locked state.
-  // registrationValidateOnLockedPaymentClick() is the single entry point for
-  // "a click landed while locked": it re-checks the real lock condition
-  // (agreement checked AND every required field above Payment valid —
-  // checking only the agreement checkbox was the earlier bug that let a
-  // wallet-pay click open its sheet as soon as it was checked, even with the
-  // rest of the form blank), shows errors on whichever required fields are
-  // still blank, and — if those are all fine but the agreement itself isn't
-  // checked — shows the error on the agreement checkbox(es) instead, so
-  // there's always something to point the user at. Returns true if it
-  // blocked the click, false if the click should proceed normally.
-  window.registrationValidateOnLockedPaymentClick = validateOnLockedPaymentClick;
-  window.registrationUpdatePaymentGating = updatePaymentGating;
+  // Exposed for wallet-payments.js: Apple/Google Pay run the exact same
+  // validate() Register does, and can't open their payment sheet if it
+  // fails — closing the actual gap this all started from (production lets
+  // wallet pay bypass the agreement entirely) without disabling anything
+  // ahead of time. Returns true if the form is valid, false if it blocked
+  // the click.
+  window.registrationValidate = validate;
 })();

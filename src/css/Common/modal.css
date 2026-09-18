@@ -101,6 +101,14 @@ body.modal-open { overflow: hidden; }
     margin: 0;
 }
 
+/* No modalTitle set → modal.njk still renders an empty <h5>, which would
+   otherwise reserve its full line-height as header space even with no text.
+   Collapsing it lets an untitled modal (like the validation error summary)
+   read as just a close button in the corner, no header bar at all. */
+.usms-modal-global .modal-title:empty {
+    display: none;
+}
+
 .usms-modal-global .modal-header--titled .modal-title {
     margin: 0;
 }
