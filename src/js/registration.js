@@ -169,13 +169,15 @@
     }
   }
 
-  // ── Agreement swap — Auto Renew replaces the general agreement ───────────
-  // Matches production (Payment.jsx): the same #agreeTerms checkbox swaps
-  // its caption/validation text and relocates to after the USMS+ block when
-  // Auto Renew is checked (showSignUpAgreement), reverting to its original
-  // position above USMS+ when unchecked — never a second checkbox. React
-  // mounts a fresh uncontrolled checkbox on each swap (always unchecked);
-  // mirrored here by explicitly unchecking + clearing error state.
+  // ── Agreement swap — Auto Renew replaces the general agreement's wording ──
+  // Matches production (Payment.jsx) in that the same #agreeTerms checkbox
+  // swaps its caption/validation text when Auto Renew is checked
+  // (showSignUpAgreement) — never a second checkbox. Deviates from
+  // production in that this block does NOT also relocate relative to USMS+
+  // terms: USMS+ terms always renders first and stays there regardless of
+  // Auto Renew, so the two checkboxes never swap position on the user.
+  // React mounts a fresh uncontrolled checkbox on each swap (always
+  // unchecked); mirrored here by explicitly unchecking + clearing error state.
   var GENERAL_AGREEMENT_HELP = 'You need to agree to the terms to complete your registration.';
   var AUTO_RENEW_AGREEMENT_HELP = 'You need to agree to the auto renew terms to complete your registration.';
   var GENERAL_AGREEMENT_HTML = 'I agree that all information I am providing is factual. I agree to the U.S. Masters Swimming <a href="/content/privacy" target="_blank">Privacy Policy</a>. I understand that this membership will take effect immediately and is non-refundable, non-transferable, and expires on December 31, 2026.';
@@ -193,7 +195,6 @@
 
     if (agreeTermsHelp)    agreeTermsHelp.textContent = autoRenew ? AUTO_RENEW_AGREEMENT_HELP : GENERAL_AGREEMENT_HELP;
     if (agreeTermsCaption) agreeTermsCaption.innerHTML = autoRenew ? AUTO_RENEW_AGREEMENT_HTML : GENERAL_AGREEMENT_HTML;
-    agreeUsmsPlusBlock.insertAdjacentElement(autoRenew ? 'afterend' : 'beforebegin', agreeTermsBlock);
 
     // Only reset when switching TO the auto-renew variant — its wording adds
     // real commitments (opting into automatic charges, storing the card)
