@@ -32,6 +32,19 @@
   opacity: .85;
 }
 
+/* Locked (agreement not yet checked) — kept clickable rather than using the
+   `disabled` attribute so registration.js can still catch the click and
+   surface validation on the agreement instead of doing nothing. See
+   registration.js's updatePaymentGating(). */
+.btn-wallet-pay.btn--payment-locked {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.btn-wallet-pay.btn--payment-locked:hover {
+  opacity: .5;
+}
+
 .btn-apple-pay {
   background: #000;
   color: #fff;
@@ -47,7 +60,7 @@
 .wallet-payment-options__divider {
   position: relative;
   text-align: center;
-  margin: 16px 0;
+  margin: 3.5rem 0;
   color: #767676;
   font-size: 1.3rem;
 }

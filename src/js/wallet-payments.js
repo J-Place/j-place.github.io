@@ -126,6 +126,11 @@
     paymentFields.parentNode.insertBefore(optionsEl, paymentFields);
     paymentFields.parentNode.insertBefore(selectedEl, paymentFields);
 
+    // These buttons didn't exist yet when registration.js ran its own
+    // initial updatePaymentGating() pass — apply the current locked state
+    // now that they're in the DOM.
+    if (window.registrationUpdatePaymentGating) window.registrationUpdatePaymentGating();
+
     var appleModal = buildAppleModal();
     var googleModal = buildGoogleModal();
     document.body.appendChild(appleModal);
@@ -135,8 +140,25 @@
     // bubble phase before modal.js's document-level listener shows the
     // modal — the sheet always opens with the current summary, not stale
     // content from an earlier point in the form.
+    //
+    // These buttons are never given the `disabled` attribute (a real
+    // disabled control never fires `click`), so a click while locked lands
+    // here: stopPropagation keeps modal.js's document-level listener from
+    // ever seeing it (so no payment sheet opens), and
+    // registrationValidateOnLockedPaymentClick() re-checks the real lock
+    // condition (agreement checked AND every required field above Payment
+    // valid — checking only the agreement checkbox was the earlier bug that
+    // let a click through as soon as it was checked, even with the rest of
+    // the form blank) and shows errors on whatever's still wrong — required
+    // fields first, or the agreement checkbox(es) themselves if those are
+    // the only thing left — same as a locked Register click.
     optionsEl.querySelectorAll('.btn-wallet-pay').forEach(function (btn) {
-      btn.addEventListener('click', function () {
+      btn.addEventListener('click', function (e) {
+        if (window.registrationValidateOnLockedPaymentClick && window.registrationValidateOnLockedPaymentClick()) {
+          e.preventDefault();
+          e.stopPropagation();
+          return;
+        }
         var modal = document.querySelector(btn.dataset.modalTarget);
         if (modal) refreshLineItems(modal.querySelector('.js-wallet-line-items'));
       });
