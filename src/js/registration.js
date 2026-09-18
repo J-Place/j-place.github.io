@@ -688,8 +688,11 @@
         // tiles enable here as a mockup convenience for testing the Event
         // Participation "Yes" flow. USMS+ is competitionEligible too and
         // stays in that set — it shouldn't disappear just because the
-        // agreement/certification gate passes.
-        if (tile.dataset.competitionEligible === 'true') {
+        // agreement/certification gate passes. initialDisplay (set once at
+        // load from data-avail-start/data-avail-end) still has to hold —
+        // otherwise this would re-show USMS+/Year-Plus outside their real
+        // date window just because the gate passed.
+        if (tile.dataset.competitionEligible === 'true' && tile.dataset.initialDisplay !== 'none') {
           col.style.display = 'flex';
           activateTile(col);
         } else {
