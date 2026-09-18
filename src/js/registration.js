@@ -682,11 +682,14 @@
       if (membershipContainer) membershipContainer.classList.remove('disabled');
       document.querySelectorAll('.membership-length--option').forEach(function (tile) {
         var col = tile.parentElement;
-        var radio = tile.querySelector('input[type="radio"]');
-        // Event License USMS+ is excluded here on purpose — only Event
-        // License Standard and Event License Year-Plus should enable once
-        // the agreement/certification gate passes.
-        if (tile.dataset.competitionEligible === 'true' && radio && radio.id !== 'usmsPlus') {
+        // Production ties no tile visibility to this checkbox (it only
+        // feeds a form field on submit — see EventParticipation.jsx /
+        // Payment.jsx InterimUSMSPolicyAcknowledgement); competitionEligible
+        // tiles enable here as a mockup convenience for testing the Event
+        // Participation "Yes" flow. USMS+ is competitionEligible too and
+        // stays in that set — it shouldn't disappear just because the
+        // agreement/certification gate passes.
+        if (tile.dataset.competitionEligible === 'true') {
           col.style.display = 'flex';
           activateTile(col);
         } else {
