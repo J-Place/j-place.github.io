@@ -108,3 +108,24 @@
 
 	<button type="submit" id="register-button" class="btn btn-primary btn-large text-uppercase">Register</button>
 </div>
+
+{# Validation error summary — matches production (Payment.jsx's ErrorModal):
+   on a failed Register click, production lists every currently-failing
+   field's help-block message in a popup (getFormErrors() scrapes
+   span.help-block.has-error across the whole form) alongside a precise
+   scroll to the first one (FindPos(), utils/forms.js). Modals are the one
+   place this project always normalizes to our own components/modal.njk
+   structure rather than copying a production component's bespoke markup —
+   production's ErrorModal is its own small wrapper, not the same modal
+   family used elsewhere in their app either. Content is populated by
+   registration.js's showValidationErrorModal(); empty on load.
+
+   No modalTitle — production's ErrorModal has no header bar, just the
+   close button in the corner over the message list (see
+   Common/ErrorModal.jsx / .css). modal.njk's :empty title collapse (see
+   Common/modal.css) is what makes that possible here. #}
+{% set modalId = "registrationValidationErrors" %}
+{% set modalBody %}
+<div class="js-registration-validation-errors registration-validation-errors"></div>
+{% endset %}
+{% include "components/modal.njk" %}

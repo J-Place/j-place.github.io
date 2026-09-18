@@ -27,32 +27,18 @@
   margin-bottom: 2rem;
 }
 
-/* Locked (agreement not yet checked) — kept clickable rather than using the
-   `disabled` attribute so registration.js can still catch the click and
-   surface validation on the agreement instead of doing nothing. See
-   registration.js's updatePaymentGating(). */
-#register-button.btn--payment-locked {
-  opacity: .5;
-  cursor: not-allowed;
+/* Validation error summary modal — matches the actual live production
+   popup (plain centered black text, no header bar) rather than the
+   .text-danger red the ErrorModal.jsx source implies; visually confirmed
+   against the real site. registration.js's showValidationErrorModal()
+   populates one <p> per currently-failing field into this container. */
+.registration-validation-errors p {
+  color: #000;
+  text-align: center;
+  font-size: 1.5rem;
+  margin: 0 0 1rem;
 }
 
-/* Card-field labels only — the inputs themselves already gray out via
-   production's own disabled/readonly styling (bootstrap-3-usms-patch.css's
-   .form-control[disabled],[readonly] + ContactInformation.css's
-   .renew__form-container .form-control[disabled],[readonly], both already
-   loaded on this page), but neither of those touches the <label> text.
-   #ccc matches that same production disabled-text convention. Scoped to
-   .registration-payment__fields so agree-terms/auto-renew/USMS+ labels are
-   unaffected. */
-.registration-payment__fields--locked label {
-  color: #ccc;
-}
-
-/* bootstrap-3-usms-patch.css's cursor:not-allowed for a locked field only
-   keys off [disabled], not [readonly] — the card fields use readonly while
-   locked (see registration.js's updatePaymentGating()) specifically so they
-   still fire click/focus, so this fills in the one bit of the disabled look
-   that selector doesn't also give [readonly]. */
-.registration-payment__fields--locked .form-control[readonly] {
-  cursor: not-allowed;
+.registration-validation-errors p:last-child {
+  margin-bottom: 0;
 }
