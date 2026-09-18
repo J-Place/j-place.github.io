@@ -593,6 +593,24 @@
     updateAutoRenewVisibility();
     buildPaymentSummary();
     setPaymentVisible(hasPayableSelection());
+
+    // membershipTierSelected only ever fires once .selected is genuinely
+    // applied (selectMembershipTier() dispatches it right after setting the
+    // class), unlike the "please select a membership option" rule's own
+    // click-based watcher — clicking a tile's label/radio area fires `click`
+    // on the tile (which that watcher listens for) BEFORE the radio's
+    // `change` event actually applies .selected, so that watcher can
+    // momentarily validate against a not-yet-selected state. Re-running the
+    // full required-fields check here, after selection is definitely
+    // applied, is what actually clears help-block--length reliably — and it
+    // also catches the same kind of cascading dependency the VSA fix did (a
+    // tile switch can change which sub-fields are required, e.g. USMS+
+    // terms). Only resets the payment section if this specific change is
+    // what made it invalid while it was already unlocked.
+    var wasUnlocked = !paymentLocked();
+    runRequiredFieldsValidation(false);
+    if (wasUnlocked && !requiredFieldsSatisfied()) resetPaymentSectionForRegression();
+    updatePaymentGating();
   });
 
   // ── Competition flow helpers (cascade reset downward) ────────────────────
@@ -1182,18 +1200,23 @@
       document.querySelectorAll(w.sel).forEach(function (el) {
         el.addEventListener(w.ev, function () {
           // Captured before re-evaluating: if the section was unlocked going
-          // into this change and this field just made it invalid, that's a
+          // into this change and something just made it invalid, that's a
           // regression — reset the payment section rather than just quietly
           // re-locking it (see resetPaymentSectionForRegression() above).
-          // Note: this rule's own span is the only thing evaluateRequiredField
-          // touches here — an agreement error already on screen is
-          // deliberately left alone. It persists until the agreement
-          // checkbox itself is legitimately checked (which only sticks once
-          // everything else already passes), not as a side effect of editing
-          // some unrelated field while it's still mid-correction.
+          //
+          // Re-evaluates every required field, not just this rule's own —
+          // several rules are conditionally required based on a DIFFERENT
+          // field's value (e.g. the stroke-focus select only becomes
+          // required once Video Stroke Analysis is set to "yes"; national
+          // recognition/certification/agree-terms-competition cascade off
+          // participation and competition-category the same way). Re-
+          // checking only the field that fired misses those — choosing VSA
+          // "yes" would leave the newly-required stroke-focus select
+          // unvalidated since ITS OWN watched event never fires just from
+          // becoming visible. Re-running the full set catches all of that
+          // generically instead of hand-wiring each cross-dependency.
           var wasUnlocked = !paymentLocked();
-          evaluateRequiredField(rule);
-          MakeColumnWithErrorSameHeight();
+          runRequiredFieldsValidation(false);
           if (wasUnlocked && !requiredFieldsSatisfied()) resetPaymentSectionForRegression();
           updatePaymentGating();
         });
