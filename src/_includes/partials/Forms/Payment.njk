@@ -6,18 +6,27 @@
 		{# Line items are built dynamically; empty on load #}
 	</div>
 
+	{# Auto Renew — matches production order (Payment.jsx): rendered before
+	   the agreement checkbox(s) below. #}
+	<div class="form-group auto-renew" style="display:none;">
+		<div class="col-xs-12">
+			<label id="signup__label" class="checkbox-label" for="signup">
+				<div class="checkbox-container">
+					<input type="checkbox" name="signup" id="signup" value="">
+					<span class="checkbox__placeholder"></span>
+				</div>
+				Auto Renew
+			</label>
+			<span class="checkbox-note">If you select to pay via auto renewal, please note that only the standard membership fee WITHOUT donations or other updates will be charged in November 2026. Membership fees may vary over time. You will be notified in advance of any fee changes.</span>
+		</div>
+	</div>
+
 	{# Agreement — swaps caption + position when Auto Renew is checked, rather
 	   than adding a second checkbox. Matches production (Payment.jsx): the
 	   same #agreeTerms checkbox conditionally renders either above or below
 	   the USMS+ block (showSignUpAgreement), never both — handled here by
 	   registration.js moving this one node and swapping its text instead of
-	   duplicating the checkbox.
-
-	   Placed above Auto Renew (a deviation from strict production order) so
-	   the agreement gate reads before the payment options it locks —
-	   registration.js's updatePaymentGating() disables the card fields and
-	   locks Register/wallet-pay until this (and, when visible, the USMS+
-	   checkbox below) is checked. #}
+	   duplicating the checkbox. #}
 	<div class="form-group agree-terms">
 		<div class="col-xs-12">
 			<span class="help-block help-block--agree-terms">You need to agree to the terms to complete your registration.</span>
@@ -47,19 +56,6 @@
 		</div>
 	</div>
 
-	<div class="form-group auto-renew" style="display:none;">
-		<div class="col-xs-12">
-			<label id="signup__label" class="checkbox-label" for="signup">
-				<div class="checkbox-container">
-					<input type="checkbox" name="signup" id="signup" value="">
-					<span class="checkbox__placeholder"></span>
-				</div>
-				Auto Renew
-			</label>
-			<span class="checkbox-note">If you select to pay via auto renewal, please note that only the standard membership fee WITHOUT donations or other updates will be charged in November 2026. Membership fees may vary over time. You will be notified in advance of any fee changes.</span>
-		</div>
-	</div>
-
 	<div class="registration-payment__fields" style="display:none;">
 		<div class="form-group card-name">
 			<div class="col-xs-12">
@@ -71,7 +67,7 @@
 			</div>
 		</div>
 
-		<div class="form-group card-number">
+		<div class="form-group clearfix card-number">
 			<div class="col-xs-12 col-sm-7">
 				<label class="font-weight-bold" for="cardNumberID">Card Number</label>
 				<div>
