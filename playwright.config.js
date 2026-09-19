@@ -1,7 +1,15 @@
 const { defineConfig, devices } = require('@playwright/test');
 
+// Resolved once here so both `use.baseURL` below and the HTML report's
+// embedded metadata (read back later by scripts/publish-visual-report.js)
+// agree on what this specific run actually targeted — re-deriving it a
+// second time at publish time would just re-read whatever PW_BASE_URL (if
+// any) happens to be set in that later shell, not the one this run used.
+const baseURL = process.env.PW_BASE_URL || 'https://j-place.github.io';
+
 module.exports = defineConfig({
   testDir: './tests/usms-visual-regression-screenshots',
+  metadata: { baseURL },
   fullyParallel: true,
   // Cap parallelism: fully-parallel workers all pulling multi-MB pages
   // (swimmer-magazine articles run 5-8 MB, home ~7 MB) from the live target at
@@ -22,7 +30,7 @@ module.exports = defineConfig({
   // just a summary count. 'html' keeps the diff viewer for failures.
   reporter: [['list'], ['html', { open: 'never' }]],
   use: {
-    baseURL: process.env.PW_BASE_URL || 'https://j-place.github.io',
+    baseURL,
   },
   expect: {
     timeout: 10000,
