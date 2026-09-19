@@ -1,0 +1,97 @@
+/* Registration/renewal form overrides — production component: production/src/App/pages/Renew.css */
+
+/* ── Bootstrap grid restoration for multi-column rows ────────
+   production/src/App/pages/Renew.css:125-131 sets
+   .renew__form-body .form-group { display: flex; flex-wrap: wrap;
+   flex-direction: row; align-items: end; } for the renewal flow, but our
+   shared FullRegistrationForm.njk wrapper applies .renew__form-body to
+   every registration (new-member included), so these multi-column rows
+   lose their normal float grid and end up misaligned. Restore
+   display: block so the existing float grid takes over again, same as
+   every .form-group outside .renew__form-body.
+
+   Clearing those floats relies on an explicit .clearfix class on the row
+   itself (Bootstrap's own .clearfix:after { content:""; display:table;
+   clear:both }), not an ambient .form-group rule — confirmed via computed
+   styles, there is no such ambient clearfix. first-last/gender/
+   email-phone/city-state-zip already carry .clearfix in production's own
+   markup (ContactInformation.jsx) — a clearfix is inert on a flex
+   container, which confirms these rows were built as float-based grids,
+   not flex rows. card-number and ClubInformation's LMSC/Club/Workout row
+   never had a .clearfix class (nothing needed one while flex sized them
+   automatically), so that class was added alongside this display:block
+   fix directly in their markup (Payment.njk, ClubInformation.njk) —
+   without it the row collapses to 0 height and the next sibling
+   (.card-zip) slides up into its leftover float space.
+   club-information__row is a local-only hook class (ClubInformation.njk)
+   — production's own equivalent row has no distinguishing class to
+   target.
+
+   card-zip and card-name are deliberately NOT in the display:block list
+   above: each is a single-column row (col-xs-12 / col-xs-8+col-sm-4), so
+   the float-vs-flex distinction produces the same visual result either
+   way — no fix needed there.
+
+   Second, separate bug (below): a real Bootstrap container > row > col
+   structure gives its .row a negative margin (Bootstrap's own -15px)
+   that exactly cancels its columns' padding, so the first column in any
+   row always sits flush with the row's own container regardless of what
+   padding value that column happens to carry. Our .form-group rows have
+   no such canceling margin (production's own Renew.css sets margin: 0 on
+   them), so whatever padding-left a row's first column carries shows up
+   as a real, visible gap instead of being absorbed — and production
+   applies that padding inconsistently: .form-group.card-number's columns
+   get bumped to 10px at the sm+ breakpoint (production Payment.css's
+   @media (--sm-viewport) rule) while card-zip/card-name's lone column
+   and first-last/gender/email-phone/city-state-zip's first column stay
+   at the base 5px. Confirmed live on production's own renewal page — a
+   genuine production bug, not a scraping artifact — so rather than
+   chase whatever arbitrary padding value each row's production CSS
+   happens to assign, zero out just the first column's padding-left,
+   which is what the row's own negative margin would have done for us if
+   one existed. Targets `> div:first-child` rather than a `[class*=...]`
+   col-class match — card-name's column carries only a single col-xs-12
+   class with no second, space-separated col-* class to key off of (the
+   convention production itself uses in Payment.css, e.g.
+   `.form-group.card-number [class*=' col-']`, silently fails to match a
+   div with just one col-* class).
+
+   The actual source, confirmed by reading the real loaded stylesheets:
+   bootstrap-3-usms-patch.css gives every .col-* class a universal base
+   padding-left: 5px (that's where card-zip/card-name/country's 5px comes
+   from — none of the three are named in any row-specific override).
+   registration.min.css then layers a more specific override for six
+   named row classes (card-number, city-state-zip, email-phone,
+   first-last, gender, street), bumping them to 10px at
+   @media (min-width: 768px) — which is why street (the Address row) and
+   card-number show 10px while country/card-zip/card-name stay at 5px.
+   This 10px bump reads as intentional (wider breathing room between
+   sibling columns on larger screens) for the genuinely multi-column rows
+   in that list, but street is single-column with no sibling to space
+   from, so it gets the same bump for no visual reason. Either way, the
+   real defect isn't the bump's existence — it's that nothing cancels it
+   on each row's *leading* column, so zeroing that one column stays the
+   right fix regardless of why any given row's padding value is what it
+   is. Covers every row in Payment.njk and ContactInformation.njk that
+   has this problem, single- or multi-column alike. */
+.renew__form-body .form-group.first-last > div:first-child,
+.renew__form-body .form-group.gender > div:first-child,
+.renew__form-body .form-group.email-phone > div:first-child,
+.renew__form-body .form-group.country > div:first-child,
+.renew__form-body .form-group.street > div:first-child,
+.renew__form-body .form-group.city-state-zip > div:first-child,
+.renew__form-body .form-group.club-information__row > div:first-child,
+.renew__form-body .form-group.card-number > div:first-child,
+.renew__form-body .form-group.card-zip > div:first-child,
+.renew__form-body .form-group.card-name > div:first-child {
+    padding-left: 0;
+}
+
+.renew__form-body .form-group.first-last,
+.renew__form-body .form-group.gender,
+.renew__form-body .form-group.email-phone,
+.renew__form-body .form-group.city-state-zip,
+.renew__form-body .form-group.club-information__row,
+.renew__form-body .form-group.card-number {
+    display: block;
+}

@@ -23,3 +23,87 @@
   left: 10px;
   top: 0;
 }
+
+/* Not a production pattern (see feedback_modal_pattern memory — modals
+   always normalize to our modal.njk, so there's no production source to
+   trace these rules to). .modal-body p renders at 1.8rem here (no
+   modalBodyClass set); .radio-label defaults to 1.4rem/inline-block per
+   production's Common/Radio.css, so both are overridden to read as one
+   voice and stack instead of sitting side by side. */
+/* Two classes to outrank production's usms.min.css .usms-container p rule
+   (font-weight: 300 at 0,1,1 specificity) which otherwise wins over a bare
+   class selector despite loading first. */
+.usms-modal-global .national-recognition-decline__question {
+  font-weight: 500;
+}
+
+.renew__form-body .form-group.national-recognition-decline__choices {
+  margin-bottom: 3rem;
+}
+
+.national-recognition-decline__choices .col-xs-12 {
+  display: flex;
+  flex-direction: column;
+}
+
+.national-recognition-decline__choices .radio-label {
+  font-size: 1.8rem;
+  font-weight: 300;
+  margin-bottom: 1.5rem;
+}
+
+/* ── Participation card — competition terms fixes ──────────── */
+/* Competition Certification and Agreement are still a single opt-in
+   checkbox each (National Recognition was reverted back to Yes/No radios —
+   see git history — so it's back to the plain .form-group/.control-label/
+   .radio-label styling shared with "Do you plan on participating in
+   events?" and "Competition Category" above, no special override needed).
+   Production's and this file's own prior per-section rules for the old
+   shapes (a 350px/20rem-padded column for agree-terms-competition,
+   absolutely-positioned .radio-container offsets for competition-
+   certification's old radio) have been removed rather than adapted, so
+   both fall back to the same plain .checkbox-label/.checkbox-container
+   defaults and their checkboxes line up on the same left edge.
+   #cardParticipationInfo is itself a column-direction flex container, and
+   (per registration.min.css's unscoped `.form-group{display:flex}`, a rule
+   apparently meant for a different section) each .form-group is ALSO its
+   own flex container — between the two, each one's cross-axis (width) was
+   shrink-to-fit sized off its own content length and then auto-centered,
+   giving different checkbox text lengths different left offsets. Neither
+   align-self: stretch nor a plain width override was enough to beat that
+   combination, so this forces the actual box model directly: full width,
+   block layout, no auto-margin. */
+.card.participation-info .form-group.competition-certification,
+.card.participation-info .form-group.agree-terms-competition {
+  display: block;
+  width: 100%;
+  margin-left: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+/* Production also sets .agree-terms-competition specifically to
+   padding-left: 20rem (vs. the generic .form-group's 4rem) at this same
+   breakpoint — only visible once viewports get wide enough to reach it,
+   which is why this one needed its own explicit, higher-specificity
+   override to match competition-certification's plain layout. */
+@media (min-width: 1200px) {
+  .card.participation-info .form-group.competition-certification,
+  .card.participation-info .form-group.agree-terms-competition {
+    max-width: 600px;
+    margin: 0 auto 2rem;
+  }
+}
+.card.participation-info .form-group.competition-certification label.checkbox-label,
+.card.participation-info .form-group.agree-terms-competition label.checkbox-label {
+  margin: 0 0 0 28px;
+  padding-left: 0;
+  text-indent: 0;
+  white-space: normal;
+}
+
+/* Scoped to VSA rather than left bare (production's own base
+   .radio-container is margin-right: 8px) — this narrower 5px gap is a VSA-
+   only adjustment, not a site-wide one. */
+.video-stroke-analysis .radio-container {
+  margin-right: 5px;
+}
