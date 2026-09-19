@@ -14,7 +14,10 @@
     "test:visual": "playwright test",
     "test:visual:update": "playwright test --update-snapshots",
     "test:visual:report": "playwright show-report",
-    "publish:visual-report": "node scripts/publish-visual-report.js"
+    "publish:visual-report": "node scripts/publish-visual-report.js",
+    "monitor:prod": "playwright test --config=playwright.production-monitor.config.js",
+    "monitor:prod:update": "playwright test --config=playwright.production-monitor.config.js --update-snapshots",
+    "monitor:prod:report": "playwright show-report production-monitor-report --port 9324"
   },
   "keywords": [],
   "author": "",
