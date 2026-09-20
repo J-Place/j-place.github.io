@@ -1,0 +1,172 @@
+name: Watch Production Deployment
+
+# Polls production's own self-reported asset version (see
+# scripts/detect-production-deploy.js) on a schedule. When it changes,
+# refreshes our vendored copies of production's CSS/JS and re-runs the
+# production-monitor suite, then notifies Slack. One detection job gates two
+# parallel downstream jobs, so nothing here polls production more than once
+# per run. See CLAUDE.md's vendoring section and the production-monitor
+# suite's own commit message for background.
+
+on:
+  schedule:
+    - cron: '0 */4 * * *'
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Run the downstream jobs even if no change was detected'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: production-watch
+  # Unlike deploy.yml/deploy-development.yml (safe to cancel-and-supersede,
+  # idempotent per push), this workflow does stateful things — persists a
+  # repo variable, commits vendored files/reports — so an overlapping run
+  # (e.g. a manual force-dispatch landing mid-schedule-run) should queue
+  # rather than race and interleave commits.
+  cancel-in-progress: false
+
+jobs:
+  detect-deployment:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.detect.outputs.changed }}
+      identifier: ${{ steps.detect.outputs.identifier }}
+      previous: ${{ steps.detect.outputs.previous }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: master
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+      - name: Check production's asset version
+        id: detect
+        env:
+          LAST_SEEN_VERSION: ${{ vars.PROD_VERSION_SIGNAL }}
+        run: node scripts/detect-production-deploy.js
+      - name: Persist detected version
+        if: steps.detect.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh variable set PROD_VERSION_SIGNAL --body "${{ steps.detect.outputs.identifier }}"
+      - name: Summary
+        run: |
+          if [ "${{ steps.detect.outputs.changed }}" = "true" ]; then
+            echo "🚀 Production deploy detected: ${{ steps.detect.outputs.previous }} → ${{ steps.detect.outputs.identifier }}" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "No change detected (current: ${{ steps.detect.outputs.identifier }})" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+  refresh-vendored-assets:
+    needs: detect-deployment
+    if: needs.detect-deployment.outputs.changed == 'true' || inputs.force == true
+    runs-on: ubuntu-latest
+    outputs:
+      failed_count: ${{ steps.refresh.outputs.failed_count }}
+      succeeded_count: ${{ steps.refresh.outputs.succeeded_count }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: master
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+      - run: npm install
+      - name: Refresh vendored assets
+        id: refresh
+        env:
+          ASSET_VERSION: ${{ needs.detect-deployment.outputs.identifier }}
+        run: npm run vendor:refresh
+      - name: Commit vendored assets
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/vendor scripts/vendor-manifest.json
+          if git diff --cached --quiet; then
+            echo "Nothing to commit."
+            exit 0
+          fi
+          git commit -m "Refresh vendored production CSS/JS (production version: ${{ needs.detect-deployment.outputs.previous }} → ${{ needs.detect-deployment.outputs.identifier }})"
+          for i in 1 2 3 4 5; do
+            git push origin HEAD:master && exit 0
+            echo "Push rejected (attempt $i) — rebasing onto latest master and retrying..."
+            git pull --rebase origin master
+            sleep $(( (RANDOM % 5) + 1 ))
+          done
+          echo "::error::Failed to push vendored-asset refresh after 5 attempts."
+          exit 1
+
+  run-production-monitor:
+    needs: detect-deployment
+    if: needs.detect-deployment.outputs.changed == 'true' || inputs.force == true
+    runs-on: ubuntu-latest
+    outputs:
+      outcome: ${{ steps.monitor.outcome }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: master
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+      - run: npm install
+      - run: npx playwright install --with-deps chromium
+      - name: Run production monitor suite
+        id: monitor
+        continue-on-error: true
+        run: npm run monitor:prod
+      - name: Publish report
+        if: steps.monitor.outcome == 'failure'
+        run: npm run publish:production-monitor-report
+      - name: Commit published report
+        if: steps.monitor.outcome == 'failure'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add reports/production-monitor
+          if git diff --cached --quiet; then
+            echo "Nothing to commit."
+            exit 0
+          fi
+          git commit -m "Publish production-monitor report (deploy ${{ needs.detect-deployment.outputs.identifier }})"
+          for i in 1 2 3 4 5; do
+            git push origin HEAD:master && exit 0
+            echo "Push rejected (attempt $i) — rebasing onto latest master and retrying..."
+            git pull --rebase origin master
+            sleep $(( (RANDOM % 5) + 1 ))
+          done
+          echo "::error::Failed to push production-monitor report after 5 attempts."
+          exit 1
+
+  notify:
+    needs: [detect-deployment, refresh-vendored-assets, run-production-monitor]
+    if: always() && needs.detect-deployment.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Slack
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          PREVIOUS: ${{ needs.detect-deployment.outputs.previous }}
+          IDENTIFIER: ${{ needs.detect-deployment.outputs.identifier }}
+          VENDOR_FAILED: ${{ needs.refresh-vendored-assets.outputs.failed_count }}
+          VENDOR_OK: ${{ needs.refresh-vendored-assets.outputs.succeeded_count }}
+          MONITOR_OUTCOME: ${{ needs.run-production-monitor.outputs.outcome }}
+        run: |
+          if [ -z "$SLACK_WEBHOOK_URL" ]; then
+            echo "::warning::SLACK_WEBHOOK_URL secret not set — skipping Slack notification. See CLAUDE.md's vendoring section / the plan for Phase 0 setup."
+            exit 0
+          fi
+          MONITOR_LINE="Production monitor: ${MONITOR_OUTCOME:-unknown}"
+          if [ "$MONITOR_OUTCOME" = "failure" ]; then
+            MONITOR_LINE="Production monitor: FAILED — see committed report at reports/production-monitor/"
+          fi
+          TEXT="🚀 USMS production deployed (version ${PREVIOUS:-unset} → ${IDENTIFIER}). Vendoring: ${VENDOR_OK:-0} refreshed, ${VENDOR_FAILED:-0} failed. ${MONITOR_LINE}."
+          curl -sf -X POST -H 'Content-type: application/json' \
+            --data "$(jq -n --arg text "$TEXT" '{text: $text}')" \
+            "$SLACK_WEBHOOK_URL"
