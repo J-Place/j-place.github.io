@@ -240,6 +240,11 @@ module.exports = function(eleventyConfig) {
   // Visual-regression dashboard: publish the latest report + baseline screenshots
   eleventyConfig.addPassthroughCopy({ "reports/visual-regression": "reports/visual-regression" });
   eleventyConfig.addWatchTarget("reports/visual-regression");
+
+  // Production-monitor dashboard: same pattern, published by
+  // scripts/publish-production-monitor-report.js
+  eleventyConfig.addPassthroughCopy({ "reports/production-monitor": "reports/production-monitor" });
+  eleventyConfig.addWatchTarget("reports/production-monitor");
   eleventyConfig.addPassthroughCopy({
     "tests/usms-visual-regression-screenshots/screenshots.spec.js-snapshots/*.png": "visual-regression-baselines"
   });
