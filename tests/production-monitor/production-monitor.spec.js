@@ -31,6 +31,18 @@ for (const check of checks) {
     // non-deterministic per machine/network. Block it so that chrome text is
     // stable run to run (same fix as the mockup suite's screenshots.spec.js).
     await page.route(/ipinfo\.io/, (route) => route.abort());
+    // Google ad slots (.advertising-dc, masked per-check in checks.js where
+    // present) don't just show different creative between loads — their
+    // IFRAME'S OWN HEIGHT varies with whatever ad happens to fill it, which
+    // shifts every element below it on the page. A pixel mask can't
+    // compensate for a masked element's bounding box itself changing size
+    // (confirmed: fitness-article-detail swung 300-380px run to run with the
+    // ad slot masked but still loading). Block gpt.js and the ad-serving
+    // domains outright so the slot never populates and stays at its natural
+    // empty-container height, every run, on every page — not just the ones
+    // checks.js currently masks. (googletagmanager.com is left unblocked —
+    // that's analytics, not what's causing the layout shift.)
+    await page.route(/doubleclick\.net|googlesyndication\.com|googletagservices\.com/, (route) => route.abort());
     // 'networkidle' times out on production — chat widgets, ads, and analytics
     // beacons (GA, GTM, etc.) keep issuing background requests indefinitely, so
     // the network never truly goes idle (confirmed: 3 outright failures + 2
@@ -66,6 +78,19 @@ for (const check of checks) {
     // 'load' event for this.
     await page.evaluate(() => document.fonts.ready);
     await waitForStableHeight(page);
+
+    // Structural presence checks, run before the screenshot and reported
+    // separately from it: `mask` intentionally blinds the pixel comparison
+    // to a region's ever-changing content (a different article, a different
+    // ad, a different hero slide), which also means a totally empty/broken
+    // masked region would look identical to a healthy one under a pixel
+    // diff. `presence` closes that gap — assert the region still contains
+    // real, expected content (without caring what it says), independent of
+    // whatever's actually rendered there today.
+    for (const { selector, min } of check.presence || []) {
+      const count = await page.locator(selector).count();
+      expect(count, `expected at least ${min} "${selector}" but found ${count}`).toBeGreaterThanOrEqual(min);
+    }
 
     const maskLocator = check.mask ? page.locator(check.mask.join(', ')) : null;
     const mask = maskLocator && (await maskLocator.count()) ? [maskLocator] : [];
