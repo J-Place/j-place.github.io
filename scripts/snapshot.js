@@ -14,6 +14,7 @@
 const { execSync } = require('child_process');
 const fs   = require('fs');
 const path = require('path');
+const { vendorCssFile } = require('./lib/vendor-assets');
 
 // ── Parse args ────────────────────────────────────────────────────────────────
 
@@ -134,39 +135,15 @@ function vendorExternalCss(snapshotDir) {
   }
 }
 
-// Downloads one stylesheet and rewrites its internal url(...) references
-// (fonts, background images) to absolute production URLs, since the file
-// itself is moving but those referenced assets are not being vendored.
-// Returns the site-relative href to use in place of the original URL, or
-// null if the fetch failed (original remote URL is left in place).
+// Downloads one stylesheet and returns the site-relative href to use in
+// place of the original URL, or null if the fetch failed (original remote
+// URL is left in place). Fetch/rewrite logic lives in lib/vendor-assets.js,
+// shared with scripts/vendor-refresh.js's living (non-immutable) copies.
 function vendorOneCssFile(url, vendorDir) {
-  fs.mkdirSync(vendorDir, { recursive: true });
-  let parsed;
-  try {
-    parsed = new URL(url);
-  } catch {
-    return null;
-  }
-  const origin = `${parsed.protocol}//${parsed.host}`;
-  const originDir = new URL('.', url).href;
-  const safeHost = parsed.hostname.replace(/[^a-z0-9.-]/gi, '-');
-  const baseName = path.basename(parsed.pathname) || 'style.css';
-  const localName = `${safeHost}-${baseName}`;
-
-  try {
-    let css = execSync(`curl -sL --fail "${url}"`, { encoding: 'utf8', maxBuffer: 1024 * 1024 * 20 });
-    css = css.replace(/url\(\s*(['"]?)([^'")]+)\1\s*\)/gi, (full, quote, ref) => {
-      if (/^(data:|https?:|\/\/)/i.test(ref)) return full;
-      const absolute = ref.startsWith('/') ? origin + ref : originDir + ref;
-      return `url(${quote}${absolute}${quote})`;
-    });
-    fs.writeFileSync(path.join(vendorDir, localName), css);
-    console.log(`  Vendored ${url} → vendor/css/${localName}`);
-    return `/vendor/css/${localName}`;
-  } catch (err) {
-    console.warn(`  ! Failed to vendor CSS from ${url}, leaving remote link in place: ${err.message}`);
-    return null;
-  }
+  const localName = vendorCssFile(url, vendorDir);
+  if (!localName) return null;
+  console.log(`  Vendored ${url} → vendor/css/${localName}`);
+  return `/vendor/css/${localName}`;
 }
 
 // ── Build ──────────────────────────────────────────────────────────────────────

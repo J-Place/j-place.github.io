@@ -232,6 +232,11 @@ module.exports = function(eleventyConfig) {
 
   eleventyConfig.addPassthroughCopy({ "src/img": "img" });
 
+  // Vendored production CSS/JS (see scripts/vendor-refresh.js + CLAUDE.md's
+  // vendoring policy) — same /vendor/css|js/... URL shape scripts/snapshot.js
+  // already uses for its own, separate immutable-snapshot vendoring.
+  eleventyConfig.addPassthroughCopy({ "src/vendor": "vendor" });
+
   // Visual-regression dashboard: publish the latest report + baseline screenshots
   eleventyConfig.addPassthroughCopy({ "reports/visual-regression": "reports/visual-regression" });
   eleventyConfig.addWatchTarget("reports/visual-regression");
