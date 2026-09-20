@@ -14,12 +14,40 @@ const pages = require('../../tests/usms-visual-regression-screenshots/pages.js')
 // keep these in sync if that function ever changes. Not `require`d directly: that file calls
 // Playwright's test() at module load time, which throws outside the test runner.
 function slug(pagePath) {
-  return pagePath
+  const [path, query] = pagePath.split('?');
+  const base = path
     .replace(/^\//, '')
     .replace(/\/$/, '')
     .replace(/\.html$/, '')
     .replace(/\//g, '--') || 'root';
+  const full = query ? `${base}--${query.replace(/[&=]/g, '-')}` : base;
+
+  // toHaveScreenshot() additionally runs the name through Playwright's own
+  // sanitizeForFilePath (playwright-core/lib/utils), which strips characters
+  // query strings can contain (e.g. '.' in lat/long values) that the transform
+  // above leaves untouched. Same regex, so filenames actually match on disk.
+  return full.replace(/[\x00-\x2C\x2E-\x2F\x3A-\x40\x5B-\x60\x7B-\x7F]+/g, '-');
 }
+
+// Human-readable label shown on the gallery page in place of the raw pagePath.
+const LABELS = {
+  '/home/index.html': 'Homepage',
+  '/fitness-and-training/articles-and-videos/index.html': 'Articles and Videos',
+  '/fitness-and-training/articles-and-videos/articles/masters-swimming-training-plan-for-former-competitive-swimmers/index.html': 'Article - Masters Swimming Training Plan ...',
+  '/swimmer-magazine/index.html': 'SWIMMER Magazine Archive',
+  '/swimmer-magazine/may-jun-2026/index.html': 'SWIMMER Magazine TOC',
+  '/swimmer-magazine/may-jun-2026/how-to-do-butterfly-pull/index.html': 'SWIMMER Magazine Article',
+  '/events/index.html': 'Calendar of Events',
+  '/events/events/2026-bumpy-jones-classic-long-course-meet-a1jpo00000abjhf2a3/index.html': 'Event - Bumpy Jones',
+  '/clubs/index.html?lat=27.3288505&long=-82.5368164': 'Club Finder',
+  '/clubs/sarasota-y-sharks-536.html?lat=27.3288505&long=-82.5368164': 'Club - Sarasota Sharks',
+  '/clubs/indy-aquatic-masters-1745.html?lat=39.76909&long=-86.158018': 'Club - Indy Masters',
+  '/join-usms/join-or-renew/index.html': 'Join or Renew',
+  '/login-to-registration-page/index.html': 'Login to Registration',
+  '/registration/index.html?user=NEW': 'Member Registration',
+  '/club-central/club-edit.html': 'Club Edit',
+  '/events/event-central/event-dashboard/event-edit.html': 'Event Edit',
+};
 
 // Manual (hand-captured) validation-state screenshots, shown as variants of their base page.
 // Not produced by the automated slug-based naming convention, so mapped by hand.
@@ -66,6 +94,6 @@ module.exports = function () {
       }
     }
 
-    return { pagePath, items };
+    return { pagePath, label: LABELS[pagePath] || pagePath, items };
   });
 };

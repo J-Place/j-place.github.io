@@ -13,7 +13,7 @@ permalink: /visual-regression-gallery.html
     <h5>Visual Regression Screenshot List</h5>
     {% for group in visualBaselines %}
     <div class="vrg__row">
-      <a class="vrg__page" href="{{ group.pagePath }}">{{ group.pagePath }}</a>
+      <a class="vrg__page" href="{{ group.pagePath }}" title="{{ group.pagePath }}">{{ group.label }}</a>
       <span class="vrg__shots">
         {%- for item in group.items -%}
           {%- if not loop.first %} <span class="vrg__sep">|</span> {% endif -%}
