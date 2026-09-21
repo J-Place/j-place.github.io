@@ -87,24 +87,57 @@ for (const pagePath of pages) {
         if (filterToggle) filterToggle.textContent = 'Fewer Filters';
       });
     }
+    // Home hero carousel (carousel.js): default markup already sits on slide 0
+    // (.carousel's inline `left: 0%`, nav item 0 already `--active`), and the
+    // frozen clock keeps its setInterval from ever firing — so nothing here
+    // should be required to stay on slide 0. Pin it anyway (belt-and-suspenders
+    // against markup/JS drift) and pause slide 1's autoplay video so it can't
+    // decode/paint a changing frame even though `.carousel-container`'s
+    // overflow:hidden already clips it off-screen. This replaces masking the
+    // whole carousel, which was hiding the hero text/typography along with the
+    // animation — the real source of the old intermittent failures was more
+    // likely slide 0's own background-image (a CSS property, not an <img>,
+    // so uncovered by the image-await below) not consistently finishing its
+    // load before capture, which the explicit wait added there now covers.
+    await page.evaluate(() => {
+      const carousel = document.querySelector('.carousel');
+      if (!carousel) return;
+      carousel.style.transition = 'none';
+      carousel.style.left = '0%';
+      const activeNav = document.querySelector('.carousel-nav__item--active');
+      const firstNav = document.querySelector('#carousel-nav__item-0');
+      if (activeNav && activeNav !== firstNav) activeNav.classList.remove('carousel-nav__item--active');
+      if (firstNav) firstNav.classList.add('carousel-nav__item--active');
+      document.querySelectorAll('.carousel__slide video').forEach((v) => v.pause());
+    });
     // networkidle doesn't guarantee images have finished decoding/laying out —
     // wait explicitly so late-arriving images can't shift page height mid-capture.
-    await page.evaluate(() => Promise.all(
-      Array.from(document.images)
+    // Also covers the hero carousel's CSS background-image slides, which
+    // aren't <img> elements and so aren't caught by document.images below.
+    await page.evaluate(() => Promise.all([
+      ...Array.from(document.images)
         .filter((img) => !img.complete)
         .map((img) => new Promise((resolve) => {
           img.addEventListener('load', resolve, { once: true });
           img.addEventListener('error', resolve, { once: true });
-        }))
-    ));
+        })),
+      ...Array.from(document.querySelectorAll('.carousel__slide-image'))
+        .map((el) => {
+          const match = el.style.backgroundImage.match(/url\(["']?(.*?)["']?\)/);
+          if (!match) return null;
+          return new Promise((resolve) => {
+            const img = new Image();
+            img.addEventListener('load', resolve, { once: true });
+            img.addEventListener('error', resolve, { once: true });
+            img.src = match[1];
+          });
+        })
+        .filter(Boolean),
+    ]));
     // Regions excluded from the pixel comparison — each is live or animated in
     // a way the frozen clock and image-await can't make deterministic, and each
     // has a fixed height so masking it doesn't shift page layout:
     //   #club-detail-map, .club-map-new  Google Maps embeds — live tiles
-    //   .carousel-container              home hero carousel — carousel.js
-    //                                    rotates slides (image vs autoplay
-    //                                    video); which slide/frame shows on
-    //                                    capture isn't pinnable
     //   .image-slider                    home partner-logo strip —
     //                                    image-slider.js scrolls it and the
     //                                    logos load from a CDN
@@ -116,7 +149,7 @@ for (const pagePath of pages) {
     //                                    load from a CDN. Fixed height, so
     //                                    masking it doesn't shift layout.
     const maskEl = page.locator(
-      '#club-detail-map, .club-map-new, .carousel-container, .image-slider, .articleStepper',
+      '#club-detail-map, .club-map-new, .image-slider, .articleStepper',
     );
 
     await expect(page).toHaveScreenshot(`${slug(pagePath)}.png`, {
