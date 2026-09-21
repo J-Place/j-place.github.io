@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+# Blocks plain commits directly on master. This repo's workflow (see CLAUDE.md
+# "Branching") treats development as the only branch where work happens and
+# baselines/reports get regenerated — master only ever receives a merge from
+# development at deploy time. Merge commits are let through; only a stray
+# `git commit` while forgetting to switch off master gets caught.
+#
+# Enabled via `git config core.hooksPath .githooks` (one-time per clone, see
+# CLAUDE.md) since .git/hooks itself isn't tracked by git.
+
+branch=$(git symbolic-ref --short HEAD 2>/dev/null)
+merge_head="$(git rev-parse --git-path MERGE_HEAD)"
+
+if [ "$branch" = "master" ] && [ ! -f "$merge_head" ]; then
+  echo "Blocked: direct commit to master." >&2
+  echo "Work happens on development — switch with: git checkout development" >&2
+  echo "master only receives merges from development at deploy time (see CLAUDE.md)." >&2
+  echo "Genuinely need to commit here? git commit --no-verify" >&2
+  exit 1
+fi
+
+exit 0

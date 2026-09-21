@@ -225,9 +225,21 @@ To add a new overlay: create the JS, CSS, and JSON config files — no changes t
 
 `/registration/index.html`'s membership-tier date-availability windows work the same way: append `?date=YYYY-MM-DD` (e.g. `?date=2026-07-15`) to simulate a date; omit it to use the real current date. Resolved in `registration.js`'s init, also carried forward via `sessionStorage.activeDate`.
 
+## Branching
+
+`development` is where all work happens, including regenerating and committing visual-regression baselines/reports and production-monitor reports. `master` only ever receives a merge *from* `development` — never the reverse, and never its own independent commits — so the two branches don't end up with parallel, differently-hashed copies of the same change (baseline PNGs and reports are binary/generated, so that kind of drift can't be merged away cleanly). A hotfix genuinely needed on `master` still has to land on `development` first (or get cherry-picked back immediately), otherwise this guarantee breaks and the branches diverge again.
+
+A tracked pre-commit hook enforces this locally: it blocks a plain `git commit` while `master` is checked out (a merge commit — `git merge development` — is let through). One-time setup per clone, since `.git/hooks/` itself isn't tracked by git:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+Forgot to switch and need to override anyway: `git commit --no-verify`.
+
 ## Deployment
 
-GitHub Actions deploys `_site/` to `gh-pages` on push to `master`.
+GitHub Actions deploys `_site/` to `gh-pages` on push to `master`. To ship what's on `development`: `git checkout master && git merge development && git push`.
 
 ## Custom Skills
 
