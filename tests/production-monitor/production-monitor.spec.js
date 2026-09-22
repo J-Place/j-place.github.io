@@ -1,5 +1,6 @@
 const { test, expect } = require('@playwright/test');
 const checks = require('./checks');
+const { applyRegionChecks } = require('../lib/apply-region-checks');
 
 // Several pages here are rendered client-side by production's React app
 // (login-to-registration-page, swimmer-magazine-issue) — the initial HTML
@@ -92,7 +93,15 @@ for (const check of checks) {
       expect(count, `expected at least ${min} "${selector}" but found ${count}`).toBeGreaterThanOrEqual(min);
     }
 
-    const maskLocator = check.mask ? page.locator(check.mask.join(', ')) : null;
+    // Shared engine with the mockup suite (tests/lib/apply-region-checks.js,
+    // plan Item 9) — this check's own `mask` array (above, in checks.js) is
+    // unioned in as page-specific extras on top of the shared catalog's
+    // auto-detected selectors, not replaced by it.
+    const { maskSelectors, fingerprintFindings } = await applyRegionChecks(page, check.mask || []);
+    for (const finding of fingerprintFindings) {
+      expect(finding.ok, `${finding.selector}: ${finding.detail}`).toBe(true);
+    }
+    const maskLocator = maskSelectors.length ? page.locator(maskSelectors.join(', ')) : null;
     const mask = maskLocator && (await maskLocator.count()) ? [maskLocator] : [];
 
     if (check.clip) {

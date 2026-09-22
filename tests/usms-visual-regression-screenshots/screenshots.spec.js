@@ -1,6 +1,7 @@
 const { test, expect } = require('@playwright/test');
 const pages = require('./pages');
 const liveEventsFixture = require('../../src/_data/events.json');
+const { applyRegionChecks } = require('../lib/apply-region-checks');
 
 function slug(pagePath) {
   const [path, query] = pagePath.split('?');
@@ -134,27 +135,20 @@ for (const pagePath of pages) {
         })
         .filter(Boolean),
     ]));
-    // Regions excluded from the pixel comparison — each is live or animated in
-    // a way the frozen clock and image-await can't make deterministic, and each
-    // has a fixed height so masking it doesn't shift page layout:
-    //   #club-detail-map, .club-map-new  Google Maps embeds — live tiles
-    //   .image-slider                    home partner-logo strip —
-    //                                    image-slider.js scrolls it and the
-    //                                    logos load from a CDN
-    //   .articleStepper                  SWIMMER "Also in this Issue" strip —
-    //                                    slick-carousel (init'd by production
-    //                                    swimmerMagazine.min.js) autoplays; which
-    //                                    related-article slide shows on capture
-    //                                    isn't pinnable, and the slide images
-    //                                    load from a CDN. Fixed height, so
-    //                                    masking it doesn't shift layout.
-    const maskEl = page.locator(
-      '#club-detail-map, .club-map-new, .image-slider, .articleStepper',
-    );
+    // Regions excluded from the pixel comparison, plus structural fingerprint
+    // assertions where the shared catalog has them populated — see
+    // tests/lib/region-checks.js (plan Item 9) for the full selector list and
+    // per-selector reasoning. This suite no longer hand-maintains its own
+    // separate mask list; production-monitor's spec uses the same engine.
+    const { maskSelectors, fingerprintFindings } = await applyRegionChecks(page);
+    for (const finding of fingerprintFindings) {
+      expect(finding.ok, `${finding.selector}: ${finding.detail}`).toBe(true);
+    }
+    const maskEl = maskSelectors.length ? page.locator(maskSelectors.join(', ')) : null;
 
     await expect(page).toHaveScreenshot(`${slug(pagePath)}.png`, {
       fullPage: true,
-      mask: (await maskEl.count()) ? [maskEl] : [],
+      mask: maskEl ? [maskEl] : [],
     });
   });
 }

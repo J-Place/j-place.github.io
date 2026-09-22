@@ -20,7 +20,9 @@ module.exports = defineConfig({
   timeout: 120000,
   // 'list' prints every check with pass/fail/skip to the console; 'html' writes
   // to its own report folder (never the mockup suite's playwright-report/).
-  reporter: [['list'], ['html', { open: 'never', outputFolder: 'production-monitor-report' }]],
+  // 'json' feeds scripts/triage-production-monitor.js (plan Item 1) — additive,
+  // doesn't change what 'list'/'html' already do for anyone reading the report.
+  reporter: [['list'], ['html', { open: 'never', outputFolder: 'production-monitor-report' }], ['json', { outputFile: 'production-monitor-report/results.json' }]],
   outputDir: 'test-results/production-monitor',
   use: {
     baseURL: process.env.PROD_MONITOR_BASE_URL || 'https://www.usms.org',

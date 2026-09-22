@@ -11,7 +11,8 @@
     "deploy:snapshot": "node scripts/snapshot.js --deploy",
     "deploy:prototype": "npm run build && netlify deploy --dir=_site --prod",
     "lint": "eslint src/js/",
-    "test:visual": "playwright test",
+    "test:visual": "playwright test; ec=$?; node scripts/triage-visual-regression.js; exit $ec",
+    "test:visual:triage": "node scripts/triage-visual-regression.js",
     "test:visual:update": "playwright test --update-snapshots",
     "test:visual:report": "playwright show-report",
     "publish:visual-report": "node scripts/publish-visual-report.js",
@@ -22,7 +23,8 @@
     "detect:production-deploy": "node scripts/detect-production-deploy.js",
     "vendor:discover": "node scripts/discover-vendor-urls.js",
     "vendor:migrate": "node scripts/migrate-vendor-refs.js",
-    "vendor:refresh": "node scripts/vendor-refresh.js"
+    "vendor:refresh": "node scripts/vendor-refresh.js",
+    "detect:flaky-regions": "node scripts/detect-flaky-regions.js"
   },
   "keywords": [],
   "author": "",
@@ -36,6 +38,8 @@
     "autoprefixer": "^10.5.0",
     "eslint": "^10.6.0",
     "globals": "^17.7.0",
+    "pixelmatch": "^7.2.0",
+    "pngjs": "^7.0.0",
     "postcss": "^8.5.10",
     "postcss-calc": "^10.1.1",
     "postcss-custom-media": "^12.0.1",

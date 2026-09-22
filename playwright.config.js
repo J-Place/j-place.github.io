@@ -28,7 +28,9 @@ module.exports = defineConfig({
   // 'list' prints every test (each page × project) with its pass/fail/skip
   // status to the console — always show the full page-by-page result, not
   // just a summary count. 'html' keeps the diff viewer for failures.
-  reporter: [['list'], ['html', { open: 'never' }]],
+  // 'json' feeds scripts/triage-visual-regression.js (plan Item 2) — additive,
+  // doesn't change what 'list'/'html' already do for anyone reading the report.
+  reporter: [['list'], ['html', { open: 'never' }], ['json', { outputFile: 'playwright-report/results.json' }]],
   use: {
     baseURL,
   },
