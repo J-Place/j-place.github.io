@@ -6,6 +6,9 @@ name: Anthropic WIF connectivity test
 # using the exact fetch mechanism the real workflows use, before trusting it
 # there. See production-update.yml / deploy-development.yml's `review` job
 # for the real usage.
+#
+# Retry after adding Console billing credits — first run authenticated
+# successfully via WIF but hit "Credit balance is too low" from the API.
 
 on:
   push:
