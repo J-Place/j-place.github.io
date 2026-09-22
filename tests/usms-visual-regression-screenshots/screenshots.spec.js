@@ -140,7 +140,7 @@ for (const pagePath of pages) {
     // tests/lib/region-checks.js (plan Item 9) for the full selector list and
     // per-selector reasoning. This suite no longer hand-maintains its own
     // separate mask list; production-monitor's spec uses the same engine.
-    const { maskSelectors, fingerprintFindings } = await applyRegionChecks(page);
+    const { maskSelectors, fingerprintFindings } = await applyRegionChecks(page, [], { suite: 'mockup' });
     for (const finding of fingerprintFindings) {
       expect(finding.ok, `${finding.selector}: ${finding.detail}`).toBe(true);
     }

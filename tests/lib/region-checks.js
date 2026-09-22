@@ -25,6 +25,25 @@
 // home page's "Latest" content grid are confirmed flaky on BOTH suites, not
 // assumed.
 //
+// SUITE-SCOPED ENTRIES, added after a real bug was found (2026-09-22, by the
+// code-review-on-push job itself reviewing this exact catalog): the initial
+// version masked .results-content/.results-list and .club-list-new on BOTH
+// suites unconditionally. On production-monitor that's correct (real,
+// changing production content). On our own mockup suite it was pure coverage
+// loss — empirically confirmed via scripts/detect-flaky-regions.js
+// (two-capture diff, no masks) that Events (fixture-backed), Club Finder
+// (geo-pinned via ?lat=&long=) and the Articles & Videos listing (hardcoded
+// in ResultsContentArticles.njk) are all 100% deterministic (0 differing
+// pixels) on the mockup suite — a real layout break there was passing
+// silently. An entry's optional `suites` array restricts which suite(s) it
+// applies to; omitted means both. `.personalize` and `.latest-content__container`
+// stay masked on both suites — real diff evidence exists for both on our own
+// mockup's home page (Item 10's scan, and a fresh confirming scan run here).
+// `.advertising-dc` and the map selectors stay masked on both too, on the
+// more conservative side: not enough evidence gathered yet to confirm they're
+// deterministic on the mockup suite everywhere they appear, unlike the three
+// selectors above which were directly, page-by-page confirmed.
+//
 // `fingerprint: null` means: cataloged as a fingerprint candidate (our own
 // markup, worth asserting), but the actual expected computed-style values
 // haven't been determined yet — inspecting each one's real CSS/JSX to get
@@ -77,13 +96,15 @@ module.exports = [
   },
   {
     selector: '.results-content, .results-list',
-    fingerprint: null, // TODO
-    reason: 'Our own results/article listing (Results/*.jsx -> partials/Results/*.njk) — card content varies. On our own mockup, verify per-page whether this is actually live (needs fingerprint) or static-baked (needs nothing) before assuming — Articles & Videos was confirmed fully static (ResultsContentArticles.njk hardcodes 3 articles), do not assume other pages using this selector are the same.',
+    suites: ['production-monitor'], // NOT masked on our mockup suite — see header note. Confirmed 0-diff on both Events (fixture-backed) and Articles & Videos listing (ResultsContentArticles.njk hardcodes 3 articles) via detect-flaky-regions.js.
+    fingerprint: null, // TODO — production-monitor side only; real content there
+    reason: 'Production\'s live results/article listing — card content varies day to day. Our own mockup versions of these pages are fixture-backed or hardcoded and confirmed fully deterministic, so this only applies to production-monitor.',
   },
   {
     selector: '.club-list-new',
-    fingerprint: null, // TODO
-    reason: 'Our own club search results list (Club/ClubFinderList.jsx -> partials/Club/ClubList.njk) — which clubs/order shows varies. Real fingerprint values not yet determined.',
+    suites: ['production-monitor'], // NOT masked on our mockup suite — see header note. Confirmed 0-diff on the geo-pinned Club Finder page via detect-flaky-regions.js.
+    fingerprint: null, // TODO — production-monitor side only; real content there
+    reason: 'Production\'s live club search results — which clubs/order shows varies. Our own mockup\'s Club Finder is pinned via ?lat=&long= and confirmed fully deterministic, so this only applies to production-monitor.',
   },
   {
     selector: '.articleStepper',

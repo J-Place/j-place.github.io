@@ -21,13 +21,21 @@ const catalog = require('./region-checks');
  * @param {string[]} [extraMaskSelectors] - page-specific selectors from the
  *   caller (e.g. a checks.js entry's own `mask:` array) to union in, for
  *   anything not yet covered by the shared catalog.
+ * @param {{suite?: 'mockup' | 'production-monitor'}} [opts] - which suite is
+ *   calling. Entries with a `suites` array only apply when `suite` is in
+ *   that list — some selectors are confirmed deterministic on one suite
+ *   (e.g. our own fixture-backed/pinned pages) but genuinely live on the
+ *   other, so the correct treatment differs per suite, not just per
+ *   selector. Omitting `suite` applies every entry regardless of scoping
+ *   (used by direct debugging/one-off calls, not the real spec files).
  * @returns {Promise<{maskSelectors: string[], fingerprintFindings: Array<{selector: string, ok: boolean, detail: string}>}>}
  */
-async function applyRegionChecks(page, extraMaskSelectors = []) {
+async function applyRegionChecks(page, extraMaskSelectors = [], { suite } = {}) {
   const maskSelectors = [...extraMaskSelectors];
   const fingerprintFindings = [];
 
   for (const entry of catalog) {
+    if (entry.suites && suite && !entry.suites.includes(suite)) continue;
     const locator = page.locator(entry.selector);
     const count = await locator.count().catch(() => 0);
     if (!count) continue; // not present on this page — nothing to do

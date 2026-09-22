@@ -97,7 +97,7 @@ for (const check of checks) {
     // plan Item 9) — this check's own `mask` array (above, in checks.js) is
     // unioned in as page-specific extras on top of the shared catalog's
     // auto-detected selectors, not replaced by it.
-    const { maskSelectors, fingerprintFindings } = await applyRegionChecks(page, check.mask || []);
+    const { maskSelectors, fingerprintFindings } = await applyRegionChecks(page, check.mask || [], { suite: 'production-monitor' });
     for (const finding of fingerprintFindings) {
       expect(finding.ok, `${finding.selector}: ${finding.detail}`).toBe(true);
     }
