@@ -205,6 +205,20 @@ Present this as a concise list. Wait for the user to confirm or redirect before 
 
 ---
 
+## Definition of Done
+
+Before reporting (Step 13), every one of these must hold. This is the fixed target both this skill and an independent reviewer check against — not a proposal, a checklist:
+
+- The Eleventy build (Step 10) exits cleanly, no errors.
+- No structural gap remains from Step 12's check against production, beyond items explicitly noted as expected-absent (dynamic/noise classes).
+- No `<style>` or `<script>` tag anywhere in the new/modified templates or partials.
+- Every modal follows the `modal.njk` normalization from Step 9's modal-normalization sub-step — no leftover `data-bs-toggle`/`data-bs-target`/`data-bs-dismiss`.
+- `COMPONENTS.md` reflects the correct current status for every component touched.
+
+If any of these don't hold, the build isn't done — fix it before Step 13, don't report it as complete with caveats.
+
+---
+
 ## Step 9 — Build
 
 After plan approval:
@@ -231,7 +245,21 @@ After plan approval:
 
 ---
 
-## Step 10 — Update COMPONENTS.md
+## Step 10 — Build verification
+
+Run the Eleventy build before doing anything else:
+
+```bash
+npm run build
+```
+
+Confirm it exits cleanly. This catches Nunjucks syntax errors, missing partials/includes, and broken `{% extends %}` references — none of which Step 12's structural check can catch, since that check compares class names via `grep`/`curl` and never actually renders anything.
+
+If the build fails, fix it before proceeding to Step 11. Do not update `COMPONENTS.md` or report a component as built if the build doesn't pass.
+
+---
+
+## Step 11 — Update COMPONENTS.md
 
 After a successful build, update `COMPONENTS.md`:
 
@@ -241,7 +269,7 @@ After a successful build, update `COMPONENTS.md`:
 
 ---
 
-## Step 11 — Structural verification
+## Step 12 — Structural verification
 
 After the build, verify structural fidelity against the production page.
 
@@ -258,16 +286,18 @@ comm -23 <(production_classes) <(grep -oP '(?<=class=")[^"]+' built_file.njk | t
 ```
 
 For each missing class:
-- **Structural** (layout, component, or BEM block/element class — e.g. `club-location__facility--length`): note as a gap and fix before proceeding to Step 12
+- **Structural** (layout, component, or BEM block/element class — e.g. `club-location__facility--length`): note as a gap and fix before proceeding to Step 13
 - **Dynamic / noise** (React hydration, GTM, Sitecore, ad slots, `data-react*`): note as expected-absent and skip
 
 Fix any structural gaps, then proceed.
 
 ---
 
-## Step 12 — Report
+## Step 13 — Report
 
-Tell the user:
+Confirm every item in the Definition of Done holds before reporting. Tell the user:
 - Files created or modified, with paths
+- Result of Step 10's build check
 - Which COMPONENTS.md entries were updated and their new status
-- Result of Step 11 structural check: classes fixed, classes expected-absent
+- Result of Step 12 structural check: classes fixed, classes expected-absent
+- If a reviewer subagent (see `.claude/agents/reviewer.md`) hasn't been run yet, offer to run it now on what was just built. The reviewer has no Bash access and cannot run the build itself — re-run `npm run build` immediately before invoking it and state the result in its prompt, even though Step 10 already ran it once; the reviewer's independence depends on a fresh build check, not a relayed claim.

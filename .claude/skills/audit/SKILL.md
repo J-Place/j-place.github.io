@@ -132,6 +132,15 @@ Check every `querySelector` / `getElementById` / `querySelectorAll` selector aga
 
 ---
 
+## Definition of Done
+
+Before reporting, confirm all of these — the fixed target this skill (and an independent reviewer) check against, not a proposal:
+
+- Steps 1–5 have all been run against every local file and every production JSX/CSS/JS file identified in Step 1 — no section skipped silently.
+- Every finding in each of the four report sections below has a concrete file/line/class reference, not a vague description.
+- The forbidden-domain check (Step 3e) has been run and its result (clean or flagged) is included in the report even when clean.
+- A Summary verdict has been assigned.
+
 ## Step 6 — Report
 
 Structure the report as four sections. Be specific: include the class name, element, file, and line reference for every finding.
