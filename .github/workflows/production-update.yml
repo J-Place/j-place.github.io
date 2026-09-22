@@ -90,15 +90,22 @@ jobs:
         env:
           ASSET_VERSION: ${{ needs.version-check.outputs.identifier }}
         run: npm run vendor:refresh
+      # continue-on-error on every step through the summary: this whole
+      # sequence is the optional LLM path (plan guiding principle #7) — a
+      # curl/npm/claude failure here must never block "Commit vendored
+      # assets" below, which is the deterministic work that actually matters.
       - name: Fetch GitHub OIDC token for Anthropic WIF
+        continue-on-error: true
         run: |
           curl -sS -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
             "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=https://api.anthropic.com" \
             | jq -r .value > "$ANTHROPIC_IDENTITY_TOKEN_FILE"
       - name: Install claude CLI
+        continue-on-error: true
         run: npm install -g @anthropic-ai/claude-code@latest
       - name: Summarize vendor diff
         id: vendor-summary
+        continue-on-error: true
         run: node scripts/summarize-vendor-diff.js
       - name: Commit vendored assets
         env:
@@ -157,18 +164,24 @@ jobs:
       - name: Publish report
         if: steps.monitor.outcome == 'failure'
         run: npm run publish:production-monitor-report
+      # continue-on-error through the triage step, same reasoning as
+      # refresh-vendored-assets above — this must never block "Commit
+      # published report" below.
       - name: Fetch GitHub OIDC token for Anthropic WIF
         if: steps.monitor.outcome == 'failure'
+        continue-on-error: true
         run: |
           curl -sS -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
             "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=https://api.anthropic.com" \
             | jq -r .value > "$ANTHROPIC_IDENTITY_TOKEN_FILE"
       - name: Install claude CLI
         if: steps.monitor.outcome == 'failure'
+        continue-on-error: true
         run: npm install -g @anthropic-ai/claude-code@latest
       - name: Triage production-monitor failure
         id: triage
         if: steps.monitor.outcome == 'failure'
+        continue-on-error: true
         run: node scripts/triage-production-monitor.js
       - name: Commit published report
         if: steps.monitor.outcome == 'failure'
