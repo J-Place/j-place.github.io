@@ -3,12 +3,21 @@
 // Plan Item 4 — runs on every push to `development` (deploy-development.yml's
 // `review` job, parallel to `deploy`, never blocking or delaying it). Runs
 // /code-review against the pushed range and posts the result to Slack.
-// Read-only by construction: the job's own `permissions: contents: read`
-// plus this script's own --allowedTools scope (read-only git + Read/Grep)
-// mean it can inspect the diff but never write anything. Never pass
-// --comment or --fix here — `development` is a direct-push branch in normal
-// use, so there's frequently no open PR for --comment to attach to, and this
-// is advisory-only by design (see the plan's guardrail tripwires).
+// Never pass --comment or --fix here — `development` is a direct-push branch
+// in normal use, so there's frequently no open PR for --comment to attach to,
+// and this is advisory-only by design (see the plan's guardrail tripwires).
+//
+// SECURITY FIX (found by this same review job, on itself): originally used
+// --permission-mode bypassPermissions, believing --allowedTools would still
+// scope it to read-only git/Read/Grep. That's wrong — bypassPermissions
+// disables the allowlist entirely ("Allow rules have no effect in
+// bypassPermissions", confirmed against Claude Code's own docs), so the
+// agent actually had full tool access, including Write/Edit/arbitrary Bash,
+// while processing untrusted pushed-diff content. The correct pattern for
+// non-interactive CI is --permission-mode dontAsk + --allowedTools: dontAsk
+// auto-denies anything outside the allowlist (never hangs waiting for a
+// prompt that can't come, never silently grants what isn't listed) — so
+// --allowedTools is now an actual enforced boundary, not decoration.
 //
 // Unlike the pure-summarization scripts (triage-*.js, summarize-vendor-diff.js),
 // this doesn't use scripts/lib/call-claude.js's summarize() helper — that
@@ -48,7 +57,7 @@ function main() {
       '-p', `/code-review ${range} --effort medium`,
       '--output-format', 'json',
       '--allowedTools', 'Bash(git diff:*) Bash(git log:*) Bash(git show:*) Read Grep',
-      '--permission-mode', 'bypassPermissions',
+      '--permission-mode', 'dontAsk',
     ], { encoding: 'utf8', maxBuffer: 20 * 1024 * 1024, timeout: 300000 });
     result = JSON.parse(output).result || '';
   } catch (err) {
