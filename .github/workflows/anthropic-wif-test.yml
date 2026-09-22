@@ -8,7 +8,10 @@ name: Anthropic WIF connectivity test
 # for the real usage.
 
 on:
-  workflow_dispatch: # manual only — no need for this to fire on every push
+  push:
+    branches: [development] # workflow_dispatch's "Run workflow" button requires the file
+    # to exist on the repo's default branch (master here) to show up at all — switched to
+    # push so this one-off test doesn't need a piecemeal merge to master just to trigger it.
 
 permissions:
   id-token: write
