@@ -1,0 +1,224 @@
+name: Production Update
+
+# Triggered manually once you know (via your own channel — Slack, checking
+# production yourself, eventually the ADO->Slack integration) that production
+# deployed. No cron: this used to poll on a schedule (renamed from
+# production-watch.yml, see plan Item 0) — that was a first-iteration
+# stand-in for not having an external deploy signal. version-check still
+# confirms/quantifies the deploy you already know about (not discovering a
+# surprise one) and gates the two downstream jobs, so a mis-triggered or
+# redundant manual run doesn't burn a vendor-refresh/monitor pass for
+# nothing, short of passing force: true. See CLAUDE.md's vendoring section
+# and the production-monitor suite's own commit message for background.
+
+on:
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Run the downstream jobs even if no change was detected'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  actions: write
+  id-token: write # required to mint the GitHub OIDC token WIF exchanges for Anthropic auth
+
+concurrency:
+  group: production-update
+  # This workflow does stateful things — persists a repo variable, commits
+  # vendored files/reports — so an overlapping manual run should queue rather
+  # than race and interleave commits.
+  cancel-in-progress: false
+
+jobs:
+  version-check:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.detect.outputs.changed }}
+      identifier: ${{ steps.detect.outputs.identifier }}
+      previous: ${{ steps.detect.outputs.previous }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: master
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+      - name: Check production's asset version
+        id: detect
+        env:
+          LAST_SEEN_VERSION: ${{ vars.PROD_VERSION_SIGNAL }}
+        run: node scripts/detect-production-deploy.js
+      - name: Persist detected version
+        if: steps.detect.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh variable set PROD_VERSION_SIGNAL --body "${{ steps.detect.outputs.identifier }}"
+      - name: Summary
+        run: |
+          if [ "${{ steps.detect.outputs.changed }}" = "true" ]; then
+            echo "🚀 Production deploy detected: ${{ steps.detect.outputs.previous }} → ${{ steps.detect.outputs.identifier }}" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "No change detected (current: ${{ steps.detect.outputs.identifier }})" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+  refresh-vendored-assets:
+    needs: version-check
+    if: needs.version-check.outputs.changed == 'true' || inputs.force == true
+    runs-on: ubuntu-latest
+    outputs:
+      failed_count: ${{ steps.refresh.outputs.failed_count }}
+      succeeded_count: ${{ steps.refresh.outputs.succeeded_count }}
+      vendor_summary: ${{ steps.vendor-summary.outputs.summary }}
+    env:
+      ANTHROPIC_FEDERATION_RULE_ID: ${{ vars.ANTHROPIC_FEDERATION_RULE_ID }}
+      ANTHROPIC_ORGANIZATION_ID: ${{ vars.ANTHROPIC_ORGANIZATION_ID }}
+      ANTHROPIC_SERVICE_ACCOUNT_ID: ${{ vars.ANTHROPIC_SERVICE_ACCOUNT_ID }}
+      ANTHROPIC_WORKSPACE_ID: ${{ vars.ANTHROPIC_WORKSPACE_ID }}
+      ANTHROPIC_IDENTITY_TOKEN_FILE: /tmp/anthropic-oidc-token
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: master
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+      - run: npm install
+      - name: Refresh vendored assets
+        id: refresh
+        env:
+          ASSET_VERSION: ${{ needs.version-check.outputs.identifier }}
+        run: npm run vendor:refresh
+      - name: Fetch GitHub OIDC token for Anthropic WIF
+        run: |
+          curl -sS -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=https://api.anthropic.com" \
+            | jq -r .value > "$ANTHROPIC_IDENTITY_TOKEN_FILE"
+      - name: Install claude CLI
+        run: npm install -g @anthropic-ai/claude-code@latest
+      - name: Summarize vendor diff
+        id: vendor-summary
+        run: node scripts/summarize-vendor-diff.js
+      - name: Commit vendored assets
+        env:
+          # Passed via env, not interpolated into the script body — the vendor
+          # summary is LLM-generated and could contain backticks/$()/quotes
+          # that would otherwise be interpreted as shell syntax (GitHub's own
+          # documented script-injection risk for ${{ }} inside `run:`).
+          PREVIOUS: ${{ needs.version-check.outputs.previous }}
+          IDENTIFIER: ${{ needs.version-check.outputs.identifier }}
+          VENDOR_SUMMARY: ${{ steps.vendor-summary.outputs.summary }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/vendor scripts/vendor-manifest.json
+          if git diff --cached --quiet; then
+            echo "Nothing to commit."
+            exit 0
+          fi
+          git commit -m "Refresh vendored production CSS/JS (production version: $PREVIOUS → $IDENTIFIER)" \
+                      -m "$VENDOR_SUMMARY"
+          for i in 1 2 3 4 5; do
+            git push origin HEAD:master && exit 0
+            echo "Push rejected (attempt $i) — rebasing onto latest master and retrying..."
+            git pull --rebase origin master
+            sleep $(( (RANDOM % 5) + 1 ))
+          done
+          echo "::error::Failed to push vendored-asset refresh after 5 attempts."
+          exit 1
+
+  run-production-monitor:
+    needs: version-check
+    if: needs.version-check.outputs.changed == 'true' || inputs.force == true
+    runs-on: ubuntu-latest
+    outputs:
+      outcome: ${{ steps.monitor.outcome }}
+      triage_summary: ${{ steps.triage.outputs.summary }}
+    env:
+      ANTHROPIC_FEDERATION_RULE_ID: ${{ vars.ANTHROPIC_FEDERATION_RULE_ID }}
+      ANTHROPIC_ORGANIZATION_ID: ${{ vars.ANTHROPIC_ORGANIZATION_ID }}
+      ANTHROPIC_SERVICE_ACCOUNT_ID: ${{ vars.ANTHROPIC_SERVICE_ACCOUNT_ID }}
+      ANTHROPIC_WORKSPACE_ID: ${{ vars.ANTHROPIC_WORKSPACE_ID }}
+      ANTHROPIC_IDENTITY_TOKEN_FILE: /tmp/anthropic-oidc-token
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: master
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+      - run: npm install
+      - run: npx playwright install --with-deps chromium
+      - name: Run production monitor suite
+        id: monitor
+        continue-on-error: true
+        run: npm run monitor:prod
+      - name: Publish report
+        if: steps.monitor.outcome == 'failure'
+        run: npm run publish:production-monitor-report
+      - name: Fetch GitHub OIDC token for Anthropic WIF
+        if: steps.monitor.outcome == 'failure'
+        run: |
+          curl -sS -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=https://api.anthropic.com" \
+            | jq -r .value > "$ANTHROPIC_IDENTITY_TOKEN_FILE"
+      - name: Install claude CLI
+        if: steps.monitor.outcome == 'failure'
+        run: npm install -g @anthropic-ai/claude-code@latest
+      - name: Triage production-monitor failure
+        id: triage
+        if: steps.monitor.outcome == 'failure'
+        run: node scripts/triage-production-monitor.js
+      - name: Commit published report
+        if: steps.monitor.outcome == 'failure'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add reports/production-monitor
+          if git diff --cached --quiet; then
+            echo "Nothing to commit."
+            exit 0
+          fi
+          git commit -m "Publish production-monitor report (deploy ${{ needs.version-check.outputs.identifier }})"
+          for i in 1 2 3 4 5; do
+            git push origin HEAD:master && exit 0
+            echo "Push rejected (attempt $i) — rebasing onto latest master and retrying..."
+            git pull --rebase origin master
+            sleep $(( (RANDOM % 5) + 1 ))
+          done
+          echo "::error::Failed to push production-monitor report after 5 attempts."
+          exit 1
+
+  notify:
+    needs: [version-check, refresh-vendored-assets, run-production-monitor]
+    if: always() && needs.version-check.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Slack
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          PREVIOUS: ${{ needs.version-check.outputs.previous }}
+          IDENTIFIER: ${{ needs.version-check.outputs.identifier }}
+          VENDOR_FAILED: ${{ needs.refresh-vendored-assets.outputs.failed_count }}
+          VENDOR_OK: ${{ needs.refresh-vendored-assets.outputs.succeeded_count }}
+          VENDOR_SUMMARY: ${{ needs.refresh-vendored-assets.outputs.vendor_summary }}
+          MONITOR_OUTCOME: ${{ needs.run-production-monitor.outputs.outcome }}
+          TRIAGE_SUMMARY: ${{ needs.run-production-monitor.outputs.triage_summary }}
+        run: |
+          if [ -z "$SLACK_WEBHOOK_URL" ]; then
+            echo "::warning::SLACK_WEBHOOK_URL secret not set — skipping Slack notification. See CLAUDE.md's vendoring section / the plan for Phase 0 setup."
+            exit 0
+          fi
+          MONITOR_LINE="Production monitor: ${MONITOR_OUTCOME:-unknown}"
+          if [ "$MONITOR_OUTCOME" = "failure" ]; then
+            MONITOR_LINE="Production monitor: FAILED — ${TRIAGE_SUMMARY:-see committed report}. Full report: reports/production-monitor/"
+          fi
+          VENDOR_LINE="Vendoring: ${VENDOR_OK:-0} refreshed, ${VENDOR_FAILED:-0} failed."
+          if [ -n "$VENDOR_SUMMARY" ]; then
+            VENDOR_LINE="$VENDOR_LINE $VENDOR_SUMMARY"
+          fi
+          TEXT="🚀 USMS production deployed (version ${PREVIOUS:-unset} → ${IDENTIFIER}). ${VENDOR_LINE} ${MONITOR_LINE}."
+          curl -sf -X POST -H 'Content-type: application/json' \
+            --data "$(jq -n --arg text "$TEXT" '{text: $text}')" \
+            "$SLACK_WEBHOOK_URL"
