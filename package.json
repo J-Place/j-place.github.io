@@ -11,7 +11,7 @@
     "deploy:snapshot": "node scripts/snapshot.js --deploy",
     "deploy:prototype": "npm run build && netlify deploy --dir=_site --prod",
     "lint": "eslint src/js/",
-    "test:visual": "playwright test; ec=$?; node scripts/triage-visual-regression.js; exit $ec",
+    "test:visual": "node scripts/run-test-visual.js",
     "test:visual:triage": "node scripts/triage-visual-regression.js",
     "test:visual:update": "playwright test --update-snapshots",
     "test:visual:report": "playwright show-report",
