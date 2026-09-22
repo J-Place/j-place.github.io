@@ -32,4 +32,5 @@ jobs:
       - name: Install claude CLI
         run: npm install -g @anthropic-ai/claude-code@latest
       - name: Say hello via claude -p (proves the full WIF chain works)
-        run: claude -p "Reply with exactly: WIF connectivity test passed." --output-format json --tools ""
+        run: |
+          claude -p "Reply with exactly: WIF connectivity test passed." --output-format json --tools ""
