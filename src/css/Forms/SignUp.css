@@ -1,0 +1,18 @@
+/* production/src/App/views/Forms/SignUp.css:7-9 — .sign-up__form button.sign-up__button
+   WCAG 2.1.4.3 color contrast: white text on #d9534f is 3.96:1, fails the 4.5:1 AA
+   minimum. Reuses #c12e2a — already this button's own hover/focus border color
+   (production usms.min.css) — as the resting background instead of introducing a new
+   color; passes at ~5.69:1. ACCESSIBILITY-AUDIT.md #12. */
+.sign-up__form .sign-up__button {
+    background-color: #c12e2a;
+    border-color: #c12e2a;
+}
+
+/* Resting and hover/focus previously differed only by border color (#d9534f -> #c12e2a);
+   now that #c12e2a is the resting background, that border swap would no longer be visible.
+   Darken further on hover/focus to preserve the interaction cue. */
+.sign-up__form .sign-up__button:hover,
+.sign-up__form .sign-up__button:focus {
+    background-color: #a52834;
+    border-color: #a52834;
+}

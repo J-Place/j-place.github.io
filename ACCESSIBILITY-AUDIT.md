@@ -82,11 +82,11 @@ Carried over from the manual + axe-core review of registration, article, and con
 
 ### Article page
 
-| # | Issue | Detail |
-|---|---|---|
-| 10 | 4 image links with no accessible name | `.latest-content__image-container > a` — related-article thumbnail links wrap an image with no alt text and no link text |
-| 11 | Email signup input has no label | `#emailAddress` newsletter input |
-| 12 | Color contrast, 8 instances | Byline date, Sign Up button, related-article author names |
+| # | Issue | Detail | Resolution |
+|---|---|---|---|
+| 10 | 4 image links with no accessible name | `.latest-content__image-container > a` — related-article thumbnail links wrap an image with no alt text and no link text | **Fixed** — see Changelog #10. |
+| 11 | Email signup input has no label | `#emailAddress` newsletter input | **Fixed** — see Changelog #11. |
+| 12 | Color contrast, 8 instances | Byline date, Sign Up button, related-article author names | **Fixed** — see Changelog #12. |
 
 ### Content page (Contact Us)
 
@@ -218,6 +218,31 @@ Template for each entry:
 **What changed:** The hero carousel's two nav dots (`.carousel-nav__item-button`) are 10×10px circles with `margin: 0 3px` (production `Carousel.css:110-118`), putting them 16px apart center-to-center — under the 24px WCAG 2.5.8 minimum, and also short of the SC's "spacing" exception (which requires adjacent undersized targets to be ≥24px apart if the target itself isn't enlarged). Rather than growing the visible dot (risking a layout/visual change to the hero), widened the margin to `8px` per side, putting the dots 26px apart. The dot itself is untouched — still a 10×10px circle, same color/shape/position — only the gap between the two dots grew by 10px.
 **Why:** A 10×10px target is difficult for touch/motor-impaired users to hit precisely; the spacing exception lets a small decorative-style control like this pass without changing its visual footprint, as long as neighboring targets aren't packed too close together.
 **Verified by:** Computed layout math (8+10+8=26px per dot box, confirming 26px center-to-center, clearing the 24px threshold) plus a rendered comparison of the production markup/CSS with the old (3px) vs. new (8px) margin — dots confirmed same size, no overlap, just more spacing. Not yet re-run through WAVE/Lighthouse against a fresh snapshot.
+
+### [10] — Article page related-article thumbnail links: no accessible name
+**Date:** 2026-09-23
+**Files changed:** none (already fixed by [15])
+**What changed:** Nothing new — the article page's "Related Articles" section renders through `src/_includes/partials/PageContent/RelatedContent.njk`, the same partial the [15] fix (2026-08-29) already updated with `aria-hidden="true" tabindex="-1"` on the image-only link. Confirmed all 4 rendered instances on the built article page already carry the fix; the findings table just hadn't been updated to reflect it.
+**Why:** Same underlying issue as [15] — a redundant, unlabeled image link immediately before a properly labeled text link to the same destination.
+**Verified by:** Inspected the built `_site/.../masters-swimming-training-plan-.../index.html`: all 4 `.latest-content__image-container > a` instances have `aria-hidden="true" tabindex="-1"`.
+
+### [11] — Article page email signup input: no label
+**Date:** 2026-09-23
+**Files changed:** `src/pages/fitness-and-training/articles-and-videos/articles/masters-swimming-training-plan-for-former-competitive-swimmers.njk`
+**What changed:** Added `aria-label="Email address"` to the `#emailAddress` input. Production's own `SignUp.jsx` has the identical gap (no label, no `aria-label`, no `placeholder`) — no production pattern to copy, so used the minimal standard remediation instead of inventing visible copy. The adjacent "SIGN UP FOR UPDATES FROM USMS" heading text isn't programmatically associated with the input (no `for`/`id` relationship, no `aria-labelledby`), so an explicit label was still needed.
+**Why:** Screen reader users landed on the input with no indication of what to type.
+**Note:** The identical unlabeled-input pattern also exists in two shared partials not used by this page — `src/_includes/partials/Forms/NewsletterSignUp.njk` and `src/_includes/partials/Forms/SignUp.njk` — left alone since they're outside this finding's scope (Article page) and aren't yet confirmed to be rendered live anywhere in the mockup.
+**Verified by:** Inspected the built HTML — `aria-label="Email address"` present on the rendered input.
+
+### [12] — Article page color contrast: byline date, Sign Up button, related-article author names
+**Date:** 2026-09-23
+**Files changed:** `src/css/Article/Author.css` (new), `src/css/Forms/SignUp.css` (new), `src/css/PageContent/LatestContentArticle.css`, page template's `pageCSS` block
+**What changed:** Three failures, all resolved toward the lightest gray that still clears 4.5:1 on white (`#767676`, ~4.54:1) per request — deliberately at the edge of passing rather than darker than necessary:
+- **Byline date** (`.usms-container p.author__date`, production `Article/Author.css:41`): `#9B9B9B` (2.78:1) → `#767676` (~4.54:1).
+- **Related-article author names** (`.latest-content__author-name` / `.latest-content__author p`, same rule already touched by [16]): tightened from `#707070` (4.95:1, more contrast than necessary) to the same `#767676` target for a single consistent "passing gray" across the site rather than three slightly different shades.
+- **Sign Up button** (`.sign-up__form .sign-up__button`, production `Forms/SignUp.css:7-9`): white text on `#d9534f` is only 3.96:1 — fails, since white is already maximally light, the background had to darken instead. Reused `#c12e2a` — already this exact button's own hover/focus border color in production — as the new resting background (~5.69:1), rather than inventing an unrelated color. Since resting and hover previously differed only by that border swap, and hover/focus would otherwise now be visually identical to resting, added a further-darkened hover/focus state (`#a52834`, an existing Bootstrap danger-button token) to preserve the interaction cue.
+**Why:** Text/controls below 4.5:1 are hard to read for low-vision users; picking the lightest passing shade keeps the fix as close to the original (lighter) design intent as possible while still clearing the bar.
+**Verified by:** Contrast computed via the WCAG relative-luminance formula for each pair (documented in each CSS file's comment); rendered a side-by-side before/after comparison of all three elements to confirm the colors read correctly and the button still looks like the same red CTA family. Not yet re-run through WAVE/Lighthouse against a fresh snapshot.
 
 ### [4] — Mobile submenu accordions: keyboard access
 **Date:** 2026-08-28
