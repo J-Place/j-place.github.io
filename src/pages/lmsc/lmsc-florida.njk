@@ -33,29 +33,41 @@ breadcrumbTitle: "Florida LMSC"
 
 {% block content %}
 
-{# Stats bar #}
-<div class="section section-full p-b-10 lmsc__stats">
-  <div class="usms-container">
-    <div class="row">
-      <div class="col-xs-6 col-md-3 lmsc__stat">
-        <div class="lmsc__stat-number">1,983</div>
-        <div class="lmsc__stat-label">Members</div>
-        <div class="lmsc__stat-season">2025-2026</div>
+{# Stats comparison #}
+<div class="section section-full lmsc__stats-compare">
+  <div class="usms-container lmsc__stats-compare__inner">
+    <div class="lmsc__stats-compare__panel lmsc__stats-compare__panel--current">
+      <div class="lmsc__stats-compare__header">
+        <span class="lmsc__stats-compare__title">Current Season</span>
+        <span class="lmsc__stats-compare__season">2025&ndash;26</span>
       </div>
-      <div class="col-xs-6 col-md-3 lmsc__stat">
-        <div class="lmsc__stat-number">62</div>
-        <div class="lmsc__stat-label">Clubs</div>
-        <div class="lmsc__stat-season">2025-2026</div>
+      <div class="lmsc__stats-compare__stats">
+        <div class="lmsc__stats-compare__stat">
+          <span class="lmsc__stats-compare__number">1,983</span>
+          <span class="lmsc__stats-compare__label">Members</span>
+          <span class="lmsc__stats-compare__delta lmsc__stats-compare__delta--down">&#9660; 19.6%</span>
+        </div>
+        <div class="lmsc__stats-compare__stat">
+          <span class="lmsc__stats-compare__number">62</span>
+          <span class="lmsc__stats-compare__label">Clubs</span>
+          <span class="lmsc__stats-compare__delta lmsc__stats-compare__delta--up">&#9650; 6.9%</span>
+        </div>
       </div>
-      <div class="col-xs-6 col-md-3 lmsc__stat">
-        <div class="lmsc__stat-number">2,466</div>
-        <div class="lmsc__stat-label">Members</div>
-        <div class="lmsc__stat-season">2024-2025</div>
+    </div>
+    <div class="lmsc__stats-compare__panel lmsc__stats-compare__panel--prior">
+      <div class="lmsc__stats-compare__header">
+        <span class="lmsc__stats-compare__title">Prior Season</span>
+        <span class="lmsc__stats-compare__season">2024&ndash;25</span>
       </div>
-      <div class="col-xs-6 col-md-3 lmsc__stat">
-        <div class="lmsc__stat-number">58</div>
-        <div class="lmsc__stat-label">Clubs</div>
-        <div class="lmsc__stat-season">2024-2025</div>
+      <div class="lmsc__stats-compare__stats">
+        <div class="lmsc__stats-compare__stat">
+          <span class="lmsc__stats-compare__number">2,466</span>
+          <span class="lmsc__stats-compare__label">Members</span>
+        </div>
+        <div class="lmsc__stats-compare__stat">
+          <span class="lmsc__stats-compare__number">58</span>
+          <span class="lmsc__stats-compare__label">Clubs</span>
+        </div>
       </div>
     </div>
   </div>
@@ -81,35 +93,35 @@ breadcrumbTitle: "Florida LMSC"
           <h3 class="">Resources</h3>
           <ul class="lmsc__resources--list">
             <li><a href="/lmsc/lmscofficers.php?LMSCID=14">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              <span class="lmsc__resources--list__icon-wrap"><img class="lmsc__resources--list__icon--officers" src="https://www.usms.org/fitness-and-training/guides/-/media/usms/non-lightroom%20images/house%20art/Join%20Icons/icon-clubs" width="40" height="40" alt=""></span>
               LMSC Officers
             </a></li>
             <li><a href="https://www.usms.org/clubs">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span class="lmsc__resources--list__icon-wrap"><img class="lmsc__resources--list__icon--places" src="https://www.usms.org/-/media/usms/developers/images/myusms/icon-myusms-places.svg" width="65" height="65" alt=""></span>
               Places to Swim
             </a></li>
             <li><a href="/comp/tt/toptenlmscsummary.php?LMSCID=14">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+              <span class="lmsc__resources--list__icon-wrap"><img class="lmsc__resources--list__icon--top10" src="https://www.usms.org/-/media/USMS/Developers/Images/MyUSMS/icon-myusms-results" width="60" height="60" alt=""></span>
               Top 10 Listings
             </a></li>
             <li><a href="https://www.usms.org/events">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span class="lmsc__resources--list__icon-wrap"><img class="lmsc__resources--list__icon--calendar" src="https://www.usms.org/fitness-and-training/guides/-/media/usms/non-lightroom%20images/house%20art/Join%20Icons/icon-calendar" width="40" height="40" alt=""></span>
               Calendar of Events
             </a></li>
             <li><a href="/comp/aa/aalist.php?LMSCID=14">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <span class="lmsc__resources--list__icon-wrap lmsc__resources--list__icon-wrap--allamericans"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
               All-Americans
             </a></li>
             <li><a href="/comp/as/aslist.php?LMSCID=14">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              <span class="lmsc__resources--list__icon-wrap lmsc__resources--list__icon-wrap--allstars"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>
               All-Star Swimmers
             </a></li>
             <li><a href="#">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              <span class="lmsc__resources--list__icon-wrap lmsc__resources--list__icon-wrap--bylaws"><img class="lmsc__resources--list__icon--bylaws" src="https://www.usms.org/fitness-and-training/guides/-/media/usms/non-lightroom%20images/house%20art/IamA%20icons/icons-book" width="60" height="60" alt=""></span>
               Bylaws
             </a></li>
             <li><a href="#">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+              <span class="lmsc__resources--list__icon-wrap"><img class="lmsc__resources--list__icon--minutes" src="https://www.usms.org/-/media/USMS/Developers/Images/MyUSMS/icon-myusms-flog" width="60" height="60" alt=""></span>
               Meeting Minutes
             </a></li>
           </ul>
