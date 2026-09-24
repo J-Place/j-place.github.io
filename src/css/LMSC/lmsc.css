@@ -67,19 +67,42 @@
 
 
 
+.lmsc__resources--subheading {
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #777;
+    margin: 3rem 0 0;
+}
+
+.lmsc__resources--subheading:first-of-type {
+    margin-top: 2rem;
+}
+
 .lmsc__resources--list {
-    padding-top: 3rem;
-    column-count: 3;
+    padding-top: 1rem;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    column-gap: 15px;
 }
 
 .lmsc__resources--list li {
-    break-inside: avoid;
+    grid-column: span 2;
+}
+
+.lmsc__resources--list li:nth-child(4) {
+    grid-column: 2 / span 2;
+}
+
+.lmsc__resources--list li:nth-child(5) {
+    grid-column: 4 / span 2;
 }
 
 .lmsc__resources--list a {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 6px;
     padding: 20px 0;
     border-bottom: none;
     color: #0068ad;
@@ -96,62 +119,59 @@
     height: 65px;
 }
 
-.lmsc__resources--list__icon-wrap--bylaws {
-    margin-top: 1rem;
-    margin-bottom: -1rem;
-}
-
-.lmsc__resources--list__icon-wrap--allamericans,
-.lmsc__resources--list__icon-wrap--allstars {
-    margin-top: -1rem;
-    margin-bottom: 1rem;
-}
-
 .lmsc__resources--list a svg {
-    color: #1e3666;
     opacity: 1;
     flex-shrink: 0;
-    height: 45px;
-    width: 45px;
     stroke-width: 1.6px;
 }
 
-.lmsc__resources--list a img {
-    flex-shrink: 0;
-}
-
-.lmsc__resources--list a img.lmsc__resources--list__icon--places {
-    width: 65px;
-    height: 65px;
-}
-
-.lmsc__resources--list a img.lmsc__resources--list__icon--officers {
+.lmsc__resources--list a svg:not(.lmsc__resources--list__icon--calendar):not(.lmsc__resources--list__icon--top10):not(.lmsc__resources--list__icon--places):not(.lmsc__resources--list__icon--bylaws):not(.lmsc__resources--list__icon--minutes):not(.lmsc__resources--list__icon--relay) {
+    height: 40px;
     width: 40px;
+}
+
+.lmsc__resources--list a svg.lmsc__resources--list__icon--relay {
+    width: 42px;
+    height: 42px;
+}
+
+/* All icons share Calendar's ~40px-tall footprint so they read at the same visual
+   weight, aspect preserved. The four vector-traced ones (potrace, alpha+luminance
+   threshold, evenodd fill for holes/rings) use their own tight content viewBox —
+   no baked-in padding — scaled to fit that same 40px height. */
+.lmsc__resources--list a svg.lmsc__resources--list__icon--calendar {
+    width: 41px;
     height: 40px;
 }
 
-.lmsc__resources--list a img.lmsc__resources--list__icon--calendar {
-    width: 40px;
+.lmsc__resources--list a svg.lmsc__resources--list__icon--top10 {
+    width: 27px;
+    height: 38px;
+}
+
+.lmsc__resources--list a svg.lmsc__resources--list__icon--places {
+    width: 27px;
     height: 40px;
 }
 
-.lmsc__resources--list a img.lmsc__resources--list__icon--bylaws {
-    width: 60px;
-    height: 60px;
+.lmsc__resources--list a svg.lmsc__resources--list__icon--bylaws {
+    width: 34px;
+    height: 40px;
 }
 
-.lmsc__resources--list a img.lmsc__resources--list__icon--minutes {
-    width: 60px;
-    height: 60px;
-}
-
-.lmsc__resources--list a img.lmsc__resources--list__icon--top10 {
-    width: 60px;
-    height: 60px;
+.lmsc__resources--list a svg.lmsc__resources--list__icon--minutes {
+    width: 37px;
+    height: 40px;
 }
 
 @media (max-width: 767px) {
     .lmsc__resources--list {
-        column-count: 2;
+        grid-template-columns: 1fr;
+    }
+
+    .lmsc__resources--list li,
+    .lmsc__resources--list li:nth-child(4),
+    .lmsc__resources--list li:nth-child(5) {
+        grid-column: auto;
     }
 }
