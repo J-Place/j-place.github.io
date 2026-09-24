@@ -1,8 +1,11 @@
 'use strict';
 
-// Plan Item 4 — runs on every push to `development` (deploy-development.yml's
-// `review` job, parallel to `deploy`, never blocking or delaying it). Runs
-// /code-review against the pushed range and posts the result to Slack.
+// Plan Item 4 — manual-only (code-review.yml, workflow_dispatch). Originally
+// ran on every push to `development`; converted off that trigger because
+// `development` is pushed to constantly under this project's branching
+// model, and a Claude API call on every push was pure cost for reviews
+// nobody had asked to see. Runs /code-review against the requested range
+// (or the latest commit, if none given) and posts the result to Slack.
 // Never pass --comment or --fix here — `development` is a direct-push branch
 // in normal use, so there's frequently no open PR for --comment to attach to,
 // and this is advisory-only by design (see the plan's guardrail tripwires).
@@ -33,12 +36,10 @@ const { execFileSync } = require('child_process');
 const { writeGithubOutput } = require('./lib/call-claude');
 
 function resolveRange() {
-  const before = process.env.GITHUB_EVENT_BEFORE;
-  const sha = process.env.GITHUB_SHA;
-  // All-zeros `before` happens on a branch's first-ever push (and some
-  // force-push cases) — there's no real prior commit to diff against.
-  const isEmptyBefore = !before || /^0+$/.test(before);
-  return isEmptyBefore ? `${sha}~1...${sha}` : `${before}...${sha}`;
+  // From the workflow_dispatch `range` input — blank means "just the latest
+  // commit on whatever branch this was run against".
+  const requested = (process.env.REVIEW_RANGE || '').trim();
+  return requested || 'HEAD~1...HEAD';
 }
 
 function main() {
@@ -50,6 +51,7 @@ function main() {
 
   const range = resolveRange();
   console.log(`Reviewing range: ${range}`);
+  writeGithubOutput('range', range);
 
   let result = '';
   try {
