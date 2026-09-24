@@ -25,8 +25,6 @@
 }
 
 .btn.lmsc__join-now {
-    background-color: #dbe7f1;
-    color: #0068ad;
     margin-top: 3rem;
     display: block;
     margin-bottom: 2rem;
@@ -66,19 +64,6 @@
 
 
 
-
-.lmsc__resources--subheading {
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #777;
-    margin: 3rem 0 0;
-}
-
-.lmsc__resources--subheading:first-of-type {
-    margin-top: 2rem;
-}
 
 .lmsc__resources--list {
     padding-top: 1rem;
@@ -166,12 +151,15 @@
 
 @media (max-width: 767px) {
     .lmsc__resources--list {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(4, 1fr);
     }
 
     .lmsc__resources--list li,
-    .lmsc__resources--list li:nth-child(4),
+    .lmsc__resources--list li:nth-child(4) {
+        grid-column: span 2;
+    }
+
     .lmsc__resources--list li:nth-child(5) {
-        grid-column: auto;
+        grid-column: 2 / span 2;
     }
 }
