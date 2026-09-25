@@ -1,0 +1,31 @@
+<!-- Matches production's real Accordion component (Sitecore content rendering, not the separate
+     React Accordion.jsx used elsewhere): production/src/Feature/Accordion/code/Views/Accordion/
+     {AccordionFrame,Accordion}.cshtml, styled by production/src/App/views/Accordion/Accordion.css
+     (compiled into common.min.css/usms.min.css, already vendored site-wide -- no local CSS needed).
+     accordion__sm matches the size class used on production's own FAQ-style accordion, e.g.
+     https://www.usms.org/events/national-championships/pool-national-championships. JS behavior
+     (openAccordion/closeAccordion/handleAccordionClick, single-open-at-a-time within the frame)
+     is ported verbatim in src/js/lib/accordion.js. -->
+<div class="html-container include-in-nav">
+  <h2 id="{{ faqHeadingId | default('FrequentlyAskedQuestions') }}">{{ faqTitle | default("Frequently Asked Questions") }}</h2>
+</div>
+<div class="accordion-frame accordion__sm" id="accordion-frame-article-faq">
+  {% for item in faqItems %}
+  <div class="accordion" id="accordion-article-faq-{{ loop.index }}">
+    <div class="accordion__header">
+      <h5 onclick="handleAccordionClick(this,'accordion-article-faq-{{ loop.index }}')">
+        <i class="fa-solid fa-plus-square accordion__icon text-primary"></i>
+        {{ item.question }}
+      </h5>
+    </div>
+    <div class="accordion__content">
+      <div class="accordion__content-container">
+        <div class="html-container">
+          <p>{{ item.answer | safe }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  <input type="hidden" name="firstToOpen" id="firstToOpen" value="" />
+</div>

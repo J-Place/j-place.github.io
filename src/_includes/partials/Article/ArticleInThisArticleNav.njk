@@ -1,0 +1,7 @@
+<!-- Mirrors production Views/SwimmerMagazine/InThisArticle.cshtml. Populated client-side by
+     /vendor/js/www.usms.org-swimmerMagazine.min.js (production's inThisArticle.js), which walks
+     `.include-in-nav h2` (and `h3` too when displayH3 is true) elements in the page body. -->
+<div class="article-nav article-nav--{{ startPosition | default('Scroll') }}{% if displayH3 %} article-nav--DisplayH3{% endif %}">
+  <h3 class="article-nav-title">{{ navTitle | default("In This Article") }}</h3>
+  <ul id="navList"></ul>
+</div>

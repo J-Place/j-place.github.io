@@ -1,0 +1,15 @@
+{% extends "layouts/base.njk" %}
+{% block pageCSS %}
+<link href="/vendor/css/www.usms.org-inThisArticle.min.css?v=20260919.1" rel="stylesheet">
+<link href="/vendor/css/www.usms.org-feature.min.css?v=20260919.1" rel="stylesheet">
+<link href="/css/Article/article-share.css" rel="stylesheet">
+<link href="/css/Article/article-key-points.css" rel="stylesheet">
+{% endblock %}
+{% block pageHeader %}
+{% include "partials/swimmer-page-header.njk" %}
+{% endblock %}
+{% block content %}{{ content | safe }}{% endblock %}
+{% block pageJS %}
+<script src="/vendor/js/www.usms.org-swimmerMagazine.min.js?v=20260919.1"></script>
+<script src="/js/lib/accordion.js"></script>
+{% endblock %}
