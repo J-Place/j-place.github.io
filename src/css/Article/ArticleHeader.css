@@ -1,0 +1,9 @@
+/* production/src/Project/USMS/code/Styles/feature.css:29 (.page-header__image img)
+   Production always feeds this a pre-cropped 900x500 image (ImageCropperService.
+   AdvancedImageField in ArticleHeader.cshtml), so width:100%/height:auto/min-height:100%
+   never needs to reconcile a mismatched aspect ratio. We can't reproduce that signed
+   crop (see CLAUDE.md's Event card image note on cw/ch hashes), so we hotlink the
+   original photo and let object-fit crop it client-side instead of stretching it. */
+.page-header__image img {
+  object-fit: cover;
+}
