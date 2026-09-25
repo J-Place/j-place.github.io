@@ -32,7 +32,3 @@ jobs:
           netlify deploy --dir=_site --prod --message="development @ ${{ github.sha }}" --site=ccd2bd96-1a67-4d15-b94a-8599aff0127a --json
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-
-  # Plan Item 4's automated review moved to a manual-only workflow
-  # (code-review.yml) — see that file for why. Run it on-demand instead of
-  # on every push to development.
