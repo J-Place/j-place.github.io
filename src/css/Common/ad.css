@@ -4,6 +4,36 @@
     padding: 1rem 0;
 }
 
+/* Sticky-ad state -- uses production's OTHER sticky-ad pattern (App/pages/Home.css's
+   `.col-sm-3 .ad__space { position: sticky; top: 0; align-self: flex-start; }`),
+   not the JS-driven position:fixed + computed right-offset pattern (Home.css lines
+   408-511, driven by /vendor/js/www.usms.org-stickyAd.min.js). That JS pins the ad
+   to the outer edge of `.usms-container` while scrolling -- a right-alignment
+   behavior by design -- which can't be made to look centered in our sidebar column.
+   position:sticky keeps the element in its normal column position the whole time
+   (it only stops scrolling with the page once it hits `top: 0`), so centering via
+   the flex rule above holds true both at page load and while scrolling. Toggled by
+   AdSidebar.njk's `adSticky` param. Do NOT load stickyAd.min.js on a page using
+   this -- it would still find `.sticky-ad` and fight this with inline styles. */
+.advertising-dc.sticky-ad {
+    visibility: hidden;
+    opacity: 0;
+    display: none;
+}
+
+@media (min-width: 992px) {
+    .advertising-dc.sticky-ad {
+        display: flex;
+        justify-content: center;
+        visibility: visible;
+        opacity: 1;
+        position: sticky;
+        top: 0;
+        align-self: flex-start;
+        padding: 2rem 0;
+    }
+}
+
 .ad-img {
     max-width: 100%;
     height: auto;
