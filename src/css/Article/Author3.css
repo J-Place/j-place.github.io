@@ -1,0 +1,178 @@
+/* production/src/App/views/Article/Author.css:59-62 (line-height: 6rem there) —
+   intentional deviation for article2, using 2.0rem instead. --sm-viewport
+   resolves to (min-width: 768px) per
+   production/src/App/assets/styles/variables.css:4. */
+@media (min-width: 768px) {
+  .usms-container h4.author__name,
+  .usms-container p.author__date {
+    line-height: 1.0;
+  }
+}
+
+
+/* Article3 layout variation — no production analog. Combines the author
+   byline and social share icons into a single row: author block on the
+   left, icons right-aligned, both vertically centered as one unit.
+   Layered on top of Author.css (still loaded first for the shared
+   name/date typography: margin, font-weight, color, line-height).
+   .author__container sits directly under .article-meta — the old
+   .author wrapper (ArticleAuthor2.njk's single-purpose div around
+   .author__container, with no styling of its own anywhere in production
+   or vendored CSS) added nothing here and was dropped. */
+.article-meta {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+/* common.min.css (vendored, sitewide) sets .author__container's own
+   align-items: center, vertically centering the name/date block against
+   the 75px avatar. Flex-end it here instead so the date (the last line of
+   that block) sits flush with the avatar's bottom edge, which — combined
+   with .article-meta's own align-items: flex-end above — puts the date
+   and the icon row's bottom edges on the same line. True text-baseline
+   alignment isn't reachable through nested flex without reordering the
+   DOM (the baseline flex algorithm reads it from the first in-flow child,
+   which is the image, not the date), so this is the flush-bottom
+   approximation. */
+.article-meta .author__container {
+  align-items: flex-end;
+}
+
+/* common.min.css (vendored, sitewide) styles .social-share for its original
+   context — alone in the sidebar column — with width: 100%; margin: 2.5rem
+   auto. As a flex item sharing this row with .author__container, that
+   width: 100% becomes its flex-basis and it claims far more space than its
+   icons need, squeezing the avatar into what's left. Reset both so it only
+   takes the width its content actually needs. */
+.article-meta .social-share {
+  width: auto;
+  margin: 0;
+}
+
+/* Lift the name/date block and the icon row up off the avatar's bottom
+   edge, so both move relative to the pic. Must come after the width/margin
+   reset above — same selector/specificity for .article-meta .social-share,
+   and source order decides the tie. The two aren't flush-aligned by equal
+   margins alone: .author__date is a block of text with its own line-height
+   leading, so its visual baseline sits above its box's bottom edge, while
+   the icon glyphs sit closer to the bottom of their (tighter) inline-flex
+   box — same box-bottom (per the flex-end alignment above) reads as the
+   icons hanging visibly lower than the date's text. .social-share gets
+   extra lift to compensate. */
+.article-meta .author__detail {
+  margin-bottom: 0.75rem;
+}
+
+.article-meta .social-share {
+  margin-bottom: 1.25rem;
+}
+
+/* Belt-and-suspenders: even if something else claims extra space in this
+   row later, the avatar should never be the one that gets compressed.
+   Author.css only sets max-width/height (both overridable by shrinking),
+   not flex-shrink, so under pressure the image container was the most
+   "compressible" thing here and got squeezed into an ellipse. */
+.author__image-container {
+  flex-shrink: 0;
+  width: 75px;
+}
+
+/* Stack name/date instead of Author.css's row layout; no separator in
+   this variant's markup (ArticleAuthorShare3.njk). .author__detail alone
+   isn't enough — common.min.css (vendored, sitewide) sets
+   .usms-container h4.author__name, .usms-container p.author__date {
+   display: initial } which resolves to inline for both elements,
+   putting them side by side regardless of their block-level parent. */
+.author__detail {
+  display: block;
+}
+
+.usms-container h4.author__name,
+.usms-container p.author__date {
+  display: block;
+  line-height: 1.5;
+}
+
+.usms-container p.author__date {
+  font-size: 1.6rem;
+}
+
+/* article-share-icons.css's .social-share and .share-icon both use
+   align-items: center — fine when every icon is the same font-size (the
+   article2 case), but here each icon is sized differently, so each
+   .share-icon box ends up a different height and center-aligning them
+   leaves their glyphs at different heights within the row. Flex-end both
+   levels so the icons share a bottom edge instead. */
+.article-meta .social-share {
+  align-items: flex-end;
+}
+
+.article-meta .share-icon {
+  align-items: flex-end;
+}
+
+/* 65% of article-share-icons.css's base sizes, then +10%, then +15% more
+   (2.75rem / 1.95rem link / 2.475rem x / 2.35125rem facebook), scoped to
+   this row so the shared .share-icon classes elsewhere aren't affected. */
+.article-meta .share-icon {
+  font-size: 2.2611875rem;
+}
+
+.article-meta .share-icon--link {
+  font-size: 1.6033875rem;
+}
+
+.article-meta .share-icon--x {
+  font-size: 2.03506875rem;
+}
+
+.article-meta .share-icon--facebook {
+  font-size: 1.9333153125rem;
+}
+
+/* Same box-bottom (flex-end above), but the X and Reddit Font Awesome
+   glyphs carry less built-in bottom padding within their own em-box than
+   the link/Facebook glyphs, so they read 1-2px high next to them even
+   though the boxes are flush. Nudge those two down by eye. */
+.article-meta .share-icon--x {
+  margin-bottom: -1.5px;
+}
+
+.article-meta .share-icon--reddit {
+  margin-bottom: -1px;
+}
+
+@media (max-width: 767px) {
+  .article-meta {
+    margin-top: 0.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .article-meta .social-share {
+    margin-top: 1.75rem;
+  }
+
+  .usms-container h4.author__name,
+  .usms-container p.author__date {
+    line-height: 1.6;
+  }
+
+  /* Desktop sizes (above) +15% more for mobile. */
+  .article-meta .share-icon {
+    font-size: 2.600365625rem;
+  }
+
+  .article-meta .share-icon--link {
+    font-size: 1.843895625rem;
+  }
+
+  .article-meta .share-icon--x {
+    font-size: 2.3403290625rem;
+  }
+
+  .article-meta .share-icon--facebook {
+    font-size: 2.223312609375rem;
+  }
+}
