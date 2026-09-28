@@ -1,0 +1,16 @@
+/* Intentional deviation from production/src/App/views/Article/AboutAuthor.css.
+   .article-author__header (9-13): production has no align-items set on its
+   flex header, so the "About the Author" + name block sits at the default
+   stretch/top alignment next to the image instead of centered against it.
+   .article-author__title (28-32): production's padding-top: 1rem pushes the
+   whole two-line block down, and the default line-height leaves the name
+   line loose beneath "About the Author" — tightened both so the name sits
+   close under the label and the combined block centers on the image. */
+.article-author__header {
+  align-items: center;
+}
+
+.article-author__title {
+  padding-top: 0;
+  line-height: 1.1;
+}

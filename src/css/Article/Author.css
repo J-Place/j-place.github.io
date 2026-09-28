@@ -1,0 +1,53 @@
+/* production/src/App/views/Article/Author.css:59-62 (line-height: 6rem there) —
+   intentional deviation for article2, using 2.0rem instead. --sm-viewport
+   resolves to (min-width: 768px) per
+   production/src/App/assets/styles/variables.css:4. */
+@media (min-width: 768px) {
+  .usms-container h4.author__name,
+  .usms-container p.author__date {
+    line-height: 2.0;
+  }
+}
+
+/* No production analog — bullet separator between author name and date. */
+.author__detail {
+  display: flex;
+  align-items: center;
+}
+
+.usms-container h4.author__name,
+.usms-container p.author__date {
+  margin: 0;
+  font-weight: 700;
+}
+
+.usms-container p.author__date {
+  font-weight: 400;
+  color: #888;
+}
+
+.author__separator {
+  font-size: 1.5rem;
+  line-height: 1;
+  color: #9b9b9b;
+  margin-left: 10px;
+  margin-right: 8px;
+}
+
+/* Intentional deviation from production/src/App/views/Article/Author.css:10-13
+   (max-width: 84px; height: 84px). Article2 demo uses a smaller avatar. */
+.author__image-container {
+  max-width: 75px;
+  height: 75px;
+}
+
+/* production/src/App/views/Article/Author.css:10-17 hides .author__image-container
+   below the --sm-viewport (768px) breakpoint (vendored in common.min.css). That
+   image's own box, including its margin-right: 15px, was the only thing
+   separating the header from the byline on mobile — replace it here so removing
+   the image doesn't also remove the spacing. */
+@media (max-width: 767px) {
+  .author {
+    margin-top: 0.5rem;
+  }
+}
