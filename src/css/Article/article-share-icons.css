@@ -4,6 +4,16 @@
   gap: 24px;
 }
 
+/* common.min.css (vendored, sitewide) sets .social-share's own
+   margin: 2.5rem auto — appropriate for it sitting alone as the first
+   thing in the sidebar column (article2's case), except the top half of
+   that margin fights the column's own padding-top (see ArticleHeader.css),
+   which is what now owns top alignment across the article row's three
+   columns. Left/right/bottom margin untouched. */
+.article-sidebar-ad > .social-share {
+  margin-top: 0;
+}
+
 .share-icon {
   display: inline-flex;
   align-items: center;

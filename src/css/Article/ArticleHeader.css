@@ -23,13 +23,66 @@ header.page-title h2 {
 }
 
 /* No production analog for header.page-title h1 (searched production/ —
-   no hits). Article2 demo tightens the space before the deck subtitle. */
+   no hits). Article2 demo tightens the space before the deck subtitle.
+   margin-top is negative, not 0: with the ~25px inherited top margin
+   removed and the column-level padding-top below providing equal space
+   on both sides of the article row, the h1's *box* lines up with the ad's
+   box exactly — but Helvetica Neue's internal ascent metric still leaves
+   visible whitespace above the cap-height even at line-height: 1.1, so
+   the visible text still sits ~9px below where the ad's image (no such
+   metric — it's a bitmap filling its box edge to edge) starts. This pulls
+   the box up by that amount so the *text*, not just the box, lines up. */
 header.page-title h1 {
+  margin-top: -9px;
   margin-bottom: 0.5rem;
+  line-height: 1.1;
 }
 
-@media (max-width: 767px) {
-  header.page-title h1 {
-    margin-top: 0;
-  }
+/* The three-column article row (In This Article nav / main content / ad
+   sidebar) needs their first-line content flush at the same height
+   regardless of what that content is. Column padding-top is the single
+   source of truth for that; anything placed first in col-lg-6 or
+   .article-sidebar-ad must have its own top margin/padding zeroed (see
+   header.page-title h1 above and AdSidebar.njk's noTopPadding /
+   .article-sidebar-ad .social-share below) rather than fighting this.
+
+   Scoped under .article-page (the page-level hook on the <section>
+   wrapping this whole layout, added specifically so rules like this one
+   can't leak onto some unrelated .col-lg-3/.col-lg-6 elsewhere on the
+   page — col-lg-* are pure Bootstrap grid-position classes, reused
+   constantly sitewide, and say nothing about "this is the article
+   template's column"). Named .article-page, not the shorter .article:
+   usms.min.css (vendored, loaded sitewide) already has a dormant
+   .article { position: relative } rule that nothing used — naming our
+   own scoping class .article activated it, which silently made this
+   <section> the offsetParent for everything inside it. Production's
+   own inThisArticle.js computes the "In This Article" nav's sticky
+   trigger point via a *plain* .offsetTop on the first .include-in-nav
+   h2 (see production/src/Project/USMS/code/Scripts/inThisArticle.js:64
+   getArticleStart(), isScroll branch) — relative to the nearest
+   positioned ancestor, not the true page top. With .article suddenly
+   becoming that ancestor, the computed trigger point dropped by exactly
+   the height of everything above it (meganav/breadcrumb/hero image,
+   ~640px measured), so the nav popped into its pinned/visible state
+   after only ~400px of scroll instead of ~1040px — visibly overlapping
+   the hero image. .article-page doesn't collide with anything in
+   vendored CSS (checked). Lesson: a new class scoping our own rules can
+   still silently activate an unrelated *vendored* rule with the same
+   name and change behavior production's own JS depends on — check for
+   collisions in both directions, not just whether the new rule's own
+   intent conflicts with something.
+
+   Further scoped with :first-of-type and direct-child combinators (>)
+   down to .usms-container's first .row, rather than every .col-lg-3/-6
+   inside .article-page generally — so a second .row of columns added
+   later anywhere else inside this same <section> (FAQ, related content,
+   whatever comes next) can't silently inherit this padding too.
+   Deliberately a structural selector, not a new class on the row: this
+   layout mirrors production Razor/Sitecore components, where adding a
+   class means touching and redeploying that component — real scope for
+   a spacing fix. A pure selector needs no markup change and would work
+   identically if ported into production CSS as-is. */
+.article-page > .usms-container > .row:first-of-type > .col-lg-3,
+.article-page > .usms-container > .row:first-of-type > .col-lg-6 {
+  padding-top: 3rem;
 }
