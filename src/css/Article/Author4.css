@@ -135,14 +135,15 @@
     margin-top: 1.25rem;
   }
 
-  /* Vertical rule (beside the icons on desktop) becomes a horizontal one
-     above them, now that .article-meta__share stacks instead of running
-     inline. width: 100% is of .article-meta__share's own box, which the
-     grid sizing above already matches to the author/date line's width. */
+  .article-meta .social-share {
+    margin: 2rem auto 0;
+  }
+
+  /* Hidden on mobile — the horizontal rule between date and socials was
+     dropped per design direction; desktop keeps the vertical divider
+     untouched. */
   .article-meta__divider {
-    width: 100%;
-    height: 1px;
-    margin: 0 0 1.25rem;
+    display: none;
   }
 
   .usms-container h4.author__name,
