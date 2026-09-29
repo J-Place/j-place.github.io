@@ -1,0 +1,101 @@
+/* Article4 layout variation — no production analog. Author image/name/date,
+   a vertical divider, and the share icons all sit inline on one row,
+   vertically centered, shrink-to-fit and left-aligned as a single unit
+   (not stretched to the column's full width). Layered on top of Author.css
+   (still loaded first for the shared name/date typography: margin,
+   font-weight, color, line-height). */
+.article-meta {
+  display: flex;
+  align-items: center;
+}
+
+/* Intentional deviation from Author.css's 75px (itself already a deviation
+   from production's 84px, per that file's own comment) — article4's byline
+   row is more crowded (avatar + name/date + divider + icons all inline),
+   so a smaller avatar keeps the row from feeling top-heavy. */
+.author__image-container {
+  max-width: 60px;
+  height: 60px;
+}
+
+/* Wraps the divider and .social-share as one unit so they move together
+   as a single block below the author row on mobile (see the max-width
+   media query at the bottom of this file), instead of each wrapping onto
+   its own line independently. */
+.article-meta__share {
+  display: flex;
+  align-items: center;
+}
+
+/* No production analog — plain vertical rule between the byline and the
+   share icons. Height matches the author name+date text block rather than
+   the taller avatar, so it reads as a divider between those two text/icon
+   rows, not a full-height column separator. */
+.article-meta__divider {
+  width: 1px;
+  height: 34px;
+  margin: 0 20px 0 23px;
+  background-color: #d8d8d8;
+}
+
+/* common.min.css (vendored, sitewide) sets .social-share's own
+   width: 100%; margin: 2.5rem auto; justify-content: flex-end (styled for
+   its original context — alone in the sidebar column, article2's case).
+   Reset both: width:100% would stretch this row to fill the remaining
+   column width and flex-end would then push the icons to the right edge,
+   away from the divider — the opposite of the compact, left-hugging
+   cluster this variant wants. Icons are left at article-share-icons.css's
+   default sizes — nothing here competes with them for row height the way
+   the avatar did in article3's inline row, so no scaling/flex-end tricks
+   are needed. */
+.article-meta .social-share {
+  width: auto;
+  margin: 0;
+}
+
+/* Stack name/date instead of Author.css's row layout; no separator in
+   this variant's markup (ArticleAuthorShare4.njk uses the divider above
+   instead). .author__detail alone isn't enough — common.min.css (vendored,
+   sitewide) sets .usms-container h4.author__name, .usms-container
+   p.author__date { display: initial } which resolves to inline for both
+   elements, putting them side by side regardless of their block-level
+   parent. */
+.author__detail {
+  display: block;
+}
+
+.usms-container h4.author__name,
+.usms-container p.author__date {
+  display: block;
+  line-height: 1.5;
+}
+
+.usms-container p.author__date {
+  font-size: 1.6rem;
+}
+
+/* Below the same 768px breakpoint Author3.css uses for its own mobile
+   stack, drop the divider+share block onto its own line, left-aligned
+   under the author image/name/date instead of squeezing into the same
+   row. */
+@media (max-width: 767px) {
+  .article-meta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .article-meta__share {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 1.25rem;
+  }
+
+  /* Vertical rule (beside the icons on desktop) becomes a horizontal one
+     above them, now that .article-meta__share stacks instead of running
+     inline. */
+  .article-meta__divider {
+    width: 100%;
+    height: 1px;
+    margin: 0 0 1.25rem;
+  }
+}
