@@ -79,9 +79,15 @@
    under the author image/name/date instead of squeezing into the same
    row. */
 @media (max-width: 767px) {
+  /* Grid instead of a plain column flex: a single max-content column sizes
+     itself to the wider of the two rows (almost always author__container,
+     the avatar+name/date line) and grid's default justify-items: stretch
+     then stretches .article-meta__share — and so the divider inside it,
+     itself width: 100% of .article-meta__share — to that same width,
+     rather than each row keeping its own independent shrink-to-fit width. */
   .article-meta {
-    flex-direction: column;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: max-content;
   }
 
   .article-meta__share {
@@ -92,10 +98,21 @@
 
   /* Vertical rule (beside the icons on desktop) becomes a horizontal one
      above them, now that .article-meta__share stacks instead of running
-     inline. */
+     inline. width: 100% is of .article-meta__share's own box, which the
+     grid sizing above already matches to the author/date line's width. */
   .article-meta__divider {
     width: 100%;
     height: 1px;
     margin: 0 0 1.25rem;
+  }
+
+  .usms-container h4.author__name,
+  .usms-container p.author__date {
+    font-size: 1.7rem;
+    line-height: 1.7;
+  }
+
+  .author__detail {
+    margin-top: 0.5rem;
   }
 }
