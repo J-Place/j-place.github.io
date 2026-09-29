@@ -28,7 +28,7 @@ jobs:
       - run: npm run build
       - name: Deploy to Netlify (development branch preview)
         run: |
-          npm install -g netlify-cli
+          npm install -g netlify-cli@27.10.2
           netlify deploy --dir=_site --prod --message="development @ ${{ github.sha }}" --site=ccd2bd96-1a67-4d15-b94a-8599aff0127a --json
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
