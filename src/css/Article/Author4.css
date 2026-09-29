@@ -14,8 +14,9 @@
    row is more crowded (avatar + name/date + divider + icons all inline),
    so a smaller avatar keeps the row from feeling top-heavy. */
 .author__image-container {
-  max-width: 60px;
-  height: 60px;
+  max-width: 55px;
+  height: 55px;
+  margin-right: 13px;
 }
 
 /* Wraps the divider and .social-share as one unit so they move together
@@ -34,7 +35,7 @@
 .article-meta__divider {
   width: 1px;
   height: 34px;
-  margin: 0 20px 0 23px;
+  margin: 0 21px 0 23px;
   background-color: #d8d8d8;
 }
 
@@ -51,6 +52,40 @@
 .article-meta .social-share {
   width: auto;
   margin: 0;
+  gap: 21px;
+}
+
+/* 95% of article-share-icons.css's base sizes (2.75rem / 1.95rem link /
+   2.475rem x / 2.35125rem facebook), scoped to this row so the shared
+   .share-icon classes elsewhere (article2's sidebar, e.g.) aren't
+   affected. */
+.article-meta .share-icon {
+  font-size: 2.6125rem;
+}
+
+.article-meta .share-icon--link {
+  font-size: 1.8525rem;
+}
+
+.article-meta .share-icon--x {
+  font-size: 2.35125rem;
+}
+
+/* 8% further reduction on top of the 95% above (2.2336875rem × 0.92). */
+.article-meta .share-icon--facebook {
+  font-size: 2.0549925rem;
+  position: relative;
+  left: -1px;
+}
+
+/* The reddit glyph's own artwork sits a couple pixels low relative to the
+   other three within its em-box — nudge it up to read level with them.
+   font-size is a 4% further reduction on top of the 95% above
+   (2.6125rem × 0.96). */
+.article-meta .share-icon--reddit {
+  position: relative;
+  top: -2px;
+  font-size: 2.508rem;
 }
 
 /* Stack name/date instead of Author.css's row layout; no separator in
