@@ -1,6 +1,25 @@
 <!-- Mirrors production Views/SwimmerMagazine/InThisArticle.cshtml. Populated client-side by
      /vendor/js/www.usms.org-swimmerMagazine.min.js (production's inThisArticle.js), which walks
-     `.include-in-nav h2` (and `h3` too when displayH3 is true) elements in the page body. -->
+     `.include-in-nav h2` (and `h3` too when displayH3 is true) elements in the page body.
+
+     startPosition becomes the `article-nav--<value>` class suffix, taken verbatim from the
+     Sitecore item Name the "Start Position" rendering parameter (droplink, source
+     /sitecore/content/USMS/Global/Swimmer Magazine/In this Article Startup Position) resolves
+     to -- confirmed in production/src/Project/USMS/code/Controllers/SwimmerMagazineController.cs
+     and Views/SwimmerMagazine/InThisArticle.cshtml. Only two values change behavior
+     (inThisArticle.css/.js, same path):
+       - "Top" = production's "After In Page Navigation" option (item Name "Top", editor-facing
+         Display Name "After In Page Navigation" -- confirmed by fetching a live production page
+         set to that option: rendered markup was literally class="article-nav article-nav--Top",
+         2026-09-30). Visible immediately in normal flow at the top of the left column
+         (opacity:1/visibility:visible, position:sticky), then pins to the viewport once the
+         reader scrolls past its own natural position.
+       - "Scroll" (unconfirmed against a live example -- name only, from inThisArticle.js's own
+         `article-nav--Scroll` check): stays hidden (opacity:0/visibility:hidden, position:fixed)
+         until the reader scrolls to the article body's first <h2>, rather than the nav's own
+         position, before it appears/sticks.
+     Default here is "Scroll" for article2/3; article4 pages set startPosition="Top" explicitly
+     to simulate "After In Page Navigation" per the confirmed production example above. -->
 <div class="article-nav article-nav--{{ startPosition | default('Scroll') }}{% if displayH3 %} article-nav--DisplayH3{% endif %}">
   <h3 class="article-nav-title">{{ navTitle | default("In This Article") }}</h3>
   <ul id="navList"></ul>
