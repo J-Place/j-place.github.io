@@ -1214,19 +1214,15 @@
       }
     });
 
-    // DEV/TESTING DEFAULT — not a production rule: only show the two Event
-    // License tiers (Event License USMS+ / usmsPlus, Event License Standard
-    // / competition) on load, for convenience testing the Event
-    // Participation "Yes" default. Standard Membership and Year-Plus are
-    // hidden here rather than via any eligibility logic. The whole
-    // Membership Options container stays .disabled (see
-    // MembershipOptions.njk's default class + the participation reset
-    // cascade re-adding it) until the agreement gate passes, so these two
-    // show up locked rather than fully hidden.
+    // Event Participation defaults to Yes on load (see the "Participation
+    // default" block above), which is meant to reveal only the event-
+    // eligible tiers (USMS+, Event License Standard/Year-Plus) — Standard
+    // Membership and Year-Plus stay hidden until Participation is switched
+    // to No. Membership Options itself stays .disabled (see
+    // MembershipOptions.njk's default class) until the agreement gate
+    // passes, so these show up locked rather than fully hidden.
     document.querySelectorAll('.membership-length--option').forEach(function (tile) {
-      var radio = tile.querySelector('input[type="radio"]');
-      var showByDefault = radio && (radio.id === 'usmsPlus' || radio.id === 'competition' || radio.id === 'competition-nextYear');
-      if (!showByDefault) tile.parentElement.style.display = 'none';
+      if (tile.dataset.competitionEligible !== 'true') tile.parentElement.style.display = 'none';
     });
 
     // Snapshot each col's display after all init logic so resets can restore it.
