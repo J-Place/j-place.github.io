@@ -1,0 +1,17 @@
+/* production/src/Project/USMS/code/Styles/inThisArticle.css:190-196 (inside its own
+   @media (min-width: 992px) block) defines .article-nav.article-nav--Top as
+   position: sticky, visible immediately in normal flow — no top-of-column offset
+   of its own, since production's own column has no equivalent top padding.
+
+   Our own ArticleHeader.css adds padding-top: 3rem to
+   .article-page > .usms-container > .row:first-of-type > .col-lg-3 (the In This
+   Article column) to align the main content column's first line across the row
+   regardless of content — see that file's comment for the full rationale. That
+   padding pushes the --Top nav 3rem lower than production's flush-at-top
+   position. Pull it back up on desktop only, where both the padding-top and the
+   sticky/visible --Top treatment are active. */
+@media (min-width: 992px) {
+  .article-nav.article-nav--Top {
+    margin-top: -18px;
+  }
+}
