@@ -80,7 +80,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(0, 0, 0, 0.5);
   border: 0;
   cursor: pointer;
 }
@@ -118,8 +118,9 @@
    on that center-bottom point.
 
    transform/transition here are the discrete flip — article5-hero-scroll.js
-   only toggles .hero-scroll-cue--flipped on/off at the two endpoints (top,
-   bottom), it doesn't animate anything itself; this 0.5s transition is what
+   only toggles .hero-scroll-cue--flipped on (first hover of the cue at the
+   resting point, or any scroll back up) and off (back at the top of the
+   page), it doesn't animate anything itself; this 0.25s transition is what
    actually turns that instant class change into a smooth rotation. */
 .hero-scroll-cue__chevron {
   position: relative;
@@ -180,12 +181,17 @@
    .advertising-dc.sticky-ad to position:sticky; top:0 at this same
    min-width:992px breakpoint — our own position:sticky pattern, not
    production's position:fixed/JS-driven one (see that file's comment).
-   Article5 layout variation: nudge the sticky ad down 104px past its
-   sticky top:0 anchor, scoped here rather than in ad.css itself since that
-   file is shared by every other page using AdSidebar.njk. */
+   Article5 layout variation: stick the ad at top: 3rem instead of 0 so it
+   keeps a 3rem gap below the browser frame once scrolling pins it (top only
+   takes effect once stuck — it doesn't move the at-load position), with no
+   extra margin above it in normal flow. Scoped here rather than in ad.css
+   itself since that file is shared by every other page using
+   AdSidebar.njk. */
 @media (min-width: 992px) {
   .advertising-dc.sticky-ad {
-    margin-top: 104px;
+    /* margin-top: 65px; */
+    margin-top: 0;
+    top: 3rem;
   }
 }
 

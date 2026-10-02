@@ -44,26 +44,45 @@
   // completely out of view.
   var VISIBLE_HERO_REMAINDER = 50;
 
-  // Discrete flip, not a continuous scroll-matching dial: the chevron holds
-  // its direction (down or, once flipped, up) through the whole scroll in
-  // between, and only rotates — animated over 0.5s via CSS transition, see
-  // ArticleHeadline5.css — at the moment it actually reaches the bottom
-  // (resting point) or the top (scrollY 0). Same counter-clockwise
-  // direction as before, just triggered at the endpoints instead of tied
-  // frame-by-frame to scroll position.
+  // Discrete flip, not a continuous scroll-matching dial: the chevron keeps
+  // pointing down through any natural scroll down and through its own first
+  // click. It only rotates up — and the click only switches to "scroll to
+  // top" — on one of two triggers: the user hovers it while the page is at
+  // (or past) the resting point (tryFlip() below), or the user scrolls back
+  // up (updateCueSticky() below). The rotation itself is a CSS transition
+  // on .hero-scroll-cue--flipped in ArticleHeadline5.css. Resets once
+  // scrollY is back to exactly 0.
   var flipped = false;
-
-  // Mid-scroll (flipped hasn't latched true yet, or has but the user is on
-  // the way back without having reached scrollY 0), position alone doesn't
-  // say which way a click should go — so track which way the user was last
-  // actually scrolling and continue that, same as a click while already
-  // scrolling up should keep going up to the top rather than reversing back
-  // down to content just because the hero hasn't fully retreated yet.
   var lastScrollY = window.scrollY;
-  var scrollDirection = null; // 'up' | 'down' | null (no scroll yet)
+
+  function setFlipped(value) {
+    flipped = value;
+    cue.classList.toggle('hero-scroll-cue--flipped', flipped);
+    cue.setAttribute('aria-label', flipped ? 'Scroll to top' : 'Scroll to article content');
+  }
+
+  // At the resting point (VISIBLE_HERO_REMAINDER or less of the hero left
+  // showing) there's nothing further for a downward click to do. 1px of
+  // slack absorbs sub-pixel rounding at the end of the animated scroll.
+  function atRestingPoint() {
+    return hero.getBoundingClientRect().bottom <= VISIBLE_HERO_REMAINDER + 1;
+  }
+
+  function tryFlip() {
+    if (!flipped && atRestingPoint()) setFlipped(true);
+  }
+
+  // mouseenter is the "first hover". mousemove covers the pointer already
+  // sitting on the cue when the page arrives at the resting point (the cue
+  // was stuck under it the whole way down, so no new mouseenter fires).
+  cue.addEventListener('mouseenter', tryFlip);
+  cue.addEventListener('mousemove', tryFlip);
 
   cue.addEventListener('click', function () {
-    if (flipped || scrollDirection === 'up') {
+    // No hover to flip it on touch/keyboard — a click at the resting point
+    // would otherwise be a no-op, so flip here and go up instead.
+    tryFlip();
+    if (flipped) {
       smoothScrollTo(0);
       return;
     }
@@ -112,32 +131,16 @@
     if (!heroImageContainer) return;
     var rect = heroImageContainer.getBoundingClientRect();
 
+    // Scrolling back up flips the chevron up, wherever on the page that
+    // happens. Back at the very top — unflip, so it points down again and
+    // a click goes back to its initial "scroll to content" behavior.
     var currentScrollY = window.scrollY;
-    if (currentScrollY !== lastScrollY) {
-      scrollDirection = currentScrollY < lastScrollY ? 'up' : 'down';
-      lastScrollY = currentScrollY;
-    }
-    // Back at the very top — reset to null rather than leaving 'up' latched
-    // from the scroll that got here, so a click goes back to its initial
-    // "scroll to content" behavior instead of a no-op scroll-to-0.
     if (currentScrollY <= 0) {
-      scrollDirection = null;
+      if (flipped) setFlipped(false);
+    } else if (currentScrollY < lastScrollY && !flipped) {
+      setFlipped(true);
     }
-
-    // Flip only at the endpoints: true the instant the hero's bottom
-    // reaches CUE_SIZE (the resting point), reset back to false only once
-    // scrollY is back to exactly 0 — same latch as scrollDirection above,
-    // so the chevron stays pointing up for the whole scroll back from rest
-    // instead of unrotating partway through. The actual rotation (0deg <->
-    // -180deg) is a CSS transition on this class in ArticleHeadline5.css,
-    // not anything animated per-frame here.
-    if (rect.bottom <= CUE_SIZE) {
-      flipped = true;
-    } else if (currentScrollY <= 0) {
-      flipped = false;
-    }
-    cue.classList.toggle('hero-scroll-cue--flipped', flipped);
-    cue.setAttribute('aria-label', flipped ? 'Scroll to top' : 'Scroll to article content');
+    lastScrollY = currentScrollY;
 
     cue.classList.remove('hero-scroll-cue--fixed', 'hero-scroll-cue--pinned');
     cue.style.left = '';
