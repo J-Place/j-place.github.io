@@ -6,7 +6,7 @@
   // Native behavior:'smooth' duration isn't configurable and runs quite
   // fast (a few hundred ms) — this animates the scroll by hand over a fixed
   // 500ms instead.
-  var DURATION = 700;
+  var DURATION = 1200;
 
   // Mild easing — sine in/out is a gentler curve than quad/cubic (a shallow
   // S rather than a pronounced accelerate/decelerate), so motion still
