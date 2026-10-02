@@ -198,9 +198,10 @@ try {
     }
   }
 
-  copyDir(path.join(siteDir, 'css'), path.join(outDir, 'css'));
-  copyDir(path.join(siteDir, 'js'),  path.join(outDir, 'js'));
-  copyDir(path.join(siteDir, 'img'), path.join(outDir, 'img'));
+  copyDir(path.join(siteDir, 'css'),    path.join(outDir, 'css'));
+  copyDir(path.join(siteDir, 'js'),     path.join(outDir, 'js'));
+  copyDir(path.join(siteDir, 'img'),    path.join(outDir, 'img'));
+  copyDir(path.join(siteDir, 'vendor'), path.join(outDir, 'vendor'));
 
   console.log(`\nVendoring production CSS...`);
   vendorExternalCss(outDir);
