@@ -1,0 +1,186 @@
+/* Article5 layout variation — no production analog. Headline/subhead moved
+   out of the article-page content row and into their own full-width row
+   above the breadcrumb + hero image header. */
+.article-headline header.page-title h1 {
+  margin-top: 0;
+}
+
+/* Keeps the headline/deck from running the full width of the page on
+   desktop; dropped on mobile where the narrower viewport needs all the
+   width it can get. 768px matches the mobile/desktop split used elsewhere
+   in Article/Author.css and Author3.css. */
+@media (min-width: 768px) {
+  .article-headline header.page-title {
+    padding-right: 20%;
+  }
+}
+
+/* ArticleHeader.css's .article-page > .row:first-of-type > .col-lg-6
+   padding-top:3rem rule (and header.page-title h1's negative margin) exist
+   to flush the *headline* against the In This Article nav / ad sidebar.
+   With the headline moved up to its own section, .article-meta (the
+   author/share row) is now the first thing in that column instead —
+   belt-and-suspenders zero here so it stays flush with the nav and ad
+   regardless of which Author*.css variant (and its own margin-top, if any)
+   this layout ends up pairing with. */
+.article-page > .usms-container > .row:first-of-type > .col-lg-6 > .article-meta {
+  margin-top: 0;
+}
+
+/* production/src/Project/USMS/code/Styles/feature.css:52-54 (.page-header--dark)
+   sets background: rgba(0, 0, 0, .5) — a dark tint over the hero image,
+   there to keep light-colored overlaid text (headline, breadcrumb) readable
+   against a busy photo. Article5 layout variation: the headline/breadcrumb
+   no longer overlay this image (they're in their own sections above it
+   now), so a dark tint has no text to protect — lighten it to a white tint
+   instead, scoped to this layout only via ArticleHeadline5.css rather than
+   the shared ArticleHeader.css, which article/article2/3/4 also load and
+   still rely on the dark tint for their overlaid headers. */
+.page-header--dark {
+  background: rgba(255, 255, 255, .5);
+}
+
+/* Article5 layout variation — no production analog. "Scroll down" cue, a
+   50x50 square (11px padding, 35% black backing so the white chevron reads
+   against any photo). article5-hero-scroll.js scrolls the page down on
+   click. Markup-wise this lives inside .page-header__image-container
+   (sibling of the <img>), not <header> itself: the <header>'s own box is
+   the full-bleed section width, but the visible photo —
+   .page-header__image-container, which wraps the real <img> — is a
+   narrower, centered column inside it. Positioning against <header>
+   instead would put (0,0) in the empty background-image margin beside the
+   photo, not the photo's own corner. z-index clears
+   .page-header__photo-credit's z-index:99 (feature.css:56-57); the tint
+   placeholder is a sibling at the <header> level, not stacked here, so no
+   ordering conflict with it.
+
+   This emulates position:sticky, rather than using it directly: .bg-media
+   (production/src/App/pages/Home.css:64-70, on <header>, needed to clip the
+   oversized hero <img>) sets overflow:hidden, which becomes the sticky
+   scrollport for any sticky descendant — and since <header> itself never
+   scrolls (the page does, not that box), real position:sticky never
+   activates here (confirmed empirically). article5-hero-scroll.js's
+   scroll/resize listener toggles the two modifier classes below instead,
+   reproducing the same three states a working sticky element would move
+   through. This box is exactly 50px tall — the same VISIBLE_HERO_REMAINDER
+   the hero scroll-cue's own click target stops the page at — so the
+   hand-off between "stuck at the viewport's top edge" and "pinned to the
+   hero's bottom edge" lands on the same frame: the box is still fully
+   flush with the viewport top (y:0 to y:50) at the exact scroll position
+   where the hero's bottom edge also reaches y:50. */
+.hero-scroll-cue {
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  width: 50px;
+  height: 50px;
+  padding: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.35);
+  border: 0;
+  cursor: pointer;
+}
+
+/* State 2 (see article5-hero-scroll.js): hero top has scrolled above the
+   viewport but its bottom is still more than 50px away — stick to the
+   viewport's top edge. left is set inline by the script (position:fixed
+   can't see .page-header__image-container's own position, so the script
+   reads its current on-screen left and pins to that pixel value instead of
+   the window edge). */
+.hero-scroll-cue--fixed {
+  position: fixed;
+  top: 0;
+}
+
+/* State 3: 50px or less of the hero remains visible — hand back to
+   position:absolute anchored to the *bottom* of .page-header__image-
+   container instead of the top, so the box rides away with the hero past
+   this point instead of staying stuck mid-content. */
+.hero-scroll-cue--pinned {
+  position: absolute;
+  top: auto;
+  bottom: 0;
+  left: 0;
+}
+
+/* .hero-scroll-cue--flipped (not --pinned — see article5-hero-scroll.js's
+   updateCueSticky) tracks whether article5-hero-scroll.js's click handler
+   is currently wired to "scroll to top" instead of "scroll to content";
+   flip the chevron to point up so its direction still matches what a click
+   does. Stays flipped for the whole scroll back up, not just while --pinned
+   is active. */
+.hero-scroll-cue--flipped .hero-scroll-cue__chevron {
+  transform: rotate(180deg);
+}
+
+/* Two independent 2px bars (not the rotated-border-corner trick — at this
+   size that box's rotated bounding box balloons well past the container and
+   gets clipped by .page-header's overflow:hidden) meeting at a bottom-center
+   apex, each pivoting from its own top corner so the two meet exactly at
+   (15, 15) — a 30px-wide, 15px-tall downward chevron, 2px white lines,
+   centered (via the flex box above) in the 30x30 content area .hero-scroll-cue's
+   12px padding leaves inside its 54x54 square. Bar length (21.2px) is half
+   the chevron's width over cos(45deg), so the 45deg arms still land exactly
+   on that center-bottom point. */
+.hero-scroll-cue__chevron {
+  position: relative;
+  display: block;
+  width: 30px;
+  height: 15px;
+}
+
+.hero-scroll-cue__chevron::before,
+.hero-scroll-cue__chevron::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 21.2px;
+  height: 2px;
+  background: #fff;
+}
+
+.hero-scroll-cue__chevron::before {
+  left: 0;
+  transform-origin: top left;
+  transform: rotate(45deg);
+}
+
+.hero-scroll-cue__chevron::after {
+  right: 0;
+  transform-origin: top right;
+  transform: rotate(-45deg);
+}
+
+/* production/src/Project/USMS/code/Styles/feature.css:14-19
+   (.page-header__image) sets height: 350px at every breakpoint there — no
+   responsive bump. Article5 layout variation: taller hero on desktop. */
+@media (min-width: 992px) {
+  .page-header__image {
+    height: 580px;
+    margin: 0 auto;
+  }
+}
+
+/* production/src/Project/USMS/code/Styles/feature.css:64-74
+   (.photo-credit__wrapper p) sets bottom: 0 — flush with the hero's bottom
+   edge there. Article5 layout variation: nudged up 15px off that edge. */
+.photo-credit__wrapper p {
+  bottom: 15px;
+}
+
+/* src/css/Common/ad.css:24-35 (loaded sitewide via base.njk) sets
+   .advertising-dc.sticky-ad to position:sticky; top:0 at this same
+   min-width:992px breakpoint — our own position:sticky pattern, not
+   production's position:fixed/JS-driven one (see that file's comment).
+   Article5 layout variation: nudge the sticky ad down 104px past its
+   sticky top:0 anchor, scoped here rather than in ad.css itself since that
+   file is shared by every other page using AdSidebar.njk. */
+@media (min-width: 992px) {
+  .advertising-dc.sticky-ad {
+    margin-top: 104px;
+  }
+}

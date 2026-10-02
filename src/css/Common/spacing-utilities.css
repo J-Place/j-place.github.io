@@ -1,0 +1,10 @@
+/* Extends production's vendored spacing utility scale (.p-t-10, .p-t-20, ...
+   .p-tb-10, .p-tb-20, ... — compiled into common.min.css/usms.min.css) down
+   to a 5px step. No production analog: the vendored scale only goes down to
+   10px, confirmed by grepping every .p-t-, .p-b-, and .p-tb- rule in both
+   bundles. Lives here, loaded sitewide in base.njk, rather than scoped to
+   whichever page first needed it — a spacing utility is meant to be reused
+   anywhere, the same as the production classes it extends. */
+.p-t-5 {
+  padding-top: 5px;
+}

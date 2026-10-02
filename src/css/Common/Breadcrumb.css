@@ -1,0 +1,63 @@
+/* production/src/App/views/Common/Breadcrumb.css:3-13 (.breadcrumb) sets
+   background-color: #1E3666 (navy) there (vendored sitewide in common.min.css
+   / usms.min.css). Article5 layout variation: white breadcrumb bar instead
+   of navy, so it reads as a neutral strip above the new full-width headline
+   row instead of a dark banner competing with it. Every other property here
+   matches production's rule as-is (position, inset, margin/padding/
+   border-radius) — only the background-color differs. */
+.breadcrumb {
+  background-color: #fff;
+  border-radius: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+}
+
+/* production/src/App/views/Common/Breadcrumb.css:44-58 (.breadcrumb__title,
+   .breadcrumb__link) set color: white, legible against the navy bar above.
+   That's invisible against the white background set here, so both go gray
+   instead. */
+.breadcrumb__title,
+.breadcrumb__link,
+.breadcrumb__link:hover {
+  color: #999;
+}
+
+/* The current-page title Common/Breadcrumb.njk renders after the crumb
+   links (.breadcrumb__title, from pageTitle) is redundant now that the
+   article5 headline row repeats it in large type right below this bar —
+   hide it so the trail just reads as a path (Home / Articles and Videos). */
+.breadcrumb__title {
+  display: none;
+}
+
+/* production/src/App/views/Common/Breadcrumb.css:39-42 (.breadcrumb__item .fa)
+   styles the fa-chevron-right separator icon from Common/Breadcrumb.njk's
+   markup. Article5 layout variation: a plain "/" reads lighter against the
+   white bar than the solid chevron glyph, so the icon is hidden and a CSS
+   slash takes its place, ~0.5rem from the crumb text it follows. Only
+   between crumbs now — with .breadcrumb__title hidden above, the last crumb
+   (Articles and Videos) has nothing after it, so its own separator is
+   dropped too instead of dangling at the end of the bar. */
+.breadcrumb__item .fa-chevron-right {
+  display: none;
+}
+
+.breadcrumb__item:not(:last-child)::after {
+  content: "/";
+  margin-left: 0.5rem;
+  color: #999;
+}
+
+/* production/src/App/views/Common/Breadcrumb.css:31-37
+   (.breadcrumb__container .breadcrumb__items .breadcrumb__item) sets
+   font-size: 1.5rem there. Article5 layout variation: slightly smaller,
+   since the breadcrumb is now a secondary wayfinding strip above the
+   headline rather than the page's main heading context. */
+.breadcrumb__container .breadcrumb__items .breadcrumb__item {
+  font-size: 1.4rem;
+}

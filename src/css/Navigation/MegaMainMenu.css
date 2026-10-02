@@ -1,0 +1,35 @@
+/* production/src/App/views/Navigation/MegaMainMenu.css:56-66
+   (.mega-main-menu__items>li.has--children, .mega-main-menu__items>li>a)
+   sets color: var(--color-primary) (brand blue) there. Article5 layout
+   variation: muted gray instead, so the meganav recedes behind the new
+   headline/breadcrumb treatment on this layout. */
+.mega-main-menu__items>li.has--children,
+.mega-main-menu__items>li>a {
+  color: #999;
+}
+
+/* production/src/App/views/Navigation/MegaMainMenu.css:78 (.mega-main-menu__items>li:hover)
+   and :87 (.mega-main-menu__items>li>a:hover) both set
+   color: var(--color-red) (#D2202E, assets/styles/variables.css:19) on
+   hover. Article5 layout variation: #0068ad instead of red.
+
+   Both selectors are needed, not just one — MegaMainMenu.njk renders two
+   different markups: dropdown items (Training, Events, About Us) are
+   <li class="has--children"><span class="fa-chevron-right"></span>Text</li>
+   with no <a> at all, so only li:hover ever reaches them; plain links (Club
+   Finder, Workout Library) are <li><a>Text</a></li>, where the more specific
+   li>a:hover — not li:hover — is what wins on hover.
+
+   Order matters here too: li:hover and the .has--children rule above share
+   the same specificity (0,2,1), so this block has to come after it in this
+   file — same-specificity ties resolve by source order, and without this
+   placement the dropdown items would stay stuck at #999 on hover instead of
+   switching to #0068ad.
+
+   Disabled for now — reverted back to production's own red hover. */
+/*
+.mega-main-menu__items>li:hover,
+.mega-main-menu__items>li>a:hover {
+  color: #0068ad;
+}
+*/

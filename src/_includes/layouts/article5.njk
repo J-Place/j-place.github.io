@@ -1,0 +1,60 @@
+{% extends "layouts/base.njk" %}
+{% block pageCSS %}
+<link href="/vendor/css/www.usms.org-inThisArticle.min.css?v=20260919.1" rel="stylesheet">
+<link href="/vendor/css/www.usms.org-feature.min.css?v=20260919.1" rel="stylesheet">
+<link href="/css/Article/inThisArticle.css" rel="stylesheet">
+<link href="/css/Article/article-share.css" rel="stylesheet">
+<link href="/css/Article/article-share-icons.css" rel="stylesheet">
+<link href="/css/Article/article-key-points.css" rel="stylesheet">
+<link href="/css/Article/ArticleHeader.css" rel="stylesheet">
+<link href="/css/Article/Author.css" rel="stylesheet">
+<link href="/css/Article/Author3.css" rel="stylesheet">
+<link href="/css/Article/AboutAuthor.css" rel="stylesheet">
+<link href="/css/Article/ArticleHeadline5.css" rel="stylesheet">
+<link href="/css/Common/Breadcrumb.css" rel="stylesheet">
+<link href="/css/Navigation/MegaMainMenu.css" rel="stylesheet">
+{% endblock %}
+{% block breadcrumb %}
+{% include "partials/Common/Breadcrumb.njk" %}
+{% endblock %}
+{% block pageHeader %}
+<section class="article-headline section section-full p-tb-10">
+  <div class="usms-container p-t-5 p-b-10">
+    <div class="row">
+      <div class="col-xs-12">
+        <header class="page-title">
+          <h1>{{ articleHeadline }}</h1>
+          <h2>{{ articleDeck }}</h2>
+        </header>
+      </div>
+    </div>
+  </div>
+</section>
+{# swimmer-page-header.njk's own breadcrumb-container is skipped here — the
+   breadcrumb block above already renders it, ahead of the new headline row,
+   so it stays immediately under the meganav instead of between the headline
+   and the hero image. Only its hero image header is needed below. #}
+<header class="page-header bg-media page-header__image page-header__image--inset"
+  style="background-image: url('{{ pageHeaderImage }}'); background-position: center center;">
+  <div class="page-header__image-container">
+    {% if photoCredit %}
+    <div class="page-header__photo-credit {{ photoCreditClass | default('photo-credit--light-1') }}">
+      <div class="photo-credit__wrapper">
+        <p>{{ photoCredit }}</p>
+      </div>
+    </div>
+    {% endif %}
+    <img src="{{ pageHeaderImage }}" alt="{{ pageHeaderImageAlt | default('') }}">
+    <button type="button" class="hero-scroll-cue" aria-label="Scroll to article content">
+      <span class="hero-scroll-cue__chevron"></span>
+    </button>
+  </div>
+  <div class="page-header__tint-placeholder page-header--dark"></div>
+</header>
+{% endblock %}
+{% block content %}{{ content | safe }}{% endblock %}
+{% block pageJS %}
+<script src="/vendor/js/www.usms.org-swimmerMagazine.min.js?v=20260919.1"></script>
+<script src="/js/lib/accordion.js"></script>
+<script src="/js/article5-hero-scroll.js"></script>
+{% endblock %}
