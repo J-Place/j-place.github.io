@@ -5,7 +5,7 @@
 .lmsc__admin,
 .lmsc__resources,
 .lmsc__contact {
-    border-top: 1px solid #ccc;
+    /* border-top: 1px solid #ccc; */
     margin-top: 4rem;
     padding-top: 3rem;
 }
@@ -63,45 +63,71 @@
 }
 
 
+/* .lmsc__resources > h3, */
+.lmsc__resources > h3 + .lmsc__resources--subheading {
+    margin-top: 4rem;
+}
 
+.lmsc__resources--subheading {
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #444;
+    /* color: #0068ad; */
+    margin: 4rem 0 1rem;
+}
+
+.lmsc__resources--subheading:first-of-type {
+    margin-top: 2rem;
+}
 
 .lmsc__resources--list {
     padding-top: 1rem;
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     column-gap: 15px;
 }
 
+/* production/src/App/views/layout/MainLayout.css:43-49 (.usms-container li,
+   compiled into usms.min.css / common.min.css) sets margin: 0 auto 1rem.
+   On a grid item those auto side margins shrink the li to its content and
+   center it in its column — zero them so each item fills the column and
+   its icon/label sit flush left. */
 .lmsc__resources--list li {
-    grid-column: span 2;
-}
-
-.lmsc__resources--list li:nth-child(4) {
-    grid-column: 2 / span 2;
-}
-
-.lmsc__resources--list li:nth-child(5) {
-    grid-column: 4 / span 2;
+    margin: 0 0 0 0;
+    border-bottom: 1px solid #EEE;
+    padding-left: 3rem;
+    margin-right: 2rem;
 }
 
 .lmsc__resources--list a {
     display: flex;
+    flex-direction: row;
     align-items: center;
-    gap: 6px;
-    padding: 20px 0;
+    justify-content: flex-start;
+    gap: 12px;
+    padding: 12px 0;
     border-bottom: none;
-    color: #0068ad;
-    font-size: 1.7rem;
+    /* color: #0068ad; */
+    color: #555;
+    font-size: 1.6rem;
     font-weight: 400;
+    text-align: left;
     text-decoration: none;
-    flex-direction: column;
 }
 
+/* Fixed 15px slot, narrower than the icons themselves (18-31px wide), which
+   overflow it evenly on both sides — so every icon is centered on the same
+   x and every label starts at the same x regardless of its own icon's
+   width. The row's align-items centers the label on the icon vertically. */
 .lmsc__resources--list__icon-wrap {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
-    height: 65px;
+    flex: 0 0 15px;
+    width: 15px;
+    height: 15px;
 }
 
 .lmsc__resources--list a svg {
@@ -111,13 +137,15 @@
 }
 
 .lmsc__resources--list a svg:not(.lmsc__resources--list__icon--calendar):not(.lmsc__resources--list__icon--top10):not(.lmsc__resources--list__icon--places):not(.lmsc__resources--list__icon--bylaws):not(.lmsc__resources--list__icon--minutes):not(.lmsc__resources--list__icon--relay) {
-    height: 40px;
-    width: 40px;
+    /* height: 40px; */
+    /* width: 40px; */
+    /* width: 25px; */
+    /* height: auto; */
 }
 
 .lmsc__resources--list a svg.lmsc__resources--list__icon--relay {
-    width: 42px;
-    height: 42px;
+    width: 31px;
+    height: auto;
 }
 
 /* All icons share Calendar's ~40px-tall footprint so they read at the same visual
@@ -125,41 +153,42 @@
    threshold, evenodd fill for holes/rings) use their own tight content viewBox —
    no baked-in padding — scaled to fit that same 40px height. */
 .lmsc__resources--list a svg.lmsc__resources--list__icon--calendar {
-    width: 41px;
-    height: 40px;
+    width: 25px;
+    height: auto;
 }
 
 .lmsc__resources--list a svg.lmsc__resources--list__icon--top10 {
-    width: 27px;
-    height: 38px;
+    width: 21px;
 }
 
+.lmsc__resources--list a svg.lmsc__resources--list__icon--allamericans {
+    width: 31px;
+}
+
+
 .lmsc__resources--list a svg.lmsc__resources--list__icon--places {
-    width: 27px;
-    height: 40px;
+    width: 18px;
+    /* height: 40px; */
+}
+
+.lmsc__resources--list a svg.lmsc__resources--list__icon--allstars {
+    width: 31px;
+}
+
+.lmsc__resources--list a svg.lmsc__resources--list__icon--website {
+    width: 25px;
 }
 
 .lmsc__resources--list a svg.lmsc__resources--list__icon--bylaws {
-    width: 34px;
-    height: 40px;
+    width: 22px;
+    /* height: 40px; */
 }
 
 .lmsc__resources--list a svg.lmsc__resources--list__icon--minutes {
-    width: 37px;
-    height: 40px;
+    width: 22px;
+    /* height: 40px; */
 }
 
-@media (max-width: 767px) {
-    .lmsc__resources--list {
-        grid-template-columns: repeat(4, 1fr);
-    }
-
-    .lmsc__resources--list li,
-    .lmsc__resources--list li:nth-child(4) {
-        grid-column: span 2;
-    }
-
-    .lmsc__resources--list li:nth-child(5) {
-        grid-column: 2 / span 2;
-    }
+.lmsc__resources--list a svg.lmsc__resources--list__icon--listofclubs {
+    width: 23px;
 }
