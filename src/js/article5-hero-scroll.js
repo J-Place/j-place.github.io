@@ -44,17 +44,26 @@
   // completely out of view.
   var VISIBLE_HERO_REMAINDER = 50;
 
-  // Once scrolled to rest, the cue flips into a "back to top" control
-  // instead of "scroll to content" — classList.contains reads whatever
-  // updateCueSticky last set, so this always reflects the cue's actual
-  // state, not just clicks. Checks --flipped (see updateCueSticky), not
-  // --pinned: --pinned only describes the box's current on-screen position
-  // and clears as soon as the hero scrolls back into its "fixed" zone,
-  // which happens well before the user is back at the top of the page —
-  // --flipped has its own one-way-until-scrollY-0 hysteresis so the cue
-  // doesn't flip back to "down" mid-scroll-up.
+  // Discrete flip, not a continuous scroll-matching dial: the chevron holds
+  // its direction (down or, once flipped, up) through the whole scroll in
+  // between, and only rotates — animated over 0.5s via CSS transition, see
+  // ArticleHeadline5.css — at the moment it actually reaches the bottom
+  // (resting point) or the top (scrollY 0). Same counter-clockwise
+  // direction as before, just triggered at the endpoints instead of tied
+  // frame-by-frame to scroll position.
+  var flipped = false;
+
+  // Mid-scroll (flipped hasn't latched true yet, or has but the user is on
+  // the way back without having reached scrollY 0), position alone doesn't
+  // say which way a click should go — so track which way the user was last
+  // actually scrolling and continue that, same as a click while already
+  // scrolling up should keep going up to the top rather than reversing back
+  // down to content just because the hero hasn't fully retreated yet.
+  var lastScrollY = window.scrollY;
+  var scrollDirection = null; // 'up' | 'down' | null (no scroll yet)
+
   cue.addEventListener('click', function () {
-    if (cue.classList.contains('hero-scroll-cue--flipped')) {
+    if (flipped || scrollDirection === 'up') {
       smoothScrollTo(0);
       return;
     }
@@ -99,31 +108,39 @@
   var heroImageContainer = document.querySelector('.page-header__image-container');
   var CUE_SIZE = 50;
 
-  // Separate from the three position states above: whether the cue is
-  // flipped (up arrow, "scroll to top") or not (down arrow, "scroll to
-  // content"). This has its own one-way latch instead of tracking the
-  // position state directly — once the user has scrolled down far enough
-  // to reach state 3 at least once, it stays flipped through the entire
-  // scroll back up (including re-entering states 2 and 1 along the way,
-  // which happens well before reaching the top) and only resets once
-  // scrollY is back to exactly 0.
-  var flipped = false;
-
   function updateCueSticky() {
     if (!heroImageContainer) return;
     var rect = heroImageContainer.getBoundingClientRect();
 
-    cue.classList.remove('hero-scroll-cue--fixed', 'hero-scroll-cue--pinned');
-    cue.style.left = '';
-
-    if (rect.bottom <= CUE_SIZE) {
-      flipped = true; // reached state 3 at least once this trip down
-    } else if (window.scrollY <= 0) {
-      flipped = false; // back at the very top — reset for the trip down
+    var currentScrollY = window.scrollY;
+    if (currentScrollY !== lastScrollY) {
+      scrollDirection = currentScrollY < lastScrollY ? 'up' : 'down';
+      lastScrollY = currentScrollY;
+    }
+    // Back at the very top — reset to null rather than leaving 'up' latched
+    // from the scroll that got here, so a click goes back to its initial
+    // "scroll to content" behavior instead of a no-op scroll-to-0.
+    if (currentScrollY <= 0) {
+      scrollDirection = null;
     }
 
+    // Flip only at the endpoints: true the instant the hero's bottom
+    // reaches CUE_SIZE (the resting point), reset back to false only once
+    // scrollY is back to exactly 0 — same latch as scrollDirection above,
+    // so the chevron stays pointing up for the whole scroll back from rest
+    // instead of unrotating partway through. The actual rotation (0deg <->
+    // -180deg) is a CSS transition on this class in ArticleHeadline5.css,
+    // not anything animated per-frame here.
+    if (rect.bottom <= CUE_SIZE) {
+      flipped = true;
+    } else if (currentScrollY <= 0) {
+      flipped = false;
+    }
     cue.classList.toggle('hero-scroll-cue--flipped', flipped);
     cue.setAttribute('aria-label', flipped ? 'Scroll to top' : 'Scroll to article content');
+
+    cue.classList.remove('hero-scroll-cue--fixed', 'hero-scroll-cue--pinned');
+    cue.style.left = '';
 
     if (rect.top > 0) {
       return; // state 1: normal, authored CSS position already correct

@@ -10,9 +10,16 @@
 <link href="/css/Article/Author.css" rel="stylesheet">
 <link href="/css/Article/Author3.css" rel="stylesheet">
 <link href="/css/Article/AboutAuthor.css" rel="stylesheet">
-<link href="/css/Article/ArticleHeadline5.css" rel="stylesheet">
 <link href="/css/Common/Breadcrumb.css" rel="stylesheet">
 <link href="/css/Navigation/MegaMainMenu.css" rel="stylesheet">
+{% endblock %}
+{# ArticleHeadline5.css loads via localCSS, not pageCSS above — pageCSS
+   renders before base.njk's own www.usms.org-rteMasters.min.css link, so a
+   same-specificity override here (e.g. a bare h3 rule) would lose to
+   production's rule loaded right after it. localCSS renders after every
+   vendored stylesheet base.njk includes, so overrides here reliably win. #}
+{% block localCSS %}
+<link href="/css/Article/ArticleHeadline5.css" rel="stylesheet">
 {% endblock %}
 {% block breadcrumb %}
 {% include "partials/Common/Breadcrumb.njk" %}

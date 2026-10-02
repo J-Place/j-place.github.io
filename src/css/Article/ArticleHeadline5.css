@@ -107,16 +107,6 @@
   left: 0;
 }
 
-/* .hero-scroll-cue--flipped (not --pinned — see article5-hero-scroll.js's
-   updateCueSticky) tracks whether article5-hero-scroll.js's click handler
-   is currently wired to "scroll to top" instead of "scroll to content";
-   flip the chevron to point up so its direction still matches what a click
-   does. Stays flipped for the whole scroll back up, not just while --pinned
-   is active. */
-.hero-scroll-cue--flipped .hero-scroll-cue__chevron {
-  transform: rotate(180deg);
-}
-
 /* Two independent 2px bars (not the rotated-border-corner trick — at this
    size that box's rotated bounding box balloons well past the container and
    gets clipped by .page-header's overflow:hidden) meeting at a bottom-center
@@ -125,12 +115,25 @@
    centered (via the flex box above) in the 30x30 content area .hero-scroll-cue's
    12px padding leaves inside its 54x54 square. Bar length (21.2px) is half
    the chevron's width over cos(45deg), so the 45deg arms still land exactly
-   on that center-bottom point. */
+   on that center-bottom point.
+
+   transform/transition here are the discrete flip — article5-hero-scroll.js
+   only toggles .hero-scroll-cue--flipped on/off at the two endpoints (top,
+   bottom), it doesn't animate anything itself; this 0.5s transition is what
+   actually turns that instant class change into a smooth rotation. */
 .hero-scroll-cue__chevron {
   position: relative;
   display: block;
   width: 30px;
   height: 15px;
+  transform: rotate(0deg);
+  transition: transform 0.25s;
+}
+
+/* Counter-clockwise to point up, matching the direction the scroll-driven
+   dial used to turn before it was replaced with this discrete flip. */
+.hero-scroll-cue--flipped .hero-scroll-cue__chevron {
+  transform: rotate(-180deg);
 }
 
 .hero-scroll-cue__chevron::before,
@@ -160,7 +163,7 @@
    responsive bump. Article5 layout variation: taller hero on desktop. */
 @media (min-width: 992px) {
   .page-header__image {
-    height: 580px;
+    height: 980px;
     margin: 0 auto;
   }
 }
@@ -169,7 +172,8 @@
    (.photo-credit__wrapper p) sets bottom: 0 — flush with the hero's bottom
    edge there. Article5 layout variation: nudged up 15px off that edge. */
 .photo-credit__wrapper p {
-  bottom: 15px;
+  /* bottom: 15px; */
+  top: 175px;
 }
 
 /* src/css/Common/ad.css:24-35 (loaded sitewide via base.njk) sets
@@ -182,5 +186,78 @@
 @media (min-width: 992px) {
   .advertising-dc.sticky-ad {
     margin-top: 104px;
+  }
+}
+
+/* Article/Author3.css's own max-width:767px block sets
+   .article-meta .social-share { margin-top: 1.75rem; } there. Article5
+   layout variation: margin: 1rem 0 instead — slightly less top space, plus
+   a matching 1rem underneath. */
+@media (max-width: 767px) {
+  .article-meta .social-share {
+    margin: 1rem 0;
+  }
+}
+
+/* ArticleHeader.css's .article-page > .row:first-of-type > .col-lg-3/-6
+   rule sets padding-top: 3rem by default, dropped to 0 only below 768px —
+   col-lg-3/-6 don't actually sit side by side until the 992px lg
+   breakpoint, so tablet widths (768-991px) were inheriting the full
+   desktop 3rem gap above each stacked column despite stacking the same way
+   mobile does. Article5 layout variation: 0.5rem for that tablet range
+   specifically. */
+@media (min-width: 768px) and (max-width: 991px) {
+  .article-page > .usms-container > .row:first-of-type > .col-lg-3,
+  .article-page > .usms-container > .row:first-of-type > .col-lg-6 {
+    padding-top: 0.5rem;
+  }
+}
+
+/* Author3.css's .article-meta .social-share { margin-bottom: 1.25rem; }
+   applies at every width (no media query there) — restated here as part of
+   this tablet-only rule just to keep the full box model together, not a
+   value change. position:relative; top:-1rem is the actual tablet
+   adjustment, nudging the share icons up to tighten the gap under the
+   author row now that padding-top above is reduced to 0.5rem. */
+@media (min-width: 768px) and (max-width: 991px) {
+  .article-meta .social-share {
+    margin-bottom: 1.25rem;
+    position: relative;
+    top: -1rem;
+  }
+}
+
+/* Not a new constraint — production/src/Project/USMS/code/Styles/
+   feature.css:301-306 already sets .page-header__image-container to
+   margin:0 auto; max-width:900px; height:100%; z-index:2; position:relative
+   at its own @media (min-width: 768px) block (the unqualified base rule at
+   feature.css:21-26 is width:100%/height:100%, with no max-width — that one
+   only actually applies below 768px). This restates the exact same values
+   at 1080px instead, so between 768-1079px the page already looks like
+   this via production's own rule; this block only matters if an earlier,
+   lower breakpoint in this file ever sets something different that needs
+   overriding again by 1080px — currently nothing does, so as written this
+   is redundant with production above 768px. Kept per spec in case that
+   changes. */
+@media (min-width: 992px) {
+  .page-header__image-container {
+    height: 100%;
+    margin: 0 auto;
+    height: 980px;
+    max-width: unset;
+    position: relative;
+    z-index: 2;
+  }
+}
+
+/* production/src/App/rteMasters.css:58-60 (h3, inside its own
+   @media (min-width: 768px) block) sets font-size: 3rem there (up from the
+   bare 2.6rem base rule at rteMasters.css:32-34) — vendored sitewide via
+   www.usms.org-rteMasters.min.css. Article5 layout variation: 2.5rem
+   instead. Scoped to v5 simply because this file only loads on the
+   article5 layout, not by a class qualifier on the selector. */
+@media (min-width: 768px) {
+  h3 {
+    font-size: 2.5rem;
   }
 }
