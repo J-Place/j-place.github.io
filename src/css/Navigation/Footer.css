@@ -45,3 +45,12 @@
   color: #FFF;
   opacity: 1;
 }
+
+/* Join Now / Donate: centered on mobile only, left-aligned (production default) on tablet/desktop.
+   !important needed to beat bootstrap.min.css's `.align-items-start { align-items: flex-start
+   !important }` utility class on the same element. */
+@media (max-width: 767px) {
+  .subscribe .d-flex.flex-column {
+    align-items: center !important;
+  }
+}
