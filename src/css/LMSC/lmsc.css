@@ -3,11 +3,16 @@
 }
 
 .lmsc__admin,
-.lmsc__resources,
 .lmsc__contact {
     /* border-top: 1px solid #ccc; */
     margin-top: 4rem;
     padding-top: 3rem;
+}
+
+.lmsc__resources {
+    /* border-top: 1px solid #ccc; */
+    margin-top: 2rem;
+    padding-top: 1rem;
 }
 
 @media (min-width: 768px) {
@@ -19,15 +24,14 @@
 }
 
 .lmsc__sidebar-card--cta {
-    border-top: 1px solid #ccc;
+    /* border-top: 1px solid #ccc; */
     margin-top: 4rem;
     padding-top: 3rem;
 }
 
 .btn.lmsc__join-now {
-    margin-top: 3rem;
     display: block;
-    margin-bottom: 2rem;
+    margin: 3rem auto 2rem;
 }
 
 
@@ -57,11 +61,14 @@
 
 .lmsc__officer-role {
     width: 50%;
-    text-align: left;
+    /* text-align: left; */
     font-size: 1.7rem;
     font-weight: 400;
 }
 
+.lmsc__resources > h3 {
+    margin-top: 2rem;
+}
 
 /* .lmsc__resources > h3, */
 .lmsc__resources > h3 + .lmsc__resources--subheading {
@@ -73,7 +80,7 @@
     letter-spacing: 0.5px;
     font-size: 1.4rem;
     font-weight: 600;
-    color: #444;
+    color: #666;
     /* color: #0068ad; */
     margin: 4rem 0 1rem;
 }
@@ -83,6 +90,7 @@
 }
 
 .lmsc__resources--list {
+    margin-right: 1rem;
     padding-top: 1rem;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -95,10 +103,9 @@
    center it in its column — zero them so each item fills the column and
    its icon/label sit flush left. */
 .lmsc__resources--list li {
-    margin: 0 0 0 0;
+    margin: 0;
     border-bottom: 1px solid #EEE;
-    padding-left: 3rem;
-    margin-right: 2rem;
+    padding-left: 1.5rem;
 }
 
 .lmsc__resources--list a {
@@ -144,7 +151,7 @@
 }
 
 .lmsc__resources--list a svg.lmsc__resources--list__icon--relay {
-    width: 31px;
+    width: 33.2px;
     height: auto;
 }
 
@@ -179,6 +186,10 @@
     width: 25px;
 }
 
+.lmsc__resources--list a svg.lmsc__resources--list__icon--join {
+    width: 20px;
+}
+
 .lmsc__resources--list a svg.lmsc__resources--list__icon--bylaws {
     width: 22px;
     /* height: 40px; */
@@ -191,4 +202,18 @@
 
 .lmsc__resources--list a svg.lmsc__resources--list__icon--listofclubs {
     width: 23px;
+}
+
+/* Mobile: the two columns stack into one, and each row runs the full width
+   of the section. lmsc-bf.css's .lmsc__main-section .lmsc__resources--list
+   { margin-right: 5rem; } has no breakpoint of its own, so it's zeroed here
+   with the same selector (which also covers the 1rem set above). */
+@media (max-width: 767px) {
+    .lmsc__resources--list {
+        grid-template-columns: 1fr;
+    }
+
+    .lmsc__main-section .lmsc__resources--list {
+        margin-right: 0;
+    }
 }
