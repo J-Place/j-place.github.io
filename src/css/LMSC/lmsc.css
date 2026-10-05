@@ -110,11 +110,17 @@
 }
 
 .lmsc__resources--list {
-    margin-right: 1rem;
     padding-top: 1rem;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     column-gap: 15px;
+}
+
+/* Same two-class selector as lmsc-bf.css's
+   .lmsc__main-section .lmsc__resources--list { margin-right: 5rem; } —
+   a bare .lmsc__resources--list here is outranked by it and never applies. */
+.lmsc__main-section .lmsc__resources--list {
+    margin-right: 1rem;
 }
 
 /* production/src/App/views/layout/MainLayout.css:43-49 (.usms-container li,
