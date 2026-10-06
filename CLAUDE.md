@@ -12,6 +12,21 @@ npm run test:visual:update  # accept new baselines
 npm run test:visual:report  # open the HTML diff viewer for the last run
 ```
 
+
+## NEVER EVER DO
+
+These rules are ABSOLUTE:
+
+### NEVER Publish Sensitive Data
+- NEVER publish passwords, API keys, tokens to git/npm/docker
+- Before ANY commit: verify no secrets included
+
+### NEVER Commit .env Files
+- NEVER commit `.env` to git
+- ALWAYS verify `.env` is in `.gitignore`
+
+
+
 ## Browser Verification
 
 Playwright is configured for visual regression testing (`playwright.config.js`, `tests/usms-visual-regression-screenshots/`) — see `tests/usms-visual-regression-screenshots/screenshots.spec.js` for how pages are captured (clock frozen, images awaited, captured at full device-pixel resolution — 2× Desktop, ~2.6× Mobile) and `tests/usms-visual-regression-screenshots/pages.js` for the page list. The home hero carousel is pinned to slide 0 (not masked) so its typography stays visible in the baseline — its off-screen autoplay-video slide is explicitly paused and its CSS background-image is explicitly awaited (not an `<img>`, so it's outside the normal image-await step) to keep that slide deterministic. Regions that genuinely can't be pinned are still masked out of the pixel comparison: Google Maps embeds (`#club-detail-map`, `.club-map-new`), the home partner-logo slider (`.image-slider`), and the SWIMMER "Also in this Issue" strip (`.articleStepper`).
