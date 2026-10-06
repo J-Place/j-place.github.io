@@ -185,6 +185,13 @@
       el.classList.toggle('menu-item-login-button--hidden', !showJoin);
     });
 
+    // Expired-card ribbon (membership-renewal-ribbon.njk) — logged-in
+    // persona whose auto-renew card has expired.
+    var showRibbon = resolved.loggedIn === true && resolved.cardExpired === true;
+    document.querySelectorAll('.membership-renewal-ribbon').forEach(function (el) {
+      el.classList.toggle('membership-renewal-ribbon--hidden', !showRibbon);
+    });
+
     // Pre-populate registration form fields (all except BirthYear)
     populateRegistrationFields(resolved);
 

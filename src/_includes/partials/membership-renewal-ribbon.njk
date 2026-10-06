@@ -1,5 +1,5 @@
-{% if currentUser and currentUser.isLapsed and currentUser.cardExpired %}
-<div class="membership-renewal-ribbon">
+{#- Always rendered; current-user.js toggles --hidden for ?user=/sessionStorage personas. -#}
+<div class="membership-renewal-ribbon{% if not (currentUser and currentUser.loggedIn and currentUser.cardExpired) %} membership-renewal-ribbon--hidden{% endif %}">
   <div class="usms-container">
     <p class="membership-renewal-ribbon__text membership-renewal-ribbon__text--full">
       Your credit card has expired and you are enrolled in auto-renew. Please <a href="#">update your payment information</a>.
@@ -9,4 +9,3 @@
     </p>
   </div>
 </div>
-{% endif %}
