@@ -131,6 +131,16 @@ function vendorExternalCss(snapshotDir) {
                    .split(`'${url}'`).join(`'${localHref}'`);
       }
     }
+
+    // A vendored copy never matches the original's SRI hash (url(...) refs
+    // are rewritten to absolute), so the browser would block it. Drop
+    // integrity from every <link> we pointed at a vendored copy.
+    html = html.replace(linkTagRe, tag => {
+      const hrefMatch = tag.match(hrefRe);
+      return hrefMatch && hrefMatch[1].startsWith('/vendor/css/')
+        ? tag.replace(/\s+integrity=["'][^"']*["']/i, '')
+        : tag;
+    });
     fs.writeFileSync(file, html);
   }
 }
@@ -183,6 +193,10 @@ try {
   } else {
     copyDir(pageSiteDir, outDir);
   }
+
+  // Each snapshot deploys as its own site root — without a /favicon.ico
+  // there, Netlify serves its own default icon in the browser tab.
+  fs.copyFileSync(path.join(root, 'public', 'favicon.ico'), path.join(outDir, 'favicon.ico'));
 
   // For public/ pages, the HTML references assets relative to the Sergey
   // project root (e.g. /search/css/..., /css/..., /js/...). Copy Sergey's
