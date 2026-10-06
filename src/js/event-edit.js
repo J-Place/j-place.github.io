@@ -5,9 +5,9 @@
  * the only local script for this page is event-edit-locations.js, scoped
  * entirely to the Location search/select behavior, and production's real
  * sanctions.min.js doesn't bind anything visible to this button here. Wires
- * it to the same validation-preview sweep Club Edit uses (validation-
- * preview.js) so required-field error content/position can be reviewed the
- * same way on both pages.
+ * it to the validation-preview sweep (validation-preview.js) so required-field
+ * error content/position can be reviewed in place. (Club Edit used to share
+ * this sweep; it now runs a port of production's real submit validation.)
  *
  * Unlike club-edit.js, this page uses genuine Bootstrap 5 (loaded from CDN,
  * same one event-edit-locations.js already drives via bootstrap.Modal) with
@@ -62,8 +62,7 @@
     if (e) e.preventDefault();
 
     // Second click — dev-only reset: clear all flags and collapse every
-    // section back down except Event Name, matching club-edit's showValidation()
-    // reset behavior.
+    // section back down except Event Name.
     if (_validationDisplayed) {
       window.clearValidationPreview({ root: '#accordion' });
       accordionSections().forEach(function (content) {

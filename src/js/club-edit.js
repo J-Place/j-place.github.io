@@ -3,7 +3,7 @@ var nextSection = null;
 var currentSectionState = null;
 var currentCallback = null;
 
-// Snapshot of whether membershipRequired came in pre-answered on page load
+// Snapshot of whether requireMembership came in pre-answered on page load
 // (an existing, already-saved club) — set once in the DOMContentLoaded
 // handler below, before the user can touch the radios. A brand-new club
 // answering this question for the first time during Create must NOT lock
@@ -72,7 +72,7 @@ function _openSection(contentEl) {
 // false for the whole session in that case.
 function lockMembershipRequiredIfAnswered() {
   if (membershipRequiredLocked) {
-    document.querySelectorAll('input[name="membershipRequired"]').forEach(function (r) {
+    document.querySelectorAll('input[name="requireMembership"]').forEach(function (r) {
       r.disabled = true;
     });
   }
@@ -142,7 +142,7 @@ function sectionSaved(section) {
   var result = false;  // production default — unknown sections (e.g. coach) always prompt save
   switch (section.id) {
     case 'location-information__content':
-      result = section.querySelectorAll('.list__container .list-item').length > 0;
+      result = validateLocations();
       break;
     case 'club-contact__content':
       result = section.querySelector('.list-item--new,.list__container--modified,.location-details.show,.edit-list') === null
@@ -340,8 +340,13 @@ function validateField(field) {
       } else if (field.id.toLowerCase().indexOf('phone') !== -1) {
         setInputStatus(field, _isValidPhone(field.value));
       } else {
-        var minLen = field.minLength > 0 ? field.minLength : 1;
-        setInputStatus(field, field.value.length >= minLen && field.value.length <= (field.maxLength || 99999));
+        // Mirrors production Validation.js ValidateText() — an unset minLength
+        // (-1) means "just non-empty"; otherwise both bounds apply.
+        if (!field.minLength || field.minLength === -1) {
+          setInputStatus(field, field.value.length > 0);
+        } else {
+          setInputStatus(field, field.value.length >= field.minLength && field.value.length <= field.maxLength);
+        }
       }
       break;
     case 'textarea':
@@ -434,19 +439,26 @@ function editClubName(e) {
 
 function cancelName() { }
 
+// Mirrors production Name.js validateSectionName().
+function validateSectionName() {
+  var section = document.querySelector('#club-name');
+  var club = document.querySelector('#selectClub');
+  validateField(document.querySelector('#selectLmsc'));
+  validateField(document.querySelector('#clubName'));
+  validateField(document.querySelector('#clubAbbr'));
+  if (club) validateField(club);
+  if (section && section.querySelector('span.has-error')) {
+    hideLoadingOverlay();
+    window.scroll(0, FindPos(section.querySelector('span.help-block.has-error')));
+    return false;
+  }
+  return true;
+}
+
 function saveName(e) {
   e.preventDefault();
-  var lmsc = document.querySelector('#selectLmsc');
-  var name = document.querySelector('#clubName');
-  var abbr = document.querySelector('#clubAbbr');
-  validateField(lmsc);
-  validateField(name);
-  validateField(abbr);
+  if (!validateSectionName()) return;
   var section = document.querySelector('#club-name');
-  if (section && section.querySelector('span.has-error')) {
-    window.scroll(0, FindPos(section.querySelector('span.help-block.has-error')));
-    return;
-  }
   section.classList.add('hasData');
   if (nextSection) {
     $(nextSection.querySelector('.section__content')).collapse('show');
@@ -502,21 +514,41 @@ function setRegionalClubSections(enabled) {
   }
 }
 
+// Mirrors production Details.js validateSectionDetails(). Production's
+// lgbtqFocus question isn't on this page.
+var DETAILS_REQUIRED_RADIOS = [
+  'usmsLiabilityInsurance',
+  'requireMembership',
+  'usaSwimmingClubAffiliation',
+  'freeTrialMembership'
+];
+
+function validateSectionDetails() {
+  var section = document.querySelector('#club-details');
+  if (!section) return true;
+  validateField(section.querySelector('#clubDescription'));
+  validateField(section.querySelector('#practiceDetails'));
+  validateField(section.querySelector('#totalSwimmers'));
+  ['#newMemberNotification', '#socialFacebook', '#socialTwitter', '#socialInstagram'].forEach(function (sel) {
+    var el = section.querySelector(sel);
+    if (el && el.value) validateField(el);
+  });
+  DETAILS_REQUIRED_RADIOS.forEach(function (name) {
+    validateField(section.querySelector('input[name="' + name + '"]'));
+  });
+  if (section.querySelector('span.has-error')) {
+    hideLoadingOverlay();
+    window.scroll(0, FindPos(section.querySelector('span.help-block.has-error')));
+    return false;
+  }
+  return true;
+}
+
 function saveDetails(e) {
   e.preventDefault();
   var section = document.querySelector('#club-details');
   if (!section) return;
-  var desc = section.querySelector('#clubDescription');
-  var practice = section.querySelector('#practiceDetails');
-  if (desc) validateField(desc);
-  if (practice) validateField(practice);
-  _validateRequiredRadioGroup('usmsLiabilityInsurance');
-  _validateRequiredRadioGroup('membershipRequired');
-  var firstError = section.querySelector('span.has-error, .input-group-header.has-error');
-  if (firstError) {
-    window.scroll(0, FindPos(firstError));
-    return;
-  }
+  if (!validateSectionDetails()) return;
   section.classList.add('hasData');
   if (nextSection) {
     $(nextSection.querySelector('.section__content')).collapse('show');
@@ -1097,6 +1129,45 @@ function saveContactList(e) {
   if (saveBtn) saveBtn.disabled = false;
 }
 
+// Mirrors production Contact.js getContact() — the last card in the contact
+// list, or null when there isn't one.
+function getContact() {
+  var items = document.querySelectorAll('.section#club-contact .list__container .row .list-item');
+  return items.length ? items[items.length - 1] : null;
+}
+
+// Mirrors production Contact.js validateSectionContact(): a Contact Type must
+// be chosen and a contact card must exist.
+function validateSectionContact() {
+  var section = document.querySelector('#club-contact');
+  validateField(document.querySelector('#contactTypeCurrent'));
+  if (section && section.querySelector('span.has-error')) {
+    hideLoadingOverlay();
+    window.scroll(0, FindPos(section.querySelector('span.help-block.has-error')));
+    return false;
+  }
+  return !!getContact();
+}
+
+// Mirrors production Payment.js validateContactStatus() — a contact still
+// awaiting My Account approval (.coach-validated pending badge) blocks
+// submission and shows the "contact pending" notice.
+function validateContactStatus() {
+  var result = document.querySelectorAll('#club-contact .list-item div.coach-validated').length === 0;
+  setSubmitStatus(result);
+  return result;
+}
+
+// Mirrors production Validation.js setSubmitStatus().
+function setSubmitStatus(status) {
+  document.querySelectorAll('.section-payment__contact-pending').forEach(function (el) {
+    el.style.display = status ? 'none' : 'block';
+  });
+  document.querySelectorAll('#club-payment button#submit-button, #club-submit-approval button#submitApprovalButton').forEach(function (btn) {
+    btn.disabled = !status;
+  });
+}
+
 function saveContact(e) {
   if (e) e.preventDefault();
   var section = document.querySelector('#club-contact');
@@ -1643,10 +1714,19 @@ function toggleLocationEdit(on) {
   if (doneBtn) doneBtn.style.display = on ? '' : 'none';
 }
 
+// Mirrors production Validation.js validateLocations() — the copy that wins in
+// club2.min.js, since Location.js is commented out of that bundle. Production
+// counts '#location-information__content .list__container .list-item', which
+// here would also count the location search candidates (also .list-item), so
+// scope to the club's own location list instead.
+function validateLocations() {
+  return document.querySelectorAll('#locationListContainer .list-item').length > 0;
+}
+
 function saveLocation(e) {
   if (e) e.preventDefault();
   var section = document.querySelector('#section-location-information');
-  var hasLocations = document.querySelectorAll('#locationListContainer .list-item').length > 0;
+  var hasLocations = validateLocations();
   var helpBlock = document.querySelector('.section-location-information .help-block--selectLocation');
   if (!hasLocations) {
     if (helpBlock) helpBlock.classList.add('has-error');
@@ -1927,23 +2007,30 @@ function syncCertifiedCoachStatus() {
   if (addCoachNote) addCoachNote.style.display = hasCoach ? 'none' : '';
 }
 
-function saveClubBundles(e) {
-  if (e) e.preventDefault();
+// Mirrors production Bundles.js validateSectionBundles() — a hidden bundle
+// section (membership not required) passes; otherwise every bundle radio
+// group in it must be answered.
+function validateSectionBundles() {
   var section = document.querySelector('#club-bundles');
-  if (!section) return;
-  var radios = section.querySelectorAll('input[type="radio"]');
+  if (!section || section.style.display === 'none') return true;
   var valid = true;
   var names = {};
-  radios.forEach(function (r) { names[r.name] = true; });
+  section.querySelectorAll('input[type="radio"]').forEach(function (r) { names[r.name] = true; });
   Object.keys(names).forEach(function (name) {
-    var checked = section.querySelector('input[name="' + name + '"]:checked');
-    if (!checked) {
+    if (!section.querySelector('input[name="' + name + '"]:checked')) {
       valid = false;
       var anyRadio = section.querySelector('input[name="' + name + '"]');
       if (anyRadio) setInputStatus(anyRadio, false);
     }
   });
-  if (!valid) {
+  return valid;
+}
+
+function saveClubBundles(e) {
+  if (e) e.preventDefault();
+  var section = document.querySelector('#club-bundles');
+  if (!section) return;
+  if (!validateSectionBundles()) {
     var header = section.querySelector('.radio-group-header') || section.querySelector('.section__header');
     window.scroll(0, FindPos(header));
     return;
@@ -2067,17 +2154,159 @@ function updateBundlePricing(bundleKey) {
 
 function editPayment() { }
 
+// ── Submit — mirrors production Payment.js / Approve.js ─────────────────────
+
+// Mirrors production Payment.js checkAgreement()/handleAgreementChange() —
+// an unchecked agreement shows its help-block error; it never disables Submit.
+function checkAgreement() {
+  var checkbox = document.querySelector('.payment-info input[name="agree-terms"]');
+  var helpBlock = document.querySelector('.help-block--agreeTerms');
+  if (!checkbox || !helpBlock) return;
+  helpBlock.classList.toggle('has-error', !checkbox.checked);
+}
+
 function handleAgreementChange() {
-  var checkbox = document.querySelector('#agreeTerms');
-  var submitBtn = document.querySelector('#submit-button');
-  if (submitBtn) submitBtn.disabled = !(checkbox && checkbox.checked);
+  checkAgreement();
+}
+
+// Mirrors production Payment.js ValidatePaymentForm().
+function ValidatePaymentForm() {
+  var form = document.querySelector('.payment-info');
+  if (!form) return false;
+  ['cardName', 'cardNumber', 'cardCode', 'expiration', 'cardZip'].forEach(function (name) {
+    validateField(form.querySelector('input[name="' + name + '"]'));
+  });
+  checkAgreement();
+  return form.querySelectorAll('span.help-block.has-error').length === 0;
+}
+
+// Mirrors production Payment.js validateSectionsForPayment(): an open section
+// with unsaved changes prompts the save modal; otherwise each section is
+// validated in page order and the first failing one is opened. A Regional
+// Club skips Location and Club Bundles entirely. As in production, only
+// Club Name/Details/Contact are change-checked — any other section left open
+// (Coach, Location, Club Bundles) always counts as unsaved.
+function validateSectionsForPayment() {
+  var openSection = document.querySelector('#accordion .section__content.collapse.in');
+  if (openSection) {
+    var openSectionSaved = false;
+    switch (openSection.id) {
+      case 'club-name__content':
+      case 'club-details__content':
+      case 'club-contact__content':
+        openSectionSaved = compareSections(openSection);
+        break;
+      default:
+        break;
+    }
+    if (!openSectionSaved) {
+      hideLoadingOverlay();
+      var saveBtn = openSection.querySelector('button.btn.save-section');
+      showSaveModal(saveBtn ? saveBtn.onclick : null);
+      return false;
+    }
+  }
+
+  if (!validateSectionName()) {
+    _openSectionForErrors('#club-name');
+    return false;
+  }
+  if (!validateSectionDetails()) {
+    _openSectionForErrors('#club-details');
+    return false;
+  }
+  if (!validateSectionContact() || !validateContactStatus()) {
+    _openSectionForErrors('#club-contact');
+    return false;
+  }
+
+  var regionalClub = document.querySelector('#regionalClub');
+  if (regionalClub && regionalClub.checked) return true;
+
+  // Production opens '#club-location', the legacy Razor section id — on the
+  // React location section actually rendered that's a silent no-op, so the
+  // section never opens and no error shows. Open the real section and flag
+  // its help-block the same way saveLocation() does.
+  if (!validateLocations()) {
+    var locHelp = document.querySelector('.section-location-information .help-block--selectLocation');
+    if (locHelp) locHelp.classList.add('has-error');
+    _openSectionForErrors('#section-location-information');
+    return false;
+  }
+  if (!validateSectionBundles()) {
+    _openSectionForErrors('#club-bundles');
+    return false;
+  }
+  return true;
+}
+
+// Production's $('#… .section__content').collapse('show'), done the way
+// initAccordion() opens a section (see there for why not $.collapse): close
+// every other section, open this one, snapshot its state for the unsaved-
+// changes check, then scroll to its first error.
+function _openSectionForErrors(sectionSelector) {
+  hideLoadingOverlay();
+  var section = document.querySelector(sectionSelector);
+  var content = section && section.querySelector('.section__content');
+  if (!content) return;
+  document.querySelectorAll('#accordion .section__content').forEach(function (other) {
+    if (other !== content && (other.classList.contains('in') || other.classList.contains('show'))) {
+      _closeSection(other);
+    }
+  });
+  _openSection(content);
+  currentSectionState = saveSectionState(content);
+  setTimeout(function () {
+    var firstError = section.querySelector('span.help-block.has-error');
+    window.scroll(0, FindPos(firstError || section));
+  }, 450);
+}
+
+// Mirrors production Payment.js submitCreditCard() → tokenizeAndPay().
+// Mocked tail: production's doubleCheckClubAbbr() (POST /apis/v2/clubweb/abbr/),
+// Authorize.net Accept.dispatchData() tokenization, and the
+// /apis/v1/clubweb/payment/save POST are skipped — no backend here — and a
+// valid form goes straight to the confirmation page production's save
+// response would redirect to.
+function submitCreditCard(e) {
+  if (e) e.preventDefault();
+  showLoadingOverlay();
+
+  if (!validateSectionsForPayment()) {
+    hideLoadingOverlay();
+    return;
+  }
+
+  if (ValidatePaymentForm()) {
+    var isEdit = !!new URLSearchParams(window.location.search).get('club');
+    window.location.href = isEdit
+      ? '/club-central/club-dashboard/confirmation-bundle.html'
+      : '/club-central/club-dashboard/confirmation-v2.html';
+    return;
+  }
+  var form = document.querySelector('.payment-info');
+  var firstInvalid = form && form.querySelector('input.has-error');
+  if (firstInvalid) window.scroll(0, FindPos(firstInvalid));
+  hideLoadingOverlay();
+}
+
+// Mirrors production Approve.js submitApproval() — the
+// /apis/v1/clubweb/section/approve POST is mocked as an immediate success.
+function submitApproval(e) {
+  if (e) e.preventDefault();
+  showLoadingOverlay();
+  if (!validateSectionsForPayment()) {
+    hideLoadingOverlay();
+    return;
+  }
+  hideLoadingOverlay();
+  showApprovalMessageModal('Thank you for editing your club information. Your club update should appear in Club Finder within 3 business days.');
 }
 
 // Force every accordion section open at once (bypassing the single-open
-// accordion behavior) so Submit Payment can surface errors anywhere in the
-// form, not just the currently-open section. Skips sections Regional Club
-// has disabled, since those are intentionally out of the flow. Also called
-// directly (no validation) by the visual-regression suite
+// accordion behavior). Skips sections Regional Club has disabled, since those
+// are intentionally out of the flow. Not part of the page's own flow — called
+// directly by the visual-regression suite
 // (tests/usms-visual-regression-screenshots/screenshots.spec.js) via
 // window.expandAllSections() before capturing this page, so every
 // section's inputs are visible in the baseline.
@@ -2090,67 +2319,6 @@ function expandAllSections() {
     content.setAttribute('aria-expanded', 'true');
     setSectionInputStatus(content, false);
     if (content.parentElement) content.parentElement.classList.add('isEdit');
-  });
-}
-
-// force=true skips the actual check and unconditionally marks the field as
-// errored — used by showValidation()'s Submit Payment button, which only
-// needs to render the has-error state for reviewing label positioning/
-// content, not determine whether fields are actually filled in correctly.
-function _validateRequiredRadioGroup(name, force) {
-  var helpBlock = document.querySelector('.help-block--' + name);
-  var answered = force ? false : !!document.querySelector('input[name="' + name + '"]:checked');
-  if (helpBlock) helpBlock.classList.toggle('has-error', !answered);
-  return answered;
-}
-
-var _validationDisplayed = false;
-
-// Dev-only: unconditionally render has-error on every required field so
-// label positioning/content can be reviewed — this does not check whether
-// fields are actually filled in correctly. Click Submit Payment again to
-// clear. The actual scan lives in validation-preview.js, shared with Event
-// Edit's equivalent trigger — this function only owns Club Edit's specific
-// accordion open/close mechanics and the two "at least one item" sections
-// that can't be discovered from markup.
-function showValidation(e) {
-  if (e) e.preventDefault();
-
-  // Second click — dev-only reset: clear all validation states and collapse
-  // every section back down except Club Name. Closes sections directly via
-  // _closeSection rather than $.collapse('show')'s side effect — Club Name
-  // already carries the 'in'/'show' classes expandAllSections() stamped on
-  // it, so Bootstrap treats it as already shown and never fires
-  // show.bs.collapse (the event the "close siblings" logic depends on).
-  // Payment isn't a collapsible accordion section — it has no header toggle
-  // and is always visible — so _closeSection would disable its inputs with
-  // no way to re-enable them; skip it along with Club Name.
-  if (_validationDisplayed) {
-    window.clearValidationPreview({ root: '#accordion' });
-    document.querySelectorAll('#accordion .section__content').forEach(function (content) {
-      if (content.id !== 'club-name__content' && content.id !== 'club-payment__content') _closeSection(content);
-    });
-    var clubNameContent = document.querySelector('#club-name__content');
-    if (clubNameContent) {
-      clubNameContent.classList.add('in', 'show');
-      clubNameContent.style.height = '';
-      clubNameContent.setAttribute('aria-expanded', 'true');
-      setSectionInputStatus(clubNameContent, false);
-      if (clubNameContent.parentElement) clubNameContent.parentElement.classList.add('isEdit');
-    }
-    _validationDisplayed = false;
-    return;
-  }
-  _validationDisplayed = true;
-
-  expandAllSections();
-
-  window.runValidationPreview({
-    root: '#accordion',
-    atLeastOne: [
-      { container: '#club-contact .list__container', helpBlock: '.help-block--ContactType' },
-      { container: '#locationListContainer', helpBlock: '.help-block--selectLocation' }
-    ]
   });
 }
 
@@ -2282,7 +2450,7 @@ document.addEventListener('DOMContentLoaded', function () {
     noRadio.disabled = locked;
   });
 
-  membershipRequiredLocked = !!document.querySelector('input[name="membershipRequired"]:checked');
+  membershipRequiredLocked = !!document.querySelector('input[name="requireMembership"]:checked');
   lockMembershipRequiredIfAnswered();
 
   var totalSwimmersInit = document.querySelector('#totalSwimmers');
@@ -2344,7 +2512,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Club Bundles section — show when "No" is selected for USMS membership requirement.
   function handleMembershipRequired() {
-    var noRadio = document.querySelector('#membershipRequiredAnsweredNo');
+    var noRadio = document.querySelector('#requireMembershipNo');
     var clubBundles = document.querySelector('#club-bundles');
     if (!clubBundles) return;
     var requiresBundle = !!(noRadio && noRadio.checked);
@@ -2367,10 +2535,20 @@ document.addEventListener('DOMContentLoaded', function () {
       clubBundles.classList.remove('hasData');
     }
   }
-  document.querySelectorAll('input[name="membershipRequired"]').forEach(function (r) {
+  document.querySelectorAll('input[name="requireMembership"]').forEach(function (r) {
     r.addEventListener('change', handleMembershipRequired);
   });
   handleMembershipRequired();
+
+  // Mirrors production Details.js's per-radio click → validateField(), which
+  // clears a group's help-block error as soon as an answer is picked.
+  // Production skips usaSwimmingClubAffiliation (its error lingers until the
+  // next save); wired here too so all four behave the same.
+  DETAILS_REQUIRED_RADIOS.forEach(function (name) {
+    document.querySelectorAll('#club-details input[name="' + name + '"]').forEach(function (r) {
+      r.addEventListener('click', function () { validateField(r); });
+    });
+  });
 
   // Regional Club checkbox — disable Location Information section when checked,
   // and warn the user with a confirmation modal (mirrors production Details.js

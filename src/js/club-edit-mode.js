@@ -79,8 +79,13 @@
     setVal('practiceDetails', MOCK_EXISTING_CLUB.practiceDetails);
     setVal('totalSwimmers', MOCK_EXISTING_CLUB.totalSwimmers);
     setRadioByValue('usmsLiabilityInsurance', MOCK_EXISTING_CLUB.usmsLiabilityInsurance);
-    setRadioByValue('membershipRequired', MOCK_EXISTING_CLUB.membershipRequired);
+    setRadioByValue('requireMembership', MOCK_EXISTING_CLUB.membershipRequired);
+    setRadioByValue('usaSwimmingClubAffiliation', MOCK_EXISTING_CLUB.usaSwimmingAffiliation);
+    setRadioByValue('freeTrialMembership', MOCK_EXISTING_CLUB.clubTrialMembership);
     setRadioByValue('marketingBundle', MOCK_EXISTING_CLUB.marketingBundle);
+    // Production's ClubContact.cshtml server-renders the saved ContactType
+    // radio as checked — validateSectionContact() requires one to be.
+    setRadioByValue('ContactType', MOCK_EXISTING_CLUB.contactType);
 
     CLUB_BUNDLES.forEach(function (bundleKey) {
       var yesRadio = document.getElementById(bundleKey + 'Yes');
@@ -121,13 +126,10 @@
       '<p class="section-payment__contact-pending" style="display: none;">You cannot submit your club until your new club contact has approved their My Account.</p>' +
       '<div class="row button-row__content button-row__content--left">' +
         '<div class="col-xs-12">' +
-          '<button class="btn save-section" id="saveClubName" type="button">Submit</button>' +
+          '<button class="btn save-section" id="submitApprovalButton" type="button" onclick="submitApproval(event)">Submit</button>' +
         '</div>' +
       '</div>';
     paymentSection.parentNode.insertBefore(approval, paymentSection.nextSibling);
-
-    var btn = approval.querySelector('#saveClubName');
-    if (btn) btn.addEventListener('click', function (e) { e.preventDefault(); });
   }
 
   // Reverses swapPaymentForApproval() — an existing club that accepts a new

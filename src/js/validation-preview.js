@@ -4,17 +4,14 @@
  * NOT real validation: every `.required` element found is flagged
  * unconditionally, regardless of its current value, so error message content
  * and position can be reviewed in place. Real per-field validation lives
- * separately in each page's own script (e.g. club-edit.js's
- * validateField/setInputStatus) — this file never calls into it, so a change
- * to one can't silently affect the other.
+ * separately in each page's own script — this file never calls into it, so a
+ * change to one can't silently affect the other.
  *
- * Shared between Club Edit and Event Edit's "click-to-preview" trigger
- * buttons (see club-edit.js's showValidation() and event-edit.js's
- * previewEventValidation()). Each page's own script still owns opening and
- * closing its own accordion sections — their collapse mechanics differ
- * (club-edit re-implements open/close to work around a BS3/BS5 conflict;
- * event-edit uses native Bootstrap 5 collapse) — this file only flags fields
- * once a section is already visible.
+ * Used by Event Edit's "click-to-preview" trigger button (see event-edit.js's
+ * previewEventValidation()), which owns opening and closing its own accordion
+ * sections — this file only flags fields once a section is already visible.
+ * Club Edit no longer uses it: its submit runs a port of production's real
+ * validation (club-edit.js's validateSectionsForPayment()).
  */
 (function () {
   // Help-block lookup prefers a sibling inside the same .required wrapper
@@ -49,20 +46,11 @@
     if (helpBlock) helpBlock.classList.add('has-error');
   }
 
-  // Radio groups have no single control to redden — no CSS in either page's
+  // Radio groups have no single control to redden — no CSS in the page's
   // bundle keys off has-error on a radio input itself — so only the message
-  // location gets flagged. Club Edit overrides _validateRequiredRadioGroup
-  // for four groups to flag their section header instead of the help-block;
-  // routing through it here (in force mode) picks that up automatically.
-  // Event Edit doesn't define the function at all, so it falls back to the
-  // plain name-derived help-block (reliable for radio groups — unlike the
-  // checkbox case above, every radio group's shared `name` consistently
-  // matches its help-block suffix across both pages).
+  // location gets flagged: the name-derived help-block (every radio group's
+  // shared `name` matches its help-block suffix).
   function flagRadioGroup(name) {
-    if (typeof window._validateRequiredRadioGroup === 'function') {
-      window._validateRequiredRadioGroup(name, true);
-      return;
-    }
     var helpBlock = document.querySelector('.help-block--' + name);
     if (helpBlock) helpBlock.classList.add('has-error');
   }
