@@ -21,10 +21,17 @@ function looksLikeHtmlNotAsset(content) {
   return /^\s*<(!doctype|html)/i.test(content);
 }
 
+// Query-addressed assets (e.g. Google Fonts' css2?family=Anton) have an
+// extensionless path and differ only by query string: fold the query into
+// the name so they don't collide, and force the extension so the static
+// host serves text/css (browsers refuse to apply a stylesheet otherwise).
 function localNameFor(url, fallbackBase) {
   const parsed = new URL(url);
   const safeHost = parsed.hostname.replace(/[^a-z0-9.-]/gi, '-');
-  const baseName = path.basename(parsed.pathname) || fallbackBase;
+  const ext = path.extname(fallbackBase);
+  let baseName = path.basename(parsed.pathname) || fallbackBase;
+  if (parsed.search) baseName += '-' + parsed.search.slice(1).replace(/[^a-z0-9.-]/gi, '-');
+  if (path.extname(baseName) !== ext) baseName += ext;
   return `${safeHost}-${baseName}`;
 }
 
