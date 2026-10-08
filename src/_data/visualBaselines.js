@@ -9,6 +9,8 @@ const fs = require('fs');
 const path = require('path');
 
 const pages = require('../../tests/usms-visual-regression-screenshots/pages.js');
+const chromeRegions = require('../../tests/usms-visual-regression-screenshots/chrome.js');
+const states = require('../../tests/usms-visual-regression-screenshots/states.js');
 
 // Mirrors the slug() transform in tests/usms-visual-regression-screenshots/screenshots.spec.js —
 // keep these in sync if that function ever changes. Not `require`d directly: that file calls
@@ -49,29 +51,14 @@ const LABELS = {
   '/events/event-central/event-dashboard/event-edit.html': 'Event Edit',
 };
 
-// Manual (hand-captured) validation-state screenshots, shown as variants of their base page.
-// Not produced by the automated slug-based naming convention, so mapped by hand.
-const MANUAL_VARIANTS = {
-  '/club-central/club-edit.html': [
-    { file: 'club-edit-validation-baseline.png', label: 'Validation' },
-  ],
-  '/events/event-central/event-dashboard/event-edit.html': [
-    { file: 'event-edit-validation-after.png', label: 'Validation' },
-  ],
-};
-
 module.exports = function () {
   const snapshotsDir = path.join(__dirname, '../../tests/usms-visual-regression-screenshots/screenshots.spec.js-snapshots');
-  const manualDir    = path.join(__dirname, '../../tests/usms-visual-regression-screenshots/manual-baselines');
 
   const availableAutomated = new Set(
     fs.existsSync(snapshotsDir) ? fs.readdirSync(snapshotsDir) : []
   );
-  const availableManual = new Set(
-    fs.existsSync(manualDir) ? fs.readdirSync(manualDir) : []
-  );
 
-  return pages.map((pagePath) => {
+  const pageEntries = pages.map((pagePath) => {
     const pageSlug = slug(pagePath);
     const items = [];
 
@@ -80,20 +67,38 @@ module.exports = function () {
       if (availableAutomated.has(filename)) {
         items.push({
           label: viewport,
+          viewport,
           path: `visual-regression-baselines/${filename}`,
         });
       }
     }
 
-    for (const variant of MANUAL_VARIANTS[pagePath] || []) {
-      if (availableManual.has(variant.file)) {
-        items.push({
-          label: variant.label,
-          path: `visual-regression-baselines/manual/${variant.file}`,
-        });
+    // Interaction states (states.js) shown as variants of their base page.
+    for (const state of states.filter((s) => s.page === pagePath)) {
+      for (const viewport of ['Desktop', 'Mobile']) {
+        const filename = `state--${state.name}-${viewport}-darwin.png`;
+        if (availableAutomated.has(filename)) {
+          items.push({
+            label: `${state.label} ${viewport}`,
+            viewport,
+            path: `visual-regression-baselines/${filename}`,
+          });
+        }
       }
     }
 
     return { pagePath, label: LABELS[pagePath] || pagePath, items };
   });
+
+  // Sitewide header/footer, captured once each (page baselines exclude them).
+  const chromeEntries = chromeRegions.map((chrome) => ({
+    pagePath: chrome.page,
+    label: chrome.label,
+    items: ['Desktop', 'Mobile']
+      .map((viewport) => ({ viewport, filename: `chrome--${chrome.name}-${viewport}-darwin.png` }))
+      .filter(({ filename }) => availableAutomated.has(filename))
+      .map(({ viewport, filename }) => ({ label: viewport, viewport, path: `visual-regression-baselines/${filename}` })),
+  }));
+
+  return [...chromeEntries, ...pageEntries];
 };

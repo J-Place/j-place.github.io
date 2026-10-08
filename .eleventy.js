@@ -248,9 +248,6 @@ module.exports = function(eleventyConfig) {
   eleventyConfig.addPassthroughCopy({
     "tests/usms-visual-regression-screenshots/screenshots.spec.js-snapshots/*.png": "visual-regression-baselines"
   });
-  eleventyConfig.addPassthroughCopy({
-    "tests/usms-visual-regression-screenshots/manual-baselines/*.png": "visual-regression-baselines/manual"
-  });
   eleventyConfig.addWatchTarget("tests/usms-visual-regression-screenshots");
 
   return {

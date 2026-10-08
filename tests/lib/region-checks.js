@@ -107,6 +107,12 @@ module.exports = [
     reason: 'Production\'s live club search results — which clubs/order shows varies. Our own mockup\'s Club Finder is pinned via ?lat=&long= and confirmed fully deterministic, so this only applies to production-monitor.',
   },
   {
+    selector: '#main-container > header.header-static, body > footer',
+    suites: ['mockup'], // production-monitor compares live production's own chrome; keep it there
+    fingerprint: false, // covered by its own element baselines instead — see chrome.js
+    reason: "Sitewide header and footer — captured once each by screenshots.spec.js's chrome: tests (tests/usms-visual-regression-screenshots/chrome.js), so a change to either one fails those tests rather than every page test, and can't hide a page-specific regression.",
+  },
+  {
     selector: '.articleStepper',
     fingerprint: null, // TODO
     reason: 'SWIMMER "Also in this Issue" strip — slick-carousel autoplay, which related-article slide shows isn\'t pinnable. Real fingerprint values not yet determined.',
