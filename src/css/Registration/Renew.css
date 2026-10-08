@@ -73,18 +73,22 @@
    on each row's *leading* column, so zeroing that one column stays the
    right fix regardless of why any given row's padding value is what it
    is. Covers every row in Payment.njk and ContactInformation.njk that
-   has this problem, single- or multi-column alike. */
-.renew__form-body .form-group.first-last > div:first-child,
-.renew__form-body .form-group.gender > div:first-child,
-.renew__form-body .form-group.email-phone > div:first-child,
-.renew__form-body .form-group.country > div:first-child,
-.renew__form-body .form-group.street > div:first-child,
-.renew__form-body .form-group.city-state-zip > div:first-child,
-.renew__form-body .form-group.club-information__row > div:first-child,
-.renew__form-body .form-group.card-number > div:first-child,
-.renew__form-body .form-group.card-zip > div:first-child,
-.renew__form-body .form-group.card-name > div:first-child {
-    padding-left: 0;
+   has this problem, single- or multi-column alike. Desktop only (same
+   768px breakpoint as registration.min.css's bump) — below it, columns
+   keep their padding. */
+@media (min-width: 768px) {
+    .renew__form-body .form-group.first-last > div:first-child,
+    .renew__form-body .form-group.gender > div:first-child,
+    .renew__form-body .form-group.email-phone > div:first-child,
+    .renew__form-body .form-group.country > div:first-child,
+    .renew__form-body .form-group.street > div:first-child,
+    .renew__form-body .form-group.city-state-zip > div:first-child,
+    .renew__form-body .form-group.club-information__row > div:first-child,
+    .renew__form-body .form-group.card-number > div:first-child,
+    .renew__form-body .form-group.card-zip > div:first-child,
+    .renew__form-body .form-group.card-name > div:first-child {
+        padding-left: 0;
+    }
 }
 
 .renew__form-body .form-group.first-last,
