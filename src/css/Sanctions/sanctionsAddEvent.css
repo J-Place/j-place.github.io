@@ -11,3 +11,11 @@
 .club-edit .radio-label--inline {
   margin-right: 2rem;
 }
+
+/* Overrides production/src/App/views/Sanctions/sanctionsAddEvent.css:84-85
+   (also sanctionsEvents.css:13-14; both compiled into sanctions.min.css) —
+   production points the select arrow at usms-cdn.azureedge.net, which no
+   longer resolves. Same image, served from the Front Door host. */
+.form__container select.form-control {
+  background-image: url(https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/Images/MyUSMS/icon-arrow-down);
+}
