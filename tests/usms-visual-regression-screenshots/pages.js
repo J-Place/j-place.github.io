@@ -6,6 +6,10 @@
 // Deliberately a small, hand-picked starting set (not one-per-page-in-the-site) — add more
 // pages here one at a time as they're worth covering, rather than letting this re-accumulate
 // near-duplicate coverage of the same template/component.
+//
+// tests/production-monitor/checks.js watches the same pages on live
+// production (minus the auth-gated ones) — when you add, remove, or swap a
+// page here, make the matching change there too.
 module.exports = [
   '/home/index.html',
   '/fitness-and-training/articles-and-videos/index.html',

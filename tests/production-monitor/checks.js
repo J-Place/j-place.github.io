@@ -95,7 +95,10 @@ module.exports = [
     // were left unmasked until diagnosed: swings of 300+ px between runs as
     // different ad creative loaded, which masking a static class doesn't
     // normally need to account for but a variable-height iframe genuinely does.
-    path: '/fitness-and-training/articles-and-videos/articles/the-5-best-freestyle-workouts',
+    // Same article as pages.js's article entry, so the mockup and the
+    // monitor watch the exact same page body (was "the-5-best-freestyle-
+    // workouts" until 2026-10-08 — same template, different content).
+    path: '/fitness-and-training/articles-and-videos/articles/masters-swimming-training-plan-for-former-competitive-swimmers',
     mask: ['.advertising-dc'],
   },
   {
@@ -127,12 +130,13 @@ module.exports = [
   },
   {
     name: 'event-detail',
-    // No trailing slash — see file header. Single event page will need
-    // periodic swapping to a still-in-range event as this one expires off
-    // the calendar (unlike the trailing-slash issue, that part is a genuine,
-    // expected maintenance cost of pointing at real production content).
+    // No trailing slash — see file header. Same event as pages.js's event
+    // entry (was Shark Tank until 2026-10-08). It's a past event, but
+    // production keeps past event detail pages reachable by URL (confirmed
+    // 200 on 2026-10-08), so it doesn't need swapping as the calendar moves
+    // on — if it ever 404s, change it here and in pages.js together.
     // .advertising-dc  1 ad slot on this page.
-    path: '/events/events/2026-shark-tank-scm-meet-a1jpo00000b0m5r2av',
+    path: '/events/events/2026-bumpy-jones-classic-long-course-meet-a1jpo00000abjhf2a3',
     mask: ['.advertising-dc'],
   },
   {
