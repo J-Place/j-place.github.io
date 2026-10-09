@@ -8,7 +8,8 @@
 // clubsLocal.json's per-club contact.userKey points at a users.json persona
 // key, and every club whose contact.userKey matches the active ?user=/
 // sessionStorage persona is rendered as a button (production: ClubDashModel.Clubs,
-// one <a> per entry).
+// one <a> per entry). A club can also list additional admins who aren't its
+// contact in adminUserKeys (e.g. SHARK: contact Renee Calloway, admin GAT0R).
 //
 // ?club=<abbreviation> is still honored as a direct single-club override
 // (bypasses the userKey lookup entirely) — useful for testing/snapshotting one
@@ -37,8 +38,9 @@
     var activeUser = userParam || sessionStorage.getItem('activeUser');
     if (activeUser) {
       abbrs = Object.keys(clubs).filter(function (abbr) {
-        var contact = clubs[abbr].contact;
-        return contact && contact.userKey === activeUser;
+        var club = clubs[abbr];
+        return (club.contact && club.contact.userKey === activeUser) ||
+          (club.adminUserKeys || []).indexOf(activeUser) !== -1;
       });
     }
   }
