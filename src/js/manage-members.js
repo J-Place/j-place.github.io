@@ -186,6 +186,101 @@
     updatePaymentSummary();
   });
 
+  // --- Current USMS Members lookup ---
+  // Lets coaches verify a drop-in swimmer is a current USMS member. Searches
+  // the USMS-wide directory (usmsMembersLocal.json), excluding the active
+  // club's own members — they're already in the table below. Results render as
+  // a plain list under the input (no selection step): a match *is* the
+  // confirmation, and no match gets an explicit "not found" message.
+  // Independent of the table and its checkboxes, so it stays usable when bulk
+  // registration is closed.
+
+  var LOOKUP_MIN_CHARS = 3;
+  var LOOKUP_MAX_RESULTS = 7;
+
+  var directory = JSON.parse(document.getElementById('usms-members-local-data').textContent)
+    .filter(function (m) { return m.clubId !== clubId; })
+    .sort(function (a, b) {
+      return a.lastName < b.lastName ? -1 : a.lastName > b.lastName ? 1 :
+        a.firstName < b.firstName ? -1 : a.firstName > b.firstName ? 1 : 0;
+    });
+  var lookupInput = document.getElementById('lookupMemberName');
+  var lookupResults = document.getElementById('lookupMemberResults');
+  var lookupTimer;
+
+  function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  // Match count label, shown above the results from the first character on:
+  // "(Showing 0 matches)" until the search kicks in at LOOKUP_MIN_CHARS, then
+  // the real count, with a "keep typing" hint when the list is truncated.
+  function lookupCountLabel(total) {
+    if (total > LOOKUP_MAX_RESULTS) {
+      return '(Showing ' + LOOKUP_MAX_RESULTS + ' of ' + total +
+        ' matches. Keep typing to narrow the list.)';
+    }
+    return '(Showing ' + total + (total === 1 ? ' match)' : ' matches)');
+  }
+
+  function renderLookupResults() {
+    var query = lookupInput.value.trim();
+    var val = query.toLowerCase();
+    lookupResults.innerHTML = '';
+    if (!val.length) return;
+
+    var matches = val.length < LOOKUP_MIN_CHARS ? [] : directory.filter(function (m) {
+      return (m.firstName + ' ' + m.lastName).toLowerCase().indexOf(val) !== -1;
+    });
+
+    var count = document.createElement('p');
+    count.className = 'members-lookup__more';
+    count.textContent = lookupCountLabel(matches.length);
+    lookupResults.appendChild(count);
+
+    if (val.length < LOOKUP_MIN_CHARS) return;
+
+    if (!matches.length) {
+      var empty = document.createElement('p');
+      empty.className = 'members-lookup__empty';
+      empty.innerHTML = 'No current USMS member matches &ldquo;' + escapeHtml(query) +
+        '&rdquo;. They may have let their membership lapse, or be registered under a different name.';
+      lookupResults.appendChild(empty);
+      return;
+    }
+
+    var list = document.createElement('ul');
+    list.className = 'members-lookup__list';
+    matches.slice(0, LOOKUP_MAX_RESULTS).forEach(function (m) {
+      var fullName = m.firstName + ' ' + m.lastName;
+      var idx = fullName.toLowerCase().indexOf(val);
+      var bolded = escapeHtml(fullName.slice(0, idx)) + '<strong>' +
+        escapeHtml(fullName.slice(idx, idx + val.length)) + '</strong>' +
+        escapeHtml(fullName.slice(idx + val.length));
+      var li = document.createElement('li');
+      li.className = 'members-lookup__item';
+      li.innerHTML =
+        '<i class="fas fa-circle-check members-lookup__icon" aria-hidden="true"></i>' +
+        '<span class="members-lookup__name">' + bolded + '</span>' +
+        '<span class="members-lookup__details">' + escapeHtml(m.clubName + ' \u00b7 ' + m.city + ', ' + m.state) + '</span>';
+      list.appendChild(li);
+    });
+    lookupResults.appendChild(list);
+  }
+
+  lookupInput.addEventListener('input', function () {
+    clearTimeout(lookupTimer);
+    // Below the search threshold there's nothing to search, so show the
+    // "0 matches" label immediately rather than after the debounce
+    if (lookupInput.value.trim().length < LOOKUP_MIN_CHARS) {
+      renderLookupResults();
+    } else {
+      lookupTimer = setTimeout(renderLookupResults, 300);
+    }
+  });
+
   var noMembersError = document.getElementById('payment-no-members-error');
 
   document.getElementById('register-button').addEventListener('click', function () {

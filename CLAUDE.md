@@ -228,7 +228,7 @@ Each config file defines which pages the overlay loads on:
 
 To add a new overlay: create the JS, CSS, and JSON config files — no changes to `base.njk` or any page template needed.
 
-**Current overlays:** `bulk-registration-state` (club-central manage-members) and `measured-pools-location-preview`. Simulating the current logged-in user or a specific date is *not* an overlay — see below.
+**Current overlays:** `measured-pools-location-preview`. Simulating the current logged-in user, a specific date, or Manage Current Members' bulk-registration state is *not* an overlay — see below.
 
 ### Simulating the current user and date
 
@@ -237,6 +237,8 @@ To add a new overlay: create the JS, CSS, and JSON config files — no changes t
 `current-user.js` also patches the meganav Join button (`.menu-item-login-button` on both the desktop and mobile-overlay Join `<li>`, toggling the `.menu-item-login-button--hidden` modifier) — mirrors production's `NavigationRepository.ShouldShowLoginButton`: hidden only when the active persona is `loggedIn: true` **and** `isLapsed: false` (a current, active member); shown for logged-out or lapsed personas, since production keeps Join/Renew visible to lapsed members.
 
 **Club admin association mirrors production's `ClubDashModel.Clubs` (a list, looked up from the club side, not a field on the member):** each club in `src/_data/clubsLocal.json` carries `contact.userKey`, pointing at a `users.json` persona key. `club-dashboard.js` resolves the active `?user=`/`sessionStorage.activeUser` persona and renders one club button per club whose `contact.userKey` matches — so a persona can administer zero, one, or several clubs, and club admin status never depends on the admin's own personal membership (`contact.isMember` on the club record is independent of `clubAdmin`/membership on the persona). Today: `CLBADM` administers both `PACMS` and `GGA` (multi-club case); `CLUBADMINONLY` administers `RFS` with `contact.isMember: false` (admin-but-not-a-member case). `?club=<abbr>` still works as a direct single-club override, bypassing the userKey lookup — useful for testing/snapshotting one club in isolation.
+
+`/club-central/manage-members.html`'s bulk-registration state works the same way: append `?bulkReg=closed` (or `?bulkReg=open`) — default is open. Resolved by `src/js/bulk-reg-state.js` (non-deferred), carried forward via `sessionStorage.bulkRegState`. Closed adds `body.bulk-reg-closed`, which hides Select All, the checkbox column and the payment section (`src/css/Club/manage-members.css`); the member lookup stays visible in both states.
 
 `/registration/index.html`'s membership-tier date-availability windows work the same way: append `?date=YYYY-MM-DD` (e.g. `?date=2026-07-15`) to simulate a date; omit it to use the real current date. Resolved in `registration.js`'s init, also carried forward via `sessionStorage.activeDate`.
 

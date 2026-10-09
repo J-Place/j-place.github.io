@@ -1,6 +1,12 @@
 
-p.members-lead {
-  margin-bottom: 0;
+/* Section headings: "Verify a Drop-In Swimmer" (member lookup) and "Your
+   Current Members" (roster) — keep the lookup from reading as a filter for the
+   roster table. Color/weight match .payment-section__heading below. */
+.members-section__heading {
+  color: #434343;
+  font-size: 2.4rem;
+  font-weight: 400;
+  margin: 0 0 1.5rem;
 }
 
 #members-no-club {
@@ -249,4 +255,79 @@ td.col-checkbox {
   .payment-info__form-summary {
     padding-right: 2.5rem;
   }
+}
+
+/* --- Member lookup --- */
+
+.members-lookup {
+  margin-bottom: 3rem;
+}
+
+.members-lookup .lookup-name {
+  width: 100%;
+}
+
+/* usms.min.css's `.input-group label { font-weight: 400 }` outranks the
+   .font-weight-bold utility, so bold has to be set at this specificity. */
+.members-lookup .lookup-name label {
+  font-weight: 700;
+}
+
+/* Results: a plain list under the input, not a dropdown — a match is itself
+   the confirmation, so there's nothing to select. */
+.members-lookup__results {
+  font-size: 1.4rem;
+}
+
+.members-lookup__list {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+}
+
+.members-lookup__item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 0.6rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.members-lookup__item:last-child {
+  border-bottom: none;
+}
+
+.members-lookup__icon {
+  color: #417505;
+}
+
+.members-lookup__details {
+  color: #666;
+  font-size: 1.2rem;
+}
+
+/* `.members-lookup p.…` to outrank common.min.css's
+   `.usms-container p { font-size: 2rem; margin: 0 auto 2rem; color: #000 }`. */
+.members-lookup p.members-lookup__empty {
+  margin: 1rem 0 0;
+  color: #666;
+}
+
+.members-lookup p.members-lookup__more {
+  margin: -0.5rem 0 1.5rem;
+  font-size: 1.5rem;
+}
+
+.members-lookup__more + .members-lookup__list {
+  margin-top: 0.4rem;
+}
+
+/* --- Bulk registration closed (?bulkReg=closed, see bulk-reg-state.js) ---
+   Read-only roster: no selection or payment. The member lookup stays. */
+
+body.bulk-reg-closed .members-select-all-row,
+body.bulk-reg-closed .members-table .col-checkbox,
+body.bulk-reg-closed #payment-section {
+  display: none !important;
 }

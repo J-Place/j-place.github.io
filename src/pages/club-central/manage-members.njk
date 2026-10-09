@@ -44,13 +44,8 @@ breadcrumbTitle: "Manage Current Members"
 
 {% block content %}
 <script type="application/json" id="members-local-data">{{ membersLocal.members | dump | safe }}</script>
+<script type="application/json" id="usms-members-local-data">{{ usmsMembersLocal.members | dump | safe }}</script>
 <script type="application/json" id="clubs-local-data">{{ clubsLocal.clubs | dump | safe }}</script>
-
-<div class="section section-full bg-gray">
-  <div class="usms-container">
-    <p class="members-lead">These are the active members currently registered with your club.</p>
-  </div>
-</div>
 
 <div class="section section-full bg-gray">
   <div class="usms-container form__container p-tb-10">
@@ -61,6 +56,19 @@ breadcrumbTitle: "Manage Current Members"
 
         <div class="members-layout">
         <div id="members-content">
+
+          <h2 class="members-section__heading">Verify a Drop-In Swimmer</h2>
+          <div class="row members-lookup">
+            <div class="col-sm-6">
+              <div class="input-group lookup-name">
+                <label for="lookupMemberName">Enter First and/or Last Name</label>
+                <input tabindex="0" type="text" class="form-control lookup__input" min="3" max="30" name="LookupMemberName" id="lookupMemberName" autocomplete="off" aria-describedby="lookupMemberResults">
+              </div>
+              <div class="members-lookup__results" id="lookupMemberResults" aria-live="polite"></div>
+            </div>
+          </div>
+
+          <h2 class="members-section__heading">Your Current Members</h2>
 
           <div class="members-select-all-row">
             <label class="members-select-all-label"><input type="checkbox" id="select-all-expiring"> Select All</label>
@@ -147,5 +155,6 @@ breadcrumbTitle: "Manage Current Members"
 {% endblock %}
 
 {% block pageJS %}
+<script src="/js/bulk-reg-state.js"></script>
 <script src="/js/manage-members.js" defer></script>
 {% endblock %}
