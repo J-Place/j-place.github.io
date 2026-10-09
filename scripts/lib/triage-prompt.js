@@ -1,9 +1,9 @@
 'use strict';
 
-// Shared between scripts/triage-production-monitor.js (Item 1) and
-// scripts/triage-visual-regression.js (Item 2) — both read a Playwright JSON
-// reporter file and build a triage prompt from its failures, differing only
-// in which report file and which "framing" sentence they use. Schema below
+// Used by scripts/triage-visual-regression.js (Item 2) — reads a Playwright
+// JSON reporter file and builds a triage prompt from its failures, with a
+// caller-supplied report path and "framing" sentence. (Its other caller,
+// the CI-only production-monitor triage, was removed 2026-10-08.) Schema below
 // confirmed against a real Playwright JSON reporter run (not guessed):
 // data.suites[].specs[].tests[].results[] with .status/.error.message/.attachments[].
 

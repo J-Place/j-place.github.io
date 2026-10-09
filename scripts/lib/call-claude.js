@@ -1,7 +1,7 @@
 'use strict';
 
-// Shared by scripts/triage-production-monitor.js, scripts/summarize-vendor-diff.js,
-// and scripts/triage-visual-regression.js — the common "call claude -p for a
+// Shared by scripts/summarize-vendor-diff.js and
+// scripts/triage-visual-regression.js — the common "call claude -p for a
 // pure-summarization task, soft-fail if auth isn't configured or the call
 // errors" pattern, so no caller needs its own try/catch for this. An optional
 // LLM step must never take down the deterministic pipeline around it (plan

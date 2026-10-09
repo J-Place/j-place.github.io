@@ -76,6 +76,22 @@ Pinning changes each baseline's filename (`slug()` folds the query string in, e.
 
 **Visual regression captures create mode.** `pages.js` uses the bare `/club-central/club-edit.html` — no `?club=`, so it's create mode. To baseline edit mode, add explicit `?club=<abbr>` URLs to `pages.js` and get the new baselines approved.
 
+## Production Monitor
+
+A second Playwright suite, separate from visual regression: it screenshots **live www.usms.org** (not our mockup) and diffs against its own baselines, so a real layout/component change shipped by the dev team surfaces as a failure. Config: `playwright.production-monitor.config.js`; checks: `tests/production-monitor/checks.js`; spec: `tests/production-monitor/production-monitor.spec.js`.
+
+```bash
+npm run monitor:prod                     # run against www.usms.org (PROD_MONITOR_BASE_URL overrides)
+npm run monitor:prod:update              # accept new baselines — needs explicit user approval, same rule as test:visual:update
+npm run monitor:prod:report              # open the last local report (production-monitor-report/, gitignored)
+npm run publish:production-monitor-report  # snapshot it into the committed reports/production-monitor/
+```
+
+- **Page list mirrors `pages.js`.** One full-page check per `pages.js` page, using production's real URL for the same content (no `.html`, no `?lat=`/`?user=` pins — production doesn't read them). Event/article detail paths have **no trailing slash** (production 404s them with one). Auth-gated pages are excluded — registration, club-edit, event-edit, and the SWIMMER root index and article (production redirects them to `/myusmslogin`). When a page is added/removed/swapped in `pages.js`, make the matching change in `checks.js`.
+- **Content churn is masked, not pinned.** Each check's `mask` hides regions whose content changes daily (carousel, news grid, listings, ads, maps), and `presence` asserts those masked regions still contain at least N real items so a broken-but-masked region can't pass silently. Ad networks and `ipinfo.io` are blocked in the spec; on club pages that means production resolves to its Sarasota default.
+- **Local and manual only, same as visual regression.** Nothing runs it automatically. Run it yourself after you learn production deployed, against the committed `-darwin.png` baselines. It used to run in the Production Update GitHub workflow; that was removed 2026-10-08 because CI would have needed a separate set of `-linux.png` baselines, which never existed. If it's ever moved back into CI, generate and approve a Linux baseline set first.
+- **Reporting** follows the visual-regression rules: full unfiltered run, report every check as pass/fail/skip for both Desktop and Mobile, and never run `monitor:prod:update` without explicit approval.
+
 ## Project Structure
 
 ```
@@ -145,7 +161,7 @@ Key rules that apply project-wide (not just inside the skill):
 - Page-specific CSS/JS goes in `{% block pageCSS %}` / `{% block pageJS %}`.
 - Page headers (breadcrumbs + hero) go in `{% block pageHeader %}` via the appropriate partial.
 - Production USMS styles and scripts are **vendored locally** under `src/vendor/{css,js}/`, referenced as `/vendor/{css,js}/<host>-<basename>.css?v=<version>` — not loaded live from `www.usms.org`/`usms-cdn.azureedge.net` in page templates. Local files in `src/css/` and `src/js/` remain overrides and additions only; they don't replace the vendored copies.
-  - **How it stays in sync**: `.github/workflows/production-watch.yml` polls production's own self-reported `?version=YYYYMMDD.N` query string (stamped on every CSS/JS URL on every production page — one global, site-wide deploy stamp) on a schedule. When it changes, `npm run vendor:refresh` re-fetches every URL in `scripts/vendor-manifest.json` into `src/vendor/`, bumps the `?v=` cache-busting suffix in every referencing template, and commits the result to `master` — see `scripts/detect-production-deploy.js`, `scripts/vendor-refresh.js`.
+  - **How it stays in sync**: `.github/workflows/production-update.yml` (triggered manually once you know production deployed — no schedule) checks production's own self-reported `?version=YYYYMMDD.N` query string (stamped on every CSS/JS URL on every production page — one global, site-wide deploy stamp). When it has changed, `npm run vendor:refresh` re-fetches every URL in `scripts/vendor-manifest.json` into `src/vendor/`, bumps the `?v=` cache-busting suffix in every referencing template, and commits the result to `master` — see `scripts/detect-production-deploy.js`, `scripts/vendor-refresh.js`.
   - **Adding a new page's production CSS/JS**: author against the live production URL first (as before), then run `npm run vendor:discover` (regenerates `scripts/vendor-manifest.json` from every `src/**/*.njk` reference) → review the diff → `npm run vendor:migrate` (rewrites the new template reference(s) to the local vendored path) → `npm run vendor:refresh` (fetches the file). Only `www.usms.org/styles|scripts/*` and `usms-cdn.azureedge.net/scripts/*` are in scope — third-party CDN libraries (jQuery, Bootstrap's JS, Font Awesome) are deliberately excluded, they never change on a USMS deploy.
   - **Images stay live** (`<img src="www.usms.org/...">` etc.) — unrelated, deliberate, unchanged policy; not vendored.
   - This is a separate mechanism from the `/snapshot` workflow's own vendoring (`.claude/skills/snapshot/SKILL.md`, `scripts/snapshot.js`), which freezes a single page's assets *permanently* at snapshot time. That one exists to keep an immutable snapshot from drifting; this one exists to keep the main site's assets *in sync* with current production — opposite goals, so they stay independent (though they share the low-level fetch primitive, `scripts/lib/vendor-assets.js`).
