@@ -262,6 +262,8 @@ To add a new overlay: create the JS, CSS, and JSON config files — no changes t
 
 `development` is where all work happens, including regenerating and committing visual-regression baselines/reports and production-monitor reports. `master` only ever receives a merge *from* `development` — never the reverse, and never its own independent commits — so the two branches don't end up with parallel, differently-hashed copies of the same change (baseline PNGs and reports are binary/generated, so that kind of drift can't be merged away cleanly). A hotfix genuinely needed on `master` still has to land on `development` first (or get cherry-picked back immediately), otherwise this guarantee breaks and the branches diverge again.
 
+**Exception: the Production Update workflow's bot commits.** `.github/workflows/production-update.yml` commits refreshed `src/vendor/` assets directly to `master`. That's allowed. Bring those commits back with `git checkout development && git pull && git merge origin/master` before the next `development` → `master` merge, so the two branches don't carry diverging copies of those generated files. This exception covers only that workflow's commits. Human commits (including `reports/production-monitor/`) still go to `development` first.
+
 A tracked pre-commit hook enforces this locally: it blocks a plain `git commit` while `master` is checked out (a merge commit — `git merge development` — is let through). One-time setup per clone, since `.git/hooks/` itself isn't tracked by git:
 
 ```bash
