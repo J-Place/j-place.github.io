@@ -6,12 +6,21 @@ Static prototype site for U.S. Masters Swimming, built with Eleventy (Nunjucks t
 
 ```bash
 npm run dev              # dev server at http://localhost:8080
-npm run build            # build to _site/
+npm run build            # build to _site/, then check-asset-hosts (postbuild)
+npm run check:asset-hosts   # rerun just the dead-host check against _site/
 npm run test:visual      # Playwright visual regression — manual only, see below
 npm run test:visual:update  # accept new baselines
 npm run test:visual:report  # open the HTML diff viewer for the last run
 ```
 
+
+## Dead Asset Host Check
+
+`npm run build` runs `scripts/check-asset-hosts.js` afterwards (npm `postbuild`), so it also runs in both deploy workflows. It collects every external host the built `_site/` loads resources from (`src`/`srcset`/`<link href>`/CSS `url()` in `.html` and `.css` files; plain `<a href>` links and JS files aren't scanned) and **fails the build** if any no longer resolves in DNS. It only checks DNS, not per-URL 200s. Added after `usms-cdn.azureedge.net` died on 2026-10-08 unnoticed except where a visual-regression screenshot happened to include a broken image.
+
+- Offline or flaky DNS doesn't fail it: if `www.usms.org` itself won't resolve, the check is skipped, and any lookup error other than `ENOTFOUND` is a warning only.
+- Dead hosts that can't be fixed locally are acknowledged in `scripts/asset-hosts-known-dead.json`, **scoped to `_site/` path prefixes**: currently `usms-cdn.azureedge.net` and `usms-test-cdn.azureedge.net` in vendored production CSS (`vendor/css/`, rules overridden in `src/css/`) and legacy Sergey output (`public/` and its passthrough-copied CSS). A new reference to an acknowledged host outside those paths still fails. `public/college-club/` is deliberately not acknowledged, since it's edited directly.
+- When it fails: point the reference at a live host (for USMS media, `www-usms-hhgdctfafngha6hr.z01.azurefd.net`, same paths). Only add an acknowledgment if the file can't be fixed locally.
 
 ## NEVER EVER DO
 
