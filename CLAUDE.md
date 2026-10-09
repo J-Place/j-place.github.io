@@ -8,6 +8,7 @@ Static prototype site for U.S. Masters Swimming, built with Eleventy (Nunjucks t
 npm run dev              # dev server at http://localhost:8080
 npm run build            # build to _site/, then check-asset-hosts (postbuild)
 npm run check:asset-hosts   # rerun just the dead-host check against _site/
+npm run check:overrides  # list local CSS rules production now duplicates (see Override Lifecycle)
 npm run test:visual      # Playwright visual regression — manual only, see below
 npm run test:visual:update  # accept new baselines
 npm run test:visual:report  # open the HTML diff viewer for the last run
@@ -280,6 +281,19 @@ git config core.hooksPath .githooks
 ```
 
 Forgot to switch and need to override anyway: `git commit --no-verify`.
+
+## Override Lifecycle
+
+Local overrides in `src/css/` hold two kinds of rules: **fixes** (closing a gap between the mockup and production) and **enhancements** (intentional improvements waiting on dev handoff). Once production ships one, the vendored bundle picks it up on the next `vendor:refresh` and the local rule becomes dead code. Retire it on `development` and merge up like any other change. Don't split the branches by content (e.g. a `master` with overrides removed). A file deleted on only one branch either comes back or conflicts on every `development` → `master` merge.
+
+**Retire, don't delete, and do it one file at a time.** Keeping the code makes it easy to bring back for a later fix or enhancement:
+- **Whole file duplicated:** `git mv x.css x.retired.css`, add a `RETIRED <date>` header that names the production bundle, the vendored version and how to restore it, and replace its `<link>` with a Nunjucks `{# Retired ... #}` note.
+- **Some rules in a live file duplicated:** comment out just those rules in place, under a `RETIRED <date>` note. A comment can't contain another comment, so remove or rewrite any `/* */` inside the rule first.
+
+- `npm run check:overrides` (needs a current `npm run build`) lists local rules whose selector and declarations the vendored production CSS now already contains. It only counts bundles loaded on every page that loads the local file, and it also lists local CSS files no built page loads. `--partial` adds rules where only some declarations are duplicated. The command reports only and never edits.
+- Run it after each Production Update, once you've merged `origin/master` back into `development`.
+- A match is a candidate, not proof. Retire it, then run the full visual suite against localhost (`PW_BASE_URL=http://localhost:8080`). An unchanged baseline confirms production absorbed the rule.
+- When writing an override, say in its source comment whether it's a fix or an enhancement and cite the production file and line (see "Building Production Page Mockups" rule 5), so whoever retires it knows what it was for.
 
 ## Deployment
 
