@@ -1,0 +1,22 @@
+<!-- No production analog: in-page variant of the full-width Related Articles band
+     (partials/PageContent/RelatedContent.njk). Reads the same relatedArticles frontmatter,
+     rendered as stacked rows (thumbnail, title, author) inside the article column,
+     placed after the first .include-in-nav RTE. -->
+<aside class="related-in-page" aria-labelledby="related-in-page-title">
+  <h2 class="related-in-page__title" id="related-in-page-title">{{ relatedInPageTitle | default("Related Articles") }}</h2>
+  <ul class="related-in-page__list">
+    {% for article in relatedArticles %}
+    <li class="related-in-page__item">
+      <a class="related-in-page__link" href="{{ article.url }}">
+        <span class="related-in-page__image-container">
+          <img class="related-in-page__image" src="{{ article.imageUrl }}" alt="" loading="lazy">
+        </span>
+        <span class="related-in-page__detail">
+          <span class="related-in-page__item-title">{{ article.title }}</span>
+          <span class="related-in-page__author">{{ article.authorName }}</span>
+        </span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</aside>

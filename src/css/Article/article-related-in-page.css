@@ -1,0 +1,91 @@
+/* Box (padding, radius, font sizes) matches .key-points (article-key-points.css).
+   No production analog: in-page, stacked-row variant of the Related Articles band
+   (partials/PageContent/RelatedContent.njk). See ArticleRelatedInPage.njk. */
+
+.related-in-page {
+  margin: 3rem 0;
+  padding: 2rem 4rem 1rem 3rem;
+  border-radius: 0 60px 60px 0;
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.related-in-page__title {
+  margin-top: 0;
+  margin-bottom: 2rem;
+  font-size: 3rem;
+  color: #555;
+}
+
+.related-in-page__list {
+  margin: -0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.related-in-page__item + .related-in-page__item {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.related-in-page__link {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 1.25rem 0;
+  text-decoration: none;
+}
+
+.related-in-page__link:hover,
+.related-in-page__link:focus {
+  text-decoration: none;
+}
+
+.related-in-page__link:hover .related-in-page__item-title,
+.related-in-page__link:focus .related-in-page__item-title {
+  text-decoration: underline;
+}
+
+.related-in-page__image-container {
+  flex: 0 0 6rem;
+  width: 6rem;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background-color: rgb(231, 245, 255);
+}
+
+.related-in-page__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.related-in-page__detail {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.related-in-page__item-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #333;
+}
+
+.related-in-page__author {
+  /* margin-top: 0.5rem; */
+  font-size: 1.4rem;
+  line-height: 1.2;
+  color: #555;
+}
+
+@media (max-width: 767px) {
+  .related-in-page {
+    padding: 2rem 3rem 3rem 2rem;
+  }
+
+  .related-in-page__image-container {
+    flex-basis: 5.4rem;
+    width: 5.4rem;
+  }
+}
