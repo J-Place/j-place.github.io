@@ -5,7 +5,8 @@
      accordion__sm matches the size class used on production's own FAQ-style accordion, e.g.
      https://www.usms.org/events/national-championships/pool-national-championships. JS behavior
      (openAccordion/closeAccordion/handleAccordionClick, single-open-at-a-time within the frame)
-     is ported verbatim in src/js/lib/accordion.js. -->
+     is ported verbatim in src/js/lib/accordion.js. Set faqFirstOpen = true before including to open
+     the first item on load (production's AccordionFrame "First To Open" field -> #firstToOpen = 1). -->
 <div class="html-container include-in-nav">
   <h2 id="{{ faqHeadingId | default('FrequentlyAskedQuestions') }}">{{ faqTitle | default("Frequently Asked Questions") }}</h2>
 </div>
@@ -27,5 +28,5 @@
     </div>
   </div>
   {% endfor %}
-  <input type="hidden" name="firstToOpen" id="firstToOpen" value="" />
+  <input type="hidden" name="firstToOpen" id="firstToOpen" value="{{ "1" if faqFirstOpen }}" />
 </div>

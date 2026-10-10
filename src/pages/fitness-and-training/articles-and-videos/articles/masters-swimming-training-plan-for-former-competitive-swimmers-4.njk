@@ -89,13 +89,13 @@ relatedArticles:
           <p>Even if you're out of shape and your former fitness level seems stuck in your bygone era, rest assured, muscle memory is a real thing and with some consistent effort and a slow, steady ramp up, you can get back into great swimming shape.</p>
         </div>
 
-        {% include "partials/Article/ArticleRelatedInPage.njk" %}
-
         <div class="html-container include-in-nav">
           <h2>Respect your current fitness situation</h2>
           <p>It's true that your former glory days may be well behind you. Our bodies change with age, and even if you've been keeping fit with other activities or sports, for many folks, time erodes their ability to achieve their previous peak times.</p>
           <p>But there's more good news here: Masters Swimming divides competition into five-year age groups so you're competing directly against others who are the same age. This gives you a fighting chance to <a href="/Global/Links/Header/Events/Calendar of Events">win races</a> even if it's been a long time since you last competed.</p>
         </div>
+
+        {% include "partials/Article/ArticleRelatedInPage.njk" %}
 
         <div class="html-container include-in-nav">
           <h2>Ramp up slowly to avoid injury</h2>
@@ -127,6 +127,7 @@ relatedArticles:
           <p>For many former competitive swimmers, reestablishing that routine can feel like a rolling back of the clock and you may be tempted to give into the grind and push too hard, too fast. That's also normal, but one of the wonderful things you've done along your journey is develop interests and knowledge outside of the pool. Look to your other life experiences to help you find the balance that works for you to keep you swimming well for years to come.</p>
         </div>
 
+        {% set faqFirstOpen = true %}
         {% include "partials/Article/ArticleFaq.njk" %}
 
         {% include "partials/Article/ArticleAboutAuthor.njk" %}
@@ -142,6 +143,9 @@ relatedArticles:
   </div>
 </section>
 
-{# Replaced by the in-page Related Articles (ArticleRelatedInPage.njk) after the first RTE.
+{# Full-width ad below the author bio: its own Sitecore section/container/row rendering, same as home and membership-comparison. #}
+{% include "partials/Advertising/Ad.njk" %}
+
+{# Replaced by the in-page Related Articles (ArticleRelatedInPage.njk) after the second RTE.
 {% include "partials/PageContent/RelatedContent.njk" %} #}
 {% endblock %}

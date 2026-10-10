@@ -1,0 +1,12 @@
+/* Overrides for production/src/App/pages/Home.css (compiled into usms.min.css/common.min.css).
+   Lives under pages/ (mirroring production's App/pages/) rather than Home/, because
+   src/css/Home/home.css already exists and is unrelated home-page CSS. */
+
+/* Enhancement: darker article dividers. production/src/App/pages/Home.css:90 sets
+   hr { border-top: 1px solid #ccc }, but vendored bootstrap.min.css's hr { opacity: .25 }
+   still applies on top of it, so in-article <hr>s render almost invisible. Scoped to
+   article body content; loaded by layouts/article4.njk. */
+.article-page hr {
+  border-top-color: #999;
+  opacity: 1;
+}

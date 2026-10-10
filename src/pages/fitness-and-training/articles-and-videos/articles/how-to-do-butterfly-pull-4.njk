@@ -88,8 +88,6 @@ relatedArticles:
           <p>A great butterfly starts with setting up your stroke, which requires you to get as much of your forearm facing backward as possible prior to pulling. Because of the lack of body rotation in butterfly, you'll have to get your arms wider than you would in freestyle &mdash; a little wider than shoulder-width apart is a good target.</p>
         </div>
 
-        {% include "partials/Article/ArticleRelatedInPage.njk" %}
-
         <div class="image-rendering image-left">
           <a>
             <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/ldm01852.jpg?h=1333&w=2000&rev=22b3261b075f4d60b4675e941a74e807&hash=D256C41B759A0DC4E06BEA7E5A4A3B52" alt="LDM01852" width="2000" height="1333" />
@@ -103,6 +101,8 @@ relatedArticles:
           <h3 id="ApplyPressureBackward">Apply Pressure Backward</h3>
           <p>Once you're in position, accelerate your arms backward to accelerate yourself forward. The challenge is that using both arms at the same time without body rotation requires a lot of strength and skill &mdash; you have to accelerate hard while keeping your arms facing backward, all without letting your pulling position collapse.</p>
         </div>
+
+        {% include "partials/Article/ArticleRelatedInPage.njk" %}
 
         <div class="image-rendering image-left">
           <a>
@@ -194,6 +194,7 @@ relatedArticles:
           <p class="image-credit">Image: Mike Lewis/@Mike2Swim</p>
         </div>
 
+        {% set faqFirstOpen = true %}
         {% include "partials/Article/ArticleFaq.njk" %}
 
         {% include "partials/Article/ArticleAboutAuthor.njk" %}
@@ -209,6 +210,9 @@ relatedArticles:
   </div>
 </section>
 
-{# Replaced by the in-page Related Articles (ArticleRelatedInPage.njk) after the first RTE.
+{# Full-width ad below the author bio: its own Sitecore section/container/row rendering, same as home and membership-comparison. #}
+{% include "partials/Advertising/Ad.njk" %}
+
+{# Replaced by the in-page Related Articles (ArticleRelatedInPage.njk) after the second RTE.
 {% include "partials/PageContent/RelatedContent.njk" %} #}
 {% endblock %}
