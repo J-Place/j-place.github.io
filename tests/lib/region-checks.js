@@ -36,9 +36,11 @@
 // in ResultsContentArticles.njk) are all 100% deterministic (0 differing
 // pixels) on the mockup suite — a real layout break there was passing
 // silently. An entry's optional `suites` array restricts which suite(s) it
-// applies to; omitted means both. `.personalize` and `.latest-content__container`
-// stay masked on both suites — real diff evidence exists for both on our own
-// mockup's home page (Item 10's scan, and a fresh confirming scan run here).
+// applies to; omitted means both. `.latest-content__container` stays masked
+// on both suites — real diff evidence exists on our own mockup's home page
+// (Item 10's scan, and a fresh confirming scan run here). `.personalize` was
+// masked on both too, and was removed from this catalog (2026-10-09) so the
+// home page's CTA cards are pixel-compared on both suites.
 // `.advertising-dc` and the map selectors stay masked on both too, on the
 // more conservative side: not enough evidence gathered yet to confirm they're
 // deterministic on the mockup suite everywhere they appear, unlike the three
@@ -62,11 +64,6 @@ module.exports = [
     selector: '#club-detail-map, .club-map-new, .club-map-new-container',
     fingerprint: false, // permanently mask-only — see file header
     reason: "Google's own live map tiles, rendered inside an iframe we don't control.",
-  },
-  {
-    selector: '.personalize',
-    fingerprint: false, // needs a case-by-case look before promoting — see Item 9 in the plan
-    reason: 'Varies by guest/member state — unclear yet whether it renders a structurally stable component with varying content, or genuinely different component shapes per segment. Left mask-only until checked; do not assume either way.',
   },
   // NOTE: .carousel-container / .carousel is deliberately NOT in this shared
   // catalog. Found the hard way (2026-09-22): screenshots.spec.js already has

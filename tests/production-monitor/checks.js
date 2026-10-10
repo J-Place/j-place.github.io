@@ -61,10 +61,9 @@ module.exports = [
     //                           height), so masking it left the real grid, 807px of
     //                           it, fully exposed and unmasked. __container is the
     //                           child that actually wraps the visible cards.
-    // .personalize              personalized CTA module — varies by guest/member state
     // .advertising-dc           Google-Publisher-Tag ad slots (2 on this page) — creative
     //                           rotates every load, not something we serve/control
-    mask: ['.carousel-container', '.image-slider', '.latest-content__container', '.personalize', '.advertising-dc'],
+    mask: ['.carousel-container', '.image-slider', '.latest-content__container', '.advertising-dc'],
     // The Latest grid's height follows whichever articles are featured
     // (measured 2026-10-09: 764–807px Desktop, 2345–2367px Mobile), shifting
     // everything below it — pinned larger than any measured load.
@@ -76,13 +75,11 @@ module.exports = [
     //   .image-slider__container            partner-logo strip's track
     //   .latest-content-event__image-container  the one always-present featured item
     //   .latest-content__article            the regular grid of article cards (5 today)
-    //   .personalize__content-column        the personalized CTA's content column(s)
     presence: [
       { selector: '.carousel__slide', min: 1 },
       { selector: '.image-slider__container', min: 1 },
       { selector: '.latest-content-event__image-container', min: 1 },
       { selector: '.latest-content__article', min: 1 },
-      { selector: '.personalize__content-column', min: 1 },
     ],
   },
   {
