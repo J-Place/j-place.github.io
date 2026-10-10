@@ -43,8 +43,13 @@ const VENDOR_DIR = path.join(ROOT, 'src/vendor/css');
 const SITE_DIR = path.join(ROOT, '_site');
 const SHOW_PARTIAL = process.argv.includes('--partial');
 
-// Tooling pages for this repo, not production overrides
-const SKIP_LOCAL = new Set(['visual-regression-gallery.css', 'visual-regression-viewer.css']);
+// Not overrides: tooling pages for this repo, and production's own content-authored <style>
+// block copied verbatim (it duplicates production bundles on purpose, same as on www.usms.org)
+const SKIP_LOCAL = new Set([
+  'visual-regression-gallery.css',
+  'visual-regression-viewer.css',
+  'home-page-content-styles.css',
+]);
 
 function listCss(dir) {
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap(entry => {
