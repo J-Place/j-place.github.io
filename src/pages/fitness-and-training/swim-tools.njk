@@ -1,0 +1,85 @@
+---
+permalink: /fitness-and-training/swim-tools/index.html
+title: Swim Tools | U.S. Masters Swimming
+pageTitle: Swim Tools
+breadcrumbs:
+  - url: "/home"
+    label: "Home"
+  - url: "/fitness-and-training/articles-and-videos/index.html"
+    label: "Fitness and Training"
+groups:
+  - id: training
+    title: Training & Fitness
+    tools:
+      - { id: pace, icon: fa-stopwatch, title: Pace Calculator }
+      - { id: calories, icon: fa-fire, title: Calorie Burn }
+  - id: racing
+    title: Race Planning
+    tools:
+      - { id: race-predictor, icon: fa-chart-line, title: Race Time Predictor }
+      - { id: race-splits, icon: fa-list-ol, title: Race Split Calculator }
+  - id: conversions
+    title: Time Conversions
+    tools:
+      - { id: course-conversion, icon: fa-right-left, title: Course Conversion }
+      - { id: age-conversion, icon: fa-hourglass-half, title: Age Conversion }
+---
+{% extends "layouts/article.njk" %}
+{% block pageCSS %}
+<link rel="stylesheet" href="/css/pages/swim-tools.css">
+{% endblock %}
+{% block pageJS %}
+<script src="/js/swim-tools.js" defer></script>
+{% endblock %}
+{% block content %}
+<section class="section section-full">
+  <div class="usms-container p-tb-10">
+    <div class="row">
+      <div class="col-xs-12">
+        <h1 class="swim-tools__title">Swim Tools</h1>
+        <p class="swim-tools__intro">Calculators for training, racing, and tracking your swimming.</p>
+        <nav class="swim-tools__jump" aria-label="Jump to a tool">
+          {% for g in groups %}
+          <div class="swim-tools__jump-group">
+            <a class="swim-tools__jump-heading" href="#{{ g.id }}">{{ g.title }}</a>
+            {% for t in g.tools %}
+            <a class="swim-tools__jump-link" href="#{{ t.id }}"><i class="fa-solid {{ t.icon }}" aria-hidden="true"></i> {{ t.title }}</a>
+            {% endfor %}
+          </div>
+          {% endfor %}
+        </nav>
+      </div>
+    </div>
+
+    {# Filled by swim-tools.js when a tool is pinned; hidden while empty #}
+    <div class="swim-tools__group swim-tools__pinned" id="pinned" hidden>
+      <header class="swim-tools__group-header">
+        <h2 class="swim-tools__group-title">Pinned</h2>
+      </header>
+      <div class="row swim-tools__grid" data-pinned-grid></div>
+    </div>
+
+    {% for g in groups %}
+    <div class="swim-tools__group" id="{{ g.id }}">
+      <header class="swim-tools__group-header">
+        <h2 class="swim-tools__group-title">{{ g.title }}</h2>
+      </header>
+      <div class="row swim-tools__grid">
+        {% if g.id == "training" %}
+          <div class="col-xs-12 col-md-4 swim-tools__cell">{% include "partials/SwimTools/Pace.njk" %}</div>
+          <div class="col-xs-12 col-md-8 swim-tools__cell">{% include "partials/SwimTools/Calories.njk" %}</div>
+        {% elif g.id == "racing" %}
+          <div class="col-xs-12 col-md-5 swim-tools__cell">{% include "partials/SwimTools/RacePredictor.njk" %}</div>
+          <div class="col-xs-12 col-md-7 swim-tools__cell">{% include "partials/SwimTools/RaceSplits.njk" %}</div>
+        {% elif g.id == "conversions" %}
+          <div class="col-xs-12 col-md-7 swim-tools__cell">{% include "partials/SwimTools/CourseConversion.njk" %}</div>
+          <div class="col-xs-12 col-md-5 swim-tools__cell">{% include "partials/SwimTools/AgeConversion.njk" %}</div>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+
+    <p class="swim-tools__disclaimer">Results are estimates. Values shown are sample data.</p>
+  </div>
+</section>
+{% endblock %}

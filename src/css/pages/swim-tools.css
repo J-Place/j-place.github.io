@@ -1,0 +1,683 @@
+/* Swim Tools dashboard. New page, no production source to mirror yet.
+   All inputs and results are static mock data until each widget's
+   behavior is specced. */
+
+.swim-tools__title {
+  margin: 0 0 8px;
+}
+
+.swim-tools__intro {
+  margin: 0 0 20px;
+  font-size: 18px;
+}
+
+/* ---------- Jump nav, grouped ---------- */
+
+/* One column per group: heading on top, its pills wrap beneath it. */
+.swim-tools__jump {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px 32px;
+  margin-bottom: 30px;
+  padding: 16px 20px;
+  border-radius: 8px;
+  background: #f5f8fb;
+}
+
+@media (max-width: 767px) {
+  .swim-tools__jump {
+    grid-template-columns: 1fr;
+  }
+}
+
+.swim-tools__jump-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 6px 8px;
+}
+
+.swim-tools__jump-heading {
+  flex: 0 0 100%;
+  color: #262627;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.swim-tools__jump-link {
+  padding: 4px 10px;
+  border: 1px solid #cacccd;
+  border-radius: 20px;
+  background: #fff;
+  color: #0068ad;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.swim-tools__jump-heading:hover,
+.swim-tools__jump-link:hover,
+.swim-tools__jump-link:focus {
+  border-color: #0068ad;
+  text-decoration: none;
+}
+
+/* ---------- Groups ---------- */
+
+.swim-tools__group {
+  margin-bottom: 20px;
+  scroll-margin-top: 20px;
+}
+
+.swim-tools__group-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 16px;
+  margin-bottom: 16px;
+}
+
+.swim-tools__group-title {
+  margin: 0;
+  font-size: 26px;
+}
+
+/* A group whose tools are all pinned has nothing left to show */
+.swim-tools__group:not(.swim-tools__pinned):not(:has(.swim-tools__cell)) {
+  display: none;
+}
+
+/* BS3 floats can't stretch, so the row flexes to give equal-height cards. */
+.swim-tools__grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.swim-tools__cell {
+  display: flex;
+  margin-bottom: 30px;
+}
+
+.swim-tools__disclaimer {
+  color: #595959;
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* ---------- Base card ---------- */
+
+.swim-widget {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 20px;
+  border-radius: 8px;
+  /* Same light blue as the article v4 key points block (Article/article-key-points.css) */
+  background: rgb(231, 245, 255);
+  overflow: hidden; /* clip full-bleed header band and side panel to the radius */
+  scroll-margin-top: 20px;
+}
+
+.swim-widget__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+/* Minimize/expand control, first item in the header (swim-tools.js) */
+.swim-widget__toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-left: -6px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.swim-widget__toggle:hover,
+.swim-widget__toggle:focus-visible {
+  background: #fff;
+}
+
+/* Pin control, right of the collapse toggle (swim-tools.js). Solid fill
+   with a 2px stroke, H1 blue, in both states. */
+.swim-widget__pin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-left: -8px; /* sit closer to the collapse arrow than the header gap */
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.swim-widget__pin:hover,
+.swim-widget__pin:focus-visible,
+.swim-widget.is-pinned .swim-widget__pin {
+  background: #fff;
+}
+
+.swim-widget__pin-icon {
+  width: 16.9px; /* 2px narrower than tall; SVG uses preserveAspectRatio="none" */
+  height: 18.9px;
+  transform: translateY(2px); /* optical centering within the hover circle */
+  fill: #0068ad;
+  stroke: #0068ad;
+  stroke-width: 2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  overflow: visible;
+}
+
+/* Keep the stroke an exact 2px although the 24-unit viewBox is drawn at 16.9 x 18.9px */
+.swim-widget__pin-icon path {
+  vector-effect: non-scaling-stroke;
+}
+
+/* Drag handle, right of the pin (swim-tools.js). Same box and icon size as
+   the pin, 2px stroke, H1 blue. Reorders within the card's own section. */
+.swim-widget__move {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-left: -8px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: grab;
+  touch-action: none;
+}
+
+.swim-widget__move:hover,
+.swim-widget__move:focus-visible {
+  background: #fff;
+}
+
+.swim-widget__move-icon {
+  width: 18.9px;
+  height: 18.9px;
+  fill: none;
+  stroke: #0068ad;
+  stroke-width: 2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  overflow: visible;
+}
+
+.swim-widget__move-icon path {
+  vector-effect: non-scaling-stroke;
+}
+
+.swim-tools--dragging,
+.swim-tools--dragging .swim-widget__move {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.swim-tools__cell.is-dragging .swim-widget {
+  opacity: 0.6;
+  outline: 2px dashed #0068ad;
+  outline-offset: -2px;
+}
+
+/* CSS chevron so the stroke is an exact 3px (a Font Awesome glyph can't be
+   stroked); same blue as the page H1. Points down when open. */
+.swim-widget__chevron {
+  width: 10px;
+  height: 10px;
+  margin-top: -4px;
+  border-right: 3px solid #0068ad;
+  border-bottom: 3px solid #0068ad;
+  transform: rotate(45deg);
+  transition: transform 0.2s, margin 0.2s;
+}
+
+.swim-widget.is-collapsed .swim-widget__chevron {
+  margin-top: 0;
+  margin-left: -4px;
+  transform: rotate(-45deg);
+}
+
+/* Collapsed: only the header row stays visible */
+.swim-widget.is-collapsed > :not(.swim-widget__header):not(.swim-widget__main),
+.swim-widget.is-collapsed .swim-widget__main > :not(.swim-widget__header) {
+  display: none;
+}
+
+.swim-widget.is-collapsed .swim-widget__header {
+  margin-bottom: 0;
+}
+
+/* A collapsed card shouldn't stretch to its row neighbour's height */
+.swim-tools__cell:has(> .is-collapsed) {
+  align-items: flex-start;
+}
+
+.swim-widget__icon {
+  color: #0068ad;
+  font-size: 20px;
+}
+
+.swim-widget__title {
+  margin: 0;
+  font-size: 20px;
+}
+
+.swim-widget__form .form-group {
+  margin-bottom: 12px;
+}
+
+.swim-widget__form label,
+.swim-label {
+  display: block;
+  margin-bottom: 4px;
+  color: #262627;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* One control height for inputs and selects. 44px is production's select
+   height (usms.min.css, WebKit-only rule: select, select.form-control
+   { height: 44px }); text inputs otherwise render at 34px. Set on every
+   .form-control here so Firefox, which skips that rule, matches too. */
+.swim-widget .form-control {
+  height: 44px;
+}
+
+.swim-field-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 12px;
+}
+
+.swim-field-row > .form-group {
+  flex: 1 1 120px;
+}
+
+.swim-field-row > .swim-field--narrow {
+  flex: 0 0 72px;
+}
+
+/* Stand-alone unit select that follows its number field */
+.swim-field-row > .swim-field--unit {
+  flex: 0 0 80px;
+}
+
+/* ---------- Segmented control + chips ---------- */
+
+.swim-seg {
+  display: inline-flex;
+  margin-bottom: 12px;
+  border: 1px solid #0068ad;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.swim-seg__btn {
+  padding: 6px 12px;
+  border: 0;
+  border-left: 1px solid #0068ad;
+  background: #fff;
+  color: #0068ad;
+  font-size: 13px;
+}
+
+.swim-seg__btn:first-child {
+  border-left: 0;
+}
+
+.swim-seg__btn.is-active {
+  background: #0068ad;
+  color: #fff;
+}
+
+.swim-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.swim-chip {
+  padding: 6px 14px;
+  border: 1px solid #cacccd;
+  border-radius: 20px;
+  background: #fff;
+  color: #262627;
+  font-size: 13px;
+}
+
+.swim-chip.is-active {
+  border-color: #0068ad;
+  background: #fff;
+  color: #0068ad;
+  font-weight: 700;
+}
+
+/* ---------- Result patterns ---------- */
+
+.swim-result__value {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.swim-result__label {
+  font-size: 14px;
+}
+
+/* Pace: one-line answer under the form */
+.swim-result--inline {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 2px solid #fff;
+  color: #0068ad;
+}
+
+/* Calories: big number in a solid side panel */
+.swim-result--hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #0068ad;
+  color: #fff;
+  text-align: center;
+}
+
+.swim-result--hero .swim-result__value {
+  font-size: 56px;
+}
+
+.swim-result--hero .swim-result__label {
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.swim-result__meta {
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+/* ---------- Variant: compact (Pace) ---------- */
+
+/* Don't stretch to the taller neighbour; this card stays short. */
+.swim-tools__cell:has(> .swim-widget--compact) {
+  align-items: flex-start;
+}
+
+.swim-widget--compact .swim-widget__header {
+  margin-bottom: 12px;
+}
+
+/* Narrow card: let Distance · Unit · Time share one row */
+.swim-widget--compact .swim-field-row > .form-group:not(.swim-field--unit) {
+  flex-basis: 80px;
+}
+
+/* ---------- Variant: split (Calories) ---------- */
+
+.swim-widget--split {
+  flex-direction: row;
+  padding: 0;
+}
+
+.swim-widget__main {
+  flex: 1 1 auto;
+  padding: 20px;
+}
+
+.swim-widget__side {
+  flex: 0 0 200px;
+  padding: 20px;
+}
+
+@media (max-width: 767px) {
+  .swim-widget--split {
+    flex-direction: column;
+  }
+
+  .swim-widget__side {
+    flex-basis: auto;
+  }
+}
+
+/* ---------- Race Predictor: known times + prediction table ---------- */
+
+.swim-known {
+  margin-bottom: 12px;
+}
+
+.swim-known__row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.swim-known__row select.form-control {
+  flex: 0 0 90px;
+}
+
+.swim-icon-btn {
+  flex: 0 0 34px;
+  border: 0;
+  background: none;
+  color: #afafaf;
+}
+
+.swim-icon-btn:hover {
+  color: #d2202e;
+}
+
+.swim-add {
+  padding: 0;
+  font-size: 13px;
+}
+
+.swim-table {
+  width: 100%;
+  font-variant-numeric: tabular-nums;
+}
+
+.swim-table caption {
+  padding: 0;
+}
+
+.swim-table th {
+  padding: 6px 8px;
+  border-bottom: 2px solid #fff;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.swim-table td {
+  padding: 8px;
+  border-bottom: 2px solid #fff;
+}
+
+.swim-table .is-known td {
+  color: #595959;
+}
+
+.swim-table .is-highlight td {
+  background: #fff;
+  color: #0068ad;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.swim-tag {
+  margin-left: 6px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  background: #e3e5e6;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+/* ---------- Race Splits: bar rows ---------- */
+
+.swim-splits {
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.swim-splits__row {
+  display: grid;
+  grid-template-columns: 40px 1fr 64px 72px;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 2px solid #fff;
+}
+
+.swim-splits__n {
+  color: #595959;
+  font-size: 13px;
+}
+
+.swim-splits__bar {
+  height: 10px;
+  border-radius: 5px;
+  background: #e3e5e6;
+}
+
+.swim-splits__bar > span {
+  display: block;
+  height: 100%;
+  border-radius: 5px;
+  background: #0068ad;
+}
+
+.swim-splits__split {
+  font-size: 18px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.swim-splits__cum {
+  color: #595959;
+  text-align: right;
+}
+
+/* ---------- Course Conversion: three tiles ---------- */
+
+/* The tiles double as the "swum in" picker: the pressed tile is the
+   course the entered time came from, the other two are conversions. */
+.swim-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.swim-tile {
+  display: flex;
+  flex-direction: column;
+  padding: 14px;
+  border: 2px solid #fff;
+  border-radius: 6px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: center;
+}
+
+.swim-tile:hover {
+  border-color: #0068ad;
+}
+
+.swim-tile.is-source {
+  background: #fff;
+  color: #595959;
+}
+
+.swim-tile__flag {
+  margin-top: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.swim-tile__course {
+  color: #0068ad;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.swim-tile.is-source .swim-tile__course {
+  color: inherit;
+}
+
+.swim-tile__name {
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+
+.swim-tile__time {
+  font-size: 24px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 479px) {
+  .swim-tiles {
+    grid-template-columns: 1fr;
+  }
+
+  .swim-tile {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 10px;
+    text-align: left;
+  }
+
+  .swim-tile__name {
+    flex: 1;
+    margin: 0;
+  }
+}
+
+/* ---------- Age Conversion: age ladder ---------- */
+
+.swim-ladder {
+  margin: auto 0 0;
+  padding: 0;
+  list-style: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.swim-ladder__row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 2px solid #fff;
+}
+
+.swim-ladder__row.is-current {
+  background: #0068ad;
+  color: #fff;
+  font-weight: 700;
+}
+
+.swim-ladder__time {
+  font-weight: 700;
+}

@@ -1,0 +1,59 @@
+{% set splits = [
+  { n: 1, split: "30.20", cum: "30.20", pct: 94 },
+  { n: 2, split: "31.80", cum: "1:02.00", pct: 99 },
+  { n: 3, split: "32.00", cum: "1:34.00", pct: 100 },
+  { n: 4, split: "32.00", cum: "2:06.00", pct: 100 }
+] %}
+<article class="swim-widget" id="race-splits">
+  <header class="swim-widget__header">
+    <button type="button" class="swim-widget__toggle" aria-expanded="true" aria-label="Minimize"><span class="swim-widget__chevron" aria-hidden="true"></span></button>
+    <button type="button" class="swim-widget__pin" aria-pressed="false" aria-label="Pin to top"><svg class="swim-widget__pin-icon" viewBox="0 0 24 24" preserveAspectRatio="none" aria-hidden="true"><path d="M7 3h10M8.5 3v6.5L5 14h14l-3.5-4.5V3M12 14v7"/></svg></button>
+    <button type="button" class="swim-widget__move" aria-label="Reorder"><svg class="swim-widget__move-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M3 12h18M9 6l3-3 3 3M9 18l3 3 3-3M6 9l-3 3 3 3M18 9l3 3-3 3"/></svg></button>
+    <i class="fa-solid fa-list-ol swim-widget__icon" aria-hidden="true"></i>
+    <h3 class="swim-widget__title">Race Split Calculator</h3>
+  </header>
+  <form class="swim-widget__form">
+    <div class="swim-field-row">
+      <div class="form-group">
+        <label for="split-event">Event</label>
+        <select class="form-control" id="split-event"><option selected>200 Free</option></select>
+      </div>
+      <div class="form-group">
+        <label for="split-course">Course</label>
+        <select class="form-control" id="split-course"><option selected>SCY</option><option>SCM</option><option>LCM</option></select>
+      </div>
+      <div class="form-group">
+        <label for="split-goal">Goal time</label>
+        <input type="text" class="form-control" id="split-goal" value="2:06.00">
+      </div>
+    </div>
+    <div class="swim-field-row">
+      <div class="form-group">
+        <span class="swim-label">Strategy</span>
+        <div class="swim-seg" role="group" aria-label="Strategy">
+          <button type="button" class="swim-seg__btn" aria-pressed="false">Even</button>
+          <button type="button" class="swim-seg__btn is-active" aria-pressed="true">Fast start</button>
+          <button type="button" class="swim-seg__btn" aria-pressed="false">Negative</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <span class="swim-label">Split every</span>
+        <div class="swim-seg" role="group" aria-label="Split interval">
+          <button type="button" class="swim-seg__btn" aria-pressed="false">25</button>
+          <button type="button" class="swim-seg__btn is-active" aria-pressed="true">50</button>
+          <button type="button" class="swim-seg__btn" aria-pressed="false">100</button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <ol class="swim-splits">
+    {% for s in splits %}
+    <li class="swim-splits__row">
+      <span class="swim-splits__n">{{ s.n * 50 }}</span>
+      <span class="swim-splits__bar"><span style="width: {{ s.pct }}%"></span></span>
+      <span class="swim-splits__split">{{ s.split }}</span>
+      <span class="swim-splits__cum">{{ s.cum }}</span>
+    </li>
+    {% endfor %}
+  </ol>
+</article>

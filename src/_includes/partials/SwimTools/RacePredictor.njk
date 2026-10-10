@@ -1,0 +1,47 @@
+<article class="swim-widget" id="race-predictor">
+  <header class="swim-widget__header">
+    <button type="button" class="swim-widget__toggle" aria-expanded="true" aria-label="Minimize"><span class="swim-widget__chevron" aria-hidden="true"></span></button>
+    <button type="button" class="swim-widget__pin" aria-pressed="false" aria-label="Pin to top"><svg class="swim-widget__pin-icon" viewBox="0 0 24 24" preserveAspectRatio="none" aria-hidden="true"><path d="M7 3h10M8.5 3v6.5L5 14h14l-3.5-4.5V3M12 14v7"/></svg></button>
+    <button type="button" class="swim-widget__move" aria-label="Reorder"><svg class="swim-widget__move-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M3 12h18M9 6l3-3 3 3M9 18l3 3 3-3M6 9l-3 3 3 3M18 9l3 3-3 3"/></svg></button>
+    <i class="fa-solid fa-chart-line swim-widget__icon" aria-hidden="true"></i>
+    <h3 class="swim-widget__title">Race Time Predictor</h3>
+  </header>
+  <form class="swim-widget__form">
+    <div class="swim-field-row">
+      <div class="form-group">
+        <label for="pred-stroke">Stroke</label>
+        <select class="form-control" id="pred-stroke"><option selected>Freestyle</option><option>Backstroke</option><option>Breaststroke</option><option>Butterfly</option><option>IM</option></select>
+      </div>
+      <div class="form-group">
+        <label for="pred-course">Course</label>
+        <select class="form-control" id="pred-course"><option selected>SCY</option><option>SCM</option><option>LCM</option></select>
+      </div>
+    </div>
+    <span class="swim-label">Your recent times</span>
+    <div class="swim-known">
+      <div class="swim-known__row">
+        <select class="form-control" aria-label="Distance"><option selected>50</option></select>
+        <input type="text" class="form-control" aria-label="Time" value="27.80">
+        <button type="button" class="swim-icon-btn" aria-label="Remove"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="swim-known__row">
+        <select class="form-control" aria-label="Distance"><option selected>100</option></select>
+        <input type="text" class="form-control" aria-label="Time" value="1:00.50">
+        <button type="button" class="swim-icon-btn" aria-label="Remove"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <button type="button" class="btn btn-link swim-add"><i class="fa-solid fa-plus"></i> Add a time</button>
+    </div>
+  </form>
+  <table class="swim-table">
+    <caption class="swim-label">Predicted times</caption>
+    <thead><tr><th scope="col">Event</th><th scope="col" class="text-right">Time</th></tr></thead>
+    <tbody>
+      <tr class="is-known"><td>50 Free</td><td class="text-right">27.80 <span class="swim-tag">Yours</span></td></tr>
+      <tr class="is-known"><td>100 Free</td><td class="text-right">1:00.50 <span class="swim-tag">Yours</span></td></tr>
+      <tr class="is-highlight"><td>200 Free</td><td class="text-right">2:06.14</td></tr>
+      <tr><td>500 Free</td><td class="text-right">5:33.24</td></tr>
+      <tr><td>1000 Free</td><td class="text-right">11:34.52</td></tr>
+      <tr><td>1650 Free</td><td class="text-right">19:40.38</td></tr>
+    </tbody>
+  </table>
+</article>

@@ -1,0 +1,40 @@
+<article class="swim-widget" id="course-conversion">
+  <header class="swim-widget__header">
+    <button type="button" class="swim-widget__toggle" aria-expanded="true" aria-label="Minimize"><span class="swim-widget__chevron" aria-hidden="true"></span></button>
+    <button type="button" class="swim-widget__pin" aria-pressed="false" aria-label="Pin to top"><svg class="swim-widget__pin-icon" viewBox="0 0 24 24" preserveAspectRatio="none" aria-hidden="true"><path d="M7 3h10M8.5 3v6.5L5 14h14l-3.5-4.5V3M12 14v7"/></svg></button>
+    <button type="button" class="swim-widget__move" aria-label="Reorder"><svg class="swim-widget__move-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M3 12h18M9 6l3-3 3 3M9 18l3 3 3-3M6 9l-3 3 3 3M18 9l3 3-3 3"/></svg></button>
+    <i class="fa-solid fa-right-left swim-widget__icon" aria-hidden="true"></i>
+    <h3 class="swim-widget__title">Course Conversion</h3>
+  </header>
+  <form class="swim-widget__form">
+    <div class="swim-field-row">
+      <div class="form-group">
+        <label for="cc-event">Event</label>
+        <select class="form-control" id="cc-event"><option selected>100 Free</option></select>
+      </div>
+      <div class="form-group">
+        <label for="cc-time">Time</label>
+        <input type="text" class="form-control" id="cc-time" value="1:00.00">
+      </div>
+    </div>
+  </form>
+  <span class="swim-label" id="cc-source-label">Tap the course you swam it in</span>
+  <div class="swim-tiles" role="group" aria-labelledby="cc-source-label">
+    <button type="button" class="swim-tile is-source" aria-pressed="true">
+      <span class="swim-tile__course">SCY</span>
+      <span class="swim-tile__name">Short course yards</span>
+      <span class="swim-tile__time">1:00.00</span>
+      <span class="swim-tile__flag">Your time</span>
+    </button>
+    <button type="button" class="swim-tile" aria-pressed="false">
+      <span class="swim-tile__course">SCM</span>
+      <span class="swim-tile__name">Short course meters</span>
+      <span class="swim-tile__time">1:06.00</span>
+    </button>
+    <button type="button" class="swim-tile" aria-pressed="false">
+      <span class="swim-tile__course">LCM</span>
+      <span class="swim-tile__name">Long course meters</span>
+      <span class="swim-tile__time">1:07.20</span>
+    </button>
+  </div>
+</article>

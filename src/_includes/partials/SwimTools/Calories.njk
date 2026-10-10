@@ -1,0 +1,53 @@
+<article class="swim-widget swim-widget--split" id="calories">
+  <div class="swim-widget__main">
+    <header class="swim-widget__header">
+      <button type="button" class="swim-widget__toggle" aria-expanded="true" aria-label="Minimize"><span class="swim-widget__chevron" aria-hidden="true"></span></button>
+      <button type="button" class="swim-widget__pin" aria-pressed="false" aria-label="Pin to top"><svg class="swim-widget__pin-icon" viewBox="0 0 24 24" preserveAspectRatio="none" aria-hidden="true"><path d="M7 3h10M8.5 3v6.5L5 14h14l-3.5-4.5V3M12 14v7"/></svg></button>
+      <button type="button" class="swim-widget__move" aria-label="Reorder"><svg class="swim-widget__move-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M3 12h18M9 6l3-3 3 3M9 18l3 3 3-3M6 9l-3 3 3 3M18 9l3 3-3 3"/></svg></button>
+      <i class="fa-solid fa-fire swim-widget__icon" aria-hidden="true"></i>
+      <h3 class="swim-widget__title">Calorie Burn</h3>
+    </header>
+    <form class="swim-widget__form">
+      <div class="form-group">
+        <span class="swim-label">Stroke</span>
+        <div class="swim-chips" role="group" aria-label="Stroke">
+          <button type="button" class="swim-chip is-active" aria-pressed="true">Freestyle</button>
+          <button type="button" class="swim-chip" aria-pressed="false">Backstroke</button>
+          <button type="button" class="swim-chip" aria-pressed="false">Breaststroke</button>
+          <button type="button" class="swim-chip" aria-pressed="false">Butterfly</button>
+        </div>
+      </div>
+      <div class="swim-field-row">
+        <div class="form-group">
+          <label for="cal-weight">Weight</label>
+          <input type="text" class="form-control" id="cal-weight" value="165" inputmode="numeric">
+        </div>
+        <div class="form-group swim-field--unit">
+          <label for="cal-weight-unit">Unit</label>
+          <select class="form-control" id="cal-weight-unit"><option selected>lb</option><option>kg</option></select>
+        </div>
+        <div class="form-group">
+          <label for="cal-effort">Effort</label>
+          <select class="form-control" id="cal-effort">
+            <option>Easy</option>
+            <option selected>Moderate</option>
+            <option>Hard</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="cal-amount">Duration</label>
+          <input type="text" class="form-control" id="cal-amount" value="45" inputmode="numeric">
+        </div>
+        <div class="form-group swim-field--unit">
+          <label for="cal-amount-unit">Unit</label>
+          <select class="form-control" id="cal-amount-unit"><option selected>min</option><option>laps</option></select>
+        </div>
+      </div>
+    </form>
+  </div>
+  <aside class="swim-widget__side swim-result swim-result--hero" aria-live="polite">
+    <span class="swim-result__value">325</span>
+    <span class="swim-result__label">calories</span>
+    <span class="swim-result__meta">About 7.2 per minute</span>
+  </aside>
+</article>

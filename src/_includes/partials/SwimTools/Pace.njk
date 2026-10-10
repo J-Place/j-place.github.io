@@ -1,0 +1,33 @@
+<article class="swim-widget swim-widget--compact" id="pace">
+  <header class="swim-widget__header">
+    <button type="button" class="swim-widget__toggle" aria-expanded="true" aria-label="Minimize"><span class="swim-widget__chevron" aria-hidden="true"></span></button>
+    <button type="button" class="swim-widget__pin" aria-pressed="false" aria-label="Pin to top"><svg class="swim-widget__pin-icon" viewBox="0 0 24 24" preserveAspectRatio="none" aria-hidden="true"><path d="M7 3h10M8.5 3v6.5L5 14h14l-3.5-4.5V3M12 14v7"/></svg></button>
+    <button type="button" class="swim-widget__move" aria-label="Reorder"><svg class="swim-widget__move-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M3 12h18M9 6l3-3 3 3M9 18l3 3 3-3M6 9l-3 3 3 3M18 9l3 3-3 3"/></svg></button>
+    <i class="fa-solid fa-stopwatch swim-widget__icon" aria-hidden="true"></i>
+    <h3 class="swim-widget__title">Pace Calculator</h3>
+  </header>
+  <div class="swim-seg" role="group" aria-label="Calculate">
+    <button type="button" class="swim-seg__btn is-active" aria-pressed="true">Find pace</button>
+    <button type="button" class="swim-seg__btn" aria-pressed="false">Find distance</button>
+  </div>
+  <form class="swim-widget__form">
+    <div class="swim-field-row">
+      <div class="form-group">
+        <label for="pace-distance">Distance</label>
+        <input type="text" class="form-control" id="pace-distance" value="1,500" inputmode="numeric">
+      </div>
+      <div class="form-group swim-field--unit">
+        <label for="pace-unit">Unit</label>
+        <select class="form-control" id="pace-unit"><option selected>yd</option><option>m</option></select>
+      </div>
+      <div class="form-group">
+        <label for="pace-time">Time</label>
+        <input type="text" class="form-control" id="pace-time" value="22:30" placeholder="mm:ss">
+      </div>
+    </div>
+  </form>
+  <div class="swim-result swim-result--inline">
+    <span class="swim-result__value">1:30</span>
+    <span class="swim-result__label">per 100 yd</span>
+  </div>
+</article>

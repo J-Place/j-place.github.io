@@ -1,0 +1,40 @@
+{% set ladder = [
+  { age: "25–29", time: "25.84" },
+  { age: "35–39", time: "26.31" },
+  { age: "45–49", time: "27.44" },
+  { age: "50–54", time: "28.50", current: true },
+  { age: "65–69", time: "31.22" }
+] %}
+<article class="swim-widget" id="age-conversion">
+  <header class="swim-widget__header">
+    <button type="button" class="swim-widget__toggle" aria-expanded="true" aria-label="Minimize"><span class="swim-widget__chevron" aria-hidden="true"></span></button>
+    <button type="button" class="swim-widget__pin" aria-pressed="false" aria-label="Pin to top"><svg class="swim-widget__pin-icon" viewBox="0 0 24 24" preserveAspectRatio="none" aria-hidden="true"><path d="M7 3h10M8.5 3v6.5L5 14h14l-3.5-4.5V3M12 14v7"/></svg></button>
+    <button type="button" class="swim-widget__move" aria-label="Reorder"><svg class="swim-widget__move-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M3 12h18M9 6l3-3 3 3M9 18l3 3 3-3M6 9l-3 3 3 3M18 9l3 3-3 3"/></svg></button>
+    <i class="fa-solid fa-hourglass-half swim-widget__icon" aria-hidden="true"></i>
+    <h3 class="swim-widget__title">Age Conversion</h3>
+  </header>
+  <form class="swim-widget__form">
+    <div class="swim-field-row">
+      <div class="form-group">
+        <label for="age-event">Event</label>
+        <select class="form-control" id="age-event"><option selected>50 Free SCY</option></select>
+      </div>
+      <div class="form-group">
+        <label for="age-time">Time</label>
+        <input type="text" class="form-control" id="age-time" value="28.50">
+      </div>
+      <div class="form-group swim-field--narrow">
+        <label for="age-age">Age</label>
+        <input type="text" class="form-control" id="age-age" value="52" inputmode="numeric">
+      </div>
+    </div>
+  </form>
+  <ul class="swim-ladder">
+    {% for r in ladder %}
+    <li class="swim-ladder__row{% if r.current %} is-current{% endif %}">
+      <span class="swim-ladder__age">{{ r.age }}</span>
+      <span class="swim-ladder__time">{{ r.time }}</span>
+    </li>
+    {% endfor %}
+  </ul>
+</article>
