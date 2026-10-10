@@ -1,30 +1,58 @@
+/* RETIRED 2026-10-09 (whole file) — no longer linked (was home.njk pageCSS).
+   It was compensating for gaps that are now fixed at the source: the home page
+   didn't load production's home.min.css, Personalize.njk lacked production's
+   -header / -description / text-uppercase classes, and production's own
+   content-authored <style> block (now css/Home/home-page-content-styles.css) was
+   missing. With those in place, production CSS renders the section on its own.
+   The per-rule RETIRED / Kept notes below date from an earlier partial pass the
+   same day. Kept for reference; to restore, rename back to personalize.css and
+   re-add the <link> in src/_includes/layouts/home.njk. */
+
+/* RETIRED 2026-10-09 — commented-out rules and declarations below are duplicated
+   verbatim by production's usms.min.css as of vendored version 20260919.1 (found
+   by `npm run check:overrides`). Kept for reference in case a future fix or
+   enhancement needs them again; to restore one, uncomment it. Everything left
+   live differs from production. */
+
 .personalize {
+  /* RETIRED 2026-10-09 — in production usms.min.css (20260919.1)
   width: 100%;
+  */
   background-image: url('/img/bg-personalize.png');
+  /* RETIRED 2026-10-09 — in production usms.min.css (20260919.1)
   background-repeat: repeat;
+  */
   color: white;
+  /* RETIRED 2026-10-09 — in production usms.min.css (20260919.1)
   height: 1100px;
   padding: 20px 0;
   position: relative;
+  */
 }
 
+/* RETIRED 2026-10-09 — in production usms.min.css (20260919.1)
 @media (max-width: 300px) {
   .personalize {
     height: 1140px;
   }
 }
+*/
 
 .personalize__content {
   color: white;
+  /* RETIRED 2026-10-09 — in production usms.min.css (20260919.1)
   position: relative !important;
   overflow: hidden;
   left: 50%;
   display: block;
   width: 90%;
+  */
   transition: all 250ms ease-in-out 0s;
   transform: translate(-50%, 0px);
+  /* RETIRED 2026-10-09 — in production usms.min.css (20260919.1)
   opacity: 1;
   z-index: 1;
+  */
 }
 
 .personalize__content > .is-flex.cta-row {
@@ -32,92 +60,131 @@
 }
 
 .personalize__content > .is-flex.cta-row > .cta-col {
+  /* RETIRED 2026-10-09 — in production usms.min.css (20260919.1)
   padding: 10px;
+  */
   display: flex;
   flex-direction: column;
+  /* RETIRED 2026-10-09 — in production usms.min.css (20260919.1)
   transition: all 0.2s ease;
   margin-top: 10px;
+  */
 }
 
+/* RETIRED 2026-10-09 — in production usms.min.css (20260919.1)
 .personalize__content > .is-flex.cta-row > .cta-col:hover {
   cursor: pointer;
   height: 100% !important;
   margin-top: 10px !important;
   margin-bottom: 0;
 }
+*/
 
 .personalize__content > .is-flex.cta-row > .cta-col:hover .personalize__content-column {
+  /* RETIRED 2026-10-09 — in production usms.min.css (20260919.1)
   transition: all 0.2s;
+  */
   background-color: rgba(255, 255, 255, 1.0);
+  /* RETIRED 2026-10-09 — in production usms.min.css (20260919.1)
   padding-top: 1.5rem !important;
+  */
 }
 
+/* RETIRED 2026-10-09 — in production usms.min.css (20260919.1)
 .personalize__content > .is-flex.cta-row > .cta-col:hover .personalize__content-column-icon {
   transition: none !important;
   margin-top: inherit;
 }
+*/
 
 .personalize__content > .cta-row > .cta-col > div {
+  /* RETIRED 2026-10-09 — in production usms.min.css (20260919.1)
   box-shadow: 0 0 25px rgba(0, 0, 0, .25);
+  */
   padding: 1.5rem 2rem 3rem;
 }
 
 .personalize__content-column {
+  /* RETIRED 2026-10-09 — in production usms.min.css (20260919.1)
   display: flex;
   flex-direction: column;
+  */
   flex: 1;
+  /* RETIRED 2026-10-09 — in production usms.min.css (20260919.1)
   padding: 2rem;
   background-color: #ACCBDF;
   border-radius: 5px;
   margin-bottom: 5px;
   color: #1E3666;
   text-align: center;
+  */
 }
 
+/* RETIRED 2026-10-09 — in production usms.min.css (20260919.1)
 .personalize__content-column-icon {
   transition: none !important;
   margin: 0 auto;
 }
+*/
 
+/* Also in production usms.min.css, but kept: a later production rule overrides
+   it there, so this local copy is still what sets the card text (verified
+   2026-10-09 by toggling each declaration; removing these changes the cards). */
 .personalize__content-column h4,
 .personalize__content-column p {
   color: #1E3666;
 }
 
+/* RETIRED 2026-10-09 — in production usms.min.css (20260919.1)
 .personalize__content-column h4 {
   margin: 0 auto 10px;
   font-size: 1.8rem;
   line-height: 1.1em;
   height: auto;
 }
+*/
 
 .personalize__content-column p {
+  /* RETIRED 2026-10-09 — in production usms.min.css (20260919.1)
   height: auto !important;
+  */
+  /* Kept (also in production but overridden there — see note above) */
   margin: 0 auto 5px;
   font-size: 1.4rem;
+  /* RETIRED 2026-10-09 — in production usms.min.css (20260919.1)
   line-height: 1.7rem !important;
+  */
+  /* Kept (also in production but overridden there — see note above) */
   font-weight: 400;
 }
 
 .personalize__content-column a,
 .personalize__content-column button {
+  /* RETIRED 2026-10-09 — in production usms.min.css (20260919.1)
   padding: 0 2rem;
   height: 38px;
   line-height: 38px;
   border-radius: 3px;
   white-space: nowrap;
   display: block;
+  */
   margin: auto auto 0 !important;
+  /* RETIRED 2026-10-09 — in production usms.min.css (20260919.1)
   font-size: 1.4rem;
   font-weight: 400;
+  */
   color: white;
+  /* RETIRED 2026-10-09 — in production usms.min.css (20260919.1)
   background-color: #D2202E;
+  */
 }
 
+/* RETIRED 2026-10-09 — in production usms.min.css (20260919.1)
 .personalize__content-column a:hover,
 .personalize__content-column button:hover {
   text-decoration: none;
 }
+*/
 
 @media (max-width: 991px) {
   .personalize__content-column a,
@@ -131,9 +198,11 @@
 }
 
 @media (min-width: 768px) {
+  /* RETIRED 2026-10-09 — in production usms.min.css (20260919.1)
   .personalize {
     height: 1040px;
   }
+  */
 
   .personalize__content {
     width: 100%;
@@ -141,15 +210,19 @@
 
   .personalize .usms-container {
     /* width: calc(100% + 60px); */
+    /* Kept (also in production but overridden there — removing it narrows the
+       container at 992px+; verified 2026-10-09) */
     width: 100%;
     padding: 0 24px 0 26px;
   }
 }
 
 @media (min-width: 992px) {
+  /* RETIRED 2026-10-09 — in production usms.min.css (20260919.1)
   .personalize {
     height: 360px;
   }
+  */
 
   .personalize .usms-container {
     /* width: calc(100% + 60px); */
@@ -158,9 +231,11 @@
 }
 
 @media (min-width: 1200px) {
+  /* RETIRED 2026-10-09 — in production usms.min.css (20260919.1)
   .personalize {
     height: 330px;
   }
+  */
 
   .personalize .usms-container {
     /* width: calc(1100px + 60px); */
@@ -171,6 +246,7 @@
 @media (min-width: 1400px) {
   .personalize .usms-container {
     /* width: calc(1200px + 60px); */
+    /* Kept: needed to win back over the local 768px width: 100% above */
     width: 1320px;
     padding: 0 24px 0 26px;
   }
