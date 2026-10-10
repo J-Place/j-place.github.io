@@ -17,6 +17,10 @@
 // `mask`: CSS selectors excluded from the pixel comparison on a full-page
 // check, for content that legitimately changes day to day.
 //
+// `style`: optional CSS injected after load, before the height-settle wait
+// and screenshot — for pinning a masked region's size when its content
+// changes height between loads (a mask hides pixels, not layout shift).
+//
 // Full-page + mask works here the same way it does in the mockup suite's
 // screenshots.spec.js EXCEPT where the masked region's ITEM COUNT (not just
 // its content) varies between visits — e.g. a news module or search-results
@@ -61,6 +65,11 @@ module.exports = [
     // .advertising-dc           Google-Publisher-Tag ad slots (2 on this page) — creative
     //                           rotates every load, not something we serve/control
     mask: ['.carousel-container', '.image-slider', '.latest-content__container', '.personalize', '.advertising-dc'],
+    // The Latest grid's height follows whichever articles are featured
+    // (measured 2026-10-09: 764–807px Desktop, 2345–2367px Mobile), shifting
+    // everything below it — pinned larger than any measured load.
+    style: `.latest-content__container { height: 850px !important; overflow: hidden !important; }
+      @media (max-width: 767px) { .latest-content__container { height: 2450px !important; } }`,
     // Confirmed against the live DOM (raw HTML — all server-rendered, no
     // client-side wait needed beyond what's already above):
     //   .carousel__slide                    hero carousel's actual slide(s)
@@ -84,6 +93,11 @@ module.exports = [
     //                   via a real browser render — not present in the raw HTML).
     // .advertising-dc   1 ad slot on this page — creative rotates every load.
     mask: ['.results-content', '.advertising-dc'],
+    // Grid height follows article title wrapping (measured 2026-10-09: 6112px
+    // Desktop, 11532px Mobile, but drifted 94px vs the 09-19 baseline) —
+    // pinned with headroom.
+    style: `.results-content { height: 6300px !important; overflow: hidden !important; }
+      @media (max-width: 767px) { .results-content { height: 11800px !important; } }`,
     presence: [{ selector: '.results-list__item', min: 1 }],
   },
   {
@@ -99,7 +113,18 @@ module.exports = [
     // monitor watch the exact same page body (was "the-5-best-freestyle-
     // workouts" until 2026-10-08 — same template, different content).
     path: '/fitness-and-training/articles-and-videos/articles/masters-swimming-training-plan-for-former-competitive-swimmers',
-    mask: ['.advertising-dc'],
+    // .related-content__container  "Related Articles" cards — production picks
+    //                   a different set on each load (confirmed 2026-10-09: a
+    //                   run minutes after regenerating the baseline failed only
+    //                   in this strip). The __header title bar stays unmasked.
+    //                   Masking alone isn't enough: the random cards' titles
+    //                   wrap differently, so the strip's height varies too
+    //                   (measured 349–392px Desktop, ~1612px Mobile), which
+    //                   shifts the whole page below it. `style` pins it to a
+    //                   fixed height larger than any measured load.
+    mask: ['.advertising-dc', '.related-content__container'],
+    style: `.related-content__container { height: 420px !important; overflow: hidden !important; }
+      @media (max-width: 767px) { .related-content__container { height: 1700px !important; } }`,
   },
   {
     name: 'join-or-renew',
@@ -154,12 +179,16 @@ module.exports = [
     // Real production URL has no .html suffix (confirmed via clubs.json's
     // own scraped `url` field) — unlike this project's local permalink for
     // the same page.
+    // .club-location__map-pin--distance  distance-to-me per location —
+    //   computed server-side from the requester's IP (confirmed 2026-10-09:
+    //   22 / 109 / 8 mi across runs/networks), so it's not stable. Blocking
+    //   ipinfo.io client-side doesn't affect it.
     path: '/clubs/sarasota-y-sharks-536',
-    mask: ['#club-detail-map'],
+    mask: ['#club-detail-map', '.club-location__map-pin--distance'],
   },
   {
     name: 'club-detail-indy',
     path: '/clubs/indy-aquatic-masters-1745',
-    mask: ['#club-detail-map'],
+    mask: ['#club-detail-map', '.club-location__map-pin--distance'],
   },
 ];

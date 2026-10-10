@@ -95,7 +95,12 @@ module.exports = [
     reason: "Our own \"Latest\" module card grid (PageContent/LatestContent.jsx -> partials/Homepage/Latest.njk) — which articles/events show varies. Real fingerprint values not yet determined.",
   },
   {
-    selector: '.results-content, .results-list',
+    // .results-list only, not .results-content: on production's Events page
+    // .results-content also wraps the filter bar and "Showing N events"
+    // summary (confirmed 2026-10-09 against the live DOM), so masking it hid
+    // the filter UI from the monitor. Articles & Videos still masks
+    // .results-content via its own checks.js `mask`.
+    selector: '.results-list',
     suites: ['production-monitor'], // NOT masked on our mockup suite — see header note. Confirmed 0-diff on both Events (fixture-backed) and Articles & Videos listing (ResultsContentArticles.njk hardcodes 3 articles) via detect-flaky-regions.js.
     fingerprint: null, // TODO — production-monitor side only; real content there
     reason: 'Production\'s live results/article listing — card content varies day to day. Our own mockup versions of these pages are fixture-backed or hardcoded and confirmed fully deterministic, so this only applies to production-monitor.',

@@ -78,6 +78,9 @@ for (const check of checks) {
     // capture time — document.fonts.ready is a stronger signal than the
     // 'load' event for this.
     await page.evaluate(() => document.fonts.ready);
+    // Per-check CSS (see checks.js `style`) — pins the size of regions whose
+    // content varies in height between loads, before the height-settle wait.
+    if (check.style) await page.addStyleTag({ content: check.style });
     await waitForStableHeight(page);
 
     // Structural presence checks, run before the screenshot and reported
