@@ -249,6 +249,11 @@ module.exports = function(eleventyConfig) {
     "tests/usms-visual-regression-screenshots/screenshots.spec.js-snapshots/*.png": "visual-regression-baselines"
   });
   eleventyConfig.addWatchTarget("tests/usms-visual-regression-screenshots");
+  // Production-monitor baselines, listed by src/pages/production-monitor-gallery.njk
+  eleventyConfig.addPassthroughCopy({
+    "tests/production-monitor/production-monitor.spec.js-snapshots/*.png": "production-monitor-baselines"
+  });
+  eleventyConfig.addWatchTarget("tests/production-monitor");
 
   return {
     dir: {

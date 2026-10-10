@@ -1,8 +1,8 @@
 ---
-permalink: /visual-regression-gallery.html
+permalink: /production-monitor-gallery.html
 ---
 {% extends "layouts/base.njk" %}
-{% set title = "Screenshots Development" %}
+{% set title = "Screenshots Production" %}
 {% block pageCSS %}
 <link rel="stylesheet" href="/css/visual-regression-gallery.css">
 {% endblock %}
@@ -10,10 +10,10 @@ permalink: /visual-regression-gallery.html
 <main>
 <div class="section section-full">
   <div class="usms-container vrg" style="margin: 3rem auto 6rem;">
-    <h5>Screenshots Development</h5>
-    {% for group in visualBaselines %}
+    <h5>Screenshots Production</h5>
+    {% for group in productionMonitorBaselines %}
     <div class="vrg__row">
-      <a class="vrg__page" href="{{ group.pagePath }}" title="{{ group.pagePath }}">{{ group.label }}</a>
+      <a class="vrg__page" href="{{ group.pageUrl }}" title="{{ group.pageUrl }}" target="_blank">{{ group.label }}</a>
       <span class="vrg__shots">
         {%- for item in group.items -%}
           {%- if not loop.first %} <span class="vrg__sep">|</span> {% endif -%}
