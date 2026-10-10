@@ -23,7 +23,9 @@
 // Retiring a match keeps it around instead of deleting it: a fully duplicated file is renamed to
 // *.retired.css (and its <link> commented out), a duplicated rule inside a live file is commented
 // out in place — both with a "RETIRED <date>" note naming the production bundle and version.
-// Retired files and commented-out rules are skipped here.
+// Retired files and commented-out rules are skipped here, as is anything right after a comment
+// containing "Kept" (a duplicate verified to still matter because production overrides its own
+// copy later in the cascade).
 //
 // Usage: node scripts/check-redundant-overrides.js [--partial]
 //   --partial  also list rules where only some declarations are covered by production
@@ -181,7 +183,16 @@ function checkLocal(index, alongside) {
     const root = postcss([postcssNested]).process(source, { from: file }).root;
     root.walkRules(rule => {
       if (rule.parent.type === 'atrule' && /keyframes$/i.test(rule.parent.name)) return;
-      const decls = rule.nodes.filter(n => n.type === 'decl');
+      // A "Kept" comment right before a rule or declaration marks a duplicate that was verified
+      // to still matter (production overrides its own copy later in the cascade) — skip it.
+      // Covers every declaration up to the next comment.
+      const kept = node => {
+        let prev = node.prev();
+        while (prev && prev.type === 'decl') prev = prev.prev();
+        return prev?.type === 'comment' && /\bkept\b/i.test(prev.text);
+      };
+      if (kept(rule)) return;
+      const decls = rule.nodes.filter(n => n.type === 'decl' && !kept(n));
       if (!decls.length) return;
       const ctx = context(rule);
       const sels = splitSelectors(rule.selector);

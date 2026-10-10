@@ -293,6 +293,7 @@ Local overrides in `src/css/` hold two kinds of rules: **fixes** (closing a gap 
 
 - `npm run check:overrides` (needs a current `npm run build`) lists local rules whose selector and declarations the vendored production CSS now already contains. It only counts bundles loaded on every page that loads the local file, and it also lists local CSS files no built page loads. `--partial` adds rules where only some declarations are duplicated. The command reports only and never edits.
 - Run it after each Production Update, once you've merged `origin/master` back into `development`.
+- **Some duplicates still matter.** Production can override its own copy of a rule later in the cascade, and the local copy, which loads after it, puts the value back. Keep those declarations and put a comment containing "Kept" directly above them, saying why. The check skips anything marked that way.
 - A match is a candidate, not proof. Retire it, then run the full visual suite against localhost (`PW_BASE_URL=http://localhost:8080`). An unchanged baseline confirms production absorbed the rule.
 - When writing an override, say in its source comment whether it's a fix or an enhancement and cite the production file and line (see "Building Production Page Mockups" rule 5), so whoever retires it knows what it was for.
 
