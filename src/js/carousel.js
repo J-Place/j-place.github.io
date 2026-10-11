@@ -40,7 +40,9 @@
     }
   }
 
-  setInterval(next, INTERVAL_MS);
+  // Visual regression (screenshots.spec.js) sets this flag before load so the
+  // hero never autoplays during capture.
+  if (!window.USMS_VISUAL_TEST) setInterval(next, INTERVAL_MS);
 
   navItems.forEach(item => {
     item.querySelector('.carousel-nav__item-button').addEventListener('click', function () {

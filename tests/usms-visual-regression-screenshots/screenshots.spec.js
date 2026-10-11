@@ -1,6 +1,5 @@
 const { test, expect } = require('@playwright/test');
 const pages = require('./pages');
-const chromeRegions = require('./chrome');
 const states = require('./states');
 const liveEventsFixture = require('../../src/_data/events.json');
 const { applyRegionChecks } = require('../lib/apply-region-checks');
@@ -52,6 +51,10 @@ async function preparePage(page, testInfo, pagePath) {
   // Freeze JS timers so setInterval-driven carousels (carousel.js, image-slider.js)
   // can't advance between page load and screenshot capture.
   await page.clock.install();
+  // carousel.js and image-slider.js skip their autoplay setInterval when this
+  // is set, so the home hero and partner-logo slider stay put independently
+  // of the frozen clock above.
+  await page.addInitScript(() => { window.USMS_VISUAL_TEST = true; });
   // Club Finder (clubs-filter.js), Calendar of Events (events-filter.js),
   // and Club Detail's distance-to-me display (club-detail-map.js) all
   // resolve the viewer's location the same way — via the shared
@@ -113,6 +116,21 @@ async function preparePage(page, testInfo, pagePath) {
     if (activeNav && activeNav !== firstNav) activeNav.classList.remove('carousel-nav__item--active');
     if (firstNav) firstNav.classList.add('carousel-nav__item--active');
     document.querySelectorAll('.carousel__slide video').forEach((v) => v.pause());
+  });
+  // Home partner-logo slider (image-slider.js): pin to its first logo, the
+  // state image-slider.js's own init leaves it in, and drop its transition so
+  // it can't be caught mid-slide.
+  await page.evaluate(() => {
+    const ul = document.querySelector('.image-slider__slider');
+    if (!ul) return;
+    const items = Array.from(ul.querySelectorAll('.image-slider__slider-item'));
+    ul.style.transition = 'none';
+    ul.classList.remove('is-reversing');
+    ul.classList.add('is-set');
+    items.forEach((item, i) => {
+      item.classList.toggle('is-ref', i === 0);
+      item.style.order = i + 1;
+    });
   });
   // networkidle doesn't guarantee images have finished decoding/laying out —
   // wait explicitly so late-arriving images can't shift page height mid-capture.
@@ -185,13 +203,25 @@ const STATE_ACTIONS = {
   },
 };
 
-async function captureFullPage(page, name) {
+// Pages compared with no masks at all. Home's content is fully deterministic
+// in the mockup (images vendored locally under src/vendor/img/home/, hero and
+// partner-logo slider pinned above), and it's the one page that diffs the
+// sitewide header and footer, which the shared catalog masks everywhere else.
+const UNMASKED_PAGES = new Set([
+  '/home/index.html',
+]);
+
+async function captureFullPage(page, name, pagePath) {
   // Regions excluded from the pixel comparison, plus structural fingerprint
   // assertions where the shared catalog has them populated — see
   // tests/lib/region-checks.js (plan Item 9) for the full selector list and
   // per-selector reasoning. This suite no longer hand-maintains its own
   // separate mask list; production-monitor's spec uses the same engine.
-  const { maskSelectors, fingerprintFindings } = await applyRegionChecks(page, [], { suite: 'mockup' });
+  let { maskSelectors, fingerprintFindings } = await applyRegionChecks(page, [], { suite: 'mockup' });
+  if (UNMASKED_PAGES.has(pagePath)) {
+    maskSelectors = [];
+    fingerprintFindings = [];
+  }
   for (const finding of fingerprintFindings) {
     expect(finding.ok, `${finding.selector}: ${finding.detail}`).toBe(true);
   }
@@ -206,7 +236,7 @@ async function captureFullPage(page, name) {
 for (const pagePath of pages) {
   test(`visual: ${pagePath}`, async ({ page }, testInfo) => {
     await preparePage(page, testInfo, pagePath);
-    await captureFullPage(page, slug(pagePath));
+    await captureFullPage(page, slug(pagePath), pagePath);
   });
 }
 
@@ -214,13 +244,6 @@ for (const state of states) {
   test(`state: ${state.name}`, async ({ page }, testInfo) => {
     await preparePage(page, testInfo, state.page);
     await STATE_ACTIONS[state.name](page);
-    await captureFullPage(page, `state--${state.name}`);
-  });
-}
-
-for (const chrome of chromeRegions) {
-  test(`chrome: ${chrome.name}`, async ({ page }, testInfo) => {
-    await preparePage(page, testInfo, chrome.page);
-    await expect(page.locator(chrome.selector)).toHaveScreenshot(`chrome--${chrome.name}.png`);
+    await captureFullPage(page, `state--${state.name}`, state.page);
   });
 }

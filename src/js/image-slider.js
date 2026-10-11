@@ -46,7 +46,9 @@
   setSlidesOrder(0);
   ul.classList.add('is-set');
 
-  const timer = setInterval(() => advance(false), INTERVAL_MS);
+  // Visual regression (screenshots.spec.js) sets this flag before load so the
+  // slider stays on its first logo during capture.
+  const timer = window.USMS_VISUAL_TEST ? null : setInterval(() => advance(false), INTERVAL_MS);
 
   root.querySelector('.image-slider__button-next').addEventListener('click', () => {
     clearInterval(timer);

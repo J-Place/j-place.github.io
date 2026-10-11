@@ -54,6 +54,11 @@
 // to mask-only for these with a console warning, so the suites keep running
 // correctly in the meantime rather than breaking on an incomplete catalog.
 
+// Mockup home page: screenshots.spec.js's UNMASKED_PAGES skips this catalog
+// there entirely. Its images are vendored locally and its carousels are
+// pinned, so every region on it, including the header and footer, is
+// pixel-compared.
+
 module.exports = [
   {
     selector: '.advertising-dc',
@@ -111,8 +116,8 @@ module.exports = [
   {
     selector: '#main-container > header.header-static, body > footer',
     suites: ['mockup'], // production-monitor compares live production's own chrome; keep it there
-    fingerprint: false, // covered by its own element baselines instead — see chrome.js
-    reason: "Sitewide header and footer — captured once each by screenshots.spec.js's chrome: tests (tests/usms-visual-regression-screenshots/chrome.js), so a change to either one fails those tests rather than every page test, and can't hide a page-specific regression.",
+    fingerprint: false, // diffed on the home page instead — see screenshots.spec.js's UNMASKED_PAGES
+    reason: "Sitewide header and footer — compared only on the home page baseline (unmasked there), so a change to either one fails that one test rather than every page test, and can't hide a page-specific regression.",
   },
   {
     selector: '.articleStepper',

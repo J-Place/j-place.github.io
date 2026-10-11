@@ -9,7 +9,6 @@ const fs = require('fs');
 const path = require('path');
 
 const pages = require('../../tests/usms-visual-regression-screenshots/pages.js');
-const chromeRegions = require('../../tests/usms-visual-regression-screenshots/chrome.js');
 const states = require('../../tests/usms-visual-regression-screenshots/states.js');
 
 // Mirrors the slug() transform in tests/usms-visual-regression-screenshots/screenshots.spec.js —
@@ -90,15 +89,5 @@ module.exports = function () {
     return { pagePath, label: LABELS[pagePath] || pagePath, items };
   });
 
-  // Sitewide header/footer, captured once each (page baselines exclude them).
-  const chromeEntries = chromeRegions.map((chrome) => ({
-    pagePath: chrome.page,
-    label: chrome.label,
-    items: ['Desktop', 'Mobile']
-      .map((viewport) => ({ viewport, filename: `chrome--${chrome.name}-${viewport}-darwin.png` }))
-      .filter(({ filename }) => availableAutomated.has(filename))
-      .map(({ viewport, filename }) => ({ label: viewport, viewport, path: `visual-regression-baselines/${filename}` })),
-  }));
-
-  return [...chromeEntries, ...pageEntries];
+  return pageEntries;
 };
