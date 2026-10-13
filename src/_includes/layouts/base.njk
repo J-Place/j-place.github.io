@@ -22,7 +22,8 @@
   <link rel="stylesheet" href="/css/Common/spacing-utilities.css">
   {% block localCSS %}{% endblock %}
   {% if dev.env === "dev" %}{% for name, overlay in devOverlays %}{% if permalink in overlay.pages %}<link rel="stylesheet" href="{{ overlay.css }}">{% endif %}{% endfor %}{% endif %}
-  <script type="application/json" id="site-users-data">{{ { "users": users, "membershipTiers": membershipTiers } | dump | safe }}</script>
+  {#- pinSwimmer (page frontmatter): open as the page's own swimmerId unless ?user= says otherwise, ignoring the persona saved from other pages (current-user.js) -#}
+  <script type="application/json" id="site-users-data"{% if pinSwimmer %} data-pin-default{% endif %}>{{ { "users": users, "membershipTiers": membershipTiers } | dump | safe }}</script>
 </head>
 <body class="">
   <div id="main-container">

@@ -110,7 +110,8 @@
   if (data && userFromUrl && data.users[userFromUrl]) {
     activeId = userFromUrl;
     sessionStorage.setItem(STORAGE_KEY, activeId);
-  } else if (data) {
+  } else if (data && !dataEl.hasAttribute('data-pin-default')) {
+    // A pinned page (pinSwimmer frontmatter) keeps its own default instead
     var saved = sessionStorage.getItem(STORAGE_KEY);
     if (saved && data.users[saved]) activeId = saved;
   }
