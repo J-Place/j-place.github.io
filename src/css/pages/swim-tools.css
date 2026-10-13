@@ -378,14 +378,19 @@
   font-size: 14px;
 }
 
-/* Pace: one-line answer under the form */
+/* Pace: one-line answer in a full-bleed band along the card's bottom edge,
+   same treatment as the Calories side panel. Negative margins cancel the
+   card's 20px padding; .swim-widget's overflow clips it to the radius.
+   margin-top: auto keeps it on the bottom edge when the card stretches
+   to its row neighbour's height. */
 .swim-result--inline {
   display: flex;
   align-items: baseline;
   gap: 8px;
-  padding-top: 12px;
-  border-top: 2px solid #fff;
-  color: #0068ad;
+  margin: auto -20px -20px;
+  padding: 28px 20px;
+  background: #0068ad;
+  color: #fff;
 }
 
 /* Calories: big number in a solid side panel */
@@ -416,11 +421,6 @@
 }
 
 /* ---------- Variant: compact (Pace) ---------- */
-
-/* Don't stretch to the taller neighbour; this card stays short. */
-.swim-tools__cell:has(> .swim-widget--compact) {
-  align-items: flex-start;
-}
 
 .swim-widget--compact .swim-widget__header {
   margin-bottom: 12px;
