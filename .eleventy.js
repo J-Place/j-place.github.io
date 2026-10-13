@@ -232,6 +232,15 @@ module.exports = function(eleventyConfig) {
 
   eleventyConfig.addPassthroughCopy({ "src/img": "img" });
 
+  // Static Top Times API responses (docs/api/top-times.openapi.yaml), built
+  // by scripts/top-times-to-json.js. Kept out of src/_data so the build never
+  // loads them; pages fetch the one event they show at runtime.
+  eleventyConfig.addPassthroughCopy({ "src/data/top-times": "data/top-times" });
+  // Plus what scripts/top-times-synthetic.js generates before every build
+  // (npm prebuild/predev, gitignored): synthetic rankings, Top 10 history and
+  // available.json over both folders, at the same /data/top-times/ URLs.
+  eleventyConfig.addPassthroughCopy({ "src/data/top-times-generated": "data/top-times" });
+
   // Vendored production CSS/JS (see scripts/vendor-refresh.js + CLAUDE.md's
   // vendoring policy) — same /vendor/css|js/... URL shape scripts/snapshot.js
   // already uses for its own, separate immutable-snapshot vendoring.

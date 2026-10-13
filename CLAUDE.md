@@ -23,6 +23,14 @@ npm run test:visual:report  # open the HTML diff viewer for the last run
 - Dead hosts that can't be fixed locally are acknowledged in `scripts/asset-hosts-known-dead.json`, **scoped to `_site/` path prefixes**: currently `usms-cdn.azureedge.net` and `usms-test-cdn.azureedge.net` in vendored production CSS (`vendor/css/`, rules overridden in `src/css/`) and legacy Sergey output (`public/` and its passthrough-copied CSS). A new reference to an acknowledged host outside those paths still fails. `public/college-club/` is deliberately not acknowledged, since it's edited directly.
 - When it fails: point the reference at a live host (for USMS media, `www-usms-hhgdctfafngha6hr.z01.azurefd.net`, same paths). Only add an acknowledgment if the file can't be fixed locally.
 
+## Top Times Data (Swim Tools v4)
+
+Static JSON rankings at `/data/top-times/{season}/{gender}-{age}/scy/{stroke}/{distance}.json` plus `available.json`, contract in `docs/api/top-times.openapi.yaml`. Every file and index entry carries `provenance`: `usms` (real) or `synthetic` (modeled, never anyone's result; pages must label it).
+
+- **Real scrapes are committed** in `src/data/top-times/` (`npm run top-times:scrape`, then `top-times:json`). Only SCY men 40-44 and 50-54, 2017-2026 so far.
+- **Everything else is generated before every build**, never committed: `npm run build`/`dev` run `scripts/top-times-synthetic.js` first (`prebuild`/`predev`, ~7 s), which empties and rewrites the gitignored `src/data/top-times-generated/`: synthetic rankings for the personas' age groups, Top 10 history back to 1970-71, and `available.json`. Same inputs, same bytes. A dataset in the real folder is never generated, so a new scrape displaces synthetic data on the next build.
+- The generator reads `src/_data/timeStandards.json` (USMS percentile cuts) and `topTens.json` (real decade Top 10s), so don't delete those without moving them.
+
 ## NEVER EVER DO
 
 These rules are ABSOLUTE:
