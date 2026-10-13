@@ -29,15 +29,15 @@
     [70, '70–74'], [75, '75–79'], [80, '80–84'], [85, '85–89'], [90, '90–94'],
     [95, '95–99'], [100, '100+']
   ].map(function (g) { return { min: g[0], label: g[1] }; });
-  // Tiers fastest first. Top 10 is the 10th-place time (topTenCut); the
-  // rest are percentile cuts of the rankings, by the data's own keys
-  // (timeStandards.json: AAA top 6% … B top 55%). Its AAAA (top 2%) isn't a
-  // tier, though tierCuts.js keeps it to place times between rows.
+  // Ranking bands, fastest first: the Top 10 (10th place, topTenCut), then
+  // down to the 25th and 50th percentiles of the rankings, then the rest.
+  // The 25% and 50% lines are estimated between the rankings' known cuts
+  // (tierCuts.js: 15%, 35%, 55%). A 75% line isn't drawn: past 55% the data
+  // has only the slowest swim, too far off to estimate from.
   var TOP_10 = 'Top 10';
-  var TIERS = [TOP_10, 'AAA', 'AA', 'A', 'BB', 'B'];
-  var TIER_TOP = { AAA: 6, AA: 8, A: 15, BB: 35, B: 55 };
-  var LOWEST = TIERS[TIERS.length - 1];
-  var UNRATED = 'Unrated';
+  var BOTTOM = '51–100%';
+  var TIERS = [TOP_10, '11th–25%', '26–50%', BOTTOM];
+  var TIER_PCT = { '11th–25%': 25, '26–50%': 50 };
   var RIEGEL = 1.06;     // the predictor's distance exponent, as in v2
   var TREND = -0.05;     // split plan: a slight negative split (v2's 'neg')
   var DIVE = 1.8;        // seconds a dive start takes off the first split
@@ -200,38 +200,49 @@
   function topTenCut(rank, course, stroke, d, ageMin, gender) {
     var list = topTenList(course, stroke, d, ageMin, gender);
     if (list) return { secs: list.last, year: list.year, list: true };
-    if (rank.n <= 10) return { secs: rank.cuts[rank.cuts.length - 1][2], list: false };
+    return { secs: atRow(rank, 10), list: false };
+  }
+
+  // The time at a place in the ranking, interpolated between the known rows
+  // (fastest, each cut, slowest); the slowest time past the end of the field
+  function atRow(rank, row) {
     var pts = rank.cuts;
+    if (row >= rank.n) return pts[pts.length - 1][2];
     for (var i = 1; i < pts.length; i++) {
-      if (pts[i][1] >= 10) {
+      if (pts[i][1] >= row) {
         var a = pts[i - 1], b = pts[i];
-        return { secs: b[1] === a[1] ? b[2] : a[2] + (b[2] - a[2]) * (10 - a[1]) / (b[1] - a[1]), list: false };
+        return b[1] === a[1] ? b[2] : a[2] + (b[2] - a[2]) * (row - a[1]) / (b[1] - a[1]);
       }
     }
-    return { secs: NaN, list: false };
+    return NaN;
   }
 
-  // A tier's cut time. In a small field 10th place can be slower than a
-  // star's cut; that star is then out of reach without making the Top 10,
-  // so its cut is the Top 10's.
+  // The median time: what the typical swimmer in the field swims
+  function median(rank) {
+    return atRow(rank, rank.n * 0.5);
+  }
+
+  // A band's cut: the slowest time that makes it. In a small field 10th
+  // place can be slower than the 25% line (under 40 swimmers); the band
+  // above it is then all Top 10, so its cut is the Top 10's.
   function cutOf(rank, tier) {
     if (tier === TOP_10) return rank.top10.secs;
-    var c = rank.cuts.filter(function (x) { return x[0] === tier; })[0];
-    return c ? Math.max(c[2], rank.top10.secs) : NaN;
+    if (tier === BOTTOM) return Infinity;
+    return Math.max(atRow(rank, rank.n * TIER_PCT[tier] / 100), rank.top10.secs);
   }
 
-  // A tier as a note under a time: "Tier B", but "Top 10" and "Unrated"
+  // A band as a note under a time: "Top 10", "Ranked 26–50%"
   function tierNote(t) {
-    return t && t !== TOP_10 && t !== UNRATED ? 'Tier ' + t : t || '';
+    return t && t !== TOP_10 ? 'Ranked ' + t : t || '';
   }
 
-  // The tier a time earns: the fastest tier whose cut it makes
+  // The band a time is in: the fastest whose cut it makes
   function tierOf(secs, rank) {
     if (!rank || !isFinite(secs)) return null;
     for (var i = 0; i < TIERS.length; i++) {
       if (secs <= cutOf(rank, TIERS[i])) return TIERS[i];
     }
-    return UNRATED;
+    return BOTTOM;
   }
 
   // A time's place in the ranking, interpolated between the known rows
@@ -353,15 +364,16 @@
     f.rank = GROUP && GENDER ? ranking(state.course, state.stroke, state.d, GROUP.min, GENDER) : null;
     f.bestTier = f.best ? tierOf(f.best.secs, f.rank) : null;
     f.topTen = GROUP ? topTenList(state.course, state.stroke, state.d, GROUP.min, GENDER) : null;
-    // Goal: the next tier up (the slowest cut faster than your best, the
-    // higher tier on a tie); in the Top 10 already, 1% off your best
+    // Goal: the next band up (the slowest cut faster than your best, the
+    // higher band on a tie); with no best, the top half; in the Top 10
+    // already, 1% off your best
     if (f.rank) {
       var next = null;
       TIERS.forEach(function (t) {
         var c = cutOf(f.rank, t);
-        if ((!f.best || c < f.best.secs) && (!next || c > next.secs)) next = { tier: t, secs: c };
+        if (isFinite(c) && f.best && c < f.best.secs && (!next || c > next.secs)) next = { tier: t, secs: c };
       });
-      if (!f.best) next = { tier: TIERS[TIERS.length - 1], secs: cutOf(f.rank, TIERS[TIERS.length - 1]) };
+      if (!f.best) next = { tier: '26–50%', secs: cutOf(f.rank, '26–50%') };
       f.goalTier = next ? next.tier : null;
       f.goal = next ? next.secs : f.best.secs * 0.99;
     } else if (f.best) {
@@ -407,24 +419,24 @@
     bar.hidden = !f.rank;
     empty.hidden = !!f.rank;
     if (!f.rank) {
-      empty.textContent = !GENDER || !GROUP ? 'Tiers need a gender and birth date on your profile.' :
+      empty.textContent = !GENDER || !GROUP ? 'Rankings need a gender and birth date on your profile.' :
         'No USMS rankings for ' + GROUP.label + ' ' + state.stroke + ' ' + state.d + ' yet.';
       return;
     }
-    var edges = TIERS.map(function (t) { return cutOf(f.rank, t); }).reverse(); // B … Top 10
+    var edges = TIERS.slice(0, -1).map(function (t) { return cutOf(f.rank, t); }).reverse(); // 50% … Top 10
     var marks = [f.best ? f.best.secs : NaN, f.goal, f.latest ? f.latest.secs : NaN].filter(isFinite);
-    var hi = Math.max.apply(null, [edges[0] * 1.06].concat(marks.map(function (m) { return m * 1.01; })));
+    var hi = Math.max.apply(null, [edges[0] * 1.12].concat(marks.map(function (m) { return m * 1.01; })));
     var lo = Math.min.apply(null, [edges[edges.length - 1] * 0.98].concat(marks.map(function (m) { return m * 0.995; })));
     var span = hi - lo;
     var pos = function (t) { return ((hi - t) / span * 100).toFixed(2) + '%'; };
     var bounds = [hi].concat(edges, [lo]);
-    var names = [UNRATED].concat(TIERS.slice().reverse());
+    var names = TIERS.slice().reverse();
     var bands = root.querySelector('[data-st3-bands]');
     bands.innerHTML = names.map(function (n, i) {
       var w = (bounds[i] - bounds[i + 1]) / span * 100;
       if (w <= 0) return '';
-      return '<div class="st3-tierbar__band st3-tierbar__band--' + i + '" style="width: ' + w.toFixed(2) + '%" title="' + n + '">' +
-        (n === UNRATED ? '' : '<span>' + n + '</span>') + '</div>';
+      return '<div class="st3-tierbar__band st3-tierbar__band--' + (i * 2) + '" style="width: ' + w.toFixed(2) + '%" title="' + n + '">' +
+        '<span>' + n + '</span></div>';
     }).join('');
     // Names that don't fit their band are left to its tooltip
     bands.querySelectorAll('span').forEach(function (el) {
@@ -455,8 +467,8 @@
     set('scaleLo', race(lo));
     set('lastNote', f.latest ? 'Dotted: latest race ' + race(f.latest.secs) + (f.latest.date ? ' (' + longDate(f.latest.date) + ')' : '') : '');
     root.querySelector('[data-st3-track]').setAttribute('aria-label',
-      'Tier cuts from ' + LOWEST + ' ' + race(edges[0]) + ' to Top 10 ' + race(edges[edges.length - 1]) +
-      (f.best ? '. Your best ' + race(f.best.secs) + ' is ' + f.bestTier : '') +
+      'Ranking bands: median ' + race(edges[0]) + ', top 25% ' + race(edges[1]) + ', Top 10 ' + race(edges[2]) +
+      (f.best ? '. Your best ' + race(f.best.secs) + ' is ' + (f.bestTier === TOP_10 ? 'Top 10' : 'ranked ' + f.bestTier) : '') +
       (isFinite(f.goal) ? '. Goal ' + race(f.goal) : ''));
   }
 
@@ -598,7 +610,7 @@
     // Swim age: the age whose typical (B, top 55%) time matches your best
     var points = AGE_GROUPS.map(function (g) {
       var r = GENDER ? ranking(state.course, state.stroke, state.d, g.min, GENDER) : null;
-      return r ? { age: g.min === 18 ? 21 : g.min + 2, b: cutOf(r, LOWEST), group: g } : null;
+      return r ? { age: g.min === 18 ? 21 : g.min + 2, b: median(r), group: g } : null;
     }).filter(Boolean);
     var swimAge = null, or = '';
     if (isFinite(best) && points.length > 1) {
@@ -668,7 +680,7 @@
     }
     var rLater = later && ranking(state.course, state.stroke, state.d, later.min, GENDER);
     if (rLater) {
-      var projected = best * cutOf(rLater, LOWEST) / cutOf(f.rank, LOWEST);
+      var projected = best * median(rLater) / median(f.rank);
       out += item('later', (birthYear + later.min) + ' · turn ' + later.min, 'Projected, holding your place · ' + tierOf(projected, rLater), projected);
     }
     future.innerHTML = out;
@@ -804,21 +816,23 @@
       cols = ['Split', 'Time', 'Cumulative'];
       rows = splitPlan(f).map(function (s) { return { a: s.label, b: race(s.t), c: race(s.cum) }; });
     } else {
-      document.getElementById('st3-sheet-title').textContent = 'Tier cuts · ' + eventLabel(state.d, state.stroke);
+      document.getElementById('st3-sheet-title').textContent = 'Ranking bands · ' + eventLabel(state.d, state.stroke);
       sub = (GENDER && GROUP ? GENDER + ' ' + GROUP.label + ' · ' : '') + state.course + ' · USMS event rankings, 2025–2026';
-      cols = ['Tier', 'Cut', 'Rank'];
+      cols = ['Band', 'Cut', 'Where'];
       if (f.rank) {
         var t10 = f.rank.top10;
+        var where = {
+          '11th–25%': '25th percentile', '26–50%': 'the median (50th percentile)', '51–100%': 'slower than the median'
+        };
         rows = TIERS.map(function (t) {
           var you = f.bestTier === t, c = cutOf(f.rank, t);
           var rule = t === TOP_10 ? (t10.list ? '10th place, USMS Top 10 ' + t10.year : '10th-fastest ranked swim') :
-            c === t10.secs ? 'top ' + TIER_TOP[t] + '%, within the Top 10 here' : 'top ' + TIER_TOP[t] + '%';
-          return { a: t, b: race(c), c: rule + (you ? ' · you' : ''), on: you };
+            t !== BOTTOM && c === t10.secs ? 'all Top 10 in a field this small' : where[t];
+          return { a: t, b: isFinite(c) ? race(c) : '', c: rule + (you ? ' · you' : ''), on: you };
         });
-        if (f.bestTier === UNRATED) rows.push({ a: UNRATED, b: '', c: 'you', on: true });
         note = (f.rank.converted ? 'Converted from SCY rankings. ' : '') +
           (f.rank.capped ? 'This ranking hit its 500-swim limit, so the cuts run a little fast. ' : '') +
-          'Cuts come from ' + f.rank.n + ' ranked swims.';
+          'From ' + f.rank.n + ' ranked swims; the 25% and 50% lines are estimated between the rankings\' published cuts.';
       } else {
         note = 'No rankings for this event, age group and gender yet.';
       }

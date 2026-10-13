@@ -7,8 +7,8 @@
 //         then AAAA … B, then row n is the slowest
 // The rows let the page place any time in the field (its percentile), not
 // just between tiers, and find 10th place for the Top 10 tier. The page
-// uses AAA … B as they are, with Top 10 in place of AAAA (swim-tools-v3.js
-// TIERS).
+// draws its own bands from these rows (swim-tools-v3.js TIERS): Top 10,
+// then the 25th and 50th percentiles, estimated between them.
 
 'use strict';
 
