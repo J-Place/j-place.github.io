@@ -1,0 +1,107 @@
+/* USMS event rankings card (partials/EventRank.njk, event-rank-card.js).
+   Enhancement: new local component, no production source. Production's own
+   ranking page (/comp/meets/eventrank.php) is a legacy PHP table. */
+
+.event-rank {
+  background: #FFFFFF;
+  border: 1px solid #D9DEE4;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 24px 0;
+  min-width: 0;
+}
+
+.event-rank__title {
+  margin: 0;
+  font-size: 20px;
+}
+
+.event-rank__sub {
+  margin: 4px 0 16px;
+  color: #5B6670;
+  font-size: 14px;
+}
+
+.event-rank__form {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+  align-items: end;
+}
+
+.event-rank__field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.event-rank__submit {
+  white-space: nowrap;
+}
+
+.event-rank__status {
+  margin: 12px 0 0;
+  font-size: 14px;
+  color: #5B6670;
+}
+
+.event-rank__status:empty {
+  display: none;
+}
+
+.event-rank.is-loading .event-rank__results {
+  opacity: 0.5;
+}
+
+.event-rank__results {
+  margin-top: 16px;
+  overflow-x: auto;
+}
+
+.event-rank__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.event-rank__table caption {
+  caption-side: top;
+  padding: 0 0 8px;
+  color: #2B2B2B;
+  font-weight: 600;
+  text-align: left;
+}
+
+.event-rank__table th,
+.event-rank__table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #E6E9ED;
+  text-align: left;
+  vertical-align: top;
+}
+
+.event-rank__table thead th {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #5B6670;
+}
+
+.event-rank__table td:first-child,
+.event-rank__time {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.event-rank__table abbr[title] {
+  text-decoration: none;
+  cursor: help;
+}
+
+.event-rank__source {
+  margin: 12px 0 0;
+  font-size: 13px;
+}

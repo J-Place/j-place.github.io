@@ -1,0 +1,63 @@
+{# USMS event rankings for one set at a time (season, course, gender, stroke,
+   distance, age group), fetched live from www.usms.org/comp/meets/eventrank.php
+   by event-rank-card.js through src/js/lib/event-rank.js. Usable on any page
+   (Swim Tools v1–v5 and later). The page loads, in this order:
+
+     {% block pageCSS %}<link rel="stylesheet" href="/css/Common/event-rank.css">{% endblock %}
+     {% block pageJS %}
+       <script src="/js/lib/event-rank.js" defer></script>
+       <script src="/js/event-rank-card.js" defer></script>
+     {% endblock %}
+
+   and can preset the inputs before including it, any of them optional:
+
+     {% set eventRank = { course: "SCY", gender: "Men", ageGroup: 50, stroke: "Free", distance: 50, howMany: 10, autoload: true } %}
+     {% include "partials/EventRank.njk" %}
+
+   plus id (default "event-rank", needed only for a second card on a page),
+   title, and level (the heading level, default 2). 
+   Page JS can also change the set later, which reloads the card:
+     card.dispatchEvent(new CustomEvent('eventrank:set', { detail: { stroke: 'Fly', distance: 100 } }))
+
+   Until usms.org allows this site's origin (see event-rank.js), the card
+   says so and links to the same set on usms.org instead. #}
+{% set er = eventRank or {} %}
+{% set erId = er.id or "event-rank" %}
+{% set erH = "h" + (er.level or 2) %}
+<section class="event-rank" data-event-rank
+  {%- if er.season %} data-season="{{ er.season }}"{% endif %}
+  {%- if er.course %} data-course="{{ er.course }}"{% endif %}
+  {%- if er.gender %} data-gender="{{ er.gender }}"{% endif %}
+  {%- if er.ageGroup %} data-age-group="{{ er.ageGroup }}"{% endif %}
+  {%- if er.stroke %} data-stroke="{{ er.stroke }}"{% endif %}
+  {%- if er.distance %} data-distance="{{ er.distance }}"{% endif %}
+  {%- if er.howMany %} data-how-many="{{ er.howMany }}"{% endif %}
+  {%- if er.autoload %} data-autoload{% endif %}
+  aria-labelledby="{{ erId }}-heading">
+  <header class="event-rank__header">
+    <{{ erH }} class="event-rank__title" id="{{ erId }}-heading">{{ er.title or "USMS Event Rankings" }}</{{ erH }}>
+    <p class="event-rank__sub">Times reported to USMS, one event and age group at a time.</p>
+  </header>
+  {# Options are filled in by event-rank-card.js from event-rank.js #}
+  <form class="event-rank__form" data-event-rank-form>
+    <label class="event-rank__field"><span>Season</span><select class="form-control" name="season"></select></label>
+    <label class="event-rank__field"><span>Course</span><select class="form-control" name="course"></select></label>
+    <label class="event-rank__field"><span>Gender</span><select class="form-control" name="gender"><option value="Men">Men</option><option value="Women">Women</option></select></label>
+    <label class="event-rank__field"><span>Stroke</span><select class="form-control" name="stroke"></select></label>
+    <label class="event-rank__field"><span>Distance</span><select class="form-control" name="distance"></select></label>
+    <label class="event-rank__field"><span>Age group</span><select class="form-control" name="ageGroup"></select></label>
+    <label class="event-rank__field"><span>Show</span><select class="form-control" name="howMany"></select></label>
+    <button type="submit" class="btn btn-primary event-rank__submit">Show rankings</button>
+  </form>
+  <p class="event-rank__status" data-event-rank-status role="status" aria-live="polite"></p>
+  <div class="event-rank__results" data-event-rank-results hidden>
+    <table class="event-rank__table">
+      <caption data-event-rank-caption></caption>
+      <thead>
+        <tr><th scope="col">#</th><th scope="col">Name</th><th scope="col">Age</th><th scope="col">Time</th><th scope="col">Club</th><th scope="col">Meet</th></tr>
+      </thead>
+      <tbody data-event-rank-rows></tbody>
+    </table>
+  </div>
+  <p class="event-rank__source"><a data-event-rank-link href="https://www.usms.org/comp/meets/toptimes.php" target="_blank" rel="noopener">View on usms.org</a></p>
+</section>
