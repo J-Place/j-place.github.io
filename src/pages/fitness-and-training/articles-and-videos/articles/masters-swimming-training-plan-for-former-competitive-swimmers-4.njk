@@ -95,7 +95,9 @@ relatedArticles:
           <p>But there's more good news here: Masters Swimming divides competition into five-year age groups so you're competing directly against others who are the same age. This gives you a fighting chance to <a href="/Global/Links/Header/Events/Calendar of Events">win races</a> even if it's been a long time since you last competed.</p>
         </div>
 
-        {% include "partials/Article/ArticleRelatedInPage.njk" %}
+        {% set showInPage = true %}
+        {% include "partials/PageContent/RelatedContent.njk" %}
+        {% set showInPage = false %}
 
         <div class="html-container include-in-nav">
           <h2>Ramp up slowly to avoid injury</h2>
@@ -146,6 +148,5 @@ relatedArticles:
 {# Full-width ad below the author bio: its own Sitecore section/container/row rendering, same as home and membership-comparison. #}
 {% include "partials/Advertising/Ad.njk" %}
 
-{# Replaced by the in-page Related Articles (ArticleRelatedInPage.njk) after the second RTE.
-{% include "partials/PageContent/RelatedContent.njk" %} #}
+{% include "partials/PageContent/RelatedContent.njk" %}
 {% endblock %}

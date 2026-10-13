@@ -1,98 +1,110 @@
-/* Box (padding, radius, font sizes) matches .key-points (article-key-points.css).
-   No production analog: in-page, stacked-row variant of the Related Articles band
-   (partials/PageContent/RelatedContent.njk). See ArticleRelatedInPage.njk. */
+/* Enhancement, no production analog: "Show in Page" rendering parameter on the Related Articles
+   band (partials/PageContent/RelatedContent.njk, helper class .show-in-page). Turns production's
+   full-width blue card band into stacked rows (thumbnail, title, author) inside the article column.
+   Box (padding, radius, font sizes) matches .key-points (article-key-points.css).
+   In-page markup is a bare .related-content (no section/usms-container/row/col wrappers).
+   Overrides production usms.min.css .related-content__* / .latest-content__* rules. */
 
-.related-in-page {
+.related-content.show-in-page {
   margin: 3rem 0;
   padding: 2rem 4rem 1.5rem 3rem;
   border-radius: 0 60px 60px 0;
   background-color: rgba(0, 0, 0, 0.05);
 }
 
-.related-in-page__title {
-  margin-top: 0;
-  margin-bottom: 2rem;
+.show-in-page .related-content__header {
+  margin: 0 0 2rem;
   font-size: 3rem;
   color: #555;
 }
 
-.related-in-page__list {
-  margin: -0.5rem 0 0;
-  padding: 0;
-  list-style: none;
+.show-in-page .related-content__container {
+  display: block;
+  margin-top: -0.5rem;
 }
 
-/* Two classes (0,2,0) to beat production common.min.css/usms.min.css
-   `.usms-container li { margin: 0 auto 1rem }` (0,1,1). */
-.related-in-page .related-in-page__item {
+/* Card → row: thumbnail spans both rows, title over author beside it. */
+.show-in-page .latest-content__article {
+  display: grid;
+  grid-template-columns: 6rem minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  column-gap: 1.5rem;
+  width: auto;
   margin: 0;
+  padding: 1.25rem 0;
+  background-color: transparent;
 }
 
-.related-in-page__item + .related-in-page__item {
+/* "Show in Page" shows three items; the fourth (and any beyond) stays in the full-width band only. */
+.show-in-page .latest-content__article:nth-child(n+4) {
+  display: none;
+}
+
+.show-in-page .latest-content__article + .latest-content__article {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.related-in-page__link {
-  display: flex;
-  align-items: flex-start;
-  gap: 1.5rem;
-  padding: 1.25rem 0;
-  text-decoration: none;
-}
-
-.related-in-page__link:hover,
-.related-in-page__link:focus {
-  text-decoration: none;
-}
-
-.related-in-page__link:hover .related-in-page__item-title,
-.related-in-page__link:focus .related-in-page__item-title {
-  text-decoration: underline;
-}
-
-.related-in-page__image-container {
-  flex: 0 0 6rem;
-  width: 6rem;
-  aspect-ratio: 4 / 3;
+.show-in-page .latest-content__image-container {
+  grid-row: 1 / span 2;
   overflow: hidden;
   background-color: rgb(231, 245, 255);
 }
 
-.related-in-page__image {
+.show-in-page .latest-content__image-container a {
   display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
-.related-in-page__detail {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
+.show-in-page .latest-content__image {
+  padding-bottom: 75%;
+  background-position: center;
 }
 
-.related-in-page__item-title {
+.show-in-page .latest-content__type,
+.show-in-page .latest-content__author-image-container {
+  display: none;
+}
+
+.show-in-page .latest-content__detail a {
+  text-decoration: none;
+}
+
+.show-in-page .latest-content__detail a:hover .latest-content__detail-header,
+.show-in-page .latest-content__detail a:focus .latest-content__detail-header {
+  text-decoration: underline;
+}
+
+.show-in-page .latest-content__detail-header {
+  margin: 0.2rem 0 0;
+  padding: 0;
   font-size: 1.6rem;
-  font-weight: 700;
   line-height: 1.2;
-  color: #333;
+  /* !important to beat the h3's .text-primary, which bootstrap.min.css (BS5 utilities) sets
+     with !important. */
+  color: #333 !important;
 }
 
-.related-in-page__author {
-  /* margin-top: 0.5rem; */
+.show-in-page .latest-content__author {
+  align-items: flex-start;
+  margin-top: 0;
+  padding: 0;
+}
+
+/* (0,3,0) to match production's
+   `.related-content__container .latest-content__author .latest-content__author-name`. */
+.show-in-page .related-content__container .latest-content__author-name {
+  padding: 0;
   font-size: 1.4rem;
   line-height: 2;
   color: #555;
 }
 
 @media (max-width: 767px) {
-  .related-in-page {
+  .related-content.show-in-page {
     padding: 2rem 3rem 1rem 2rem;
     border-radius: 0 30px 30px 0;
   }
 
-  .related-in-page__image-container {
-    flex-basis: 5.4rem;
-    width: 5.4rem;
+  .show-in-page .latest-content__article {
+    grid-template-columns: 5.4rem minmax(0, 1fr);
   }
 }

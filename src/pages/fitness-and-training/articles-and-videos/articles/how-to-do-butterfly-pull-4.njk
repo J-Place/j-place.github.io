@@ -102,7 +102,9 @@ relatedArticles:
           <p>Once you're in position, accelerate your arms backward to accelerate yourself forward. The challenge is that using both arms at the same time without body rotation requires a lot of strength and skill &mdash; you have to accelerate hard while keeping your arms facing backward, all without letting your pulling position collapse.</p>
         </div>
 
-        {% include "partials/Article/ArticleRelatedInPage.njk" %}
+        {% set showInPage = true %}
+        {% include "partials/PageContent/RelatedContent.njk" %}
+        {% set showInPage = false %}
 
         <div class="image-rendering image-left">
           <a>
@@ -213,6 +215,5 @@ relatedArticles:
 {# Full-width ad below the author bio: its own Sitecore section/container/row rendering, same as home and membership-comparison. #}
 {% include "partials/Advertising/Ad.njk" %}
 
-{# Replaced by the in-page Related Articles (ArticleRelatedInPage.njk) after the second RTE.
-{% include "partials/PageContent/RelatedContent.njk" %} #}
+{% include "partials/PageContent/RelatedContent.njk" %}
 {% endblock %}

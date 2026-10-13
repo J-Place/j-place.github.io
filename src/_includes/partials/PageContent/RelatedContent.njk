@@ -1,3 +1,16 @@
+{#- Rendering parameter "Show in Page": {% set showInPage = true %} before the include renders this
+    inside the article column as a bare .related-content (no section/usms-container/row/col
+    wrappers), as stacked rows (first three items only), styled by
+    css/Article/article-related-in-page.css. Reset it to false afterward so a later include on the
+    same page renders the default full-width band.
+    Production's inThisArticle.js (getArticleEnd) ends the sticky In This Article nav at the first
+    .related-content on the page, which would be this box; js/Article/inThisArticle.js overrides it
+    to skip .show-in-page (proposed dev handoff change; show-in-page is new, not in production). -#}
+{% if showInPage %}
+<div class="related-content show-in-page">
+  <h3 class="related-content__header">Related Articles</h3>
+  <div class="related-content__container">
+{% else %}
 <div class="section section-full bg-blue p-tb-30">
   <div class="usms-container">
     <div class="row">
@@ -5,6 +18,7 @@
         <h3 class="related-content__header">Related Articles</h3>
         <div class="col-xs-12">
           <div class="related-content__container">
+{% endif %}
             {% for article in relatedArticles %}
             <div class="latest-content__article">
               <div class="latest-content__image-container">
@@ -26,9 +40,14 @@
               </div>
             </div>
             {% endfor %}
+{% if showInPage %}
+  </div>
+</div>
+{% else %}
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+{% endif %}
