@@ -1,0 +1,394 @@
+---
+permalink: /fitness-and-training/swim-tools-v4/index.html
+title: Swim Tools | U.S. Masters Swimming
+pageTitle: Swim Tools
+# Opens as Jay Place (KT2JH) every time, whatever persona other pages saved
+# (pinSwimmer); ?user=<users.json key> still switches swimmer, and with it the
+# races, age group, gender, club and membership (swim-tools-v4.js)
+swimmerId: KT2JH
+pinSwimmer: true
+breadcrumbs:
+  - url: "/home"
+    label: "Home"
+  - url: "/fitness-and-training/articles-and-videos/index.html"
+    label: "Fitness and Training"
+courses: [SCY, SCM, LCM]
+strokes: [Free, Back, Breast, Fly, IM]
+---
+{% extends "layouts/article.njk" %}
+{% block pageCSS %}
+<link rel="stylesheet" href="/css/pages/swim-tools-v4.css">
+{% endblock %}
+{% block pageJS %}
+<script src="/js/swim-tools-v4.js" defer></script>
+{% endblock %}
+{% block content %}
+{# v4 of /fitness-and-training/swim-tools/, after the "Swim Tools v2 +
+   engagement layer" design reference: v2's tools with a goal, an age-up
+   and a get-back-to-racing card up top, one "time used by every tool"
+   switch (latest, best, goal), and a swim log. Filled in by
+   swim-tools-v4.js from race history (raceHistory.json), USMS rankings
+   (the Top Times files under /data/top-times/, fetched as each card needs
+   them; docs/api/top-times.openapi.yaml), the events calendar
+   (eventsEnriched.json) and club names (clubNames.js). The swim log is
+   kept in the viewer's browser and starts from a sample week. #}
+
+<script type="application/json" id="race-history-data">{{ { "default": swimmerId, "swimmers": raceHistory.swimmers } | dump | safe }}</script>
+{# Upcoming events: pool meets and virtual events, for the racing card #}
+{% set meets = [] %}
+{% for e in eventsEnriched %}{% if e.courseType in courses or e.virtual %}{% set _ = meets.push({ title: e.title, url: e.url, date: e.startDate, course: e.courseType, state: e.venueState, virtual: e.virtual }) %}{% endif %}{% endfor %}
+<script type="application/json" id="meets-data">{{ meets | dump | safe }}</script>
+{# Names for the personas' clubs (clubNames.js) #}
+<script type="application/json" id="club-names-data">{ {% for key, u in users %}{% if u.club and clubNames[u.club] %}{{ u.club | dump | safe }}: {{ clubNames[u.club] | dump | safe }}, {% endif %}{% endfor %}"": "" }</script>
+
+<section class="section section-full st4-page">
+  <div class="usms-container st4">
+
+    <div class="st4-head">
+      <div>
+        <h1 class="st4-head__title">Swim Tools</h1>
+        <p class="st4-head__lede" data-st4="welcome">Here's where your swimming stands.</p>
+      </div>
+      <div class="st4-head__meta" data-st4-member hidden>
+        <span data-st4="whoLine"></span>
+        <a href="#st4-races">Your races</a>
+        <a href="#st4-train">My swim log</a>
+      </div>
+      <a href="/join-usms/membership-comparison.html" class="st4-btn st4-btn--red" data-st4-guest hidden>Join to save goals and results</a>
+    </div>
+
+    {# ---------- Engagement cards ---------- #}
+    <section class="st4-band st4-band--top" aria-label="Your swimming">
+      <article class="st4-card st4-card--wide st4-goal">
+        <div class="st4-card__row">
+          <h2 class="st4-card__title" data-st4="goalTitle">Set a goal</h2>
+          <span class="st4-card__meta"><span data-st4="goalMeta"></span> · <button type="button" class="st4-link" data-modal-target="#st4Event">Change goal</button></span>
+        </div>
+        <div class="st4-goal__stats st4-num">
+          <div><div class="st4-stat__label" data-st4="latestLabel">Latest</div><div class="st4-stat__value" data-st4="latest">—</div></div>
+          <div><div class="st4-stat__label" data-st4="bestLabel">Best</div><div class="st4-stat__value" data-st4="best">—</div></div>
+          <div><div class="st4-stat__label">Goal</div><div class="st4-stat__value st4-stat__value--goal" data-st4="goal">—</div></div>
+          <div><div class="st4-stat__label">To go</div><div class="st4-stat__value"><span data-st4="toGo">—</span><span class="st4-stat__unit"> s</span></div></div>
+        </div>
+        <div class="st4-track" data-st4-track>
+          <div class="st4-track__bar" role="img" data-st4-track-bar>
+            <span class="st4-track__rail"></span>
+            <span class="st4-track__fill" data-st4-track-fill></span>
+            <span class="st4-track__goal" data-st4-track-goal></span>
+            <span class="st4-track__best" data-st4-track-best></span>
+            <span class="st4-track__latest" data-st4-track-latest></span>
+          </div>
+          <div class="st4-track__scale st4-num"><span data-st4="trackHi"></span><span>Filled: latest · ring: best · line: goal</span><span data-st4="trackLo"></span></div>
+        </div>
+        <div class="st4-actions">
+          <a href="#st4-plan" class="st4-btn st4-btn--blue">Practice at goal pace</a>
+          <button type="button" class="st4-btn st4-btn--outline" data-st4-share>Share progress card</button>
+        </div>
+        <p class="st4-share-note" data-st4="shareNote" aria-live="polite"></p>
+      </article>
+
+      <article class="st4-card st4-ageup">
+        <h2 class="st4-card__title" data-st4="ageUpTitle">Your age group</h2>
+        <p class="st4-card__text" data-st4="ageUpText"></p>
+        <div class="st4-gaps st4-num" data-st4-gaps></div>
+        <p class="st4-card__fine" data-st4="ageUpFine"></p>
+      </article>
+
+      <article class="st4-card st4-comeback">
+        <h2 class="st4-card__title" data-st4="sinceTitle">Find your next race</h2>
+        <p class="st4-card__text" data-st4="sinceText"></p>
+        <div class="st4-events" data-st4-events></div>
+        <div class="st4-links">
+          <a href="/events/index.html">See meets near you</a>
+          <a href="/fitness-and-training/swim-tools-v2/index.html#race-planning">Add a race</a>
+        </div>
+      </article>
+    </section>
+
+    {# ---------- Your event, and the time every tool uses ---------- #}
+    <nav class="st4-context" aria-label="Swim Tools sections">
+      <div class="st4-context__event">
+        <span class="st4-context__label">Your event</span>
+        <span class="st4-chip" data-st4="chipEvent"></span>
+        <span class="st4-chip" data-st4="chipCourse"></span>
+        <span class="st4-chip" data-st4="chipGroup"></span>
+        <button type="button" class="st4-link st4-link--sm" data-modal-target="#st4Event">Change</button>
+      </div>
+      <div class="st4-seg" role="group" aria-label="Time used by every tool" data-st4-refs></div>
+      <div class="st4-context__links">
+        <a href="#st4-race">Race planning</a><a href="#st4-convert">Time conversions</a><a href="#st4-train">Training</a>
+      </div>
+    </nav>
+
+    {# ---------- Race planning ---------- #}
+    <section class="st4-section" id="st4-race" aria-labelledby="st4-race-h">
+      <h2 class="st4-section__title" id="st4-race-h">Race planning</h2>
+      <div class="st4-band">
+        <article class="st4-card st4-card--wide">
+          <div class="st4-card__row">
+            <div>
+              <h3 class="st4-card__title">Event Forecast</h3>
+              <p class="st4-card__sub" data-st4="predSub"></p>
+            </div>
+            <button type="button" class="st4-link" data-st4-view>Table view</button>
+          </div>
+          <div data-st4-pred-chart>
+            <div class="st4-pred">
+              <svg class="st4-pred__svg" viewBox="0 0 100 100" preserveAspectRatio="none" role="img" data-st4-pred-svg>
+                <line x1="0" y1="100" x2="100" y2="100" class="st4-pred__base"></line>
+                {# The age group's slowest ranked swim at each distance #}
+                <polyline points="" class="st4-pred__line st4-pred__line--bottom" data-st4-pred-bottom></polyline>
+                <polyline points="" class="st4-pred__line st4-pred__line--group" data-st4-pred-group></polyline>
+                {# Your bests joined to the projected times, dashed #}
+                <polyline points="" class="st4-pred__line st4-pred__line--proj" data-st4-pred-proj></polyline>
+                <path d="" class="st4-pred__line" data-st4-pred-you></path>
+              </svg>
+              <div data-st4-pred-dots></div>
+            </div>
+            <div class="st4-pred__axis st4-num" data-st4-pred-axis></div>
+          </div>
+          <div class="st4-table-wrap" data-st4-pred-table hidden>
+            <table class="st4-table st4-num">
+              <thead><tr><th scope="col">Event</th><th scope="col">Your best</th><th scope="col">Per 100</th><th scope="col" data-st4="groupCol">Age-group middle</th><th scope="col">Per 100</th><th scope="col">Slowest</th><th scope="col">Per 100</th></tr></thead>
+              <tbody data-st4-pred-rows></tbody>
+            </table>
+          </div>
+          <div class="st4-insight" data-st4-insight></div>
+          <div class="st4-legend">
+            <span><span class="st4-legend__dot"></span> Your best per distance</span>
+            <span data-st4-legend-proj hidden><span class="st4-legend__dot st4-legend__dot--proj"></span> Projected</span>
+            <span><span class="st4-legend__dash"></span> <span data-st4="groupLegend">Age-group middle</span></span>
+            <span><span class="st4-legend__line"></span> Slowest swim</span>
+            <button type="button" class="st4-link st4-legend__cta" data-st4-goal-from></button>
+          </div>
+        </article>
+
+        <article class="st4-card st4-splits" id="st4-plan">
+          <div>
+            <h3 class="st4-card__title">Race Splits</h3>
+            <p class="st4-card__sub st4-num" data-st4="splitSub"></p>
+          </div>
+          <div class="st4-seg st4-seg--fill" role="group" aria-label="Strategy" data-st4-strats>
+            <button type="button" data-value="even" aria-pressed="true">Even</button>
+            <button type="button" data-value="fast" aria-pressed="false">Fast start</button>
+            <button type="button" data-value="neg" aria-pressed="false">Negative</button>
+          </div>
+          <div class="st4-splitbar" data-st4-splitbar aria-hidden="true"></div>
+          <div class="st4-splitrows st4-num" data-st4-splitrows></div>
+          <div class="st4-practice">
+            <div class="st4-practice__label">Practice this</div>
+            <div class="st4-practice__set st4-num" data-st4="practiceSet"></div>
+            <div class="st4-practice__note" data-st4="practiceNote"></div>
+            <div class="st4-links">
+              <a href="#0">Find sets in Workout Library</a>
+              <a href="#st4-train">Add to my log</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="st4-card st4-card--wide" id="st4-races">
+          <div class="st4-card__row">
+            <div>
+              <h3 class="st4-card__title">Your Races</h3>
+              <p class="st4-card__sub" data-st4="racesSub"></p>
+            </div>
+            <button type="button" class="st4-link" data-st4-races-toggle></button>
+          </div>
+          <ol class="st4-races st4-num" data-st4-races></ol>
+        </article>
+
+        <article class="st4-card st4-rank">
+          <div>
+            <h3 class="st4-card__title">Rank and Tier</h3>
+            <p class="st4-card__sub" data-st4="rankSub"></p>
+          </div>
+          <div class="st4-rank__body" data-st4-rank-body>
+            <div class="st4-rungs st4-num" data-st4-rungs></div>
+            <p class="st4-rank__next st4-num" data-st4="rankNext"></p>
+          </div>
+          <div class="st4-lock" data-st4-lock hidden>
+            <div class="st4-lock__title" data-st4="lockTitle"></div>
+            <div class="st4-lock__text">Members see their tier on every event and track it as new results arrive.</div>
+            <a href="/join-usms/membership-comparison.html" class="st4-btn st4-btn--red st4-btn--sm">Join U.S. Masters Swimming</a>
+          </div>
+          <button type="button" class="st4-link st4-rank__link" data-modal-target="#st4Top10" data-st4-top10>See Top 10 by season for this event</button>
+        </article>
+
+        {# Every race, filtered by course, stroke and distance; a single
+           event also gets its times over the years (swim-tools-v4.js) #}
+        <article class="st4-card st4-card--full st4-history" id="st4-history" aria-labelledby="st4-history-h">
+          <div class="st4-card__row">
+            <div>
+              <h3 class="st4-card__title" id="st4-history-h">Race History</h3>
+              <p class="st4-card__sub" data-st4="histSub"></p>
+            </div>
+          </div>
+          <div class="st4-history__filters">
+            <div class="st4-history__filter">
+              <span class="st4-history__label" id="st4-hist-course-label">Course</span>
+              <div class="st4-seg" role="group" aria-labelledby="st4-hist-course-label" data-st4-hist="course">
+                <button type="button" data-value="" aria-pressed="true">All</button>{% for c in courses %}<button type="button" data-value="{{ c }}" aria-pressed="false">{{ c }}</button>{% endfor %}
+              </div>
+            </div>
+            <div class="st4-history__filter">
+              <span class="st4-history__label" id="st4-hist-stroke-label">Stroke</span>
+              <div class="st4-seg" role="group" aria-labelledby="st4-hist-stroke-label" data-st4-hist="stroke">
+                <button type="button" data-value="" aria-pressed="true">All</button>{% for st in strokes %}<button type="button" data-value="{{ st }}" aria-pressed="false">{{ st }}</button>{% endfor %}
+              </div>
+            </div>
+            <label class="st4-history__filter">
+              <span class="st4-history__label">Distance</span>
+              <select class="form-control st4-history__select" data-st4-hist-distance></select>
+            </label>
+            <button type="button" class="st4-link st4-history__reset" data-st4-hist-reset hidden>Show all events</button>
+          </div>
+          {# Every event in the filters as its own line over time: pace per 100
+             (so a 50 and a 1650 share a scale), each race a dot with its time #}
+          <div class="st4-trend" data-st4-hist-trend hidden>
+            <p class="st4-trend__note" data-st4="trendNote"></p>
+            <div class="st4-trend__frame">
+              <div class="st4-trend__yaxis st4-num" data-st4-trend-y aria-hidden="true"></div>
+              <div class="st4-trend__chart">
+                <svg class="st4-trend__svg" viewBox="0 0 100 100" preserveAspectRatio="none" role="img" data-st4-trend-svg></svg>
+                <div data-st4-trend-dots></div>
+              </div>
+            </div>
+            <div class="st4-trend__axis st4-num" data-st4-trend-axis aria-hidden="true"></div>
+            <div class="st4-trend__legend" role="group" aria-label="Show or hide an event's line" data-st4-trend-legend></div>
+          </div>
+          <div class="st4-table-wrap">
+            <table class="st4-table st4-history__table st4-num">
+              <thead>
+                <tr>
+                  <th scope="col" aria-sort="descending" data-st4-sort-col="date"><button type="button" class="st4-sort" data-st4-sort="date">Date</button></th>
+                  <th scope="col">Age</th>
+                  <th scope="col">Course</th>
+                  <th scope="col">Event</th>
+                  <th scope="col" aria-sort="none" data-st4-sort-col="time"><button type="button" class="st4-sort" data-st4-sort="time">Time</button></th>
+                  <th scope="col">Vs best</th>
+                  <th scope="col">Vs last time</th>
+                </tr>
+              </thead>
+              <tbody data-st4-hist-rows></tbody>
+            </table>
+          </div>
+          <div class="st4-history__foot">
+            <span class="st4-num" data-st4="histCount"></span>
+            <button type="button" class="st4-link" data-st4-hist-more hidden></button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    {# ---------- Time conversions ---------- #}
+    <section class="st4-section" id="st4-convert" aria-labelledby="st4-convert-h">
+      <h2 class="st4-section__title" id="st4-convert-h">Time conversions</h2>
+      <div class="st4-band">
+        <article class="st4-card">
+          <h3 class="st4-card__title">Course Conversion</h3>
+          <p class="st4-card__sub st4-num" data-st4="convSub"></p>
+          <div class="st4-courses st4-num" data-st4-courses></div>
+          <p class="st4-callout st4-num" data-st4="convNote" hidden></p>
+        </article>
+        <article class="st4-card st4-card--wide">
+          <h3 class="st4-card__title">Age Conversion</h3>
+          <p class="st4-card__sub st4-num" data-st4="agesSub"></p>
+          <ol class="st4-ages st4-num" data-st4-ages></ol>
+        </article>
+      </div>
+    </section>
+
+    {# ---------- Training ---------- #}
+    <section class="st4-section" id="st4-train" aria-labelledby="st4-train-h">
+      <div class="st4-section__row">
+        <h2 class="st4-section__title" id="st4-train-h">Training</h2>
+        <a href="#st4-week" data-st4="logLink">My swim log</a>
+      </div>
+      <div class="st4-band st4-band--stack">
+        <form class="st4-logform" data-st4-logform>
+          <label class="st4-field">Distance <span class="st4-field__unit">(yards)</span>
+            <input class="st4-num" inputmode="numeric" value="2,400" data-st4-log="distance" aria-describedby="st4-log-calc">
+          </label>
+          <label class="st4-field">Time
+            <input class="st4-num" value="45:00" data-st4-log="time" aria-describedby="st4-log-calc">
+          </label>
+          <span class="st4-logform__calc st4-num" id="st4-log-calc" data-st4="logCalc"></span>
+          <button type="submit" class="st4-btn st4-btn--blue st4-logform__add">Add to Log</button>
+        </form>
+        <div aria-live="polite" data-st4-saved></div>
+        <div class="st4-band__grid">
+          <article class="st4-card st4-card--wide" id="st4-week">
+            <div class="st4-card__row">
+              <h3 class="st4-card__title">This week</h3>
+              <div class="st4-week__summary">
+                <span class="st4-num" data-st4="weekSummary"></span>
+                <a href="#st4-train">Open full log</a>
+              </div>
+            </div>
+            <div class="st4-week" data-st4-week></div>
+            <p class="st4-week__note" data-st4="weekNote"></p>
+          </article>
+          <article class="st4-card">
+            <h3 class="st4-card__title">Distance logged</h3>
+            <div class="st4-life st4-num"><span data-st4="lifeMi">—</span> mi</div>
+            <p class="st4-card__text" data-st4="lifeSince"></p>
+            <div class="st4-life__bar"><span data-st4-life-bar></span></div>
+            <p class="st4-card__fine st4-num" data-st4="lifeNext"></p>
+          </article>
+        </div>
+      </div>
+      <div class="st4-mlog">
+        <button type="button" class="st4-mlog__btn" data-st4-mlog>Log a swim</button>
+      </div>
+    </section>
+
+    <p class="st4-disclaimer">Results are estimates. Race history is from USMS meet results. Age-group middles and tiers come from the full USMS event rankings for your age group's latest season (SCY so far; other courses converted from it): the middle is the median swim, and the tiers are the Top 10, then 11th place to the 25th percentile, the 26th to 50th, the 51st to 75th, and the rest. Real rankings are loaded for SCY men 40–44 and 50–54 so far; other seasons and age groups use synthetic rankings, modeled from USMS percentile cuts and the shape of the real rankings, and marked "synthetic data" wherever they appear. The swim log is sample data kept in your browser.</p>
+  </div>
+</section>
+
+{# Change the event and goal #}
+{% set modalId = "st4Event" %}
+{% set modalModifier = "st4-modal" %}
+{% set modalTitle = "Your event and goal" %}
+{% set modalBody %}
+<div class="st4-modal__grid">
+  <label class="st4-field">Course
+    <select class="form-control" data-st4-edit="course">{% for c in courses %}<option>{{ c }}</option>{% endfor %}</select>
+  </label>
+  <label class="st4-field">Stroke
+    <select class="form-control" data-st4-edit="stroke">{% for s in strokes %}<option>{{ s }}</option>{% endfor %}</select>
+  </label>
+  <label class="st4-field">Distance
+    <select class="form-control" data-st4-edit="distance"></select>
+  </label>
+  <label class="st4-field">Goal time <span class="st4-field__unit">(m:ss.hh)</span>
+    <input class="form-control st4-num" data-st4-edit="goal" placeholder="29.99">
+  </label>
+</div>
+<p class="st4-modal__hint" data-st4="editHint">Leave the goal empty to aim just under your latest time.</p>
+{% endset %}
+{% set modalFooter %}
+<button type="button" class="btn btn-primary" data-st4-edit-save>Save</button>
+<button type="button" class="btn btn-default js-modal-close">Cancel</button>
+{% endset %}
+{% include "components/modal.njk" %}
+
+{# Top 10 by season for the event, from the Top Times files (swim-tools-v4.js) #}
+{% set modalId = "st4Top10" %}
+{% set modalModifier = "st4-modal" %}
+{% set modalSize = "lg" %}
+{% set modalTitle = "" %}
+{% set modalTitleId = "st4-top10-title" %}
+{% set modalBody %}
+<p class="st4-modal__sub" data-st4="t10Sub"></p>
+<div class="st4-t10-seasons st4-num" data-st4-t10-seasons></div>
+<p class="st4-modal__hint st4-num" data-st4="t10Key"></p>
+<h4 class="st4-t10__heading" data-st4="t10Heading"></h4>
+<ol class="st4-t10-list st4-num" data-st4-t10-list></ol>
+<p class="st4-modal__hint st4-num" data-st4="t10Note"></p>
+{% endset %}
+{% set modalFooter %}
+<button type="button" class="btn btn-default js-modal-close">Close</button>
+{% endset %}
+{% include "components/modal.njk" %}
+{% endblock %}

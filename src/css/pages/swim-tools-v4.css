@@ -1,0 +1,1593 @@
+/* Swim Tools v4 (/fitness-and-training/swim-tools-v4/): the "Swim Tools v2 +
+   engagement layer" design reference, with its values carried over from
+   the reference's inline styles. Enhancement, not a production page. */
+
+.st4-page {
+  --st4-ink: #262627;
+  --st4-muted: #595959;
+  --st4-line: #E3E5E6;
+  --st4-border: #DDDDDD;
+  --st4-grey: #F6F7F8;
+  --st4-blue: #0068AD;
+  --st4-blue-hover: #267FB9;
+  --st4-sky: #8CC0E3;
+  --st4-panel: rgb(231, 245, 255);
+  --st4-red: #CC2030;
+  --st4-dash: #9A9A9A;
+  /* Production styles section (and .section-full) as display: table, which
+     widens to fit the content instead of the screen */
+  display: block;
+  background: #FFFFFF;
+  color: var(--st4-ink);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.st4-section {
+  display: block;
+  min-width: 0;
+}
+
+.st4 {
+  padding-top: 28px;
+  padding-bottom: 48px;
+}
+
+.st4 [hidden] {
+  display: none !important;
+}
+
+.st4 a,
+.st4-link {
+  color: var(--st4-blue);
+}
+
+.st4 a:hover,
+.st4-link:hover {
+  color: var(--st4-blue-hover);
+}
+
+.st4 button:focus-visible,
+.st4 a:focus-visible,
+.st4 input:focus-visible,
+.st4 select:focus-visible {
+  outline: 2px solid var(--st4-blue);
+  outline-offset: 2px;
+}
+
+.st4-num {
+  font-variant-numeric: tabular-nums;
+}
+
+.st4-link {
+  border: 0;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.st4-link--sm {
+  font-size: 13px;
+  font-weight: 400;
+}
+
+/* ---------- Buttons ---------- */
+
+.st4 .st4-btn {
+  display: inline-block;
+  border-radius: 4px;
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  cursor: pointer;
+  line-height: 1.4;
+}
+
+.st4 .st4-btn--blue {
+  background: var(--st4-blue);
+  color: #FFFFFF;
+  border: 0;
+}
+
+.st4 .st4-btn--outline {
+  border: 1px solid var(--st4-blue);
+  color: var(--st4-blue);
+  background: #FFFFFF;
+  padding: 9px 16px;
+}
+
+.st4 .st4-btn--red {
+  background: var(--st4-red);
+  color: #FFFFFF;
+  border: 0;
+}
+
+.st4 .st4-btn--blue:hover,
+.st4 .st4-btn--red:hover {
+  color: #FFFFFF;
+  text-decoration: none;
+  filter: brightness(0.94);
+}
+
+.st4 .st4-btn--sm {
+  padding: 8px 14px;
+}
+
+/* ---------- Head ---------- */
+
+.st4-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.st4-head__title {
+  margin: 0;
+  font-size: 44px;
+  font-weight: 400;
+  color: var(--st4-blue);
+  line-height: 1.15;
+}
+
+.st4 .st4-head__lede {
+  margin: 6px 0 0;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.st4-head__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 16px;
+  font-size: 13px;
+  color: var(--st4-muted);
+}
+
+.st4-head__meta a {
+  font-weight: 600;
+}
+
+/* ---------- Bands and cards ---------- */
+
+.st4-band {
+  background: var(--st4-panel);
+  border-radius: 8px;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+  gap: 16px;
+}
+
+.st4-band--top {
+  margin-top: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+}
+
+.st4-band--stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.st4-band__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 16px;
+}
+
+.st4-card {
+  min-width: 0;
+  background: #FFFFFF;
+  border: 1px solid var(--st4-border);
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Wide cards take two columns once there's room for them */
+@media (min-width: 992px) {
+  .st4-card--wide {
+    grid-column: span 2;
+  }
+}
+
+.st4-card__row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.st4-card__title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--st4-blue);
+  line-height: 1.25;
+}
+
+.st4 .st4-card__sub {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: var(--st4-muted);
+  line-height: 1.5;
+}
+
+.st4-card__meta {
+  font-size: 13px;
+  color: var(--st4-muted);
+}
+
+.st4-card__meta .st4-link {
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.st4 .st4-card__text {
+  margin: 0;
+  font-size: 14px;
+  color: var(--st4-muted);
+  line-height: 1.5;
+}
+
+.st4 .st4-card__fine {
+  margin: 0;
+  font-size: 12px;
+  color: var(--st4-muted);
+  line-height: 1.5;
+}
+
+.st4-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: auto;
+}
+
+/* ---------- Goal card ---------- */
+
+.st4-goal {
+  gap: 14px;
+}
+
+.st4-goal__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+}
+
+.st4-stat__label {
+  font-size: 13px;
+  color: var(--st4-muted);
+}
+
+.st4-stat__value {
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.st4-stat__value--goal {
+  color: var(--st4-blue);
+}
+
+.st4-stat__unit {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.st4-track__bar {
+  position: relative;
+  height: 34px;
+}
+
+.st4-track__rail,
+.st4-track__fill {
+  position: absolute;
+  top: 14px;
+  height: 6px;
+  border-radius: 3px;
+}
+
+.st4-track__rail {
+  left: 0;
+  right: 0;
+  background: var(--st4-line);
+}
+
+.st4-track__fill {
+  left: 0;
+  background: var(--st4-sky);
+}
+
+.st4-track__goal {
+  position: absolute;
+  top: 6px;
+  width: 3px;
+  height: 22px;
+  margin-left: -1px;
+  background: var(--st4-blue);
+}
+
+.st4-track__best,
+.st4-track__latest {
+  position: absolute;
+  top: 9px;
+  width: 16px;
+  height: 16px;
+  margin-left: -8px;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.st4-track__best {
+  background: #FFFFFF;
+  border: 2px solid var(--st4-ink);
+}
+
+.st4-track__latest {
+  background: var(--st4-blue);
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 0 0 1px var(--st4-blue);
+}
+
+.st4-track__scale {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--st4-muted);
+}
+
+.st4-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.st4 .st4-share-note {
+  margin: 0;
+  font-size: 13px;
+  color: var(--st4-muted);
+}
+
+.st4 .st4-share-note:empty {
+  display: none;
+}
+
+/* ---------- Age-up and comeback cards ---------- */
+
+.st4-gaps {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.st4-gaps__row {
+  display: grid;
+  grid-template-columns: 56px 1fr 60px;
+  gap: 8px;
+  align-items: center;
+}
+
+.st4-gaps__row.is-next {
+  font-weight: 700;
+}
+
+.st4-gaps__track {
+  height: 10px;
+  background: var(--st4-line);
+  border-radius: 5px;
+}
+
+.st4-gaps__track span {
+  display: block;
+  height: 100%;
+  background: var(--st4-sky);
+  border-radius: 5px;
+}
+
+.st4-gaps__row.is-next .st4-gaps__track span {
+  background: var(--st4-blue);
+}
+
+.st4-gaps__value {
+  text-align: right;
+}
+
+.st4-events {
+  border-top: 1px solid var(--st4-line);
+  padding-top: 10px;
+  font-size: 14px;
+}
+
+.st4-events:empty {
+  display: none;
+}
+
+.st4-events__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.st4-events__row + .st4-events__row {
+  margin-top: 4px;
+}
+
+.st4-events__row span {
+  color: var(--st4-muted);
+  white-space: nowrap;
+}
+
+/* ---------- Context bar ---------- */
+
+.st4-context {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--st4-line);
+  margin-top: 24px;
+  padding: 12px 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+}
+
+.st4-context__event {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.st4-context__label {
+  font-weight: 700;
+}
+
+.st4-chip {
+  border: 1px solid var(--st4-border);
+  border-radius: 4px;
+  padding: 4px 10px;
+}
+
+.st4-seg {
+  display: flex;
+  border: 1px solid var(--st4-border);
+  border-radius: 8px;
+  padding: 3px;
+  background: #FFFFFF;
+}
+
+.st4-seg button {
+  height: 34px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  background: transparent;
+  color: var(--st4-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.st4-seg button[aria-pressed="true"] {
+  background: var(--st4-blue);
+  color: #FFFFFF;
+}
+
+/* No times yet (no races, no goal): nothing to switch between */
+.st4-seg:empty {
+  display: none;
+}
+
+.st4-seg--fill button {
+  flex: 1;
+}
+
+.st4-context__links {
+  margin-left: auto;
+  display: flex;
+  gap: 18px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ---------- Sections ---------- */
+
+.st4-section {
+  margin-top: 22px;
+}
+
+.st4-section + .st4-section {
+  margin-top: 28px;
+}
+
+.st4-section__title {
+  margin: 0 0 10px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--st4-ink);
+}
+
+.st4-section__row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.st4-section__row .st4-section__title {
+  margin: 0;
+}
+
+.st4-section__row a {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ---------- Event Forecast ---------- */
+
+.st4-pred {
+  position: relative;
+  height: 180px;
+  margin: 20px 8px 6px;
+}
+
+.st4-pred__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.st4-pred__base {
+  stroke: var(--st4-line);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.st4-pred__line {
+  fill: none;
+  stroke: var(--st4-blue);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.st4-pred__line--group {
+  stroke: var(--st4-dash);
+  stroke-dasharray: 5 4;
+}
+
+/* The age group's slowest ranked swims: a light line */
+.st4-pred__line--bottom {
+  stroke: #D3D6D8;
+  stroke-width: 1.5;
+}
+
+.st4-pred__dot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--st4-blue);
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 0 0 1px var(--st4-blue);
+}
+
+/* A projected time: an open dot, on a dashed line from your real races */
+.st4-pred__line--proj {
+  stroke-dasharray: 2 4;
+  stroke-linecap: round;
+}
+
+.st4-pred__dot.is-projected {
+  background: #FFFFFF;
+  border-color: var(--st4-blue);
+  box-shadow: none;
+}
+
+.st4-pred__label {
+  position: absolute;
+  transform: translate(-50%, -150%);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.st4-pred__label.is-projected,
+.st4-pred__proj {
+  color: var(--st4-muted);
+  font-style: italic;
+}
+
+.st4-pred__proj small {
+  font-size: 11px;
+}
+
+.st4-pred__axis {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--st4-muted);
+  margin: 0 2px;
+}
+
+.st4-insight {
+  margin-top: 4px;
+  background: var(--st4-grey);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 14px;
+}
+
+.st4-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  font-size: 13px;
+  color: var(--st4-muted);
+}
+
+.st4-legend__dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--st4-blue);
+  vertical-align: middle;
+}
+
+.st4-legend__dot--proj {
+  background: #FFFFFF;
+  border: 2px solid var(--st4-blue);
+}
+
+.st4-legend__dash {
+  display: inline-block;
+  width: 18px;
+  border-top: 2px dashed var(--st4-dash);
+  vertical-align: middle;
+}
+
+.st4-legend__line {
+  display: inline-block;
+  width: 18px;
+  border-top: 2px solid #D3D6D8;
+  vertical-align: middle;
+}
+
+.st4-legend__cta {
+  margin-left: auto;
+  font-size: 13px;
+}
+
+.st4-table-wrap {
+  overflow-x: auto;
+  margin-top: 12px;
+}
+
+.st4-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.st4-table th,
+.st4-table td {
+  text-align: left;
+  padding: 8px 10px 8px 0;
+  border-top: 1px solid var(--st4-line);
+}
+
+.st4-table thead th {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--st4-muted);
+  border-top: 0;
+}
+
+/* ---------- Race Splits ---------- */
+
+.st4-splits {
+  gap: 12px;
+}
+
+.st4-splitbar {
+  display: flex;
+  gap: 3px;
+  height: 12px;
+}
+
+.st4-splitbar__seg {
+  background: var(--st4-blue);
+}
+
+.st4-splitbar__seg.is-alt {
+  background: var(--st4-sky);
+}
+
+.st4-splitbar__seg:first-child {
+  border-radius: 6px 0 0 6px;
+}
+
+.st4-splitbar__seg:last-child {
+  border-radius: 0 6px 6px 0;
+}
+
+.st4-splitrows {
+  font-size: 14px;
+}
+
+.st4-splitrows__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--st4-line);
+}
+
+.st4-splitrows__row span {
+  color: var(--st4-muted);
+}
+
+.st4-splitrows__row b {
+  font-size: 18px;
+}
+
+.st4-practice {
+  background: var(--st4-panel);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.st4-practice__label,
+.st4-practice__note {
+  font-size: 13px;
+  color: var(--st4-muted);
+}
+
+.st4-practice__set {
+  font-weight: 700;
+}
+
+.st4-practice .st4-links {
+  margin-top: 8px;
+}
+
+/* ---------- Your Races ---------- */
+
+.st4 .st4-races {
+  list-style: none;
+  margin: 2px 0 0;
+  padding: 0;
+}
+
+.st4 .st4-races__row {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) auto auto;
+  gap: 10px;
+  align-items: center;
+  padding: 9px 0;
+  border-top: 1px solid var(--st4-line);
+  font-size: 15px;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.st4-races__course {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--st4-blue);
+}
+
+.st4-races__date {
+  font-size: 13px;
+  color: var(--st4-muted);
+}
+
+.st4-races__time {
+  font-weight: 700;
+  font-size: 17px;
+  min-width: 76px;
+  text-align: right;
+}
+
+.st4-badge {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--st4-grey);
+  color: var(--st4-muted);
+  white-space: nowrap;
+}
+
+.st4-badge--best {
+  background: var(--st4-blue);
+  color: #FFFFFF;
+}
+
+/* ---------- Rank and Tier ---------- */
+
+.st4-rank {
+  position: relative;
+  gap: 12px;
+}
+
+.st4-rank__body.is-locked {
+  filter: blur(4px);
+  user-select: none;
+}
+
+.st4-rungs {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.st4-rung {
+  display: grid;
+  grid-template-columns: 76px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  padding: 7px 10px;
+  border-radius: 6px;
+  background: var(--st4-grey);
+  border: 2px solid transparent;
+}
+
+.st4-rung span:nth-child(2) {
+  font-size: 13px;
+  color: var(--st4-muted);
+}
+
+.st4-rung span:last-child {
+  font-size: 14px;
+}
+
+.st4-rung.is-here {
+  background: var(--st4-panel);
+  border-color: var(--st4-blue);
+}
+
+.st4 .st4-rank__next {
+  margin: 10px 0 0;
+  font-size: 14px;
+}
+
+.st4-lock {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 56px;
+  background: #FFFFFF;
+  border: 1px solid var(--st4-border);
+  border-radius: 8px;
+  padding: 14px;
+  box-shadow: 0 8px 24px rgba(38, 38, 39, 0.12);
+}
+
+.st4-lock__title {
+  font-weight: 700;
+}
+
+.st4-lock__text {
+  font-size: 14px;
+  color: var(--st4-muted);
+  margin-bottom: 8px;
+}
+
+.st4 .st4-rank__link {
+  margin-top: auto;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ---------- Conversions ---------- */
+
+.st4-courses {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.st4-courses__col {
+  padding: 0 12px;
+  border-left: 1px solid var(--st4-line);
+}
+
+.st4-courses__col:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.st4-courses__name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--st4-blue);
+}
+
+.st4-courses__time {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.st4 .st4-callout {
+  margin: 4px 0 0;
+  font-size: 14px;
+  background: var(--st4-grey);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.st4 .st4-ages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.st4 .st4-ages__row {
+  display: grid;
+  grid-template-columns: 70px minmax(0, 1fr) 76px;
+  gap: 12px;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 6px;
+  margin: 0;
+  font-size: 15px;
+}
+
+.st4-ages__row.is-now {
+  background: var(--st4-grey);
+  font-weight: 700;
+}
+
+.st4-ages__row.is-next {
+  background: var(--st4-panel);
+  font-weight: 700;
+}
+
+.st4-ages__note {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--st4-muted);
+}
+
+.st4-ages__time {
+  text-align: right;
+  font-weight: 700;
+  font-size: 17px;
+}
+
+/* ---------- Training ---------- */
+
+.st4-logform {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 14px 18px;
+}
+
+.st4 .st4-field,
+.st4-modal .st4-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.st4-field__unit {
+  font-weight: 400;
+  color: var(--st4-muted, #595959);
+  font-size: 13px;
+}
+
+.st4-logform input {
+  width: 100px;
+  height: 44px;
+  border: 1px solid var(--st4-border);
+  border-radius: 4px;
+  padding: 0 10px;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.st4-logform__calc {
+  font-size: 14px;
+  color: var(--st4-muted);
+  padding-bottom: 12px;
+}
+
+.st4 .st4-logform__add {
+  margin-left: auto;
+  min-height: 44px;
+  padding: 0 18px;
+}
+
+[data-st4-saved]:empty {
+  display: none;
+}
+
+.st4-saved {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  background: #FFFFFF;
+  border: 1px solid var(--st4-blue);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+}
+
+.st4-saved svg {
+  fill: none;
+  stroke: var(--st4-blue);
+  stroke-width: 2.5;
+}
+
+.st4-saved .st4-link {
+  margin-left: auto;
+  min-height: 32px;
+}
+
+.st4-saved--guest {
+  border-color: var(--st4-border);
+}
+
+.st4-saved--guest .st4-btn {
+  margin-left: auto;
+}
+
+.st4-week__summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 16px;
+  font-size: 14px;
+}
+
+.st4-week__summary a {
+  font-weight: 600;
+}
+
+.st4-week {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8px;
+  height: 126px;
+  margin-top: 4px;
+}
+
+.st4 .st4-week__day {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  text-decoration: none;
+  color: var(--st4-muted);
+}
+
+.st4-week__bar {
+  display: block;
+  width: 100%;
+  max-height: 90px;
+  background: var(--st4-line);
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.st4-week__bar.is-done {
+  background: var(--st4-blue);
+}
+
+.st4-week__bar.is-planned {
+  background: #FFFFFF;
+  border: 2px dashed var(--st4-blue);
+}
+
+.st4-week__day:hover .st4-week__bar {
+  outline: 2px solid var(--st4-blue);
+  outline-offset: 1px;
+}
+
+.st4-week__label {
+  margin-top: 4px;
+  font-size: 12px;
+  text-align: center;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+}
+
+.st4 .st4-week__note {
+  margin: 2px 0 0;
+  font-size: 14px;
+}
+
+.st4-life {
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.st4-life__bar {
+  height: 8px;
+  background: var(--st4-line);
+  border-radius: 4px;
+  margin-top: 4px;
+}
+
+.st4-life__bar span {
+  display: block;
+  height: 100%;
+  background: var(--st4-blue);
+  border-radius: 4px;
+}
+
+/* The phone's sticky Log a swim button */
+.st4-mlog {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .st4-mlog {
+    display: flex;
+    position: sticky;
+    bottom: 0;
+    padding: 12px 0 calc(12px + env(safe-area-inset-bottom, 0px));
+    justify-content: center;
+  }
+
+  .st4-head__title {
+    font-size: 34px;
+  }
+
+  .st4-context {
+    position: static;
+  }
+
+  .st4-context__links {
+    margin-left: 0;
+  }
+}
+
+.st4-mlog__btn {
+  width: 100%;
+  min-height: 48px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--st4-blue);
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 16px;
+  box-shadow: 0 6px 18px rgba(0, 104, 173, 0.3);
+  cursor: pointer;
+}
+
+.st4 .st4-disclaimer {
+  margin: 24px 0 0;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--st4-muted);
+  line-height: 1.5;
+}
+
+/* ---------- Event and goal modal ---------- */
+
+.st4-modal__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 16px;
+}
+
+.st4-modal .st4-modal__hint {
+  margin: 12px 0 0;
+  font-size: 13px;
+  color: #595959;
+}
+
+/* ---------- Top 10 by season (modal) ---------- */
+
+.st4-modal .st4-modal__sub {
+  margin: 0 0 14px;
+  color: #595959;
+}
+
+.st4-t10-seasons {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.st4-t10-season {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr) 128px;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  padding: 6px 8px;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  background: none;
+  font: inherit;
+  font-size: 14px;
+  color: #262627;
+  text-align: left;
+  cursor: pointer;
+}
+
+.st4-t10-season:hover {
+  background: #F6F7F8;
+}
+
+.st4-t10-season.is-on {
+  background: rgb(231, 245, 255);
+  border-color: #0068AD;
+}
+
+.st4-t10-season__track {
+  position: relative;
+  height: 10px;
+  background: #E3E5E6;
+  border-radius: 5px;
+}
+
+.st4-t10-season__range {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  min-width: 4px;
+  background: #0068AD;
+  border-radius: 5px;
+}
+
+.st4-t10-season__you {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 2px;
+  margin-left: -1px;
+  background: #CC2030;
+}
+
+.st4-t10-season__times {
+  text-align: right;
+  color: #595959;
+}
+
+.st4-modal .st4-t10__heading {
+  margin: 18px 0 6px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #262627;
+}
+
+.st4-modal .st4-t10-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.st4-modal .st4-t10-list__row {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: baseline;
+  padding: 7px 0;
+  border-top: 1px solid #E3E5E6;
+  margin: 0;
+  font-size: 14px;
+}
+
+.st4-t10-list__place {
+  font-weight: 700;
+  color: #0068AD;
+}
+
+.st4-t10-list__meta {
+  font-size: 12px;
+  color: #595959;
+}
+
+@media (max-width: 640px) {
+  .st4-t10-season {
+    grid-template-columns: 72px minmax(0, 1fr);
+  }
+
+  .st4-t10-season__times {
+    grid-column: 2;
+    text-align: left;
+  }
+}
+
+/* A tall panel (Top 10 by season) would push the centred dialog, close
+   button and all, off the top of a short screen; its body scrolls instead */
+.st4-modal .modal-body {
+  max-height: calc(100vh - 170px);
+  overflow-y: auto;
+}
+
+/* ---------- Race History ---------- */
+
+.st4-card--full {
+  grid-column: 1 / -1;
+}
+
+.st4-history {
+  gap: 14px;
+}
+
+.st4-history__filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px 20px;
+}
+
+.st4 .st4-history__filter {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  font-weight: 400;
+}
+
+.st4-history__label {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.st4 .st4-history__select {
+  height: 42px;
+  min-width: 96px;
+  font-size: 14px;
+}
+
+.st4-history__reset {
+  padding-bottom: 10px;
+}
+
+.st4-sort {
+  border: 0;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-weight: 600;
+  color: var(--st4-blue);
+  cursor: pointer;
+}
+
+.st4-sort::after {
+  content: "";
+  margin-left: 4px;
+}
+
+[aria-sort="descending"] > .st4-sort::after {
+  content: "↓";
+}
+
+[aria-sort="ascending"] > .st4-sort::after {
+  content: "↑";
+}
+
+.st4-history__table td {
+  white-space: nowrap;
+}
+
+.st4-history__time {
+  font-weight: 700;
+}
+
+.st4-history__change.is-faster {
+  color: #1F7A3A;
+  font-weight: 600;
+}
+
+.st4-history__change.is-slower {
+  color: var(--st4-muted);
+}
+
+.st4-history__first {
+  font-size: 13px;
+  color: var(--st4-muted);
+}
+
+.st4 .st4-history__empty {
+  text-align: center;
+  color: var(--st4-muted);
+  padding: 18px 0;
+}
+
+.st4-history__foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--st4-muted);
+}
+
+.st4 .st4-trend__note {
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: var(--st4-muted);
+}
+
+.st4-trend__frame {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: 8px;
+}
+
+.st4-trend__yaxis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--st4-muted);
+  text-align: right;
+  padding: 18px 0;
+}
+
+.st4-trend__chart {
+  position: relative;
+  height: 260px;
+  margin: 18px 10px 4px;
+  border-left: 1px solid var(--st4-line);
+  border-bottom: 1px solid var(--st4-line);
+}
+
+.st4-trend__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.st4-trend__line {
+  fill: none;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.85;
+}
+
+.st4-trend__dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  border-radius: 50%;
+  border: 2px solid;
+  box-sizing: border-box;
+}
+
+.st4-trend__dot.is-best {
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  border-width: 3px;
+}
+
+.st4-trend__label {
+  position: absolute;
+  transform: translate(-50%, -170%);
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  pointer-events: none;
+  text-shadow: 0 0 2px #FFFFFF, 0 0 2px #FFFFFF;
+}
+
+.st4-trend__axis {
+  position: relative;
+  height: 18px;
+  margin: 0 10px 0 58px;
+  font-size: 12px;
+  color: var(--st4-muted);
+}
+
+.st4-trend__axis span {
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+.st4-trend__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.st4-trend__legend:empty {
+  display: none;
+}
+
+.st4-trend__key {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--st4-border);
+  border-radius: 999px;
+  background: #FFFFFF;
+  padding: 3px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  color: var(--st4-ink);
+}
+
+.st4-trend__key[aria-pressed="false"] {
+  color: var(--st4-muted);
+  background: var(--st4-grey);
+  text-decoration: line-through;
+}
+
+.st4-trend__key[aria-pressed="false"] .st4-trend__swatch {
+  opacity: 0.3;
+}
+
+.st4-trend__swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.st4-trend__count {
+  color: var(--st4-muted);
+  font-size: 12px;
+}
+
+/* Race History's Top 10 lines: 10th place each season, a 1px light grey
+   line, dashed where the season is synthetic */
+.st4-trend__line--top10 {
+  stroke: #BFC4C8;
+  stroke-width: 1;
+  opacity: 1;
+}
+
+.st4-trend__line--top10.is-synthetic {
+  stroke-dasharray: 3 3;
+}
+
+.st4-trend__swatch--top10 {
+  background: #C9CDD0;
+}
+
+/* Synthetic (modeled, not real) Top Times data: flagged wherever it shows */
+.st4-synth {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 0 6px;
+  border: 1px dashed #9A9A9A;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #595959;
+  vertical-align: middle;
+}
+
