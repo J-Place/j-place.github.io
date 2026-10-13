@@ -1,0 +1,40 @@
+{# The time Time Conversions converts: its own event and time, independent of
+   Your Event. Feeds Course Conversion and Age Conversion (swim-tools-v2.js).
+   The controls band of the Time Conversions panel, laid out like Your Event. #}
+{% from "partials/SwimToolsV2/TimeField.njk" import timeField %}
+<div class="swim-panel__band swim-panel__band--blue">
+  <div class="swim-deck__context" role="group" aria-label="Time to convert, applies to every conversion">
+    <div class="swim-swim__field">
+      <span class="swim-swim__label" id="sd-conv-course-label">Course</span>
+      <div class="swim-seg" role="group" aria-labelledby="sd-conv-course-label" data-conv="course">
+        {% for c in courses %}<button type="button" data-value="{{ c }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ c }}</button>{% endfor %}
+      </div>
+    </div>
+    <div class="swim-swim__field">
+      <label class="swim-swim__label" for="sd-conv-distance">Distance</label>
+      <div class="swim-deck__field">
+        <select class="form-control" id="sd-conv-distance" data-conv-input="distance" data-st-conv-options>
+          {% for d in [50, 100, 200, 500, 1000, 1650] %}<option value="{{ d }}"{{ ' selected' if d == 200 }}>{{ d }}</option>{% endfor %}
+        </select>
+        <span class="swim-deck__field-value" aria-hidden="true" data-st="convDistance">200</span>
+      </div>
+    </div>
+    <div class="swim-swim__field">
+      <span class="swim-swim__label" id="sd-conv-stroke-label">Stroke</span>
+      <div class="swim-seg" role="group" aria-labelledby="sd-conv-stroke-label" data-conv="stroke">
+        {% for s in strokes %}<button type="button" data-value="{{ s }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ s }}</button>{% endfor %}
+      </div>
+    </div>
+    <div class="swim-swim__field">
+      <span class="swim-swim__label" id="sd-conv-time-label">Time</span>
+      {{ timeField("sd-conv-time-label", 'data-time-conv="time"', "xs") }}
+    </div>
+    {# Age Conversion and Rank in Age Group start from this age #}
+    <div class="swim-swim__field">
+      <label class="swim-swim__label" for="sd-age">Your age</label>
+      <input type="number" inputmode="numeric" min="18" max="120" class="form-control swim-ages__age" id="sd-age" data-input="age" value="27">
+    </div>
+  </div>
+  {# Time errors; hidden while empty #}
+  <p class="swim-deck__note swim-convert__hint" data-st="convHint" aria-live="polite"></p>
+</div>

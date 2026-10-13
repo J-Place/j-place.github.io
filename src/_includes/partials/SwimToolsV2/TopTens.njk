@@ -1,0 +1,34 @@
+{# USMS Top 10 by decade for one event: each season's range, 1st to 10th,
+   with your goal across it on Your Event (src/_data/topTens.json): the list
+   for the swimmer's age group and gender, or else the first one, noted.
+   Its stroke and distance start from Your Event and follow it when it
+   changes, and can be changed here on their own. Drawn by swim-tools-v2.js. #}
+<script type="application/json" id="top-tens-data">{{ topTens | dump | safe }}</script>
+<article class="swim-card" id="top-tens">
+  <header class="swim-card__header">
+    <div class="swim-card__heading">
+      <h3 class="swim-card__title">Top 10 by Decade</h3>
+      <p class="swim-card__sub" data-st="topTensSubtitle"></p>
+    </div>
+    <div class="swim-tens__filters" role="group" aria-label="Top 10 event">
+      <div class="swim-seg" role="group" aria-label="Stroke" data-tens="stroke">
+        {% for s in strokes %}<button type="button" data-value="{{ s }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ s }}</button>{% endfor %}
+      </div>
+      {# Options follow the stroke, in the lists' course (swim-tools-v2.js) #}
+      <div class="swim-deck__field">
+        <select class="form-control" aria-label="Distance" data-tens-input="distance" data-st-tens-options>
+          {% for d in [50, 100, 200, 500, 1000, 1650] %}<option value="{{ d }}"{{ ' selected' if d == 200 }}>{{ d }}</option>{% endfor %}
+        </select>
+        <span class="swim-deck__field-value" aria-hidden="true" data-st="tensDistance">200</span>
+      </div>
+    </div>
+  </header>
+  <div class="swim-chart">
+    <svg class="swim-chart__svg swim-tens__svg" viewBox="0 0 960 264" role="img" data-st-top-tens></svg>
+  </div>
+  <ul class="swim-chart__legend">
+    <li><span class="swim-chart__key swim-chart__key--range"></span>1st to 10th</li>
+    <li data-st-top-tens-goal hidden><span class="swim-chart__key swim-chart__key--goal-line"></span>Goal</li>
+  </ul>
+  <p class="swim-deck__note" data-st="topTensNote"></p>
+</article>

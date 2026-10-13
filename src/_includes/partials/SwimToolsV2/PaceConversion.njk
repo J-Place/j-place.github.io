@@ -1,0 +1,14 @@
+{# Pace Conversion: the Your Swim pace per 100 in the two courses other than
+   the one swum (Training Pace shows that one). Filled by swim-tools-v2.js.
+   Display only. #}
+<div class="swim-kpi" id="pace-conversion">
+  <span class="swim-kpi__label"><i class="fa-solid fa-right-left swim-kpi__icon--conversion" aria-hidden="true"></i>Pace conversion</span>
+  <div class="swim-tiles swim-tiles--two">
+    {% for n in [1, 2] %}
+    <div class="swim-tile">
+      <span class="swim-tile__course" data-st="convCourse{{ n }}"></span>
+      <span class="swim-tile__time" data-st="convPace{{ n }}"></span>
+    </div>
+    {% endfor %}
+  </div>
+</div>

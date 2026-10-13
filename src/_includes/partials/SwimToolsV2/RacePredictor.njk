@@ -1,0 +1,48 @@
+{# Average times for events you haven't raced (src/_data/averageTimes.json) #}
+<script type="application/json" id="average-times-data">{{ averageTimes.times | dump | safe }}</script>
+{# The age group range: USMS B and A cut times (src/_data/ageGroupRanges.js) #}
+<script type="application/json" id="age-group-ranges-data">{{ ageGroupRanges | dump | safe }}</script>
+<article class="swim-card" id="race-predictor">
+  <header class="swim-card__header">
+    <div class="swim-card__heading">
+      <h3 class="swim-card__title">Race Time Predictor</h3>
+      <p class="swim-card__sub" data-st="predSubtitle"></p>
+    </div>
+    <div class="swim-seg" role="group" aria-label="View" data-control="view">
+      <button type="button" data-value="chart" aria-pressed="true">Curve</button><button type="button" data-value="table" aria-pressed="false">Table</button>
+    </div>
+    <button type="button" class="swim-card__edit" data-modal-target="#swimDeckRace" aria-label="Add a race"><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+  </header>
+
+  <div data-view-panel="chart">
+    <div class="swim-chart">
+      {# Drawn by swim-tools-v2.js #}
+      <svg class="swim-chart__svg" viewBox="0 0 720 270" role="img" data-st-chart></svg>
+    </div>
+    <ul class="swim-chart__legend">
+      <li data-st-legend-mine hidden><span class="swim-chart__key swim-chart__key--known"></span>Your races</li>
+      <li data-st-legend-estimate hidden><span class="swim-chart__key swim-chart__key--estimate"></span>Your estimate</li>
+      <li><span class="swim-chart__key swim-chart__key--average-line"></span>Age group average</li>
+      {# USMS B (top 55%) to A (top 15%) for the swimmer's age group and
+         gender (timeStandards.json); hidden when there's no such data #}
+      <li data-st-legend-age-range hidden><span class="swim-chart__key swim-chart__key--age-range"></span>Age group range (top 15–55%)</li>
+      {# The latest USMS Top 10, 1st to 10th (topTens.json), for the chart's
+         course and the swimmer's age group and gender; hidden when there's
+         no such list #}
+      <li data-st-legend-top-ten hidden><span class="swim-chart__key swim-chart__key--top-ten"></span><span data-st="topTenLegend">Top ten range</span></li>
+      <li><span class="swim-chart__key swim-chart__key--goal"></span>Your event</li>
+      <li data-st-legend-goal hidden><span class="swim-chart__key swim-chart__key--goal-line"></span>Goal pace</li>
+    </ul>
+  </div>
+
+  <div data-view-panel="table" hidden>
+    <div class="swim-table-wrap">
+      <table class="swim-table">
+        <thead>
+          <tr><th scope="col">Event</th><th scope="col">Average</th><th scope="col" data-st-you-col hidden>You</th><th scope="col" data-st-top-ten-col hidden>Top 10</th><th scope="col">Per 100</th><th scope="col" data-st-goal-col hidden>Goal</th><th scope="col">Source</th></tr>
+        </thead>
+        <tbody data-st-pred-rows></tbody>
+      </table>
+    </div>
+  </div>
+</article>

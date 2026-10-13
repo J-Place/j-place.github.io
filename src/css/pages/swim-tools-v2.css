@@ -1,0 +1,1666 @@
+/* Swim Tools v2. New page, no production source to mirror yet. Layout and
+   modules follow the "Race Deck" design reference, restyled from its dark
+   theme to USMS brand colors on light surfaces. Blue carries accents and the
+   predictor curve; red is kept for the goal event and the current age group.
+   All values are sample data (swim-tools-v2.js). */
+
+.swim-deck,
+.swim-deck-modal {
+  --sd-blue: #0068ad;
+  --sd-blue-hover: #267fb9; /* production .btn-primary:hover, usms.min.css */
+  --sd-red: #cc2030;
+  --sd-ink: #262627;
+  --sd-muted: #595959;
+  --sd-border: #dddddd;
+  --sd-rule: #e3e5e6;
+  --sd-subtle: #f6f7f8;
+  /* Same light blue as the v1 cards and the article v4 key points block */
+  --sd-tint: rgb(231, 245, 255);
+  /* Not USMS brand colours; requested for the Training Pace and Pace
+     Conversion icons */
+  --sd-yellow: #ffbe00;
+  --sd-orange: #ff7f00;
+}
+
+/* Production's section { display: table } (usms.min.css) lets the page grow
+   to fit the chart's min-width on phones instead of scrolling the chart. */
+.swim-deck-page {
+  display: block;
+}
+
+/* ---------- Page head ---------- */
+
+.swim-deck__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px 24px;
+  margin-bottom: 20px;
+}
+
+.swim-deck__title {
+  margin: 0 0 8px;
+}
+
+.swim-deck .swim-deck__intro {
+  margin: 0;
+  font-size: 18px;
+}
+
+/* Add to Log: production's outline button (.btn.btn-outline, usms.min.css:
+   white, 1px #0068ad border and text), at the right end of the Your Swim
+   fields and as tall as them (44px, like production's .form__container
+   .btn-outline; not .btn-md, whose height is 32px !important) */
+.swim-swim__save {
+  display: inline-flex;
+  align-items: center;
+  height: 44px;
+  margin-left: auto;
+  padding: 0 16px;
+  font-size: 15px;
+}
+
+/* Below 1100px the fields wrap anyway: Add to Log takes its own last row,
+   on the left. The ::after is a full-width break placed just before it. */
+@media (max-width: 1099px) {
+  .swim-swim__fields::after {
+    content: "";
+    flex-basis: 100%;
+    order: 1;
+  }
+
+  .swim-swim__save {
+    order: 2;
+    margin: 0;
+  }
+}
+
+/* ---------- Context bar ---------- */
+
+.swim-deck__context {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 14px 24px;
+  padding: 14px 20px;
+  border-radius: 8px;
+  background: var(--sd-tint);
+}
+
+/* Distance select, between the Course and Stroke controls. Built like a
+   .swim-seg: the wrapper is the white track, and the selected distance is a
+   blue pressed pill. A select can't paint part of itself, so the pill is a
+   separate span laid over the select's hidden text, leaving the arrow on the
+   white track. */
+.swim-deck__field {
+  position: relative;
+  display: flex;
+  padding: 3px;
+  border: 1px solid var(--sd-border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.swim-deck .swim-deck__field > .form-control,
+.swim-deck-modal .swim-deck__field > .form-control {
+  width: 85px; /* 93px overall with the track; fixed so it doesn't resize between courses */
+  height: 36px;
+  padding: 0 30px 0 0; /* 30px arrow area, matched by the pill's right edge */
+  border: 0;
+  border-radius: 5px;
+  /* Grey chevron, same grey as the unpressed Course and Stroke labels */
+  background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23595959' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 8px center / 12px 8px;
+  box-shadow: none;
+  color: transparent; /* the pill shows the value */
+  font-size: 14px;
+  appearance: none;
+  cursor: pointer;
+}
+
+.swim-deck__field-value {
+  /* Spans the select minus its 30px arrow area (the select's right padding),
+     so the pill's right edge and the arrow area never move */
+  position: absolute;
+  top: 3px;
+  right: 33px; /* 3px track padding + 30px arrow area */
+  left: 3px;
+  height: 36px;
+  border-radius: 5px;
+  background: var(--sd-blue);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 36px;
+  text-align: center;
+  pointer-events: none; /* clicks reach the select underneath */
+}
+
+.swim-deck__field:hover .swim-deck__field-value {
+  background: var(--sd-blue-hover);
+}
+
+/* Chrome counts a select as focus-visible even after a mouse pick, so the
+   focus ring only shows while the keyboard is in use (.swim-keyboard, from
+   swim-tools-v2.js), on the pill so the track's border stays grey. */
+.swim-deck .swim-deck__field > .form-control:focus,
+.swim-deck-modal .swim-deck__field > .form-control:focus {
+  outline: 0;
+}
+
+.swim-keyboard .swim-deck__field > .form-control:focus + .swim-deck__field-value {
+  outline: 2px solid #fff;
+  outline-offset: -4px;
+}
+
+/* The open list keeps normal dark-on-white options */
+.swim-deck__field option {
+  background: #fff;
+  color: var(--sd-ink);
+}
+
+/* ---------- Section ribbon ---------- */
+
+/* The design reference's side rail, laid out horizontally above the
+   sections */
+.swim-ribbon {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 28px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--sd-border);
+}
+
+.swim-ribbon__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 16px 0 12px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--sd-blue);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.swim-ribbon__link svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.swim-ribbon__link:hover,
+.swim-ribbon__link:focus {
+  background: var(--sd-tint);
+  color: var(--sd-blue);
+  text-decoration: none;
+}
+
+.swim-ribbon__link:focus-visible {
+  outline: 2px solid var(--sd-blue);
+  outline-offset: 2px;
+}
+
+.swim-ribbon__link[aria-pressed="true"] {
+  border-color: var(--sd-blue);
+  background: var(--sd-tint);
+}
+
+@media (max-width: 479px) {
+  .swim-ribbon__link {
+    flex: 1 1 auto;
+    justify-content: center;
+    padding: 0 10px;
+    font-size: 14px;
+  }
+}
+
+.swim-deck__eyebrow {
+  margin: 0;
+  color: var(--sd-ink);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.swim-deck__section > .swim-deck__eyebrow {
+  margin-bottom: 12px;
+}
+
+.swim-deck .swim-deck__note.swim-deck__note-error {
+  color: var(--sd-red);
+}
+
+/* Under the Your Event controls (Goal time errors). Prefixed to outrank
+   production's .usms-container p type size. */
+.swim-deck .swim-deck__note {
+  margin: 8px 0 16px;
+  color: var(--sd-muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.swim-deck .swim-deck__note:empty {
+  display: none;
+}
+
+/* ---------- Bordered panel: a light blue band, then a white one ---------- */
+
+/* One thin border around both bands, flush to it (no padding between the
+   border and either band). Each band pads its own content. Used for
+   Training Metrics (Your Swim) and Race Planning (Your Event). */
+.swim-panel {
+  margin-bottom: 24px;
+  border: 1px solid var(--sd-border);
+  border-radius: 8px;
+  background: #fff;
+  overflow: hidden; /* the bands follow the rounded corners */
+}
+
+.swim-panel__band {
+  padding: 20px;
+}
+
+.swim-panel__band--blue {
+  background: var(--sd-tint);
+}
+
+/* Two blue bands in a row read as one: don't double the padding between them */
+.swim-panel__band--blue + .swim-panel__band--blue {
+  padding-top: 0;
+}
+
+/* A grid row as the last thing in a band: its cards' bottom margin would
+   double the band's padding */
+.swim-panel__band > .swim-deck__grid:last-child {
+  margin-bottom: -24px;
+}
+
+/* Your Event inside the blue band: the band gives the colour and padding */
+.swim-panel .swim-deck__context {
+  padding: 0;
+  border-radius: 0;
+  background: none;
+}
+
+.swim-deck .swim-panel .swim-deck__note {
+  margin: 10px 0 0;
+}
+
+/* ---------- Segmented control ---------- */
+
+.swim-seg {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--sd-border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.swim-seg--block {
+  display: flex;
+}
+
+.swim-seg--block > button {
+  flex: 1;
+}
+
+.swim-seg > button {
+  min-width: 52px;
+  height: 36px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--sd-muted);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.swim-seg > button:hover {
+  color: var(--sd-blue);
+}
+
+/* e.g. a split interval that doesn't divide the distance */
+.swim-seg > button:disabled {
+  color: var(--sd-muted);
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.swim-seg > button[aria-pressed="true"] {
+  background: var(--sd-blue);
+  color: #fff;
+}
+
+.swim-seg > button:focus-visible,
+.swim-card__edit:focus-visible,
+.swim-tile:focus-visible {
+  outline: 2px solid var(--sd-blue);
+  outline-offset: 2px;
+}
+
+/* ---------- Sections ---------- */
+
+/* Reordered from the ribbon; without this the browser's scroll anchoring
+   would shift the page to follow whichever section moved. */
+.swim-deck__sections {
+  overflow-anchor: none;
+}
+
+/* Brief fade on the section the ribbon just moved to the top */
+.swim-deck__section.is-arriving {
+  animation: swim-deck-arrive 0.35s ease-out;
+}
+
+@keyframes swim-deck-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swim-deck__section.is-arriving {
+    animation: none;
+  }
+}
+
+/* Production sets section { display: table } (usms.min.css), which
+   shrink-wraps the tiles grid. */
+.swim-deck__section {
+  display: block;
+  margin-bottom: 8px;
+  scroll-margin-top: 20px;
+}
+
+/* BS3 floats can't stretch, so the row flexes to give equal-height cards. */
+.swim-deck__grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.swim-deck__cell {
+  display: flex;
+  margin-bottom: 24px;
+}
+
+/* A column of cards in one cell, e.g. the predictor over Your Races */
+.swim-deck__cell--stack {
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Paragraphs and list items need the .swim-deck prefix to outrank
+   production's .usms-container p / li type sizes. */
+.swim-deck .swim-deck__disclaimer {
+  color: var(--sd-muted);
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* ---------- At a glance tiles ---------- */
+
+/* A tile is never wider than a third, however few a section has, so two
+   tiles don't split 50/50. The 10px column gap is the gap between the
+   .swim-deck__grid cards (production's grid rules replace BS3's 30px
+   gutter), so tiles line up with the col-md-4 cards below. Stacked on
+   phones. */
+.swim-deck__kpis {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px 10px;
+  margin-bottom: 24px;
+}
+
+@media (min-width: 768px) {
+  .swim-deck__kpis {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Wide screens: sixths, so a narrow tile (Calorie Burn, Training Pace) can
+   take one; the rest still take a third. From 1100px, where a sixth still
+   fits "1:22 /100 yd" at 40px on one line. */
+@media (min-width: 1100px) {
+  .swim-deck__kpis {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .swim-deck__kpis > * {
+    grid-column: span 2;
+  }
+
+  .swim-deck__kpis > .swim-kpi--narrow {
+    grid-column: span 1;
+  }
+}
+
+.swim-kpi {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 132px;
+  /* Extra at the bottom makes up for the numbers' -0.167em baseline margin */
+  padding: 16px 18px 22px;
+  border: 1px solid var(--sd-border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--sd-ink);
+}
+
+.swim-kpi__label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.swim-kpi__label > i {
+  color: var(--sd-blue);
+  font-size: 16px;
+}
+
+.swim-kpi__label > .swim-kpi__icon--pace {
+  color: var(--sd-orange);
+}
+
+.swim-kpi__label > .swim-kpi__icon--conversion {
+  color: var(--sd-orange);
+}
+
+.swim-kpi__label > .swim-kpi__icon--calories {
+  color: var(--sd-red);
+}
+
+/* Tile numbers share a baseline across the row: each sits at the bottom
+   of its (equal-height) tile, and the negative em margin cancels the space
+   a line box leaves under the baseline, which grows with font size. */
+.swim-kpi__value,
+.swim-tile__time {
+  /* 0.167em: Helvetica Neue's baseline-to-bottom at line-height 1, measured
+     from rendered digits at 34, 36 and 40px */
+  margin-bottom: -0.167em;
+  line-height: 1;
+}
+
+.swim-kpi__value {
+  margin-top: auto;
+  white-space: nowrap; /* a wrapped unit would break the shared baseline */
+  color: var(--sd-ink);
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.swim-kpi__value--lg {
+  font-size: 40px;
+}
+
+/* Phones: tiles stack, so there's no row to line up with; the number
+   follows its label instead of sitting at the bottom */
+@media (max-width: 767px) {
+  .swim-kpi {
+    min-height: 0;
+  }
+
+  .swim-kpi__value {
+    margin-top: 8px;
+  }
+}
+
+.swim-kpi__unit {
+  margin-left: 6px;
+  color: var(--sd-muted);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.swim-kpi__sub {
+  color: var(--sd-muted);
+  font-size: 13px;
+}
+
+/* ---------- Card ---------- */
+
+.swim-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid var(--sd-border);
+  border-radius: 8px;
+  background: #fff;
+  scroll-margin-top: 20px;
+}
+
+.swim-card__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.swim-card__heading {
+  flex: 1 1 200px;
+}
+
+.swim-card__title {
+  margin: 0;
+  font-size: 20px;
+}
+
+.swim-deck .swim-card__sub {
+  margin: 4px 0 0;
+  color: var(--sd-muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.swim-card__edit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--sd-blue);
+  font-size: 15px;
+}
+
+.swim-card__edit:hover {
+  background: var(--sd-tint);
+}
+
+/* ---------- Race Time Predictor: chart ---------- */
+
+/* Below ~600px the 720-unit viewBox would shrink its labels past legibility,
+   so the chart keeps a minimum width and scrolls inside the card. */
+.swim-chart {
+  overflow-x: auto;
+}
+
+.swim-chart__svg {
+  display: block;
+  width: 100%;
+  min-width: 560px;
+  font-family: inherit;
+}
+
+.swim-chart__grid {
+  stroke: var(--sd-rule);
+}
+
+.swim-chart__base {
+  stroke: #cacccd;
+}
+
+.swim-chart__axis {
+  fill: var(--sd-muted);
+  font-size: 12px;
+}
+
+.swim-chart__line {
+  fill: none;
+  stroke: var(--sd-blue);
+  stroke-width: 2.5;
+  stroke-linejoin: round;
+}
+
+/* Your races: solid blue, with a border as wide as the predicted circle's
+   so both read the same size */
+/* Goal pace: thin, dark, dashed; one dot, at Your Event */
+.swim-chart__line--goal {
+  stroke: var(--sd-muted);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 4;
+}
+
+.swim-chart__dot--goal-time {
+  fill: var(--sd-ink);
+}
+
+.swim-chart__value--goal-time {
+  font-weight: 700;
+}
+
+.swim-chart__dot--known {
+  fill: var(--sd-blue);
+  stroke: var(--sd-blue);
+  stroke-width: 2.5;
+}
+
+/* The age group average: a grey dashed line, with outline dots when it's
+   the main line (no races) */
+.swim-chart__line--average {
+  stroke: #aaa;
+  stroke-width: 2;
+  stroke-dasharray: 6 4;
+}
+
+/* The age group range (USMS B to A cut times): very light red shading, no outline */
+.swim-chart__age-range {
+  fill: var(--sd-red);
+  fill-opacity: 0.07;
+}
+
+/* The Top 10 range, 1st to 10th: light blue shading, no outline */
+.swim-chart__top-ten {
+  fill: var(--sd-blue);
+  fill-opacity: 0.16;
+}
+
+.swim-chart__dot--average {
+  fill: #fff;
+  stroke: #999;
+  stroke-width: 2.5;
+}
+
+/* Your estimates (events you haven't raced, on your line): blue outline */
+.swim-chart__dot--estimate {
+  fill: #fff;
+  stroke: var(--sd-blue);
+  stroke-width: 2.5;
+}
+
+.swim-chart__dot--goal {
+  fill: var(--sd-red);
+}
+
+.swim-chart__value {
+  fill: var(--sd-ink);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.swim-chart__value--known {
+  font-weight: 700;
+}
+
+.swim-chart__value--goal {
+  fill: var(--sd-red);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.swim-chart__empty {
+  fill: var(--sd-muted);
+  font-size: 14px;
+}
+
+.swim-chart__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--sd-muted);
+  font-size: 13px;
+}
+
+/* margin: production's li margin is auto, which spreads the items across
+   the row */
+.swim-deck .swim-chart__legend li {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.4;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.swim-chart__key {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.swim-chart__key--known {
+  border: 2px solid var(--sd-blue);
+  background: var(--sd-blue);
+}
+
+.swim-chart__key--estimate {
+  border: 2px solid var(--sd-blue);
+}
+
+.swim-chart__key--average-line {
+  width: 18px;
+  height: 0;
+  border-radius: 0;
+  border-top: 2px dashed #aaa;
+}
+
+.swim-chart__key--age-range {
+  width: 18px;
+  border-radius: 2px;
+  background: rgba(204, 32, 48, 0.07);
+}
+
+.swim-chart__key--top-ten {
+  width: 18px;
+  border-radius: 2px;
+  background: rgba(0, 104, 173, 0.16);
+}
+
+.swim-chart__key--goal {
+  background: var(--sd-red);
+}
+
+.swim-chart__key--goal-line {
+  width: 18px;
+  height: 0;
+  border-radius: 0;
+  border-top: 2px dashed var(--sd-muted);
+}
+
+/* ---------- Top 10 by Decade ---------- */
+
+/* The card's own Stroke and Distance, in its header like the predictor's
+   Curve/Table */
+.swim-tens__filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Each season's 1st to 10th as a pale blue bar of its times, inside a paler
+   band joining the seasons; 1st place is the solid dot */
+.swim-tens__band {
+  fill: var(--sd-blue);
+  fill-opacity: 0.07;
+}
+
+.swim-tens__first-line {
+  fill: none;
+  stroke: var(--sd-blue);
+  stroke-width: 1.5;
+  stroke-opacity: 0.5;
+}
+
+.swim-tens__bar {
+  fill: var(--sd-blue);
+  fill-opacity: 0.16;
+}
+
+.swim-tens__dot {
+  fill: var(--sd-blue);
+  fill-opacity: 0.55;
+}
+
+.swim-tens__dot--first {
+  fill-opacity: 1;
+}
+
+.swim-tens__year {
+  font-weight: 700;
+}
+
+/* Your goal dashed, like the predictor's goal line */
+.swim-tens__line--goal {
+  stroke: var(--sd-muted);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 4;
+}
+
+.swim-tens__line-label,
+.swim-tens__place {
+  fill: var(--sd-ink);
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.swim-chart__key--range {
+  width: 10px;
+  height: 18px;
+  border-radius: 5px;
+  background: rgba(0, 104, 173, 0.16);
+}
+
+/* A wider viewBox than the predictor's (960 units), so it needs more room
+   before its labels get too small; it scrolls inside the card below that */
+.swim-deck .swim-tens__svg {
+  min-width: 720px;
+}
+
+/* ---------- Race Time Predictor: table ---------- */
+
+.swim-table-wrap {
+  overflow-x: auto;
+}
+
+.swim-table {
+  width: 100%;
+  font-variant-numeric: tabular-nums;
+}
+
+.swim-table th,
+.swim-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid var(--sd-rule);
+  text-align: right;
+}
+
+.swim-table th:first-child {
+  text-align: left;
+}
+
+.swim-table thead th {
+  color: var(--sd-muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.swim-table tbody th {
+  font-weight: 400;
+}
+
+.swim-table__time {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.swim-table td.swim-table__empty {
+  color: var(--sd-muted);
+  font-size: 14px;
+  text-align: left;
+}
+
+.swim-table__avg {
+  color: var(--sd-muted);
+}
+
+.swim-table__goal {
+  color: var(--sd-ink);
+  font-weight: 700;
+}
+
+.swim-table__source {
+  color: var(--sd-blue);
+  font-size: 13px;
+}
+
+.swim-table .is-known .swim-table__source {
+  color: var(--sd-ink);
+}
+
+.swim-table .is-goal th,
+.swim-table .is-goal td {
+  background: var(--sd-tint);
+}
+
+.swim-table .is-goal .swim-table__time,
+.swim-table .is-goal .swim-table__source {
+  color: var(--sd-red);
+}
+
+/* ---------- Your Races ---------- */
+
+/* Stroke and Distance filters, in the card header: selects sized to their
+   longest option, with room on the right for production's arrow, bordered
+   like the page's other fields */
+.swim-races__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.swim-deck .swim-races__filters .form-control {
+  width: auto;
+  height: 36px;
+  padding: 0 32px 0 10px;
+  border: 1px solid var(--sd-border);
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: none;
+  font-size: 14px;
+}
+
+/* One race per line: remove, course, event and its date, then the time at
+   the right. Two columns once the card is wide enough to fit a date in
+   each (1200px). Prefixed to outrank production's
+   .usms-container ol/li rules. */
+.swim-deck .swim-races__list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: 32px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (min-width: 1200px) {
+  .swim-deck .swim-races__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Expanded past RACES_SCROLL (swim-tools-v2.js): scroll inside the card */
+.swim-deck .swim-races__list.is-long {
+  max-height: 480px;
+  overflow-y: auto;
+}
+
+.swim-races__list:focus-visible {
+  outline: 2px solid var(--sd-blue);
+  outline-offset: 2px;
+}
+
+.swim-deck .swim-races__item {
+  display: grid;
+  grid-template-columns: 28px 30px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 6px 0;
+  border-top: 1px solid var(--sd-rule);
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.swim-races__course {
+  color: var(--sd-blue);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+/* Event then date on one line; the date gives way (ellipsis) when the
+   column is too narrow for both */
+.swim-races__what {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.swim-races__event {
+  flex: none;
+  color: var(--sd-ink);
+}
+
+.swim-races__date {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--sd-muted);
+  font-size: 12px;
+}
+
+/* Show all / Show fewer, under the list */
+.swim-races__toggle {
+  align-self: flex-start;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--sd-blue);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.swim-races__toggle:hover {
+  text-decoration: underline;
+}
+
+.swim-races__toggle:focus-visible {
+  outline: 2px solid var(--sd-blue);
+  outline-offset: 2px;
+}
+
+.swim-races__time {
+  color: var(--sd-ink);
+  font-size: 18px;
+  font-weight: 700;
+  text-align: right;
+}
+
+/* A little smaller on phones, so a long event's date still fits */
+@media (max-width: 479px) {
+  .swim-races__time {
+    font-size: 16px;
+  }
+}
+
+.swim-races__remove {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--sd-muted);
+}
+
+.swim-races__remove:hover {
+  background: var(--sd-subtle);
+  color: var(--sd-red);
+}
+
+.swim-races__remove:focus-visible {
+  outline: 2px solid var(--sd-blue);
+  outline-offset: 1px;
+}
+
+.swim-deck .swim-races__empty {
+  color: var(--sd-muted);
+  font-size: 14px;
+}
+
+/* ---------- Race Splits ---------- */
+
+.swim-splits__bar {
+  display: flex;
+  gap: 2px;
+  height: 14px;
+  border-radius: 7px;
+  overflow: hidden;
+}
+
+/* Long races (a 1650 by 50s is 33 rows) scroll inside the card */
+.swim-splits {
+  max-height: 380px;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.swim-splits:focus-visible {
+  outline: 2px solid var(--sd-blue);
+  outline-offset: 2px;
+}
+
+.swim-deck .swim-splits__empty {
+  color: var(--sd-muted);
+  font-size: 14px;
+}
+
+.swim-deck .swim-splits__row {
+  font-size: 14px;
+  line-height: 1.4;
+  display: grid;
+  grid-template-columns: 44px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 0;
+  border-top: 1px solid var(--sd-rule);
+}
+
+.swim-splits__at {
+  color: var(--sd-muted);
+  font-size: 13px;
+}
+
+.swim-splits__split {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.swim-splits__delta {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.swim-splits__delta--faster {
+  color: var(--sd-blue);
+}
+
+.swim-splits__delta--slower {
+  color: var(--sd-red);
+}
+
+.swim-splits__cum {
+  color: var(--sd-muted);
+  font-size: 14px;
+}
+
+/* ---------- Time field: minutes : seconds . hundredths ---------- */
+
+.swim-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.swim-deck .swim-time__part,
+.swim-deck-modal .swim-time__part {
+  padding: 0;
+  color: var(--sd-ink);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+.swim-deck .swim-time__part::placeholder,
+.swim-deck-modal .swim-time__part::placeholder {
+  color: #9a9a9a;
+  font-weight: 400;
+}
+
+.swim-deck .swim-time__part[aria-invalid="true"],
+.swim-deck-modal .swim-time__part[aria-invalid="true"] {
+  border-color: var(--sd-red);
+}
+
+.swim-time__sep {
+  color: var(--sd-muted);
+  font-weight: 700;
+}
+
+/* Time Conversions */
+.swim-time--lg .swim-time__part {
+  width: 64px;
+  height: 56px;
+  font-size: 28px;
+}
+
+.swim-time--lg .swim-time__sep {
+  font-size: 28px;
+}
+
+/* Your Event panel: matches the panel's 44px controls */
+.swim-time--xs {
+  gap: 2px;
+}
+
+.swim-time--xs .swim-time__part {
+  width: 40px;
+  height: 44px;
+  font-size: 16px;
+}
+
+.swim-time--xs .swim-time__sep {
+  font-size: 16px;
+}
+
+/* Modals */
+.swim-time--sm .swim-time__part {
+  width: 52px;
+  height: 44px;
+  font-size: 18px;
+}
+
+.swim-time--sm .swim-time__sep {
+  font-size: 18px;
+}
+
+/* ---------- Pace Conversion: pace per course (Training Metrics) ---------- */
+
+/* Display only: three plain columns across a one-third tile */
+.swim-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: auto; /* to the bottom, with the other tiles' numbers */
+  padding-top: 12px;
+}
+
+.swim-tile {
+  display: flex;
+  flex-direction: column;
+  padding: 0 14px;
+}
+
+.swim-tile:first-child {
+  padding-left: 0;
+}
+
+/* Divider between courses */
+.swim-tile + .swim-tile {
+  border-left: 1px solid var(--sd-border);
+}
+
+/* Pace Conversion: the two courses other than the one swum */
+.swim-tiles--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.swim-tile__course {
+  color: var(--sd-blue);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.swim-tile__time {
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Tablets: a third of the row is too narrow for three 34px times */
+@media (min-width: 768px) and (max-width: 991px) {
+  .swim-tile__time {
+    font-size: 28px;
+  }
+}
+
+.swim-deck .swim-ages__age {
+  width: 80px;
+  height: 44px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* ---------- Training Metrics: Your Swim ---------- */
+
+/* Your Swim's inputs: the fields, then the error line */
+.swim-swim .swim-panel__band--blue {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Fields with their labels above, wrapping as needed. 18px apart so Add to
+   Log still fits on the row on desktop. */
+.swim-swim__fields {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 14px 18px;
+}
+
+.swim-swim__field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.swim-deck .swim-swim__label {
+  margin: 0;
+  color: var(--sd-ink);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Between Time and Pace, level with their boxes */
+.swim-swim__or {
+  align-self: flex-end;
+  margin: 0 -8px;
+  color: var(--sd-muted);
+  font-size: 14px;
+  line-height: 44px;
+}
+
+.swim-swim__optional {
+  color: var(--sd-muted);
+  font-weight: 400;
+}
+
+.swim-deck .swim-swim__hint {
+  margin: 0;
+  color: var(--sd-red);
+}
+
+.swim-deck .swim-swim__hint:empty {
+  display: none;
+}
+
+/* The result tiles, in the white band under the fields */
+.swim-swim .swim-deck__kpis {
+  margin: 0;
+}
+
+/* After Add to Log: what was saved */
+.swim-deck .swim-swim__status {
+  margin: 0;
+  color: var(--sd-blue);
+  font-weight: 700;
+}
+
+.swim-deck .swim-swim__status:empty {
+  display: none;
+}
+
+/* Add to Log modal: the workout being logged */
+.swim-log__stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px 16px;
+  margin: 0 0 16px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  background: var(--sd-tint);
+}
+
+.swim-log__stats dt {
+  color: var(--sd-muted);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.swim-log__stats dd {
+  margin: 0;
+  color: var(--sd-ink);
+  font-size: 16px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.swim-deck-modal .swim-log__hint:not(:empty) {
+  color: var(--sd-red);
+}
+
+.swim-deck .swim-swim .swim-params__number {
+  width: 110px;
+  height: 44px;
+}
+
+/* ---------- Time Conversions: Convert a Time ---------- */
+
+/* The controls band's hint turns red when the time is invalid */
+.swim-deck .swim-convert:has([aria-invalid="true"]) .swim-convert__hint {
+  color: var(--sd-red);
+}
+
+/* Course Conversion reuses the Pace Conversion tiles, at the top of its card */
+.swim-tiles--courses {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.swim-tile__event {
+  color: var(--sd-muted);
+  font-size: 12px;
+}
+
+/* ---------- Age Conversion: bars ---------- */
+
+.swim-deck .swim-card__note {
+  margin: auto 0 0; /* bottom of the card when it stretches to its neighbour */
+  color: var(--sd-muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.swim-ages {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.swim-deck .swim-ages__row {
+  width: 100%;
+  font-size: 14px;
+  line-height: 1.4;
+  display: grid;
+  grid-template-columns: 56px 1fr 56px;
+  align-items: center;
+  gap: 12px;
+}
+
+.swim-ages__group {
+  color: var(--sd-muted);
+  font-size: 13px;
+}
+
+.swim-ages__track {
+  position: relative;
+  height: 22px;
+  border-radius: 4px;
+  background: var(--sd-subtle);
+  overflow: hidden;
+}
+
+.swim-ages__track > span {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 4px;
+  background: #8cc0e3;
+}
+
+.swim-ages__time {
+  font-size: 15px;
+  text-align: right;
+}
+
+.swim-ages__row.is-current .swim-ages__group,
+.swim-ages__row.is-current .swim-ages__time {
+  color: var(--sd-ink);
+  font-weight: 700;
+}
+
+.swim-ages__row.is-current .swim-ages__track > span {
+  background: var(--sd-red);
+}
+
+/* ---------- Rank in Age Group ---------- */
+
+.swim-rank[hidden],
+.swim-rank__empty[hidden] {
+  display: none;
+}
+
+.swim-rank {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.swim-rank__stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.swim-rank__stat {
+  display: flex;
+  flex-direction: column;
+  padding: 0 14px;
+}
+
+.swim-rank__stat:first-child {
+  padding-left: 0;
+}
+
+/* Divider, like the Course Conversion tiles */
+.swim-rank__stat + .swim-rank__stat {
+  border-left: 1px solid var(--sd-border);
+}
+
+.swim-rank__label {
+  color: var(--sd-blue);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.swim-rank__value {
+  color: var(--sd-ink);
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.swim-rank__of {
+  color: var(--sd-muted);
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+/* The field, slowest to fastest, with your time as a red marker */
+.swim-rank__scale {
+  position: relative;
+  height: 10px;
+  margin-top: 8px;
+  border-radius: 5px;
+  background: linear-gradient(to right, var(--sd-subtle), #8cc0e3);
+}
+
+.swim-rank__marker {
+  position: absolute;
+  top: -5px;
+  width: 4px;
+  height: 20px;
+  margin-left: -2px;
+  border-radius: 2px;
+  background: var(--sd-red);
+}
+
+.swim-rank__ends {
+  display: flex;
+  justify-content: space-between;
+  color: var(--sd-muted);
+  font-size: 12px;
+}
+
+.swim-rank__refs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 24px;
+  margin: 4px 0 0;
+  font-size: 14px;
+}
+
+.swim-rank__refs dt {
+  display: inline;
+  color: var(--sd-muted);
+  font-weight: 400;
+}
+
+.swim-rank__refs dd {
+  display: inline;
+  margin-left: 6px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Prefixed to outrank production's .usms-container p type size */
+.swim-deck .swim-rank__empty {
+  margin: 0;
+  color: var(--sd-muted);
+  font-size: 14px;
+}
+
+/* ---------- Editor modals ---------- */
+
+.swim-deck-modal .modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.swim-deck-modal .form-group {
+  margin-bottom: 12px;
+}
+
+.swim-deck-modal label,
+.swim-deck-modal__label {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--sd-ink);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* One control height for inputs and selects; see v1's swim-tools.css */
+.swim-deck-modal .form-control {
+  height: 44px;
+  font-variant-numeric: tabular-nums;
+}
+
+.swim-deck-modal__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 12px;
+}
+
+.swim-deck-modal__row > .form-group {
+  flex: 1 1 140px;
+}
+
+/* Fields keep their own width, side by side (e.g. Unit and Distance) */
+.swim-deck-modal__row--compact {
+  gap: 0 24px;
+}
+
+.swim-deck-modal__row--compact > .form-group {
+  flex: none;
+}
+
+.swim-deck-modal__intro {
+  margin: 0 0 12px;
+  color: var(--sd-muted);
+  font-size: 14px;
+}
+
+.swim-deck-modal .modal-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.swim-deck .swim-ages__empty {
+  color: var(--sd-muted);
+  font-size: 14px;
+}
+
+/* Some rules here set display on elements swim-tools-v2.js hides */
+.swim-deck [hidden],
+.swim-deck-modal [hidden] {
+  display: none !important;
+}
+
+/* ---------- Training Metrics settings modal ---------- */
+
+.swim-deck-modal .swim-params__date {
+  width: 170px;
+  height: 44px;
+}
+
+.swim-params__hint {
+  display: block;
+  margin-top: 4px;
+  color: var(--sd-muted);
+  font-size: 12px;
+}
+
+.swim-params__hint:empty {
+  display: none;
+}
+
+.swim-time:has([aria-invalid="true"]) + .swim-params__hint {
+  color: var(--sd-red);
+}
+
+.swim-deck .swim-params__number,
+.swim-deck-modal .swim-params__number {
+  width: 140px;
+  font-size: 18px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}

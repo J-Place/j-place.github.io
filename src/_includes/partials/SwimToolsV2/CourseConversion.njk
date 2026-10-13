@@ -1,0 +1,21 @@
+{# Course Conversion: the Convert a Time entry as the matching event in each
+   course: the same distance, or its yards/meters equivalent (500 yd and
+   400 m). A tile names its event when the distance changes, or says the
+   course has no such event. Filled by swim-tools-v2.js. #}
+<article class="swim-card" id="course-conversion">
+  <header class="swim-card__header">
+    <div class="swim-card__heading">
+      <h3 class="swim-card__title">Course Conversion</h3>
+      <p class="swim-card__sub" data-st="courseConvSubtitle"></p>
+    </div>
+  </header>
+  <div class="swim-tiles swim-tiles--courses">
+    {% for c in courses %}
+    <div class="swim-tile">
+      <span class="swim-tile__course">{{ c }}</span>
+      <span class="swim-tile__time" data-st="courseConv{{ c }}"></span>
+      <span class="swim-tile__event" data-st="courseConvEvent{{ c }}"></span>
+    </div>
+    {% endfor %}
+  </div>
+</article>

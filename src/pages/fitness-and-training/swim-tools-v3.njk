@@ -1,0 +1,308 @@
+---
+permalink: /fitness-and-training/swim-tools-v3/index.html
+title: Swimmer Tools | U.S. Masters Swimming
+pageTitle: Swimmer Tools
+# Default persona (Jay Place); ?user=<users.json key> switches swimmer, and
+# with it the race history, age group and gender (swim-tools-v3.js)
+swimmerId: KT2JH
+breadcrumbs:
+  - url: "/home"
+    label: "Home"
+  - url: "/fitness-and-training/articles-and-videos/index.html"
+    label: "Fitness and Training"
+courses: [SCY, SCM, LCM]
+---
+{% extends "layouts/article.njk" %}
+{% block pageCSS %}
+<link rel="stylesheet" href="/css/pages/swim-tools-v3.css">
+<link rel="stylesheet" href="/css/Common/event-rank.css">
+{% endblock %}
+{% block pageJS %}
+<script src="/js/swim-tools-v3.js" defer></script>
+<script src="/js/lib/event-rank.js" defer></script>
+<script src="/js/event-rank-card.js" defer></script>
+{% endblock %}
+{% block content %}
+{# v3 of /fitness-and-training/swim-tools/, after the "Premium light command
+   center" design reference: one goal race up top, then Race, Standing and
+   Train, with a Coach desk alongside. Filled in by swim-tools-v3.js from the
+   same data as v2: race history (raceHistory.json), USMS tier cuts
+   (timeStandards.json, via tierCuts.js), Top 10 lists (topTens.json) and the
+   events calendar (eventsEnriched.json). The training plan, Coach desk and
+   gear are the design's sample content. #}
+
+{# Each persona's races, as in v2 #}
+<script type="application/json" id="race-history-data">{{ { "default": swimmerId, "swimmers": raceHistory.swimmers } | dump | safe }}</script>
+{# USMS tier cuts by course, gender and age group (src/_data/tierCuts.js) #}
+<script type="application/json" id="tier-cuts-data">{{ tierCuts | dump | safe }}</script>
+{# USMS Top 10 lists (src/_data/topTens.json) #}
+<script type="application/json" id="top-tens-data">{{ topTens | dump | safe }}</script>
+{# Pool meets from the events calendar, for the goal meet #}
+{% set meets = [] %}
+{% for e in eventsEnriched %}{% if e.courseType in courses and not e.virtual %}{% set _ = meets.push({ title: e.title, url: e.url, date: e.startDate, course: e.courseType }) %}{% endif %}{% endfor %}
+<script type="application/json" id="meets-data">{{ meets | dump | safe }}</script>
+
+<section class="section section-full st3-page">
+  <div class="usms-container st3">
+
+    <div class="st3-head">
+      <div>
+        <h1 class="st3-head__title" data-st3="headline">Swimmer Tools</h1>
+        <p class="st3-head__sub" data-st3="subhead"></p>
+      </div>
+      <div class="st3-head__controls">
+        {# The swimmer's most-raced events (swim-tools-v3.js) #}
+        <div class="st3-pills" role="group" aria-label="Event" data-st3-events></div>
+        <div class="st3-seg" role="group" aria-label="Course" data-st3-courses>
+          {% for c in courses %}<button type="button" data-value="{{ c }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ c }}</button>{% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <nav class="st3-tabs" aria-label="Sections">
+      <a href="#st3-goal" aria-current="true">Overview</a>
+      <a href="#st3-race">Race</a>
+      <a href="#st3-standing">Standing</a>
+      <a href="#st3-train">Train</a>
+      <a href="/fitness-and-training/swim-tools-v2/index.html">All tools</a>
+    </nav>
+
+    {# ---------- Goal race ---------- #}
+    <section class="st3-goal" id="st3-goal" aria-labelledby="st3-goal-h">
+      <div class="st3-goal__main">
+        <div class="st3-goal__top">
+          <h2 class="st3-goal__title" id="st3-goal-h">Goal race · <span data-st3="eventLabel"></span> · <span data-st3="course"></span></h2>
+          <button type="button" class="st3-btn st3-btn--ghost" data-modal-target="#st3Sheet" data-st3-sheet="tiers">See all tier cuts</button>
+        </div>
+        <div class="st3-goal__stats">
+          <div class="st3-stat">
+            <div class="st3-stat__label">Best</div>
+            <div class="st3-stat__value st3-num" data-st3="best">—</div>
+            <div class="st3-stat__note" data-st3="bestNote"></div>
+          </div>
+          <div class="st3-stat">
+            <div class="st3-stat__label">Goal</div>
+            <div class="st3-stat__value st3-stat__value--goal st3-num" data-st3="goal">—</div>
+            <div class="st3-stat__note" data-st3="goalNote"></div>
+          </div>
+          <div class="st3-stat">
+            <div class="st3-stat__label">To go</div>
+            <div class="st3-stat__value st3-num" data-st3="gap">—</div>
+            <div class="st3-stat__note" data-st3="gapNote"></div>
+          </div>
+        </div>
+        {# Tier bands, slowest on the left; Now, Goal and last season marked #}
+        <div class="st3-tierbar" data-st3-tierbar>
+          <div class="st3-tierbar__labels" aria-hidden="true">
+            <span class="st3-tierbar__label" data-st3-mark="now">Now</span>
+            <span class="st3-tierbar__label st3-tierbar__label--goal" data-st3-mark="goal">Goal</span>
+          </div>
+          <div class="st3-tierbar__track" role="img" data-st3-track>
+            <div class="st3-tierbar__bands" data-st3-bands></div>
+            <span class="st3-tierbar__line st3-tierbar__line--last" data-st3-line="last"></span>
+            <span class="st3-tierbar__line st3-tierbar__line--now" data-st3-line="now"></span>
+            <span class="st3-tierbar__line st3-tierbar__line--goal" data-st3-line="goal"></span>
+          </div>
+          <div class="st3-tierbar__scale st3-num">
+            <span>Slower · <span data-st3="scaleHi"></span></span>
+            <span data-st3="lastNote"></span>
+            <span>Faster · <span data-st3="scaleLo"></span></span>
+          </div>
+        </div>
+        <p class="st3-goal__empty" data-st3="tierEmpty" hidden></p>
+      </div>
+      <div class="st3-goal__side">
+        <div class="st3-plan">
+          <svg class="st3-plan__ring" viewBox="0 0 36 36" role="img" data-st3-ring>
+            <circle cx="18" cy="18" r="15.9" class="st3-plan__ring-track"></circle>
+            <circle cx="18" cy="18" r="15.9" class="st3-plan__ring-fill" stroke-dasharray="0 100" data-st3-ring-fill></circle>
+          </svg>
+          <div>
+            <div class="st3-plan__week" data-st3="planWeek"></div>
+            <div class="st3-plan__phase" data-st3="planPhase"></div>
+          </div>
+        </div>
+        <div class="st3-forecast">
+          <div class="st3-forecast__label">Goal meet</div>
+          <a class="st3-forecast__value" data-st3-meet-link href="#"><span data-st3="meetName"></span></a>
+          <div class="st3-forecast__date" data-st3="meetDate"></div>
+        </div>
+        <a href="#st3-train" class="st3-btn st3-btn--red">Start today's workout</a>
+      </div>
+    </section>
+
+    <div class="st3-layout">
+      <div class="st3-layout__main">
+
+        {# ---------- Race ---------- #}
+        <section class="st3-section" id="st3-race" aria-labelledby="st3-race-h">
+          <div class="st3-section__head">
+            <h2 class="st3-section__title" id="st3-race-h">Race</h2>
+            <span class="st3-section__sub">Pace, splits, predictions, course conversion</span>
+          </div>
+          <div class="st3-cards">
+            <article class="st3-card">
+              <div class="st3-card__head">
+                <h3 class="st3-card__title">Split plan for <span data-st3="goal">—</span></h3>
+                <button type="button" class="st3-icon-btn" data-modal-target="#st3Sheet" data-st3-sheet="splits" aria-label="Expand split plan">
+                  <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></svg>
+                </button>
+              </div>
+              <div class="st3-splits" data-st3-splits></div>
+              <p class="st3-card__note">Controlled first split, hold the middle, finish slightly faster.</p>
+            </article>
+
+            <article class="st3-card">
+              <h3 class="st3-card__title">Predicted pace by distance</h3>
+              <div class="st3-pace">
+                <svg class="st3-pace__svg" viewBox="0 0 100 100" preserveAspectRatio="none" role="img" data-st3-pace-svg>
+                  <line x1="0" y1="100" x2="100" y2="100" class="st3-pace__base"></line>
+                  <polyline points="" class="st3-pace__line" data-st3-pace-line></polyline>
+                </svg>
+                <div data-st3-pace-dots></div>
+              </div>
+              <div class="st3-pace__axis st3-num" data-st3-pace-axis></div>
+              <p class="st3-card__note" data-st3="paceNote"></p>
+            </article>
+
+            <article class="st3-card">
+              <h3 class="st3-card__title">Same swim, every course</h3>
+              <div class="st3-conv" data-st3-conv></div>
+              <p class="st3-card__note">Pace calculator: <span data-st3="pace">—</span> per 100 at this time.</p>
+            </article>
+          </div>
+        </section>
+
+        {# ---------- Standing ---------- #}
+        <section class="st3-section" id="st3-standing" aria-labelledby="st3-standing-h">
+          <div class="st3-section__head">
+            <h2 class="st3-section__title" id="st3-standing-h">Standing</h2>
+            <span class="st3-section__sub">How you compare, now and later</span>
+          </div>
+          <div class="st3-cards">
+            <article class="st3-card">
+              <h3 class="st3-card__title">Swim age</h3>
+              <div class="st3-big st3-num"><span data-st3="swimAge">—</span> <span class="st3-big__note" data-st3="swimAgeNote"></span></div>
+              <div class="st3-agebar" aria-hidden="true">
+                <div class="st3-agebar__span" data-st3-agebar-span></div>
+                <div class="st3-agebar__tick st3-agebar__tick--swim" data-st3-agebar-swim></div>
+                <div class="st3-agebar__tick" data-st3-agebar-actual></div>
+              </div>
+              <div class="st3-agebar__ends st3-num"><span>18</span><span>84</span></div>
+              <p class="st3-card__note" data-st3="swimAgeAt"></p>
+            </article>
+
+            <article class="st3-card">
+              <div class="st3-card__head">
+                <h3 class="st3-card__title">Percentile</h3>
+                <span class="st3-badge">USMS rankings</span>
+              </div>
+              <div class="st3-big st3-num" data-st3="percentile">—</div>
+              <div class="st3-bars" data-st3-percentiles></div>
+              <p class="st3-card__note" data-st3="topTenNote" hidden></p>
+            </article>
+
+            <article class="st3-card">
+              <h3 class="st3-card__title">Future age-group goal</h3>
+              <ol class="st3-timeline" data-st3-future></ol>
+            </article>
+          </div>
+
+          {# Live USMS rankings, one event and age group at a time
+             (partials/EventRank.njk), preset to the swimmer's gender #}
+          {% set eventRank = { course: "SCY", gender: currentUser.gender, stroke: "Free", distance: 50, title: "Event rankings", level: 3 } %}
+          {% include "partials/EventRank.njk" %}
+        </section>
+
+        {# ---------- Train ---------- #}
+        <section class="st3-section" id="st3-train" aria-labelledby="st3-train-h">
+          <div class="st3-section__head">
+            <h2 class="st3-section__title" id="st3-train-h">Train</h2>
+            <a href="#" class="st3-section__link">Edit plan</a>
+          </div>
+          {# Sample week from the design reference; today is marked (swim-tools-v3.js) #}
+          <div class="st3-card st3-week-wrap">
+            <div class="st3-week" data-st3-week></div>
+          </div>
+          <div class="st3-cards st3-cards--two">
+            <article class="st3-card">
+              <div class="st3-card__head">
+                <h3 class="st3-card__title">What your races say</h3>
+                <span class="st3-badge">Members</span>
+              </div>
+              <ul class="st3-insights" data-st3-insights></ul>
+            </article>
+            <article class="st3-card">
+              <div class="st3-card__head">
+                <h3 class="st3-card__title">Lifetime racing</h3>
+                <span class="st3-badge">Members</span>
+              </div>
+              <div class="st3-big st3-num" data-st3="lifetime">—</div>
+              <div class="st3-years" data-st3-years aria-hidden="true"></div>
+              <p class="st3-card__note" data-st3="lifetimeNote"></p>
+            </article>
+          </div>
+        </section>
+      </div>
+
+      <aside class="st3-layout__side" aria-labelledby="st3-desk-h">
+        {# Coach desk: the design's three modes with their sample results #}
+        <section class="st3-panel">
+          <h2 class="st3-panel__title" id="st3-desk-h">Coach desk</h2>
+          <div class="st3-desk-tabs" role="tablist" aria-label="Coach desk mode" data-st3-desk-tabs>
+            <button type="button" role="tab" data-value="vibe" aria-selected="true">Vibe</button>
+            <button type="button" role="tab" data-value="find" aria-selected="false">Find</button>
+            <button type="button" role="tab" data-value="body" aria-selected="false">Symptom</button>
+          </div>
+          <label for="st3-desk-input" class="st3-desk__label" data-st3="deskPrompt"></label>
+          <textarea id="st3-desk-input" rows="2" class="st3-desk__input" data-st3-desk-input></textarea>
+          <button type="button" class="st3-btn st3-btn--blue st3-btn--block" data-st3="deskCta"></button>
+          <div class="st3-desk__results">
+            <div class="st3-desk__head" data-st3="deskHead"></div>
+            <div data-st3-desk-results></div>
+          </div>
+        </section>
+        <section class="st3-panel">
+          <h2 class="st3-panel__title st3-panel__title--sm">Gear for this block</h2>
+          <div class="st3-rows">
+            <div><span>Paddles + pull buoy</span><span>pull sets ×3</span></div>
+            <div><span>Short fins</span><span>kick sets ×2</span></div>
+            <div><span>Wetsuit</span><span>open water 64°F</span></div>
+          </div>
+        </section>
+        <section class="st3-panel">
+          <h2 class="st3-panel__title st3-panel__title--sm">Last race, translated</h2>
+          <p class="st3-panel__sub" data-st3="lastRace"></p>
+          <div class="st3-translate st3-num">
+            <div><div class="st3-translate__value" data-st3="lastKcal">—</div><div class="st3-translate__label">kcal</div></div>
+            <div><div class="st3-translate__value" data-st3="lastTier">—</div><div class="st3-translate__label">tier</div></div>
+            <div><div class="st3-translate__value" data-st3="lastRun">—</div><div class="st3-translate__label">run equivalent</div></div>
+            <div><div class="st3-translate__value" data-st3="lastRide">—</div><div class="st3-translate__label">ride equivalent</div></div>
+          </div>
+        </section>
+      </aside>
+    </div>
+
+    <p class="st3-disclaimer">Results are estimates. Races are from USMS meet results; percentiles and tiers from USMS event rankings (SCY, 2025–2026 season; other courses converted). Tiers AAA to B are the top 6% (AAA), 8% (AA), 15% (A), 35% (BB) and 55% (B) of the rankings. The Top 10 tier is 10th place in the USMS Top 10 list where we have one, otherwise the 10th-fastest ranked swim. The training plan, Coach desk and gear are sample content.</p>
+  </div>
+</section>
+
+{# Tier cuts or the split plan, filled in when opened (swim-tools-v3.js) #}
+{% set modalId = "st3Sheet" %}
+{% set modalModifier = "st3-sheet" %}
+{% set modalSize = "lg" %}
+{% set modalTitleId = "st3-sheet-title" %}
+{% set modalBody %}
+<p class="st3-sheet__sub" data-st3="sheetSub"></p>
+<table class="st3-sheet__table st3-num">
+  <thead><tr data-st3-sheet-cols></tr></thead>
+  <tbody data-st3-sheet-rows></tbody>
+</table>
+<p class="st3-sheet__note" data-st3="sheetNote"></p>
+{% endset %}
+{% set modalFooter %}
+<button type="button" class="btn btn-primary js-modal-close">Save to my goals</button>
+<button type="button" class="btn btn-default" data-st3-print>Print pace card</button>
+{% endset %}
+{% include "components/modal.njk" %}
+{% endblock %}

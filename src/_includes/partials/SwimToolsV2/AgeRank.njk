@@ -1,0 +1,32 @@
+{# Rank in Age Group: where the Convert a Time entry would place in your age
+   group (from Your age), estimated from the sample age-group averages
+   (src/_data/averageTimes.json). Filled by swim-tools-v2.js. #}
+<article class="swim-card" id="age-rank">
+  <header class="swim-card__header">
+    <div class="swim-card__heading">
+      <h3 class="swim-card__title">Rank in Age Group</h3>
+      <p class="swim-card__sub" data-st="rankSubtitle"></p>
+    </div>
+  </header>
+  <div class="swim-rank" data-st-rank>
+    <div class="swim-rank__stats">
+      <div class="swim-rank__stat">
+        <span class="swim-rank__label">Place</span>
+        <span class="swim-rank__value"><span data-st="rankPlace"></span><span class="swim-rank__of" data-st="rankOf"></span></span>
+      </div>
+      <div class="swim-rank__stat">
+        <span class="swim-rank__label">Faster than</span>
+        <span class="swim-rank__value"><span data-st="rankBeats"></span><span class="swim-rank__of">%</span></span>
+      </div>
+    </div>
+    {# The field from slowest to fastest, with your time marked #}
+    <div class="swim-rank__scale" aria-hidden="true"><span class="swim-rank__marker" data-st-rank-marker></span></div>
+    <div class="swim-rank__ends" aria-hidden="true"><span>Slower</span><span>Faster</span></div>
+    <dl class="swim-rank__refs">
+      <div><dt>Age group average</dt><dd data-st="rankAvg"></dd></div>
+      <div><dt>Top 10%</dt><dd data-st="rankTop10"></dd></div>
+    </dl>
+  </div>
+  <p class="swim-rank__empty" data-st="rankEmpty" hidden></p>
+  <p class="swim-card__note">Estimated from sample age-group averages, not USMS rankings.</p>
+</article>

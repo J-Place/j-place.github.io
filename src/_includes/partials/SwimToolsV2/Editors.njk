@@ -1,0 +1,73 @@
+{# Modals for Swim Tools v2 (swim-tools-v2.js) #}
+{% from "partials/SwimToolsV2/TimeField.njk" import timeField %}
+{% set modalModifier = "swim-deck-modal" %}
+
+{# Add a race to your race history (the Your Races card), which the Race
+   Time Predictor is built from. Starts from Your Event each time it opens.
+   Adds on the button, not as you type. #}
+{% set modalId = "swimDeckRace" %}
+{% set modalTitle = "Add a Race" %}
+{% set modalBody %}
+<div class="swim-deck-modal__row swim-deck-modal__row--compact">
+  <div class="form-group">
+    <span class="swim-deck-modal__label" id="sd-race-course-label">Course</span>
+    <div class="swim-seg" role="group" aria-labelledby="sd-race-course-label" data-race="course">
+      {% for c in courses %}<button type="button" data-value="{{ c }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ c }}</button>{% endfor %}
+    </div>
+  </div>
+  <div class="form-group">
+    <span class="swim-deck-modal__label" id="sd-race-distance-label">Distance</span>
+    <div class="swim-deck__field">
+      <select class="form-control" id="sd-race-distance" aria-labelledby="sd-race-distance-label" data-race-input="distance" data-st-race-options></select>
+      <span class="swim-deck__field-value" aria-hidden="true" data-st="raceDistance"></span>
+    </div>
+  </div>
+</div>
+<div class="form-group">
+  <span class="swim-deck-modal__label" id="sd-race-stroke-label">Stroke</span>
+  <div class="swim-seg" role="group" aria-labelledby="sd-race-stroke-label" data-race="stroke">
+    {% for s in strokes %}<button type="button" data-value="{{ s }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ s }}</button>{% endfor %}
+  </div>
+</div>
+<div class="swim-deck-modal__row swim-deck-modal__row--compact">
+  <div class="form-group">
+    <span class="swim-deck-modal__label" id="sd-race-time-label">Time</span>
+    {{ timeField("sd-race-time-label", 'data-time-race="time"', "sm") }}
+  </div>
+  <div class="form-group">
+    <label for="sd-race-date">Date</label>
+    <input type="date" class="form-control swim-params__date" id="sd-race-date" data-race-input="date" required>
+  </div>
+</div>
+<span class="swim-params__hint" data-st="raceHint" aria-live="polite"></span>
+{% endset %}
+{% set modalFooter %}
+<button type="button" class="btn btn-md btn-outline js-modal-close">Cancel</button>
+<button type="button" class="btn btn-md btn-primary" data-add-race>Add Race</button>
+{% endset %}
+{% include "components/modal.njk" %}
+
+{# Add to Log: the Your Swim workout as it stands (filled in on open,
+   swim-tools-v2.js), and the date it was swum. Saved in the browser. #}
+{% set modalId = "swimDeckLog" %}
+{% set modalTitle = "Add to Log" %}
+{% set modalBody %}
+<dl class="swim-log__stats">
+  <div><dt>Distance</dt><dd data-st="logDistance"></dd></div>
+  <div><dt>Course</dt><dd data-st="logCourse"></dd></div>
+  <div><dt>Time</dt><dd data-st="logTime"></dd></div>
+  <div><dt>Pace</dt><dd data-st="logPace"></dd></div>
+  <div data-st-log-stroke><dt>Stroke</dt><dd data-st="logStroke"></dd></div>
+  <div><dt>Calories</dt><dd data-st="logCalories"></dd></div>
+</dl>
+<div class="form-group">
+  <label for="sd-log-date">Date</label>
+  <input type="date" class="form-control swim-params__date" id="sd-log-date" required>
+</div>
+<span class="swim-params__hint swim-log__hint" data-st="logHint" aria-live="polite"></span>
+{% endset %}
+{% set modalFooter %}
+<button type="button" class="btn btn-md btn-outline js-modal-close">Cancel</button>
+<button type="button" class="btn btn-md btn-primary" data-save-log>Save to Log</button>
+{% endset %}
+{% include "components/modal.njk" %}

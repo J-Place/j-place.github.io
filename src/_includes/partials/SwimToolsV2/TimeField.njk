@@ -1,0 +1,24 @@
+{#
+  Time field: minutes : seconds . hundredths as three two-digit boxes, read
+  and filled by swim-tools-v2.js as one "m:ss.hh" value (hundredths 00 when
+  the box is left out).
+
+    labelId  — id of the visible label that names the group
+    bind     — the setting it edits: 'data-time-input="goal"' (a page
+               setting), 'data-time-metric="time"' (the Training Metrics swim),
+               'data-time-conv="time"' (Convert a Time) or
+               'data-time-race="time"' (Add a Race)
+    size     — "xs" (panels and cards) or "sm" (modals)
+    noHundredths — optional: true for minutes and seconds only (e.g. a pace)
+#}
+{% macro timeField(labelId, bind, size, noHundredths) %}
+<div class="swim-time swim-time--{{ size }}" role="group" aria-labelledby="{{ labelId }}" data-time-field {{ bind | safe }}>
+  <input type="text" inputmode="numeric" maxlength="2" autocomplete="off" class="form-control swim-time__part" data-time-part="m" aria-label="Minutes" placeholder="mm">
+  <span class="swim-time__sep" aria-hidden="true">:</span>
+  <input type="text" inputmode="numeric" maxlength="2" autocomplete="off" class="form-control swim-time__part" data-time-part="s" aria-label="Seconds" placeholder="ss">
+  {% if not noHundredths %}
+  <span class="swim-time__sep" aria-hidden="true">.</span>
+  <input type="text" inputmode="numeric" maxlength="2" autocomplete="off" class="form-control swim-time__part" data-time-part="h" aria-label="Hundredths" placeholder="hh">
+  {% endif %}
+</div>
+{% endmacro %}
