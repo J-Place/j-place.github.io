@@ -35,7 +35,7 @@
   var BOTTOM = '76–100%';
   var TIERS = [TOP_10, '11th–25%', '26–50%', '51–75%', BOTTOM];
   var TIER_SHARE = { '11th–25%': 0.25, '26–50%': 0.5, '51–75%': 0.75 };
-  var TIER_WHERE = { 'Top 10': '10th place', '11th–25%': 'Top 25%', '26–50%': 'Top 50%', '51–75%': 'Top 75%', '76–100%': 'Slower than the top 75%' };
+  var TIER_WHERE = { 'Top 10': '10th place', '11th–25%': 'Top 25%', '26–50%': 'Top 50%', '51–75%': 'Top 75%', '76–100%': '> top 75%' };
   var TREND = { even: 0, fast: 0.06, neg: -0.05 }; // split pace trend, as in v2
   var DIVE = 1.8;   // seconds a dive start takes off the first split
   var PUSH = 0.7;   // a push start runs about this much slower than a dive
@@ -315,8 +315,13 @@
     course: 'SCY', stroke: 'Free', d: 50, goal: null, goalSet: null, ref: 'latest', strat: 'even', view: 'chart',
     // Race History: '' is all; sort by date (newest first) or time (fastest first)
     hist: { course: '', stroke: '', d: '', sort: 'date', shown: 25 },
-    hiddenLines: {} // Race History chart: events whose line is turned off
+    hiddenLines: {}, // Race History chart: events whose line is turned off
+    // Race History chart's years: the span shown and where it ends (null:
+    // every year); reset when the course or stroke changes
+    zoom: { key: null, span: null, end: null },
+    predHidden: {} // Race Time Predictions: lines turned off (you, mid, low, ten, top)
   };
+  var YEAR_MS = 365.25 * 864e5, ZOOM_MIN = 5 * YEAR_MS, ZOOM_STEP = 0.6;
   var HIST_PAGE = 25;
 
   // The saved event and goal, otherwise the event raced most (latest wins)
@@ -482,8 +487,14 @@
   // ---------- Context: event chips and the reference time ----------
 
   function renderContext(f) {
-    set('chipEvent', eventName(state.d, state.stroke));
-    set('chipCourse', state.course);
+    // The event dropdown: every event in the course, grouped by stroke
+    var pick = q('[data-st4-pick="event"]');
+    pick.innerHTML = ['Free', 'Back', 'Breast', 'Fly', 'IM'].map(function (st) {
+      return '<optgroup label="' + st + '">' + eventsFor(state.course, st).map(function (d) {
+        return '<option value="' + st + '|' + d + '"' + (st === state.stroke && d === state.d ? ' selected' : '') + '>' + eventName(d, st) + '</option>';
+      }).join('') + '</optgroup>';
+    }).join('');
+    q('[data-st4-pick="course"]').value = state.course;
     set('chipGroup', GENDER && GROUP ? GENDER + ' ' + GROUP.label : GROUP ? GROUP.label : 'No age group');
     var labels = { latest: 'Latest', best: 'Best', goal: 'Goal' };
     q('[data-st4-refs]').innerHTML = ['latest', 'best', 'goal'].filter(function (k) { return isFinite(f.times[k]); }).map(function (k) {
@@ -493,22 +504,80 @@
 
   // ---------- Race planning ----------
 
+  // Race Time Predictions only counts the last 8 years' races: age
+  // adjustment covers getting older, not changes in fitness or training.
+  // Undated races count.
+  var WINDOW_YEARS = 8;
+
+  // The races the predictor works from: the window's, or, when none of
+  // them are in Your event's stroke, every race (pool.old: all over 8 years
+  // ago), so a swimmer back from a break still sees their swims, adjusted
+  function predPool() {
+    var from = (Number(TODAY.slice(0, 4)) - WINDOW_YEARS) + TODAY.slice(4);
+    var recent = RACES.filter(function (r) { return !r.date || r.date >= from; });
+    var inStroke = function (r) { return r.stroke === state.stroke; };
+    var pool = !recent.some(inStroke) && RACES.some(inStroke) ? RACES.slice() : recent;
+    pool.old = pool !== recent;
+    return pool;
+  }
+  // The pool's races at one event
+  function poolFor(pool, course, stroke, d) {
+    return pool.filter(function (r) { return r.course === course && r.stroke === stroke && r.d === d; });
+  }
+
+  // A race swum in your current age group (by your age at the time)
+  function inGroupNow(x) {
+    return !!GROUP && x.age != null && groupOf(x.age) === GROUP;
+  }
+
+  // Slowdown by age group against 18-24, for age-adjusting when an older age
+  // group's rankings aren't loaded (the curve v2 uses)
+  var AGE_FACTOR = { 18: 1, 25: 1, 30: 1.008, 35: 1.018, 40: 1.038, 45: 1.062, 50: 1.103, 55: 1.135, 60: 1.17,
+    65: 1.208, 70: 1.27, 75: 1.35, 80: 1.46, 85: 1.6, 90: 1.8, 95: 2.05, 100: 2.4 };
+
+  // A distance you've raced in this course and stroke, but not in your
+  // current age group: your best earlier swim, scaled from that age group to
+  // yours by how the age-group median slows (the age curve where those
+  // rankings aren't loaded). The fastest result wins. Sets r.proj, r.projFrom
+  // and r.adjusted.
+  function ageAdjust(rows, pool) {
+    if (!GROUP) return;
+    var nowRank = function (d) { return groupRank(state.course, state.stroke, d, GROUP); };
+    rows.forEach(function (r) {
+      if (isFinite(r.you)) return;
+      poolFor(pool, state.course, state.stroke, r.d).forEach(function (x) {
+        if (x.age == null || inGroupNow(x)) return;
+        var then = groupOf(x.age);
+        if (!then) return;
+        var a = nowRank(r.d), b = groupRank(state.course, state.stroke, r.d, then);
+        var ratio = a && b ? median(a) / median(b) : AGE_FACTOR[GROUP.min] / AGE_FACTOR[then.min];
+        var t = x.secs * ratio;
+        if (!(t >= r.proj)) {
+          r.proj = t; r.adjusted = true;
+          r.projFrom = 'Age-adjusted from your ' + race(x.secs) + ' at ' + x.age + (x.date ? ' (' + monthYear(x.date) + ')' : '');
+        }
+      });
+    });
+  }
+
   // Projected times for the distances you haven't raced in this course and
   // stroke. First your best at the same distance in another course,
   // converted; otherwise your nearest distance, scaled by how the age
   // group's middle slows from that distance to this one (or by Riegel's
   // 1.06 exponent with no rankings). Sets r.proj and r.projFrom.
-  function project(rows) {
+  function project(rows, pool) {
     var COURSE_ORDER = ['SCY', 'SCM', 'LCM'];
     rows.forEach(function (r) {
       if (isFinite(r.you)) return;
       COURSE_ORDER.forEach(function (c) {
         if (c === state.course) return;
-        RACES.forEach(function (x) {
-          if (x.course !== c || x.stroke !== state.stroke) return;
+        pool.forEach(function (x) {
+          // only swims from your current age group (and they beat an
+          // age-adjusted older swim, being real ones)
+          if (x.course !== c || x.stroke !== state.stroke || !inGroupNow(x)) return;
           var to = convert(x.secs, x.d, c, state.course, state.stroke);
-          if (to.d === r.d && isFinite(to.secs) && !(to.secs >= r.proj)) {
-            r.proj = to.secs; r.projFrom = 'your ' + c + ' ' + x.d;
+          if (to.d === r.d && isFinite(to.secs) && (r.adjusted || !(to.secs >= r.proj))) {
+            r.proj = to.secs; r.projFrom = 'your ' + c + ' ' + x.d; r.adjusted = false;
           }
         });
       });
@@ -521,84 +590,208 @@
       });
       var t = isFinite(a.you) ? a.you : a.proj;
       r.proj = isFinite(a.mid) && isFinite(r.mid) ? t * r.mid / a.mid : t * Math.pow(r.d / a.d, 1.06);
-      r.projFrom = isFinite(a.you) ? 'your ' + a.d : a.projFrom;
+      r.projFrom = isFinite(a.you) ? 'your ' + a.d : a.adjusted ? 'your age-adjusted ' + a.d : a.projFrom;
     });
   }
 
+  // The pace scale both charts share. Bottom: 15 s per 100 below your 50
+  // (your shortest event, real or predicted: state.anchorPace), rounded down
+  // to 5 s, but never above the fastest line showing, so nothing is cut off;
+  // 0:30 without a time of yours. Top: the slowest pace, at least 2 s
+  // clear, rounded up to the next 15 s (a label on a dot near the top moves
+  // under it, so it stays inside).
+  // Ticks on the 30 s (or minute, past six) marks, plus the bottom itself.
+  // The caption names the unit, since the dots are labelled with race times.
+  function paceScale(slowest, unit, fastest) {
+    var lo = isFinite(state.anchorPace) ? Math.floor((state.anchorPace - 15) / 5) * 5 : 30;
+    if (isFinite(fastest)) lo = Math.min(lo, Math.floor((fastest - 2) / 5) * 5);
+    lo = Math.max(0, lo);
+    var hi = Math.max(lo + 30, Math.ceil((slowest + 2) / 15) * 15);
+    var step = 30 * Math.ceil((hi - lo) / 30 / 6), ticks = [lo];
+    for (var tk = Math.ceil(lo / step) * step; tk <= hi; tk += step) {
+      // the bottom's own label unless a round mark sits right on top of it
+      if (tk - lo < 8) ticks.pop();
+      ticks.push(tk);
+    }
+    if (ticks[ticks.length - 1] !== hi) ticks.push(hi);
+    var at = function (p) { return 100 - (p - lo) / (hi - lo) * 100; };
+    return {
+      lo: lo, hi: hi, y: at,
+      html: '<span class="st4-axis-unit">per 100' + (unit ? ' ' + unit : '') + '</span>' + ticks.map(function (tk) {
+        return '<span style="top: ' + at(tk).toFixed(1) + '%">' + clock(tk) + '</span>';
+      }).join('')
+    };
+  }
+
+  // The bottom edge of a ranking: the slowest swims, without outliers. Drops
+  // anything past the usual outlier fence (more than 1.5 times the middle
+  // half's spread beyond its slower end), then averages the 3 slowest left.
+  function typicalSlowest(rank) {
+    var t = rank.times, n = t.length;
+    if (!n) return NaN;
+    var q = function (p) { return t[Math.min(n - 1, Math.max(0, Math.ceil(n * p) - 1))]; };
+    var fence = q(0.75) + 1.5 * (q(0.75) - q(0.25));
+    var kept = t.filter(function (x) { return x <= fence; }).slice(-3);
+    return kept.reduce(function (a, b) { return a + b; }, 0) / kept.length;
+  }
+
   function renderPredictor(f) {
-    var dists = eventsFor(state.course, state.stroke);
+    var dists = eventsFor(state.course, state.stroke), pool = predPool();
     var rows = dists.map(function (d) {
-      var b = fastest(racesFor(state.course, state.stroke, d));
+      // Your best in your current age group: older swims aren't a fair
+      // comparison with today's age-group times (they're age-adjusted below)
+      var b = fastest(poolFor(pool, state.course, state.stroke, d).filter(inGroupNow));
       var r = groupRank(state.course, state.stroke, d, GROUP);
-      // mid: the median; low: the slowest ranked swim (of the first 500 in a
-      // truncated list)
-      return { d: d, you: b ? b.secs : NaN, proj: NaN, mid: r ? median(r) : NaN, low: r ? r.times[r.times.length - 1] : NaN, synthetic: r && r.synthetic };
+      // mid: the median; low: the bottom edge, the slowest swims without
+      // outliers (typicalSlowest)
+      // ten: 10th place; top: the fastest ranked swim
+      return { d: d, you: b ? b.secs : NaN, youDate: b ? b.date : '', proj: NaN, mid: r ? median(r) : NaN, low: r ? typicalSlowest(r) : NaN, ten: r ? topTen(r) : NaN,
+        top: r ? r.times[0] : NaN, synthetic: r && r.synthetic };
     });
-    project(rows);
+    ageAdjust(rows, pool);
+    project(rows, pool);
     var projected = rows.some(function (r) { return isFinite(r.proj); });
     var pace = function (t, d) { return t / (d / 100); };
+    // Lines turned off from the legend: you, mid, low
+    var off = state.predHidden;
     var all = [];
     rows.forEach(function (r) {
-      r.youP = pace(r.you, r.d); r.midP = pace(r.mid, r.d); r.lowP = pace(r.low, r.d);
+      r.youP = pace(r.you, r.d); r.midP = pace(r.mid, r.d); r.lowP = pace(r.low, r.d); r.tenP = pace(r.ten, r.d); r.topP = pace(r.top, r.d);
       // est: your best, or the projection where you haven't raced
       r.est = isFinite(r.you) ? r.you : r.proj; r.estP = pace(r.est, r.d);
-      if (isFinite(r.estP)) all.push(r.estP);
-      if (isFinite(r.midP)) all.push(r.midP);
-      if (isFinite(r.lowP)) all.push(r.lowP);
+      // As fast as this season's fastest in your age group: you'd have won
+      r.wins = isFinite(r.est) && isFinite(r.top) && r.est <= r.top;
+      if (isFinite(r.estP) && !off.you) all.push(r.estP);
+      if (isFinite(r.midP) && !off.mid) all.push(r.midP);
+      if (isFinite(r.lowP) && !off.low) all.push(r.lowP);
+      if (isFinite(r.tenP) && !off.ten) all.push(r.tenP);
     });
-    var label = GROUP ? GROUP.label + ' middle' : 'Age-group middle';
+    // Both charts' scales start 15 s below your shortest event (paceScale)
+    var first = rows.filter(function (r) { return isFinite(r.estP); })[0];
+    state.anchorPace = first ? first.estP : NaN;
+    var label = GROUP ? GROUP.label + ' median' : 'Age-group median';
     set('predSub', 'Pace per 100 · your ' + state.course + ' ' + (state.stroke === 'IM' ? 'IM' : state.stroke.toLowerCase()) + ' races against the ' + label +
-      (projected ? ', with projected times where you haven\'t raced' : '') + synthNote.apply(null, rows));
-    q('[data-st4-legend-proj]').hidden = !projected;
-    set('groupLegend', label);
+      (projected ? ', with projected times where you haven\'t raced' : '') + (pool.old ? ' · from races over ' + WINDOW_YEARS + ' years ago' : '') +
+      synthNote.apply(null, rows));
+    // The bottom edge: "50–54 bottom"
+    var lowLabel = GROUP ? GROUP.label + ' slowest' : 'Age-group slowest';
+    var tenLabel = GROUP ? GROUP.label + ' top ten' : 'Age-group top ten';
+    var topLabel = GROUP ? GROUP.label + ' fastest' : 'Age-group fastest';
     set('groupCol', label);
+    set('bottomCol', lowLabel);
+    set('topTenCol', tenLabel);
+    set('fastestCol', topLabel);
+    // The legend, as Race History's: pills turn lines off and on
+    var key = function (id, swatch, text) {
+      return '<button type="button" class="st4-trend__key" data-st4-pred-line="' + id + '" aria-pressed="' + !off[id] + '">' +
+        '<span class="st4-trend__swatch ' + swatch + '" aria-hidden="true"></span>' + text + '</button>';
+    };
+    q('[data-st4-pred-legend]').innerHTML = key('you', 'st4-trend__swatch--you', 'Your best') +
+      (projected ? '<span class="st4-trend__key st4-trend__key--static"><span class="st4-trend__swatch st4-trend__swatch--proj" aria-hidden="true"></span>Projected</span>' : '') +
+      // fastest first, down to slowest
+      (rows.some(function (r) { return isFinite(r.ten); }) ? key('top', 'st4-trend__swatch--fastest', topLabel) + key('ten', 'st4-trend__swatch--ten', tenLabel) : '') +
+      key('mid', 'st4-trend__swatch--mid', label) + key('low', 'st4-trend__swatch--low', lowLabel);
     var svg = q('[data-st4-pred-svg]'), dots = q('[data-st4-pred-dots]');
     q('[data-st4-pred-axis]').innerHTML = dists.map(function (d) { return '<span>' + d + '</span>'; }).join('');
     if (!all.length) {
       q('[data-st4-pred-group]').setAttribute('points', '');
       q('[data-st4-pred-bottom]').setAttribute('points', '');
+      q('[data-st4-pred-field]').setAttribute('points', '');
+      q('[data-st4-pred-field-top]').setAttribute('points', '');
+      q('[data-st4-pred-field-fastest]').setAttribute('points', '');
+      q('[data-st4-pred-field-mid]').setAttribute('points', '');
+      q('[data-st4-pred-top10]').setAttribute('points', '');
+      q('[data-st4-pred-fastest]').setAttribute('points', '');
       q('[data-st4-pred-you]').setAttribute('d', '');
       q('[data-st4-pred-proj]').setAttribute('points', '');
       dots.innerHTML = '';
+      q('[data-st4-pred-y]').innerHTML = '';
       svg.setAttribute('aria-label', 'No paces to show');
     } else {
-      var lo = Math.min.apply(null, all), hi = Math.max.apply(null, all), pad = (hi - lo) * 0.12 || 2;
-      lo -= pad; hi += pad;
+      // The scale both charts share (paceScale); slower is higher
+      var scale = paceScale(Math.max.apply(null, all), COURSES[state.course].unit, Math.min.apply(null, all));
+      q('[data-st4-pred-y]').innerHTML = scale.html;
       var x = function (i) { return dists.length > 1 ? i / (dists.length - 1) * 100 : 50; };
-      var y = function (p) { return (p - lo) / (hi - lo) * 100; }; // slower is lower
+      var y = scale.y; // slower is higher
       var pts = function (key) {
         return rows.map(function (r, i) { return isFinite(r[key]) ? x(i).toFixed(2) + ',' + y(r[key]).toFixed(1) : null; }).filter(Boolean).join(' ');
       };
-      q('[data-st4-pred-group]').setAttribute('points', pts('midP'));
-      q('[data-st4-pred-bottom]').setAttribute('points', pts('lowP'));
+      q('[data-st4-pred-group]').setAttribute('points', off.mid ? '' : pts('midP'));
+      q('[data-st4-pred-bottom]').setAttribute('points', off.low ? '' : pts('lowP'));
+      // Fills down to the bottom of the chart: 3% black under the bottom
+      // line, 10% under 10th place (the Top 10 zone), white under the fastest
+      var fill = function (key) {
+        var p = rows.map(function (r, i) { return isFinite(r[key]) ? [x(i), y(r[key])] : null; }).filter(Boolean);
+        return p.length ? p.map(function (a) { return a[0].toFixed(2) + ',' + a[1].toFixed(1); }).join(' ') +
+          ' ' + p[p.length - 1][0].toFixed(2) + ',100 ' + p[0][0].toFixed(2) + ',100' : '';
+      };
+      q('[data-st4-pred-field]').setAttribute('points', off.low ? '' : fill('lowP'));
+      q('[data-st4-pred-field-top]').setAttribute('points', off.ten ? '' : fill('tenP'));
+      q('[data-st4-pred-field-fastest]').setAttribute('points', off.top ? '' : fill('topP'));
+      // 5% black between the median line and the Top Ten line
+      var band = rows.map(function (r, i) { return isFinite(r.midP) && isFinite(r.tenP) ? i : null; }).filter(function (i) { return i !== null; });
+      q('[data-st4-pred-field-mid]').setAttribute('points', off.mid || off.ten || !band.length ? '' :
+        band.map(function (i) { return x(i).toFixed(2) + ',' + y(rows[i].midP).toFixed(1); })
+          .concat(band.slice().reverse().map(function (i) { return x(i).toFixed(2) + ',' + y(rows[i].tenP).toFixed(1); })).join(' '));
+      q('[data-st4-pred-top10]').setAttribute('points', off.ten ? '' : pts('tenP'));
+      q('[data-st4-pred-fastest]').setAttribute('points', off.top ? '' : pts('topP'));
       // Solid only between real races at neighboring distances
-      q('[data-st4-pred-you]').setAttribute('d', rows.map(function (r, i) {
+      q('[data-st4-pred-you]').setAttribute('d', off.you ? '' : rows.map(function (r, i) {
         if (!isFinite(r.youP)) return '';
         return (i && isFinite(rows[i - 1].youP) ? 'L' : 'M') + x(i).toFixed(2) + ',' + y(r.youP).toFixed(1);
       }).join(''));
       // Dashed through every point, so projections join your real races
-      q('[data-st4-pred-proj]').setAttribute('points', projected ? pts('estP') : '');
-      dots.innerHTML = rows.map(function (r, i) {
+      q('[data-st4-pred-proj]').setAttribute('points', projected && !off.you ? pts('estP') : '');
+      // Your bests are triangles (as Race History's personal bests), your
+      // projections open circles; your event's label is bold. Each label
+      // sits on the side away from the median line (above when you're
+      // slower than it)
+      dots.innerHTML = off.you ? '' : rows.map(function (r, i) {
         if (!isFinite(r.estP)) return '';
-        var proj = !isFinite(r.you) ? ' is-projected' : '';
+        var cls = !isFinite(r.you) ? ' is-projected' : ' is-best';
+        var lbl = cls + (r.d === state.d ? ' is-event' : '');
+        // ...or under it anyway when the dot is near the top of the chart
+        var below = (isFinite(r.midP) && !off.mid && r.estP < r.midP) || y(r.estP) < 14;
         var at = 'left: ' + x(i).toFixed(2) + '%; top: ' + y(r.estP).toFixed(1) + '%';
-        return '<span class="st4-pred__dot' + proj + '" style="' + at + '"' + (proj ? ' title="Projected from ' + r.projFrom + '"' : '') + '></span>' +
-          '<span class="st4-pred__label' + proj + '" style="' + at + '">' + race(r.est) + '</span>';
+        return '<span class="st4-pred__dot' + cls + '" style="' + at + '"' + (!isFinite(r.you) ? ' title="' + (r.adjusted ? r.projFrom : 'Projected from ' + r.projFrom) + '"' : '') + '></span>' +
+          '<span class="st4-pred__label' + lbl + (below ? ' is-below' : '') + '" style="' + at + '">' + race(r.est) + '</span>' +
+          // "Projected Winner" sits on the side away from the time label
+          // ...anchored inward at the chart's first and last distance
+          (r.wins ? '<span class="st4-win' + (below ? '' : ' is-below') + (x(i) > 90 ? ' is-end' : x(i) < 10 ? ' is-start' : '') + '" style="' + at + '">' +
+            'Projected Winner</span>' : '');
       }).join('');
-      svg.setAttribute('aria-label', 'Pace per 100 by distance. ' + rows.map(function (r) {
-        return r.d + ': you ' + clock(r.estP) + (isFinite(r.you) ? '' : ' (projected)') + ', ' + label + ' ' + clock(r.midP) + ', slowest ' + clock(r.lowP);
+      svg.setAttribute('aria-label', 'Pace per 100 by distance, from 0:30 at the bottom, slower higher. ' + rows.map(function (r) {
+        return r.d + ': you ' + clock(r.estP) + (isFinite(r.you) ? '' : ' (projected)') + ', ' + label + ' ' + clock(r.midP) + ', ' + lowLabel + ' ' + clock(r.lowP) + ', 10th place ' + clock(r.tenP) + ', fastest ' + clock(r.topP);
       }).join('; '));
     }
     q('[data-st4-pred-rows]').innerHTML = rows.map(function (r) {
       var mine = isFinite(r.you) ? race(r.you) : isFinite(r.proj) ?
-        '<span class="st4-pred__proj" title="Projected from ' + r.projFrom + '">' + race(r.proj) + ' <small>projected</small></span>' : '—';
-      return '<tr><th scope="row">' + eventName(r.d, state.stroke) + '</th><td>' + mine + '</td><td>' + clock(r.estP) + '</td><td>' + race(r.mid) + '</td><td>' + clock(r.midP) + '</td><td>' + race(r.low) + '</td><td>' + clock(r.lowP) + '</td></tr>';
+        '<span class="st4-pred__proj" title="' + (r.adjusted ? r.projFrom : 'Projected from ' + r.projFrom) + '">' + race(r.proj) + ' <small>' + (r.adjusted ? 'age-adjusted' : 'projected') + '</small></span>' : '—';
+      if (r.wins) mine += ' <span class="st4-win st4-win--inline">' + 'Projected Winner</span>';
+      return '<tr><th scope="row">' + eventName(r.d, state.stroke) + '</th><td>' + mine + '</td><td>' + clock(r.estP) + '</td><td>' + race(r.mid) + '</td><td>' + clock(r.midP) + '</td><td>' + race(r.low) + '</td><td>' + clock(r.lowP) + '</td><td>' + race(r.ten) + '</td><td>' + clock(r.tenP) + '</td><td>' + race(r.top) + '</td><td>' + clock(r.topP) + '</td></tr>';
     }).join('');
 
     // The insight: where your pace is closest to and furthest from the middle
-    var raced = rows.filter(function (r) { return isFinite(r.youP) && isFinite(r.midP); });
+    // Your real bests and age-adjusted swims (not times projected from
+    // another distance)
+    var raced = rows.filter(function (r) { return (isFinite(r.you) || r.adjusted) && isFinite(r.estP) && isFinite(r.midP); });
+    var old = pool.old ? 'Your last ' + (state.stroke === 'IM' ? 'IM' : state.stroke.toLowerCase()) + ' races were over ' + WINDOW_YEARS +
+      ' years ago, so they\'re age-adjusted to ' + (GROUP ? GROUP.label : 'your age group') + '. ' : '';
     var box = q('[data-st4-insight]'), cta = q('[data-st4-goal-from]');
-    raced.forEach(function (r) { r.gap = r.youP - r.midP; });
+    // Any distance where you'd have won: say so under the chart
+    var winNote = q('[data-st4-win-note]'), wins = rows.filter(function (r) { return r.wins; });
+    winNote.hidden = !wins.length || !!off.you;
+    if (wins.length) {
+      var groupName = (GENDER ? GENDER.toLowerCase() + ' ' : '') + (GROUP ? GROUP.label : '');
+      // Say when the best was swum: it may be years old, against today's field
+      winNote.innerHTML = wins.map(function (r) {
+        var what = isFinite(r.you) ? 'Your best ' + eventLower(r.d, state.stroke) + ' (' + race(r.est) + (r.youDate ? ', ' + monthYear(r.youDate) : '') + ')' :
+          r.adjusted ? 'Your age-adjusted ' + eventLower(r.d, state.stroke) + ' (' + race(r.est) + ', ' + r.projFrom.replace(/^Age-adjusted /, '') + ')' :
+          'Your projected ' + eventLower(r.d, state.stroke) + ' (' + race(r.est) + ')';
+        return '<b>' + what + (r.est < r.top ? ' beats' : ' ties') + ' this season\'s fastest in ' + groupName + '</b> (' + race(r.top) + ').';
+      }).join(' ');
+    }
+    raced.forEach(function (r) { r.gap = r.estP - r.midP; });
     var off = function (r) {
       return 'about ' + Math.abs(r.gap).toFixed(1) + ' s ' + (r.gap > 0 ? 'off' : 'ahead of') + ' the age-group middle';
     };
@@ -607,7 +800,11 @@
     } else if (!raced.length) {
       box.textContent = 'Race the ' + (state.stroke === 'IM' ? 'IM' : state.stroke.toLowerCase()) + ' to compare your pace with your age group.';
     } else if (raced.length === 1) {
-      box.innerHTML = '<b>One ' + state.course + ' ' + eventLower(raced[0].d, state.stroke) + ' so far.</b> Per 100 you\'re ' + off(raced[0]) + '. Race another distance to see where you\'re strongest.';
+      // How many times you've swum it in the window (or ever, past it)
+      var times = poolFor(pool, state.course, state.stroke, raced[0].d).length;
+      box.innerHTML = old + '<b>You\'ve raced the ' + state.course + ' ' + eventLower(raced[0].d, state.stroke) + ' ' +
+        (times === 1 ? 'one time' : times === 2 ? 'twice' : times + ' times') + (pool.old ? '' : ' in the last ' + WINDOW_YEARS + ' years') +
+        '.</b> Per 100 you\'re ' + off(raced[0]) + '. Race another distance to see where you\'re strongest.';
     } else {
       // Strongest and weakest by pace against the middle (lower is better)
       var strong = raced.reduce(function (a, b) { return b.gap < a.gap ? b : a; });
@@ -615,18 +812,19 @@
       var kind = function (d) { return d <= 100 ? 'sprint' : d >= 500 ? 'distance' : d; };
       var work = weak.d > strong.d ? 'Distance work' : 'Speed work';
       if (weak.gap <= 0) {
-        box.innerHTML = '<b>You\'re ahead of the age-group middle at every distance.</b> Per 100, your ' + strong.d + ' is ' + off(strong) +
+        box.innerHTML = old + '<b>You\'re ahead of the age-group middle at every distance.</b> Per 100, your ' + strong.d + ' is ' + off(strong) +
           ' and your ' + weak.d + ' is ' + off(weak) + '. Your ' + kind(strong.d) + ' is your strongest event.';
       } else if (strong.gap < 0) {
-        box.innerHTML = '<b>Your ' + kind(strong.d) + ' is ahead of the pack.</b> Per 100, your ' + strong.d + ' is ' + off(strong) +
+        box.innerHTML = old + '<b>Your ' + kind(strong.d) + ' is ahead of the pack.</b> Per 100, your ' + strong.d + ' is ' + off(strong) +
           ' and your ' + weak.d + ' is ' + off(weak) + '. ' + work + ' will close the gap fastest.';
       } else {
-        box.innerHTML = '<b>Your ' + kind(strong.d) + ' is closest to the pack.</b> Per 100, your ' + strong.d + ' is ' + off(strong) +
+        box.innerHTML = old + '<b>Your ' + kind(strong.d) + ' is closest to the pack.</b> Per 100, your ' + strong.d + ' is ' + off(strong) +
           ' and your ' + weak.d + ' is ' + off(weak) + '. ' + work + ' will move your times fastest.';
       }
     }
     // A goal at the next distance up that you've raced
-    var nextUp = raced.filter(function (r) { return r.d > state.d; })[0] || raced.filter(function (r) { return r.d !== state.d; })[0];
+    var real = raced.filter(function (r) { return isFinite(r.you); });
+    var nextUp = real.filter(function (r) { return r.d > state.d; })[0] || real.filter(function (r) { return r.d !== state.d; })[0];
     cta.hidden = !nextUp;
     if (nextUp) {
       cta.textContent = 'Set a ' + eventLower(nextUp.d, state.stroke) + ' goal from this';
@@ -694,7 +892,8 @@
     var first = RACES.length ? RACES[RACES.length - 1].date.slice(0, 4) : '';
     set('racesSub', RACES.length ? RACES.length + (RACES.length === 1 ? ' race' : ' races') + (first ? ' since ' + first : '') + ' · new meet results appear automatically' :
       'No races yet · meet results appear here automatically');
-    var shown = RACES.slice(0, RACES_SHOWN);
+    var shown = state.racesAll ? RACES : RACES.slice(0, RACES_SHOWN);
+    q('[data-st4-races]').classList.toggle('is-all', !!state.racesAll);
     q('[data-st4-races]').innerHTML = shown.map(function (r) {
       var b = bests[r.course + ' ' + r.d + ' ' + r.stroke], pb = r.secs === b;
       return '<li class="st4-races__row"><span class="st4-races__course">' + r.course + '</span>' +
@@ -704,7 +903,7 @@
     }).join('');
     var toggle = q('[data-st4-races-toggle]');
     toggle.hidden = RACES.length <= RACES_SHOWN;
-    toggle.textContent = 'See all ' + RACES.length + ' in Race History';
+    toggle.textContent = state.racesAll ? 'Show fewer' : 'Show all ' + RACES.length;
   }
 
   // ---------- Race History ----------
@@ -713,10 +912,42 @@
   var LINE_COLORS = ['#0068AD', '#CC2030', '#2A9D8F', '#E09F3E', '#6A4C93', '#1F7A3A', '#5A6B7D', '#8CC0E3', '#B5651D', '#D45087'];
   var LABEL_LIMIT = 40; // more dots than this: times on hover, and on each best
 
+  // The zoom bar: hidden when every race fits in five years; each button off
+  // at its limit, and the years in view for screen readers
+  function renderZoom(card, canZoom, zoomed, full, span, end, t0, w0, w1) {
+    var bar = card.querySelector('[data-st4-zoom-bar]');
+    bar.hidden = !canZoom;
+    if (!canZoom) return;
+    var years = function (ms) { return Math.round(ms / YEAR_MS); };
+    var yr = function (t) { return new Date(t).getFullYear(); };
+    set('zoomLabel', zoomed ? yr(w0) + '–' + yr(w1) + ' · ' + years(span) + ' of ' + years(full) + ' years' :
+      'All ' + years(full) + ' years · ' + yr(w0) + '–' + yr(w1));
+    bar.querySelector('[data-st4-zoom="in"]').disabled = span <= ZOOM_MIN + 1;
+    bar.querySelector('[data-st4-zoom="out"]').disabled = !zoomed;
+    bar.querySelector('[data-st4-zoom="all"]').hidden = !zoomed;
+    bar.querySelector('[data-st4-pan="earlier"]').disabled = !zoomed || w0 <= t0 + 864e5;
+    bar.querySelector('[data-st4-pan="later"]').disabled = !zoomed || end >= t0 + full - 864e5;
+    // Zoomed in, the chart drags; on touch screens, say so until the first drag
+    card.querySelector('.st4-trend__chart').classList.toggle('is-draggable', zoomed);
+    card.querySelector('[data-st4-drag-hint]').hidden = !(zoomed && !state.dragged && window.matchMedia && matchMedia('(pointer: coarse)').matches);
+  }
+
+  // The Top 10 line's synthetic seasons, for the chart's note: "; 2018–19 to
+  // 2021–22 are synthetic data (modeled, not real)."
+  function synthSeasons(tens) {
+    var ss = [];
+    tens.forEach(function (x) { x.pts.forEach(function (p) { if (p.synthetic && ss.indexOf(p.season) < 0) ss.push(p.season); }); });
+    if (!ss.length) return '.';
+    ss.sort(function (a, b) { return a - b; });
+    var label = function (y) { return (y - 1) + '–' + String(y).slice(2); };
+    return '; ' + (ss.length === 1 ? 'the ' + label(ss[0]) + ' season is' : label(ss[0]) + ' to ' + label(ss[ss.length - 1]) + ' include') +
+      ' synthetic data (modeled, not real).';
+  }
+
   // The filtered races as a line per event over time. Pace per 100 on the
-  // vertical (faster higher), so every distance shares a scale; each dot
+  // vertical (from 0:30 at the bottom, slower higher), so every distance shares a scale; each dot
   // is a race, labelled with its time.
-  function renderTrend(races) {
+  function renderTrend(races, selected) {
     var card = q('#st4-history'), box = card.querySelector('[data-st4-hist-trend]');
     var dated = races.filter(function (r) { return r.date; });
     box.hidden = !dated.length;
@@ -736,6 +967,7 @@
       e.races.sort(function (a, b) { return a.date < b.date ? -1 : 1; });
       e.best = Math.min.apply(null, e.races.map(function (r) { return r.secs; }));
       e.on = !state.hiddenLines[e.key];
+      e.selected = e.key === selected;
     });
     var shown = list.filter(function (e) { return e.on; });
     var pace = function (r) { return r.secs / (r.d / 100); };
@@ -744,10 +976,13 @@
     shown.forEach(function (e) { all = all.concat(e.races); });
 
     var legend = card.querySelector('[data-st4-trend-legend]');
-    legend.innerHTML = list.length > 1 ? list.map(function (e) {
-      return '<button type="button" class="st4-trend__key" data-st4-line="' + e.key + '" aria-pressed="' + e.on + '">' +
-        '<span class="st4-trend__swatch" style="background: ' + e.color + '"></span>' + e.course + ' ' + eventName(e.d, e.stroke) +
-        ' <span class="st4-trend__count">' + e.races.length + '</span></button>';
+    // Pills: "LCM 50 Br", each turning its line off and on
+    var SHORT = { Free: 'Fr', Back: 'Ba', Breast: 'Br', Fly: 'Fl', IM: 'IM' };
+    // With every race showing, no pill per event: too many to be useful
+    legend.innerHTML = list.length > 1 && !state.histAll ? list.map(function (e) {
+      return '<button type="button" class="st4-trend__key" data-st4-line="' + e.key + '" aria-pressed="' + e.on + '" aria-label="' +
+        e.course + ' ' + eventName(e.d, e.stroke) + '">' +
+        '<span class="st4-trend__swatch" style="background: ' + e.color + '"></span>' + e.course + ' ' + e.d + ' ' + SHORT[e.stroke] + '</button>';
     }).join('') : '';
     var svg = card.querySelector('[data-st4-trend-svg]'), dots = card.querySelector('[data-st4-trend-dots]');
     if (!all.length) {
@@ -758,14 +993,22 @@
       return;
     }
     var t0 = Math.min.apply(null, all.map(when)), t1 = Math.max.apply(null, all.map(when));
+    // The years shown: every race to start with, zoomed down to five
+    var z = state.zoom, zkey = selected.replace(/ \d+ /, ' ') + (state.histAll ? ' all' : '');
+    if (z.key !== zkey) { z.key = zkey; z.span = null; z.end = null; }
+    var full = t1 - t0, canZoom = full > ZOOM_MIN;
+    var span = canZoom && z.span ? Math.min(full, Math.max(ZOOM_MIN, z.span)) : full;
+    var end = z.end == null ? t1 : Math.min(t1, Math.max(t0 + span, z.end));
+    var w0 = end - span, w1 = end, zoomed = span < full - 1;
+    z.range = { t0: t0, t1: t1, span: span, end: end };
+    var inWin = function (t) { return t >= w0 - 864e5 && t <= w1 + 864e5; };
     // Each event's Top 10 line: 10th place in the swimmer's age group (their
     // age when the SCY season ended, May 31) each season within the chart's
     // years, where those rankings are loaded
     var seasons = {};
     (AVAILABLE || []).forEach(function (x) { seasons[x.season] = 1; });
-    // Top 10 lines need a file per event per season, so only for a few events
-    var TEN_LIMIT = 8, tooMany = shown.length > TEN_LIMIT;
-    var tens = state.hiddenLines.top10 || !GENDER || tooMany ? [] : shown.map(function (e) {
+    // The Top 10 line is Your event's
+    var tens = state.hiddenLines.top10 || !GENDER ? [] : shown.filter(function (e) { return e.selected; }).map(function (e) {
       var pts = Object.keys(seasons).map(Number).sort().map(function (season) {
         var end = season + '-05-31', t = new Date(end + 'T00:00:00').getTime(), age = ageOn(end);
         if (t < t0 || t > t1 || age == null) return null;
@@ -774,23 +1017,34 @@
       }).filter(Boolean);
       return { e: e, pts: pts };
     }).filter(function (x) { return x.pts.length; });
-    // The Top 10 key turns every grey line off and on
-    if (tens.length || state.hiddenLines.top10 || (tooMany && GENDER)) {
+    // The Top 10 key turns the black Top 10 line off and on
+    if (tens.length || state.hiddenLines.top10) {
       legend.insertAdjacentHTML('beforeend', '<button type="button" class="st4-trend__key" data-st4-line="top10" aria-pressed="' + !state.hiddenLines.top10 + '">' +
         '<span class="st4-trend__swatch st4-trend__swatch--top10"></span>Top 10 (10th place)</button>');
     }
-    var paces = all.map(pace);
-    tens.forEach(function (x) { x.pts.forEach(function (p) { paces.push(p.pace); }); });
-    var lo = Math.min.apply(null, paces), hi = Math.max.apply(null, paces), pad = (hi - lo) * 0.1 || 2;
-    lo -= pad; hi += pad;
+    // The ▲ key: not a toggle, just what the mark means
+    legend.insertAdjacentHTML('beforeend', '<span class="st4-trend__key st4-trend__key--static"><span class="st4-trend__swatch st4-trend__swatch--best" aria-hidden="true"></span>Personal Best</span>');
+    // Every race on the chart, or back to Your event's course and stroke
+    legend.insertAdjacentHTML('beforeend', '<button type="button" class="st4-link st4-trend__all" data-st4-trend-all aria-pressed="' + !!state.histAll + '">' +
+      (state.histAll ? 'Show ' + state.course + ' ' + state.stroke + ' Only' : 'Show All Races') + '</button>');
+    // The pace scale fits the races in view (all of them if none are)
+    var seen = all.filter(function (r) { return inWin(when(r)); });
+    var paces = (seen.length ? seen : all).map(pace);
+    tens.forEach(function (x) { x.pts.forEach(function (p) { if (inWin(p.t)) paces.push(p.pace); }); });
+    // The scale both charts share (paceScale); with every race showing,
+    // courses mix yards and meters, so no unit
+    var scale = paceScale(Math.max.apply(null, paces), state.histAll ? '' : COURSES[state.course].unit, Math.min.apply(null, paces)), lo = scale.lo, hi = scale.hi;
     // Times along 4–96%, so labels on the first and last races aren't cut off
-    var xAt = function (t) { return t1 > t0 ? 4 + (t - t0) / (t1 - t0) * 92 : 50; };
+    var xAt = function (t) { return w1 > w0 ? 4 + (t - w0) / (w1 - w0) * 92 : 50; };
     var x = function (r) { return xAt(when(r)); };
-    var y = function (r) { return (pace(r) - lo) / (hi - lo) * 100; }; // faster is higher
-    var labels = all.length <= LABEL_LIMIT;
-    var tenY = function (p) { return ((p.pace - lo) / (hi - lo) * 100).toFixed(1); };
-    // Top 10 lines: 1px, solid between real seasons, dashed into or out of
-    // a synthetic one
+    var y = function (r) { return 100 - (pace(r) - lo) / (hi - lo) * 100; }; // slower is higher
+    var labels = shown.filter(function (e) { return e.selected; }).reduce(function (n, e) {
+      return n + e.races.filter(function (r) { return inWin(when(r)); }).length;
+    }, 0) <= LABEL_LIMIT;
+    // Zoomed in, lines run on past the edges and are cut there
+    svg.style.clipPath = zoomed ? 'inset(-40px 3.5% -40px 3.5%)' : '';
+    var tenY = function (p) { return (100 - (p.pace - lo) / (hi - lo) * 100).toFixed(1); };
+    // Top 10 line: solid 1px; the note names its synthetic seasons
     svg.innerHTML = tens.map(function (x) {
       return x.pts.slice(1).map(function (p, i) {
         var a = x.pts[i];
@@ -798,44 +1052,54 @@
           '" x2="' + xAt(p.t).toFixed(2) + '" y2="' + tenY(p) + '"></line>';
       }).join('');
     }).join('') + shown.map(function (e) {
-      return '<polyline class="st4-trend__line" style="stroke: ' + e.color + '" points="' + e.races.map(function (r) {
+      return '<polyline class="st4-trend__line' + (e.selected ? ' is-event' : ' is-other') + '" style="stroke: ' + e.color + '" points="' + e.races.map(function (r) {
         return x(r).toFixed(2) + ',' + y(r).toFixed(1);
       }).join(' ') + '"></polyline>';
     }).join('');
     dots.innerHTML = shown.map(function (e) {
-      return e.races.map(function (r) {
+      return e.races.filter(function (r) { return inWin(when(r)); }).map(function (r) {
         var at = 'left: ' + x(r).toFixed(2) + '%; top: ' + y(r).toFixed(1) + '%', isBest = r.secs === e.best;
-        return '<span class="st4-trend__dot' + (isBest ? ' is-best' : '') + '" style="' + at + '; border-color: ' + e.color + '; background: ' + (isBest ? '#FFFFFF' : e.color) + '" title="' +
+        return '<span class="st4-trend__dot' + (isBest ? ' is-best' : '') + (e.selected ? '' : ' is-other') + '" style="' + at + '; border-color: ' + e.color + '; background: ' + e.color + '" title="' +
           e.course + ' ' + eventName(r.d, r.stroke) + ' · ' + longDate(r.date) + ' · ' + race(r.secs) + (isBest ? ' (best)' : '') + '"></span>' +
-          (labels || isBest ? '<span class="st4-trend__label" style="' + at + '; color: ' + e.color + '">' + race(r.secs) + '</span>' : '');
+          ((labels && e.selected) || isBest ? '<span class="st4-trend__label' + (e.selected ? ' is-below' : ' is-other') + '" style="' + at + '; color: ' + e.color + '">' + race(r.secs) + '</span>' : '');
       }).join('');
     }).join('');
-    // Axes: pace at the top and bottom, years along the bottom
-    card.querySelector('[data-st4-trend-y]').innerHTML = '<span>' + clock(lo + pad) + '</span><span>' + clock(hi - pad) + '</span>';
-    var y0 = new Date(t0).getFullYear(), y1 = new Date(t1).getFullYear(), ticks = [], step = Math.max(1, Math.ceil((y1 - y0) / 6));
-    for (var yr = y0; yr <= y1; yr += step) ticks.push(yr);
-    if (ticks[ticks.length - 1] !== y1) ticks.push(y1);
-    card.querySelector('[data-st4-trend-axis]').innerHTML = ticks.map(function (yr) {
-      var at = xAt(Math.max(t0, new Date(yr, 0, 1).getTime()));
-      return '<span style="left: ' + at.toFixed(1) + '%">' + yr + '</span>';
+    // Axes: pace up the side, years along the bottom
+    card.querySelector('[data-st4-trend-y]').innerHTML = scale.html;
+    var y0 = new Date(w0).getFullYear(), y1 = new Date(w1).getFullYear(), ticks = [], ystep = Math.max(1, Math.ceil((y1 - y0) / 6));
+    for (var yr = y0; yr <= y1; yr += ystep) ticks.push(yr);
+    // The last year too, unless it would crowd the tick before it
+    if (ticks[ticks.length - 1] !== y1) {
+      if (y1 - ticks[ticks.length - 1] < ystep / 2 && ticks.length > 1) ticks.pop();
+      ticks.push(y1);
+    }
+    // A year that starts before the view is pinned to its left edge; dropped
+    // if that crowds the next year's label
+    var tickAt = ticks.map(function (yr) { return xAt(Math.max(w0, new Date(yr, 0, 1).getTime())); });
+    card.querySelector('[data-st4-trend-axis]').innerHTML = ticks.map(function (yr, i) {
+      if (i === 0 && ticks.length > 1 && tickAt[1] - tickAt[0] < 8) return '';
+      return '<span style="left: ' + tickAt[i].toFixed(1) + '%">' + yr + '</span>';
     }).join('');
-    set('trendNote', 'Pace per 100, faster higher. Each dot is a race, labelled with its time' +
-      (labels ? '' : ' on hover (each event\'s best is labelled)') + '; the open dot is that event\'s best.' +
-      (tens.length ? ' The light grey line is 10th place in your age group each season, from USMS event rankings' +
-        (tens.some(function (x) { return x.pts.some(function (p) { return p.synthetic; }); }) ? ', dashed where the season is synthetic data (modeled, not real).' : '.') :
-        GENDER && !state.hiddenLines.top10 && tooMany ? ' Filter to ' + TEN_LIMIT + ' events or fewer to see each event\'s Top 10 line.' :
-        GENDER && !state.hiddenLines.top10 ? ' No Top 10 line: USMS rankings aren\'t loaded for your age group in these seasons.' : ''));
+    renderZoom(card, canZoom, zoomed, full, span, end, t0, w0, w1);
+    set('trendNote', 'Pace per 100, slower is higher. Each dot is a race' +
+      (labels ? '; Your event\'s are labelled with their time and the others show it on hover' : ', with its time on hover') +
+      '. The solid ▲ marks each distance\'s best.' +
+      (tens.length ? ' The black line is 10th place in your age group each season, from USMS event rankings' +
+        synthSeasons(tens) :
+        GENDER && !state.hiddenLines.top10 && shown.some(function (e) { return e.selected; }) ? ' No Top 10 line: USMS rankings aren\'t loaded for your age group in these seasons.' : ''));
     svg.setAttribute('aria-label', shown.map(function (e) {
       return e.course + ' ' + eventName(e.d, e.stroke) + ': ' + e.races.length + (e.races.length === 1 ? ' race' : ' races') + ', best ' + race(e.best) +
         ', from ' + race(e.races[0].secs) + ' in ' + e.races[0].date.slice(0, 4) + ' to ' + race(e.races[e.races.length - 1].secs) + ' in ' + e.races[e.races.length - 1].date.slice(0, 4);
     }).join('; '));
   }
 
-  // Every race, newest first or fastest first, filtered by course, stroke
-  // and distance. Each row's gap to that event's best, and its change from
-  // the swim before it in the same event. One event gets a trend line.
+  // Your races in Your event's course and stroke, newest first or fastest
+  // first. Each row's gap to that event's best, and its change from the swim
+  // before it in the same event; Your event's rows stand out.
   function renderHistory() {
+    // Your event's course and stroke, every distance, like Race Time Predictions
     var h = state.hist, card = q('#st4-history');
+    h.course = state.course; h.stroke = state.stroke; h.d = '';
     var key = function (r) { return r.course + ' ' + r.d + ' ' + r.stroke; };
     var best = {}, prev = {}, last = {};
     RACES.slice().reverse().forEach(function (r) { // oldest first
@@ -844,23 +1108,6 @@
       prev[RACES.indexOf(r)] = k in last ? last[k] : null;
       last[k] = r.secs;
     });
-    // Distances raced under the course and stroke filters
-    var ds = {};
-    RACES.forEach(function (r) {
-      if ((!h.course || r.course === h.course) && (!h.stroke || r.stroke === h.stroke)) ds[r.d] = 1;
-    });
-    var dists = Object.keys(ds).map(Number).sort(function (a, b) { return a - b; });
-    if (h.d && dists.indexOf(Number(h.d)) < 0) h.d = '';
-    card.querySelector('[data-st4-hist-distance]').innerHTML = '<option value="">All</option>' + dists.map(function (d) {
-      return '<option value="' + d + '"' + (String(d) === String(h.d) ? ' selected' : '') + '>' + d + '</option>';
-    }).join('');
-    ['course', 'stroke'].forEach(function (f) {
-      card.querySelectorAll('[data-st4-hist="' + f + '"] button').forEach(function (b) {
-        b.setAttribute('aria-pressed', String(b.getAttribute('data-value') === h[f]));
-      });
-    });
-    card.querySelector('[data-st4-hist-reset]').hidden = !(h.course || h.stroke || h.d);
-
     var rows = RACES.map(function (r, i) { return { r: r, i: i }; }).filter(function (x) {
       return (!h.course || x.r.course === h.course) && (!h.stroke || x.r.stroke === h.stroke) && (!h.d || x.r.d === Number(h.d));
     });
@@ -870,11 +1117,12 @@
       return COURSE_ORDER.indexOf(a.r.course) - COURSE_ORDER.indexOf(b.r.course) ||
         STROKES.indexOf(a.r.stroke) - STROKES.indexOf(b.r.stroke) || a.r.d - b.r.d || a.r.secs - b.r.secs;
     });
-    var label = [h.course, h.d, h.stroke].filter(Boolean).join(' ');
+    var label = h.course + ' ' + (h.stroke === 'IM' ? 'IM' : h.stroke.toLowerCase());
     var years = rows.map(function (x) { return x.r.date.slice(0, 4); }).filter(Boolean).sort();
     set('histSub', !RACES.length ? 'No races yet · meet results appear here automatically' :
-      (label ? label + ' · ' : 'All events · ') + rows.length + (rows.length === 1 ? ' race' : ' races') +
-      (years.length ? (years[0] === years[years.length - 1] ? ' in ' + years[0] : ' from ' + years[0] + ' to ' + years[years.length - 1]) : ''));
+      'Your ' + label + ' races · ' + rows.length + (rows.length === 1 ? ' race' : ' races') +
+      (years.length ? (years[0] === years[years.length - 1] ? ' in ' + years[0] : ' from ' + years[0] + ' to ' + years[years.length - 1]) : '') +
+      (rows.some(function (x) { return x.r.d === state.d; }) ? ' · the ' + state.d + ' stands out' : ''));
     card.querySelectorAll('[data-st4-sort-col]').forEach(function (th) {
       var on = th.getAttribute('data-st4-sort-col') === h.sort;
       th.setAttribute('aria-sort', on ? (h.sort === 'date' ? 'descending' : 'ascending') : 'none');
@@ -886,17 +1134,18 @@
       var change = p == null ? '<span class="st4-history__first">First swim</span>' :
         '<span class="st4-history__change ' + (r.secs < p ? 'is-faster' : r.secs > p ? 'is-slower' : '') + '">' +
           (r.secs < p ? '−' : r.secs > p ? '+' : '±') + Math.abs(r.secs - p).toFixed(2) + '</span>';
-      return '<tr><td>' + (r.date ? longDate(r.date) : '—') + '</td><td>' + (r.age != null ? r.age : '—') + '</td>' +
+      return '<tr' + (r.d === state.d ? ' class="is-event"' : '') + '><td>' + (r.date ? longDate(r.date) : '—') + '</td><td>' + (r.age != null ? r.age : '—') + '</td>' +
         '<td><span class="st4-races__course">' + r.course + '</span></td><td>' + eventName(r.d, r.stroke) + '</td>' +
         '<td class="st4-history__time">' + race(r.secs) + '</td>' +
         '<td>' + (gap === 0 ? '<span class="st4-badge st4-badge--best">Best</span>' : '+' + gap.toFixed(2)) + '</td><td>' + change + '</td></tr>';
-    }).join('') : '<tr><td colspan="7" class="st4-history__empty">' + (RACES.length ? 'No races match these filters.' : 'No races yet.') + '</td></tr>';
+    }).join('') : '<tr><td colspan="7" class="st4-history__empty">' + (RACES.length ? 'No ' + label + ' races yet.' : 'No races yet.') + '</td></tr>';
     set('histCount', rows.length > shown.length ? 'Showing ' + shown.length + ' of ' + rows.length : rows.length > HIST_PAGE ? 'Showing all ' + rows.length : '');
     var more = card.querySelector('[data-st4-hist-more]');
     more.hidden = rows.length <= shown.length;
     more.textContent = 'Show ' + Math.min(HIST_PAGE, rows.length - shown.length) + ' more';
 
-    renderTrend(rows.map(function (x) { return x.r; }));
+    // The chart: Your event's course and stroke, or every race (Show All Races)
+    renderTrend(state.histAll ? RACES : rows.map(function (x) { return x.r; }), state.course + ' ' + state.d + ' ' + state.stroke);
   }
 
   function renderRank(f) {
@@ -911,13 +1160,15 @@
       return;
     }
     var here = tierOf(f.t, f.rank);
-    rungs.innerHTML = TIERS.map(function (t) { // Top 10 first
+    // The fastest swim first, for reference (not a tier), then Top 10 down
+    rungs.innerHTML = '<div class="st4-rung st4-rung--fastest"><b>Fastest</b><span>1st place</span><span>' + race(f.rank.times[0]) + '</span></div>' +
+      TIERS.map(function (t) {
       var c = cutOf(f.rank, t);
       // A tier that's all Top 10 in a small field has no cut of its own
       var shared = t !== TOP_10 && t !== BOTTOM && c === topTen(f.rank);
       return '<div class="st4-rung' + (t === here ? ' is-here' : '') + '"><b>' + t + '</b><span>' + TIER_WHERE[t] + '</span><span>' +
-        (t === BOTTOM ? 'slower than ' + race(cutOf(f.rank, '51–75%')) : shared ? 'all Top 10' : !isFinite(c) ? '—' : race(c)) + '</span></div>';
-    }).join('');
+        (t === BOTTOM ? '> ' + race(cutOf(f.rank, '51–75%')) : shared ? 'all Top 10' : !isFinite(c) ? '—' : race(c)) + '</span></div>';
+      }).join('');
     var k = TIERS.indexOf(here), next = null;
     for (var i = k - 1; i >= 0 && !next; i--) if (cutOf(f.rank, TIERS[i]) < f.t) next = TIERS[i];
     var refName = { latest: 'latest', best: 'best', goal: 'goal' }[state.ref];
@@ -1175,22 +1426,34 @@
     var strat = t.closest('[data-st4-strats] button');
     if (strat) { state.strat = strat.getAttribute('data-value'); render(); return; }
     if (t.closest('[data-st4-view]')) { state.view = state.view === 'chart' ? 'table' : 'chart'; render(); return; }
-    if (t.closest('[data-st4-races-toggle]')) {
-      state.hist = { course: '', stroke: '', d: '', sort: 'date', shown: HIST_PAGE };
-      renderHistory();
-      q('#st4-history').scrollIntoView({ behavior: 'smooth', block: 'start' });
-      return;
-    }
-    var hf = t.closest('[data-st4-hist] button');
-    if (hf) {
-      state.hist[hf.parentNode.getAttribute('data-st4-hist')] = hf.getAttribute('data-value');
-      state.hist.shown = HIST_PAGE;
-      renderHistory();
-      return;
-    }
+    if (t.closest('[data-st4-races-toggle]')) { state.racesAll = !state.racesAll; renderRaces(); return; }
     var sort = t.closest('[data-st4-sort]');
     if (sort) { state.hist.sort = sort.getAttribute('data-st4-sort'); state.hist.shown = HIST_PAGE; renderHistory(); return; }
     if (t.closest('[data-st4-hist-more]')) { state.hist.shown += HIST_PAGE; renderHistory(); return; }
+    if (t.closest('[data-st4-trend-all]')) { state.histAll = !state.histAll; renderHistory(); return; }
+    var pl = t.closest('[data-st4-pred-line]');
+    if (pl) { var pk = pl.getAttribute('data-st4-pred-line'); state.predHidden[pk] = !state.predHidden[pk]; renderPredictor(figures()); return; }
+    // Zoom the Race History chart's years, keeping the middle of the view
+    var zb = t.closest('[data-st4-zoom]');
+    if (zb && state.zoom.range) {
+      var zr = state.zoom.range, mid = zr.end - zr.span / 2, how = zb.getAttribute('data-st4-zoom');
+      if (how === 'all') { state.zoom.span = null; state.zoom.end = null; }
+      else {
+        var ns = how === 'in' ? Math.max(ZOOM_MIN, zr.span * ZOOM_STEP) : Math.min(zr.t1 - zr.t0, zr.span / ZOOM_STEP);
+        state.zoom.span = ns >= zr.t1 - zr.t0 - 1 ? null : ns;
+        state.zoom.end = state.zoom.span ? mid + ns / 2 : null;
+      }
+      renderHistory();
+      return;
+    }
+    // Move the zoomed years half a view earlier or later
+    var pb = t.closest('[data-st4-pan]');
+    if (pb && state.zoom.range && state.zoom.span) {
+      var pr = state.zoom.range, by = pr.span / 2 * (pb.getAttribute('data-st4-pan') === 'earlier' ? -1 : 1);
+      state.zoom.end = Math.min(pr.t1, Math.max(pr.t0 + pr.span, pr.end + by));
+      renderHistory();
+      return;
+    }
     var line = t.closest('[data-st4-line]');
     if (line) {
       var lk = line.getAttribute('data-st4-line');
@@ -1198,7 +1461,7 @@
       renderHistory();
       return;
     }
-    if (t.closest('[data-st4-hist-reset]')) { state.hist = { course: '', stroke: '', d: '', sort: state.hist.sort, shown: HIST_PAGE }; renderHistory(); return; }
+
     var from = t.closest('[data-st4-goal-from]');
     if (from) {
       state.d = Number(from.getAttribute('data-d'));
@@ -1246,10 +1509,51 @@
       Number(document.querySelector('[data-st4-edit="distance"]').value));
   });
 
-  q('[data-st4-hist-distance]').addEventListener('change', function (e) {
-    state.hist.d = e.target.value;
-    state.hist.shown = HIST_PAGE;
-    renderHistory();
+
+  // Drag the zoomed Race History chart sideways (mouse or touch) to move
+  // through the years; the ‹ › buttons do the same without dragging
+  (function dragToPan() {
+    var chart = q('#st4-history .st4-trend__chart'), drag = null, frame = 0;
+    chart.addEventListener('pointerdown', function (e) {
+      var zr = state.zoom.range;
+      if (!zr || !state.zoom.span || (e.pointerType === 'mouse' && e.button !== 0)) return;
+      drag = { x: e.clientX, end: zr.end, perPx: zr.span / (chart.clientWidth * 0.92), id: e.pointerId };
+      chart.setPointerCapture(e.pointerId);
+      chart.classList.add('is-dragging');
+    });
+    chart.addEventListener('pointermove', function (e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      var zr = state.zoom.range, dx = e.clientX - drag.x;
+      if (Math.abs(dx) > 3) state.dragged = true;
+      state.zoom.end = Math.min(zr.t1, Math.max(zr.t0 + zr.span, drag.end - dx * drag.perPx));
+      if (!frame) frame = requestAnimationFrame(function () { frame = 0; renderHistory(); });
+    });
+    var stop = function () {
+      if (!drag) return;
+      drag = null;
+      chart.classList.remove('is-dragging');
+    };
+    chart.addEventListener('pointerup', stop);
+    chart.addEventListener('pointercancel', stop);
+  })();
+
+  // Your event's dropdowns: a new event or course applies at once (the goal
+  // goes back to the suggested one; a course keeps the distance, or its
+  // yards/meters equivalent)
+  root.addEventListener('change', function (e) {
+    var sel = e.target.closest('[data-st4-pick]');
+    if (!sel) return;
+    if (sel.getAttribute('data-st4-pick') === 'event') {
+      var v = sel.value.split('|');
+      state.stroke = v[0]; state.d = Number(v[1]);
+    } else {
+      var c = sel.value;
+      state.d = matchDistance(state.d, c, state.stroke) || eventsFor(c, state.stroke)[0];
+      state.course = c;
+    }
+    state.goal = null; state.goalSet = null;
+    writeStore(GOAL_KEY, { course: state.course, stroke: state.stroke, d: state.d, goal: null, goalSet: null });
+    render();
   });
 
   var form = q('[data-st4-logform]');

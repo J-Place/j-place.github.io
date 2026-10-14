@@ -545,7 +545,7 @@
   font-weight: 600;
 }
 
-/* ---------- Event Forecast ---------- */
+/* ---------- Race Time Predictions ---------- */
 
 .st4-pred {
   position: relative;
@@ -576,13 +576,15 @@
 
 .st4-pred__line--group {
   stroke: var(--st4-dash);
+  stroke-width: 1;
   stroke-dasharray: 5 4;
 }
 
 /* The age group's slowest ranked swims: a light line */
 .st4-pred__line--bottom {
-  stroke: #D3D6D8;
+  stroke: #E3E5E6; /* lighter: the slowest swims recede */
   stroke-width: 1.5;
+  stroke-dasharray: 4 3;
 }
 
 .st4-pred__dot {
@@ -1444,19 +1446,25 @@
 }
 
 .st4-trend__yaxis {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  position: relative;
+  height: 260px; /* the chart's */
+  margin: 32px 0 4px;
   font-size: 12px;
   color: var(--st4-muted);
-  text-align: right;
-  padding: 18px 0;
+}
+
+/* Each pace tick sits level with its place on the chart */
+.st4-trend__yaxis span {
+  position: absolute;
+  right: 0;
+  transform: translateY(-50%);
+  white-space: nowrap;
 }
 
 .st4-trend__chart {
   position: relative;
   height: 260px;
-  margin: 18px 10px 4px;
+  margin: 32px 10px 4px; /* room for the axis unit above */
   border-left: 1px solid var(--st4-line);
   border-bottom: 1px solid var(--st4-line);
 }
@@ -1487,11 +1495,14 @@
   box-sizing: border-box;
 }
 
+/* Each distance's best: a solid upright triangle, centred on the race */
 .st4-trend__dot.is-best {
-  width: 12px;
-  height: 12px;
-  margin: -6px 0 0 -6px;
-  border-width: 3px;
+  width: 12.6px;
+  height: 10.8px;
+  margin: -5.4px 0 0 -6.3px;
+  border: 0;
+  border-radius: 0;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
 }
 
 .st4-trend__label {
@@ -1562,20 +1573,17 @@
   font-size: 12px;
 }
 
-/* Race History's Top 10 lines: 10th place each season, a 1px light grey
-   line, dashed where the season is synthetic */
+/* Race History's Top 10 line: 10th place each season, a solid 1px black
+   line (the chart's note says which seasons are synthetic) */
 .st4-trend__line--top10 {
-  stroke: #BFC4C8;
+  stroke: #000000;
   stroke-width: 1;
   opacity: 1;
 }
 
-.st4-trend__line--top10.is-synthetic {
-  stroke-dasharray: 3 3;
-}
 
 .st4-trend__swatch--top10 {
-  background: #C9CDD0;
+  background: #000000;
 }
 
 /* Synthetic (modeled, not real) Top Times data: flagged wherever it shows */
@@ -1591,3 +1599,484 @@
   vertical-align: middle;
 }
 
+
+/* The Race Time Predictions pace axis: from 15 s below your 50, ticks every 30 s */
+.st4-pred-frame {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 22px; /* room for the first dot's label, centred on the chart's edge */
+}
+
+.st4-pred__yaxis {
+  position: relative;
+  height: 180px; /* the chart's */
+  margin: 20px 0 6px;
+  font-size: 12px;
+  color: var(--st4-muted);
+}
+
+/* Each pace tick sits level with its place on the chart */
+.st4-pred__yaxis span {
+  position: absolute;
+  right: 0;
+  transform: translateY(-50%);
+  white-space: nowrap;
+}
+
+.st4-pred__axis--framed {
+  margin-left: 82px;
+}
+
+/* Your Races, all of them: scrolls inside the card */
+.st4 .st4-races.is-all {
+  max-height: 460px;
+  overflow-y: auto;
+}
+
+/* Race History: Your event's distance stands out among the stroke's others */
+.st4-trend__line.is-other {
+  stroke-width: 1.5;
+  stroke-dasharray: 4 3; /* dashed, like the Top 10 line, so Your event's solid line leads */
+  opacity: 0.35;
+}
+
+.st4-trend__line.is-event {
+  stroke-width: 5;
+  opacity: 0.25; /* mostly see-through: the Top 10 line shows underneath */
+  stroke-linecap: round;
+}
+
+.st4-trend__dot.is-other,
+.st4-trend__label.is-other {
+  opacity: 0.45;
+}
+
+.st4-history__table tr.is-event td {
+  background: rgb(231, 245, 255);
+}
+
+/* Your event's time labels go under its dots: with slower higher, the
+   stroke's other distances run above it */
+.st4-trend__label.is-below {
+  transform: translate(-50%, 70%);
+}
+
+/* The Personal Best key: the chart's ▲, not a toggle */
+.st4-trend__key--static {
+  cursor: default;
+}
+
+.st4-trend__swatch--best {
+  width: 11px;
+  height: 9.5px;
+  border-radius: 0;
+  background: var(--st4-ink);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+/* Race History zoom: lined up over the plot (past the pace axis: 40px +
+   8px gap + the chart's 10px margins), − + at its centre with ‹ and ›
+   just either side */
+.st4-zoom {
+  position: relative;
+  height: 32px;
+  margin: 6px 10px 2px 58px;
+  font-size: 13px;
+}
+
+.st4-zoom__set--zoom {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+}
+
+.st4-zoom__pan {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+}
+
+.st4-zoom__pan--earlier {
+  left: calc(50% - 64px); /* − + is 66px wide: a 16px gap to each side */
+}
+
+.st4-zoom__pan--later {
+  left: calc(50% + 64px);
+}
+
+.st4 .st4-zoom__all {
+  position: absolute;
+  top: 7px;
+  right: 0;
+}
+
+.st4 .st4-zoom__hint {
+  margin: 0 10px 0 58px;
+  font-size: 12px;
+  color: var(--st4-muted);
+  text-align: center;
+}
+
+/* Zoomed in, the chart drags sideways (mouse or touch); vertical swipes
+   still scroll the page */
+.st4-trend__chart.is-draggable {
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.st4-trend__chart.is-dragging {
+  cursor: grabbing;
+}
+
+.st4-zoom__btn {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid var(--st4-border);
+  border-radius: 6px;
+  background: #FFFFFF;
+  color: var(--st4-blue);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.st4-zoom__btn:disabled {
+  color: #B5BABE;
+  cursor: default;
+}
+
+/* Show All Races: a plain underlined text link at the end of the legend */
+.st4 .st4-trend__all {
+  align-self: center;
+  margin-left: 6px;
+  font-size: 13px;
+  font-weight: 400;
+  text-decoration: underline;
+}
+
+/* On a phone the plot is too narrow to spread the zoom buttons out: one
+   centred row instead, ‹ − + › then All years */
+@media (max-width: 640px) {
+  .st4-zoom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    height: auto;
+    margin: 6px 0 2px;
+  }
+
+  .st4-zoom__set--zoom,
+  .st4 .st4-zoom__all {
+    position: static;
+    transform: none;
+  }
+
+  /* relative, not static: its chevron is drawn inside it (and no desktop
+     offset, or it would sit over − +) */
+  .st4-zoom__pan,
+  .st4-zoom__pan--earlier,
+  .st4-zoom__pan--later {
+    position: relative;
+    left: auto;
+    transform: none;
+  }
+
+  .st4-zoom__pan--earlier { order: 1; }
+  .st4-zoom__set--zoom { order: 2; }
+  .st4-zoom__pan--later { order: 3; }
+  .st4 .st4-zoom__all { order: 4; margin-left: 6px; }
+
+  .st4 .st4-zoom__hint {
+    margin: 0;
+  }
+}
+
+/* Race Time Predictions: Your event's dot stands out, and a label can sit under
+   its dot (when you're faster than the median, whose line runs above) */
+/* Your bests: a solid triangle, as Race History's personal bests */
+.st4-pred__dot.is-best {
+  width: 12.6px;
+  height: 10.8px;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: var(--st4-blue);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.st4-pred__label.is-event {
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.st4-pred__label.is-below {
+  transform: translate(-50%, 60%);
+}
+
+/* Its legend pills' swatches */
+.st4-trend__swatch--you {
+  width: 11px;
+  height: 9.5px;
+  border-radius: 0;
+  background: var(--st4-blue);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.st4-trend__swatch--proj {
+  background: #FFFFFF;
+  border: 2px solid var(--st4-blue);
+  box-sizing: border-box;
+}
+
+.st4-trend__swatch--mid,
+.st4-trend__swatch--low {
+  width: 16px;
+  height: 0;
+  border-radius: 0;
+  border-top: 2px dashed var(--st4-dash);
+}
+
+.st4-trend__swatch--low {
+  border-top: 2px dashed #E3E5E6;
+}
+
+/* The Top Ten pill's swatch: a dashed 40% black line, like its line */
+.st4-trend__swatch--ten {
+  width: 16px;
+  height: 0;
+  border-radius: 0;
+  border-top: 2px dashed rgba(0, 0, 0, 0.4);
+}
+
+/* Race Time Predictions: 3% grey from the age group's slowest line down to the chart's bottom */
+.st4-pred__field {
+  fill: #000000;
+  fill-opacity: 0.03;
+  stroke: none;
+}
+
+/* Race Time Predictions' top ten line: 10th place, 1px dashed, 40% black */
+.st4-pred__line--top10 {
+  stroke: #000000;
+  stroke-width: 1;
+  stroke-dasharray: 4 3;
+  opacity: 0.4;
+}
+
+/* Race Time Predictions' fastest line: 1st place, black 1px solid, at half */
+.st4-pred__line--fastest {
+  stroke: #000000;
+  stroke-width: 1;
+  opacity: 0.5;
+}
+
+.st4-trend__swatch--fastest {
+  width: 16px;
+  height: 0;
+  border-radius: 0;
+  border-top: 2px solid rgba(0, 0, 0, 0.5);
+}
+
+/* Both charts' pace axes: the unit above the ticks */
+.st4 .st4-pred__yaxis .st4-axis-unit,
+.st4 .st4-trend__yaxis .st4-axis-unit {
+  top: -27px;
+  left: 0;
+  right: auto; /* runs right from the axis, over the chart, never clipped */
+  transform: none;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* Race Time Predictions: white from the fastest line down to the chart's bottom,
+   over the grey fills, since nobody in the age group swims faster */
+.st4-pred__field--clear {
+  fill: #FFFFFF;
+  fill-opacity: 1;
+}
+
+/* Race Time Predictions: the Top 10 zone, 10% black (over the field's 3%) */
+.st4-pred__field--top10 {
+  fill-opacity: 0.08;
+}
+
+/* Race Time Predictions: between the median and the top ten line, 5% black */
+.st4-pred__field--mid {
+  fill-opacity: 0.05;
+}
+
+/* Rank and Tier: the fastest swim, a reference row above the tiers */
+.st4-rung--fastest {
+  background: transparent;
+  border-color: var(--st4-line);
+}
+
+/* Your event: event and course are dropdowns styled as pills, with a
+   caret; the age group is plain bold text */
+.st4 .st4-chip--select {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  font-weight: 400;
+}
+
+.st4-chip--select select {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  color: var(--st4-ink);
+  padding: 4px 26px 4px 10px;
+  cursor: pointer;
+}
+
+.st4-chip--select::after {
+  content: "";
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  margin-top: -5px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+.st4-chip--select:hover,
+.st4-chip--select:focus-within {
+  border-color: var(--st4-blue);
+  color: var(--st4-blue);
+}
+
+.st4-chip--select select:focus-visible {
+  outline: none;
+}
+
+.st4-context__group {
+  font-weight: 700;
+}
+
+/* ‹ › drawn as chevrons, larger and with a 2px line, in the same 30px box
+   (the ‹ › text stays for no-CSS; the buttons' aria-labels name them) */
+.st4-zoom__btn.st4-zoom__pan {
+  font-size: 0;
+  color: var(--st4-blue);
+}
+
+.st4-zoom__btn.st4-zoom__pan::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 11px;
+  height: 11px;
+  border-left: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translate(-30%, -50%) rotate(45deg);
+}
+
+.st4-zoom__btn.st4-zoom__pan--later::before {
+  transform: translate(-70%, -50%) rotate(-135deg);
+}
+
+.st4-zoom__btn.st4-zoom__pan:disabled {
+  color: #B5BABE;
+}
+
+/* "Projected Winner": a gold pill on a distance where your time is as fast as this
+   season's fastest in your age group, on the side away from the time label */
+.st4-win {
+  position: absolute;
+  transform: translate(-50%, -260%);
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: #FFBE00;
+  color: #262627;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.st4-win.is-below {
+  transform: translate(-50%, 170%);
+}
+
+.st4-win--inline {
+  position: static;
+  transform: none;
+  margin-left: 4px;
+}
+
+.st4 .st4-win-note {
+  margin: 8px 0 0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #FFF6D6;
+  border-left: 4px solid #FFBE00;
+  font-size: 14px;
+}
+
+.st4-win-note[hidden] {
+  display: none;
+}
+
+/* At the chart's ends, the pill hangs inward so it isn't cut off */
+.st4-win.is-end { transform: translate(-100%, -260%); }
+.st4-win.is-end.is-below { transform: translate(-100%, 170%); }
+.st4-win.is-start { transform: translate(0, -260%); }
+.st4-win.is-start.is-below { transform: translate(0, 170%); }
+
+/* This Week's legend: the box styles of a swum, planned and rest day */
+.st4 .st4-week__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 13px;
+  color: var(--st4-muted);
+}
+
+.st4 .st4-week__legend li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+}
+
+.st4-week__key {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+
+.st4-week__key--done {
+  background: var(--st4-blue);
+}
+
+.st4-week__key--planned {
+  background: #FFFFFF;
+  border: 2px dashed var(--st4-blue);
+}
+
+.st4-week__key--rest {
+  height: 4px;
+  background: var(--st4-line);
+}

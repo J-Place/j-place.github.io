@@ -109,9 +109,18 @@ strokes: [Free, Back, Breast, Fly, IM]
     <nav class="st4-context" aria-label="Swim Tools sections">
       <div class="st4-context__event">
         <span class="st4-context__label">Your event</span>
-        <span class="st4-chip" data-st4="chipEvent"></span>
-        <span class="st4-chip" data-st4="chipCourse"></span>
-        <span class="st4-chip" data-st4="chipGroup"></span>
+        {# Event and course: dropdowns styled as pills (native selects, so
+           touch screens get their own picker); options filled in by
+           swim-tools-v4.js. Change opens the full editor, with the goal. #}
+        <label class="st4-chip st4-chip--select">
+          <span class="sr-only">Event</span>
+          <select data-st4-pick="event"></select>
+        </label>
+        <label class="st4-chip st4-chip--select">
+          <span class="sr-only">Course</span>
+          <select data-st4-pick="course">{% for c in courses %}<option value="{{ c }}">{{ c }}</option>{% endfor %}</select>
+        </label>
+        <span class="st4-context__group" data-st4="chipGroup"></span>
         <button type="button" class="st4-link st4-link--sm" data-modal-target="#st4Event">Change</button>
       </div>
       <div class="st4-seg" role="group" aria-label="Time used by every tool" data-st4-refs></div>
@@ -127,17 +136,32 @@ strokes: [Free, Back, Breast, Fly, IM]
         <article class="st4-card st4-card--wide">
           <div class="st4-card__row">
             <div>
-              <h3 class="st4-card__title">Event Forecast</h3>
+              <h3 class="st4-card__title">Race Time Predictions</h3>
               <p class="st4-card__sub" data-st4="predSub"></p>
             </div>
             <button type="button" class="st4-link" data-st4-view>Table view</button>
           </div>
           <div data-st4-pred-chart>
+            {# Pace per 100 from 0:30 at the bottom, slower higher, as Race History #}
+            <div class="st4-pred-frame">
+            <div class="st4-pred__yaxis st4-num" data-st4-pred-y aria-hidden="true"></div>
             <div class="st4-pred">
               <svg class="st4-pred__svg" viewBox="0 0 100 100" preserveAspectRatio="none" role="img" data-st4-pred-svg>
+                {# 3% grey from the age group's bottom line down to the chart's bottom, behind the lines #}
+                <polygon points="" class="st4-pred__field" data-st4-pred-field></polygon>
+                {# 10% black from 10th place down to the chart's bottom: the Top 10 zone #}
+                {# 5% black between the median line and the Top Ten line #}
+                <polygon points="" class="st4-pred__field st4-pred__field--mid" data-st4-pred-field-mid></polygon>
+                <polygon points="" class="st4-pred__field st4-pred__field--top10" data-st4-pred-field-top></polygon>
+                {# White from the fastest line down: nobody in the age group swims faster #}
+                <polygon points="" class="st4-pred__field st4-pred__field--clear" data-st4-pred-field-fastest></polygon>
                 <line x1="0" y1="100" x2="100" y2="100" class="st4-pred__base"></line>
-                {# The age group's slowest ranked swim at each distance #}
+                {# The age group's bottom edge: its slowest swims, outliers dropped #}
                 <polyline points="" class="st4-pred__line st4-pred__line--bottom" data-st4-pred-bottom></polyline>
+                {# 10th place in the age group at each distance, black dashed #}
+                <polyline points="" class="st4-pred__line st4-pred__line--top10" data-st4-pred-top10></polyline>
+                {# The fastest ranked swim (1st place), black solid, faded #}
+                <polyline points="" class="st4-pred__line st4-pred__line--fastest" data-st4-pred-fastest></polyline>
                 <polyline points="" class="st4-pred__line st4-pred__line--group" data-st4-pred-group></polyline>
                 {# Your bests joined to the projected times, dashed #}
                 <polyline points="" class="st4-pred__line st4-pred__line--proj" data-st4-pred-proj></polyline>
@@ -145,20 +169,21 @@ strokes: [Free, Back, Breast, Fly, IM]
               </svg>
               <div data-st4-pred-dots></div>
             </div>
-            <div class="st4-pred__axis st4-num" data-st4-pred-axis></div>
+            </div>
+            <div class="st4-pred__axis st4-pred__axis--framed st4-num" data-st4-pred-axis></div>
           </div>
           <div class="st4-table-wrap" data-st4-pred-table hidden>
             <table class="st4-table st4-num">
-              <thead><tr><th scope="col">Event</th><th scope="col">Your best</th><th scope="col">Per 100</th><th scope="col" data-st4="groupCol">Age-group middle</th><th scope="col">Per 100</th><th scope="col">Slowest</th><th scope="col">Per 100</th></tr></thead>
+              <thead><tr><th scope="col">Event</th><th scope="col">Your best</th><th scope="col">Per 100</th><th scope="col" data-st4="groupCol">Age-group median</th><th scope="col">Per 100</th><th scope="col" data-st4="bottomCol">Age-group slowest</th><th scope="col">Per 100</th><th scope="col" data-st4="topTenCol">Age-group top ten</th><th scope="col">Per 100</th><th scope="col" data-st4="fastestCol">Age-group fastest</th><th scope="col">Per 100</th></tr></thead>
               <tbody data-st4-pred-rows></tbody>
             </table>
           </div>
+          {# Shown when you'd have won a distance outright (swim-tools-v4.js) #}
+          <p class="st4-win-note" data-st4-win-note aria-live="polite" hidden></p>
           <div class="st4-insight" data-st4-insight></div>
+          {# Pills like Race History's: each turns a line off and on (swim-tools-v4.js) #}
           <div class="st4-legend">
-            <span><span class="st4-legend__dot"></span> Your best per distance</span>
-            <span data-st4-legend-proj hidden><span class="st4-legend__dot st4-legend__dot--proj"></span> Projected</span>
-            <span><span class="st4-legend__dash"></span> <span data-st4="groupLegend">Age-group middle</span></span>
-            <span><span class="st4-legend__line"></span> Slowest swim</span>
+            <div class="st4-trend__legend" role="group" aria-label="Show or hide a line" data-st4-pred-legend></div>
             <button type="button" class="st4-link st4-legend__cta" data-st4-goal-from></button>
           </div>
         </article>
@@ -214,8 +239,8 @@ strokes: [Free, Back, Breast, Fly, IM]
           <button type="button" class="st4-link st4-rank__link" data-modal-target="#st4Top10" data-st4-top10>See Top 10 by season for this event</button>
         </article>
 
-        {# Every race, filtered by course, stroke and distance; a single
-           event also gets its times over the years (swim-tools-v4.js) #}
+        {# Your races in Your event's course and stroke, following Your event
+           like Race Time Predictions; no controls of its own (swim-tools-v4.js) #}
         <article class="st4-card st4-card--full st4-history" id="st4-history" aria-labelledby="st4-history-h">
           <div class="st4-card__row">
             <div>
@@ -223,29 +248,28 @@ strokes: [Free, Back, Breast, Fly, IM]
               <p class="st4-card__sub" data-st4="histSub"></p>
             </div>
           </div>
-          <div class="st4-history__filters">
-            <div class="st4-history__filter">
-              <span class="st4-history__label" id="st4-hist-course-label">Course</span>
-              <div class="st4-seg" role="group" aria-labelledby="st4-hist-course-label" data-st4-hist="course">
-                <button type="button" data-value="" aria-pressed="true">All</button>{% for c in courses %}<button type="button" data-value="{{ c }}" aria-pressed="false">{{ c }}</button>{% endfor %}
-              </div>
-            </div>
-            <div class="st4-history__filter">
-              <span class="st4-history__label" id="st4-hist-stroke-label">Stroke</span>
-              <div class="st4-seg" role="group" aria-labelledby="st4-hist-stroke-label" data-st4-hist="stroke">
-                <button type="button" data-value="" aria-pressed="true">All</button>{% for st in strokes %}<button type="button" data-value="{{ st }}" aria-pressed="false">{{ st }}</button>{% endfor %}
-              </div>
-            </div>
-            <label class="st4-history__filter">
-              <span class="st4-history__label">Distance</span>
-              <select class="form-control st4-history__select" data-st4-hist-distance></select>
-            </label>
-            <button type="button" class="st4-link st4-history__reset" data-st4-hist-reset hidden>Show all events</button>
-          </div>
-          {# Every event in the filters as its own line over time: pace per 100
-             (so a 50 and a 1650 share a scale), each race a dot with its time #}
+          {# Your event's course and stroke, a line per distance over time: pace
+             per 100 (so a 50 and a 1650 share a scale), each race a dot with
+             its time; Your event's distance stands out #}
           <div class="st4-trend" data-st4-hist-trend hidden>
             <p class="st4-trend__note" data-st4="trendNote"></p>
+            {# Zoom the years down to five, and slide along them; hidden when
+               every race fits in five years (swim-tools-v4.js) #}
+            {# − + centred over the plot, ‹ a quarter of its width to the left
+               and › a fifth to the right; dragging the chart also moves it
+               when zoomed. Hidden when every race fits in five years. #}
+            <div class="st4-zoom" data-st4-zoom-bar hidden>
+              <div class="st4-zoom__set st4-zoom__set--zoom" role="group" aria-label="Zoom the years">
+                <button type="button" class="st4-zoom__btn" data-st4-zoom="out" aria-label="Zoom out: more years">−</button>
+                <button type="button" class="st4-zoom__btn" data-st4-zoom="in" aria-label="Zoom in: fewer years">+</button>
+              </div>
+              <button type="button" class="st4-zoom__btn st4-zoom__pan st4-zoom__pan--earlier" data-st4-pan="earlier" aria-label="Earlier years">‹</button>
+              <button type="button" class="st4-zoom__btn st4-zoom__pan st4-zoom__pan--later" data-st4-pan="later" aria-label="Later years">›</button>
+              <button type="button" class="st4-link st4-link--sm st4-zoom__all" data-st4-zoom="all">All years</button>
+              {# The years in view, for screen readers #}
+              <span class="sr-only" data-st4="zoomLabel" aria-live="polite"></span>
+            </div>
+            <p class="st4-zoom__hint" data-st4-drag-hint hidden>Drag the chart to move through the years.</p>
             <div class="st4-trend__frame">
               <div class="st4-trend__yaxis st4-num" data-st4-trend-y aria-hidden="true"></div>
               <div class="st4-trend__chart">
@@ -326,6 +350,12 @@ strokes: [Free, Back, Breast, Fly, IM]
               </div>
             </div>
             <div class="st4-week" data-st4-week></div>
+            {# What the boxes mean #}
+            <ul class="st4-week__legend">
+              <li><span class="st4-week__key st4-week__key--done" aria-hidden="true"></span>Swum</li>
+              <li><span class="st4-week__key st4-week__key--planned" aria-hidden="true"></span>Planned</li>
+              <li><span class="st4-week__key st4-week__key--rest" aria-hidden="true"></span>Rest</li>
+            </ul>
             <p class="st4-week__note" data-st4="weekNote"></p>
           </article>
           <article class="st4-card">
@@ -352,14 +382,14 @@ strokes: [Free, Back, Breast, Fly, IM]
 {% set modalTitle = "Your event and goal" %}
 {% set modalBody %}
 <div class="st4-modal__grid">
-  <label class="st4-field">Course
-    <select class="form-control" data-st4-edit="course">{% for c in courses %}<option>{{ c }}</option>{% endfor %}</select>
+  <label class="st4-field">Distance
+    <select class="form-control" data-st4-edit="distance"></select>
   </label>
   <label class="st4-field">Stroke
     <select class="form-control" data-st4-edit="stroke">{% for s in strokes %}<option>{{ s }}</option>{% endfor %}</select>
   </label>
-  <label class="st4-field">Distance
-    <select class="form-control" data-st4-edit="distance"></select>
+  <label class="st4-field">Course
+    <select class="form-control" data-st4-edit="course">{% for c in courses %}<option>{{ c }}</option>{% endfor %}</select>
   </label>
   <label class="st4-field">Goal time <span class="st4-field__unit">(m:ss.hh)</span>
     <input class="form-control st4-num" data-st4-edit="goal" placeholder="29.99">
