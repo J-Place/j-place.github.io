@@ -1,0 +1,11 @@
+/* Article4 layout variation, enhancement, no production analog. src/css/Common/ad.css
+   (sitewide) sticks .advertising-dc.sticky-ad at top: 0 from 992px up, so once pinned the ad
+   touches the browser frame. Stick it at 15px instead: top only applies while stuck, so the
+   at-load position is unchanged. Same approach as Article5 (ArticleHeadline5.css, top: 3rem);
+   scoped to this layout because ad.css is shared by every page using AdSidebar.njk.
+   (0,3,0) because ad.css loads after pageCSS (base.njk), so an equal-specificity rule loses. */
+@media (min-width: 992px) {
+  .article-sidebar-ad .advertising-dc.sticky-ad {
+    top: 30px;
+  }
+}
