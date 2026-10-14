@@ -1,13 +1,22 @@
 /* Enhancement, no production analog: Share This Article box inside the article column
-   (partials/Article/ArticleShareThis.njk). Box (margin, radius, background) matches
-   .related-content.show-in-page (article-related-in-page.css). Icons reuse .social-share /
-   .share-icon from article-share-icons.css. */
+   (partials/Article/ArticleShareThis.njk). The gray box (.share-this-article__container:
+   radius, background) matches .related-content.show-in-page (article-related-in-page.css).
+   Icons reuse .social-share / .share-icon from article-share-icons.css.
+   Sticky: once scrolled to, it pins at the top of the browser frame until the reader scrolls
+   back above its original position, or the article column ends. The outer .share-this-article
+   is a white backing strip, 15px above the gray box (same gap as the sidebar ad,
+   article4-sticky-ad.css) and 30px below it, so the article scrolls underneath the whole strip.
+   margin-top + padding-top keep the in-flow gap above the gray box at 3rem.
+   Gray is solid (#f2f2f2, what Related Articles' rgba(0,0,0,.05) gives on white) so text
+   doesn't show through. */
 
 .share-this-article {
-  margin: 3rem 0;
-  padding: 2rem 4rem 2rem 2.5rem;
-  border-radius: 0 60px 60px 0;
-  background-color: rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  margin: 15px 0 0;
+  padding: 15px 0 30px;
+  background-color: #fff;
 }
 
 .share-this-article__container {
@@ -15,6 +24,9 @@
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
+  padding: 2rem 4rem 2rem 2.5rem;
+  border-radius: 0 60px 60px 0;
+  background-color: #f2f2f2;
 }
 
 /* (0,2,0) to beat usms.min.css's `.usms-container p { margin: 0 auto 2rem }`, whose bottom
@@ -37,13 +49,10 @@
 }
 
 @media (max-width: 767px) {
-  .share-this-article {
-    padding: 2rem 3rem 2rem 2rem;
-    border-radius: 0 30px 30px 0;
-  }
-
   /* Too narrow for text and icons on one row: icons drop below, text may wrap. */
   .share-this-article__container {
+    padding: 2rem 3rem 2rem 2rem;
+    border-radius: 0 30px 30px 0;
     flex-direction: column;
     align-items: flex-start;
   }
