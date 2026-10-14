@@ -1,0 +1,23 @@
+{# Rank and Tier, as v4's: where Your Event's time sits in your age group's
+   USMS ranking (Top Times), as a ladder of tiers from the fastest swim down,
+   yours marked, with the next rung to aim for. Members only: others see it
+   blurred under a join prompt. Filled by swim-tools-v2.js (renderTier). #}
+<article class="swim-card swim-rank" id="rank-tier">
+  <header class="swim-card__header">
+    <div class="swim-card__heading">
+      <h3 class="swim-card__title">Rank and Tier</h3>
+      <p class="swim-card__sub" data-st="rankTierSub"></p>
+    </div>
+  </header>
+  <div class="swim-rank__body" data-rank-body>
+    <div class="swim-rungs" data-rank-rungs></div>
+    <p class="swim-rank__next" data-rank-next aria-live="polite"></p>
+  </div>
+  <div class="swim-lock" data-rank-lock hidden>
+    <div class="swim-lock__title" data-st="lockTitle"></div>
+    <div class="swim-lock__text">Members see their tier on every event and track it as new results arrive.</div>
+    <a href="/join-usms/membership-comparison.html" class="btn btn-primary btn-sm">Join U.S. Masters Swimming</a>
+  </div>
+  {# Retired with Top 10 by Decade (2026-10-14); restore with it:
+  <a href="#top-tens" class="swim-pred-link swim-rank__link">See Top 10 by decade for this event</a> #}
+</article>

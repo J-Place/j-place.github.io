@@ -66,18 +66,17 @@
     races: [],
     // The Add a Race form; reset from Your Event each time it opens
     newRace: { course: 'SCY', distance: '200', stroke: 'Free', time: '', date: '' },
-    racesStroke: '',        // Your Races: one stroke's races, or '' for all
-    racesDistance: '',      // Your Races: one distance's races, or '' for all
     racesExpanded: false,   // Your Races: all of them, not just the newest few
-    // Convert a Time (Time Conversions): its own event and time
-    conv: { course: 'SCY', distance: '200', stroke: 'Free', time: '' },
+    // Convert a Time (Time Conversions): its own event, and a time or a pace
+    // (per 100); the one changed last (source) is used and the other worked
+    // out from it
+    conv: { course: 'SCY', distance: '200', stroke: 'Free', time: '', pace: '', source: 'time' },
     // Top 10 by Decade's event, in the lists' course; follows Your Event
     // (followEvent) until the card's own controls change it
     tens: { stroke: 'Free', distance: '200' },
-    // Race Splits goal, as a time or a pace (per 100): the one changed last
-    // (goalSource) is used, and the other worked out. Empty means use the
-    // event's time (your race or the average).
-    goal: '', goalPace: '', goalSource: 'time',
+    // Race Splits goal time. Empty means use the event's time (your best,
+    // projected time or the age-group median).
+    goal: '',
     interval: '50' // Race Splits: every 50, or the closest interval that divides the distance (fitInterval)
   };
 
@@ -261,7 +260,7 @@
     RANKS[url] = 'loading';
     fetch(url).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }).then(function (data) {
       RANKS[url] = data && data.swimmers && data.swimmers.length ? {
-        n: data.total || data.swimmers.length, truncated: !!data.truncated,
+        n: data.total || data.swimmers.length, truncated: !!data.truncated, seasonLabel: data.seasonLabel,
         // 'usms' (real) or 'synthetic' (modeled), which the page must say
         synthetic: data.provenance === 'synthetic',
         times: data.swimmers.map(function (x) { return parse(x.time); }).filter(isFinite)
@@ -300,7 +299,10 @@
     var e = RANKS[url];
     if (!e || e === 'loading') return null;
     var scale = COURSES[course].factor / COURSES[FROM].factor * d / fromD;
-    return { n: e.n, truncated: e.truncated, synthetic: e.synthetic, times: e.times.map(function (t) { return t * scale; }) };
+    return {
+      n: e.n, truncated: e.truncated, synthetic: e.synthetic, seasonLabel: e.seasonLabel, converted: FROM !== course,
+      times: e.times.map(function (t) { return t * scale; })
+    };
   }
 
   // The time at a share of the field: the slowest swim within it (NaN past
@@ -754,6 +756,7 @@
   // the predictor), so 1st place reads as the top of the list.
   function renderTopTens(goal) {
     var svg = root.querySelector('[data-st-top-tens]');
+    if (!svg) return; // the card is retired for now (TopTens.njk isn't included)
     var W = 960; // wider than the predictor's 720: the card spans the row
     // The swimmer's own list, or else the first there is, with a note
     var matched = topTenList();
@@ -893,6 +896,78 @@
     }).join('');
   }
 
+  // ---------- Rank and Tier ----------
+
+  // Ranking tiers, as v4's, fastest first: the Top 10 (10th place), then to
+  // the 25th, 50th and 75th percentiles of the full ranking, then the rest
+  var TOP_10 = 'Top 10';
+  var BOTTOM = '76–100%';
+  var TIERS = [TOP_10, '11th–25%', '26–50%', '51–75%', BOTTOM];
+  var TIER_SHARE = { '11th–25%': 0.25, '26–50%': 0.5, '51–75%': 0.75 };
+  var TIER_WHERE = { 'Top 10': '10th place', '11th–25%': 'Top 25%', '26–50%': 'Top 50%', '51–75%': 'Top 75%', '76–100%': '> top 75%' };
+
+  // A tier's cut: the slowest time in it. In a field under 40, 10th place is
+  // slower than the 25% line; the tiers above it are then all Top 10.
+  function cutOf(rank, tier) {
+    if (tier === TOP_10) return topTen(rank);
+    if (tier === BOTTOM) return Infinity;
+    return Math.max(atShare(rank, TIER_SHARE[tier]), topTen(rank));
+  }
+  function tierOf(secs, rank) {
+    for (var i = 0; i < TIERS.length; i++) {
+      if (secs <= cutOf(rank, TIERS[i])) return TIERS[i];
+    }
+    return BOTTOM;
+  }
+  // Where a time would place: 1 + everyone faster; null past the end of a
+  // truncated list
+  function placeOf(secs, rank) {
+    var faster = rank.times.filter(function (t) { return t < secs; }).length;
+    return faster === rank.times.length && rank.truncated ? null : faster + 1;
+  }
+
+  // Rank and Tier, as v4's: Your Event's time (t: your goal, best, projected
+  // time or the median; kind names it) on its age group's ladder. Members
+  // only: others see it blurred under a join prompt. While rankings load,
+  // grey rungs hold its place.
+  function renderTier(t, kind) {
+    var rank = groupRank(state.course, state.stroke, Number(state.distance), ageGroup());
+    var user = USERS[SWIMMER] || {}, member = !!(user.loggedIn && user.membershipTier);
+    var gender = swimmerGender();
+    set('rankTierSub', state.course + ' ' + state.distance + ' ' + lowerStroke(state.stroke) + (gender ? ' · ' + gender.toLowerCase() + ' ' + ageGroup().label : '') +
+      (rank ? ' · ' + (rank.seasonLabel ? rank.seasonLabel + ' season, ' : '') + rank.n.toLocaleString() + ' ranked' +
+        (rank.converted ? ' · converted from SCY' : '') + (rank.synthetic ? ' · synthetic data' : '') : ''));
+    var rungs = root.querySelector('[data-rank-rungs]'), next = root.querySelector('[data-rank-next]');
+    var body = root.querySelector('[data-rank-body]'), lock = root.querySelector('[data-rank-lock]');
+    if (!rank || !isFinite(t)) {
+      var loading = !rank && pending();
+      rungs.innerHTML = loading ? new Array(7).join('<span class="swim-skel swim-skel__rung" aria-hidden="true"></span>') : '';
+      next.textContent = loading ? 'Loading USMS rankings…' : !rank ? noRankText() : 'Race the ' + state.distance + ' ' + lowerStroke(state.stroke) + ' or set a goal to see your tier.';
+      lock.hidden = true;
+      body.classList.remove('is-locked');
+      return;
+    }
+    var here = tierOf(t, rank);
+    // The fastest swim first, for reference (not a tier), then Top 10 down
+    rungs.innerHTML = '<div class="swim-rung swim-rung--fastest"><b>Fastest</b><span>1st place</span><span>' + race(rank.times[0]) + '</span></div>' +
+      TIERS.map(function (tier) {
+        var c = cutOf(rank, tier);
+        // A tier that's all Top 10 in a small field has no cut of its own
+        var shared = tier !== TOP_10 && tier !== BOTTOM && c === topTen(rank);
+        return '<div class="swim-rung' + (tier === here ? ' is-here' : '') + '"><b>' + tier + '</b><span>' + TIER_WHERE[tier] + '</span><span>' +
+          (tier === BOTTOM ? '> ' + race(cutOf(rank, '51–75%')) : shared ? 'all Top 10' : !isFinite(c) ? '—' : race(c)) + '</span></div>';
+      }).join('');
+    var k = TIERS.indexOf(here), up = null;
+    for (var i = k - 1; i >= 0 && !up; i--) if (cutOf(rank, TIERS[i]) < t) up = TIERS[i];
+    var place = placeOf(t, rank);
+    var placed = (/median/.test(kind) ? 'The ' : 'Your ') + kind + ' of ' + race(t) + (place ? ' would place ' + ordinal(place) + ' of ' + rank.n.toLocaleString() : ' is outside the ' + rank.times.length + ' listed') + '.';
+    next.innerHTML = up ? '<b>Next rung: ' + up + ' at ' + race(cutOf(rank, up)) + '.</b> ' + placed + ' ' + (t - cutOf(rank, up)).toFixed(2) + ' s to go.' :
+      '<b>You\'re in the Top 10.</b> ' + placed;
+    lock.hidden = member;
+    body.classList.toggle('is-locked', !member);
+    set('lockTitle', up ? 'You\'re one rung from ' + up + '.' : 'You\'re in the Top 10 range.');
+  }
+
   // Practice this, as v4's Race Splits: the race pace in pieces from a
   // push, at the chosen strategy. Pieces follow v4's split lengths (25s for
   // the 50, 50s to the 200, then 100s, 150s for the mile), not the split
@@ -907,7 +982,7 @@
     }
     var leg = distance <= 50 ? 25 : distance <= 200 ? 50 : distance === 1650 ? 150 : 100;
     var n = distance / leg, segs = splitTimes(total, n, state.strategy);
-    if (n === 2) {
+    if (leg === 25) { // the 50 (a 100 is also two splits, but of 50)
       set('practiceSet', '8 × 25 from a push at ' + race(segs[0] + PUSH));
       set('practiceNote', 'Rest 45 s. Push starts run about ' + PUSH + ' s slower than a dive.');
     } else {
@@ -965,8 +1040,7 @@
 
   // ---------- Your races ----------
 
-  var RACES_SHOWN = 5;
-  var RACES_SCROLL = 20; // expanded lists longer than this scroll inside the card
+  var RACES_SHOWN = 6;
   // Whose races these are: the active persona, as current-user.js resolves
   // it (?user=, then sessionStorage.activeUser, then the page's swimmerId).
   // Each persona's races come from src/_data/raceHistory.json, embedded as
@@ -1071,61 +1145,38 @@
     return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
   }
 
-  // Your races, newest race date first (undated ones last, newest added
-  // first), filtered by stroke and distance if chosen; the newest few
-  // unless expanded. The distance list offers only distances you've raced
-  // in the chosen stroke, and goes back to all when the stroke has none.
-  var STROKE_NAMES = { Fly: 'Butterfly' };
-
+  // Your Races, as v4's: every race, newest first (undated ones last,
+  // newest added first), each against your best at that event (course,
+  // distance and stroke); the newest RACES_SHOWN unless expanded, when the
+  // list scrolls inside the card
   function renderRaces() {
     var list = root.querySelector('[data-st-races]');
     var toggle = root.querySelector('[data-races-toggle]');
-    var stroke = state.racesStroke;
-    var inStroke = state.races.filter(function (r) { return !stroke || r.stroke === stroke; });
-    var distances = inStroke.map(function (r) { return Number(r.distance); })
-      .filter(function (d, i, all) { return all.indexOf(d) === i; })
-      .sort(function (a, b) { return a - b; });
-    if (distances.indexOf(Number(state.racesDistance)) < 0) state.racesDistance = '';
-    var sel = root.querySelector('[data-st-races-distances]');
-    if (sel.getAttribute('data-key') !== distances.join()) {
-      sel.setAttribute('data-key', distances.join());
-      sel.innerHTML = '<option value="">All distances</option>' + distances.map(function (d) {
-        return '<option value="' + d + '">' + d + '</option>';
-      }).join('');
-    }
-    var distance = state.racesDistance;
-    var races = inStroke.filter(function (r) { return !distance || r.distance === distance; })
+    var races = state.races.map(function (r) {
+      return { id: r.id, course: r.course, d: r.distance, stroke: r.stroke, secs: parse(r.time), date: r.date };
+    }).filter(function (r) { return isFinite(r.secs); })
       .sort(function (a, b) { return (b.date || '').localeCompare(a.date || '') || b.id - a.id; });
+    var key = function (r) { return r.course + ' ' + r.d + ' ' + r.stroke; };
+    var bests = {};
+    races.forEach(function (r) { if (!(bests[key(r)] <= r.secs)) bests[key(r)] = r.secs; });
+    var dated = races.filter(function (r) { return r.date; });
+    var first = dated.length ? dated[dated.length - 1].date.slice(0, 4) : '';
+    set('racesSub', races.length ? races.length + (races.length === 1 ? ' race' : ' races') + (first ? ' since ' + first : '') +
+      ' · new meet results appear automatically' : 'No races yet · meet results appear here automatically');
     var shown = state.racesExpanded ? races : races.slice(0, RACES_SHOWN);
-    // The filters, e.g. "100 Butterfly"
-    var kind = [distance, stroke && (STROKE_NAMES[stroke] || stroke)].filter(Boolean).join(' ');
-    var what = races.length === 1 ? 'race' : 'races';
-
+    list.classList.toggle('is-all', state.racesExpanded);
     list.innerHTML = shown.length ? shown.map(function (r) {
-      var name = r.course + ' ' + r.distance + ' ' + r.stroke, when = formatDate(r.date);
-      return '<li class="swim-races__item">' +
-        '<button type="button" class="swim-races__remove" data-remove-race="' + r.id + '" aria-label="Remove ' + name + ', ' + race(parse(r.time)) + (when ? ', ' + when : '') + '">' +
-        '<i class="fa-solid fa-xmark" aria-hidden="true"></i></button>' +
-        '<span class="swim-races__course">' + r.course + '</span>' +
-        '<span class="swim-races__what"><span class="swim-races__event">' + r.distance + ' ' + r.stroke + '</span>' +
-        (when ? '<span class="swim-races__date">' + when + '</span>' : '') + '</span>' +
-        '<span class="swim-races__time">' + race(parse(r.time)) + '</span></li>';
-    }).join('') : '<li class="swim-races__empty">' +
-      (kind && state.races.length ? 'No ' + kind + ' races yet.' : 'No races yet. Add one to build your predictions.') + '</li>';
-
-    // Long expanded lists scroll inside the card; focusable so the keyboard can scroll them
-    var long = state.racesExpanded && races.length > RACES_SCROLL;
-    list.classList.toggle('is-long', long);
-    if (long) list.setAttribute('tabindex', '0');
-    else list.removeAttribute('tabindex');
-
+      var best = bests[key(r)], pb = r.secs === best;
+      return '<li class="swim-races__row"><span class="swim-races__course">' + r.course + '</span>' +
+        '<span>' + r.d + ' ' + r.stroke + ' <span class="swim-races__date">' + formatDate(r.date) + '</span></span>' +
+        '<span class="swim-badge' + (pb ? ' swim-badge--best' : '') + '">' + (pb ? 'Best' : '+' + (r.secs - best).toFixed(2) + ' vs best') + '</span>' +
+        '<span class="swim-races__time">' + race(r.secs) + '</span></li>';
+    }).join('') : '<li class="swim-races__empty">Add a race with the predictor\'s + to build your predictions.</li>';
     toggle.hidden = races.length <= RACES_SHOWN;
     toggle.setAttribute('aria-expanded', String(state.racesExpanded));
-    toggle.textContent = state.racesExpanded ? 'Show fewer' : 'Show all ' + races.length + ' ' + what;
-    set('racesCount', !races.length ? '' : (kind ? kind + ': ' : '') +
-      (races.length > shown.length ? 'Newest ' + shown.length + ' of ' + races.length + ' ' + what
-        : races.length + ' ' + what) + ', newest first');
+    toggle.textContent = state.racesExpanded ? 'Show fewer' : 'Show all ' + races.length;
   }
+
 
   // The Add a Race form
   function renderNewRace() {
@@ -1198,15 +1249,37 @@
     if (sel.value !== c.distance) sel.value = c.distance;
     set('convDistance', c.distance);
 
-    var typed = c.time !== '', ok = !typed || validEntry(c.time);
-    var secs = typed && ok ? parse(c.time) : NaN;
-    markTimeField(root.querySelector('[data-time-conv]'), ok);
-    set('convHint', !ok ? 'Seconds must be under 60.'
-      : typed ? '' : 'Enter a time to convert it to every course and age group.');
+    // The time or pace that wasn't changed last, from the one that was
+    var d = Number(c.distance), byPace = c.source === 'pace';
+    var typedValue = byPace ? c.pace : c.time;
+    var typed = typedValue !== '', ok = !typed || validEntry(typedValue);
+    var secs, pace;
+    if (byPace) {
+      pace = typed && ok ? parse(c.pace) : NaN;
+      secs = pace * d / 100;
+      c.time = isFinite(secs) ? race(secs) : '';
+    } else {
+      secs = typed && ok ? parse(c.time) : NaN;
+      pace = secs / d * 100;
+      // The pace field has no hundredths: to the nearest second
+      c.pace = isFinite(pace) ? race(Math.round(pace)) : '';
+    }
+    markTimeField(root.querySelector('[data-time-conv="time"]'), byPace || ok);
+    markTimeField(root.querySelector('[data-time-conv="pace"]'), !byPace || ok);
+    set('convHint', !ok ? (byPace ? 'Pace' : 'Time') + ': seconds must be under 60.'
+      : typed ? '' : 'Enter a time or a pace to convert it to every course and age group.');
 
+    // Course Conversion: a time as the matching event's time in each course;
+    // a pace as the pace per 100 in each course
     var name = c.distance + ' ' + c.stroke;
-    set('courseConvSubtitle', name + ' in ' + c.course + (isFinite(secs) ? ' @ ' + race(secs) : ''));
+    set('courseConvSubtitle', byPace ? 'Pace per 100 in ' + c.course + (isFinite(pace) ? ' @ ' + clock(pace) : '')
+      : name + ' in ' + c.course + (isFinite(secs) ? ' @ ' + race(secs) : ''));
     Object.keys(COURSES).forEach(function (k) {
+      if (byPace) {
+        set('courseConv' + k, isFinite(pace) ? clock(pace / COURSES[c.course].factor * COURSES[k].factor) : '—');
+        set('courseConvEvent' + k, '/100 ' + COURSES[k].unit);
+        return;
+      }
       var to = convertRace(c, k);
       set('courseConv' + k, isFinite(secs) && to.d ? race(to.secs) : '—');
       set('courseConvEvent' + k, !to.d ? 'No ' + name + ' in ' + k
@@ -1444,7 +1517,9 @@
   function renderMetrics() {
     var t = state.metrics, course = COURSES[t.course], unit = course.unit, d = Number(t.distance);
     if (!(d > 0)) d = NaN;
-    var byPace = t.source === 'pace';
+    // Time only: its Pace field is gone (pace shows as Training Pace)
+    t.source = 'time';
+    var byPace = false;
     var secs, pace;
     if (byPace) {
       pace = validEntry(t.pace) ? parse(t.pace) : NaN;
@@ -1496,12 +1571,9 @@
     });
     // Errors are for the one being typed in (the source)
     var timeField = card.querySelector('[data-time-metric="time"]');
-    var paceField = card.querySelector('[data-time-metric="pace"]');
-    var typed = t[t.source], ok = typed === '' || validEntry(typed);
-    markTimeField(timeField, byPace || ok);
-    markTimeField(paceField, !byPace || ok);
-    set('metricsHint', typed === '' ? 'Enter a time or a pace.'
-      : ok ? '' : (byPace ? 'Pace' : 'Time') + ': seconds must be under 60.');
+    var typed = t.time, ok = typed === '' || validEntry(typed);
+    markTimeField(timeField, ok);
+    set('metricsHint', typed === '' ? 'Enter a time.' : ok ? '' : 'Time: seconds must be under 60.');
     set('metricsDistanceUnit', '(' + unitWord.trim() + ')');
   }
 
@@ -1524,18 +1596,8 @@
     // The goal belongs to one event; a new event starts it empty
     var eventKey = state.course + ' ' + state.distance + ' ' + state.stroke;
     if (lastEvent && eventKey !== lastEvent) {
-      state.goal = state.goalPace = '';
-      ['goal', 'goalPace'].forEach(function (key) {
-        fillTimeField(document.querySelector('[data-time-input="' + key + '"]'), ''); // even if focused
-      });
-    }
-    // The goal time or pace that wasn't changed last, from the one that was
-    var goalD = Number(state.distance);
-    if (state.goalSource === 'pace') {
-      state.goal = validEntry(state.goalPace) ? race(parse(state.goalPace) * goalD / 100) : '';
-    } else {
-      // The pace field has no hundredths: to the nearest second
-      state.goalPace = validEntry(state.goal) ? race(Math.round(parse(state.goal) / goalD * 100)) : '';
+      state.goal = '';
+      fillTimeField(document.querySelector('[data-time-input="goal"]'), ''); // even if focused
     }
     // Top 10 by Decade follows a new Your Event
     if (eventKey !== lastEvent) followEvent();
@@ -1560,21 +1622,18 @@
     var distance = Number(state.distance);
     fitInterval(distance);
     var goalTyped = state.goal !== '';
-    var byPace = state.goalSource === 'pace';
-    var typedGoal = byPace ? state.goalPace : state.goal;
-    var goalOk = typedGoal === '' || validEntry(typedGoal);
+    var goalOk = state.goal === '' || validEntry(state.goal);
     var goal = goalTyped ? (goalOk ? parse(state.goal) : NaN) : eventTime;
     renderSplits(goal, distance);
     renderPractice(goal, distance);
+    // Rank and Tier: the same time, named by where it came from
+    renderTier(goal, goalTyped ? 'goal' : isFinite(goalRow.you) ? 'best' : isFinite(goalRow.proj) ? 'projected time' : ageGroup().label + ' median');
     set('splitsSubtitle', state.distance + ' ' + state.stroke +
       (goalTyped ? ' · goal ' : isFinite(goalRow.you) ? ' · your best ' : isFinite(goalRow.proj) ? ' · your projected time ' : ' · ' + ageGroup().label + ' median ') + race(goal));
     var goalField = document.querySelector('[data-time-input="goal"]');
-    var goalPaceField = document.querySelector('[data-time-input="goalPace"]');
     setTimePlaceholders(goalField, eventTime);
-    setTimePlaceholders(goalPaceField, eventTime / distance * 100);
-    markTimeField(goalField, byPace || goalOk);
-    markTimeField(goalPaceField, !byPace || goalOk);
-    set('goalHint', goalOk ? '' : (byPace ? 'Pace' : 'Time') + ': seconds must be under 60.');
+    markTimeField(goalField, goalOk);
+    set('goalHint', goalOk ? '' : 'Time: seconds must be under 60.');
 
     renderConversions(age);
 
@@ -1590,7 +1649,7 @@
     document.querySelectorAll('[data-time-field]').forEach(function (group) {
       var key = group.getAttribute('data-time-input'), metric = group.getAttribute('data-time-metric');
       var value = key ? state[key] : metric ? state.metrics[metric]
-        : group.hasAttribute('data-time-conv') ? state.conv.time : state.newRace.time;
+        : group.hasAttribute('data-time-conv') ? state.conv[group.getAttribute('data-time-conv')] : state.newRace.time;
       if (readTimeField(group) === value || group.contains(document.activeElement)) return;
       fillTimeField(group, value);
     });
@@ -1682,9 +1741,6 @@
     var key = group.getAttribute('data-time-input'), metric = group.getAttribute('data-time-metric');
     if (key) {
       state[key] = readTimeField(group);
-      // Your Event's goal: the time or pace just changed is the one used
-      if (key === 'goal') state.goalSource = 'time';
-      if (key === 'goalPace') state.goalSource = 'pace';
     }
     else if (metric) {
       // Your Swim: the time or pace just changed becomes the source the
@@ -1692,7 +1748,12 @@
       state.metrics[metric] = readTimeField(group);
       state.metrics.source = metric;
     }
-    else if (group.hasAttribute('data-time-conv')) state.conv.time = readTimeField(group);
+    else if (group.hasAttribute('data-time-conv')) {
+      // Convert a Time: the time or pace just changed is the one used
+      var convKey = group.getAttribute('data-time-conv');
+      state.conv[convKey] = readTimeField(group);
+      state.conv.source = convKey;
+    }
     else {
       // Add a Race: clear an error once the time is fixed
       state.newRace.time = readTimeField(group);
@@ -1853,7 +1914,7 @@
     modal.querySelector('.js-modal-close').click();
   }
 
-  // Your races: add (Add a Race modal), remove, and show all or fewer
+  // Your races: add (Add a Race modal), and show all or fewer
   document.addEventListener('click', function (e) {
     if (e.target.closest('[data-races-toggle]')) {
       state.racesExpanded = !state.racesExpanded;
@@ -1868,15 +1929,6 @@
       addRace();
       return;
     }
-    var remove = e.target.closest('[data-remove-race]');
-    if (!remove) return;
-    var id = Number(remove.getAttribute('data-remove-race'));
-    state.races = state.races.filter(function (r) { return r.id !== id; });
-    saveRaces();
-    render();
-    // The button is gone; keep focus in the card
-    var next = root.querySelector('[data-remove-race]') || root.querySelector('#race-history [data-modal-target]');
-    if (next) next.focus();
   });
 
   // Section ribbon: the chosen section moves to the top of the tools, the

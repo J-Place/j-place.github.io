@@ -246,7 +246,8 @@
    Training Metrics (Your Swim) and Race Planning (Your Event). */
 .swim-panel {
   margin-bottom: 24px;
-  border: 1px solid var(--sd-border);
+  /* border: 1px solid var(--sd-border); */
+  border: 0 none;
   border-radius: 8px;
   background: #fff;
   overflow: hidden; /* the bands follow the rounded corners */
@@ -911,65 +912,31 @@
 
 /* ---------- Your Races ---------- */
 
-/* Stroke and Distance filters, in the card header: selects sized to their
-   longest option, with room on the right for production's arrow, bordered
-   like the page's other fields */
-.swim-races__filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.swim-deck .swim-races__filters .form-control {
-  width: auto;
-  height: 36px;
-  padding: 0 32px 0 10px;
-  border: 1px solid var(--sd-border);
-  border-radius: 8px;
-  background-color: #fff;
-  box-shadow: none;
-  font-size: 14px;
-}
-
-/* One race per line: remove, course, event and its date, then the time at
-   the right. Two columns once the card is wide enough to fit a date in
-   each (1200px). Prefixed to outrank production's
-   .usms-container ol/li rules. */
+/* As v4's (.st4-races): one race per line, newest first: course, event
+   and its date, a badge against your best at that event, and the time.
+   Prefixed to outrank production's .usms-container ol/li rules. */
 .swim-deck .swim-races__list {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  column-gap: 32px;
   margin: 0;
   padding: 0;
   list-style: none;
   font-variant-numeric: tabular-nums;
 }
 
-@media (min-width: 1200px) {
-  .swim-deck .swim-races__list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-/* Expanded past RACES_SCROLL (swim-tools-v2.js): scroll inside the card */
-.swim-deck .swim-races__list.is-long {
-  max-height: 480px;
+/* Show all: scrolls inside the card */
+.swim-deck .swim-races__list.is-all {
+  max-height: 460px;
   overflow-y: auto;
 }
 
-.swim-races__list:focus-visible {
-  outline: 2px solid var(--sd-blue);
-  outline-offset: 2px;
-}
-
-.swim-deck .swim-races__item {
+.swim-deck .swim-races__row {
   display: grid;
-  grid-template-columns: 28px 30px minmax(0, 1fr) auto;
+  grid-template-columns: 44px minmax(0, 1fr) auto auto;
   align-items: center;
-  gap: 6px;
-  width: 100%;
-  padding: 6px 0;
+  gap: 10px;
+  margin: 0;
+  padding: 9px 0;
   border-top: 1px solid var(--sd-rule);
+  color: var(--sd-ink);
   font-size: 15px;
   line-height: 1.4;
 }
@@ -978,88 +945,151 @@
   color: var(--sd-blue);
   font-size: 12px;
   font-weight: 700;
-  letter-spacing: 0.04em;
-}
-
-/* Event then date on one line; the date gives way (ellipsis) when the
-   column is too narrow for both */
-.swim-races__what {
-  display: flex;
-  align-items: baseline;
-  gap: 8px;
-  min-width: 0;
-  white-space: nowrap;
-}
-
-.swim-races__event {
-  flex: none;
-  color: var(--sd-ink);
 }
 
 .swim-races__date {
-  overflow: hidden;
-  text-overflow: ellipsis;
   color: var(--sd-muted);
-  font-size: 12px;
-}
-
-/* Show all / Show fewer, under the list */
-.swim-races__toggle {
-  align-self: flex-start;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--sd-blue);
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.swim-races__toggle:hover {
-  text-decoration: underline;
-}
-
-.swim-races__toggle:focus-visible {
-  outline: 2px solid var(--sd-blue);
-  outline-offset: 2px;
+  font-size: 13px;
 }
 
 .swim-races__time {
+  min-width: 76px;
   color: var(--sd-ink);
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 700;
   text-align: right;
 }
 
-/* A little smaller on phones, so a long event's date still fits */
-@media (max-width: 479px) {
-  .swim-races__time {
-    font-size: 16px;
-  }
-}
-
-.swim-races__remove {
-  width: 28px;
-  height: 28px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: transparent;
-  color: var(--sd-muted);
-}
-
-.swim-races__remove:hover {
+/* "Best", or "+0.42 vs best" */
+.swim-badge {
+  padding: 2px 8px;
+  border-radius: 999px;
   background: var(--sd-subtle);
-  color: var(--sd-red);
+  color: var(--sd-muted);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
-.swim-races__remove:focus-visible {
-  outline: 2px solid var(--sd-blue);
-  outline-offset: 1px;
+.swim-badge--best {
+  background: var(--sd-blue);
+  color: #fff;
 }
 
 .swim-deck .swim-races__empty {
+  margin: 0;
   color: var(--sd-muted);
   font-size: 14px;
+}
+
+/* Phones: the badge drops under the event, so the time keeps its place */
+@media (max-width: 479px) {
+  .swim-deck .swim-races__row {
+    grid-template-columns: 40px minmax(0, 1fr) auto;
+    row-gap: 4px;
+  }
+
+  .swim-races__row .swim-badge {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: start;
+  }
+
+  .swim-races__row .swim-races__time {
+    grid-row: 1;
+    grid-column: 3;
+  }
+}
+
+/* ---------- Rank and Tier ---------- */
+
+/* As v4's (.st4-rank): the age group's tiers as rungs, fastest first, yours
+   outlined; blurred under a join prompt for non-members */
+.swim-rank {
+  position: relative;
+}
+
+.swim-rank__body.is-locked {
+  filter: blur(4px);
+  user-select: none;
+}
+
+.swim-rungs {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.swim-rung {
+  display: grid;
+  grid-template-columns: 76px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  background: var(--sd-subtle);
+  color: var(--sd-ink);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.swim-rung span:nth-child(2) {
+  color: var(--sd-muted);
+  font-size: 13px;
+}
+
+/* The fastest swim: a reference row above the tiers */
+.swim-rung--fastest {
+  border-color: var(--sd-rule);
+  background: transparent;
+}
+
+.swim-rung.is-here {
+  border-color: var(--sd-blue);
+  background: var(--sd-tint);
+}
+
+.swim-deck .swim-rank__next {
+  margin: 10px 0 0;
+  font-size: 14px;
+}
+
+.swim-lock {
+  position: absolute;
+  right: 20px;
+  bottom: 56px;
+  left: 20px;
+  padding: 14px;
+  border: 1px solid var(--sd-border);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(38, 38, 39, 0.12);
+}
+
+.swim-lock[hidden] {
+  display: none;
+}
+
+.swim-lock__title {
+  font-weight: 700;
+}
+
+.swim-lock__text {
+  margin-bottom: 8px;
+  color: var(--sd-muted);
+  font-size: 14px;
+}
+
+.swim-rank__link {
+  align-self: flex-start;
+  text-decoration: none;
+}
+
+/* While rankings load: grey rungs, as tall as the real ones */
+.swim-skel__rung {
+  height: 37px;
+  border-radius: 6px;
 }
 
 /* ---------- Race Splits ---------- */

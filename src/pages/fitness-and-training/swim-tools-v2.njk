@@ -119,15 +119,9 @@ ageGroups:
               </div>
               {# Goal time for Your Event: what Race Splits splits up. Until it's
                  set, splits use the prediction, shown as the placeholders. #}
-              {# Goal as a time or a pace: changing either updates the other #}
               <div class="swim-swim__field">
                 <span class="swim-swim__label" id="sd-goal-label">Time</span>
                 {{ timeField("sd-goal-label", 'data-time-input="goal"', "xs") }}
-              </div>
-              <span class="swim-swim__or">or</span>
-              <div class="swim-swim__field">
-                <span class="swim-swim__label" id="sd-goal-pace-label">Pace <span class="swim-swim__optional">(per 100)</span></span>
-                {{ timeField("sd-goal-pace-label", 'data-time-input="goalPace"', "xs", true) }}
               </div>
             </div>
             {# Goal time errors; hidden while empty #}
@@ -141,8 +135,14 @@ ageGroups:
                 {% include "partials/SwimToolsV2/RacePredictor.njk" %}
                 {% include "partials/SwimToolsV2/RaceHistory.njk" %}
               </div>
-              <div class="col-xs-12 col-md-4 swim-deck__cell">{% include "partials/SwimToolsV2/RaceSplits.njk" %}</div>
-              <div class="col-xs-12 swim-deck__cell">{% include "partials/SwimToolsV2/TopTens.njk" %}</div>
+              {# Race Splits, then Rank and Tier #}
+              <div class="col-xs-12 col-md-4 swim-deck__cell swim-deck__cell--stack">
+                {% include "partials/SwimToolsV2/RaceSplits.njk" %}
+                {% include "partials/SwimToolsV2/RankTier.njk" %}
+              </div>
+              {# Retired 2026-10-14: Top 10 by Decade (TopTens.njk, kept for reuse).
+                 To restore, include it here again in a col-xs-12 cell, and Rank
+                 and Tier's link to it (RankTier.njk). #}
             </div>
           </div>
         </div>

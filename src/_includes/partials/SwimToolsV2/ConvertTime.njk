@@ -26,9 +26,17 @@
         {% for c in courses %}<button type="button" data-value="{{ c }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ c }}</button>{% endfor %}
       </div>
     </div>
+    {# Time or pace (per 100): changing either updates the other; the one
+       changed last is what Course Conversion shows, as event times or as
+       paces per course (swim-tools-v2.js) #}
     <div class="swim-swim__field">
       <span class="swim-swim__label" id="sd-conv-time-label">Time</span>
       {{ timeField("sd-conv-time-label", 'data-time-conv="time"', "xs") }}
+    </div>
+    <span class="swim-swim__or">or</span>
+    <div class="swim-swim__field">
+      <span class="swim-swim__label" id="sd-conv-pace-label">Pace <span class="swim-swim__optional">(per 100)</span></span>
+      {{ timeField("sd-conv-pace-label", 'data-time-conv="pace"', "xs", true) }}
     </div>
   </div>
   {# Time errors; hidden while empty #}

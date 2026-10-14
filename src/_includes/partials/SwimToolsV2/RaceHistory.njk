@@ -1,7 +1,7 @@
-{# Your race history, newest race date first (Add a Race modal): the newest
-   few, or all of them with Show all; filterable by stroke and distance. The
-   Race Time Predictor is built from all of them. Filled by
-   swim-tools-v2.js. #}
+{# Your Races, as v4's: every race, newest first, each with its course, date
+   and how it compares with your best at that event; the newest few, or all
+   of them with Show all. Races are added from the predictor's + button.
+   Filled by swim-tools-v2.js (renderRaces). #}
 {# Each persona's races from src/_data/raceHistory.json, plus the page's
    default persona; swim-tools-v2.js picks the active one (?user=) #}
 <script type="application/json" id="race-history-data">{{ { "default": swimmerId, "swimmers": raceHistory.swimmers } | dump | safe }}</script>
@@ -9,20 +9,9 @@
   <header class="swim-card__header">
     <div class="swim-card__heading">
       <h3 class="swim-card__title">Your Races</h3>
-      <p class="swim-card__sub" data-st="racesCount"></p>
+      <p class="swim-card__sub" data-st="racesSub"></p>
     </div>
-    {# Filters: a stroke, and a distance from the ones you've raced in it
-       (swim-tools-v2.js). Races are added from the predictor's + button. #}
-    <div class="swim-races__filters">
-      <select class="form-control" aria-label="Stroke" data-input="racesStroke">
-        <option value="">All strokes</option>
-        {% for s in [["Free", "Free"], ["Breast", "Breast"], ["Back", "Back"], ["Fly", "Butterfly"], ["IM", "IM"]] %}<option value="{{ s[0] }}">{{ s[1] }}</option>{% endfor %}
-      </select>
-      <select class="form-control" aria-label="Distance" data-input="racesDistance" data-st-races-distances>
-        <option value="">All distances</option>
-      </select>
-    </div>
+    <button type="button" class="swim-pred-link" data-races-toggle aria-controls="swim-races-list" aria-expanded="false" hidden></button>
   </header>
   <ol class="swim-races__list" id="swim-races-list" data-st-races></ol>
-  <button type="button" class="swim-races__toggle" data-races-toggle aria-controls="swim-races-list" aria-expanded="false" hidden></button>
 </div>

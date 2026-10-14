@@ -23,15 +23,9 @@
           {% for c in courses %}<button type="button" data-value="{{ c }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ c }}</button>{% endfor %}
         </div>
       </div>
-      {# Time and pace: changing either updates the other (swim-tools-v2.js) #}
       <div class="swim-swim__field">
         <span class="swim-swim__label" id="sd-metrics-time-label">Time</span>
         {{ timeField("sd-metrics-time-label", 'data-time-metric="time"', "xs") }}
-      </div>
-      <span class="swim-swim__or">or</span>
-      <div class="swim-swim__field">
-        <span class="swim-swim__label" id="sd-metrics-pace-label">Pace <span class="swim-swim__optional">(per 100)</span></span>
-        {{ timeField("sd-metrics-pace-label", 'data-time-metric="pace"', "xs", true) }}
       </div>
       {# How hard the swim felt, 1 to 10 (optional): a slider on a track shaded
          like the Relative Effort bar. Faded with no thumb until rated; clicking

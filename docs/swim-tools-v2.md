@@ -7,7 +7,7 @@ Status as of 2026-10-12: built and working locally, **nothing committed**. Page:
 | File | Role |
 |---|---|
 | `src/pages/fitness-and-training/swim-tools-v2.njk` | Page shell: ribbon, the three sections, the Race Planning controls. Frontmatter holds `swimmerId: KT2JH` (default persona), `courses`, `ageGroups`. |
-| `src/_includes/partials/SwimToolsV2/` | `YourSwim` (Training Metrics panel), `PaceConversion` (retired 2026-10-13, not included; kept for reuse), `RelativeEffort`, `StrokeSelect` (macro), `RacePredictor`, `RaceHistory` (Your Races, and embeds race data), `RaceSplits`, `TopTens`, `ConvertTime`, `CourseConversion`, `AgeRank`, `AgeConversion`, `Editors` (modals), `TimeField` (macro). |
+| `src/_includes/partials/SwimToolsV2/` | `YourSwim` (Training Metrics panel), `PaceConversion` (retired 2026-10-13, not included; kept for reuse), `RelativeEffort`, `StrokeSelect` (macro), `RacePredictor`, `RaceHistory` (Your Races, and embeds race data), `RankTier` (Rank and Tier), `RaceSplits`, `TopTens` (retired 2026-10-14, not included; kept for reuse), `ConvertTime`, `CourseConversion`, `AgeRank`, `AgeConversion`, `Editors` (modals), `TimeField` (macro). |
 | `src/js/swim-tools-v2.js` | All behavior (~1240 lines, one IIFE, one `state` object, one `render()`). |
 | `src/css/pages/swim-tools-v2.css` | All styles (~1540 lines), tokens `--sd-*`. |
 | `src/_data/raceHistory.json` | Real race history per persona (see Data). |
@@ -25,7 +25,7 @@ Unrelated uncommitted changes in the tree (`addons.css`, `swim-tools.css`, `affi
    - **Light-blue input band** (`YourSwim.njk`), with labels above the controls:
      - Distance (number; arrows step by 25; label "Distance (yards)" with the unit in regular weight).
      - Course (SCY/SCM/LCM).
-     - Time, then "or", then Pace (per 100). These are two-way: changing either updates the other. Nothing is cleared, and `metrics.source` records which one was entered last.
+     - Time (its Pace field was removed 2026-10-14; the pace shows in the Training pace tile).
      - Stroke (optional select, "Any" means a mixed workout).
      - **Effort** (optional, 1–10): how hard the swim felt, after Stroke on the same row. A **slider** (`.swim-slider`, a native `input type="range"` styled for WebKit and Firefox), "1" and "10" at its ends, its track shaded like the Relative Effort bar; the thumb's ring takes the rating's shade (`FELT_SHADES`). Not rated: the track is faded and has no thumb, and clicking or dragging anywhere on it rates. Arrow keys step; the mouse wheel steps it only while it's focused (so it doesn't take over page scrolling); × clears. The × keeps its space while hidden so rating doesn't widen the row and wrap Add to Log. The label shows the RPE word (`FELT_WORDS`: 1–2 Very easy, 3–4 Easy, 5–6 Moderate, 7–8 Hard, 9 Very hard, 10 Max), "(optional)" when not rated. Shown as "You rated it 7/10" in the Relative effort tile, adjusts Calorie burn, and saved with Add to Log (`effort`, a number or null).
      - **Add to Log**: an outline button (`btn btn-outline`), 44px tall and right-aligned. Below 1100px it wraps to its own bottom row, left-aligned.
@@ -38,18 +38,18 @@ Unrelated uncommitted changes in the tree (`addons.css`, `swim-tools.css`, `affi
    - Add to Log opens `#swimDeckLog`, showing the stats as static text, a date input, and Cancel / Save to Log. Entries are saved to localStorage `swimTools.log`. There's no log view yet.
 4. **Race Planning**: one panel.
    - **Blue band**, with labels above the controls:
-     - Age group select (`data-input="ageGroup"`), shown as a blue pill.
-     - Course.
      - Distance: select with a blue pill, numbers only (no "yd"/"m").
      - Stroke.
-     - Time "or" Pace (per 100, minutes and seconds only): the goal for Your Event. Time and pace are two-way.
+     - Course.
+     - Time: the goal for Your Event (its Pace field was removed 2026-10-14). The age group select is in the page header, only when the age isn't known.
      - Goal errors show in red (`goalHint`).
    - **Tools band**:
      - Race Time Predictions (chart or table) with **Your Races** beneath it, at col-md-8.
-     - Race Splits (Even / Fast start / Negative), at col-md-4.
-     - **Top 10 by Decade**, full width (col-xs-12) beneath both.
+     - Race Splits (Even / Fast start / Negative, with Practice this), then **Rank and Tier**, stacked at col-md-4.
+     - Top 10 by Decade: **retired 2026-10-14** (`TopTens.njk` kept; `renderTopTens` skips drawing while it isn't on the page).
 5. **Time Conversions**: one panel.
-   - **Convert a Time band**: course, distance, stroke, time, and **Your age**.
+   - **Convert a Time band**: distance, stroke, course, then Time "or" Pace (per 100, minutes and seconds only; added 2026-10-14). Time and pace are two-way: changing either updates the other, and `conv.source` records which was entered last. Your age comes from the profile, or the header's age group.
+   - **Course Conversion** follows the source: a time shows as the matching event's time in each course (same distance or its yards/meters equivalent); a pace shows as the pace per 100 in each course, each labelled "/100 yd" or "/100 m". Age Conversion and Rank in Age Group always use the time (worked out from the pace when that was entered).
    - Cards: Course Conversion and Rank in Age Group (stacked, col-md-5), and Age Conversion (col-md-7). Age Conversion shows your group plus three younger and three older.
 
 ## Behavior rules worth keeping
@@ -62,8 +62,10 @@ Unrelated uncommitted changes in the tree (`addons.css`, `swim-tools.css`, `affi
   - **Insight** under the chart: where your pace is closest to and furthest from the median.
   - No goal line any more. Your Event's default time (splits, goal placeholders) is your best, else your projected time, else the median.
 - **Relative Effort** (Training Metrics, `renderEffort`): the Your Swim pace as a share of your race pace at the swim's distance (race pace / swim pace; 100% = race effort). Race pace comes from the predictor's rows for the swim's course and stroke (Free when Any): the nearest event with your best or projected time, scaled to the swim's distance by Riegel's 1.06; with no races in that stroke, the age group's median. Zones (`EFFORT_ZONES`): Recovery under 70%, Easy 70, Moderate 80, Hard 90, Race pace 97, Faster than race pace from 104 (the reference pace is stale or undersells you). The bar runs 50–105%.
+- **Your Races** (since 2026-10-14, as v4's; `renderRaces`): every race, newest first, each with its course, date, and a badge against your best at that event (course, distance and stroke): "Best", or "+0.42 vs best". The newest 6 (`RACES_SHOWN`); Show all lists every race, scrolling inside the card. No filters and no remove buttons (v2's earlier version had both); races are still added from the predictor's +. On phones the badge drops under the event.
+- **Rank and Tier** (since 2026-10-14, as v4's; `renderTier`, `RankTier.njk`), below Race Splits: Your Event's time (your goal, else best, projected time or the age-group median, the same time Race Splits uses) on your age group's latest Top Times ranking: a Fastest reference row, then Top 10, 11th–25%, 26–50%, 51–75% and 76–100% with each tier's cut, yours outlined; then the next rung, where the time would place, and how far to go. Non-members (not logged in, or no membership tier) see it blurred under a join prompt. Grey rungs while rankings load. Its link to Top 10 by Decade is retired with that card.
 - **Which races count** (since 2026-10-13, v2 and v4 alike): only the last 8 years' (`WINDOW_YEARS`; undated races count). Within that, races from your current age group are real bests (`inAgeGroup`; races without an age count as current), and earlier ones are age-adjusted into it. A real current-group swim beats an adjusted older one at the same distance, even a faster one. If none of the window's races are in Your Event's stroke, every race in the stroke is used, age-adjusted, and the subtitle and insight say they're from races over 8 years ago (`predPool`). The insight compares real and age-adjusted swims, not times projected from other distances.
-- **Top 10 by Decade** (`renderTopTens`):
+- **Top 10 by Decade** (`renderTopTens`; retired 2026-10-14, notes kept for when it returns):
   - **Its own Stroke and Distance** filters sit in the card header (`data-tens` / `data-tens-input`, `state.tens`), with distances in the lists' course (SCY).
   - **Following Your Event**: the card starts on Your Event, and switches back to it whenever Your Event's course, distance or stroke changes (`followEvent`). A meters event maps to its yards equivalent (400 m → 500 yd) through `convertRace`. The subtitle says "Your event" while the two match.
   - **Columns**: one per season, each a bar from 1st to 10th with every time as a dot. 1st is solid and labelled bold above the bar, and 10th is labelled below it. A pale band joins the seasons, with a line along the 1st-place times. Fastest is at the top, the reverse of the predictor (where slower is higher).
@@ -79,13 +81,8 @@ Unrelated uncommitted changes in the tree (`addons.css`, `swim-tools.css`, `affi
     - Your Event: the event they've swum most, with the latest winning a tie (`startFromSwimmer`).
   - **No race history** (e.g. `?user=COACH`): empty races, averages only.
 - **Saved races**: races added or removed are stored per persona in localStorage `swimTools.races.<id>`, which then replaces that persona's seed list. The old unscoped `swimTools.races` key is ignored. New races get an `age` computed from the birth date.
-- **Your Races**:
-  - Sorted by date, newest first.
-  - **Filters**: two selects in the header. Stroke (`racesStroke`) offers All, Free, Breast, Back, Butterfly, IM. Distance (`racesDistance`) offers All plus only the distances raced in the chosen stroke, and resets to All when the stroke has none. There's no Add a Race button here; races are added from the predictor's + button.
-  - Shows the newest 5, then "Show all"; expanded lists over 20 scroll inside the card.
-  - Each row is one line: remove × at the **start**, course, event, date, then time. The list is two columns only from 1200px, where both dates fit. Below about 380px a long event's date truncates with an ellipsis.
 - **Time fields** (`TimeField.njk` macro):
-  - Three boxes `mm : ss . hh`; paces have no hundredths.
+  - Three inputs `mm : ss . hh` in one outlined box; paces have no hundredths. Clicking into the box starts at minutes.
   - Typing auto-advances between boxes.
   - Up/Down arrows or the wheel step a box, wrapping at 0–59 (hundredths 0–99).
   - Focusing a box selects its contents.

@@ -4,6 +4,9 @@
    Its stroke and distance start from Your Event and follow it when it
    changes, and can be changed here on their own. Drawn by swim-tools-v2.js. #}
 {% from "partials/SwimToolsV2/StrokeSelect.njk" import strokeSelect %}
+{# RETIRED 2026-10-14: no longer included on swim-tools-v2.njk, kept for
+   reuse. renderTopTens in swim-tools-v2.js skips drawing while it's out;
+   including it again restores it as was. #}
 <script type="application/json" id="top-tens-data">{{ topTens | dump | safe }}</script>
 <article class="swim-card" id="top-tens">
   <header class="swim-card__header">
