@@ -2,21 +2,26 @@
    (partials/Article/ArticleShareThis.njk). The gray box (.share-this-article__container:
    radius, background) matches .related-content.show-in-page (article-related-in-page.css).
    Icons reuse .social-share / .share-icon from article-share-icons.css.
-   Sticky: once scrolled to, it pins at the top of the browser frame until the reader scrolls
-   back above its original position, or the article column ends. The outer .share-this-article
-   is a white backing strip, 15px above the gray box (same gap as the sidebar ad,
-   article4-sticky-ad.css) and 30px below it, so the article scrolls underneath the whole strip.
+   Sticky (.is-sticky, added by js/Article/article-share-dock.js, so without JS it just stays in
+   place): once scrolled to, it pins at the top of the browser frame until it reaches the end of
+   the article body, where the script moves it into the page and it scrolls with it. See the
+   script's and the partial's header comments. The outer .share-this-article is a white backing
+   strip, 15px above the gray box (same gap as the sidebar ad, article4-sticky-ad.css) and 30px
+   below it, so the article scrolls underneath the whole strip.
    margin-top + padding-top keep the in-flow gap above the gray box at 3rem.
    Gray is solid (#f2f2f2, what Related Articles' rgba(0,0,0,.05) gives on white) so text
    doesn't show through. */
 
 .share-this-article {
+  margin: 29px 0 0;
+  padding: 29px 0 35px;
+  background-color: #fff;
+}
+
+.share-this-article.is-sticky {
   position: sticky;
   top: 0;
   z-index: 5;
-  margin: 15px 0 0;
-  padding: 15px 0 30px;
-  background-color: #fff;
 }
 
 .share-this-article__container {

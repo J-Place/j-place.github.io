@@ -1,9 +1,24 @@
-{#- Share This Article: in-page box inside the article column. Same bare container > component
+{#- Share This Article: in-page share bar inside the article body. Same bare container > component
     markup as Related Articles' "Show in Page" rendering (partials/PageContent/RelatedContent.njk),
-    styled by css/Article/article-share-this.css. Enhancement, no production analog. -#}
+    styled by css/Article/article-share-this.css, behavior in js/Article/article-share-dock.js.
+    Enhancement, no production analog.
+
+    Two roles (proposed Sitecore model):
+      - The bar (default): placed by the editor anywhere in the article body. Sticks to the top of
+        the window once scrolled to.
+      - The dock ({% set shareDock = true %} before the include): an empty marker built into the
+        layout as the last child of the article body container. When the pinned bar reaches it,
+        the bar moves into the page there and scrolls with it, until the reader scrolls back above
+        the bar's original position. Takes no space itself.
+    The bar and the dock must be direct children of the same container (no class needed on it):
+    sticky only works inside its parent. -#}
+{% if shareDock %}
+<div class="share-this-article-dock"></div>
+{% else %}
 <div class="share-this-article">
   <div class="share-this-article__container">
     <p class="share-this-article__text"><strong>Enjoying this article?</strong> Share it &mdash;</p>
     {% include "partials/Article/ArticleShareIcons.njk" %}
   </div>
 </div>
+{% endif %}

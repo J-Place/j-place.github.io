@@ -78,6 +78,10 @@ relatedArticles:
 
         {% include "partials/Article/ArticleAuthorShare4.njk" %}
 
+        {# Article body: the editor's placeholder (no class). Ends with the Share This Article
+           dock, built into the layout; see ArticleShareThis.njk. #}
+        <div>
+
         {% include "partials/Article/ArticleKeyPoints.njk" %}
 
         <div class="html-container include-in-nav">
@@ -197,6 +201,11 @@ relatedArticles:
             <img src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/ldm03196.jpg?h=1305&w=2000&rev=e90aa23430e44318a8186eb9bf17c453&hash=1A4E365D7ED7A18ED9758370F0C78093" alt="LDM03196" width="2000" height="1305" />
           </a>
           <p class="image-credit">Image: Mike Lewis/@Mike2Swim</p>
+        </div>
+
+        {% set shareDock = true %}
+        {% include "partials/Article/ArticleShareThis.njk" %}
+        {% set shareDock = false %}
         </div>
 
         {% set faqFirstOpen = true %}
