@@ -519,6 +519,31 @@
     return segs.map(function (s) { return s * total / sum; });
   }
 
+  // Practice this, as v4's Race Splits: the race pace in pieces from a push.
+  // Pieces follow v4's split lengths (25s for the 50, 50s to the 200, then
+  // 100s, 150s for the mile), not the plan's above. A 50: its first 25 from
+  // a push, PUSH slower than off the dive; longer races: their middle splits.
+  var PUSH = 0.7; // seconds a push start runs slower than a dive
+  function practiceLeg(d) {
+    return d <= 50 ? 25 : d <= 200 ? 50 : d === 1650 ? 150 : 100;
+  }
+  function renderPractice(f) {
+    if (!isFinite(f.goal)) {
+      set('practiceSet', 'Set a goal to plan your practice');
+      set('practiceNote', '');
+      return;
+    }
+    var leg = practiceLeg(state.d), n = state.d / leg, segs = splitTimes(f.goal, n);
+    if (n === 2) {
+      set('practiceSet', '8 × 25 from a push at ' + race(segs[0] + PUSH));
+      set('practiceNote', 'Rest 45 s. Push starts run about ' + PUSH + ' s slower than a dive.');
+    } else {
+      var mid = segs.slice(1).reduce(function (a, b) { return a + b; }, 0) / (n - 1);
+      set('practiceSet', Math.min(10, Math.max(4, n)) + ' × ' + leg + ' from a push at ' + race(mid));
+      set('practiceNote', 'Rest ' + (leg <= 50 ? 20 : leg <= 100 ? 30 : 40) + ' s. That\'s your race pace after the dive.');
+    }
+  }
+
   function splitPlan(f) {
     if (!isFinite(f.goal)) return [];
     var leg = legFor(state.d), n = state.d / leg, cum = 0, unit = COURSES[state.course].unit;
@@ -531,6 +556,7 @@
 
   function renderRace(f) {
     var plan = splitPlan(f);
+    renderPractice(f);
     root.querySelector('[data-st3-splits]').innerHTML = plan.length ? plan.map(function (s) {
       return '<div class="st3-splits__row"><span class="st3-splits__label">' + s.label + '</span>' +
         '<span class="st3-splits__track"><span style="width: ' + s.w.toFixed(1) + '%"></span></span>' +
