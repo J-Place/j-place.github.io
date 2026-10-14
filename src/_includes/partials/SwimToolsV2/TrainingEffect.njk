@@ -1,0 +1,12 @@
+{# Training Effect: how much the Your Swim workout does for your fitness,
+   0.0 to 5.0. Its load comes from intensity (pace against your threshold
+   pace, stroke-adjusted), duration and stroke, then it's compared with your
+   typical logged swim of the last 6 weeks (Add to Log). Filled by
+   swim-tools-v2.js (renderTraining). Display only. #}
+<div class="swim-kpi swim-effort" id="training-effect">
+  <span class="swim-kpi__label"><i class="fa-solid fa-gauge-high swim-kpi__icon--effort" aria-hidden="true"></i>Training effect</span>
+  <p class="swim-kpi__sub swim-effort__sub" data-st="teSub"></p>
+  {# Peak effort (4.5 and up): a caution about overdoing it #}
+  <p class="swim-te__warn" data-te-warn hidden><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i><span data-st="teWarn"></span></p>
+  <span class="swim-kpi__value"><span data-st="teValue"></span><span class="swim-kpi__unit"><span data-st="teWord"></span></span><span class="swim-effort__felt" data-effort-felt hidden>You rated it <b data-st="effortFelt"></b>/10</span></span>
+</div>

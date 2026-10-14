@@ -28,10 +28,10 @@
         {{ timeField("sd-metrics-time-label", 'data-time-metric="time"', "xs") }}
       </div>
       {# How hard the swim felt, 1 to 10 (optional): a slider on a track shaded
-         like the Relative Effort bar. Faded with no thumb until rated; clicking
+         light blue to red. Faded with no thumb until rated; clicking
          or dragging anywhere on it rates, arrows step, the mouse wheel steps
          it while it's focused, and × clears. Its word shows in the label.
-         Shown with Relative Effort, adjusts Calorie Burn, and saved with Add
+         Shown with Training Effect, adjusts Calorie Burn, and saved with Add
          to Log (swim-tools-v2.js). #}
       <div class="swim-swim__field swim-felt">
         <label class="swim-swim__label" for="sd-metrics-effort">Effort <span class="swim-swim__optional" data-st="effortWord"></span></label>
@@ -53,8 +53,10 @@
     <div class="swim-deck__kpis">
       <div class="swim-kpi swim-kpi--narrow">
         <span class="swim-kpi__label"><i class="fa-solid fa-fire swim-kpi__icon--calories" aria-hidden="true"></i>Calorie burn</span>
-        {# "At effort 7/10" when Effort is rated: it adjusts the estimate #}
-        <span class="swim-kpi__sub" data-st="calSub"></span>
+        {# What the estimate allows for, each only when set: the stroke
+           ("Butterfly") and the Effort rating ("At effort 7/10") #}
+        <span class="swim-kpi__sub swim-cal__note" data-st="calStroke"></span>
+        <span class="swim-kpi__sub swim-cal__note" data-st="calEffort"></span>
         <span class="swim-kpi__value"><span data-st="calValue"></span><span class="swim-kpi__unit">cal</span></span>
       </div>
       <div class="swim-kpi swim-kpi--narrow">
@@ -63,7 +65,7 @@
       </div>
       {# Retired 2026-10-13: Pace Conversion (PaceConversion.njk, kept for reuse).
          To restore, include it here again; renderMetrics still fills it. #}
-      {% include "partials/SwimToolsV2/RelativeEffort.njk" %}
+      {% include "partials/SwimToolsV2/TrainingEffect.njk" %}
     </div>
   </div>
 </div>

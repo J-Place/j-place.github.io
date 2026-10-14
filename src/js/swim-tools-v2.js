@@ -417,7 +417,7 @@
           if (x.course !== c || x.stroke !== stroke || !inAgeGroup(x)) return;
           var to = convertRace({ course: c, distance: x.d, stroke: x.stroke, time: String(x.secs) }, course);
           if (to.d === r.d && isFinite(to.secs) && (r.adjusted || !(to.secs >= r.proj))) {
-            r.proj = to.secs; r.projFrom = 'your ' + c + ' ' + x.d; r.adjusted = false;
+            r.proj = to.secs; r.projFrom = 'your ' + c + ' ' + x.d; r.adjusted = false; r.converted = true;
           }
         });
       });
@@ -435,7 +435,7 @@
   }
 
   // Every event in a course and stroke (Your Event's, or Your Swim's for
-  // Relative Effort), as:
+  // Training Effect), as:
   //   you   your best in your current age group (NaN if you haven't raced it)
   //   proj  a projected or age-adjusted time where you haven't
   //   est   you, else proj
@@ -1399,63 +1399,115 @@
 
   // The tiles, all from the one swim (Your Swim): calories (which use the
   // stroke too), pace, and that pace in each course
-  // Relative Effort zones, by the swim's pace as a share of your race pace
-  // at its distance: the lowest share each starts at
-  // (past 103%, the swim beat the race pace it's measured against: that
-  // pace is out of date, or a projection that undersells you)
-  var EFFORT_ZONES = [[0, 'Recovery'], [70, 'Easy'], [80, 'Moderate'], [90, 'Hard'], [97, 'Race pace'], [104, 'Faster than race pace']];
-  var EFFORT_MIN = 50, EFFORT_MAX = 105; // the bar's range, in %
+  // ---------- Training Effect ----------
 
-  // Relative Effort: how hard the Your Swim pace is for you, as your race
-  // pace at that distance over the swim's pace (100% = race effort). Your
-  // race pace comes from the predictor's rows for the swim's course and
-  // stroke (Free when none is chosen): the nearest event with your best or
-  // projected time, scaled to the swim's distance by Riegel's 1.06. With no
-  // races in the stroke, it's against your age group's median instead.
-  function renderEffort(t, d, pace) {
-    var card = document.getElementById('your-swim');
-    var stroke = t.stroke || 'Free', course = t.course;
-    var rows = predictions(eventsFor(course, stroke), course, stroke);
-    var near = function (key) {
-      var have = rows.filter(function (r) { return isFinite(r[key]); });
-      return have.length && isFinite(d) ? have.reduce(function (b, r) {
+  // Training Effect: what a swim does for your fitness, 0.0 to 5.0, from
+  // the training-stress model swim coaches use (swim TSS), then judged
+  // against your own recent training. Sample math, not a published formula.
+  //   intensity  your threshold pace / the swim's pace, both freestyle terms
+  //              (STROKE_PACE turns another stroke's pace into free's)
+  //   load       intensity cubed × hours × 100 × the stroke's cost
+  //              (STROKE_LOAD): an hour at threshold pace is 100
+  //   effect     5 × (1 − e^(−0.7 × load / typical)): typical is your
+  //              average logged swim over the last 6 weeks (Add to Log),
+  //              or TE_BASE without any, about an hour of moderate swimming;
+  //              a typical swim is about 2.5, Steady. From 4.5 it's
+  //              Peak effort, with a caution about overdoing it.
+  var STROKE_PACE = { '': 1, Free: 1, Back: 1.1, Breast: 1.22, Fly: 1.12, IM: 1.12 };
+  var STROKE_LOAD = { '': 1, Free: 1, Back: 0.95, Breast: 1.05, Fly: 1.15, IM: 1.05 };
+  var TE_BASE = 55;
+  var TE_DAYS = 42;
+  var TE_RATE = 0.7;
+  var TE_PEAK = 4.5;
+  // Effort words, like the Effort slider's RPE scale (Easy ... Max)
+  var TE_WORDS = [[0, 'Easy'], [1, 'Light'], [2, 'Steady'], [3, 'Solid'], [4, 'Hard push'], [TE_PEAK, 'Peak effort']];
+
+  // Your threshold pace per 100 in a course: freestyle at the pace you could
+  // hold for about 30 minutes, the 1650 yd / 1500 m. From your nearest real
+  // free race in your age group (in this course, or another converted),
+  // scaled to that distance by Riegel's 1.06; else the nearest age-adjusted
+  // older swim; else a projection; else the age group's median.
+  function thresholdPace(course) {
+    var list = eventsFor(course, 'Free'), d = list[list.length - 1];
+    var rows = predictions(list, course, 'Free');
+    var nearest = function (ok) {
+      var have = rows.filter(ok);
+      return have.length ? have.reduce(function (b, r) {
         return Math.abs(Math.log(r.d / d)) < Math.abs(Math.log(b.d / d)) ? r : b;
       }) : null;
     };
-    var a = near('est'), key = 'est';
-    if (!a) { a = near('mid'); key = 'mid'; }
-    var racePace = a ? a[key] * Math.pow(d / a.d, 1.06) / d * 100 : NaN;
-    var effort = racePace / pace * 100;
-    var bar = card.querySelector('[data-effort-bar]');
-    if (!isFinite(effort)) {
-      set('effortValue', '—');
-      set('effortZone', '');
-      set('effortSub', !isFinite(pace) ? 'Enter a swim to see how hard it was for you.' : noRankText());
-      bar.hidden = true;
+    var real = nearest(function (r) { return isFinite(r.you) || (r.converted && isFinite(r.proj)); }) ||
+      nearest(function (r) { return r.adjusted && isFinite(r.proj); });
+    if (real) {
+      var from = isFinite(real.you) ? 'your ' + real.d + ' free' : real.converted ? real.projFrom + ' free' : 'your age-adjusted ' + real.d + ' free';
+      return { pace: real.est * Math.pow(d / real.d, 1.06) / d * 100, from: from };
+    }
+    var at = rows.filter(function (r) { return r.d === d; })[0];
+    if (at && isFinite(at.proj)) return { pace: at.proj / d * 100, from: 'your projected ' + d + ' free' };
+    if (at && isFinite(at.mid)) return { pace: at.mid / d * 100, from: 'the ' + ageGroup().label + ' median ' + d + ' free' };
+    return { pace: NaN, from: '' };
+  }
+
+  // A swim's intensity and load against a threshold pace
+  function swimLoad(d, secs, stroke, threshold) {
+    var intensity = threshold / (secs / d * 100 / (STROKE_PACE[stroke || ''] || 1));
+    return { intensity: intensity, load: Math.pow(intensity, 3) * secs / 3600 * 100 * (STROKE_LOAD[stroke || ''] || 1) };
+  }
+
+  // Your typical logged swim's load over the last TE_DAYS days
+  function typicalLoad() {
+    var log = [];
+    try { log = JSON.parse(localStorage.getItem(LOG_KEY)) || []; } catch (e) {}
+    var now = new Date(), from = new Date(now.getFullYear(), now.getMonth(), now.getDate() - TE_DAYS);
+    var since = from.getFullYear() + '-' + ('0' + (from.getMonth() + 1)).slice(-2) + '-' + ('0' + from.getDate()).slice(-2);
+    var thresholds = {};
+    var loads = log.filter(function (e) { return e.date >= since && e.date <= today(); }).map(function (e) {
+      if (!thresholds[e.course]) thresholds[e.course] = thresholdPace(e.course).pace;
+      return swimLoad(Number(e.distance), parse(e.time), e.stroke, thresholds[e.course]).load;
+    }).filter(isFinite);
+    return loads.length ? { load: loads.reduce(function (a, b) { return a + b; }, 0) / loads.length, swims: loads.length } : { load: TE_BASE, swims: 0 };
+  }
+
+  function renderTraining(t, d, secs) {
+    var threshold = thresholdPace(t.course);
+    var swim = isFinite(secs) && d > 0 && isFinite(threshold.pace) ? swimLoad(d, secs, t.stroke, threshold.pace) : null;
+    var warn = document.querySelector('[data-te-warn]');
+    warn.hidden = true;
+    if (!swim) {
+      set('teValue', '—');
+      set('teWord', '');
+      set('teSub', !isFinite(secs) ? 'Enter a swim to see what it does for your fitness.' : pending() ? 'Loading USMS rankings…' : noRankText());
       return;
     }
-    var shown = Math.round(effort);
-    var zone = EFFORT_ZONES.filter(function (z) { return shown >= z[0]; }).pop()[1];
-    set('effortValue', String(shown));
-    set('effortZone', zone);
-    var what = key === 'est' ? 'your ' + (isFinite(a.you) ? '' : a.adjusted ? 'age-adjusted ' : 'projected ') + lowerStroke(stroke) + ' race pace'
-      : 'the ' + ageGroup().label + ' median ' + lowerStroke(stroke) + ' race pace';
-    set('effortSub', 'Against ' + what + ' for ' + d + ' ' + COURSES[course].unit + ' (' + clock(racePace) + ' per 100)');
-    bar.hidden = false;
-    var at = function (p) { return Math.min(100, Math.max(0, (p - EFFORT_MIN) / (EFFORT_MAX - EFFORT_MIN) * 100)); };
-    card.querySelector('[data-effort-marker]').style.left = at(effort).toFixed(1) + '%';
-    bar.setAttribute('aria-label', shown + '% of race effort: ' + zone);
+    var typical = typicalLoad();
+    var effect = Math.min(5, 5 * (1 - Math.exp(-TE_RATE * swim.load / typical.load)));
+    var shown = effect >= 4.95 ? 5 : Math.floor(effect * 10) / 10;
+    var word = TE_WORDS.filter(function (w) { return shown >= w[0]; }).pop()[1];
+    set('teValue', shown.toFixed(1));
+    set('teWord', word);
+    // Peak effort: about 3 times your typical load or more
+    if (shown >= TE_PEAK) {
+      warn.hidden = false;
+      set('teWarn', 'About ' + Math.round(swim.load / typical.load) + ' times your typical load: you may be overdoing it. ' +
+        'Take an easy day or two after, and build toward swims like this gradually.');
+    }
+    set('teSub', 'Load ' + Math.round(swim.load) + ' against your typical ' + Math.round(typical.load) +
+      (typical.swims ? ' (' + typical.swims + (typical.swims === 1 ? ' logged swim' : ' logged swims') + ', last 6 weeks)' : ' (no logged swims yet: about an hour of moderate swimming)') +
+      ' · ' + Math.round(swim.intensity * 100) + '% of threshold pace, ' + clock(threshold.pace) + ' per 100 from ' + threshold.from);
   }
 
   // Calorie Burn's adjustment for an Effort rating: none at 5-6 (moderate,
   // what pace alone assumes), about 4% a step either side, so 1 burns about
   // 18% less and 10 about 18% more. Sample math, not a published formula.
   var FELT_STEP = 0.04;
+
+  // Strokes spelled out, for Calorie Burn's note
+  var STROKE_FULL = { Free: 'Freestyle', Back: 'Backstroke', Breast: 'Breaststroke', Fly: 'Butterfly', IM: 'Individual medley' };
   function effortFactor(effort) {
     return effort ? 1 + (Number(effort) - 5.5) * FELT_STEP : 1;
   }
 
-  // Each rating's shade, as on the Relative Effort bar
+  // Each rating's shade, light blue (very easy) to red (max)
   var FELT_SHADES = { 1: '#d6e9f6', 2: '#d6e9f6', 3: '#8cc0e3', 4: '#8cc0e3', 5: '#0068ad', 6: '#0068ad',
     7: '#ff7f00', 8: '#ff7f00', 9: '#cc2030', 10: '#cc2030' };
 
@@ -1463,7 +1515,7 @@
   var FELT_WORDS = { 1: 'Very easy', 2: 'Very easy', 3: 'Easy', 4: 'Easy', 5: 'Moderate', 6: 'Moderate',
     7: 'Hard', 8: 'Hard', 9: 'Very hard', 10: 'Max' };
 
-  // Your own rating: the slider and its word, and beside Relative Effort
+  // Your own rating: the slider and its word, and beside Training Effect
   function renderFelt(t) {
     document.querySelector('[data-effort-felt]').hidden = t.effort === '';
     set('effortFelt', t.effort);
@@ -1542,9 +1594,10 @@
     var perMin = CAL_PER_MIN * STROKE_BURN[t.stroke] * intensity * effortFactor(t.effort);
     var calories = Math.round(perMin * secs / 60);
     set('calValue', isFinite(calories) ? String(calories) : '—');
-    set('calSub', t.effort ? 'At effort ' + t.effort + '/10' : '');
+    set('calStroke', STROKE_FULL[t.stroke] || '');
+    set('calEffort', t.effort ? 'At effort ' + t.effort + '/10' : '');
 
-    renderEffort(t, d, pace);
+    renderTraining(t, d, secs);
     renderFelt(t);
 
     // The workout as it stands, for Add to Log

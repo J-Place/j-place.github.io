@@ -246,8 +246,7 @@
    Training Metrics (Your Swim) and Race Planning (Your Event). */
 .swim-panel {
   margin-bottom: 24px;
-  /* border: 1px solid var(--sd-border); */
-  border: 0 none;
+  border: 1px solid var(--sd-border);
   border-radius: 8px;
   background: #fff;
   overflow: hidden; /* the bands follow the rounded corners */
@@ -430,11 +429,6 @@
 
   .swim-deck__kpis > .swim-kpi--narrow {
     grid-column: span 1;
-  }
-
-  /* With Pace Conversion retired, Relative Effort takes the rest of the row */
-  .swim-deck__kpis > .swim-effort {
-    grid-column: span 4;
   }
 }
 
@@ -2073,11 +2067,11 @@
   width: 115px;
 }
 
-/* ---------- Training Metrics: Relative Effort ---------- */
+/* ---------- Training Metrics: Training Effect ---------- */
 
-/* The Your Swim pace as a share of your race pace at its distance, with
-   its zone on a bar (RelativeEffort.njk). Enhancement, not a production
-   pattern. */
+/* What the Your Swim workout does for your fitness, 0 to 5: icon and name,
+   the working, then the score (TrainingEffect.njk). Enhancement, not a
+   production pattern. */
 .swim-kpi__label > .swim-kpi__icon--effort {
   color: var(--sd-red);
 }
@@ -2090,52 +2084,13 @@
   line-height: 1.4;
 }
 
-.swim-effort .swim-kpi__unit [data-st="effortZone"] {
+.swim-effort .swim-kpi__unit [data-st="teWord"] {
   color: var(--sd-ink);
   font-weight: 700;
 }
 
-/* Zones to scale from 50% to 105% of race pace, lightest to hardest */
-.swim-effort__bar {
-  position: relative;
-  display: flex;
-  height: 8px;
-  margin: 10px 0 6px;
-  border-radius: 4px;
-}
-
-.swim-effort__bar[hidden] {
-  display: none;
-}
-
-.swim-effort__zone:first-child {
-  border-radius: 4px 0 0 4px;
-}
-
-.swim-effort__zone:nth-last-child(2) {
-  border-radius: 0 4px 4px 0;
-}
-
-.swim-effort__zone--1 { background: #d6e9f6; }
-.swim-effort__zone--2 { background: #8cc0e3; }
-.swim-effort__zone--3 { background: var(--sd-blue); }
-.swim-effort__zone--4 { background: var(--sd-orange); }
-.swim-effort__zone--5 { background: var(--sd-red); }
-
-/* The swim: a dark tick across the bar */
-.swim-effort__marker {
-  position: absolute;
-  top: -4px;
-  width: 4px;
-  height: 16px;
-  margin-left: -2px;
-  border: 1px solid #fff;
-  border-radius: 2px;
-  background: var(--sd-ink);
-}
-
 /* Effort, how the swim felt (1-10): a slider in Your Swim's row, as tall
-   as its other controls. The track is shaded like the Relative Effort bar;
+   as its other controls. The track is shaded light blue to red;
    the thumb's ring takes the rating's shade (--felt-now). Unrated, the
    track is faded and has no thumb. */
 .swim-slider {
@@ -2356,4 +2311,32 @@
 
 .swim-practice__links a {
   color: var(--sd-blue);
+}
+
+/* Calorie Burn's notes (stroke, effort): one per line, nothing when unset */
+.swim-cal__note {
+  display: block;
+}
+
+.swim-cal__note:empty {
+  display: none;
+}
+
+/* Training Effect's Peak effort caution: orange icon, ink text */
+.swim-deck .swim-te__warn {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  margin: 6px 0 0;
+  color: var(--sd-ink);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.swim-te__warn[hidden] {
+  display: none;
+}
+
+.swim-te__warn > i {
+  color: var(--sd-orange);
 }
