@@ -73,14 +73,15 @@ ageGroups:
         <p class="swim-deck__who" data-st-who hidden><span class="visually-hidden">Your tools are set for </span><span data-st="who"></span></p>
         {# Age group, only when we don't know it: logged out, or logged in with
            no birth date on the profile. Logged in, it comes from the profile
-           (swim-tools-v2.js). Its averages fill in the events you haven't raced. #}
+           (swim-tools-v2.js). Starts on 60-64, the largest men's group in USMS
+           membership (Nov. 1, 2024). #}
         <div class="swim-swim__field swim-deck__age" data-st-age-group-field hidden>
           <label class="swim-swim__label" for="sd-age-group">Your age group</label>
           <div class="swim-deck__field">
             <select class="form-control" id="sd-age-group" data-input="ageGroup">
-              {% for g in ageGroups %}<option value="{{ g[0] }}"{{ ' selected' if g[0] == 25 }}>{{ g[1] }}</option>{% endfor %}
+              {% for g in ageGroups %}<option value="{{ g[0] }}"{{ ' selected' if g[0] == 60 }}>{{ g[1] }}</option>{% endfor %}
             </select>
-            <span class="swim-deck__field-value" aria-hidden="true" data-st="ageGroupLabel">25–29</span>
+            <span class="swim-deck__field-value" aria-hidden="true" data-st="ageGroupLabel">60–64</span>
           </div>
         </div>
       </div>

@@ -1209,6 +1209,13 @@
   font-weight: 400;
 }
 
+/* A guest's default (age-group median) time, not typed yet: shown like the
+   placeholders, as if not yet entered (swim-tools-v2.js) */
+.swim-deck .swim-time.is-default .swim-time__part {
+  color: #9a9a9a;
+  font-weight: 400;
+}
+
 .swim-time__sep {
   color: var(--sd-muted);
   font-weight: 700;
@@ -2067,6 +2074,13 @@
   width: 115px;
 }
 
+/* The stroke's name sits left in its pill. px, not rem: production sets
+   html { font-size: 10px }, so 1.25rem would be 12.5px */
+.swim-deck__field--stroke > .swim-deck__field-value {
+  padding-left: 12px;
+  text-align: left;
+}
+
 /* ---------- Training Metrics: Training Effect ---------- */
 
 /* What the Your Swim workout does for your fitness, 0 to 5: icon and name,
@@ -2313,7 +2327,7 @@
   color: var(--sd-blue);
 }
 
-/* Calorie Burn's notes (stroke, effort): one per line, nothing when unset */
+/* Calorie Burn's note (stroke, intensity): nothing when neither is set */
 .swim-cal__note {
   display: block;
 }
@@ -2339,4 +2353,10 @@
 
 .swim-te__warn > i {
   color: var(--sd-orange);
+}
+
+/* Rank in Age Group with no time yet: no marker on the scale, no % sign */
+.swim-rank__marker[hidden],
+.swim-rank__of[hidden] {
+  display: none;
 }

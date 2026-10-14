@@ -34,12 +34,12 @@
          Shown with Training Effect, adjusts Calorie Burn, and saved with Add
          to Log (swim-tools-v2.js). #}
       <div class="swim-swim__field swim-felt">
-        <label class="swim-swim__label" for="sd-metrics-effort">Effort <span class="swim-swim__optional" data-st="effortWord"></span></label>
+        <label class="swim-swim__label" for="sd-metrics-effort">Intensity <span class="swim-swim__optional" data-st="effortWord"></span></label>
         <div class="swim-slider is-unrated" data-effort-slider>
           <span class="swim-slider__end" aria-hidden="true">1</span>
           <input type="range" min="1" max="10" step="1" value="5" class="swim-slider__input" id="sd-metrics-effort" data-effort-range>
           <span class="swim-slider__end" aria-hidden="true">10</span>
-          <button type="button" class="swim-slider__clear" data-effort-clear aria-label="Clear effort" hidden><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+          <button type="button" class="swim-slider__clear" data-effort-clear aria-label="Clear intensity" hidden><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
         </div>
       </div>
       {# Opens the Add to Log modal (Editors.njk) #}
@@ -53,10 +53,9 @@
     <div class="swim-deck__kpis">
       <div class="swim-kpi swim-kpi--narrow">
         <span class="swim-kpi__label"><i class="fa-solid fa-fire swim-kpi__icon--calories" aria-hidden="true"></i>Calorie burn</span>
-        {# What the estimate allows for, each only when set: the stroke
-           ("Butterfly") and the Effort rating ("At effort 7/10") #}
-        <span class="swim-kpi__sub swim-cal__note" data-st="calStroke"></span>
-        <span class="swim-kpi__sub swim-cal__note" data-st="calEffort"></span>
+        {# What the estimate allows for, whichever is set: "Butterfly @ 5/10
+           intensity", "@ 5/10 intensity" or "Butterfly" #}
+        <span class="swim-kpi__sub swim-cal__note" data-st="calNote"></span>
         <span class="swim-kpi__value"><span data-st="calValue"></span><span class="swim-kpi__unit">cal</span></span>
       </div>
       <div class="swim-kpi swim-kpi--narrow">
