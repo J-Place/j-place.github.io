@@ -3,6 +3,7 @@
    for the swimmer's age group and gender, or else the first one, noted.
    Its stroke and distance start from Your Event and follow it when it
    changes, and can be changed here on their own. Drawn by swim-tools-v2.js. #}
+{% from "partials/SwimToolsV2/StrokeSelect.njk" import strokeSelect %}
 <script type="application/json" id="top-tens-data">{{ topTens | dump | safe }}</script>
 <article class="swim-card" id="top-tens">
   <header class="swim-card__header">
@@ -11,9 +12,7 @@
       <p class="swim-card__sub" data-st="topTensSubtitle"></p>
     </div>
     <div class="swim-tens__filters" role="group" aria-label="Top 10 event">
-      <div class="swim-seg" role="group" aria-label="Stroke" data-tens="stroke">
-        {% for s in strokes %}<button type="button" data-value="{{ s }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ s }}</button>{% endfor %}
-      </div>
+      {{ strokeSelect('aria-label="Stroke"', 'data-tens-input="stroke"') }}
       {# Options follow the stroke, in the lists' course (swim-tools-v2.js) #}
       <div class="swim-deck__field">
         <select class="form-control" aria-label="Distance" data-tens-input="distance" data-st-tens-options>

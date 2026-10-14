@@ -1,5 +1,6 @@
 {# Modals for Swim Tools v2 (swim-tools-v2.js) #}
 {% from "partials/SwimToolsV2/TimeField.njk" import timeField %}
+{% from "partials/SwimToolsV2/StrokeSelect.njk" import strokeSelect %}
 {% set modalModifier = "swim-deck-modal" %}
 
 {# Add a race to your race history (the Your Races card), which the Race
@@ -10,23 +11,21 @@
 {% set modalBody %}
 <div class="swim-deck-modal__row swim-deck-modal__row--compact">
   <div class="form-group">
-    <span class="swim-deck-modal__label" id="sd-race-course-label">Course</span>
-    <div class="swim-seg" role="group" aria-labelledby="sd-race-course-label" data-race="course">
-      {% for c in courses %}<button type="button" data-value="{{ c }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ c }}</button>{% endfor %}
-    </div>
-  </div>
-  <div class="form-group">
     <span class="swim-deck-modal__label" id="sd-race-distance-label">Distance</span>
     <div class="swim-deck__field">
       <select class="form-control" id="sd-race-distance" aria-labelledby="sd-race-distance-label" data-race-input="distance" data-st-race-options></select>
       <span class="swim-deck__field-value" aria-hidden="true" data-st="raceDistance"></span>
     </div>
   </div>
+  <div class="form-group">
+    <span class="swim-deck-modal__label" id="sd-race-stroke-label">Stroke</span>
+    {{ strokeSelect('aria-labelledby="sd-race-stroke-label"', 'data-race-input="stroke"') }}
+  </div>
 </div>
 <div class="form-group">
-  <span class="swim-deck-modal__label" id="sd-race-stroke-label">Stroke</span>
-  <div class="swim-seg" role="group" aria-labelledby="sd-race-stroke-label" data-race="stroke">
-    {% for s in strokes %}<button type="button" data-value="{{ s }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ s }}</button>{% endfor %}
+  <span class="swim-deck-modal__label" id="sd-race-course-label">Course</span>
+  <div class="swim-seg" role="group" aria-labelledby="sd-race-course-label" data-race="course">
+    {% for c in courses %}<button type="button" data-value="{{ c }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ c }}</button>{% endfor %}
   </div>
 </div>
 <div class="swim-deck-modal__row swim-deck-modal__row--compact">
@@ -54,11 +53,12 @@
 {% set modalBody %}
 <dl class="swim-log__stats">
   <div><dt>Distance</dt><dd data-st="logDistance"></dd></div>
+  <div data-st-log-stroke><dt>Stroke</dt><dd data-st="logStroke"></dd></div>
   <div><dt>Course</dt><dd data-st="logCourse"></dd></div>
   <div><dt>Time</dt><dd data-st="logTime"></dd></div>
   <div><dt>Pace</dt><dd data-st="logPace"></dd></div>
-  <div data-st-log-stroke><dt>Stroke</dt><dd data-st="logStroke"></dd></div>
   <div><dt>Calories</dt><dd data-st="logCalories"></dd></div>
+  <div data-st-log-effort><dt>Effort</dt><dd data-st="logEffort"></dd></div>
 </dl>
 <div class="form-group">
   <label for="sd-log-date">Date</label>

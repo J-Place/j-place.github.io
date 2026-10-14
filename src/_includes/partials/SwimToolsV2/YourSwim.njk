@@ -1,6 +1,7 @@
 {# Your Swim: one swim in, and its Training Metrics out: Calorie Burn,
    Training Pace and Pace Conversion. Filled and read by swim-tools-v2.js. #}
 {% from "partials/SwimToolsV2/TimeField.njk" import timeField %}
+{% from "partials/SwimToolsV2/StrokeSelect.njk" import strokeSelect %}
 <div class="swim-panel swim-swim" id="your-swim">
   {# Inputs, on light blue #}
   <div class="swim-panel__band swim-panel__band--blue">
@@ -9,6 +10,11 @@
       <div class="swim-swim__field">
         <label class="swim-swim__label" for="sd-metrics-distance-number">Distance <span class="swim-swim__optional" data-st="metricsDistanceUnit">(yards)</span></label>
         <input type="number" inputmode="numeric" min="25" step="25" class="form-control swim-params__number" id="sd-metrics-distance-number" data-metric-input="distance">
+      </div>
+      {# Optional: "Any" is a mixed workout #}
+      <div class="swim-swim__field">
+        <span class="swim-swim__label" id="sd-metrics-stroke-label">Stroke <span class="swim-swim__optional">(optional)</span></span>
+        {{ strokeSelect('aria-labelledby="sd-metrics-stroke-label"', 'data-metric-input="stroke"', true) }}
       </div>
       {# The course swum: sets the unit, and which course Pace Conversion converts from #}
       <div class="swim-swim__field">
@@ -27,11 +33,19 @@
         <span class="swim-swim__label" id="sd-metrics-pace-label">Pace <span class="swim-swim__optional">(per 100)</span></span>
         {{ timeField("sd-metrics-pace-label", 'data-time-metric="pace"', "xs", true) }}
       </div>
-      {# Optional (data-optional): clicking the chosen stroke clears it #}
-      <div class="swim-swim__field">
-        <span class="swim-swim__label" id="sd-metrics-stroke-label">Stroke <span class="swim-swim__optional">(optional)</span></span>
-        <div class="swim-seg" role="group" aria-labelledby="sd-metrics-stroke-label" data-metric="stroke" data-optional>
-          {% for s in strokes %}<button type="button" data-value="{{ s }}" aria-pressed="false">{{ s }}</button>{% endfor %}
+      {# How hard the swim felt, 1 to 10 (optional): a slider on a track shaded
+         like the Relative Effort bar. Faded with no thumb until rated; clicking
+         or dragging anywhere on it rates, arrows step, the mouse wheel steps
+         it while it's focused, and × clears. Its word shows in the label.
+         Shown with Relative Effort, adjusts Calorie Burn, and saved with Add
+         to Log (swim-tools-v2.js). #}
+      <div class="swim-swim__field swim-felt">
+        <label class="swim-swim__label" for="sd-metrics-effort">Effort <span class="swim-swim__optional" data-st="effortWord"></span></label>
+        <div class="swim-slider is-unrated" data-effort-slider>
+          <span class="swim-slider__end" aria-hidden="true">1</span>
+          <input type="range" min="1" max="10" step="1" value="5" class="swim-slider__input" id="sd-metrics-effort" data-effort-range>
+          <span class="swim-slider__end" aria-hidden="true">10</span>
+          <button type="button" class="swim-slider__clear" data-effort-clear aria-label="Clear effort" hidden><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
         </div>
       </div>
       {# Opens the Add to Log modal (Editors.njk) #}
@@ -40,18 +54,22 @@
     <p class="swim-card__sub swim-swim__hint" data-st="metricsHint" aria-live="polite"></p>
     <p class="swim-card__sub swim-swim__status" data-st="logStatus" aria-live="polite"></p>
   </div>
-  {# The results, from the swim above: white tiles on blue #}
-  <div class="swim-panel__band swim-panel__band--blue">
+  {# The results, from the swim above, on white #}
+  <div class="swim-panel__band">
     <div class="swim-deck__kpis">
       <div class="swim-kpi swim-kpi--narrow">
         <span class="swim-kpi__label"><i class="fa-solid fa-fire swim-kpi__icon--calories" aria-hidden="true"></i>Calorie burn</span>
+        {# "At effort 7/10" when Effort is rated: it adjusts the estimate #}
+        <span class="swim-kpi__sub" data-st="calSub"></span>
         <span class="swim-kpi__value"><span data-st="calValue"></span><span class="swim-kpi__unit">cal</span></span>
       </div>
       <div class="swim-kpi swim-kpi--narrow">
         <span class="swim-kpi__label"><i class="fa-solid fa-stopwatch swim-kpi__icon--pace" aria-hidden="true"></i>Training pace</span>
         <span class="swim-kpi__value swim-kpi__value--lg"><span data-st="paceValue"></span><span class="swim-kpi__unit" data-st="paceUnit"></span></span>
       </div>
-      {% include "partials/SwimToolsV2/PaceConversion.njk" %}
+      {# Retired 2026-10-13: Pace Conversion (PaceConversion.njk, kept for reuse).
+         To restore, include it here again; renderMetrics still fills it. #}
+      {% include "partials/SwimToolsV2/RelativeEffort.njk" %}
     </div>
   </div>
 </div>

@@ -11,7 +11,6 @@ breadcrumbs:
   - url: "/fitness-and-training/articles-and-videos/index.html"
     label: "Fitness and Training"
 courses: [SCY, SCM, LCM]
-strokes: [Free, Back, Breast, Fly, IM]
 # USMS age groups: value is the group's youngest age (swim-tools-v2.js AGE_GROUPS)
 ageGroups:
   - [18, "18–24"]
@@ -34,6 +33,7 @@ ageGroups:
 ---
 {% extends "layouts/article.njk" %}
 {% from "partials/SwimToolsV2/TimeField.njk" import timeField %}
+{% from "partials/SwimToolsV2/StrokeSelect.njk" import strokeSelect %}
 {% block pageCSS %}
 <link rel="stylesheet" href="/css/pages/swim-tools-v2.css">
 {% endblock %}
@@ -49,31 +49,44 @@ ageGroups:
     <header class="swim-deck__head">
       <div>
         <h1 class="swim-deck__title">Swim Tools</h1>
-        <p class="swim-deck__intro">Calculators for training, racing, and tracking your swimming.</p>
+        {# "Welcome back, Jay…" when logged in, as on v4 (swim-tools-v2.js) #}
+        <p class="swim-deck__intro" data-st="greeting">Calculators for training, racing, and tracking your swimming.</p>
+      </div>
+      <div class="swim-deck__head-side">
+        {# Section tabs, icons only (each named by its label and tooltip), in
+           page order. Choosing one moves its section to the top of the tools,
+           in place of scrolling to it (swim-tools-v2.js). Icons are the
+           design reference's own. #}
+        <div class="swim-ribbon" role="group" aria-label="Show first">
+          <button type="button" class="swim-ribbon__link" data-section="race-planning" aria-controls="swim-deck-sections" aria-pressed="true" aria-label="Race Planning" title="Race Planning">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l5-6 4 3 7-8"/><path d="M14 6h5v5"/></svg>
+          </button>
+          <button type="button" class="swim-ribbon__link" data-section="time-conversions" aria-controls="swim-deck-sections" aria-pressed="false" aria-label="Time Conversions" title="Time Conversions">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h13l-4-4M17 17H4l4 4"/></svg>
+          </button>
+          <button type="button" class="swim-ribbon__link" data-section="training-metrics" aria-controls="swim-deck-sections" aria-pressed="false" aria-label="Training Metrics" title="Training Metrics">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M10 2h4"/></svg>
+          </button>
+        </div>
+        {# Who the tools are for: sex and age group, when we know the age (the
+           select below takes its place when we don't) #}
+        <p class="swim-deck__who" data-st-who hidden><span class="visually-hidden">Your tools are set for </span><span data-st="who"></span></p>
+        {# Age group, only when we don't know it: logged out, or logged in with
+           no birth date on the profile. Logged in, it comes from the profile
+           (swim-tools-v2.js). Its averages fill in the events you haven't raced. #}
+        <div class="swim-swim__field swim-deck__age" data-st-age-group-field hidden>
+          <label class="swim-swim__label" for="sd-age-group">Your age group</label>
+          <div class="swim-deck__field">
+            <select class="form-control" id="sd-age-group" data-input="ageGroup">
+              {% for g in ageGroups %}<option value="{{ g[0] }}"{{ ' selected' if g[0] == 25 }}>{{ g[1] }}</option>{% endfor %}
+            </select>
+            <span class="swim-deck__field-value" aria-hidden="true" data-st="ageGroupLabel">25–29</span>
+          </div>
+        </div>
       </div>
     </header>
 
-    {# The design reference's side rail, laid out horizontally. Choosing a
-       section moves it to the top of the tools below, in place of scrolling
-       to it (swim-tools-v2.js). Icons are the reference's own. #}
-    <div class="swim-ribbon" role="group" aria-label="Show first">
-      <button type="button" class="swim-ribbon__link" data-section="training-metrics" aria-controls="swim-deck-sections" aria-pressed="true">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M10 2h4"/></svg>Training Metrics
-      </button>
-      <button type="button" class="swim-ribbon__link" data-section="race-planning" aria-controls="swim-deck-sections" aria-pressed="false">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l5-6 4 3 7-8"/><path d="M14 6h5v5"/></svg>Race Planning
-      </button>
-      <button type="button" class="swim-ribbon__link" data-section="time-conversions" aria-controls="swim-deck-sections" aria-pressed="false">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h13l-4-4M17 17H4l4 4"/></svg>Time Conversions
-      </button>
-    </div>
-
     <div class="swim-deck__sections" id="swim-deck-sections">
-      <section class="swim-deck__section" id="training-metrics" aria-labelledby="training-metrics-title">
-        <h2 class="swim-deck__eyebrow" id="training-metrics-title">Training metrics</h2>
-        {% include "partials/SwimToolsV2/YourSwim.njk" %}
-      </section>
-
       <section class="swim-deck__section" id="race-planning" aria-labelledby="race-planning-title">
         <h2 class="swim-deck__eyebrow" id="race-planning-title">Race planning</h2>
         {# One bordered panel: Your Event on light blue, then the tools on white #}
@@ -81,22 +94,6 @@ ageGroups:
           <div class="swim-panel__band swim-panel__band--blue">
             {# Your Event: labels above each control, like Your Swim #}
             <div class="swim-deck__context" role="group" aria-label="Your event, applies to every tool">
-              {# Whose averages fill in the events you haven't raced #}
-              <div class="swim-swim__field">
-                <label class="swim-swim__label" for="sd-age-group">Age group</label>
-                <div class="swim-deck__field">
-                  <select class="form-control" id="sd-age-group" data-input="ageGroup">
-                    {% for g in ageGroups %}<option value="{{ g[0] }}"{{ ' selected' if g[0] == 25 }}>{{ g[1] }}</option>{% endfor %}
-                  </select>
-                  <span class="swim-deck__field-value" aria-hidden="true" data-st="ageGroupLabel">25–29</span>
-                </div>
-              </div>
-              <div class="swim-swim__field">
-                <span class="swim-swim__label" id="sd-event-course-label">Course</span>
-                <div class="swim-seg" role="group" aria-labelledby="sd-event-course-label" data-control="course">
-                  {% for c in courses %}<button type="button" data-value="{{ c }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ c }}</button>{% endfor %}
-                </div>
-              </div>
               {# Options follow course and stroke (swim-tools-v2.js). Also the Race
                  Time Predictor's marked event. #}
               <div class="swim-swim__field">
@@ -112,8 +109,12 @@ ageGroups:
               </div>
               <div class="swim-swim__field">
                 <span class="swim-swim__label" id="sd-event-stroke-label">Stroke</span>
-                <div class="swim-seg" role="group" aria-labelledby="sd-event-stroke-label" data-control="stroke">
-                  {% for s in strokes %}<button type="button" data-value="{{ s }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ s }}</button>{% endfor %}
+                {{ strokeSelect('aria-labelledby="sd-event-stroke-label"', 'data-input="stroke"') }}
+              </div>
+              <div class="swim-swim__field">
+                <span class="swim-swim__label" id="sd-event-course-label">Course</span>
+                <div class="swim-seg" role="group" aria-labelledby="sd-event-course-label" data-control="course">
+                  {% for c in courses %}<button type="button" data-value="{{ c }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ c }}</button>{% endfor %}
                 </div>
               </div>
               {# Goal time for Your Event: what Race Splits splits up. Until it's
@@ -132,8 +133,8 @@ ageGroups:
             {# Goal time errors; hidden while empty #}
             <p class="swim-deck__note swim-deck__note-error" data-st="goalHint" aria-live="polite"></p>
           </div>
-          {# Blue like the Your Event band above, so the white cards sit on it #}
-          <div class="swim-panel__band swim-panel__band--blue">
+          {# The tools, on white #}
+          <div class="swim-panel__band">
             <div class="row swim-deck__grid">
               {# Predictor with the race history it's built from beneath it #}
               <div class="col-xs-12 col-md-8 swim-deck__cell swim-deck__cell--stack">
@@ -149,11 +150,11 @@ ageGroups:
 
       <section class="swim-deck__section" id="time-conversions" aria-labelledby="time-conversions-title">
         <h2 class="swim-deck__eyebrow" id="time-conversions-title">Time conversions</h2>
-        {# One bordered panel, like Race Planning: the time to convert, then
-           the conversions as white cards, all on light blue #}
+        {# One bordered panel, like Race Planning: the time to convert on
+           light blue, then the conversions on white #}
         <div class="swim-panel swim-convert" id="convert-time">
           {% include "partials/SwimToolsV2/ConvertTime.njk" %}
-          <div class="swim-panel__band swim-panel__band--blue">
+          <div class="swim-panel__band">
             <div class="row swim-deck__grid">
               {# Course Conversion with Rank in Age Group beneath it #}
               <div class="col-xs-12 col-md-5 swim-deck__cell swim-deck__cell--stack">
@@ -164,6 +165,11 @@ ageGroups:
             </div>
           </div>
         </div>
+      </section>
+
+      <section class="swim-deck__section" id="training-metrics" aria-labelledby="training-metrics-title">
+        <h2 class="swim-deck__eyebrow" id="training-metrics-title">Training metrics</h2>
+        {% include "partials/SwimToolsV2/YourSwim.njk" %}
       </section>
     </div>
 

@@ -1,0 +1,23 @@
+{#
+  Stroke select, built like the Distance selects: a white track with the
+  chosen stroke's name as a blue pill.
+  swim-tools-v2.js keeps the select and pill in step with its setting.
+
+    name     — the select's accessible name: 'aria-labelledby="sd-x-label"'
+               or 'aria-label="Stroke"'
+    bind     — the setting it edits: 'data-input="stroke"' (Your Event),
+               'data-metric-input="stroke"' (Your Swim),
+               'data-conv-input="stroke"' (Convert a Time),
+               'data-tens-input="stroke"' (Top 10 by Decade) or
+               'data-race-input="stroke"' (Add a Race)
+    optional — true adds "Any" (no stroke: a mixed workout) as the first choice
+#}
+{% macro strokeSelect(name, bind, optional) %}
+<div class="swim-deck__field swim-deck__field--stroke">
+  <select class="form-control" {{ name | safe }} {{ bind | safe }} data-stroke-select>
+    {% if optional %}<option value="">Any</option>{% endif %}
+    {% for s in [["Free", "Free"], ["Back", "Back"], ["Breast", "Breast"], ["Fly", "Butterfly"], ["IM", "IM"]] %}<option value="{{ s[0] }}">{{ s[1] }}</option>{% endfor %}
+  </select>
+  <span class="swim-deck__field-value" aria-hidden="true" data-stroke-value>{{ "Any" if optional else "Free" }}</span>
+</div>
+{% endmacro %}

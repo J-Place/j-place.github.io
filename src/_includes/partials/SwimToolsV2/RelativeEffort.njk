@@ -1,0 +1,13 @@
+{# Relative Effort: how hard the Your Swim pace is for you, as a share of
+   your race pace at that distance (100% = race effort), with its zone on a
+   bar. Filled by swim-tools-v2.js (renderEffort). Display only. #}
+<div class="swim-kpi swim-effort" id="relative-effort">
+  <span class="swim-kpi__label"><i class="fa-solid fa-gauge-high swim-kpi__icon--effort" aria-hidden="true"></i>Relative effort</span>
+  <p class="swim-kpi__sub swim-effort__sub" data-st="effortSub"></p>
+  {# The zones, 50% to 105% of race pace, widths to scale; the marker is the swim #}
+  <div class="swim-effort__bar" role="img" data-effort-bar hidden>
+    {% for z in [["Recovery", 36.36], ["Easy", 18.18], ["Moderate", 18.18], ["Hard", 12.73], ["Race", 14.55]] %}<span class="swim-effort__zone swim-effort__zone--{{ loop.index }}" style="width: {{ z[1] }}%" title="{{ z[0] }}"></span>{% endfor %}
+    <span class="swim-effort__marker" data-effort-marker></span>
+  </div>
+  <span class="swim-kpi__value"><span data-st="effortValue"></span><span class="swim-kpi__unit">% · <span data-st="effortZone"></span></span><span class="swim-effort__felt" data-effort-felt hidden>You rated it <b data-st="effortFelt"></b>/10</span></span>
+</div>

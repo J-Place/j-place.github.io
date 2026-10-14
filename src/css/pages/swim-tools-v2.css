@@ -161,67 +161,52 @@
 
 /* ---------- Section ribbon ---------- */
 
-/* The design reference's side rail, laid out horizontally above the
-   sections */
-.swim-ribbon {
+/* The section tabs, in the header left of the age-group pill: icons only,
+   in light grey circles. aria-pressed marks the section shown first. */
+.swim-deck__head-side {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 28px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--sd-border);
+  align-items: center;
+  gap: 12px 16px;
+}
+
+.swim-ribbon {
+  display: flex;
+  gap: 8px;
 }
 
 .swim-ribbon__link {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  height: 44px;
-  padding: 0 16px 0 12px;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  background: transparent;
-  color: var(--sd-blue);
-  font-family: inherit;
-  font-size: 15px;
-  font-weight: 700;
-  white-space: nowrap;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #e9ebec;
+  color: #595959;
+  cursor: pointer;
 }
 
 .swim-ribbon__link svg {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   fill: none;
   stroke: currentColor;
-  stroke-width: 1.8;
+  stroke-width: 2.4;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
-.swim-ribbon__link:hover,
-.swim-ribbon__link:focus {
-  background: var(--sd-tint);
-  color: var(--sd-blue);
-  text-decoration: none;
+.swim-ribbon__link:hover {
+  background: #dcdfe1;
+  color: var(--sd-ink);
 }
 
 .swim-ribbon__link:focus-visible {
   outline: 2px solid var(--sd-blue);
   outline-offset: 2px;
-}
-
-.swim-ribbon__link[aria-pressed="true"] {
-  border-color: var(--sd-blue);
-  background: var(--sd-tint);
-}
-
-@media (max-width: 479px) {
-  .swim-ribbon__link {
-    flex: 1 1 auto;
-    justify-content: center;
-    padding: 0 10px;
-    font-size: 14px;
-  }
 }
 
 .swim-deck__eyebrow {
@@ -444,6 +429,11 @@
 
   .swim-deck__kpis > .swim-kpi--narrow {
     grid-column: span 1;
+  }
+
+  /* With Pace Conversion retired, Relative Effort takes the rest of the row */
+  .swim-deck__kpis > .swim-effort {
+    grid-column: span 4;
   }
 }
 
@@ -1143,30 +1133,56 @@
 
 /* ---------- Time field: minutes : seconds . hundredths ---------- */
 
+/* One outlined box, like the panel's other controls; the parts inside it
+   are borderless inputs, each still its own tab stop (MM, SS, then
+   hundredths). Clicking into the box from outside starts at MM
+   (swim-tools-v2.js). */
 .swim-time {
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  padding: 0 6px;
+  border: 1px solid var(--sd-border);
+  border-radius: 8px;
+  background: #fff;
+  cursor: text;
+}
+
+.swim-time:focus-within {
+  border-color: var(--sd-blue);
+  box-shadow: 0 0 0 1px var(--sd-blue);
+}
+
+.swim-time:has([aria-invalid="true"]) {
+  border-color: var(--sd-red);
+  box-shadow: none;
 }
 
 .swim-deck .swim-time__part,
 .swim-deck-modal .swim-time__part {
   padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  box-shadow: none;
   color: var(--sd-ink);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   text-align: center;
 }
 
+/* The part being typed in: a light tint, since the ring is on the box */
+.swim-deck .swim-time__part:focus,
+.swim-deck-modal .swim-time__part:focus {
+  outline: 0;
+  background: var(--sd-tint);
+  box-shadow: none;
+}
+
 .swim-deck .swim-time__part::placeholder,
 .swim-deck-modal .swim-time__part::placeholder {
   color: #9a9a9a;
   font-weight: 400;
-}
-
-.swim-deck .swim-time__part[aria-invalid="true"],
-.swim-deck-modal .swim-time__part[aria-invalid="true"] {
-  border-color: var(--sd-red);
 }
 
 .swim-time__sep {
@@ -1176,8 +1192,8 @@
 
 /* Time Conversions */
 .swim-time--lg .swim-time__part {
-  width: 64px;
-  height: 56px;
+  width: 48px;
+  height: 54px;
   font-size: 28px;
 }
 
@@ -1188,11 +1204,12 @@
 /* Your Event panel: matches the panel's 44px controls */
 .swim-time--xs {
   gap: 2px;
+  height: 44px;
 }
 
 .swim-time--xs .swim-time__part {
-  width: 40px;
-  height: 44px;
+  width: 30px;
+  height: 36px;
   font-size: 16px;
 }
 
@@ -1201,9 +1218,13 @@
 }
 
 /* Modals */
-.swim-time--sm .swim-time__part {
-  width: 52px;
+.swim-time--sm {
   height: 44px;
+}
+
+.swim-time--sm .swim-time__part {
+  width: 40px;
+  height: 36px;
   font-size: 18px;
 }
 
@@ -1663,4 +1684,646 @@
   font-size: 18px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
+}
+
+/* The age group select at the top of the page: only shown when the swimmer's
+   age isn't known (swim-tools-v2.js), so [hidden] must win over the field's
+   own display */
+.swim-deck__age[hidden] {
+  display: none;
+}
+
+/* Sex and age group, top right: a pill in the select's place */
+.swim-deck .swim-deck__who {
+  margin: 0;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--sd-tint);
+  color: var(--sd-blue);
+  font-size: 15px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.swim-deck__who[hidden] {
+  display: none;
+}
+
+/* ---------- Race Time Predictions ---------- */
+
+/* As v4's (swim-tools-v4.css, .st4-pred and friends): pace per 100 by
+   distance, slower higher, your bests against your age group's median,
+   slowest, top ten and fastest. Enhancement, not a production pattern. */
+
+.swim-pred-link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--sd-blue);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.swim-pred-link:hover {
+  color: var(--sd-blue-hover);
+}
+
+/* The pace axis beside the chart: room between for the first dot's label,
+   centred on the chart's edge */
+.swim-pred-frame {
+  display: grid;
+  grid-template-columns: 43px minmax(0, 1fr);
+  gap: 34px;
+}
+
+.swim-pred,
+.swim-pred__yaxis {
+  position: relative;
+  height: 180px;
+  margin: 28px 0 6px;
+}
+
+/* Room on the right for the last event's label and time, centred on the
+   chart's edge */
+.swim-pred {
+  margin-right: 28px;
+}
+
+.swim-pred__yaxis {
+  font-size: 12px;
+  color: var(--sd-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Each pace tick sits level with its place on the chart */
+.swim-pred__yaxis span {
+  position: absolute;
+  right: 0;
+  transform: translateY(-50%);
+  white-space: nowrap;
+}
+
+/* The events, above the chart, each centred on its distance's points
+   (swim-tools-v2.js places them); spans the chart: past the pace axis
+   column and gap, to the chart's right margin */
+.swim-pred__axis {
+  position: relative;
+  height: 18px;
+  margin: 0 28px 0 86px; /* the axis column (52px) and gap (34px); the chart's right margin */
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--sd-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.swim-pred__axis span {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.swim-pred__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.swim-pred__base {
+  stroke: var(--sd-rule);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Fills down to the chart's bottom: 3% black under the slowest line, 5%
+   between the median and the top ten, 8% under the top ten (the Top 10
+   zone), and white under the fastest, since nobody swims faster */
+.swim-pred__field {
+  fill: #000;
+  fill-opacity: 0.03;
+  stroke: none;
+}
+
+.swim-pred__field--mid {
+  fill-opacity: 0.05;
+}
+
+.swim-pred__field--top10 {
+  fill-opacity: 0.08;
+}
+
+.swim-pred__field--clear {
+  fill: #fff;
+  fill-opacity: 1;
+}
+
+.swim-pred__line {
+  fill: none;
+  stroke: var(--sd-blue);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+/* The median: grey dashed */
+.swim-pred__line--group {
+  stroke: #9a9a9a;
+  stroke-width: 1;
+  stroke-dasharray: 5 4;
+}
+
+/* The slowest swims: a light dashed line, receding */
+.swim-pred__line--bottom {
+  stroke: var(--sd-rule);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 3;
+}
+
+/* 10th place: 1px dashed, 40% black */
+.swim-pred__line--top10 {
+  stroke: #000;
+  stroke-width: 1;
+  stroke-dasharray: 4 3;
+  opacity: 0.4;
+}
+
+/* 1st place: 1px solid, 50% black */
+.swim-pred__line--fastest {
+  stroke: #000;
+  stroke-width: 1;
+  opacity: 0.5;
+}
+
+/* Your bests joined to the projected times */
+.swim-pred__line--proj {
+  stroke-dasharray: 2 4;
+  stroke-linecap: round;
+}
+
+/* A projected time: an open dot */
+.swim-pred__dot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--sd-blue);
+  border-radius: 50%;
+  background: #fff;
+}
+
+/* Your bests: a solid triangle, as v4's personal bests */
+.swim-pred__dot.is-best {
+  width: 12.6px;
+  height: 10.8px;
+  border: 0;
+  border-radius: 0;
+  background: var(--sd-blue);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.swim-pred__label {
+  position: absolute;
+  transform: translate(-50%, -150%);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Under its dot, when you're faster than the median (whose line runs above) */
+.swim-pred__label.is-below {
+  transform: translate(-50%, 60%);
+}
+
+.swim-pred__label.is-event {
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.swim-pred__label.is-projected,
+.swim-pred__proj {
+  color: var(--sd-muted);
+  font-style: italic;
+}
+
+.swim-pred__proj small {
+  font-size: 11px;
+}
+
+/* "Projected Winner": a gold pill where your time is as fast as this
+   season's fastest, on the side away from the time label */
+.swim-pred-win {
+  position: absolute;
+  transform: translate(-50%, -260%);
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--sd-yellow);
+  color: var(--sd-ink);
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.swim-pred-win.is-below { transform: translate(-50%, 170%); }
+/* At the chart's ends, the pill hangs inward so it isn't cut off */
+.swim-pred-win.is-end { transform: translate(-100%, -260%); }
+.swim-pred-win.is-end.is-below { transform: translate(-100%, 170%); }
+.swim-pred-win.is-start { transform: translate(0, -260%); }
+.swim-pred-win.is-start.is-below { transform: translate(0, 170%); }
+
+.swim-pred-win--inline {
+  position: static;
+  margin-left: 4px;
+  transform: none;
+}
+
+.swim-deck .swim-pred-win-note {
+  margin: 0;
+  padding: 10px 14px;
+  border-left: 4px solid var(--sd-yellow);
+  border-radius: 8px;
+  background: #fff6d6;
+  font-size: 14px;
+}
+
+.swim-pred-win-note[hidden] {
+  display: none;
+}
+
+.swim-pred-insight {
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: var(--sd-subtle);
+  font-size: 14px;
+}
+
+/* Legend pills: each turns its line off and on */
+.swim-pred-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.swim-pred-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border: 1px solid var(--sd-border);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--sd-ink);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.swim-pred-key[aria-pressed="false"] {
+  background: var(--sd-subtle);
+  color: var(--sd-muted);
+  text-decoration: line-through;
+}
+
+.swim-pred-key[aria-pressed="false"] .swim-pred-swatch {
+  opacity: 0.3;
+}
+
+/* Projected: a key, not a toggle */
+.swim-pred-key--static {
+  cursor: default;
+}
+
+.swim-pred-swatch {
+  width: 16px;
+  height: 0;
+  border-top: 2px dashed #9a9a9a; /* the median's */
+}
+
+.swim-pred-swatch--you {
+  width: 11px;
+  height: 9.5px;
+  border: 0;
+  background: var(--sd-blue);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.swim-pred-swatch--proj {
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--sd-blue);
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.swim-pred-swatch--low {
+  border-top-color: var(--sd-rule);
+}
+
+.swim-pred-swatch--ten {
+  border-top-color: rgba(0, 0, 0, 0.4);
+}
+
+.swim-pred-swatch--top {
+  border-top: 2px solid rgba(0, 0, 0, 0.5);
+}
+
+.swim-pred-table th,
+.swim-pred-table td {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Stroke selects: wide enough for "Butterfly" in the pill */
+.swim-deck .swim-deck__field--stroke > .form-control,
+.swim-deck-modal .swim-deck__field--stroke > .form-control {
+  width: 115px;
+}
+
+/* ---------- Training Metrics: Relative Effort ---------- */
+
+/* The Your Swim pace as a share of your race pace at its distance, with
+   its zone on a bar (RelativeEffort.njk). Enhancement, not a production
+   pattern. */
+.swim-kpi__label > .swim-kpi__icon--effort {
+  color: var(--sd-red);
+}
+
+/* What it's measured against: small, as the tiles' other notes */
+.swim-deck .swim-effort__sub {
+  margin: 0;
+  color: var(--sd-muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.swim-effort .swim-kpi__unit [data-st="effortZone"] {
+  color: var(--sd-ink);
+  font-weight: 700;
+}
+
+/* Zones to scale from 50% to 105% of race pace, lightest to hardest */
+.swim-effort__bar {
+  position: relative;
+  display: flex;
+  height: 8px;
+  margin: 10px 0 6px;
+  border-radius: 4px;
+}
+
+.swim-effort__bar[hidden] {
+  display: none;
+}
+
+.swim-effort__zone:first-child {
+  border-radius: 4px 0 0 4px;
+}
+
+.swim-effort__zone:nth-last-child(2) {
+  border-radius: 0 4px 4px 0;
+}
+
+.swim-effort__zone--1 { background: #d6e9f6; }
+.swim-effort__zone--2 { background: #8cc0e3; }
+.swim-effort__zone--3 { background: var(--sd-blue); }
+.swim-effort__zone--4 { background: var(--sd-orange); }
+.swim-effort__zone--5 { background: var(--sd-red); }
+
+/* The swim: a dark tick across the bar */
+.swim-effort__marker {
+  position: absolute;
+  top: -4px;
+  width: 4px;
+  height: 16px;
+  margin-left: -2px;
+  border: 1px solid #fff;
+  border-radius: 2px;
+  background: var(--sd-ink);
+}
+
+/* Effort, how the swim felt (1-10): a slider in Your Swim's row, as tall
+   as its other controls. The track is shaded like the Relative Effort bar;
+   the thumb's ring takes the rating's shade (--felt-now). Unrated, the
+   track is faded and has no thumb. */
+.swim-slider {
+  --felt-now: transparent;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+}
+
+.swim-slider__end {
+  color: var(--sd-muted);
+  font-size: 13px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.swim-deck .swim-slider__input {
+  width: 120px; /* with its end numbers and ×, it still fits the row beside Add to Log */
+  height: 24px;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.swim-slider__input::-webkit-slider-runnable-track {
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(to right, #d6e9f6, #8cc0e3, #0068ad, #ff7f00, #cc2030);
+}
+
+.swim-slider__input::-moz-range-track {
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(to right, #d6e9f6, #8cc0e3, #0068ad, #ff7f00, #cc2030);
+}
+
+.swim-slider__input::-webkit-slider-thumb {
+  width: 22px;
+  height: 22px;
+  margin-top: -7px;
+  border: 4px solid var(--felt-now);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 1px var(--sd-ink), 0 1px 3px rgba(0, 0, 0, 0.3);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.swim-slider__input::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: 4px solid var(--felt-now);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 1px var(--sd-ink), 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.swim-slider__input:focus {
+  outline: 0;
+}
+
+.swim-keyboard .swim-slider__input:focus-visible {
+  outline: 2px solid var(--sd-blue);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* Not rated: a faded track, no thumb */
+.swim-slider.is-unrated .swim-slider__input::-webkit-slider-runnable-track {
+  opacity: 0.35;
+}
+
+.swim-slider.is-unrated .swim-slider__input::-moz-range-track {
+  opacity: 0.35;
+}
+
+.swim-slider.is-unrated .swim-slider__input::-webkit-slider-thumb {
+  opacity: 0;
+}
+
+.swim-slider.is-unrated .swim-slider__input::-moz-range-thumb {
+  opacity: 0;
+}
+
+.swim-slider__clear {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--sd-muted);
+  cursor: pointer;
+}
+
+.swim-slider__clear:hover {
+  background: var(--sd-subtle);
+  color: var(--sd-ink);
+}
+
+/* Unrated: kept in place but invisible, so rating doesn't widen the row
+   (which would wrap Add to Log and move the slider mid-drag) */
+.swim-slider__clear[hidden] {
+  display: inline-block;
+  visibility: hidden;
+}
+
+/* Your own rating, after the zone */
+.swim-effort__felt {
+  margin-left: 16px;
+  color: var(--sd-muted);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.swim-effort__felt[hidden] {
+  display: none;
+}
+
+.swim-effort__felt b {
+  color: var(--sd-ink);
+}
+
+/* ---------- Skeletons: grey placeholders while data loads ---------- */
+
+/* A soft grey block with a light sweep across it; static when motion is
+   reduced. New to the site (production uses spinners): an enhancement. */
+.swim-skel {
+  display: block;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #eceeef 25%, #f6f7f8 50%, #eceeef 75%) 0 0 / 200% 100%;
+  animation: swim-skel 1.4s ease-in-out infinite;
+}
+
+@keyframes swim-skel {
+  from { background-position: 100% 0; }
+  to { background-position: -100% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swim-skel {
+    animation: none;
+  }
+}
+
+/* Race Time Predictions: behind the plot, only while rankings load */
+.swim-pred__skel {
+  position: absolute;
+  inset: 0;
+  display: none;
+  border-radius: 6px;
+}
+
+.is-loading .swim-pred__skel {
+  display: block;
+}
+
+/* The summary's lines: 12px bars on its 20px line height */
+.swim-pred-insight .swim-skel__line {
+  /* 12px of bar in a 20px line: transparent borders space them, since
+     margins between them would collapse */
+  box-sizing: content-box;
+  height: 12px;
+  border: 4px solid transparent;
+  border-right: 0;
+  border-left: 0;
+  background-clip: content-box;
+  /* a shade darker: the summary box is already light grey */
+  background-image: linear-gradient(90deg, #e3e5e6 25%, #eef0f1 50%, #e3e5e6 75%);
+}
+
+@media (min-width: 768px) {
+  .swim-skel__line--phone {
+    display: none;
+  }
+}
+
+/* The legend's pills: 25px, between the real buttons (27px) and keys (23px) */
+.swim-skel__pill {
+  height: 25px;
+  border-radius: 999px;
+}
+
+/* ---------- Race Splits: Practice this ---------- */
+
+/* The race pace in pieces from a push, as v4's Race Splits (.st4-practice):
+   a tinted box under the splits. Enhancement, not a production pattern. */
+.swim-practice {
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: var(--sd-tint);
+}
+
+.swim-practice__label,
+.swim-practice__note {
+  color: var(--sd-muted);
+  font-size: 13px;
+}
+
+.swim-practice__set {
+  color: var(--sd-ink);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.swim-practice__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.swim-practice__links a {
+  color: var(--sd-blue);
 }

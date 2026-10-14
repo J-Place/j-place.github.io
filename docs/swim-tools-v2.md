@@ -6,32 +6,34 @@ Status as of 2026-10-12: built and working locally, **nothing committed**. Page:
 
 | File | Role |
 |---|---|
-| `src/pages/fitness-and-training/swim-tools-v2.njk` | Page shell: ribbon, the three sections, the Race Planning controls. Frontmatter holds `swimmerId: KT2JH` (default persona), `courses`, `strokes`, `ageGroups`. |
-| `src/_includes/partials/SwimToolsV2/` | `YourSwim` (Training Metrics panel), `PaceConversion`, `RacePredictor`, `RaceHistory` (Your Races, and embeds race data), `RaceSplits`, `TopTens`, `ConvertTime`, `CourseConversion`, `AgeRank`, `AgeConversion`, `Editors` (modals), `TimeField` (macro). |
+| `src/pages/fitness-and-training/swim-tools-v2.njk` | Page shell: ribbon, the three sections, the Race Planning controls. Frontmatter holds `swimmerId: KT2JH` (default persona), `courses`, `ageGroups`. |
+| `src/_includes/partials/SwimToolsV2/` | `YourSwim` (Training Metrics panel), `PaceConversion` (retired 2026-10-13, not included; kept for reuse), `RelativeEffort`, `StrokeSelect` (macro), `RacePredictor`, `RaceHistory` (Your Races, and embeds race data), `RaceSplits`, `TopTens`, `ConvertTime`, `CourseConversion`, `AgeRank`, `AgeConversion`, `Editors` (modals), `TimeField` (macro). |
 | `src/js/swim-tools-v2.js` | All behavior (~1240 lines, one IIFE, one `state` object, one `render()`). |
 | `src/css/pages/swim-tools-v2.css` | All styles (~1540 lines), tokens `--sd-*`. |
 | `src/_data/raceHistory.json` | Real race history per persona (see Data). |
 | `src/_data/topTens.json` | USMS Top 10 `lists`, one per course, gender and age group. So far only **SCY Men 50–54**, for 1976, 1986, 1996, 2006, 2016 and 2026 (see Data). |
-| `src/_data/averageTimes.json` | **Sample** SCY 25–29 averages by stroke and distance; used for events a swimmer hasn't raced. Needs real USMS data eventually. |
+| `src/_data/averageTimes.json` | **Sample** SCY 25–29 averages by stroke and distance; used by Rank in Age Group (the predictor uses Top Times rankings). Needs real USMS data eventually. |
 | `src/_data/users.json` | Personas; `SHARK` (Rick B Walker) and `RDS0X` (Tracy L Grilli) were added for this page. |
 
 Unrelated uncommitted changes in the tree (`addons.css`, `swim-tools.css`, `affiliate-club-information.njk`, `membership-comparison.njk`, `docs/headless-cms-poc.md`) aren't part of this work. Separate them when committing.
 
 ## Page structure
 
-1. **Header** ("Swim Tools" plus intro).
-2. **Section ribbon**: Training Metrics / Race Planning / Time Conversions. Clicking one **reorders** the sections so it comes first. It never scrolls (`showFirst`).
+1. **Header**: "Swim Tools" and the greeting on the left; on the right, the section tabs then the sex and age-group pill (or the age group select when the age isn't known).
+2. **Section tabs** (`.swim-ribbon`, in the header): icon-only buttons in light grey circles, named by `aria-label` and `title`, in page order: Race Planning / Time Conversions / Training Metrics. Clicking one **reorders** the sections so it comes first. It never scrolls (`showFirst`). Page order (since 2026-10-13): Race Planning, Time Conversions, then Training Metrics.
 3. **Training Metrics**: one bordered `.swim-panel`.
    - **Light-blue input band** (`YourSwim.njk`), with labels above the controls:
      - Distance (number; arrows step by 25; label "Distance (yards)" with the unit in regular weight).
      - Course (SCY/SCM/LCM).
      - Time, then "or", then Pace (per 100). These are two-way: changing either updates the other. Nothing is cleared, and `metrics.source` records which one was entered last.
-     - Stroke (optional; none means a mixed workout).
+     - Stroke (optional select, "Any" means a mixed workout).
+     - **Effort** (optional, 1–10): how hard the swim felt, after Stroke on the same row. A **slider** (`.swim-slider`, a native `input type="range"` styled for WebKit and Firefox), "1" and "10" at its ends, its track shaded like the Relative Effort bar; the thumb's ring takes the rating's shade (`FELT_SHADES`). Not rated: the track is faded and has no thumb, and clicking or dragging anywhere on it rates. Arrow keys step; the mouse wheel steps it only while it's focused (so it doesn't take over page scrolling); × clears. The × keeps its space while hidden so rating doesn't widen the row and wrap Add to Log. The label shows the RPE word (`FELT_WORDS`: 1–2 Very easy, 3–4 Easy, 5–6 Moderate, 7–8 Hard, 9 Very hard, 10 Max), "(optional)" when not rated. Shown as "You rated it 7/10" in the Relative effort tile, adjusts Calorie burn, and saved with Add to Log (`effort`, a number or null).
      - **Add to Log**: an outline button (`btn btn-outline`), 44px tall and right-aligned. Below 1100px it wraps to its own bottom row, left-aligned.
    - **White results band**, as KPI tiles:
-     - Calorie burn: 1/6 width, red icon, estimated at 165 lb (no weight input).
+     - Calorie burn: 1/6 width, red icon, estimated at 165 lb (no weight input). Pace sets the intensity; an Effort rating then adjusts it (`effortFactor`: none at 5–6, about 4% a step, so 1 is about −18% and 10 about +18%), noted "At effort 7/10". Add to Log saves the adjusted figure.
      - Training pace: 1/6 width, orange icon.
-     - Pace conversion: 1/3 width, orange icon. It shows only the **two other** courses, with a vertical divider between them and no "/100" label.
+     - Relative effort: the rest of the row (2/3 width), red gauge icon. See Relative Effort below.
+     - Pace conversion: **retired 2026-10-13** (not included; `PaceConversion.njk` kept for reuse, and `renderMetrics` still fills it). It showed only the **two other** courses, with a vertical divider between them and no "/100" label.
      - The tiles' numbers share a baseline.
    - Add to Log opens `#swimDeckLog`, showing the stats as static text, a date input, and Cancel / Save to Log. Entries are saved to localStorage `swimTools.log`. There's no log view yet.
 4. **Race Planning**: one panel.
@@ -43,7 +45,7 @@ Unrelated uncommitted changes in the tree (`addons.css`, `swim-tools.css`, `affi
      - Time "or" Pace (per 100, minutes and seconds only): the goal for Your Event. Time and pace are two-way.
      - Goal errors show in red (`goalHint`).
    - **Tools band**:
-     - Race Time Predictor (chart or table) with **Your Races** beneath it, at col-md-8.
+     - Race Time Predictions (chart or table) with **Your Races** beneath it, at col-md-8.
      - Race Splits (Even / Fast start / Negative), at col-md-4.
      - **Top 10 by Decade**, full width (col-xs-12) beneath both.
 5. **Time Conversions**: one panel.
@@ -52,15 +54,15 @@ Unrelated uncommitted changes in the tree (`addons.css`, `swim-tools.css`, `affi
 
 ## Behavior rules worth keeping
 
-- **Race Time Predictor chart** has three lines:
-  1. **Age-group average**: always shown, as a grey dashed line.
-  - **Age group range**: very light red shading with no outline, from the USMS **A** cut time (top 15%) to the **B** cut time (top 55%) for the selected age group and the swimmer's gender (`ageGroupRange`). The data is real: `src/_data/timeStandards.json` (usms.org event rankings, 2025–2026 season, SCY, 18–24 to 80–84), trimmed to A and B by `src/_data/ageGroupRanges.js`. The cut times are all "top X%" tiers with nothing for the slower half, so the old middle half (25th–75th percentile) can't be drawn; A to B is the nearest match. SCM and LCM are converted from SCY the same way as the average (course factor, yards/meters equivalent distance). With no data for the group (85+, or a blank gender) there's no band and no legend item. Drawn under the Top 10 band.
-  - **Top 10 range**: light blue shading between 1st and 10th place with no outline (`topTenRange`), drawn under every line. It uses the latest season of the list matching the chart's course and the swimmer's age group and gender (`topTenList`; gender from `users.json`, and a blank gender matches nothing). With no matching list there's no band and no legend item, and the lists aren't converted between courses. The legend reads "Top ten range", and the table gets a "Top 10" column showing 1st–10th.
-  2. **Your line**:
-     - Raced distances are solid dots.
-     - Unraced distances are estimates scaled from the average by your race ratios, drawn as hollow dots and a dashed line.
-  3. **Goal line**: shown only when a goal is set. Thin, dashed and lighter, with **one dot**, at Your Event. It applies the goal improvement with falloff `GOAL_FALLOFF = ln 4`: the full ratio at the event, fading with distance. The baseline uses known races only and never the goal.
-- **Known times** come from the fastest race per distance in the context course and stroke. Races in other courses are **not converted** (user's call, 2026-10-12): an LCM chart shows only LCM races, and an SCY chart only SCY races. **They only count races whose `age` falls in the selected Age group** (`inAgeGroup`), so a long history predicts current speed. Races without an age always count. With no races in that group, the chart shows only the average.
+- **Race Time Predictions** works as v4's (since 2026-10-13), with the v4 styling under `swim-pred*` classes:
+  - **Data**: your age group's USMS rankings from the Top Times files (`/data/top-times/`, `docs/api/top-times.openapi.yaml`), fetched per event as the card needs them (`groupRank`), using `available.json` (fetched at start). A course with no files uses SCY's, converted. Age group is the profile's or the select's; gender is the persona's (`swimmerGender`), and with no gender there's no ranking. Synthetic rankings add "· synthetic data" to the subtitle.
+  - **Chart**: pace per 100 by distance, slower higher. Age-group lines: fastest (1st), top ten (10th), median and slowest (outliers dropped, `typicalSlowest`), with grey fills beneath. Your bests in your current age group are triangles, solid line between neighboring distances. Unraced distances are projected (open dots, dotted line): an older swim age-adjusted (`ageAdjust`), else the same distance in another course converted, else your nearest distance scaled by how the median slows (`project`). Your Event's label is bold. A "Projected Winner" pill and note show where your time is as fast as this season's fastest.
+  - **Skeleton** while the rankings load (`.is-loading` on the card, when there are no rankings yet and `pending()`): a grey shimmer behind the plot (your own dots still show over it), grey bars in place of the summary (two lines on desktop, five on phones) and grey pills in place of the legend, sized so the card doesn't change height when the data arrives (exact on desktop, within a few px on phones). Static when motion is reduced; screen readers hear "Loading USMS rankings…". Skeletons are new to the site (production uses spinners).
+  - **Legend pills** turn each line off and on (`state.predHidden`). **Table view** shows every value with its pace.
+  - **Insight** under the chart: where your pace is closest to and furthest from the median.
+  - No goal line any more. Your Event's default time (splits, goal placeholders) is your best, else your projected time, else the median.
+- **Relative Effort** (Training Metrics, `renderEffort`): the Your Swim pace as a share of your race pace at the swim's distance (race pace / swim pace; 100% = race effort). Race pace comes from the predictor's rows for the swim's course and stroke (Free when Any): the nearest event with your best or projected time, scaled to the swim's distance by Riegel's 1.06; with no races in that stroke, the age group's median. Zones (`EFFORT_ZONES`): Recovery under 70%, Easy 70, Moderate 80, Hard 90, Race pace 97, Faster than race pace from 104 (the reference pace is stale or undersells you). The bar runs 50–105%.
+- **Which races count** (since 2026-10-13, v2 and v4 alike): only the last 8 years' (`WINDOW_YEARS`; undated races count). Within that, races from your current age group are real bests (`inAgeGroup`; races without an age count as current), and earlier ones are age-adjusted into it. A real current-group swim beats an adjusted older one at the same distance, even a faster one. If none of the window's races are in Your Event's stroke, every race in the stroke is used, age-adjusted, and the subtitle and insight say they're from races over 8 years ago (`predPool`). The insight compares real and age-adjusted swims, not times projected from other distances.
 - **Top 10 by Decade** (`renderTopTens`):
   - **Its own Stroke and Distance** filters sit in the card header (`data-tens` / `data-tens-input`, `state.tens`), with distances in the lists' course (SCY).
   - **Following Your Event**: the card starts on Your Event, and switches back to it whenever Your Event's course, distance or stroke changes (`followEvent`). A meters event maps to its yards equivalent (400 m → 500 yd) through `convertRace`. The subtitle says "Your event" while the two match.
