@@ -1,0 +1,55 @@
+/* Enhancement, no production analog: share icons below the In This Article links
+   (partials/Article/ArticleInThisArticleNav.njk, navShare; article4 only). Hidden until the
+   reader scrolls past the byline's share icons; js/Article/article-nav-share.js toggles
+   .is-visible. Fades in quickly; fades out more slowly. visibility rides along so hidden icons
+   drop out of the tab order, delayed on the way out until the opacity fade finishes.
+   Icons reuse .social-share / .share-icon (article-share-icons.css). */
+
+.article-nav-share {
+  display: none;
+}
+
+/* Desktop only: below 992px the In This Article nav is production's collapsed dropdown. */
+@media (min-width: 992px) {
+  .article-nav-share {
+    display: block;
+    /* Divider between the In This Article links and the icons; fades with them. */
+    margin-top: -2.5rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid #ccc;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s ease, visibility 0s linear 1s;
+  }
+
+  .article-nav-share.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s ease, visibility 0s;
+  }
+
+  /* common.min.css (vendored, sitewide) gives .social-share margin: 2.5rem auto and
+     width: 100%, plus justify-content: flex-end from 992px up. */
+  .article-nav-share .social-share {
+    justify-content: flex-start;
+    margin: 0;
+    padding-left: 15px;
+  }
+
+  /* 15% smaller than the byline icons (article-share-icons.css sizes x 0.85). */
+  .article-nav-share .share-icon {
+    font-size: 2.3375rem;
+  }
+
+  .article-nav-share .share-icon--link {
+    font-size: 1.6575rem;
+  }
+
+  .article-nav-share .share-icon--x {
+    font-size: 2.104rem;
+  }
+
+  .article-nav-share .share-icon--facebook {
+    font-size: 1.9986rem;
+  }
+}

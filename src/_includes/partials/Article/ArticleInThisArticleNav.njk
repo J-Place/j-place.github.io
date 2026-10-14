@@ -19,8 +19,17 @@
          until the reader scrolls to the article body's first <h2>, rather than the nav's own
          position, before it appears/sticks.
      Default here is "Scroll" for article2/3; article4 pages set startPosition="Top" explicitly
-     to simulate "After In Page Navigation" per the confirmed production example above. -->
+     to simulate "After In Page Navigation" per the confirmed production example above.
+
+     navShare (enhancement, no production analog; article4 only): adds a second set of share
+     icons below the links, hidden until the reader scrolls past the byline's share icons
+     (js/Article/article-nav-share.js, css/Article/article-nav-share.css). -->
 <div class="article-nav article-nav--{{ startPosition | default('Scroll') }}{% if displayH3 %} article-nav--DisplayH3{% endif %}">
   <h3 class="article-nav-title">{{ navTitle | default("In This Article") }}</h3>
   <ul id="navList"></ul>
+  {% if navShare %}
+  <div class="article-nav-share">
+    {% include "partials/Article/ArticleShareIcons.njk" %}
+  </div>
+  {% endif %}
 </div>
