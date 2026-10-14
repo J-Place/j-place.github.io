@@ -342,20 +342,22 @@ for (const [season, gender, sex, ageMin] of wanted.values()) {
   datasets++;
 }
 // Seasons with a real Top 10 list (topTens.json: men 50-54 by decade) are
-// written from it, flagged usms: real times, though the lists carry no
-// names, clubs or meets
+// written from it, flagged usms: real times and ages, though the lists carry
+// no names, clubs or meets
 const REAL_TOP_TENS = new Map(); // "season|gender|ageMin" → list
 topTens.lists.filter(l => l.course === 'SCY').forEach(l => {
   Object.keys(l.seasons).map(Number).filter(y => y < seasons[0]).forEach(y => {
-    REAL_TOP_TENS.set(`${y}|${l.gender === 'Men' ? 'men' : 'women'}|${l.ageGroup}`, l.seasons[y]);
+    REAL_TOP_TENS.set(`${y}|${l.gender === 'Men' ? 'men' : 'women'}|${l.ageGroup}`,
+      { times: l.seasons[y], ages: (l.ages || {})[y] || {} });
   });
 });
 function writeRealTopTen(season, gender, ageMin, stroke, d, list) {
-  const times = ((list[STROKE_LABELS[stroke]] || {})[d] || []).map(secs);
+  const times = ((list.times[STROKE_LABELS[stroke]] || {})[d] || []).map(secs);
+  const ages = (list.ages[STROKE_LABELS[stroke]] || {})[d] || [];
   let rank = 0;
   const swimmers = times.map((t, i) => {
     if (!i || t !== times[i - 1]) rank = i + 1;
-    return { rank, time: fmt(t) };
+    return ages[i] != null ? { rank, age: ages[i], time: fmt(t) } : { rank, time: fmt(t) };
   });
   const age = ageKey(ageMin);
   const body = {
