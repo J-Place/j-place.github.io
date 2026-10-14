@@ -534,7 +534,7 @@
       return;
     }
     var leg = practiceLeg(state.d), n = state.d / leg, segs = splitTimes(f.goal, n);
-    if (n === 2) {
+    if (leg === 25) { // the 50 (a 100 is also two splits, but of 50)
       set('practiceSet', '8 × 25 from a push at ' + race(segs[0] + PUSH));
       set('practiceNote', 'Rest 45 s. Push starts run about ' + PUSH + ' s slower than a dive.');
     } else {

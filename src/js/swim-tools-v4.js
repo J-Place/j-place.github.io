@@ -873,7 +873,7 @@
     }).join('');
     // Practice the race pace in pieces from a push: the 50's first 25 from
     // a push (a dive is faster), or longer races' middle splits
-    if (n === 2) {
+    if (leg === 25) { // the 50 (a 100 is also two splits, but of 50)
       set('practiceSet', '8 × 25 from a push at ' + race(segs[0] + PUSH));
       set('practiceNote', 'Rest 45 s. Push starts run about ' + PUSH + ' s slower than a dive.');
     } else {
