@@ -2051,7 +2051,10 @@
   // he's always a current, active swimmer and they never go stale. Course
   // SCY (the export has no pool length); stroke and effort weren't
   // recorded. Synthetic: flagged, never shown as races, used only for his
-  // own estimates.
+  // own estimates. Before them, 24 modeled swims (2026-10-15, never anyone's
+  // workouts): 8 weeks building from 2,300 to 5,200 yards a week, then an
+  // easy week, so the Training Summary's 12-week timeline and its 3-week
+  // average (which reaches 2 weeks further back) have a trend to show.
   var SAMPLE_LOG_SWIMMER = 'KT2JH';
   var SAMPLE_DAYS = [0, 2, 5]; // weekdays, 0 Monday
   // [yards, time], oldest first
@@ -2061,17 +2064,24 @@
     [1900, '37:47.00'], [1200, '20:01.00'], [2200, '41:35.00'], [1900, '39:32.00'], [1000, '19:52.00'], [450, '8:37.20'],
     [1650, '31:18.00']
   ];
+  var SAMPLE_SWIMS_MODELED = [
+    [800, '14:50.00'], [650, '11:52.00'], [850, '16:13.00'], [900, '16:19.00'], [750, '14:10.00'], [950, '17:41.00'],
+    [1100, '19:54.00'], [900, '16:58.00'], [1200, '21:40.00'], [1300, '24:20.00'], [1050, '19:01.00'], [1350, '24:30.00'],
+    [1500, '28:04.00'], [1200, '23:15.00'], [1600, '29:08.00'], [1700, '31:14.00'], [1350, '25:43.00'], [1850, '36:13.00'],
+    [1800, '34:08.00'], [1450, '27:04.00'], [1950, '38:16.00'], [1050, '18:59.00'], [850, '16:31.00'], [1100, '20:20.00']
+  ];
   function sampleLog() {
     var user = USERS[SWIMMER] || {};
     if (SWIMMER !== SAMPLE_LOG_SWIMMER || !user.loggedIn) return [];
     // The swim days on or before today, newest first, one per sample swim
+    var all = SAMPLE_SWIMS_MODELED.concat(SAMPLE_SWIMS);
     var now = new Date(), days = [];
-    for (var back = 0; days.length < SAMPLE_SWIMS.length; back++) {
+    for (var back = 0; days.length < all.length; back++) {
       var day = new Date(now.getFullYear(), now.getMonth(), now.getDate() - back);
       if (SAMPLE_DAYS.indexOf((day.getDay() + 6) % 7) !== -1) days.push(day);
     }
-    return SAMPLE_SWIMS.map(function (x, i) {
-      var day = days[SAMPLE_SWIMS.length - 1 - i];
+    return all.map(function (x, i) {
+      var day = days[all.length - 1 - i];
       return {
         date: day.getFullYear() + '-' + ('0' + (day.getMonth() + 1)).slice(-2) + '-' + ('0' + day.getDate()).slice(-2),
         course: 'SCY', distance: x[0], time: x[1], stroke: '', effort: null, synthetic: true
@@ -2114,24 +2124,40 @@
   // secondary cards (age-up, comeback) instead. Returns whether it showed.
   var STATUS_WEEKS = TE_DAYS / 7;
   var STATUS_BANDS = [[1.5, 'Overreaching'], [1.15, 'Building'], [0.8, 'Maintaining'], [0.0001, 'Recovering'], [0, 'Detraining']];
+
+  // Its timeline: weekly yards for the last 12 weeks (TREND_WEEKS), 6 at a
+  // time (TREND_SHOWN), stepped back and forward a week at a time with the
+  // arrows either side (trendOffset: how many weeks back the newest shown
+  // is). The line across the bars is a 3-week rolling average (TREND_ROLL:
+  // the week and the 2 before it, so it reads 2 weeks further back), over
+  // only the weeks since you started logging. One scale for all 12 weeks,
+  // so the bars keep their heights as they step.
+  var TREND_WEEKS = 12, TREND_SHOWN = 6, TREND_ROLL = 3;
+  var trendOffset = 0;
   function renderStatus() {
     var card = root.querySelector('[data-status-card]');
     var now = new Date(today() + 'T00:00:00');
     var daysAgo = function (iso) { return Math.round((now - new Date(iso + 'T00:00:00')) / 86400000); };
-    var swims = loggedSwims().map(function (e) {
+    var history = (TREND_WEEKS + TREND_ROLL - 1) * 7;
+    var all = loggedSwims().map(function (e) {
       var d = Number(e.distance);
       return { ago: daysAgo(e.date), yards: e.course === 'SCY' ? d : d * 1.0936, synthetic: e.synthetic };
-    }).filter(function (e) { return e.ago >= 0 && e.ago < TE_DAYS && isFinite(e.yards) && e.yards > 0; });
+    }).filter(function (e) { return e.ago >= 0 && e.ago < history && isFinite(e.yards) && e.yards > 0; });
+    var swims = all.filter(function (e) { return e.ago < TE_DAYS; });
     card.hidden = !swims.length;
     if (!swims.length) return false;
 
     // Weekly yards, rolling 7-day weeks back from today (0: the last 7 days)
     var weeks = [];
-    for (var w = 0; w < STATUS_WEEKS; w++) weeks.push(0);
-    swims.forEach(function (e) { weeks[Math.floor(e.ago / 7)] += e.yards; });
-    var logging = Math.min(STATUS_WEEKS, Math.floor(Math.max.apply(null, swims.map(function (e) { return e.ago; })) / 7) + 1);
-    var total = weeks.reduce(function (a, b) { return a + b; }, 0);
-    var avg = total / logging, ratio = weeks[0] / avg;
+    for (var w = 0; w < TREND_WEEKS + TREND_ROLL - 1; w++) weeks.push(0);
+    all.forEach(function (e) { weeks[Math.floor(e.ago / 7)] += e.yards; });
+    // How many weeks back your logging reaches (within the history read)
+    var since = Math.floor(Math.max.apply(null, all.map(function (e) { return e.ago; })) / 7) + 1;
+
+    // The status: the last 7 days against the last 6 weeks
+    var logging = Math.min(STATUS_WEEKS, since);
+    var avg = weeks.slice(0, STATUS_WEEKS).reduce(function (a, b) { return a + b; }, 0) / logging;
+    var ratio = weeks[0] / avg;
     var word = STATUS_BANDS.filter(function (b) { return ratio >= b[0]; })[0][1];
     var last = Math.min.apply(null, swims.map(function (e) { return e.ago; }));
     var yd = function (n) { return Math.round(n).toLocaleString('en-US'); };
@@ -2147,18 +2173,68 @@
       Recovering: 'A lighter week than usual: good for recovery, or before a meet.',
       Detraining: 'No swims in the last 7 days (your last was ' + last + ' days ago). Fitness starts to slip after a week or two off.'
     }[word]);
-    set('statusFine', 'Yards logged with Add to Log' + (logging < STATUS_WEEKS ? ', averaged over the ' + logging + (logging === 1 ? ' week' : ' weeks') + ' you\'ve been logging' : '') +
-      (swims.some(function (e) { return e.synthetic; }) ? ', including sample workouts' : '') + '. Sample math, not a published formula.');
 
-    // The bars, oldest on the left
-    var max = Math.max.apply(null, weeks) || 1;
-    var bars = root.querySelector('[data-status-weeks]');
-    bars.innerHTML = weeks.slice().reverse().map(function (y, i) {
-      return '<span class="swim-weeks__bar' + (i === weeks.length - 1 ? ' is-now' : '') + '" style="height: ' + Math.max(4, y / max * 100).toFixed(1) + '%"></span>';
-    }).join('');
-    bars.setAttribute('aria-label', 'Yards per week, oldest first: ' + weeks.slice().reverse().map(yd).join(', '));
+    renderTimeline(weeks, since, yd);
     return true;
   }
+
+  // The timeline's 6 weeks (see TREND_WEEKS)
+  function renderTimeline(weeks, since, yd) {
+    var rolling = [];
+    for (var i = 0; i < TREND_WEEKS; i++) {
+      var span = weeks.slice(i, Math.min(i + TREND_ROLL, since));
+      rolling.push(i < since ? span.reduce(function (a, b) { return a + b; }, 0) / span.length : null);
+    }
+    // Back no further than your logging reaches
+    var maxOffset = Math.max(0, Math.min(TREND_WEEKS, since) - TREND_SHOWN);
+    trendOffset = Math.min(trendOffset, maxOffset);
+    var max = Math.max.apply(null, weeks.slice(0, TREND_WEEKS).concat(rolling.filter(isFinite))) || 1;
+    var now = new Date(today() + 'T00:00:00');
+    var day = function (back) {
+      return new Date(now.getFullYear(), now.getMonth(), now.getDate() - back).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    };
+
+    // Shown oldest on the left: week indexes offset+5 down to offset
+    var shown = [];
+    for (var k = TREND_SHOWN - 1; k >= 0; k--) shown.push(trendOffset + k);
+    var box = root.querySelector('[data-status-weeks]');
+    // Built once, then updated, so the bars' heights ease as they step
+    if (box.children.length !== TREND_SHOWN + 1) {
+      box.innerHTML = shown.map(function () {
+        return '<span class="swim-weeks__slot"><span class="swim-weeks__bar"></span></span>';
+      }).join('') +
+        '<svg class="swim-weeks__line" viewBox="0 0 ' + TREND_SHOWN + ' 100" preserveAspectRatio="none" aria-hidden="true"><polyline/></svg>';
+    }
+    var slots = box.querySelectorAll('.swim-weeks__slot');
+    var points = [];
+    shown.forEach(function (w, i) {
+      var bar = slots[i].firstChild;
+      bar.style.height = Math.max(4, weeks[w] / max * 100).toFixed(1) + '%';
+      bar.classList.toggle('is-now', w === 0);
+      slots[i].title = day(w * 7 + 6) + '–' + day(w * 7) + ': ' + yd(weeks[w]) + ' yd' +
+        (rolling[w] !== null ? ' · 3-week average ' + yd(rolling[w]) + ' yd' : '');
+      if (rolling[w] !== null) points.push((i + 0.5) + ',' + (100 - rolling[w] / max * 100).toFixed(1));
+    });
+    box.querySelector('polyline').setAttribute('points', points.join(' '));
+    box.setAttribute('aria-label', 'Yards per week, ' + day(shown[0] * 7 + 6) + ' to ' + day(trendOffset * 7) + ', oldest first: ' +
+      shown.map(function (w) { return yd(weeks[w]) + (rolling[w] !== null ? ' (3-week average ' + yd(rolling[w]) + ')' : ''); }).join(', ') + '.');
+
+    // Each week's first day under its bar
+    root.querySelector('[data-status-dates]').innerHTML = shown.map(function (w) {
+      return '<span>' + day(w * 7 + 6) + '</span>';
+    }).join('');
+    set('statusRange', trendOffset ? day(shown[0] * 7 + 6) + ' – ' + day(trendOffset * 7) : 'Last 6 weeks');
+    root.querySelector('[data-weeks-step="1"]').disabled = trendOffset >= maxOffset;
+    root.querySelector('[data-weeks-step="-1"]').disabled = trendOffset <= 0;
+  }
+
+  // The timeline's arrows: a week back (1) or forward (-1)
+  root.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-weeks-step]');
+    if (!btn || btn.disabled) return;
+    trendOffset = Math.max(0, trendOffset + Number(btn.getAttribute('data-weeks-step')));
+    renderStatus();
+  });
 
   // Training Effect needs a typical swim to judge against: at least
   // TE_MIN_SWIMS logged in the last 6 weeks. Until then the tile is locked:
@@ -3124,14 +3200,25 @@
     // stuck rather than just touching
     var top = sectionsBox.getBoundingClientRect().top + window.scrollY - offset + (wide ? 1 : 0);
     var still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // A glide of its own, so the section pager (pageOn) doesn't turn it
+    // aside at a section it passes
+    glide = { to: Math.max(0, Math.round(top)), until: Date.now() + 1500 };
     // 'instant', not 'auto', which would follow the site's smooth scroll-behavior
     window.scrollTo({ top: Math.max(0, top), behavior: still ? 'instant' : 'smooth' });
   });
 
+  // MOTHBALLED 2026-10-15: the page scrolls naturally. STICKY switches off
+  // all the sticky behavior's script: the toolbar's stuck state and shadow,
+  // the stuck headings, the tabs following the scroll, the section pager
+  // and its panel pins. To restore, set it to true and uncomment the sticky
+  // CSS (swim-tools-v2.css, marked MOTHBALLED). With the toolbar never
+  // stuck, a tab click only reorders the sections (no scroll).
+  var STICKY = false;
+
   // The sticky toolbar's shadow, only while it's stuck: a zero-height marker
   // just above it scrolls out of view exactly when it sticks
   var toolbar = root.querySelector('.swim-deck__toolbar');
-  if (toolbar && 'IntersectionObserver' in window) {
+  if (STICKY && toolbar && 'IntersectionObserver' in window) {
     var marker = document.createElement('div');
     marker.setAttribute('aria-hidden', 'true');
     toolbar.parentNode.insertBefore(marker, toolbar);
@@ -3205,11 +3292,79 @@
       if (on) btn.setAttribute('aria-current', 'true'); else btn.removeAttribute('aria-current');
     });
   }
-  ['scroll', 'resize'].forEach(function (type) {
+  if (STICKY) ['scroll', 'resize'].forEach(function (type) {
     window.addEventListener(type, function () {
-      if (!stuckFrame) stuckFrame = requestAnimationFrame(markStuckHeadings);
+      if (!stuckFrame) stuckFrame = requestAnimationFrame(function () {
+        markStuckHeadings();
+        pageOn();
+      });
     }, { passive: true });
   });
+
+  // ---------- Section pager (tablet and up) ----------
+
+  // Each section holds still once its heading docks: its panel is pinned
+  // (CSS sticky) for the first 100px of scrolling down (--sd-hold, the room
+  // at the section's foot). Past that, the page glides on to the next
+  // section, its heading docked. Scrolling up is as normal, and the last
+  // section scrolls on to the page's foot.
+  var PANELS = '.swim-deck__section > .swim-panel, .swim-deck__section > .swim-summary';
+
+  // A panel taller than the window would pin with its foot out of sight:
+  // it pins this far above the window's foot instead (--sd-pin-top), so
+  // it scrolls until all of it has been seen, then holds
+  var PIN_FOOT = 16;
+  function pinPanels() {
+    root.querySelectorAll(PANELS).forEach(function (panel) {
+      panel.style.removeProperty('--sd-pin-top');
+      var top = parseFloat(getComputedStyle(panel).top) || 0;
+      var room = window.innerHeight - PIN_FOOT - panel.offsetHeight;
+      if (room < top) panel.style.setProperty('--sd-pin-top', room + 'px');
+    });
+  }
+  if (STICKY) {
+    pinPanels();
+    window.addEventListener('resize', pinPanels, { passive: true });
+  }
+  // Panels change height as they fill (rankings loading, Show all races)
+  if (STICKY && 'ResizeObserver' in window) {
+    var panelSizes = new ResizeObserver(pinPanels);
+    root.querySelectorAll(PANELS).forEach(function (panel) { panelSizes.observe(panel); });
+  }
+
+  var lastY = window.scrollY;
+  var glide = null; // { to, until } while the page glides to a section
+  function pageOn() {
+    var y = window.scrollY, down = y > lastY;
+    lastY = y;
+    if (glide) {
+      // Landed, or cut short (the reader scrolled meanwhile): paging again
+      if (Math.abs(y - glide.to) < 2 || Date.now() > glide.until) glide = null;
+      return;
+    }
+    var wide = !window.matchMedia || matchMedia('(min-width: 768px)').matches;
+    if (!down || !wide || !toolbar || !toolbar.classList.contains('is-stuck')) return;
+    var sections = Array.prototype.filter.call(sectionsBox.children, function (s) {
+      return s.classList.contains('swim-deck__section') && !s.hidden;
+    });
+    for (var i = 0; i < sections.length - 1; i++) {
+      var panel = sections[i].querySelector(':scope > .swim-panel, :scope > .swim-summary');
+      if (!panel) continue;
+      var next = sections[i + 1];
+      var line = stickyTop(next.querySelector('.swim-deck__eyebrow'));
+      var nextTop = next.getBoundingClientRect().top;
+      // Past its hold (moving again, above where it pins), and the next
+      // section's heading not yet docked
+      if (panel.getBoundingClientRect().top < (parseFloat(getComputedStyle(panel).top) || 0) - 1 && nextTop > line + 1) {
+        // As the tabs scroll: 1px past, so the heading is stuck
+        var to = Math.round(nextTop + y - line + 1);
+        var still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+        glide = { to: to, until: Date.now() + 1500 };
+        window.scrollTo({ top: to, behavior: still ? 'instant' : 'smooth' });
+        return;
+      }
+    }
+  }
 
   // The triangle, or the heading's text beside it while the triangle shows
   // (the button stays the keyboard's way in)

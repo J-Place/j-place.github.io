@@ -8,6 +8,7 @@
 .swim-deck-modal {
   --sd-blue: #0068ad;
   --sd-heading-top: 40px; /* where section headings stick (tablet and up) */
+  --sd-hold: 100px; /* how far you scroll, held at a section, before the page glides on to the next */
   --sd-green: #2ba34e; /* the Race History chart's green (LINE_COLORS) */
   --sd-blue-hover: #267fb9; /* production .btn-primary:hover, usms.min.css */
   --sd-red: #cc2030;
@@ -58,20 +59,25 @@
   display: flex;
   margin-bottom: -75px;
   background-color: #FFF;
-  /* Sticks to the top of the window once scrolled to, and lets go on the
-     way back up; its white keeps the sections from showing through */
+  /* MOTHBALLED 2026-10-15: the page scrolls naturally. To restore all the
+     sticky behavior, uncomment this, the headings' and the pager's below,
+     and set STICKY to true in swim-tools-v2.js.
+     Sticks to the top of the window once scrolled to, and lets go on the
+     way back up; its white keeps the sections from showing through
   position: sticky;
   top: 0;
   z-index: 20;
-  transition: box-shadow 0.2s;
+  transition: box-shadow 0.2s; */
 }
 
-/* While stuck (swim-tools-v2.js): a soft shadow under it */
+/* While stuck (swim-tools-v2.js): a soft shadow under it. Mothballed with
+   the sticky toolbar: is-stuck is never set while STICKY is false. */
 .swim-deck__toolbar.is-stuck {
   box-shadow: 0 6px 8px -6px rgba(0, 0, 0, 0.18);
 }
 
-/* Tablet and up: each section's heading is drawn above the toolbar and
+/* MOTHBALLED 2026-10-15 (see the toolbar): all but the width.
+   Tablet and up: each section's heading is drawn above the toolbar and
    sticks at the left of the stuck toolbar's row (its top: swim-tools-v2.js
    reads it, to scroll a chosen section there) while its section scrolls by. Sticky only within
    its own section, so as the section scrolls out the heading leaves with
@@ -79,9 +85,9 @@
    text, so the toolbar's icons stay clickable beside it. */
 @media (min-width: 768px) {
   .swim-deck__section > .swim-deck__eyebrow {
-    position: sticky;
-    top: var(--sd-heading-top); /* the panels' pause follows it */
-    z-index: 21;
+    /* position: sticky;
+    top: var(--sd-heading-top); the panels' pause follows it
+    z-index: 21; */
     width: fit-content;
   }
 }
@@ -350,11 +356,12 @@
   height: 23px;
 }
 
-/* Training Metrics' dumbbell: wide and short, so a size up to carry the
-   same weight as its neighbours */
+/* Training Metrics' dumbbell: short, so a size up to carry the same weight
+   as its neighbours. Narrower than tall (its viewBox is 41.14 x 45), so the
+   plates keep the size they had at 35px square. */
 .swim-ribbon__link[data-section="training-metrics"] svg {
-  width: 25px;
-  height: 25px;
+  width: 38px;
+  height: 38px;
 }
 
 /* Home, hidden for anyone but a logged-in member (swim-tools-v2.js) */
@@ -463,23 +470,41 @@
   margin-top: 40px;
 }
 
-/* Tablet and up: a pause at each section. Its panel (the card band, or the
-   Highlights band) sticks the moment its heading does, 34px under it (the
-   heading's 14px and its 20px margin below), and holds for the 50px of
-   room at the section's foot, then scrolls on: time to match the heading
-   to its cards. The room is an empty block in the section (a sticky
-   element only moves within its container's content, not its padding),
-   and it's also the gap between sections, so the space above each heading
-   but the first goes. */
+/* Tablet and up: 50px between sections, and no space above each heading
+   but the first (as with the pager's room, which was the gap). */
 @media (min-width: 768px) {
   .swim-deck .swim-deck__section {
-    margin-bottom: 0;
+    margin-bottom: 50px;
+  }
+
+  .swim-deck__section:not(:first-child) > .swim-deck__eyebrow {
+    margin-top: 0;
+  }
+}
+
+/* MOTHBALLED 2026-10-15 (see the toolbar): the section pager's hold. To
+   restore, swap this in for the gap rule above.
+   Tablet and up: the section pager's hold. Each section's panel (the card
+   band, or the Highlights band) sticks the moment its heading does, 34px
+   under it (the heading's 14px and its 20px margin below), and holds,
+   everything still, for the first 100px of scrolling (--sd-hold, the room
+   at the section's foot); past that, swim-tools-v2.js glides the page on
+   to the next section. A panel taller than the window pins lower
+   (--sd-pin-top, set by swim-tools-v2.js), when its foot reaches the
+   window's, so all of it can be read first. The room is an empty block in
+   the section (a sticky element only moves within its container's content,
+   not its padding); the section's negative margin overlaps the next
+   section with all but 50px of it, so 50px is still the gap between
+   sections, and the space above each heading but the first goes.
+@media (min-width: 768px) {
+  .swim-deck .swim-deck__section {
+    margin-bottom: calc(50px - var(--sd-hold));
   }
 
   .swim-deck__section::after {
     content: "";
     display: block;
-    height: 50px;
+    height: var(--sd-hold);
   }
 
   .swim-deck__section:not(:first-child) > .swim-deck__eyebrow {
@@ -489,10 +514,11 @@
   .swim-deck__section > .swim-panel,
   .swim-deck__section > .swim-summary {
     position: sticky;
-    top: calc(var(--sd-heading-top) + 34px);
-    margin-bottom: 0; /* the 50px room is the gap */
+    top: var(--sd-pin-top, calc(var(--sd-heading-top) + 34px));
+    margin-bottom: 0; (the room is the gap)
   }
 }
+*/
 
 .swim-deck .swim-deck__note.swim-deck__note-error {
   color: var(--sd-red);
@@ -3980,23 +4006,124 @@
 
 /* Training status card: yards per week over the last 6 weeks, the last
    7 days in USMS blue */
+/* The timeline: the arrows either side of the bars and their dates */
+.swim-timeline {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.swim-timeline__chart {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Level with the bars' middle */
+.swim-timeline__step {
+  flex: none;
+  width: 24px;
+  height: 32px;
+  margin-top: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--sd-blue);
+  font-size: 13px;
+}
+
+.swim-timeline__step:hover:not(:disabled) {
+  background: var(--sd-tint);
+}
+
+.swim-timeline__step:disabled {
+  color: var(--sd-rule);
+  cursor: default;
+}
+
 .swim-weeks {
+  position: relative;
   display: flex;
   align-items: flex-end;
-  gap: 6px;
-  height: 48px;
-  padding-bottom: 1px;
+  height: 80px;
   border-bottom: 1px solid var(--sd-rule);
 }
 
-.swim-weeks__bar {
+/* A slot per week, the bar within it 3px in from each side, so the line's
+   points (at each slot's middle) sit over the bars' middles */
+.swim-weeks__slot {
+  display: flex;
   flex: 1;
+  align-items: flex-end;
+  height: 100%;
+  padding: 0 3px;
+}
+
+.swim-weeks__bar {
+  width: 100%;
   border-radius: 3px 3px 0 0;
   background: #8cc0e3;
+  transition: height 0.25s ease;
 }
 
 .swim-weeks__bar.is-now {
   background: var(--sd-blue);
+}
+
+/* The 3-week average, across the bars */
+.swim-weeks__line {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.swim-weeks__line polyline {
+  fill: none;
+  stroke: var(--sd-ink);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Each week's first day, under its bar */
+.swim-weeks__dates {
+  display: flex;
+  margin-top: 4px;
+}
+
+.swim-weeks__dates > span {
+  flex: 1;
+  color: var(--sd-muted);
+  font-size: 10px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* The key: a bar swatch and a line swatch */
+.swim-deck .swim-weeks__key {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  color: var(--sd-muted);
+  font-size: 11px;
+}
+
+.swim-weeks__key-bar {
+  width: 8px;
+  height: 10px;
+  border-radius: 2px 2px 0 0;
+  background: #8cc0e3;
+}
+
+.swim-weeks__key-line {
+  width: 14px;
+  margin-left: 8px;
+  border-top: 2px solid var(--sd-ink);
 }
 
 /* Age-up card: the gap to the median now and in the next age group */

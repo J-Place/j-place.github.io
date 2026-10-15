@@ -20,17 +20,27 @@
         <h3 class="swim-summary__title">Training Summary</h3>
         <p class="swim-summary__lead" data-st="statusTitle"></p>
       </div>
-      <span class="swim-summary__meta">Last 6 weeks</span>
+      <span class="swim-summary__meta" data-st="statusRange">Last 6 weeks</span>
     </div>
     <div class="swim-goal__stats">
       <div><div class="swim-goal__label">Last 7 days</div><div class="swim-goal__value"><span data-st="statusWeek">—</span><span class="swim-goal__unit"> yd</span></div></div>
       <div><div class="swim-goal__label">Weekly average</div><div class="swim-goal__value"><span data-st="statusAvg">—</span><span class="swim-goal__unit"> yd</span></div></div>
       <div><div class="swim-goal__label">Swims</div><div class="swim-goal__value" data-st="statusSwims">—</div></div>
     </div>
-    {# Weekly yards, oldest on the left; the last 7 days in USMS blue #}
-    <div class="swim-weeks" role="img" data-status-weeks></div>
+    {# The timeline: weekly yards, 6 of the last 12 weeks at a time, oldest
+       on the left, the last 7 days in USMS blue; a line across them for the
+       3-week average; the arrows step a week back or forward; each week's
+       first day under its bar (swim-tools-v2.js, renderTimeline) #}
+    <div class="swim-timeline">
+      <button type="button" class="swim-timeline__step" data-weeks-step="1" aria-label="A week earlier" title="A week earlier"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+      <div class="swim-timeline__chart">
+        <div class="swim-weeks" role="img" data-status-weeks></div>
+        <div class="swim-weeks__dates" data-status-dates aria-hidden="true"></div>
+      </div>
+      <button type="button" class="swim-timeline__step" data-weeks-step="-1" aria-label="A week later" title="A week later"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+    </div>
+    <p class="swim-weeks__key"><span class="swim-weeks__key-bar" aria-hidden="true"></span>Yards per week <span class="swim-weeks__key-line" aria-hidden="true"></span>3-week average</p>
     <p class="swim-summary__text" data-st="statusText"></p>
-    <p class="swim-summary__fine" data-st="statusFine"></p>
   </article>
 
   <article class="swim-card swim-summary__card swim-summary__card--wide swim-goal">
