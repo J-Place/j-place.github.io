@@ -7,6 +7,8 @@
 .swim-deck,
 .swim-deck-modal {
   --sd-blue: #0068ad;
+  --sd-heading-top: 40px; /* where section headings stick (tablet and up) */
+  --sd-green: #2ba34e; /* the Race History chart's green (LINE_COLORS) */
   --sd-blue-hover: #267fb9; /* production .btn-primary:hover, usms.min.css */
   --sd-red: #cc2030;
   --sd-ink: #262627;
@@ -36,27 +38,123 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: 12px 24px;
-  margin-bottom: 20px;
+  margin-bottom: 0;
+}
+
+/* Tablet and up: the title and intro keep to the left 7 of 12 columns, the
+   intro wrapping onto more lines */
+@media (min-width: 768px) {
+  .swim-deck__head > :first-child {
+    flex: 0 1 58.333%; /* col-7 */
+    max-width: 58.333%;
+  }
+}
+
+/* The toolbar, its own row between the header and the sections: the tabs
+   and who-pill (or a guest's controls), right-aligned from tablet up,
+   wrapping among themselves if they must; left-aligned and stacked on
+   phones */
+.swim-deck__toolbar {
+  display: flex;
+  margin-bottom: -75px;
+  background-color: #FFF;
+  /* Sticks to the top of the window once scrolled to, and lets go on the
+     way back up; its white keeps the sections from showing through */
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  transition: box-shadow 0.2s;
+}
+
+/* While stuck (swim-tools-v2.js): a soft shadow under it */
+.swim-deck__toolbar.is-stuck {
+  box-shadow: 0 6px 8px -6px rgba(0, 0, 0, 0.18);
+}
+
+/* Tablet and up: each section's heading is drawn above the toolbar and
+   sticks at the left of the stuck toolbar's row (its top: swim-tools-v2.js
+   reads it, to scroll a chosen section there) while its section scrolls by. Sticky only within
+   its own section, so as the section scrolls out the heading leaves with
+   it and the next section's heading takes its place. Only as wide as its
+   text, so the toolbar's icons stay clickable beside it. */
+@media (min-width: 768px) {
+  .swim-deck__section > .swim-deck__eyebrow {
+    position: sticky;
+    top: var(--sd-heading-top); /* the panels' pause follows it */
+    z-index: 21;
+    width: fit-content;
+  }
+}
+
+/* Phones: the toolbar spans the width, so there's no room beside the first
+   section's heading to pull up into; it sits above it instead */
+@media (max-width: 767px) {
+  .swim-deck__toolbar {
+    margin-bottom: 0;
+    padding-bottom: 8px;
+  }
+}
+
+@media (min-width: 768px) {
+  /* In place: only as wide as its controls, at the right, so (sticky, above
+     the sections) it doesn't cover the first section's heading beside it.
+     Stuck at the top: the full width, a white band across the page. */
+  .swim-deck__toolbar {
+    justify-content: flex-end;
+    width: fit-content;
+    margin-left: auto;
+    padding: 16px 0 16px 12px;
+  }
+
+  .swim-deck__toolbar.is-stuck {
+    width: 100%;
+  }
+
+  .swim-deck__toolbar > .swim-deck__head-side {
+    justify-content: flex-end;
+  }
 }
 
 .swim-deck__title {
   margin: 0 0 8px;
 }
 
+/* The intro under "Swim Tools", styled like an article's deck subtitle:
+   production's header.page-title h2 colour (#888,
+   production/src/App/pages/Home.css:395) with the Article demo's smaller,
+   lighter type (src/css/Article/ArticleHeader.css:16). Enhancement. */
 .swim-deck .swim-deck__intro {
   margin: 0;
-  font-size: 18px;
+  color: #888;
+  font-size: 2.6rem;
+  font-weight: 200;
+  line-height: 1.5;
+  letter-spacing: 0.05rem;
 }
 
 /* Add to Log: production's outline button (.btn.btn-outline, usms.min.css:
    white, 1px #0068ad border and text), at the right end of the Your Swim
    fields and as tall as them (44px, like production's .form__container
    .btn-outline; not .btn-md, whose height is 32px !important) */
+/* View Fitness Log beside Add to Log, a pair at the right end of the
+   fields, the link to the button's left and centred on it */
+.swim-swim__log {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: auto;
+}
+
+.swim-deck .swim-swim__log-link {
+  color: var(--sd-blue);
+  font-size: 14px;
+  font-weight: 400;
+}
+
 .swim-swim__save {
   display: inline-flex;
   align-items: center;
   height: 44px;
-  margin-left: auto;
   padding: 0 16px;
   font-size: 15px;
 }
@@ -70,7 +168,7 @@
     order: 1;
   }
 
-  .swim-swim__save {
+  .swim-swim__log {
     order: 2;
     margin: 0;
   }
@@ -159,10 +257,26 @@
   color: var(--sd-ink);
 }
 
+/* ---------- Meganav hover (this page only) ---------- */
+
+/* Production turns the meganav's top items red on hover
+   (production/src/App/views/Navigation/MegaMainMenu.css:78 li:hover and :87
+   li>a:hover, color: var(--color-red)). Here: their own blue
+   (var(--color-primary), #0068ad) at half strength, a light blue. Both
+   selectors, as in src/css/Navigation/MegaMainMenu.css: Training, Events
+   and About Us are <li class="has--children"> with no <a>, so only li:hover
+   reaches them. The colour carries the 0.5 (rather than opacity) so nothing
+   else in the <li> fades with it. Enhancement. */
+.mega-main-menu__items > li:hover,
+.mega-main-menu__items > li > a:hover {
+  color: rgba(0, 104, 173, 0.5);
+}
+
 /* ---------- Section ribbon ---------- */
 
 /* The section tabs, in the header left of the age-group pill: icons only,
-   in light grey circles. aria-pressed marks the section shown first. */
+   no circles. The selected one (aria-pressed: Home on load, or the section
+   shown first) in USMS blue, the rest medium-light grey. */
 .swim-deck__head-side {
   display: flex;
   flex-wrap: wrap;
@@ -184,14 +298,73 @@
   padding: 0;
   border: 0;
   border-radius: 50%;
-  background: #e9ebec;
-  color: #595959;
+  background: none;
+  color: #a6a6a6;
   cursor: pointer;
 }
 
+/* Phones: a guest's Age Group and Competition Category on top, the section
+   tabs on their own row below. A member's "50–54 Men's/Open" is plain text
+   instead of the blue box, on the tabs' row at the right. */
+@media (max-width: 767px) {
+  .swim-deck__head-side .swim-ribbon {
+    order: 1;
+    flex-basis: 100%;
+    margin-left: -10px; /* the first icon's glyph on the text's left edge */
+  }
+
+  .swim-deck__head-side:has(.swim-deck__who:not([hidden])) {
+    flex-wrap: nowrap;
+    width: 100%;
+  }
+
+  .swim-deck__head-side:has(.swim-deck__who:not([hidden])) .swim-ribbon {
+    order: 0;
+    flex-basis: auto;
+  }
+
+  .swim-deck .swim-deck__head-side .swim-deck__who {
+    order: 1;
+    height: auto;
+    margin-left: auto;
+    padding: 0;
+    border-radius: 0;
+    background: none;
+    color: var(--sd-muted);
+    font-size: 14px;
+    font-weight: 600;
+  }
+}
+
+/* The paperclip (Home) reads larger than the other icons at the same box:
+   a step smaller */
+.swim-ribbon__link[data-section="home"] svg {
+  width: 18.5px;
+  height: 18.5px;
+}
+
+/* Race Planning's stopwatch: a touch larger (the trend arrow it replaced,
+   the lightest of the icons, took 25px) */
+.swim-ribbon__link[data-section="race-planning"] svg {
+  width: 23px;
+  height: 23px;
+}
+
+/* Training Metrics' dumbbell: wide and short, so a size up to carry the
+   same weight as its neighbours */
+.swim-ribbon__link[data-section="training-metrics"] svg {
+  width: 25px;
+  height: 25px;
+}
+
+/* Home, hidden for anyone but a logged-in member (swim-tools-v2.js) */
+.swim-ribbon__link[hidden] {
+  display: none;
+}
+
 .swim-ribbon__link svg {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   fill: none;
   stroke: currentColor;
   stroke-width: 2.4;
@@ -200,8 +373,23 @@
 }
 
 .swim-ribbon__link:hover {
-  background: #dcdfe1;
-  color: var(--sd-ink);
+  color: #595959;
+}
+
+/* Following the scroll (swim-tools-v2.js, while the toolbar is stuck): the
+   tab of the section under the toolbar is lit in place of the selected one */
+.swim-ribbon.is-following .swim-ribbon__link[aria-pressed="true"]:not(.is-current) {
+  color: #a6a6a6;
+  cursor: pointer; /* it scrolls to its section from here */
+}
+
+.swim-ribbon.is-following .swim-ribbon__link.is-current {
+  color: var(--sd-blue);
+}
+
+.swim-ribbon__link[aria-pressed="true"] {
+  color: var(--sd-blue);
+  cursor: default;
 }
 
 .swim-ribbon__link:focus-visible {
@@ -210,7 +398,7 @@
 }
 
 .swim-deck__eyebrow {
-  margin: 0;
+  margin: 10px 0 0;
   color: var(--sd-ink);
   font-size: 12px;
   font-weight: 700;
@@ -219,7 +407,91 @@
 }
 
 .swim-deck__section > .swim-deck__eyebrow {
-  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Back to top, on every section but the one on top (swim-tools-v2.js adds
+   it) */
+/* The triangle is retired (2026-10-15; its icon is commented out in
+   swim-tools-v2.js): the button is hidden but for the keyboard and screen
+   readers ("Back to top"), and the heading's text still goes back to top.
+   Its old look, to restore:
+   .swim-deck__to-top { display: inline-flex; align-items: center;
+     justify-content: center; width: 20px; height: 20px;
+     margin: 0 6px 0 -5px; padding: 0; border: 0; border-radius: 4px;
+     background: none; color: var(--sd-blue); cursor: pointer; }
+   .swim-deck__to-top svg { width: 10px; height: 8px; fill: currentColor; }
+   .swim-deck__to-top:hover { color: var(--sd-blue-hover); } */
+.swim-deck__to-top {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  border: 0;
+  white-space: nowrap;
+}
+
+/* Tabbed to: its heading shows the focus ring */
+.swim-deck__eyebrow:has(> .swim-deck__to-top:focus-visible) {
+  outline: 2px solid var(--sd-blue);
+  outline-offset: 3px;
+}
+
+.swim-deck__section:first-child > .swim-deck__eyebrow > .swim-deck__to-top,
+.swim-deck__eyebrow.is-stuck > .swim-deck__to-top {
+  display: none; /* the top section's, and a heading stuck at the top's */
+}
+
+/* While its triangle shows, the heading's text goes back to top too */
+.swim-deck__section:not(:first-child) > .swim-deck__eyebrow:not(.is-stuck) {
+  cursor: pointer;
+}
+
+.swim-deck__section:not(:first-child) > .swim-deck__eyebrow:not(.is-stuck):hover {
+  color: var(--sd-blue);
+}
+
+/* Space above every section's eyebrow but the first section's (whichever
+   the ribbon has put first) */
+/* .swim-deck__section:not(:first-child) > .swim-deck__eyebrow { */
+  .swim-deck__section > .swim-deck__eyebrow {
+  margin-top: 40px;
+}
+
+/* Tablet and up: a pause at each section. Its panel (the card band, or the
+   Highlights band) sticks the moment its heading does, 34px under it (the
+   heading's 14px and its 20px margin below), and holds for the 50px of
+   room at the section's foot, then scrolls on: time to match the heading
+   to its cards. The room is an empty block in the section (a sticky
+   element only moves within its container's content, not its padding),
+   and it's also the gap between sections, so the space above each heading
+   but the first goes. */
+@media (min-width: 768px) {
+  .swim-deck .swim-deck__section {
+    margin-bottom: 0;
+  }
+
+  .swim-deck__section::after {
+    content: "";
+    display: block;
+    height: 50px;
+  }
+
+  .swim-deck__section:not(:first-child) > .swim-deck__eyebrow {
+    margin-top: 0;
+  }
+
+  .swim-deck__section > .swim-panel,
+  .swim-deck__section > .swim-summary {
+    position: sticky;
+    top: calc(var(--sd-heading-top) + 34px);
+    margin-bottom: 0; /* the 50px room is the gap */
+  }
 }
 
 .swim-deck .swim-deck__note.swim-deck__note-error {
@@ -263,12 +535,6 @@
 /* Two blue bands in a row read as one: don't double the padding between them */
 .swim-panel__band--blue + .swim-panel__band--blue {
   padding-top: 0;
-}
-
-/* A grid row as the last thing in a band: its cards' bottom margin would
-   double the band's padding */
-.swim-panel__band > .swim-deck__grid:last-child {
-  margin-bottom: -24px;
 }
 
 /* Your Event inside the blue band: the band gives the colour and padding */
@@ -370,21 +636,48 @@
   scroll-margin-top: 20px;
 }
 
-/* BS3 floats can't stretch, so the row flexes to give equal-height cards. */
+/* The sections' columns: CSS Grid, like the Highlights band and the
+   Training Metrics tiles (the whole page uses Grid, not production's BS3
+   columns: an enhancement page). One column on phones and tablets; from
+   992px (BS3's md) side by side, Race Planning 8/4 and Time Conversions
+   5/7 of 12. 14px between the columns, the Highlights band's gap; 24px
+   between rows. Cells stretch to the row's height. */
 .swim-deck__grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px 14px;
+}
+
+@media (min-width: 992px) {
+  .swim-deck__grid--8-4 {
+    grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+  }
+
+  .swim-deck__grid--5-7 {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
 }
 
 .swim-deck__cell {
   display: flex;
-  margin-bottom: 24px;
+  min-width: 0;
 }
 
 /* A column of cards in one cell, e.g. the predictor over Your Races */
 .swim-deck__cell--stack {
   flex-direction: column;
   gap: 24px;
+}
+
+/* Race Planning: each column's last card stretches so the two end level
+   (balanceRacePlanning fills most of the gap with content first). Natural
+   heights while it measures. */
+.swim-deck__grid--balance .swim-deck__cell--stack > :last-child {
+  flex-grow: 1;
+}
+
+.swim-deck__grid--balance.is-measuring .swim-deck__cell--stack > :last-child {
+  flex-grow: 0;
 }
 
 /* Paragraphs and list items need the .swim-deck prefix to outrank
@@ -398,14 +691,12 @@
 /* ---------- At a glance tiles ---------- */
 
 /* A tile is never wider than a third, however few a section has, so two
-   tiles don't split 50/50. The 10px column gap is the gap between the
-   .swim-deck__grid cards (production's grid rules replace BS3's 30px
-   gutter), so tiles line up with the col-md-4 cards below. Stacked on
-   phones. */
+   tiles don't split 50/50. The 14px column gap is the .swim-deck__grid
+   columns' gap (and the Highlights band's). Stacked on phones. */
 .swim-deck__kpis {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 24px 10px;
+  gap: 24px 14px;
   margin-bottom: 24px;
 }
 
@@ -430,6 +721,190 @@
   .swim-deck__kpis > .swim-kpi--narrow {
     grid-column: span 1;
   }
+}
+
+/* Race Planning's Goal: its time, and Set / Edit this goal beside it,
+   centred on the boxes */
+.swim-goal-field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.swim-deck .swim-goal-field__link {
+  font-size: 14px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.swim-goal-field__link[hidden] {
+  display: none;
+}
+
+/* Training Pace's note's link: a text button, inline */
+.swim-deck .swim-pace__link {
+  display: inline;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--sd-blue);
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.swim-deck .swim-pace__link:hover {
+  color: var(--sd-blue-hover);
+}
+
+/* Create a Workout: the button at the tile's foot, full width */
+.swim-kpi--action .swim-kpi__action {
+  width: 100%;
+  margin-top: auto;
+  white-space: normal;
+}
+
+/* Training Plans' bars: a soft lime */
+.swim-kpi__label > .swim-kpi__icon--workout {
+  color: #7cb342;
+}
+
+/* Workout Library's icon: Training Plans' green plus square, small and
+   sharp, at the label icons' size (flex: none, so a wrapping label can't
+   squeeze it) */
+.swim-kpi__label > .swim-kpi__icon--library {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  background: var(--sd-green);
+  color: #fff;
+  font-size: 10px;
+}
+
+/* Training Plans' Add Workout: a green square with a white plus over a
+   small grey label, the two one link. For anyone but a member, both are
+   faded and blurred like Training Effect's sample reading
+   (.swim-te-lock__teaser). */
+/* The square just under the description; the label at the tile's foot */
+.swim-kpi__add {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 22px;
+  color: var(--sd-blue);
+  text-decoration: none;
+}
+
+.swim-kpi__add-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 6px;
+  background: var(--sd-green);
+  color: #fff;
+  font-size: 19px;
+}
+
+.swim-kpi__add[data-non-members-only] .swim-kpi__add-icon {
+  opacity: 0.35;
+  filter: blur(2px);
+}
+
+.swim-kpi__add-label {
+  margin-top: auto;
+  color: #8c8c8c;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.43;
+  text-align: center;
+}
+
+.swim-kpi__add[hidden],
+.swim-kpi__sub[hidden] {
+  display: none;
+}
+
+/* Only the square takes the pointer (hover and click); the label beside it
+   doesn't. The link's own :hover still applies through the square. */
+.swim-kpi__add {
+  pointer-events: none;
+}
+
+.swim-kpi__add .swim-kpi__add-icon {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.swim-kpi__add-label {
+  transition: color 0.5s ease;
+}
+
+/* The non-members' label: blurred like the square (on hover too) */
+.swim-kpi__add[data-non-members-only] .swim-kpi__add-label {
+  filter: blur(2px);
+  user-select: none;
+}
+
+.swim-kpi__add:hover,
+.swim-kpi__add:focus-visible {
+  text-decoration: none;
+}
+
+/* A member's: darker grey on hover */
+.swim-kpi__add[data-members-only]:hover .swim-kpi__add-label,
+.swim-kpi__add[data-members-only]:focus-visible .swim-kpi__add-label {
+  color: var(--sd-muted);
+}
+
+
+/* A tile or button hidden for members or non-members (swim-tools-v2.js) */
+.swim-kpi[hidden],
+.swim-kpi__action[hidden] {
+  display: none;
+}
+
+/* The Workout Library's Browse (members): dark grey, only as wide as its
+   text, centred; a lighter grey on hover */
+.swim-deck .swim-kpi--action .swim-kpi__action--browse {
+  align-self: center;
+  width: auto;
+  padding-right: 22px;
+  padding-left: 22px;
+  border-color: #3d3d3d;
+  background: #3d3d3d;
+  color: #fff;
+}
+
+.swim-deck .swim-kpi--action .swim-kpi__action--browse:hover,
+.swim-deck .swim-kpi--action .swim-kpi__action--browse:focus {
+  border-color: #555;
+  background: #555;
+  color: #fff;
+}
+
+/* The Workout Library's three short points */
+.swim-deck .swim-kpi__list {
+  margin: 4px 0 10px;
+  padding-left: 16px;
+  color: var(--sd-muted);
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+/* The size on the items too: production's .usms-container li sets its own */
+.swim-deck .swim-kpi__list li {
+  margin: 0 0 5px;
+  font-size: 12px;
+  line-height: 1.3;
 }
 
 .swim-kpi {
@@ -550,6 +1025,25 @@
 .swim-card__title {
   margin: 0;
   font-size: 20px;
+}
+
+/* A grey line icon before a card's title (Race History's calendar, Race
+   Time Predictions' stopwatch), drawn like the section tabs' icons */
+.swim-card__title--icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.swim-card__icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: #8c8c8c;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .swim-deck .swim-card__sub {
@@ -907,7 +1401,8 @@
 /* ---------- Your Races ---------- */
 
 /* As v4's (.st4-races): one race per line, newest first: course, event
-   and its date, a badge against your best at that event, and the time.
+   and its date, a badge against your best at that event, the time, and
+   its pace per 100.
    Prefixed to outrank production's .usms-container ol/li rules. */
 .swim-deck .swim-races__list {
   margin: 0;
@@ -924,7 +1419,7 @@
 
 .swim-deck .swim-races__row {
   display: grid;
-  grid-template-columns: 44px minmax(0, 1fr) auto auto;
+  grid-template-columns: 44px minmax(0, 1fr) auto auto auto;
   align-items: center;
   gap: 10px;
   margin: 0;
@@ -954,6 +1449,20 @@
   text-align: right;
 }
 
+/* "Synthetic data" notes after a subtitle or note: still said (Top Times
+   provenance), but very light grey so they don't distract */
+.swim-synth {
+  color: #c4c4c4;
+}
+
+/* Pace per 100, right of the time, no label */
+.swim-races__pace {
+  min-width: 38px;
+  color: var(--sd-muted);
+  font-size: 13px;
+  text-align: right;
+}
+
 /* "Best", or "+0.42 vs best" */
 .swim-badge {
   padding: 2px 8px;
@@ -970,6 +1479,50 @@
   color: #fff;
 }
 
+/* No races yet: a meet photo over a short pitch and Find an Event */
+.swim-races__promo {
+  overflow: hidden;
+  border-radius: 0;
+  background: #FFF;
+  margin: 0 -20px -20px;
+}
+
+.swim-races__promo[hidden],
+.swim-races__list[hidden] {
+  display: none;
+}
+
+.swim-races__promo-img {
+  display: block;
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  object-position: 40% 8%; /* the swimmer, mid-start, under the USMS pennants */
+}
+
+.swim-races__promo-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 18px 20px 20px;
+}
+
+.swim-deck .swim-races__promo-title {
+  margin: 0;
+  color: var(--sd-blue);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.swim-deck .swim-races__promo-text {
+  margin: 0 0 6px;
+  color: var(--sd-ink);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
 .swim-deck .swim-races__empty {
   margin: 0;
   color: var(--sd-muted);
@@ -979,7 +1532,7 @@
 /* Phones: the badge drops under the event, so the time keeps its place */
 @media (max-width: 479px) {
   .swim-deck .swim-races__row {
-    grid-template-columns: 40px minmax(0, 1fr) auto;
+    grid-template-columns: 40px minmax(0, 1fr) auto auto;
     row-gap: 4px;
   }
 
@@ -992,6 +1545,400 @@
   .swim-races__row .swim-races__time {
     grid-row: 1;
     grid-column: 3;
+  }
+
+  .swim-races__row .swim-races__pace {
+    grid-row: 1;
+    grid-column: 4;
+  }
+}
+
+/* ---------- Race History chart ---------- */
+
+/* As v4's (swim-tools-v4.css, .st4-trend and .st4-zoom): your races as a
+   line per event over time, pace per 100 (slower higher), each race a dot,
+   each event's best a ▲, your age group's Top 10 as a black line; zoom and
+   pan through the years. Enhancement, not a production pattern. */
+.swim-trend[hidden] {
+  display: none;
+}
+
+.swim-trend__frame {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: 8px;
+}
+
+.swim-trend__yaxis {
+  position: relative;
+  height: 220px; /* the chart's */
+  margin: 28px 0 4px;
+  color: var(--sd-muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Each pace tick sits level with its place on the chart */
+.swim-trend__yaxis span {
+  position: absolute;
+  right: 0;
+  transform: translateY(-50%);
+  white-space: nowrap;
+}
+
+/* The unit above the ticks, running right over the chart */
+.swim-deck .swim-trend__yaxis .swim-trend__unit {
+  top: -22px;
+  right: auto;
+  left: 0;
+  transform: none;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.swim-trend__chart {
+  position: relative;
+  height: 220px;
+  margin: 28px 10px 4px;
+  border-bottom: 1px solid var(--sd-rule);
+  border-left: 1px solid var(--sd-rule);
+}
+
+.swim-trend__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.swim-trend__line {
+  fill: none;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.85;
+}
+
+/* Your Event's line: wide and see-through, so the Top 10 line shows under
+   it; the stroke's other distances thin and faint */
+.swim-trend__line.is-event {
+  stroke-width: 5;
+  stroke-linecap: round;
+  opacity: 0.25;
+}
+
+.swim-trend__line.is-other {
+  stroke-width: 1.5;
+  opacity: 0.35;
+}
+
+/* The age group's Top 10 each season: the fastest swim (a solid 1px grey
+   line) and 10th place (a lighter dashed one), behind your races */
+.swim-trend__line--fastest {
+  stroke: #8c8c8c;
+  stroke-width: 1;
+  opacity: 1;
+}
+
+/* From Your Event's latest race to your goal: light grey, dashed */
+.swim-trend__line--to-goal {
+  stroke: #b5b5b5;
+  stroke-width: 1.5;
+  stroke-dasharray: 4 3;
+  opacity: 1;
+}
+
+.swim-trend__line--top10 {
+  stroke: #b5b5b5;
+  stroke-width: 1;
+  stroke-dasharray: 4 3;
+  opacity: 1;
+}
+
+/* No races in this course and stroke: in red over the blank chart, as Race
+   Time Predictions' and Age Group Conversion's notes */
+.swim-deck .swim-trend__empty {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max-content;
+  max-width: 90%;
+  margin: 0;
+  color: var(--sd-red);
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 1.4;
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+
+.swim-trend__empty[hidden] {
+  display: none;
+}
+
+.swim-trend__dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  margin: -4px 0 0 -4px;
+  border: 2px solid;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+/* Each event's best: a solid upright triangle, centred on the race */
+.swim-trend__dot.is-best {
+  width: 12.6px;
+  height: 10.8px;
+  margin: -5.4px 0 0 -6.3px;
+  border: 0;
+  border-radius: 0;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.swim-trend__label {
+  position: absolute;
+  transform: translate(-50%, -170%);
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  pointer-events: none;
+  text-shadow: 0 0 2px #fff, 0 0 2px #fff;
+}
+
+/* Your Event's time labels go under its dots: with slower higher, the
+   stroke's other distances run above it */
+.swim-trend__label.is-below {
+  transform: translate(-50%, 70%);
+}
+
+.swim-trend__dot.is-other,
+.swim-trend__label.is-other {
+  opacity: 0.45;
+}
+
+.swim-trend__axis {
+  position: relative;
+  height: 18px;
+  margin: 0 10px 0 58px;
+  color: var(--sd-muted);
+  font-size: 12px;
+}
+
+.swim-trend__axis span {
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+.swim-trend__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.swim-trend__legend:empty {
+  display: none;
+}
+
+.swim-trend__key {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border: 1px solid var(--sd-border);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--sd-ink);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.swim-trend__key[aria-pressed="false"] {
+  background: var(--sd-subtle);
+  color: var(--sd-muted);
+  text-decoration: line-through;
+}
+
+.swim-trend__key[aria-pressed="false"] .swim-trend__swatch {
+  opacity: 0.3;
+}
+
+/* The Personal Best key: the chart's ▲, not a toggle */
+.swim-trend__key--static {
+  cursor: default;
+}
+
+.swim-trend__swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+/* Its legend key: the two lines (solid over dashed) */
+/* Selected race's key: a short stretch of its wide, see-through line */
+.swim-trend__swatch--event {
+  width: 18px;
+  height: 5px;
+  border-radius: 3px;
+  opacity: 0.25;
+}
+
+.swim-trend__swatch--top10 {
+  width: 18px;
+  height: 6px;
+  border-top: 1px solid #8c8c8c;
+  border-bottom: 1px dashed #b5b5b5;
+  border-radius: 0;
+  background: none;
+}
+
+.swim-trend__swatch--best {
+  width: 11px;
+  height: 9.5px;
+  border-radius: 0;
+  background: var(--sd-ink);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+/* Show All Races: a plain underlined text link at the end of the legend */
+.swim-deck .swim-trend__all {
+  align-self: center;
+  margin-left: 6px;
+  font-size: 13px;
+  font-weight: 400;
+  text-decoration: underline;
+}
+
+/* Zoom: lined up over the plot (past the pace axis), − + at its centre with
+   ‹ and › either side, All years at the right */
+.swim-zoom {
+  position: relative;
+  height: 32px;
+  margin: 0 10px -16px 58px;
+  font-size: 13px;
+}
+
+.swim-zoom[hidden] {
+  display: none;
+}
+
+.swim-zoom__set {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  display: flex;
+  gap: 6px;
+  transform: translateX(-50%);
+}
+
+.swim-zoom__btn {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid var(--sd-border);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--sd-blue);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.swim-zoom__btn:disabled {
+  color: #b5babe;
+  cursor: default;
+}
+
+.swim-zoom__btn.swim-zoom__pan {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  font-size: 0; /* ‹ › drawn as chevrons; the aria-labels name them */
+}
+
+.swim-zoom__pan--earlier {
+  left: calc(50% - 64px);
+}
+
+.swim-zoom__pan--later {
+  left: calc(50% + 64px);
+}
+
+.swim-zoom__btn.swim-zoom__pan::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 11px;
+  height: 11px;
+  border-bottom: 2px solid currentColor;
+  border-left: 2px solid currentColor;
+  transform: translate(-30%, -50%) rotate(45deg);
+}
+
+.swim-zoom__btn.swim-zoom__pan--later::before {
+  transform: translate(-70%, -50%) rotate(-135deg);
+}
+
+.swim-deck .swim-zoom__all {
+  position: absolute;
+  top: 7px;
+  right: 0;
+  font-size: 13px;
+}
+
+.swim-deck .swim-zoom__hint {
+  margin: 16px 10px -16px 58px;
+  color: var(--sd-muted);
+  font-size: 12px;
+  text-align: center;
+}
+
+/* Zoomed in, the chart drags sideways; vertical swipes still scroll */
+.swim-trend__chart.is-draggable {
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.swim-trend__chart.is-dragging {
+  cursor: grabbing;
+}
+
+/* Phones: one centred row, ‹ − + › then All years */
+@media (max-width: 640px) {
+  .swim-zoom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    height: auto;
+    margin: 0 0 -12px;
+  }
+
+  .swim-zoom__set,
+  .swim-deck .swim-zoom__all {
+    position: static;
+    transform: none;
+  }
+
+  .swim-zoom__btn.swim-zoom__pan {
+    position: relative;
+    left: auto;
+    transform: none;
+  }
+
+  .swim-zoom__pan--earlier { order: 1; }
+  .swim-zoom__set { order: 2; }
+  .swim-zoom__pan--later { order: 3; }
+  .swim-deck .swim-zoom__all { order: 4; margin-left: 6px; }
+
+  .swim-deck .swim-zoom__hint {
+    margin: 12px 0 -12px;
   }
 }
 
@@ -1177,9 +2124,11 @@
   box-shadow: 0 0 0 1px var(--sd-blue);
 }
 
+/* Invalid or wanted (e.g. Convert a Time after Swimmer Info): a 2px red
+   outline, the inset shadow adding the second pixel so nothing shifts */
 .swim-time:has([aria-invalid="true"]) {
   border-color: var(--sd-red);
-  box-shadow: none;
+  box-shadow: inset 0 0 0 1px var(--sd-red);
 }
 
 .swim-deck .swim-time__part,
@@ -1665,6 +2614,16 @@
   flex: none;
 }
 
+/* Swimmer Info: the two controls with room either side */
+.swim-who {
+  padding: 8px 24px 0;
+}
+
+/* Its Age Group select a little wider than the Distance-sized default */
+.swim-deck-modal .swim-who .swim-deck__field > .form-control {
+  width: 105px;
+}
+
 .swim-deck-modal__intro {
   margin: 0 0 12px;
   color: var(--sd-muted);
@@ -1674,6 +2633,12 @@
 .swim-deck-modal .modal-footer {
   display: flex;
   justify-content: flex-end;
+}
+
+/* A disabled button (e.g. Swimmer Info's Confirm, until both are picked):
+   production fades it; no pointer either */
+.swim-deck-modal .modal-footer .btn:disabled {
+  cursor: not-allowed;
 }
 
 .swim-deck .swim-ages__empty {
@@ -1720,20 +2685,42 @@
 /* The age group select at the top of the page: only shown when the swimmer's
    age isn't known (swim-tools-v2.js), so [hidden] must win over the field's
    own display */
-.swim-deck__age[hidden] {
+.swim-deck__age[hidden],
+.swim-deck__sex[hidden] {
   display: none;
 }
 
-/* Sex and age group, top right: a pill in the select's place */
+/* Age group and sex ("50–54 Men's/Open"), top right, in the place of a
+   guest's Age Group and Competition Category: a solid blue box with white
+   text, as tall as their controls (44px) with their 8px corners */
 .swim-deck .swim-deck__who {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  height: 44px;
   margin: 0;
-  padding: 6px 14px;
-  border-radius: 999px;
-  background: var(--sd-tint);
-  color: var(--sd-blue);
-  font-size: 15px;
-  font-weight: 700;
+  padding: 0 15px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--sd-blue);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* A guest's Age Group and Competition Category, in the pill's place: styled
+   like Your Event's Distance, Stroke and Course controls (.swim-deck__field,
+   .swim-seg), level with the section tabs. Their labels stay for screen
+   readers only. */
+.swim-deck__head-side .swim-deck__age .swim-swim__label,
+.swim-deck__head-side .swim-deck__sex .swim-swim__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
   white-space: nowrap;
 }
 
@@ -1781,6 +2768,11 @@
    chart's edge */
 .swim-pred {
   margin-right: 28px;
+}
+
+/* The summary note can be hidden */
+.swim-pred-insight[hidden] {
+  display: none;
 }
 
 .swim-pred__yaxis {
@@ -1906,6 +2898,17 @@
   background: #fff;
 }
 
+/* Your goal (once typed): a solid deep yellow dot, white-ringed, above the
+   rest */
+.swim-pred__dot.is-goal {
+  z-index: 2;
+  width: 13px;
+  height: 13px;
+  border: 2px solid #fff;
+  background: #e0a100;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
+}
+
 /* Your bests: a solid triangle, as v4's personal bests */
 .swim-pred__dot.is-best {
   width: 12.6px;
@@ -1993,6 +2996,44 @@
   font-size: 14px;
 }
 
+/* Median times, no time of your own: kicker, headline, then the how-to */
+.swim-pred-insight--note {
+  padding: 14px 18px 16px;
+  border-left: 4px solid var(--sd-blue);
+  border-radius: 0 8px 8px 0;
+}
+
+.swim-pred-insight__kicker,
+.swim-pred-insight__lead,
+.swim-pred-insight__body {
+  display: block;
+}
+
+.swim-pred-insight__kicker {
+  margin-bottom: 4px;
+  color: var(--sd-blue);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.swim-pred-insight__lead {
+  color: var(--sd-ink);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.swim-pred-insight__body {
+  max-width: 60ch;
+  margin-top: 6px;
+  color: var(--sd-muted);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
 /* Legend pills: each turns its line off and on */
 .swim-pred-legend {
   display: flex;
@@ -2048,6 +3089,15 @@
   border: 2px solid var(--sd-blue);
   border-radius: 50%;
   box-sizing: border-box;
+}
+
+/* Your goal's key: the solid deep yellow dot */
+.swim-pred-swatch--goal {
+  width: 10px;
+  height: 10px;
+  border: 0;
+  border-radius: 50%;
+  background: #e0a100;
 }
 
 .swim-pred-swatch--low {
@@ -2266,22 +3316,44 @@
   display: block;
 }
 
-/* The summary's lines: 12px bars on its 20px line height */
-.swim-pred-insight .swim-skel__line {
-  /* 12px of bar in a 20px line: transparent borders space them, since
-     margins between them would collapse */
+/* The summary note's lines while loading, each a bar in its line's height
+   (transparent borders space them, since margins would collapse): the
+   kicker (18px line + 4px gap), headline (25px), paragraph (22.5px lines,
+   after a 6px gap) */
+.swim-pred-insight .swim-skel__k,
+.swim-pred-insight .swim-skel__l,
+.swim-pred-insight .swim-skel__b {
   box-sizing: content-box;
-  height: 12px;
-  border: 4px solid transparent;
   border-right: 0;
   border-left: 0;
+  border-style: solid;
+  border-color: transparent;
   background-clip: content-box;
-  /* a shade darker: the summary box is already light grey */
   background-image: linear-gradient(90deg, #e3e5e6 25%, #eef0f1 50%, #e3e5e6 75%);
 }
 
+.swim-pred-insight .swim-skel__k {
+  height: 10px;
+  border-width: 4px 0 8px;
+}
+
+.swim-pred-insight .swim-skel__l {
+  height: 16px;
+  border-width: 4.5px 0;
+}
+
+.swim-pred-insight .swim-skel__b {
+  height: 12px;
+  border-width: 5.25px 0;
+}
+
+.swim-pred-insight .swim-skel__l + .swim-skel__b,
+.swim-pred-insight .swim-skel__l + .swim-skel--phone + .swim-skel__b {
+  border-top-width: 11.25px; /* the paragraph's 6px gap */
+}
+
 @media (min-width: 768px) {
-  .swim-skel__line--phone {
+  .swim-pred-insight .swim-skel--phone {
     display: none;
   }
 }
@@ -2314,17 +3386,28 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* Stacked, left-aligned, each with a small icon */
 .swim-practice__links {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px 14px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
   margin-top: 8px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .swim-practice__links a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
   color: var(--sd-blue);
+}
+
+.swim-practice__links a > i {
+  width: 14px;
+  font-size: 12px;
+  text-align: center;
 }
 
 /* Calorie Burn's note (stroke, intensity): nothing when neither is set */
@@ -2347,6 +3430,76 @@
   line-height: 1.4;
 }
 
+/* Training Effect, locked until 5 swims are logged (swim-tools-v2.js): its
+   reading and note give way to a faded sample reading behind an upsell */
+.swim-effort.is-locked > .swim-kpi__sub,
+.swim-effort.is-locked > .swim-te__warn,
+.swim-effort.is-locked > .swim-kpi__value {
+  display: none;
+}
+
+.swim-te-lock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.swim-te-lock[hidden],
+.swim-te-lock [hidden] {
+  display: none;
+}
+
+.swim-te-lock__teaser {
+  color: var(--sd-ink);
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1;
+  opacity: 0.18;
+  filter: blur(3px);
+  user-select: none;
+}
+
+.swim-deck .swim-te-lock__title {
+  margin: 4px 0 0;
+  color: var(--sd-ink);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.swim-deck .swim-te-lock__text {
+  margin: 0;
+  color: var(--sd-muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+/* Swims logged toward the 5: a dot each, filled blue when done */
+.swim-te-lock__dots {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 2px 0 4px;
+}
+
+.swim-te-lock__dots span {
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--sd-blue);
+  border-radius: 50%;
+}
+
+.swim-te-lock__dots span.is-done {
+  background: var(--sd-blue);
+}
+
+.swim-te-lock__dots em {
+  margin-left: 4px;
+  color: var(--sd-muted);
+  font-size: 12px;
+  font-style: normal;
+}
+
 .swim-te__warn[hidden] {
   display: none;
 }
@@ -2359,4 +3512,571 @@
 .swim-rank__marker[hidden],
 .swim-rank__of[hidden] {
   display: none;
+}
+
+/* Age Group Conversion with no time yet: a red prompt centred over the
+   empty rows */
+.swim-ages__wrap {
+  position: relative;
+}
+
+.swim-deck .swim-ages__prompt {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max-content; /* one line, wrapping only when the card is narrower */
+  max-width: 96%;
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--sd-red);
+  font-size: 1.4rem;
+  font-weight: 400;
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
+
+.swim-ages__prompt[hidden] {
+  display: none;
+}
+
+/* A guest's Start Here (production's .btn-xl .btn-primary): dark green */
+.swim-deck .swim-ages__prompt .swim-ages__set {
+  border-color: #1f7a3a;
+  background-color: #1f7a3a;
+  color: #fff;
+}
+
+.swim-deck .swim-ages__prompt .swim-ages__set:hover,
+.swim-deck .swim-ages__prompt .swim-ages__set:focus {
+  border-color: #17602d;
+  background-color: #17602d;
+  color: #fff;
+}
+
+/* Swimmer Info modal's select, before a pick: grey like the header's */
+.swim-deck-modal .swim-deck__field.is-unset .swim-deck__field-value {
+  background: #9a9a9a;
+}
+
+/* A guest's Age Group, still on its default (.is-unset, swim-tools-v2.js):
+   grey instead of blue until picked. (Competition Category shows neither
+   option pressed until picked.) */
+.swim-deck__age.is-unset .swim-deck__field-value {
+  background: #9a9a9a;
+  color: #fff;
+}
+
+.swim-deck__age.is-unset .swim-deck__field:hover .swim-deck__field-value {
+  background: #808080;
+}
+
+/* ...and Race Time Predictions' projections, grey until both are picked */
+.is-pending .swim-pred__line--proj,
+.is-pending .swim-pred__line:not([class*="--"]) {
+  stroke: #9a9a9a;
+}
+
+.is-pending .swim-pred__dot.is-projected {
+  border-color: #9a9a9a;
+}
+
+.is-pending .swim-pred__label.is-projected {
+  color: #9a9a9a;
+}
+
+.is-pending .swim-pred-swatch--proj {
+  border-color: #9a9a9a;
+}
+
+/* ---------- Summary band (as v4's engagement cards) ---------- */
+
+/* Goal, age-up and comeback cards on a light grey band, between the
+   header and the sections. Enhancement, not a production pattern. */
+.swim-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 16px;
+  padding: 20px;
+  border-radius: 8px;
+  background: #e8eaed; /* --sd-subtle, 5% darker */
+}
+
+.swim-summary__card {
+  gap: 10px;
+}
+
+/* The Dashboard: members only (swim-tools-v2.js) */
+.swim-dashboard[hidden] {
+  display: none;
+}
+
+/* The secondary cards step aside (and the status card waits) via [hidden],
+   which .swim-card's display: flex would otherwise override */
+.swim-summary__card[hidden] {
+  display: none;
+}
+
+/* Desktop: all three on one row, the goal card wider, everything scaled
+   down a step to fit */
+@media (min-width: 992px) {
+  .swim-summary {
+    grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr) minmax(0, 1fr);
+    gap: 14px;
+    padding: 16px;
+  }
+
+  /* Goal and training status: two cards, the goal still wider */
+  .swim-summary--status {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); /* Training Summary, then the wider Race Goal */
+  }
+
+
+  .swim-summary .swim-summary__card {
+    padding: 16px;
+    gap: 8px;
+  }
+
+  .swim-deck .swim-summary .swim-summary__title {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .swim-deck .swim-summary .swim-summary__text {
+    font-size: 13px;
+  }
+
+  .swim-summary .swim-summary__links,
+  .swim-summary .swim-meets {
+    font-size: 13px;
+  }
+
+  .swim-summary .swim-goal {
+    gap: 10px;
+  }
+
+  .swim-summary .swim-goal__stats {
+    gap: 12px 20px;
+  }
+
+  .swim-summary .swim-goal__label {
+    font-size: 12px;
+  }
+
+  .swim-summary .swim-goal__value {
+    font-size: 24px;
+  }
+
+  .swim-summary .swim-goal__unit {
+    font-size: 13px;
+  }
+
+  .swim-summary .swim-track__bar {
+    height: 28px;
+  }
+
+  .swim-summary .swim-track__rail,
+  .swim-summary .swim-track__fill {
+    top: 11px;
+  }
+
+  .swim-summary .swim-track__goal {
+    top: 6px;
+  }
+
+  .swim-summary .swim-track__best,
+  .swim-summary .swim-track__latest {
+    top: 6px;
+  }
+
+  .swim-summary .swim-gaps__row {
+    grid-template-columns: 44px 1fr 52px;
+    font-size: 12px;
+  }
+
+  .swim-deck .swim-summary .swim-goal__actions .btn {
+    padding: 7px 12px;
+    font-size: 13px;
+  }
+
+  .swim-deck .swim-summary .swim-goal__actions .btn-outline {
+    padding: 6px 12px;
+  }
+}
+
+/* No room for a compact secondary card from 992px to 1199px */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .swim-summary .swim-summary__card--mini {
+    display: none;
+  }
+}
+
+/* Goal, training status and one compact secondary card: 6/4/2 of 12 */
+@media (min-width: 1200px) {
+  .swim-summary--status.swim-summary--mini {
+    grid-template-columns: minmax(0, 4fr) minmax(0, 6fr) minmax(0, 2fr); /* Training Summary 4, Race Goal 6, compact card 2 */
+  }
+
+  .swim-deck .swim-summary .swim-summary__card--mini .swim-summary__title {
+    font-size: 16px;
+  }
+}
+
+.swim-deck .swim-summary__title {
+  margin: 0;
+  color: var(--sd-blue);
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+/* The card's headline under its title: the goal ("Break 30 again in the
+   50 free") or the training status ("Recovering") */
+/* The title and its headline, kept together (the meta wraps below them
+   on phones) */
+.swim-summary__heading {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.swim-deck .swim-summary__lead {
+  margin: 0;
+  color: var(--sd-muted);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.3;
+  font-style: italic;
+}
+
+.swim-summary__meta {
+  color: var(--sd-muted);
+  font-size: 13px;
+}
+
+.swim-summary__meta a {
+  color: var(--sd-blue);
+}
+
+.swim-deck .swim-summary__text {
+  margin: 0;
+  color: var(--sd-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.swim-deck .swim-summary__fine {
+  margin: 0;
+  color: var(--sd-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.swim-summary__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  margin-top: auto;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.swim-summary__links a {
+  color: var(--sd-blue);
+}
+
+/* Goal card */
+.swim-goal {
+  gap: 14px;
+}
+
+.swim-goal__head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.swim-goal__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+  font-variant-numeric: tabular-nums;
+}
+
+.swim-goal__label {
+  color: var(--sd-muted);
+  font-size: 13px;
+}
+
+.swim-goal__value {
+  color: var(--sd-ink);
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+/* Each figure in its mark's colour on the track: latest blue (the filled
+   dot), goal deep yellow (the goal dot; a shade darker than the dot's
+   #e0a100 so the number reads on white) */
+.swim-goal__value--latest {
+  color: var(--sd-blue);
+}
+
+.swim-goal__value--goal {
+  color: #b57f00;
+}
+
+.swim-goal__unit {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.swim-track[hidden] {
+  display: none;
+}
+
+.swim-track__bar {
+  position: relative;
+  height: 34px;
+}
+
+.swim-track__rail,
+.swim-track__fill {
+  position: absolute;
+  top: 14px;
+  height: 6px;
+  border-radius: 3px;
+}
+
+.swim-track__rail {
+  right: 0;
+  left: 0;
+  background: var(--sd-rule);
+}
+
+.swim-track__fill {
+  left: 0;
+  background: #8cc0e3;
+}
+
+/* The goal: a solid deep yellow dot, white-ringed, as on Race Time
+   Predictions and Race History (.swim-pred__dot.is-goal), here the latest
+   dot's size and ring; centred on the rail and above the other marks */
+.swim-track__goal {
+  position: absolute;
+  z-index: 1;
+  top: 9px;
+  box-sizing: border-box;
+  width: 16px; /* the latest dot's size, ring and all */
+  height: 16px;
+  margin-left: -8px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  background: #e0a100;
+  box-shadow: 0 0 0 1px #e0a100;
+}
+
+.swim-track__best,
+.swim-track__latest {
+  position: absolute;
+  top: 9px;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  margin-left: -8px;
+  border-radius: 50%;
+}
+
+/* Your best: a solid blue triangle, as the charts' personal bests
+   (.swim-pred__dot.is-best, .swim-trend__dot.is-best), centred on the rail */
+.swim-track__best {
+  width: 14px;
+  height: 12px;
+  margin-left: -7px;
+  border: 0;
+  border-radius: 0;
+  background: var(--sd-blue);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+  transform: translateY(1px);
+}
+
+.swim-track__latest {
+  border: 2px solid #fff;
+  background: var(--sd-blue);
+  box-shadow: 0 0 0 1px var(--sd-blue);
+}
+
+.swim-track__goal[hidden],
+.swim-track__best[hidden],
+.swim-track__latest[hidden] {
+  display: none;
+}
+
+.swim-track__scale {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  color: var(--sd-muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.swim-goal__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.swim-deck .swim-goal__share-note {
+  margin: 0;
+  color: var(--sd-muted);
+  font-size: 13px;
+}
+
+.swim-goal__synopsis[hidden] {
+  display: none;
+}
+
+.swim-deck .swim-goal__synopsis {
+  color: var(--sd-ink);
+}
+
+.swim-deck .swim-goal__share-note:empty {
+  display: none;
+}
+
+/* Compact secondary card (beside a training status): its headline, one
+   short line, the next meet, and one link */
+.swim-summary__short {
+  display: none;
+}
+
+.swim-summary__card--mini .swim-summary__short {
+  display: block;
+}
+
+.swim-summary__card--mini [data-st="ageUpText"],
+.swim-summary__card--mini [data-st="sinceText"],
+.swim-summary__card--mini .swim-gaps,
+.swim-summary__card--mini .swim-summary__fine,
+.swim-summary__card--mini .swim-meets__row + .swim-meets__row,
+.swim-summary__card--mini .swim-summary__full-only {
+  display: none;
+}
+
+.swim-summary__card--mini .swim-meets__row {
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Training status card: yards per week over the last 6 weeks, the last
+   7 days in USMS blue */
+.swim-weeks {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 48px;
+  padding-bottom: 1px;
+  border-bottom: 1px solid var(--sd-rule);
+}
+
+.swim-weeks__bar {
+  flex: 1;
+  border-radius: 3px 3px 0 0;
+  background: #8cc0e3;
+}
+
+.swim-weeks__bar.is-now {
+  background: var(--sd-blue);
+}
+
+/* Age-up card: the gap to the median now and in the next age group */
+.swim-gaps {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+
+.swim-gaps__row {
+  display: grid;
+  grid-template-columns: 56px 1fr 60px;
+  align-items: center;
+  gap: 8px;
+}
+
+.swim-gaps__row.is-next {
+  font-weight: 700;
+}
+
+.swim-gaps__track {
+  height: 10px;
+  border-radius: 5px;
+  background: var(--sd-rule);
+}
+
+.swim-gaps__track span {
+  display: block;
+  height: 100%;
+  border-radius: 5px;
+  background: #8cc0e3;
+}
+
+.swim-gaps__row.is-next .swim-gaps__track span {
+  background: var(--sd-blue);
+}
+
+.swim-gaps__value {
+  text-align: right;
+}
+
+/* Comeback card: upcoming meets */
+.swim-meets {
+  padding-top: 10px;
+  border-top: 1px solid var(--sd-rule);
+  font-size: 14px;
+}
+
+.swim-meets:empty {
+  display: none;
+}
+
+.swim-meets__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.swim-meets__row + .swim-meets__row {
+  margin-top: 4px;
+}
+
+.swim-meets__row a {
+  color: var(--sd-blue);
+}
+
+.swim-meets__row span {
+  color: var(--sd-muted);
+  white-space: nowrap;
+}
+
+/* The goal card's buttons, sized as v4's (production's .btn is in rem,
+   small here with html at 10px) */
+.swim-deck .swim-goal__actions .btn {
+  padding: 10px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.swim-deck .swim-goal__actions .btn-outline {
+  padding: 9px 16px;
+  border: 1px solid var(--sd-blue);
+  background: #fff;
+  color: var(--sd-blue);
 }

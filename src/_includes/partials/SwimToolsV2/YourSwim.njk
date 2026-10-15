@@ -42,8 +42,13 @@
           <button type="button" class="swim-slider__clear" data-effort-clear aria-label="Clear intensity" hidden><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
         </div>
       </div>
-      {# Opens the Add to Log modal (Editors.njk) #}
-      <button type="button" class="btn btn-outline swim-swim__save" data-modal-target="#swimDeckLog" aria-label="Add this workout to your log">Add to Log</button>
+      {# View Fitness Log (production's, as My Account's Fitness Log tile
+         links it), over Add to Log, which opens the Add to Log modal
+         (Editors.njk) #}
+      <div class="swim-swim__log">
+        <a href="https://www.usms.org/myusms/flog/" class="swim-swim__log-link">View Log</a>
+        <button type="button" class="btn btn-outline swim-swim__save" data-modal-target="#swimDeckLog" aria-label="Add this workout to your log">Add to Log</button>
+      </div>
     </div>
     <p class="swim-card__sub swim-swim__hint" data-st="metricsHint" aria-live="polite"></p>
     <p class="swim-card__sub swim-swim__status" data-st="logStatus" aria-live="polite"></p>
@@ -53,18 +58,53 @@
     <div class="swim-deck__kpis">
       <div class="swim-kpi swim-kpi--narrow">
         <span class="swim-kpi__label"><i class="fa-solid fa-fire swim-kpi__icon--calories" aria-hidden="true"></i>Calorie burn</span>
-        {# What the estimate allows for, whichever is set: "Butterfly @ 5/10
-           intensity", "@ 5/10 intensity" or "Butterfly" #}
+        {# What the estimate allows for, whichever is set: "Butterfly @ 5/10",
+           "@ 5/10" or "Butterfly" #}
         <span class="swim-kpi__sub swim-cal__note" data-st="calNote"></span>
         <span class="swim-kpi__value"><span data-st="calValue"></span><span class="swim-kpi__unit">cal</span></span>
       </div>
       <div class="swim-kpi swim-kpi--narrow">
         <span class="swim-kpi__label"><i class="fa-solid fa-stopwatch swim-kpi__icon--pace" aria-hidden="true"></i>Training pace</span>
+        {# This workout's pace, or your all-time average: a line saying which,
+           with a link to the other (swim-tools-v2.js) #}
+        <span class="swim-kpi__sub swim-pace__note" data-pace-note></span>
         <span class="swim-kpi__value swim-kpi__value--lg"><span data-st="paceValue"></span><span class="swim-kpi__unit" data-st="paceUnit"></span></span>
       </div>
       {# Retired 2026-10-13: Pace Conversion (PaceConversion.njk, kept for reuse).
          To restore, include it here again; renderMetrics still fills it. #}
       {% include "partials/SwimToolsV2/TrainingEffect.njk" %}
+      {# Workout Library: what it offers, then a button: members browse it,
+         anyone else joins first (swim-tools-v2.js). No library page yet:
+         Browse links to #0. #}
+      <div class="swim-kpi swim-kpi--narrow swim-kpi--action">
+        <span class="swim-kpi__label"><span class="swim-kpi__icon--library" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>Workout Library</span>
+        <ul class="swim-kpi__list">
+          <li>Workouts from Masters coaches</li>
+          <li>Search by stroke and distance</li>
+          <li>Sets for every level</li>
+        </ul>
+        <a href="#0" class="btn btn-primary btn-sm swim-kpi__action swim-kpi__action--browse" data-members-only>Browse</a>
+        <a href="/join-usms/membership-comparison.html" class="btn btn-primary btn-sm swim-kpi__action" data-non-members-only hidden>Join USMS</a>
+      </div>
+      {# Training Plans: a small tile (one column) leading to a workout
+         builder. No builder page yet: #0, like Race Splits' Workout Library
+         link. #}
+      <div class="swim-kpi swim-kpi--narrow swim-kpi--action">
+        <span class="swim-kpi__label"><i class="fa-solid fa-chart-simple swim-kpi__icon--workout" aria-hidden="true"></i>Training Plans</span>
+        <span class="swim-kpi__sub" data-members-only>Build a training plan based on this swim.</span>
+        <span class="swim-kpi__sub" data-non-members-only hidden>Members can build a custom plan from our Workout Library.</span>
+        {# A green square with a white plus over a label ("View Plans"): one link #}
+        <a href="#0" class="swim-kpi__add" data-members-only>
+          <span class="swim-kpi__add-icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
+          <span class="swim-kpi__add-label">View Plans</span>
+        </a>
+        {# Anyone but a member: the same, faded and blurred like Training
+           Effect's sample reading, to join first (swim-tools-v2.js) #}
+        <a href="/join-usms/membership-comparison.html" class="swim-kpi__add" data-non-members-only hidden aria-label="Add Workout: join USMS to add workouts">
+          <span class="swim-kpi__add-icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
+          <span class="swim-kpi__add-label">Add Workout</span>
+        </a>
+      </div>
     </div>
   </div>
 </div>

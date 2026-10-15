@@ -5,7 +5,8 @@
 
 {# Add a race to your race history (the Your Races card), which the Race
    Time Predictor is built from. Starts from Your Event each time it opens.
-   Adds on the button, not as you type. #}
+   Adds on the button, not as you type. Opened from the "add a race" link in
+   Race Time Predictions' summary (its + button is retired). #}
 {% set modalId = "swimDeckRace" %}
 {% set modalTitle = "Add a Race" %}
 {% set modalBody %}
@@ -69,5 +70,36 @@
 {% set modalFooter %}
 <button type="button" class="btn btn-md btn-outline js-modal-close">Cancel</button>
 <button type="button" class="btn btn-md btn-primary" data-save-log>Save to Log</button>
+{% endset %}
+{% include "components/modal.njk" %}
+
+{# A guest's age group and competition category, from Age Group
+   Conversion's prompt: the same as the header's Age Group and Competition
+   Category, applied on Confirm (swim-tools-v2.js). #}
+{% set modalId = "swimDeckWho" %}
+{% set modalTitle = "Swimmer Info" %}
+{% set modalBody %}
+<div class="swim-deck-modal__row swim-deck-modal__row--compact swim-who">
+  <div class="form-group">
+    <span class="swim-deck-modal__label" id="sd-who-age-label">Age Group</span>
+    <div class="swim-deck__field">
+      <select class="form-control" id="sd-who-age" aria-labelledby="sd-who-age-label" data-who-age>
+        <option value="">Select</option>
+        {% for g in ageGroups %}<option value="{{ g[0] }}">{{ g[1] }}</option>{% endfor %}
+      </select>
+      <span class="swim-deck__field-value" aria-hidden="true" data-st="whoAge">Select</span>
+    </div>
+  </div>
+  <div class="form-group">
+    <span class="swim-deck-modal__label" id="sd-who-sex-label">Competition Category</span>
+    <div class="swim-seg" role="group" aria-labelledby="sd-who-sex-label" data-who-sex>
+      <button type="button" data-value="Men" aria-pressed="false">Men's/Open</button><button type="button" data-value="Women" aria-pressed="false">Women's</button>
+    </div>
+  </div>
+</div>
+{% endset %}
+{% set modalFooter %}
+<button type="button" class="btn btn-md btn-outline js-modal-close">Cancel</button>
+<button type="button" class="btn btn-md btn-primary" data-who-set disabled>Confirm</button>
 {% endset %}
 {% include "components/modal.njk" %}

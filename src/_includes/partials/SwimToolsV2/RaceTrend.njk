@@ -1,0 +1,39 @@
+{# Race History chart, as v4's (swim-tools-v4.njk, #st4-history): your races
+   in Your Event's course and stroke (or every race), a line per event over
+   time as pace per 100, slower higher, each race a dot; your age group's
+   Top 10 each season as a black line; zoom and drag through the years.
+   Filled by swim-tools-v2.js (renderTrend). Blank, with a note, when you
+   haven't raced Your Event's course and stroke; hidden with no races at all. #}
+<div class="swim-card swim-trend" id="race-trend" data-trend hidden>
+  <header class="swim-card__header">
+    <div class="swim-card__heading">
+      <h3 class="swim-card__title swim-card__title--icon"><svg class="swim-card__icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Race History</h3>
+      <p class="swim-card__sub" data-st="trendNote"></p>
+    </div>
+  </header>
+  {# − + centred over the plot, ‹ › either side, All years at the right;
+     hidden when every race fits in five years #}
+  <div class="swim-zoom" data-zoom-bar hidden>
+    <div class="swim-zoom__set" role="group" aria-label="Zoom the years">
+      <button type="button" class="swim-zoom__btn" data-zoom="out" aria-label="Zoom out: more years">−</button>
+      <button type="button" class="swim-zoom__btn" data-zoom="in" aria-label="Zoom in: fewer years">+</button>
+    </div>
+    <button type="button" class="swim-zoom__btn swim-zoom__pan swim-zoom__pan--earlier" data-pan="earlier" aria-label="Earlier years">‹</button>
+    <button type="button" class="swim-zoom__btn swim-zoom__pan swim-zoom__pan--later" data-pan="later" aria-label="Later years">›</button>
+    <button type="button" class="swim-pred-link swim-zoom__all" data-zoom="all">All years</button>
+    <span class="visually-hidden" data-st="zoomLabel" aria-live="polite"></span>
+  </div>
+  <p class="swim-zoom__hint" data-drag-hint hidden>Drag the chart to move through the years.</p>
+  <div class="swim-trend__frame">
+    <div class="swim-trend__yaxis" data-trend-y aria-hidden="true"></div>
+    <div class="swim-trend__chart">
+      <svg class="swim-trend__svg" viewBox="0 0 100 100" preserveAspectRatio="none" role="img" data-trend-svg></svg>
+      <div data-trend-dots></div>
+      {# No races in Your Event's course and stroke (but some elsewhere): the
+         chart stays, blank, with this in red (swim-tools-v2.js) #}
+      <p class="swim-trend__empty" data-trend-empty aria-live="polite" hidden></p>
+    </div>
+  </div>
+  <div class="swim-trend__axis" data-trend-axis aria-hidden="true"></div>
+  <div class="swim-trend__legend" role="group" aria-label="Show or hide an event's line" data-trend-legend></div>
+</div>

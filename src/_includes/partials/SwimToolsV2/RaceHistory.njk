@@ -1,6 +1,7 @@
 {# Your Races, as v4's: every race, newest first, each with its course, date
    and how it compares with your best at that event; the newest few, or all
-   of them with Show all. Races are added from the predictor's + button.
+   of them with Show all. Races come from USMS results (adding your own is
+   retired for now).
    Filled by swim-tools-v2.js (renderRaces). #}
 {# Each persona's races from src/_data/raceHistory.json, plus the page's
    default persona; swim-tools-v2.js picks the active one (?user=) #}
@@ -14,4 +15,15 @@
     <button type="button" class="swim-pred-link" data-races-toggle aria-controls="swim-races-list" aria-expanded="false" hidden></button>
   </header>
   <ol class="swim-races__list" id="swim-races-list" data-st-races></ol>
+  {# No races yet: a meet photo and a way to find one (swim-tools-v2.js).
+     Photo hotlinked from USMS media: 2023 Spring Nationals, Anthony Kung. #}
+  <div class="swim-races__promo" data-races-promo hidden>
+    <img class="swim-races__promo-img" src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/anthony-kung-%202023%20usms%20sp%20nats%202962-enhanced-nr.jpg"
+      alt="A Masters swimmer launching off the blocks at the 2023 USMS Spring Nationals" loading="lazy">
+    <div class="swim-races__promo-body">
+      <p class="swim-races__promo-title">Your first race is waiting</p>
+      <p class="swim-races__promo-text">Pool meets, open water swims and fun events, for every speed. Race once and your results show up here.</p>
+      <a class="btn btn-md btn-primary" href="/events/index.html">Find an Event</a>
+    </div>
+  </div>
 </div>

@@ -9,4 +9,15 @@
   {# Peak effort (4.5 and up): a caution about overdoing it #}
   <p class="swim-te__warn" data-te-warn hidden><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i><span data-st="teWarn"></span></p>
   <span class="swim-kpi__value"><span data-st="teValue"></span><span class="swim-kpi__unit"><span data-st="teWord"></span></span><span class="swim-effort__felt" data-effort-felt hidden>You rated it <b data-st="effortFelt"></b>/10</span></span>
+  {# Locked, until 5 swims are logged in the last 6 weeks: a faded sample
+     reading behind an upsell. Guests and non-members: join; members: log
+     swims, with how many so far (swim-tools-v2.js) #}
+  <div class="swim-te-lock" data-te-lock hidden>
+    <span class="swim-te-lock__teaser" aria-hidden="true">2.5 <span class="swim-kpi__unit">Steady</span></span>
+    <p class="swim-te-lock__title" data-st="teLockTitle"></p>
+    <p class="swim-te-lock__text" data-st="teLockText"></p>
+    <div class="swim-te-lock__dots" data-te-lock-dots aria-hidden="true"></div>
+    <a href="/join-usms/membership-comparison.html" class="btn btn-primary btn-sm" data-te-lock-join>Join U.S. Masters Swimming</a>
+    <button type="button" class="btn btn-primary btn-sm" data-modal-target="#swimDeckLog" data-te-lock-log>Add to Log</button>
+  </div>
 </div>

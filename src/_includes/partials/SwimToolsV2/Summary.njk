@@ -1,0 +1,88 @@
+{# The Dashboard section (members only), first of the sections on Home: its
+   summary band, your goal in Your Event and your training status from
+   your log. The age-up and comeback cards (as v4's engagement cards) are
+   secondary: both show, full size, while there's no recent training to
+   report; beside a training status, at most one shows, compact
+   (.swim-summary__card--mini). Filled by swim-tools-v2.js (renderSummary,
+   renderStatus). #}
+{# Upcoming pool meets and virtual events, for the race card #}
+{% set meets = [] %}
+{% for e in eventsEnriched %}{% if e.courseType in ['SCY', 'SCM', 'LCM'] or e.virtual %}{% set _ = meets.push({ title: e.title, url: e.url, date: e.startDate, course: e.courseType, state: e.venueState, virtual: e.virtual }) %}{% endif %}{% endfor %}
+
+<section class="swim-deck__section swim-dashboard" id="dashboard" aria-labelledby="dashboard-title">
+<h2 class="swim-deck__eyebrow" id="dashboard-title">Highlights</h2>
+{# Inside the section, so the Dashboard is the sections' first child #}
+<script type="application/json" id="meets-data">{{ meets | dump | safe }}</script>
+<div class="swim-summary">
+  <article class="swim-card swim-summary__card swim-status" data-status-card hidden>
+    <div class="swim-goal__head">
+      <div class="swim-summary__heading">
+        <h3 class="swim-summary__title">Training Summary</h3>
+        <p class="swim-summary__lead" data-st="statusTitle"></p>
+      </div>
+      <span class="swim-summary__meta">Last 6 weeks</span>
+    </div>
+    <div class="swim-goal__stats">
+      <div><div class="swim-goal__label">Last 7 days</div><div class="swim-goal__value"><span data-st="statusWeek">—</span><span class="swim-goal__unit"> yd</span></div></div>
+      <div><div class="swim-goal__label">Weekly average</div><div class="swim-goal__value"><span data-st="statusAvg">—</span><span class="swim-goal__unit"> yd</span></div></div>
+      <div><div class="swim-goal__label">Swims</div><div class="swim-goal__value" data-st="statusSwims">—</div></div>
+    </div>
+    {# Weekly yards, oldest on the left; the last 7 days in USMS blue #}
+    <div class="swim-weeks" role="img" data-status-weeks></div>
+    <p class="swim-summary__text" data-st="statusText"></p>
+    <p class="swim-summary__fine" data-st="statusFine"></p>
+  </article>
+
+  <article class="swim-card swim-summary__card swim-summary__card--wide swim-goal">
+    <div class="swim-goal__head">
+      <div class="swim-summary__heading">
+        <h3 class="swim-summary__title">Race Goal</h3>
+        <p class="swim-summary__lead" data-st="goalTitle"></p>
+      </div>
+      <span class="swim-summary__meta"><span data-st="goalMeta"></span> · <a href="#race-planning" data-goal-change>Add goal</a></span>
+    </div>
+    <div class="swim-goal__stats">
+      <div><div class="swim-goal__label" data-st="goalLatestLabel">Latest</div><div class="swim-goal__value swim-goal__value--latest" data-st="goalLatest">—</div></div>
+      <div><div class="swim-goal__label" data-st="goalBestLabel">Best</div><div class="swim-goal__value" data-st="goalBest">—</div></div>
+      <div><div class="swim-goal__label">Goal</div><div class="swim-goal__value swim-goal__value--goal" data-st="goalTime">—</div></div>
+      <div><div class="swim-goal__label">To go</div><div class="swim-goal__value"><span data-st="goalToGo">—</span><span class="swim-goal__unit"> s</span></div></div>
+    </div>
+    {# Slower on the left: the filled bar is your latest, the triangle your best, the yellow dot your goal #}
+    <div class="swim-track" data-goal-track>
+      <div class="swim-track__bar" role="img" data-goal-track-bar>
+        <span class="swim-track__rail"></span>
+        <span class="swim-track__fill" data-goal-track-fill></span>
+        <span class="swim-track__goal" data-goal-track-goal></span>
+        <span class="swim-track__best" data-goal-track-best></span>
+        <span class="swim-track__latest" data-goal-track-latest></span>
+      </div>
+      <div class="swim-track__scale"><span data-st="goalTrackHi"></span><span>Filled: latest · triangle: best · yellow dot: goal</span><span data-st="goalTrackLo"></span></div>
+    </div>
+    {# What the goal means against your times, once one's set (swim-tools-v2.js) #}
+    <p class="swim-summary__text swim-goal__synopsis" data-st="goalSynopsis" hidden></p>
+    <div class="swim-goal__actions">
+      <a href="#race-splits" class="btn btn-primary">Practice at goal pace</a>
+      <button type="button" class="btn btn-outline" data-goal-share>Share progress card</button>
+    </div>
+    <p class="swim-goal__share-note" data-st="goalShareNote" aria-live="polite"></p>
+  </article>
+
+  <article class="swim-card swim-summary__card swim-ageup" data-summary-fallback>
+    <h3 class="swim-summary__title" data-st="ageUpTitle">Your age group</h3>
+    <p class="swim-summary__text" data-st="ageUpText"></p>
+    <p class="swim-summary__text swim-summary__short" data-st="ageUpShort"></p>
+    <div class="swim-gaps" data-ageup-gaps></div>
+    <p class="swim-summary__fine" data-st="ageUpFine"></p>
+  </article>
+
+  <article class="swim-card swim-summary__card swim-comeback" data-summary-fallback>
+    <h3 class="swim-summary__title" data-st="sinceTitle">Find your next race</h3>
+    <p class="swim-summary__text" data-st="sinceText"></p>
+    <div class="swim-meets" data-comeback-meets></div>
+    <div class="swim-summary__links">
+      <a href="/events/index.html">See meets near you</a>
+      <a href="#swimDeckRace" data-modal-target="#swimDeckRace" class="swim-summary__full-only">Add a race</a>
+    </div>
+  </article>
+</div>
+</section>
