@@ -42,6 +42,15 @@
           <button type="button" class="swim-slider__clear" data-effort-clear aria-label="Clear intensity" hidden><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
         </div>
       </div>
+      {# Heart rate zone (optional): the usual five-zone scale, Z1 to Z5.
+         Clicking the pressed zone clears it (data-optional). Its word shows
+         in the label, and it's saved with Add to Log (swim-tools-v2.js). #}
+      <div class="swim-swim__field">
+        <span class="swim-swim__label" id="sd-metrics-hr-label">Heart rate zone <span class="swim-swim__optional" data-st="hrZoneWord">(optional)</span></span>
+        <div class="swim-seg swim-seg--zones" role="group" aria-labelledby="sd-metrics-hr-label" data-metric="hrZone" data-optional>
+          {% for word in ["Recovery", "Endurance", "Tempo", "Threshold", "Max"] %}<button type="button" data-value="{{ loop.index }}" aria-pressed="false" aria-label="Zone {{ loop.index }}, {{ word }}" title="Zone {{ loop.index }}: {{ word }}">Z{{ loop.index }}</button>{% endfor %}
+        </div>
+      </div>
       {# View Fitness Log (production's, as My Account's Fitness Log tile
          links it), over Add to Log, which opens the Add to Log modal
          (Editors.njk) #}

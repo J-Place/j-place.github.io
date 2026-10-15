@@ -64,8 +64,9 @@
     // Time and pace (per 100) both show; the one changed last (source) is
     // used, and the other is worked out from it
     // effort: how hard it felt, '1' to '10', or '' (not rated; Effort's
-    // buttons, data-optional)
-    metrics: { course: 'SCY', distance: '1650', time: '22:30.00', pace: '', source: 'time', stroke: '', effort: '' },
+    // buttons, data-optional); hrZone: heart rate zone, '1' to '5', or ''
+    // (not given; data-optional)
+    metrics: { course: 'SCY', distance: '1650', time: '22:30.00', pace: '', source: 'time', stroke: '', effort: '', hrZone: '' },
     // Race history, oldest first; the predictor is built from it (loadRaces)
     races: [],
     // The Add a Race form; reset from Your Event each time it opens
@@ -1952,6 +1953,8 @@
     set('logCalories', ok && isFinite(w.calories) ? w.calories + ' cal' : '—');
     set('logEffort', w && w.effort ? w.effort + ' / 10' : '');
     document.querySelector('[data-st-log-effort]').hidden = !(w && w.effort);
+    set('logHrZone', w && w.hrZone ? 'Zone ' + w.hrZone + ', ' + HR_ZONE_WORDS[w.hrZone] : '');
+    document.querySelector('[data-st-log-hr-zone]').hidden = !(w && w.hrZone);
     var date = document.getElementById('sd-log-date');
     date.value = today();
     date.max = today();
@@ -1970,7 +1973,8 @@
     }
     var entry = {
       date: date.value, course: w.course, distance: w.distance, time: race(w.secs),
-      pace: clock(w.pace), stroke: w.stroke, calories: w.calories, effort: w.effort ? Number(w.effort) : null
+      pace: clock(w.pace), stroke: w.stroke, calories: w.calories, effort: w.effort ? Number(w.effort) : null,
+      hrZone: w.hrZone ? Number(w.hrZone) : null
     };
     try {
       var log = JSON.parse(localStorage.getItem(LOG_KEY)) || [];
@@ -2236,7 +2240,11 @@
     set('effortFelt', t.effort);
     set('effortWord', t.effort ? '· ' + FELT_WORDS[t.effort] : '(optional)');
     renderSlider(t.effort);
+    set('hrZoneWord', t.hrZone ? '· ' + HR_ZONE_WORDS[t.hrZone] : '(optional)');
   }
+
+  // Heart rate zones' words, on the usual five-zone scale
+  var HR_ZONE_WORDS = { 1: 'Recovery', 2: 'Endurance', 3: 'Tempo', 4: 'Threshold', 5: 'Max' };
 
   // ---------- Effort slider ----------
 
@@ -2352,7 +2360,7 @@
     renderFelt(t);
 
     // The workout as it stands, for Add to Log
-    metricsNow = { course: t.course, unit: unit, distance: d, secs: secs, pace: pace, stroke: t.stroke, calories: calories, effort: t.effort };
+    metricsNow = { course: t.course, unit: unit, distance: d, secs: secs, pace: pace, stroke: t.stroke, calories: calories, effort: t.effort, hrZone: t.hrZone };
 
     // Pace conversion: that pace per 100 in the two other courses (its tile,
     // PaceConversion.njk, is retired for now; this fills it if it's back)
