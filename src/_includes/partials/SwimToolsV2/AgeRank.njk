@@ -1,6 +1,9 @@
-{# Rank in Age Group: where the Convert a Time entry would place in your age
-   group (from Your age), estimated from the sample age-group averages
-   (src/_data/averageTimes.json). Filled by swim-tools-v2.js. #}
+{# Rank in Age Group (Race Planning): where Your Event's time would place in
+   your age group, the same time Race Splits and Rank and Tier use (your
+   goal, else best, projected time or the age-group median), estimated from
+   the sample age-group averages (src/_data/averageTimes.json). Filled by
+   swim-tools-v2.js (renderRank). #}
+{% from "partials/SwimToolsV2/SectionGear.njk" import sectionGear %}
 <script type="application/json" id="average-times-data">{{ averageTimes.times | dump | safe }}</script>
 <article class="swim-card" id="age-rank">
   <header class="swim-card__header">
@@ -8,6 +11,7 @@
       <h3 class="swim-card__title">Rank in Age Group</h3>
       <p class="swim-card__sub" data-st="rankSubtitle"></p>
     </div>
+    {{ sectionGear("swimDeckPlan", "Race Planning") }}
   </header>
   <div class="swim-rank" data-st-rank>
     <div class="swim-rank__stats">

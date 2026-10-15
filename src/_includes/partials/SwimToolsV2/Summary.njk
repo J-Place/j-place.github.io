@@ -15,31 +15,45 @@
 <script type="application/json" id="meets-data">{{ meets | dump | safe }}</script>
 <div class="swim-summary">
   <article class="swim-card swim-summary__card swim-status" data-status-card hidden>
-    <div class="swim-goal__head">
+    {# Title and status on the left, the Weeks / Days toggle top right #}
+    <div class="swim-goal__head swim-status__head">
       <div class="swim-summary__heading">
         <h3 class="swim-summary__title">Training Summary</h3>
         <p class="swim-summary__lead" data-st="statusTitle"></p>
       </div>
-      <span class="swim-summary__meta" data-st="statusRange">Last 6 weeks</span>
+      {# Weeks: the timeline below; Days: the last 7 days, a column each #}
+      <div class="swim-seg swim-seg--small swim-status__view" role="group" aria-label="Show by">
+        <button type="button" data-status-view="weeks" aria-pressed="true">Weeks</button><button type="button" data-status-view="days" aria-pressed="false">Days</button>
+      </div>
     </div>
-    <div class="swim-goal__stats">
-      <div><div class="swim-goal__label">Last 7 days</div><div class="swim-goal__value"><span data-st="statusWeek">—</span><span class="swim-goal__unit"> yd</span></div></div>
-      <div><div class="swim-goal__label">Weekly average</div><div class="swim-goal__value"><span data-st="statusAvg">—</span><span class="swim-goal__unit"> yd</span></div></div>
-      <div><div class="swim-goal__label">Swims</div><div class="swim-goal__value" data-st="statusSwims">—</div></div>
-    </div>
+    {# The view's figures on one centred line, on a baseline: in Weeks, the
+       weeks shown ("Last 6 weeks", or their dates once stepped back), their
+       weekly average and swims; in Days, the last 7 days' yards and swims #}
+    <p class="swim-status__line">
+      <span class="swim-summary__meta" data-st="statusRange">Last <span class="swim-status__figure">6</span> weeks</span>
+      <span class="swim-status__figure"><span data-st="statusAvg">—</span><span class="swim-goal__unit" data-st="statusAvgUnit"> y/avg</span></span>
+      <span class="swim-status__figure"><span data-st="statusSwims">—</span><span class="swim-goal__unit" data-st="statusSwimsUnit"> swims</span></span>
+    </p>
     {# The timeline: weekly yards, 6 of the last 12 weeks at a time, oldest
        on the left, the last 7 days in USMS blue; a line across them for the
        3-week average; the arrows step a week back or forward; each week's
        first day under its bar (swim-tools-v2.js, renderTimeline) #}
     <div class="swim-timeline">
       <button type="button" class="swim-timeline__step" data-weeks-step="1" aria-label="A week earlier" title="A week earlier"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
-      <div class="swim-timeline__chart">
+      <div class="swim-timeline__chart" data-status-chart="weeks">
         <div class="swim-weeks" role="img" data-status-weeks></div>
         <div class="swim-weeks__dates" data-status-dates aria-hidden="true"></div>
       </div>
+      {# Days: the last 7 days, oldest on the left, each a light grey column
+         filled blue to its yards (today darker), none on a day off #}
+      <div class="swim-timeline__chart" data-status-chart="days" hidden>
+        <div class="swim-days" role="img" data-status-days></div>
+        <div class="swim-days__dates" data-status-day-dates aria-hidden="true"></div>
+      </div>
       <button type="button" class="swim-timeline__step" data-weeks-step="-1" aria-label="A week later" title="A week later"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
     </div>
-    <p class="swim-weeks__key"><span class="swim-weeks__key-bar" aria-hidden="true"></span>Yards per week <span class="swim-weeks__key-line" aria-hidden="true"></span>3-week average</p>
+    <p class="swim-weeks__key" data-status-key="weeks"><span class="swim-weeks__key-bar" aria-hidden="true"></span>Yards per week <span class="swim-weeks__key-line" aria-hidden="true"></span>3-week average</p>
+    <p class="swim-weeks__key" data-status-key="days" hidden><span class="swim-weeks__key-bar" aria-hidden="true"></span>Yards per day <span class="swim-weeks__key-bar swim-weeks__key-bar--off" aria-hidden="true"></span>No swim</p>
     <p class="swim-summary__text" data-st="statusText"></p>
   </article>
 
@@ -48,8 +62,9 @@
       <div class="swim-summary__heading">
         <h3 class="swim-summary__title">Race Goal</h3>
         <p class="swim-summary__lead" data-st="goalTitle"></p>
+        <p class="swim-summary__fine" data-st="goalSuggestion" hidden></p>
       </div>
-      <span class="swim-summary__meta"><span data-st="goalMeta"></span> · <a href="#race-planning" data-goal-change>Add goal</a></span>
+      <span class="swim-summary__meta"><a href="#swimDeckPlan" data-goal-change data-modal-target="#swimDeckPlan">Add your goal</a></span>
     </div>
     <div class="swim-goal__stats">
       <div><div class="swim-goal__label" data-st="goalLatestLabel">Latest</div><div class="swim-goal__value swim-goal__value--latest" data-st="goalLatest">—</div></div>
@@ -57,16 +72,17 @@
       <div><div class="swim-goal__label">Goal</div><div class="swim-goal__value swim-goal__value--goal" data-st="goalTime">—</div></div>
       <div><div class="swim-goal__label">To go</div><div class="swim-goal__value"><span data-st="goalToGo">—</span><span class="swim-goal__unit"> s</span></div></div>
     </div>
-    {# Slower on the left: the filled bar is your latest, the triangle your best, the yellow dot your goal #}
+    {# Slower on the left: the filled bar is your latest, the triangle your best, the yellow dot your goal; until you set one, a grey open circle is the suggested goal #}
     <div class="swim-track" data-goal-track>
       <div class="swim-track__bar" role="img" data-goal-track-bar>
         <span class="swim-track__rail"></span>
         <span class="swim-track__fill" data-goal-track-fill></span>
         <span class="swim-track__goal" data-goal-track-goal></span>
+        <span class="swim-track__suggested" data-goal-track-suggested></span>
         <span class="swim-track__best" data-goal-track-best></span>
         <span class="swim-track__latest" data-goal-track-latest></span>
       </div>
-      <div class="swim-track__scale"><span data-st="goalTrackHi"></span><span>Filled: latest · triangle: best · yellow dot: goal</span><span data-st="goalTrackLo"></span></div>
+      <div class="swim-track__scale"><span data-st="goalTrackHi"></span><span data-st="goalTrackKey">Filled: latest · triangle: best · yellow dot: goal</span><span data-st="goalTrackLo"></span></div>
     </div>
     {# What the goal means against your times, once one's set (swim-tools-v2.js) #}
     <p class="swim-summary__text swim-goal__synopsis" data-st="goalSynopsis" hidden></p>

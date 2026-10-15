@@ -125,10 +125,11 @@
   margin: 0 0 8px;
 }
 
-/* The intro under "Swim Tools", styled like an article's deck subtitle:
-   production's header.page-title h2 colour (#888,
-   production/src/App/pages/Home.css:395) with the Article demo's smaller,
-   lighter type (src/css/Article/ArticleHeader.css:16). Enhancement. */
+/* Commented out 2026-10-15 with its markup (swim-tools-v2.njk). The intro
+   under "Swim Tools", styled like an article's deck subtitle: production's
+   header.page-title h2 colour (#888, production/src/App/pages/Home.css:395)
+   with the Article demo's smaller, lighter type
+   (src/css/Article/ArticleHeader.css:16). Enhancement.
 .swim-deck .swim-deck__intro {
   margin: 0;
   color: #888;
@@ -137,13 +138,19 @@
   line-height: 1.5;
   letter-spacing: 0.05rem;
 }
+*/
 
-/* Add to Log: production's outline button (.btn.btn-outline, usms.min.css:
+/* RETIRED 2026-10-15: View Log and Add to Log at the end of Training
+   Metrics' fields (removed from YourSwim.njk). Training Effect's lock still
+   opens the Add to Log modal. To restore, put the markup back (see the
+   note in YourSwim.njk) and uncomment these rules; their comments were
+   stripped to fit inside this one.
+ Add to Log: production's outline button (.btn.btn-outline, usms.min.css:
    white, 1px #0068ad border and text), at the right end of the Your Swim
    fields and as tall as them (44px, like production's .form__container
-   .btn-outline; not .btn-md, whose height is 32px !important) */
-/* View Fitness Log beside Add to Log, a pair at the right end of the
-   fields, the link to the button's left and centred on it */
+   .btn-outline; not .btn-md, whose height is 32px !important) 
+ View Fitness Log beside Add to Log, a pair at the right end of the
+   fields, the link to the button's left and centred on it 
 .swim-swim__log {
   display: flex;
   align-items: center;
@@ -165,8 +172,8 @@
   font-size: 15px;
 }
 
-/* Below 1100px the fields wrap anyway: Add to Log takes its own last row,
-   on the left. The ::after is a full-width break placed just before it. */
+ Below 1100px the fields wrap anyway: Add to Log takes its own last row,
+   on the left. The ::after is a full-width break placed just before it. 
 @media (max-width: 1099px) {
   .swim-swim__fields::after {
     content: "";
@@ -179,6 +186,7 @@
     margin: 0;
   }
 }
+*/
 
 /* ---------- Context bar ---------- */
 
@@ -605,10 +613,18 @@
   font-weight: 500;
 }
 
-/* Your Swim's heart rate zones: five short labels (Z1-Z5), kept narrow */
-.swim-seg--zones > button {
-  min-width: 38px;
-  padding: 0 8px;
+/* A smaller one, e.g. Training Summary's Weeks / Days */
+.swim-seg--small {
+  padding: 2px;
+  border-radius: 6px;
+}
+
+.swim-seg--small > button {
+  min-width: 0;
+  height: 26px;
+  padding: 0 10px;
+  border-radius: 4px;
+  font-size: 12px;
 }
 
 .swim-seg > button:hover {
@@ -750,9 +766,31 @@
     grid-column: span 2;
   }
 
-  .swim-deck__kpis > .swim-kpi--narrow {
+  .swim-deck__kpis > .swim-kpi--narrow,
+  .swim-deck__kpis > .swim-kpi-stack {
     grid-column: span 1;
   }
+}
+
+/* One column holding two half-height tiles (Training Plans over Send to
+   Strava), splitting the row's height between them */
+.swim-kpi-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+}
+
+.swim-kpi--half {
+  flex: 1;
+  min-height: 0;
+  padding: 12px 14px 14px;
+}
+
+/* Send to Strava's icon: Strava orange */
+.swim-kpi__label > .swim-kpi__icon--strava {
+  color: #fc4c02;
+  font-size: 22px;
 }
 
 /* Race Planning's Goal: its time, and Set / Edit this goal beside it,
@@ -817,86 +855,49 @@
   font-size: 10px;
 }
 
-/* Training Plans' Add Workout: a green square with a white plus over a
-   small grey label, the two one link. For anyone but a member, both are
-   faded and blurred like Training Effect's sample reading
-   (.swim-te-lock__teaser). */
-/* The square just under the description; the label at the tile's foot */
-.swim-kpi__add {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  margin-top: 22px;
-  color: var(--sd-blue);
+/* Training Plans' Create a plan: a green text link at the tile's foot.
+   Darker than --sd-green so 13px text passes WCAG AA on white (5.4:1;
+   --sd-green is 3.2:1). For anyone but a member it's faded and blurred
+   like Training Effect's sample reading (.swim-te-lock__teaser). */
+.swim-deck .swim-kpi__add {
+  align-self: flex-start;
+  margin-top: auto;
+  padding-top: 6px;
+  color: #1e7b3a;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.43;
   text-decoration: none;
 }
 
-.swim-kpi__add-icon {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 6px;
-  background: var(--sd-green);
-  color: #fff;
-  font-size: 19px;
+.swim-deck .swim-kpi__add[data-members-only]:hover,
+.swim-deck .swim-kpi__add[data-members-only]:focus-visible {
+  color: #155c2b;
+  text-decoration: underline;
 }
 
-.swim-kpi__add[data-non-members-only] .swim-kpi__add-icon {
+/* Send to Strava's Get started: the same link in a dark orange, less red
+   than Strava's own #fc4c02 (which is only 3.0:1 on white): #b35900, 4.8:1 */
+.swim-deck .swim-kpi__add--strava {
+  color: #b35900;
+}
+
+.swim-deck .swim-kpi__add--strava:hover,
+.swim-deck .swim-kpi__add--strava:focus-visible {
+  color: #8f4700;
+  text-decoration: underline;
+}
+
+.swim-deck .swim-kpi__add[data-non-members-only] {
   opacity: 0.35;
   filter: blur(2px);
-}
-
-.swim-kpi__add-label {
-  margin-top: auto;
-  color: #8c8c8c;
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 1.43;
-  text-align: center;
+  user-select: none;
 }
 
 .swim-kpi__add[hidden],
 .swim-kpi__sub[hidden] {
   display: none;
 }
-
-/* Only the square takes the pointer (hover and click); the label beside it
-   doesn't. The link's own :hover still applies through the square. */
-.swim-kpi__add {
-  pointer-events: none;
-}
-
-.swim-kpi__add .swim-kpi__add-icon {
-  pointer-events: auto;
-  cursor: pointer;
-}
-
-.swim-kpi__add-label {
-  transition: color 0.5s ease;
-}
-
-/* The non-members' label: blurred like the square (on hover too) */
-.swim-kpi__add[data-non-members-only] .swim-kpi__add-label {
-  filter: blur(2px);
-  user-select: none;
-}
-
-.swim-kpi__add:hover,
-.swim-kpi__add:focus-visible {
-  text-decoration: none;
-}
-
-/* A member's: darker grey on hover */
-.swim-kpi__add[data-members-only]:hover .swim-kpi__add-label,
-.swim-kpi__add[data-members-only]:focus-visible .swim-kpi__add-label {
-  color: var(--sd-muted);
-}
-
 
 /* A tile or button hidden for members or non-members (swim-tools-v2.js) */
 .swim-kpi[hidden],
@@ -1101,6 +1102,40 @@
 
 .swim-card__edit:hover {
   background: var(--sd-tint);
+}
+
+/* A card's settings button (SectionGear.njk): top right of its header,
+   after any header link, opening its section's modal. Lucide's settings-2
+   icon (two sliders), stroked like Lucide's own (2 in a 24-unit grid,
+   round ends). Grey, blue on hover; pulled into the corner so the icon
+   lines up with the title. */
+.swim-card__gear {
+  flex: none;
+  align-self: flex-start;
+  width: 32px;
+  height: 32px;
+  margin: -6px -8px 0 auto;
+  color: #8c8c8c;
+}
+
+/* No circle behind it on hover (.swim-card__edit's): just the icon turning blue */
+.swim-card__gear:hover {
+  background: transparent;
+}
+
+.swim-card__gear-icon {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.swim-card__gear:hover,
+.swim-card__gear:focus-visible {
+  color: var(--sd-blue);
 }
 
 /* ---------- Race Time Predictor: chart ---------- */
@@ -2191,8 +2226,10 @@
 }
 
 /* A guest's default (age-group median) time, not typed yet: shown like the
-   placeholders, as if not yet entered (swim-tools-v2.js) */
-.swim-deck .swim-time.is-default .swim-time__part {
+   placeholders, as if not yet entered (swim-tools-v2.js); in the Race
+   Planning modal too */
+.swim-deck .swim-time.is-default .swim-time__part,
+.swim-deck-modal .swim-time.is-default .swim-time__part {
   color: #9a9a9a;
   font-weight: 400;
 }
@@ -2234,7 +2271,11 @@
   height: 44px;
 }
 
-.swim-time--sm .swim-time__part {
+/* .swim-deck-modal too: its .form-control rule (44px, the whole box's
+   height) would otherwise win, and a focused part's tint would cover the
+   box's blue border */
+.swim-time--sm .swim-time__part,
+.swim-deck-modal .swim-time--sm .swim-time__part {
   width: 40px;
   height: 36px;
   font-size: 18px;
@@ -2602,6 +2643,119 @@
 
 /* ---------- Editor modals ---------- */
 
+/* Your Races modal (#swimDeckRaces): filters, Select all shown and a count,
+   then every race matching with a checkbox, scrolling in the modal */
+.swim-deck .swim-pick__intro,
+.swim-pick__intro {
+  margin: 0 0 12px;
+  color: var(--sd-muted);
+  font-size: 13px;
+}
+
+.swim-deck-modal .swim-pick__select.form-control {
+  width: auto;
+  min-width: 110px;
+  border-color: var(--sd-border);
+  background-color: #fff;
+  color: var(--sd-ink);
+}
+
+.swim-pick__bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px 16px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--sd-rule);
+}
+
+.swim-deck-modal label.swim-pick__all {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 13px;
+}
+
+.swim-pick__count {
+  color: var(--sd-muted);
+  font-size: 13px;
+}
+
+.swim-pick__list {
+  max-height: 320px;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.swim-pick__list > li {
+  border-bottom: 1px solid var(--sd-rule);
+}
+
+.swim-deck-modal label.swim-pick__row {
+  display: grid;
+  grid-template-columns: auto 40px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 9px 4px;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.swim-pick__row:hover {
+  background: var(--sd-tint);
+}
+
+.swim-pick__list input[type="checkbox"],
+.swim-pick__all input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--sd-blue);
+}
+
+.swim-pick__none {
+  padding: 16px 4px;
+  color: var(--sd-muted);
+  font-size: 14px;
+}
+
+/* Add to chart: a text link beside Cancel, faded until a race is checked */
+.swim-pick__add {
+  margin-left: 12px;
+  text-decoration: underline;
+}
+
+.swim-pick__add:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  text-decoration: none;
+}
+
+/* A chart showing races picked in the Your Races modal: how many, and Clear */
+.swim-deck .swim-picked {
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: var(--sd-tint);
+  color: var(--sd-ink);
+  font-size: 13px;
+}
+
+.swim-picked[hidden] {
+  display: none;
+}
+
+.swim-picked__clear.swim-pred-link {
+  font-size: 13px;
+  text-decoration: underline;
+}
+
 .swim-deck-modal .modal-body {
   display: flex;
   flex-direction: column;
@@ -2644,6 +2798,12 @@
 
 .swim-deck-modal__row--compact > .form-group {
   flex: none;
+}
+
+/* Time Conversions' modal: "or" between Time and Pace, level with their
+   boxes (the form groups' bottom margin lifts it to match) */
+.swim-convm__times > .swim-swim__or {
+  margin: 0 0 12px;
 }
 
 /* Swimmer Info: the two controls with room either side */
@@ -2779,6 +2939,16 @@
 
 .swim-pred-link:hover {
   color: var(--sd-blue-hover);
+}
+
+/* Small text links inline after a card's title: Race Time Predictions'
+   Table view / Chart view and Add races, Race History's Add races */
+.swim-pred-link.swim-pred-view {
+  align-self: baseline;
+  margin-left: 4px;
+  font-size: 13px;
+  font-weight: 400;
+  text-decoration: underline;
 }
 
 /* The pace axis beside the chart: room between for the first dot's label,
@@ -3713,7 +3883,8 @@
     top: 11px;
   }
 
-  .swim-summary .swim-track__goal {
+  .swim-summary .swim-track__goal,
+  .swim-summary .swim-track__suggested {
     top: 6px;
   }
 
@@ -3861,9 +4032,48 @@
   color: #b57f00;
 }
 
+.swim-goal__value.is-default {
+  color: #9a9a9a; /* the Time boxes' placeholder grey (.swim-time.is-default) */
+  font-weight: 400;
+}
+
 .swim-goal__unit {
   font-size: 15px;
   font-weight: 400;
+}
+
+/* Training Summary's head: title and status, the Weeks / Days toggle top
+   right; side by side on phones too */
+.swim-status__head {
+  flex-wrap: nowrap;
+  align-items: flex-start;
+}
+
+.swim-status__view {
+  flex: none;
+}
+
+/* The view's figures, read as one centred sentence fragment ("Last 6 weeks
+   3,900 avg 18 swims"): inline text, so plain word spaces between the parts
+   and one shared baseline; wraps between figures on a narrow card */
+.swim-deck .swim-status__line {
+  margin: 0;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+/* A touch more than a word space between its three parts ("Last 6 weeks",
+   "3,900 avg", "18 swims") */
+.swim-status__line > * + * {
+  margin-left: 4px;
+}
+
+.swim-status__figure {
+  color: var(--sd-ink);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
 }
 
 .swim-track[hidden] {
@@ -3941,7 +4151,23 @@
   box-shadow: 0 0 0 1px var(--sd-blue);
 }
 
+/* The suggested goal, until you set one: an empty grey circle, the goal
+   dot's size, above the other marks like the goal */
+.swim-track__suggested {
+  position: absolute;
+  z-index: 1;
+  top: 9px;
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  margin-left: -8px;
+  border: 2px solid #9a9a9a;
+  border-radius: 50%;
+  background: #fff;
+}
+
 .swim-track__goal[hidden],
+.swim-track__suggested[hidden],
 .swim-track__best[hidden],
 .swim-track__latest[hidden] {
   display: none;
@@ -4043,24 +4269,59 @@
 
 .swim-weeks {
   position: relative;
-  display: flex;
-  align-items: flex-end;
   height: 80px;
   border-bottom: 1px solid var(--sd-rule);
 }
 
-/* A slot per week, the bar within it 3px in from each side, so the line's
-   points (at each slot's middle) sit over the bars' middles */
+/* The bars' strip shows through a window the chart's size; the line's
+   strip through a wider one, so the line can run on past the outer bars
+   (half the gap between bars plus TREND_RUN, 0.15 of a slot: 3.5% of the
+   chart and 2.64px; see the bar widths below) */
+.swim-weeks__window,
+.swim-weeks__run {
+  position: absolute;
+  inset: 0;
+}
+
+.swim-weeks__window {
+  overflow: hidden;
+}
+
+.swim-weeks__run {
+  clip-path: inset(-4px calc(-3.5% - 2.64px));
+}
+
+/* All 12 weeks side by side (--n slots, 6 to the chart's width), slid a
+   slot per step (swim-tools-v2.js sets the transform) */
+.swim-weeks__strip {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  width: calc(var(--n) / 6 * 100%);
+  height: 100%;
+  transition: transform 0.35s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swim-weeks__strip {
+    transition: none;
+  }
+}
+
+/* A slot per week, the bar centred in it at 88% of (slot - 6px), so the
+   line's points (at each slot's middle) sit over the bars' middles */
 .swim-weeks__slot {
   display: flex;
   flex: 1;
   align-items: flex-end;
+  justify-content: center;
   height: 100%;
-  padding: 0 3px;
 }
 
 .swim-weeks__bar {
-  width: 100%;
+  position: relative;
+  overflow: hidden; /* clips the white copy of the line to the bar */
+  width: calc((100% - 6px) * 0.88);
   border-radius: 3px 3px 0 0;
   background: #8cc0e3;
   transition: height 0.25s ease;
@@ -4070,7 +4331,8 @@
   background: var(--sd-blue);
 }
 
-/* The 3-week average, across the bars */
+/* The 3-week average, across the strip and a little past its outer bars
+   (TREND_RUN in swim-tools-v2.js): 1.1px, dashed 6/5, medium grey */
 .swim-weeks__line {
   position: absolute;
   inset: 0;
@@ -4080,27 +4342,105 @@
   pointer-events: none;
 }
 
+/* The white copy inside each bar: the strip's full size, shifted so it
+   lines up with the grey one. In the bar's terms a slot is
+   (bar / 0.88 + 6px) wide (--s), and bar j starts j slots plus half of
+   (slot - bar) in. */
+.swim-weeks__line--on-bar {
+  --s: calc(100% / 0.88 + 6px);
+  inset: auto auto 0;
+  left: calc(-1 * ((var(--s) - 100%) / 2 + var(--j) * var(--s)));
+  width: calc(12 * var(--s)); /* TREND_WEEKS slots */
+  height: 80px; /* .swim-weeks' height */
+  overflow: hidden;
+}
+
+.swim-weeks__line.swim-weeks__line--on-bar polyline {
+  stroke: #fff;
+}
+
 .swim-weeks__line polyline {
   fill: none;
-  stroke: var(--sd-ink);
-  stroke-width: 2;
+  stroke: #8c8c8c;
+  stroke-width: 1.1;
+  stroke-dasharray: 6 5;
   stroke-linejoin: round;
-  stroke-linecap: round;
   vector-effect: non-scaling-stroke;
 }
 
-/* Each week's first day, under its bar */
+/* Each week's first day, under its bar, on a strip of its own */
 .swim-weeks__dates {
-  display: flex;
   margin-top: 4px;
+  overflow: hidden;
 }
 
-.swim-weeks__dates > span {
+.swim-weeks__dates > .swim-weeks__strip > span {
   flex: 1;
   color: var(--sd-muted);
   font-size: 10px;
   text-align: center;
   white-space: nowrap;
+}
+
+/* Days: the last 7 days, a light grey column each, filled blue to the
+   day's yards (today darker); a day off is the grey column alone. Its
+   height and gaps as the weeks' chart. */
+.swim-days {
+  display: flex;
+  height: 80px;
+  border-bottom: 1px solid var(--sd-rule);
+}
+
+.swim-days__col {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: flex-end;
+  justify-content: center;
+  height: 100%;
+}
+
+/* The grey column, and the blue fill over it */
+.swim-days__col::before,
+.swim-days__bar {
+  width: calc((100% - 6px) * 0.88);
+  border-radius: 3px 3px 0 0;
+}
+
+.swim-days__col::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: #eeeeee;
+}
+
+.swim-days__bar {
+  position: relative;
+  background: #8cc0e3;
+  transition: height 0.25s ease;
+}
+
+.swim-days__bar.is-now {
+  background: var(--sd-blue);
+}
+
+.swim-days__dates {
+  display: flex;
+  margin-top: 4px;
+}
+
+.swim-days__dates > span {
+  flex: 1;
+  color: var(--sd-muted);
+  font-size: 10px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.swim-timeline__chart[hidden],
+.swim-weeks__key[hidden] {
+  display: none;
 }
 
 /* The key: a bar swatch and a line swatch */
@@ -4120,10 +4460,15 @@
   background: #8cc0e3;
 }
 
+.swim-weeks__key-bar--off {
+  margin-left: 8px;
+  background: #eeeeee;
+}
+
 .swim-weeks__key-line {
   width: 14px;
   margin-left: 8px;
-  border-top: 2px solid var(--sd-ink);
+  border-top: 2px dashed #8c8c8c;
 }
 
 /* Age-up card: the gap to the median now and in the next age group */

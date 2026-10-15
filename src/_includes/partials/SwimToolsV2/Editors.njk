@@ -60,7 +60,6 @@
   <div><dt>Pace</dt><dd data-st="logPace"></dd></div>
   <div><dt>Calories</dt><dd data-st="logCalories"></dd></div>
   <div data-st-log-effort><dt>Intensity</dt><dd data-st="logEffort"></dd></div>
-  <div data-st-log-hr-zone><dt>Heart rate zone</dt><dd data-st="logHrZone"></dd></div>
 </dl>
 <div class="form-group">
   <label for="sd-log-date">Date</label>
@@ -102,5 +101,128 @@
 {% set modalFooter %}
 <button type="button" class="btn btn-md btn-outline js-modal-close">Cancel</button>
 <button type="button" class="btn btn-md btn-primary" data-who-set disabled>Confirm</button>
+{% endset %}
+{% include "components/modal.njk" %}
+
+{# Race Planning's controls as a modal: Your Event (distance, stroke,
+   course) and its goal. The same settings as the section's own controls,
+   bound the same way, so the two always match and a change in either
+   applies at once (swim-tools-v2.js). No trigger yet: open it with
+   data-modal-target="#swimDeckPlan". #}
+{% set modalId = "swimDeckPlan" %}
+{% set modalTitle = "Race Planning" %}
+{% set modalBody %}
+<div class="swim-deck-modal__row swim-deck-modal__row--compact">
+  <div class="form-group">
+    <span class="swim-deck-modal__label" id="sd-plan-distance-label">Distance</span>
+    <div class="swim-deck__field">
+      <select class="form-control" aria-labelledby="sd-plan-distance-label" data-input="distance" data-st-event-options></select>
+      <span class="swim-deck__field-value" aria-hidden="true" data-st="distance"></span>
+    </div>
+  </div>
+  <div class="form-group">
+    <span class="swim-deck-modal__label" id="sd-plan-stroke-label">Stroke</span>
+    {{ strokeSelect('aria-labelledby="sd-plan-stroke-label"', 'data-input="stroke"') }}
+  </div>
+</div>
+<div class="form-group">
+  <span class="swim-deck-modal__label" id="sd-plan-course-label">Course</span>
+  <div class="swim-seg" role="group" aria-labelledby="sd-plan-course-label" data-control="course">
+    {% for c in courses %}<button type="button" data-value="{{ c }}" aria-pressed="false">{{ c }}</button>{% endfor %}
+  </div>
+</div>
+<div class="form-group">
+  <span class="swim-deck-modal__label" id="sd-plan-goal-label">Goal</span>
+  {{ timeField("sd-plan-goal-label", 'data-time-input="goal"', "sm") }}
+</div>
+<span class="swim-params__hint" data-st="goalHint" aria-live="polite"></span>
+{% endset %}
+{% set modalFooter %}
+<button type="button" class="btn btn-md btn-primary js-modal-close">Done</button>
+{% endset %}
+{% include "components/modal.njk" %}
+
+{# Time Conversions' controls as a modal: the event and its time or pace
+   (per 100). The same settings as the section's own controls, bound the
+   same way, so time and pace update each other and the section at once
+   (swim-tools-v2.js). No trigger yet: open it with
+   data-modal-target="#swimDeckConv". #}
+{% set modalId = "swimDeckConv" %}
+{% set modalTitle = "Time Conversions" %}
+{% set modalBody %}
+<div class="swim-deck-modal__row swim-deck-modal__row--compact">
+  <div class="form-group">
+    <span class="swim-deck-modal__label" id="sd-convm-distance-label">Distance</span>
+    <div class="swim-deck__field">
+      <select class="form-control" aria-labelledby="sd-convm-distance-label" data-conv-input="distance" data-st-conv-options></select>
+      <span class="swim-deck__field-value" aria-hidden="true" data-st="convDistance"></span>
+    </div>
+  </div>
+  <div class="form-group">
+    <span class="swim-deck-modal__label" id="sd-convm-stroke-label">Stroke</span>
+    {{ strokeSelect('aria-labelledby="sd-convm-stroke-label"', 'data-conv-input="stroke"') }}
+  </div>
+</div>
+<div class="form-group">
+  <span class="swim-deck-modal__label" id="sd-convm-course-label">Course</span>
+  <div class="swim-seg" role="group" aria-labelledby="sd-convm-course-label" data-conv="course">
+    {% for c in courses %}<button type="button" data-value="{{ c }}" aria-pressed="false">{{ c }}</button>{% endfor %}
+  </div>
+</div>
+<div class="swim-deck-modal__row swim-deck-modal__row--compact swim-convm__times">
+  <div class="form-group">
+    <span class="swim-deck-modal__label" id="sd-convm-time-label">Time</span>
+    {{ timeField("sd-convm-time-label", 'data-time-conv="time"', "sm") }}
+  </div>
+  <span class="swim-swim__or">or</span>
+  <div class="form-group">
+    <span class="swim-deck-modal__label" id="sd-convm-pace-label">Pace <span class="swim-swim__optional">(per 100)</span></span>
+    {{ timeField("sd-convm-pace-label", 'data-time-conv="pace"', "sm", true) }}
+  </div>
+</div>
+<span class="swim-params__hint" data-st="convHint" aria-live="polite"></span>
+{% endset %}
+{% set modalFooter %}
+<button type="button" class="btn btn-md btn-primary js-modal-close">Done</button>
+{% endset %}
+{% include "components/modal.njk" %}
+
+{# Your Races: every race, filterable by course, stroke and distance, with a
+   checkbox each; Add to chart shows only the checked races on the chart it
+   was opened for (data-races-target: "trend", Race History, or "pred", Race
+   Time Predictions), until that chart's Clear. Opened from Your Races' gear
+   (Race History) and each chart's Add races link (swim-tools-v2.js, pick). #}
+{% set modalId = "swimDeckRaces" %}
+{% set modalTitle = "Your Races" %}
+{% set modalBody %}
+<p class="swim-pick__intro" data-st="pickIntro"></p>
+<div class="swim-deck-modal__row swim-deck-modal__row--compact swim-pick__filters">
+  <div class="form-group">
+    <span class="swim-deck-modal__label" id="sd-pick-course-label">Course</span>
+    <div class="swim-seg" role="group" aria-labelledby="sd-pick-course-label" data-pick-filter="course">
+      <button type="button" data-value="" aria-pressed="true">All</button>{% for c in courses %}<button type="button" data-value="{{ c }}" aria-pressed="false">{{ c }}</button>{% endfor %}
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="swim-deck-modal__label" for="sd-pick-stroke">Stroke</label>
+    <select class="form-control swim-pick__select" id="sd-pick-stroke" data-pick-input="stroke">
+      <option value="">All</option>
+      {% for st in [["Free", "Free"], ["Back", "Back"], ["Breast", "Breast"], ["Fly", "Butterfly"], ["IM", "IM"]] %}<option value="{{ st[0] }}">{{ st[1] }}</option>{% endfor %}
+    </select>
+  </div>
+  <div class="form-group">
+    <label class="swim-deck-modal__label" for="sd-pick-distance">Distance</label>
+    <select class="form-control swim-pick__select" id="sd-pick-distance" data-pick-input="distance"></select>
+  </div>
+</div>
+<div class="swim-pick__bar">
+  <label class="swim-pick__all"><input type="checkbox" data-pick-all> Select all shown</label>
+  <span class="swim-pick__count" data-st="pickCount" aria-live="polite"></span>
+</div>
+<ul class="swim-pick__list" data-pick-list></ul>
+{% endset %}
+{% set modalFooter %}
+<button type="button" class="btn btn-md btn-outline js-modal-close">Cancel</button>
+<button type="button" class="swim-pred-link swim-pick__add" data-pick-add disabled>Add to chart</button>
 {% endset %}
 {% include "components/modal.njk" %}

@@ -42,22 +42,10 @@
           <button type="button" class="swim-slider__clear" data-effort-clear aria-label="Clear intensity" hidden><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
         </div>
       </div>
-      {# Heart rate zone (optional): the usual five-zone scale, Z1 to Z5.
-         Clicking the pressed zone clears it (data-optional). Its word shows
-         in the label, and it's saved with Add to Log (swim-tools-v2.js). #}
-      <div class="swim-swim__field">
-        <span class="swim-swim__label" id="sd-metrics-hr-label">Heart rate zone <span class="swim-swim__optional" data-st="hrZoneWord">(optional)</span></span>
-        <div class="swim-seg swim-seg--zones" role="group" aria-labelledby="sd-metrics-hr-label" data-metric="hrZone" data-optional>
-          {% for word in ["Recovery", "Endurance", "Tempo", "Threshold", "Max"] %}<button type="button" data-value="{{ loop.index }}" aria-pressed="false" aria-label="Zone {{ loop.index }}, {{ word }}" title="Zone {{ loop.index }}: {{ word }}">Z{{ loop.index }}</button>{% endfor %}
-        </div>
-      </div>
-      {# View Fitness Log (production's, as My Account's Fitness Log tile
-         links it), over Add to Log, which opens the Add to Log modal
-         (Editors.njk) #}
-      <div class="swim-swim__log">
-        <a href="https://www.usms.org/myusms/flog/" class="swim-swim__log-link">View Log</a>
-        <button type="button" class="btn btn-outline swim-swim__save" data-modal-target="#swimDeckLog" aria-label="Add this workout to your log">Add to Log</button>
-      </div>
+      {# Retired 2026-10-15: View Log (production's /myusms/flog/) and Add to
+         Log (an outline button, data-modal-target="#swimDeckLog", opening
+         the Add to Log modal in Editors.njk), in a .swim-swim__log pair
+         here. Their CSS is commented out in swim-tools-v2.css. #}
     </div>
     <p class="swim-card__sub swim-swim__hint" data-st="metricsHint" aria-live="polite"></p>
     <p class="swim-card__sub swim-swim__status" data-st="logStatus" aria-live="polite"></p>
@@ -95,24 +83,27 @@
         <a href="#0" class="btn btn-primary btn-sm swim-kpi__action swim-kpi__action--browse" data-members-only>Browse</a>
         <a href="/join-usms/membership-comparison.html" class="btn btn-primary btn-sm swim-kpi__action" data-non-members-only hidden>Join USMS</a>
       </div>
-      {# Training Plans: a small tile (one column) leading to a workout
-         builder. No builder page yet: #0, like Race Splits' Workout Library
-         link. #}
-      <div class="swim-kpi swim-kpi--narrow swim-kpi--action">
+      {# One column, two half-height tiles: Training Plans over Send to Strava #}
+      <div class="swim-kpi-stack">
+      {# Training Plans: a half-height tile leading to a workout builder. No
+         builder page yet: #0, like Race Splits' Workout Library link. #}
+      <div class="swim-kpi swim-kpi--half swim-kpi--action">
         <span class="swim-kpi__label"><i class="fa-solid fa-chart-simple swim-kpi__icon--workout" aria-hidden="true"></i>Training Plans</span>
         <span class="swim-kpi__sub" data-members-only>Build a training plan based on this swim.</span>
         <span class="swim-kpi__sub" data-non-members-only hidden>Members can build a custom plan from our Workout Library.</span>
-        {# A green square with a white plus over a label ("View Plans"): one link #}
-        <a href="#0" class="swim-kpi__add" data-members-only>
-          <span class="swim-kpi__add-icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
-          <span class="swim-kpi__add-label">View Plans</span>
-        </a>
+        {# Create a plan: a green text link #}
+        <a href="#0" class="swim-kpi__add" data-members-only>Create a plan</a>
         {# Anyone but a member: the same, faded and blurred like Training
            Effect's sample reading, to join first (swim-tools-v2.js) #}
-        <a href="/join-usms/membership-comparison.html" class="swim-kpi__add" data-non-members-only hidden aria-label="Add Workout: join USMS to add workouts">
-          <span class="swim-kpi__add-icon" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>
-          <span class="swim-kpi__add-label">Add Workout</span>
-        </a>
+        <a href="/join-usms/membership-comparison.html" class="swim-kpi__add" data-non-members-only hidden aria-label="Create a plan: join USMS to create plans">Create a plan</a>
+      </div>
+      {# Send to Strava: a half-height tile, then Get started, an orange text
+         link. No Strava connection yet: #0. #}
+      <div class="swim-kpi swim-kpi--half">
+        <span class="swim-kpi__label"><i class="fa-brands fa-strava swim-kpi__icon--strava" aria-hidden="true"></i>Send to Strava</span>
+        <span class="swim-kpi__sub">Sync to your Strava account for enhanced metrics.</span>
+        <a href="#0" class="swim-kpi__add swim-kpi__add--strava">Get started.</a>
+      </div>
       </div>
     </div>
   </div>

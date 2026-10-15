@@ -1,0 +1,11 @@
+{#
+  A card's settings button (Lucide's settings-2 sliders icon, inline), top right of its header: opens its section's controls as a
+  modal (Editors.njk), the same settings as the section's input band.
+
+    modal — the modal's id: "swimDeckPlan" (Race Planning) or
+            "swimDeckConv" (Time Conversions)
+    name  — the section's name, for the accessible label and tooltip
+#}
+{% macro sectionGear(modal, name) %}
+<button type="button" class="swim-card__edit swim-card__gear" data-modal-target="#{{ modal }}" aria-label="{{ name }} settings" title="{{ name }} settings"><svg class="swim-card__gear-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 17H5"/><path d="M19 7h-9"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></button>
+{% endmacro %}

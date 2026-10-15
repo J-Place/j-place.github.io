@@ -51,8 +51,11 @@ ageGroups:
     <header class="swim-deck__head">
       <div>
         <h1 class="swim-deck__title">Swim Tools</h1>
-        {# "Welcome back, Jay…" when logged in, as on v4 (swim-tools-v2.js) #}
+        {# Commented out 2026-10-15: the intro under the title ("Welcome back,
+           Jay…" when logged in, as on v4; swim-tools-v2.js still sets it,
+           harmlessly, with nothing to fill). Its CSS is commented out too.
         <p class="swim-deck__intro" data-st="greeting">Manage your races, times and training, all in one place.</p>
+        #}
       </div>
     </header>
 
@@ -161,8 +164,8 @@ ageGroups:
               <div class="swim-swim__field">
                 <span class="swim-swim__label" id="sd-goal-label">Goal</span>
                 {# Beside the time: "Set this goal" takes the suggestion shown in
-                   its boxes as your goal; "Edit this goal" puts the cursor in
-                   its minutes (swim-tools-v2.js) #}
+                   its boxes as your goal; shown only until a goal is set
+                   (swim-tools-v2.js) #}
                 <div class="swim-goal-field">
                   {{ timeField("sd-goal-label", 'data-time-input="goal"', "xs") }}
                   <button type="button" class="swim-pred-link swim-goal-field__link" data-goal-set hidden></button>
@@ -176,14 +179,16 @@ ageGroups:
           <div class="swim-panel__band">
             {# The two columns end level: balanceRacePlanning (swim-tools-v2.js) #}
             <div class="swim-deck__grid swim-deck__grid--8-4 swim-deck__grid--balance">
-              {# Predictor with the race history it's built from beneath it #}
+              {# Race Time Predictions, then Race History, then Your Races #}
               <div class="swim-deck__cell swim-deck__cell--stack">
-                {% include "partials/SwimToolsV2/RaceTrend.njk" %}
                 {% include "partials/SwimToolsV2/RacePredictor.njk" %}
+                {% include "partials/SwimToolsV2/RaceTrend.njk" %}
                 {% include "partials/SwimToolsV2/RaceHistory.njk" %}
               </div>
-              {# Race Splits, then Rank and Tier #}
+              {# Rank in Age Group (Your Event, since 2026-10-15; was in Time
+                 Conversions), Race Splits, then Rank and Tier #}
               <div class="swim-deck__cell swim-deck__cell--stack">
+                {% include "partials/SwimToolsV2/AgeRank.njk" %}
                 {% include "partials/SwimToolsV2/RaceSplits.njk" %}
                 {% include "partials/SwimToolsV2/RankTier.njk" %}
               </div>
@@ -203,11 +208,9 @@ ageGroups:
           {% include "partials/SwimToolsV2/ConvertTime.njk" %}
           <div class="swim-panel__band">
             <div class="swim-deck__grid swim-deck__grid--5-7">
-              {# Course Conversion with Rank in Age Group beneath it #}
-              <div class="swim-deck__cell swim-deck__cell--stack">
-                {% include "partials/SwimToolsV2/CourseConversion.njk" %}
-                {% include "partials/SwimToolsV2/AgeRank.njk" %}
-              </div>
+              {# Course Conversion (Rank in Age Group moved to Race Planning
+                 2026-10-15) #}
+              <div class="swim-deck__cell">{% include "partials/SwimToolsV2/CourseConversion.njk" %}</div>
               <div class="swim-deck__cell">{% include "partials/SwimToolsV2/AgeConversion.njk" %}</div>
             </div>
           </div>

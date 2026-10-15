@@ -1,11 +1,13 @@
 {# The Convert a Time entry at Your age (in the controls above), converted to other
    age groups. Rows are filled by swim-tools-v2.js. #}
+{% from "partials/SwimToolsV2/SectionGear.njk" import sectionGear %}
 <article class="swim-card" id="age-conversion">
   <header class="swim-card__header">
     <div class="swim-card__heading">
       <h3 class="swim-card__title">Age Group Conversion</h3>
       <p class="swim-card__sub" data-st="ageSubtitle"></p>
     </div>
+    {{ sectionGear("swimDeckConv", "Time Conversions") }}
   </header>
   {# Until there's a time to convert, a prompt in red over the empty rows
      (swim-tools-v2.js) #}

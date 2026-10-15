@@ -3,12 +3,14 @@
    equivalent (500 yd and 400 m); a tile names its event when the distance
    changes, or says the course has no such event. A pace shows as the pace
    per 100 in each course. Filled by swim-tools-v2.js. #}
+{% from "partials/SwimToolsV2/SectionGear.njk" import sectionGear %}
 <article class="swim-card" id="course-conversion">
   <header class="swim-card__header">
     <div class="swim-card__heading">
       <h3 class="swim-card__title">Course Conversion</h3>
       <p class="swim-card__sub" data-st="courseConvSubtitle"></p>
     </div>
+    {{ sectionGear("swimDeckConv", "Time Conversions") }}
   </header>
   <div class="swim-tiles swim-tiles--courses">
     {% for c in courses %}

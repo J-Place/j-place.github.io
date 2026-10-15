@@ -64,9 +64,8 @@
     // Time and pace (per 100) both show; the one changed last (source) is
     // used, and the other is worked out from it
     // effort: how hard it felt, '1' to '10', or '' (not rated; Effort's
-    // buttons, data-optional); hrZone: heart rate zone, '1' to '5', or ''
-    // (not given; data-optional)
-    metrics: { course: 'SCY', distance: '1650', time: '22:30.00', pace: '', source: 'time', stroke: '', effort: '', hrZone: '' },
+    // buttons, data-optional)
+    metrics: { course: 'SCY', distance: '1650', time: '22:30.00', pace: '', source: 'time', stroke: '', effort: '' },
     // Race history, oldest first; the predictor is built from it (loadRaces)
     races: [],
     // The Add a Race form; reset from Your Event each time it opens
@@ -354,7 +353,7 @@
   // Your races as the predictor reads them: { course, d, stroke, secs, date, age }
   function predRaces() {
     return state.races.map(function (r) {
-      return { course: r.course, d: Number(r.distance), stroke: r.stroke, secs: parse(r.time), date: r.date, age: r.age };
+      return { id: r.id, course: r.course, d: Number(r.distance), stroke: r.stroke, secs: parse(r.time), date: r.date, age: r.age };
     }).filter(function (r) { return isFinite(r.secs); });
   }
   // Only the last 8 years' races count: age adjustment covers getting
@@ -372,6 +371,11 @@
     var pool = !recent.some(inStroke) && all.some(inStroke) ? all : recent;
     pool.old = pool === all && pool !== recent;
     return pool;
+  }
+
+  // The races picked in the Your Races modal, as predRaces reads them
+  function pickedRaces(ids) {
+    return predRaces().filter(function (r) { return ids.indexOf(r.id) >= 0; });
   }
 
   function fastest(list) {
@@ -451,9 +455,10 @@
   //   wins  est is as fast as this season's fastest: you'd have won
   // From the last 8 years' races (predPool): your current age group's are
   // real bests, earlier ones age-adjusted. rows.old: every race in the
-  // stroke is older than that.
-  function predictions(list, course, stroke) {
-    var group = ageGroup(), races = predPool(stroke);
+  // stroke is older than that. ids: only these races (Race Time
+  // Predictions' selection from the Your Races modal), whatever their age.
+  function predictions(list, course, stroke, ids) {
+    var group = ageGroup(), races = ids ? pickedRaces(ids) : predPool(stroke);
     var rows = list.map(function (d) {
       var b = fastest(races.filter(function (x) {
         return x.course === course && x.stroke === stroke && x.d === d && inAgeGroup(x);
@@ -558,7 +563,11 @@
   // (state.predHidden). Returns the rows (predictions).
   function renderPredictor(list) {
     var q = function (sel) { return root.querySelector(sel); };
-    var rows = predictions(list, state.course, state.stroke), group = ageGroup(), off = state.predHidden;
+    // A selection from the Your Races modal: the chart shows only those
+    // races; the rows returned (Race Splits, Rank and Tier, the summary) still
+    // come from every race
+    var rows = predictions(list, state.course, state.stroke, picked.pred), group = ageGroup(), off = state.predHidden;
+    var shared = picked.pred ? predictions(list, state.course, state.stroke) : rows;
     var eventD = Number(state.distance);
     // No races to predict from (a guest, or a stroke you haven't raced):
     // predict from Your Event's time instead, your own goal if you've typed
@@ -583,24 +592,25 @@
           (Math.max.apply(null, old) > Math.min.apply(null, old) ? '–' + String(Math.max.apply(null, old)).slice(-2) : '') +
           ', over ' + WINDOW_YEARS + ' years ago, so they aren\'t used.' : 'Race ' + ev + ' to see your own times here.');
     }
-    var fromTime = null;
-    if (!rows.some(function (r) { return isFinite(r.est); })) {
+    var fromTimeFor = function (rows) {
+      if (rows.some(function (r) { return isFinite(r.est); })) return null;
       var at = rows.filter(function (r) { return r.d === eventD; })[0];
       var own = !state.goalAuto && state.goal !== '' && validEntry(state.goal);
       var anchor = own ? parse(state.goal) : at ? at.mid : NaN;
-      if (at && isFinite(anchor) && isFinite(at.mid)) {
-        fromTime = { own: own, d: eventD, secs: anchor };
-        var why = own ? 'Predicted from your ' + eventD + ' time, ' + race(anchor) : 'The ' + group.label + ' median';
-        rows.forEach(function (r) {
-          if (!isFinite(r.mid)) return;
-          r.proj = anchor * r.mid / at.mid;
-          r.est = r.proj;
-          r.fromTime = true;
-          r.projFrom = why;
-          r.wins = isFinite(r.top) && r.est <= r.top;
-        });
-      }
-    }
+      if (!(at && isFinite(anchor) && isFinite(at.mid))) return null;
+      var why = own ? 'Predicted from your ' + eventD + ' time, ' + race(anchor) : 'The ' + group.label + ' median';
+      rows.forEach(function (r) {
+        if (!isFinite(r.mid)) return;
+        r.proj = anchor * r.mid / at.mid;
+        r.est = r.proj;
+        r.fromTime = true;
+        r.projFrom = why;
+        r.wins = isFinite(r.top) && r.est <= r.top;
+      });
+      return { own: own, d: eventD, secs: anchor };
+    };
+    var fromTime = fromTimeFor(rows);
+    if (shared !== rows) fromTimeFor(shared);
     var projected = rows.some(function (r) { return isFinite(r.proj); });
     var hasRank = rows.some(function (r) { return isFinite(r.mid); });
     // Rankings still on their way: grey placeholders the size of what's
@@ -798,7 +808,7 @@
         note('Your races', 'Race the ' + lowerStroke(state.stroke) + ' to compare your pace with your age group.');
     } else if (raced.length === 1) {
       // How many times you've swum it in the window (or ever, past it)
-      var times = predPool(state.stroke).filter(function (x) {
+      var times = (picked.pred ? pickedRaces(picked.pred) : predPool(state.stroke)).filter(function (x) {
         return x.course === state.course && x.stroke === state.stroke && x.d === raced[0].d;
       }).length;
       box.innerHTML = note('Your races',
@@ -817,7 +827,10 @@
         note('Your strengths', 'Your ' + kind(strong.d) + ' is closest to the pack.', both + work + ' will move your times fastest.');
     }
     q('[data-pred-view]').textContent = state.view === 'chart' ? 'Table view' : 'Chart view';
-    return rows;
+    renderPickedNote('pred', picked.pred && picked.pred.filter(function (id) {
+      return pickedRaces([id]).some(function (r) { return r.stroke === state.stroke; });
+    }).length);
+    return shared;
   }
 
   // ---------- Top 10 by Decade ----------
@@ -1054,18 +1067,28 @@
     else if (latest) { round = Math.floor(latest.secs); goal = round - 0.01; kind = 'break'; }
     else { goal = groupMedian; kind = 'middle'; }
     // The card shows a goal only once you've set one (Race Planning's Goal,
-    // which Add goal / Edit goal goes to); the suggestion above still stands
+    // which Add your goal / Edit goal goes to); the suggestion above still stands
     // in for it in Race Planning (its Goal placeholders, Race Splits, Rank
     // and Tier: this function's return)
     var shown = typed ? goal : NaN;
-    set('goalTitle', typed ? race(goal) + ' in the ' + ev : 'Set a goal in the ' + ev);
-    set('goalMeta', state.course);
-    q('[data-goal-change]').textContent = typed ? 'Edit goal' : 'Add goal';
+    set('goalTitle', (typed ? race(goal) + ' in the ' : 'Set a goal in the ') + ev + ' ' + state.course);
+    // With no goal and no races, the suggestion is the median for the age
+    // group and category the rankings use: the defaults (45–49 Men's/Open)
+    // until the swimmer gives their own
+    var suggestion = !typed && kind === 'middle' ?
+      'The suggested goal is the median time in the ' + ageGroup().label + ' ' + CATEGORY_NAMES[swimmerGender()] + ' category.' : '';
+    set('goalSuggestion', suggestion);
+    q('[data-st="goalSuggestion"]').hidden = !suggestion;
+    q('[data-goal-change]').textContent = typed ? 'Edit goal' : 'Add your goal';
     set('goalLatestLabel', latest && latest.date ? 'Latest · ' + monthYear(latest.date) : 'Latest');
     set('goalBestLabel', best && best.date ? 'Best · ' + monthYear(best.date) : 'Best');
     set('goalLatest', latest ? race(latest.secs) : '—');
     set('goalBest', best ? race(best.secs) : '—');
-    set('goalTime', typed ? race(goal) : '—');
+    // Until you set one, the suggested goal, greyed like an untyped Time
+    // box (.is-default); it follows the age group and sex as they change
+    var suggestedTime = !typed && isFinite(goal) ? goal : NaN;
+    set('goalTime', typed ? race(goal) : isFinite(suggestedTime) ? race(suggestedTime) : '—');
+    q('[data-st="goalTime"]').classList.toggle('is-default', !typed);
     // The goal against your times: a personal best, or what it beats
     var synopsis = !typed ? '' :
       !best ? 'Your first race in the ' + ev + ' will set your personal best.' :
@@ -1081,19 +1104,23 @@
     // The track, slower on the left; only with two or more marks
     var track = q('[data-goal-track]');
     var lt = latest ? latest.secs : NaN, bt = best ? best.secs : NaN;
-    var marks = [lt, bt, shown].filter(isFinite);
-    track.hidden = marks.length < 2 || !latest;
+    var marks = [lt, bt, shown, suggestedTime].filter(isFinite);
+    track.hidden = !marks.length;
     if (!track.hidden) {
       var hi = Math.ceil(Math.max.apply(null, marks) * 2 + 0.5) / 2, lo = Math.floor(Math.min.apply(null, marks) * 2 - 0.5) / 2;
       var pos = function (t) { return ((hi - t) / (hi - lo) * 100).toFixed(1) + '%'; };
       var show = function (sel, t) { var el = q(sel); el.hidden = !isFinite(t); if (isFinite(t)) el.style.left = pos(t); };
-      q('[data-goal-track-fill]').style.width = pos(lt);
+      q('[data-goal-track-fill]').style.width = isFinite(lt) ? pos(lt) : '0';
       show('[data-goal-track-latest]', lt);
       show('[data-goal-track-best]', bt);
       show('[data-goal-track-goal]', shown);
+      show('[data-goal-track-suggested]', suggestedTime);
+      set('goalTrackKey', [isFinite(lt) && 'Filled: latest', isFinite(bt) && 'triangle: best',
+        typed ? 'yellow dot: goal' : isFinite(suggestedTime) && 'open circle: suggested goal'].filter(Boolean).join(' · '));
       set('goalTrackHi', race(hi));
       set('goalTrackLo', race(lo));
-      q('[data-goal-track-bar]').setAttribute('aria-label', 'Latest ' + race(lt) + ', best ' + race(bt) + (typed ? ', goal ' + race(goal) : ''));
+      q('[data-goal-track-bar]').setAttribute('aria-label', [isFinite(lt) && 'Latest ' + race(lt), isFinite(bt) && 'best ' + race(bt),
+        typed ? 'goal ' + race(goal) : isFinite(suggestedTime) && 'suggested goal ' + race(suggestedTime)].filter(Boolean).join(', '));
     }
     state.summaryShare = (typed ? 'Working toward ' + race(goal) + ' in the ' + state.course + ' ' + ev + (latest ? ':' : '.') :
       'My ' + state.course + ' ' + ev + (latest ? ':' : '.')) +
@@ -1509,11 +1536,138 @@
   // than five.
   var LINE_COLORS = ['#0068AD', '#CC2030', '#2A9D8F', '#E09F3E', '#6A4C93', '#1F7A3A', '#5A6B7D', '#8CC0E3', '#B5651D', '#D45087'];
   var LABEL_LIMIT = 40; // more of Your Event's dots than this: times on hover
+  var PICK_LABEL_LIMIT = 12; // the same for a selection's dots, which mix events
   var YEAR_MS = 365.25 * 864e5, ZOOM_MIN = 5 * YEAR_MS, ZOOM_STEP = 0.6;
   var STROKE_SHORT = { Free: 'Fr', Back: 'Ba', Breast: 'Br', Fly: 'Fl', IM: 'IM' };
   // all: every race, not just Your Event's course and stroke; hidden: lines
   // turned off (an event's key, or top10); zoom: the years shown (null: all)
   var trend = { all: false, hidden: {}, zoom: { key: null, span: null, end: null }, dragged: false };
+
+  // Races picked in the Your Races modal, per chart (trend: Race History,
+  // pred: Race Time Predictions): race ids, or null for the chart's own
+  // choice. Not saved.
+  var picked = { trend: null, pred: null };
+  var PICK_CHARTS = { trend: 'Race History', pred: 'Race Time Predictions' };
+
+  // A chart's "Showing N selected races · Clear" line, while it has a
+  // selection (shown: how many of them it can draw)
+  function renderPickedNote(target, shown) {
+    var note = root.querySelector('[data-picked-note="' + target + '"]');
+    if (!note) return;
+    var ids = picked[target];
+    note.hidden = !ids;
+    if (!ids) return;
+    var n = ids.length, races = n === 1 ? ' race' : ' races';
+    note.querySelector('[data-picked-text]').textContent = shown === n || target === 'trend' && shown ?
+      'Showing ' + n + ' selected' + races + '.' :
+      target === 'pred' ? (shown ? 'Showing ' + shown + ' of your ' + n + ' selected' + races + ' (only ' + lowerStroke(state.stroke) + ' races here).' :
+        'None of your ' + n + ' selected' + races + ' are ' + lowerStroke(state.stroke) + ' races.') :
+      'None of your ' + n + ' selected' + races + ' have a date to chart.';
+  }
+
+  // ---------- Your Races modal ----------
+
+  // pick: which chart it adds to, the boxes checked (ids) and the filters
+  var pick = { target: 'trend', ids: [], course: '', stroke: '', distance: '' };
+
+  function pickRaces() {
+    return state.races.map(function (r) {
+      return { id: r.id, course: r.course, d: Number(r.distance), stroke: r.stroke, secs: parse(r.time), date: r.date };
+    }).filter(function (r) { return isFinite(r.secs); })
+      .sort(function (a, b) { return (b.date || '').localeCompare(a.date || '') || b.id - a.id; });
+  }
+
+  // Opening: for the chart it came from, its current selection checked, no filters
+  function preparePick(target) {
+    pick = { target: target, ids: (picked[target] || []).slice(), course: '', stroke: '', distance: '' };
+    renderPick();
+  }
+
+  function renderPick() {
+    var modal = document.getElementById('swimDeckRaces');
+    if (!modal) return;
+    var all = pickRaces();
+    // Distances on offer: those raced in the course and stroke chosen
+    var inCS = all.filter(function (r) { return (!pick.course || r.course === pick.course) && (!pick.stroke || r.stroke === pick.stroke); });
+    var ds = [];
+    inCS.forEach(function (r) { if (ds.indexOf(r.d) < 0) ds.push(r.d); });
+    ds.sort(function (a, b) { return a - b; });
+    if (pick.distance && ds.indexOf(Number(pick.distance)) < 0) pick.distance = '';
+    var dsel = modal.querySelector('[data-pick-input="distance"]');
+    dsel.innerHTML = '<option value="">All</option>' + ds.map(function (d) { return '<option value="' + d + '">' + d + '</option>'; }).join('');
+    dsel.value = pick.distance;
+    modal.querySelector('[data-pick-input="stroke"]').value = pick.stroke;
+    modal.querySelectorAll('[data-pick-filter="course"] [data-value]').forEach(function (btn) {
+      btn.setAttribute('aria-pressed', String(btn.getAttribute('data-value') === pick.course));
+    });
+    var shown = inCS.filter(function (r) { return !pick.distance || r.d === Number(pick.distance); });
+    var checked = function (r) { return pick.ids.indexOf(r.id) >= 0; };
+    pick.shown = shown.map(function (r) { return r.id; });
+    modal.querySelector('[data-pick-list]').innerHTML = shown.length ? shown.map(function (r) {
+      return '<li><label class="swim-pick__row"><input type="checkbox" data-pick-id="' + r.id + '"' + (checked(r) ? ' checked' : '') + '>' +
+        '<span class="swim-races__course">' + r.course + '</span>' +
+        '<span class="swim-pick__event">' + r.d + ' ' + r.stroke + ' <span class="swim-races__date">' + formatDate(r.date) + '</span></span>' +
+        '<span class="swim-races__time">' + race(r.secs) + '</span></label></li>';
+    }).join('') : '<li class="swim-pick__none">No races match.</li>';
+    set('pickIntro', 'Check the races to show on ' + PICK_CHARTS[pick.target] + '; it shows only those until you clear them.');
+    renderPickStatus();
+  }
+
+  // Ticking boxes leaves the list (and its scroll) alone: just Select all
+  // shown, the count and Add to chart
+  function renderPickStatus() {
+    var modal = document.getElementById('swimDeckRaces');
+    var shown = pick.shown || [];
+    modal.querySelectorAll('[data-pick-id]').forEach(function (box) {
+      box.checked = pick.ids.indexOf(Number(box.getAttribute('data-pick-id'))) >= 0;
+    });
+    var on = shown.filter(function (id) { return pick.ids.indexOf(id) >= 0; }).length;
+    var allBox = modal.querySelector('[data-pick-all]');
+    allBox.checked = !!shown.length && on === shown.length;
+    allBox.indeterminate = on > 0 && on < shown.length;
+    allBox.disabled = !shown.length;
+    set('pickCount', shown.length + (shown.length === 1 ? ' race' : ' races') + ' shown · ' + pick.ids.length + ' selected');
+    modal.querySelector('[data-pick-add]').disabled = !pick.ids.length;
+  }
+
+  document.addEventListener('click', function (e) {
+    var opener = e.target.closest('[data-races-target]');
+    if (opener) { preparePick(opener.getAttribute('data-races-target')); return; }
+    var course = e.target.closest('[data-pick-filter] [data-value]');
+    if (course) { pick.course = course.getAttribute('data-value'); renderPick(); return; }
+    if (e.target.closest('[data-pick-add]') && pick.ids.length) {
+      picked[pick.target] = pick.ids.slice();
+      close(document.getElementById('swimDeckRaces'));
+      render();
+      return;
+    }
+    var clear = e.target.closest('[data-picked-clear]');
+    if (clear) {
+      picked[clear.getAttribute('data-picked-clear')] = null;
+      render();
+    }
+  });
+
+  document.addEventListener('change', function (e) {
+    var el = e.target;
+    if (el.hasAttribute('data-pick-input')) {
+      pick[el.getAttribute('data-pick-input')] = el.value;
+      renderPick();
+    } else if (el.hasAttribute('data-pick-id')) {
+      var id = Number(el.getAttribute('data-pick-id')), at = pick.ids.indexOf(id);
+      if (el.checked && at < 0) pick.ids.push(id);
+      if (!el.checked && at >= 0) pick.ids.splice(at, 1);
+      renderPickStatus();
+    } else if (el.hasAttribute('data-pick-all')) {
+      // Every race shown in, or out; the ones filtered away stay as they were
+      document.querySelectorAll('#swimDeckRaces [data-pick-id]').forEach(function (box) {
+        var id = Number(box.getAttribute('data-pick-id')), at = pick.ids.indexOf(id);
+        if (el.checked && at < 0) pick.ids.push(id);
+        if (!el.checked && at >= 0) pick.ids.splice(at, 1);
+      });
+      renderPickStatus();
+    }
+  });
 
   // The zoom bar: hidden when every race fits in five years; each button off
   // at its limit, and the years in view for screen readers
@@ -1552,9 +1706,13 @@
     var card = root.querySelector('[data-trend]');
     if (!card) return;
     var selected = state.course + ' ' + Number(state.distance) + ' ' + state.stroke;
-    var dated = predRaces().filter(function (r) {
-      return r.date && (trend.all || (r.course === state.course && r.stroke === state.stroke));
+    // A selection from the Your Races modal: only those races, any course
+    // or stroke, drawn as with Show All Races (mixed: no unit, goal or Top 10)
+    var ids = picked.trend, mixed = trend.all || !!ids;
+    var dated = (ids ? pickedRaces(ids) : predRaces()).filter(function (r) {
+      return r.date && (mixed || (r.course === state.course && r.stroke === state.stroke));
     });
+    renderPickedNote('trend', ids && dated.length);
     // No races at all: no card. Races, but none in this course and stroke:
     // the card stays, its chart blank, with a note in red over it.
     var anyRaces = predRaces().some(function (r) { return r.date; });
@@ -1602,7 +1760,7 @@
     // off and on), just what Your Event's wide, see-through line is
     var legend = card.querySelector('[data-trend-legend]');
     var selectedEvent = list.filter(function (e) { return e.selected; })[0];
-    legend.innerHTML = selectedEvent && !trend.all ? '<span class="swim-trend__key swim-trend__key--static">' +
+    legend.innerHTML = selectedEvent && !mixed ? '<span class="swim-trend__key swim-trend__key--static">' +
       '<span class="swim-trend__swatch swim-trend__swatch--event" style="background: ' + selectedEvent.color + '" aria-hidden="true"></span>Selected race</span>' : '';
     var svg = card.querySelector('[data-trend-svg]'), dots = card.querySelector('[data-trend-dots]');
     if (!all.length) {
@@ -1617,13 +1775,13 @@
     // Your goal, once typed (Race Planning's Goal): a solid deep yellow dot,
     // as Race Time Predictions', at today, so the years run to now; not with
     // every race showing (it's Your Event's)
-    var goalSecs = !trend.all && !state.goalAuto && state.goal !== '' && validEntry(state.goal) ? parse(state.goal) : NaN;
+    var goalSecs = !mixed && !state.goalAuto && state.goal !== '' && validEntry(state.goal) ? parse(state.goal) : NaN;
     var goalT = new Date(today() + 'T00:00:00').getTime();
     var goalPace = goalSecs / (Number(state.distance) / 100);
     if (isFinite(goalPace)) t1 = Math.max(t1, goalT);
     // The years shown: every race to start with, zoomed down to five; a new
     // course or stroke starts over
-    var z = trend.zoom, zkey = state.course + ' ' + state.stroke + (trend.all ? ' all' : '');
+    var z = trend.zoom, zkey = state.course + ' ' + state.stroke + (ids ? ' picked ' + ids.join(',') : trend.all ? ' all' : '');
     if (z.key !== zkey) { z.key = zkey; z.span = null; z.end = null; }
     var full = t1 - t0, canZoom = full > ZOOM_MIN;
     var span = canZoom && z.span ? Math.min(full, Math.max(ZOOM_MIN, z.span)) : full;
@@ -1637,7 +1795,7 @@
     (AVAILABLE || []).forEach(function (x) { seasons[x.season] = 1; });
     // (not with every race showing: courses and strokes mixed, it isn't
     // any one event's)
-    var tens = trend.all || trend.hidden.top10 || !swimmerGender() ? [] : shown.filter(function (e) { return e.selected; }).map(function (e) {
+    var tens = mixed || trend.hidden.top10 || !swimmerGender() ? [] : shown.filter(function (e) { return e.selected; }).map(function (e) {
       var pts = Object.keys(seasons).map(Number).sort().map(function (season) {
         var at = season + '-05-31', t = new Date(at + 'T00:00:00').getTime(), age = ageOn(at);
         if (t < t0 || t > t1 || age == null) return null;
@@ -1646,7 +1804,7 @@
       }).filter(Boolean);
       return { e: e, pts: pts };
     }).filter(function (x) { return x.pts.length; });
-    if (!trend.all && (tens.length || trend.hidden.top10)) {
+    if (!mixed && (tens.length || trend.hidden.top10)) {
       legend.insertAdjacentHTML('beforeend', '<button type="button" class="swim-trend__key" data-trend-line="top10" aria-pressed="' + !trend.hidden.top10 + '">' +
         '<span class="swim-trend__swatch swim-trend__swatch--top10"></span>Top 10 (1st–10th place)</button>');
     }
@@ -1654,7 +1812,8 @@
     legend.insertAdjacentHTML('beforeend', '<span class="swim-trend__key swim-trend__key--static"><span class="swim-trend__swatch swim-trend__swatch--best" aria-hidden="true"></span>Personal Best</span>');
     if (isFinite(goalPace)) legend.insertAdjacentHTML('beforeend', '<span class="swim-trend__key swim-trend__key--static"><span class="swim-trend__swatch swim-pred-swatch--goal" aria-hidden="true"></span>Your goal</span>');
     // Every race on the chart, or back to Your Event's course and stroke
-    legend.insertAdjacentHTML('beforeend', '<button type="button" class="swim-pred-link swim-trend__all" data-trend-all aria-pressed="' + trend.all + '">' +
+    // (not with a selection showing: its Clear goes back)
+    if (!ids) legend.insertAdjacentHTML('beforeend', '<button type="button" class="swim-pred-link swim-trend__all" data-trend-all aria-pressed="' + trend.all + '">' +
       (trend.all ? 'Show ' + state.course + ' ' + state.stroke + ' Only' : 'Show All Races') + '</button>');
     // The pace scale fits the races in view (all of them if none are)
     var seen = all.filter(function (r) { return inWin(when(r)); });
@@ -1664,14 +1823,17 @@
     var fastest = Math.min.apply(null, paces);
     var scale = paceScale(fastest, Math.max.apply(null, paces), fastest);
     // With every race showing, courses mix yards and meters: no unit
-    var unit = trend.all ? '' : ' ' + COURSES[state.course].unit;
+    var unit = mixed ? '' : ' ' + COURSES[state.course].unit;
     // Times along 4–96%, so labels on the first and last races aren't cut off
     var xAt = function (t) { return w1 > w0 ? 4 + (t - w0) / (w1 - w0) * 92 : 50; };
     var x = function (r) { return xAt(when(r)); };
     var y = function (r) { return scale.y(pace(r)); };
-    var labels = shown.filter(function (e) { return e.selected; }).reduce(function (n, e) {
+    // Labelled: Your Event's dots, or with a selection showing, every one
+    // while there are few enough to read (PICK_LABEL_LIMIT); else bests only
+    var labelled = function (e) { return ids ? true : e.selected; };
+    var labels = shown.filter(labelled).reduce(function (n, e) {
       return n + e.races.filter(function (r) { return inWin(when(r)); }).length;
-    }, 0) <= LABEL_LIMIT;
+    }, 0) <= (ids ? PICK_LABEL_LIMIT : LABEL_LIMIT);
     // Zoomed in, lines run on past the edges and are cut there
     svg.style.clipPath = zoomed ? 'inset(-40px 3.5% -40px 3.5%)' : '';
     // The age group's Top 10 each season: the fastest swim (1st place, a
@@ -1698,7 +1860,7 @@
         var at = 'left: ' + x(r).toFixed(2) + '%; top: ' + y(r).toFixed(1) + '%', isBest = r.secs === e.best;
         return '<span class="swim-trend__dot' + (isBest ? ' is-best' : '') + (e.selected ? '' : ' is-other') + '" style="' + at + '; border-color: ' + e.color + '; background: ' + e.color + '" title="' +
           e.course + ' ' + e.d + ' ' + e.stroke + ' · ' + formatDate(r.date) + ' · ' + race(r.secs) + (isBest ? ' (best)' : '') + '"></span>' +
-          ((labels && e.selected) || isBest ? '<span class="swim-trend__label' + (e.selected ? ' is-below' : ' is-other') + '" style="' + at + '; color: ' + e.color + '">' + race(r.secs) + '</span>' : '');
+          ((labels && labelled(e)) || isBest ? '<span class="swim-trend__label' + (e.selected || ids ? ' is-below' : ' is-other') + '" style="' + at + '; color: ' + e.color + '">' + race(r.secs) + '</span>' : '');
       }).join('');
     }).join('') + (isFinite(goalPace) && inWin(goalT) ? '<span class="swim-pred__dot is-goal" style="left: ' + xAt(goalT).toFixed(2) + '%; top: ' +
       scale.y(goalPace).toFixed(1) + '%" title="Your goal: ' + race(goalSecs) + ' in the ' + state.distance + ' ' + lowerStroke(state.stroke) + '"></span>' : '');
@@ -1719,9 +1881,9 @@
       return '<span style="left: ' + tickAt[i].toFixed(1) + '%">' + yr + '</span>';
     }).join('');
     renderZoom(card, canZoom, zoomed, full, span, end, t0, w0, w1);
-    setWithSynth('trendNote', (trend.all ? 'Every race' : 'Your ' + state.course + ' ' + lowerStroke(state.stroke) + ' races') +
+    setWithSynth('trendNote', (ids ? 'Your selected races' : trend.all ? 'Every race' : 'Your ' + state.course + ' ' + lowerStroke(state.stroke) + ' races') +
       ' over time, as pace per 100 (slower is higher). Each dot is a race' +
-      (labels ? '; the ' + state.distance + '\'s are labelled with their time and the others show it on hover' : ', with its time on hover') +
+      (labels ? (ids ? ', labelled with its time' : '; the ' + state.distance + '\'s are labelled with their time and the others show it on hover') : ', with its time on hover') +
       '. The solid ▲ marks each event\'s best.' +
       (tens.length ? ' The grey lines are your age group\'s Top 10 each season: the fastest swim (solid) and 10th place (dashed), from USMS event rankings.' : ''), synthSeasons(tens));
     svg.setAttribute('aria-label', shown.map(function (e) {
@@ -1794,15 +1956,19 @@
   function renderConversions(age) {
     var c = state.conv, list = eventsFor(c.course, c.stroke);
     fitDistance(c, list);
-    renderEventOptions(root.querySelector('[data-st-conv-options]'), list, c.course + ' ' + c.stroke);
-    root.querySelectorAll('[data-conv]').forEach(function (group) {
+    // The section's controls, and the Time Conversions modal's (Editors.njk)
+    document.querySelectorAll('[data-st-conv-options]').forEach(function (sel) {
+      renderEventOptions(sel, list, c.course + ' ' + c.stroke);
+    });
+    document.querySelectorAll('[data-conv]').forEach(function (group) {
       var value = c[group.getAttribute('data-conv')];
       group.querySelectorAll('[data-value]').forEach(function (btn) {
         btn.setAttribute('aria-pressed', String(btn.getAttribute('data-value') === value));
       });
     });
-    var sel = root.querySelector('[data-conv-input="distance"]');
-    if (sel.value !== c.distance) sel.value = c.distance;
+    document.querySelectorAll('[data-conv-input="distance"]').forEach(function (sel) {
+      if (sel.value !== c.distance) sel.value = c.distance;
+    });
     set('convDistance', c.distance);
 
     var d = Number(c.distance);
@@ -1826,8 +1992,8 @@
     // typed in either
     if (typed) state.convNeedsTime = false;
     var waiting = !!state.convNeedsTime;
-    markTimeField(root.querySelector('[data-time-conv="time"]'), (byPace || ok) && !waiting);
-    markTimeField(root.querySelector('[data-time-conv="pace"]'), (!byPace || ok) && !waiting);
+    document.querySelectorAll('[data-time-conv="time"]').forEach(function (f) { markTimeField(f, (byPace || ok) && !waiting); });
+    document.querySelectorAll('[data-time-conv="pace"]').forEach(function (f) { markTimeField(f, (!byPace || ok) && !waiting); });
     // Only an error here; an empty field's prompt is its red outline
     set('convHint', !ok ? (byPace ? 'Pace' : 'Time') + ': seconds must be under 60.' : '');
 
@@ -1867,7 +2033,6 @@
     // Centred on the middle row (the 55–59 of seven), not the list's middle
     var rows = root.querySelectorAll('[data-st-age-rows] > li'), mid = rows[Math.floor(rows.length / 2)];
     prompt.style.top = mid ? (mid.offsetTop + mid.offsetHeight / 2) + 'px' : '';
-    renderRank(age, secs);
   }
 
   // ---------- Rank in Age Group ----------
@@ -1889,10 +2054,11 @@
     return z < 0 ? (1 - erf) / 2 : (1 + erf) / 2;
   }
 
-  // The Convert a Time entry's place among your age group's swimmers in
+  // Race Planning: Your Event's time (secs, named by what it is: "goal",
+  // "best", "45–49 median"…) placed among your age group's swimmers in
   // that event
-  function renderRank(age, secs) {
-    var c = state.conv, d = Number(c.distance);
+  function renderRank(age, secs, name) {
+    var c = { course: state.course, distance: state.distance, stroke: state.stroke }, d = Number(c.distance);
     var k = 0;
     AGE_GROUPS.forEach(function (g, i) { if (age >= g.min) k = i; });
     var group = AGE_GROUPS[k];
@@ -1900,7 +2066,7 @@
     // No time yet: place and share show "- -"; the average and Top 10% don't need one
     var empty = !age ? 'Enter an age of 18 or older.'
       : !isFinite(avg) ? 'No age group data for this event.' : '';
-    set('rankSubtitle', c.distance + ' ' + c.stroke + ' | ' + c.course);
+    set('rankSubtitle', c.distance + ' ' + c.stroke + ' | ' + c.course + (isFinite(secs) ? ' · ' + name + ' ' + race(secs) : ''));
     set('rankEmpty', empty);
     root.querySelector('[data-st="rankEmpty"]').hidden = !empty;
     root.querySelector('[data-st-rank]').hidden = !!empty;
@@ -1953,8 +2119,6 @@
     set('logCalories', ok && isFinite(w.calories) ? w.calories + ' cal' : '—');
     set('logEffort', w && w.effort ? w.effort + ' / 10' : '');
     document.querySelector('[data-st-log-effort]').hidden = !(w && w.effort);
-    set('logHrZone', w && w.hrZone ? 'Zone ' + w.hrZone + ', ' + HR_ZONE_WORDS[w.hrZone] : '');
-    document.querySelector('[data-st-log-hr-zone]').hidden = !(w && w.hrZone);
     var date = document.getElementById('sd-log-date');
     date.value = today();
     date.max = today();
@@ -1973,8 +2137,7 @@
     }
     var entry = {
       date: date.value, course: w.course, distance: w.distance, time: race(w.secs),
-      pace: clock(w.pace), stroke: w.stroke, calories: w.calories, effort: w.effort ? Number(w.effort) : null,
-      hrZone: w.hrZone ? Number(w.hrZone) : null
+      pace: clock(w.pace), stroke: w.stroke, calories: w.calories, effort: w.effort ? Number(w.effort) : null
     };
     try {
       var log = JSON.parse(localStorage.getItem(LOG_KEY)) || [];
@@ -2148,9 +2311,10 @@
     if (!swims.length) return false;
 
     // Weekly yards, rolling 7-day weeks back from today (0: the last 7 days)
-    var weeks = [];
-    for (var w = 0; w < TREND_WEEKS + TREND_ROLL - 1; w++) weeks.push(0);
-    all.forEach(function (e) { weeks[Math.floor(e.ago / 7)] += e.yards; });
+    // and how many swims each
+    var weeks = [], counts = [];
+    for (var w = 0; w < TREND_WEEKS + TREND_ROLL - 1; w++) { weeks.push(0); counts.push(0); }
+    all.forEach(function (e) { weeks[Math.floor(e.ago / 7)] += e.yards; counts[Math.floor(e.ago / 7)]++; });
     // How many weeks back your logging reaches (within the history read)
     var since = Math.floor(Math.max.apply(null, all.map(function (e) { return e.ago; })) / 7) + 1;
 
@@ -2163,9 +2327,6 @@
     var yd = function (n) { return Math.round(n).toLocaleString('en-US'); };
 
     set('statusTitle', word);
-    set('statusWeek', yd(weeks[0]));
-    set('statusAvg', yd(avg));
-    set('statusSwims', String(swims.length));
     set('statusText', {
       Overreaching: 'About ' + ratio.toFixed(1) + ' times your usual week. Take an easy day or two, and build toward weeks like this gradually.',
       Building: 'You\'re swimming more than your usual week. Keep the increase gradual.',
@@ -2174,12 +2335,80 @@
       Detraining: 'No swims in the last 7 days (your last was ' + last + ' days ago). Fitness starts to slip after a week or two off.'
     }[word]);
 
-    renderTimeline(weeks, since, yd);
+    // The last 7 days, a day each (0: today), and how many swims each
+    var days = [0, 0, 0, 0, 0, 0, 0], dayCounts = [0, 0, 0, 0, 0, 0, 0];
+    all.forEach(function (e) { if (e.ago < 7) { days[e.ago] += e.yards; dayCounts[e.ago]++; } });
+
+    var byWeek = renderTimeline(weeks, counts, since, yd);
+    renderDays(days, yd);
+    // The figures line and the chart, for the view chosen
+    var inDays = statusView === 'days';
+    var swimCount = inDays ? dayCounts.reduce(function (a, b) { return a + b; }, 0) : byWeek.swims;
+    // "Last 6 weeks" / "Last 7 days" with the number as big and bold as the
+    // figures beside it; a stepped-back week's dates as they are
+    var range = inDays ? 'Last 7 days' : byWeek.range;
+    root.querySelector('[data-st="statusRange"]').innerHTML = range.replace(/^Last (\d+)/, 'Last <span class="swim-status__figure">$1</span>');
+    set('statusAvg', yd(inDays ? weeks[0] : byWeek.avg));
+    set('statusAvgUnit', inDays ? ' yd' : ' y/avg');
+    set('statusSwims', String(swimCount));
+    set('statusSwimsUnit', swimCount === 1 ? ' swim' : ' swims');
+    card.querySelectorAll('[data-status-view]').forEach(function (btn) {
+      btn.setAttribute('aria-pressed', String(btn.getAttribute('data-status-view') === statusView));
+    });
+    card.querySelectorAll('[data-status-chart], [data-status-key]').forEach(function (el) {
+      el.hidden = (el.getAttribute('data-status-chart') || el.getAttribute('data-status-key')) !== statusView;
+    });
+    // The arrows step weeks; in Days there's nothing to step
+    if (inDays) card.querySelectorAll('[data-weeks-step]').forEach(function (btn) { btn.disabled = true; });
     return true;
   }
 
+  // Training Summary's Weeks / Days toggle
+  var statusView = 'weeks';
+  root.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-status-view]');
+    if (!btn) return;
+    statusView = btn.getAttribute('data-status-view');
+    renderStatus();
+  });
+
+  // Days: the last 7 days, oldest on the left, each a light grey column
+  // filled blue to its yards on one scale (the week's biggest day fills it),
+  // today darker; a day off is the grey column alone
+  function renderDays(days, yd) {
+    var box = root.querySelector('[data-status-days]');
+    var dates = root.querySelector('[data-status-day-dates]');
+    var max = Math.max.apply(null, days) || 1;
+    var now = new Date(today() + 'T00:00:00');
+    var date = function (back) { return new Date(now.getFullYear(), now.getMonth(), now.getDate() - back); };
+    var order = [6, 5, 4, 3, 2, 1, 0];
+    if (box.children.length !== 7) {
+      box.innerHTML = order.map(function () {
+        return '<span class="swim-days__col"><span class="swim-days__bar"></span></span>';
+      }).join('');
+      dates.innerHTML = order.map(function () { return '<span></span>'; }).join('');
+    }
+    order.forEach(function (d, i) {
+      var col = box.children[i], bar = col.firstChild;
+      bar.style.height = days[d] ? Math.max(4, days[d] / max * 100).toFixed(1) + '%' : '0';
+      bar.classList.toggle('is-now', d === 0);
+      var when = date(d).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+      col.title = when + ': ' + (days[d] ? yd(days[d]) + ' yd' : 'no swim');
+      dates.children[i].textContent = d === 0 ? 'Today' : date(d).toLocaleDateString('en-US', { weekday: 'short' });
+    });
+    box.setAttribute('aria-label', 'Yards per day, the last 7 days, oldest first: ' + order.map(function (d) {
+      return date(d).toLocaleDateString('en-US', { weekday: 'short' }) + ' ' + (days[d] ? yd(days[d]) : 'no swim');
+    }).join(', ') + '.');
+  }
+
   // The timeline's 6 weeks (see TREND_WEEKS)
-  function renderTimeline(weeks, since, yd) {
+  // How far the 3-week average runs on past the outer bars, in slots
+  var TREND_RUN = 0.15;
+
+  // All 12 weeks sit side by side on a strip twice the chart's width (bars,
+  // the line and the dates each on their own copy); stepping slides the
+  // strips a slot, so the weeks scroll rather than redraw.
+  function renderTimeline(weeks, counts, since, yd) {
     var rolling = [];
     for (var i = 0; i < TREND_WEEKS; i++) {
       var span = weeks.slice(i, Math.min(i + TREND_ROLL, since));
@@ -2194,38 +2423,69 @@
       return new Date(now.getFullYear(), now.getMonth(), now.getDate() - back).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
     };
 
-    // Shown oldest on the left: week indexes offset+5 down to offset
-    var shown = [];
-    for (var k = TREND_SHOWN - 1; k >= 0; k--) shown.push(trendOffset + k);
+    // The strip's weeks, oldest on the left: slot j is week TREND_WEEKS-1-j
+    var all = [];
+    for (var k = TREND_WEEKS - 1; k >= 0; k--) all.push(k);
     var box = root.querySelector('[data-status-weeks]');
-    // Built once, then updated, so the bars' heights ease as they step
-    if (box.children.length !== TREND_SHOWN + 1) {
-      box.innerHTML = shown.map(function () {
-        return '<span class="swim-weeks__slot"><span class="swim-weeks__bar"></span></span>';
-      }).join('') +
-        '<svg class="swim-weeks__line" viewBox="0 0 ' + TREND_SHOWN + ' 100" preserveAspectRatio="none" aria-hidden="true"><polyline/></svg>';
+    var dates = root.querySelector('[data-status-dates]');
+    var strip = function (inner) {
+      return '<div class="swim-weeks__strip" style="--n: ' + TREND_WEEKS + '">' + inner + '</div>';
+    };
+    // The line twice: grey over the whole strip, behind the bars, and a
+    // white copy inside each bar, clipped to it (the bar's overflow), so
+    // it's white where it crosses a bar and grey elsewhere
+    var line = function (cls, attr) {
+      return '<svg class="swim-weeks__line' + cls + '"' + (attr || '') + ' viewBox="0 0 ' + TREND_WEEKS + ' 100" preserveAspectRatio="none" aria-hidden="true"><polyline/></svg>';
+    };
+    // Built once, then updated, so the strips slide as they step
+    if (!box.querySelector('.swim-weeks__strip')) {
+      box.innerHTML =
+        '<div class="swim-weeks__run">' + strip(line('')) + '</div>' +
+        '<div class="swim-weeks__window">' + strip(all.map(function (w, j) {
+          return '<span class="swim-weeks__slot"><span class="swim-weeks__bar">' + line(' swim-weeks__line--on-bar', ' style="--j: ' + j + '"') + '</span></span>';
+        }).join('')) + '</div>';
+      dates.innerHTML = strip(all.map(function () { return '<span></span>'; }).join(''));
     }
     var slots = box.querySelectorAll('.swim-weeks__slot');
+    var labels = dates.querySelectorAll('.swim-weeks__strip > span');
     var points = [];
-    shown.forEach(function (w, i) {
-      var bar = slots[i].firstChild;
+    all.forEach(function (w, j) {
+      var bar = slots[j].firstChild;
       bar.style.height = Math.max(4, weeks[w] / max * 100).toFixed(1) + '%';
       bar.classList.toggle('is-now', w === 0);
-      slots[i].title = day(w * 7 + 6) + '–' + day(w * 7) + ': ' + yd(weeks[w]) + ' yd' +
+      slots[j].title = day(w * 7 + 6) + '–' + day(w * 7) + ': ' + yd(weeks[w]) + ' yd' +
         (rolling[w] !== null ? ' · 3-week average ' + yd(rolling[w]) + ' yd' : '');
-      if (rolling[w] !== null) points.push((i + 0.5) + ',' + (100 - rolling[w] / max * 100).toFixed(1));
+      labels[j].textContent = day(w * 7 + 6);
+      if (rolling[w] !== null) points.push([j + 0.5, (100 - rolling[w] / max * 100).toFixed(1)]);
     });
-    box.querySelector('polyline').setAttribute('points', points.join(' '));
+    // Run the line on flat past its first and last weeks: to the slot's
+    // edge (half a slot) and TREND_RUN beyond, outside the bars
+    if (points.length) {
+      var first = points[0], last = points[points.length - 1];
+      points.unshift([first[0] - 0.5 - TREND_RUN, first[1]]);
+      points.push([last[0] + 0.5 + TREND_RUN, last[1]]);
+    }
+    var pts = points.map(function (p) { return p.join(','); }).join(' ');
+    box.querySelectorAll('polyline').forEach(function (pl) { pl.setAttribute('points', pts); });
+
+    // Slide the strips so weeks offset+5 down to offset show
+    var shift = 'translateX(' + (-(TREND_WEEKS - TREND_SHOWN - trendOffset) / TREND_WEEKS * 100).toFixed(4) + '%)';
+    root.querySelectorAll('.swim-timeline .swim-weeks__strip').forEach(function (el) { el.style.transform = shift; });
+
+    var shown = all.slice(TREND_WEEKS - TREND_SHOWN - trendOffset, TREND_WEEKS - trendOffset);
     box.setAttribute('aria-label', 'Yards per week, ' + day(shown[0] * 7 + 6) + ' to ' + day(trendOffset * 7) + ', oldest first: ' +
       shown.map(function (w) { return yd(weeks[w]) + (rolling[w] !== null ? ' (3-week average ' + yd(rolling[w]) + ')' : ''); }).join(', ') + '.');
-
-    // Each week's first day under its bar
-    root.querySelector('[data-status-dates]').innerHTML = shown.map(function (w) {
-      return '<span>' + day(w * 7 + 6) + '</span>';
-    }).join('');
-    set('statusRange', trendOffset ? day(shown[0] * 7 + 6) + ' – ' + day(trendOffset * 7) : 'Last 6 weeks');
+    // The figures line follows the weeks shown: their dates, weekly
+    // average (over only the weeks since logging began) and swims
+    var inView = shown.filter(function (w) { return w < since; });
+    var sum = function (arr) { return inView.reduce(function (a, w) { return a + arr[w]; }, 0); };
     root.querySelector('[data-weeks-step="1"]').disabled = trendOffset >= maxOffset;
     root.querySelector('[data-weeks-step="-1"]').disabled = trendOffset <= 0;
+    return {
+      range: trendOffset ? day(shown[0] * 7 + 6) + ' – ' + day(trendOffset * 7) : 'Last 6 weeks',
+      avg: inView.length ? sum(weeks) / inView.length : 0,
+      swims: sum(counts)
+    };
   }
 
   // The timeline's arrows: a week back (1) or forward (-1)
@@ -2316,11 +2576,7 @@
     set('effortFelt', t.effort);
     set('effortWord', t.effort ? '· ' + FELT_WORDS[t.effort] : '(optional)');
     renderSlider(t.effort);
-    set('hrZoneWord', t.hrZone ? '· ' + HR_ZONE_WORDS[t.hrZone] : '(optional)');
   }
-
-  // Heart rate zones' words, on the usual five-zone scale
-  var HR_ZONE_WORDS = { 1: 'Recovery', 2: 'Endurance', 3: 'Tempo', 4: 'Threshold', 5: 'Max' };
 
   // ---------- Effort slider ----------
 
@@ -2436,7 +2692,7 @@
     renderFelt(t);
 
     // The workout as it stands, for Add to Log
-    metricsNow = { course: t.course, unit: unit, distance: d, secs: secs, pace: pace, stroke: t.stroke, calories: calories, effort: t.effort, hrZone: t.hrZone };
+    metricsNow = { course: t.course, unit: unit, distance: d, secs: secs, pace: pace, stroke: t.stroke, calories: calories, effort: t.effort };
 
     // Pace conversion: that pace per 100 in the two other courses (its tile,
     // PaceConversion.njk, is retired for now; this fills it if it's back)
@@ -2479,13 +2735,16 @@
     // Context distance
     var list = eventsFor(state.course, state.stroke);
     fitDistance(state, list);
-    renderEventOptions(root.querySelector('[data-st-event-options]'), list, state.course + ' ' + state.stroke);
+    // The section's Distance, and the Race Planning modal's (Editors.njk)
+    document.querySelectorAll('[data-st-event-options]').forEach(function (sel) {
+      renderEventOptions(sel, list, state.course + ' ' + state.stroke);
+    });
     set('distance', state.distance);
     // The goal belongs to one event; a new event starts it empty
     var eventKey = state.course + ' ' + state.distance + ' ' + state.stroke;
     if (lastEvent && eventKey !== lastEvent && !state.goalAuto) {
       state.goal = '';
-      fillTimeField(document.querySelector('[data-time-input="goal"]'), ''); // even if focused
+      document.querySelectorAll('[data-time-input="goal"]').forEach(function (f) { fillTimeField(f, ''); }); // even if focused
     }
     // Top 10 by Decade follows a new Your Event
     if (eventKey !== lastEvent) followEvent();
@@ -2534,22 +2793,26 @@
     // Rank and Tier: the same time, named by where it came from
     // (a prediction from the median, with no races, is the median)
     var projectedTime = isFinite(goalRow.proj) && !goalRow.fromTime;
-    renderTier(goal, goalTyped ? 'goal' : untypedName || (isFinite(goalRow.you) ? 'best' : projectedTime ? 'projected time' : ageGroup().label + ' median'));
+    var goalName = goalTyped ? 'goal' : untypedName || (isFinite(goalRow.you) ? 'best' : projectedTime ? 'projected time' : ageGroup().label + ' median');
+    renderTier(goal, goalName);
+    // Rank in Age Group: the same time, from the sample averages
+    renderRank(age, goal, goalName);
     // Toward the age-group median: just whose median ("50 Free | 45–49
     // Men's/Open"); otherwise the time and what it is
     var toMedian = !goalTyped && (untypedName ? suggested.kind !== 'break' : !isFinite(goalRow.you) && !projectedTime);
     set('splitsSubtitle', state.distance + ' ' + state.stroke + (toMedian ?
       ' | ' + ageGroup().label + (CATEGORY_NAMES[swimmerGender()] ? ' ' + CATEGORY_NAMES[swimmerGender()] : '') :
       (goalTyped ? ' · goal ' : untypedName ? ' · ' + untypedName + ' ' : isFinite(goalRow.you) ? ' · your best ' : ' · your projected time ') + race(goal)));
-    var goalField = document.querySelector('[data-time-input="goal"]');
-    setTimePlaceholders(goalField, untyped);
+    var goalFields = document.querySelectorAll('[data-time-input="goal"]');
+    goalFields.forEach(function (f) { setTimePlaceholders(f, untyped); });
     // Beside the Goal field: Set this goal (the suggestion in its boxes, or a
-    // guest's median), or Edit this goal once one's set
+    // guest's median), only until a goal is set (no Edit this goal since
+    // 2026-10-15: the field itself is where you change it)
     state.goalSuggestion = state.goalAuto ? parse(state.goal) : untyped;
     var goalSet = root.querySelector('[data-goal-set]');
-    goalSet.hidden = !goalTyped && !isFinite(state.goalSuggestion);
-    goalSet.textContent = goalTyped ? 'Edit this goal' : 'Set this goal';
-    markTimeField(goalField, goalOk);
+    goalSet.hidden = goalTyped || !isFinite(state.goalSuggestion);
+    goalSet.textContent = 'Set this goal';
+    goalFields.forEach(function (f) { markTimeField(f, goalOk); });
     set('goalHint', goalOk ? '' : 'Goal: seconds must be under 60.');
 
     renderConversions(age);
@@ -2577,7 +2840,7 @@
 
     // A guest's untouched median time looks like a placeholder: grey until
     // they type their own (.is-default)
-    root.querySelector('[data-time-input="goal"]').classList.toggle('is-default', !!state.goalAuto);
+    document.querySelectorAll('[data-time-input="goal"]').forEach(function (f) { f.classList.toggle('is-default', !!state.goalAuto); });
 
     // Pressed state for every segmented control and tile group
     document.querySelectorAll('[data-control]').forEach(function (group) {
@@ -2702,11 +2965,34 @@
     var key = group.getAttribute('data-control') || group.getAttribute('data-metric') ||
       group.getAttribute('data-race') || group.getAttribute('data-conv') || group.getAttribute('data-tens');
     var value = btn.getAttribute('data-value');
+    // Time Conversions' course (the section's or its modal's): the entry
+    // converts to the new course, as Course Conversion shows it, rather
+    // than keeping its number
+    if (target === state.conv && key === 'course' && value !== state.conv.course) convertConvEntry(value);
     // An optional choice (data-optional) clears when its pressed button is clicked
     target[key] = group.hasAttribute('data-optional') && target[key] === value ? '' : value;
     if (target === state && key === 'sex') state.sexChosen = true;
     render();
   });
+
+  // Convert a Time's entry into another course: a pace per 100 by the
+  // courses' factors (to the whole second, the pace field has no
+  // hundredths); a time as the matching event's (the same distance, or its
+  // yards/meters equivalent, which becomes the distance). Left as it is when
+  // it doesn't parse or that course has no matching event.
+  function convertConvEntry(course) {
+    var c = state.conv;
+    if (c.source === 'pace') {
+      if (c.pace === '' || !validEntry(c.pace)) return;
+      c.pace = race(Math.round(parse(c.pace) / COURSES[c.course].factor * COURSES[course].factor));
+      return;
+    }
+    if (c.time === '' || !validEntry(c.time)) return;
+    var to = convertRace({ course: c.course, distance: c.distance, stroke: c.stroke, time: c.time }, course);
+    if (!to.d || !isFinite(to.secs)) return;
+    c.distance = String(to.d);
+    c.time = race(to.secs);
+  }
 
   // Race Time Predictions: chart or table, and its legend pills turning
   // lines off and on (focus stays on the pill, which render replaces)
@@ -3009,21 +3295,15 @@
     render();
   });
 
-  // Set this goal / Edit this goal, beside Race Planning's Goal
+  // Set this goal, beside Race Planning's Goal: the suggestion becomes your goal
   root.addEventListener('click', function (e) {
-    if (!e.target.closest('[data-goal-set]')) return;
-    var typed = state.goal !== '' && !state.goalAuto;
-    if (!typed && isFinite(state.goalSuggestion)) {
-      state.goal = race(state.goalSuggestion);
-      state.goalAuto = false;
-      render();
-      return;
-    }
-    var minutes = root.querySelector('[data-time-input="goal"] [data-time-part="m"]');
-    if (minutes) minutes.focus();
+    if (!e.target.closest('[data-goal-set]') || !isFinite(state.goalSuggestion)) return;
+    state.goal = race(state.goalSuggestion);
+    state.goalAuto = false;
+    render();
   });
 
-  // Summary: share the goal card, and Add goal / Edit goal (to Race Planning's Goal)
+  // Summary: share the goal card, and Add your goal / Edit goal (the Race Planning modal)
   root.addEventListener('click', function (e) {
     if (e.target.closest('[data-goal-share]')) {
       var text = state.summaryShare || '';
@@ -3033,11 +3313,12 @@
       else done(text);
       return;
     }
+    // Add your goal / Edit goal: the Race Planning modal (data-modal-target),
+    // with the cursor in its Goal's minutes, after the modal's own focus
+    // on its first field
     if (e.target.closest('[data-goal-change]')) {
-      e.preventDefault();
-      var box = root.querySelector('[data-time-input="goal"] [data-time-part="m"]');
-      document.getElementById('race-planning').scrollIntoView({ behavior: 'smooth', block: 'start' });
-      if (box) setTimeout(function () { box.focus(); }, 400);
+      var box = document.querySelector('#swimDeckPlan [data-time-input="goal"] [data-time-part="m"]');
+      if (box) setTimeout(function () { box.focus(); box.select(); }, 50);
     }
   });
 
