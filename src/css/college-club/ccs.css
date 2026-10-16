@@ -643,16 +643,17 @@ nav.admin .menu > li > a {
 .ccs-plx__fg {
     z-index: 3;
     pointer-events: none;
-    /* Zoom (data-zoom) grows the crowd up and out from its bottom centre. */
+    /* Zoom (data-zoom-to) grows the crowd up and out from its bottom centre. */
     transform-origin: 50% 100%;
 }
 /* The cutout is the background's crowd, 19px (of 2067 wide) up from its bottom edge. */
 .ccs-plx__fg img { bottom: 0.92%; }
 
-/* Text box measured from the comp: top at comp y 140 = photo row 420 of 1624. */
+/* Text box: the comp put it at 25.9% (comp y 140 = photo row 420 of 1624);
+   raised so the last line sits half behind the zoomed-in crowd, as in the comp. */
 .ccs-plx__words {
     position: absolute;
-    top: 25.9%;
+    top: 18%;
     left: 0;
     right: 0;
     margin: 0;

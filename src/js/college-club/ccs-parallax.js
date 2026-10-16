@@ -3,30 +3,38 @@
 (function () {
     /*
      * Reveal: as the section scrolls into view, the crowd starts high in the frame
-     * and slides down to its resting place, uncovering the pool behind it, while
-     * the words rise from behind the crowd into the gap between them.
+     * and slides down to its resting place while zooming in, the pool rises behind
+     * it so the water shows above the heads, and the words rise from behind the
+     * crowd into the gap between them.
      *
-     * data-shift = where a layer starts, as a fraction of the section's height
-     * (negative = higher, positive = lower). It eases to 0 as the section scrolls
-     * in, and every layer is at rest (the flattened comp) once the section's
-     * bottom edge reaches the bottom of the viewport. -1 would pin the crowd to
-     * the bottom of the viewport the whole way in.
+     * Each layer eases from its "from" values to its "to" values between the
+     * section's top edge entering the bottom of the viewport and the whole section
+     * being on screen, then holds the "to" values.
+     *   data-y-from / data-y-to:       vertical offset as a fraction of the
+     *                                  section's height (negative = up). Default 0.
+     *   data-zoom-from / data-zoom-to: scale, from the layer's transform-origin
+     *                                  (ccs.css). Default 1.
+     * A crowd y-from of -1 would pin it to the bottom of the viewport on the way in.
      *
-     * data-zoom = the layer's scale once the section is fully in view (1.3 = 30%
-     * bigger). It starts at 1 and grows on the same schedule, so the layer zooms
-     * in as you scroll down. It scales from the layer's transform-origin (ccs.css).
-     *
-     * Whatever is below the crowd is always below the fold, so the pool photo can
-     * stay put. It must be the clean plate (crowd removed): the gaps between heads
-     * show it while the crowd is still above its resting place.
+     * The pool must be the clean plate (crowd removed): the gaps between heads
+     * show it while the crowd and pool are out of their comp alignment.
      */
     var stage = document.querySelector("[data-ccs-plx]");
     if (!stage) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    var layers = Array.prototype.map.call(stage.querySelectorAll("[data-shift], [data-zoom]"), function (el) {
-        return { el: el, shift: parseFloat(el.dataset.shift) || 0, zoom: parseFloat(el.dataset.zoom) || 1 };
-    }).filter(function (l) { return l.shift !== 0 || l.zoom !== 1; });
+    function num(el, name, fallback) {
+        var v = parseFloat(el.dataset[name]);
+        return isNaN(v) ? fallback : v;
+    }
+
+    var layers = Array.prototype.map.call(stage.querySelectorAll(".ccs-plx__layer"), function (el) {
+        return {
+            el: el,
+            y0: num(el, "yFrom", 0), y1: num(el, "yTo", 0),
+            z0: num(el, "zoomFrom", 1), z1: num(el, "zoomTo", 1)
+        };
+    }).filter(function (l) { return l.y0 || l.y1 || l.z0 !== 1 || l.z1 !== 1; });
 
     var ticking = false, inView = false;
 
@@ -39,8 +47,8 @@
         // 0 = top edge just entering the bottom of the viewport, 1 = fully in view.
         var p = Math.min(Math.max((vh - r.top) / r.height, 0), 1);
         layers.forEach(function (l) {
-            var y = l.shift * (1 - p) * r.height;
-            var z = 1 + (l.zoom - 1) * p;
+            var y = (l.y0 + (l.y1 - l.y0) * p) * r.height;
+            var z = l.z0 + (l.z1 - l.z0) * p;
             l.el.style.transform = "translate3d(0," + y.toFixed(1) + "px,0) scale(" + z.toFixed(4) + ")";
         });
     }
