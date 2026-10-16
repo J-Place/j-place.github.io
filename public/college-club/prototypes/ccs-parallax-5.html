@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CCS Parallax 5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+<style>
+    /* Demo page chrome only: filler above the section and a short footer below,
+       matching the live home page where this section sits right above the footer. */
+    html { font-size: 62.5%; }
+    body { margin: 0; background: #000; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+    .demo-filler { height: 150vh; background: #f4f4f4; color: #333; padding: 4rem 1.6rem; font-size: 1.6rem; }
+    .demo-footer { min-height: 120px; padding: 4rem; color: #fff; font-size: 1.4rem; }
+</style>
+</head>
+<body>
+
+<div class="demo-filler">Scroll down to the Have Fun. Compete. Connect. section.</div>
+
+<!-- ===== Paste from here into the Sitecore rich-text block ===== -->
+<style>
+    /*
+     * Stage = the visible window. Plate = the full background photo's box
+     * (2067 x 1678), bottom-aligned inside the stage so the black sky is what
+     * gets cropped. All three layers are positioned in plate percentages, so
+     * they stay registered at every width without per-breakpoint offsets.
+     */
+    .ccs-plx {
+        position: relative;
+        width: 100%; /* children are all absolute; in a flex row it would collapse to 0 */
+        overflow: hidden;
+        background: #000;
+        /* Height from width, not aspect-ratio: aspect-ratio + min-height widens the
+           box on phones. Capped at the viewport so big screens crop sky, not crowd. */
+        height: clamp(440px, 54.2vw, 100vh);
+    }
+    .ccs-plx__plate {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: max(100%, 720px);
+        aspect-ratio: 2067 / 1678;
+        /* The comp (ccs-parallax-large.jpg) is photo rows 280-1364 of 1624 at 2000
+           wide: it crops the crowd at the waist. Push the plate down by the 16%
+           below the comp's bottom edge. */
+        transform: translate(-50%, 16%);
+        container-type: inline-size;
+    }
+    .ccs-plx__layer {
+        position: absolute;
+        inset: 0;
+        will-change: transform;
+    }
+    .ccs-plx__layer img {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+    .ccs-plx__bg { z-index: 1; }
+    .ccs-plx__bg img { bottom: 0; }
+    .ccs-plx__text { z-index: 2; }
+    .ccs-plx__fg { z-index: 3; pointer-events: none; }
+    /* The cutout is the background's crowd, 19px (of 2067 wide) up from its bottom edge. */
+    .ccs-plx__fg img { bottom: 0.92%; }
+
+    /* Text box measured from the comp: top at comp y 140 = photo row 420 of 1624. */
+    .ccs-plx__words {
+        position: absolute;
+        top: 25.9%;
+        left: 0;
+        right: 0;
+        margin: 0;
+        text-align: center;
+        font-family: "Anton", sans-serif;
+        font-weight: 400;
+        font-size: 13.2cqw;
+        line-height: 0.9;
+        text-transform: uppercase;
+        color: #fff;
+    }
+    .ccs-plx__words span { display: block; }
+
+    @media (prefers-reduced-motion: reduce) {
+        .ccs-plx__layer { transform: none !important; }
+    }
+</style>
+
+<section class="ccs-plx" data-ccs-plx>
+    <div class="ccs-plx__plate">
+        <div class="ccs-plx__layer ccs-plx__bg" data-depth="0.2">
+            <img src="../img/ccs-parallax-background-clean.jpg" alt="">
+        </div>
+        <div class="ccs-plx__layer ccs-plx__text" data-depth="0.1">
+            <h2 class="ccs-plx__words">
+                <span>Have Fun.</span>
+                <span>Compete.</span>
+                <span>Connect.</span>
+            </h2>
+        </div>
+        <div class="ccs-plx__layer ccs-plx__fg" data-depth="0">
+            <img src="../img/ccs-parallax-foreground.png" alt="">
+        </div>
+    </div>
+</section>
+
+<script>
+(function () {
+    /*
+     * Depth = how much a layer lags the page scroll (0 = moves with the page,
+     * 0.2 = moves 20% slower). Farther layers lag more: background > text > crowd.
+     *
+     * Every layer sits exactly where the CSS puts it (the flattened comp) at the
+     * rest position: the section centred in the viewport, or the bottom of the
+     * page if it can't scroll that far (this section sits right above the footer).
+     *
+     * The background must be the clean plate (crowd removed). With the original
+     * photo, whenever the background sits higher than the cutout a second row of
+     * heads shows above the real ones.
+     */
+    var stage = document.querySelector("[data-ccs-plx]");
+    if (!stage) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    var layers = Array.prototype.map.call(stage.querySelectorAll("[data-depth]"), function (el) {
+        return { el: el, depth: parseFloat(el.dataset.depth) || 0 };
+    }).filter(function (l) { return l.depth !== 0; });
+
+    var ticking = false, inView = false;
+
+    // Measured every frame, not cached: images above this section load after the
+    // script runs and push it down the page, so a cached position goes stale.
+    function update() {
+        ticking = false;
+        var vh = window.innerHeight;
+        var sy = window.scrollY;
+        var r = stage.getBoundingClientRect();
+        var top = r.top + sy;
+        var maxScroll = document.documentElement.scrollHeight - vh;
+        var rest = Math.min(top + r.height / 2 - vh / 2, maxScroll);
+        var s = Math.min(Math.max(sy, top - vh), top + r.height);
+        layers.forEach(function (l) {
+            var y = l.depth * (s - rest);
+            l.el.style.transform = "translate3d(0," + y.toFixed(1) + "px,0)";
+        });
+    }
+
+    function onScroll() {
+        if (!inView || ticking) return;
+        ticking = true;
+        requestAnimationFrame(update);
+    }
+
+    new IntersectionObserver(function (entries) {
+        inView = entries[0].isIntersecting;
+        if (inView) onScroll();
+    }, { rootMargin: "100px 0px" }).observe(stage);
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    update();
+})();
+</script>
+<!-- ===== End paste ===== -->
+
+<footer class="demo-footer">Footer</footer>
+
+</body>
+</html>

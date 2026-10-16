@@ -1246,132 +1246,155 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-xs-12">
-                                <style>
-    #ccsParallaxLarge {
-        display: none;
-    }
-    .parallax-container {
+<style>
+    /*
+     * Stage = the visible window. Plate = the full background photo's box
+     * (2067 x 1678), bottom-aligned inside the stage so the black sky is what
+     * gets cropped. All three layers are positioned in plate percentages, so
+     * they stay registered at every width without per-breakpoint offsets.
+     */
+    .ccs-plx {
         position: relative;
-        background-size: cover;
-        background-attachment: fixed;
-        background-repeat: no-repeat;
-        height: 600px;
+        width: 100%; /* children are all absolute; in a flex row it would collapse to 0 */
         overflow: hidden;
+        background: #000;
+        /* Height from width, not aspect-ratio: aspect-ratio + min-height widens the
+           box on phones. Capped at the viewport so big screens crop sky, not crowd. */
+        height: clamp(440px, 54.2vw, 100vh);
     }
-    .parallax-foreground,
-    .parallax-text {
+    .ccs-plx__plate {
         position: absolute;
-        width: 100%;
-        transition: transform 0.1s ease-out;
+        bottom: 0;
+        left: 50%;
+        width: max(100%, 720px);
+        aspect-ratio: 2067 / 1678;
+        /* The comp (ccs-parallax-large.jpg) is photo rows 280-1364 of 1624 at 2000
+           wide: it crops the crowd at the waist. Push the plate down by the 16%
+           below the comp's bottom edge. */
+        transform: translate(-50%, 16%);
+        container-type: inline-size;
+    }
+    .ccs-plx__layer {
+        position: absolute;
+        inset: 0;
         will-change: transform;
     }
-    .parallax-foreground {
-        z-index: 9999;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        pointer-events: none;
-        height: 600px;
-        bottom: -180px;
-        display: none;
-    }
-    .parallax-foreground img {
-        width: 1500px;
-        height: 450px;
-        left: 50%;
-        bottom: 0;
-        transform: translateX(-50%);
+    .ccs-plx__layer img {
         position: absolute;
-    }
-    .parallax-background {
-        position: absolute;
-        width: 100%;
-    }
-    .parallax-background img {
-        position: relative;
-        z-index: 1;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 1500px;
-        top: -380px;
-    }
-    .parallax-text {
-        position: absolute;
-        z-index: 999;
         left: 0;
-        transform: translateY(-50%);
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+    .ccs-plx__bg { z-index: 1; }
+    .ccs-plx__bg img { bottom: 0; }
+    .ccs-plx__text { z-index: 2; }
+    .ccs-plx__fg { z-index: 3; pointer-events: none; }
+    /* The cutout is the background's crowd, 19px (of 2067 wide) up from its bottom edge. */
+    .ccs-plx__fg img { bottom: 0.92%; }
+
+    /* Text box measured from the comp: top at comp y 140 = photo row 420 of 1624. */
+    .ccs-plx__words {
+        position: absolute;
+        top: 25.9%;
+        left: 0;
+        right: 0;
+        margin: 0;
         text-align: center;
-        height: 500px;
-    }
-    .parallax-text h3 {
-        color: #FFF !important;
-        margin: 0 auto;
+        font-family: "Anton", sans-serif;
+        font-weight: 400;
+        font-size: 13.2cqw;
+        line-height: 0.9;
         text-transform: uppercase;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-        font-size: 10rem;
-        line-height: 9rem;
-        letter-spacing: -3px;
+        color: #fff;
     }
-    @media (min-width: 375px) { .parallax-text { bottom: -240px; } }
-    @media (min-width: 390px) { .parallax-text { bottom: -235px; } }
-    @media (min-width: 430px) { .parallax-text { bottom: -230px; } }
-    @media (min-width: 768px) { .parallax-text { bottom: -225px; } }
-    @media (min-width: 820px) { .parallax-text { bottom: -220px; } }
-    @media (min-width: 900px) { .parallax-text { bottom: -210px; } }
-    @media (min-width: 1050px) { .parallax-text { bottom: -240px; } }
-    @media (min-width: 1200px) {
-        .parallax-container { height: 900px; }
-        .parallax-foreground { bottom: 1200px; }
-        .parallax-foreground img { width: 100%; }
-        .parallax-text h3 { font-size: 18rem; line-height: 16.5rem; }
-        .parallax-background img { width: 100%; top: -100px; }
-    }
+    .ccs-plx__words span { display: block; }
+
     .col-ccs-parallax { background-color: #000; }
-    @media (min-width: 1200px) {
-        .parallax-container { height: auto; }
-        #ccsParallaxLarge { display: block; width: 100%; }
-        .parallax-foreground, .parallax-text, .parallax-background { display: none; }
+    /* Full bleed: drop the grid gutters around the stage. */
+    .col-ccs-parallax .container-fluid,
+    .col-ccs-parallax .col-xs-12 { padding-left: 0; padding-right: 0; }
+    .col-ccs-parallax .row { margin-left: 0; margin-right: 0; }
+
+    @media (prefers-reduced-motion: reduce) {
+        .ccs-plx__layer { transform: none !important; }
     }
 </style>
-<div class="parallax-container">
-    <img id="ccsParallaxLarge" src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/ccs/site/ccs-parallax-large.jpg" alt="College Club Swimming. Have Fun. Compete. Connect.">
-    <div class="parallax-foreground">
-        <img src="img/ccs-parallax-foreground.png" alt="">
-    </div>
-    <div class="parallax-text">
-        <h3>Have Fun.</h3>
-        <h3>Compete.</h3>
-        <h3>Connect.</h3>
-    </div>
-    <div class="parallax-background">
-        <img src="img/ccs-parallax-background.jpg" alt="">
-    </div>
-</div>
-<script>
-    document.addEventListener("scroll", function () {
-        const container = document.querySelector(".parallax-container");
-        const foreground = document.querySelector(".parallax-foreground");
-        const text = document.querySelector(".parallax-text");
-        const containerRect = container.getBoundingClientRect();
-        const startParallax = containerRect.top;
-        const endParallax = containerRect.bottom;
-        const windowHeight = window.innerHeight;
-        const windowWidth = window.innerWidth;
-        const scrollProgress = 1 - (containerRect.top / windowHeight);
 
-        if (windowWidth < 768) {
-            if (startParallax < windowHeight && endParallax > windowHeight) {
-                const textOffset = scrollProgress * -300;
-                text.style.transform = `translateY(calc(${textOffset}px))`;
-            }
-        }
-        if (windowWidth >= 768 && windowWidth < 1200) {
-            if (startParallax < windowHeight && endParallax > windowHeight) {
-                const textOffset = scrollProgress * -390;
-                text.style.transform = `translateY(calc(${textOffset}px))`;
-            }
-        }
-    });
+<section class="ccs-plx" data-ccs-plx>
+    <div class="ccs-plx__plate">
+        <div class="ccs-plx__layer ccs-plx__bg" data-depth="0.2">
+            <img src="img/ccs-parallax-background-clean.jpg" alt="">
+        </div>
+        <div class="ccs-plx__layer ccs-plx__text" data-depth="0.1">
+            <h2 class="ccs-plx__words">
+                <span>Have Fun.</span>
+                <span>Compete.</span>
+                <span>Connect.</span>
+            </h2>
+        </div>
+        <div class="ccs-plx__layer ccs-plx__fg" data-depth="0">
+            <img src="img/ccs-parallax-foreground.png" alt="">
+        </div>
+    </div>
+</section>
+
+<script>
+(function () {
+    /*
+     * Depth = how much a layer lags the page scroll (0 = moves with the page,
+     * 0.2 = moves 20% slower). Farther layers lag more: background > text > crowd.
+     *
+     * Every layer sits exactly where the CSS puts it (the flattened comp) at the
+     * rest position: the section centred in the viewport, or the bottom of the
+     * page if it can't scroll that far (this section sits right above the footer).
+     *
+     * The background must be the clean plate (crowd removed). With the original
+     * photo, whenever the background sits higher than the cutout a second row of
+     * heads shows above the real ones.
+     */
+    var stage = document.querySelector("[data-ccs-plx]");
+    if (!stage) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    var layers = Array.prototype.map.call(stage.querySelectorAll("[data-depth]"), function (el) {
+        return { el: el, depth: parseFloat(el.dataset.depth) || 0 };
+    }).filter(function (l) { return l.depth !== 0; });
+
+    var ticking = false, inView = false;
+
+    // Measured every frame, not cached: images above this section load after the
+    // script runs and push it down the page, so a cached position goes stale.
+    function update() {
+        ticking = false;
+        var vh = window.innerHeight;
+        var sy = window.scrollY;
+        var r = stage.getBoundingClientRect();
+        var top = r.top + sy;
+        var maxScroll = document.documentElement.scrollHeight - vh;
+        var rest = Math.min(top + r.height / 2 - vh / 2, maxScroll);
+        var s = Math.min(Math.max(sy, top - vh), top + r.height);
+        layers.forEach(function (l) {
+            var y = l.depth * (s - rest);
+            l.el.style.transform = "translate3d(0," + y.toFixed(1) + "px,0)";
+        });
+    }
+
+    function onScroll() {
+        if (!inView || ticking) return;
+        ticking = true;
+        requestAnimationFrame(update);
+    }
+
+    new IntersectionObserver(function (entries) {
+        inView = entries[0].isIntersecting;
+        if (inView) onScroll();
+    }, { rootMargin: "100px 0px" }).observe(stage);
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    update();
+})();
 </script>
                             </div>
                         </div>
