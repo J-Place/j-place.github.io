@@ -133,7 +133,9 @@ ageGroups:
         <h2 class="swim-deck__eyebrow" id="race-planning-title">Race planning</h2>
         {# One bordered panel: Your Event on light blue, then the tools on white #}
         <div class="swim-panel">
-          <div class="swim-panel__band swim-panel__band--blue">
+          {# Hidden on phones: the cards' gears open the same controls in the
+             Race Planning modal #}
+          <div class="swim-panel__band swim-panel__band--blue swim-panel__band--modal-on-mobile">
             {# Your Event: labels above each control, like Your Swim #}
             <div class="swim-deck__context" role="group" aria-label="Your event, applies to every tool">
               {# Options follow course and stroke (swim-tools-v2.js). Also the Race

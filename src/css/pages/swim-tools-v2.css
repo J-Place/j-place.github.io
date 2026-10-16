@@ -571,6 +571,15 @@
   padding-top: 0;
 }
 
+/* Race Planning's and Time Conversions' controls bands: hidden on phones,
+   where the cards' gears open the same controls in the section's modal
+   (Editors.njk). Training Metrics has no modal yet, so its band stays. */
+@media (max-width: 767px) {
+  .swim-panel__band--modal-on-mobile {
+    display: none;
+  }
+}
+
 /* Your Event inside the blue band: the band gives the colour and padding */
 .swim-panel .swim-deck__context {
   padding: 0;
