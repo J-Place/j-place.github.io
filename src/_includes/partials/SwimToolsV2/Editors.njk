@@ -133,7 +133,12 @@
 </div>
 <div class="form-group">
   <span class="swim-deck-modal__label" id="sd-plan-goal-label">Goal</span>
-  {{ timeField("sd-plan-goal-label", 'data-time-input="goal"', "sm") }}
+  {# Set goal: the suggestion in the boxes becomes your goal, as Race
+     Planning's Set this goal; only until a goal is set (swim-tools-v2.js) #}
+  <div class="swim-goal-field">
+    {{ timeField("sd-plan-goal-label", 'data-time-input="goal"', "sm") }}
+    <button type="button" class="swim-pred-link swim-goal-field__link" data-goal-set hidden>Set goal</button>
+  </div>
 </div>
 <span class="swim-params__hint" data-st="goalHint" aria-live="polite"></span>
 {% endset %}
@@ -194,6 +199,8 @@
    (Race History) and each chart's Add races link (swim-tools-v2.js, pick). #}
 {% set modalId = "swimDeckRaces" %}
 {% set modalTitle = "Your Races" %}
+{# Large and a fixed size, so filtering doesn't resize it (swim-tools-v2.css) #}
+{% set modalSize = "lg" %}
 {% set modalBody %}
 <p class="swim-pick__intro" data-st="pickIntro"></p>
 <div class="swim-deck-modal__row swim-deck-modal__row--compact swim-pick__filters">
@@ -226,3 +233,4 @@
 <button type="button" class="swim-pred-link swim-pick__add" data-pick-add disabled>Add to chart</button>
 {% endset %}
 {% include "components/modal.njk" %}
+{% set modalSize = "" %}

@@ -92,11 +92,12 @@ ageGroups:
                <g transform="rotate(-45 12 12)"><rect x="4.5" y="7.5" width="3" height="9" rx="1.2" fill="currentColor"/><rect x="16.5" y="7.5" width="3" height="9" rx="1.2" fill="currentColor"/><path d="M7.5 12h9M3.5 12h1M19.5 12h1"/></g> #}
             {# Narrowed 2026-10-15: the bar shortened (14.84 to 11) and the
                viewBox cropped to match, the plates the same size #}
-            <svg viewBox="0 0 41.14 45" aria-hidden="true">
-              <rect x="8.92" y="13.18" width="6" height="17" stroke-width="1.9"/>
-              <rect x="25.07" y="13.18" width="6" height="17" stroke-width="1.9"/>
-              <line x1="16.07" y1="21.8" x2="24.07" y2="21.8" stroke-width="4.5" stroke-linecap="butt"/>
-            </svg>
+            {# Back to the flat two-plate line dumbbell 2026-10-16. The
+               designer's (viewBox 0 0 41.14 45, at 38px), kept for reuse:
+               <rect x="8.92" y="13.18" width="6" height="17" stroke-width="1.9"/>
+               <rect x="25.07" y="13.18" width="6" height="17" stroke-width="1.9"/>
+               <line x1="16.07" y1="21.8" x2="24.07" y2="21.8" stroke-width="4.5" stroke-linecap="butt"/> #}
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 12h8M8 6v12M16 6v12M4.5 9v6M19.5 9v6M2 12h2.5M19.5 12H22"/></svg>
           </button>
         </div>
         {# Who the tools are for: sex and age group, when we know the age (the
@@ -170,7 +171,7 @@ ageGroups:
                    (swim-tools-v2.js) #}
                 <div class="swim-goal-field">
                   {{ timeField("sd-goal-label", 'data-time-input="goal"', "xs") }}
-                  <button type="button" class="swim-pred-link swim-goal-field__link" data-goal-set hidden></button>
+                  <button type="button" class="swim-pred-link swim-goal-field__link" data-goal-set hidden>Set this goal</button>
                 </div>
               </div>
             </div>

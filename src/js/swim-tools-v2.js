@@ -853,6 +853,14 @@
   // Competition categories as the page shows them ("Men's/Open 40–44")
   var CATEGORY_NAMES = { Men: 'Men\'s/Open', Women: 'Women\'s' };
 
+  // The header's pill: your name when logged in, then age group and
+  // category ("Jay Place 50–54 Men's/Open")
+  function whoText() {
+    var user = USERS[SWIMMER] || {};
+    var name = user.loggedIn ? [user.firstName, user.lastName].filter(Boolean).join(' ') : '';
+    return [name, ageGroup().label, CATEGORY_NAMES[swimmerGender()]].filter(Boolean).join(' ');
+  }
+
   // The swimmer's gender as the rankings name it: the profile's when logged
   // in with one, otherwise the header's Sex choice (state.sex)
   function swimmerGender() {
@@ -1445,7 +1453,7 @@
     var user = USERS[SWIMMER] || {};
     if (user.loggedIn && user.firstName) set('greeting', 'Welcome back, ' + user.firstName + '. Here are your races, times and training, all in one place.');
     root.querySelector('[data-st-who]').hidden = !(age >= 18);
-    if (age >= 18) set('who', [CATEGORY_NAMES[swimmerGender()], ageGroup().label].filter(Boolean).join(' '));
+    if (age >= 18) set('who', whoText());
     var counts = {}, best = null;
     state.races.slice().sort(function (a, b) { return a.date < b.date ? -1 : 1; }).forEach(function (r) {
       var key = r.course + ' ' + r.distance + ' ' + r.stroke;
@@ -2760,7 +2768,7 @@
     set('ageGroupLabel', state.guest && !state.ageChosen ? 'Age' : ageGroup().label);
     // The header's pill, when we know your age: sex (yours, or the Sex
     // choice) and age group
-    if (state.ageKnown) set('who', [ageGroup().label, CATEGORY_NAMES[swimmerGender()]].filter(Boolean).join(' '));
+    if (state.ageKnown) set('who', whoText());
     var rows = renderPredictor(list);
     var goalRow = rows.filter(function (r) { return r.d === Number(state.distance); })[0];
     // Your Event's time until you set a goal: your best, else your
@@ -2809,9 +2817,10 @@
     // guest's median), only until a goal is set (no Edit this goal since
     // 2026-10-15: the field itself is where you change it)
     state.goalSuggestion = state.goalAuto ? parse(state.goal) : untyped;
-    var goalSet = root.querySelector('[data-goal-set]');
-    goalSet.hidden = goalTyped || !isFinite(state.goalSuggestion);
-    goalSet.textContent = 'Set this goal';
+    // (the Race Planning modal's says "Set goal"; each carries its own text)
+    document.querySelectorAll('[data-goal-set]').forEach(function (el) {
+      el.hidden = goalTyped || !isFinite(state.goalSuggestion);
+    });
     goalFields.forEach(function (f) { markTimeField(f, goalOk); });
     set('goalHint', goalOk ? '' : 'Goal: seconds must be under 60.');
 
@@ -3295,8 +3304,9 @@
     render();
   });
 
-  // Set this goal, beside Race Planning's Goal: the suggestion becomes your goal
-  root.addEventListener('click', function (e) {
+  // Set this goal, beside Race Planning's Goal (and Set goal, in its modal):
+  // the suggestion becomes your goal
+  document.addEventListener('click', function (e) {
     if (!e.target.closest('[data-goal-set]') || !isFinite(state.goalSuggestion)) return;
     state.goal = race(state.goalSuggestion);
     state.goalAuto = false;
