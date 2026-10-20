@@ -10,16 +10,29 @@
 
 .wallet-payment-options__buttons {
   display: flex;
+  flex-direction: column;
   gap: 12px;
   margin-bottom: 16px;
 }
 
+/* Phones stack the wallet buttons full-width (the Stripe/Shopify pattern);
+   side by side from the sm breakpoint up. */
+@media (min-width: 768px) {
+  .wallet-payment-options__buttons {
+    flex-direction: row;
+  }
+
+  .wallet-payment-options__buttons > .btn-wallet-pay {
+    flex: 1 1 0;
+  }
+}
+
 .btn-wallet-pay {
-  flex: 1 1 0;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
+  min-width: 0; /* Google's card art can't widen its half of the row */
   height: 44px;
   border-radius: 6px;
   font-size: 1.6rem;
