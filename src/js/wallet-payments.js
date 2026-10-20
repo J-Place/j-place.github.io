@@ -39,10 +39,46 @@
     wrap.innerHTML =
       '<div class="wallet-payment-options__buttons">' +
         '<button type="button" class="btn-wallet-pay btn-apple-pay" data-modal-target="#walletApplePayModal" aria-label="Pay with Apple Pay">' + APPLE_ICON + ' <span>Pay</span></button>' +
-        '<button type="button" class="btn-wallet-pay btn-google-pay" data-modal-target="#walletGooglePayModal" aria-label="Pay with Google Pay">' + GOOGLE_ICON + ' <span>Pay</span></button>' +
+        // The container is the modal trigger, so the clicks from Google's own
+        // rendered button (see renderGooglePayButton) bubble up to it. The
+        // fallback button inside only shows if pay.js never loads.
+        '<div class="btn-wallet-pay btn-google-pay-container js-google-pay-container" data-modal-target="#walletGooglePayModal">' +
+          '<button type="button" class="btn-wallet-pay btn-google-pay" aria-label="Pay with Google Pay">' + GOOGLE_ICON + ' <span>Pay</span></button>' +
+        '</div>' +
       '</div>' +
       '<div class="wallet-payment-options__divider"><span>or pay with card</span></div>';
     return wrap;
+  }
+
+  // Google's brand guidelines only accept the button pay.js renders itself
+  // (createButton), not a lookalike. Options match the snippet Google sent,
+  // except buttonColor: black, not white: the payment card is white, and
+  // Google's contrast rule wants black on light backgrounds. It still opens
+  // our mock sheet: onClick is a no-op and the click bubbles to the
+  // container's data-modal-target. TEST environment, since there's no real
+  // merchant behind this mockup.
+  var GOOGLE_PAY_METHODS = [{
+    type: 'CARD',
+    parameters: {
+      allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+      allowedCardNetworks: ['AMEX', 'DISCOVER', 'MASTERCARD', 'VISA']
+    }
+  }];
+
+  function renderGooglePayButton(container) {
+    if (!window.google || !google.payments || !google.payments.api) return;
+    var googlePayClient = new google.payments.api.PaymentsClient({ environment: 'TEST' });
+    var button = googlePayClient.createButton({
+      buttonColor: 'black',
+      buttonType: 'pay',
+      buttonRadius: 6,
+      buttonBorderType: 'default_border',
+      buttonSizeMode: 'fill',
+      onClick: function () {},
+      allowedPaymentMethods: GOOGLE_PAY_METHODS
+    });
+    container.innerHTML = '';
+    container.appendChild(button);
   }
 
   function buildSelectedStrip() {
@@ -131,6 +167,14 @@
     document.body.appendChild(appleModal);
     document.body.appendChild(googleModal);
 
+    var googleContainer = optionsEl.querySelector('.js-google-pay-container');
+    if (window.google && google.payments) {
+      renderGooglePayButton(googleContainer);
+    } else {
+      var payScript = document.getElementById('google-pay-js');
+      if (payScript) payScript.addEventListener('load', function () { renderGooglePayButton(googleContainer); });
+    }
+
     // Bound directly on each button (not delegated) so this runs during the
     // bubble phase before modal.js's document-level listener shows the
     // modal — the sheet always opens with the current summary, not stale
@@ -145,7 +189,7 @@
     // locked click here just needs to stop the sheet from opening:
     // stopPropagation keeps modal.js's document-level listener from ever
     // seeing the click.
-    optionsEl.querySelectorAll('.btn-wallet-pay').forEach(function (btn) {
+    optionsEl.querySelectorAll('[data-modal-target]').forEach(function (btn) {
       btn.addEventListener('click', function (e) {
         if (window.registrationValidate && !window.registrationValidate(true)) {
           e.preventDefault();
