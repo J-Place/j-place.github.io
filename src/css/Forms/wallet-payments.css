@@ -10,21 +10,13 @@
 
 .wallet-payment-options__buttons {
   display: flex;
-  flex-direction: column;
   gap: 12px;
   margin-bottom: 16px;
 }
 
-/* Phones stack the wallet buttons full-width (the Stripe/Shopify pattern);
-   side by side from the sm breakpoint up. */
-@media (min-width: 768px) {
-  .wallet-payment-options__buttons {
-    flex-direction: row;
-  }
-
-  .wallet-payment-options__buttons > .btn-wallet-pay {
-    flex: 1 1 0;
-  }
+/* Equal halves, side by side at every width. */
+.wallet-payment-options__buttons > .btn-wallet-pay {
+  flex: 1 1 0;
 }
 
 .btn-wallet-pay {

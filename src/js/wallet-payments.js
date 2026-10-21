@@ -52,11 +52,19 @@
 
   // Google's brand guidelines only accept the button pay.js renders itself
   // (createButton), not a lookalike. Options match the snippet Google sent,
-  // except buttonColor: black, not white: the payment card is white, and
-  // Google's contrast rule wants black on light backgrounds. It still opens
+  // except buttonColor: black, not white (the payment card is white, and
+  // Google's contrast rule wants black on light backgrounds), and buttonType:
+  // plain, which is the logo alone with no "Pay with". It still opens
   // our mock sheet: onClick is a no-op and the click bubbles to the
   // container's data-modal-target. TEST environment, since there's no real
   // merchant behind this mockup.
+  //
+  // ForceDisableDynamicGpayButton keeps pay.js from swapping in its
+  // "dynamic" button, the one with the signed-in viewer's card art and
+  // last four digits. That swap is decided by Google-side flags, not by
+  // any createButton option, and this flag is the only off switch pay.js
+  // checks (undocumented, read when createButton runs). The plain black
+  // button is all the brand guidelines require.
   var GOOGLE_PAY_METHODS = [{
     type: 'CARD',
     parameters: {
@@ -67,10 +75,11 @@
 
   function renderGooglePayButton(container) {
     if (!window.google || !google.payments || !google.payments.api) return;
+    google.payments.api.ForceDisableDynamicGpayButton = true;
     var googlePayClient = new google.payments.api.PaymentsClient({ environment: 'TEST' });
     var button = googlePayClient.createButton({
       buttonColor: 'black',
-      buttonType: 'pay',
+      buttonType: 'plain',
       buttonRadius: 6,
       buttonBorderType: 'default_border',
       buttonSizeMode: 'fill',
