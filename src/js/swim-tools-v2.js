@@ -780,7 +780,7 @@
     // another distance)
     var raced = rows.filter(function (r) { return (isFinite(r.you) || r.adjusted) && isFinite(r.estP) && isFinite(r.midP); });
     raced.forEach(function (r) { r.gap = r.estP - r.midP; });
-    var old = rows.old ? 'Your last ' + lowerStroke(state.stroke) + ' races were over ' + WINDOW_YEARS + ' years ago, so they\'re age-adjusted to ' + group.label + '. ' : '';
+    var oldNote = rows.old ? 'Your last ' + lowerStroke(state.stroke) + ' races were over ' + WINDOW_YEARS + ' years ago, so they\'re age-adjusted to ' + group.label + '. ' : '';
     var gap = function (r) {
       return 'about ' + Math.abs(r.gap).toFixed(1) + ' s ' + (r.gap > 0 ? 'off' : 'ahead of') + ' the age-group median';
     };
@@ -818,14 +818,14 @@
       box.innerHTML = note('Your races',
         'You\'ve raced the ' + state.course + ' ' + raced[0].d + ' ' + lowerStroke(state.stroke) + ' ' +
           (times === 1 ? 'one time' : times === 2 ? 'twice' : times + ' times') + (rows.old ? '' : ' in the last ' + WINDOW_YEARS + ' years') + '.',
-        old + 'Per 100 you\'re ' + gap(raced[0]) + '. Race another distance to see where you\'re strongest.');
+        oldNote + 'Per 100 you\'re ' + gap(raced[0]) + '. Race another distance to see where you\'re strongest.');
     } else {
       // Strongest and weakest by pace against the median (lower is better)
       var strong = raced.reduce(function (a, b) { return b.gap < a.gap ? b : a; });
       var weak = raced.reduce(function (a, b) { return b.gap > a.gap ? b : a; });
       var kind = function (d) { return d <= 100 ? 'sprint' : d >= 500 ? 'distance' : d; };
       var work = weak.d > strong.d ? 'Distance work' : 'Speed work';
-      var both = old + 'Per 100, your ' + strong.d + ' is ' + gap(strong) + ' and your ' + weak.d + ' is ' + gap(weak) + '. ';
+      var both = oldNote + 'Per 100, your ' + strong.d + ' is ' + gap(strong) + ' and your ' + weak.d + ' is ' + gap(weak) + '. ';
       box.innerHTML = weak.gap <= 0 ? note('Your strengths', 'You\'re ahead of the age-group median at every distance.', both + 'Your ' + kind(strong.d) + ' is your strongest event.') :
         strong.gap < 0 ? note('Your strengths', 'Your ' + kind(strong.d) + ' is ahead of the pack.', both + work + ' will close the gap fastest.') :
         note('Your strengths', 'Your ' + kind(strong.d) + ' is closest to the pack.', both + work + ' will move your times fastest.');
