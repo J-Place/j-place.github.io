@@ -610,12 +610,14 @@ nav.admin .menu > li > a {
     overflow: hidden;
     background: #000;
     /* Height from width, not aspect-ratio: aspect-ratio + min-height widens the
-       box on phones. Capped at the viewport so big screens crop sky, not crowd. */
-    height: clamp(440px, 54.2vw, 100vh);
+       box on phones. Capped at the viewport so big screens crop sky, not crowd.
+       --ccs-plx-hold is extra scroll room below the scene, set by ccs-parallax.js
+       (data-hold), where the crowd and words stay still while the pool scrolls on. */
+    height: calc(clamp(440px, 54.2vw, 100vh) + var(--ccs-plx-hold, 0px));
 }
 .ccs-plx__plate {
     position: absolute;
-    bottom: 0;
+    bottom: var(--ccs-plx-hold, 0px);
     left: 50%;
     width: max(100%, 720px);
     aspect-ratio: 2067 / 1678;
