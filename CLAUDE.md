@@ -31,6 +31,12 @@ Static JSON rankings at `/data/top-times/{season}/{gender}-{age}/scy/{stroke}/{d
 - **Everything else is generated before every build**, never committed: `npm run build`/`dev` run `scripts/top-times-synthetic.js` first (`prebuild`/`predev`, ~7 s), which empties and rewrites the gitignored `src/data/top-times-generated/`: synthetic rankings for the personas' age groups, Top 10 history back to 1970-71, and `available.json`. Same inputs, same bytes. A dataset in the real folder is never generated, so a new scrape displaces synthetic data on the next build.
 - The generator reads `src/_data/timeStandards.json` (USMS percentile cuts) and `topTens.json` (real decade Top 10s), so don't delete those without moving them.
 
+## Swim Tools App (separate repo)
+
+The member-facing Swim Tools app (Build a Workout, Training Plans, Your Log, Workout Library, How We Build Your Workouts) lives in its own repo, **`~/dev/usms/swim-tools`** (Next.js + TypeScript). Its workout library, rules registry, references, ingest scripts and handoff doc (`docs/swim-tools-app.md`) are all there, not here. It is not production's *Workout Composer*, which is the coaches' authoring tool.
+
+This repo plays Sitecore's part: the Swim Tools v2 page is the dashboard, and each view will be an Eleventy page that renders the chrome plus a mount point (`data-usms-component="SwimTools"` with a `data-view`) for the app's embed bundle. Phase 1 adds those host pages and a sync script that copies the app's built bundle and static data in.
+
 ## NEVER EVER DO
 
 These rules are ABSOLUTE:
