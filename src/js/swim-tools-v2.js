@@ -551,6 +551,7 @@
     var at = function (p) { return 100 - (p - lo) / (hi - lo) * 100; };
     return {
       y: at,
+      lo: lo, hi: hi, // its range, slowest at the top: for dragging the goal (goalDrag)
       html: ticks.map(function (t) {
         return '<span style="top: ' + at(t).toFixed(1) + '%">' + clock(t) + '</span>';
       }).join('')
@@ -733,12 +734,15 @@
           (r.wins ? '<span class="swim-pred-win' + (below ? '' : ' is-below') + (x(i) > 90 ? ' is-end' : x(i) < 10 ? ' is-start' : '') + '" style="' + at + '">Projected Winner</span>' : '');
       }).join('') +
         (isFinite(goalP) ? '<span class="swim-pred__dot is-goal" style="left: ' + x(goalIndex).toFixed(2) + '%; top: ' + y(goalP).toFixed(1) +
-          '%" title="Your goal: ' + race(parse(state.goal)) + ' in the ' + eventD + ' ' + lowerStroke(state.stroke) + '"></span>' : '') +
+          '%" title="Your goal: ' + race(parse(state.goal)) + ' in the ' + eventD + ' ' + lowerStroke(state.stroke) + '. Drag up or down to change it."' +
+          goalHandle('pred', parse(state.goal)) + '></span>' : '') +
         // The goal's flag: above the dot (below it near the chart's top), hung
         // inward at the ends; not when your own time there already flies one
         (goalWins && !(goalRow.wins && !off.you) ? '<span class="swim-pred-win' + (y(goalP) < 14 ? ' is-below' : '') +
           (x(goalIndex) > 90 ? ' is-end' : x(goalIndex) < 10 ? ' is-start' : '') +
           '" style="left: ' + x(goalIndex).toFixed(2) + '%; top: ' + y(goalP).toFixed(1) + '%">Projected Winner</span>' : '');
+      // Dragging the goal dot: up and down the pace scale, at Your Event
+      goalDrag.pred = { axis: 'y', toSecs: function (f) { return (scale.lo + (1 - f) * (scale.hi - scale.lo)) * eventD / 100; } };
       svg.setAttribute('aria-label', 'Pace per 100 by distance, slower higher. ' + rows.map(function (r) {
         return r.d + ': you ' + clock(r.estP) + (isFinite(r.you) ? '' : ' (projected)') + ', ' + label + ' ' + clock(r.midP) +
           ', ' + lowLabel + ' ' + clock(r.lowP) + ', 10th place ' + clock(r.tenP) + ', fastest ' + clock(r.topP);
@@ -1075,11 +1079,15 @@
     else if (latest) { round = Math.floor(latest.secs); goal = round - 0.01; kind = 'break'; }
     else { goal = groupMedian; kind = 'middle'; }
     // The card shows a goal only once you've set one (Race Planning's Goal,
-    // which Add your goal / Edit goal goes to); the suggestion above still stands
+    // which Set this goal / Edit goal goes to); the suggestion above still stands
     // in for it in Race Planning (its Goal placeholders, Race Splits, Rank
     // and Tier: this function's return)
     var shown = typed ? goal : NaN;
-    set('goalTitle', (typed ? race(goal) + ' in the ' : 'Set a goal in the ') + ev + ' ' + state.course);
+    // Until you set one, how the default goal is made (the median with no
+    // races, else just under your latest)
+    set('goalTitle', typed ? race(goal) + ' in the ' + ev + ' ' + state.course :
+      'The default goal is based on ' + (kind === 'break' ? 'your latest time' : 'the median age group time') +
+      '.');
     // With no goal and no races, the suggestion is the median for the age
     // group and category the rankings use: the defaults (45–49 Men's/Open)
     // until the swimmer gives their own
@@ -1087,9 +1095,10 @@
       'The suggested goal is the median time in the ' + ageGroup().label + ' ' + CATEGORY_NAMES[swimmerGender()] + ' category.' : '';
     set('goalSuggestion', suggestion);
     q('[data-st="goalSuggestion"]').hidden = !suggestion;
-    q('[data-goal-change]').textContent = typed ? 'Edit goal' : 'Add your goal';
-    set('goalLatestLabel', latest && latest.date ? 'Latest · ' + monthYear(latest.date) : 'Latest');
-    set('goalBestLabel', best && best.date ? 'Best · ' + monthYear(best.date) : 'Best');
+    q('[data-goal-change]').textContent = typed ? 'Edit goal' : 'Set this goal';
+    // Each date on its own line under its label
+    set('goalLatestDate', latest && latest.date ? monthYear(latest.date) : '');
+    set('goalBestDate', best && best.date ? monthYear(best.date) : '');
     set('goalLatest', latest ? race(latest.secs) : '—');
     set('goalBest', best ? race(best.secs) : '—');
     // Until you set one, the suggested goal, greyed like an untyped Time
@@ -1097,6 +1106,7 @@
     var suggestedTime = !typed && isFinite(goal) ? goal : NaN;
     set('goalTime', typed ? race(goal) : isFinite(suggestedTime) ? race(suggestedTime) : '—');
     q('[data-st="goalTime"]').classList.toggle('is-default', !typed);
+    set('goalTimeLabel', typed ? 'Goal' : 'Default Goal');
     // The goal against your times: a personal best, or what it beats
     var synopsis = !typed ? '' :
       !best ? 'Your first race in the ' + ev + ' will set your personal best.' :
@@ -1107,8 +1117,12 @@
       'Your race goal matches your latest time.';
     set('goalSynopsis', synopsis);
     q('[data-st="goalSynopsis"]').hidden = !synopsis;
-    var gap = latest && isFinite(shown) ? latest.secs - shown : NaN;
+    // To go: your latest less the goal, or until you set one, the default
+    // goal (greyed with it)
+    var target = typed ? shown : suggestedTime;
+    var gap = latest && isFinite(target) ? latest.secs - target : NaN;
     set('goalToGo', isFinite(gap) ? (gap > 0 ? gap.toFixed(2) : '0.00') : '—');
+    q('[data-goal-to-go]').classList.toggle('is-default', !typed && isFinite(gap));
     // The track, slower on the left; only with two or more marks
     var track = q('[data-goal-track]');
     var lt = latest ? latest.secs : NaN, bt = best ? best.secs : NaN;
@@ -1123,8 +1137,16 @@
       show('[data-goal-track-best]', bt);
       show('[data-goal-track-goal]', shown);
       show('[data-goal-track-suggested]', suggestedTime);
-      set('goalTrackKey', [isFinite(lt) && 'Filled: latest', isFinite(bt) && 'triangle: best',
-        typed ? 'yellow dot: goal' : isFinite(suggestedTime) && 'open circle: suggested goal'].filter(Boolean).join(' · '));
+      // Dragging the goal (or the default goal's circle) along the track,
+      // slower on the left
+      goalDrag.track = { axis: 'x', toSecs: function (f) { return hi - f * (hi - lo); } };
+      ['[data-goal-track-goal]', '[data-goal-track-suggested]'].forEach(function (sel) {
+        var t = sel === '[data-goal-track-goal]' ? shown : suggestedTime;
+        if (isFinite(t)) q(sel).setAttribute('aria-valuetext', race(t));
+      });
+      // Each mark's name under it: Latest, Best, Goal (the goal's dot, or
+      // the default goal's circle)
+      placeTrackNames({ latest: lt, best: bt, goal: typed ? shown : suggestedTime }, pos);
       set('goalTrackHi', race(hi));
       set('goalTrackLo', race(lo));
       q('[data-goal-track-bar]').setAttribute('aria-label', [isFinite(lt) && 'Latest ' + race(lt), isFinite(bt) && 'best ' + race(bt),
@@ -1871,7 +1893,10 @@
           ((labels && labelled(e)) || isBest ? '<span class="swim-trend__label' + (e.selected || ids ? ' is-below' : ' is-other') + '" style="' + at + '; color: ' + e.color + '">' + race(r.secs) + '</span>' : '');
       }).join('');
     }).join('') + (isFinite(goalPace) && inWin(goalT) ? '<span class="swim-pred__dot is-goal" style="left: ' + xAt(goalT).toFixed(2) + '%; top: ' +
-      scale.y(goalPace).toFixed(1) + '%" title="Your goal: ' + race(goalSecs) + ' in the ' + state.distance + ' ' + lowerStroke(state.stroke) + '"></span>' : '');
+      scale.y(goalPace).toFixed(1) + '%" title="Your goal: ' + race(goalSecs) + ' in the ' + state.distance + ' ' + lowerStroke(state.stroke) + '. Drag up or down to change it."' +
+      goalHandle('trend', goalSecs) + '></span>' : '');
+    // Dragging the goal dot: up and down the pace scale
+    goalDrag.trend = { axis: 'y', toSecs: function (f) { return (scale.lo + (1 - f) * (scale.hi - scale.lo)) * Number(state.distance) / 100; } };
     // Axes: pace up the side (its unit above), years along the bottom
     card.querySelector('[data-trend-y]').innerHTML = '<span class="swim-trend__unit">per 100' + unit + '</span>' + scale.html;
     var y0 = new Date(w0).getFullYear(), y1 = new Date(w1).getFullYear(), ticks = [], ystep = Math.max(1, Math.ceil((y1 - y0) / 6));
@@ -3313,7 +3338,117 @@
     render();
   });
 
-  // Summary: share the goal card, and Add your goal / Edit goal (the Race Planning modal)
+  // The Race Goal track's names under its marks, at pos(time); a name that
+  // would run into the one before it (left to right) drops to a second line,
+  // and the end ones hang inward so they stay on the card
+  function placeTrackNames(times, pos) {
+    var names = Array.prototype.slice.call(document.querySelectorAll('[data-goal-track-name]'));
+    names.forEach(function (el) {
+      var t = times[el.getAttribute('data-goal-track-name')];
+      el.hidden = !isFinite(t);
+      el.classList.remove('is-low', 'is-start', 'is-end');
+      if (!isFinite(t)) return;
+      var at = parseFloat(pos(t));
+      el.style.left = at + '%';
+      if (at < 6) el.classList.add('is-start');
+      if (at > 94) el.classList.add('is-end');
+    });
+    var shownNames = names.filter(function (el) { return !el.hidden; })
+      .sort(function (a, b) { return parseFloat(a.style.left) - parseFloat(b.style.left); });
+    var lastRight = -Infinity;
+    shownNames.forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.width && r.left < lastRight + 6) el.classList.add('is-low');
+      else lastRight = r.right;
+    });
+  }
+
+  // ---------- Drag the goal ----------
+
+  // Your goal's mark, on the Race Goal track and the Race Time Predictions
+  // and Race History charts, slides to change the goal (the track's default
+  // goal circle too, which sets it). Each render registers how its mark's
+  // position, as a share of its box (0 at the top or left), becomes a time:
+  // goalDrag[name] = { axis: 'x' or 'y', toSecs: function (share) }. While
+  // dragging only the mark moves, showing its time; letting go sets the goal
+  // and renders everything (the charts rescale to it). Arrow keys nudge it
+  // by a tenth of a second.
+  var goalDrag = {};
+
+  // The attributes that make a mark a handle (charts' marks are re-made each
+  // render; the track's are in Summary.njk)
+  function goalHandle(name, secs) {
+    return ' data-goal-drag="' + name + '" tabindex="0" role="slider" aria-label="Goal time" aria-valuetext="' + race(secs) + '"';
+  }
+
+  function setGoalFromDrag(secs, refocus) {
+    if (!isFinite(secs) || secs <= 0) return;
+    state.goal = race(Math.round(secs * 100) / 100);
+    state.goalAuto = false;
+    render();
+    // The mark is re-made: keep the focus on it
+    if (refocus) {
+      var el = document.querySelector('[data-goal-drag="' + refocus + '"]:not([hidden])');
+      if (el) el.focus();
+    }
+  }
+
+  (function goalDragging() {
+    var drag = null;
+    var share = function (e) {
+      var v = drag.spec.axis === 'x' ? (e.clientX - drag.box.left) / drag.box.width : (e.clientY - drag.box.top) / drag.box.height;
+      return Math.min(1, Math.max(0, v));
+    };
+    // Capturing, so the Race History chart's drag-to-pan never sees it
+    document.addEventListener('pointerdown', function (e) {
+      var el = e.target.closest && e.target.closest('[data-goal-drag]');
+      var spec = el && goalDrag[el.getAttribute('data-goal-drag')];
+      if (!spec || (e.pointerType === 'mouse' && e.button !== 0)) return;
+      e.preventDefault();
+      e.stopPropagation();
+      drag = { el: el, spec: spec, box: el.offsetParent.getBoundingClientRect(), id: e.pointerId, secs: NaN };
+      el.setPointerCapture(e.pointerId);
+      el.classList.add('is-dragging');
+    }, true);
+    document.addEventListener('pointermove', function (e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      var f = share(e);
+      drag.secs = Math.round(drag.spec.toSecs(f) * 100) / 100;
+      drag.el.style[drag.spec.axis === 'x' ? 'left' : 'top'] = (f * 100).toFixed(2) + '%';
+      // The track's Goal name follows its mark
+      if (drag.spec.axis === 'x') {
+        var name = document.querySelector('[data-goal-track-name="goal"]');
+        if (name) name.style.left = (f * 100).toFixed(2) + '%';
+      }
+      drag.el.setAttribute('data-drag-time', race(drag.secs));
+    });
+    var stop = function (e) {
+      if (!drag || e.pointerId !== drag.id) return;
+      var d = drag;
+      drag = null;
+      d.el.classList.remove('is-dragging');
+      d.el.removeAttribute('data-drag-time');
+      if (isFinite(d.secs)) setGoalFromDrag(d.secs);
+    };
+    document.addEventListener('pointerup', stop);
+    document.addEventListener('pointercancel', stop);
+    // Keyboard, the way the mark moves: on the charts (slower higher) up is
+    // slower; on the track (slower on the left) right is faster
+    document.addEventListener('keydown', function (e) {
+      var el = e.target.closest && e.target.closest('[data-goal-drag]');
+      if (!el) return;
+      var faster = el.getAttribute('data-goal-drag') === 'track' ?
+        { ArrowRight: 1, ArrowUp: 1, ArrowLeft: -1, ArrowDown: -1 }[e.key] :
+        { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[e.key];
+      if (!faster) return;
+      e.preventDefault();
+      var now = state.goal !== '' && validEntry(state.goal) ? parse(state.goal) :
+        isFinite(state.goalSuggestion) ? state.goalSuggestion : NaN;
+      setGoalFromDrag(now - faster * 0.1, el.getAttribute('data-goal-drag'));
+    });
+  })();
+
+  // Summary: share the goal card, and Set this goal / Edit goal (the Race Planning modal)
   root.addEventListener('click', function (e) {
     if (e.target.closest('[data-goal-share]')) {
       var text = state.summaryShare || '';
@@ -3323,7 +3458,7 @@
       else done(text);
       return;
     }
-    // Add your goal / Edit goal: the Race Planning modal (data-modal-target),
+    // Set this goal / Edit goal: the Race Planning modal (data-modal-target),
     // with the cursor in its Goal's minutes, after the modal's own focus
     // on its first field
     if (e.target.closest('[data-goal-change]')) {

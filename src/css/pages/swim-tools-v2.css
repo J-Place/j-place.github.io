@@ -3207,7 +3207,7 @@
   margin: 0;
   padding: 10px 14px;
   border-left: 4px solid var(--sd-yellow);
-  border-radius: 8px;
+  border-radius: 0 8px 8px 0; /* a square left bar, as the blue note below (.swim-pred-insight--note) */
   background: #fff6d6;
   font-size: 14px;
 }
@@ -4014,6 +4014,16 @@
   color: var(--sd-blue);
 }
 
+/* See meets near you: regular weight, with a small arrow after it */
+.swim-summary__links .swim-summary__arrow-link {
+  font-weight: 400;
+}
+
+.swim-summary__arrow-link .fa-arrow-right {
+  margin-left: 4px;
+  font-size: 0.8em;
+}
+
 /* Goal card */
 .swim-goal {
   gap: 14px;
@@ -4032,6 +4042,26 @@
   flex-wrap: wrap;
   gap: 16px 32px;
   font-variant-numeric: tabular-nums;
+}
+
+/* Each figure's label on top, its value at the foot, so the values line up
+   though Latest and Best carry a date under their labels */
+.swim-goal__stats > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.swim-goal__stats .swim-goal__value {
+  margin-top: auto;
+}
+
+/* Latest's and Best's date, stacked under the label */
+.swim-goal__date {
+  display: block;
+}
+
+.swim-goal__date:empty {
+  display: none;
 }
 
 .swim-goal__label {
@@ -4099,6 +4129,25 @@
   font-weight: 700;
   line-height: 1.2;
   white-space: nowrap;
+}
+
+/* The slowest time, the bar, the fastest time in a row; the marks' names
+   under the bar only */
+.swim-track {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.swim-track__end {
+  color: var(--sd-muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.swim-track__names {
+  grid-column: 2;
 }
 
 .swim-track[hidden] {
@@ -4191,6 +4240,47 @@
   background: #fff;
 }
 
+/* The goal's mark slides to change the goal (swim-tools-v2.js, goalDrag):
+   on the track and both charts. A bigger invisible target than the dot,
+   its time above it while dragging. */
+[data-goal-drag] {
+  cursor: grab;
+  touch-action: none;
+}
+
+[data-goal-drag]::before {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+}
+
+[data-goal-drag].is-dragging {
+  z-index: 3;
+  cursor: grabbing;
+}
+
+[data-goal-drag]:focus-visible {
+  outline: 2px solid var(--sd-blue);
+  outline-offset: 2px;
+}
+
+[data-goal-drag][data-drag-time]::after {
+  content: attr(data-drag-time);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--sd-ink);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
 .swim-track__goal[hidden],
 .swim-track__suggested[hidden],
 .swim-track__best[hidden],
@@ -4198,14 +4288,41 @@
   display: none;
 }
 
-.swim-track__scale {
-  display: flex;
-  justify-content: space-between;
-  gap: 8px;
+.swim-track__names {
+  position: relative;
+  height: 15px; /* one line; a second for names that would collide */
   color: var(--sd-muted);
   font-size: 12px;
-  font-variant-numeric: tabular-nums;
+  line-height: 15px;
 }
+
+.swim-track__names:has(.is-low:not([hidden])) {
+  height: 30px;
+}
+
+.swim-track__name {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.swim-track__name.is-low {
+  top: 15px;
+}
+
+.swim-track__name.is-start {
+  transform: translateX(-4px);
+}
+
+.swim-track__name.is-end {
+  transform: translateX(calc(-100% + 4px));
+}
+
+.swim-track__name[hidden] {
+  display: none;
+}
+
 
 .swim-goal__actions {
   display: flex;

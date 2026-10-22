@@ -64,25 +64,34 @@
         <p class="swim-summary__lead" data-st="goalTitle"></p>
         <p class="swim-summary__fine" data-st="goalSuggestion" hidden></p>
       </div>
-      <span class="swim-summary__meta"><a href="#swimDeckPlan" data-goal-change data-modal-target="#swimDeckPlan">Add your goal</a></span>
+      <span class="swim-summary__meta"><a href="#swimDeckPlan" data-goal-change data-modal-target="#swimDeckPlan">Set this goal</a></span>
     </div>
     <div class="swim-goal__stats">
-      <div><div class="swim-goal__label" data-st="goalLatestLabel">Latest</div><div class="swim-goal__value swim-goal__value--latest" data-st="goalLatest">—</div></div>
-      <div><div class="swim-goal__label" data-st="goalBestLabel">Best</div><div class="swim-goal__value" data-st="goalBest">—</div></div>
-      <div><div class="swim-goal__label">Goal</div><div class="swim-goal__value swim-goal__value--goal" data-st="goalTime">—</div></div>
-      <div><div class="swim-goal__label">To go</div><div class="swim-goal__value"><span data-st="goalToGo">—</span><span class="swim-goal__unit"> s</span></div></div>
+      <div><div class="swim-goal__label">Latest<span class="swim-goal__date" data-st="goalLatestDate"></span></div><div class="swim-goal__value swim-goal__value--latest" data-st="goalLatest">—</div></div>
+      <div><div class="swim-goal__label">Best<span class="swim-goal__date" data-st="goalBestDate"></span></div><div class="swim-goal__value" data-st="goalBest">—</div></div>
+      <div><div class="swim-goal__label" data-st="goalTimeLabel">Goal</div><div class="swim-goal__value swim-goal__value--goal" data-st="goalTime">—</div></div>
+      <div><div class="swim-goal__label">To go</div><div class="swim-goal__value" data-goal-to-go><span data-st="goalToGo">—</span><span class="swim-goal__unit"> s</span></div></div>
     </div>
     {# Slower on the left: the filled bar is your latest, the triangle your best, the yellow dot your goal; until you set one, a grey open circle is the suggested goal #}
+    {# The track's slowest and fastest times at its ends, beside the bar #}
     <div class="swim-track" data-goal-track>
+      <span class="swim-track__end" data-st="goalTrackHi"></span>
       <div class="swim-track__bar" role="img" data-goal-track-bar>
         <span class="swim-track__rail"></span>
         <span class="swim-track__fill" data-goal-track-fill></span>
-        <span class="swim-track__goal" data-goal-track-goal></span>
-        <span class="swim-track__suggested" data-goal-track-suggested></span>
+        {# Both slide to change the goal (swim-tools-v2.js, goalDrag) #}
+        <span class="swim-track__goal" data-goal-track-goal data-goal-drag="track" tabindex="0" role="slider" aria-label="Goal time" title="Drag to change your goal"></span>
+        <span class="swim-track__suggested" data-goal-track-suggested data-goal-drag="track" tabindex="0" role="slider" aria-label="Default goal time" title="Drag to set your goal"></span>
         <span class="swim-track__best" data-goal-track-best></span>
         <span class="swim-track__latest" data-goal-track-latest></span>
       </div>
-      <div class="swim-track__scale"><span data-st="goalTrackHi"></span><span data-st="goalTrackKey">Filled: latest · triangle: best · yellow dot: goal</span><span data-st="goalTrackLo"></span></div>
+      <span class="swim-track__end" data-st="goalTrackLo"></span>
+      {# Each mark's name under it (swim-tools-v2.js places them) #}
+      <div class="swim-track__names" aria-hidden="true">
+        <span class="swim-track__name" data-goal-track-name="latest">Latest</span>
+        <span class="swim-track__name" data-goal-track-name="best">Best</span>
+        <span class="swim-track__name" data-goal-track-name="goal">Goal</span>
+      </div>
     </div>
     {# What the goal means against your times, once one's set (swim-tools-v2.js) #}
     <p class="swim-summary__text swim-goal__synopsis" data-st="goalSynopsis" hidden></p>
@@ -106,7 +115,7 @@
     <p class="swim-summary__text" data-st="sinceText"></p>
     <div class="swim-meets" data-comeback-meets></div>
     <div class="swim-summary__links">
-      <a href="/events/index.html">See meets near you</a>
+      <a href="/events/index.html" class="swim-summary__arrow-link">See meets near you <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
       <a href="#swimDeckRace" data-modal-target="#swimDeckRace" class="swim-summary__full-only">Add a race</a>
     </div>
   </article>
