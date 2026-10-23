@@ -2,6 +2,8 @@ import js from '@eslint/js';
 import globals from 'globals';
 
 export default [
+  // The Swim Tools app's built embed bundle, synced from ~/dev/usms/swim-tools
+  { ignores: ['src/js/swim-tools/**'] },
   js.configs.recommended,
   {
     files: ['src/js/**/*.js'],

@@ -1,0 +1,278 @@
+{
+  "about": "The Swim Tools app's registry: the vocabularies the user picks from and every rule the engines apply, each with its evidence (`basis`, ids in trainingReferences.json) and how firmly it binds. Tune numbers here, not in code. Corpus-measured values (event mix, skill rotation, role shares, typical yardages) live in the library file's `stats` (data/workouts/<collection>.json) and are referenced, not copied. See docs/swim-tools-app.md.",
+  "version": 1,
+  "binding": {
+    "hard": "The engine always enforces it.",
+    "default": "On unless the user turns it off.",
+    "experimental": "Off until the group decides; shown in the Methodology page as under review."
+  },
+
+  "vocabularies": {
+    "effort": [
+      { "id": "cruise", "label": "Cruise", "description": "As easy as desired", "percent": null, "rpe": [1, 3], "zone": "A1" },
+      { "id": "steady", "label": "Steady", "description": "About 60% effort", "percent": 60, "rpe": [4, 5], "zone": "A2" },
+      { "id": "solid", "label": "Solid", "description": "About 70% effort", "percent": 70, "rpe": [5, 6], "zone": "AT-" },
+      { "id": "strong", "label": "Strong", "description": "About 85–90% effort", "percent": 88, "rpe": [7, 8], "zone": "AT/VO2" },
+      { "id": "race", "label": "Race / Fast", "description": "100% effort", "percent": 100, "rpe": [9, 10], "zone": "LP/LT" }
+    ],
+    "effortModifiers": [
+      { "id": "build", "label": "Build", "description": "Increase your effort throughout a swim; your last several strokes should be your strongest" },
+      { "id": "descend", "label": "Descend", "description": "Increase your effort throughout a series of repeats; on 4x25, the fourth is fastest" }
+    ],
+    "zones": [
+      { "id": "A1", "label": "Easy aerobic" },
+      { "id": "A2", "label": "Aerobic" },
+      { "id": "AT-", "label": "Below threshold" },
+      { "id": "AT/VO2", "label": "Threshold to max aerobic" },
+      { "id": "LP/LT", "label": "Sprint / race" }
+    ],
+    "skills": [
+      { "id": "kick + body position", "label": "Kick & body position", "equipment": ["kickboard", "snorkel"] },
+      { "id": "timing", "label": "Timing", "equipment": ["fins"] },
+      { "id": "pull", "label": "Pull", "equipment": ["pull-buoy"] }
+    ],
+    "fitness": [
+      { "id": "aerobic", "label": "Aerobic", "description": "Longer, steady swims that build your engine" },
+      { "id": "conditioning", "label": "Conditioning", "description": "Mixed sets that hold a strong pace with short rest" },
+      { "id": "speed", "label": "Speed", "description": "Short, fast efforts with plenty of rest" },
+      { "id": "race", "label": "Race", "description": "Race-pace work and practice for your event" }
+    ],
+    "drills": [
+      { "id": "underwater-recovery", "label": "Underwater recovery", "stroke": "free", "description": "Swim regular free while recovering both arms under the water" },
+      { "id": "over-under", "label": "Over-under free", "stroke": "free", "description": "Swim regular free while recovering one arm under the water and the other over the water" },
+      { "id": "alligator", "label": "Alligator", "stroke": "free", "description": "Swim regular free with your head up and your eyes right at the surface of the water" },
+      { "id": "stroke-and-roll", "label": "Stroke and roll", "stroke": "free", "description": "Swim regular free, breathe every three strokes, roll straight onto your back to breathe, and return" },
+      { "id": "closed-fist", "label": "Closed fist", "stroke": "free", "description": "Swim regular free with your fists closed" },
+      { "id": "one-arm-fly", "label": "One-arm fly", "stroke": "fly", "description": "Butterfly with one arm at a time" },
+      { "id": "flipper-kick", "label": "Flipper kick", "stroke": "kick", "description": "Dolphin kick on your back, hands by your side, head up looking at your feet, and kick hard enough to make a splash" },
+      { "id": "wall-kick", "label": "Wall kick", "stroke": "kick", "description": "Dolphin kick while holding onto the wall" },
+      { "id": "uwk-arms-by-side", "label": "Underwater kick, arms by side", "stroke": "kick", "description": "Underwater kick with your arms by your side" },
+      { "id": "uwk-arms-across-chest", "label": "Underwater kick, arms across chest", "stroke": "kick", "description": "Underwater kick with your arms across your chest" },
+      { "id": "uwk", "label": "Underwater kicking", "stroke": "kick", "description": "Dolphin kicks underwater off each wall" },
+      { "id": "stroke-count", "label": "Stroke count", "stroke": "any", "description": "Count strokes per length and hold or lower the count" },
+      { "id": "breathing-pattern", "label": "Breathing pattern", "stroke": "free", "description": "Breathe on a set pattern (every 3 or 5 strokes, or one side)" }
+    ],
+    "equipment": [
+      { "id": "kickboard", "label": "Kickboard" },
+      { "id": "snorkel", "label": "Snorkel", "optional": true },
+      { "id": "fins", "label": "Fins" },
+      { "id": "pull-buoy", "label": "Pull buoy" }
+    ],
+    "strokes": [
+      { "id": "free", "label": "Freestyle", "available": true },
+      { "id": "back", "label": "Backstroke", "available": false },
+      { "id": "breast", "label": "Breaststroke", "available": false },
+      { "id": "fly", "label": "Butterfly", "available": false },
+      { "id": "im", "label": "IM", "available": false }
+    ],
+    "roles": [
+      { "id": "warmup", "label": "Warm-up" },
+      { "id": "skill", "label": "Skill" },
+      { "id": "kick", "label": "Kick" },
+      { "id": "pull", "label": "Pull" },
+      { "id": "main", "label": "Main set" },
+      { "id": "recovery", "label": "Recovery" },
+      { "id": "test", "label": "Time trial" },
+      { "id": "cooldown", "label": "Cooldown" }
+    ],
+    "abbreviations": [
+      { "id": "btw", "meaning": "between" },
+      { "id": "UWK", "meaning": "underwater kicking" },
+      { "id": "FRIM", "meaning": "free IM (free + back + breast + free)" },
+      { "id": "EZ", "meaning": "easy" }
+    ],
+    "courses": [
+      { "id": "SCY", "label": "Short course yards", "unit": "yd", "pool": 25 },
+      { "id": "SCM", "label": "Short course meters", "unit": "m", "pool": 25 },
+      { "id": "LCM", "label": "Long course meters", "unit": "m", "pool": 50 }
+    ]
+  },
+
+  "goals": {
+    "workout": [
+      { "id": "course", "type": "select", "options": "vocabularies.courses", "default": "persona" },
+      { "id": "distance", "type": "number", "unit": "course", "min": 1000, "max": 5000, "step": 100, "default": 2500 },
+      { "id": "minutes", "type": "number", "min": 20, "max": 120, "step": 5, "alternativeTo": "distance" },
+      { "id": "stroke", "type": "select", "options": "vocabularies.strokes", "default": "free" },
+      { "id": "skills", "type": "select", "options": "vocabularies.skills", "optional": true },
+      { "id": "fitness", "type": "select", "options": "vocabularies.fitness", "default": "aerobic" },
+      { "id": "drills", "type": "multiselect", "options": "vocabularies.drills", "optional": true },
+      { "id": "equipment", "type": "multiselect", "options": "vocabularies.equipment", "label": "Equipment you have", "default": [] }
+    ],
+    "plan": [
+      { "id": "event", "type": "select", "options": "library.events" },
+      { "id": "goalTime", "type": "time", "optional": true, "prefill": "swimTools.raceGoal" },
+      { "id": "eventDate", "type": "date" },
+      { "id": "isMeet", "type": "boolean", "default": true, "label": "This is a meet (adds a taper)" },
+      { "id": "sessionsPerWeek", "type": "number", "min": 2, "max": 5, "default": 4 },
+      { "id": "minutesPerSession", "type": "number", "min": 30, "max": 120, "step": 15, "default": 60 },
+      { "id": "course", "type": "select", "options": "vocabularies.courses", "default": "persona" }
+    ],
+    "backlog": [
+      "CSS / threshold pace from the v2 log",
+      "Session RPE feedback loop",
+      "Stroke count, SWOLF and stroke index",
+      "Injury and avoid constraints (no fly, no paddles)",
+      "Open water",
+      "Other strokes and events, as source plans arrive",
+      "Levels (novice / advanced), as source plans arrive"
+    ]
+  },
+
+  "rules": [
+    {
+      "id": "library.sets",
+      "binding": "hard",
+      "basis": ["lanemate-event-plans"],
+      "rule": "Generated workouts use only sets from the library. The engine may change a set's repeat count (rounds and reps), never a rep's distance or the set's content. A repeat count stays within this range of the source's own count (e.g. 4 rounds become 2 to 8).",
+      "params": { "repeatScale": [0.5, 2] }
+    },
+    {
+      "id": "workout.vocabulary",
+      "binding": "hard",
+      "basis": ["lanemate-event-plans"],
+      "rule": "Effort, drills, skills, fitness and equipment use the library's own words (vocabularies above)."
+    },
+    {
+      "id": "workout.structure",
+      "binding": "hard",
+      "basis": ["lanemate-event-plans", "neiva-2014"],
+      "rule": "Every workout opens with a warm-up set and closes with a cooldown set; main sets go between.",
+      "params": { "warmupFirst": true, "cooldownLast": true }
+    },
+    {
+      "id": "workout.warmup",
+      "binding": "default",
+      "basis": ["neiva-2014", "lanemate-event-plans"],
+      "rule": "The warm-up is at least this share of the session (but not under the minimum yards). Before speed and race main sets, prefer a warm-up that contains short fast or build efforts.",
+      "params": { "minShare": 0.12, "minYards": 300, "preferFastTouchFor": ["speed", "race"] }
+    },
+    {
+      "id": "workout.template",
+      "binding": "default",
+      "basis": ["lanemate-event-plans"],
+      "rule": "Split the session's distance across roles in the proportions the library itself uses for the chosen fitness focus. Roles the library gives less than minRoleShare of the distance are left out, and time trials only appear in plans (plan.benchmarks).",
+      "params": { "source": "stats.roleShareByFitness", "minRoleShare": 0.03 }
+    },
+    {
+      "id": "workout.distanceTolerance",
+      "binding": "hard",
+      "basis": ["lanemate-event-plans"],
+      "rule": "The finished workout is within this fraction of the requested distance.",
+      "params": { "tolerance": 0.05 }
+    },
+    {
+      "id": "workout.zones",
+      "binding": "hard",
+      "basis": ["fernandes-2024"],
+      "rule": "Every set carries a zone, from its hardest effort word (vocabularies.effort[].zone). A set the source gives no effort word takes the effort most common among the library's labeled sets of the same role, and is marked as inferred."
+    },
+    {
+      "id": "workout.zoneMix",
+      "binding": "default",
+      "basis": ["gonzalez-rave-2021"],
+      "rule": "Sprint-event sessions (50/100) favor easy and fast work over the middle; distance-event sessions (500+) put more in the middle zones than in the fast ones.",
+      "params": { "polarized": ["50 free", "100 free"], "pyramidal": ["500 free", "1000 free", "1650 free"], "threshold": ["200 free"] }
+    },
+    {
+      "id": "workout.drills",
+      "binding": "default",
+      "basis": ["lanemate-event-plans", "costill-1985"],
+      "rule": "Requested drills must appear at least once; skill sets that hold or lower stroke count count toward a 'stroke count' request."
+    },
+    {
+      "id": "workout.equipment",
+      "binding": "hard",
+      "basis": ["lanemate-event-plans"],
+      "rule": "A set that needs equipment the swimmer doesn't have is never chosen. Optional equipment (snorkel) never excludes a set."
+    },
+    {
+      "id": "workout.racePace",
+      "binding": "default",
+      "basis": ["papadimitriou-2024"],
+      "rule": "For race-focused sprint sessions with a goal time, include one race-pace set of short reps at goal pace with short rest.",
+      "params": { "events": ["50 free", "100 free", "200 free"], "repDistance": 25, "reps": [16, 30], "restSeconds": [15, 20] }
+    },
+    {
+      "id": "workout.variety",
+      "binding": "default",
+      "basis": ["lanemate-event-plans"],
+      "rule": "Don't reuse a set used in the swimmer's last N generated or planned sessions.",
+      "params": { "lookbackSessions": 6 }
+    },
+    {
+      "id": "pace.css",
+      "binding": "default",
+      "basis": ["wakayoshi-1992", "dekerle-2005"],
+      "rule": "Critical swim speed = (D2 − D1) / (T2 − T1) from two all-out swims (e.g. 400 and 200). Threshold sets target CSS pace per 100 plus this offset, because CSS runs slightly faster than truly sustainable pace.",
+      "params": { "offsetSecondsPer100": [2, 5], "testDistances": [200, 400] }
+    },
+    {
+      "id": "pace.predict",
+      "binding": "default",
+      "basis": ["riegel-1981"],
+      "rule": "Predict a time at an unswum distance as T2 = T1 × (D2 / D1)^k. Uses the exponent Swim Tools already uses until it's calibrated against USMS results.",
+      "params": { "k": 1.06, "calibrated": false }
+    },
+    {
+      "id": "log.load",
+      "binding": "default",
+      "basis": ["foster-2001", "wallace-2009"],
+      "rule": "A logged swim's training load = the swimmer's own session rating (1–10) × minutes.",
+      "params": { "scale": [1, 10] }
+    },
+    {
+      "id": "log.strokeCount",
+      "binding": "default",
+      "basis": ["costill-1985"],
+      "rule": "The log accepts an optional strokes-per-length; SWOLF and stroke index are derived from it later (backlog)."
+    },
+    {
+      "id": "plan.skillRotation",
+      "binding": "default",
+      "basis": ["lanemate-event-plans"],
+      "rule": "Each week has one skill focus, rotating as the library's plans do; equipment follows the skill.",
+      "params": { "source": "stats.skillByWeek" }
+    },
+    {
+      "id": "plan.eventMix",
+      "binding": "default",
+      "basis": ["lanemate-event-plans", "gonzalez-rave-2021", "arroyo-toledo-2021"],
+      "rule": "The mix of aerobic, conditioning, speed and race sessions follows the chosen event, as measured from that event's plan; race sessions concentrate in the final weeks.",
+      "params": { "source": "stats.eventMix", "byWeek": "stats.fitnessByWeek" }
+    },
+    {
+      "id": "plan.benchmarks",
+      "binding": "default",
+      "basis": ["lanemate-event-plans"],
+      "rule": "The first and last sessions include a timed swim of the target event; they are never dropped when sessions per week is reduced."
+    },
+    {
+      "id": "plan.taper",
+      "binding": "default",
+      "basis": ["bosquet-2007"],
+      "rule": "When the goal date is a meet, reduce volume progressively over the final weeks while keeping the hard efforts and the number of sessions.",
+      "params": { "days": [8, 14], "volumeReduction": [0.41, 0.6], "keepIntensity": true, "keepFrequency": true }
+    },
+    {
+      "id": "plan.adapt",
+      "binding": "default",
+      "basis": ["wallace-2009"],
+      "rule": "After a week of logged swims, adjust the next week from the swimmer's own ratings: lighter if sessions felt much harder than planned, unchanged otherwise.",
+      "params": { "hardGap": 2 }
+    },
+    {
+      "id": "plan.loadGuardrail",
+      "binding": "experimental",
+      "basis": ["griffin-2020"],
+      "rule": "If a planned week's load would be more than this multiple of the swimmer's recent 4-week average, suggest a lighter session. A suggestion, never an injury prediction.",
+      "params": { "ratio": 1.3, "weeks": 4 }
+    },
+    {
+      "id": "plan.goalCheck",
+      "binding": "default",
+      "basis": ["knechtle-2019"],
+      "rule": "Check a goal time against USMS results for the swimmer's age group and sex (Top Times / time standards already in Swim Tools) and say if it's unusually ambitious."
+    }
+  ]
+}

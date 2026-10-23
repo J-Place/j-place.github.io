@@ -1,0 +1,38 @@
+---
+permalink: /fitness-and-training/swim-tools-v2/workouts/index.html
+title: Build a Workout | Swim Tools | U.S. Masters Swimming
+pageTitle: Build a Workout
+# Same default persona as Swim Tools v2; ?user=<users.json key> switches it
+# (src/js/swim-tools-host.js)
+swimmerId: KT2JH
+breadcrumbs:
+  - url: "/home"
+    label: "Home"
+  - url: "/fitness-and-training/articles-and-videos/index.html"
+    label: "Fitness and Training"
+  - url: "/fitness-and-training/swim-tools-v2/"
+    label: "Swim Tools"
+---
+{% extends "layouts/article.njk" %}
+{# Build a Workout, a view of the Swim Tools app (~/dev/usms/swim-tools).
+   This page plays Sitecore's part: the chrome and a mount point. The app's
+   embed bundle (src/js/swim-tools/, synced by its npm run sync:eleventy)
+   renders the view into the div; src/js/swim-tools-host.js works out the
+   persona and which data source to use, then mounts it. #}
+{% block pageCSS %}
+<link href="/css/Common/Breadcrumb.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/pages/swim-tools-host.css">
+<link rel="stylesheet" href="/js/swim-tools/swim-tools.css">
+{% endblock %}
+{% block pageJS %}
+<script src="/js/swim-tools/swim-tools.js" defer></script>
+<script src="/js/swim-tools-host.js" defer></script>
+{% endblock %}
+{% block content %}
+<section class="section section-full swim-tools-host">
+  <div class="usms-container p-tb-10">
+    <h1 class="visually-hidden">Build a Workout</h1>
+    <div data-usms-component="SwimTools" data-view="workouts" data-default-persona="{{ swimmerId }}"></div>
+  </div>
+</section>
+{% endblock %}

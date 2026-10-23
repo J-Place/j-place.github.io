@@ -35,7 +35,11 @@ Static JSON rankings at `/data/top-times/{season}/{gender}-{age}/scy/{stroke}/{d
 
 The member-facing Swim Tools app (Build a Workout, Training Plans, Your Log, Workout Library, How We Build Your Workouts) lives in its own repo, **`~/dev/usms/swim-tools`** (Next.js + TypeScript). Its workout library, rules registry, references, ingest scripts and handoff doc (`docs/swim-tools-app.md`) are all there, not here. It is not production's *Workout Composer*, which is the coaches' authoring tool.
 
-This repo plays Sitecore's part: the Swim Tools v2 page is the dashboard, and each view will be an Eleventy page that renders the chrome plus a mount point (`data-usms-component="SwimTools"` with a `data-view`) for the app's embed bundle. Phase 1 adds those host pages and a sync script that copies the app's built bundle and static data in.
+This repo plays Sitecore's part: the Swim Tools v2 page is the dashboard, and each view is an Eleventy page that renders the chrome plus a mount point (`data-usms-component="SwimTools"` with a `data-view`) for the app's embed bundle. Build a Workout is the first: `src/pages/fitness-and-training/swim-tools-workouts.njk` at `/fitness-and-training/swim-tools-v2/workouts/` (v2's Workout Library tile's Browse links to it).
+
+- **Synced, never hand-edited:** `src/js/swim-tools/` (the bundle, plus `source.json` naming the swim-tools commit) and `src/data/swim-tools/` (library, rules registry, references; served at `/data/swim-tools/`). Refresh them from the app repo with `npm run sync:eleventy`, then commit them here. ESLint ignores the bundle.
+- **`src/js/swim-tools-host.js`** mounts each view with the persona (`?user=` → `sessionStorage.activeUser` → the page's `swimmerId`, as `current-user.js` and `swim-tools-v2.js` resolve it, so Add to Log lands in v2's own `swimTools.log.<persona>`) and the app's **static** adapter. `?swimtools=api` (kept for the tab in `sessionStorage.swimToolsAdapter`; `?swimtools=static` clears it) switches to the app's own server on `localhost:3000` (`npm run dev` in the app repo), for testing its API.
+- **The component's styles win over production's:** every rule in its stylesheet starts with `.st-root`, because `common.min.css` sets `.usms-container p` and `li` to 2rem. The host page sets `display: block` on its section (`src/css/pages/swim-tools-host.css`), as v2 does, against production's `section { display: table }`.
 
 ## NEVER EVER DO
 

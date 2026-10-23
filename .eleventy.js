@@ -240,6 +240,10 @@ module.exports = function(eleventyConfig) {
   // (npm prebuild/predev, gitignored): synthetic rankings, Top 10 history and
   // available.json over both folders, at the same /data/top-times/ URLs.
   eleventyConfig.addPassthroughCopy({ "src/data/top-times-generated": "data/top-times" });
+  // The Swim Tools app's static data (library, rules registry, references),
+  // copied in from ~/dev/usms/swim-tools by its `npm run sync:eleventy`, for
+  // the app's static adapter. Its embed bundle is under src/js/swim-tools/.
+  eleventyConfig.addPassthroughCopy({ "src/data/swim-tools": "data/swim-tools" });
 
   // Vendored production CSS/JS (see scripts/vendor-refresh.js + CLAUDE.md's
   // vendoring policy) — same /vendor/css|js/... URL shape scripts/snapshot.js

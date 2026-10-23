@@ -1,0 +1,260 @@
+{
+  "about": "Sources behind the Swim Tools app's rules (docs/swim-tools-app.md). Written for members first: headline, takeaway, what it means for your workouts, how sure the evidence is, where to read more; the formal citation last. Rules in trainingMetrics.json point here by id (their `basis`). Until `reviewed.by` is filled in, the site labels an entry \"Pending review\"; production should hide unreviewed entries.",
+  "evidenceLabels": {
+    "strong": "Strong: a review of many studies, or a large, consistent body of research",
+    "moderate": "Moderate: a few good studies, or a widely used coaching framework",
+    "early": "Early: promising but thin or debated"
+  },
+  "topics": [
+    { "id": "warmup", "label": "Warm-up" },
+    { "id": "pace", "label": "Pace & zones" },
+    { "id": "effort", "label": "Effort & logging" },
+    { "id": "fitness", "label": "Building fitness" },
+    { "id": "race-prep", "label": "Race prep & taper" },
+    { "id": "technique", "label": "Technique" },
+    { "id": "masters", "label": "Training as a Masters swimmer" },
+    { "id": "library", "label": "Where the workouts come from" }
+  ],
+  "references": [
+    {
+      "id": "lanemate-event-plans",
+      "type": "content-source",
+      "topic": "library",
+      "headline": "Where the workouts come from",
+      "takeaway": "Every set Swim Tools uses is taken from USMS's six-week freestyle training plans (50 to 1650 free), written for swimmers training without a coach on deck.",
+      "inYourWorkouts": "Sets keep the plans' own effort words (cruise, steady, solid, strong, race), drills and equipment. Swim Tools chooses and orders them, and adjusts the number of repeats, but never invents new ones.",
+      "evidence": { "grade": "moderate", "basedOn": "Coach-written plans; 144 workouts" },
+      "caveats": "All six plans are short course yards and freestyle-focused. Other strokes and courses are converted or left out until more plans are added.",
+      "readMore": [
+        { "label": "USMS six-week swim training plans", "url": "https://www.usms.org/fitness-and-training/six-week-swim-training-plans/six-week-swim-training-plan-information", "access": "free" }
+      ],
+      "citation": { "authors": "U.S. Masters Swimming; LaneMate", "year": null, "title": "Training Plan for 50/100/200/500/1000/1650 Freestyle (six-week plans)", "source": "U.S. Masters Swimming" },
+      "appliesTo": ["library.sets", "workout.vocabulary", "plan.skillRotation", "plan.eventMix"],
+      "reviewed": { "by": "", "date": "" }
+    },
+    {
+      "id": "wakayoshi-1992",
+      "type": "study",
+      "topic": "pace",
+      "headline": "Finding your threshold pace from two timed swims",
+      "takeaway": "Swim two distances all-out (for example a 400 and a 200). The difference between them gives a 'critical swim speed', a good estimate of the fastest pace you can hold for a long time.",
+      "inYourWorkouts": "When we know two of your times, threshold sets give you a target pace per 100 instead of just an effort word.",
+      "evidence": { "grade": "strong", "basedOn": "Competitive swimmers" },
+      "caveats": "Tested in competitive (non-Masters) swimmers. See the next entry: the estimate runs slightly fast.",
+      "readMore": [
+        { "label": "Plain-English summary", "url": "https://coachsci.sdsu.edu/swim/physiol/wakayosh.htm", "access": "free" }
+      ],
+      "citation": { "authors": "Wakayoshi K, Ikuta K, Yoshida T, Udo M, Moritani T, Mutoh Y, Miyashita M", "year": 1992, "title": "Determination and validity of critical velocity as an index of swimming performance in the competitive swimmer", "source": "European Journal of Applied Physiology 64:153–157" },
+      "appliesTo": ["pace.css"],
+      "reviewed": { "by": "", "date": "" }
+    },
+    {
+      "id": "dekerle-2005",
+      "type": "study",
+      "topic": "pace",
+      "headline": "Why your threshold target is a little slower than your test says",
+      "takeaway": "Critical swim speed came out a bit faster (about 93% of top aerobic speed) than the pace swimmers could truly hold steady (about 88%).",
+      "inYourWorkouts": "Threshold sets aim 2–5 seconds per 100 slower than your calculated critical speed, so the set stays sustainable.",
+      "evidence": { "grade": "moderate", "basedOn": "8 well-trained young swimmers" },
+      "caveats": "A small study of young competitive swimmers.",
+      "readMore": [
+        { "label": "Plain-English summary", "url": "https://coachsci.sdsu.edu/swim/training/dekerle.htm", "access": "free" },
+        { "label": "Original paper", "url": "https://doi.org/10.1055/s-2004-821227", "access": "abstract" }
+      ],
+      "citation": { "authors": "Dekerle J, Pelayo P, Clipet B, Depretz S, Lefevre T, Sidney M", "year": 2005, "title": "Critical swimming speed does not represent the speed at maximal lactate steady state", "source": "International Journal of Sports Medicine 26(7):524–530" },
+      "appliesTo": ["pace.css"],
+      "reviewed": { "by": "", "date": "" }
+    },
+    {
+      "id": "gonzalez-rave-2021",
+      "type": "review",
+      "topic": "fitness",
+      "headline": "Why sprint and distance plans feel so different",
+      "takeaway": "Elite sprinters mix lots of easy swimming with very fast work and little in between. Distance swimmers do the most easy swimming, a good amount of moderate work and the least very hard work.",
+      "inYourWorkouts": "A 50 or 100 free plan pairs easy aerobic days with short, fast sets. A 500 to 1650 plan spends more time at a steady, moderately hard pace.",
+      "evidence": { "grade": "moderate", "basedOn": "Systematic review of 9 studies of elite swimmers" },
+      "caveats": "Elite swimmers training far more than most Masters swimmers. We borrow the shape of the plan, not the volume.",
+      "readMore": [
+        { "label": "Abstract", "url": "https://lida.sport-iat.de/ta/Record/4072108", "access": "abstract" },
+        { "label": "Original paper", "url": "https://doi.org/10.1123/ijspp.2020-0906", "access": "paywalled" }
+      ],
+      "citation": { "authors": "González-Ravé JM, Hermosilla F, González-Mohíno F, Casado A, Pyne DB", "year": 2021, "title": "Training intensity distribution, training volume, and periodization models in elite swimmers: a systematic review", "source": "International Journal of Sports Physiology and Performance 16(7):913–926" },
+      "appliesTo": ["plan.eventMix", "workout.zoneMix"],
+      "reviewed": { "by": "", "date": "" }
+    },
+    {
+      "id": "arroyo-toledo-2021",
+      "type": "study",
+      "topic": "fitness",
+      "headline": "Match the training to the race",
+      "takeaway": "Over 12 weeks, swimmers who trained the sprint way improved their 100 free the most, and those who trained the distance way improved their 800 free and aerobic capacity the most.",
+      "inYourWorkouts": "Your plan's mix of easy, moderate and hard sessions follows the event you chose.",
+      "evidence": { "grade": "moderate", "basedOn": "National-level adolescent swimmers" },
+      "caveats": "Teenage swimmers, not Masters.",
+      "readMore": [
+        { "label": "Abstract", "url": "https://lida.sport-iat.de/ta/Record/4075910", "access": "abstract" }
+      ],
+      "citation": { "authors": "Arroyo-Toledo J, Sortwell A, Clemente-Suárez V", "year": 2021, "title": "The effect of 12-week of pyramidal and polarized training intensity distribution in national elite adolescent swimmers", "source": "Journal of Swimming Research 28:36–47" },
+      "appliesTo": ["plan.eventMix"],
+      "reviewed": { "by": "", "date": "" }
+    },
+    {
+      "id": "fernandes-2024",
+      "type": "review",
+      "topic": "pace",
+      "headline": "What 'steady', 'solid' and 'strong' mean for your body",
+      "takeaway": "Swimming intensities fall into zones, from easy aerobic work up to all-out sprints. Each zone can be recognized by how hard it feels, your heart rate, or how your stroke holds up.",
+      "inYourWorkouts": "Every set is tagged with a zone, so you can see whether a workout is mostly easy, mostly threshold or mostly fast.",
+      "evidence": { "grade": "moderate", "basedOn": "Review of swimming physiology research" },
+      "caveats": "",
+      "readMore": [
+        { "label": "Full text", "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10982397/", "access": "free" }
+      ],
+      "citation": { "authors": "Fernandes RJ, Carvalho DD, Figueiredo P", "year": 2024, "title": "Training zones in competitive swimming: a biophysical approach", "source": "Frontiers in Sports and Active Living 6:1363730" },
+      "appliesTo": ["workout.zones"],
+      "reviewed": { "by": "", "date": "" }
+    },
+    {
+      "id": "foster-2001",
+      "type": "study",
+      "topic": "effort",
+      "headline": "How hard was it? Your answer counts",
+      "takeaway": "Rate a whole session from 1 to 10 and multiply by its minutes, and you get a simple, reliable measure of how much training you did.",
+      "inYourWorkouts": "When you log a swim, you rate it 1–10. Your plan uses your ratings to decide whether the next week should be lighter or harder.",
+      "evidence": { "grade": "strong", "basedOn": "Many sports; widely replicated" },
+      "caveats": "",
+      "readMore": [],
+      "citation": { "authors": "Foster C, Florhaug JA, Franklin J, et al.", "year": 2001, "title": "A new approach to monitoring exercise training", "source": "Journal of Strength and Conditioning Research 15(1):109–115" },
+      "appliesTo": ["log.load"],
+      "reviewed": { "by": "", "date": "" }
+    },
+    {
+      "id": "wallace-2009",
+      "type": "study",
+      "topic": "effort",
+      "headline": "Effort ratings work in the pool too",
+      "takeaway": "In swimmers, session effort ratings tracked heart-rate-based training load closely. Coaches tended to underrate the hard days and overrate the easy ones compared with the swimmers.",
+      "inYourWorkouts": "The plan trusts your rating of a session over the effort the workout prescribed.",
+      "evidence": { "grade": "strong", "basedOn": "12 well-trained swimmers, 20 sessions each" },
+      "caveats": "Well-trained, younger swimmers.",
+      "readMore": [
+        { "label": "Full text (university repository)", "url": "https://opus.lib.uts.edu.au/handle/10453/9495", "access": "free" }
+      ],
+      "citation": { "authors": "Wallace LK, Slattery KM, Coutts AJ", "year": 2009, "title": "The ecological validity and application of the session-RPE method for quantifying training loads in swimming", "source": "Journal of Strength and Conditioning Research 23(1):33–38" },
+      "appliesTo": ["log.load", "plan.adapt"],
+      "reviewed": { "by": "", "date": "" }
+    },
+    {
+      "id": "griffin-2020",
+      "type": "review",
+      "topic": "effort",
+      "headline": "Don't ramp up too fast",
+      "takeaway": "Sudden jumps in training compared with what you've been doing lately are linked with more injuries, but studies measure this so differently that no single number is proven.",
+      "inYourWorkouts": "If a week would be much bigger than your recent average, the plan suggests a lighter session. It's a nudge, not a rule.",
+      "evidence": { "grade": "early", "basedOn": "Systematic review of 27 studies, mostly team sports" },
+      "caveats": "Mostly team sports, not swimming, and the method is debated.",
+      "readMore": [
+        { "label": "Editorial: is there scientific evidence?", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8138569/", "access": "free" }
+      ],
+      "citation": { "authors": "Griffin A, Kenny IC, Comyns TM, Lyons M", "year": 2020, "title": "The association between the acute:chronic workload ratio and injury and its application in team sports: a systematic review", "source": "Sports Medicine 50(3):561–580" },
+      "appliesTo": ["plan.loadGuardrail"],
+      "reviewed": { "by": "", "date": "" }
+    },
+    {
+      "id": "bosquet-2007",
+      "type": "meta-analysis",
+      "topic": "race-prep",
+      "headline": "Why your last two weeks get shorter, not easier",
+      "takeaway": "Across many studies, cutting distance by about half over the final two weeks, while keeping the fast efforts and the number of swims, made athletes about 3% faster on race day.",
+      "inYourWorkouts": "Plans aimed at a meet trim each session's distance in the last two weeks. Your fast sets stay fast.",
+      "evidence": { "grade": "strong", "basedOn": "Meta-analysis of 27 studies of swimmers, runners and cyclists" },
+      "caveats": "Most participants were younger competitive athletes, not Masters swimmers.",
+      "readMore": [
+        { "label": "Plain-English summary", "url": "https://coachsci.sdsu.edu/csa/vol131/bosquet.htm", "access": "free" },
+        { "label": "Abstract (PubMed)", "url": "https://pubmed.ncbi.nlm.nih.gov/17762369/", "access": "abstract" }
+      ],
+      "citation": { "authors": "Bosquet L, Montpetit J, Arvisais D, Mujika I", "year": 2007, "title": "Effects of tapering on performance: a meta-analysis", "source": "Medicine & Science in Sports & Exercise 39(8):1358–1365" },
+      "appliesTo": ["plan.taper"],
+      "reviewed": { "by": "", "date": "" }
+    },
+    {
+      "id": "papadimitriou-2024",
+      "type": "review",
+      "topic": "race-prep",
+      "headline": "Practicing your race pace in short pieces",
+      "takeaway": "Many short swims (like 25s) at goal race pace with short rest can improve speed with less fatigue than traditional hard sets, but only a handful of studies exist.",
+      "inYourWorkouts": "Sprint plans include an optional race-pace set based on your goal time. You can turn it off.",
+      "evidence": { "grade": "early", "basedOn": "Reviews of 4–5 small studies" },
+      "caveats": "Very few studies, mostly young competitive swimmers.",
+      "readMore": [
+        { "label": "Full text", "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC11358974/", "access": "free" },
+        { "label": "Scoping review: does volume and interval matter?", "url": "https://lida.sport-iat.de/ta/Record/4091810", "access": "abstract" }
+      ],
+      "citation": { "authors": "Papadimitriou K", "year": 2024, "title": "Intensity and pace calculation of ultra short race pace training (USRPT) in swimming: take-home messages and statements for swimming coaches", "source": "Open-access review (PMC11358974)" },
+      "appliesTo": ["workout.racePace"],
+      "reviewed": { "by": "", "date": "" }
+    },
+    {
+      "id": "neiva-2014",
+      "type": "review",
+      "topic": "warmup",
+      "headline": "Why every workout starts easy, then wakes up",
+      "takeaway": "A good warm-up builds gradually and includes a few short efforts near race pace. It seems to help most for races of 200 or longer, though results vary.",
+      "inYourWorkouts": "Every workout opens with a warm-up, and before a fast main set it includes a few short, quicker swims.",
+      "evidence": { "grade": "moderate", "basedOn": "Review of warm-up studies in competitive swimming" },
+      "caveats": "Studied before races, in competitive swimmers.",
+      "readMore": [
+        { "label": "Record and abstract", "url": "https://oasisbr.ibict.br/vufind/Record/RCAP_0feef586e68faf22753b471e38370cd8", "access": "abstract" }
+      ],
+      "citation": { "authors": "Neiva HP, Marques MC, Barbosa TM, Izquierdo M, Marinho DA", "year": 2014, "title": "Warm-up and performance in competitive swimming", "source": "Sports Medicine" },
+      "appliesTo": ["workout.warmup"],
+      "reviewed": { "by": "", "date": "" }
+    },
+    {
+      "id": "costill-1985",
+      "type": "study",
+      "topic": "technique",
+      "headline": "Why the plans keep asking you to count strokes",
+      "takeaway": "Distance per stroke was the single best predictor of performance in a middle-distance freestyle swim. Efficient swimmers go farther with each stroke.",
+      "inYourWorkouts": "Sets that say 'take one less stroke per 25' or 'same stroke count' build that efficiency. You can log your stroke count to track it.",
+      "evidence": { "grade": "strong", "basedOn": "39 competitive swimmers; widely confirmed since" },
+      "caveats": "",
+      "readMore": [
+        { "label": "Original paper (PDF)", "url": "https://www.thieme-connect.de/products/ejournals/pdf/10.1055/s-2008-1025849.pdf", "access": "paywalled" }
+      ],
+      "citation": { "authors": "Costill DL, et al.", "year": 1985, "title": "Energy expenditure during front crawl swimming: predicting success in middle-distance events", "source": "International Journal of Sports Medicine 6(5):266–270" },
+      "appliesTo": ["log.strokeCount", "workout.drills"],
+      "reviewed": { "by": "", "date": "" }
+    },
+    {
+      "id": "knechtle-2019",
+      "type": "study",
+      "topic": "masters",
+      "headline": "Training as a Masters swimmer",
+      "takeaway": "Masters swimming times hold up well into middle age and then slow gradually. How fast depends on the stroke, the distance and sex.",
+      "inYourWorkouts": "Goal times are checked against real results for your age group, so targets stay realistic.",
+      "evidence": { "grade": "moderate", "basedOn": "Analysis of Masters swimming results" },
+      "caveats": "Based on race results, not training studies.",
+      "readMore": [
+        { "label": "Special issue on Masters athletes", "url": "https://www.mov-sport-sciences.org/articles/sm/ref/2019/02/sm190034s/sm190034s.html", "access": "free" }
+      ],
+      "citation": { "authors": "Knechtle B, Barbosa TM, Nikolaidis PT", "year": 2019, "title": "The age-related changes and sex difference in master swimming performance", "source": "Movement & Sport Sciences – Science & Motricité 104:29–36" },
+      "appliesTo": ["plan.goalCheck"],
+      "reviewed": { "by": "", "date": "" }
+    },
+    {
+      "id": "riegel-1981",
+      "type": "study",
+      "topic": "pace",
+      "headline": "Predicting a time for a distance you haven't swum",
+      "takeaway": "Across endurance sports, how much you slow down as the distance grows follows a steady pattern, so one time can predict another.",
+      "inYourWorkouts": "If you set a goal for an event you haven't raced, your goal pace is estimated from your other swims.",
+      "evidence": { "grade": "moderate", "basedOn": "World records across running, swimming and other sports" },
+      "caveats": "Built from world-record performances. We are checking it against USMS results before relying on it.",
+      "readMore": [],
+      "citation": { "authors": "Riegel PS", "year": 1981, "title": "Athletic records and human endurance", "source": "American Scientist 69(3):285–290" },
+      "appliesTo": ["pace.predict"],
+      "reviewed": { "by": "", "date": "" }
+    }
+  ]
+}
