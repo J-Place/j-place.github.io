@@ -31,6 +31,10 @@ Static JSON rankings at `/data/top-times/{season}/{gender}-{age}/scy/{stroke}/{d
 - **Everything else is generated before every build**, never committed: `npm run build`/`dev` run `scripts/top-times-synthetic.js` first (`prebuild`/`predev`, ~7 s), which empties and rewrites the gitignored `src/data/top-times-generated/`: synthetic rankings for the personas' age groups, Top 10 history back to 1970-71, and `available.json`. Same inputs, same bytes. A dataset in the real folder is never generated, so a new scrape displaces synthetic data on the next build.
 - The generator reads `src/_data/timeStandards.json` (USMS percentile cuts) and `topTens.json` (real decade Top 10s), so don't delete those without moving them.
 
+## Dev container
+
+`.devcontainer/` runs this repo in a firewalled container for working with Claude Code in auto mode (how to: `~/dev/usms/swim-tools/docs/dev-container.md`). **`production/` is covered by an empty volume inside**, so its credentials don't exist there. Its `Dockerfile` and `init-firewall.sh` are identical to swim-tools' and sergey's; change all three together. Inside, nothing can reach GitHub or www.usms.org: push, run the visual tests, `vendor:refresh`, `top-times:scrape` and `monitor:prod` from the Mac.
+
 ## Swim Tools App (separate repo)
 
 The member-facing Swim Tools app (Build a Workout, Training Plans, Your Log, Workout Library, How We Build Your Workouts) lives in its own repo, **`~/dev/usms/swim-tools`** (Next.js + TypeScript). Its workout library, rules registry, references, ingest scripts and handoff doc (`docs/swim-tools-app.md`) are all there, not here. It is not production's *Workout Composer*, which is the coaches' authoring tool.
