@@ -6,7 +6,7 @@
 {# Add a race to your race history (the Your Races card), which the Race
    Time Predictor is built from. Starts from Your Event each time it opens.
    Adds on the button, not as you type. Opened from the "add a race" link in
-   Race Time Predictions' summary (its + button is retired). #}
+   Time Predictions' summary (its + button is retired). #}
 {% set modalId = "swimDeckRace" %}
 {% set modalTitle = "Add a Race" %}
 {% set modalBody %}
@@ -47,23 +47,49 @@
 {% endset %}
 {% include "components/modal.njk" %}
 
-{# Add to Log: the Your Swim workout as it stands (filled in on open,
-   swim-tools-v2.js), and the date it was swum. Saved in the browser. #}
+{# Add to Log (from Training Metrics and Highlights' Your Training card):
+   a swim you did, its own fields, not the calculators' (since 2026-10-25;
+   it was the Your Swim workout as it stood). Starts empty and dated today
+   each time it opens; saved in the browser (swim-tools-v2.js). #}
 {% set modalId = "swimDeckLog" %}
 {% set modalTitle = "Add to Log" %}
 {% set modalBody %}
-<dl class="swim-log__stats">
-  <div><dt>Distance</dt><dd data-st="logDistance"></dd></div>
-  <div data-st-log-stroke><dt>Stroke</dt><dd data-st="logStroke"></dd></div>
-  <div><dt>Course</dt><dd data-st="logCourse"></dd></div>
-  <div><dt>Time</dt><dd data-st="logTime"></dd></div>
-  <div><dt>Pace</dt><dd data-st="logPace"></dd></div>
-  <div><dt>Calories</dt><dd data-st="logCalories"></dd></div>
-  <div data-st-log-effort><dt>Intensity</dt><dd data-st="logEffort"></dd></div>
-</dl>
+<div class="swim-deck-modal__row swim-deck-modal__row--compact">
+  <div class="form-group">
+    <label for="sd-log-date">Date</label>
+    <input type="date" class="form-control swim-params__date" id="sd-log-date" data-log-input="date" required>
+  </div>
+  <div class="form-group">
+    <label for="sd-log-distance">Distance <span class="swim-swim__optional" data-st="logUnit">(yards)</span></label>
+    <input type="number" inputmode="numeric" min="25" step="25" class="form-control swim-params__number" id="sd-log-distance" data-log-input="distance">
+  </div>
+</div>
 <div class="form-group">
-  <label for="sd-log-date">Date</label>
-  <input type="date" class="form-control swim-params__date" id="sd-log-date" required>
+  <span class="swim-deck-modal__label" id="sd-log-course-label">Course</span>
+  <div class="swim-seg" role="group" aria-labelledby="sd-log-course-label" data-log="course">
+    {% for c in courses %}<button type="button" data-value="{{ c }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ c }}</button>{% endfor %}
+  </div>
+</div>
+<div class="swim-deck-modal__row swim-deck-modal__row--compact">
+  <div class="form-group">
+    <span class="swim-deck-modal__label" id="sd-log-time-label">Time</span>
+    {{ timeField("sd-log-time-label", 'data-time-log="time"', "sm") }}
+  </div>
+  <div class="form-group">
+    <span class="swim-deck-modal__label" id="sd-log-stroke-label">Stroke <span class="swim-swim__optional">(optional)</span></span>
+    {{ strokeSelect('aria-labelledby="sd-log-stroke-label"', 'data-log-input="stroke"', true) }}
+  </div>
+</div>
+{# How hard it felt, 1 to 10 (optional): shown beside its Training Effect #}
+<div class="form-group">
+  <label for="sd-log-effort">Intensity <span class="swim-swim__optional">(optional)</span></label>
+  <div class="swim-deck__field swim-deck__field--effort">
+    <select class="form-control" id="sd-log-effort" data-log-input="effort">
+      <option value="">Not rated</option>
+      {% for n in range(1, 11) %}<option value="{{ n }}">{{ n }}</option>{% endfor %}
+    </select>
+    <span class="swim-deck__field-value" aria-hidden="true" data-st="logEffort">Not rated</span>
+  </div>
 </div>
 <span class="swim-params__hint swim-log__hint" data-st="logHint" aria-live="polite"></span>
 {% endset %}
@@ -104,13 +130,13 @@
 {% endset %}
 {% include "components/modal.njk" %}
 
-{# Race Planning's controls as a modal: Your Event (distance, stroke,
+{# Race Metrics' controls as a modal: Your Event (distance, stroke,
    course) and its goal. The same settings as the section's own controls,
    bound the same way, so the two always match and a change in either
    applies at once (swim-tools-v2.js). No trigger yet: open it with
    data-modal-target="#swimDeckPlan". #}
 {% set modalId = "swimDeckPlan" %}
-{% set modalTitle = "Race Planning" %}
+{% set modalTitle = "Race Metrics" %}
 {% set modalBody %}
 <div class="swim-deck-modal__row swim-deck-modal__row--compact">
   <div class="form-group">
@@ -147,13 +173,13 @@
 {% endset %}
 {% include "components/modal.njk" %}
 
-{# Time Conversions' controls as a modal: the event and its time or pace
-   (per 100). The same settings as the section's own controls, bound the
+{# Convert a Time's controls (Calculators) as a modal: the event and its
+   time or pace (per 100). The same settings as the section's own controls, bound the
    same way, so time and pace update each other and the section at once
    (swim-tools-v2.js). No trigger yet: open it with
    data-modal-target="#swimDeckConv". #}
 {% set modalId = "swimDeckConv" %}
-{% set modalTitle = "Time Conversions" %}
+{% set modalTitle = "Convert a Time" %}
 {% set modalBody %}
 <div class="swim-deck-modal__row swim-deck-modal__row--compact">
   <div class="form-group">

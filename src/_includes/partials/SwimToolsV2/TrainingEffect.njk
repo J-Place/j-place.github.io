@@ -1,23 +1,26 @@
-{# Training Effect: how much the Your Swim workout does for your fitness,
-   0.0 to 5.0. Its load comes from intensity (pace against your threshold
-   pace, stroke-adjusted), duration and stroke, then it's compared with your
-   typical logged swim of the last 6 weeks (Add to Log). Filled by
-   swim-tools-v2.js (renderTraining). Display only. #}
-<div class="swim-kpi swim-effort" id="training-effect">
-  <span class="swim-kpi__label"><i class="fa-solid fa-gauge-high swim-kpi__icon--effort" aria-hidden="true"></i>Training effect</span>
-  <p class="swim-kpi__sub swim-effort__sub" data-st="teSub"></p>
+{# Training Effect (Training Metrics, since 2026-10-25; was a tile scoring
+   the Your Swim workout, then briefly in Highlights): how much your latest
+   logged swim did for your fitness, 0.0 to 5.0. Its load comes from
+   intensity (pace against your threshold pace, stroke-adjusted), duration
+   and stroke, then it's compared with your typical logged swim of the
+   last 6 weeks. Members only. Filled by swim-tools-v2.js (renderTraining).
+   Display only. #}
+<article class="swim-card swim-effort" id="training-effect">
+  <div class="swim-summary__heading">
+    <h3 class="swim-summary__title">Training Effect</h3>
+    <p class="swim-summary__lead" data-st="teSwim"></p>
+  </div>
+  <span class="swim-kpi__value"><span data-st="teValue"></span><span class="swim-kpi__unit"><span data-st="teWord"></span></span><span class="swim-effort__felt" data-effort-felt hidden>You rated it <b data-st="effortFelt"></b>/10</span></span>
   {# Peak effort (4.5 and up): a caution about overdoing it #}
   <p class="swim-te__warn" data-te-warn hidden><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i><span data-st="teWarn"></span></p>
-  <span class="swim-kpi__value"><span data-st="teValue"></span><span class="swim-kpi__unit"><span data-st="teWord"></span></span><span class="swim-effort__felt" data-effort-felt hidden>You rated it <b data-st="effortFelt"></b>/10</span></span>
+  <p class="swim-summary__fine swim-effort__sub" data-st="teSub"></p>
   {# Locked, until 5 swims are logged in the last 6 weeks: a faded sample
-     reading behind an upsell. Guests and non-members: join; members: log
-     swims, with how many so far (swim-tools-v2.js) #}
+     reading behind how many more to log (swim-tools-v2.js) #}
   <div class="swim-te-lock" data-te-lock hidden>
     <span class="swim-te-lock__teaser" aria-hidden="true">2.5 <span class="swim-kpi__unit">Steady</span></span>
     <p class="swim-te-lock__title" data-st="teLockTitle"></p>
     <p class="swim-te-lock__text" data-st="teLockText"></p>
     <div class="swim-te-lock__dots" data-te-lock-dots aria-hidden="true"></div>
-    <a href="/join-usms/membership-comparison.html" class="btn btn-primary btn-sm" data-te-lock-join>Join U.S. Masters Swimming</a>
-    <button type="button" class="btn btn-primary btn-sm" data-modal-target="#swimDeckLog" data-te-lock-log>Add to Log</button>
+    <button type="button" class="btn btn-primary btn-sm" data-modal-target="#swimDeckLog">Add to Log</button>
   </div>
-</div>
+</article>

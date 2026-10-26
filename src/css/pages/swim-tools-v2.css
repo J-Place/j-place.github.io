@@ -351,7 +351,7 @@
   height: 18.5px;
 }
 
-/* Race Planning's stopwatch: a touch larger (the trend arrow it replaced,
+/* Race Metrics' stopwatch: a touch larger (the trend arrow it replaced,
    the lightest of the icons, took 25px) */
 .swim-ribbon__link[data-section="race-planning"] svg {
   width: 23px;
@@ -550,7 +550,7 @@
 
 /* One thin border around both bands, flush to it (no padding between the
    border and either band). Each band pads its own content. Used for
-   Training Metrics (Your Swim) and Race Planning (Your Event). */
+   Training Metrics (Your Swim) and Race Metrics (Your Event). */
 .swim-panel {
   margin-bottom: 24px;
   border: 1px solid var(--sd-border);
@@ -572,7 +572,7 @@
   padding-top: 0;
 }
 
-/* Race Planning's and Time Conversions' controls bands: hidden on phones,
+/* Race Metrics' and Time Conversions' controls bands: hidden on phones,
    where the cards' gears open the same controls in the section's modal
    (Editors.njk). Training Metrics has no modal yet, so its band stays. */
 @media (max-width: 767px) {
@@ -697,7 +697,7 @@
 /* The sections' columns: CSS Grid, like the Highlights band and the
    Training Metrics tiles (the whole page uses Grid, not production's BS3
    columns: an enhancement page). One column on phones and tablets; from
-   992px (BS3's md) side by side, Race Planning 8/4 and Time Conversions
+   992px (BS3's md) side by side, Race Metrics 8/4 and Time Conversions
    5/7 of 12. 14px between the columns, the Highlights band's gap; 24px
    between rows. Cells stretch to the row's height. */
 .swim-deck__grid {
@@ -727,7 +727,7 @@
   gap: 24px;
 }
 
-/* Race Planning: each column's last card stretches so the two end level
+/* Race Metrics: each column's last card stretches so the two end level
    (balanceRacePlanning fills most of the gap with content first). Natural
    heights while it measures. */
 .swim-deck__grid--balance .swim-deck__cell--stack > :last-child {
@@ -803,7 +803,7 @@
   font-size: 22px;
 }
 
-/* Race Planning's Goal: its time, and Set / Edit this goal beside it,
+/* Race Metrics' Goal: its time, and Set / Edit this goal beside it,
    centred on the boxes */
 .swim-goal-field {
   display: flex;
@@ -820,22 +820,6 @@
 
 .swim-goal-field__link[hidden] {
   display: none;
-}
-
-/* Training Pace's note's link: a text button, inline */
-.swim-deck .swim-pace__link {
-  display: inline;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: var(--sd-blue);
-  font: inherit;
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.swim-deck .swim-pace__link:hover {
-  color: var(--sd-blue-hover);
 }
 
 /* Create a Workout: the button at the tile's foot, full width */
@@ -2542,7 +2526,7 @@
   background: var(--sd-red);
 }
 
-/* ---------- Rank in Age Group ---------- */
+/* ---------- Age Group Rank ---------- */
 
 .swim-rank[hidden],
 .swim-rank__empty[hidden] {
@@ -2945,7 +2929,7 @@
   display: none;
 }
 
-/* ---------- Race Time Predictions ---------- */
+/* ---------- Time Predictions ---------- */
 
 /* As v4's (swim-tools-v4.css, .st4-pred and friends): pace per 100 by
    distance, slower higher, your bests against your age group's median,
@@ -2966,7 +2950,7 @@
   color: var(--sd-blue-hover);
 }
 
-/* Small text links inline after a card's title: Race Time Predictions'
+/* Small text links inline after a card's title: Time Predictions'
    Table view / Chart view and Add races, Race History's Add races */
 .swim-pred-link.swim-pred-view {
   align-self: baseline;
@@ -3351,6 +3335,16 @@
   width: 115px;
 }
 
+/* Add to Log's Intensity: on a row of its own, so as wide as its choices,
+   not the form */
+.swim-deck-modal .swim-deck__field--effort {
+  width: fit-content;
+}
+
+.swim-deck-modal .swim-deck__field--effort > .form-control {
+  width: 115px;
+}
+
 /* The stroke's name sits left in its pill. px, not rem: production sets
    html { font-size: 10px }, so 1.25rem would be 12.5px */
 .swim-deck__field--stroke > .swim-deck__field-value {
@@ -3367,12 +3361,17 @@
   color: var(--sd-red);
 }
 
-/* What it's measured against: small, as the tiles' other notes */
+/* What it's measured against: small, as the cards' other fine print */
 .swim-deck .swim-effort__sub {
   margin: 0;
   color: var(--sd-muted);
   font-size: 13px;
   line-height: 1.4;
+}
+
+/* In Highlights its score follows the heading, not the card's foot */
+.swim-effort .swim-kpi__value {
+  margin: 4px 0 0;
 }
 
 .swim-effort .swim-kpi__unit [data-st="teWord"] {
@@ -3531,7 +3530,7 @@
   }
 }
 
-/* Race Time Predictions: behind the plot, only while rankings load */
+/* Time Predictions: behind the plot, only while rankings load */
 .swim-pred__skel {
   position: absolute;
   inset: 0;
@@ -3659,7 +3658,7 @@
 
 /* Training Effect, locked until 5 swims are logged (swim-tools-v2.js): its
    reading and note give way to a faded sample reading behind an upsell */
-.swim-effort.is-locked > .swim-kpi__sub,
+.swim-effort.is-locked > .swim-effort__sub,
 .swim-effort.is-locked > .swim-te__warn,
 .swim-effort.is-locked > .swim-kpi__value {
   display: none;
@@ -3735,7 +3734,7 @@
   color: var(--sd-orange);
 }
 
-/* Rank in Age Group with no time yet: no marker on the scale, no % sign */
+/* Age Group Rank with no time yet: no marker on the scale, no % sign */
 .swim-rank__marker[hidden],
 .swim-rank__of[hidden] {
   display: none;
@@ -3799,7 +3798,7 @@
   background: #808080;
 }
 
-/* ...and Race Time Predictions' projections, grey until both are picked */
+/* ...and Time Predictions' projections, grey until both are picked */
 .is-pending .swim-pred__line--proj,
 .is-pending .swim-pred__line:not([class*="--"]) {
   stroke: #9a9a9a;
@@ -3845,18 +3844,14 @@
   display: none;
 }
 
-/* Desktop: all three on one row, the goal card wider, everything scaled
-   down a step to fit */
+/* Desktop: all three on one row, Your Training, the wider Race Goal, then
+   the age-up or comeback card (3/6/3 of 12), everything scaled down a step
+   to fit */
 @media (min-width: 992px) {
   .swim-summary {
-    grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 3fr) minmax(0, 6fr) minmax(0, 3fr);
     gap: 14px;
     padding: 16px;
-  }
-
-  /* Goal and training status: two cards, the goal still wider */
-  .swim-summary--status {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); /* Training Summary, then the wider Race Goal */
   }
 
 
@@ -3930,24 +3925,6 @@
 
   .swim-deck .swim-summary .swim-goal__actions .btn-outline {
     padding: 6px 12px;
-  }
-}
-
-/* No room for a compact secondary card from 992px to 1199px */
-@media (min-width: 992px) and (max-width: 1199px) {
-  .swim-summary .swim-summary__card--mini {
-    display: none;
-  }
-}
-
-/* Goal, training status and one compact secondary card: 6/4/2 of 12 */
-@media (min-width: 1200px) {
-  .swim-summary--status.swim-summary--mini {
-    grid-template-columns: minmax(0, 4fr) minmax(0, 6fr) minmax(0, 2fr); /* Training Summary 4, Race Goal 6, compact card 2 */
-  }
-
-  .swim-deck .swim-summary .swim-summary__card--mini .swim-summary__title {
-    font-size: 16px;
   }
 }
 
@@ -4348,28 +4325,110 @@
   display: none;
 }
 
-/* Compact secondary card (beside a training status): its headline, one
-   short line, the next meet, and one link */
+/* The age-up card's short line, for the compact card retired 2026-10-25 */
 .swim-summary__short {
   display: none;
 }
 
-.swim-summary__card--mini .swim-summary__short {
-  display: block;
-}
-
-.swim-summary__card--mini [data-st="ageUpText"],
-.swim-summary__card--mini [data-st="sinceText"],
-.swim-summary__card--mini .swim-gaps,
-.swim-summary__card--mini .swim-summary__fine,
-.swim-summary__card--mini .swim-meets__row + .swim-meets__row,
-.swim-summary__card--mini .swim-summary__full-only {
+/* Training status card (Training Metrics): with nothing logged in the
+   last 6 weeks, a line saying so in place of its figures and chart */
+.swim-status__empty,
+.swim-status.is-empty > :not(.swim-status__head):not(.swim-status__empty),
+.swim-status.is-empty .swim-status__view,
+.swim-status.is-empty .swim-summary__lead {
   display: none;
 }
 
-.swim-summary__card--mini .swim-meets__row {
+.swim-status.is-empty .swim-status__empty {
+  display: block;
+}
+
+/* Highlights' Your Training card: the last 7 days' yards and swims and
+   the latest swim's Training Effect, figures like Race Goal's */
+.swim-week__figures {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  font-variant-numeric: tabular-nums;
+}
+
+.swim-week__figures[hidden],
+.swim-week__figures > [hidden] {
+  display: none;
+}
+
+.swim-week__figures > div {
+  display: flex;
   flex-direction: column;
-  gap: 0;
+}
+
+/* See your training: a link that's a button (it presses the section's tab) */
+.swim-summary__links button.swim-summary__arrow-link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--sd-blue);
+  font: inherit;
+  cursor: pointer;
+}
+
+.swim-summary__links button.swim-summary__arrow-link:hover {
+  text-decoration: underline;
+}
+
+/* Training Metrics: Add to Log and Build a Workout on the blue band, beside
+   a line on what logging gives you */
+.swim-training__band {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 20px;
+}
+
+.swim-deck .swim-training__lead {
+  flex: 1 1 320px;
+  margin: 0;
+  color: var(--sd-ink);
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.swim-training__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.swim-deck .swim-training__status {
+  flex-basis: 100%;
+  margin: 0;
+  color: var(--sd-blue);
+  font-weight: 700;
+}
+
+.swim-deck .swim-training__status:empty {
+  display: none;
+}
+
+/* Its Training Summary and Training Effect, then the link tiles */
+.swim-training__grid {
+  margin-bottom: 24px;
+}
+
+.swim-training__grid[hidden] {
+  display: none;
+}
+
+/* Calculators: a heading over each of its two panels */
+.swim-deck .swim-deck__subhead {
+  margin: 0 0 12px;
+  color: var(--sd-ink);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.swim-deck .swim-panel + .swim-deck__subhead {
+  margin-top: 32px;
 }
 
 /* Training status card: yards per week over the last 6 weeks, the last

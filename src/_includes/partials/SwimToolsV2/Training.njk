@@ -1,0 +1,55 @@
+{# Training Metrics (since 2026-10-25; the Your Swim calculator it held
+   moved to Calculators): your logged training. Add to Log and Build a
+   Workout on light blue, then Training Summary and Training Effect from
+   your log, then the training links (Workout Library, Training Plans, Send
+   to Strava), on white. Members log swims; anyone else sees what members
+   get (swim-tools-v2.js). #}
+<div class="swim-panel swim-training" id="your-training">
+  <div class="swim-panel__band swim-panel__band--blue swim-training__band">
+    <p class="swim-training__lead" data-members-only>Log each swim, or build a workout and log it, to see your training here.</p>
+    <p class="swim-training__lead" data-non-members-only hidden>Members log their swims and see their training: weekly yards, a training status and what each swim does for their fitness.</p>
+    <div class="swim-training__actions">
+      <button type="button" class="btn btn-primary btn-sm" data-modal-target="#swimDeckLog" data-members-only>Add to Log</button>
+      <a href="/fitness-and-training/swim-tools-v2/workouts/" class="btn btn-outline btn-sm" data-members-only>Build a Workout</a>
+      <a href="/join-usms/membership-comparison.html" class="btn btn-primary btn-sm" data-non-members-only hidden>Join U.S. Masters Swimming</a>
+    </div>
+    <p class="swim-card__sub swim-training__status" data-st="logStatus" aria-live="polite"></p>
+  </div>
+  <div class="swim-panel__band">
+    <div class="swim-deck__grid swim-deck__grid--8-4 swim-training__grid" data-members-only>
+      <div class="swim-deck__cell">{% include "partials/SwimToolsV2/TrainingSummary.njk" %}</div>
+      <div class="swim-deck__cell">{% include "partials/SwimToolsV2/TrainingEffect.njk" %}</div>
+    </div>
+    <div class="swim-deck__kpis">
+      {# Workout Library: what it offers, then a button: members browse it,
+         anyone else joins first (swim-tools-v2.js). Browse opens Build a
+         Workout (the Swim Tools app, swim-tools-v2/workouts/) until the
+         app's Workout Library view exists. #}
+      <div class="swim-kpi swim-kpi--action">
+        <span class="swim-kpi__label"><span class="swim-kpi__icon--library" aria-hidden="true"><i class="fa-solid fa-plus"></i></span>Workout Library</span>
+        <ul class="swim-kpi__list">
+          <li>Workouts from Masters coaches</li>
+          <li>Search by stroke and distance</li>
+          <li>Sets for every level</li>
+        </ul>
+        <a href="/fitness-and-training/swim-tools-v2/workouts/" class="btn btn-primary btn-sm swim-kpi__action swim-kpi__action--browse" data-members-only>Browse</a>
+        <a href="/join-usms/membership-comparison.html" class="btn btn-primary btn-sm swim-kpi__action" data-non-members-only hidden>Join USMS</a>
+      </div>
+      {# Training Plans: leads to the Swim Tools app's Training Plans view.
+         Not built yet: #0. #}
+      <div class="swim-kpi swim-kpi--action">
+        <span class="swim-kpi__label"><i class="fa-solid fa-chart-simple swim-kpi__icon--workout" aria-hidden="true"></i>Training Plans</span>
+        <span class="swim-kpi__sub" data-members-only>Build a training plan toward your race goal.</span>
+        <span class="swim-kpi__sub" data-non-members-only hidden>Members can build a custom plan from our Workout Library.</span>
+        <a href="#0" class="swim-kpi__add" data-members-only>Create a plan</a>
+        <a href="/join-usms/membership-comparison.html" class="swim-kpi__add" data-non-members-only hidden aria-label="Create a plan: join USMS to create plans">Create a plan</a>
+      </div>
+      {# Send to Strava: no Strava connection yet: #0 #}
+      <div class="swim-kpi">
+        <span class="swim-kpi__label"><i class="fa-brands fa-strava swim-kpi__icon--strava" aria-hidden="true"></i>Send to Strava</span>
+        <span class="swim-kpi__sub">Sync to your Strava account for enhanced metrics.</span>
+        <a href="#0" class="swim-kpi__add swim-kpi__add--strava">Get started.</a>
+      </div>
+    </div>
+  </div>
+</div>

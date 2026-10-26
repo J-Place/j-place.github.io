@@ -74,13 +74,10 @@ ageGroups:
             {# Trying a paperclip in place of the house (was: <path d="M3 11l9-8 9 8"/><path d="M5 9.5V20h14V9.5"/><path d="M10 20v-6h4v6"/>) #}
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
           </button>
-          <button type="button" class="swim-ribbon__link" data-section="race-planning" aria-controls="swim-deck-sections" aria-pressed="false" aria-label="Race Planning" title="Race Planning">
+          <button type="button" class="swim-ribbon__link" data-section="race-planning" aria-controls="swim-deck-sections" aria-pressed="false" aria-label="Race Metrics" title="Race Metrics">
             {# The stopwatch, moved from Training Metrics (was a trend arrow,
                kept for reuse: <path d="M3 17l5-6 4 3 7-8"/><path d="M14 6h5v5"/>) #}
             <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M10 2h4"/></svg>
-          </button>
-          <button type="button" class="swim-ribbon__link" data-section="time-conversions" aria-controls="swim-deck-sections" aria-pressed="false" aria-label="Time Conversions" title="Time Conversions">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h13l-4-4M17 17H4l4 4"/></svg>
           </button>
           <button type="button" class="swim-ribbon__link" data-section="training-metrics" aria-controls="swim-deck-sections" aria-pressed="false" aria-label="Training Metrics" title="Training Metrics">
             {# A dumbbell (2026-10-15, from the designer's Illustrator export,
@@ -98,6 +95,9 @@ ageGroups:
                <rect x="25.07" y="13.18" width="6" height="17" stroke-width="1.9"/>
                <line x1="16.07" y1="21.8" x2="24.07" y2="21.8" stroke-width="4.5" stroke-linecap="butt"/> #}
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 12h8M8 6v12M16 6v12M4.5 9v6M19.5 9v6M2 12h2.5M19.5 12H22"/></svg>
+          </button>
+          <button type="button" class="swim-ribbon__link" data-section="calculators" aria-controls="swim-deck-sections" aria-pressed="false" aria-label="Calculators" title="Calculators">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h13l-4-4M17 17H4l4 4"/></svg>
           </button>
         </div>
         {# Who the tools are for: sex and age group, when we know the age (the
@@ -131,11 +131,11 @@ ageGroups:
     <div class="swim-deck__sections" id="swim-deck-sections">
       {% include "partials/SwimToolsV2/Summary.njk" %}
       <section class="swim-deck__section" id="race-planning" aria-labelledby="race-planning-title">
-        <h2 class="swim-deck__eyebrow" id="race-planning-title">Race planning</h2>
+        <h2 class="swim-deck__eyebrow" id="race-planning-title">Race metrics</h2>
         {# One bordered panel: Your Event on light blue, then the tools on white #}
         <div class="swim-panel">
           {# Hidden on phones: the cards' gears open the same controls in the
-             Race Planning modal #}
+             Race Metrics modal #}
           <div class="swim-panel__band swim-panel__band--blue swim-panel__band--modal-on-mobile">
             {# Your Event: labels above each control, like Your Swim #}
             <div class="swim-deck__context" role="group" aria-label="Your event, applies to every tool">
@@ -182,13 +182,13 @@ ageGroups:
           <div class="swim-panel__band">
             {# The two columns end level: balanceRacePlanning (swim-tools-v2.js) #}
             <div class="swim-deck__grid swim-deck__grid--8-4 swim-deck__grid--balance">
-              {# Race Time Predictions, then Race History, then Your Races #}
+              {# Time Predictions, then Race History, then Your Races #}
               <div class="swim-deck__cell swim-deck__cell--stack">
                 {% include "partials/SwimToolsV2/RacePredictor.njk" %}
                 {% include "partials/SwimToolsV2/RaceTrend.njk" %}
                 {% include "partials/SwimToolsV2/RaceHistory.njk" %}
               </div>
-              {# Rank in Age Group (Your Event, since 2026-10-15; was in Time
+              {# Age Group Rank (Your Event, since 2026-10-15; was in Time
                  Conversions), Race Splits, then Rank and Tier #}
               <div class="swim-deck__cell swim-deck__cell--stack">
                 {% include "partials/SwimToolsV2/AgeRank.njk" %}
@@ -203,25 +203,31 @@ ageGroups:
         </div>
       </section>
 
-      <section class="swim-deck__section" id="time-conversions" aria-labelledby="time-conversions-title">
-        <h2 class="swim-deck__eyebrow" id="time-conversions-title">Time conversions</h2>
-        {# One bordered panel, like Race Planning: the time to convert on
+      <section class="swim-deck__section" id="training-metrics" aria-labelledby="training-metrics-title">
+        <h2 class="swim-deck__eyebrow" id="training-metrics-title">Training metrics</h2>
+        {% include "partials/SwimToolsV2/Training.njk" %}
+      </section>
+
+      {# Calculators (since 2026-10-25): Time Conversions and the Your Swim
+         calculator (pace and calories, was Training Metrics), a panel each
+         under its own heading #}
+      <section class="swim-deck__section" id="calculators" aria-labelledby="calculators-title">
+        <h2 class="swim-deck__eyebrow" id="calculators-title">Calculators</h2>
+        <h3 class="swim-deck__subhead" id="convert-time-title">Convert a time</h3>
+        {# One bordered panel, like Race Metrics: the time to convert on
            light blue, then the conversions on white #}
-        <div class="swim-panel swim-convert" id="convert-time">
+        <div class="swim-panel swim-convert" id="convert-time" aria-labelledby="convert-time-title">
           {% include "partials/SwimToolsV2/ConvertTime.njk" %}
           <div class="swim-panel__band">
             <div class="swim-deck__grid swim-deck__grid--5-7">
-              {# Course Conversion (Rank in Age Group moved to Race Planning
+              {# Course Conversion (Age Group Rank moved to Race Metrics
                  2026-10-15) #}
               <div class="swim-deck__cell">{% include "partials/SwimToolsV2/CourseConversion.njk" %}</div>
               <div class="swim-deck__cell">{% include "partials/SwimToolsV2/AgeConversion.njk" %}</div>
             </div>
           </div>
         </div>
-      </section>
-
-      <section class="swim-deck__section" id="training-metrics" aria-labelledby="training-metrics-title">
-        <h2 class="swim-deck__eyebrow" id="training-metrics-title">Training metrics</h2>
+        <h3 class="swim-deck__subhead" id="your-swim-title">Pace and calories</h3>
         {% include "partials/SwimToolsV2/YourSwim.njk" %}
       </section>
     </div>

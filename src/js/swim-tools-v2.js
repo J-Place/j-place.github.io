@@ -1,6 +1,6 @@
 // Swim Tools v2: one swimmer context (course, stroke) feeds every tool on the
 // page, and each tool's inputs live in an editor modal. All results are sample
-// math, not USMS-approved formulas. Race Time Predictions works as v4's:
+// math, not USMS-approved formulas. Time Predictions works as v4's:
 // your bests against your age group's USMS rankings (Top Times), projecting
 // the distances you haven't raced; split strategies are a linear pace trend
 // plus a dive-start allowance on the first split.
@@ -57,7 +57,7 @@
     // Sex, when we don't know it (logged out, or no gender on the profile)
     sex: 'Men',
     view: 'chart', strategy: 'even',
-    predHidden: {}, // Race Time Predictions: lines turned off (you, mid, low, ten, top)
+    predHidden: {}, // Time Predictions: lines turned off (you, mid, low, ten, top)
     // The swim Training Metrics are worked out from (its settings modal)
     // The Training Metrics swim (Your Swim). stroke is optional: '' for a
     // mixed workout.
@@ -70,6 +70,8 @@
     races: [],
     // The Add a Race form; reset from Your Event each time it opens
     newRace: { course: 'SCY', distance: '200', stroke: 'Free', time: '', date: '' },
+    // The Add to Log form's swim
+    newLog: { date: '', distance: '', course: 'SCY', time: '', stroke: '', effort: '' },
     racesExpanded: false,   // Your Races: all of them, not just the newest few
     // Convert a Time (Time Conversions): its own event, and a time or a pace
     // (per 100); the one changed last (source) is used and the other worked
@@ -348,7 +350,7 @@
     return stroke === 'IM' ? 'IM' : stroke.toLowerCase();
   }
 
-  // ---------- Race Time Predictions ----------
+  // ---------- Time Predictions ----------
 
   // Your races as the predictor reads them: { course, d, stroke, secs, date, age }
   function predRaces() {
@@ -519,7 +521,7 @@
     });
   }
 
-  // Race Time Predictions' skeleton, shaped like the summary note it stands
+  // Time Predictions' skeleton, shaped like the summary note it stands
   // in for: a kicker, a headline (two lines on phones), then the paragraph
   // (three lines on desktop, five on phones; .swim-skel--phone), and the
   // legend's pills at their usual widths
@@ -558,7 +560,7 @@
     };
   }
 
-  // Race Time Predictions, as v4's: your bests (triangles) and projections
+  // Time Predictions, as v4's: your bests (triangles) and projections
   // (open dots) as pace per 100, against your age group's median, slowest,
   // 10th place and fastest. Each line turns off from its legend pill
   // (state.predHidden). Returns the rows (predictions).
@@ -632,7 +634,7 @@
       if (isFinite(r.lowP) && !off.low) all.push(r.lowP);
       if (isFinite(r.tenP) && !off.ten) all.push(r.tenP);
     });
-    // Your goal, once you've typed one (Race Planning's Goal): a solid deep
+    // Your goal, once you've typed one (Race Metrics' Goal): a solid deep
     // yellow dot at Your Event's distance, in the scale too
     var goalTyped = !state.goalAuto && state.goal !== '' && validEntry(state.goal);
     var goalIndex = list.indexOf(eventD);
@@ -1070,7 +1072,7 @@
     var latest = mine[0] || null, best = fastest(mine);
     var groupMedian = goalRow ? goalRow.mid : NaN;
 
-    // The goal: the one you typed in Race Planning, else v4's suggestion:
+    // The goal: the one you typed in Race Metrics, else v4's suggestion:
     // just under the whole second below your latest ("break 2:55"), or with
     // no races, the age-group median
     var typed = !state.goalAuto && state.goal !== '' && validEntry(state.goal);
@@ -1078,15 +1080,15 @@
     if (typed) { goal = parse(state.goal); kind = 'set'; }
     else if (latest) { round = Math.floor(latest.secs); goal = round - 0.01; kind = 'break'; }
     else { goal = groupMedian; kind = 'middle'; }
-    // The card shows a goal only once you've set one (Race Planning's Goal,
+    // The card shows a goal only once you've set one (Race Metrics' Goal,
     // which Set this goal / Edit goal goes to); the suggestion above still stands
-    // in for it in Race Planning (its Goal placeholders, Race Splits, Rank
+    // in for it in Race Metrics (its Goal placeholders, Race Splits, Rank
     // and Tier: this function's return)
     var shown = typed ? goal : NaN;
     // Until you set one, how the default goal is made (the median with no
     // races, else just under your latest)
-    set('goalTitle', typed ? race(goal) + ' in the ' + ev + ' ' + state.course :
-      'The default goal is based on ' + (kind === 'break' ? 'your latest time' : 'the median age group time') +
+    set('goalTitle', typed ? 'Your set goal is ' + race(goal) + ' in the ' + ev + ' ' + state.course :
+      'The suggested goal is based on ' + (kind === 'break' ? 'your latest time' : 'the median age group time') +
       '.');
     // With no goal and no races, the suggestion is the median for the age
     // group and category the rankings use: the defaults (45–49 Men's/Open)
@@ -1106,7 +1108,7 @@
     var suggestedTime = !typed && isFinite(goal) ? goal : NaN;
     set('goalTime', typed ? race(goal) : isFinite(suggestedTime) ? race(suggestedTime) : '—');
     q('[data-st="goalTime"]').classList.toggle('is-default', !typed);
-    set('goalTimeLabel', typed ? 'Goal' : 'Default Goal');
+    set('goalTimeLabel', typed ? 'Goal' : 'Suggested Goal');
     // The goal against your times: a personal best, or what it beats
     var synopsis = !typed ? '' :
       !best ? 'Your first race in the ' + ev + ' will set your personal best.' :
@@ -1160,7 +1162,7 @@
     var user = USERS[SWIMMER] || {}, group = ageGroup(), k = AGE_GROUPS.indexOf(group), next = AGE_GROUPS[k + 1];
     var gaps = q('[data-ageup-gaps]');
     var dob = (user.birthDate || '').split('/').map(Number);
-    var moveUpSoon = false, sinceMonths = NaN; // for the compact secondary card
+    var moveUpSoon = false; // which secondary card shows
     set('ageUpShort', '');
     if (!state.ageKnown || dob.length !== 3 || !next) {
       set('ageUpTitle', 'Your age group');
@@ -1208,7 +1210,6 @@
     } else {
       var a = last.date.split('-').map(Number), n = new Date();
       var months = (n.getFullYear() - a[0]) * 12 + n.getMonth() + 1 - a[1] - (n.getDate() < a[2] ? 1 : 0);
-      sinceMonths = months;
       set('sinceTitle', months >= 2 ? months + ' months since your last race' : months === 1 ? 'A month since your last race' : 'You raced this month');
       set('sinceText', 'Your last swim was ' + last.d + ' ' + lowerStroke(last.stroke) + ' at ' + race(last.secs) + ' in ' + MONTH_NAMES[a[1] - 1] + ' ' + a[0] + '. ' +
         (months >= 2 ? 'A meet gives your goal a date.' : 'Keep the momentum going.'));
@@ -1224,28 +1225,17 @@
     };
     q('[data-comeback-meets]').innerHTML = (near ? row(near, near.state ? near.state + ' · ' : '') : '') + (virtual ? row(virtual, 'Virtual · ') : '');
 
-    // Your training status leads; the age-up and comeback cards are
-    // secondary. With no recent training to report, both show in full.
-    // Beside a training status, at most one, compact: age-up when you move
-    // up within a year, else comeback when your last race was 6 or more
-    // months ago (or you haven't raced), else neither.
-    var status = renderStatus();
-    var pick = !status ? null :
-      moveUpSoon ? q('.swim-ageup') :
-      !(sinceMonths < SINCE_MONTHS) ? q('.swim-comeback') : null;
-    root.querySelectorAll('[data-summary-fallback]').forEach(function (card) {
-      card.hidden = status && card !== pick;
-      card.classList.toggle('swim-summary__card--mini', card === pick);
-    });
-    q('.swim-summary').classList.toggle('swim-summary--status', status);
-    q('.swim-summary').classList.toggle('swim-summary--mini', !!pick);
-    // The goal, for Race Planning: its Goal placeholders, Race Splits and
+    // One of the age-up and comeback cards: age-up when you move up within
+    // a year, else comeback (since 2026-10-25)
+    var pick = moveUpSoon ? q('.swim-ageup') : q('.swim-comeback');
+    root.querySelectorAll('[data-summary-fallback]').forEach(function (card) { card.hidden = card !== pick; });
+    // Your training (Training Metrics), and its card here
+    renderWeek(renderStatus(), renderTraining());
+    // The goal, for Race Metrics: its Goal placeholders, Race Splits and
     // Rank and Tier use it until you type your own
     return { secs: goal, kind: kind };
   }
 
-  // Months since your last race before the compact comeback card shows
-  var SINCE_MONTHS = 6;
 
   // ---------- Rank and Tier ----------
 
@@ -1486,7 +1476,7 @@
       best = best.split(' ');
       state.course = best[0]; state.distance = best[1]; state.stroke = best[2];
     }
-    // A guest (logged out): the 50 free SCY in Race Planning, with its
+    // A guest (logged out): the 50 free SCY in Race Metrics, with its
     // age-group median as the time (goalAuto) until they type their own,
     // following the age group and the event until then; and the 50 free SCY
     // in Time Conversions, empty until they enter a time or pace
@@ -1574,10 +1564,10 @@
   var trend = { all: false, hidden: {}, zoom: { key: null, span: null, end: null }, dragged: false };
 
   // Races picked in the Your Races modal, per chart (trend: Race History,
-  // pred: Race Time Predictions): race ids, or null for the chart's own
+  // pred: Time Predictions): race ids, or null for the chart's own
   // choice. Not saved.
   var picked = { trend: null, pred: null };
-  var PICK_CHARTS = { trend: 'Race History', pred: 'Race Time Predictions' };
+  var PICK_CHARTS = { trend: 'Race History', pred: 'Time Predictions' };
 
   // A chart's "Showing N selected races · Clear" line, while it has a
   // selection (shown: how many of them it can draw)
@@ -1802,8 +1792,8 @@
       return;
     }
     var t0 = Math.min.apply(null, all.map(when)), t1 = Math.max.apply(null, all.map(when));
-    // Your goal, once typed (Race Planning's Goal): a solid deep yellow dot,
-    // as Race Time Predictions', at today, so the years run to now; not with
+    // Your goal, once typed (Race Metrics' Goal): a solid deep yellow dot,
+    // as Time Predictions', at today, so the years run to now; not with
     // every race showing (it's Your Event's)
     var goalSecs = !mixed && !state.goalAuto && state.goal !== '' && validEntry(state.goal) ? parse(state.goal) : NaN;
     var goalT = new Date(today() + 'T00:00:00').getTime();
@@ -2068,7 +2058,7 @@
     prompt.style.top = mid ? (mid.offsetTop + mid.offsetHeight / 2) + 'px' : '';
   }
 
-  // ---------- Rank in Age Group ----------
+  // ---------- Age Group Rank ----------
 
   // Sample model, not USMS data: an age group's times spread log-normally
   // around its average (averageTime), RANK_SPREAD wide, and its field shrinks
@@ -2087,7 +2077,7 @@
     return z < 0 ? (1 - erf) / 2 : (1 + erf) / 2;
   }
 
-  // Race Planning: Your Event's time (secs, named by what it is: "goal",
+  // Race Metrics: Your Event's time (secs, named by what it is: "goal",
   // "best", "45–49 median"…) placed among your age group's swimmers in
   // that event
   function renderRank(age, secs, name) {
@@ -2135,50 +2125,74 @@
   // ---------- Add to Log ----------
 
   // Your workout log: yours alone, kept in this browser per persona, shown
-  // only to you, and used only for your own estimates (Training Effect's
-  // typical swim). Never mixed with race results.
+  // only to you, and used only for your own training (Training Metrics).
+  // Never mixed with race results.
   var LOG_KEY = 'swimTools.log.' + SWIMMER;
-  var metricsNow = null; // the Your Swim workout at the last render
 
-  // Fill the modal from the workout as it stands, dated today
+  // Each time the form opens it starts empty, dated today, in Your Event's
+  // course
   function prepareLog() {
-    var w = metricsNow, ok = w && isFinite(w.secs) && isFinite(w.distance);
-    set('logDistance', w && isFinite(w.distance) ? w.distance + (w.unit === 'yd' ? ' yards' : ' meters') : '—');
-    set('logCourse', w ? w.course : '—');
-    set('logTime', ok ? race(w.secs) : '—');
-    set('logPace', ok ? clock(w.pace) + ' /100 ' + w.unit : '—');
-    set('logStroke', w && w.stroke ? w.stroke : '');
-    document.querySelector('[data-st-log-stroke]').hidden = !(w && w.stroke);
-    set('logCalories', ok && isFinite(w.calories) ? w.calories + ' cal' : '—');
-    set('logEffort', w && w.effort ? w.effort + ' / 10' : '');
-    document.querySelector('[data-st-log-effort]').hidden = !(w && w.effort);
+    state.newLog = { date: today(), distance: '', course: state.course, time: '', stroke: '', effort: '' };
+    var modal = document.getElementById('swimDeckLog');
     var date = document.getElementById('sd-log-date');
-    date.value = today();
+    date.value = state.newLog.date;
     date.max = today();
     date.removeAttribute('aria-invalid');
-    document.querySelector('[data-save-log]').disabled = !ok;
-    set('logHint', ok ? '' : 'Enter a distance and a time or pace first.');
+    document.getElementById('sd-log-distance').value = '';
+    document.getElementById('sd-log-distance').removeAttribute('aria-invalid');
+    var field = modal.querySelector('[data-time-field]');
+    fillTimeField(field, '');
+    markTimeField(field, true);
+    set('logHint', '');
+  }
+
+  // The form's course, unit, effort pill and stroke follow its swim
+  function renderLogForm() {
+    var t = state.newLog, modal = document.getElementById('swimDeckLog');
+    modal.querySelectorAll('[data-log] [data-value]').forEach(function (btn) {
+      btn.setAttribute('aria-pressed', String(btn.getAttribute('data-value') === t.course));
+    });
+    set('logUnit', COURSES[t.course].unit === 'yd' ? '(yards)' : '(meters)');
+    var effort = document.getElementById('sd-log-effort');
+    if (effort.value !== t.effort) effort.value = t.effort;
+    set('logEffort', t.effort || 'Not rated');
   }
 
   function saveLog() {
-    var w = metricsNow, date = document.getElementById('sd-log-date');
-    if (!date.value || date.value > today()) {
+    var t = state.newLog, modal = document.getElementById('swimDeckLog');
+    var date = document.getElementById('sd-log-date'), dist = document.getElementById('sd-log-distance');
+    var field = modal.querySelector('[data-time-field]');
+    var d = Number(t.distance);
+    if (!t.date || t.date > today()) {
       date.setAttribute('aria-invalid', 'true');
-      set('logHint', date.value ? 'The date can’t be in the future.' : 'Enter the date of the workout.');
+      set('logHint', t.date ? 'The date can’t be in the future.' : 'Enter the date of the swim.');
       date.focus();
       return;
     }
+    if (!(d > 0)) {
+      dist.setAttribute('aria-invalid', 'true');
+      set('logHint', 'Enter the distance you swam.');
+      dist.focus();
+      return;
+    }
+    if (!validEntry(t.time)) {
+      markTimeField(field, false);
+      set('logHint', t.time === '' ? 'Enter how long it took.' : 'Seconds must be under 60.');
+      field.querySelector('[data-time-part]').focus();
+      return;
+    }
+    var secs = parse(t.time), unit = COURSES[t.course].unit;
     var entry = {
-      date: date.value, course: w.course, distance: w.distance, time: race(w.secs),
-      pace: clock(w.pace), stroke: w.stroke, calories: w.calories, effort: w.effort ? Number(w.effort) : null
+      date: t.date, course: t.course, distance: d, time: race(secs),
+      pace: clock(secs / d * 100), stroke: t.stroke, calories: null, effort: t.effort ? Number(t.effort) : null
     };
     try {
       var log = JSON.parse(localStorage.getItem(LOG_KEY)) || [];
       log.push(entry);
       localStorage.setItem(LOG_KEY, JSON.stringify(log));
     } catch (e) {}
-    close(document.getElementById('swimDeckLog'));
-    set('logStatus', 'Added to your log: ' + entry.distance + ' ' + w.unit + (w.stroke ? ' ' + w.stroke : '') +
+    close(modal);
+    set('logStatus', 'Added to your log: ' + d.toLocaleString('en-US') + ' ' + unit + (t.stroke ? ' ' + lowerStroke(t.stroke) : '') +
       ' in ' + entry.time + ', ' + formatDate(entry.date) + '.');
   }
 
@@ -2340,8 +2354,10 @@
       return { ago: daysAgo(e.date), yards: e.course === 'SCY' ? d : d * 1.0936, synthetic: e.synthetic };
     }).filter(function (e) { return e.ago >= 0 && e.ago < history && isFinite(e.yards) && e.yards > 0; });
     var swims = all.filter(function (e) { return e.ago < TE_DAYS; });
-    card.hidden = !swims.length;
-    if (!swims.length) return false;
+    // Nothing logged in 6 weeks: a line saying so in place of the figures
+    // and chart
+    card.classList.toggle('is-empty', !swims.length);
+    if (!swims.length) return null;
 
     // Weekly yards, rolling 7-day weeks back from today (0: the last 7 days)
     // and how many swims each
@@ -2393,7 +2409,28 @@
     });
     // The arrows step weeks; in Days there's nothing to step
     if (inDays) card.querySelectorAll('[data-weeks-step]').forEach(function (btn) { btn.disabled = true; });
-    return true;
+    var weekSwims = all.filter(function (e) { return e.ago < 7; }).length;
+    return { word: word, yards: weeks[0], swims: weekSwims, last: last };
+  }
+
+  // Highlights' Your Training card: the status, the last 7 days, and the
+  // latest swim's Training Effect, from Training Metrics
+  function renderWeek(status, effect) {
+    var card = root.querySelector('.swim-week');
+    card.querySelector('[data-week-figures]').hidden = !status;
+    if (!status) {
+      set('weekTitle', 'Nothing logged lately');
+      set('weekText', 'Log your swims to see your weekly yards, a training status and what each swim does for your fitness.');
+      return;
+    }
+    set('weekTitle', status.word);
+    set('weekYards', Math.round(status.yards).toLocaleString('en-US'));
+    set('weekUnit', ' yd');
+    set('weekSwims', String(status.swims));
+    card.querySelector('[data-week-effect]').hidden = !effect;
+    set('weekEffect', effect ? effect.score.toFixed(1) : '');
+    set('weekEffectWord', effect ? ' ' + effect.word : '');
+    set('weekText', status.swims ? '' : 'No swims in the last 7 days (your last was ' + status.last + ' days ago).');
   }
 
   // Training Summary's Weeks / Days toggle
@@ -2529,59 +2566,68 @@
     renderStatus();
   });
 
-  // Training Effect needs a typical swim to judge against: at least
-  // TE_MIN_SWIMS logged in the last 6 weeks. Until then the tile is locked:
-  // a faded sample reading behind an upsell. Guests and non-members: join
-  // (members log swims); members: log more, with how many so far.
+  // Training Effect (Training Metrics, since 2026-10-25) scores your latest
+  // logged swim, and needs a typical swim to judge it against: at least
+  // TE_MIN_SWIMS logged in the last 6 weeks. Until then it's locked: a
+  // faded sample reading behind how many more to log. Returns the score
+  // and its word, for Highlights' Your Training card, or null.
   var TE_MIN_SWIMS = 5;
 
-  function renderTraining(t, d, secs) {
+  // Your latest logged swim with a distance and time, the last one entered
+  // on its day
+  function latestSwim() {
+    return loggedSwims().filter(function (e) {
+      return e.date <= today() && Number(e.distance) > 0 && isFinite(parse(e.time));
+    }).reduce(function (latest, e) { return !latest || e.date >= latest.date ? e : latest; }, null);
+  }
+
+  function renderTraining() {
     var card = document.getElementById('training-effect');
     var lock = card.querySelector('[data-te-lock]');
     var typical = typicalLoad();
     var locked = typical.swims < TE_MIN_SWIMS;
     card.classList.toggle('is-locked', locked);
     lock.hidden = !locked;
+    var e = latestSwim();
+    set('teSwim', locked || !e ? '' : 'Your latest swim: ' + Number(e.distance).toLocaleString('en-US') +
+      (e.course === 'SCY' ? ' yd' : ' m') + (e.stroke ? ' ' + lowerStroke(e.stroke) : '') + ', ' + formatDate(e.date) + '.');
     if (locked) {
-      var user = USERS[SWIMMER] || {}, member = !!(user.loggedIn && user.membershipTier);
       var left = TE_MIN_SWIMS - typical.swims;
-      set('teLockTitle', member ? 'Log ' + left + (left === 1 ? ' more swim' : ' more swims') + ' to unlock' : 'See what each swim does for you');
-      set('teLockText', member ?
-        'Training Effect scores each swim against your own typical training from the last 6 weeks.' :
-        'Members get a Training Effect for every swim, judged against their own training.');
-      var dots = lock.querySelector('[data-te-lock-dots]');
-      dots.hidden = !member;
-      dots.innerHTML = new Array(TE_MIN_SWIMS + 1).join('.').split('').map(function (x, i) {
+      set('teLockTitle', 'Log ' + left + (left === 1 ? ' more swim' : ' more swims') + ' to unlock');
+      set('teLockText', 'Training Effect scores each swim against your own typical training from the last 6 weeks.');
+      lock.querySelector('[data-te-lock-dots]').innerHTML = new Array(TE_MIN_SWIMS + 1).join('.').split('').map(function (x, i) {
         return '<span class="' + (i < typical.swims ? 'is-done' : '') + '"></span>';
       }).join('') + '<em>' + typical.swims + ' of ' + TE_MIN_SWIMS + ' logged</em>';
-      lock.querySelector('[data-te-lock-join]').hidden = member;
-      lock.querySelector('[data-te-lock-log]').hidden = !member;
-      return;
+      return null;
     }
-    var threshold = thresholdPace(t.course);
-    var swim = isFinite(secs) && d > 0 && isFinite(threshold.pace) ? swimLoad(d, secs, t.stroke, threshold.pace) : null;
-    var warn = document.querySelector('[data-te-warn]');
+    var d = Number(e.distance), secs = parse(e.time);
+    var threshold = thresholdPace(e.course);
+    var swim = isFinite(threshold.pace) ? swimLoad(d, secs, e.stroke, threshold.pace) : null;
+    var warn = card.querySelector('[data-te-warn]');
     warn.hidden = true;
+    card.querySelector('[data-effort-felt]').hidden = !e.effort;
+    set('effortFelt', e.effort || '');
     if (!swim) {
       set('teValue', '—');
       set('teWord', '');
-      set('teSub', !isFinite(secs) ? 'Enter a swim to see what it does for your fitness.' : pending() ? 'Loading USMS rankings…' : noRankText());
-      return;
+      set('teSub', pending() ? 'Loading USMS rankings…' : noRankText());
+      return null;
     }
     var effect = Math.min(5, 5 * (1 - Math.exp(-TE_RATE * swim.load / typical.load)));
-    var shown = effect >= 4.95 ? 5 : Math.floor(effect * 10) / 10;
-    var word = TE_WORDS.filter(function (w) { return shown >= w[0]; }).pop()[1];
-    set('teValue', shown.toFixed(1));
+    var score = effect >= 4.95 ? 5 : Math.floor(effect * 10) / 10;
+    var word = TE_WORDS.filter(function (w) { return score >= w[0]; }).pop()[1];
+    set('teValue', score.toFixed(1));
     set('teWord', word);
     // Peak effort: about 3 times your typical load or more
-    if (shown >= TE_PEAK) {
+    if (score >= TE_PEAK) {
       warn.hidden = false;
       set('teWarn', 'About ' + Math.round(swim.load / typical.load) + ' times your typical load: you may be overdoing it. ' +
         'Take an easy day or two after, and build toward swims like this gradually.');
     }
     set('teSub', 'Load ' + Math.round(swim.load) + ' against your typical ' + Math.round(typical.load) +
-      (typical.swims ? ' (' + typical.swims + (typical.swims === 1 ? ' logged swim' : ' logged swims') + ', last 6 weeks' + (typical.sample ? ', including sample workouts' : '') + ')' : ' (no logged swims yet: about an hour of moderate swimming)') +
+      ' (' + typical.swims + ' logged swims, last 6 weeks' + (typical.sample ? ', including sample workouts' : '') + ')' +
       ' · ' + Math.round(swim.intensity * 100) + '% of threshold pace, ' + clock(threshold.pace) + ' per 100 from ' + threshold.from);
+    return { score: score, word: word };
   }
 
   // Calorie Burn's adjustment for an Effort rating: none at 5-6 (moderate,
@@ -2603,10 +2649,8 @@
   var FELT_WORDS = { 1: 'Very easy', 2: 'Very easy', 3: 'Easy', 4: 'Easy', 5: 'Moderate', 6: 'Moderate',
     7: 'Hard', 8: 'Hard', 9: 'Very hard', 10: 'Max' };
 
-  // Your own rating: the slider and its word, and beside Training Effect
+  // Your own rating: the slider and its word
   function renderFelt(t) {
-    document.querySelector('[data-effort-felt]').hidden = t.effort === '';
-    set('effortFelt', t.effort);
     set('effortWord', t.effort ? '· ' + FELT_WORDS[t.effort] : '(optional)');
     renderSlider(t.effort);
   }
@@ -2654,44 +2698,6 @@
     effortSpin = 0;
   }, { passive: false });
 
-  // Training Pace: this workout's pace, or your all-time average (every
-  // logged swim in the same course, sample workouts included: their total
-  // time over their total distance), with a line saying which and a link
-  // to the other
-  var paceView = 'swim';
-  function renderPaceView(t, pace, unit) {
-    var note = root.querySelector('[data-pace-note]');
-    if (!note) return;
-    var link = function (view, text) {
-      return '<button type="button" class="swim-pace__link" data-pace-view="' + view + '">' + text + '</button>';
-    };
-    if (paceView === 'swim') {
-      set('paceValue', clock(pace));
-      set('paceUnit', '/100 ' + unit);
-      note.innerHTML = '<em>Showing pace for this workout.</em> Want to see your ' + link('avg', 'all-time average') + '?';
-      return;
-    }
-    var swims = loggedSwims().filter(function (e) {
-      return e.course === t.course && isFinite(parse(e.time)) && Number(e.distance) > 0 && e.date <= today();
-    });
-    var secs = swims.reduce(function (a, e) { return a + parse(e.time); }, 0);
-    var dist = swims.reduce(function (a, e) { return a + Number(e.distance); }, 0);
-    var avg = dist ? secs / dist * 100 : NaN;
-    set('paceValue', clock(avg));
-    set('paceUnit', isFinite(avg) ? '/100 ' + unit : '');
-    note.innerHTML = '<em>' + (swims.length ? 'Showing your all-time average, ' + swims.length + ' logged ' + t.course + (swims.length === 1 ? ' swim' : ' swims') + '.' :
-      'No ' + t.course + ' swims logged yet.') + '</em> Back to ' + link('swim', 'this workout') + '.';
-  }
-
-  root.addEventListener('click', function (e) {
-    var btn = e.target.closest('[data-pace-view]');
-    if (!btn) return;
-    paceView = btn.getAttribute('data-pace-view');
-    renderMetrics();
-    var again = root.querySelector('[data-pace-view]');
-    if (again) again.focus();
-  });
-
   function renderMetrics() {
     var t = state.metrics, course = COURSES[t.course], unit = course.unit, d = Number(t.distance);
     if (!(d > 0)) d = NaN;
@@ -2711,7 +2717,9 @@
     }
     var unitWord = unit === 'yd' ? ' yards' : ' meters';
 
-    renderPaceView(t, pace, unit);
+    // Training Pace
+    set('paceValue', clock(pace));
+    set('paceUnit', '/100 ' + unit);
 
     // Calories: pace in yards terms sets the intensity, capped to a sane range,
     // then your Effort rating adjusts it for how hard you were working
@@ -2721,11 +2729,8 @@
     set('calValue', isFinite(calories) ? String(calories) : '—');
     set('calNote', [STROKE_FULL[t.stroke], t.effort && '@ ' + t.effort + '/10'].filter(Boolean).join(' '));
 
-    renderTraining(t, d, secs);
     renderFelt(t);
 
-    // The workout as it stands, for Add to Log
-    metricsNow = { course: t.course, unit: unit, distance: d, secs: secs, pace: pace, stroke: t.stroke, calories: calories, effort: t.effort };
 
     // Pace conversion: that pace per 100 in the two other courses (its tile,
     // PaceConversion.njk, is retired for now; this fills it if it's back)
@@ -2758,7 +2763,7 @@
     // Context
     set('course', state.course);
 
-    // Your age for Age Group Conversion and Rank in Age Group: your profile's when
+    // Your age for Age Group Conversion and Age Group Rank: your profile's when
     // we know it, otherwise the age group chosen at the top of the page
     var age = state.ageKnown ? Number(state.age) : ageGroup().min;
 
@@ -2768,7 +2773,7 @@
     // Context distance
     var list = eventsFor(state.course, state.stroke);
     fitDistance(state, list);
-    // The section's Distance, and the Race Planning modal's (Editors.njk)
+    // The section's Distance, and the Race Metrics modal's (Editors.njk)
     document.querySelectorAll('[data-st-event-options]').forEach(function (sel) {
       renderEventOptions(sel, list, state.course + ' ' + state.stroke);
     });
@@ -2783,7 +2788,7 @@
     if (eventKey !== lastEvent) followEvent();
     lastEvent = eventKey;
 
-    // Your races, and Race Time Predictions: your bests against your age
+    // Your races, and Time Predictions: your bests against your age
     // group's USMS rankings. Its marked event is the context distance.
     renderRaces();
     renderTrend();
@@ -2805,6 +2810,7 @@
     var goalSet = state.goal !== '' && validEntry(state.goal);
     // The summary's goal ("break 30"): Your Event's goal until you type one
     var suggested = renderSummary(goalRow);
+    renderLogForm();
     // Top 10 by Decade, with your goal across it when it shows Your Event
     renderTopTens(goalSet ? parse(state.goal) : NaN);
 
@@ -2828,7 +2834,7 @@
     var projectedTime = isFinite(goalRow.proj) && !goalRow.fromTime;
     var goalName = goalTyped ? 'goal' : untypedName || (isFinite(goalRow.you) ? 'best' : projectedTime ? 'projected time' : ageGroup().label + ' median');
     renderTier(goal, goalName);
-    // Rank in Age Group: the same time, from the sample averages
+    // Age Group Rank: the same time, from the sample averages
     renderRank(age, goal, goalName);
     // Toward the age-group median: just whose median ("50 Free | 45–49
     // Men's/Open"); otherwise the time and what it is
@@ -2842,7 +2848,7 @@
     // guest's median), only until a goal is set (no Edit this goal since
     // 2026-10-15: the field itself is where you change it)
     state.goalSuggestion = state.goalAuto ? parse(state.goal) : untyped;
-    // (the Race Planning modal's says "Set goal"; each carries its own text)
+    // (the Race Metrics modal's says "Set goal"; each carries its own text)
     document.querySelectorAll('[data-goal-set]').forEach(function (el) {
       el.hidden = goalTyped || !isFinite(state.goalSuggestion);
     });
@@ -2863,7 +2869,8 @@
     document.querySelectorAll('[data-time-field]').forEach(function (group) {
       var key = group.getAttribute('data-time-input'), metric = group.getAttribute('data-time-metric');
       var value = key ? state[key] : metric ? state.metrics[metric]
-        : group.hasAttribute('data-time-conv') ? state.conv[group.getAttribute('data-time-conv')] : state.newRace.time;
+        : group.hasAttribute('data-time-conv') ? state.conv[group.getAttribute('data-time-conv')]
+        : group.hasAttribute('data-time-log') ? state.newLog.time : state.newRace.time;
       if (readTimeField(group) === value || group.contains(document.activeElement)) return;
       fillTimeField(group, value);
     });
@@ -2889,7 +2896,8 @@
       var value = sel.hasAttribute('data-metric-input') ? state.metrics.stroke
         : sel.hasAttribute('data-conv-input') ? state.conv.stroke
         : sel.hasAttribute('data-tens-input') ? state.tens.stroke
-        : sel.hasAttribute('data-race-input') ? state.newRace.stroke : state.stroke;
+        : sel.hasAttribute('data-race-input') ? state.newRace.stroke
+        : sel.hasAttribute('data-log-input') ? state.newLog.stroke : state.stroke;
       if (sel.value !== value) sel.value = value;
       var opt = sel.options[sel.selectedIndex];
       sel.parentNode.querySelector('[data-stroke-value]').textContent = opt ? opt.text : '';
@@ -2905,9 +2913,9 @@
     balanceRacePlanning();
   }
 
-  // ---------- Race Planning's column heights ----------
+  // ---------- Race Metrics' column heights ----------
 
-  // Race Planning's two columns (Predictions over Your Races; Race Splits
+  // Race Metrics' two columns (Predictions over Your Races; Race Splits
   // over Rank and Tier) end level on desktop, with real content rather than
   // empty space where possible. Measured with the cards at their natural
   // heights, then:
@@ -2986,18 +2994,20 @@
   // ---------- Events ----------
 
   // Segmented controls: data-control sets a page setting, data-metric one of
-  // the Training Metrics swim's, data-race one of the Add a Race form's,
-  // data-conv one of Convert a Time's, data-tens one of Top 10 by Decade's
+  // the Your Swim calculator's, data-race one of the Add a Race form's,
+  // data-log one of the Add to Log form's, data-conv one of Convert a
+  // Time's, data-tens one of Top 10 by Decade's
   document.addEventListener('click', function (e) {
-    var btn = e.target.closest('[data-control] [data-value], [data-metric] [data-value], [data-race] [data-value], [data-conv] [data-value], [data-tens] [data-value]');
+    var btn = e.target.closest('[data-control] [data-value], [data-metric] [data-value], [data-race] [data-value], [data-log] [data-value], [data-conv] [data-value], [data-tens] [data-value]');
     if (!btn) return;
-    var group = btn.closest('[data-control], [data-metric], [data-race], [data-conv], [data-tens]');
+    var group = btn.closest('[data-control], [data-metric], [data-race], [data-log], [data-conv], [data-tens]');
     var target = group.hasAttribute('data-metric') ? state.metrics
       : group.hasAttribute('data-race') ? state.newRace
+      : group.hasAttribute('data-log') ? state.newLog
       : group.hasAttribute('data-conv') ? state.conv
       : group.hasAttribute('data-tens') ? state.tens : state;
     var key = group.getAttribute('data-control') || group.getAttribute('data-metric') ||
-      group.getAttribute('data-race') || group.getAttribute('data-conv') || group.getAttribute('data-tens');
+      group.getAttribute('data-race') || group.getAttribute('data-log') || group.getAttribute('data-conv') || group.getAttribute('data-tens');
     var value = btn.getAttribute('data-value');
     // Time Conversions' course (the section's or its modal's): the entry
     // converts to the new course, as Course Conversion shows it, rather
@@ -3028,7 +3038,7 @@
     c.time = race(to.secs);
   }
 
-  // Race Time Predictions: chart or table, and its legend pills turning
+  // Time Predictions: chart or table, and its legend pills turning
   // lines off and on (focus stays on the pill, which render replaces)
   root.addEventListener('click', function (e) {
     if (e.target.closest('[data-pred-view]')) {
@@ -3046,13 +3056,13 @@
   });
 
   // Fields: data-input is a page setting, data-metric-input one of the
-  // Training Metrics swim's, data-race-input one of the Add a Race form's,
-  // data-conv-input one of Convert a Time's, data-tens-input one of Top 10
-  // by Decade's
+  // Your Swim calculator's, data-race-input one of the Add a Race form's,
+  // data-log-input one of the Add to Log form's, data-conv-input one of
+  // Convert a Time's, data-tens-input one of Top 10 by Decade's
   function applyInput(el) {
     var key = el.getAttribute('data-input'), metric = el.getAttribute('data-metric-input');
     var raceKey = el.getAttribute('data-race-input'), convKey = el.getAttribute('data-conv-input');
-    var tensKey = el.getAttribute('data-tens-input');
+    var tensKey = el.getAttribute('data-tens-input'), logKey = el.getAttribute('data-log-input');
     if (key) {
       state[key] = el.value;
       if (key === 'ageGroup') state.ageChosen = true;
@@ -3063,6 +3073,10 @@
     else if (raceKey) {
       state.newRace[raceKey] = el.value;
       if (raceKey === 'date') el.removeAttribute('aria-invalid');
+    }
+    else if (logKey) {
+      state.newLog[logKey] = el.value;
+      el.removeAttribute('aria-invalid');
     }
     else return;
     render();
@@ -3087,6 +3101,14 @@
       var convKey = group.getAttribute('data-time-conv');
       state.conv[convKey] = readTimeField(group);
       state.conv.source = convKey;
+    }
+    else if (group.hasAttribute('data-time-log')) {
+      // Add to Log: clear an error once the time is fixed
+      state.newLog.time = readTimeField(group);
+      if (validEntry(state.newLog.time)) {
+        markTimeField(group, true);
+        set('logHint', '');
+      }
     }
     else {
       // Add a Race: clear an error once the time is fixed
@@ -3329,7 +3351,7 @@
     render();
   });
 
-  // Set this goal, beside Race Planning's Goal (and Set goal, in its modal):
+  // Set this goal, beside Race Metrics' Goal (and Set goal, in its modal):
   // the suggestion becomes your goal
   document.addEventListener('click', function (e) {
     if (!e.target.closest('[data-goal-set]') || !isFinite(state.goalSuggestion)) return;
@@ -3365,7 +3387,7 @@
 
   // ---------- Drag the goal ----------
 
-  // Your goal's mark, on the Race Goal track and the Race Time Predictions
+  // Your goal's mark, on the Race Goal track and the Time Predictions
   // and Race History charts, slides to change the goal (the track's default
   // goal circle too, which sets it). Each render registers how its mark's
   // position, as a share of its box (0 at the top or left), becomes a time:
@@ -3448,7 +3470,7 @@
     });
   })();
 
-  // Summary: share the goal card, and Set this goal / Edit goal (the Race Planning modal)
+  // Summary: share the goal card, and Set this goal / Edit goal (the Race Metrics modal)
   root.addEventListener('click', function (e) {
     if (e.target.closest('[data-goal-share]')) {
       var text = state.summaryShare || '';
@@ -3458,7 +3480,7 @@
       else done(text);
       return;
     }
-    // Set this goal / Edit goal: the Race Planning modal (data-modal-target),
+    // Set this goal / Edit goal: the Race Metrics modal (data-modal-target),
     // with the cursor in its Goal's minutes, after the modal's own focus
     // on its first field
     if (e.target.closest('[data-goal-change]')) {
@@ -3553,8 +3575,8 @@
 
   // Anyone but a logged-in member (a guest, or logged in without a
   // membership) has no race history or log to sum up: no Dashboard, and
-  // the tools that work without one come first: Time Conversions, Training
-  // Metrics, then Race Planning (sections and their ribbon tabs both)
+  // the tools that work without one come first: Calculators, Race Metrics,
+  // then Training Metrics (sections and their ribbon tabs both)
   var isMember = !!((USERS[SWIMMER] || {}).loggedIn && (USERS[SWIMMER] || {}).membershipTier);
   var dashboard = document.getElementById('dashboard');
   // Member features (the Workout Library search) and what anyone else sees
@@ -3567,16 +3589,16 @@
     var sectionsEl = root.querySelector('.swim-deck__sections'), ribbon = root.querySelector('.swim-ribbon');
     dashboard.hidden = true;
     sectionsEl.parentNode.insertBefore(dashboard, sectionsEl.nextSibling);
-    ['time-conversions', 'training-metrics', 'race-planning'].forEach(function (id) {
+    ['calculators', 'race-planning', 'training-metrics'].forEach(function (id) {
       ribbon.appendChild(ribbon.querySelector('[data-section="' + id + '"]'));
       sectionsEl.appendChild(document.getElementById(id));
     });
-    // No Home either: with no summary it would only repeat Time Conversions'
-    // order, so Time Conversions is the selected tab to start
+    // No Home either: with no summary it would only repeat Calculators'
+    // order, so Calculators is the selected tab to start
     var home = ribbon.querySelector('[data-section="home"]');
     home.hidden = true;
     home.setAttribute('aria-pressed', 'false');
-    ribbon.querySelector('[data-section="time-conversions"]').setAttribute('aria-pressed', 'true');
+    ribbon.querySelector('[data-section="calculators"]').setAttribute('aria-pressed', 'true');
   }
 
   // Section ribbon: the chosen section moves to the top of the tools, above
@@ -3605,6 +3627,14 @@
     void first.offsetWidth; // restart the arrival fade
     first.classList.add('is-arriving');
   }
+
+  // A link to a section (Highlights' cards): as its tab
+  root.addEventListener('click', function (e) {
+    var link = e.target.closest('[data-show-section]');
+    if (!link) return;
+    var tab = root.querySelector('.swim-ribbon [data-section="' + link.getAttribute('data-show-section') + '"]');
+    if (tab) tab.click();
+  });
 
   // A tab, even the selected one: its section first (if it isn't). Clicked
   // from the stuck toolbar, the page then glides (keeping the toolbar

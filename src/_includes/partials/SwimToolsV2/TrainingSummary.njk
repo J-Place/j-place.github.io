@@ -1,0 +1,49 @@
+{# Training Summary (Training Metrics, since 2026-10-25; was in Highlights):
+   your training status from your log, the last 7 days against your weekly
+   average over the last 6 weeks, and a timeline of weekly (or the last 7
+   days' daily) yards. Filled by swim-tools-v2.js (renderStatus). #}
+<article class="swim-card swim-status" data-status-card>
+  {# Title and status on the left, the Weeks / Days toggle top right #}
+  <div class="swim-goal__head swim-status__head">
+    <div class="swim-summary__heading">
+      <h3 class="swim-summary__title">Training Summary</h3>
+      <p class="swim-summary__lead" data-st="statusTitle"></p>
+    </div>
+    {# Weeks: the timeline below; Days: the last 7 days, a column each #}
+    <div class="swim-seg swim-seg--small swim-status__view" role="group" aria-label="Show by">
+      <button type="button" data-status-view="weeks" aria-pressed="true">Weeks</button><button type="button" data-status-view="days" aria-pressed="false">Days</button>
+    </div>
+  </div>
+  {# The view's figures on one centred line, on a baseline: in Weeks, the
+     weeks shown ("Last 6 weeks", or their dates once stepped back), their
+     weekly average and swims; in Days, the last 7 days' yards and swims #}
+  <p class="swim-status__line">
+    <span class="swim-summary__meta" data-st="statusRange">Last <span class="swim-status__figure">6</span> weeks</span>
+    <span class="swim-status__figure"><span data-st="statusAvg">—</span><span class="swim-goal__unit" data-st="statusAvgUnit"> y/avg</span></span>
+    <span class="swim-status__figure"><span data-st="statusSwims">—</span><span class="swim-goal__unit" data-st="statusSwimsUnit"> swims</span></span>
+  </p>
+  {# The timeline: weekly yards, 6 of the last 12 weeks at a time, oldest
+     on the left, the last 7 days in USMS blue; a line across them for the
+     3-week average; the arrows step a week back or forward; each week's
+     first day under its bar (swim-tools-v2.js, renderTimeline) #}
+  <div class="swim-timeline">
+    <button type="button" class="swim-timeline__step" data-weeks-step="1" aria-label="A week earlier" title="A week earlier"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+    <div class="swim-timeline__chart" data-status-chart="weeks">
+      <div class="swim-weeks" role="img" data-status-weeks></div>
+      <div class="swim-weeks__dates" data-status-dates aria-hidden="true"></div>
+    </div>
+    {# Days: the last 7 days, oldest on the left, each a light grey column
+       filled blue to its yards (today darker), none on a day off #}
+    <div class="swim-timeline__chart" data-status-chart="days" hidden>
+      <div class="swim-days" role="img" data-status-days></div>
+      <div class="swim-days__dates" data-status-day-dates aria-hidden="true"></div>
+    </div>
+    <button type="button" class="swim-timeline__step" data-weeks-step="-1" aria-label="A week later" title="A week later"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+  </div>
+  <p class="swim-weeks__key" data-status-key="weeks"><span class="swim-weeks__key-bar" aria-hidden="true"></span>Yards per week <span class="swim-weeks__key-line" aria-hidden="true"></span>3-week average</p>
+  <p class="swim-weeks__key" data-status-key="days" hidden><span class="swim-weeks__key-bar" aria-hidden="true"></span>Yards per day <span class="swim-weeks__key-bar swim-weeks__key-bar--off" aria-hidden="true"></span>No swim</p>
+  <p class="swim-summary__text" data-st="statusText"></p>
+  {# Nothing logged in the last 6 weeks: this in place of the figures and
+     chart (.is-empty) #}
+  <p class="swim-summary__text swim-status__empty">No swims logged in the last 6 weeks. Add to Log, or build a workout and log it, to see your weekly yards and training status.</p>
+</article>

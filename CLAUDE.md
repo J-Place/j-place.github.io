@@ -177,7 +177,7 @@ The production site uses a **split Bootstrap strategy**:
 
 When writing layout markup: use BS3 grid classes for columns, BS5 utility classes for alignment and spacing. Do not add a Bootstrap 5 CDN link — it is already present via the production bundles.
 
-**Exception: Swim Tools v2** (`/fitness-and-training/swim-tools-v2/`, an enhancement page, not a production mockup) lays out every module with CSS Grid rather than BS3 columns: the Highlights band, the Training Metrics tiles, and the Race Planning and Time Conversions sections (`.swim-deck__grid`, `--8-4` / `--5-7`). Keep it to one system there; don't mix BS3 column classes back in.
+**Exception: Swim Tools v2** (`/fitness-and-training/swim-tools-v2/`, an enhancement page, not a production mockup) lays out every module with CSS Grid rather than BS3 columns: the Highlights band, the tiles, and the Race Metrics, Training Metrics and Calculators sections (`.swim-deck__grid`, `--8-4` / `--5-7`). Keep it to one system there; don't mix BS3 column classes back in.
 
 ## Building Production Page Mockups
 
