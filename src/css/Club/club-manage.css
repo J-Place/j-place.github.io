@@ -37,12 +37,19 @@
   border-bottom: 1px solid #ccc;
 }
 
-.club-manage-options .col-lg-4:last-of-type {
+/* The Club Toolbox row follows the columns, so the third column is no longer :last-of-type */
+.club-manage-options .col-lg-4:last-of-type,
+.club-manage-options .col-lg-4:nth-last-child(2) {
   border: 0 none;
 }
 
 .club-manage-options .col-lg-4 .btn {
   margin-top: 3rem;
+}
+
+/* Enhancement: Club Toolbox link in its own row below the three actions */
+.club-manage-toolbox {
+  padding-top: 3rem;
 }
 
 @media (min-width: 992px) {
@@ -60,8 +67,13 @@
     border-right: 1px solid #ccc;
   }
 
-  .club-manage-options .col-lg-4:last-of-type {
+  .club-manage-options .col-lg-4:last-of-type,
+  .club-manage-options .col-lg-4:nth-last-child(2) {
     border: 0 none;
+  }
+
+  .club-manage-toolbox {
+    padding-top: 7rem;
   }
 
   .club-manage-options .col-lg-4 .btn {
