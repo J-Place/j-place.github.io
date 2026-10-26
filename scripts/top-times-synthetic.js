@@ -92,9 +92,10 @@ const REAL_LATEST = realGroups(LATEST);
 if (!REAL_LATEST.length) throw new Error(`No real rankings in ${REAL_DIR}/${LATEST} to model from`);
 UPDATED = REAL_LATEST.map(g => readJson(path.join(REAL_DIR, String(LATEST), g, COURSE, 'free', '50.json')).updated).sort().pop();
 
-// Start from nothing: the folder is only ever this script's output
-fs.rmSync(OUT_DIR, { recursive: true, force: true });
+// Start from nothing: the folder is only ever this script's output. Empty it
+// rather than remove it, since the dev container mounts a volume on it
 fs.mkdirSync(OUT_DIR, { recursive: true });
+for (const f of fs.readdirSync(OUT_DIR)) fs.rmSync(path.join(OUT_DIR, f), { recursive: true, force: true });
 
 const avg = xs => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : NaN);
 // Shape of the slower half: time at p over time at 55%, averaged over the
