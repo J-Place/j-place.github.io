@@ -1,12 +1,17 @@
 {# Rank and Tier, as v4's: where Your Event's time sits in your age group's
    USMS ranking (Top Times), as a ladder of tiers from the fastest swim down,
-   yours marked, with the next rung to aim for. Members only: others see it
+   yours marked, with the next rung to aim for and, when the time is your
+   goal, how many places it moves you up from your last race. It looks
+   ahead; Age Group Rank looks back at where your races placed (split
+   2026-10-28). Top of Race Metrics' right column. Members only: others see it
    blurred under a join prompt. Filled by swim-tools-v2.js (renderTier). #}
 {% from "partials/SwimToolsV2/SectionGear.njk" import sectionGear %}
 <article class="swim-card swim-rank" id="rank-tier">
   <header class="swim-card__header">
     <div class="swim-card__heading">
-      <h3 class="swim-card__title">Rank and Tier</h3>
+      {# Current Rank and Tier, or Recent Rank and Tier when your latest race
+         in Your Event is over a year old (since 2026-10-28; renderTier) #}
+      <h3 class="swim-card__title" data-st="rankTierTitle">Current Rank and Tier</h3>
       <p class="swim-card__sub" data-st="rankTierSub"></p>
     </div>
     {{ sectionGear("swimDeckPlan", "Race Metrics") }}

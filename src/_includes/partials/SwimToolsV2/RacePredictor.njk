@@ -1,9 +1,13 @@
 {# Time Predictions, as v4's: your bests in Your Event's course and
    stroke against your age group's USMS rankings (the Top Times files under
    /data/top-times/, fetched as needed; docs/api/top-times.openapi.yaml), with
-   projected times where you haven't raced. Drawn by swim-tools-v2.js. #}
+   projected times where you haven't raced. Drawn by swim-tools-v2.js.
+   Hidden for now (since 2026-10-27): its predictions still feed Race Goal,
+   Race Splits, Rank and Tier and Training Effect, so the
+   card stays in the page and renderPredictor still runs. To restore, drop
+   the hidden attribute. #}
 {% from "partials/SwimToolsV2/SectionGear.njk" import sectionGear %}
-<article class="swim-card" id="race-predictor">
+<article class="swim-card" id="race-predictor" hidden>
   <header class="swim-card__header">
     <div class="swim-card__heading">
       <h3 class="swim-card__title swim-card__title--icon"><svg class="swim-card__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M10 2h4"/></svg>Time Predictions

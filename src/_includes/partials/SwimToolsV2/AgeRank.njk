@@ -1,10 +1,11 @@
-{# Age Group Rank (Race Metrics): where Your Event's time would place in
-   your age group, the same time Race Splits and Rank and Tier use (your
-   goal, else best, projected time or the age-group median), estimated from
-   the sample age-group averages (src/_data/averageTimes.json). Filled by
-   swim-tools-v2.js (renderRank). #}
+{# Age Group Rank (Race Metrics): where you've actually placed, as Rank and
+   Tier is where your goal would. Your last race in Your Event, placed in its
+   season's Top Times ranking for the age group you were in then (real or
+   synthetic, and labeled; the published place when a real list has you at
+   that time), then your best placing each season. Until 2026-10-28 it placed
+   your goal with a sample model (src/_data/averageTimes.json, no longer
+   read). Filled by swim-tools-v2.js (renderRank). #}
 {% from "partials/SwimToolsV2/SectionGear.njk" import sectionGear %}
-<script type="application/json" id="average-times-data">{{ averageTimes.times | dump | safe }}</script>
 <article class="swim-card" id="age-rank">
   <header class="swim-card__header">
     <div class="swim-card__heading">
@@ -21,17 +22,22 @@
       </div>
       <div class="swim-rank__stat">
         <span class="swim-rank__label">Faster than</span>
-        <span class="swim-rank__value"><span data-st="rankBeats"></span><span class="swim-rank__of" data-st-rank-pct>%</span></span>
+        <span class="swim-rank__value"><span data-st="rankBeats"></span><span class="swim-rank__of">%</span></span>
       </div>
     </div>
-    {# The field from slowest to fastest, with your time marked #}
+    {# The field from slowest to fastest, with your last race marked #}
     <div class="swim-rank__scale" aria-hidden="true"><span class="swim-rank__marker" data-st-rank-marker></span></div>
     <div class="swim-rank__ends" aria-hidden="true"><span>Slower</span><span>Faster</span></div>
     <dl class="swim-rank__refs">
-      <div><dt>Age group average</dt><dd data-st="rankAvg"></dd></div>
-      <div><dt>Top 10%</dt><dd data-st="rankTop10"></dd></div>
+      <div><dt>Ranking</dt><dd data-st="rankLastSeason"></dd></div>
+      <div><dt>Best season</dt><dd data-st="rankBest"></dd></div>
     </dl>
+    {# Your best placing each season: two or more seasons only #}
+    <figure class="swim-rank__seasons" data-rank-seasons hidden>
+      <figcaption>Your best each season</figcaption>
+      <svg role="img" preserveAspectRatio="none"></svg>
+    </figure>
   </div>
   <p class="swim-rank__empty" data-st="rankEmpty" hidden></p>
-  <p class="swim-card__note">Estimated from sample age-group averages, not USMS rankings.</p>
+  <p class="swim-card__note" data-st="rankNote"></p>
 </article>

@@ -7,6 +7,11 @@
 (function () {
   var root = document.querySelector('.swim-deck');
   if (!root) return;
+  // Which page: Race Analysis has Race Metrics and Calculators, Training Tools
+  // (since 2026-10-27) Training Metrics and Pace and calories. Each renders
+  // only its own.
+  var RACE_PAGE = !!document.getElementById('race-planning');
+  var TRAINING_PAGE = !!document.getElementById('training-metrics');
 
   var COURSES = {
     SCY: { factor: 1, unit: 'yd', name: 'short course yards' },
@@ -214,27 +219,9 @@
     return found;
   }
 
-  // Average times (src/_data/averageTimes.json, embedded as
-  // #average-times-data): SCY, 25-29, by stroke and distance. Rank in Age
-  // Group's estimate; the predictor uses USMS rankings (Top Times, below).
-  var AVERAGES = {};
-  try {
-    AVERAGES = JSON.parse(document.getElementById('average-times-data').textContent);
-  } catch (e) {}
-
   function ageGroup() {
     var min = Number(state.ageGroup);
     return AGE_GROUPS.filter(function (g) { return g.min === min; })[0] || AGE_GROUPS[1];
-  }
-
-  // The average time for an event in a course, for an age group: the SCY
-  // 25-29 time for that distance (or its yards/meters equivalent), scaled by
-  // course, distance and age
-  function averageTime(course, stroke, d, group) {
-    var table = AVERAGES[stroke] || {};
-    var from = table[d] ? d : table[EQUIVALENT[d]] ? EQUIVALENT[d] : 0;
-    if (!from) return NaN;
-    return parse(table[from]) * COURSES[course].factor * (d / from) * group.factor;
   }
 
   // The same distance in another course's list, or its yards/meters
@@ -265,11 +252,16 @@
   function request(url) {
     RANKS[url] = 'loading';
     fetch(url).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }).then(function (data) {
-      RANKS[url] = data && data.swimmers && data.swimmers.length ? {
-        n: data.total || data.swimmers.length, truncated: !!data.truncated, seasonLabel: data.seasonLabel,
+      // Each swim's time, with its name and published place (Age Group
+      // Rank finds yours by them)
+      var swims = data && data.swimmers ? data.swimmers.filter(function (x) { return isFinite(parse(x.time)); }) : [];
+      RANKS[url] = swims.length ? {
+        n: data.total || swims.length, truncated: !!data.truncated, seasonLabel: data.seasonLabel,
         // 'usms' (real) or 'synthetic' (modeled), which the page must say
         synthetic: data.provenance === 'synthetic',
-        times: data.swimmers.map(function (x) { return parse(x.time); }).filter(isFinite)
+        times: swims.map(function (x) { return parse(x.time); }),
+        names: swims.map(function (x) { return x.name || ''; }),
+        places: swims.map(function (x) { return x.rank; })
       } : null;
       // One render for a batch of files arriving together
       if (!renderQueued) {
@@ -309,7 +301,7 @@
     var scale = COURSES[course].factor / COURSES[FROM].factor * d / fromD;
     return {
       n: e.n, truncated: e.truncated, synthetic: e.synthetic, seasonLabel: e.seasonLabel, converted: FROM !== course, season: sets[0].season,
-      times: e.times.map(function (t) { return t * scale; })
+      times: e.times.map(function (t) { return t * scale; }), names: e.names, places: e.places
     };
   }
 
@@ -567,7 +559,7 @@
   function renderPredictor(list) {
     var q = function (sel) { return root.querySelector(sel); };
     // A selection from the Your Races modal: the chart shows only those
-    // races; the rows returned (Race Splits, Rank and Tier, the summary) still
+    // races; the rows returned (Race Splits, Rank and Tier, Race Goal) still
     // come from every race
     var rows = predictions(list, state.course, state.stroke, picked.pred), group = ageGroup(), off = state.predHidden;
     var shared = picked.pred ? predictions(list, state.course, state.stroke) : rows;
@@ -776,8 +768,17 @@
         swimmerGender().toLowerCase() + ' ' + group.label + '</b> (' + race(r.top) + ').';
     }).join(' ');
 
-    // The insight: where your pace is closest to and furthest from the median
-    var box = q('[data-pred-insight]');
+    // The insight: where your pace is closest to and furthest from the median.
+    // About your own races, it's the Your Strengths card (since 2026-10-27);
+    // the rest (loading, medians, projections) stays here.
+    var box = q('[data-pred-insight]'), card = q('[data-strengths]'), target = box;
+    var strengths = function (lead, body) {
+      if (!card) { box.innerHTML = note('Your strengths', lead, body); return box; }
+      set('strengthsSub', state.course + ' ' + lowerStroke(state.stroke) + ' · pace per 100 against the ' + group.label + ' median');
+      set('strengthsLead', lead);
+      set('strengthsBody', body);
+      return card;
+    };
     // Your real bests and age-adjusted swims (not times projected from
     // another distance)
     var raced = rows.filter(function (r) { return (isFinite(r.you) || r.adjusted) && isFinite(r.estP) && isFinite(r.midP); });
@@ -817,7 +818,7 @@
       var times = (picked.pred ? pickedRaces(picked.pred) : predPool(state.stroke)).filter(function (x) {
         return x.course === state.course && x.stroke === state.stroke && x.d === raced[0].d;
       }).length;
-      box.innerHTML = note('Your races',
+      target = strengths(
         'You\'ve raced the ' + state.course + ' ' + raced[0].d + ' ' + lowerStroke(state.stroke) + ' ' +
           (times === 1 ? 'one time' : times === 2 ? 'twice' : times + ' times') + (rows.old ? '' : ' in the last ' + WINDOW_YEARS + ' years') + '.',
         oldNote + 'Per 100 you\'re ' + gap(raced[0]) + '. Race another distance to see where you\'re strongest.');
@@ -828,10 +829,12 @@
       var kind = function (d) { return d <= 100 ? 'sprint' : d >= 500 ? 'distance' : d; };
       var work = weak.d > strong.d ? 'Distance work' : 'Speed work';
       var both = oldNote + 'Per 100, your ' + strong.d + ' is ' + gap(strong) + ' and your ' + weak.d + ' is ' + gap(weak) + '. ';
-      box.innerHTML = weak.gap <= 0 ? note('Your strengths', 'You\'re ahead of the age-group median at every distance.', both + 'Your ' + kind(strong.d) + ' is your strongest event.') :
-        strong.gap < 0 ? note('Your strengths', 'Your ' + kind(strong.d) + ' is ahead of the pack.', both + work + ' will close the gap fastest.') :
-        note('Your strengths', 'Your ' + kind(strong.d) + ' is closest to the pack.', both + work + ' will move your times fastest.');
+      target = weak.gap <= 0 ? strengths('You\'re ahead of the age-group median at every distance.', both + 'Your ' + kind(strong.d) + ' is your strongest event.') :
+        strong.gap < 0 ? strengths('Your ' + kind(strong.d) + ' is ahead of the pack.', both + work + ' will close the gap fastest.') :
+        strengths('Your ' + kind(strong.d) + ' is closest to the pack.', both + work + ' will move your times fastest.');
     }
+    box.hidden = target !== box;
+    if (card) card.hidden = target !== card;
     q('[data-pred-view]').textContent = state.view === 'chart' ? 'Table view' : 'Chart view';
     renderPickedNote('pred', picked.pred && picked.pred.filter(function (id) {
       return pickedRaces([id]).some(function (r) { return r.stroke === state.stroke; });
@@ -1063,7 +1066,8 @@
     return m ? m + ':' + (r < 10 ? '0' : '') + r : String(r);
   }
 
-  // The summary band, from Your Event (goalRow: its predictor row)
+  // Race Metrics' Race Goal and age-up or comeback cards, from Your Event
+  // (goalRow: its predictor row)
   function renderSummary(goalRow) {
     var q = function (sel) { return root.querySelector(sel); };
     var d = Number(state.distance), ev = d + ' ' + lowerStroke(state.stroke);
@@ -1080,8 +1084,8 @@
     if (typed) { goal = parse(state.goal); kind = 'set'; }
     else if (latest) { round = Math.floor(latest.secs); goal = round - 0.01; kind = 'break'; }
     else { goal = groupMedian; kind = 'middle'; }
-    // The card shows a goal only once you've set one (Race Metrics' Goal,
-    // which Set this goal / Edit goal goes to); the suggestion above still stands
+    // The card shows a goal only once you've set one (in its own editor,
+    // which Set this goal / Edit goal opens); the suggestion above still stands
     // in for it in Race Metrics (its Goal placeholders, Race Splits, Rank
     // and Tier: this function's return)
     var shown = typed ? goal : NaN;
@@ -1098,6 +1102,7 @@
     set('goalSuggestion', suggestion);
     q('[data-st="goalSuggestion"]').hidden = !suggestion;
     q('[data-goal-change]').textContent = typed ? 'Edit goal' : 'Set this goal';
+    q('[data-goal-change]').setAttribute('aria-expanded', String(!q('[data-goal-editor]').hidden));
     // Each date on its own line under its label
     set('goalLatestDate', latest && latest.date ? monthYear(latest.date) : '');
     set('goalBestDate', best && best.date ? monthYear(best.date) : '');
@@ -1154,9 +1159,6 @@
       q('[data-goal-track-bar]').setAttribute('aria-label', [isFinite(lt) && 'Latest ' + race(lt), isFinite(bt) && 'best ' + race(bt),
         typed ? 'goal ' + race(goal) : isFinite(suggestedTime) && 'suggested goal ' + race(suggestedTime)].filter(Boolean).join(', '));
     }
-    state.summaryShare = (typed ? 'Working toward ' + race(goal) + ' in the ' + state.course + ' ' + ev + (latest ? ':' : '.') :
-      'My ' + state.course + ' ' + ev + (latest ? ':' : '.')) +
-      (latest ? ' latest ' + race(latest.secs) : '') + (best ? ', best ' + race(best.secs) : '') + (latest ? '.' : '');
 
     // You move up an age group: your gap to the median now and in the next
     var user = USERS[SWIMMER] || {}, group = ageGroup(), k = AGE_GROUPS.indexOf(group), next = AGE_GROUPS[k + 1];
@@ -1226,11 +1228,10 @@
     q('[data-comeback-meets]').innerHTML = (near ? row(near, near.state ? near.state + ' · ' : '') : '') + (virtual ? row(virtual, 'Virtual · ') : '');
 
     // One of the age-up and comeback cards: age-up when you move up within
-    // a year, else comeback (since 2026-10-25)
+    // a year, else comeback (since 2026-10-25). Members only.
     var pick = moveUpSoon ? q('.swim-ageup') : q('.swim-comeback');
-    root.querySelectorAll('[data-summary-fallback]').forEach(function (card) { card.hidden = card !== pick; });
-    // Your training (Training Metrics), and its card here
-    renderWeek(renderStatus(), renderTraining());
+    var member = !!((USERS[SWIMMER] || {}).loggedIn && (USERS[SWIMMER] || {}).membershipTier);
+    root.querySelectorAll('[data-summary-fallback]').forEach(function (card) { card.hidden = !member || card !== pick; });
     // The goal, for Race Metrics: its Goal placeholders, Race Splits and
     // Rank and Tier use it until you type your own
     return { secs: goal, kind: kind };
@@ -1245,7 +1246,7 @@
   var BOTTOM = '76–100%';
   var TIERS = [TOP_10, '11th–25%', '26–50%', '51–75%', BOTTOM];
   var TIER_SHARE = { '11th–25%': 0.25, '26–50%': 0.5, '51–75%': 0.75 };
-  var TIER_WHERE = { 'Top 10': '10th place', '11th–25%': 'Top 25%', '26–50%': 'Top 50%', '51–75%': 'Top 75%', '76–100%': '> top 75%' };
+  var TIER_WHERE = { 'Top 10': '≥10th place', '11th–25%': 'Top 25%', '26–50%': 'Top 50%', '51–75%': 'Top 75%', '76–100%': '> top 75%' };
 
   // A tier's cut: the slowest time in it. In a field under 40, 10th place is
   // slower than the 25% line; the tiers above it are then all Top 10.
@@ -1271,8 +1272,16 @@
   // time or the median; kind names it) on its age group's ladder. Members
   // only: others see it blurred under a join prompt. While rankings load,
   // grey rungs hold its place.
+  // Rank and Tier's title: Current, or Recent when your latest race in Your
+  // Event is over this many months old
+  var TIER_RECENT_MONTHS = 12;
+
   function renderTier(t, kind) {
     var rank = groupRank(state.course, state.stroke, Number(state.distance), ageGroup());
+    var latest = eventRaces().pop(), now = new Date(today() + 'T00:00:00');
+    var cutoff = new Date(now.getFullYear(), now.getMonth() - TIER_RECENT_MONTHS, now.getDate());
+    var older = !!latest && new Date(latest.date + 'T00:00:00') < cutoff;
+    set('rankTierTitle', (older ? 'Recent' : 'Current') + ' Rank and Tier');
     var user = USERS[SWIMMER] || {}, member = !!(user.loggedIn && user.membershipTier);
     var gender = swimmerGender();
     setWithSynth('rankTierSub', state.course + ' ' + state.distance + ' ' + lowerStroke(state.stroke) + (gender ? ' · ' + gender.toLowerCase() + ' ' + ageGroup().label : '') +
@@ -1302,6 +1311,10 @@
     for (var i = k - 1; i >= 0 && !up; i--) if (cutOf(rank, TIERS[i]) < t) up = TIERS[i];
     var place = placeOf(t, rank);
     var placed = (/median/.test(kind) ? 'The ' : 'Your ') + kind + ' of ' + race(t) + (place ? ' would place ' + ordinal(place) + ' of ' + rank.n.toLocaleString() : ' is outside the ' + rank.times.length + ' listed') + '.';
+    // Against your last race in the event, in this same ranking
+    var races = eventRaces(), lastRace = races[races.length - 1];
+    var was = lastRace && place && kind !== 'best' ? placeOf(lastRace.secs, rank) : null;
+    if (was && was > place) placed += ' That\'s up ' + (was - place).toLocaleString() + (was - place === 1 ? ' place' : ' places') + ' from your last race (' + ordinal(was) + ').';
     next.innerHTML = up ? '<b>Next rung: ' + up + ' at ' + race(cutOf(rank, up)) + '.</b> ' + placed + ' ' + (t - cutOf(rank, up)).toFixed(2) + ' s to go.' :
       '<b>You\'re in the Top 10.</b> ' + placed;
     lock.hidden = member;
@@ -1546,28 +1559,26 @@
 
   // ---------- Race History chart (as v4's) ----------
 
-  // As v4's renderTrend (swim-tools-v4.js): your races in Your Event's
-  // course and stroke (or every race), a line per event over time. Pace per
-  // 100 up the side (slower higher), so a 50 and a 1650 share a scale; each
-  // dot a race, Your Event's labelled with its time, each event's best a
-  // solid ▲. Grey lines mark your age group's Top 10 each season (1st and 10th place)
-  // (your age at the SCY season's end, May 31), where those rankings exist.
-  // Zoom (− +) and pan (‹ ›, or drag) through the years once they span more
-  // than five.
-  var LINE_COLORS = ['#0068AD', '#CC2030', '#2A9D8F', '#E09F3E', '#6A4C93', '#1F7A3A', '#5A6B7D', '#8CC0E3', '#B5651D', '#D45087'];
+  // As v4's renderTrend (swim-tools-v4.js), but one event only (since
+  // 2026-10-27): your races in Your Event over time, as pace per 100 up the
+  // side (slower higher), each dot a race labelled with its time, your best
+  // a solid ▲. Behind them, Time Predictions' age-group lines and shading,
+  // season by season (your age at the SCY season's end, May 31), where those
+  // rankings exist. Zoom (− +) and pan (‹ ›, or drag) through the years once
+  // they span more than five.
+  var TREND_COLOR = '#0068AD'; // your races' line and dots, USMS blue
   var LABEL_LIMIT = 40; // more of Your Event's dots than this: times on hover
-  var PICK_LABEL_LIMIT = 12; // the same for a selection's dots, which mix events
   var YEAR_MS = 365.25 * 864e5, ZOOM_MIN = 5 * YEAR_MS, ZOOM_STEP = 0.6;
-  var STROKE_SHORT = { Free: 'Fr', Back: 'Ba', Breast: 'Br', Fly: 'Fl', IM: 'IM' };
-  // all: every race, not just Your Event's course and stroke; hidden: lines
-  // turned off (an event's key, or top10); zoom: the years shown (null: all)
-  var trend = { all: false, hidden: {}, zoom: { key: null, span: null, end: null }, dragged: false };
+  // hidden: the age group's lines turned off (top, ten, mid, low); zoom:
+  // the years shown (null: all)
+  var trend = { hidden: {}, zoom: { key: null, span: null, end: null }, dragged: false };
 
-  // Races picked in the Your Races modal, per chart (trend: Race History,
-  // pred: Time Predictions): race ids, or null for the chart's own
-  // choice. Not saved.
-  var picked = { trend: null, pred: null };
-  var PICK_CHARTS = { trend: 'Race History', pred: 'Time Predictions' };
+  // Races picked in the Your Races modal, per chart (pred: Time
+  // Predictions; Race History's went 2026-10-27, when it became one event
+  // only): race ids, or null for the chart's own choice. Not saved. No link
+  // opens the modal for now.
+  var picked = { pred: null };
+  var PICK_CHARTS = { pred: 'Time Predictions' };
 
   // A chart's "Showing N selected races · Clear" line, while it has a
   // selection (shown: how many of them it can draw)
@@ -1578,17 +1589,16 @@
     note.hidden = !ids;
     if (!ids) return;
     var n = ids.length, races = n === 1 ? ' race' : ' races';
-    note.querySelector('[data-picked-text]').textContent = shown === n || target === 'trend' && shown ?
+    note.querySelector('[data-picked-text]').textContent = shown === n ?
       'Showing ' + n + ' selected' + races + '.' :
-      target === 'pred' ? (shown ? 'Showing ' + shown + ' of your ' + n + ' selected' + races + ' (only ' + lowerStroke(state.stroke) + ' races here).' :
-        'None of your ' + n + ' selected' + races + ' are ' + lowerStroke(state.stroke) + ' races.') :
-      'None of your ' + n + ' selected' + races + ' have a date to chart.';
+      shown ? 'Showing ' + shown + ' of your ' + n + ' selected' + races + ' (only ' + lowerStroke(state.stroke) + ' races here).' :
+      'None of your ' + n + ' selected' + races + ' are ' + lowerStroke(state.stroke) + ' races.';
   }
 
   // ---------- Your Races modal ----------
 
   // pick: which chart it adds to, the boxes checked (ids) and the filters
-  var pick = { target: 'trend', ids: [], course: '', stroke: '', distance: '' };
+  var pick = { target: 'pred', ids: [], course: '', stroke: '', distance: '' };
 
   function pickRaces() {
     return state.races.map(function (r) {
@@ -1710,98 +1720,81 @@
     card.querySelector('[data-drag-hint]').hidden = !(zoomed && !trend.dragged && window.matchMedia && matchMedia('(pointer: coarse)').matches);
   }
 
-  // The Top 10 line's synthetic seasons, for the note: "2018–19 to 2021–22
-  // are synthetic data (modeled, not real)." ('' when none are)
-  function synthSeasons(tens) {
-    var ss = [];
-    tens.forEach(function (x) { x.pts.forEach(function (p) { if (p.synthetic && ss.indexOf(p.season) < 0) ss.push(p.season); }); });
-    if (!ss.length) return '';
-    ss.sort(function (a, b) { return a - b; });
-    var label = function (y) { return (y - 1) + '–' + String(y).slice(2); };
-    return (ss.length === 1 ? 'The ' + label(ss[0]) + ' season is' : label(ss[0]) + ' to ' + label(ss[ss.length - 1]) + ' are') +
-      ' synthetic data (modeled, not real).';
+  // The age group's rankings in Your Event each season the chart covers, as
+  // Time Predictions' lines: fastest (top), 10th place (ten), median (mid)
+  // and slowest (low), for the age group you were in that season (your age
+  // on May 31, the season's end). Only seasons whose rankings are loaded.
+  function seasonRanks(t0, t1) {
+    if (!swimmerGender()) return [];
+    var seasons = {};
+    (AVAILABLE || []).forEach(function (x) { seasons[x.season] = 1; });
+    var d = Number(state.distance);
+    return Object.keys(seasons).map(Number).sort().map(function (season) {
+      var at = season + '-05-31', t = new Date(at + 'T00:00:00').getTime(), age = ageOn(at);
+      if (t < t0 || t > t1 || age == null) return null;
+      var g = groupOf(age), r = g && groupRank(state.course, state.stroke, d, g, season);
+      if (!r) return null;
+      var pace = function (secs) { return secs / (d / 100); };
+      // A list of only the top swims (truncated) has no median, and its
+      // slowest would be just the slowest of those: neither is drawn
+      return { t: t, season: season, group: g.label, synthetic: r.synthetic,
+        top: pace(r.times[0]), ten: pace(topTen(r)), mid: pace(median(r)), low: r.truncated ? NaN : pace(typicalSlowest(r)) };
+    }).filter(Boolean);
   }
 
   function renderTrend() {
     var card = root.querySelector('[data-trend]');
     if (!card) return;
-    var selected = state.course + ' ' + Number(state.distance) + ' ' + state.stroke;
-    // A selection from the Your Races modal: only those races, any course
-    // or stroke, drawn as with Show All Races (mixed: no unit, goal or Top 10)
-    var ids = picked.trend, mixed = trend.all || !!ids;
-    var dated = (ids ? pickedRaces(ids) : predRaces()).filter(function (r) {
-      return r.date && (mixed || (r.course === state.course && r.stroke === state.stroke));
-    });
-    renderPickedNote('trend', ids && dated.length);
-    // No races at all: no card. Races, but none in this course and stroke:
-    // the card stays, its chart blank, with a note in red over it.
+    // One event only (since 2026-10-27): Your Event's course, distance and
+    // stroke
+    var d = Number(state.distance), ev = state.course + ' ' + d + ' ' + lowerStroke(state.stroke);
+    var races = eventRaces();
+    // No races at all: no card. Races, but none in Your Event: the card
+    // stays, its chart blank, with a note in red over it.
     var anyRaces = predRaces().some(function (r) { return r.date; });
     card.hidden = !anyRaces;
     var emptyNote = card.querySelector('[data-trend-empty]');
-    emptyNote.hidden = !!dated.length || !anyRaces;
+    emptyNote.hidden = !!races.length || !anyRaces;
+    var legend = card.querySelector('[data-trend-legend]');
+    var svg = card.querySelector('[data-trend-svg]'), dots = card.querySelector('[data-trend-dots]');
     if (card.hidden) return;
-    if (!dated.length) {
-      emptyNote.textContent = 'You haven\'t raced ' + state.course + ' ' + lowerStroke(state.stroke) + ' yet.';
-      card.querySelector('[data-trend-svg]').innerHTML = '';
-      card.querySelector('[data-trend-dots]').innerHTML = '';
+    if (!races.length) {
+      emptyNote.textContent = 'You haven\'t raced the ' + ev + ' yet.';
+      svg.innerHTML = ''; dots.innerHTML = ''; legend.innerHTML = '';
       card.querySelector('[data-trend-y]').innerHTML = '';
       card.querySelector('[data-trend-axis]').innerHTML = '';
       card.querySelector('[data-zoom-bar]').hidden = true;
       card.querySelector('[data-drag-hint]').hidden = true;
-      // Show All Races still offers every race
-      card.querySelector('[data-trend-legend]').innerHTML = '<button type="button" class="swim-pred-link swim-trend__all" data-trend-all aria-pressed="false">Show All Races</button>';
-      set('trendNote', 'Your ' + state.course + ' ' + lowerStroke(state.stroke) + ' races over time, as pace per 100 (slower is higher).');
+      set('trendNote', 'Your ' + ev + ' races over time, as pace per 100 (slower is higher).');
       return;
     }
-    var STROKES = ['Free', 'Back', 'Breast', 'Fly', 'IM'], COURSE_ORDER = ['SCY', 'SCM', 'LCM'];
-    var events = {};
-    dated.forEach(function (r) {
-      var k = r.course + ' ' + r.d + ' ' + r.stroke;
-      (events[k] = events[k] || { key: k, course: r.course, d: r.d, stroke: r.stroke, races: [] }).races.push(r);
-    });
-    var list = Object.keys(events).map(function (k) { return events[k]; }).sort(function (a, b) {
-      return COURSE_ORDER.indexOf(a.course) - COURSE_ORDER.indexOf(b.course) ||
-        STROKES.indexOf(a.stroke) - STROKES.indexOf(b.stroke) || a.d - b.d;
-    });
-    list.forEach(function (e, i) {
-      e.color = LINE_COLORS[i % LINE_COLORS.length];
-      e.races.sort(function (a, b) { return a.date < b.date ? -1 : 1; });
-      e.best = Math.min.apply(null, e.races.map(function (r) { return r.secs; }));
-      e.on = !trend.hidden[e.key];
-      e.selected = e.key === selected;
-    });
-    var shown = list.filter(function (e) { return e.on; });
-    var pace = function (r) { return r.secs / (r.d / 100); };
+    var color = TREND_COLOR;
+    var best = Math.min.apply(null, races.map(function (r) { return r.secs; }));
+    var pace = function (r) { return r.secs / (d / 100); };
     var when = function (r) { return new Date(r.date + 'T00:00:00').getTime(); };
-    var all = [];
-    shown.forEach(function (e) { all = all.concat(e.races); });
-
-    // The legend: no pill per event (retired 2026-10-15; each turned its line
-    // off and on), just what Your Event's wide, see-through line is
-    var legend = card.querySelector('[data-trend-legend]');
-    var selectedEvent = list.filter(function (e) { return e.selected; })[0];
-    legend.innerHTML = selectedEvent && !mixed ? '<span class="swim-trend__key swim-trend__key--static">' +
-      '<span class="swim-trend__swatch swim-trend__swatch--event" style="background: ' + selectedEvent.color + '" aria-hidden="true"></span>Selected race</span>' : '';
-    var svg = card.querySelector('[data-trend-svg]'), dots = card.querySelector('[data-trend-dots]');
-    if (!all.length) {
-      svg.innerHTML = ''; dots.innerHTML = '';
-      card.querySelector('[data-trend-y]').innerHTML = '';
-      card.querySelector('[data-trend-axis]').innerHTML = '';
-      card.querySelector('[data-zoom-bar]').hidden = true;
-      set('trendNote', 'Every line is turned off. Select an event below to show it.');
-      return;
-    }
-    var t0 = Math.min.apply(null, all.map(when)), t1 = Math.max.apply(null, all.map(when));
-    // Your goal, once typed (Race Metrics' Goal): a solid deep yellow dot,
-    // as Time Predictions', at today, so the years run to now; not with
-    // every race showing (it's Your Event's)
-    var goalSecs = !mixed && !state.goalAuto && state.goal !== '' && validEntry(state.goal) ? parse(state.goal) : NaN;
+    var t0 = Math.min.apply(null, races.map(when)), t1 = Math.max.apply(null, races.map(when));
+    // The years run to now (since 2026-10-27; with your goal before), so
+    // the age group's lines carry on past your last race, and a single
+    // race has seasons beside it. Your goal, once typed (Race Metrics'
+    // Goal): a solid deep yellow dot, as Time Predictions', at today.
+    var goalSecs = !state.goalAuto && state.goal !== '' && validEntry(state.goal) ? parse(state.goal) : NaN;
     var goalT = new Date(today() + 'T00:00:00').getTime();
-    var goalPace = goalSecs / (Number(state.distance) / 100);
-    if (isFinite(goalPace)) t1 = Math.max(t1, goalT);
+    var goalPace = goalSecs / (d / 100);
+    t1 = Math.max(t1, goalT);
+    // The age group's lines, over the races' years. A line missing from
+    // some seasons (no median or slowest where only the top swims are
+    // listed) carries its nearest season's value across them, so every
+    // line runs the chart's full width
+    var ranks = seasonRanks(t0, t1), off = trend.hidden;
+    ['top', 'ten', 'mid', 'low'].forEach(function (k) {
+      var have = ranks.filter(function (p) { return isFinite(p[k]); });
+      if (!have.length) return;
+      var last = have[0][k];
+      ranks.forEach(function (p) { if (isFinite(p[k])) last = p[k]; else p[k] = last; });
+    });
     // The years shown: every race to start with, zoomed down to five; a new
-    // course or stroke starts over
-    var z = trend.zoom, zkey = state.course + ' ' + state.stroke + (ids ? ' picked ' + ids.join(',') : trend.all ? ' all' : '');
+    // event starts over
+    var z = trend.zoom, zkey = state.course + ' ' + d + ' ' + state.stroke;
     if (z.key !== zkey) { z.key = zkey; z.span = null; z.end = null; }
     var full = t1 - t0, canZoom = full > ZOOM_MIN;
     var span = canZoom && z.span ? Math.min(full, Math.max(ZOOM_MIN, z.span)) : full;
@@ -1809,86 +1802,88 @@
     var w0 = end - span, w1 = end, zoomed = span < full - 1;
     z.range = { t0: t0, t1: t1, span: span, end: end };
     var inWin = function (t) { return t >= w0 - 864e5 && t <= w1 + 864e5; };
-    // Your Event's Top 10 line: 10th place in your age group each season
-    // within the chart's years, where those rankings are loaded
-    var seasons = {};
-    (AVAILABLE || []).forEach(function (x) { seasons[x.season] = 1; });
-    // (not with every race showing: courses and strokes mixed, it isn't
-    // any one event's)
-    var tens = mixed || trend.hidden.top10 || !swimmerGender() ? [] : shown.filter(function (e) { return e.selected; }).map(function (e) {
-      var pts = Object.keys(seasons).map(Number).sort().map(function (season) {
-        var at = season + '-05-31', t = new Date(at + 'T00:00:00').getTime(), age = ageOn(at);
-        if (t < t0 || t > t1 || age == null) return null;
-        var g = groupOf(age), r = g && groupRank(e.course, e.stroke, e.d, g, season);
-        return r ? { t: t, pace: topTen(r) / (e.d / 100), fast: r.times[0] / (e.d / 100), season: season, synthetic: r.synthetic } : null;
-      }).filter(Boolean);
-      return { e: e, pts: pts };
-    }).filter(function (x) { return x.pts.length; });
-    if (!mixed && (tens.length || trend.hidden.top10)) {
-      legend.insertAdjacentHTML('beforeend', '<button type="button" class="swim-trend__key" data-trend-line="top10" aria-pressed="' + !trend.hidden.top10 + '">' +
-        '<span class="swim-trend__swatch swim-trend__swatch--top10"></span>Top 10 (1st–10th place)</button>');
-    }
-    // The ▲ key: not a toggle, just what the mark means
-    legend.insertAdjacentHTML('beforeend', '<span class="swim-trend__key swim-trend__key--static"><span class="swim-trend__swatch swim-trend__swatch--best" aria-hidden="true"></span>Personal Best</span>');
-    if (isFinite(goalPace)) legend.insertAdjacentHTML('beforeend', '<span class="swim-trend__key swim-trend__key--static"><span class="swim-trend__swatch swim-pred-swatch--goal" aria-hidden="true"></span>Your goal</span>');
-    // Every race on the chart, or back to Your Event's course and stroke
-    // (not with a selection showing: its Clear goes back)
-    if (!ids) legend.insertAdjacentHTML('beforeend', '<button type="button" class="swim-pred-link swim-trend__all" data-trend-all aria-pressed="' + trend.all + '">' +
-      (trend.all ? 'Show ' + state.course + ' ' + state.stroke + ' Only' : 'Show All Races') + '</button>');
-    // The pace scale fits the races in view (all of them if none are)
-    var seen = all.filter(function (r) { return inWin(when(r)); });
-    var paces = (seen.length ? seen : all).map(pace);
-    tens.forEach(function (x) { x.pts.forEach(function (p) { if (inWin(p.t)) paces.push(p.pace, p.fast); }); });
+
+    // The legend, as Time Predictions': your races, then the age group's
+    // lines as pills that turn them off and on, fastest first. Named by the
+    // age group when it's one throughout ("50–54 fastest").
+    var groups = [];
+    ranks.forEach(function (p) { if (groups.indexOf(p.group) < 0) groups.push(p.group); });
+    var who = groups.length === 1 ? groups[0] : 'Age group';
+    var key = function (id, text) {
+      return '<button type="button" class="swim-trend__key" data-trend-line="' + id + '" aria-pressed="' + !off[id] + '">' +
+        '<span class="swim-pred-swatch swim-pred-swatch--' + id + '" aria-hidden="true"></span>' + text + '</button>';
+    };
+    legend.innerHTML = '<span class="swim-trend__key swim-trend__key--static">' +
+      '<span class="swim-trend__swatch swim-trend__swatch--event" style="background: ' + color + '" aria-hidden="true"></span>Your ' + state.distance + ' ' + lowerStroke(state.stroke) + '</span>' +
+      // The ▲ key: not a toggle, just what the mark means
+      '<span class="swim-trend__key swim-trend__key--static"><span class="swim-trend__swatch swim-trend__swatch--best" aria-hidden="true"></span>Personal Best</span>' +
+      (isFinite(goalPace) ? '<span class="swim-trend__key swim-trend__key--static"><span class="swim-trend__swatch swim-pred-swatch--goal" aria-hidden="true"></span>Your goal</span>' : '') +
+      (ranks.length ? key('top', who + ' fastest') + key('ten', who + ' top ten') + key('mid', who + ' median') + key('low', who + ' slowest') : '');
+
+    // The pace scale fits the races in view and the lines shown
+    var seen = races.filter(function (r) { return inWin(when(r)); });
+    var paces = (seen.length ? seen : races).map(pace);
+    ranks.forEach(function (p) {
+      if (!inWin(p.t)) return;
+      ['top', 'ten', 'mid', 'low'].forEach(function (k) { if (!off[k] && isFinite(p[k])) paces.push(p[k]); });
+    });
     if (isFinite(goalPace) && inWin(goalT)) paces.push(goalPace);
-    var fastest = Math.min.apply(null, paces);
-    var scale = paceScale(fastest, Math.max.apply(null, paces), fastest);
-    // With every race showing, courses mix yards and meters: no unit
-    var unit = mixed ? '' : ' ' + COURSES[state.course].unit;
+    var fastestPace = Math.min.apply(null, paces);
+    var scale = paceScale(fastestPace, Math.max.apply(null, paces), fastestPace);
     // Times along 4–96%, so labels on the first and last races aren't cut off
     var xAt = function (t) { return w1 > w0 ? 4 + (t - w0) / (w1 - w0) * 92 : 50; };
     var x = function (r) { return xAt(when(r)); };
     var y = function (r) { return scale.y(pace(r)); };
-    // Labelled: Your Event's dots, or with a selection showing, every one
-    // while there are few enough to read (PICK_LABEL_LIMIT); else bests only
-    var labelled = function (e) { return ids ? true : e.selected; };
-    var labels = shown.filter(labelled).reduce(function (n, e) {
-      return n + e.races.filter(function (r) { return inWin(when(r)); }).length;
-    }, 0) <= (ids ? PICK_LABEL_LIMIT : LABEL_LIMIT);
+    var labels = seen.length <= LABEL_LIMIT;
     // Zoomed in, lines run on past the edges and are cut there
     svg.style.clipPath = zoomed ? 'inset(-40px 3.5% -40px 3.5%)' : '';
-    // The age group's Top 10 each season: the fastest swim (1st place, a
-    // solid grey line) and 10th place (a lighter dashed one), behind your races
-    var at = function (p, k) { return xAt(p.t).toFixed(2) + ',' + scale.y(p[k]).toFixed(1); };
-    svg.innerHTML = tens.map(function (t) {
-      var ten = t.pts.map(function (p) { return at(p, 'pace'); }), fast = t.pts.map(function (p) { return at(p, 'fast'); });
-      return '<polyline class="swim-trend__line swim-trend__line--fastest" points="' + fast.join(' ') + '"></polyline>' +
-        '<polyline class="swim-trend__line swim-trend__line--top10" points="' + ten.join(' ') + '"></polyline>';
-    }).join('') + (function () {
-      // From Your Event's latest race to your goal: a light grey dashed line
-      var ev = shown.filter(function (e) { return e.selected; })[0];
-      if (!ev || !isFinite(goalPace) || !inWin(goalT)) return '';
-      var last = ev.races[ev.races.length - 1];
-      return '<line class="swim-trend__line swim-trend__line--to-goal" x1="' + x(last).toFixed(2) + '" y1="' + y(last).toFixed(1) +
-        '" x2="' + xAt(goalT).toFixed(2) + '" y2="' + scale.y(goalPace).toFixed(1) + '"></line>';
-    })() + shown.map(function (e) {
-      return '<polyline class="swim-trend__line' + (e.selected ? ' is-event' : ' is-other') + '" style="stroke: ' + e.color + '" points="' + e.races.map(function (r) {
+
+    // The age group's lines and shading, as Time Predictions' (its classes):
+    // 3% black under the slowest, 5% between the median and the top ten, 8%
+    // under the top ten, white under the fastest
+    // Out to the chart's edges, left and right: the first season's values
+    // carried flat back to the left edge, the last season's on to the right
+    // (where the view doesn't already reach them)
+    if (ranks.length && w1 > w0) {
+      var pad = (w1 - w0) * 4 / 92, tl = w0 - pad, tr = w1 + pad;
+      if (ranks[0].t > tl) ranks.unshift(Object.assign({}, ranks[0], { t: tl, edge: true }));
+      if (ranks[ranks.length - 1].t < tr) ranks.push(Object.assign({}, ranks[ranks.length - 1], { t: tr, edge: true }));
+    }
+    var line = function (k) {
+      return ranks.filter(function (p) { return isFinite(p[k]); })
+        .map(function (p) { return xAt(p.t).toFixed(2) + ',' + scale.y(p[k]).toFixed(1); }).join(' ');
+    };
+    var fill = function (k) {
+      var ps = ranks.filter(function (p) { return isFinite(p[k]); });
+      return ps.length ? line(k) + ' ' + xAt(ps[ps.length - 1].t).toFixed(2) + ',100 ' + xAt(ps[0].t).toFixed(2) + ',100' : '';
+    };
+    var band = ranks.filter(function (p) { return isFinite(p.mid) && isFinite(p.ten); });
+    var bandPts = band.map(function (p) { return xAt(p.t).toFixed(2) + ',' + scale.y(p.mid).toFixed(1); })
+      .concat(band.slice().reverse().map(function (p) { return xAt(p.t).toFixed(2) + ',' + scale.y(p.ten).toFixed(1); })).join(' ');
+    var poly = function (cls, pts) { return pts ? '<polygon class="swim-pred__field' + cls + '" points="' + pts + '"></polygon>' : ''; };
+    var pline = function (cls, k) { return off[k] ? '' : '<polyline class="swim-pred__line swim-pred__line--' + cls + '" points="' + line(k) + '"></polyline>'; };
+    var lastRace = races[races.length - 1];
+    svg.innerHTML = (ranks.length ?
+      poly('', off.low ? '' : fill('low')) +
+      poly(' swim-pred__field--mid', off.mid || off.ten || !band.length ? '' : bandPts) +
+      poly(' swim-pred__field--top10', off.ten ? '' : fill('ten')) +
+      poly(' swim-pred__field--clear', off.top ? '' : fill('top')) +
+      pline('bottom', 'low') + pline('top10', 'ten') + pline('fastest', 'top') + pline('group', 'mid') : '') +
+      // From your latest race to your goal: a light grey dashed line
+      (isFinite(goalPace) && inWin(goalT) ? '<line class="swim-trend__line swim-trend__line--to-goal" x1="' + x(lastRace).toFixed(2) + '" y1="' + y(lastRace).toFixed(1) +
+        '" x2="' + xAt(goalT).toFixed(2) + '" y2="' + scale.y(goalPace).toFixed(1) + '"></line>' : '') +
+      '<polyline class="swim-trend__line is-event" style="stroke: ' + color + '" points="' + races.map(function (r) {
         return x(r).toFixed(2) + ',' + y(r).toFixed(1);
       }).join(' ') + '"></polyline>';
-    }).join('');
-    dots.innerHTML = shown.map(function (e) {
-      return e.races.filter(function (r) { return inWin(when(r)); }).map(function (r) {
-        var at = 'left: ' + x(r).toFixed(2) + '%; top: ' + y(r).toFixed(1) + '%', isBest = r.secs === e.best;
-        return '<span class="swim-trend__dot' + (isBest ? ' is-best' : '') + (e.selected ? '' : ' is-other') + '" style="' + at + '; border-color: ' + e.color + '; background: ' + e.color + '" title="' +
-          e.course + ' ' + e.d + ' ' + e.stroke + ' · ' + formatDate(r.date) + ' · ' + race(r.secs) + (isBest ? ' (best)' : '') + '"></span>' +
-          ((labels && labelled(e)) || isBest ? '<span class="swim-trend__label' + (e.selected || ids ? ' is-below' : ' is-other') + '" style="' + at + '; color: ' + e.color + '">' + race(r.secs) + '</span>' : '');
-      }).join('');
+    dots.innerHTML = seen.map(function (r) {
+      var at = 'left: ' + x(r).toFixed(2) + '%; top: ' + y(r).toFixed(1) + '%', isBest = r.secs === best;
+      return '<span class="swim-trend__dot' + (isBest ? ' is-best' : '') + '" style="' + at + '; border-color: ' + color + '; background: ' + color + '" title="' +
+        ev + ' · ' + formatDate(r.date) + ' · ' + race(r.secs) + (isBest ? ' (best)' : '') + '"></span>' +
+        (labels || isBest ? '<span class="swim-trend__label is-below" style="' + at + '; color: ' + color + '">' + race(r.secs) + '</span>' : '');
     }).join('') + (isFinite(goalPace) && inWin(goalT) ? '<span class="swim-pred__dot is-goal" style="left: ' + xAt(goalT).toFixed(2) + '%; top: ' +
-      scale.y(goalPace).toFixed(1) + '%" title="Your goal: ' + race(goalSecs) + ' in the ' + state.distance + ' ' + lowerStroke(state.stroke) + '. Drag up or down to change it."' +
-      goalHandle('trend', goalSecs) + '></span>' : '');
-    // Dragging the goal dot: up and down the pace scale
-    goalDrag.trend = { axis: 'y', toSecs: function (f) { return (scale.lo + (1 - f) * (scale.hi - scale.lo)) * Number(state.distance) / 100; } };
+      scale.y(goalPace).toFixed(1) + '%" title="Your goal: ' + race(goalSecs) + ' in the ' + state.distance + ' ' + lowerStroke(state.stroke) + '. Change it on Race Goal."></span>' : '');
     // Axes: pace up the side (its unit above), years along the bottom
-    card.querySelector('[data-trend-y]').innerHTML = '<span class="swim-trend__unit">per 100' + unit + '</span>' + scale.html;
+    card.querySelector('[data-trend-y]').innerHTML = '<span class="swim-trend__unit">per 100 ' + COURSES[state.course].unit + '</span>' + scale.html;
     var y0 = new Date(w0).getFullYear(), y1 = new Date(w1).getFullYear(), ticks = [], ystep = Math.max(1, Math.ceil((y1 - y0) / 6));
     for (var yr = y0; yr <= y1; yr += ystep) ticks.push(yr);
     // The last year too, unless it would crowd the tick before it
@@ -1904,15 +1899,20 @@
       return '<span style="left: ' + tickAt[i].toFixed(1) + '%">' + yr + '</span>';
     }).join('');
     renderZoom(card, canZoom, zoomed, full, span, end, t0, w0, w1);
-    setWithSynth('trendNote', (ids ? 'Your selected races' : trend.all ? 'Every race' : 'Your ' + state.course + ' ' + lowerStroke(state.stroke) + ' races') +
-      ' over time, as pace per 100 (slower is higher). Each dot is a race' +
-      (labels ? (ids ? ', labelled with its time' : '; the ' + state.distance + '\'s are labelled with their time and the others show it on hover') : ', with its time on hover') +
-      '. The solid ▲ marks each event\'s best.' +
-      (tens.length ? ' The grey lines are your age group\'s Top 10 each season: the fastest swim (solid) and 10th place (dashed), from USMS event rankings.' : ''), synthSeasons(tens));
-    svg.setAttribute('aria-label', shown.map(function (e) {
-      return e.course + ' ' + e.d + ' ' + e.stroke + ': ' + e.races.length + (e.races.length === 1 ? ' race' : ' races') + ', best ' + race(e.best) +
-        ', from ' + race(e.races[0].secs) + ' in ' + e.races[0].date.slice(0, 4) + ' to ' + race(e.races[e.races.length - 1].secs) + ' in ' + e.races[e.races.length - 1].date.slice(0, 4);
-    }).join('; '));
+    var synth = [];
+    var seasons = ranks.filter(function (p) { return !p.edge; });
+    seasons.forEach(function (p) { if (p.synthetic) synth.push(p.season); });
+    var seasonLabel = function (yr) { return (yr - 1) + '–' + String(yr).slice(2); };
+    setWithSynth('trendNote', 'Your ' + ev + ' races over time, as pace per 100 (slower is higher). Each dot is a race' +
+      (labels ? ', labelled with its time' : ', with its time on hover') + '; the solid ▲ marks your best.' +
+      (ranks.length ? ' The grey lines are your age group\'s rankings each season: the fastest swim, 10th place, the median and the slowest, from USMS event rankings.' : ''),
+      synth.length ? (synth.length === 1 ? 'The ' + seasonLabel(synth[0]) + ' season is' : seasonLabel(synth[0]) + ' to ' + seasonLabel(synth[synth.length - 1]) + ' are') +
+        ' synthetic data (modeled, not real).' : '');
+    svg.setAttribute('aria-label', ev + ': ' + races.length + (races.length === 1 ? ' race' : ' races') + ', best ' + race(best) +
+      ', from ' + race(races[0].secs) + ' in ' + races[0].date.slice(0, 4) + ' to ' + race(lastRace.secs) + ' in ' + lastRace.date.slice(0, 4) +
+      (seasons.length ? '. ' + seasons.map(function (p) {
+        return seasonLabel(p.season) + ' ' + p.group + ': fastest ' + clock(p.top) + ', 10th place ' + clock(p.ten) + ', median ' + clock(p.mid) + ', slowest ' + clock(p.low);
+      }).join('; ') : ''));
   }
 
   // The Add a Race form
@@ -2060,54 +2060,122 @@
 
   // ---------- Age Group Rank ----------
 
-  // Sample model, not USMS data: an age group's times spread log-normally
-  // around its average (averageTime), RANK_SPREAD wide, and its field shrinks
-  // with distance and away from the busiest age groups.
-  var RANK_SPREAD = 0.12;   // standard deviation of log time
-  var RANK_FIELD = 300;     // swimmers in the shortest event, busiest group
-  var RANK_FALLOFF = 0.72;  // each longer event in the list keeps this share
-  var RANK_AGE_SHARE = [0.55, 0.7, 0.8, 0.9, 1, 1, 1, 0.95, 0.85, 0.7, 0.5, 0.35, 0.2, 0.1, 0.05, 0.02, 0.01];
-  var TOP_10_Z = -1.2816;   // z of the 10th percentile
+  // Where you've actually placed, as Rank and Tier is where your goal would:
+  // your races in Your Event, each in its own season's ranking for the age
+  // group you were in that season (as Race History's lines)
 
-  // Share of a normal distribution below z
-  function normalCdf(z) {
-    var t = 1 / (1 + 0.3275911 * Math.abs(z) / Math.SQRT2);
-    var erf = 1 - t * Math.exp(-z * z / 2) *
-      (0.254829592 + t * (-0.284496736 + t * (1.421413741 + t * (-1.453152027 + t * 1.061405429))));
-    return z < 0 ? (1 - erf) / 2 : (1 + erf) / 2;
+  // The season a date falls in: June 1 to May 31, named by its end year
+  function seasonOf(iso) {
+    var y = Number(iso.slice(0, 4));
+    return iso.slice(5) <= '05-31' ? y : y + 1;
   }
 
-  // Race Metrics: Your Event's time (secs, named by what it is: "goal",
-  // "best", "45–49 median"…) placed among your age group's swimmers in
-  // that event
-  function renderRank(age, secs, name) {
-    var c = { course: state.course, distance: state.distance, stroke: state.stroke }, d = Number(c.distance);
-    var k = 0;
-    AGE_GROUPS.forEach(function (g, i) { if (age >= g.min) k = i; });
-    var group = AGE_GROUPS[k];
-    var avg = averageTime(c.course, c.stroke, d, group);
-    // No time yet: place and share show "- -"; the average and Top 10% don't need one
-    var empty = !age ? 'Enter an age of 18 or older.'
-      : !isFinite(avg) ? 'No age group data for this event.' : '';
-    set('rankSubtitle', c.distance + ' ' + c.stroke + ' | ' + c.course + (isFinite(secs) ? ' · ' + name + ' ' + race(secs) : ''));
+  // A race placed in its season's ranking: { race, season, rank, place
+  // (null past the end of a truncated list), official (the published
+  // place, when the list has you at this time) }. null when there's no
+  // ranking, or it isn't in yet.
+  function racePlacing(r) {
+    var season = seasonOf(r.date), age = ageOn(season + '-05-31');
+    var g = groupOf(age != null ? age : r.age);
+    var rank = g && groupRank(state.course, state.stroke, r.d, g, season);
+    if (!rank) return null;
+    var user = USERS[SWIMMER] || {}, official = null;
+    var me = user.lastName && user.firstName ? (user.lastName + ', ' + user.firstName).toLowerCase() : '';
+    if (me && !rank.converted && !rank.synthetic && rank.names) {
+      rank.names.forEach(function (name, i) {
+        if (official == null && name.toLowerCase().indexOf(me) === 0 && Math.abs(rank.times[i] - r.secs) < 0.005) official = rank.places[i];
+      });
+    }
+    return { race: r, season: season, rank: rank, group: g, official: official, place: official || placeOf(r.secs, rank) };
+  }
+
+  // Share of the field slower than a placing, 0 to 1
+  function beatsOf(p) {
+    return (p.rank.n - p.place) / p.rank.n;
+  }
+  // "top 4%"
+  function topShare(p) {
+    return 'top ' + Math.max(1, Math.ceil(p.place / p.rank.n * 100)) + '%';
+  }
+
+  // Your races in Your Event, oldest first
+  function eventRaces() {
+    var d = Number(state.distance);
+    return predRaces().filter(function (r) {
+      return r.date && r.course === state.course && r.stroke === state.stroke && r.d === d;
+    }).sort(function (a, b) { return a.date < b.date ? -1 : 1; });
+  }
+
+  // Race Metrics: your last race in Your Event, where it placed, then your
+  // best placing each season
+  function renderRank() {
+    var ev = state.distance + ' ' + state.stroke + ' | ' + state.course;
+    var races = eventRaces();
+    var placings = races.map(racePlacing);
+    // The latest race with a ranking to place it in
+    var last = null;
+    placings.forEach(function (p) { if (p && p.place) last = p; });
+    var empty = !swimmerGender() ? noRankText()
+      : !races.length ? 'Race the ' + state.distance + ' ' + lowerStroke(state.stroke) + ' (' + state.course + ') to see where you\'ve ranked.'
+      : !last && pending() ? 'Loading USMS rankings…'
+      : !last ? 'There are no USMS rankings yet for the seasons you\'ve raced the ' + state.distance + ' ' + lowerStroke(state.stroke) + '.' : '';
+    set('rankSubtitle', ev + (last ? ' · last race ' + race(last.race.secs) + ', ' + formatDate(last.race.date) : ''));
     set('rankEmpty', empty);
     root.querySelector('[data-st="rankEmpty"]').hidden = !empty;
     root.querySelector('[data-st-rank]').hidden = !!empty;
+    root.querySelector('[data-st="rankNote"]').hidden = !!empty;
     if (empty) return;
 
-    var list = eventsFor(c.course, c.stroke);
-    var field = Math.max(3, Math.round(RANK_FIELD * Math.pow(RANK_FALLOFF, Math.max(0, list.indexOf(d))) * RANK_AGE_SHARE[k]));
-    var faster = normalCdf(Math.log(secs / avg) / RANK_SPREAD); // share of the field faster than you
-    var timed = isFinite(secs);
-    set('rankPlace', timed ? '#' + (1 + Math.round(faster * (field - 1))) : EMPTY);
-    set('rankOf', ' of ' + field);
-    set('rankBeats', timed ? String(Math.min(99, Math.round((1 - faster) * 100))) : EMPTY);
-    set('rankAvg', race(avg));
-    set('rankTop10', race(avg * Math.exp(TOP_10_Z * RANK_SPREAD)));
-    root.querySelector('[data-st-rank-pct]').hidden = !timed;
-    var marker = root.querySelector('[data-st-rank-marker]');
-    marker.hidden = !timed;
-    if (timed) marker.style.left = ((1 - faster) * 100).toFixed(1) + '%';
+    set('rankPlace', '#' + last.place);
+    set('rankOf', ' of ' + last.rank.n.toLocaleString());
+    set('rankBeats', String(Math.min(99, Math.round(beatsOf(last) * 100))));
+    root.querySelector('[data-st-rank-marker]').style.left = (beatsOf(last) * 100).toFixed(1) + '%';
+    set('rankLastSeason', (last.rank.seasonLabel || last.season) + ', ' + last.group.label);
+
+    // Each season's best placing
+    var seasons = {};
+    placings.forEach(function (p) {
+      if (p && p.place && (!seasons[p.season] || p.place / p.rank.n < seasons[p.season].place / seasons[p.season].rank.n)) seasons[p.season] = p;
+    });
+    var bests = Object.keys(seasons).sort().map(function (k) { return seasons[k]; });
+    var best = bests.reduce(function (b, p) { return !b || beatsOf(p) > beatsOf(b) ? p : b; }, null);
+    set('rankBest', topShare(best) + ', ' + (best.rank.seasonLabel || best.season));
+    renderRankSeasons(bests, best);
+
+    var synth = placings.some(function (p) { return p && p.rank.synthetic; });
+    var converted = placings.some(function (p) { return p && p.rank.converted; });
+    setWithSynth('rankNote', (last.official ? 'Your last race is #' + last.official + ' in the published USMS ranking. ' : '') +
+      'Each race is placed in its season\'s USMS ranking for your age group then' + (converted ? ', converted from SCY' : '') + '.',
+      synth && (placings.every(function (p) { return !p || p.rank.synthetic; }) ? '(synthetic data)' : '(some seasons synthetic)'));
+  }
+
+  // Your best placing each season, as the share of the field you beat
+  // (higher is better), with the best season marked
+  function renderRankSeasons(bests, best) {
+    var box = root.querySelector('[data-rank-seasons]');
+    box.hidden = bests.length < 2;
+    if (box.hidden) return;
+    var W = 300, H = 96, L = 34, R = 10, T = 8, B = 20;
+    var s0 = bests[0].season, s1 = bests[bests.length - 1].season;
+    var x = function (p) { return L + (s1 === s0 ? 0 : (p.season - s0) / (s1 - s0)) * (W - L - R); };
+    var y = function (v) { return T + (1 - v) * (H - T - B); };
+    var grid = [[0.5, 'Median'], [0.9, 'Top 10%']].map(function (g) {
+      return '<line class="swim-rank__seasons-grid" x1="' + L + '" x2="' + (W - R) + '" y1="' + y(g[0]) + '" y2="' + y(g[0]) + '"/>' +
+        '<text class="swim-rank__seasons-label" x="' + (L - 4) + '" y="' + (y(g[0]) + 3) + '" text-anchor="end">' + (g[0] * 100) + '%</text>';
+    }).join('');
+    var pts = bests.map(function (p) { return x(p).toFixed(1) + ',' + y(beatsOf(p)).toFixed(1); }).join(' ');
+    var svg = box.querySelector('svg');
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    svg.innerHTML = grid + '<polyline class="swim-rank__seasons-line" points="' + pts + '"/>' +
+      bests.map(function (p) {
+        return '<circle class="swim-rank__seasons-dot' + (p === best ? ' is-best' : '') + (p.rank.synthetic ? ' is-synthetic' : '') +
+          '" cx="' + x(p).toFixed(1) + '" cy="' + y(beatsOf(p)).toFixed(1) + '" r="' + (p === best ? 5 : 3.5) + '"/>';
+      }).join('') +
+      '<text class="swim-rank__seasons-label" x="' + L + '" y="' + (H - 4) + '">' + s0 + '</text>' +
+      '<text class="swim-rank__seasons-label" x="' + (W - R) + '" y="' + (H - 4) + '" text-anchor="end">' + s1 + '</text>';
+    svg.setAttribute('aria-label', 'Your best placing each season: ' + bests.map(function (p) {
+      return (p.rank.seasonLabel || p.season) + ' ' + topShare(p);
+    }).join(', '));
   }
 
   // Distance options for a select, rebuilt only when its course or stroke
@@ -2319,7 +2387,7 @@
     return loads.length ? { load: loads.reduce(function (a, b) { return a + b; }, 0) / loads.length, swims: loads.length, sample: samples.length > 0 } : { load: TE_BASE, swims: 0 };
   }
 
-  // ---------- Training status (summary band) ----------
+  // ---------- Training Summary (Training Metrics) ----------
 
   // Your training status from your log: the last 7 days' yards against
   // your weekly average over the last 6 weeks (TE_DAYS), averaged over the
@@ -2330,8 +2398,7 @@
   //         ≥ 0.8   Maintaining
   //         > 0     Recovering (a lighter week)
   //         0       Detraining (nothing in the last 7 days)
-  // Nothing logged in 6 weeks: no status, and the summary band shows its
-  // secondary cards (age-up, comeback) instead. Returns whether it showed.
+  // Nothing logged in 6 weeks: no status, a line saying so instead.
   var STATUS_WEEKS = TE_DAYS / 7;
   var STATUS_BANDS = [[1.5, 'Overreaching'], [1.15, 'Building'], [0.8, 'Maintaining'], [0.0001, 'Recovering'], [0, 'Detraining']];
 
@@ -2357,7 +2424,7 @@
     // Nothing logged in 6 weeks: a line saying so in place of the figures
     // and chart
     card.classList.toggle('is-empty', !swims.length);
-    if (!swims.length) return null;
+    if (!swims.length) return;
 
     // Weekly yards, rolling 7-day weeks back from today (0: the last 7 days)
     // and how many swims each
@@ -2409,28 +2476,6 @@
     });
     // The arrows step weeks; in Days there's nothing to step
     if (inDays) card.querySelectorAll('[data-weeks-step]').forEach(function (btn) { btn.disabled = true; });
-    var weekSwims = all.filter(function (e) { return e.ago < 7; }).length;
-    return { word: word, yards: weeks[0], swims: weekSwims, last: last };
-  }
-
-  // Highlights' Your Training card: the status, the last 7 days, and the
-  // latest swim's Training Effect, from Training Metrics
-  function renderWeek(status, effect) {
-    var card = root.querySelector('.swim-week');
-    card.querySelector('[data-week-figures]').hidden = !status;
-    if (!status) {
-      set('weekTitle', 'Nothing logged lately');
-      set('weekText', 'Log your swims to see your weekly yards, a training status and what each swim does for your fitness.');
-      return;
-    }
-    set('weekTitle', status.word);
-    set('weekYards', Math.round(status.yards).toLocaleString('en-US'));
-    set('weekUnit', ' yd');
-    set('weekSwims', String(status.swims));
-    card.querySelector('[data-week-effect]').hidden = !effect;
-    set('weekEffect', effect ? effect.score.toFixed(1) : '');
-    set('weekEffectWord', effect ? ' ' + effect.word : '');
-    set('weekText', status.swims ? '' : 'No swims in the last 7 days (your last was ' + status.last + ' days ago).');
   }
 
   // Training Summary's Weeks / Days toggle
@@ -2569,8 +2614,7 @@
   // Training Effect (Training Metrics, since 2026-10-25) scores your latest
   // logged swim, and needs a typical swim to judge it against: at least
   // TE_MIN_SWIMS logged in the last 6 weeks. Until then it's locked: a
-  // faded sample reading behind how many more to log. Returns the score
-  // and its word, for Highlights' Your Training card, or null.
+  // faded sample reading behind how many more to log.
   var TE_MIN_SWIMS = 5;
 
   // Your latest logged swim with a distance and time, the last one entered
@@ -2598,7 +2642,7 @@
       lock.querySelector('[data-te-lock-dots]').innerHTML = new Array(TE_MIN_SWIMS + 1).join('.').split('').map(function (x, i) {
         return '<span class="' + (i < typical.swims ? 'is-done' : '') + '"></span>';
       }).join('') + '<em>' + typical.swims + ' of ' + TE_MIN_SWIMS + ' logged</em>';
-      return null;
+      return;
     }
     var d = Number(e.distance), secs = parse(e.time);
     var threshold = thresholdPace(e.course);
@@ -2611,7 +2655,7 @@
       set('teValue', '—');
       set('teWord', '');
       set('teSub', pending() ? 'Loading USMS rankings…' : noRankText());
-      return null;
+      return;
     }
     var effect = Math.min(5, 5 * (1 - Math.exp(-TE_RATE * swim.load / typical.load)));
     var score = effect >= 4.95 ? 5 : Math.floor(effect * 10) / 10;
@@ -2627,7 +2671,6 @@
     set('teSub', 'Load ' + Math.round(swim.load) + ' against your typical ' + Math.round(typical.load) +
       ' (' + typical.swims + ' logged swims, last 6 weeks' + (typical.sample ? ', including sample workouts' : '') + ')' +
       ' · ' + Math.round(swim.intensity * 100) + '% of threshold pace, ' + clock(threshold.pace) + ' per 100 from ' + threshold.from);
-    return { score: score, word: word };
   }
 
   // Calorie Burn's adjustment for an Effort rating: none at 5-6 (moderate,
@@ -2661,8 +2704,8 @@
   // clicking or dragging on it rates. × clears; the mouse wheel steps it
   // while it's focused (one step a notch, trackpads one per 30px).
   var effortSlider = root.querySelector('[data-effort-slider]');
-  var effortRange = effortSlider.querySelector('[data-effort-range]');
-  var effortClear = effortSlider.querySelector('[data-effort-clear]');
+  var effortRange = effortSlider && effortSlider.querySelector('[data-effort-range]');
+  var effortClear = effortSlider && effortSlider.querySelector('[data-effort-clear]');
 
   function renderSlider(value) {
     effortSlider.classList.toggle('is-unrated', !value);
@@ -2679,24 +2722,27 @@
     render();
   }
 
-  effortRange.addEventListener('input', function () { setEffort(effortRange.value); });
-  // A click on the unrated track where the thumb already sits fires no input
-  effortRange.addEventListener('pointerup', function () { setEffort(effortRange.value); });
-  effortClear.addEventListener('click', function () {
-    setEffort('');
-    effortRange.focus();
-  });
+  // Training Tools only (Pace and calories)
+  if (effortSlider) {
+    effortRange.addEventListener('input', function () { setEffort(effortRange.value); });
+    // A click on the unrated track where the thumb already sits fires no input
+    effortRange.addEventListener('pointerup', function () { setEffort(effortRange.value); });
+    effortClear.addEventListener('click', function () {
+      setEffort('');
+      effortRange.focus();
+    });
 
-  var effortSpin = 0;
-  effortRange.addEventListener('wheel', function (e) {
-    if (effortRange !== document.activeElement) return;
-    e.preventDefault();
-    effortSpin += Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : -e.deltaY;
-    if (Math.abs(effortSpin) < 30) return;
-    var now = Number(state.metrics.effort) || (effortSpin > 0 ? 0 : 11);
-    setEffort(String(Math.min(10, Math.max(1, now + (effortSpin > 0 ? 1 : -1)))));
-    effortSpin = 0;
-  }, { passive: false });
+    var effortSpin = 0;
+    effortRange.addEventListener('wheel', function (e) {
+      if (effortRange !== document.activeElement) return;
+      e.preventDefault();
+      effortSpin += Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : -e.deltaY;
+      if (Math.abs(effortSpin) < 30) return;
+      var now = Number(state.metrics.effort) || (effortSpin > 0 ? 0 : 11);
+      setEffort(String(Math.min(10, Math.max(1, now + (effortSpin > 0 ? 1 : -1)))));
+      effortSpin = 0;
+    }, { passive: false });
+  }
 
   function renderMetrics() {
     var t = state.metrics, course = COURSES[t.course], unit = course.unit, d = Number(t.distance);
@@ -2759,17 +2805,9 @@
     set('metricsDistanceUnit', '(' + unitWord.trim() + ')');
   }
 
-  function render() {
-    // Context
-    set('course', state.course);
-
-    // Your age for Age Group Conversion and Age Group Rank: your profile's when
-    // we know it, otherwise the age group chosen at the top of the page
-    var age = state.ageKnown ? Number(state.age) : ageGroup().min;
-
-    // Training Metrics, from Your Swim
-    renderMetrics();
-
+  // Race Analysis' sections: Race Metrics and Calculators (Convert a Time;
+  // age: for Age Group Conversion)
+  function renderRacePage(age) {
     // Context distance
     var list = eventsFor(state.course, state.stroke);
     fitDistance(state, list);
@@ -2793,12 +2831,6 @@
     renderRaces();
     renderTrend();
     renderNewRace();
-    // A guest's Age Group says "Age" until they pick one (the tools still
-    // use the default 45-49 meanwhile)
-    set('ageGroupLabel', state.guest && !state.ageChosen ? 'Age' : ageGroup().label);
-    // The header's pill, when we know your age: sex (yours, or the Sex
-    // choice) and age group
-    if (state.ageKnown) set('who', whoText());
     var rows = renderPredictor(list);
     var goalRow = rows.filter(function (r) { return r.d === Number(state.distance); })[0];
     // Your Event's time until you set a goal: your best, else your
@@ -2808,20 +2840,19 @@
     // they type their own
     if (state.goalAuto) state.goal = isFinite(goalRow.mid) ? race(goalRow.mid) : '';
     var goalSet = state.goal !== '' && validEntry(state.goal);
-    // The summary's goal ("break 30"): Your Event's goal until you type one
+    // Race Goal's goal ("break 30"): Your Event's goal until you type one
     var suggested = renderSummary(goalRow);
-    renderLogForm();
     // Top 10 by Decade, with your goal across it when it shows Your Event
     renderTopTens(goalSet ? parse(state.goal) : NaN);
 
     // Splits: Your Event, toward its goal time (the Your Event panel's Goal;
-    // until you set one, the summary's suggested goal, else the event's
+    // until you set one, Race Goal's suggested goal, else the event's
     // time, shown as the Goal placeholders).
     var distance = Number(state.distance);
     fitInterval(distance);
     var goalTyped = state.goal !== '' && !state.goalAuto;
     var goalOk = state.goal === '' || validEntry(state.goal);
-    // The summary's goal unless you typed one: "break 30", or with no races
+    // Race Goal's goal unless you typed one: "break 30", or with no races
     // in the event, the age-group median
     var suggestedGoal = suggested.kind !== 'set' && isFinite(suggested.secs);
     var untyped = suggestedGoal ? suggested.secs : eventTime;
@@ -2834,8 +2865,9 @@
     var projectedTime = isFinite(goalRow.proj) && !goalRow.fromTime;
     var goalName = goalTyped ? 'goal' : untypedName || (isFinite(goalRow.you) ? 'best' : projectedTime ? 'projected time' : ageGroup().label + ' median');
     renderTier(goal, goalName);
-    // Age Group Rank: the same time, from the sample averages
-    renderRank(age, goal, goalName);
+    // Age Group Rank: not this time, but your races in the event, each in
+    // its own season's ranking
+    renderRank();
     // Toward the age-group median: just whose median ("50 Free | 45–49
     // Men's/Open"); otherwise the time and what it is
     var toMedian = !goalTyped && (untypedName ? suggested.kind !== 'break' : !isFinite(goalRow.you) && !projectedTime);
@@ -2856,6 +2888,33 @@
     set('goalHint', goalOk ? '' : 'Goal: seconds must be under 60.');
 
     renderConversions(age);
+  }
+
+  function render() {
+    // Context
+    set('course', state.course);
+
+    // Your age for Age Group Conversion: your profile's when
+    // we know it, otherwise the age group chosen at the top of the page
+    var age = state.ageKnown ? Number(state.age) : ageGroup().min;
+
+    // A guest's Age Group says "Age" until they pick one (the tools still
+    // use the default 45-49 meanwhile)
+    set('ageGroupLabel', state.guest && !state.ageChosen ? 'Age' : ageGroup().label);
+    // The header's pill, when we know your age: sex (yours, or the Sex
+    // choice) and age group
+    if (state.ageKnown) set('who', whoText());
+
+    if (RACE_PAGE) renderRacePage(age);
+    // Training Metrics: Training Summary and Training Effect, from the log;
+    // and Pace and calories, from Your Swim
+    if (TRAINING_PAGE) {
+      renderStatus();
+      renderTraining();
+      renderMetrics();
+    }
+    // Add to Log, on both pages
+    renderLogForm();
 
     // Fields show the current setting, e.g. the distance after fitDistance();
     // the one being typed in is left alone.
@@ -2910,13 +2969,13 @@
     root.querySelectorAll('[data-view-panel]').forEach(function (panel) {
       panel.hidden = panel.getAttribute('data-view-panel') !== state.view;
     });
-    balanceRacePlanning();
+    if (RACE_PAGE) balanceRacePlanning();
   }
 
   // ---------- Race Metrics' column heights ----------
 
-  // Race Metrics' two columns (Predictions over Your Races; Race Splits
-  // over Rank and Tier) end level on desktop, with real content rather than
+  // Race Metrics' two columns (Race History, Your Races and Set a Race
+  // Goal; Rank and Tier down to Age Group Rank) end level on desktop, with real content rather than
   // empty space where possible. Measured with the cards at their natural
   // heights, then:
   //   right taller  more Your Races rows, then a shorter splits window
@@ -3270,7 +3329,7 @@
   document.addEventListener('click', function (e) {
     var trigger = e.target.closest('[data-modal-target]');
     if (trigger && root.contains(trigger)) {
-      if (trigger.tagName === 'A') e.preventDefault(); // e.g. "add a race" in the summary: no jump
+      if (trigger.tagName === 'A') e.preventDefault(); // a link that opens a modal: no jump
       opener = trigger;
       if (trigger.getAttribute('data-modal-target') === '#swimDeckRace') {
         resetNewRace();
@@ -3351,8 +3410,8 @@
     render();
   });
 
-  // Set this goal, beside Race Metrics' Goal (and Set goal, in its modal):
-  // the suggestion becomes your goal
+  // Use suggested goal, in Race Goal's editor: the suggestion becomes your
+  // goal
   document.addEventListener('click', function (e) {
     if (!e.target.closest('[data-goal-set]') || !isFinite(state.goalSuggestion)) return;
     state.goal = race(state.goalSuggestion);
@@ -3470,22 +3529,20 @@
     });
   })();
 
-  // Summary: share the goal card, and Set this goal / Edit goal (the Race Metrics modal)
+  // Race Goal: Set this goal / Edit goal opens (or closes) its editor, with
+  // the cursor in the goal's minutes; Done closes it
   root.addEventListener('click', function (e) {
-    if (e.target.closest('[data-goal-share]')) {
-      var text = state.summaryShare || '';
-      var done = function (msg) { set('goalShareNote', msg); };
-      if (navigator.share) navigator.share({ title: 'Swim Tools', text: text }).catch(function () {});
-      else if (navigator.clipboard) navigator.clipboard.writeText(text).then(function () { done('Copied: ' + text); }, function () { done(text); });
-      else done(text);
-      return;
-    }
-    // Set this goal / Edit goal: the Race Metrics modal (data-modal-target),
-    // with the cursor in its Goal's minutes, after the modal's own focus
-    // on its first field
-    if (e.target.closest('[data-goal-change]')) {
-      var box = document.querySelector('#swimDeckPlan [data-time-input="goal"] [data-time-part="m"]');
-      if (box) setTimeout(function () { box.focus(); box.select(); }, 50);
+    var change = e.target.closest('[data-goal-change]'), done = e.target.closest('[data-goal-done]');
+    if (!change && !done) return;
+    var editor = root.querySelector('[data-goal-editor]');
+    editor.hidden = done ? true : !editor.hidden;
+    root.querySelector('[data-goal-change]').setAttribute('aria-expanded', String(!editor.hidden));
+    if (!editor.hidden) {
+      var box = editor.querySelector('[data-time-part="m"]');
+      box.focus();
+      box.select();
+    } else if (done) {
+      root.querySelector('[data-goal-change]').focus();
     }
   });
 
@@ -3498,7 +3555,7 @@
     }
     if (e.target.closest('[data-save-log]')) {
       saveLog();
-      render(); // the summary's training status
+      render(); // Training Metrics' training status
       return;
     }
     if (e.target.closest('[data-add-race]')) {
@@ -3507,8 +3564,8 @@
     }
   });
 
-  // Race History chart: legend pills, Show All Races, zoom and pan. A line
-  // or all races can change the columns' heights, so those re-render all.
+  // Race History chart: legend pills, zoom and pan. A line can change the
+  // columns' heights, so it re-renders all.
   root.addEventListener('click', function (e) {
     var t = e.target;
     var line = t.closest('[data-trend-line]');
@@ -3516,11 +3573,8 @@
       var lk = line.getAttribute('data-trend-line');
       trend.hidden[lk] = !trend.hidden[lk];
       render();
-      return;
-    }
-    if (t.closest('[data-trend-all]')) {
-      trend.all = !trend.all;
-      render();
+      var again = root.querySelector('[data-trend-line="' + lk + '"]');
+      if (again) again.focus();
       return;
     }
     // Zoom the years, keeping the middle of the view
@@ -3574,36 +3628,31 @@
   })();
 
   // Anyone but a logged-in member (a guest, or logged in without a
-  // membership) has no race history or log to sum up: no Dashboard, and
-  // the tools that work without one come first: Calculators, Race Metrics,
-  // then Training Metrics (sections and their ribbon tabs both)
+  // membership) has no race history or log. On Race Analysis, the tools that
+  // work without one come first: Calculators, then Race Metrics (sections
+  // and their ribbon tabs both)
   var isMember = !!((USERS[SWIMMER] || {}).loggedIn && (USERS[SWIMMER] || {}).membershipTier);
-  var dashboard = document.getElementById('dashboard');
   // Member features (the Workout Library search) and what anyone else sees
   // in their place
   root.querySelectorAll('[data-members-only]').forEach(function (el) { el.hidden = !isMember; });
   root.querySelectorAll('[data-non-members-only]').forEach(function (el) { el.hidden = isMember; });
-  if (!isMember) {
-    // Hidden, and out of the sections, so the first one shown stays their
-    // first child (the eyebrows' spacing)
+  if (!isMember && RACE_PAGE) {
     var sectionsEl = root.querySelector('.swim-deck__sections'), ribbon = root.querySelector('.swim-ribbon');
-    dashboard.hidden = true;
-    sectionsEl.parentNode.insertBefore(dashboard, sectionsEl.nextSibling);
-    ['calculators', 'race-planning', 'training-metrics'].forEach(function (id) {
+    ['calculators', 'race-planning'].forEach(function (id) {
       ribbon.appendChild(ribbon.querySelector('[data-section="' + id + '"]'));
       sectionsEl.appendChild(document.getElementById(id));
     });
-    // No Home either: with no summary it would only repeat Calculators'
-    // order, so Calculators is the selected tab to start
+    // No Home either: it would only repeat Calculators' order, so
+    // Calculators is the selected tab to start
     var home = ribbon.querySelector('[data-section="home"]');
     home.hidden = true;
     home.setAttribute('aria-pressed', 'false');
     ribbon.querySelector('[data-section="calculators"]').setAttribute('aria-pressed', 'true');
   }
 
-  // Section ribbon: the chosen section moves to the top of the tools, above
-  // even the Dashboard (members), and the rest keep their page order below
-  // it; Home puts the Dashboard back on top and the sections in page order.
+  // Section ribbon: the chosen section moves to the top of the tools, and
+  // the rest keep their page order below it; Home puts them back in page
+  // order.
   // Nodes are moved (not CSS order) so tab order matches what's on screen,
   // and, from the stuck toolbar, the page glides to it (the click handler
   // below).
@@ -3619,7 +3668,6 @@
     var first = id === 'home' ? defaultOrder[0] : document.getElementById(id);
     [first].concat(defaultOrder.filter(function (s) { return s !== first; }))
       .forEach(function (section) { sectionsBox.appendChild(section); });
-    if (isMember) sectionsBox.insertBefore(dashboard, id === 'home' ? sectionsBox.firstChild : first.nextSibling);
     ribbonButtons.forEach(function (btn) {
       btn.setAttribute('aria-pressed', String(btn.getAttribute('data-section') === id));
     });
@@ -3627,14 +3675,6 @@
     void first.offsetWidth; // restart the arrival fade
     first.classList.add('is-arriving');
   }
-
-  // A link to a section (Highlights' cards): as its tab
-  root.addEventListener('click', function (e) {
-    var link = e.target.closest('[data-show-section]');
-    if (!link) return;
-    var tab = root.querySelector('.swim-ribbon [data-section="' + link.getAttribute('data-show-section') + '"]');
-    if (tab) tab.click();
-  });
 
   // A tab, even the selected one: its section first (if it isn't). Clicked
   // from the stuck toolbar, the page then glides (keeping the toolbar
@@ -3724,7 +3764,7 @@
   // section under it (whose heading is stuck there; on phones, the section
   // just under the toolbar) is lit (.is-current, aria-current), in place of
   // the selected one, which stays aria-pressed for what the clicks do.
-  // Highlights is Home's. Near the top, the selected tab is lit again.
+  // Near the top, the selected tab is lit again.
   function markCurrentTab(wide) {
     var ribbon = root.querySelector('.swim-ribbon');
     var current = null;
@@ -3739,7 +3779,7 @@
       var atEnd = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
       var section = atEnd ? sections[sections.length - 1] : null;
       if (!section) sections.forEach(function (s) { if (s.getBoundingClientRect().top <= line) section = s; });
-      if (section) current = section.id === 'dashboard' ? 'home' : section.id;
+      if (section) current = section.id;
     }
     ribbon.classList.toggle('is-following', !!current);
     ribbon.querySelectorAll('[data-section]').forEach(function (btn) {
@@ -3764,7 +3804,7 @@
   // at the section's foot). Past that, the page glides on to the next
   // section, its heading docked. Scrolling up is as normal, and the last
   // section scrolls on to the page's foot.
-  var PANELS = '.swim-deck__section > .swim-panel, .swim-deck__section > .swim-summary';
+  var PANELS = '.swim-deck__section > .swim-panel';
 
   // A panel taller than the window would pin with its foot out of sight:
   // it pins this far above the window's foot instead (--sd-pin-top), so
@@ -3804,7 +3844,7 @@
       return s.classList.contains('swim-deck__section') && !s.hidden;
     });
     for (var i = 0; i < sections.length - 1; i++) {
-      var panel = sections[i].querySelector(':scope > .swim-panel, :scope > .swim-summary');
+      var panel = sections[i].querySelector(':scope > .swim-panel');
       if (!panel) continue;
       var next = sections[i + 1];
       var line = stickyTop(next.querySelector('.swim-deck__eyebrow'));

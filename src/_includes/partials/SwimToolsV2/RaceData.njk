@@ -1,0 +1,5 @@
+{# Each persona's races from src/_data/raceHistory.json, plus the page's
+   default persona; swim-tools-v2.js picks the active one (?user=). On Race
+   Tools (Your Races) and Training Tools (Training Effect's threshold pace,
+   from your races). #}
+<script type="application/json" id="race-history-data">{{ { "default": swimmerId, "swimmers": raceHistory.swimmers } | dump | safe }}</script>

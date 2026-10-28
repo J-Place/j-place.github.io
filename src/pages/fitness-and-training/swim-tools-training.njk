@@ -1,0 +1,62 @@
+---
+permalink: /fitness-and-training/swim-tools-v2/training/index.html
+title: Training Tools | U.S. Masters Swimming
+pageTitle: Training Tools
+# Same default persona as Race Analysis; ?user=<users.json key> switches
+# swimmer, and with it the log, race history and age (swim-tools-v2.js)
+swimmerId: KT2JH
+breadcrumbs:
+  - url: "/home"
+    label: "Home"
+  - url: "/fitness-and-training/articles-and-videos/index.html"
+    label: "Fitness and Training"
+courses: [SCY, SCM, LCM]
+---
+{% extends "layouts/article.njk" %}
+{% block pageCSS %}
+<link href="/css/Common/Breadcrumb.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/pages/swim-tools-v2.css">
+{% endblock %}
+{% block pageJS %}
+<script src="/js/swim-tools-v2.js" defer></script>
+{% endblock %}
+{% block content %}
+{# Training Tools (since 2026-10-27): Training Metrics and Pace and calories, moved from Race Analysis
+   (swim-tools-v2.njk), whose script, styles, toolbar and modals it shares.
+   Your races come along unseen: Training Effect's threshold pace is worked
+   out from them. #}
+<section class="section section-full swim-deck-page">
+  <div class="usms-container p-tb-10 swim-deck">
+    <header class="swim-deck__head">
+      <div>
+        <h1 class="swim-deck__title">Training Tools</h1>
+        <a class="swim-deck__other" href="/fitness-and-training/swim-tools-v2/">Race Analysis <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+      </div>
+    </header>
+
+    {# Toolbar: who the tools are for. One section, so no section tabs. #}
+    <div class="swim-deck__toolbar">
+      <div class="swim-deck__head-side">
+        {% include "partials/SwimToolsV2/Who.njk" %}
+      </div>
+    </div>
+
+    {% include "partials/SwimToolsV2/RaceData.njk" %}
+    <div class="swim-deck__sections" id="swim-deck-sections">
+      <section class="swim-deck__section" id="training-metrics" aria-labelledby="training-metrics-title">
+        <h2 class="swim-deck__eyebrow" id="training-metrics-title">Training metrics</h2>
+        {% include "partials/SwimToolsV2/Training.njk" %}
+      </section>
+      {# Pace and calories (the Your Swim calculator; on Race Analysis'
+         Calculators until 2026-10-27) #}
+      <section class="swim-deck__section" id="pace-calories" aria-labelledby="your-swim-title">
+        <h2 class="swim-deck__eyebrow" id="your-swim-title">Pace and calories</h2>
+        {% include "partials/SwimToolsV2/YourSwim.njk" %}
+      </section>
+    </div>
+
+    <p class="swim-deck__disclaimer">Results are estimates. Training Effect's threshold pace comes from your USMS meet results; age-group times are sample data.</p>
+  </div>
+</section>
+{% include "partials/SwimToolsV2/Editors.njk" %}
+{% endblock %}

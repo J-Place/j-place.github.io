@@ -1,7 +1,7 @@
 ---
 permalink: /fitness-and-training/swim-tools-v2/index.html
-title: Swim Tools | U.S. Masters Swimming
-pageTitle: Swim Tools
+title: Race Analysis | U.S. Masters Swimming
+pageTitle: Race Analysis
 # Default persona (Jay Place); ?user=<users.json key> switches swimmer, and
 # with it the race history and age (swim-tools-v2.js)
 swimmerId: KT2JH
@@ -11,28 +11,8 @@ breadcrumbs:
   - url: "/fitness-and-training/articles-and-videos/index.html"
     label: "Fitness and Training"
 courses: [SCY, SCM, LCM]
-# USMS age groups: value is the group's youngest age (swim-tools-v2.js AGE_GROUPS)
-ageGroups:
-  - [18, "18–24"]
-  - [25, "25–29"]
-  - [30, "30–34"]
-  - [35, "35–39"]
-  - [40, "40–44"]
-  - [45, "45–49"]
-  - [50, "50–54"]
-  - [55, "55–59"]
-  - [60, "60–64"]
-  - [65, "65–69"]
-  - [70, "70–74"]
-  - [75, "75–79"]
-  - [80, "80–84"]
-  - [85, "85–89"]
-  - [90, "90–94"]
-  - [95, "95–99"]
-  - [100, "100+"]
 ---
 {% extends "layouts/article.njk" %}
-{% from "partials/SwimToolsV2/TimeField.njk" import timeField %}
 {% from "partials/SwimToolsV2/StrokeSelect.njk" import strokeSelect %}
 {% block pageCSS %}
 {# Breadcrumbs as the article5 pages': a white bar, grey links, "/" between #}
@@ -43,14 +23,17 @@ ageGroups:
 <script src="/js/swim-tools-v2.js" defer></script>
 {% endblock %}
 {% block content %}
-{# v2 of /fitness-and-training/swim-tools/: one shared swimmer context drives
-   every tool, and each tool's inputs live in an editor modal. Values are
-   filled in by swim-tools-v2.js. #}
+{# Race Analysis (Race Tools from 2026-10-27 to 2026-10-28; Swim Tools v2 until 2026-10-27, when Training Metrics moved
+   to Training Tools, swim-tools-training.njk): v2 of
+   /fitness-and-training/swim-tools/. One shared swimmer context drives every
+   tool, and each tool's inputs live in an editor modal. Values are filled
+   in by swim-tools-v2.js, which runs both pages. #}
 <section class="section section-full swim-deck-page">
   <div class="usms-container p-tb-10 swim-deck">
     <header class="swim-deck__head">
       <div>
-        <h1 class="swim-deck__title">Swim Tools</h1>
+        <h1 class="swim-deck__title">Race Analysis</h1>
+        <a class="swim-deck__other" href="/fitness-and-training/swim-tools-v2/training/">Training Tools <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
         {# Commented out 2026-10-15: the intro under the title ("Welcome back,
            Jay…" when logged in, as on v4; swim-tools-v2.js still sets it,
            harmlessly, with nothing to fill). Its CSS is commented out too.
@@ -61,8 +44,10 @@ ageGroups:
 
     {# Toolbar, between the header and the sections: the section tabs, and who
        the tools are for (the pill, or a guest's Age Group and Competition
-       Category). Right-aligned on tablet and up. #}
-    <div class="swim-deck__toolbar">
+       Category). Right-aligned on tablet and up. Above the sections, not
+       beside the first one's heading: Race Analysis' section headings are for
+       screen readers only (since 2026-10-27). #}
+    <div class="swim-deck__toolbar swim-deck__toolbar--no-headings">
       <div class="swim-deck__head-side">
         {# Section tabs, icons only (each named by its label and tooltip), in
            page order. Choosing one moves its section to the top of the tools,
@@ -79,59 +64,18 @@ ageGroups:
                kept for reuse: <path d="M3 17l5-6 4 3 7-8"/><path d="M14 6h5v5"/>) #}
             <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M10 2h4"/></svg>
           </button>
-          <button type="button" class="swim-ribbon__link" data-section="training-metrics" aria-controls="swim-deck-sections" aria-pressed="false" aria-label="Training Metrics" title="Training Metrics">
-            {# A dumbbell (2026-10-15, from the designer's Illustrator export,
-               cleaned up: its colour now follows the tab's, grey or blue): two
-               outlined plates joined by a heavy bar. Earlier versions, kept
-               for reuse: the flat two-plate line dumbbell (viewBox 0 0 24 24)
-               <path d="M8 12h8M8 6v12M16 6v12M4.5 9v6M19.5 9v6M2 12h2.5M19.5 12H22"/>,
-               and an angled single-plate one
-               <g transform="rotate(-45 12 12)"><rect x="4.5" y="7.5" width="3" height="9" rx="1.2" fill="currentColor"/><rect x="16.5" y="7.5" width="3" height="9" rx="1.2" fill="currentColor"/><path d="M7.5 12h9M3.5 12h1M19.5 12h1"/></g> #}
-            {# Narrowed 2026-10-15: the bar shortened (14.84 to 11) and the
-               viewBox cropped to match, the plates the same size #}
-            {# Back to the flat two-plate line dumbbell 2026-10-16. The
-               designer's (viewBox 0 0 41.14 45, at 38px), kept for reuse:
-               <rect x="8.92" y="13.18" width="6" height="17" stroke-width="1.9"/>
-               <rect x="25.07" y="13.18" width="6" height="17" stroke-width="1.9"/>
-               <line x1="16.07" y1="21.8" x2="24.07" y2="21.8" stroke-width="4.5" stroke-linecap="butt"/> #}
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 12h8M8 6v12M16 6v12M4.5 9v6M19.5 9v6M2 12h2.5M19.5 12H22"/></svg>
-          </button>
           <button type="button" class="swim-ribbon__link" data-section="calculators" aria-controls="swim-deck-sections" aria-pressed="false" aria-label="Calculators" title="Calculators">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h13l-4-4M17 17H4l4 4"/></svg>
           </button>
         </div>
-        {# Who the tools are for: sex and age group, when we know the age (the
-           select below takes its place when we don't) #}
-        <p class="swim-deck__who" data-st-who hidden><span class="visually-hidden">Your tools are set for </span><span data-st="who"></span></p>
-        {# Age group, only when we don't know it: logged out, or logged in with
-           no birth date on the profile. Logged in, it comes from the profile
-           (swim-tools-v2.js). Starts on 45-49, shown as "Age" until picked. #}
-        <div class="swim-swim__field swim-deck__age" data-st-age-group-field hidden>
-          <label class="swim-swim__label" for="sd-age-group">Age Group</label>
-          <div class="swim-deck__field">
-            <select class="form-control" id="sd-age-group" data-input="ageGroup">
-              {% for g in ageGroups %}<option value="{{ g[0] }}"{{ ' selected' if g[0] == 45 }}>{{ g[1] }}</option>{% endfor %}
-            </select>
-            <span class="swim-deck__field-value" aria-hidden="true" data-st="ageGroupLabel">Age</span>
-          </div>
-        </div>
-        {# Competition Category, after Age Group, only when we don't know your
-           sex: logged out, or logged in with no gender on the profile. Sets
-           whose USMS rankings the tools compare with (swim-tools-v2.js).
-           Starts on Men's/Open. #}
-        <div class="swim-swim__field swim-deck__sex" data-st-sex-field hidden>
-          <span class="swim-swim__label" id="sd-sex-label">Competition Category</span>
-          <div class="swim-seg" role="group" aria-labelledby="sd-sex-label" data-control="sex">
-            <button type="button" data-value="Men" aria-pressed="true">Men's/Open</button><button type="button" data-value="Women" aria-pressed="false">Women's</button>
-          </div>
-        </div>
+        {% include "partials/SwimToolsV2/Who.njk" %}
       </div>
     </div>
 
     <div class="swim-deck__sections" id="swim-deck-sections">
-      {% include "partials/SwimToolsV2/Summary.njk" %}
       <section class="swim-deck__section" id="race-planning" aria-labelledby="race-planning-title">
-        <h2 class="swim-deck__eyebrow" id="race-planning-title">Race metrics</h2>
+        {# For screen readers only (since 2026-10-27) #}
+        <h2 class="swim-deck__eyebrow visually-hidden" id="race-planning-title">Race metrics</h2>
         {# One bordered panel: Your Event on light blue, then the tools on white #}
         <div class="swim-panel">
           {# Hidden on phones: the cards' gears open the same controls in the
@@ -162,38 +106,35 @@ ageGroups:
                   {% for c in courses %}<button type="button" data-value="{{ c }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ c }}</button>{% endfor %}
                 </div>
               </div>
-              {# Goal time for Your Event: what Race Splits splits up. Until it's
-                 set, splits use the prediction, shown as the placeholders. #}
-              <div class="swim-swim__field">
-                <span class="swim-swim__label" id="sd-goal-label">Goal</span>
-                {# Beside the time: "Set this goal" takes the suggestion shown in
-                   its boxes as your goal; shown only until a goal is set
-                   (swim-tools-v2.js) #}
-                <div class="swim-goal-field">
-                  {{ timeField("sd-goal-label", 'data-time-input="goal"', "xs") }}
-                  <button type="button" class="swim-pred-link swim-goal-field__link" data-goal-set hidden>Set this goal</button>
-                </div>
-              </div>
+              {# Its Goal (and Set this goal beside it) was removed 2026-10-27:
+                 the goal is set in the Race Metrics modal (a card's gear, or
+                 Race Goal's Set this goal), or by dragging its dot #}
             </div>
-            {# Goal time errors; hidden while empty #}
-            <p class="swim-deck__note swim-deck__note-error" data-st="goalHint" aria-live="polite"></p>
           </div>
           {# The tools, on white #}
           <div class="swim-panel__band">
             {# The two columns end level: balanceRacePlanning (swim-tools-v2.js) #}
             <div class="swim-deck__grid swim-deck__grid--8-4 swim-deck__grid--balance">
-              {# Time Predictions, then Race History, then Your Races #}
+              {# Time Predictions (hidden for now), Race History, Your Races,
+                 then Set a Race Goal (members; Your Races moved above it
+                 2026-10-27) #}
               <div class="swim-deck__cell swim-deck__cell--stack">
                 {% include "partials/SwimToolsV2/RacePredictor.njk" %}
                 {% include "partials/SwimToolsV2/RaceTrend.njk" %}
                 {% include "partials/SwimToolsV2/RaceHistory.njk" %}
+                {% include "partials/SwimToolsV2/RaceGoal.njk" %}
               </div>
-              {# Age Group Rank (Your Event, since 2026-10-15; was in Time
-                 Conversions), Race Splits, then Rank and Tier #}
+              {# Rank and Tier, the age-up or comeback card (members), Your
+                 Strengths and Race Splits (hidden for now; Your Strengths
+                 in its place since 2026-10-27), then Age Group Rank, beside
+                 Set a Race Goal (Rank and Tier moved up from the bottom and
+                 Age Group Rank down from the top 2026-10-28) #}
               <div class="swim-deck__cell swim-deck__cell--stack">
-                {% include "partials/SwimToolsV2/AgeRank.njk" %}
-                {% include "partials/SwimToolsV2/RaceSplits.njk" %}
                 {% include "partials/SwimToolsV2/RankTier.njk" %}
+                {% include "partials/SwimToolsV2/AgeUp.njk" %}
+                {% include "partials/SwimToolsV2/Strengths.njk" %}
+                {% include "partials/SwimToolsV2/RaceSplits.njk" %}
+                {% include "partials/SwimToolsV2/AgeRank.njk" %}
               </div>
               {# Retired 2026-10-14: Top 10 by Decade (TopTens.njk, kept for reuse).
                  To restore, include it here again in a full-width cell, and Rank
@@ -203,16 +144,13 @@ ageGroups:
         </div>
       </section>
 
-      <section class="swim-deck__section" id="training-metrics" aria-labelledby="training-metrics-title">
-        <h2 class="swim-deck__eyebrow" id="training-metrics-title">Training metrics</h2>
-        {% include "partials/SwimToolsV2/Training.njk" %}
-      </section>
-
-      {# Calculators (since 2026-10-25): Time Conversions and the Your Swim
-         calculator (pace and calories, was Training Metrics), a panel each
-         under its own heading #}
+      {# Calculators (since 2026-10-25): Time Conversions, under its own
+         heading. Pace and calories (the Your Swim calculator) was here too
+         until 2026-10-27, when it moved to Training Tools. #}
       <section class="swim-deck__section" id="calculators" aria-labelledby="calculators-title">
-        <h2 class="swim-deck__eyebrow" id="calculators-title">Calculators</h2>
+        {# For screen readers only (since 2026-10-27); Convert a time is the
+           heading shown #}
+        <h2 class="swim-deck__eyebrow visually-hidden" id="calculators-title">Calculators</h2>
         <h3 class="swim-deck__subhead" id="convert-time-title">Convert a time</h3>
         {# One bordered panel, like Race Metrics: the time to convert on
            light blue, then the conversions on white #}
@@ -227,8 +165,6 @@ ageGroups:
             </div>
           </div>
         </div>
-        <h3 class="swim-deck__subhead" id="your-swim-title">Pace and calories</h3>
-        {% include "partials/SwimToolsV2/YourSwim.njk" %}
       </section>
     </div>
 

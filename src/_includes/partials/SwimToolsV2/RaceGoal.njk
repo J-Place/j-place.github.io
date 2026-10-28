@@ -1,0 +1,59 @@
+{# Race Goal (Race Metrics, since 2026-10-27; was Highlights'): your goal
+   in Your Event against your latest and best, on a track you can drag to
+   change it. Members only. Filled by swim-tools-v2.js (renderSummary). #}
+{% from "partials/SwimToolsV2/TimeField.njk" import timeField %}
+<article class="swim-card swim-summary__card swim-goal" data-members-only>
+  <div class="swim-goal__head">
+    <div class="swim-summary__heading">
+      <h3 class="swim-card__title">Set a Race Goal</h3>
+      <p class="swim-summary__lead" data-st="goalTitle"></p>
+      <p class="swim-summary__fine" data-st="goalSuggestion" hidden></p>
+    </div>
+    <span class="swim-summary__meta"><button type="button" class="swim-pred-link swim-goal__change" data-goal-change aria-expanded="false" aria-controls="race-goal-editor">Set this goal</button></span>
+  </div>
+  {# The goal's editor, opened by Set this goal / Edit goal: since
+     2026-10-27 the one place a goal is set or changed (with the track's
+     goal dot, which drags). Use suggested goal takes the suggestion shown
+     in its boxes, only until a goal is set. #}
+  <div class="swim-goal__editor" id="race-goal-editor" data-goal-editor hidden>
+    <span class="swim-goal__label" id="sd-goal-label">Goal</span>
+    <div class="swim-goal-field">
+      {{ timeField("sd-goal-label", 'data-time-input="goal"', "xs") }}
+      <button type="button" class="swim-pred-link swim-goal-field__link" data-goal-set hidden>Use suggested goal</button>
+      <button type="button" class="btn btn-primary btn-sm swim-goal__done" data-goal-done>Done</button>
+    </div>
+    {# Goal time errors; hidden while empty #}
+    <p class="swim-deck__note swim-deck__note-error" data-st="goalHint" aria-live="polite"></p>
+  </div>
+  <div class="swim-goal__stats">
+    <div><div class="swim-goal__label">Latest<span class="swim-goal__date" data-st="goalLatestDate"></span></div><div class="swim-goal__value swim-goal__value--latest" data-st="goalLatest">—</div></div>
+    <div><div class="swim-goal__label">Best<span class="swim-goal__date" data-st="goalBestDate"></span></div><div class="swim-goal__value" data-st="goalBest">—</div></div>
+    <div><div class="swim-goal__label" data-st="goalTimeLabel">Goal</div><div class="swim-goal__value swim-goal__value--goal" data-st="goalTime">—</div></div>
+    <div><div class="swim-goal__label">To go</div><div class="swim-goal__value" data-goal-to-go><span data-st="goalToGo">—</span><span class="swim-goal__unit"> s</span></div></div>
+  </div>
+  {# Slower on the left: the filled bar is your latest, the triangle your best, the yellow dot your goal; until you set one, a grey open circle is the suggested goal #}
+  {# The track's slowest and fastest times at its ends, beside the bar #}
+  <div class="swim-track" data-goal-track>
+    <span class="swim-track__end" data-st="goalTrackHi"></span>
+    <div class="swim-track__bar" role="img" data-goal-track-bar>
+      <span class="swim-track__rail"></span>
+      <span class="swim-track__fill" data-goal-track-fill></span>
+      {# Both slide to change the goal (swim-tools-v2.js, goalDrag) #}
+      <span class="swim-track__goal" data-goal-track-goal data-goal-drag="track" tabindex="0" role="slider" aria-label="Goal time" title="Drag to change your goal"></span>
+      <span class="swim-track__suggested" data-goal-track-suggested data-goal-drag="track" tabindex="0" role="slider" aria-label="Suggested goal time" title="Drag to set your goal"></span>
+      <span class="swim-track__best" data-goal-track-best></span>
+      <span class="swim-track__latest" data-goal-track-latest></span>
+    </div>
+    <span class="swim-track__end" data-st="goalTrackLo"></span>
+    {# Each mark's name under it (swim-tools-v2.js places them) #}
+    <div class="swim-track__names" aria-hidden="true">
+      <span class="swim-track__name" data-goal-track-name="latest">Latest</span>
+      <span class="swim-track__name" data-goal-track-name="best">Best</span>
+      <span class="swim-track__name" data-goal-track-name="goal">Goal</span>
+    </div>
+  </div>
+  {# What the goal means against your times, once one's set (swim-tools-v2.js) #}
+  <p class="swim-summary__text swim-goal__synopsis" data-st="goalSynopsis" hidden></p>
+  {# Its Practice at goal pace and Share progress card buttons were removed
+     2026-10-27 #}
+</article>

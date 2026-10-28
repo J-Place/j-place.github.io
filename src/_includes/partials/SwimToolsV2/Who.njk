@@ -1,0 +1,28 @@
+{# Who the tools are for, in the toolbar of Race Analysis and Training Tools:
+   the pill, or a guest's Age Group and Competition Category.
+   Age groups: src/_data/ageGroups.json. #}
+{# Who the tools are for: sex and age group, when we know the age (the
+   select below takes its place when we don't) #}
+<p class="swim-deck__who" data-st-who hidden><span class="visually-hidden">Your tools are set for </span><span data-st="who"></span></p>
+{# Age group, only when we don't know it: logged out, or logged in with
+   no birth date on the profile. Logged in, it comes from the profile
+   (swim-tools-v2.js). Starts on 45-49, shown as "Age" until picked. #}
+<div class="swim-swim__field swim-deck__age" data-st-age-group-field hidden>
+  <label class="swim-swim__label" for="sd-age-group">Age Group</label>
+  <div class="swim-deck__field">
+    <select class="form-control" id="sd-age-group" data-input="ageGroup">
+      {% for g in ageGroups %}<option value="{{ g[0] }}"{{ ' selected' if g[0] == 45 }}>{{ g[1] }}</option>{% endfor %}
+    </select>
+    <span class="swim-deck__field-value" aria-hidden="true" data-st="ageGroupLabel">Age</span>
+  </div>
+</div>
+{# Competition Category, after Age Group, only when we don't know your
+   sex: logged out, or logged in with no gender on the profile. Sets
+   whose USMS rankings the tools compare with (swim-tools-v2.js).
+   Starts on Men's/Open. #}
+<div class="swim-swim__field swim-deck__sex" data-st-sex-field hidden>
+  <span class="swim-swim__label" id="sd-sex-label">Competition Category</span>
+  <div class="swim-seg" role="group" aria-labelledby="sd-sex-label" data-control="sex">
+    <button type="button" data-value="Men" aria-pressed="true">Men's/Open</button><button type="button" data-value="Women" aria-pressed="false">Women's</button>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+{# Your Strengths (Race Metrics, since 2026-10-27; was a note under Race
+   History, and before that under Time Predictions): where your pace per 100
+   is closest to and furthest from the age-group median across the stroke's
+   distances, or with one distance raced, how often you've raced it. In Race
+   Splits' place while that's hidden. Shown only with races of your own in
+   the stroke. Filled by swim-tools-v2.js (renderPredictor). #}
+{% from "partials/SwimToolsV2/SectionGear.njk" import sectionGear %}
+<article class="swim-card swim-strengths" id="your-strengths" data-strengths hidden>
+  <header class="swim-card__header">
+    <div class="swim-card__heading">
+      <h3 class="swim-card__title">Your Strengths</h3>
+      <p class="swim-card__sub" data-st="strengthsSub"></p>
+    </div>
+    {{ sectionGear("swimDeckPlan", "Race Metrics") }}
+  </header>
+  <p class="swim-strengths__lead" data-st="strengthsLead"></p>
+  <p class="swim-strengths__body" data-st="strengthsBody"></p>
+</article>

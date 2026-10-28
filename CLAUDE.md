@@ -39,7 +39,7 @@ Static JSON rankings at `/data/top-times/{season}/{gender}-{age}/scy/{stroke}/{d
 
 The member-facing Swim Tools app (Workout Generator, Training Plans, Your Log, Workout Library, How We Build Your Workouts) lives in its own repo, **`~/dev/usms/swim-tools`** (Next.js + TypeScript). Its workout library, rules registry, references, ingest scripts and handoff doc (`docs/swim-tools-app.md`) are all there, not here. It is not production's *Workout Composer*, which is the coaches' authoring tool.
 
-This repo plays Sitecore's part: the Swim Tools v2 page is the dashboard, and each view is an Eleventy page that renders the chrome plus a mount point (`data-usms-component="SwimTools"` with a `data-view`) for the app's embed bundle. Workout Generator is the first: `src/pages/fitness-and-training/swim-tools-workouts.njk` at `/fitness-and-training/swim-tools-v2/workouts/` (v2's Workout Library tile's Browse links to it).
+This repo plays Sitecore's part: the Swim Tools v2 pages, Race Analysis (`/fitness-and-training/swim-tools-v2/`) and Training Tools (`…/swim-tools-v2/training/`, since 2026-10-27), are the dashboard, and each view is an Eleventy page that renders the chrome plus a mount point (`data-usms-component="SwimTools"` with a `data-view`) for the app's embed bundle. Workout Generator is the first: `src/pages/fitness-and-training/swim-tools-workouts.njk` at `/fitness-and-training/swim-tools-v2/workouts/` (Training Tools' Workout Library tile's Browse links to it, and its breadcrumb leads back to Training Tools).
 
 - **Synced, never hand-edited:** `src/js/swim-tools/` (the bundle, plus `source.json` naming the swim-tools commit) and `src/data/swim-tools/` (library, rules registry, references; served at `/data/swim-tools/`). Refresh them from the app repo with `npm run sync:eleventy`, then commit them here. ESLint ignores the bundle.
 - **`src/js/swim-tools-host.js`** mounts each view with the persona (`?user=` → `sessionStorage.activeUser` → the page's `swimmerId`, as `current-user.js` and `swim-tools-v2.js` resolve it, so Add to Log lands in v2's own `swimTools.log.<persona>`) and the app's **static** adapter. `?swimtools=api` (kept for the tab in `sessionStorage.swimToolsAdapter`; `?swimtools=static` clears it) switches to the app's own server on `localhost:3000` (`npm run dev` in the app repo), for testing its API.
@@ -177,7 +177,7 @@ The production site uses a **split Bootstrap strategy**:
 
 When writing layout markup: use BS3 grid classes for columns, BS5 utility classes for alignment and spacing. Do not add a Bootstrap 5 CDN link — it is already present via the production bundles.
 
-**Exception: Swim Tools v2** (`/fitness-and-training/swim-tools-v2/`, an enhancement page, not a production mockup) lays out every module with CSS Grid rather than BS3 columns: the Highlights band, the tiles, and the Race Metrics, Training Metrics and Calculators sections (`.swim-deck__grid`, `--8-4` / `--5-7`). Keep it to one system there; don't mix BS3 column classes back in.
+**Exception: Swim Tools v2** (Race Analysis at `/fitness-and-training/swim-tools-v2/` and Training Tools at `…/training/`, enhancement pages, not a production mockup) lays out every module with CSS Grid rather than BS3 columns: the tiles, and the Race Metrics, Training Metrics and Calculators sections (`.swim-deck__grid`, `--8-4` / `--5-7`). Keep it to one system there; don't mix BS3 column classes back in.
 
 ## Building Production Page Mockups
 

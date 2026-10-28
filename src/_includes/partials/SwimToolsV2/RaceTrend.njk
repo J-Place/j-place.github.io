@@ -1,22 +1,19 @@
-{# Race History chart, as v4's (swim-tools-v4.njk, #st4-history): your races
-   in Your Event's course and stroke (or every race), a line per event over
-   time as pace per 100, slower higher, each race a dot; your age group's
-   Top 10 each season as a black line; zoom and drag through the years.
-   Filled by swim-tools-v2.js (renderTrend). Blank, with a note, when you
-   haven't raced Your Event's course and stroke; hidden with no races at all. #}
+{# Race History chart, as v4's (swim-tools-v4.njk, #st4-history), one event
+   only (since 2026-10-27): your races in Your Event over time as pace per
+   100, slower higher, each race a dot; behind them Time Predictions' age
+   group lines (fastest, top ten, median, slowest) season by season; zoom
+   and drag through the years. Filled by swim-tools-v2.js (renderTrend).
+   Blank, with a note, when you haven't raced Your Event; hidden with no
+   races at all. #}
 {% from "partials/SwimToolsV2/SectionGear.njk" import sectionGear %}
 <div class="swim-card swim-trend" id="race-trend" data-trend hidden>
   <header class="swim-card__header">
     <div class="swim-card__heading">
-      <h3 class="swim-card__title swim-card__title--icon"><svg class="swim-card__icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Race History
-        {# Choose races to show (the Your Races modal) #}
-        <button type="button" class="swim-pred-link swim-pred-view" data-modal-target="#swimDeckRaces" data-races-target="trend">Add races</button></h3>
+      <h3 class="swim-card__title swim-card__title--icon"><svg class="swim-card__icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>Race History</h3>
       <p class="swim-card__sub" data-st="trendNote"></p>
     </div>
     {{ sectionGear("swimDeckPlan", "Race Metrics") }}
   </header>
-  {# A selection from the Your Races modal showing: how many, and Clear #}
-  <p class="swim-picked" data-picked-note="trend" hidden><span data-picked-text></span> <button type="button" class="swim-pred-link swim-picked__clear" data-picked-clear="trend">Clear</button></p>
   {# − + centred over the plot, ‹ › either side, All years at the right;
      hidden when every race fits in five years #}
   <div class="swim-zoom" data-zoom-bar hidden>
@@ -41,5 +38,5 @@
     </div>
   </div>
   <div class="swim-trend__axis" data-trend-axis aria-hidden="true"></div>
-  <div class="swim-trend__legend" role="group" aria-label="Show or hide an event's line" data-trend-legend></div>
+  <div class="swim-trend__legend" role="group" aria-label="Show or hide a line" data-trend-legend></div>
 </div>

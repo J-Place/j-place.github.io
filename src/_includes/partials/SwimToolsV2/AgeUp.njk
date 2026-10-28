@@ -1,0 +1,24 @@
+{# The age-up and comeback cards (Race Metrics, since 2026-10-27; were
+   Highlights', as v4's engagement cards): age-up when you move up within a
+   year, else comeback, with the next meets. Members only. Filled by
+   swim-tools-v2.js (renderSummary). #}
+{# Upcoming pool meets and virtual events, for the race card #}
+{% set meets = [] %}
+{% for e in eventsEnriched %}{% if e.courseType in ['SCY', 'SCM', 'LCM'] or e.virtual %}{% set _ = meets.push({ title: e.title, url: e.url, date: e.startDate, course: e.courseType, state: e.venueState, virtual: e.virtual }) %}{% endif %}{% endfor %}
+<script type="application/json" id="meets-data">{{ meets | dump | safe }}</script>
+<article class="swim-card swim-summary__card swim-ageup" data-summary-fallback>
+  <h3 class="swim-card__title" data-st="ageUpTitle">Your age group</h3>
+  <p class="swim-summary__text" data-st="ageUpText"></p>
+  <p class="swim-summary__text swim-summary__short" data-st="ageUpShort"></p>
+  <div class="swim-gaps" data-ageup-gaps></div>
+  <p class="swim-summary__fine" data-st="ageUpFine"></p>
+</article>
+
+<article class="swim-card swim-summary__card swim-comeback" data-summary-fallback>
+  <h3 class="swim-card__title" data-st="sinceTitle">Find your next race</h3>
+  <p class="swim-summary__text" data-st="sinceText"></p>
+  <div class="swim-meets" data-comeback-meets></div>
+  <div class="swim-summary__links">
+    <a href="/events/index.html" class="swim-summary__arrow-link">See meets near you <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+  </div>
+</article>

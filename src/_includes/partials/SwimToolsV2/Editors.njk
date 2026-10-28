@@ -131,7 +131,8 @@
 {% include "components/modal.njk" %}
 
 {# Race Metrics' controls as a modal: Your Event (distance, stroke,
-   course) and its goal. The same settings as the section's own controls,
+   course; its goal too until 2026-10-27, when the goal moved to the Race
+   Goal card alone). The same settings as the section's own controls,
    bound the same way, so the two always match and a change in either
    applies at once (swim-tools-v2.js). No trigger yet: open it with
    data-modal-target="#swimDeckPlan". #}
@@ -157,16 +158,6 @@
     {% for c in courses %}<button type="button" data-value="{{ c }}" aria-pressed="false">{{ c }}</button>{% endfor %}
   </div>
 </div>
-<div class="form-group">
-  <span class="swim-deck-modal__label" id="sd-plan-goal-label">Goal</span>
-  {# Set goal: the suggestion in the boxes becomes your goal, as Race
-     Planning's Set this goal; only until a goal is set (swim-tools-v2.js) #}
-  <div class="swim-goal-field">
-    {{ timeField("sd-plan-goal-label", 'data-time-input="goal"', "sm") }}
-    <button type="button" class="swim-pred-link swim-goal-field__link" data-goal-set hidden>Set goal</button>
-  </div>
-</div>
-<span class="swim-params__hint" data-st="goalHint" aria-live="polite"></span>
 {% endset %}
 {% set modalFooter %}
 <button type="button" class="btn btn-md btn-primary js-modal-close">Done</button>
