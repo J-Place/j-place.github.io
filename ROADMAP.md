@@ -20,16 +20,6 @@ When the pricing matrix arrives:
 
 ---
 
-## Dev overlay page list — migrate from JSON config to per-page frontmatter
-
-**Current state:** Each overlay's config file in `src/_data/devOverlays/` includes a `pages` array listing which permalinks load the overlay. This is a central registry that drifts as pages are added or renamed.
-
-**Target state:** Move the page list out of the JSON config and into frontmatter on each page template, so overlay inclusion is co-located with the page that uses it.
-
-**Related:** `src/_data/devOverlays/`, `src/_includes/layouts/base.njk`, CLAUDE.md dev overlay docs.
-
----
-
 ## Add-ons page: wire ShowMagazineAddOn per persona
 
 **Context:** Production added a server-side gate on the magazine add-on (PR 1610, 2026-07-01). The render condition in `MastersAddOns.jsx` changed to `data.ContactModel.Magazine !== 'Yes' && data.ShowMagazineAddOn` — previously the add-on appeared automatically for anyone without a subscription; now the server must explicitly set `ShowMagazineAddOn: true`.

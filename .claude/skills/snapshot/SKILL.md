@@ -49,11 +49,9 @@ This is a deliberate exception to the project-wide rule of never vendoring produ
 
 ---
 
-## Step 1 — Determine the page path and dev flag
+## Step 1 — Determine the page path
 
-If `$ARGUMENTS` contains a value, parse it for:
-- A page path (starts with `/`) → use as `--page` argument
-- The flag `--dev` → pass `--dev` to the deploy command (builds with dev overlays active)
+If `$ARGUMENTS` contains a value, parse it for a page path (starts with `/`) → use as `--page` argument. Dev overlays no longer exist, so there is no `--dev` flag; personas, dates and other states are URL parameters (`?user=`, `?date=`, …) and a snapshot captures the page's defaults.
 
 If no page path is found in `$ARGUMENTS`, ask the user:
 > "Which page should I snapshot? Provide the page path (e.g. `/events/event-central/usms-measured-pools`)"
@@ -90,7 +88,7 @@ Record the branch name for the registry entry.
 Run the build and package step **without** deploying:
 
 ```
-npm run deploy:snapshot -- --page=<page-path> [--dev]
+npm run deploy:snapshot -- --page=<page-path>
 ```
 
 From the output, extract the auto-generated dist folder name from the line:
@@ -117,7 +115,7 @@ Locking is required — Netlify auto-deletes old unlocked deploys, which 404s th
 Run the deploy script with the `--deploy` flag:
 
 ```
-npm run deploy:snapshot -- --page=<page-path> [--dev] --deploy
+npm run deploy:snapshot -- --page=<page-path> --deploy
 ```
 
 Extract the full URL from the `Deployed:` line in the output. The script locks the

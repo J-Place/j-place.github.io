@@ -21,7 +21,6 @@
   <link rel="stylesheet" href="/css/Navigation/Footer.css">
   <link rel="stylesheet" href="/css/Common/spacing-utilities.css">
   {% block localCSS %}{% endblock %}
-  {% if dev.env === "dev" %}{% for name, overlay in devOverlays %}{% if permalink in overlay.pages %}<link rel="stylesheet" href="{{ overlay.css }}">{% endif %}{% endfor %}{% endif %}
   {#- pinSwimmer (page frontmatter): open as the page's own swimmerId unless ?user= says otherwise, ignoring the persona saved from other pages (current-user.js) -#}
   <script type="application/json" id="site-users-data"{% if pinSwimmer %} data-pin-default{% endif %}>{{ { "users": users, "membershipTiers": membershipTiers } | dump | safe }}</script>
 </head>
@@ -48,10 +47,5 @@
   {% endblock %}
   {% block pageJS %}{% endblock %}
   <script src="/js/current-user.js"></script>
-  {% if dev.env === "dev" %}
-  {% for name, overlay in devOverlays %}{% if permalink in overlay.pages %}
-  {% if overlay.defer === false %}<script src="{{ overlay.js }}"></script>{% else %}<script src="{{ overlay.js }}" defer></script>{% endif %}
-  {% endif %}{% endfor %}
-  {% endif %}
 </body>
 </html>

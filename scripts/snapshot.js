@@ -3,11 +3,9 @@
 // and optionally deploys to Netlify with a permanent alias URL.
 //
 // Usage:
-//   node scripts/snapshot.js --page=/path/to/page [--name=my-name] [--dev] [--deploy]
+//   node scripts/snapshot.js --page=/path/to/page [--name=my-name] [--deploy]
 //   npm run build:snapshot --page=/events/event-central/usms-measured-pools
 //   npm run deploy:snapshot --page=/events/event-central/usms-measured-pools
-//
-// --dev  Build with env=dev so dev overlays (e.g. login-status) are included.
 
 'use strict';
 
@@ -29,7 +27,6 @@ const cliArgs = Object.fromEntries(
 
 const page   = cliArgs.page   || process.env.npm_config_page;
 const deploy = cliArgs.deploy === true || process.env.npm_config_deploy === 'true';
-const devMode = cliArgs.dev   === true || process.env.npm_config_dev   === 'true';
 
 if (!page) {
   console.error('Usage: node scripts/snapshot.js --page=</path/to/page> [--name=<name>] [--deploy]');
@@ -61,7 +58,6 @@ const name = (cliArgs.name || process.env.npm_config_name) || (pageSlug(page) + 
 // ── Paths ──────────────────────────────────────────────────────────────────────
 
 const root        = path.resolve(__dirname, '..');
-const devJsonPath = path.join(root, 'src/_data/dev.json');
 const siteDir     = path.join(root, '_site');
 const outDir      = path.join(root, 'dist/snapshots', name);
 
@@ -157,16 +153,6 @@ function vendorOneCssFile(url, vendorDir) {
 }
 
 // ── Build ──────────────────────────────────────────────────────────────────────
-
-const devJson        = JSON.parse(fs.readFileSync(devJsonPath, 'utf8'));
-const originalEnv    = devJson.env;
-const targetEnv      = devMode ? 'dev' : 'prod';
-const needsEnvChange = originalEnv !== targetEnv;
-
-if (needsEnvChange) {
-  fs.writeFileSync(devJsonPath, JSON.stringify({ env: targetEnv }, null, 2));
-  console.log(`Temporarily switched dev.json → ${targetEnv}`);
-}
 
 try {
   console.log(`\nBuilding site...`);
@@ -286,9 +272,7 @@ try {
     console.log(`  netlify api lockDeploy --data '{"deploy_id":"<deploy_id from above>"}'`);
   }
 
-} finally {
-  if (needsEnvChange) {
-    fs.writeFileSync(devJsonPath, JSON.stringify({ env: originalEnv }, null, 2));
-    console.log('\nRestored dev.json');
-  }
+} catch (err) {
+  console.error(err);
+  process.exit(1);
 }

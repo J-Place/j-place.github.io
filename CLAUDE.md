@@ -137,9 +137,7 @@ src/
     partials/     # Reusable HTML fragments (header, footer, page-header, head-css, head-js, etc.)
     components/   # Nunjucks macros/components (article-stepper)
   js/             # Local JS (megamenu.js, clubs.js, events.js, filters.js, home-personalize.js, search.js)
-    dev/          # Dev-only JS overlays — not loaded in production
   css/            # Local CSS overrides (clubs.css, events.css, home.css)
-    dev/          # Dev-only CSS for overlays — not loaded in production
 public/           # Legacy Sergey mockup files — passthrough copied as-is
   college-club/   # EXCEPTION: edit directly here, not in the Sergey project (see below)
 _site/            # Build output (gitignored)
@@ -250,42 +248,11 @@ Custom JS replacement for the production React megamenu (from `common.min.js`). 
 
 ## Dev Environment
 
-### Switching dev/prod
-
-`src/_data/dev.json` controls the environment for the entire site:
-
-```json
-{ "env": "dev" }   // dev overlays active
-{ "env": "prod" }  // nothing dev loads anywhere
-```
-
-### Dev overlays
-
-When `env === "dev"`, `base.njk` automatically loads any overlay whose page list includes the current `permalink`. Overlays live in:
-
-```
-src/_data/devOverlays/   # one JSON config per overlay
-src/js/dev/              # overlay JS
-src/css/dev/             # overlay CSS
-```
-
-Each config file defines which pages the overlay loads on:
-
-```json
-{
-  "js": "/js/dev/my-overlay.js",
-  "css": "/css/dev/my-overlay.css",
-  "pages": ["/account/some-page.html"]
-}
-```
-
-To add a new overlay: create the JS, CSS, and JSON config files — no changes to `base.njk` or any page template needed.
-
-**Current overlays:** `measured-pools-location-preview`. Simulating the current logged-in user, a specific date, or Manage Current Members' bulk-registration state is *not* an overlay — see below.
+Previewing personas, dates and other states is done with URL parameters, read by scripts that load in every build. The old `dev.json` switch and dev-overlay mechanism (`src/_data/devOverlays/`, `src/js/dev/`) were removed on 2026-10-28.
 
 ### Simulating the current user and date
 
-`base.njk` always embeds `users`/`membershipTiers` as a JSON data island (`#site-users-data`) and always loads `src/js/current-user.js`, unconditionally in both dev and prod — same pattern as Club Central's `?club=` (see `club-edit-mode.js`). Each persona record in `src/_data/users.json` carries both profile fields (name, DOB, club, …) and status facts (`loggedIn`, `membershipTier`, `clubAdmin`, `isLapsed`, `cardExpired`) — there's no separate persona file. Not every record is an active member: a `membershipTier: null` / `swimmerId: null` record (e.g. `NONMEMBER`, `CLUBADMINONLY`) represents someone logged in with no USMS membership, matching production's own `IsClubAdmin` being independent of membership status. Each page's `swimmerId` frontmatter sets its default persona at build time (`currentUser`/`swimmer` in Nunjucks, both the same object); to preview a different one at runtime, append `?user=<users.json key>` to the URL (e.g. `?user=COACH`). The resolved id is written to `sessionStorage.activeUser` so it carries forward across normal navigation in the same tab without repeating the param on every link; an invalid or absent param falls back to sessionStorage, then to the page's baked-in default. There is no visible switcher UI — change persona by editing/sharing the URL. A page with `pinSwimmer: true` in its frontmatter skips the sessionStorage step: it always opens as its own `swimmerId` unless `?user=` says otherwise (base.njk marks `#site-users-data` with `data-pin-default`, which current-user.js checks). Swim Tools v4 uses this to always open as Jay Place (KT2JH).
+`base.njk` always embeds `users`/`membershipTiers` as a JSON data island (`#site-users-data`) and always loads `src/js/current-user.js` on every page — same pattern as Club Central's `?club=` (see `club-edit-mode.js`). Each persona record in `src/_data/users.json` carries both profile fields (name, DOB, club, …) and status facts (`loggedIn`, `membershipTier`, `clubAdmin`, `isLapsed`, `cardExpired`) — there's no separate persona file. Not every record is an active member: a `membershipTier: null` / `swimmerId: null` record (e.g. `NONMEMBER`, `CLUBADMINONLY`) represents someone logged in with no USMS membership, matching production's own `IsClubAdmin` being independent of membership status. Each page's `swimmerId` frontmatter sets its default persona at build time (`currentUser`/`swimmer` in Nunjucks, both the same object); to preview a different one at runtime, append `?user=<users.json key>` to the URL (e.g. `?user=COACH`). The resolved id is written to `sessionStorage.activeUser` so it carries forward across normal navigation in the same tab without repeating the param on every link; an invalid or absent param falls back to sessionStorage, then to the page's baked-in default. There is no visible switcher UI — change persona by editing/sharing the URL. A page with `pinSwimmer: true` in its frontmatter skips the sessionStorage step: it always opens as its own `swimmerId` unless `?user=` says otherwise (base.njk marks `#site-users-data` with `data-pin-default`, which current-user.js checks). Swim Tools v4 uses this to always open as Jay Place (KT2JH).
 
 `current-user.js` also patches the meganav Join button (`.menu-item-login-button` on both the desktop and mobile-overlay Join `<li>`, toggling the `.menu-item-login-button--hidden` modifier) — mirrors production's `NavigationRepository.ShouldShowLoginButton`: hidden only when the active persona is `loggedIn: true` **and** `isLapsed: false` (a current, active member); shown for logged-out or lapsed personas, since production keeps Join/Renew visible to lapsed members.
 
@@ -332,7 +299,7 @@ GitHub Actions deploys `_site/` to `gh-pages` on push to `master`. To ship what'
 | Skill | Command | Purpose |
 |---|---|---|
 | Mockup | `/mockup [url]` | Build a mockup of a production page. Pass a URL to auto-fetch, or paste markup when prompted. Strips noise, diffs against any existing local version, asks for target path, then builds. |
-| Snapshot | `/snapshot [/path/to/page] [--dev]` | Build and deploy a finished page as an immutable Netlify alias, then update `snapshot-registry.json` and commit. `--dev` includes dev overlays. The index page auto-generates from the registry — no separate link step needed. |
+| Snapshot | `/snapshot [/path/to/page]` | Build and deploy a finished page as an immutable Netlify alias, then update `snapshot-registry.json` and commit. The index page auto-generates from the registry — no separate link step needed. |
 | Audit | `/audit [/path/to/page]` | Bidirectional structural audit of a local Nunjucks page against its production JSX. Finds gaps (production has, we don't), extras (we have, production doesn't), suspect CSS overrides, and JS selector drift. |
 | Compare | `/compare [path-a] [path-b]` | Bidirectional structural diff between two local mockup pages. Finds class, attribute, and hierarchy differences without a production source of truth. |
 | Commit | `/commit` | Review uncommitted changes, group into logical commits with messages, and commit immediately |
