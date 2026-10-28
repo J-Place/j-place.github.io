@@ -2596,13 +2596,15 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Your best placing each season: share of the field beaten, higher is
+/* Your best placing each season (Current Rank and Tier, since 2026-10-28;
+   Age Group Rank's for a day): share of the field beaten, higher is
    better, with Median and Top 10% lines and the best season larger */
 .swim-rank__seasons {
   margin: 8px 0 0;
 }
 
 .swim-rank__seasons[hidden],
+.swim-rank__refs[hidden],
 #age-rank .swim-card__note[hidden] {
   display: none;
 }
@@ -4087,6 +4089,24 @@
 }
 
 .swim-track[hidden] {
+  display: none;
+}
+
+/* Projected Winner, over the goal's mark (since 2026-10-28; as Time
+   Predictions' flags): just above the bar, with room made for it */
+.swim-track.has-win {
+  margin-top: 14px;
+}
+
+.swim-track__win.swim-pred-win {
+  top: 0;
+  transform: translate(-50%, -85%);
+}
+
+.swim-track__win.swim-pred-win.is-end { transform: translate(-100%, -85%); }
+.swim-track__win.swim-pred-win.is-start { transform: translate(0, -85%); }
+
+.swim-track__win[hidden] {
   display: none;
 }
 

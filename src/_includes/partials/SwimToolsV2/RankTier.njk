@@ -1,16 +1,18 @@
-{# Rank and Tier, as v4's: where Your Event's time sits in your age group's
-   USMS ranking (Top Times), as a ladder of tiers from the fastest swim down,
-   yours marked, with the next rung to aim for and, when the time is your
-   goal, how many places it moves you up from your last race. It looks
-   ahead; Age Group Rank looks back at where your races placed (split
-   2026-10-28). Top of Race Metrics' right column. Members only: others see it
-   blurred under a join prompt. Filled by swim-tools-v2.js (renderTier). #}
+{# Current Rank and Tier, as v4's Rank and Tier: where your latest race in
+   Your Event placed in its season's USMS ranking (Top Times) for the age
+   group you were in then, as a ladder of tiers from the fastest swim down,
+   yours marked, with the next rung to aim for; then your best placing each
+   season. It looks back at your races, as Age Group Rank looks ahead to
+   your goal (swapped 2026-10-28). Top of Race Metrics' right column.
+   Members only: others see it blurred under a join prompt. Filled by
+   swim-tools-v2.js (renderTier). #}
 {% from "partials/SwimToolsV2/SectionGear.njk" import sectionGear %}
 <article class="swim-card swim-rank" id="rank-tier">
   <header class="swim-card__header">
     <div class="swim-card__heading">
-      {# Current Rank and Tier, or Recent Rank and Tier when your latest race
-         in Your Event is over a year old (since 2026-10-28; renderTier) #}
+      {# Current Rank and Tier, or Last Rank and Tier when your latest
+         race in Your Event is from an earlier season than the newest
+         ranking (since 2026-10-28; renderTier) #}
       <h3 class="swim-card__title" data-st="rankTierTitle">Current Rank and Tier</h3>
       <p class="swim-card__sub" data-st="rankTierSub"></p>
     </div>
@@ -19,6 +21,14 @@
   <div class="swim-rank__body" data-rank-body>
     <div class="swim-rungs" data-rank-rungs></div>
     <p class="swim-rank__next" data-rank-next aria-live="polite"></p>
+    <dl class="swim-rank__refs" data-tier-best hidden>
+      <div><dt>Best season</dt><dd data-st="tierBest"></dd></div>
+    </dl>
+    {# Your best placing each season: two or more seasons only #}
+    <figure class="swim-rank__seasons" data-rank-seasons hidden>
+      <figcaption>Your best each season</figcaption>
+      <svg role="img" preserveAspectRatio="none"></svg>
+    </figure>
   </div>
   <div class="swim-lock" data-rank-lock hidden>
     <div class="swim-lock__title" data-st="lockTitle"></div>

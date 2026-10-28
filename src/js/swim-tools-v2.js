@@ -1122,6 +1122,14 @@
       latest && goal < latest.secs ? 'Your race goal would beat your latest time by ' + (latest.secs - goal).toFixed(2) + ' s, and your best is ' + race(best.secs) + '.' :
       latest && goal > latest.secs ? 'Your race goal is ' + (goal - latest.secs).toFixed(2) + ' s slower than your latest time.' :
       'Your race goal matches your latest time.';
+    // A goal (or the suggested one) as fast as this season's fastest in
+    // your age group: a Projected Winner flag over its mark, as Time
+    // Predictions' (since 2026-10-28), and a line saying so
+    var fastestNow = goalRow ? goalRow.top : NaN;
+    var wins = isFinite(goal) && isFinite(fastestNow) && goal <= fastestNow;
+    var winLine = wins ? (typed ? 'Your goal' : 'The suggested goal') + ' of ' + race(goal) + (goal < fastestNow ? ' beats' : ' ties') +
+      ' this season\'s fastest in ' + swimmerGender().toLowerCase() + ' ' + ageGroup().label + ' (' + race(fastestNow) + ').' : '';
+    if (winLine) synopsis = synopsis ? synopsis + ' ' + winLine : winLine;
     set('goalSynopsis', synopsis);
     q('[data-st="goalSynopsis"]').hidden = !synopsis;
     // To go: your latest less the goal, or until you set one, the default
@@ -1144,6 +1152,17 @@
       show('[data-goal-track-best]', bt);
       show('[data-goal-track-goal]', shown);
       show('[data-goal-track-suggested]', suggestedTime);
+      // The flag, hung inward near the track's ends
+      var flag = q('[data-goal-track-win]'), at = typed ? shown : suggestedTime;
+      flag.hidden = !wins;
+      track.classList.toggle('has-win', wins);
+      if (wins) {
+        var f = (hi - at) / (hi - lo);
+        flag.style.left = pos(at);
+        flag.classList.toggle('is-end', f > 0.85);
+        flag.classList.toggle('is-start', f < 0.15);
+        flag.title = winLine;
+      }
       // Dragging the goal (or the default goal's circle) along the track,
       // slower on the left
       goalDrag.track = { axis: 'x', toSecs: function (f) { return hi - f * (hi - lo); } };
@@ -1268,33 +1287,39 @@
     return faster === rank.times.length && rank.truncated ? null : faster + 1;
   }
 
-  // Rank and Tier, as v4's: Your Event's time (t: your goal, best, projected
-  // time or the median; kind names it) on its age group's ladder. Members
-  // only: others see it blurred under a join prompt. While rankings load,
-  // grey rungs hold its place.
-  // Rank and Tier's title: Current, or Recent when your latest race in Your
-  // Event is over this many months old
-  var TIER_RECENT_MONTHS = 12;
-
-  function renderTier(t, kind) {
-    var rank = groupRank(state.course, state.stroke, Number(state.distance), ageGroup());
-    var latest = eventRaces().pop(), now = new Date(today() + 'T00:00:00');
-    var cutoff = new Date(now.getFullYear(), now.getMonth() - TIER_RECENT_MONTHS, now.getDate());
-    var older = !!latest && new Date(latest.date + 'T00:00:00') < cutoff;
-    set('rankTierTitle', (older ? 'Recent' : 'Current') + ' Rank and Tier');
+  // Rank and Tier, as v4's, from your races (since 2026-10-28; it ranked
+  // your goal before, as Age Group Rank now does): your latest race in Your
+  // Event on the ladder of its season's ranking for the age group you were
+  // in then (racePlacing), or this season's while that one isn't loaded or
+  // published yet; then your best placing each season. "Current" when that's
+  // the newest ranking, "Last" when the race is from an earlier season.
+  // Members only: others see it blurred under a join prompt. While rankings
+  // load, grey rungs hold its place.
+  function renderTier() {
+    var d = Number(state.distance);
+    var races = eventRaces(), latest = races[races.length - 1];
+    var current = groupRank(state.course, state.stroke, d, ageGroup());
+    var p = latest ? racePlacing(latest) : null;
+    var rank = p ? p.rank : current, group = p ? p.group : ageGroup();
+    var older = !!(p && current && p.season < current.season);
+    set('rankTierTitle', (older ? 'Last' : 'Current') + ' Rank and Tier');
     var user = USERS[SWIMMER] || {}, member = !!(user.loggedIn && user.membershipTier);
     var gender = swimmerGender();
-    setWithSynth('rankTierSub', state.course + ' ' + state.distance + ' ' + lowerStroke(state.stroke) + (gender ? ' · ' + gender.toLowerCase() + ' ' + ageGroup().label : '') +
+    setWithSynth('rankTierSub', state.course + ' ' + state.distance + ' ' + lowerStroke(state.stroke) + (gender ? ' · ' + gender.toLowerCase() + ' ' + group.label : '') +
       (rank ? ' · ' + (rank.seasonLabel ? rank.seasonLabel + ' season, ' : '') + rank.n.toLocaleString() + ' ranked' +
         (rank.converted ? ' · converted from SCY' : '') : ''), rank && rank.synthetic && '(synthetic data)');
     var rungs = root.querySelector('[data-rank-rungs]'), next = root.querySelector('[data-rank-next]');
     var body = root.querySelector('[data-rank-body]'), lock = root.querySelector('[data-rank-lock]');
+    var t = latest ? latest.secs : NaN;
     if (!rank || !isFinite(t)) {
       var loading = !rank && pending();
       rungs.innerHTML = loading ? new Array(7).join('<span class="swim-skel swim-skel__rung" aria-hidden="true"></span>') : '';
-      next.textContent = loading ? 'Loading USMS rankings…' : !rank ? noRankText() : 'Race the ' + state.distance + ' ' + lowerStroke(state.stroke) + ' or set a goal to see your tier.';
+      next.textContent = loading ? 'Loading USMS rankings…' : !rank ? noRankText() : 'Race the ' + state.distance + ' ' + lowerStroke(state.stroke) + ' to see your tier.';
       lock.hidden = true;
       body.classList.remove('is-locked');
+      set('tierBest', '');
+      root.querySelector('[data-tier-best]').hidden = true;
+      renderRankSeasons([], null);
       return;
     }
     var here = tierOf(t, rank);
@@ -1309,17 +1334,26 @@
       }).join('');
     var k = TIERS.indexOf(here), up = null;
     for (var i = k - 1; i >= 0 && !up; i--) if (cutOf(rank, TIERS[i]) < t) up = TIERS[i];
-    var place = placeOf(t, rank);
-    var placed = (/median/.test(kind) ? 'The ' : 'Your ') + kind + ' of ' + race(t) + (place ? ' would place ' + ordinal(place) + ' of ' + rank.n.toLocaleString() : ' is outside the ' + rank.times.length + ' listed') + '.';
-    // Against your last race in the event, in this same ranking
-    var races = eventRaces(), lastRace = races[races.length - 1];
-    var was = lastRace && place && kind !== 'best' ? placeOf(lastRace.secs, rank) : null;
-    if (was && was > place) placed += ' That\'s up ' + (was - place).toLocaleString() + (was - place === 1 ? ' place' : ' places') + ' from your last race (' + ordinal(was) + ').';
+    var place = p ? p.place : placeOf(t, rank);
+    var placed = 'Your last race, ' + race(t) + ' on ' + formatDate(latest.date) + ', ' +
+      (place ? (p && p.official ? 'is #' + p.official + ' in the published ranking' : 'places ' + ordinal(place) + ' of ' + rank.n.toLocaleString()) :
+        'is outside the ' + rank.times.length + ' listed') + '.';
     next.innerHTML = up ? '<b>Next rung: ' + up + ' at ' + race(cutOf(rank, up)) + '.</b> ' + placed + ' ' + (t - cutOf(rank, up)).toFixed(2) + ' s to go.' :
       '<b>You\'re in the Top 10.</b> ' + placed;
     lock.hidden = member;
     body.classList.toggle('is-locked', !member);
     set('lockTitle', up ? 'You\'re one rung from ' + up + '.' : 'You\'re in the Top 10 range.');
+
+    // Your best placing each season, each race in its own season's ranking
+    var seasons = {};
+    races.map(racePlacing).forEach(function (q) {
+      if (q && q.place && (!seasons[q.season] || q.place / q.rank.n < seasons[q.season].place / seasons[q.season].rank.n)) seasons[q.season] = q;
+    });
+    var bests = Object.keys(seasons).sort().map(function (key) { return seasons[key]; });
+    var best = bests.reduce(function (b, q) { return !b || beatsOf(q) > beatsOf(b) ? q : b; }, null);
+    root.querySelector('[data-tier-best]').hidden = !best;
+    set('tierBest', best ? topShare(best) + ', ' + (best.rank.seasonLabel || best.season) : '');
+    renderRankSeasons(bests, best);
   }
 
   // Practice this, as v4's Race Splits: the race pace in pieces from a
@@ -2058,11 +2092,11 @@
     prompt.style.top = mid ? (mid.offsetTop + mid.offsetHeight / 2) + 'px' : '';
   }
 
-  // ---------- Age Group Rank ----------
+  // ---------- Placing your races, and Age Group Rank ----------
 
-  // Where you've actually placed, as Rank and Tier is where your goal would:
-  // your races in Your Event, each in its own season's ranking for the age
-  // group you were in that season (as Race History's lines)
+  // Your races in Your Event, each in its own season's ranking for the age
+  // group you were in that season (as Race History's lines): Rank and
+  // Tier's (renderTier). Age Group Rank places your goal (renderRank).
 
   // The season a date falls in: June 1 to May 31, named by its end year
   function seasonOf(iso) {
@@ -2106,47 +2140,39 @@
     }).sort(function (a, b) { return a.date < b.date ? -1 : 1; });
   }
 
-  // Race Metrics: your last race in Your Event, where it placed, then your
-  // best placing each season
-  function renderRank() {
+  // Age Group Rank, from your goal (since 2026-10-28; it placed your races
+  // before, as Rank and Tier now does): where Your Event's goal (t: the one
+  // you set, else the suggested goal, or the event's time; kind names it)
+  // would place in this season's ranking for your age group, against where
+  // your last race would place in it
+  function renderRank(t, kind) {
     var ev = state.distance + ' ' + state.stroke + ' | ' + state.course;
-    var races = eventRaces();
-    var placings = races.map(racePlacing);
-    // The latest race with a ranking to place it in
-    var last = null;
-    placings.forEach(function (p) { if (p && p.place) last = p; });
+    var rank = groupRank(state.course, state.stroke, Number(state.distance), ageGroup());
     var empty = !swimmerGender() ? noRankText()
-      : !races.length ? 'Race the ' + state.distance + ' ' + lowerStroke(state.stroke) + ' (' + state.course + ') to see where you\'ve ranked.'
-      : !last && pending() ? 'Loading USMS rankings…'
-      : !last ? 'There are no USMS rankings yet for the seasons you\'ve raced the ' + state.distance + ' ' + lowerStroke(state.stroke) + '.' : '';
-    set('rankSubtitle', ev + (last ? ' · last race ' + race(last.race.secs) + ', ' + formatDate(last.race.date) : ''));
+      : !rank && pending() ? 'Loading USMS rankings…'
+      : !rank ? noRankText()
+      : !isFinite(t) ? 'Set a goal to see where it would place in your age group.' : '';
+    set('rankSubtitle', ev + (isFinite(t) ? ' · ' + kind + ' ' + race(t) : ''));
     set('rankEmpty', empty);
     root.querySelector('[data-st="rankEmpty"]').hidden = !empty;
     root.querySelector('[data-st-rank]').hidden = !!empty;
     root.querySelector('[data-st="rankNote"]').hidden = !!empty;
     if (empty) return;
 
-    set('rankPlace', '#' + last.place);
-    set('rankOf', ' of ' + last.rank.n.toLocaleString());
-    set('rankBeats', String(Math.min(99, Math.round(beatsOf(last) * 100))));
-    root.querySelector('[data-st-rank-marker]').style.left = (beatsOf(last) * 100).toFixed(1) + '%';
-    set('rankLastSeason', (last.rank.seasonLabel || last.season) + ', ' + last.group.label);
-
-    // Each season's best placing
-    var seasons = {};
-    placings.forEach(function (p) {
-      if (p && p.place && (!seasons[p.season] || p.place / p.rank.n < seasons[p.season].place / seasons[p.season].rank.n)) seasons[p.season] = p;
-    });
-    var bests = Object.keys(seasons).sort().map(function (k) { return seasons[k]; });
-    var best = bests.reduce(function (b, p) { return !b || beatsOf(p) > beatsOf(b) ? p : b; }, null);
-    set('rankBest', topShare(best) + ', ' + (best.rank.seasonLabel || best.season));
-    renderRankSeasons(bests, best);
-
-    var synth = placings.some(function (p) { return p && p.rank.synthetic; });
-    var converted = placings.some(function (p) { return p && p.rank.converted; });
-    setWithSynth('rankNote', (last.official ? 'Your last race is #' + last.official + ' in the published USMS ranking. ' : '') +
-      'Each race is placed in its season\'s USMS ranking for your age group then' + (converted ? ', converted from SCY' : '') + '.',
-      synth && (placings.every(function (p) { return !p || p.rank.synthetic; }) ? '(synthetic data)' : '(some seasons synthetic)'));
+    var place = placeOf(t, rank), at = { rank: rank, place: place || rank.n };
+    set('rankPlace', place ? '#' + place : '> #' + rank.times.length);
+    set('rankOf', ' of ' + rank.n.toLocaleString());
+    set('rankBeats', String(Math.min(99, Math.round(beatsOf(at) * 100))));
+    root.querySelector('[data-st-rank-marker]').style.left = (beatsOf(at) * 100).toFixed(1) + '%';
+    set('rankLastSeason', (rank.seasonLabel || rank.season) + ', ' + ageGroup().label);
+    // Your last race in the same ranking, for comparison
+    var races = eventRaces(), last = races[races.length - 1];
+    var was = last ? placeOf(last.secs, rank) : null;
+    root.querySelector('[data-rank-last]').hidden = !last;
+    set('rankLast', last ? (was ? ordinal(was) : 'outside the ' + rank.times.length + ' listed') + ' (' + race(last.secs) + ')' : '');
+    var moved = was && place && was > place ? ' That\'s up ' + (was - place).toLocaleString() + (was - place === 1 ? ' place' : ' places') + ' from your last race.' : '';
+    setWithSynth('rankNote', 'Where your ' + kind + ' would place in this season\'s USMS ranking for ' + ageGroup().label +
+      (rank.converted ? ', converted from SCY' : '') + '.' + moved, rank.synthetic && '(synthetic data)');
   }
 
   // Your best placing each season, as the share of the field you beat
@@ -2860,14 +2886,14 @@
     var goal = goalTyped ? (goalOk ? parse(state.goal) : NaN) : untyped;
     renderSplits(goal, distance);
     renderPractice(goal, distance);
-    // Rank and Tier: the same time, named by where it came from
-    // (a prediction from the median, with no races, is the median)
+    // Age Group Rank: the same time, named by where it came from (a
+    // prediction from the median, with no races, is the median)
     var projectedTime = isFinite(goalRow.proj) && !goalRow.fromTime;
     var goalName = goalTyped ? 'goal' : untypedName || (isFinite(goalRow.you) ? 'best' : projectedTime ? 'projected time' : ageGroup().label + ' median');
-    renderTier(goal, goalName);
-    // Age Group Rank: not this time, but your races in the event, each in
-    // its own season's ranking
-    renderRank();
+    renderRank(goal, goalName);
+    // Rank and Tier: not this time, but your latest race in the event, in
+    // its season's ranking
+    renderTier();
     // Toward the age-group median: just whose median ("50 Free | 45–49
     // Men's/Open"); otherwise the time and what it is
     var toMedian = !goalTyped && (untypedName ? suggested.kind !== 'break' : !isFinite(goalRow.you) && !projectedTime);

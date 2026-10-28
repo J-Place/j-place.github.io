@@ -1,15 +1,16 @@
-{# Age Group Rank (Race Metrics): where you've actually placed, as Rank and
-   Tier is where your goal would. Your last race in Your Event, placed in its
-   season's Top Times ranking for the age group you were in then (real or
-   synthetic, and labeled; the published place when a real list has you at
-   that time), then your best placing each season. Until 2026-10-28 it placed
-   your goal with a sample model (src/_data/averageTimes.json, no longer
-   read). Filled by swim-tools-v2.js (renderRank). #}
+{# Age Group Rank (Race Metrics): where your goal in Your Event (the one you
+   set, else the suggested goal) would place in this season's Top Times
+   ranking for your age group (real or synthetic, and labeled), against
+   where your last race would place in it. It looks ahead, as Current Rank
+   and Tier looks back at your races (swapped 2026-10-28: for a day it
+   placed your races, and before that your goal with a sample model,
+   src/_data/averageTimes.json, no longer read). Filled by swim-tools-v2.js
+   (renderRank). #}
 {% from "partials/SwimToolsV2/SectionGear.njk" import sectionGear %}
 <article class="swim-card" id="age-rank">
   <header class="swim-card__header">
     <div class="swim-card__heading">
-      <h3 class="swim-card__title">Age Group Rank</h3>
+      <h3 class="swim-card__title">Projected Age Group Rank</h3>
       <p class="swim-card__sub" data-st="rankSubtitle"></p>
     </div>
     {{ sectionGear("swimDeckPlan", "Race Metrics") }}
@@ -25,18 +26,13 @@
         <span class="swim-rank__value"><span data-st="rankBeats"></span><span class="swim-rank__of">%</span></span>
       </div>
     </div>
-    {# The field from slowest to fastest, with your last race marked #}
+    {# The field from slowest to fastest, with your goal marked #}
     <div class="swim-rank__scale" aria-hidden="true"><span class="swim-rank__marker" data-st-rank-marker></span></div>
     <div class="swim-rank__ends" aria-hidden="true"><span>Slower</span><span>Faster</span></div>
     <dl class="swim-rank__refs">
       <div><dt>Ranking</dt><dd data-st="rankLastSeason"></dd></div>
-      <div><dt>Best season</dt><dd data-st="rankBest"></dd></div>
+      <div data-rank-last><dt>Your last race, this season</dt><dd data-st="rankLast"></dd></div>
     </dl>
-    {# Your best placing each season: two or more seasons only #}
-    <figure class="swim-rank__seasons" data-rank-seasons hidden>
-      <figcaption>Your best each season</figcaption>
-      <svg role="img" preserveAspectRatio="none"></svg>
-    </figure>
   </div>
   <p class="swim-rank__empty" data-st="rankEmpty" hidden></p>
   <p class="swim-card__note" data-st="rankNote"></p>
