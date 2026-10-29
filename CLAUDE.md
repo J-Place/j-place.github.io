@@ -33,7 +33,7 @@ Static JSON rankings at `/data/top-times/{season}/{gender}-{age}/scy/{stroke}/{d
 
 ## Dev container
 
-`.devcontainer/` runs this repo in a firewalled container for working with Claude Code in auto mode (how to: `~/dev/usms/swim-tools/docs/dev-container.md`). **`production/` is covered by an empty volume inside**, so its credentials don't exist there. `node_modules/` and `src/data/top-times-generated/` are volumes too, so `top-times-synthetic.js` empties that folder rather than deleting it (deleting a mount point fails, in the container and on the Mac while it runs). Its `Dockerfile` and `init-firewall.sh` are identical to swim-tools' and sergey's; change all three together. Inside, nothing can reach GitHub or www.usms.org: push, run the visual tests, `vendor:refresh`, `top-times:scrape` and `monitor:prod` from the Mac.
+`.devcontainer/` runs this repo in a firewalled container for working with Claude Code in auto mode (how to: `~/dev/usms/swim-tools/docs/dev-container.md`). **`production/` is covered by an empty volume inside**, so its credentials don't exist there. `node_modules/` and `src/data/top-times-generated/` are volumes too, so `top-times-synthetic.js` empties that folder rather than deleting it (deleting a mount point fails, in the container and on the Mac while it runs). Its `Dockerfile` and `init-firewall.sh` are identical to swim-tools' and sergey's; change all three together. Inside, nothing can reach GitHub or www.usms.org: push, deploy snapshots (`/snapshot` stops and hands over the command), run the visual tests, `vendor:refresh`, `top-times:scrape` and `monitor:prod` from the Mac.
 
 ## Swim Tools App (separate repo)
 

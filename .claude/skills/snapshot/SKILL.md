@@ -60,6 +60,31 @@ Wait for the user's response before continuing.
 
 ---
 
+## Step 1a — Check whether you're in the dev container
+
+Run:
+```
+echo "${DEVCONTAINER:-false}"
+```
+
+`true` means you're in the firewalled dev container (`.devcontainer/Dockerfile` sets `DEVCONTAINER=true`). A snapshot can't be made there: the Netlify CLI and its login aren't in the container, the firewall blocks Netlify, and it also blocks www.usms.org, cdnjs and Google Fonts, so the CSS vendoring above would silently leave stylesheets live. This is deliberate (see "Dev container" in CLAUDE.md), so don't try to install or work around it.
+
+In the container, **don't run Step 3**. Do Step 1b and Step 2, then tell the user to run the deploy on the Mac after pulling `development`:
+
+> Snapshots deploy from the Mac. Pull `development` there, then run:
+> ```
+> npm run deploy:snapshot -- --page=<page-path> --deploy
+> ```
+> Check the output for `Deploy … locked` and for any `! Failed to vendor CSS` warnings, then paste me the `Deployed:` URL.
+
+(With a custom alias from Step 1b, give the Step 3 custom-alias commands instead, including the lock.)
+
+Wait for the URL. When it arrives, continue at Step 4: the registry key is the alias, which is the URL's subdomain before `--usms-mockup` (e.g. `club-manage-261026` from `https://club-manage-261026--usms-mockup.netlify.app`). You can't confirm the lock from the container, so in Step 5 remind the user to check it took.
+
+`false` (on the Mac): carry on with Step 1b as normal.
+
+---
+
 ## Step 1b — Short alias for article pages
 
 If the page path contains `/articles-and-videos/articles/`, ask the user:
