@@ -2,10 +2,10 @@
    with your goal across it on Your Event (src/_data/topTens.json): the list
    for the swimmer's age group and gender, or else the first one, noted.
    Its stroke and distance start from Your Event and follow it when it
-   changes, and can be changed here on their own. Drawn by swim-tools-v2.js. #}
-{% from "partials/SwimToolsV2/StrokeSelect.njk" import strokeSelect %}
-{# RETIRED 2026-10-14: no longer included on swim-tools-v2.njk, kept for
-   reuse. renderTopTens in swim-tools-v2.js skips drawing while it's out;
+   changes, and can be changed here on their own. Drawn by race-tools.js. #}
+{% from "partials/RaceTools/StrokeSelect.njk" import strokeSelect %}
+{# RETIRED 2026-10-14: no longer included on race-tools.njk, kept for
+   reuse. renderTopTens in race-tools.js skips drawing while it's out;
    including it again restores it as was. #}
 <script type="application/json" id="top-tens-data">{{ topTens | dump | safe }}</script>
 <article class="swim-card" id="top-tens">
@@ -16,7 +16,7 @@
     </div>
     <div class="swim-tens__filters" role="group" aria-label="Top 10 event">
       {{ strokeSelect('aria-label="Stroke"', 'data-tens-input="stroke"') }}
-      {# Options follow the stroke, in the lists' course (swim-tools-v2.js) #}
+      {# Options follow the stroke, in the lists' course (race-tools.js) #}
       <div class="swim-deck__field">
         <select class="form-control" aria-label="Distance" data-tens-input="distance" data-st-tens-options>
           {% for d in [50, 100, 200, 500, 1000, 1650] %}<option value="{{ d }}"{{ ' selected' if d == 200 }}>{{ d }}</option>{% endfor %}

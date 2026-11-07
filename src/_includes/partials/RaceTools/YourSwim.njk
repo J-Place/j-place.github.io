@@ -1,9 +1,9 @@
 {# Your Swim (Pace and calories: on Training Tools since 2026-10-27, after
-   Race Analysis' Calculators from 2026-10-25 and Training Metrics before
+   Race Tools' Calculators from 2026-10-25 and Training Metrics before
    that): one swim in, and its Calorie Burn and Training Pace out (Pace
-   Conversion is retired). Filled and read by swim-tools-v2.js. #}
-{% from "partials/SwimToolsV2/TimeField.njk" import timeField %}
-{% from "partials/SwimToolsV2/StrokeSelect.njk" import strokeSelect %}
+   Conversion is retired). Filled and read by race-tools.js. #}
+{% from "partials/RaceTools/TimeField.njk" import timeField %}
+{% from "partials/RaceTools/StrokeSelect.njk" import strokeSelect %}
 <div class="swim-panel swim-swim" id="your-swim" aria-labelledby="your-swim-title">
   {# Inputs, on light blue #}
   <div class="swim-panel__band swim-panel__band--blue">
@@ -33,20 +33,21 @@
          light blue to red. Faded with no thumb until rated; clicking
          or dragging anywhere on it rates, arrows step, the mouse wheel steps
          it while it's focused, and × clears. Its word shows in the label.
-         Adjusts Calorie Burn, and saved with Add to Log (swim-tools-v2.js). #}
+         Adjusts Calorie Burn, and saved with Add to Log (race-tools.js). #}
       <div class="swim-swim__field swim-felt">
         <label class="swim-swim__label" for="sd-metrics-effort">Intensity <span class="swim-swim__optional" data-st="effortWord"></span></label>
-        <div class="swim-slider is-unrated" data-effort-slider>
+        <div class="swim-slider is-unrated" data-effort-slider data-effort-for="metrics">
           <span class="swim-slider__end" aria-hidden="true">1</span>
           <input type="range" min="1" max="10" step="1" value="5" class="swim-slider__input" id="sd-metrics-effort" data-effort-range>
           <span class="swim-slider__end" aria-hidden="true">10</span>
           <button type="button" class="swim-slider__clear" data-effort-clear aria-label="Clear intensity" hidden><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
         </div>
       </div>
-      {# Retired 2026-10-15: View Log (production's /myusms/flog/) and Add to
-         Log (an outline button, data-modal-target="#swimDeckLog", opening
-         the Add to Log modal in Editors.njk), in a .swim-swim__log pair
-         here. Their CSS is commented out in swim-tools-v2.css. #}
+      {# Add to Log (since 2026-10-28; members): the Add to Log modal
+         (Editors.njk), filled in from this swim (prepareLog). An earlier
+         View Log and Add to Log pair here was retired 2026-10-15; its CSS
+         is commented out in race-tools.css. #}
+      <button type="button" class="btn btn-outline btn-sm swim-swim__add" data-modal-target="#swimDeckLog" data-log-from="metrics" data-members-only>Add to Log</button>
     </div>
     <p class="swim-card__sub swim-swim__hint" data-st="metricsHint" aria-live="polite"></p>
   </div>
@@ -67,8 +68,8 @@
       {# Retired 2026-10-13: Pace Conversion (PaceConversion.njk, kept for reuse).
          To restore, include it here again; renderMetrics still fills it. #}
       {# Workout Library, Training Plans and Send to Strava moved to Training
-         Metrics 2026-10-25 (Training.njk), as did Training Effect (via
-         Highlights) #}
+         Metrics 2026-10-25 (Training.njk; Send to Strava was removed
+         2026-10-28), as did Training Effect (via Highlights) #}
     </div>
   </div>
 </div>

@@ -52,6 +52,12 @@
       { "id": "stroke-count", "label": "Stroke count", "stroke": "any", "description": "Count strokes per length and hold or lower the count" },
       { "id": "breathing-pattern", "label": "Breathing pattern", "stroke": "free", "description": "Breathe on a set pattern (every 3 or 5 strokes, or one side)" }
     ],
+    "drillAmounts": [
+      { "id": "none", "label": "No Drills" },
+      { "id": "light", "label": "Light Drills" },
+      { "id": "moderate", "label": "Moderate Drills" },
+      { "id": "heavy", "label": "Heavy Drills" }
+    ],
     "equipment": [
       { "id": "kickboard", "label": "Kickboard" },
       { "id": "snorkel", "label": "Snorkel", "optional": true },
@@ -96,7 +102,7 @@
       { "id": "stroke", "type": "select", "options": "vocabularies.strokes", "default": "free" },
       { "id": "skills", "type": "select", "options": "vocabularies.skills", "optional": true },
       { "id": "fitness", "type": "select", "options": "vocabularies.fitness", "default": "aerobic" },
-      { "id": "drills", "type": "multiselect", "options": "vocabularies.drills", "optional": true },
+      { "id": "drillAmount", "type": "select", "options": "vocabularies.drillAmounts", "default": "moderate" },
       { "id": "equipment", "type": "multiselect", "options": "vocabularies.equipment", "label": "Equipment you have", "default": [] }
     ],
     "plan": [
@@ -178,7 +184,8 @@
       "id": "workout.drills",
       "binding": "default",
       "basis": ["lanemate-event-plans", "costill-1985"],
-      "rule": "Requested drills must appear at least once; skill sets that hold or lower stroke count count toward a 'stroke count' request."
+      "rule": "No Drills leaves drill sets out wherever a part of the workout has sets without them (skill sets are all drills, so the skill set goes to the main set). Light, Moderate and Heavy weight the choice of sets by the share of each set's distance in drills: Moderate is the library's own mix (about 38% of the distance in drill sets), Light about 12%, Heavy about 67%.",
+      "params": { "weight": { "light": -1, "moderate": 0, "heavy": 1 } }
     },
     {
       "id": "workout.equipment",

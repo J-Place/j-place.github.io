@@ -1,12 +1,14 @@
-{# Who the tools are for, in the toolbar of Race Analysis and Training Tools:
-   the pill, or a guest's Age Group and Competition Category.
+{# Who the tools are for: on Race Tools in the Race Metrics controls band
+   (since 2026-10-29), on Training Tools in the toolbar. Your name, then
+   age group and category, as text; or a guest's Age Group and
+   Competition Category.
    Age groups: src/_data/ageGroups.json. #}
 {# Who the tools are for: sex and age group, when we know the age (the
    select below takes its place when we don't) #}
-<p class="swim-deck__who" data-st-who hidden><span class="visually-hidden">Your tools are set for </span><span data-st="who"></span></p>
+<p class="swim-deck__who" data-st-who hidden><span class="swim-deck__who-name" data-st="whoName"></span> <span class="swim-deck__who-group" data-st="who"></span></p>
 {# Age group, only when we don't know it: logged out, or logged in with
    no birth date on the profile. Logged in, it comes from the profile
-   (swim-tools-v2.js). Starts on 45-49, shown as "Age" until picked. #}
+   (race-tools.js). Starts on 45-49, shown as "Age" until picked. #}
 <div class="swim-swim__field swim-deck__age" data-st-age-group-field hidden>
   <label class="swim-swim__label" for="sd-age-group">Age Group</label>
   <div class="swim-deck__field">
@@ -18,7 +20,7 @@
 </div>
 {# Competition Category, after Age Group, only when we don't know your
    sex: logged out, or logged in with no gender on the profile. Sets
-   whose USMS rankings the tools compare with (swim-tools-v2.js).
+   whose USMS rankings the tools compare with (race-tools.js).
    Starts on Men's/Open. #}
 <div class="swim-swim__field swim-deck__sex" data-st-sex-field hidden>
   <span class="swim-swim__label" id="sd-sex-label">Competition Category</span>

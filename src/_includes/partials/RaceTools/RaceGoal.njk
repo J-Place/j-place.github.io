@@ -1,7 +1,7 @@
 {# Race Goal (Race Metrics, since 2026-10-27; was Highlights'): your goal
    in Your Event against your latest and best, on a track you can drag to
-   change it. Members only. Filled by swim-tools-v2.js (renderSummary). #}
-{% from "partials/SwimToolsV2/TimeField.njk" import timeField %}
+   change it. Members only. Filled by race-tools.js (renderSummary). #}
+{% from "partials/RaceTools/TimeField.njk" import timeField %}
 <article class="swim-card swim-summary__card swim-goal" data-members-only>
   <div class="swim-goal__head">
     <div class="swim-summary__heading">
@@ -38,7 +38,7 @@
     <div class="swim-track__bar" role="img" data-goal-track-bar>
       <span class="swim-track__rail"></span>
       <span class="swim-track__fill" data-goal-track-fill></span>
-      {# Both slide to change the goal (swim-tools-v2.js, goalDrag) #}
+      {# Both slide to change the goal (race-tools.js, goalDrag) #}
       <span class="swim-track__goal" data-goal-track-goal data-goal-drag="track" tabindex="0" role="slider" aria-label="Goal time" title="Drag to change your goal"></span>
       <span class="swim-track__suggested" data-goal-track-suggested data-goal-drag="track" tabindex="0" role="slider" aria-label="Suggested goal time" title="Drag to set your goal"></span>
       <span class="swim-track__best" data-goal-track-best></span>
@@ -48,14 +48,14 @@
       <span class="swim-pred-win swim-track__win" data-goal-track-win hidden>Projected Winner</span>
     </div>
     <span class="swim-track__end" data-st="goalTrackLo"></span>
-    {# Each mark's name under it (swim-tools-v2.js places them) #}
+    {# Each mark's name under it (race-tools.js places them) #}
     <div class="swim-track__names" aria-hidden="true">
       <span class="swim-track__name" data-goal-track-name="latest">Latest</span>
       <span class="swim-track__name" data-goal-track-name="best">Best</span>
       <span class="swim-track__name" data-goal-track-name="goal">Goal</span>
     </div>
   </div>
-  {# What the goal means against your times, once one's set (swim-tools-v2.js) #}
+  {# What the goal means against your times, once one's set (race-tools.js) #}
   <p class="swim-summary__text swim-goal__synopsis" data-st="goalSynopsis" hidden></p>
   {# Its Practice at goal pace and Share progress card buttons were removed
      2026-10-27 #}

@@ -1,76 +1,50 @@
 ---
-permalink: /fitness-and-training/swim-tools-v2/index.html
-title: Race Analysis | U.S. Masters Swimming
-pageTitle: Race Analysis
+permalink: /events/race-tools/index.html
+title: Race Tools | U.S. Masters Swimming
+pageTitle: Race Tools
+toolsPage: race
 # Default persona (Jay Place); ?user=<users.json key> switches swimmer, and
-# with it the race history and age (swim-tools-v2.js)
+# with it the race history and age (race-tools.js)
 swimmerId: KT2JH
 breadcrumbs:
   - url: "/home"
     label: "Home"
-  - url: "/fitness-and-training/articles-and-videos/index.html"
-    label: "Fitness and Training"
+  - url: "/events/"
+    label: "Events"
 courses: [SCY, SCM, LCM]
 ---
-{% extends "layouts/article.njk" %}
-{% from "partials/SwimToolsV2/StrokeSelect.njk" import strokeSelect %}
+{% extends "layouts/base.njk" %}
+{% block breadcrumb %}{% include "partials/Common/Breadcrumb.njk" %}{% endblock %}
+{% from "partials/RaceTools/StrokeSelect.njk" import strokeSelect %}
 {% block pageCSS %}
 {# Breadcrumbs as the article5 pages': a white bar, grey links, "/" between #}
 <link href="/css/Common/Breadcrumb.css" rel="stylesheet">
-<link rel="stylesheet" href="/css/pages/swim-tools-v2.css">
+<link rel="stylesheet" href="/css/pages/race-tools.css">
 {% endblock %}
 {% block pageJS %}
-<script src="/js/swim-tools-v2.js" defer></script>
+<script src="/js/race-tools.js" defer></script>
 {% endblock %}
 {% block content %}
-{# Race Analysis (Race Tools from 2026-10-27 to 2026-10-28; Swim Tools v2 until 2026-10-27, when Training Metrics moved
+{# Race Tools (again since 2026-10-29; Race Analysis on 2026-10-28; Swim Tools v2 until 2026-10-27, when Training Metrics moved
    to Training Tools, swim-tools-training.njk): v2 of
    /fitness-and-training/swim-tools/. One shared swimmer context drives every
    tool, and each tool's inputs live in an editor modal. Values are filled
-   in by swim-tools-v2.js, which runs both pages. #}
+   in by race-tools.js, which runs both pages. #}
 <section class="section section-full swim-deck-page">
   <div class="usms-container p-tb-10 swim-deck">
     <header class="swim-deck__head">
       <div>
-        <h1 class="swim-deck__title">Race Analysis</h1>
-        <a class="swim-deck__other" href="/fitness-and-training/swim-tools-v2/training/">Training Tools <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        <h1 class="swim-deck__title">Race Tools</h1>
         {# Commented out 2026-10-15: the intro under the title ("Welcome back,
-           Jay…" when logged in, as on v4; swim-tools-v2.js still sets it,
+           Jay…" when logged in, as on v4; race-tools.js still sets it,
            harmlessly, with nothing to fill). Its CSS is commented out too.
         <p class="swim-deck__intro" data-st="greeting">Manage your races, times and training, all in one place.</p>
         #}
       </div>
     </header>
 
-    {# Toolbar, between the header and the sections: the section tabs, and who
-       the tools are for (the pill, or a guest's Age Group and Competition
-       Category). Right-aligned on tablet and up. Above the sections, not
-       beside the first one's heading: Race Analysis' section headings are for
-       screen readers only (since 2026-10-27). #}
-    <div class="swim-deck__toolbar swim-deck__toolbar--no-headings">
-      <div class="swim-deck__head-side">
-        {# Section tabs, icons only (each named by its label and tooltip), in
-           page order. Choosing one moves its section to the top of the tools,
-           in place of scrolling to it (swim-tools-v2.js). Icons are the
-           design reference's own. #}
-        <div class="swim-ribbon" role="group" aria-label="Show first">
-          {# Home: the tools in page order (selected on load) #}
-          <button type="button" class="swim-ribbon__link" data-section="home" aria-controls="swim-deck-sections" aria-pressed="true" aria-label="Home" title="Home">
-            {# Trying a paperclip in place of the house (was: <path d="M3 11l9-8 9 8"/><path d="M5 9.5V20h14V9.5"/><path d="M10 20v-6h4v6"/>) #}
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
-          </button>
-          <button type="button" class="swim-ribbon__link" data-section="race-planning" aria-controls="swim-deck-sections" aria-pressed="false" aria-label="Race Metrics" title="Race Metrics">
-            {# The stopwatch, moved from Training Metrics (was a trend arrow,
-               kept for reuse: <path d="M3 17l5-6 4 3 7-8"/><path d="M14 6h5v5"/>) #}
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M10 2h4"/></svg>
-          </button>
-          <button type="button" class="swim-ribbon__link" data-section="calculators" aria-controls="swim-deck-sections" aria-pressed="false" aria-label="Calculators" title="Calculators">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h13l-4-4M17 17H4l4 4"/></svg>
-          </button>
-        </div>
-        {% include "partials/SwimToolsV2/Who.njk" %}
-      </div>
-    </div>
+    {# No toolbar since 2026-10-29: who the tools are for is in the Race
+       Metrics controls band #}
 
     <div class="swim-deck__sections" id="swim-deck-sections">
       <section class="swim-deck__section" id="race-planning" aria-labelledby="race-planning-title">
@@ -78,12 +52,19 @@ courses: [SCY, SCM, LCM]
         <h2 class="swim-deck__eyebrow visually-hidden" id="race-planning-title">Race metrics</h2>
         {# One bordered panel: Your Event on light blue, then the tools on white #}
         <div class="swim-panel">
-          {# Hidden on phones: the cards' gears open the same controls in the
-             Race Metrics modal #}
-          <div class="swim-panel__band swim-panel__band--blue swim-panel__band--modal-on-mobile">
-            {# Your Event: labels above each control, like Your Swim #}
+          <div class="swim-panel__band swim-panel__band--blue">
+            <div class="swim-deck__band-row">
+            {# Who the tools are for (your name, age group and category, or a
+               guest's Age Group and Competition Category): at the right of
+               the controls; first, above them, on phones (since 2026-10-29) #}
+            <div class="swim-deck__band-who">
+              {% include "partials/RaceTools/Who.njk" %}
+            </div>
+            {# Your Event: labels above each control, like Your Swim. Hidden
+               on phones: the cards' gears open the same controls in the
+               Race Metrics modal #}
             <div class="swim-deck__context" role="group" aria-label="Your event, applies to every tool">
-              {# Options follow course and stroke (swim-tools-v2.js). Also the Race
+              {# Options follow course and stroke (race-tools.js). Also the Race
                  Time Predictor's marked event. #}
               <div class="swim-swim__field">
                 <label class="swim-swim__label" for="sd-distance">Distance</label>
@@ -110,19 +91,20 @@ courses: [SCY, SCM, LCM]
                  the goal is set in the Race Metrics modal (a card's gear, or
                  Race Goal's Set this goal), or by dragging its dot #}
             </div>
+            </div>
           </div>
           {# The tools, on white #}
           <div class="swim-panel__band">
-            {# The two columns end level: balanceRacePlanning (swim-tools-v2.js) #}
+            {# The two columns end level: balanceRacePlanning (race-tools.js) #}
             <div class="swim-deck__grid swim-deck__grid--8-4 swim-deck__grid--balance">
               {# Time Predictions (hidden for now), Race History, Your Races,
                  then Set a Race Goal (members; Your Races moved above it
                  2026-10-27) #}
               <div class="swim-deck__cell swim-deck__cell--stack">
-                {% include "partials/SwimToolsV2/RacePredictor.njk" %}
-                {% include "partials/SwimToolsV2/RaceTrend.njk" %}
-                {% include "partials/SwimToolsV2/RaceHistory.njk" %}
-                {% include "partials/SwimToolsV2/RaceGoal.njk" %}
+                {% include "partials/RaceTools/RacePredictor.njk" %}
+                {% include "partials/RaceTools/RaceTrend.njk" %}
+                {% include "partials/RaceTools/RaceHistory.njk" %}
+                {% include "partials/RaceTools/RaceGoal.njk" %}
               </div>
               {# Rank and Tier, the age-up or comeback card (members), Your
                  Strengths and Race Splits (hidden for now; Your Strengths
@@ -130,11 +112,11 @@ courses: [SCY, SCM, LCM]
                  Set a Race Goal (Rank and Tier moved up from the bottom and
                  Age Group Rank down from the top 2026-10-28) #}
               <div class="swim-deck__cell swim-deck__cell--stack">
-                {% include "partials/SwimToolsV2/RankTier.njk" %}
-                {% include "partials/SwimToolsV2/AgeUp.njk" %}
-                {% include "partials/SwimToolsV2/Strengths.njk" %}
-                {% include "partials/SwimToolsV2/RaceSplits.njk" %}
-                {% include "partials/SwimToolsV2/AgeRank.njk" %}
+                {% include "partials/RaceTools/RankTier.njk" %}
+                {% include "partials/RaceTools/AgeUp.njk" %}
+                {% include "partials/RaceTools/Strengths.njk" %}
+                {% include "partials/RaceTools/RaceSplits.njk" %}
+                {% include "partials/RaceTools/AgeRank.njk" %}
               </div>
               {# Retired 2026-10-14: Top 10 by Decade (TopTens.njk, kept for reuse).
                  To restore, include it here again in a full-width cell, and Rank
@@ -155,13 +137,13 @@ courses: [SCY, SCM, LCM]
         {# One bordered panel, like Race Metrics: the time to convert on
            light blue, then the conversions on white #}
         <div class="swim-panel swim-convert" id="convert-time" aria-labelledby="convert-time-title">
-          {% include "partials/SwimToolsV2/ConvertTime.njk" %}
+          {% include "partials/RaceTools/ConvertTime.njk" %}
           <div class="swim-panel__band">
             <div class="swim-deck__grid swim-deck__grid--5-7">
               {# Course Conversion (Age Group Rank moved to Race Metrics
                  2026-10-15) #}
-              <div class="swim-deck__cell">{% include "partials/SwimToolsV2/CourseConversion.njk" %}</div>
-              <div class="swim-deck__cell">{% include "partials/SwimToolsV2/AgeConversion.njk" %}</div>
+              <div class="swim-deck__cell">{% include "partials/RaceTools/CourseConversion.njk" %}</div>
+              <div class="swim-deck__cell">{% include "partials/RaceTools/AgeConversion.njk" %}</div>
             </div>
           </div>
         </div>
@@ -171,5 +153,5 @@ courses: [SCY, SCM, LCM]
     <p class="swim-deck__disclaimer">Results are estimates. Race history is from USMS meet results and Top 10 times from USMS Top 10 lists; age-group averages are sample data.</p>
   </div>
 </section>
-{% include "partials/SwimToolsV2/Editors.njk" %}
+{% include "partials/RaceTools/Editors.njk" %}
 {% endblock %}

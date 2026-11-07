@@ -24,6 +24,7 @@
         { title: '2026 Spring Nationals', url: '/events/national-championships/pool-national-championships/2026-pool-national-championships/2026-spring-national-championship' },
         { title: 'National Championships', url: '/events/national-championships' },
         { title: 'Results and Rankings', url: '/events/event-results-database' },
+        { title: 'Race Tools', url: '/events/race-tools/' },
         { title: 'Records', url: '/events/usms-records' },
         { title: 'Eligibility Policy', url: '/volunteer-central/policy-and-governance/usms-policies/interim-eligibility-policy' }
       ]

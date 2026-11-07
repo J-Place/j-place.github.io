@@ -7,7 +7,7 @@
 (function () {
   var root = document.querySelector('.swim-deck');
   if (!root) return;
-  // Which page: Race Analysis has Race Metrics and Calculators, Training Tools
+  // Which page: Race Tools has Race Metrics and Calculators, Training Tools
   // (since 2026-10-27) Training Metrics and Pace and calories. Each renders
   // only its own.
   var RACE_PAGE = !!document.getElementById('race-planning');
@@ -862,12 +862,14 @@
   // Competition categories as the page shows them ("Men's/Open 40–44")
   var CATEGORY_NAMES = { Men: 'Men\'s/Open', Women: 'Women\'s' };
 
-  // The header's pill: your name when logged in, then age group and
-  // category ("Jay Place 50–54 Men's/Open")
-  function whoText() {
+  // Who the tools are for (Who.njk): your name when logged in, and under
+  // it age group and category ("50–54, Men's/Open")
+  function whoName() {
     var user = USERS[SWIMMER] || {};
-    var name = user.loggedIn ? [user.firstName, user.lastName].filter(Boolean).join(' ') : '';
-    return [name, ageGroup().label, CATEGORY_NAMES[swimmerGender()]].filter(Boolean).join(' ');
+    return user.loggedIn ? [user.firstName, user.lastName].filter(Boolean).join(' ') : '';
+  }
+  function whoText() {
+    return [ageGroup().label, CATEGORY_NAMES[swimmerGender()]].filter(Boolean).join(', ');
   }
 
   // The swimmer's gender as the rankings name it: the profile's when logged
@@ -1152,15 +1154,12 @@
       show('[data-goal-track-best]', bt);
       show('[data-goal-track-goal]', shown);
       show('[data-goal-track-suggested]', suggestedTime);
-      // The flag, hung inward near the track's ends
+      // The flag, standing on the goal's mark
       var flag = q('[data-goal-track-win]'), at = typed ? shown : suggestedTime;
       flag.hidden = !wins;
       track.classList.toggle('has-win', wins);
       if (wins) {
-        var f = (hi - at) / (hi - lo);
         flag.style.left = pos(at);
-        flag.classList.toggle('is-end', f > 0.85);
-        flag.classList.toggle('is-start', f < 0.15);
         flag.title = winLine;
       }
       // Dragging the goal (or the default goal's circle) along the track,
@@ -1512,7 +1511,10 @@
     var user = USERS[SWIMMER] || {};
     if (user.loggedIn && user.firstName) set('greeting', 'Welcome back, ' + user.firstName + '. Here are your races, times and training, all in one place.');
     root.querySelector('[data-st-who]').hidden = !(age >= 18);
-    if (age >= 18) set('who', whoText());
+    if (age >= 18) {
+      set('whoName', whoName());
+      set('who', whoText());
+    }
     var counts = {}, best = null;
     state.races.slice().sort(function (a, b) { return a.date < b.date ? -1 : 1; }).forEach(function (r) {
       var key = r.course + ' ' + r.distance + ' ' + r.stroke;
@@ -1599,10 +1601,13 @@
   // a solid ▲. Behind them, Time Predictions' age-group lines and shading,
   // season by season (your age at the SCY season's end, May 31), where those
   // rankings exist. Zoom (− +) and pan (‹ ›, or drag) through the years once
-  // they span more than five.
+  // they span more than five (three on phones, which start there).
   var TREND_COLOR = '#0068AD'; // your races' line and dots, USMS blue
   var LABEL_LIMIT = 40; // more of Your Event's dots than this: times on hover
   var YEAR_MS = 365.25 * 864e5, ZOOM_MIN = 5 * YEAR_MS, ZOOM_STEP = 0.6;
+  // Phones (since 2026-10-29): three years at a time, from the start
+  var isPhone = function () { return !!window.matchMedia && matchMedia('(max-width: 767px)').matches; };
+  var zoomMin = function () { return isPhone() ? 3 * YEAR_MS : ZOOM_MIN; };
   // hidden: the age group's lines turned off (top, ten, mid, low); zoom:
   // the years shown (null: all)
   var trend = { hidden: {}, zoom: { key: null, span: null, end: null }, dragged: false };
@@ -1743,9 +1748,11 @@
     if (!canZoom) return;
     var years = function (ms) { return Math.round(ms / YEAR_MS); };
     var yr = function (t) { return new Date(t).getFullYear(); };
-    set('zoomLabel', zoomed ? yr(w0) + '–' + yr(w1) + ' · ' + years(span) + ' of ' + years(full) + ' years' :
+    // A view starting within a day of New Year's (a phone's three calendar
+    // years) is named from that year
+    set('zoomLabel', zoomed ? yr(w0 + 864e5) + '–' + yr(w1) + ' · ' + years(span) + ' of ' + years(full) + ' years' :
       'All ' + years(full) + ' years · ' + yr(w0) + '–' + yr(w1));
-    bar.querySelector('[data-zoom="in"]').disabled = span <= ZOOM_MIN + 1;
+    bar.querySelector('[data-zoom="in"]').disabled = span <= zoomMin() + 1;
     bar.querySelector('[data-zoom="out"]').disabled = !zoomed;
     bar.querySelector('[data-zoom="all"]').hidden = !zoomed;
     bar.querySelector('[data-pan="earlier"]').disabled = !zoomed || w0 <= t0 + 864e5;
@@ -1814,7 +1821,20 @@
     var goalSecs = !state.goalAuto && state.goal !== '' && validEntry(state.goal) ? parse(state.goal) : NaN;
     var goalT = new Date(today() + 'T00:00:00').getTime();
     var goalPace = goalSecs / (d / 100);
+    var nowRank = groupRank(state.course, state.stroke, d, ageGroup());
+    var goalWins = isFinite(goalSecs) && !!nowRank && goalSecs <= nowRank.times[0];
     t1 = Math.max(t1, goalT);
+    // Phones start on three calendar years: one race's year in the middle,
+    // or the last race's year at the right with the two before it. The
+    // years run out to them, so the chart can show them whole.
+    var phoneView = null;
+    if (isPhone()) {
+      var lastYear = new Date(Math.max.apply(null, races.map(when))).getFullYear();
+      var firstYear = races.length === 1 ? lastYear - 1 : lastYear - 2;
+      phoneView = { w0: new Date(firstYear, 0, 1).getTime(), w1: new Date(firstYear + 3, 0, 1).getTime() - 864e5 };
+      t0 = Math.min(t0, phoneView.w0);
+      t1 = Math.max(t1, phoneView.w1);
+    }
     // The age group's lines, over the races' years. A line missing from
     // some seasons (no median or slowest where only the top swims are
     // listed) carries its nearest season's value across them, so every
@@ -1829,9 +1849,13 @@
     // The years shown: every race to start with, zoomed down to five; a new
     // event starts over
     var z = trend.zoom, zkey = state.course + ' ' + d + ' ' + state.stroke;
-    if (z.key !== zkey) { z.key = zkey; z.span = null; z.end = null; }
-    var full = t1 - t0, canZoom = full > ZOOM_MIN;
-    var span = canZoom && z.span ? Math.min(full, Math.max(ZOOM_MIN, z.span)) : full;
+    if (z.key !== zkey) {
+      z.key = zkey;
+      z.span = phoneView ? phoneView.w1 - phoneView.w0 : null;
+      z.end = phoneView ? phoneView.w1 : null;
+    }
+    var full = t1 - t0, canZoom = full > zoomMin();
+    var span = canZoom && z.span ? Math.min(full, Math.max(zoomMin(), z.span)) : full;
     var end = z.end == null ? t1 : Math.min(t1, Math.max(t0 + span, z.end));
     var w0 = end - span, w1 = end, zoomed = span < full - 1;
     z.range = { t0: t0, t1: t1, span: span, end: end };
@@ -1915,10 +1939,22 @@
         ev + ' · ' + formatDate(r.date) + ' · ' + race(r.secs) + (isBest ? ' (best)' : '') + '"></span>' +
         (labels || isBest ? '<span class="swim-trend__label is-below" style="' + at + '; color: ' + color + '">' + race(r.secs) + '</span>' : '');
     }).join('') + (isFinite(goalPace) && inWin(goalT) ? '<span class="swim-pred__dot is-goal" style="left: ' + xAt(goalT).toFixed(2) + '%; top: ' +
-      scale.y(goalPace).toFixed(1) + '%" title="Your goal: ' + race(goalSecs) + ' in the ' + state.distance + ' ' + lowerStroke(state.stroke) + '. Change it on Race Goal."></span>' : '');
+      scale.y(goalPace).toFixed(1) + '%" title="Your goal: ' + race(goalSecs) + ' in the ' + state.distance + ' ' + lowerStroke(state.stroke) + '. Change it on Race Goal."></span>' +
+      // Projected Winner over it (since 2026-10-28), as Set a Race Goal's
+      // track: the goal as fast as this season's fastest in your age group.
+      // A small vertical pill, reading upward; under the dot when there's
+      // no room above it
+      (goalWins ? '<span class="swim-pred-win swim-trend__win' + (scale.y(goalPace) < 45 ? ' is-below' : '') + '" style="left: ' + xAt(goalT).toFixed(2) + '%; top: ' +
+        scale.y(goalPace).toFixed(1) + '%">Projected Winner</span>' : '') : '');
     // Axes: pace up the side (its unit above), years along the bottom
     card.querySelector('[data-trend-y]').innerHTML = '<span class="swim-trend__unit">per 100 ' + COURSES[state.course].unit + '</span>' + scale.html;
-    var y0 = new Date(w0).getFullYear(), y1 = new Date(w1).getFullYear(), ticks = [], ystep = Math.max(1, Math.ceil((y1 - y0) / 6));
+    // Tablet and up: every year, while each has 30px (an 11px label and a
+    // gap); otherwise, and on phones, about six (since 2026-10-30)
+    var y0 = new Date(w0).getFullYear(), y1 = new Date(w1).getFullYear(), ticks = [];
+    var room = card.querySelector('.swim-trend__chart').clientWidth * 0.92;
+    var ystep = isPhone() || !room ? Math.max(1, Math.ceil((y1 - y0) / 6)) : Math.max(1, Math.ceil((y1 - y0 + 1) * 30 / room));
+    var everyYear = !isPhone() && ystep === 1;
+    card.querySelector('[data-trend-axis]').classList.toggle('is-every-year', everyYear);
     for (var yr = y0; yr <= y1; yr += ystep) ticks.push(yr);
     // The last year too, unless it would crowd the tick before it
     if (ticks[ticks.length - 1] !== y1) {
@@ -1929,7 +1965,7 @@
     // if that crowds the next year's label
     var tickAt = ticks.map(function (yr) { return xAt(Math.max(w0, new Date(yr, 0, 1).getTime())); });
     card.querySelector('[data-trend-axis]').innerHTML = ticks.map(function (yr, i) {
-      if (i === 0 && ticks.length > 1 && tickAt[1] - tickAt[0] < 8) return '';
+      if (i === 0 && ticks.length > 1 && tickAt[1] - tickAt[0] < (everyYear ? 24 / room * 92 : 8)) return '';
       return '<span style="left: ' + tickAt[i].toFixed(1) + '%">' + yr + '</span>';
     }).join('');
     renderZoom(card, canZoom, zoomed, full, span, end, t0, w0, w1);
@@ -2225,17 +2261,22 @@
 
   // Each time the form opens it starts empty, dated today, in Your Event's
   // course
-  function prepareLog() {
-    state.newLog = { date: today(), distance: '', course: state.course, time: '', stroke: '', effort: '' };
+  // From Pace and calories' Add to Log (from: 'metrics', since 2026-10-28)
+  // it starts with that swim: its distance, course, time, stroke and
+  // intensity
+  function prepareLog(from) {
+    var m = state.metrics, own = from === 'metrics';
+    state.newLog = own ? { date: today(), distance: m.distance, course: m.course, time: validEntry(m.time) ? m.time : '', stroke: m.stroke, effort: m.effort } :
+      { date: today(), distance: '', course: state.course, time: '', stroke: '', effort: '' };
     var modal = document.getElementById('swimDeckLog');
     var date = document.getElementById('sd-log-date');
     date.value = state.newLog.date;
     date.max = today();
     date.removeAttribute('aria-invalid');
-    document.getElementById('sd-log-distance').value = '';
+    document.getElementById('sd-log-distance').value = state.newLog.distance;
     document.getElementById('sd-log-distance').removeAttribute('aria-invalid');
     var field = modal.querySelector('[data-time-field]');
-    fillTimeField(field, '');
+    fillTimeField(field, state.newLog.time);
     markTimeField(field, true);
     set('logHint', '');
   }
@@ -2247,9 +2288,7 @@
       btn.setAttribute('aria-pressed', String(btn.getAttribute('data-value') === t.course));
     });
     set('logUnit', COURSES[t.course].unit === 'yd' ? '(yards)' : '(meters)');
-    var effort = document.getElementById('sd-log-effort');
-    if (effort.value !== t.effort) effort.value = t.effort;
-    set('logEffort', t.effort || 'Not rated');
+    renderFelt(modal.querySelector('[data-effort-for="log"]'));
   }
 
   function saveLog() {
@@ -2718,10 +2757,17 @@
   var FELT_WORDS = { 1: 'Very easy', 2: 'Very easy', 3: 'Easy', 4: 'Easy', 5: 'Moderate', 6: 'Moderate',
     7: 'Hard', 8: 'Hard', 9: 'Very hard', 10: 'Max' };
 
-  // Your own rating: the slider and its word
-  function renderFelt(t) {
-    set('effortWord', t.effort ? '· ' + FELT_WORDS[t.effort] : '(optional)');
-    renderSlider(t.effort);
+  // Your own rating, each slider's and its word: Pace and calories'
+  // (metrics) and Add to Log's (log; since 2026-10-28, a select before)
+  var EFFORT_WORD = { metrics: 'effortWord', log: 'logEffortWord' };
+  function effortOf(slider) {
+    return slider.getAttribute('data-effort-for') === 'log' ? state.newLog : state.metrics;
+  }
+  function renderFelt(slider) {
+    if (!slider) return;
+    var value = effortOf(slider).effort;
+    set(EFFORT_WORD[slider.getAttribute('data-effort-for')], value ? '· ' + FELT_WORDS[value] : '(optional)');
+    renderSlider(slider, value);
   }
 
   // ---------- Effort slider ----------
@@ -2729,46 +2775,44 @@
   // A range input, 1 to 10. Not rated (''): faded with no thumb, and
   // clicking or dragging on it rates. × clears; the mouse wheel steps it
   // while it's focused (one step a notch, trackpads one per 30px).
-  var effortSlider = root.querySelector('[data-effort-slider]');
-  var effortRange = effortSlider && effortSlider.querySelector('[data-effort-range]');
-  var effortClear = effortSlider && effortSlider.querySelector('[data-effort-clear]');
-
-  function renderSlider(value) {
-    effortSlider.classList.toggle('is-unrated', !value);
-    effortClear.hidden = !value;
-    if (value && effortRange.value !== value) effortRange.value = value;
+  function renderSlider(slider, value) {
+    var range = slider.querySelector('[data-effort-range]');
+    slider.classList.toggle('is-unrated', !value);
+    slider.querySelector('[data-effort-clear]').hidden = !value;
+    if (value && range.value !== value) range.value = value;
     // The thumb's ring takes the rating's shade
-    effortSlider.style.setProperty('--felt-now', value ? FELT_SHADES[value] : 'transparent');
-    effortRange.setAttribute('aria-valuetext', value ? value + ', ' + FELT_WORDS[value] : 'Not rated');
+    slider.style.setProperty('--felt-now', value ? FELT_SHADES[value] : 'transparent');
+    range.setAttribute('aria-valuetext', value ? value + ', ' + FELT_WORDS[value] : 'Not rated');
   }
 
-  function setEffort(value) {
-    if (state.metrics.effort === value) return;
-    state.metrics.effort = value;
+  function setEffort(slider, value) {
+    var t = effortOf(slider);
+    if (t.effort === value) return;
+    t.effort = value;
     render();
   }
 
-  // Training Tools only (Pace and calories)
-  if (effortSlider) {
-    effortRange.addEventListener('input', function () { setEffort(effortRange.value); });
+  document.querySelectorAll('[data-effort-slider]').forEach(function (slider) {
+    var range = slider.querySelector('[data-effort-range]'), clear = slider.querySelector('[data-effort-clear]');
+    range.addEventListener('input', function () { setEffort(slider, range.value); });
     // A click on the unrated track where the thumb already sits fires no input
-    effortRange.addEventListener('pointerup', function () { setEffort(effortRange.value); });
-    effortClear.addEventListener('click', function () {
-      setEffort('');
-      effortRange.focus();
+    range.addEventListener('pointerup', function () { setEffort(slider, range.value); });
+    clear.addEventListener('click', function () {
+      setEffort(slider, '');
+      range.focus();
     });
 
-    var effortSpin = 0;
-    effortRange.addEventListener('wheel', function (e) {
-      if (effortRange !== document.activeElement) return;
+    var spin = 0;
+    range.addEventListener('wheel', function (e) {
+      if (range !== document.activeElement) return;
       e.preventDefault();
-      effortSpin += Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : -e.deltaY;
-      if (Math.abs(effortSpin) < 30) return;
-      var now = Number(state.metrics.effort) || (effortSpin > 0 ? 0 : 11);
-      setEffort(String(Math.min(10, Math.max(1, now + (effortSpin > 0 ? 1 : -1)))));
-      effortSpin = 0;
+      spin += Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : -e.deltaY;
+      if (Math.abs(spin) < 30) return;
+      var now = Number(effortOf(slider).effort) || (spin > 0 ? 0 : 11);
+      setEffort(slider, String(Math.min(10, Math.max(1, now + (spin > 0 ? 1 : -1)))));
+      spin = 0;
     }, { passive: false });
-  }
+  });
 
   function renderMetrics() {
     var t = state.metrics, course = COURSES[t.course], unit = course.unit, d = Number(t.distance);
@@ -2801,7 +2845,7 @@
     set('calValue', isFinite(calories) ? String(calories) : '—');
     set('calNote', [STROKE_FULL[t.stroke], t.effort && '@ ' + t.effort + '/10'].filter(Boolean).join(' '));
 
-    renderFelt(t);
+    renderFelt(document.querySelector('[data-effort-for="metrics"]'));
 
 
     // Pace conversion: that pace per 100 in the two other courses (its tile,
@@ -2831,7 +2875,7 @@
     set('metricsDistanceUnit', '(' + unitWord.trim() + ')');
   }
 
-  // Race Analysis' sections: Race Metrics and Calculators (Convert a Time;
+  // Race Tools' sections: Race Metrics and Calculators (Convert a Time;
   // age: for Age Group Conversion)
   function renderRacePage(age) {
     // Context distance
@@ -3361,7 +3405,10 @@
         resetNewRace();
         render();
       }
-      if (trigger.getAttribute('data-modal-target') === '#swimDeckLog') prepareLog();
+      if (trigger.getAttribute('data-modal-target') === '#swimDeckLog') {
+        prepareLog(trigger.getAttribute('data-log-from'));
+        render(); // its course, stroke and intensity
+      }
       if (trigger.getAttribute('data-modal-target') === '#swimDeckWho') prepareWho();
       var modal = document.querySelector(trigger.getAttribute('data-modal-target'));
       var first = modal && modal.querySelector('input, select, [data-value]');
@@ -3609,7 +3656,7 @@
       var mid = zr.end - zr.span / 2, how = zb.getAttribute('data-zoom');
       if (how === 'all') { trend.zoom.span = null; trend.zoom.end = null; }
       else {
-        var ns = how === 'in' ? Math.max(ZOOM_MIN, zr.span * ZOOM_STEP) : Math.min(zr.t1 - zr.t0, zr.span / ZOOM_STEP);
+        var ns = how === 'in' ? Math.max(zoomMin(), zr.span * ZOOM_STEP) : Math.min(zr.t1 - zr.t0, zr.span / ZOOM_STEP);
         trend.zoom.span = ns >= zr.t1 - zr.t0 - 1 ? null : ns;
         trend.zoom.end = trend.zoom.span ? mid + ns / 2 : null;
       }
@@ -3654,86 +3701,30 @@
   })();
 
   // Anyone but a logged-in member (a guest, or logged in without a
-  // membership) has no race history or log. On Race Analysis, the tools that
-  // work without one come first: Calculators, then Race Metrics (sections
-  // and their ribbon tabs both)
+  // membership) has no race history or log. On Race Tools, the tools that
+  // work without one come first: Calculators, then Race Metrics
   var isMember = !!((USERS[SWIMMER] || {}).loggedIn && (USERS[SWIMMER] || {}).membershipTier);
   // Member features (the Workout Library search) and what anyone else sees
   // in their place
   root.querySelectorAll('[data-members-only]').forEach(function (el) { el.hidden = !isMember; });
   root.querySelectorAll('[data-non-members-only]').forEach(function (el) { el.hidden = isMember; });
-  if (!isMember && RACE_PAGE) {
-    var sectionsEl = root.querySelector('.swim-deck__sections'), ribbon = root.querySelector('.swim-ribbon');
-    ['calculators', 'race-planning'].forEach(function (id) {
-      ribbon.appendChild(ribbon.querySelector('[data-section="' + id + '"]'));
-      sectionsEl.appendChild(document.getElementById(id));
-    });
-    // No Home either: it would only repeat Calculators' order, so
-    // Calculators is the selected tab to start
-    var home = ribbon.querySelector('[data-section="home"]');
-    home.hidden = true;
-    home.setAttribute('aria-pressed', 'false');
-    ribbon.querySelector('[data-section="calculators"]').setAttribute('aria-pressed', 'true');
-  }
-
-  // Section ribbon: the chosen section moves to the top of the tools, and
-  // the rest keep their page order below it; Home puts them back in page
-  // order.
-  // Nodes are moved (not CSS order) so tab order matches what's on screen,
-  // and, from the stuck toolbar, the page glides to it (the click handler
-  // below).
   var sectionsBox = root.querySelector('.swim-deck__sections');
-  var ribbonButtons = root.querySelectorAll('.swim-ribbon [data-section]');
-  var defaultOrder = Array.prototype.filter.call(ribbonButtons, function (btn) {
-    return btn.getAttribute('data-section') !== 'home';
-  }).map(function (btn) {
-    return document.getElementById(btn.getAttribute('data-section'));
-  });
-
-  function showFirst(id) {
-    var first = id === 'home' ? defaultOrder[0] : document.getElementById(id);
-    [first].concat(defaultOrder.filter(function (s) { return s !== first; }))
-      .forEach(function (section) { sectionsBox.appendChild(section); });
-    ribbonButtons.forEach(function (btn) {
-      btn.setAttribute('aria-pressed', String(btn.getAttribute('data-section') === id));
+  if (!isMember && RACE_PAGE) {
+    ['calculators', 'race-planning'].forEach(function (id) {
+      sectionsBox.appendChild(document.getElementById(id));
     });
-    first.classList.remove('is-arriving');
-    void first.offsetWidth; // restart the arrival fade
-    first.classList.add('is-arriving');
   }
 
-  // A tab, even the selected one: its section first (if it isn't). Clicked
-  // from the stuck toolbar, the page then glides (keeping the toolbar
-  // stuck) to where the section's heading sticks onto the toolbar's row; on
-  // phones, where headings don't stick, to just under the toolbar. Near the
-  // top, with the toolbar in place, the section is already in view.
-  root.addEventListener('click', function (e) {
-    var btn = e.target.closest('.swim-ribbon [data-section]');
-    if (!btn) return;
-    var stuck = toolbar && toolbar.classList.contains('is-stuck');
-    if (btn.getAttribute('aria-pressed') !== 'true') showFirst(btn.getAttribute('data-section'));
-    if (!stuck) return;
-    var section = sectionsBox.querySelector(':scope > .swim-deck__section');
-    var wide = !window.matchMedia || matchMedia('(min-width: 768px)').matches;
-    var offset = wide ? stickyTop(section.querySelector('.swim-deck__eyebrow')) : toolbar.offsetHeight + 8;
-    // The heading's top margin collapses outside its section, so the
-    // section's top (the sections box's: the section itself may be mid
-    // arrival fade) is where the heading sits in place; 1px past, so it's
-    // stuck rather than just touching
-    var top = sectionsBox.getBoundingClientRect().top + window.scrollY - offset + (wide ? 1 : 0);
-    var still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-    // A glide of its own, so the section pager (pageOn) doesn't turn it
-    // aside at a section it passes
-    glide = { to: Math.max(0, Math.round(top)), until: Date.now() + 1500 };
-    // 'instant', not 'auto', which would follow the site's smooth scroll-behavior
-    window.scrollTo({ top: Math.max(0, top), behavior: still ? 'instant' : 'smooth' });
-  });
+  // The toolbar has no tabs since 2026-10-29. From 2026-10-28 they were
+  // icon links to the two pages (PageTabs.njk); before that, section tabs:
+  // the chosen section moved to the top (showFirst), Home put them back in
+  // page order, and from the stuck toolbar the page glided to it.
 
   // MOTHBALLED 2026-10-15: the page scrolls naturally. STICKY switches off
   // all the sticky behavior's script: the toolbar's stuck state and shadow,
   // the stuck headings, the tabs following the scroll, the section pager
   // and its panel pins. To restore, set it to true and uncomment the sticky
-  // CSS (swim-tools-v2.css, marked MOTHBALLED). With the toolbar never
+  // CSS (race-tools.css, marked MOTHBALLED). With the toolbar never
   // stuck, a tab click only reorders the sections (no scroll).
   var STICKY = false;
 
@@ -3768,7 +3759,7 @@
   // A section heading stuck at the top (tablet and up, CSS sticky) drops its
   // triangle: is-stuck while it sits at its sticky spot, displaced from where
   // it would be in its section
-  // The headings' sticky top, as swim-tools-v2.css sets it (read, so the CSS
+  // The headings' sticky top, as race-tools.css sets it (read, so the CSS
   // stays the one place to change it)
   function stickyTop(heading) {
     return parseFloat(getComputedStyle(heading).top) || 0;
@@ -3793,6 +3784,7 @@
   // Near the top, the selected tab is lit again.
   function markCurrentTab(wide) {
     var ribbon = root.querySelector('.swim-ribbon');
+    if (!ribbon) return;
     var current = null;
     if (toolbar && toolbar.classList.contains('is-stuck')) {
       var sections = Array.prototype.filter.call(sectionsBox.children, function (s) {

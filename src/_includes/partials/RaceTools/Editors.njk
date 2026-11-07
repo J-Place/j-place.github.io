@@ -1,6 +1,6 @@
-{# Modals for Swim Tools v2 (swim-tools-v2.js) #}
-{% from "partials/SwimToolsV2/TimeField.njk" import timeField %}
-{% from "partials/SwimToolsV2/StrokeSelect.njk" import strokeSelect %}
+{# Modals for Swim Tools v2 (race-tools.js) #}
+{% from "partials/RaceTools/TimeField.njk" import timeField %}
+{% from "partials/RaceTools/StrokeSelect.njk" import strokeSelect %}
 {% set modalModifier = "swim-deck-modal" %}
 
 {# Add a race to your race history (the Your Races card), which the Race
@@ -47,13 +47,14 @@
 {% endset %}
 {% include "components/modal.njk" %}
 
-{# Add to Log (from Training Metrics and Highlights' Your Training card):
-   a swim you did, its own fields, not the calculators' (since 2026-10-25;
-   it was the Your Swim workout as it stood). Starts empty and dated today
-   each time it opens; saved in the browser (swim-tools-v2.js). #}
+{# Add to Log (from Pace and calories, filled in from its swim, and
+   Training Effect's lock, empty): a swim you did, dated today each time it
+   opens; saved in the browser (race-tools.js). Its inputs sit on the
+   light blue of the panels' control bands (since 2026-10-28). #}
 {% set modalId = "swimDeckLog" %}
 {% set modalTitle = "Add to Log" %}
 {% set modalBody %}
+<div class="swim-log__fields">
 <div class="swim-deck-modal__row swim-deck-modal__row--compact">
   <div class="form-group">
     <label for="sd-log-date">Date</label>
@@ -80,16 +81,17 @@
     {{ strokeSelect('aria-labelledby="sd-log-stroke-label"', 'data-log-input="stroke"', true) }}
   </div>
 </div>
-{# How hard it felt, 1 to 10 (optional): shown beside its Training Effect #}
+{# How hard it felt, 1 to 10 (optional): shown beside its Training Effect.
+   Pace and calories' slider (since 2026-10-28; a select before) #}
 <div class="form-group">
-  <label for="sd-log-effort">Intensity <span class="swim-swim__optional">(optional)</span></label>
-  <div class="swim-deck__field swim-deck__field--effort">
-    <select class="form-control" id="sd-log-effort" data-log-input="effort">
-      <option value="">Not rated</option>
-      {% for n in range(1, 11) %}<option value="{{ n }}">{{ n }}</option>{% endfor %}
-    </select>
-    <span class="swim-deck__field-value" aria-hidden="true" data-st="logEffort">Not rated</span>
+  <label for="sd-log-effort">Intensity <span class="swim-swim__optional" data-st="logEffortWord">(optional)</span></label>
+  <div class="swim-slider is-unrated" data-effort-slider data-effort-for="log">
+    <span class="swim-slider__end" aria-hidden="true">1</span>
+    <input type="range" min="1" max="10" step="1" value="5" class="swim-slider__input" id="sd-log-effort" data-effort-range>
+    <span class="swim-slider__end" aria-hidden="true">10</span>
+    <button type="button" class="swim-slider__clear" data-effort-clear aria-label="Clear intensity" hidden><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
   </div>
+</div>
 </div>
 <span class="swim-params__hint swim-log__hint" data-st="logHint" aria-live="polite"></span>
 {% endset %}
@@ -101,7 +103,7 @@
 
 {# A guest's age group and competition category, from Age Group
    Conversion's prompt: the same as the header's Age Group and Competition
-   Category, applied on Confirm (swim-tools-v2.js). #}
+   Category, applied on Confirm (race-tools.js). #}
 {% set modalId = "swimDeckWho" %}
 {% set modalTitle = "Swimmer Info" %}
 {% set modalBody %}
@@ -134,7 +136,7 @@
    course; its goal too until 2026-10-27, when the goal moved to the Race
    Goal card alone). The same settings as the section's own controls,
    bound the same way, so the two always match and a change in either
-   applies at once (swim-tools-v2.js). No trigger yet: open it with
+   applies at once (race-tools.js). No trigger yet: open it with
    data-modal-target="#swimDeckPlan". #}
 {% set modalId = "swimDeckPlan" %}
 {% set modalTitle = "Race Metrics" %}
@@ -167,7 +169,7 @@
 {# Convert a Time's controls (Calculators) as a modal: the event and its
    time or pace (per 100). The same settings as the section's own controls, bound the
    same way, so time and pace update each other and the section at once
-   (swim-tools-v2.js). No trigger yet: open it with
+   (race-tools.js). No trigger yet: open it with
    data-modal-target="#swimDeckConv". #}
 {% set modalId = "swimDeckConv" %}
 {% set modalTitle = "Convert a Time" %}
@@ -213,10 +215,10 @@
    checkbox each; Add to chart shows only the checked races on the chart it
    was opened for (data-races-target: "trend", Race History, or "pred", Race
    Time Predictions), until that chart's Clear. Opened from Your Races' gear
-   (Race History) and each chart's Add races link (swim-tools-v2.js, pick). #}
+   (Race History) and each chart's Add races link (race-tools.js, pick). #}
 {% set modalId = "swimDeckRaces" %}
 {% set modalTitle = "Your Races" %}
-{# Large and a fixed size, so filtering doesn't resize it (swim-tools-v2.css) #}
+{# Large and a fixed size, so filtering doesn't resize it (race-tools.css) #}
 {% set modalSize = "lg" %}
 {% set modalBody %}
 <p class="swim-pick__intro" data-st="pickIntro"></p>

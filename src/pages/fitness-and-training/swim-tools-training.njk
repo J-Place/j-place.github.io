@@ -1,9 +1,10 @@
 ---
-permalink: /fitness-and-training/swim-tools-v2/training/index.html
+permalink: /fitness-and-training/training-tools/index.html
 title: Training Tools | U.S. Masters Swimming
 pageTitle: Training Tools
-# Same default persona as Race Analysis; ?user=<users.json key> switches
-# swimmer, and with it the log, race history and age (swim-tools-v2.js)
+toolsPage: training
+# Same default persona as Race Tools; ?user=<users.json key> switches
+# swimmer, and with it the log, race history and age (race-tools.js)
 swimmerId: KT2JH
 breadcrumbs:
   - url: "/home"
@@ -12,17 +13,18 @@ breadcrumbs:
     label: "Fitness and Training"
 courses: [SCY, SCM, LCM]
 ---
-{% extends "layouts/article.njk" %}
+{% extends "layouts/base.njk" %}
+{% block breadcrumb %}{% include "partials/Common/Breadcrumb.njk" %}{% endblock %}
 {% block pageCSS %}
 <link href="/css/Common/Breadcrumb.css" rel="stylesheet">
-<link rel="stylesheet" href="/css/pages/swim-tools-v2.css">
+<link rel="stylesheet" href="/css/pages/race-tools.css">
 {% endblock %}
 {% block pageJS %}
-<script src="/js/swim-tools-v2.js" defer></script>
+<script src="/js/race-tools.js" defer></script>
 {% endblock %}
 {% block content %}
-{# Training Tools (since 2026-10-27): Training Metrics and Pace and calories, moved from Race Analysis
-   (swim-tools-v2.njk), whose script, styles, toolbar and modals it shares.
+{# Training Tools (since 2026-10-27): Training Metrics and Pace and calories, moved from Race Tools
+   (race-tools.njk), whose script, styles, toolbar and modals it shares.
    Your races come along unseen: Training Effect's threshold pace is worked
    out from them. #}
 <section class="section section-full swim-deck-page">
@@ -30,33 +32,36 @@ courses: [SCY, SCM, LCM]
     <header class="swim-deck__head">
       <div>
         <h1 class="swim-deck__title">Training Tools</h1>
-        <a class="swim-deck__other" href="/fitness-and-training/swim-tools-v2/">Race Analysis <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        <a class="swim-deck__other" href="/events/race-tools/">Race Tools <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
       </div>
     </header>
 
-    {# Toolbar: who the tools are for. One section, so no section tabs. #}
-    <div class="swim-deck__toolbar">
+    {# Toolbar: the page tabs, and who the tools are for. Above the sections,
+       not beside the first one's heading: Training Metrics' heading is for
+       screen readers only (since 2026-10-28). #}
+    <div class="swim-deck__toolbar swim-deck__toolbar--no-headings">
       <div class="swim-deck__head-side">
-        {% include "partials/SwimToolsV2/Who.njk" %}
+        {% include "partials/RaceTools/Who.njk" %}
       </div>
     </div>
 
-    {% include "partials/SwimToolsV2/RaceData.njk" %}
+    {% include "partials/RaceTools/RaceData.njk" %}
     <div class="swim-deck__sections" id="swim-deck-sections">
       <section class="swim-deck__section" id="training-metrics" aria-labelledby="training-metrics-title">
-        <h2 class="swim-deck__eyebrow" id="training-metrics-title">Training metrics</h2>
-        {% include "partials/SwimToolsV2/Training.njk" %}
+        {# For screen readers only (since 2026-10-28) #}
+        <h2 class="swim-deck__eyebrow visually-hidden" id="training-metrics-title">Training metrics</h2>
+        {% include "partials/RaceTools/Training.njk" %}
       </section>
-      {# Pace and calories (the Your Swim calculator; on Race Analysis'
+      {# Pace and calories (the Your Swim calculator; on Race Tools'
          Calculators until 2026-10-27) #}
       <section class="swim-deck__section" id="pace-calories" aria-labelledby="your-swim-title">
         <h2 class="swim-deck__eyebrow" id="your-swim-title">Pace and calories</h2>
-        {% include "partials/SwimToolsV2/YourSwim.njk" %}
+        {% include "partials/RaceTools/YourSwim.njk" %}
       </section>
     </div>
 
     <p class="swim-deck__disclaimer">Results are estimates. Training Effect's threshold pace comes from your USMS meet results; age-group times are sample data.</p>
   </div>
 </section>
-{% include "partials/SwimToolsV2/Editors.njk" %}
+{% include "partials/RaceTools/Editors.njk" %}
 {% endblock %}

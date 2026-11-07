@@ -2,10 +2,10 @@
    only (since 2026-10-27): your races in Your Event over time as pace per
    100, slower higher, each race a dot; behind them Time Predictions' age
    group lines (fastest, top ten, median, slowest) season by season; zoom
-   and drag through the years. Filled by swim-tools-v2.js (renderTrend).
+   and drag through the years. Filled by race-tools.js (renderTrend).
    Blank, with a note, when you haven't raced Your Event; hidden with no
    races at all. #}
-{% from "partials/SwimToolsV2/SectionGear.njk" import sectionGear %}
+{% from "partials/RaceTools/SectionGear.njk" import sectionGear %}
 <div class="swim-card swim-trend" id="race-trend" data-trend hidden>
   <header class="swim-card__header">
     <div class="swim-card__heading">
@@ -33,7 +33,7 @@
       <svg class="swim-trend__svg" viewBox="0 0 100 100" preserveAspectRatio="none" role="img" data-trend-svg></svg>
       <div data-trend-dots></div>
       {# No races in Your Event's course and stroke (but some elsewhere): the
-         chart stays, blank, with this in red (swim-tools-v2.js) #}
+         chart stays, blank, with this in red (race-tools.js) #}
       <p class="swim-trend__empty" data-trend-empty aria-live="polite" hidden></p>
     </div>
   </div>

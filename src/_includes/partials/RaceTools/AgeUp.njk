@@ -1,7 +1,7 @@
 {# The age-up and comeback cards (Race Metrics, since 2026-10-27; were
    Highlights', as v4's engagement cards): age-up when you move up within a
    year, else comeback, with the next meets. Members only. Filled by
-   swim-tools-v2.js (renderSummary). #}
+   race-tools.js (renderSummary). #}
 {# Upcoming pool meets and virtual events, for the race card #}
 {% set meets = [] %}
 {% for e in eventsEnriched %}{% if e.courseType in ['SCY', 'SCM', 'LCM'] or e.virtual %}{% set _ = meets.push({ title: e.title, url: e.url, date: e.startDate, course: e.courseType, state: e.venueState, virtual: e.virtual }) %}{% endif %}{% endfor %}

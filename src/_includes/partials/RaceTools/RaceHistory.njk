@@ -2,9 +2,9 @@
    and how it compares with your best at that event; the newest few, or all
    of them with Show all. Races come from USMS results (adding your own is
    retired for now).
-   Filled by swim-tools-v2.js (renderRaces). #}
-{% from "partials/SwimToolsV2/SectionGear.njk" import sectionGear %}
-{% include "partials/SwimToolsV2/RaceData.njk" %}
+   Filled by race-tools.js (renderRaces). #}
+{% from "partials/RaceTools/SectionGear.njk" import sectionGear %}
+{% include "partials/RaceTools/RaceData.njk" %}
 <div class="swim-card swim-races" id="race-history">
   <header class="swim-card__header">
     <div class="swim-card__heading">
@@ -18,7 +18,7 @@
     {{ sectionGear("swimDeckPlan", "Race Metrics") }}
   </header>
   <ol class="swim-races__list" id="swim-races-list" data-st-races></ol>
-  {# No races yet: a meet photo and a way to find one (swim-tools-v2.js).
+  {# No races yet: a meet photo and a way to find one (race-tools.js).
      Photo hotlinked from USMS media: 2023 Spring Nationals, Anthony Kung. #}
   <div class="swim-races__promo" data-races-promo hidden>
     <img class="swim-races__promo-img" src="https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/lightroom/anthony-kung-%202023%20usms%20sp%20nats%202962-enhanced-nr.jpg"

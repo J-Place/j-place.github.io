@@ -769,7 +769,7 @@
       }
     }
     root.querySelector('[data-st3-insights]').innerHTML = tips.length ? tips.map(function (t) { return '<li>' + escapeHtml(t) + '</li>'; }).join('') :
-      '<li>Add races in <a href="/fitness-and-training/swim-tools-v2/index.html">Swim Tools</a> to see what they say.</li>';
+      '<li>Add races in <a href="/events/race-tools/index.html">Swim Tools</a> to see what they say.</li>';
 
     // Lifetime racing: races per year
     var years = {}, days = {};

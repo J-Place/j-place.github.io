@@ -2,7 +2,7 @@
 // (data-usms-component="SwimTools"), with what Sitecore will know in
 // production and this prototype knows from its personas:
 //   - who's visiting: the same ?user= → sessionStorage.activeUser → page
-//     default order as current-user.js and swim-tools-v2.js, so the log
+//     default order as current-user.js and race-tools.js, so the log
 //     lands under v2's own key (swimTools.log.<persona>)
 //   - where data comes from: the static copy synced into /data/swim-tools/
 //     (the app's static adapter), or, with ?swimtools=api, the app's own

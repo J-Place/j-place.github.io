@@ -1,12 +1,12 @@
 {# Time Predictions, as v4's: your bests in Your Event's course and
    stroke against your age group's USMS rankings (the Top Times files under
    /data/top-times/, fetched as needed; docs/api/top-times.openapi.yaml), with
-   projected times where you haven't raced. Drawn by swim-tools-v2.js.
+   projected times where you haven't raced. Drawn by race-tools.js.
    Hidden for now (since 2026-10-27): its predictions still feed Race Goal,
    Race Splits, Rank and Tier and Training Effect, so the
    card stays in the page and renderPredictor still runs. To restore, drop
    the hidden attribute. #}
-{% from "partials/SwimToolsV2/SectionGear.njk" import sectionGear %}
+{% from "partials/RaceTools/SectionGear.njk" import sectionGear %}
 <article class="swim-card" id="race-predictor" hidden>
   <header class="swim-card__header">
     <div class="swim-card__heading">
@@ -14,7 +14,7 @@
         {# Chart or table: a small text link inline after the title #}
         <button type="button" class="swim-pred-link swim-pred-view" data-pred-view>Table view</button>
         {# Add races (the Your Races modal, data-races-target="pred") removed
-           2026-10-16; the selection code in swim-tools-v2.js stays, unused
+           2026-10-16; the selection code in race-tools.js stays, unused
            here, for Race History #}</h3>
       <p class="swim-card__sub" data-st="predSubtitle"></p>
     </div>
@@ -32,7 +32,7 @@
       <div class="swim-pred__yaxis" data-pred-y aria-hidden="true"></div>
       <div class="swim-pred">
         {# Skeleton while the rankings load: a shimmer behind the plot, so your
-           own dots still show over it (.is-loading, swim-tools-v2.js) #}
+           own dots still show over it (.is-loading, race-tools.js) #}
         <div class="swim-skel swim-pred__skel" aria-hidden="true"></div>
         <svg class="swim-pred__svg" viewBox="0 0 100 100" preserveAspectRatio="none" role="img" data-pred-svg>
           {# 3% black from the age group's slowest line down to the chart's bottom #}
