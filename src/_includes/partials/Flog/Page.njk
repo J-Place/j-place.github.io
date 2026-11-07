@@ -1,0 +1,12 @@
+{# The FLOG mockup's page body, shared by every FLOG page: the header and
+   the mount point app.js renders into (from flog-api.js's data). #}
+{% include "partials/Flog/Icons.njk" %}
+<section class="flog" data-flog-page="{{ flogPage }}" data-flog-root="{{ flogRoot }}" data-default-persona="{{ swimmerId }}">
+  <div class="flog__container">
+    {% include "partials/Flog/Header.njk" %}
+    <div class="flog__app" data-flog-app aria-busy="true">
+      <p class="flog-loading">Loading…</p>
+      <noscript><p>The Fitness Log needs JavaScript.</p></noscript>
+    </div>
+  </div>
+</section>

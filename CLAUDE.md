@@ -45,6 +45,10 @@ This repo plays Sitecore's part: the Swim Tools v2 pages, Race Tools (`/events/r
 - **`src/js/swim-tools-host.js`** mounts each view with the persona (`?user=` → `sessionStorage.activeUser` → the page's `swimmerId`, as `current-user.js` and `race-tools.js` resolve it, so Add to Log lands in v2's own `swimTools.log.<persona>`) and the app's **static** adapter. `?swimtools=api` (kept for the tab in `sessionStorage.swimToolsAdapter`; `?swimtools=static` clears it) switches to the app's own server on `localhost:3000` (`npm run dev` in the app repo), for testing its API.
 - **The component's styles win over production's:** every rule in its stylesheet starts with `.st-root`, because `common.min.css` sets `.usms-container p` and `li` to 2rem. The host page sets `display: block` on its section (`src/css/pages/swim-tools-host.css`), as v2 does, against production's `section { display: table }`.
 
+## Fitness Log (FLOG) mockup
+
+The new Fitness Log is Bonfire's React/Next.js app; this repo mocks it up for them (their brief: `FLOG-MOCKUP-PRIMER.md`, not in the repo). Five pages at `/myusms/flog/` (`src/pages/myusms/flog/`, on `base.njk` with the breadcrumb, shared body in `partials/Flog/Page.njk`), FLOG's own files in `src/css/pages/flog/` (`tokens.css` holds every colour; `flog.css` uses only tokens) and `src/js/flog/`. **All data goes through `flog-api.js`** (Promises, FLOG's field names); `app.js` has one `renderX(data)` function per repeated thing, for Bonfire to turn into React components. The sample data is generated: change `scripts/flog-seed.js` and run `npm run flog:seed`, never edit `seed-data.js`. FLOG uses its own `.flog__container` and `<section class="flog">` (block), not `.usms-container`/`.section`: production's `.usms-container p`/`li` rules and `section { display: table }` would restyle it (see Swim Tools App above). Handoff is a snapshot: `npm run build:snapshot -- --page=/myusms/flog --notes=docs/flog-mockup-notes.md`. Plan, stages and API: `docs/flog-mockup.md`.
+
 ## NEVER EVER DO
 
 These rules are ABSOLUTE:

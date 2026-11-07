@@ -3,7 +3,11 @@
 // and optionally deploys to Netlify with a permanent alias URL.
 //
 // Usage:
-//   node scripts/snapshot.js --page=/path/to/page [--name=my-name] [--deploy]
+//   node scripts/snapshot.js --page=/path/to/page [--name=my-name] [--notes=file.md] [--deploy]
+//
+// A page folder with pages under it (e.g. --page=/myusms/flog) comes along
+// whole, its links to itself rewritten for the alias root (/myusms/flog/totals/
+// → /totals/). --notes copies a file to the snapshot root as NOTES.md.
 //   npm run build:snapshot --page=/events/event-central/usms-measured-pools
 //   npm run deploy:snapshot --page=/events/event-central/usms-measured-pools
 
@@ -27,6 +31,7 @@ const cliArgs = Object.fromEntries(
 
 const page   = cliArgs.page   || process.env.npm_config_page;
 const deploy = cliArgs.deploy === true || process.env.npm_config_deploy === 'true';
+const notes  = cliArgs.notes || process.env.npm_config_notes;
 
 if (!page) {
   console.error('Usage: node scripts/snapshot.js --page=</path/to/page> [--name=<name>] [--deploy]');
@@ -82,6 +87,22 @@ function copyDir(src, dest) {
     const s = path.join(src, entry.name);
     const d = path.join(dest, entry.name);
     entry.isDirectory() ? copyDir(s, d) : fs.copyFileSync(s, d);
+  }
+}
+
+// The page's folder becomes the alias root, so its links to itself and to
+// the pages under it (href, src and data-* attributes, quoted) drop the
+// folder: "/myusms/flog/totals/" → "/totals/". Links elsewhere stay as they are.
+function rebaseLinks(dir, prefix) {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const p = path.join(dir, entry.name);
+    if (entry.isDirectory()) { rebaseLinks(p, prefix); continue; }
+    if (!entry.name.endsWith('.html')) continue;
+    const html = fs.readFileSync(p, 'utf8');
+    const out = html
+      .split('"' + prefix).join('"/')
+      .split("'" + prefix).join("'/");
+    if (out !== html) fs.writeFileSync(p, out);
   }
 }
 
@@ -178,6 +199,11 @@ try {
     fs.copyFileSync(pageSiteFile, path.join(outDir, 'index.html'));
   } else {
     copyDir(pageSiteDir, outDir);
+    rebaseLinks(outDir, '/' + normalizedPage + '/');
+  }
+
+  if (notes) {
+    fs.copyFileSync(path.resolve(root, notes), path.join(outDir, 'NOTES.md'));
   }
 
   // Each snapshot deploys as its own site root — without a /favicon.ico

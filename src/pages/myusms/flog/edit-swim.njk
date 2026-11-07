@@ -1,0 +1,29 @@
+---
+permalink: /myusms/flog/edit-swim/index.html
+title: Edit a Swim | Fitness Log | U.S. Masters Swimming
+pageTitle: Edit a swim
+flogPage: edit-swim
+flogHeading: Edit a swim
+# The FLOG mockup (docs/flog-mockup.md): the swimmer is the ?user= persona
+# (KT2JH by default, flog.json); ?empty=1 shows the first-time state
+breadcrumbs:
+  - url: "/home"
+    label: "Home"
+  - url: "/account/my-account.html"
+    label: "My USMS"
+  - url: "/myusms/flog/"
+    label: "Fitness Log"
+---
+{% extends "layouts/base.njk" %}
+{% block breadcrumb %}{% include "partials/Common/Breadcrumb.njk" %}{% endblock %}
+{% block pageCSS %}
+<link href="/css/Common/Breadcrumb.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/pages/flog/tokens.css">
+<link rel="stylesheet" href="/css/pages/flog/flog.css">
+{% endblock %}
+{% block pageJS %}
+<script src="/js/flog/seed-data.js" defer></script>
+<script src="/js/flog/flog-api.js" defer></script>
+<script src="/js/flog/app.js" defer></script>
+{% endblock %}
+{% block content %}{% include "partials/Flog/Page.njk" %}{% endblock %}

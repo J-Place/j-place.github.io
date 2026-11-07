@@ -1,0 +1,45 @@
+/* FLOG mockup: every colour, font, radius and spacing step the Fitness Log
+   uses, as custom properties. flog.css only ever refers to these (never a raw
+   colour), so Bonfire can swap in the official design tokens in one place.
+   The brand values are Bonfire's primer's (FLOG-MOCKUP-PRIMER.md, §5);
+   the ones under "Added" are the mockup's own, listed in NOTES.md. */
+.flog {
+  /* Brand (primer) */
+  --flog-primary: #0068ad;
+  --flog-primary-hover: #267fb9;
+  --flog-secondary: #1e3666;
+  --flog-dark-blue: #071c31;
+  --flog-gold: #cca367;
+  --flog-red: #d2202e;
+  --flog-bg: #f4f4f4;
+  --flog-card: #ffffff;
+  --flog-muted: #e7e7e7;
+  --flog-muted-text: #555555;
+  --flog-light-blue: #eaf4ff;
+  --flog-border: #cccccc;
+
+  /* Added */
+  --flog-ink: #262627;          /* body text: the site's own ink, softer than black */
+  --flog-on-color: #ffffff;     /* text on primary, secondary and red */
+  --flog-red-tint: #fdeced;     /* behind the delete confirmation */
+  --flog-red-dark: #a8141f;     /* the red button's hover */
+
+  /* Type */
+  --flog-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --flog-text-sm: 14px;
+  --flog-text: 16px;
+  --flog-text-lg: 20px;
+  --flog-text-xl: 28px;
+  --flog-text-xxl: 36px;
+
+  /* Shape and space */
+  --flog-radius: 3px;
+  --flog-space-1: 4px;
+  --flog-space-2: 8px;
+  --flog-space-3: 12px;
+  --flog-space-4: 16px;
+  --flog-space-5: 24px;
+  --flog-space-6: 32px;
+  --flog-tap: 44px;             /* the smallest thing you can tap */
+  --flog-focus: 0 0 0 3px var(--flog-light-blue), 0 0 0 5px var(--flog-primary);
+}
