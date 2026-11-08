@@ -61,7 +61,44 @@ function _deriveLmsc(state, lat, lng) {
   }
 }
 
+// ── FLOG API on the dev server ────────────────────────────────────────────────
+// The FLOG mockup's API (api/flog/handler.mjs, docs/flog-mockup.md) answers
+// /api/flog/* here as Netlify's function does there, keeping each visitor's
+// data in a JSON file under the gitignored .data/flog/.
+let flogHandle = null;
+async function flogApi(req, res, next) {
+  if (!req.url.startsWith('/api/flog')) return next();
+  try {
+    if (!flogHandle) {
+      const [{ createHandler }, { fileStore }, seed] = await Promise.all([
+        import('./api/flog/handler.mjs'),
+        import('./api/flog/stores.mjs'),
+        import('./api/flog/seed.mjs')
+      ]);
+      flogHandle = createHandler({ store: fileStore(path.join(__dirname, '.data/flog')), seed: seed.default });
+    }
+    const chunks = [];
+    for await (const chunk of req) chunks.push(chunk);
+    const headers = new Headers();
+    for (const [k, v] of Object.entries(req.headers)) if (typeof v === 'string') headers.set(k, v);
+    const response = await flogHandle(new Request('http://localhost' + req.url, {
+      method: req.method,
+      headers,
+      body: req.method === 'GET' || req.method === 'HEAD' ? undefined : Buffer.concat(chunks)
+    }));
+    res.statusCode = response.status;
+    response.headers.forEach((value, key) => res.setHeader(key, value));
+    res.end(Buffer.from(await response.arrayBuffer()));
+  } catch (err) {
+    console.error('flog api:', err);
+    res.statusCode = 500;
+    res.end();
+  }
+}
+
 module.exports = function(eleventyConfig) {
+  eleventyConfig.setServerOptions({ middleware: [flogApi] });
+
   eleventyConfig.addWatchTarget("src/_data/");
 
   // Build swimmer registry from all swimmer-*.json files in _data/.

@@ -2254,10 +2254,43 @@
 
   // ---------- Add to Log ----------
 
-  // Your workout log: yours alone, kept in this browser per persona, shown
-  // only to you, and used only for your own training (Training Metrics).
-  // Never mixed with race results.
-  var LOG_KEY = 'swimTools.log.' + SWIMMER;
+  // Your workout log: your Fitness Log (FLOG), through the same client the
+  // FLOG pages use (src/js/flog/flog-api.js, our FLOG API; since
+  // 2026-11-08, before that this browser's swimTools.log.<persona>). Shown
+  // only to you, used only for your own training (Training Metrics), never
+  // mixed with race results. loadLog() reads the last LOG_DAYS days once;
+  // swims are kept here in this script's own terms (date, course,
+  // distance in the course's unit, time, stroke, effort).
+  var LOG_DAYS = 105; // Training Summary's 12-week timeline and its 3-week average
+  var flogLog = [];
+
+  // A FLOG entry in this script's terms. Open water and Other count as SCY
+  // yards; the time is FLOG's whole minutes.
+  function fromFlog(e) {
+    var meters = e.RawDistanceCourse === 'SCM' || e.RawDistanceCourse === 'LCM';
+    return {
+      date: e.Date,
+      course: meters || e.RawDistanceCourse === 'SCY' ? e.RawDistanceCourse : 'SCY',
+      distance: Math.round(meters ? e.DistanceYards * 0.9144 : e.DistanceYards),
+      time: race(e.DurationMinutes * 60),
+      stroke: e.Stroke || '',
+      effort: e.Intensity || null
+    };
+  }
+
+  function loadLog() {
+    var user = USERS[SWIMMER] || {};
+    if (!TRAINING_PAGE || !window.FlogApi || !user.loggedIn || !user.membershipTier) return;
+    var from = new Date();
+    from.setDate(from.getDate() - LOG_DAYS);
+    window.FlogApi.use(SWIMMER);
+    window.FlogApi.getEntries({ from: from.getFullYear() + '-' + ('0' + (from.getMonth() + 1)).slice(-2) + '-' + ('0' + from.getDate()).slice(-2), to: today() }).then(function (entries) {
+      flogLog = entries.map(fromFlog);
+      render();
+    }, function () {
+      set('logStatus', 'We couldn’t load your Fitness Log, so Training Metrics can’t show your swims right now.');
+    });
+  }
 
   // Each time the form opens it starts empty, dated today, in Your Event's
   // course
@@ -2315,18 +2348,26 @@
       return;
     }
     var secs = parse(t.time), unit = COURSES[t.course].unit;
+    // In the Fitness Log's own terms (docs/api/flog.openapi.yaml): it keeps
+    // whole minutes
     var entry = {
-      date: t.date, course: t.course, distance: d, time: race(secs),
-      pace: clock(secs / d * 100), stroke: t.stroke, calories: null, effort: t.effort ? Number(t.effort) : null
+      Date: t.date, RawDistance: d, RawDistanceUnit: unit === 'yd' ? 'Y' : 'M', RawDistanceCourse: t.course,
+      DurationMinutes: Math.max(1, Math.round(secs / 60)), Details: ''
     };
-    try {
-      var log = JSON.parse(localStorage.getItem(LOG_KEY)) || [];
-      log.push(entry);
-      localStorage.setItem(LOG_KEY, JSON.stringify(log));
-    } catch (e) {}
-    close(modal);
-    set('logStatus', 'Added to your log: ' + d.toLocaleString('en-US') + ' ' + unit + (t.stroke ? ' ' + lowerStroke(t.stroke) : '') +
-      ' in ' + entry.time + ', ' + formatDate(entry.date) + '.');
+    if (t.effort) entry.Intensity = Number(t.effort);
+    if (t.stroke) entry.Stroke = t.stroke;
+    set('logHint', 'Saving…');
+    window.FlogApi.use(SWIMMER);
+    window.FlogApi.saveEntry(entry).then(function (saved) {
+      flogLog.push(fromFlog(saved));
+      close(modal);
+      set('logHint', '');
+      set('logStatus', 'Added to your Fitness Log: ' + d.toLocaleString('en-US') + ' ' + unit + (t.stroke ? ' ' + lowerStroke(t.stroke) : '') +
+        ' in ' + race(secs) + ', ' + formatDate(saved.Date) + '.');
+      render(); // Training Metrics' training status
+    }, function (err) {
+      set('logHint', (err && err.problems && err.problems[0] && err.problems[0].message) || 'We couldn’t save your swim. Try again.');
+    });
   }
 
   // The tiles, all from the one swim (Your Swim): calories (which use the
@@ -2387,61 +2428,15 @@
   }
 
   // Your typical logged swim's load over the last TE_DAYS days
-  // Sample workouts for the demo swimmer, Jay Place (KT2JH), when he's
-  // logged in: 19 pool swims from a real Garmin export (May to Sep 2020),
-  // kept in order with their yards and moving times (Garmin's Time includes
-  // rest), but re-dated three a week (Mon, Wed, Sat) back from today so
-  // he's always a current, active swimmer and they never go stale. Course
-  // SCY (the export has no pool length); stroke and effort weren't
-  // recorded. Synthetic: flagged, never shown as races, used only for his
-  // own estimates. Before them, 24 modeled swims (2026-10-15, never anyone's
-  // workouts): 8 weeks building from 2,300 to 5,200 yards a week, then an
-  // easy week, so the Training Summary's 12-week timeline and its 3-week
-  // average (which reaches 2 weeks further back) have a trend to show.
-  var SAMPLE_LOG_SWIMMER = 'KT2JH';
-  var SAMPLE_DAYS = [0, 2, 5]; // weekdays, 0 Monday
-  // [yards, time], oldest first
-  var SAMPLE_SWIMS = [
-    [1700, '31:03.00'], [1700, '31:21.00'], [1750, '31:32.00'], [2050, '38:03.00'], [1100, '19:10.00'], [1350, '24:42.00'],
-    [600, '10:06.00'], [1100, '20:38.00'], [775, '16:23.00'], [1100, '21:51.00'], [575, '10:31.00'], [1000, '19:10.00'],
-    [1900, '37:47.00'], [1200, '20:01.00'], [2200, '41:35.00'], [1900, '39:32.00'], [1000, '19:52.00'], [450, '8:37.20'],
-    [1650, '31:18.00']
-  ];
-  var SAMPLE_SWIMS_MODELED = [
-    [800, '14:50.00'], [650, '11:52.00'], [850, '16:13.00'], [900, '16:19.00'], [750, '14:10.00'], [950, '17:41.00'],
-    [1100, '19:54.00'], [900, '16:58.00'], [1200, '21:40.00'], [1300, '24:20.00'], [1050, '19:01.00'], [1350, '24:30.00'],
-    [1500, '28:04.00'], [1200, '23:15.00'], [1600, '29:08.00'], [1700, '31:14.00'], [1350, '25:43.00'], [1850, '36:13.00'],
-    [1800, '34:08.00'], [1450, '27:04.00'], [1950, '38:16.00'], [1050, '18:59.00'], [850, '16:31.00'], [1100, '20:20.00']
-  ];
-  function sampleLog() {
-    var user = USERS[SWIMMER] || {};
-    if (SWIMMER !== SAMPLE_LOG_SWIMMER || !user.loggedIn) return [];
-    // The swim days on or before today, newest first, one per sample swim
-    var all = SAMPLE_SWIMS_MODELED.concat(SAMPLE_SWIMS);
-    var now = new Date(), days = [];
-    for (var back = 0; days.length < all.length; back++) {
-      var day = new Date(now.getFullYear(), now.getMonth(), now.getDate() - back);
-      if (SAMPLE_DAYS.indexOf((day.getDay() + 6) % 7) !== -1) days.push(day);
-    }
-    return all.map(function (x, i) {
-      var day = days[all.length - 1 - i];
-      return {
-        date: day.getFullYear() + '-' + ('0' + (day.getMonth() + 1)).slice(-2) + '-' + ('0' + day.getDate()).slice(-2),
-        course: 'SCY', distance: x[0], time: x[1], stroke: '', effort: null, synthetic: true
-      };
-    });
-  }
-
-  // Your logged swims, with the demo swimmer's sample workouts
+  // Your logged swims, from your Fitness Log (every member persona has a
+  // made-up sample log there: scripts/flog-seed.js; Jay Place's built-in
+  // sample workouts went 2026-11-08)
   function loggedSwims() {
-    var log = [];
-    try { log = JSON.parse(localStorage.getItem(LOG_KEY)) || []; } catch (e) {}
-    return log.concat(sampleLog());
+    return flogLog;
   }
 
   function typicalLoad() {
     var log = loggedSwims();
-    var samples = log.filter(function (e) { return e.synthetic; });
     var now = new Date(), from = new Date(now.getFullYear(), now.getMonth(), now.getDate() - TE_DAYS);
     var since = from.getFullYear() + '-' + ('0' + (from.getMonth() + 1)).slice(-2) + '-' + ('0' + from.getDate()).slice(-2);
     var thresholds = {};
@@ -2449,7 +2444,7 @@
       if (!thresholds[e.course]) thresholds[e.course] = thresholdPace(e.course).pace;
       return swimLoad(Number(e.distance), parse(e.time), e.stroke, thresholds[e.course]).load;
     }).filter(isFinite);
-    return loads.length ? { load: loads.reduce(function (a, b) { return a + b; }, 0) / loads.length, swims: loads.length, sample: samples.length > 0 } : { load: TE_BASE, swims: 0 };
+    return loads.length ? { load: loads.reduce(function (a, b) { return a + b; }, 0) / loads.length, swims: loads.length } : { load: TE_BASE, swims: 0 };
   }
 
   // ---------- Training Summary (Training Metrics) ----------
@@ -2483,7 +2478,7 @@
     var history = (TREND_WEEKS + TREND_ROLL - 1) * 7;
     var all = loggedSwims().map(function (e) {
       var d = Number(e.distance);
-      return { ago: daysAgo(e.date), yards: e.course === 'SCY' ? d : d * 1.0936, synthetic: e.synthetic };
+      return { ago: daysAgo(e.date), yards: e.course === 'SCY' ? d : d * 1.0936 };
     }).filter(function (e) { return e.ago >= 0 && e.ago < history && isFinite(e.yards) && e.yards > 0; });
     var swims = all.filter(function (e) { return e.ago < TE_DAYS; });
     // Nothing logged in 6 weeks: a line saying so in place of the figures
@@ -2734,7 +2729,7 @@
         'Take an easy day or two after, and build toward swims like this gradually.');
     }
     set('teSub', 'Load ' + Math.round(swim.load) + ' against your typical ' + Math.round(typical.load) +
-      ' (' + typical.swims + ' logged swims, last 6 weeks' + (typical.sample ? ', including sample workouts' : '') + ')' +
+      ' (' + typical.swims + ' logged swims, last 6 weeks)' +
       ' · ' + Math.round(swim.intensity * 100) + '% of threshold pace, ' + clock(threshold.pace) + ' per 100 from ' + threshold.from);
   }
 
@@ -3627,8 +3622,7 @@
       return;
     }
     if (e.target.closest('[data-save-log]')) {
-      saveLog();
-      render(); // Training Metrics' training status
+      saveLog(); // renders once saved
       return;
     }
     if (e.target.closest('[data-add-race]')) {
@@ -3902,6 +3896,7 @@
   state.races = loadRaces();
   startFromSwimmer();
   render();
+  loadLog(); // renders again with your Fitness Log
   // Which rankings exist; the predictor fetches its events' files from there
   fetch(DATA_BASE + 'available.json').then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; })
     .then(function (data) {

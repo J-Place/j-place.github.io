@@ -15,6 +15,7 @@
     "build:snapshot": "node scripts/snapshot.js",
     "deploy:snapshot": "node scripts/snapshot.js --deploy",
     "flog:seed": "node scripts/flog-seed.js",
+    "test:api": "node --test \"api/**/*.test.mjs\"",
     "deploy:prototype": "npm run build && netlify deploy --dir=_site --prod",
     "lint": "eslint src/js/",
     "test:visual": "node scripts/run-test-visual.js",
@@ -60,5 +61,8 @@
     "postcss-import": "^16.1.1",
     "postcss-nested": "^7.0.2",
     "puppeteer": "^24.42.0"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^11.1.8"
   }
 }

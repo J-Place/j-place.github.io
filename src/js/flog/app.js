@@ -807,7 +807,7 @@
         done(app, renderPreferences(prefs) +
           '<div class="flog-card flog-demo">' +
             '<h2 class="flog-card__title">Demo data</h2>' +
-            '<p>This mockup starts every swimmer from sample swims, and keeps your changes in this browser. Reset to start over.</p>' +
+            '<p>This mockup starts every swimmer from sample swims and keeps your changes for this browser. Reset to start over.</p>' +
             '<p><button type="button" class="flog-btn flog-btn--quiet" data-reset>Reset demo data</button></p>' +
           '</div>');
         var form = app.querySelector('[data-preferences-form]');

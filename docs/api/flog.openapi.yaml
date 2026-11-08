@@ -1,0 +1,320 @@
+openapi: 3.1.0
+info:
+  title: USMS Fitness Log (FLOG) API
+  version: 0.1.0
+  summary: A member's logged swims, their totals and their Fitness Log preferences.
+  description: |
+    The data behind the new Fitness Log: the FLOG pages read and write it,
+    and so can other tools that log a swim (Training Tools, the Workout
+    Generator).
+
+    **Status: working mockup, and our proposal for the real one.** Today's
+    FLOG is PHP pages with no API. This contract is served with synthetic
+    data by `netlify/functions/flog.mjs` (the prototype site and every
+    snapshot) and by the local dev server (`.eleventy.js`), both running
+    `api/flog/handler.mjs`. Bonfire may build the new FLOG's API
+    differently; the field names are the Fitness Log's own (`FlogModel.cs`),
+    so each call maps onto the existing tables.
+
+    ## Who's asking
+
+    In production, the login says who's asking (the member's `SwimmerId`),
+    and the page never sends it. In the mockup, three headers stand in:
+
+    - `X-Flog-Swimmer`: the prototype persona (a `users.json` key, e.g.
+      `KT2JH`).
+    - `X-Flog-Visitor`: a random id the browser keeps. Each visitor gets
+      their own copy of the sample data, so testers don't see each other's
+      swims.
+    - `X-Flog-Empty: 1`: the first-time state, with no sample swims.
+
+    ## Dates and distances
+
+    Dates are plain calendar dates, `YYYY-MM-DD`, with no time or time
+    zone. A swimmer types a distance in their own unit (`RawDistance`,
+    `RawDistanceUnit`); the server works out `DistanceYards` (meters ×
+    1.0936, miles × 1760), and totals are always in yards.
+
+    ## Errors
+
+    Every error has the same body, `{ "problems": [{ "field", "message" }] }`:
+    `field` names the input at fault (or is null), and `message` is written
+    for the swimmer, so a page can show it as is.
+servers:
+  - url: https://usms-mockup.netlify.app/api/flog
+    description: Prototype site (Netlify), synthetic data
+  - url: http://localhost:8080/api/flog
+    description: Eleventy dev server
+security:
+  - mockupSwimmer: []
+    mockupVisitor: []
+paths:
+  /entries:
+    get:
+      operationId: listEntries
+      summary: Swims in a date range, or the newest swims a page at a time
+      description: |
+        Two ways to ask:
+
+        - **A range** (`from` and `to`, both included), oldest first, for the
+          week and month calendars. Optional `course` filter.
+        - **A page** (`limit`, then `before` from the last page's
+          `nextBefore`), newest first, for the list. A page never splits a
+          day: it may hold a few more than `limit`.
+      parameters:
+        - { name: from, in: query, schema: { $ref: '#/components/schemas/Date' }, description: 'First day (with `to`).' }
+        - { name: to, in: query, schema: { $ref: '#/components/schemas/Date' }, description: 'Last day (with `from`).' }
+        - { name: course, in: query, schema: { $ref: '#/components/schemas/Course' }, description: 'Only swims on this course (with `from` and `to`).' }
+        - { name: limit, in: query, schema: { type: integer, minimum: 1, maximum: 200, default: 20 }, description: 'Swims per page (without `from` and `to`).' }
+        - { name: before, in: query, schema: { $ref: '#/components/schemas/Date' }, description: 'Swims before this day, not included.' }
+        - $ref: '#/components/parameters/Empty'
+      responses:
+        '200':
+          description: With `from` and `to`, an array of entries; otherwise a page.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: array
+                    items: { $ref: '#/components/schemas/Entry' }
+                  - $ref: '#/components/schemas/EntryPage'
+              examples:
+                range:
+                  summary: GET /entries?from=2026-11-01&to=2026-11-07
+                  value:
+                    - { EntryID: 100269, Date: '2026-11-02', RawDistance: 2500, RawDistanceUnit: Y, RawDistanceCourse: SCY, DistanceYards: 2500, DurationMinutes: 52, Details: 'Back and breast drills', Stroke: Fly, Calories: 374 }
+                    - { EntryID: 100275, Date: '2026-11-06', RawDistance: 1.2, RawDistanceUnit: mi, RawDistanceCourse: OW, DistanceYards: 2112, DurationMinutes: 42, Details: 'Lake swim', Intensity: 7 }
+        '400': { $ref: '#/components/responses/Problems' }
+        '401': { $ref: '#/components/responses/Problems' }
+    post:
+      operationId: createEntry
+      summary: Log a swim
+      description: The server sets `EntryID` and `DistanceYards`; anything sent for them is ignored.
+      parameters:
+        - $ref: '#/components/parameters/Empty'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/EntryInput' }
+            example: { Date: '2026-11-06', RawDistance: 1.2, RawDistanceUnit: mi, RawDistanceCourse: OW, DurationMinutes: 42, Details: 'Lake swim', Intensity: 7 }
+      responses:
+        '201':
+          description: The swim as saved.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Entry' }
+        '400': { $ref: '#/components/responses/Problems' }
+        '401': { $ref: '#/components/responses/Problems' }
+        '409':
+          description: The mockup's limit of 3,000 swims per visitor is reached; reset to start over.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Problems' }
+  /entries/{EntryID}:
+    parameters:
+      - { name: EntryID, in: path, required: true, schema: { type: integer } }
+      - $ref: '#/components/parameters/Empty'
+    get:
+      operationId: getEntry
+      summary: One swim
+      responses:
+        '200':
+          description: The swim.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Entry' }
+        '404': { $ref: '#/components/responses/Problems' }
+    put:
+      operationId: updateEntry
+      summary: Change a swim
+      description: Replaces the whole swim (send every field you want to keep).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/EntryInput' }
+      responses:
+        '200':
+          description: The swim as saved.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Entry' }
+        '400': { $ref: '#/components/responses/Problems' }
+        '404': { $ref: '#/components/responses/Problems' }
+    delete:
+      operationId: deleteEntry
+      summary: Delete a swim
+      responses:
+        '204': { description: Deleted. }
+        '404': { $ref: '#/components/responses/Problems' }
+  /totals:
+    get:
+      operationId: getTotals
+      summary: Totals for the month and year a date falls in, and lifetime
+      description: Month and year count swims up to `date`. Lifetime includes swims logged before the records this API holds.
+      parameters:
+        - { name: date, in: query, schema: { $ref: '#/components/schemas/Date' }, description: "Defaults to the server's today." }
+        - $ref: '#/components/parameters/Empty'
+      responses:
+        '200':
+          description: The totals.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Totals' }
+              example:
+                month: { NumSessions: 6, TotalMinutes: 373, TotalYards: 18700 }
+                year: { NumSessions: 194, TotalMinutes: 11178, TotalYards: 581374 }
+                lifetime: { NumSessions: 1459, TotalMinutes: 86190, TotalYards: 4310014 }
+                firstLogDate: '2012-01-09'
+        '400': { $ref: '#/components/responses/Problems' }
+  /preferences:
+    parameters:
+      - $ref: '#/components/parameters/Empty'
+    get:
+      operationId: getPreferences
+      summary: The swimmer's Fitness Log preferences
+      responses:
+        '200':
+          description: The preferences.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Preferences' }
+    put:
+      operationId: updatePreferences
+      summary: Save the swimmer's preferences
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/Preferences' }
+      responses:
+        '200':
+          description: The preferences as saved.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Preferences' }
+        '400': { $ref: '#/components/responses/Problems' }
+  /reset:
+    post:
+      operationId: reset
+      summary: Back to the sample data (mockup only)
+      description: Deletes this visitor's copy for this swimmer; the next call starts again from the sample data. Not part of the proposal for production.
+      parameters:
+        - $ref: '#/components/parameters/Empty'
+      responses:
+        '204': { description: Reset. }
+components:
+  securitySchemes:
+    mockupSwimmer:
+      type: apiKey
+      in: header
+      name: X-Flog-Swimmer
+      description: The prototype persona. In production, the login's SwimmerId instead.
+    mockupVisitor:
+      type: apiKey
+      in: header
+      name: X-Flog-Visitor
+      description: The browser's own id, 8 to 64 letters, digits or dashes. Mockup only.
+  parameters:
+    Empty:
+      name: X-Flog-Empty
+      in: header
+      required: false
+      schema: { type: string, enum: ['1'] }
+      description: The first-time state, with no sample swims (mockup only).
+  responses:
+    Problems:
+      description: What's wrong, for the swimmer.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Problems' }
+          example:
+            problems:
+              - { field: RawDistance, message: 'Enter how far you swam.' }
+              - { field: DurationMinutes, message: 'Enter your time in whole minutes, 1 to 1440.' }
+  schemas:
+    Date:
+      type: string
+      format: date
+      pattern: '^\d{4}-\d{2}-\d{2}$'
+      description: A plain calendar date, no time zone.
+    Course:
+      type: string
+      enum: [SCY, SCM, LCM, OW, Other]
+      description: Short course yards, short course meters, long course meters, open water, other.
+    Unit:
+      type: string
+      enum: [Y, M, mi]
+      description: Yards, meters, miles.
+    EntryInput:
+      type: object
+      required: [Date, RawDistance, RawDistanceUnit, RawDistanceCourse, DurationMinutes]
+      properties:
+        Date:
+          $ref: '#/components/schemas/Date'
+          description: The day of the swim. Not in the future (a day's grace for time zones).
+        RawDistance: { type: number, exclusiveMinimum: 0, description: 'As the swimmer typed it, in RawDistanceUnit. At most 100,000 yards.' }
+        RawDistanceUnit: { $ref: '#/components/schemas/Unit' }
+        RawDistanceCourse: { $ref: '#/components/schemas/Course' }
+        DurationMinutes: { type: integer, minimum: 1, maximum: 1440 }
+        Details: { type: string, maxLength: 2000, description: 'The swimmer''s comments. Plain text; pages must escape it.' }
+        Intensity: { type: integer, minimum: 1, maximum: 10, description: 'New, optional: how hard it felt (1–2 very easy … 10 max).' }
+        Calories: { type: number, minimum: 0, maximum: 20000, description: New, optional. }
+        Stroke: { type: string, maxLength: 20, description: 'New, optional: the main stroke (Free, Back, Breast, Fly, IM, Mixed).' }
+    Entry:
+      allOf:
+        - $ref: '#/components/schemas/EntryInput'
+        - type: object
+          required: [EntryID, DistanceYards, Details]
+          properties:
+            EntryID: { type: integer, description: Set by the server. }
+            DistanceYards: { type: number, description: 'Set by the server from RawDistance and RawDistanceUnit, to 2 decimals.' }
+    EntryPage:
+      type: object
+      required: [entries, hasMore, nextBefore]
+      properties:
+        entries:
+          type: array
+          items: { $ref: '#/components/schemas/Entry' }
+        hasMore: { type: boolean }
+        nextBefore:
+          oneOf: [{ $ref: '#/components/schemas/Date' }, { type: 'null' }]
+          description: Send as `before` for the next page; null when there's no more.
+    Total:
+      type: object
+      required: [NumSessions, TotalMinutes, TotalYards]
+      properties:
+        NumSessions: { type: integer }
+        TotalMinutes: { type: integer }
+        TotalYards: { type: number }
+    Totals:
+      type: object
+      required: [month, year, lifetime, firstLogDate]
+      properties:
+        month: { $ref: '#/components/schemas/Total' }
+        year: { $ref: '#/components/schemas/Total' }
+        lifetime: { $ref: '#/components/schemas/Total' }
+        firstLogDate:
+          oneOf: [{ $ref: '#/components/schemas/Date' }, { type: 'null' }]
+    Preferences:
+      type: object
+      required: [WorkoutsPublic, MeasurementsPublic, UserDefaultView, UserDefaultCourse, UserDefaultDistance]
+      properties:
+        WorkoutsPublic: { type: integer, enum: [0, 1] }
+        MeasurementsPublic: { type: integer, enum: [0, 1] }
+        UserDefaultView: { type: string, enum: [week, month] }
+        UserDefaultCourse: { $ref: '#/components/schemas/Course' }
+        UserDefaultDistance: { $ref: '#/components/schemas/Unit' }
+    Problems:
+      type: object
+      required: [problems]
+      properties:
+        problems:
+          type: array
+          items:
+            type: object
+            required: [field, message]
+            properties:
+              field: { type: [string, 'null'] }
+              message: { type: string }

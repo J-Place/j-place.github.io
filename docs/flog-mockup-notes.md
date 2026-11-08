@@ -35,8 +35,7 @@ Everything else in the snapshot is the site's chrome, which you already have.
   - `renderTotals`
   - `renderSwimForm`
   - `renderPreferences`
-- `js/flog/flog-api.js`: the **only** place that knows where data comes from. Every function returns a Promise and uses FLOG's field names. Each function's comment names the REST call it stands for (for example `GET /api/flog/entries?from=&to=`). Today it answers from the sample data and keeps changes in the visitor's own browser. Replace this one file with however the real FLOG serves its data, and the pages don't change.
-- `js/flog/seed-data.js`: generated sample data. All names and swims are made up.
+- `js/flog/flog-api.js`: the **only** place that knows where data comes from. Every function returns a Promise and uses FLOG's field names. Each function's comment names the REST call it stands for (for example `GET /api/flog/entries?from=&to=`). Today it calls our own mockup API (below). Replace this one file with however the real FLOG serves its data, and the pages don't change.
 - The icons are Lucide, as one inline SVG sprite at the top of each page (`#flog-i-*`).
 
 ## Data
@@ -87,9 +86,29 @@ The primer's brand tokens are used as given. The mockup adds:
 
 Gold (`--flog-gold`) marks today. It sits behind dark text, never as text on white, because it's too light for that.
 
+## Our mockup API: a model for the new FLOG's
+
+Today's FLOG has no API, and the other tools need one, so the mockup runs on a working API of our own with made-up data, served by the snapshot itself at `/api/flog/`. Its contract is an OpenAPI file, `flog.openapi.yaml`, sent alongside this snapshot (Postman can import it). It's REST, in FLOG's field names:
+
+| Call | What it does |
+|---|---|
+| `GET /api/flog/entries?from=&to=` | Swims in a date range (week, month) |
+| `GET /api/flog/entries?limit=&before=` | The newest swims, a page at a time |
+| `GET`, `PUT`, `DELETE /api/flog/entries/{EntryID}` | One swim |
+| `POST /api/flog/entries` | Log a swim |
+| `GET /api/flog/totals?date=` | Month, year and lifetime totals |
+| `GET`, `PUT /api/flog/preferences` | Preferences |
+
+- The server sets `EntryID` and `DistanceYards`.
+- Errors are `{ "problems": [{ "field", "message" }] }`, with messages written for the swimmer.
+- In the mockup, headers say who's asking (`X-Flog-Swimmer`, and `X-Flog-Visitor` so each tester gets their own copy). In production the login should say, and the page shouldn't send it.
+- `POST /api/flog/reset` is for the mockup only.
+
+Build it your own way if it suits your app better. If you do, a short note of your calls would let us point Training Tools and the Workout Generator at them.
+
 ## Open questions
 
 1. **GTD isn't in this handoff.** The current FLOG's Go The Distance pieces (the progress card, Events, Monthly Progress) aren't mocked up. Keep them as they are, or tell us if you want them in the new look.
-2. **How the other tools reach FLOG.** Training Tools and the Workout Generator both let members log a swim, and Training Tools reads the log back for its Training Metrics. Will the new FLOG take swims and give them back through an API, or should those tools link to FLOG's Log a swim page, pre-filled? Our next stage is a working API of our own with the same calls as `flog-api.js` (spec to follow), offered as a model.
+2. **How the other tools reach FLOG.** Training Tools and the Workout Generator both let members log a swim, and Training Tools reads the log back for its Training Metrics. Will the new FLOG take swims and give them back through an API, or should those tools link to FLOG's Log a swim page, pre-filled? In the mockup they already do: both post swims to our API and Training Tools reads them back (see the API, below).
 3. **`Value1` and `Value2`**: what do they hold, and does anything still use them?
 4. **Details length**: is there a limit on comments?

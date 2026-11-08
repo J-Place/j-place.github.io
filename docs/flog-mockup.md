@@ -40,16 +40,17 @@ My Account's Fitness Log link already points to `/myusms/flog/`.
   - Render functions: `renderSwim`, `renderDay`, `renderWeek`, `renderMonth`, `renderList`, `renderTotals`, `renderSwimForm`, `renderPreferences`.
   - One small controller per page.
 - **`src/js/flog/flog-api.js`:** see Data, below.
-- **`src/js/flog/seed-data.js`:** generated, so don't edit it.
-- **`scripts/flog-seed.js`** (`npm run flog:seed [-- --anchor=YYYY-MM-DD]`): writes `seed-data.js`. Every logged-in member persona gets a made-up log. KT2JH and GAT0R get 14 months of it, with lifetime totals from before that (`prior`, `firstLogDate`); the rest get 3 months. KT2JH swims yards. GAT0R swims long course and short course meters, with open water in miles. Both have two-swim days, long comments, and the optional fields on some swims. The run is seeded, so the same anchor writes the same file.
+- **`scripts/flog-seed.js`** (`npm run flog:seed [-- --anchor=YYYY-MM-DD]`): writes `api/flog/seed.mjs`, which is generated, so don't edit it. Every logged-in member persona gets a made-up log. KT2JH and GAT0R get 14 months of it, with lifetime totals from before that (`prior`, `firstLogDate`); the rest get 3 months. KT2JH swims yards. GAT0R swims long course and short course meters, with open water in miles. Both have two-swim days, long comments, and the optional fields on some swims. The run is seeded, so the same anchor writes the same file.
 
-## Data: two stages
+## Data: our own FLOG API
 
-### Stage 1 (now): local data behind an API-shaped module
+Built in two stages: on 2026-11-07 the pages ran on local data behind `flog-api.js` (stage 1), and the same day that module switched to `fetch()` calls to our own API (stage 2), with no change to the pages. Today's FLOG has no API, and Training Tools and the Workout Generator need one to log swims into FLOG and read them back, so the API is also the model we offer Bonfire.
 
-`flog-api.js` is the only file that knows where data comes from. Each function returns a Promise and uses FLOG's field names:
+### The pages' side: `flog-api.js`
 
-| Function | Stands for |
+The only file that knows where data comes from. Each function returns a Promise, uses FLOG's field names, and makes one call:
+
+| Function | Call |
 |---|---|
 | `getEntries({from, to, course})` | `GET /api/flog/entries?from=&to=[&course=]` |
 | `getEntriesPage({limit, before})` | `GET /api/flog/entries?limit=&before=` (newest first; never splits a day across pages) |
@@ -60,27 +61,26 @@ My Account's Fitness Log link already points to `/myusms/flog/`.
 | `getPreferences()` / `savePreferences(p)` | `GET` / `PUT /api/flog/preferences` |
 | `reset()` | `POST /api/flog/reset` (mockup only) |
 
-How the stand-in data works:
-- **Dates track the calendar.** The seed's dates are moved forward by the days since its anchor, so the latest swim is always yesterday and today has none.
-- **Changes stay in the browser.** A visitor's changes are saved in `localStorage` under `flog.v1.<persona>` (or `….empty`). Preferences' "Reset demo data" removes them.
-- **Validation lives here for now.** Errors come back as `{ status: 400, problems: [{ field, message }] }`, and the form shows them in a summary that links to each field and under the field itself.
-- **Every call waits 120 ms**, so the pages' loading states get exercised.
+- **Where it calls:** `/api/flog` on the same site (the dev server, Netlify, snapshots). On GitHub Pages (`j-place.github.io`) it calls `https://usms-mockup.netlify.app/api/flog`, which needs `deploy:prototype` to have run with the function.
+- **Who's asking:** `X-Flog-Swimmer` (the `?user=` persona), `X-Flog-Visitor` (a random id kept in `localStorage` as `flog.visitor`, so each browser gets its own copy of the sample data) and `X-Flog-Empty: 1` for `?empty=1`.
+- **Errors:** a failed call rejects with `{ status, problems: [{ field, message }] }`, the API's own body (`status` 0 when it couldn't be reached). The form shows the problems in a summary that links to each field, and under the field itself.
 
-### Stage 2 (next): our own API
+### The server's side: `api/flog/`
 
-A working API with synthetic data, offered to Bonfire as a model. Today's FLOG has no API, and Training Tools and the Workout Generator will need one to log swims into FLOG and read them back.
-- **Spec:** `docs/api/flog.openapi.yaml`, REST with FLOG's field names. Postman can import it.
-- **Server:** `netlify/functions/flog.mjs`, one web-standard `(Request) => Response` handler, the same shape as a Next.js route handler.
-  - Validation, unit conversion and totals move into it.
-  - It identifies the swimmer from `X-Flog-Swimmer`. `X-Flog-Visitor`, a random id kept in `localStorage`, gives each visitor their own copy.
-  - Storage is Netlify Blobs, or a JSON file in a gitignored `.data/flog/` locally.
-- **Local dev:** the dev server routes `/api/flog/*` to the handler.
-- **Deploys:** `netlify.toml` gets the function and a redirect. The GitHub Pages copy calls the Netlify-hosted API (CORS).
-- **The switch:** each function in `flog-api.js` becomes a `fetch()`. The pages don't change.
+- **Contract:** `docs/api/flog.openapi.yaml`. Postman can import it (servers: the Netlify site and `localhost:8080`).
+- **`api/flog/core.mjs`:** the rules, pure. Validation (dates not in the future, with a day's grace for swimmers ahead of the server's time zone; whole minutes 1 to 1440; at most 100,000 yards; comments up to 2,000 characters), `DistanceYards`, totals, paging, and moving the seed's dates forward so the latest swim is yesterday.
+- **`api/flog/handler.mjs`:** one web-standard `(Request) => Response` handler, the same shape as a Next.js route handler: routing, the headers above (checked, so they're safe as storage keys), JSON errors, CORS for `https://j-place.github.io` and `http://localhost:8080`, a 16 KB body limit and 3,000 swims per visitor.
+- **`api/flog/stores.mjs`:** one record per visitor and swimmer (`<visitor>/<swimmer>`, `-empty` for the first-time state), copied from the seed on first use. Three adapters with the same calls: memory (tests), a JSON file (`.data/flog/`, gitignored; the dev server) and Netlify Blobs (store `flog`).
+- **Where it runs:** `netlify/functions/flog.mjs` on Netlify (`config.path` `/api/flog/*`; `netlify.toml` `[functions]`), so `deploy:prototype` and every snapshot carry it. On the dev server, `.eleventy.js`'s `flogApi` middleware runs the same handler. A change to `api/flog/` needs a dev server restart.
+- **Tests:** `npm run test:api` (`node --test`): seed dates, logging, conversions, validation, editing and deleting, paging, totals, per-visitor copies and reset, the empty state, preferences, bad requests, unsafe keys and CORS.
 
-**Changing data (Stage 2):**
+**Changing data:**
 - **Everyone's starting data:** edit `scripts/flog-seed.js` and run `npm run flog:seed`. Reset picks up the new seed.
 - **One live record:** use the API from Postman, `netlify blobs:get` / `netlify blobs:set flog <key>` from the Mac, or the files in `.data/flog/` locally.
+
+**Other tools on the same log (2026-11-08):** Training Tools' Add to Log and Training Metrics (`race-tools.js`, through `flog-api.js`) and the Workout Generator's Add to Log (the Swim Tools app's static adapter, given `flogApi` by `src/js/swim-tools-host.js`) all use this API, so one log feeds every tool.
+
+**Can't be tested from the container:** Netlify itself (the firewall blocks it). On the Mac, after `deploy:prototype`: Postman against `https://usms-mockup.netlify.app/api/flog`, and the GitHub Pages FLOG pages calling it without CORS errors.
 
 ## Snapshot
 

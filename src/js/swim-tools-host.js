@@ -2,8 +2,11 @@
 // (data-usms-component="SwimTools"), with what Sitecore will know in
 // production and this prototype knows from its personas:
 //   - who's visiting: the same ?user= → sessionStorage.activeUser → page
-//     default order as current-user.js and race-tools.js, so the log
-//     lands under v2's own key (swimTools.log.<persona>)
+//     default order as current-user.js and race-tools.js
+//   - where Add to Log goes: the persona's Fitness Log, through the FLOG
+//     API (api/flog/, docs/flog-mockup.md) on this site, or on Netlify
+//     from GitHub Pages, as src/js/flog/flog-api.js calls it; so a logged
+//     workout shows in FLOG and in Training Tools' Training Metrics
 //   - where data comes from: the static copy synced into /data/swim-tools/
 //     (the app's static adapter), or, with ?swimtools=api, the app's own
 //     server on localhost:3000 (next dev in ~/dev/usms/swim-tools), kept for
@@ -13,6 +16,7 @@
 
   var LOGIN_URL = '/account/myusmslogin';
   var API_URL = 'http://localhost:3000';
+  var FLOG_API = (location.hostname === 'j-place.github.io' ? 'https://usms-mockup.netlify.app' : '') + '/api/flog';
 
   function users() {
     var el = document.getElementById('site-users-data');
@@ -51,7 +55,7 @@
       var visitor = { status: status(all[id]), persona: id };
       var data = adapter() === 'api'
         ? { adapter: 'api', apiUrl: API_URL, persona: id }
-        : { adapter: 'static', dataUrl: '/data/swim-tools', visitor: visitor, loginUrl: LOGIN_URL };
+        : { adapter: 'static', dataUrl: '/data/swim-tools', visitor: visitor, loginUrl: LOGIN_URL, flogApi: FLOG_API };
       window.SwimTools.mount(el, { view: el.dataset.view, data: data });
     });
   }

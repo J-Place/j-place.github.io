@@ -3,3 +3,10 @@
 
 [build.environment]
   NODE_VERSION = "22"
+
+# The FLOG mockup's API (netlify/functions/flog.mjs, served at /api/flog/*
+# by its own config.path). Every deploy carries it: deploy:prototype and
+# each snapshot. docs/flog-mockup.md
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
