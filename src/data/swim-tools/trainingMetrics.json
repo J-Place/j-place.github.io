@@ -88,16 +88,17 @@
       { "id": "EZ", "meaning": "easy" }
     ],
     "courses": [
-      { "id": "SCY", "label": "Short course yards", "unit": "yd", "pool": 25 },
-      { "id": "SCM", "label": "Short course meters", "unit": "m", "pool": 25 },
-      { "id": "LCM", "label": "Long course meters", "unit": "m", "pool": 50 }
+      { "id": "SCY", "label": "Short course yards", "unit": "yd", "pool": 25, "available": true },
+      { "id": "SCM", "label": "Short course meters", "unit": "m", "pool": 25, "available": true },
+      { "id": "LCM", "label": "Long course meters", "unit": "m", "pool": 50, "available": false },
+      { "id": "OW", "label": "Open water", "available": false }
     ]
   },
 
   "goals": {
     "workout": [
       { "id": "course", "type": "select", "options": "vocabularies.courses", "default": "persona" },
-      { "id": "distance", "type": "number", "unit": "course", "min": 1000, "max": 5000, "step": 100, "default": 2500 },
+      { "id": "distance", "type": "number", "unit": "course", "step": 50, "default": 2500 },
       { "id": "minutes", "type": "number", "min": 20, "max": 120, "step": 5, "alternativeTo": "distance" },
       { "id": "stroke", "type": "select", "options": "vocabularies.strokes", "default": "free" },
       { "id": "skills", "type": "select", "options": "vocabularies.skills", "optional": true },
@@ -239,20 +240,21 @@
       "binding": "default",
       "basis": ["lanemate-event-plans"],
       "rule": "Each week has one skill focus, rotating as the library's plans do; equipment follows the skill.",
-      "params": { "source": "stats.skillByWeek" }
+      "params": { "source": "stats.plans[].skillByWeek" }
     },
     {
       "id": "plan.eventMix",
       "binding": "default",
       "basis": ["lanemate-event-plans", "gonzalez-rave-2021", "arroyo-toledo-2021"],
       "rule": "The mix of aerobic, conditioning, speed and race sessions follows the chosen event, as measured from that event's plan; race sessions concentrate in the final weeks.",
-      "params": { "source": "stats.eventMix", "byWeek": "stats.fitnessByWeek" }
+      "params": { "source": "stats.plans[].fitnessMix", "byWeek": "stats.plans[].fitnessByWeek" }
     },
     {
       "id": "plan.benchmarks",
       "binding": "default",
       "basis": ["lanemate-event-plans"],
-      "rule": "The first and last sessions include a timed swim of the target event; they are never dropped when sessions per week is reduced."
+      "rule": "The first and last sessions include a timed swim of the target event; they are never dropped when sessions per week is reduced.",
+      "params": { "source": "stats.plans[].benchmarkSessions" }
     },
     {
       "id": "plan.taper",
