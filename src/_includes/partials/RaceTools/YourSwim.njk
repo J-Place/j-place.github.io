@@ -4,6 +4,7 @@
    Conversion is retired). Filled and read by race-tools.js. #}
 {% from "partials/RaceTools/TimeField.njk" import timeField %}
 {% from "partials/RaceTools/StrokeSelect.njk" import strokeSelect %}
+{% from "partials/RaceTools/CourseSelect.njk" import courseSelect %}
 <div class="swim-panel swim-swim" id="your-swim" aria-labelledby="your-swim-title">
   {# Inputs, on light blue #}
   <div class="swim-panel__band swim-panel__band--blue">
@@ -21,9 +22,7 @@
       {# The course swum: sets the unit, and which course Pace Conversion converts from #}
       <div class="swim-swim__field">
         <span class="swim-swim__label" id="sd-metrics-course-label">Course</span>
-        <div class="swim-seg" role="group" aria-labelledby="sd-metrics-course-label" data-metric="course">
-          {% for c in courses %}<button type="button" data-value="{{ c }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ c }}</button>{% endfor %}
-        </div>
+        {{ courseSelect('aria-labelledby="sd-metrics-course-label"', 'data-metric-input="course"') }}
       </div>
       <div class="swim-swim__field">
         <span class="swim-swim__label" id="sd-metrics-time-label">Time</span>

@@ -1,0 +1,23 @@
+{#
+  Course select, built like the Stroke and Distance selects: a white track
+  with the chosen course as a blue pill. Course on Race Tools and Training
+  Tools is a select everywhere (2026-11-08; it was SCY/SCM/LCM buttons):
+  one of these, or a plain select in Choose Races' filters, beside its
+  plain Stroke and Distance. race-tools.js keeps the select and pill in
+  step with its setting.
+
+    name — the select's accessible name: 'aria-labelledby="sd-x-label"'
+    bind — the setting it edits: 'data-input="course"' (Your Event, Plan a
+           Race), 'data-metric-input="course"' (Your Swim),
+           'data-conv-input="course"' (Convert a Time and its modal),
+           'data-race-input="course"' (Add a Race),
+           'data-log-input="course"' (Add to Log)
+#}
+{% macro courseSelect(name, bind) %}
+<div class="swim-deck__field">
+  <select class="form-control" {{ name | safe }} {{ bind | safe }} data-course-select>
+    {% for c in ["SCY", "SCM", "LCM"] %}<option value="{{ c }}">{{ c }}</option>{% endfor %}
+  </select>
+  <span class="swim-deck__field-value" aria-hidden="true" data-course-value>SCY</span>
+</div>
+{% endmacro %}

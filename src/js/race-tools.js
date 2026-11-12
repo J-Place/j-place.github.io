@@ -1666,9 +1666,7 @@
     dsel.innerHTML = '<option value="">All</option>' + ds.map(function (d) { return '<option value="' + d + '">' + d + '</option>'; }).join('');
     dsel.value = pick.distance;
     modal.querySelector('[data-pick-input="stroke"]').value = pick.stroke;
-    modal.querySelectorAll('[data-pick-filter="course"] [data-value]').forEach(function (btn) {
-      btn.setAttribute('aria-pressed', String(btn.getAttribute('data-value') === pick.course));
-    });
+    modal.querySelector('[data-pick-input="course"]').value = pick.course;
     var shown = inCS.filter(function (r) { return !pick.distance || r.d === Number(pick.distance); });
     var checked = function (r) { return pick.ids.indexOf(r.id) >= 0; };
     pick.shown = shown.map(function (r) { return r.id; });
@@ -1702,8 +1700,6 @@
   document.addEventListener('click', function (e) {
     var opener = e.target.closest('[data-races-target]');
     if (opener) { preparePick(opener.getAttribute('data-races-target')); return; }
-    var course = e.target.closest('[data-pick-filter] [data-value]');
-    if (course) { pick.course = course.getAttribute('data-value'); renderPick(); return; }
     if (e.target.closest('[data-pick-add]') && pick.ids.length) {
       picked[pick.target] = pick.ids.slice();
       close(document.getElementById('swimDeckRaces'));
@@ -1992,12 +1988,6 @@
     if (!modal) return; // Add a Race is retired for now (Editors.njk)
     fitDistance(t, list);
     renderEventOptions(modal.querySelector('[data-st-race-options]'), list, t.course + ' ' + t.stroke);
-    modal.querySelectorAll('[data-race]').forEach(function (group) {
-      var value = t[group.getAttribute('data-race')];
-      group.querySelectorAll('[data-value]').forEach(function (btn) {
-        btn.setAttribute('aria-pressed', String(btn.getAttribute('data-value') === value));
-      });
-    });
     var sel = modal.querySelector('[data-race-input="distance"]');
     if (sel.value !== t.distance) sel.value = t.distance;
     set('raceDistance', t.distance);
@@ -2052,12 +2042,6 @@
     // The section's controls, and the Time Conversions modal's (Editors.njk)
     document.querySelectorAll('[data-st-conv-options]').forEach(function (sel) {
       renderEventOptions(sel, list, c.course + ' ' + c.stroke);
-    });
-    document.querySelectorAll('[data-conv]').forEach(function (group) {
-      var value = c[group.getAttribute('data-conv')];
-      group.querySelectorAll('[data-value]').forEach(function (btn) {
-        btn.setAttribute('aria-pressed', String(btn.getAttribute('data-value') === value));
-      });
     });
     document.querySelectorAll('[data-conv-input="distance"]').forEach(function (sel) {
       if (sel.value !== c.distance) sel.value = c.distance;
@@ -2317,9 +2301,6 @@
   // The form's course, unit, effort pill and stroke follow its swim
   function renderLogForm() {
     var t = state.newLog, modal = document.getElementById('swimDeckLog');
-    modal.querySelectorAll('[data-log] [data-value]').forEach(function (btn) {
-      btn.setAttribute('aria-pressed', String(btn.getAttribute('data-value') === t.course));
-    });
     set('logUnit', COURSES[t.course].unit === 'yd' ? '(yards)' : '(meters)');
     renderFelt(modal.querySelector('[data-effort-for="log"]'));
   }
@@ -2852,12 +2833,6 @@
 
     // The Your Swim card
     var card = document.getElementById('your-swim');
-    card.querySelectorAll('[data-metric]').forEach(function (group) {
-      var value = t[group.getAttribute('data-metric')];
-      group.querySelectorAll('[data-value]').forEach(function (btn) {
-        btn.setAttribute('aria-pressed', String(btn.getAttribute('data-value') === value));
-      });
-    });
     card.querySelectorAll('[data-metric-input]').forEach(function (el) {
       var value = t[el.getAttribute('data-metric-input')];
       if (el !== document.activeElement && el.value !== value) el.value = value;
@@ -3014,17 +2989,16 @@
         btn.setAttribute('aria-pressed', String(btn.getAttribute('data-value') === value));
       });
     });
-    // Stroke selects (StrokeSelect.njk), the modal's too: each shows its
-    // setting, and its pill the stroke's name
-    document.querySelectorAll('[data-stroke-select]').forEach(function (sel) {
-      var value = sel.hasAttribute('data-metric-input') ? state.metrics.stroke
-        : sel.hasAttribute('data-conv-input') ? state.conv.stroke
-        : sel.hasAttribute('data-tens-input') ? state.tens.stroke
-        : sel.hasAttribute('data-race-input') ? state.newRace.stroke
-        : sel.hasAttribute('data-log-input') ? state.newLog.stroke : state.stroke;
-      if (sel.value !== value) sel.value = value;
-      var opt = sel.options[sel.selectedIndex];
-      sel.parentNode.querySelector('[data-stroke-value]').textContent = opt ? opt.text : '';
+    // Stroke and course selects (StrokeSelect.njk, CourseSelect.njk), the
+    // modals' too: each shows its setting, and its pill the choice's name
+    document.querySelectorAll('[data-stroke-select], [data-course-select]').forEach(function (sel) {
+      var key = sel.hasAttribute('data-course-select') ? 'course' : 'stroke';
+      var on = sel.hasAttribute('data-metric-input') ? state.metrics
+        : sel.hasAttribute('data-conv-input') ? state.conv
+        : sel.hasAttribute('data-tens-input') ? state.tens
+        : sel.hasAttribute('data-race-input') ? state.newRace
+        : sel.hasAttribute('data-log-input') ? state.newLog : state;
+      showSelect(sel, on[key]);
     });
     // A guest's Competition Category before they pick: neither pressed
     // (the rankings still use Men's/Open until then)
@@ -3035,6 +3009,14 @@
       panel.hidden = panel.getAttribute('data-view-panel') !== state.view;
     });
     if (RACE_PAGE) balanceRacePlanning();
+  }
+
+  // A select with a pill (StrokeSelect.njk, CourseSelect.njk): its value,
+  // and the pill the chosen option's name
+  function showSelect(sel, value) {
+    if (sel.value !== value) sel.value = value;
+    var opt = sel.options[sel.selectedIndex];
+    sel.parentNode.querySelector('.swim-deck__field-value').textContent = opt ? opt.text : '';
   }
 
   // ---------- Race Metrics' column heights ----------
@@ -3117,26 +3099,16 @@
 
   // ---------- Events ----------
 
-  // Segmented controls: data-control sets a page setting, data-metric one of
-  // the Your Swim calculator's, data-race one of the Add a Race form's,
-  // data-log one of the Add to Log form's, data-conv one of Convert a
-  // Time's, data-tens one of Top 10 by Decade's
+  // Segmented controls: data-control sets a page setting, data-tens one of
+  // Top 10 by Decade's. (Course is a select everywhere since 2026-11-08:
+  // CourseSelect.njk, applied by applyInput.)
   document.addEventListener('click', function (e) {
-    var btn = e.target.closest('[data-control] [data-value], [data-metric] [data-value], [data-race] [data-value], [data-log] [data-value], [data-conv] [data-value], [data-tens] [data-value]');
+    var btn = e.target.closest('[data-control] [data-value], [data-tens] [data-value]');
     if (!btn) return;
-    var group = btn.closest('[data-control], [data-metric], [data-race], [data-log], [data-conv], [data-tens]');
-    var target = group.hasAttribute('data-metric') ? state.metrics
-      : group.hasAttribute('data-race') ? state.newRace
-      : group.hasAttribute('data-log') ? state.newLog
-      : group.hasAttribute('data-conv') ? state.conv
-      : group.hasAttribute('data-tens') ? state.tens : state;
-    var key = group.getAttribute('data-control') || group.getAttribute('data-metric') ||
-      group.getAttribute('data-race') || group.getAttribute('data-log') || group.getAttribute('data-conv') || group.getAttribute('data-tens');
+    var group = btn.closest('[data-control], [data-tens]');
+    var target = group.hasAttribute('data-tens') ? state.tens : state;
+    var key = group.getAttribute('data-control') || group.getAttribute('data-tens');
     var value = btn.getAttribute('data-value');
-    // Time Conversions' course (the section's or its modal's): the entry
-    // converts to the new course, as Course Conversion shows it, rather
-    // than keeping its number
-    if (target === state.conv && key === 'course' && value !== state.conv.course) convertConvEntry(value);
     // An optional choice (data-optional) clears when its pressed button is clicked
     target[key] = group.hasAttribute('data-optional') && target[key] === value ? '' : value;
     if (target === state && key === 'sex') state.sexChosen = true;
@@ -3192,7 +3164,13 @@
       if (key === 'ageGroup') state.ageChosen = true;
     }
     else if (metric) state.metrics[metric] = el.value;
-    else if (convKey) state.conv[convKey] = el.value;
+    else if (convKey) {
+      // Time Conversions' course (the section's or its modal's): the entry
+      // converts to the new course, as Course Conversion shows it, rather
+      // than keeping its number
+      if (convKey === 'course' && el.value !== state.conv.course) convertConvEntry(el.value);
+      state.conv[convKey] = el.value;
+    }
     else if (tensKey) state.tens[tensKey] = el.value;
     else if (raceKey) {
       state.newRace[raceKey] = el.value;

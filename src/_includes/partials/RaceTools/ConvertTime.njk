@@ -6,6 +6,7 @@
    hidden on phones, where the cards' gears open the Convert a Time modal. #}
 {% from "partials/RaceTools/TimeField.njk" import timeField %}
 {% from "partials/RaceTools/StrokeSelect.njk" import strokeSelect %}
+{% from "partials/RaceTools/CourseSelect.njk" import courseSelect %}
 <div class="swim-panel__band swim-panel__band--blue">
   <div class="swim-deck__context" role="group" aria-label="Time to convert, applies to every conversion">
     <div class="swim-swim__field">
@@ -23,9 +24,7 @@
     </div>
     <div class="swim-swim__field">
       <span class="swim-swim__label" id="sd-conv-course-label">Course</span>
-      <div class="swim-seg" role="group" aria-labelledby="sd-conv-course-label" data-conv="course">
-        {% for c in courses %}<button type="button" data-value="{{ c }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ c }}</button>{% endfor %}
-      </div>
+      {{ courseSelect('aria-labelledby="sd-conv-course-label"', 'data-conv-input="course"') }}
     </div>
     {# Time or pace (per 100): changing either updates the other; the one
        changed last is what Course Conversion shows, as event times or as

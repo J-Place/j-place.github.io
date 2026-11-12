@@ -17,6 +17,7 @@ courses: [SCY, SCM, LCM]
 {% block breadcrumb %}{% include "partials/Common/Breadcrumb.njk" %}{% endblock %}
 {% block pageHeader %}{% include "partials/Common/PageTitle.njk" %}{% endblock %}
 {% from "partials/RaceTools/StrokeSelect.njk" import strokeSelect %}
+{% from "partials/RaceTools/CourseSelect.njk" import courseSelect %}
 {% block pageCSS %}
 <link rel="stylesheet" href="/css/pages/race-tools.css">
 {% endblock %}
@@ -81,9 +82,7 @@ courses: [SCY, SCM, LCM]
               </div>
               <div class="swim-swim__field">
                 <span class="swim-swim__label" id="sd-event-course-label">Course</span>
-                <div class="swim-seg" role="group" aria-labelledby="sd-event-course-label" data-control="course">
-                  {% for c in courses %}<button type="button" data-value="{{ c }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ c }}</button>{% endfor %}
-                </div>
+                {{ courseSelect('aria-labelledby="sd-event-course-label"', 'data-input="course"') }}
               </div>
               {# Its Goal (and Set this goal beside it) was removed 2026-10-27:
                  the goal is set in the Race Metrics modal (a card's gear, or

@@ -1,6 +1,7 @@
 {# Modals for Swim Tools v2 (race-tools.js) #}
 {% from "partials/RaceTools/TimeField.njk" import timeField %}
 {% from "partials/RaceTools/StrokeSelect.njk" import strokeSelect %}
+{% from "partials/RaceTools/CourseSelect.njk" import courseSelect %}
 {% set modalModifier = "swim-deck-modal" %}
 
 {# Add a race to your race history (the Your Races card), which the Race
@@ -25,9 +26,7 @@
 </div>
 <div class="form-group">
   <span class="swim-deck-modal__label" id="sd-race-course-label">Course</span>
-  <div class="swim-seg" role="group" aria-labelledby="sd-race-course-label" data-race="course">
-    {% for c in courses %}<button type="button" data-value="{{ c }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ c }}</button>{% endfor %}
-  </div>
+  {{ courseSelect('aria-labelledby="sd-race-course-label"', 'data-race-input="course"') }}
 </div>
 <div class="swim-deck-modal__row swim-deck-modal__row--compact">
   <div class="form-group">
@@ -67,9 +66,7 @@
 </div>
 <div class="form-group">
   <span class="swim-deck-modal__label" id="sd-log-course-label">Course</span>
-  <div class="swim-seg" role="group" aria-labelledby="sd-log-course-label" data-log="course">
-    {% for c in courses %}<button type="button" data-value="{{ c }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ c }}</button>{% endfor %}
-  </div>
+  {{ courseSelect('aria-labelledby="sd-log-course-label"', 'data-log-input="course"') }}
 </div>
 <div class="swim-deck-modal__row swim-deck-modal__row--compact">
   <div class="form-group">
@@ -156,9 +153,7 @@
 </div>
 <div class="form-group">
   <span class="swim-deck-modal__label" id="sd-plan-course-label">Course</span>
-  <div class="swim-seg" role="group" aria-labelledby="sd-plan-course-label" data-control="course">
-    {% for c in courses %}<button type="button" data-value="{{ c }}" aria-pressed="false">{{ c }}</button>{% endfor %}
-  </div>
+  {{ courseSelect('aria-labelledby="sd-plan-course-label"', 'data-input="course"') }}
 </div>
 {% endset %}
 {% set modalFooter %}
@@ -189,9 +184,7 @@
 </div>
 <div class="form-group">
   <span class="swim-deck-modal__label" id="sd-convm-course-label">Course</span>
-  <div class="swim-seg" role="group" aria-labelledby="sd-convm-course-label" data-conv="course">
-    {% for c in courses %}<button type="button" data-value="{{ c }}" aria-pressed="false">{{ c }}</button>{% endfor %}
-  </div>
+  {{ courseSelect('aria-labelledby="sd-convm-course-label"', 'data-conv-input="course"') }}
 </div>
 <div class="swim-deck-modal__row swim-deck-modal__row--compact swim-convm__times">
   <div class="form-group">
@@ -224,10 +217,11 @@
 <p class="swim-pick__intro" data-st="pickIntro"></p>
 <div class="swim-deck-modal__row swim-deck-modal__row--compact swim-pick__filters">
   <div class="form-group">
-    <span class="swim-deck-modal__label" id="sd-pick-course-label">Course</span>
-    <div class="swim-seg" role="group" aria-labelledby="sd-pick-course-label" data-pick-filter="course">
-      <button type="button" data-value="" aria-pressed="true">All</button>{% for c in courses %}<button type="button" data-value="{{ c }}" aria-pressed="false">{{ c }}</button>{% endfor %}
-    </div>
+    <label class="swim-deck-modal__label" for="sd-pick-course">Course</label>
+    <select class="form-control swim-pick__select" id="sd-pick-course" data-pick-input="course">
+      <option value="">All</option>
+      {% for c in ["SCY", "SCM", "LCM"] %}<option value="{{ c }}">{{ c }}</option>{% endfor %}
+    </select>
   </div>
   <div class="form-group">
     <label class="swim-deck-modal__label" for="sd-pick-stroke">Stroke</label>
