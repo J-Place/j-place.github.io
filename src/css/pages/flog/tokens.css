@@ -2,7 +2,10 @@
    uses, as custom properties. flog.css only ever refers to these (never a raw
    colour), so Bonfire can swap in the official design tokens in one place.
    The brand values are Bonfire's primer's (FLOG-MOCKUP-PRIMER.md, §5);
-   the ones under "Added" are the mockup's own, listed in NOTES.md. */
+   the ones under "Added" are the mockup's own, listed in NOTES.md.
+   Since 2026-11-09 FLOG looks like Race Tools (/events/race-tools/,
+   race-tools.css): the values marked "Race Tools" are its, in place of
+   the primer's (theirs in the comment). */
 .flog {
   /* Brand (primer) */
   --flog-primary: #0068ad;
@@ -10,22 +13,31 @@
   --flog-secondary: #1e3666;
   --flog-dark-blue: #071c31;
   --flog-gold: #cca367;
-  --flog-red: #d2202e;
-  --flog-bg: #f4f4f4;
+  --flog-red: #cc2030;          /* Race Tools; primer #d2202e */
+  --flog-bg: #ffffff;           /* Race Tools: a white page; primer #f4f4f4 */
   --flog-card: #ffffff;
   --flog-muted: #e7e7e7;
-  --flog-muted-text: #555555;
-  --flog-light-blue: #eaf4ff;
-  --flog-border: #cccccc;
+  --flog-muted-text: #595959;   /* Race Tools; primer #555555 */
+  --flog-light-blue: #e7f5ff;   /* Race Tools' tint, rgb(231, 245, 255); primer #eaf4ff */
+  --flog-border: #dddddd;       /* Race Tools; primer #cccccc */
 
   /* Added */
   --flog-ink: #262627;          /* body text: the site's own ink, softer than black */
   --flog-on-color: #ffffff;     /* text on primary, secondary and red */
   --flog-red-tint: #fdeced;     /* behind the delete confirmation */
   --flog-red-dark: #a8141f;     /* the red button's hover */
+  /* Intensity's scale, light blue (very easy) to red (max), as Race Tools'
+     slider (race-tools.css, .swim-slider) */
+  --flog-intensity-1: #d6e9f6;
+  --flog-intensity-2: #8cc0e3;
+  --flog-intensity-3: var(--flog-primary);
+  --flog-intensity-4: #ff7f00;
+  --flog-intensity-5: var(--flog-red);
+  --flog-shadow: rgba(0, 0, 0, 0.3); /* the slider's thumb */
 
   /* Type */
-  --flog-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --flog-font: arial, sans-serif; /* the site's, as Race Tools; primer "Helvetica Neue", Helvetica, Arial, sans-serif */
+  --flog-label: 13px;           /* Race Tools' field labels */
   --flog-text-sm: 14px;
   --flog-text: 16px;
   --flog-text-lg: 20px;
@@ -33,7 +45,9 @@
   --flog-text-xxl: 36px;
 
   /* Shape and space */
-  --flog-radius: 3px;
+  --flog-radius: 8px;           /* Race Tools' cards, fields and tracks; primer 3px */
+  --flog-radius-inner: 5px;     /* Race Tools' pill inside a track */
+  --flog-radius-btn: 3px;       /* buttons: the primer's */
   --flog-space-1: 4px;
   --flog-space-2: 8px;
   --flog-space-3: 12px;

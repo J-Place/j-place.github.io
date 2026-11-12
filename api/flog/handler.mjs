@@ -95,7 +95,7 @@ export function createHandler({ store, seed, origins = [], today = () => isoDate
           const entry = cleanEntry(await body());
           const problems = entryProblems(entry, today());
           if (problems.length) return json({ problems }, 400);
-          if (record.entries.length >= MAX_ENTRIES) return problem(409, 'This log is full (a mockup limit). Reset it from Preferences.');
+          if (record.entries.length >= MAX_ENTRIES) return problem(409, 'This log is full (a mockup limit). Reset it: POST /api/flog/reset.');
           entry.EntryID = nextEntryId(record.entries);
           entry.DistanceYards = toYards(entry.RawDistance, entry.RawDistanceUnit);
           record.entries.push(entry);

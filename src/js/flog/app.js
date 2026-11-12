@@ -1,6 +1,6 @@
 // FLOG mockup: the pages. Each repeated thing has one render function that
 // takes data and returns its HTML (renderSwim, renderDay, renderWeek,
-// renderMonth, renderList, renderTotals, renderSwimForm, renderPreferences):
+// renderMonth, renderTotals, renderSwimForm, renderPreferences):
 // each is meant to become one React component. Data only ever comes from
 // flog-api.js (window.FlogApi), in the Fitness Log's own field names.
 (function () {
@@ -197,12 +197,10 @@
 
   // ---------- Render functions ----------
 
-  // One swim: on the calendar, in the list, on a day
-  function renderSwim(swim, prefs, options) {
-    var showDate = options && options.showDate;
+  // One swim: on the calendar, on a day
+  function renderSwim(swim, prefs) {
     var course = courseOf(swim.RawDistanceCourse);
     var meta = [];
-    if (showDate) meta.push(esc(shortDate(swim.Date)));
     meta.push(esc(formatDuration(swim.DurationMinutes)));
     if (swim.Intensity) meta.push('Intensity ' + swim.Intensity + ' <span class="flog-swim__word">' + esc(INTENSITY_WORDS[swim.Intensity]) + '</span>');
     if (swim.Stroke) meta.push(esc(swim.Stroke));
@@ -267,8 +265,10 @@
       cells.push('<td>' +
         '<button type="button" class="flog-month__day' + (date === today() ? ' is-today' : '') + (swims.length ? ' has-swims' : '') + '" data-day="' + date + '" aria-pressed="' + (date === selected) + '" aria-label="' + esc(label) + '"' + (date > today() ? ' disabled' : '') + '>' +
           '<span class="flog-month__num">' + parseDate(date).getDate() + '</span>' +
-          (swims.length ? '<span class="flog-month__dist">' + esc(formatDistance(t.yards, prefs.UserDefaultDistance, { bare: true })) + '</span>' : '') +
-          (swims.length > 1 ? '<span class="flog-month__count">×' + swims.length + '</span>' : '') +
+          // Each swim's distance, stacked
+          (swims.length ? '<span class="flog-month__dists">' + swims.map(function (s) {
+            return '<span class="flog-month__dist">' + esc(formatDistance(s.DistanceYards, prefs.UserDefaultDistance, { bare: true })) + '</span>';
+          }).join('') + '</span>' : '') +
         '</button>' +
       '</td>');
     }
@@ -282,23 +282,6 @@
         '<thead><tr>' + head + '</tr></thead><tbody>' + rows.join('') + '</tbody>' +
       '</table>' +
       (pick ? '<ul class="flog-week flog-month__picked" aria-live="polite">' + renderDay(pick, swimsOn(entries, pick), prefs, { long: true }) + '</ul>' : '');
-  }
-
-  // Every swim, newest first, under a heading for each month
-  function renderList(entries, prefs) {
-    var html = '';
-    var month = null;
-    var open = false;
-    entries.forEach(function (e) {
-      if (e.Date.slice(0, 7) !== month) {
-        if (open) html += '</ul>';
-        month = e.Date.slice(0, 7);
-        html += '<h3 class="flog-list__month">' + esc(monthLabel(e.Date)) + '</h3><ul class="flog-list">';
-        open = true;
-      }
-      html += renderSwim(e, prefs, { showDate: true });
-    });
-    return html + (open ? '</ul>' : '');
   }
 
   // This month, this year, lifetime
@@ -333,6 +316,78 @@
     }).join('') + '</div>';
   }
 
+  // A select drawn as Race Tools' are: a white track with the choice in a
+  // blue pill. The pill is a span over the select's hidden text; the change
+  // listener below keeps its text in step. options: [{ id, label }]
+  function select(name, options, value, describedBy) {
+    var chosen = options.filter(function (o) { return String(o.id) === String(value); })[0] || options[0];
+    return '<div class="flog-select">' +
+      '<select class="flog-select__input" id="flog-' + name + '" name="' + name + '"' + (describedBy ? ' aria-describedby="' + describedBy + '"' : '') + '>' +
+        options.map(function (o) {
+          return '<option value="' + esc(o.id) + '"' + (o === chosen ? ' selected' : '') + '>' + esc(o.label) + '</option>';
+        }).join('') +
+      '</select>' +
+      '<span class="flog-select__value" aria-hidden="true">' + esc(chosen.label) + '</span>' +
+    '</div>';
+  }
+
+  // How hard a swim felt, 1 to 10, as Race Tools' Pace and calories slider:
+  // a track shaded light blue to red. Not rated: faded, with no thumb, and
+  // clicking or dragging on it rates; × clears. wireSlider keeps it in step.
+  function slider(name, value, describedBy) {
+    return '<div class="flog-slider' + (value ? '' : ' is-unrated') + '" data-slider>' +
+      '<span class="flog-slider__end" aria-hidden="true">1</span>' +
+      '<input type="range" class="flog-slider__input" id="flog-' + name + '" name="' + name + '" min="1" max="10" step="1" value="' + esc(value || 5) + '"' + (describedBy ? ' aria-describedby="' + describedBy + '"' : '') + '>' +
+      '<span class="flog-slider__end" aria-hidden="true">10</span>' +
+      '<button type="button" class="flog-slider__clear" data-slider-clear aria-label="Clear intensity"' + (value ? '' : ' hidden') + '>' + icon('x') + '</button>' +
+    '</div>';
+  }
+
+  // Each rating's shade (tokens.css), for the thumb's ring
+  var INTENSITY_SHADES = { 1: 1, 2: 1, 3: 2, 4: 2, 5: 3, 6: 3, 7: 4, 8: 4, 9: 5, 10: 5 };
+
+  // The slider's behaviour; onChange(value) gets '' when it's cleared.
+  // The mouse wheel steps it while it's focused (one step a notch,
+  // trackpads one per 30px), as on Race Tools.
+  function wireSlider(el, onChange) {
+    var range = el.querySelector('input');
+    var clear = el.querySelector('[data-slider-clear]');
+    var value = el.classList.contains('is-unrated') ? '' : range.value;
+    function set(v) {
+      value = v;
+      el.classList.toggle('is-unrated', !v);
+      clear.hidden = !v;
+      if (v) range.value = v;
+      el.style.setProperty('--flog-slider-now', v ? 'var(--flog-intensity-' + INTENSITY_SHADES[v] + ')' : 'transparent');
+      range.setAttribute('aria-valuetext', v ? v + ', ' + INTENSITY_WORDS[v] : 'Not rated');
+      onChange(v);
+    }
+    range.addEventListener('input', function () { set(range.value); });
+    // A click on the unrated track where the thumb already sits fires no input
+    range.addEventListener('pointerup', function () { set(range.value); });
+    clear.addEventListener('click', function () {
+      set('');
+      range.focus();
+    });
+    var spin = 0;
+    range.addEventListener('wheel', function (e) {
+      if (range !== document.activeElement) return;
+      e.preventDefault();
+      spin += Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : -e.deltaY;
+      if (Math.abs(spin) < 30) return;
+      var now = Number(value) || (spin > 0 ? 0 : 11);
+      set(String(Math.min(10, Math.max(1, now + (spin > 0 ? 1 : -1)))));
+      spin = 0;
+    }, { passive: false });
+    set(value);
+  }
+
+  document.addEventListener('change', function (e) {
+    if (!e.target.matches || !e.target.matches('.flog-select__input')) return;
+    var sel = e.target;
+    sel.parentNode.querySelector('.flog-select__value').textContent = sel.options[sel.selectedIndex].text;
+  });
+
   function fieldError(name) {
     return '<p class="flog-field__error" id="flog-error-' + name + '" hidden></p>';
   }
@@ -348,57 +403,48 @@
           '<input class="flog-input flog-input--date" type="date" id="flog-Date" name="Date" value="' + esc(entry.Date || '') + '" max="' + today() + '" required aria-describedby="flog-error-Date">' +
           fieldError('Date') +
         '</div>' +
-        '<fieldset class="flog-field" aria-describedby="flog-error-RawDistanceCourse">' +
-          '<legend class="flog-label">Course</legend>' +
-          choices('RawDistanceCourse', COURSES.map(function (c) { return { id: c.id, label: c.label, title: c.name }; }), entry.RawDistanceCourse, 'flog-choices--wrap') +
-          '<p class="flog-hint">SCY short course yards · SCM short course meters · LCM long course meters</p>' +
-          fieldError('RawDistanceCourse') +
-        '</fieldset>' +
-        '<div class="flog-field flog-field--distance">' +
-          '<label class="flog-label" for="flog-RawDistance">Distance</label>' +
-          '<div class="flog-row">' +
-            '<input class="flog-input flog-input--number" type="number" inputmode="decimal" min="0" step="any" id="flog-RawDistance" name="RawDistance" value="' + esc(entry.RawDistance != null ? entry.RawDistance : '') + '" required aria-describedby="flog-error-RawDistance">' +
-            '<fieldset class="flog-unit"><legend class="visually-hidden">Unit</legend>' +
-              choices('RawDistanceUnit', UNITS.map(function (u) { return { id: u.id, label: u.label, title: u.name }; }), entry.RawDistanceUnit) +
-            '</fieldset>' +
+        // Course, main stroke and distance, side by side (wrapping on phones)
+        '<div class="flog-row flog-row--fields">' +
+          '<div class="flog-field">' +
+            '<label class="flog-label" for="flog-RawDistanceCourse">Course</label>' +
+            select('RawDistanceCourse', COURSES.map(function (c) { return { id: c.id, label: c.id }; }), entry.RawDistanceCourse, 'flog-error-RawDistanceCourse') +
+            fieldError('RawDistanceCourse') +
           '</div>' +
-          fieldError('RawDistance') +
+          '<div class="flog-field">' +
+            '<label class="flog-label" for="flog-Stroke">Main stroke <span class="flog-label__note">(optional)</span></label>' +
+            select('Stroke', [{ id: '', label: '–' }].concat(STROKES.map(function (st) { return { id: st, label: st }; })), entry.Stroke || '') +
+          '</div>' +
+          '<div class="flog-field flog-field--distance">' +
+            '<label class="flog-label" for="flog-RawDistance">Distance</label>' +
+            '<div class="flog-row">' +
+              '<input class="flog-input flog-input--number" type="number" inputmode="decimal" min="0" step="any" id="flog-RawDistance" name="RawDistance" value="' + esc(entry.RawDistance != null ? entry.RawDistance : '') + '" required aria-describedby="flog-error-RawDistance">' +
+              '<label class="visually-hidden" for="flog-RawDistanceUnit">Unit</label>' +
+              select('RawDistanceUnit', unitOptions(entry.RawDistanceCourse, entry.RawDistanceUnit), entry.RawDistanceUnit) +
+            '</div>' +
+            fieldError('RawDistance') +
+          '</div>' +
         '</div>' +
-        '<div class="flog-field">' +
-          '<label class="flog-label" for="flog-DurationMinutes">Time <span class="flog-label__note">(minutes)</span></label>' +
-          '<div class="flog-row">' +
-            '<input class="flog-input flog-input--number" type="number" inputmode="numeric" min="1" max="1440" step="1" id="flog-DurationMinutes" name="DurationMinutes" value="' + esc(entry.DurationMinutes != null ? entry.DurationMinutes : '') + '" required aria-describedby="flog-duration-as flog-error-DurationMinutes">' +
-            '<span class="flog-hint flog-hint--inline" id="flog-duration-as" data-duration-as></span>' +
+        // Time and intensity, side by side
+        '<div class="flog-row flog-row--fields">' +
+          '<div class="flog-field">' +
+            '<label class="flog-label" for="flog-DurationMinutes">Time <span class="flog-label__note">(minutes)</span></label>' +
+            '<div class="flog-row">' +
+              '<input class="flog-input flog-input--number" type="number" inputmode="numeric" min="1" max="1440" step="1" id="flog-DurationMinutes" name="DurationMinutes" value="' + esc(entry.DurationMinutes != null ? entry.DurationMinutes : '') + '" required aria-describedby="flog-duration-as flog-error-DurationMinutes">' +
+              '<span class="flog-hint flog-hint--inline" id="flog-duration-as" data-duration-as></span>' +
+            '</div>' +
+            fieldError('DurationMinutes') +
           '</div>' +
-          fieldError('DurationMinutes') +
+          '<div class="flog-field">' +
+            '<label class="flog-label" for="flog-Intensity">Intensity <span class="flog-label__note" data-intensity-word></span></label>' +
+            slider('Intensity', entry.Intensity, 'flog-error-Intensity') +
+            fieldError('Intensity') +
+          '</div>' +
         '</div>' +
         '<div class="flog-field">' +
           '<label class="flog-label" for="flog-Details">Comments</label>' +
           '<textarea class="flog-input flog-input--text" id="flog-Details" name="Details" rows="3">' + esc(entry.Details || '') + '</textarea>' +
         '</div>' +
       '</div>' +
-      '<fieldset class="flog-card flog-optional">' +
-        '<legend class="flog-optional__title">More about this swim <span class="flog-label__note">(optional)</span></legend>' +
-        '<fieldset class="flog-field" aria-describedby="flog-intensity-word flog-error-Intensity">' +
-          '<legend class="flog-label">Intensity <span class="flog-label__note">(how hard it felt, 1 to 10)</span></legend>' +
-          choices('Intensity', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(function (n) { return { id: n, label: String(n), title: INTENSITY_WORDS[n] }; }), entry.Intensity, 'flog-choices--scale') +
-          '<p class="flog-hint"><span id="flog-intensity-word" data-intensity-word></span> <button type="button" class="flog-link" data-clear-intensity>Clear</button></p>' +
-          fieldError('Intensity') +
-        '</fieldset>' +
-        '<div class="flog-row flog-row--fields">' +
-          '<div class="flog-field">' +
-            '<label class="flog-label" for="flog-Stroke">Main stroke</label>' +
-            '<select class="flog-input flog-input--select" id="flog-Stroke" name="Stroke">' +
-              '<option value="">–</option>' + STROKES.map(function (s) { return '<option' + (entry.Stroke === s ? ' selected' : '') + '>' + s + '</option>'; }).join('') +
-            '</select>' +
-          '</div>' +
-          '<div class="flog-field">' +
-            '<label class="flog-label" for="flog-Calories">Calories</label>' +
-            '<input class="flog-input flog-input--number" type="number" inputmode="numeric" min="0" step="1" id="flog-Calories" name="Calories" value="' + esc(entry.Calories != null ? entry.Calories : '') + '" aria-describedby="flog-error-Calories">' +
-            fieldError('Calories') +
-          '</div>' +
-        '</div>' +
-      '</fieldset>' +
       '<div class="flog-actions" data-actions>' +
         '<button type="submit" class="flog-btn flog-btn--primary">' + icon('check') + (editing ? 'Save changes' : 'Log swim') + '</button>' +
         '<a class="flog-btn flog-btn--quiet" href="' + homeUrl(null, entry.Date) + '">Cancel</a>' +
@@ -427,10 +473,6 @@
           '<input type="checkbox" class="flog-check__input" id="flog-WorkoutsPublic" name="WorkoutsPublic"' + (prefs.WorkoutsPublic ? ' checked' : '') + '>' +
           '<label class="flog-check__label" for="flog-WorkoutsPublic">Make my workouts public</label>' +
         '</div>' +
-        '<div class="flog-check">' +
-          '<input type="checkbox" class="flog-check__input" id="flog-MeasurementsPublic" name="MeasurementsPublic"' + (prefs.MeasurementsPublic ? ' checked' : '') + '>' +
-          '<label class="flog-check__label" for="flog-MeasurementsPublic">Make my measurements public</label>' +
-        '</div>' +
       '</div>' +
       '<div class="flog-card">' +
         '<h2 class="flog-card__title">Defaults</h2>' +
@@ -439,11 +481,12 @@
           choices('UserDefaultDistance', UNITS.map(function (u) { return { id: u.id, label: u.name }; }), prefs.UserDefaultDistance) +
           '<p class="flog-hint">Your log and totals show distances in this unit. Open water and Other swims start in it too.</p>' +
         '</fieldset>' +
-        '<fieldset class="flog-field">' +
-          '<legend class="flog-label">Course</legend>' +
-          choices('UserDefaultCourse', COURSES.map(function (c) { return { id: c.id, label: c.label, title: c.name }; }), prefs.UserDefaultCourse, 'flog-choices--wrap') +
-          '<p class="flog-hint">Where a new swim starts.</p>' +
-        '</fieldset>' +
+        // A select, as on Log a swim
+        '<div class="flog-field">' +
+          '<label class="flog-label" for="flog-UserDefaultCourse">Course</label>' +
+          select('UserDefaultCourse', COURSES.map(function (c) { return { id: c.id, label: c.id }; }), prefs.UserDefaultCourse, 'flog-hint-UserDefaultCourse') +
+          '<p class="flog-hint" id="flog-hint-UserDefaultCourse">Where a new swim starts.</p>' +
+        '</div>' +
         '<fieldset class="flog-field">' +
           '<legend class="flog-label">Calendar view</legend>' +
           choices('UserDefaultView', [{ id: 'week', label: 'Week' }, { id: 'month', label: 'Month' }], prefs.UserDefaultView) +
@@ -518,29 +561,28 @@
 
   // ---------- Pages ----------
 
-  // Home: the calendar (week or month) or the list
+  // Home: the calendar, a week or a month
   function home() {
     var view = params.get('view');
     var date = validDate(params.get('date')) ? params.get('date') : today();
     var prefs;
     var selected = null;
     var monthEntries = [];
-    var list = null;
     var flash = takeFlash();
 
     function load() {
       showLoading(app);
       Promise.all([api.getPreferences(), api.getTotals(today())]).then(function (r) {
         prefs = r[0];
-        if (['week', 'month', 'list'].indexOf(view) < 0) view = prefs.UserDefaultView || 'week';
+        if (['week', 'month'].indexOf(view) < 0) view = prefs.UserDefaultView || 'week';
         var firstTime = !r[1].lifetime.NumSessions;
         done(app,
           (flash ? '<p class="flog-flash" role="status">' + icon('check-circle') + esc(flash) + '</p>' : '') +
           (firstTime ? renderMessage('Welcome to your Fitness Log', 'Log each swim to see your weeks, months and totals add up. It only takes a few seconds after practice.', '<a class="flog-btn flog-btn--primary" href="' + pageUrl('log-swim') + '">' + icon('plus') + 'Log your first swim</a>') : '') +
           '<div class="flog-toolbar">' +
             '<div class="flog-seg" role="group" aria-label="Show your swims by">' +
-              ['week', 'month', 'list'].map(function (v) {
-                return '<button type="button" data-view="' + v + '" aria-pressed="' + (v === view) + '">' + icon(v === 'list' ? 'list' : 'calendar') + v.charAt(0).toUpperCase() + v.slice(1) + '</button>';
+              ['week', 'month'].map(function (v) {
+                return '<button type="button" data-view="' + v + '" aria-pressed="' + (v === view) + '">' + icon('calendar') + v.charAt(0).toUpperCase() + v.slice(1) + '</button>';
               }).join('') +
             '</div>' +
             '<div class="flog-pager">' +
@@ -562,8 +604,7 @@
     function setUrl() {
       var q = new URLSearchParams(location.search);
       q.set('view', view);
-      if (view === 'list') q.delete('date');
-      else q.set('date', date);
+      q.set('date', date);
       history.replaceState(null, '', location.pathname + '?' + q.toString());
     }
 
@@ -575,19 +616,9 @@
     function draw() {
       setUrl();
       app.querySelectorAll('[data-view]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-view') === view)); });
-      var pager = app.querySelector('.flog-pager');
       var label = app.querySelector('[data-label]');
       var summary = app.querySelector('[data-summary]');
       var body = app.querySelector('[data-body]');
-      pager.classList.toggle('is-list', view === 'list');
-      if (view === 'list') {
-        label.textContent = 'All swims, newest first';
-        summary.textContent = '';
-        list = { entries: [], hasMore: false, nextBefore: null };
-        showLoading(body);
-        more(body);
-        return;
-      }
       var r = range();
       label.textContent = view === 'week' ? weekLabel(r.from) : monthLabel(r.from);
       app.querySelectorAll('[data-step-label]').forEach(function (s, i) { s.textContent = (i ? 'Next ' : 'Previous ') + view; });
@@ -604,17 +635,6 @@
           done(body, renderMonth(r.from, entries, prefs, selected));
         }
       }, function () { showError(body, draw); });
-    }
-
-    // The list: the next page of older swims
-    function more(body) {
-      api.getEntriesPage({ limit: 20, before: list.nextBefore }).then(function (page) {
-        list.entries = list.entries.concat(page.entries);
-        list.hasMore = page.hasMore;
-        list.nextBefore = page.nextBefore;
-        done(body, (list.entries.length ? renderList(list.entries, prefs) : '<p class="flog-day__none">No swims yet.</p>') +
-          (list.hasMore ? '<p class="flog-more"><button type="button" class="flog-btn flog-btn--quiet" data-more>Show older swims</button></p>' : ''));
-      }, function () { showError(body, function () { more(body); }); });
     }
 
     function onToolbar(e) {
@@ -642,14 +662,6 @@
         var body = app.querySelector('[data-body]');
         body.innerHTML = renderMonth(monthStart(date), monthEntries, prefs, selected);
         body.querySelector('[data-day="' + selected + '"]').focus();
-        return;
-      }
-      if (e.target.closest('[data-more]')) {
-        var moreBody = app.querySelector('[data-body]');
-        var button = e.target.closest('[data-more]');
-        button.disabled = true;
-        button.textContent = 'Loading…';
-        more(moreBody);
       }
     }
 
@@ -660,21 +672,26 @@
   function readSwimForm(form) {
     var f = form.elements;
     var num = function (v) { return v === '' ? null : Number(v); };
-    var checked = function (name) {
-      var el = form.querySelector('[name="' + name + '"]:checked');
-      return el ? el.value : null;
-    };
     return {
       Date: f.Date.value,
-      RawDistanceCourse: checked('RawDistanceCourse'),
+      RawDistanceCourse: f.RawDistanceCourse.value,
       RawDistance: num(f.RawDistance.value.trim()),
-      RawDistanceUnit: checked('RawDistanceUnit'),
+      RawDistanceUnit: f.RawDistanceUnit.value,
       DurationMinutes: num(f.DurationMinutes.value.trim()),
       Details: f.Details.value.trim(),
-      Intensity: num(checked('Intensity') || ''),
-      Stroke: f.Stroke.value || null,
-      Calories: num(f.Calories.value.trim())
+      Intensity: form.querySelector('[data-slider]').classList.contains('is-unrated') ? null : num(f.Intensity.value),
+      Stroke: f.Stroke.value || null
     };
+  }
+
+  // The units each course offers: a pool's own, or miles; open water and
+  // Other, any. `keep`: a swim's saved unit, still offered if the course
+  // wouldn't, so editing it never changes it unasked.
+  var COURSE_UNITS = { SCY: ['Y', 'mi'], SCM: ['M', 'mi'], LCM: ['M', 'mi'] };
+  function unitOptions(course, keep) {
+    var ids = COURSE_UNITS[course];
+    return UNITS.filter(function (u) { return !ids || ids.indexOf(u.id) >= 0 || u.id === keep; })
+      .map(function (u) { return { id: u.id, label: u.label }; });
   }
 
   // A pool course says its own unit; open water and Other use the swimmer's
@@ -685,7 +702,9 @@
   }
 
   // The form's behaviour, for Log and Edit
-  function wireSwimForm(form, prefs, entryId) {
+  // `entry`: the swim being edited (null when logging a new one)
+  function wireSwimForm(form, prefs, entry) {
+    var entryId = entry ? entry.EntryID : null;
     var unitTouched = entryId != null;
     var durationAs = form.querySelector('[data-duration-as]');
     var word = form.querySelector('[data-intensity-word]');
@@ -693,37 +712,39 @@
       var m = Number(form.elements.DurationMinutes.value);
       durationAs.textContent = m >= 60 && m <= 1440 ? '= ' + formatDuration(m) : '';
     }
-    function showIntensity() {
-      var el = form.querySelector('[name="Intensity"]:checked');
-      word.textContent = el ? el.value + ': ' + INTENSITY_WORDS[el.value] : 'Not rated';
-      form.querySelector('[data-clear-intensity]').hidden = !el;
-    }
     form.addEventListener('change', function (e) {
       if (e.target.name === 'RawDistanceUnit') unitTouched = true;
-      if (e.target.name === 'RawDistanceCourse' && !unitTouched) {
-        var unit = form.querySelector('[name="RawDistanceUnit"][value="' + unitFor(e.target.value, prefs) + '"]');
-        if (unit) unit.checked = true;
+      // A new course: only its units. The unit stays if the swimmer chose it
+      // and the course offers it; otherwise it's the course's own.
+      if (e.target.name === 'RawDistanceCourse') {
+        var unit = form.elements.RawDistanceUnit;
+        var options = unitOptions(e.target.value);
+        var keep = unitTouched && options.some(function (o) { return o.id === unit.value; });
+        var value = keep ? unit.value : unitFor(e.target.value, prefs);
+        unit.innerHTML = options.map(function (o) {
+          return '<option value="' + esc(o.id) + '">' + esc(o.label) + '</option>';
+        }).join('');
+        unit.value = value;
+        unit.parentNode.querySelector('.flog-select__value').textContent = unit.options[unit.selectedIndex].text;
       }
-      if (e.target.name === 'Intensity') showIntensity();
     });
     form.elements.DurationMinutes.addEventListener('input', showDuration);
-    form.querySelector('[data-clear-intensity]').addEventListener('click', function () {
-      var el = form.querySelector('[name="Intensity"]:checked');
-      if (el) el.checked = false;
-      showIntensity();
-      form.querySelector('[name="Intensity"]').focus();
+    // Its word goes in the label, as on Race Tools
+    wireSlider(form.querySelector('[data-slider]'), function (v) {
+      word.textContent = v ? '· ' + INTENSITY_WORDS[v] : '(optional)';
     });
     showDuration();
-    showIntensity();
 
     var saving = false;
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (saving) return;
-      var entry = readSwimForm(form);
-      if (entryId != null) entry.EntryID = entryId;
+      var input = readSwimForm(form);
+      if (entryId != null) input.EntryID = entryId;
+      // The form doesn't ask for calories; an edit keeps the swim's own
+      if (entry && entry.Calories != null) input.Calories = entry.Calories;
       saving = true;
-      api.saveEntry(entry).then(function (saved) {
+      api.saveEntry(input).then(function (saved) {
         setFlash((entryId != null ? 'Swim saved: ' : 'Swim logged: ') + formatDistance(saved.DistanceYards, prefs.UserDefaultDistance) + ' on ' + shortDate(saved.Date) + '.');
         location.href = homeUrl(null, saved.Date);
       }, function (err) {
@@ -778,7 +799,7 @@
       showLoading(app);
       Promise.all([api.getPreferences(), api.getEntry(id)]).then(function (r) {
         done(app, renderSwimForm(r[1], r[0], 'edit'));
-        wireSwimForm(app.querySelector('[data-swim-form]'), r[0], r[1].EntryID);
+        wireSwimForm(app.querySelector('[data-swim-form]'), r[0], r[1]);
       }, function (err) {
         if (err && err.status === 404) {
           done(app, renderMessage('We couldn’t find that swim', 'It may have been deleted.', '<a class="flog-btn flog-btn--primary" href="' + homeUrl() + '">Back to your Fitness Log</a>'));
@@ -801,18 +822,12 @@
   }
 
   function preferences() {
-    function load(message) {
+    function load() {
       showLoading(app);
       api.getPreferences().then(function (prefs) {
-        done(app, renderPreferences(prefs) +
-          '<div class="flog-card flog-demo">' +
-            '<h2 class="flog-card__title">Demo data</h2>' +
-            '<p>This mockup starts every swimmer from sample swims and keeps your changes for this browser. Reset to start over.</p>' +
-            '<p><button type="button" class="flog-btn flog-btn--quiet" data-reset>Reset demo data</button></p>' +
-          '</div>');
+        done(app, renderPreferences(prefs));
         var form = app.querySelector('[data-preferences-form]');
         var status = form.querySelector('[data-status]');
-        if (message) status.textContent = message;
         form.addEventListener('submit', function (e) {
           e.preventDefault();
           var checked = function (name) {
@@ -822,9 +837,10 @@
           status.textContent = '';
           api.savePreferences({
             WorkoutsPublic: form.elements.WorkoutsPublic.checked,
-            MeasurementsPublic: form.elements.MeasurementsPublic.checked,
+            // Not on the page (since 2026-11-12), so it's sent back unchanged
+            MeasurementsPublic: prefs.MeasurementsPublic,
             UserDefaultDistance: checked('UserDefaultDistance'),
-            UserDefaultCourse: checked('UserDefaultCourse'),
+            UserDefaultCourse: form.elements.UserDefaultCourse.value,
             UserDefaultView: checked('UserDefaultView')
           }).then(function () {
             showProblems(form, []);
@@ -832,9 +848,6 @@
           }, function (err) {
             showProblems(form, (err && err.problems) || [{ field: null, message: 'We couldn’t save your preferences. Try again.' }]);
           });
-        });
-        app.querySelector('[data-reset]').addEventListener('click', function () {
-          api.reset().then(function () { load('Demo data reset: your swims and preferences are back to the samples.'); });
         });
       }, function () { showError(app, load); });
     }

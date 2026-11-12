@@ -118,7 +118,8 @@ window.FlogApi = (function () {
       return call('PUT', '/preferences', prefs);
     },
 
-    // Back to the sample data. POST /api/flog/reset (mockup only)
+    // Back to the sample data. POST /api/flog/reset (mockup only; no page
+    // offers it since 2026-11-08: call it from the console or Postman)
     reset: function () {
       return call('POST', '/reset');
     }

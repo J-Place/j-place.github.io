@@ -8,7 +8,7 @@ Like Race Tools, Training Tools and the Workout Generator, FLOG is a stand-alone
 
 | Page | URL | File |
 |---|---|---|
-| Home (week, month, list) | `/myusms/flog/?view=&date=` | `src/pages/myusms/flog/index.njk` |
+| Home (week, month) | `/myusms/flog/?view=&date=` | `src/pages/myusms/flog/index.njk` |
 | Log a swim | `/myusms/flog/log-swim/?date=` | `log-swim.njk` |
 | Edit a swim | `/myusms/flog/edit-swim/?id=` | `edit-swim.njk` |
 | Totals | `/myusms/flog/totals/` | `totals.njk` |
@@ -37,7 +37,7 @@ My Account's Fitness Log link already points to `/myusms/flog/`.
   - Uses `.flog__container` and a plain `<section class="flog">`, because production styles `.usms-container p`/`li` at 2rem and makes `.section` a table.
 - **`src/js/flog/app.js`:**
   - Helpers: local dates, `formatDistance` (the one place distances are shown, always in `UserDefaultDistance`), `formatDuration`, and `esc`. Comments are typed by swimmers, so they're escaped before they go into HTML.
-  - Render functions: `renderSwim`, `renderDay`, `renderWeek`, `renderMonth`, `renderList`, `renderTotals`, `renderSwimForm`, `renderPreferences`.
+  - Render functions: `renderSwim`, `renderDay`, `renderWeek`, `renderMonth`, `renderTotals`, `renderSwimForm`, `renderPreferences`.
   - One small controller per page.
 - **`src/js/flog/flog-api.js`:** see Data, below.
 - **`scripts/flog-seed.js`** (`npm run flog:seed [-- --anchor=YYYY-MM-DD]`): writes `api/flog/seed.mjs`, which is generated, so don't edit it. Every logged-in member persona gets a made-up log. KT2JH and GAT0R get 14 months of it, with lifetime totals from before that (`prior`, `firstLogDate`); the rest get 3 months. KT2JH swims yards. GAT0R swims long course and short course meters, with open water in miles. Both have two-swim days, long comments, and the optional fields on some swims. The run is seeded, so the same anchor writes the same file.
@@ -75,7 +75,7 @@ The only file that knows where data comes from. Each function returns a Promise,
 - **Tests:** `npm run test:api` (`node --test`): seed dates, logging, conversions, validation, editing and deleting, paging, totals, per-visitor copies and reset, the empty state, preferences, bad requests, unsafe keys and CORS.
 
 **Changing data:**
-- **Everyone's starting data:** edit `scripts/flog-seed.js` and run `npm run flog:seed`. Reset picks up the new seed.
+- **Everyone's starting data:** edit `scripts/flog-seed.js` and run `npm run flog:seed`. A reset (`POST /api/flog/reset`, or `FlogApi.reset()` in the browser console on a FLOG page; Preferences' Reset demo data card went 2026-11-08) picks up the new seed.
 - **One live record:** use the API from Postman, `netlify blobs:get` / `netlify blobs:set flog <key>` from the Mac, or the files in `.data/flog/` locally.
 
 **Other tools on the same log (2026-11-08):** Training Tools' Add to Log and Training Metrics (`race-tools.js`, through `flog-api.js`) and the Workout Generator's Add to Log (the Swim Tools app's static adapter, given `flogApi` by `src/js/swim-tools-host.js`) all use this API, so one log feeds every tool.
@@ -103,8 +103,8 @@ Playwright at 375px and 1280px, as KT2JH, GAT0R, NEW01, NEW and with `?empty=1`.
 - Every field labelled.
 
 The flows:
-1. **Log a swim:** an open-water swim in miles shows in week, month, list and Totals, and is still there after a reload.
+1. **Log a swim:** an open-water swim in miles shows in week, month and Totals, and is still there after a reload.
 2. **Edit, then delete:** delete uses the in-page confirm, and Keep it puts focus back on Delete.
 3. **Preferences:** a new default view and unit change Home.
-4. **Reset** brings back the samples.
+4. **Reset** (`FlogApi.reset()`) brings back the samples.
 5. **Errors:** an empty form shows the error summary, with focus on it.

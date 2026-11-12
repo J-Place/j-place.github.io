@@ -1,17 +1,29 @@
-{# The FLOG mockup's header: the page's name, whose log it is (app.js fills
-   it from the persona), Log a swim, and FLOG's own nav. Links use
-   flogRoot; snapshots rewrite it. #}
+{# The FLOG mockup's header: whose log it is (app.js fills it from the
+   persona), Log a swim, and FLOG's own nav. Links use flogRoot; snapshots
+   rewrite it. The page's name isn't FLOG's: it's the site's page title
+   (PageTitle.njk, from pageTitle, since 2026-11-09), which Sitecore's
+   template renders around the app. #}
 <header class="flog-head">
   <div class="flog-head__text">
-    <h1 class="flog-head__title">{{ flogHeading }}</h1>
     <p class="flog-head__who" data-flog-who></p>
   </div>
   {% if flogPage != "log-swim" %}
   <a class="flog-btn flog-btn--primary flog-head__log" href="{{ flogRoot }}log-swim/"><svg class="flog-icon" aria-hidden="true" focusable="false"><use href="#flog-i-plus"></use></svg>Log a swim</a>
   {% endif %}
 </header>
-<nav class="flog-nav" aria-label="Fitness Log">
-  <a class="flog-nav__link" href="{{ flogRoot }}"{% if flogPage == "home" %} aria-current="page"{% endif %}><svg class="flog-icon" aria-hidden="true" focusable="false"><use href="#flog-i-calendar"></use></svg>Calendar</a>
-  <a class="flog-nav__link" href="{{ flogRoot }}totals/"{% if flogPage == "totals" %} aria-current="page"{% endif %}><svg class="flog-icon" aria-hidden="true" focusable="false"><use href="#flog-i-chart"></use></svg>Totals</a>
-  <a class="flog-nav__link" href="{{ flogRoot }}preferences/"{% if flogPage == "preferences" %} aria-current="page"{% endif %}><svg class="flog-icon" aria-hidden="true" focusable="false"><use href="#flog-i-sliders"></use></svg>Preferences</a>
+{# On Log a swim the nav is shown but disabled: finish or cancel the swim
+   first (plain text, aria-disabled, not links) #}
+{% set flogNav = [
+  { href: flogRoot, page: "home", icon: "calendar", label: "Calendar" },
+  { href: flogRoot + "totals/", page: "totals", icon: "chart", label: "Totals" },
+  { href: flogRoot + "preferences/", page: "preferences", icon: "sliders", label: "Preferences" }
+] %}
+<nav class="flog-nav{% if flogPage == "log-swim" %} is-disabled{% endif %}" aria-label="Fitness Log">
+  {% for item in flogNav %}
+  {% if flogPage == "log-swim" %}
+  <span class="flog-nav__link" aria-disabled="true"><svg class="flog-icon" aria-hidden="true" focusable="false"><use href="#flog-i-{{ item.icon }}"></use></svg>{{ item.label }}</span>
+  {% else %}
+  <a class="flog-nav__link" href="{{ item.href }}"{% if flogPage == item.page %} aria-current="page"{% endif %}><svg class="flog-icon" aria-hidden="true" focusable="false"><use href="#flog-i-{{ item.icon }}"></use></svg>{{ item.label }}</a>
+  {% endif %}
+  {% endfor %}
 </nav>

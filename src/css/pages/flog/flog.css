@@ -4,7 +4,7 @@
 
 .flog {
   display: block; /* the site makes every section a table */
-  padding: var(--flog-space-5) 0 var(--flog-space-6);
+  padding: 0 0 var(--flog-space-6); /* none above: the page title (PageTitle.njk) is */
   background: var(--flog-bg);
   color: var(--flog-ink);
   font-family: var(--flog-font);
@@ -100,13 +100,6 @@
   margin-bottom: var(--flog-space-4);
 }
 
-.flog-head__title {
-  color: var(--flog-secondary);
-  font-size: var(--flog-text-xl);
-  font-weight: 700;
-  line-height: 1.15;
-}
-
 .flog-head__who {
   color: var(--flog-muted-text);
   font-size: var(--flog-text-sm);
@@ -146,6 +139,12 @@
   color: var(--flog-primary);
 }
 
+.flog .flog-nav__link[aria-disabled="true"] {
+  color: var(--flog-muted-text);
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
 .flog .flog-nav__link[aria-current="page"] {
   border-bottom-color: var(--flog-primary);
   color: var(--flog-primary);
@@ -174,7 +173,7 @@
   min-height: var(--flog-tap);
   padding: 0 var(--flog-space-4);
   border: 1px solid transparent;
-  border-radius: var(--flog-radius);
+  border-radius: var(--flog-radius-btn);
   font-family: inherit;
   font-size: var(--flog-text);
   font-weight: 600;
@@ -242,7 +241,7 @@
   height: var(--flog-tap);
   padding: 0;
   border: 1px solid var(--flog-border);
-  border-radius: var(--flog-radius);
+  border-radius: var(--flog-radius-btn);
   background: var(--flog-card);
   color: var(--flog-primary);
   cursor: pointer;
@@ -340,15 +339,15 @@
   align-items: center;
   justify-content: center;
   gap: var(--flog-space-2);
-  min-height: 40px;
+  height: 36px; /* Race Tools' segmented control */
   padding: 0 var(--flog-space-3);
   border: 0;
-  border-radius: var(--flog-radius);
+  border-radius: var(--flog-radius-inner);
   background: transparent;
   color: var(--flog-muted-text);
   font-family: inherit;
   font-size: var(--flog-text-sm);
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
 }
 
@@ -373,15 +372,6 @@
   font-size: var(--flog-text-lg);
   font-weight: 700;
   text-align: center;
-}
-
-.flog-pager.is-list .flog-icon-btn,
-.flog-pager.is-list [data-today] {
-  display: none;
-}
-
-.flog-pager.is-list .flog-pager__label {
-  text-align: left;
 }
 
 .flog-summary {
@@ -428,7 +418,7 @@
 
 .flog-swim__course {
   padding: 1px 6px;
-  border-radius: var(--flog-radius);
+  border-radius: var(--flog-radius-inner);
   background: var(--flog-light-blue);
   color: var(--flog-primary);
   font-size: 12px;
@@ -507,7 +497,7 @@
 .flog-badge {
   margin-left: var(--flog-space-1);
   padding: 1px 6px;
-  border-radius: var(--flog-radius);
+  border-radius: var(--flog-radius-inner);
   background: var(--flog-gold);
   color: var(--flog-dark-blue);
   font-size: 12px;
@@ -581,7 +571,7 @@
   min-height: 52px;
   padding: 3px 4px;
   border: 1px solid var(--flog-border);
-  border-radius: var(--flog-radius);
+  border-radius: var(--flog-radius-inner);
   background: var(--flog-card);
   color: var(--flog-ink);
   font-family: inherit;
@@ -629,14 +619,14 @@
   white-space: nowrap;
 }
 
-.flog-month__count {
-  font-size: 10px;
-  color: var(--flog-muted-text);
-  line-height: 1;
+/* A day's swims, one distance per line */
+.flog-month__dists {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
 }
 
-.flog .flog-month__day[aria-pressed="true"] .flog-month__dist,
-.flog .flog-month__day[aria-pressed="true"] .flog-month__count {
+.flog .flog-month__day[aria-pressed="true"] .flog-month__dist {
   color: var(--flog-on-color);
 }
 
@@ -649,35 +639,6 @@
   padding-bottom: var(--flog-space-2);
   color: var(--flog-muted-text);
   font-size: var(--flog-text-sm);
-}
-
-/* ---------- The list ---------- */
-
-.flog-list__month {
-  margin: var(--flog-space-4) 0 var(--flog-space-2) !important;
-  color: var(--flog-secondary);
-  font-size: var(--flog-text);
-  font-weight: 700;
-}
-
-.flog-list__month:first-child {
-  margin-top: 0 !important;
-}
-
-.flog-list {
-  padding: 0 var(--flog-space-4) !important;
-  border: 1px solid var(--flog-border);
-  border-radius: var(--flog-radius);
-  background: var(--flog-card);
-}
-
-.flog-list > .flog-swim + .flog-swim {
-  border-top: 1px solid var(--flog-muted);
-}
-
-.flog-more {
-  margin-top: var(--flog-space-4) !important;
-  text-align: center;
 }
 
 /* ---------- Totals ---------- */
@@ -764,10 +725,10 @@
 
 .flog .flog-label {
   display: block;
-  margin-bottom: var(--flog-space-2);
+  margin-bottom: var(--flog-space-1); /* Race Tools' labels: 13px bold, 4px above the field */
   padding: 0;
   color: var(--flog-ink);
-  font-size: var(--flog-text);
+  font-size: var(--flog-label);
   font-weight: 700;
 }
 
@@ -798,6 +759,12 @@
   font-size: var(--flog-text); /* 16px: phones don't zoom in */
 }
 
+/* Focused, as Race Tools' time fields: a blue border, doubled */
+.flog .flog-input:focus-visible {
+  border-color: var(--flog-primary);
+  box-shadow: 0 0 0 1px var(--flog-primary);
+}
+
 .flog .flog-input--date {
   max-width: 220px;
 }
@@ -806,16 +773,87 @@
   max-width: 140px;
 }
 
-.flog .flog-input--select {
-  max-width: 220px;
-}
-
 .flog .flog-input--text {
   resize: vertical;
 }
 
 .flog .flog-input[aria-invalid="true"] {
-  border: 2px solid var(--flog-red);
+  border-color: var(--flog-red);
+  box-shadow: inset 0 0 0 1px var(--flog-red); /* 2px, nothing shifts */
+}
+
+/* Selects as Race Tools' (StrokeSelect.njk): a white track with the
+   choice in a blue pill. A select can't paint part of itself, so the pill
+   is a span (app.js's select()) laid over the select's hidden text,
+   leaving the arrow on the track. */
+.flog-select {
+  position: relative;
+  display: flex;
+  width: fit-content;
+  padding: 3px;
+  border: 1px solid var(--flog-border);
+  border-radius: var(--flog-radius);
+  background: var(--flog-card);
+}
+
+.flog .flog-select__input {
+  min-width: 93px;
+  height: 36px;
+  margin: 0;
+  padding: 0 30px 0 var(--flog-space-3); /* 30px arrow area, matched by the pill */
+  border: 0;
+  border-radius: var(--flog-radius-inner);
+  /* Grey chevron, the muted text's colour */
+  background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23595959' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 8px center / 12px 8px;
+  color: transparent; /* the pill shows the value */
+  font-family: inherit;
+  font-size: var(--flog-text-sm);
+  font-weight: 500;
+  appearance: none;
+  cursor: pointer;
+}
+
+/* The open list keeps normal dark-on-white options */
+.flog .flog-select__input option {
+  background: var(--flog-card);
+  color: var(--flog-ink);
+}
+
+.flog-select__value {
+  position: absolute;
+  top: 3px;
+  right: 33px; /* 3px track padding + 30px arrow area */
+  left: 3px;
+  height: 36px;
+  padding: 0 var(--flog-space-3);
+  border-radius: var(--flog-radius-inner);
+  background: var(--flog-primary);
+  color: var(--flog-on-color);
+  font-size: var(--flog-text-sm);
+  font-weight: 500;
+  line-height: 36px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none; /* clicks reach the select underneath */
+}
+
+.flog-select:hover .flog-select__value {
+  background: var(--flog-primary-hover);
+}
+
+/* The ring goes on the pill, so the track's border stays grey */
+.flog .flog-select__input:focus-visible {
+  box-shadow: none;
+}
+
+.flog-select__input:focus-visible + .flog-select__value {
+  box-shadow: var(--flog-focus);
+}
+
+.flog-select:has([aria-invalid="true"]) {
+  border-color: var(--flog-red);
+  box-shadow: inset 0 0 0 1px var(--flog-red);
 }
 
 .flog-field__error {
@@ -834,7 +872,8 @@
 
 .flog-row--fields {
   align-items: flex-start;
-  gap: 0 var(--flog-space-5);
+  gap: var(--flog-space-5);
+  margin-bottom: var(--flog-space-5);
 }
 
 .flog-row--fields > .flog-field {
@@ -842,10 +881,16 @@
 }
 
 /* Choices that look like buttons: radio inputs, each with its label */
+/* One track, as Race Tools' segmented controls (.swim-seg): a white box,
+   the picked choice a blue pill inside it */
 .flog-choices {
   display: inline-flex;
   flex-wrap: wrap;
-  gap: var(--flog-space-1);
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--flog-border);
+  border-radius: var(--flog-radius);
+  background: var(--flog-card);
 }
 
 .flog-choices__input {
@@ -859,25 +904,23 @@
   align-items: center;
   justify-content: center;
   min-width: 52px;
-  min-height: var(--flog-tap);
+  height: 36px;
   margin: 0;
   padding: 0 var(--flog-space-3);
-  border: 1px solid var(--flog-border);
-  border-radius: var(--flog-radius);
-  background: var(--flog-card);
-  color: var(--flog-ink);
+  border: 0;
+  border-radius: var(--flog-radius-inner);
+  background: transparent;
+  color: var(--flog-muted-text);
   font-size: var(--flog-text-sm);
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
 }
 
 .flog .flog-choices__option:hover {
-  border-color: var(--flog-primary);
   color: var(--flog-primary);
 }
 
 .flog .flog-choices__input:checked + .flog-choices__option {
-  border-color: var(--flog-primary);
   background: var(--flog-primary);
   color: var(--flog-on-color);
 }
@@ -886,37 +929,125 @@
   box-shadow: var(--flog-focus);
 }
 
-.flog .flog-choices__input[aria-invalid="true"] + .flog-choices__option {
+.flog-choices:has([aria-invalid="true"]) {
   border-color: var(--flog-red);
+  box-shadow: inset 0 0 0 1px var(--flog-red);
 }
 
-/* The unit beside the distance: narrower, so both fit on a phone */
-.flog .flog-unit .flog-choices__option {
-  min-width: 46px;
+/* Intensity: Race Tools' slider (race-tools.css, .swim-slider). The thumb's
+   ring takes the rating's shade (--flog-slider-now, set by app.js) */
+.flog-slider {
+  --flog-slider-now: transparent;
+  display: flex;
+  align-items: center;
+  gap: var(--flog-space-2);
+  height: var(--flog-tap);
 }
 
-.flog-choices--scale {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  width: 100%;
-  max-width: 360px;
-}
-
-.flog .flog-choices--scale .flog-choices__option {
-  min-width: 0;
-}
-
-.flog-optional__title {
-  float: left; /* a legend that sits inside its fieldset's border */
-  width: 100%;
-  margin-bottom: var(--flog-space-4);
-  color: var(--flog-secondary);
-  font-size: var(--flog-text-lg);
+.flog-slider__end {
+  color: var(--flog-muted-text);
+  font-size: var(--flog-label);
   font-weight: 700;
+  font-variant-numeric: tabular-nums;
 }
 
-.flog-optional__title + * {
-  clear: both;
+.flog .flog-slider__input {
+  width: 100%;
+  max-width: 240px;
+  height: 24px;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.flog-slider__input::-webkit-slider-runnable-track {
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(to right, var(--flog-intensity-1), var(--flog-intensity-2), var(--flog-intensity-3), var(--flog-intensity-4), var(--flog-intensity-5));
+}
+
+.flog-slider__input::-moz-range-track {
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(to right, var(--flog-intensity-1), var(--flog-intensity-2), var(--flog-intensity-3), var(--flog-intensity-4), var(--flog-intensity-5));
+}
+
+.flog-slider__input::-webkit-slider-thumb {
+  width: 22px;
+  height: 22px;
+  margin-top: -7px;
+  border: 4px solid var(--flog-slider-now);
+  border-radius: 50%;
+  background: var(--flog-card);
+  box-shadow: 0 0 0 1px var(--flog-ink), 0 1px 3px var(--flog-shadow);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.flog-slider__input::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: 4px solid var(--flog-slider-now);
+  border-radius: 50%;
+  background: var(--flog-card);
+  box-shadow: 0 0 0 1px var(--flog-ink), 0 1px 3px var(--flog-shadow);
+}
+
+/* An outline rather than the usual ring, which would sit on the range's box */
+.flog .flog-slider__input:focus-visible {
+  outline: 2px solid var(--flog-primary);
+  outline-offset: 4px;
+  border-radius: 4px;
+  box-shadow: none;
+}
+
+/* Not rated: a faded track, no thumb */
+.flog-slider.is-unrated .flog-slider__input::-webkit-slider-runnable-track {
+  opacity: 0.35;
+}
+
+.flog-slider.is-unrated .flog-slider__input::-moz-range-track {
+  opacity: 0.35;
+}
+
+.flog-slider.is-unrated .flog-slider__input::-webkit-slider-thumb {
+  opacity: 0;
+}
+
+.flog-slider.is-unrated .flog-slider__input::-moz-range-thumb {
+  opacity: 0;
+}
+
+.flog .flog-slider__clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--flog-muted-text);
+  cursor: pointer;
+}
+
+.flog .flog-slider__clear:hover {
+  background: var(--flog-muted);
+  color: var(--flog-ink);
+}
+
+.flog-slider__clear .flog-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Unrated: kept in place but invisible, so rating doesn't move the slider */
+.flog .flog-slider__clear[hidden] {
+  display: inline-flex;
+  visibility: hidden;
 }
 
 .flog-check {
@@ -1011,24 +1142,9 @@
 
 /* ---------- Wider screens ---------- */
 
-@media (min-width: 576px) {
-  .flog-choices--scale {
-    grid-template-columns: repeat(10, minmax(0, 1fr));
-    max-width: 560px;
-  }
-}
-
 @media (min-width: 768px) {
-  .flog {
-    padding-top: var(--flog-space-6);
-  }
-
   .flog__container {
     padding: 0 var(--flog-space-5);
-  }
-
-  .flog-head__title {
-    font-size: var(--flog-text-xxl);
   }
 
   .flog-toolbar {
