@@ -5,6 +5,7 @@
       cta: { href: '/workout-library', img: 'https://www-usms-hhgdctfafngha6hr.z01.azurefd.net/-/media/usms/developers/images/megamenu/fittraincta-200x150.png?rev=dc95a7fc0d8348648260d6495466eb1e', label: 'Workout Library' },
       links: [
         { title: 'Workout Library', url: '/workout-library' },
+        { title: 'Workout Generator', url: '/fitness-and-training/workout-generator/' },
         { title: 'Articles and Videos', url: '/fitness-and-training/articles-and-videos' },
         { title: 'Swimming 101', url: '/fitness-and-training/guides/swimming-101' },
         { title: 'Training Plans', url: '/fitness-and-training/six-week-swim-training-plans/six-week-swim-training-plan-information' },
