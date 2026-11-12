@@ -7,3 +7,52 @@
 .swim-tools-host {
   display: block;
 }
+
+/* Workout Generator: Focus's description wraps to the width of its select
+   instead of widening the field, so Course sits the row's 24px from Focus,
+   as Race Tools' Course does from Stroke. Enhancement, for the swim-tools
+   repo like the one below. */
+.swim-tools-host .st-root .st-goals__grid .st-field__hint {
+  width: 0;
+  min-width: 100%;
+}
+
+/* Workout Generator on phones: Distance, Focus and Course on one row, as
+   Race Tools' Your Event (race-tools.css). They share the width, 12px apart,
+   Focus wider for its longer names. Enhancement, here only because the
+   swim-tools repo wasn't to hand: move it into the component's own styles
+   there, then delete it. */
+@media (max-width: 767px) {
+  .swim-tools-host .st-root .st-goals__grid > .st-fields {
+    flex-wrap: nowrap;
+    gap: 12px;
+  }
+
+  .swim-tools-host .st-root .st-goals__grid > .st-fields > .st-field {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .swim-tools-host .st-root .st-goals__grid > .st-fields > .st-field:nth-child(2) {
+    flex-grow: 1.5;
+  }
+
+  .swim-tools-host .st-root .st-goals__grid .st-input--distance {
+    width: 100%;
+  }
+
+  .swim-tools-host .st-root .st-goals__grid .st-select {
+    align-self: stretch;
+  }
+
+  .swim-tools-host .st-root .st-goals__grid .st-select select {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .swim-tools-host .st-root .st-goals__grid .st-select__value {
+    padding: 0 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
