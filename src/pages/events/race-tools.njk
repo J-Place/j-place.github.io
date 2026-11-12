@@ -15,10 +15,9 @@ courses: [SCY, SCM, LCM]
 ---
 {% extends "layouts/base.njk" %}
 {% block breadcrumb %}{% include "partials/Common/Breadcrumb.njk" %}{% endblock %}
+{% block pageHeader %}{% include "partials/Common/PageTitle.njk" %}{% endblock %}
 {% from "partials/RaceTools/StrokeSelect.njk" import strokeSelect %}
 {% block pageCSS %}
-{# Breadcrumbs as the article5 pages': a white bar, grey links, "/" between #}
-<link href="/css/Common/Breadcrumb.css" rel="stylesheet">
 <link rel="stylesheet" href="/css/pages/race-tools.css">
 {% endblock %}
 {% block pageJS %}
@@ -34,16 +33,13 @@ courses: [SCY, SCM, LCM]
    in by race-tools.js, which runs both pages. #}
 <section class="section section-full swim-deck-page">
   <div class="usms-container p-tb-10 swim-deck">
-    <header class="swim-deck__head">
-      <div>
-        <h1 class="swim-deck__title">Race Tools</h1>
-        {# Commented out 2026-10-15: the intro under the title ("Welcome back,
-           Jay…" when logged in, as on v4; race-tools.js still sets it,
-           harmlessly, with nothing to fill). Its CSS is commented out too.
-        <p class="swim-deck__intro" data-st="greeting">Manage your races, times and training, all in one place.</p>
-        #}
-      </div>
-    </header>
+    {# The page title is the site's page title (PageTitle.njk, in the
+       pageHeader block, since 2026-11-09): Sitecore's template renders it,
+       not the tools. Commented out 2026-10-15: the intro under the title
+       ("Welcome back, Jay…" when logged in, as on v4; race-tools.js still
+       sets it, harmlessly, with nothing to fill). Its CSS is commented out too.
+    <p class="swim-deck__intro" data-st="greeting">Manage your races, times and training, all in one place.</p>
+    #}
 
     {# No toolbar since 2026-10-29: who the tools are for is in the Race
        Metrics controls band #}

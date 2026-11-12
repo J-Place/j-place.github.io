@@ -1,0 +1,19 @@
+{# The plain page title, as on My Account and Club Central: production's
+   header.page-title with the h1 from pageTitle, on the page's own background
+   (no banner, unlike PageHeader.njk). For the pageHeader block. The
+   wrapper is My Account's (section section-full p-tb-10) without its
+   bg-gray, since these pages are white; pages on gray (My Account, Club
+   Central) write it out themselves. Padding above only (p-t-10): on My
+   Account the content follows the title in the same container, so only
+   the h1's own bottom margin sits between them. #}
+<section class="section section-full p-t-10">
+  <div class="usms-container p-t-10">
+    <div class="row">
+      <div class="col-xs-12">
+        <header class="page-title">
+          <h1>{{ pageTitle }}</h1>
+        </header>
+      </div>
+    </div>
+  </div>
+</section>

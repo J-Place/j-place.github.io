@@ -15,8 +15,8 @@ courses: [SCY, SCM, LCM]
 ---
 {% extends "layouts/base.njk" %}
 {% block breadcrumb %}{% include "partials/Common/Breadcrumb.njk" %}{% endblock %}
+{% block pageHeader %}{% include "partials/Common/PageTitle.njk" %}{% endblock %}
 {% block pageCSS %}
-<link href="/css/Common/Breadcrumb.css" rel="stylesheet">
 <link rel="stylesheet" href="/css/pages/race-tools.css">
 {% endblock %}
 {% block pageJS %}
@@ -30,12 +30,12 @@ courses: [SCY, SCM, LCM]
    out from them. #}
 <section class="section section-full swim-deck-page">
   <div class="usms-container p-tb-10 swim-deck">
-    <header class="swim-deck__head">
-      <div>
-        <h1 class="swim-deck__title">Training Tools</h1>
-        <a class="swim-deck__other" href="/events/race-tools/">Race Tools <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
-      </div>
-    </header>
+    {# The page title is the site's page title (PageTitle.njk, in the
+       pageHeader block, since 2026-11-09): Sitecore's template renders it,
+       not the tools. The link to the other tools page stays here. #}
+    <div class="swim-deck__head">
+      <a class="swim-deck__other" href="/events/race-tools/">Race Tools <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+    </div>
 
     {# Toolbar: the page tabs, and who the tools are for. Above the sections,
        not beside the first one's heading: Training Metrics' heading is for
