@@ -78,6 +78,7 @@
     // The Add to Log form's swim
     newLog: { date: '', distance: '', course: 'SCY', time: '', stroke: '', effort: '' },
     racesExpanded: false,   // Your Races: all of them, not just the newest few
+    racesFilter: { course: '', stroke: '', distance: '' }, // Your Races' filters ('' is All); not saved
     // Convert a Time (Time Conversions): its own event, and a time or a pace
     // (per 100); the one changed last (source) is used and the other worked
     // out from it
@@ -1431,6 +1432,7 @@
 
   var RACES_SHOWN = 6;
   var racesShown = 0; // set by balanceRacePlanning; 0 is RACES_SHOWN
+  var racesMatching = 0; // Your Races in the filters, set by renderRaces
   // Whose races these are: the active persona, as current-user.js resolves
   // it (?user=, then sessionStorage.activeUser, then the page's swimmerId).
   // Each persona's races come from src/_data/raceHistory.json, embedded as
@@ -1571,6 +1573,30 @@
     var first = dated.length ? dated[dated.length - 1].date.slice(0, 4) : '';
     set('racesSub', races.length ? races.length + (races.length === 1 ? ' race' : ' races') + (first ? ' since ' + first : '') +
       ' · new meet results appear automatically' : 'No races yet · meet results appear here automatically');
+    // The filters: each "All" ('') or one value; Distance offers those
+    // raced in the course and stroke chosen, and goes back to All when
+    // they leave it out. Your best stays your best over every race.
+    var f = state.racesFilter;
+    var inCS = races.filter(function (r) { return (!f.course || r.course === f.course) && (!f.stroke || r.stroke === f.stroke); });
+    var ds = [];
+    inCS.forEach(function (r) { if (ds.indexOf(Number(r.d)) < 0) ds.push(Number(r.d)); });
+    ds.sort(function (a, b) { return a - b; });
+    if (f.distance && ds.indexOf(Number(f.distance)) < 0) f.distance = '';
+    var dsel = root.querySelector('[data-races-filter="distance"]');
+    dsel.innerHTML = '<option value="">All</option>' + ds.map(function (d) { return '<option value="' + d + '">' + d + '</option>'; }).join('');
+    ['course', 'stroke', 'distance'].forEach(function (k) {
+      root.querySelector('[data-races-filter="' + k + '"]').value = f[k];
+      set('racesFilter-' + k, f[k] || k.charAt(0).toUpperCase() + k.slice(1));
+      root.querySelector('[data-st="racesFilter-' + k + '"]').classList.toggle('is-all', !f[k]);
+    });
+    var filtered = !!(f.course || f.stroke || f.distance);
+    var all = races;
+    races = inCS.filter(function (r) { return !f.distance || Number(r.d) === Number(f.distance); });
+    racesMatching = races.length;
+    root.querySelector('[data-races-filters]').hidden = all.length < 2;
+    root.querySelector('[data-races-filters] [data-races-clear]').hidden = !filtered;
+    root.querySelector('[data-races-none]').hidden = !(filtered && !races.length);
+    if (filtered) set('racesSub', races.length + ' of ' + all.length + ' races');
     var count = racesShown || RACES_SHOWN;
     var shown = state.racesExpanded ? races : races.slice(0, count);
     list.classList.toggle('is-all', state.racesExpanded);
@@ -1586,7 +1612,7 @@
     }).join('') : '';
     // No races: the Find an Event promo in the list's place
     list.hidden = !shown.length;
-    root.querySelector('[data-races-promo]').hidden = !!shown.length;
+    root.querySelector('[data-races-promo]').hidden = !!all.length;
     toggle.hidden = races.length <= count;
     toggle.setAttribute('aria-expanded', String(state.racesExpanded));
     toggle.textContent = state.racesExpanded ? 'Show fewer' : 'Show all ' + races.length;
@@ -1600,7 +1626,7 @@
   // side (slower higher), each dot a race labelled with its time, your best
   // a solid ▲. Behind them, Time Predictions' age-group lines and shading,
   // season by season (your age at the SCY season's end, May 31), where those
-  // rankings exist. Zoom (− +) and pan (‹ ›, or drag) through the years once
+  // rankings exist. Zoom (out, in) and drag through the years once
   // they span more than five (three on phones, which start there).
   var TREND_COLOR = '#0068AD'; // your races' line and dots, USMS blue
   var LABEL_LIMIT = 40; // more of Your Event's dots than this: times on hover
@@ -1736,7 +1762,7 @@
 
   // The zoom bar: hidden when every race fits in five years; each button off
   // at its limit, and the years in view for screen readers
-  function renderZoom(card, canZoom, zoomed, full, span, end, t0, w0, w1) {
+  function renderZoom(card, canZoom, zoomed, full, span, w0, w1) {
     var bar = card.querySelector('[data-zoom-bar]');
     bar.hidden = !canZoom;
     card.querySelector('[data-drag-hint]').hidden = true;
@@ -1751,8 +1777,6 @@
     bar.querySelector('[data-zoom="in"]').disabled = span <= zoomMin() + 1;
     bar.querySelector('[data-zoom="out"]').disabled = !zoomed;
     bar.querySelector('[data-zoom="all"]').hidden = !zoomed;
-    bar.querySelector('[data-pan="earlier"]').disabled = !zoomed || w0 <= t0 + 864e5;
-    bar.querySelector('[data-pan="later"]').disabled = !zoomed || end >= t0 + full - 864e5;
     // Zoomed in on a touch screen, say the chart drags, until the first drag
     card.querySelector('[data-drag-hint]').hidden = !(zoomed && !trend.dragged && window.matchMedia && matchMedia('(pointer: coarse)').matches);
   }
@@ -1964,7 +1988,7 @@
       if (i === 0 && ticks.length > 1 && tickAt[1] - tickAt[0] < (everyYear ? 24 / room * 92 : 8)) return '';
       return '<span style="left: ' + tickAt[i].toFixed(1) + '%">' + yr + '</span>';
     }).join('');
-    renderZoom(card, canZoom, zoomed, full, span, end, t0, w0, w1);
+    renderZoom(card, canZoom, zoomed, full, span, w0, w1);
     var synth = [];
     var seasons = ranks.filter(function (p) { return !p.edge; });
     seasons.forEach(function (p) { if (p.synthetic) synth.push(p.season); });
@@ -3057,7 +3081,7 @@
       return kids.reduce(function (h, c) { return h + c.offsetHeight; }, 0) + gap * Math.max(0, kids.length - 1);
     };
     var rows = left.querySelectorAll('.swim-races__row');
-    var total = state.races.filter(function (r) { return isFinite(parse(r.time)); }).length;
+    var total = racesMatching;
     var rowH = rows.length ? rows[0].offsetHeight : 0;
     var shown = rows.length;
     var view = splits.clientHeight, content = splits.scrollHeight;
@@ -3593,6 +3617,20 @@
   });
 
   // Your races: add (Add a Race modal), and show all or fewer
+  // Your Races' filters, and Clear (or Show all races, when none match)
+  root.addEventListener('change', function (e) {
+    var sel = e.target.closest('[data-races-filter]');
+    if (!sel) return;
+    state.racesFilter[sel.getAttribute('data-races-filter')] = sel.value;
+    render();
+  });
+  root.addEventListener('click', function (e) {
+    if (!e.target.closest('[data-races-clear]')) return;
+    state.racesFilter = { course: '', stroke: '', distance: '' };
+    render();
+    root.querySelector('[data-races-filter="course"]').focus();
+  });
+
   document.addEventListener('click', function (e) {
     if (e.target.closest('[data-races-toggle]')) {
       state.racesExpanded = !state.racesExpanded;
@@ -3609,7 +3647,7 @@
     }
   });
 
-  // Race History chart: legend pills, zoom and pan. A line can change the
+  // Race History chart: legend pills and zoom. A line can change the
   // columns' heights, so it re-renders all.
   root.addEventListener('click', function (e) {
     var t = e.target;
@@ -3635,17 +3673,10 @@
       renderTrend();
       return;
     }
-    // Move the zoomed years half a view earlier or later
-    var pb = t.closest('[data-pan]');
-    if (pb && zr && trend.zoom.span) {
-      var by = zr.span / 2 * (pb.getAttribute('data-pan') === 'earlier' ? -1 : 1);
-      trend.zoom.end = Math.min(zr.t1, Math.max(zr.t0 + zr.span, zr.end + by));
-      renderTrend();
-    }
   });
 
   // Drag the zoomed chart sideways (mouse or touch) to move through the
-  // years; ‹ › do the same without dragging
+  // years
   (function dragToPan() {
     var chart = root.querySelector('.swim-trend__chart'), drag = null, frame = 0;
     if (!chart) return;

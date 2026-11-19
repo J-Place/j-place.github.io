@@ -1429,6 +1429,66 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* Filters: Course, Stroke and Distance as the page's selects, Clear
+   after them; wraps on phones */
+.swim-races__filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px;
+}
+
+.swim-races__filters[hidden],
+.swim-races__none[hidden] {
+  display: none;
+}
+
+.swim-deck .swim-races__filters .swim-deck__field > .form-control {
+  width: 100px; /* room for "Distance" */
+}
+
+.swim-races__filters [data-races-clear] {
+  margin-left: 4px;
+  font-size: 13px;
+}
+
+/* A set filter: a blue border and value, so it stands out from those
+   left at All (which show the setting's name) */
+.swim-races__filters .swim-deck__field:not(:has(.is-all)) {
+  border-color: var(--sd-blue);
+}
+
+.swim-races__filters .swim-deck__field-value:not(.is-all) {
+  color: var(--sd-blue);
+}
+
+/* Phones: two to a row, Course and Stroke, then Distance and Clear */
+@media (max-width: 640px) {
+  .swim-races__filters {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .swim-races__filters [data-races-clear] {
+    justify-self: start;
+  }
+
+  .swim-deck .swim-races__filters .swim-deck__field > .form-control {
+    width: 100%;
+  }
+}
+
+.swim-races__none {
+  width: 100%;
+  margin: 0;
+  text-align: left;
+  padding: 9px 0;
+  border-top: 1px solid var(--sd-rule);
+  color: var(--sd-muted);
+  font-size: 15px;
+}
+
 /* Show all: scrolls inside the card */
 .swim-deck .swim-races__list.is-all {
   max-height: 460px;
@@ -1820,10 +1880,13 @@
   clip-path: polygon(50% 0, 100% 100%, 0 100%);
 }
 
-/* Zoom: lined up over the plot (past the pace axis), − + at its centre with
-   ‹ and › either side, All years at the right */
+/* Zoom: over the plot at its right edge (past the pace axis), All years,
+   then zoom out and in (magnifiers, no outline) */
 .swim-zoom {
-  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
   height: 32px;
   margin: 0 10px -16px 58px;
   font-size: 13px;
@@ -1834,26 +1897,39 @@
 }
 
 .swim-zoom__set {
-  position: absolute;
-  top: 0;
-  left: 50%;
   display: flex;
-  gap: 6px;
-  transform: translateX(-50%);
+  gap: 2px;
 }
 
 .swim-zoom__btn {
-  position: relative;
-  width: 30px;
-  height: 30px;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
   padding: 0;
-  border: 1px solid var(--sd-border);
+  border: 0;
   border-radius: 6px;
-  background: #fff;
+  background: none;
   color: var(--sd-blue);
-  font-size: 18px;
-  line-height: 1;
   cursor: pointer;
+}
+
+.swim-zoom__btn svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.swim-zoom__btn:hover:not(:disabled) {
+  color: var(--sd-ink);
+}
+
+.swim-zoom__btn:focus-visible {
+  outline: 2px solid var(--sd-blue);
+  outline-offset: 1px;
 }
 
 .swim-zoom__btn:disabled {
@@ -1861,41 +1937,8 @@
   cursor: default;
 }
 
-.swim-zoom__btn.swim-zoom__pan {
-  position: absolute;
-  top: 0;
-  transform: translateX(-50%);
-  font-size: 0; /* ‹ › drawn as chevrons; the aria-labels name them */
-}
-
-.swim-zoom__pan--earlier {
-  left: calc(50% - 64px);
-}
-
-.swim-zoom__pan--later {
-  left: calc(50% + 64px);
-}
-
-.swim-zoom__btn.swim-zoom__pan::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 11px;
-  height: 11px;
-  border-bottom: 2px solid currentColor;
-  border-left: 2px solid currentColor;
-  transform: translate(-30%, -50%) rotate(45deg);
-}
-
-.swim-zoom__btn.swim-zoom__pan--later::before {
-  transform: translate(-70%, -50%) rotate(-135deg);
-}
-
 .swim-deck .swim-zoom__all {
-  position: absolute;
-  top: 7px;
-  right: 0;
+  order: -1; /* before the magnifiers, which keep the right edge */
   font-size: 13px;
 }
 
@@ -1917,34 +1960,11 @@
   cursor: grabbing;
 }
 
-/* Phones: one centred row, ‹ − + › then All years */
+/* Phones: the plot spans the card, so the row does too */
 @media (max-width: 640px) {
   .swim-zoom {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 6px;
-    height: auto;
     margin: 0 0 -12px;
   }
-
-  .swim-zoom__set,
-  .swim-deck .swim-zoom__all {
-    position: static;
-    transform: none;
-  }
-
-  .swim-zoom__btn.swim-zoom__pan {
-    position: relative;
-    left: auto;
-    transform: none;
-  }
-
-  .swim-zoom__pan--earlier { order: 1; }
-  .swim-zoom__set { order: 2; }
-  .swim-zoom__pan--later { order: 3; }
-  .swim-deck .swim-zoom__all { order: 4; margin-left: 6px; }
 
   .swim-deck .swim-zoom__hint {
     margin: 12px 0 -12px;
@@ -3770,17 +3790,17 @@
   display: none;
 }
 
-/* A guest's Start Here (production's .btn-xl .btn-primary): dark green */
+/* A guest's Start Here (production's .btn-xl .btn-primary): USMS blue */
 .swim-deck .swim-ages__prompt .swim-ages__set {
-  border-color: #1f7a3a;
-  background-color: #1f7a3a;
+  border-color: var(--sd-blue);
+  background-color: var(--sd-blue);
   color: #fff;
 }
 
 .swim-deck .swim-ages__prompt .swim-ages__set:hover,
 .swim-deck .swim-ages__prompt .swim-ages__set:focus {
-  border-color: #17602d;
-  background-color: #17602d;
+  border-color: var(--sd-blue-hover);
+  background-color: var(--sd-blue-hover);
   color: #fff;
 }
 

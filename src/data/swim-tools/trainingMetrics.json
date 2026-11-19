@@ -37,6 +37,13 @@
       { "id": "speed", "label": "Speed", "description": "Short, fast efforts with plenty of rest" },
       { "id": "race", "label": "Race", "description": "Race-pace work and practice for your event" }
     ],
+    "focuses": [
+      { "id": "basic", "label": "Basic", "fitness": ["aerobic", "conditioning"], "available": true },
+      { "id": "high-intensity", "label": "High-Intensity", "fitness": ["speed", "race"], "available": true },
+      { "id": "stroke-im", "label": "Stroke and IM", "fitness": [], "available": false },
+      { "id": "open-water", "label": "Open Water", "fitness": [], "available": false },
+      { "id": "triathlon", "label": "Triathlon", "fitness": [], "available": false }
+    ],
     "drills": [
       { "id": "underwater-recovery", "label": "Underwater recovery", "stroke": "free", "description": "Swim regular free while recovering both arms under the water" },
       { "id": "over-under", "label": "Over-under free", "stroke": "free", "description": "Swim regular free while recovering one arm under the water and the other over the water" },
@@ -102,7 +109,7 @@
       { "id": "minutes", "type": "number", "min": 20, "max": 120, "step": 5, "alternativeTo": "distance" },
       { "id": "stroke", "type": "select", "options": "vocabularies.strokes", "default": "free" },
       { "id": "skills", "type": "select", "options": "vocabularies.skills", "optional": true },
-      { "id": "fitness", "type": "select", "options": "vocabularies.fitness", "default": "aerobic" },
+      { "id": "fitness", "type": "select", "options": "vocabularies.focuses", "default": "aerobic", "label": "Focus: the Workout Library's focus areas (usms.org), without the word Training (the label says Focus), each the library's fitness tags it covers; the three workouts offered take them in turn. High-Volume and Low-Volume Training left out (they're the Distance); the others unavailable until the library has their workouts" },
       { "id": "drillAmount", "type": "select", "options": "vocabularies.drillAmounts", "default": "moderate" },
       { "id": "equipment", "type": "multiselect", "options": "vocabularies.equipment", "label": "Equipment you have", "default": [] }
     ],
@@ -112,7 +119,7 @@
       { "id": "eventDate", "type": "date" },
       { "id": "isMeet", "type": "boolean", "default": true, "label": "This is a meet (adds a taper)" },
       { "id": "sessionsPerWeek", "type": "number", "min": 2, "max": 5, "default": 4 },
-      { "id": "minutesPerSession", "type": "number", "min": 30, "max": 120, "step": 15, "default": 60 },
+      { "id": "sessionDistance", "type": "number", "unit": "course", "step": 100, "default": "plan", "scale": [0.6, 1.4], "label": "Typical session distance; the plan's sessions are scaled to it, keeping their differences. scale: the range offered, as a share of the plan's own average session (measured 2026-11-12: within it about 1 session in 10 misses its distance by more than workout.distanceTolerance; at double, more than half)" },
       { "id": "course", "type": "select", "options": "vocabularies.courses", "default": "persona" }
     ],
     "backlog": [

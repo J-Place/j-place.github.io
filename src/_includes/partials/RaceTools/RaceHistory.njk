@@ -17,6 +17,23 @@
        when Race History became one event only) #}
     {{ sectionGear("swimDeckPlan", "Race Metrics") }}
   </header>
+  {# Filters (2026-11-18): course, stroke and distance, each "All" to
+     start, shown as the setting's name; Distance offers those raced in the
+     course and stroke chosen. Not saved. race-tools.js (renderRaces). #}
+  <div class="swim-races__filters" role="group" aria-label="Filter your races" data-races-filters hidden>
+    {% for f in [["course", "Course"], ["stroke", "Stroke"], ["distance", "Distance"]] %}
+    <div class="swim-deck__field">
+      <select class="form-control" aria-label="{{ f[1] }}" data-races-filter="{{ f[0] }}">
+        <option value="">All</option>
+        {% if f[0] == "course" %}{% for c in ["SCY", "SCM", "LCM"] %}<option value="{{ c }}">{{ c }}</option>{% endfor %}{% endif %}
+        {% if f[0] == "stroke" %}{% for st in ["Free", "Back", "Breast", "Fly", "IM"] %}<option value="{{ st }}">{{ st }}</option>{% endfor %}{% endif %}
+      </select>
+      <span class="swim-deck__field-value" aria-hidden="true" data-st="racesFilter-{{ f[0] }}">{{ f[1] }}</span>
+    </div>
+    {% endfor %}
+    <button type="button" class="swim-pred-link" data-races-clear hidden>Clear</button>
+  </div>
+  <p class="swim-races__none" data-races-none hidden>No races match. <button type="button" class="swim-pred-link" data-races-clear>Show all races</button></p>
   <ol class="swim-races__list" id="swim-races-list" data-st-races></ol>
   {# No races yet: a meet photo and a way to find one (race-tools.js).
      Photo hotlinked from USMS media: 2023 Spring Nationals, Anthony Kung. #}

@@ -1,0 +1,39 @@
+---
+permalink: /fitness-and-training/training-plans/index.html
+title: Training Plans | U.S. Masters Swimming
+pageTitle: Training Plans
+# Same default persona as the other tools; ?user=<users.json key> switches it
+# (src/js/swim-tools-host.js). A plan's choices are in its address
+# (?event=&date=&course=&sessions=&distance=&meet=), so a bookmark keeps it.
+swimmerId: KT2JH
+breadcrumbs:
+  - url: "/home"
+    label: "Home"
+  - url: "/fitness-and-training/articles-and-videos/index.html"
+    label: "Fitness and Training"
+---
+{% extends "layouts/base.njk" %}
+{% block breadcrumb %}{% include "partials/Common/Breadcrumb.njk" %}{% endblock %}
+{% block pageHeader %}{% include "partials/Common/PageTitle.njk" %}{% endblock %}
+{# Training Plans, a view of the Swim Tools app (~/dev/usms/swim-tools), as
+   the Workout Generator page: this page plays Sitecore's part (the chrome
+   and a mount point), the app's embed bundle (src/js/swim-tools/, synced by
+   its npm run sync:eleventy) renders the view, and src/js/swim-tools-host.js
+   works out the persona and the data source, then mounts it. Not the
+   six-week plans' information page (/fitness-and-training/six-week-swim-
+   training-plans/…), which the mega menu's Training Plans still links to. #}
+{% block pageCSS %}
+<link rel="stylesheet" href="/css/pages/swim-tools-host.css">
+<link rel="stylesheet" href="/js/swim-tools/swim-tools.css">
+{% endblock %}
+{% block pageJS %}
+<script src="/js/swim-tools/swim-tools.js" defer></script>
+<script src="/js/swim-tools-host.js" defer></script>
+{% endblock %}
+{% block content %}
+<section class="section section-full swim-tools-host">
+  <div class="usms-container p-tb-10">
+    <div data-usms-component="SwimTools" data-view="plans" data-default-persona="{{ swimmerId }}"></div>
+  </div>
+</section>
+{% endblock %}
