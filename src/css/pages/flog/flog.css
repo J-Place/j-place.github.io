@@ -324,13 +324,14 @@
   margin-bottom: var(--flog-space-2);
 }
 
+/* As usms.org's results view switch: buttons joined on a light grey
+   track, the chosen one blue */
 .flog-seg {
   display: flex;
   gap: 2px;
   padding: 3px;
-  border: 1px solid var(--flog-border);
-  border-radius: var(--flog-radius);
-  background: var(--flog-card);
+  border-radius: var(--flog-radius-control);
+  background: var(--flog-track);
 }
 
 .flog .flog-seg > button {
@@ -339,12 +340,12 @@
   align-items: center;
   justify-content: center;
   gap: var(--flog-space-2);
-  height: 36px; /* Race Tools' segmented control */
+  height: 30px; /* 36px with the track, as Race Tools' segmented control */
   padding: 0 var(--flog-space-3);
   border: 0;
-  border-radius: var(--flog-radius-inner);
+  border-radius: 3px;
   background: transparent;
-  color: var(--flog-muted-text);
+  color: var(--flog-control-text);
   font-family: inherit;
   font-size: var(--flog-text-sm);
   font-weight: 500;
@@ -782,30 +783,33 @@
   box-shadow: inset 0 0 0 1px var(--flog-red); /* 2px, nothing shifts */
 }
 
-/* Selects as Race Tools' (StrokeSelect.njk): a white track with the
-   choice in a blue pill. A select can't paint part of itself, so the pill
-   is a span (app.js's select()) laid over the select's hidden text,
-   leaving the arrow on the track. */
+/* Selects as Race Tools' and usms.org's results filters: a white 36px
+   box, 1px grey border, the value on the left and a grey chevron. The
+   value is a span (app.js's select()) laid over the select's hidden text. */
 .flog-select {
   position: relative;
   display: flex;
   width: fit-content;
-  padding: 3px;
-  border: 1px solid var(--flog-border);
-  border-radius: var(--flog-radius);
+  border: 1px solid var(--flog-control-border);
+  border-radius: var(--flog-radius-control);
   background: var(--flog-card);
+  transition: border-color 0.15s;
+}
+
+.flog-select:hover {
+  border-color: var(--flog-control-border-hover);
 }
 
 .flog .flog-select__input {
-  min-width: 93px;
-  height: 36px;
+  min-width: 91px;
+  height: 34px; /* 36px with the border */
   margin: 0;
-  padding: 0 30px 0 var(--flog-space-3); /* 30px arrow area, matched by the pill */
+  padding: 0 30px 0 var(--flog-space-3); /* 30px arrow area, matched by the value */
   border: 0;
-  border-radius: var(--flog-radius-inner);
+  border-radius: 3px;
   /* Grey chevron, the muted text's colour */
   background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23595959' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 8px center / 12px 8px;
-  color: transparent; /* the pill shows the value */
+  color: transparent; /* the span shows the value */
   font-family: inherit;
   font-size: var(--flog-text-sm);
   font-weight: 500;
@@ -821,33 +825,27 @@
 
 .flog-select__value {
   position: absolute;
-  top: 3px;
-  right: 33px; /* 3px track padding + 30px arrow area */
-  left: 3px;
-  height: 36px;
-  padding: 0 var(--flog-space-3);
-  border-radius: var(--flog-radius-inner);
-  background: var(--flog-primary);
-  color: var(--flog-on-color);
+  top: 0;
+  right: 30px; /* the arrow area */
+  left: 0;
+  height: 34px;
+  padding: 0 0 0 var(--flog-space-3);
+  color: var(--flog-control-text);
   font-size: var(--flog-text-sm);
   font-weight: 500;
-  line-height: 36px;
+  line-height: 34px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   pointer-events: none; /* clicks reach the select underneath */
 }
 
-.flog-select:hover .flog-select__value {
-  background: var(--flog-primary-hover);
-}
-
-/* The ring goes on the pill, so the track's border stays grey */
+/* The ring goes around the box */
 .flog .flog-select__input:focus-visible {
   box-shadow: none;
 }
 
-.flog-select__input:focus-visible + .flog-select__value {
+.flog-select:has(.flog-select__input:focus-visible) {
   box-shadow: var(--flog-focus);
 }
 
@@ -881,16 +879,15 @@
 }
 
 /* Choices that look like buttons: radio inputs, each with its label */
-/* One track, as Race Tools' segmented controls (.swim-seg): a white box,
-   the picked choice a blue pill inside it */
+/* One track, as Race Tools' segmented controls (.swim-seg): light grey,
+   the picked choice blue on it */
 .flog-choices {
   display: inline-flex;
   flex-wrap: wrap;
   gap: 2px;
   padding: 3px;
-  border: 1px solid var(--flog-border);
-  border-radius: var(--flog-radius);
-  background: var(--flog-card);
+  border-radius: var(--flog-radius-control);
+  background: var(--flog-track);
 }
 
 .flog-choices__input {
@@ -904,13 +901,13 @@
   align-items: center;
   justify-content: center;
   min-width: 52px;
-  height: 36px;
+  height: 30px;
   margin: 0;
   padding: 0 var(--flog-space-3);
   border: 0;
-  border-radius: var(--flog-radius-inner);
+  border-radius: 3px;
   background: transparent;
-  color: var(--flog-muted-text);
+  color: var(--flog-control-text);
   font-size: var(--flog-text-sm);
   font-weight: 500;
   cursor: pointer;
@@ -930,8 +927,7 @@
 }
 
 .flog-choices:has([aria-invalid="true"]) {
-  border-color: var(--flog-red);
-  box-shadow: inset 0 0 0 1px var(--flog-red);
+  box-shadow: 0 0 0 2px var(--flog-red); /* the track has no border to colour */
 }
 
 /* Intensity: Race Tools' slider (race-tools.css, .swim-slider). The thumb's

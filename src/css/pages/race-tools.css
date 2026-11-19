@@ -17,6 +17,13 @@
   --sd-border: #dddddd;
   --sd-rule: #e3e5e6;
   --sd-subtle: #f6f7f8;
+  /* Selects and button groups, as usms.org's results filters
+     (/results/individual-results): a 1px #ccc box, 4px corners, #555 text,
+     and a light grey track behind a button group */
+  --sd-control-border: #cccccc;
+  --sd-control-border-hover: #999999;
+  --sd-control-text: #555555;
+  --sd-track: #eeeeee;
   /* Same light blue as the v1 cards and the article v4 key points block */
   --sd-tint: rgb(231, 245, 255);
   /* Not USMS brand colours; requested for the Training Pace and Pace
@@ -228,69 +235,69 @@
   background: var(--sd-tint);
 }
 
-/* Distance select, between the Course and Stroke controls. Built like a
-   .swim-seg: the wrapper is the white track, and the selected distance is a
-   blue pressed pill. A select can't paint part of itself, so the pill is a
-   separate span laid over the select's hidden text, leaving the arrow on the
-   white track. */
+/* Selects, as usms.org's results filters: a white 36px box, 1px #ccc
+   border, 4px corners, the value in #555 on the left and a grey chevron on
+   the right. The value is a span laid over the select's hidden text, so a
+   filter left at All can show the setting's name instead. */
 .swim-deck__field {
   position: relative;
   display: flex;
-  padding: 3px;
-  border: 1px solid var(--sd-border);
-  border-radius: 8px;
+  border: 1px solid var(--sd-control-border);
+  border-radius: 4px;
   background: #fff;
+  transition: border-color 0.15s;
+}
+
+.swim-deck__field:hover {
+  border-color: var(--sd-control-border-hover);
 }
 
 .swim-deck .swim-deck__field > .form-control,
 .swim-deck-modal .swim-deck__field > .form-control {
-  width: 85px; /* 93px overall with the track; fixed so it doesn't resize between courses */
-  height: 36px;
-  padding: 0 30px 0 0; /* 30px arrow area, matched by the pill's right edge */
+  width: 91px; /* 93px overall with the border; fixed so it doesn't resize between courses */
+  height: 34px; /* 36px with the border */
+  padding: 0 30px 0 0; /* 30px arrow area, matched by the value's right edge */
   border: 0;
-  border-radius: 5px;
+  border-radius: 3px;
   /* Grey chevron, same grey as the unpressed Course and Stroke labels */
   background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23595959' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat right 8px center / 12px 8px;
   box-shadow: none;
-  color: transparent; /* the pill shows the value */
+  color: transparent; /* the span shows the value */
   font-size: 14px;
   appearance: none;
   cursor: pointer;
 }
 
 .swim-deck__field-value {
-  /* Spans the select minus its 30px arrow area (the select's right padding),
-     so the pill's right edge and the arrow area never move */
+  /* Spans the select minus its 30px arrow area (the select's right padding) */
   position: absolute;
-  top: 3px;
-  right: 33px; /* 3px track padding + 30px arrow area */
-  left: 3px;
-  height: 36px;
-  border-radius: 5px;
-  background: var(--sd-blue);
-  color: #fff;
+  top: 0;
+  right: 30px;
+  left: 0;
+  height: 34px;
+  padding-left: 12px;
+  overflow: hidden;
+  color: var(--sd-control-text);
   font-size: 14px;
   font-weight: 500;
-  line-height: 36px;
-  text-align: center;
+  line-height: 34px;
+  text-align: left;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   pointer-events: none; /* clicks reach the select underneath */
-}
-
-.swim-deck__field:hover .swim-deck__field-value {
-  background: var(--sd-blue-hover);
 }
 
 /* Chrome counts a select as focus-visible even after a mouse pick, so the
    focus ring only shows while the keyboard is in use (.swim-keyboard, from
-   race-tools.js), on the pill so the track's border stays grey. */
+   race-tools.js), around the box. */
 .swim-deck .swim-deck__field > .form-control:focus,
 .swim-deck-modal .swim-deck__field > .form-control:focus {
   outline: 0;
 }
 
-.swim-keyboard .swim-deck__field > .form-control:focus + .swim-deck__field-value {
-  outline: 2px solid #fff;
-  outline-offset: -4px;
+.swim-keyboard .swim-deck__field:has(> .form-control:focus) {
+  outline: 2px solid var(--sd-blue);
+  outline-offset: 2px;
 }
 
 /* The open list keeps normal dark-on-white options */
@@ -555,13 +562,15 @@
 
 /* ---------- Segmented control ---------- */
 
+/* As usms.org's results view switch: buttons joined on a light grey
+   track, the chosen one blue with white text. 36px tall overall, level with
+   the selects. */
 .swim-seg {
   display: inline-flex;
   gap: 2px;
   padding: 3px;
-  border: 1px solid var(--sd-border);
-  border-radius: 8px;
-  background: #fff;
+  border-radius: 4px;
+  background: var(--sd-track);
 }
 
 .swim-seg--block {
@@ -574,27 +583,28 @@
 
 .swim-seg > button {
   min-width: 52px;
-  height: 36px;
+  height: 30px;
   padding: 0 12px;
   border: 0;
-  border-radius: 5px;
+  border-radius: 3px;
   background: transparent;
-  color: var(--sd-muted);
+  color: var(--sd-control-text);
   font-size: 14px;
   font-weight: 500;
+  transition: background-color 0.15s, color 0.15s;
 }
 
 /* A smaller one, e.g. Training Summary's Weeks / Days */
 .swim-seg--small {
   padding: 2px;
-  border-radius: 6px;
+  border-radius: 4px;
 }
 
 .swim-seg--small > button {
   min-width: 0;
-  height: 26px;
+  height: 24px;
   padding: 0 10px;
-  border-radius: 4px;
+  border-radius: 3px;
   font-size: 12px;
 }
 
@@ -612,6 +622,10 @@
 .swim-seg > button[aria-pressed="true"] {
   background: var(--sd-blue);
   color: #fff;
+}
+
+.swim-seg > button[aria-pressed="true"]:hover {
+  background: var(--sd-blue-hover);
 }
 
 .swim-seg > button:focus-visible,
@@ -3334,17 +3348,10 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Stroke selects: wide enough for "Butterfly" in the pill */
+/* Stroke selects: wide enough for "Butterfly" */
 .swim-deck .swim-deck__field--stroke > .form-control,
 .swim-deck-modal .swim-deck__field--stroke > .form-control {
   width: 115px;
-}
-
-/* The stroke's name sits left in its pill. px, not rem: production sets
-   html { font-size: 10px }, so 1.25rem would be 12.5px */
-.swim-deck__field--stroke > .swim-deck__field-value {
-  padding-left: 12px;
-  text-align: left;
 }
 
 /* ---------- Training Metrics: Training Effect ---------- */
@@ -3777,21 +3784,18 @@
   color: #fff;
 }
 
-/* Swimmer Info modal's select, before a pick: grey like the header's */
+/* Swimmer Info modal's select, before a pick: lighter text like the header's */
 .swim-deck-modal .swim-deck__field.is-unset .swim-deck__field-value {
-  background: #9a9a9a;
+  color: #767676;
+  font-weight: 400;
 }
 
 /* A guest's Age Group, still on its default (.is-unset, race-tools.js):
-   grey instead of blue until picked. (Competition Category shows neither
+   lighter text until picked. (Competition Category shows neither
    option pressed until picked.) */
 .swim-deck__age.is-unset .swim-deck__field-value {
-  background: #9a9a9a;
-  color: #fff;
-}
-
-.swim-deck__age.is-unset .swim-deck__field:hover .swim-deck__field-value {
-  background: #808080;
+  color: #767676;
+  font-weight: 400;
 }
 
 /* ...and Time Predictions' projections, grey until both are picked */
