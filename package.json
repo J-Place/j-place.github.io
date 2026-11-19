@@ -16,7 +16,7 @@
     "deploy:snapshot": "node scripts/snapshot.js --deploy",
     "flog:seed": "node scripts/flog-seed.js",
     "test:api": "node --test \"api/**/*.test.mjs\"",
-    "deploy:prototype": "npm run build && netlify deploy --dir=_site --prod",
+    "deploy:prototype": "npm run build && netlify deploy --dir=_site --prod --skip-functions-cache",
     "lint": "eslint src/js/",
     "test:visual": "node scripts/run-test-visual.js",
     "test:visual:triage": "node scripts/triage-visual-regression.js",

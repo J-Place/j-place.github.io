@@ -3,11 +3,14 @@
 // and optionally deploys to Netlify with a permanent alias URL.
 //
 // Usage:
-//   node scripts/snapshot.js --page=/path/to/page [--name=my-name] [--notes=file.md] [--deploy]
+//   node scripts/snapshot.js --page=/path/to/page [--name=my-name] [--notes=file.md] [--data=a,b] [--deploy]
 //
 // A page folder with pages under it (e.g. --page=/myusms/flog) comes along
 // whole, its links to itself rewritten for the alias root (/myusms/flog/totals/
 // → /totals/). --notes copies a file to the snapshot root as NOTES.md.
+// --data copies the named folders of /data/ that the page fetches at run
+// time (e.g. --data=top-times for Race Tools, --data=swim-tools for the
+// Workout Generator); nothing under /data/ comes along otherwise.
 //   npm run build:snapshot --page=/events/event-central/usms-measured-pools
 //   npm run deploy:snapshot --page=/events/event-central/usms-measured-pools
 
@@ -32,6 +35,8 @@ const cliArgs = Object.fromEntries(
 const page   = cliArgs.page   || process.env.npm_config_page;
 const deploy = cliArgs.deploy === true || process.env.npm_config_deploy === 'true';
 const notes  = cliArgs.notes || process.env.npm_config_notes;
+const dataDirs = String(cliArgs.data || process.env.npm_config_data || '')
+  .split(',').map(d => d.trim()).filter(Boolean);
 
 if (!page) {
   console.error('Usage: node scripts/snapshot.js --page=</path/to/page> [--name=<name>] [--deploy]');
@@ -228,6 +233,14 @@ try {
   copyDir(path.join(siteDir, 'js'),     path.join(outDir, 'js'));
   copyDir(path.join(siteDir, 'img'),    path.join(outDir, 'img'));
   copyDir(path.join(siteDir, 'vendor'), path.join(outDir, 'vendor'));
+  for (const d of dataDirs) {
+    const src = path.join(siteDir, 'data', d);
+    if (!fs.existsSync(src)) {
+      console.error(`--data: _site/data/${d} doesn't exist`);
+      process.exit(1);
+    }
+    copyDir(src, path.join(outDir, 'data', d));
+  }
 
   console.log(`\nVendoring production CSS...`);
   vendorExternalCss(outDir);
@@ -237,9 +250,22 @@ try {
   // ── Deploy ───────────────────────────────────────────────────────────────────
 
   if (deploy) {
+    // Every deploy carries netlify/functions (the FLOG API), bundled from
+    // this machine's node_modules: a dependency missing here deploys a
+    // function that fails at run time (a 502), so stop first. The dev
+    // container keeps its own node_modules, so one installed there isn't
+    // installed on the Mac. --skip-functions-cache: the CLI otherwise reuses
+    // the last bundle it made, even one made before a dependency arrived.
+    const deps = Object.keys(require(path.join(root, 'package.json')).dependencies || {});
+    const missing = deps.filter(d => !fs.existsSync(path.join(root, 'node_modules', d, 'package.json')));
+    if (missing.length) {
+      console.error(`\nNot deployed: ${missing.join(', ')} not installed. Run npm install, then deploy again.`);
+      process.exit(1);
+    }
+
     console.log(`\nDeploying to Netlify as alias "${name}"...`);
     const deployOut = execSync(
-      `netlify deploy --dir="${outDir}" --alias="${name}" --message="${name}" --json`,
+      `netlify deploy --dir="${outDir}" --alias="${name}" --message="${name}" --skip-functions-cache --json`,
       { cwd: root, encoding: 'utf8', stdio: ['inherit', 'pipe', 'inherit'] }
     );
 

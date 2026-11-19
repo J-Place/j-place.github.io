@@ -135,6 +135,10 @@ netlify api lockDeploy --data '{"deploy_id":"<deploy_id>"}'
 
 Locking is required — Netlify auto-deletes old unlocked deploys, which 404s the alias.
 
+### Pages that fetch data
+
+Nothing under `/data/` is copied unless named: add `--data=<folder>[,<folder>]` for what the page fetches at run time. Race Tools and Training Tools: `--data=top-times`. Workout Generator: `--data=swim-tools`. FLOG needs none (its data comes from the FLOG API, the `netlify/functions` deployed with every snapshot); add `--notes=docs/flog-mockup-notes.md`.
+
 ### If no custom alias:
 
 Run the deploy script with the `--deploy` flag:
