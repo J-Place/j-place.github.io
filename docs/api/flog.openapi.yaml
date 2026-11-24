@@ -2,7 +2,7 @@ openapi: 3.1.0
 info:
   title: USMS Fitness Log (FLOG) API
   version: 0.1.0
-  summary: A member's logged swims, their totals and their Fitness Log preferences.
+  summary: A member's logged workouts (swims and other activities), their totals, their virtual events and their Fitness Log preferences.
   description: |
     The data behind the new Fitness Log: the FLOG pages read and write it,
     and so can other tools that log a swim (Training Tools, the Workout
@@ -152,7 +152,7 @@ paths:
     get:
       operationId: getTotals
       summary: Totals for the month and year a date falls in, and lifetime
-      description: Month and year count swims up to `date`. Lifetime includes swims logged before the records this API holds.
+      description: Month and year count workouts up to `date`. Each period's NumSessions, TotalMinutes and TotalYards are its swims; `Other` is its other workouts (count and time; their distances are other sports', so not added up). Lifetime's swims include those logged before the records this API holds.
       parameters:
         - { name: date, in: query, schema: { $ref: '#/components/schemas/Date' }, description: "Defaults to the server's today." }
         - $ref: '#/components/parameters/Empty'
@@ -163,11 +163,69 @@ paths:
             application/json:
               schema: { $ref: '#/components/schemas/Totals' }
               example:
-                month: { NumSessions: 6, TotalMinutes: 373, TotalYards: 18700 }
-                year: { NumSessions: 194, TotalMinutes: 11178, TotalYards: 581374 }
-                lifetime: { NumSessions: 1459, TotalMinutes: 86190, TotalYards: 4310014 }
+                month: { NumSessions: 6, TotalMinutes: 373, TotalYards: 18700, Other: { NumSessions: 2, TotalMinutes: 56 } }
+                year: { NumSessions: 194, TotalMinutes: 11178, TotalYards: 581374, Other: { NumSessions: 69, TotalMinutes: 2931 } }
+                lifetime: { NumSessions: 1459, TotalMinutes: 86190, TotalYards: 4310014, Other: { NumSessions: 87, TotalMinutes: 3661 } }
                 firstLogDate: '2012-01-09'
         '400': { $ref: '#/components/responses/Problems' }
+  /events:
+    get:
+      operationId: getEvents
+      summary: This year's virtual events, the swimmer's place in each, and past years' results
+      description: Go the Distance (a yearly goal in miles the swimmer sets; this year's swims up to today count toward it, as YearYards), three yearly distance challenges with a fixed goal (Swim the Nile, Swim the Atlantic, Swim Around the World; their miles are placeholders) and the Virtual Championships. Then past years' results, newest first.
+      parameters:
+        - $ref: '#/components/parameters/Empty'
+      responses:
+        '200':
+          description: This year's events, then past results.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [events, past]
+                properties:
+                  events:
+                    type: array
+                    items: { $ref: '#/components/schemas/Event' }
+                  past:
+                    type: array
+                    items: { $ref: '#/components/schemas/PastEvent' }
+              example:
+                events:
+                  - { EventID: gtd, Name: Go the Distance, SignedUp: true, Removed: false, GoalMiles: 400, YearYards: 609674 }
+                  - { EventID: nile, Name: Swim the Nile, SignedUp: false, Removed: false, GoalMiles: 4132, YearYards: 609674 }
+                  - { EventID: atlantic, Name: Swim the Atlantic, SignedUp: false, Removed: false, GoalMiles: 3000, YearYards: 609674 }
+                  - { EventID: world, Name: Swim Around the World, SignedUp: false, Removed: false, GoalMiles: 24901, YearYards: 609674 }
+                  - { EventID: vc, Name: Virtual Championships, SignedUp: false, Removed: true }
+                past:
+                  - { EventID: gtd, Name: Go the Distance, Year: 2025, GoalMiles: 400, Miles: 431.6 }
+                  - { EventID: vc, Name: Virtual Championships, Year: 2025 }
+  /events/{EventID}:
+    parameters:
+      - { name: EventID, in: path, required: true, schema: { type: string, enum: [gtd, nile, atlantic, world, vc] } }
+      - $ref: '#/components/parameters/Empty'
+    put:
+      operationId: updateEvent
+      summary: Sign up for an event, remove yourself, or re-enter (mockup only)
+      description: The mockup's stand-in for signing up. SignedUp false after being in marks the event Removed (Go the Distance keeps its goal), and SignedUp true again re-enters. In production, signing up is the event's registration, and this API only reads who's in.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [SignedUp]
+              properties:
+                SignedUp: { type: boolean }
+                GoalMiles: { type: integer, minimum: 1, maximum: 5000, description: "Go the Distance's goal; required to sign up for it." }
+      responses:
+        '200':
+          description: The event, as now.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Event' }
+        '400': { $ref: '#/components/responses/Problems' }
+        '404': { $ref: '#/components/responses/Problems' }
   /preferences:
     parameters:
       - $ref: '#/components/parameters/Empty'
@@ -245,23 +303,48 @@ components:
       description: Short course yards, short course meters, long course meters, open water, other.
     Unit:
       type: string
-      enum: [Y, M, mi]
-      description: Yards, meters, miles.
+      enum: [Y, M, mi, km]
+      description: >-
+        Yards, meters, miles, kilometers. A swim's unit follows its course:
+        SCY yards; SCM and LCM meters; OW and Other yards, meters or miles.
+        Another activity's is one of its own (Running, Cycling, Walking,
+        Hiking, Cross-Country Skiing, Snowshoeing: mi or km; Rowing,
+        Canoeing, Kayaking, Stand-Up Paddleboarding: M, km or mi).
+    ActivityType:
+      type: integer
+      enum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
+      default: 1
+      description: >-
+        The legacy FLOG's activity ids: 1 Swimming, 2 Weights, 3 Running,
+        4 Walking, 5 Cycling, 6 Spinning, 7 Yoga, 8 Pilates, 9 Other,
+        12 Dancing, 13 Elliptical, 14 Stairs, 15 Lawn Mowing, 16 Snowshoeing,
+        17 Downhill Skiing, 18 Cross-Country Skiing, 19 Canoeing, 20 Kayaking,
+        21 Stand-Up Paddleboarding, 22 Rowing, 23 Steps, 24 Hiking, 25 Barre.
+        Missing means Swimming (entries from before activities, and other
+        tools' swims).
     EntryInput:
       type: object
-      required: [Date, RawDistance, RawDistanceUnit, RawDistanceCourse, DurationMinutes]
+      required: [Date, DurationMinutes]
+      description: >-
+        A swim (ActivityType 1) needs RawDistance, RawDistanceUnit and
+        RawDistanceCourse. Another activity has no course or stroke (the
+        server drops them), and a distance only if it has units and one is
+        given.
       properties:
         Date:
           $ref: '#/components/schemas/Date'
-          description: The day of the swim. Not in the future (a day's grace for time zones).
-        RawDistance: { type: number, exclusiveMinimum: 0, description: 'As the swimmer typed it, in RawDistanceUnit. At most 100,000 yards.' }
+          description: The day of the workout. Not in the future (a day's grace for time zones).
+        ActivityType: { $ref: '#/components/schemas/ActivityType' }
+        RawDistance: { type: number, exclusiveMinimum: 0, description: 'As the swimmer typed it, in RawDistanceUnit. At most 100,000 yards for a swim, 500 miles otherwise.' }
         RawDistanceUnit: { $ref: '#/components/schemas/Unit' }
         RawDistanceCourse: { $ref: '#/components/schemas/Course' }
         DurationMinutes: { type: integer, minimum: 1, maximum: 1440 }
         Details: { type: string, maxLength: 2000, description: 'The swimmer''s comments. Plain text; pages must escape it.' }
         Intensity: { type: integer, minimum: 1, maximum: 10, description: 'New, optional: how hard it felt (1–2 very easy … 10 max).' }
         Calories: { type: number, minimum: 0, maximum: 20000, description: New, optional. }
-        Stroke: { type: string, maxLength: 20, description: 'New, optional: the main stroke (Free, Back, Breast, Fly, IM, Mixed).' }
+        Stroke: { type: string, maxLength: 20, description: 'New, optional, swims only: the main stroke (Free, Back, Breast, Fly, IM, Mixed).' }
+        HeartRate: { type: integer, minimum: 30, maximum: 250, description: 'New, optional: average heart rate for the workout, beats a minute.' }
+        Weight: { type: number, minimum: 50, maximum: 700, description: 'New, optional: body weight that day, pounds. (The legacy FLOG logged heart rate and weight on their own.)' }
     Entry:
       allOf:
         - $ref: '#/components/schemas/EntryInput'
@@ -269,7 +352,8 @@ components:
           required: [EntryID, DistanceYards, Details]
           properties:
             EntryID: { type: integer, description: Set by the server. }
-            DistanceYards: { type: number, description: 'Set by the server from RawDistance and RawDistanceUnit, to 2 decimals.' }
+            ActivityType: { $ref: '#/components/schemas/ActivityType' }
+            DistanceYards: { type: number, description: 'Set by the server from RawDistance and RawDistanceUnit, to 2 decimals; 0 for an activity logged without a distance.' }
     EntryPage:
       type: object
       required: [entries, hasMore, nextBefore]
@@ -285,9 +369,35 @@ components:
       type: object
       required: [NumSessions, TotalMinutes, TotalYards]
       properties:
-        NumSessions: { type: integer }
-        TotalMinutes: { type: integer }
-        TotalYards: { type: number }
+        NumSessions: { type: integer, description: Swims. }
+        TotalMinutes: { type: integer, description: Swims' time. }
+        TotalYards: { type: number, description: Swims' distance. }
+        Other:
+          type: object
+          required: [NumSessions, TotalMinutes]
+          description: Every other activity.
+          properties:
+            NumSessions: { type: integer }
+            TotalMinutes: { type: integer }
+    Event:
+      type: object
+      required: [EventID, SignedUp]
+      properties:
+        EventID: { type: string, enum: [gtd, nile, atlantic, world, vc], description: 'gtd: Go the Distance; nile, atlantic, world: the yearly distance challenges; vc: the Virtual Championships.' }
+        Name: { type: string }
+        SignedUp: { type: boolean }
+        Removed: { type: boolean, description: 'They were in and removed themselves: the page offers Re-enter.' }
+        GoalMiles: { type: [integer, 'null'], description: "Distance events only: Go the Distance's goal (null if never set), or a challenge's fixed miles." }
+        YearYards: { type: number, description: "Distance events only: this year's swims, up to today." }
+    PastEvent:
+      type: object
+      required: [EventID, Name, Year]
+      properties:
+        EventID: { type: string, enum: [gtd, nile, atlantic, world, vc] }
+        Name: { type: string }
+        Year: { type: integer }
+        GoalMiles: { type: integer, description: 'Distance events only.' }
+        Miles: { type: number, description: "Distance events only: the year's swims." }
     Totals:
       type: object
       required: [month, year, lifetime, firstLogDate]
@@ -304,8 +414,13 @@ components:
         WorkoutsPublic: { type: integer, enum: [0, 1] }
         MeasurementsPublic: { type: integer, enum: [0, 1] }
         UserDefaultView: { type: string, enum: [week, month] }
-        UserDefaultCourse: { $ref: '#/components/schemas/Course' }
-        UserDefaultDistance: { $ref: '#/components/schemas/Unit' }
+        UserDefaultCourse:
+          $ref: '#/components/schemas/Course'
+          description: "'My swim workouts are mostly done in this course': the course a new swim starts in."
+        UserDefaultDistance:
+          type: string
+          enum: [Y, M, mi]
+          description: "'Enter my swim distances mostly in this unit of measure': the unit a new open-water or Other swim starts in, and the unit totals and the calendar are shown in. (Each workout shows in its own unit.)"
     Problems:
       type: object
       required: [problems]

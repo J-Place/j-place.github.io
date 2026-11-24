@@ -12,6 +12,12 @@ const seed = {
       preferences: { UserDefaultView: 'month', UserDefaultCourse: 'SCY', UserDefaultDistance: 'Y' },
       prior: { NumSessions: 10, TotalMinutes: 600, TotalYards: 30000 },
       firstLogDate: '2012-01-09',
+      events: { gtd: { SignedUp: true, GoalMiles: 300 } },
+      pastEvents: [
+        { EventID: 'gtd', Year: 2024, GoalMiles: 250, Miles: 262.4 },
+        { EventID: 'vc', Year: 2025 },
+        { EventID: 'gtd', Year: 2025, GoalMiles: 300, Miles: 288.1 }
+      ],
       entries: [
         { EntryID: 1, Date: '2026-10-30', RawDistance: 3000, RawDistanceUnit: 'Y', RawDistanceCourse: 'SCY', DistanceYards: 3000, DurationMinutes: 60, Details: '' },
         { EntryID: 2, Date: '2026-10-31', RawDistance: 1, RawDistanceUnit: 'mi', RawDistanceCourse: 'OW', DistanceYards: 1760, DurationMinutes: 35, Details: 'Lake' }
@@ -63,7 +69,33 @@ test('says what is wrong with a swim', async () => {
   const res = await api()('POST', '/api/flog/entries', { body: { Date: '2026-12-25', RawDistance: -1, RawDistanceUnit: 'km', RawDistanceCourse: 'Lake', DurationMinutes: 1.5, Intensity: 11 } });
   assert.equal(res.status, 400);
   const fields = (await res.json()).problems.map(p => p.field).sort();
-  assert.deepEqual(fields, ['Date', 'DurationMinutes', 'Intensity', 'RawDistance', 'RawDistanceCourse', 'RawDistanceUnit']);
+  assert.deepEqual(fields, ['Date', 'DurationMinutes', 'Intensity', 'RawDistance', 'RawDistanceCourse']);
+});
+
+test('a pool swim is in its own unit; open water in any', async () => {
+  const call = api();
+  const bad = await call('POST', '/api/flog/entries', { body: swim({ RawDistanceCourse: 'SCY', RawDistanceUnit: 'mi', RawDistance: 1 }) });
+  assert.equal(bad.status, 400);
+  assert.deepEqual((await bad.json()).problems, [{ field: 'RawDistanceUnit', message: 'A SCY swim is in yards.' }]);
+  assert.equal((await call('POST', '/api/flog/entries', { body: swim({ RawDistanceCourse: 'LCM', RawDistanceUnit: 'Y' }) })).status, 400);
+  assert.equal((await call('POST', '/api/flog/entries', { body: swim({ RawDistanceCourse: 'OW', RawDistanceUnit: 'M' }) })).status, 201);
+});
+
+test('other activities: no course or stroke, distance optional and in their units', async () => {
+  const call = api();
+  const run = await (await call('POST', '/api/flog/entries', { body: { Date: '2026-11-06', ActivityType: 3, RawDistance: 5, RawDistanceUnit: 'km', RawDistanceCourse: 'SCY', Stroke: 'Free', DurationMinutes: 28, HeartRate: 148 } })).json();
+  assert.equal(run.ActivityType, 3);
+  assert.equal(run.RawDistanceCourse, undefined);
+  assert.equal(run.Stroke, undefined);
+  assert.equal(run.DistanceYards, 5468.07);
+  assert.equal(run.HeartRate, 148);
+  const weights = await (await call('POST', '/api/flog/entries', { body: { Date: '2026-11-06', ActivityType: 2, DurationMinutes: 40, Weight: 172.5 } })).json();
+  assert.equal(weights.DistanceYards, 0);
+  assert.equal(weights.Weight, 172.5);
+  const bad = await call('POST', '/api/flog/entries', { body: { Date: '2026-11-06', ActivityType: 3, RawDistance: 5, RawDistanceUnit: 'Y', DurationMinutes: 28, HeartRate: 20, Weight: 10 } });
+  assert.deepEqual((await bad.json()).problems.map(p => p.field).sort(), ['HeartRate', 'RawDistanceUnit', 'Weight']);
+  assert.equal((await call('POST', '/api/flog/entries', { body: { Date: '2026-11-06', ActivityType: 99, DurationMinutes: 10 } })).status, 400);
+  assert.equal((await call('POST', '/api/flog/entries', { body: { Date: '2026-11-06', ActivityType: 7, RawDistance: 2, RawDistanceUnit: 'mi', DurationMinutes: 10 } })).status, 400);
 });
 
 test('allows tomorrow (a swimmer ahead of the server’s time zone), not later', async () => {
@@ -97,10 +129,49 @@ test('pages the list newest first, never splitting a day', async () => {
 
 test('totals: month, year, lifetime with what came before', async () => {
   const t = await (await api()('GET', '/api/flog/totals?date=2026-11-07')).json();
-  assert.deepEqual(t.month, { NumSessions: 2, TotalMinutes: 95, TotalYards: 4760 });
+  assert.deepEqual(t.month, { NumSessions: 2, TotalMinutes: 95, TotalYards: 4760, Other: { NumSessions: 0, TotalMinutes: 0 } });
   assert.equal(t.lifetime.NumSessions, 12);
   assert.equal(t.lifetime.TotalYards, 34760);
   assert.equal(t.firstLogDate, '2012-01-09');
+});
+
+test('totals: swims, and other workouts apart', async () => {
+  const call = api();
+  await call('POST', '/api/flog/entries', { body: { Date: '2026-11-06', ActivityType: 5, RawDistance: 20, RawDistanceUnit: 'mi', DurationMinutes: 70 } });
+  const t = await (await call('GET', '/api/flog/totals?date=2026-11-07')).json();
+  assert.deepEqual(t.month, { NumSessions: 2, TotalMinutes: 95, TotalYards: 4760, Other: { NumSessions: 1, TotalMinutes: 70 } });
+});
+
+test('events: this year’s events with the swimmer’s place in each, then past years', async () => {
+  const call = api();
+  const { events, past } = await (await call('GET', '/api/flog/events')).json();
+  assert.deepEqual(events.map(e => e.EventID), ['gtd', 'nile', 'atlantic', 'world', 'vc']);
+  assert.deepEqual(events[0], { EventID: 'gtd', Name: 'Go the Distance', SignedUp: true, Removed: false, GoalMiles: 300, YearYards: 4760 });
+  assert.deepEqual(events[1], { EventID: 'nile', Name: 'Swim the Nile', SignedUp: false, Removed: false, GoalMiles: 4132, YearYards: 4760 });
+  assert.deepEqual(events[4], { EventID: 'vc', Name: 'Virtual Championships', SignedUp: false, Removed: false });
+  // Newest first, then in the events' order
+  assert.deepEqual(past.map(p => p.EventID + p.Year), ['gtd2025', 'vc2025', 'gtd2024']);
+  assert.equal(past[0].Name, 'Go the Distance');
+});
+
+test('events: sign up, remove yourself, re-enter', async () => {
+  const call = api();
+  const nile = await call('PUT', '/api/flog/events/nile', { body: { SignedUp: true } });
+  assert.equal((await nile.json()).SignedUp, true);
+  assert.equal((await call('PUT', '/api/flog/events/gtd', { body: { SignedUp: true, GoalMiles: 0 } })).status, 400);
+  assert.equal((await call('PUT', '/api/flog/events/nope', { body: { SignedUp: true } })).status, 404);
+  // Removed keeps the goal, so Re-enter can offer it
+  const left = await (await call('PUT', '/api/flog/events/gtd', { body: { SignedUp: false } })).json();
+  assert.deepEqual(left, { EventID: 'gtd', Name: 'Go the Distance', SignedUp: false, Removed: true, GoalMiles: 300, YearYards: 4760 });
+  const back = await (await call('PUT', '/api/flog/events/gtd', { body: { SignedUp: true, GoalMiles: 320 } })).json();
+  assert.deepEqual([back.SignedUp, back.Removed, back.GoalMiles], [true, false, 320]);
+  // Never in: not removed
+  const vc = await (await call('PUT', '/api/flog/events/vc', { body: { SignedUp: false } })).json();
+  assert.equal(vc.Removed, false);
+  // Another swimmer, with no sign-ups or past events in the seed
+  const none = await (await call('GET', '/api/flog/events', { swimmer: 'SHARK' })).json();
+  assert.equal(none.events.every(e => !e.SignedUp), true);
+  assert.deepEqual(none.past, []);
 });
 
 test('each visitor has their own copy, and reset brings back the seed', async () => {

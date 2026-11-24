@@ -9,9 +9,10 @@ Like Race Tools, Training Tools and the Workout Generator, FLOG is a stand-alone
 | Page | URL | File |
 |---|---|---|
 | Home (week, month) | `/myusms/flog/?view=&date=` | `src/pages/myusms/flog/index.njk` |
-| Log a swim | `/myusms/flog/log-swim/?date=` | `log-swim.njk` |
-| Edit a swim | `/myusms/flog/edit-swim/?id=` | `edit-swim.njk` |
-| Totals | `/myusms/flog/totals/` | `totals.njk` |
+| Log an activity | `/myusms/flog/log-swim/?date=` | `log-swim.njk` |
+| Edit an activity | `/myusms/flog/edit-swim/?id=` | `edit-swim.njk` |
+| Totals | `/myusms/flog/totals/?show=all` | `totals.njk` |
+| Events | `/myusms/flog/events/` | `events.njk` |
 | Preferences | `/myusms/flog/preferences/` | `preferences.njk` |
 
 My Account's Fitness Log link already points to `/myusms/flog/`.
@@ -19,7 +20,7 @@ My Account's Fitness Log link already points to `/myusms/flog/`.
 **Page structure:**
 - Each page extends `layouts/base.njk` and fills the breadcrumb block: Home / My USMS / Fitness Log.
 - `src/pages/myusms/flog/flog.json` gives every page `swimmerId: KT2JH` and `flogRoot: /myusms/flog/`.
-- `partials/Flog/Page.njk` holds the shared body: the icon sprite, `partials/Flog/Header.njk` (title, whose log it is, Log a swim, FLOG's nav), and the mount point that `app.js` renders into.
+- `partials/Flog/Page.njk` holds the shared body: the icon sprite, `partials/Flog/Header.njk` (Log an activity, and FLOG's four-tab nav, icons only on phones; the swimmer's name was removed 2026-11-18), and the mount point that `app.js` renders into.
 
 **Who's visiting:** the `?user=` persona, then `sessionStorage.activeUser`, then the page's `swimmerId` (the same order as `current-user.js`).
 - A logged-out visitor (`NEW`) gets a log-in prompt.
@@ -36,11 +37,11 @@ My Account's Fitness Log link already points to `/myusms/flog/`.
   - Phone first, with breakpoints at 576, 768 and 992px. At 992px the week becomes seven columns.
   - Uses `.flog__container` and a plain `<section class="flog">`, because production styles `.usms-container p`/`li` at 2rem and makes `.section` a table.
 - **`src/js/flog/app.js`:**
-  - Helpers: local dates, `formatDistance` (the one place distances are shown, always in `UserDefaultDistance`), `formatDuration`, and `esc`. Comments are typed by swimmers, so they're escaped before they go into HTML.
-  - Render functions: `renderSwim`, `renderDay`, `renderWeek`, `renderMonth`, `renderTotals`, `renderSwimForm`, `renderPreferences`.
+  - Helpers: local dates, `formatDistance` (totals and summaries, in `UserDefaultDistance`, the Totals default unit) and `formatRaw` (a workout in its own logged unit), `formatDuration`, and `esc`. Comments are typed by swimmers, so they're escaped before they go into HTML.
+  - Render functions: `renderWorkout`, `renderDay`, `renderWeek`, `renderMonth`, `renderTotals`, `renderWorkoutForm`, `renderEvents`, `renderPreferences`.
   - One small controller per page.
 - **`src/js/flog/flog-api.js`:** see Data, below.
-- **`scripts/flog-seed.js`** (`npm run flog:seed [-- --anchor=YYYY-MM-DD]`): writes `api/flog/seed.mjs`, which is generated, so don't edit it. Every logged-in member persona gets a made-up log. KT2JH and GAT0R get 14 months of it, with lifetime totals from before that (`prior`, `firstLogDate`); the rest get 3 months. KT2JH swims yards. GAT0R swims long course and short course meters, with open water in miles. Both have two-swim days, long comments, and the optional fields on some swims. The run is seeded, so the same anchor writes the same file.
+- **`scripts/flog-seed.js`** (`npm run flog:seed [-- --anchor=YYYY-MM-DD]`): writes `api/flog/seed.mjs`, which is generated, so don't edit it. Every logged-in member persona gets a made-up log. KT2JH and GAT0R get 14 months of it, with lifetime totals from before that (`prior`, `firstLogDate`); the rest get 3 months. Since 2026-11-18 members also log other workouts (KT2JH runs, lifts and does yoga, is in Go the Distance with a 400-mile goal, has removed themselves from the Virtual Championships and has six past events, so Show more shows; GAT0R cycles and walks, and is in no event), with average heart rate and weight on some, from a second random stream so the swims don't change. KT2JH swims yards. GAT0R swims long course and short course meters, with open water in miles. Both have two-swim days, long comments, and the optional fields on some swims. The run is seeded, so the same anchor writes the same file.
 
 ## Data: our own FLOG API
 
@@ -58,6 +59,7 @@ The only file that knows where data comes from. Each function returns a Promise,
 | `saveEntry(entry)` | `POST /api/flog/entries`, or `PUT /api/flog/entries/{EntryID}` when it has one |
 | `deleteEntry(id)` | `DELETE /api/flog/entries/{EntryID}` |
 | `getTotals(date)` | `GET /api/flog/totals?date=` |
+| `getEvents()` / `saveEvent(id, value)` | `GET /api/flog/events` (this year's events and past results) / `PUT /api/flog/events/{EventID}` (sign up, remove yourself, re-enter: mockup only) |
 | `getPreferences()` / `savePreferences(p)` | `GET` / `PUT /api/flog/preferences` |
 | `reset()` | `POST /api/flog/reset` (mockup only) |
 
@@ -68,7 +70,7 @@ The only file that knows where data comes from. Each function returns a Promise,
 ### The server's side: `api/flog/`
 
 - **Contract:** `docs/api/flog.openapi.yaml`. Postman can import it (servers: the Netlify site and `localhost:8080`).
-- **`api/flog/core.mjs`:** the rules, pure. Validation (dates not in the future, with a day's grace for swimmers ahead of the server's time zone; whole minutes 1 to 1440; at most 100,000 yards; comments up to 2,000 characters), `DistanceYards`, totals, paging, and moving the seed's dates forward so the latest swim is yesterday.
+- **`api/flog/core.mjs`:** the rules, pure. Validation (dates not in the future, with a day's grace for swimmers ahead of the server's time zone; the legacy FLOG's activities (`ActivityType`, 1 Swimming); a pool swim in its own unit only (SCY yards, SCM and LCM meters); another activity's distance optional and in its own units; average heart rate 30–250; weight 50–700 lb; whole minutes 1 to 1440; at most 100,000 yards for a swim; comments up to 2,000 characters), `DistanceYards`, totals, paging, and moving the seed's dates forward so the latest swim is yesterday.
 - **`api/flog/handler.mjs`:** one web-standard `(Request) => Response` handler, the same shape as a Next.js route handler: routing, the headers above (checked, so they're safe as storage keys), JSON errors, CORS for `https://j-place.github.io` and `http://localhost:8080`, a 16 KB body limit and 3,000 swims per visitor.
 - **`api/flog/stores.mjs`:** one record per visitor and swimmer (`<visitor>/<swimmer>`, `-empty` for the first-time state), copied from the seed on first use. Three adapters with the same calls: memory (tests), a JSON file (`.data/flog/`, gitignored; the dev server) and Netlify Blobs (store `flog`).
 - **Where it runs:** `netlify/functions/flog.mjs` on Netlify (`config.path` `/api/flog/*`; `netlify.toml` `[functions]`), so `deploy:prototype` and every snapshot carry it. On the dev server, `.eleventy.js`'s `flogApi` middleware runs the same handler. A change to `api/flog/` needs a dev server restart.
@@ -108,3 +110,7 @@ The flows:
 3. **Preferences:** a new default view and unit change Home.
 4. **Reset** (`FlogApi.reset()`) brings back the samples.
 5. **Errors:** an empty form shows the error summary, with focus on it.
+
+## On hold
+
+- **Month view on phones (proposed 2026-11-23, on hold).** At 375px each day is about 46 by 52px with 1–2px between them: just over a 44px target, but easy to mis-tap and too crowded to read. The proposal: on phones, a small overview grid (day numbers, a blue fill that deepens with distance, tap to jump) over a full-width list of the month's days with activity, newest first ("Sat 21 · Swimming 3,600 yd · Swimming 1,500 yd"), each row at least 48px tall and opening its day; today always listed. Desktop keeps the grid with names. The alternatives were taller squares with only a total, or weeks only on phones.

@@ -38,7 +38,7 @@ function hash(s) {
   return h >>> 0;
 }
 
-const YARDS_PER = { Y: 1, M: 1 / 0.9144, mi: 1760 };
+const YARDS_PER = { Y: 1, M: 1 / 0.9144, mi: 1760, km: 1000 / 0.9144 };
 const toYards = (d, unit) => Math.round(d * YARDS_PER[unit] * 100) / 100;
 
 function iso(d) {
@@ -73,16 +73,38 @@ const LONG_NOTES = [
 ];
 const STROKES = ['Free', 'Free', 'Free', 'Back', 'Breast', 'Fly', 'IM'];
 
+// Other workouts (the legacy FLOG's ActivityType ids): what each persona
+// does besides swimming, about `perWeek` a week. `unit`/`range`: a distance,
+// for the activities that have one.
+const OTHER = {
+  run: { ActivityType: 3, unit: 'mi', range: [2, 6], pace: 9.5, notes: ['Easy run', 'Hill repeats', 'Long run, flat route', ''] },
+  bike: { ActivityType: 5, unit: 'mi', range: [10, 35], pace: 3.6, notes: ['Group ride', 'Trainer ride', 'Commute', ''] },
+  weights: { ActivityType: 2, minutes: [30, 55], notes: ['Dryland: core and shoulders', 'Gym, upper body', ''] },
+  yoga: { ActivityType: 7, minutes: [30, 60], notes: ['Stretch class', ''] },
+  walk: { ActivityType: 4, unit: 'mi', range: [1.5, 4], pace: 18, notes: ['Walk with the dog', ''] }
+};
+
 // How each persona swims. Others get the default habits.
 const HABITS = {
   KT2JH: { months: 14, perWeek: 4.2, course: 'SCY', poolUnits: { SCY: 'Y' }, base: 3200, spread: 900, owSummer: 0.25, owUnit: 'mi', pace: 1.55,
+           other: { perWeek: 1.6, kinds: ['run', 'weights', 'weights', 'yoga'] }, weight: 174, heartRate: 128,
+           events: { gtd: { SignedUp: true, GoalMiles: 400 }, vc: { SignedUp: false, Removed: true } },
+           // Past years' results (since 2026-11-23): six, so Events' Show more has one to show
+           pastEvents: [
+             { EventID: 'gtd', Year: 2025, GoalMiles: 400, Miles: 431.6 }, { EventID: 'vc', Year: 2025 },
+             { EventID: 'gtd', Year: 2024, GoalMiles: 350, Miles: 338.2 }, { EventID: 'vc', Year: 2024 },
+             { EventID: 'gtd', Year: 2023, GoalMiles: 300, Miles: 322.9 }, { EventID: 'gtd', Year: 2022, GoalMiles: 250, Miles: 271 }
+           ],
            prefs: { WorkoutsPublic: 1, MeasurementsPublic: 0, UserDefaultView: 'week', UserDefaultCourse: 'SCY', UserDefaultDistance: 'Y' },
            prior: { NumSessions: 1184, TotalMinutes: 70250, TotalYards: 3482600 }, firstLogDate: '2012-01-09' },
   GAT0R: { months: 14, perWeek: 3.4, course: 'LCM', poolUnits: { LCM: 'M', SCM: 'M' }, base: 3000, spread: 1100, owSummer: 0.4, owUnit: 'mi', pace: 1.7, mixScm: 0.25,
+           other: { perWeek: 1.2, kinds: ['bike', 'bike', 'walk'] }, heartRate: 122,
+           pastEvents: [{ EventID: 'gtd', Year: 2025, GoalMiles: 200, Miles: 214.3 }],
            prefs: { WorkoutsPublic: 0, MeasurementsPublic: 0, UserDefaultView: 'month', UserDefaultCourse: 'LCM', UserDefaultDistance: 'M' },
            prior: { NumSessions: 712, TotalMinutes: 47900, TotalYards: 2140300 }, firstLogDate: '2016-06-02' }
 };
 const DEFAULT_HABITS = { months: 3, perWeek: 2.6, course: 'SCY', poolUnits: { SCY: 'Y' }, base: 2200, spread: 700, owSummer: 0.1, owUnit: 'Y', pace: 1.9,
+  other: { perWeek: 0.5, kinds: ['walk', 'yoga'] }, events: {},
   prefs: { WorkoutsPublic: 0, MeasurementsPublic: 0, UserDefaultView: 'month', UserDefaultCourse: 'SCY', UserDefaultDistance: 'Y' } };
 
 function roundTo(n, step) {
@@ -147,7 +169,35 @@ function swimmerLog(id, idBase) {
     const e = entries[entries.length - 3 - i * 4];
     if (e) e.Details = note;
   });
-  const seed = { preferences: h.prefs, entries };
+  // Heart rate and weight (optional, since 2026-11-18) on some swims, from
+  // their own random stream so the swims above don't change
+  const r2 = rng(hash(id + anchor + 'extra'));
+  for (const e of entries) {
+    if (h.heartRate && r2() < 0.3) e.HeartRate = Math.round(h.heartRate + (e.Intensity || 5) * 3 - 15 + r2() * 10);
+    if (h.weight && r2() < 0.15) e.Weight = Math.round((h.weight + (r2() - 0.5) * 4) * 10) / 10;
+  }
+  // Other workouts, on their own days' afternoons, never yesterday (so
+  // yesterday shows one swim) or today
+  let nextId = idBase + 50000;
+  for (let day = start; day < addDays(anchor, -1); day = addDays(day, 1)) {
+    if (r2() >= h.other.perWeek / 7) continue;
+    const kind = OTHER[h.other.kinds[Math.floor(r2() * h.other.kinds.length)]];
+    const e = { EntryID: nextId++, Date: day, ActivityType: kind.ActivityType };
+    if (kind.unit) {
+      e.RawDistance = Math.round((kind.range[0] + r2() * (kind.range[1] - kind.range[0])) * 10) / 10;
+      e.RawDistanceUnit = kind.unit;
+      e.DurationMinutes = Math.round(e.RawDistance * kind.pace * (0.9 + r2() * 0.2));
+    } else {
+      e.DurationMinutes = Math.round(kind.minutes[0] + r2() * (kind.minutes[1] - kind.minutes[0]));
+    }
+    e.DistanceYards = e.RawDistance ? toYards(e.RawDistance, e.RawDistanceUnit) : 0;
+    e.Details = kind.notes[Math.floor(r2() * kind.notes.length)];
+    if (r2() < 0.5) e.Intensity = Math.min(10, Math.max(1, Math.round(3 + r2() * 5)));
+    if (h.heartRate && kind.unit && r2() < 0.5) e.HeartRate = Math.round(h.heartRate + 10 + r2() * 20);
+    entries.push(e);
+  }
+  entries.sort((a, b) => (a.Date < b.Date ? -1 : a.Date > b.Date ? 1 : a.EntryID - b.EntryID));
+  const seed = { preferences: h.prefs, entries, events: h.events || {}, pastEvents: h.pastEvents || [] };
   if (h.prior) {
     seed.prior = h.prior;
     seed.firstLogDate = h.firstLogDate;

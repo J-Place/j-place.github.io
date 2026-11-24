@@ -9,8 +9,9 @@
 //                   their own copy of the sample data
 //   X-Flog-Empty: 1 the first-time state (no sample swims)
 import {
-  MAX_ENTRIES, cleanEntry, cleanPreferences, entriesBetween, entriesPage, entryProblems,
-  isDate, isoDate, nextEntryId, preferencesProblems, recordFromSeed, toYards, totals
+  EVENTS, MAX_ENTRIES, cleanEntry, cleanEvent, cleanPreferences, entriesBetween, entriesPage, entryProblems,
+  eventProblems, eventsView, isDate, isoDate, nextEntryId, preferencesProblems, recordFromSeed, totals,
+  withDistanceYards
 } from './core.mjs';
 
 const BASE = '/api/flog';
@@ -57,7 +58,12 @@ export function createHandler({ store, seed, origins = [], today = () => isoDate
     const key = visitor + '/' + swimmer + (empty ? '-empty' : '');
 
     async function load() {
-      return (await store.get(key)) || recordFromSeed(seed, swimmer, today(), empty);
+      const record = (await store.get(key)) || recordFromSeed(seed, swimmer, today(), empty);
+      // A record saved before events (2026-11-18) takes the seed's
+      if (!record.events) record.events = recordFromSeed(seed, swimmer, today(), empty).events;
+      // ...and before past events (2026-11-23)
+      if (!record.pastEvents) record.pastEvents = recordFromSeed(seed, swimmer, today(), empty).pastEvents;
+      return record;
     }
     async function body() {
       const text = await request.text();
@@ -97,7 +103,7 @@ export function createHandler({ store, seed, origins = [], today = () => isoDate
           if (problems.length) return json({ problems }, 400);
           if (record.entries.length >= MAX_ENTRIES) return problem(409, 'This log is full (a mockup limit). Reset it: POST /api/flog/reset.');
           entry.EntryID = nextEntryId(record.entries);
-          entry.DistanceYards = toYards(entry.RawDistance, entry.RawDistanceUnit);
+          withDistanceYards(entry);
           record.entries.push(entry);
           await store.set(key, record);
           return json(entry, 201);
@@ -110,14 +116,14 @@ export function createHandler({ store, seed, origins = [], today = () => isoDate
         const entryId = Number(id);
         const record = await load();
         const i = record.entries.findIndex(e => e.EntryID === entryId);
-        if (i < 0) return problem(404, 'We couldn’t find that swim.');
+        if (i < 0) return problem(404, 'We couldn’t find that activity.');
         if (method === 'GET') return json(record.entries[i]);
         if (method === 'PUT') {
           const entry = cleanEntry(await body());
           const problems = entryProblems(entry, today());
           if (problems.length) return json({ problems }, 400);
           entry.EntryID = entryId;
-          entry.DistanceYards = toYards(entry.RawDistance, entry.RawDistanceUnit);
+          withDistanceYards(entry);
           record.entries[i] = entry;
           await store.set(key, record);
           return json(entry);
@@ -151,6 +157,27 @@ export function createHandler({ store, seed, origins = [], today = () => isoDate
           return json(prefs);
         }
         return problem(405, 'Use GET or PUT.');
+      }
+
+      // /events: this year's virtual events and the swimmer's place in each,
+      // then past years' results
+      if (resource === 'events' && !id) {
+        if (method !== 'GET') return problem(405, 'Use GET.');
+        return json(eventsView(await load(), today()));
+      }
+
+      // /events/{EventID}: sign up, remove yourself or re-enter (mockup only: in production,
+      // signing up is the event's registration)
+      if (resource === 'events') {
+        if (!EVENTS.includes(id)) return problem(404, 'There’s no event ' + id + '.');
+        if (method !== 'PUT') return problem(405, 'Use PUT.');
+        const input = await body();
+        const problems = eventProblems(id, input);
+        if (problems.length) return json({ problems }, 400);
+        const record = await load();
+        record.events[id] = cleanEvent(id, input, record.events[id]);
+        await store.set(key, record);
+        return json(eventsView(record, today()).events.find(e => e.EventID === id));
       }
 
       // /reset (mockup only): back to the sample data

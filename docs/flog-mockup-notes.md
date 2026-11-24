@@ -6,11 +6,14 @@ These notes go with the FLOG mockup snapshot. The pages are U.S. Masters Swimmin
 
 | Page | Path in the snapshot | What it does |
 |---|---|---|
-| Home | `/` | Week and month views. `?view=week\|month&date=YYYY-MM-DD` |
-| Log a swim | `/log-swim/` | `?date=` pre-fills the date (from a day's "Log a swim") |
-| Edit a swim | `/edit-swim/?id=EntryID` | Same form, filled in, with Delete and an in-page "are you sure?" |
-| Totals | `/totals/` | This month, this year, lifetime |
-| Preferences | `/preferences/` | Sharing, default unit, course and calendar view, plus a demo-only reset |
+| Home (Calendar) | `/` | Week and month views. `?view=week\|month&date=YYYY-MM-DD`. A member in no virtual event sees a short prompt toward Events |
+| Log an activity | `/log-swim/` | Any activity. `?date=` pre-fills the date (from a day's "Log an activity"; the header button reads "Log an activity") |
+| Edit an activity | `/edit-swim/?id=EntryID` | Same form, filled in, with Delete and an in-page "are you sure?" |
+| Totals | `/totals/` | This month, this year, lifetime: swims, or all workouts (`?show=all`) |
+| Events | `/events/` | This year's events: Go the Distance, Swim the Nile, Swim the Atlantic, Swim Around the World and the Virtual Championships. Each has Sign up, Remove yourself (after a confirm) and Re-enter, and the distance events show your progress. The events are cards in a grid: three across on desktop, two on tablets, one on phones, with each card's button at its foot so a row's buttons line up. Then Past events: the latest five, and Show more |
+| Preferences | `/preferences/` | Sharing, the unit you mostly enter distances in, the course you mostly swim and the calendar default view. Save is off until something changes and goes to the calendar; Cancel goes back to it unsaved |
+
+The nav is four tabs, Calendar, Totals, Events and Preferences, each with an icon (calendar, list, flag, gear). On phones (under 768px) only the icons show; their names stay for screen readers.
 
 On the prototype site they live at `/myusms/flog/`.
 
@@ -44,8 +47,10 @@ Entries use the Fitness Log's own field names:
 - `Date` (`YYYY-MM-DD`, a plain calendar date)
 - `RawDistance`
 - `RawDistanceUnit` (`Y`, `M` or `mi`)
-- `RawDistanceCourse` (`SCY`, `SCM`, `LCM`, `OW` or `Other`)
-  - The form offers only the units that fit the course: yards or miles for SCY, meters or miles for SCM and LCM, and any unit for open water and Other.
+- `ActivityType`: the legacy FLOG's own activity ids, with 1 for Swimming (the full list is in `flog.openapi.yaml`). An entry without one is a swim.
+- `RawDistanceCourse` (`SCY`, `SCM`, `LCM`, `OW` or `Other`): swims only.
+  - A pool swim has one unit: yards for SCY, meters for SCM and LCM. Open water and Other take yards, meters or miles. The form shows a pool's unit as plain text, and our API rejects a pool swim in any other unit.
+- Other activities have no course or stroke. Their distance is optional, for the activities that have one: miles or kilometers for running, cycling, walking, hiking, cross-country skiing and snowshoeing; meters, kilometers or miles for rowing and paddling. The rest (weights, yoga and so on) are time only.
 - `DistanceYards`
 - `DurationMinutes`
 - `Details`
@@ -53,15 +58,24 @@ Entries use the Fitness Log's own field names:
 `DistanceYards` is set by the data source, never by the page:
 - meters × 1.0936
 - miles × 1760
+- kilometers × 1093.61
 
-Preferences are `WorkoutsPublic`, `MeasurementsPublic`, `UserDefaultView` (`week` or `month`), `UserDefaultCourse` and `UserDefaultDistance`.
+It's 0 for an activity logged without a distance.
 
-Preferences doesn't show `MeasurementsPublic` (the log has no measurements). It's still in the data, and saving sends it back unchanged.
+Each workout shows in the unit it was logged in. Totals and the calendar's week and month lines use the swimmer's Totals default unit.
 
-Totals are `NumSessions`, `TotalMinutes` and `TotalYards` for the month, the year and lifetime, plus `firstLogDate`.
+Preferences are `WorkoutsPublic`, `MeasurementsPublic` (heart rate and weight; not on the page since 2026-11-23, kept as it was), `UserDefaultView` (`week` or `month`), `UserDefaultCourse` and `UserDefaultDistance`. The page labels them in the legacy FLOG's words:
+- `UserDefaultDistance`: **Enter my swim distances mostly in this unit of measure** (you may change this for individual workouts). It's the unit a new open-water or Other swim starts in (a pool course has one unit), and the unit totals and the calendar show.
+- `UserDefaultCourse`: **My swim workouts are mostly done in this course** (you may change this for individual workouts). The course a new swim starts in.
+- `UserDefaultView`: **Calendar default view**.
+
+The month calendar names each activity before its distance ("Swimming 3,000", "Running 3 mi"; a time-only activity by name). On phones an icon (Lucide) stands for the name.
+
+Totals are, for the month, the year and lifetime, the swims' `NumSessions`, `TotalMinutes` and `TotalYards`, plus `Other: { NumSessions, TotalMinutes }` for every other activity, and `firstLogDate`. Other workouts' distances aren't added up, because they're in different sports.
+
+Events (`GET /api/flog/events`) are `{ events, past }`. `events` is this year's: Go the Distance (`gtd`, the swimmer's own `GoalMiles`), the three distance challenges (`nile`, `atlantic`, `world`, a fixed `GoalMiles`) and the Virtual Championships (`vc`). Each has `Name`, `SignedUp` and `Removed` (they were in and took themselves out, so the page offers Re-enter); the distance events also have `YearYards`, this year's swims. `past` is earlier years' results, newest first: `EventID`, `Name`, `Year`, and for the distance events `GoalMiles` and `Miles`.
 
 Left out on purpose:
-- `ActivityType`, because the log is swims only.
 - `Value1` and `Value2`, because we don't know what they hold.
 - `SwimmerId`, which should come from the login, never from the page.
 
@@ -71,6 +85,8 @@ These are **new, optional fields**. A swim without them is complete.
 
 - `Intensity` (1 to 10): how hard the swim felt, set with a slider (the same as Race Tools' Pace and calories). Until it's moved, the swim isn't rated. The page shows a word with it: 1–2 Very easy, 3–4 Easy, 5–6 Moderate, 7–8 Hard, 9 Very hard, 10 Max. Training Tools' Training Effect uses the same scale.
 - `Stroke`: the swim's main stroke (`Free`, `Back`, `Breast`, `Fly`, `IM`, `Mixed`).
+- `HeartRate`: the workout's average heart rate, in beats a minute (30–250).
+- `Weight`: body weight that day, in pounds (50–700). The legacy FLOG logged heart rate and weight on their own; here they're optional fields on any workout.
 - `Calories`: a whole number. The form doesn't ask for it (since 2026-11-08); swims that have it show it, and editing a swim keeps it. Training Tools' pace and calories calculator, or a watch import, could fill it in later.
 
 Also not in the primer's data, but worked out on the page from what's there:
@@ -105,11 +121,13 @@ Today's FLOG has no API, and the other tools need one, so the mockup runs on a w
 
 | Call | What it does |
 |---|---|
-| `GET /api/flog/entries?from=&to=` | Swims in a date range (week, month) |
-| `GET /api/flog/entries?limit=&before=` | The newest swims, a page at a time |
-| `GET`, `PUT`, `DELETE /api/flog/entries/{EntryID}` | One swim |
-| `POST /api/flog/entries` | Log a swim |
-| `GET /api/flog/totals?date=` | Month, year and lifetime totals |
+| `GET /api/flog/entries?from=&to=` | Workouts in a date range (week, month) |
+| `GET /api/flog/entries?limit=&before=` | The newest workouts, a page at a time |
+| `GET`, `PUT`, `DELETE /api/flog/entries/{EntryID}` | One workout |
+| `POST /api/flog/entries` | Log a workout |
+| `GET /api/flog/totals?date=` | Month, year and lifetime totals, swims and other workouts |
+| `GET /api/flog/events` | The virtual events, and whether the swimmer is in each |
+| `PUT /api/flog/events/{EventID}` | Sign up, remove yourself or re-enter (mockup only: in production that's the event's registration) |
 | `GET`, `PUT /api/flog/preferences` | Preferences |
 
 - The server sets `EntryID` and `DistanceYards`.
@@ -121,8 +139,9 @@ Build it your own way if it suits your app better. If you do, a short note of yo
 
 ## Open questions
 
-1. **GTD isn't in this handoff.** The current FLOG's Go The Distance pieces (the progress card, Events, Monthly Progress) aren't mocked up. Keep them as they are, or tell us if you want them in the new look.
+1. **Events and sign-up.** The Events tab shows Go the Distance, Swim the Nile, Swim the Atlantic, Swim Around the World and the Virtual Championships, and where the member stands in each, then past years' results. The challenges run yearly like Go the Distance, with a fixed goal; their miles (Nile 4,132, Atlantic 3,000, around the world 24,901) are placeholders until USMS gives the real distances, and as yearly goals the last two may be out of reach. Where do past results come from in production? Signing up in the mockup is a stand-in: where should Sign up go in production (each event's registration?), and where does the real FLOG learn who's signed up and their Go the Distance goal? The current FLOG's Monthly Progress isn't mocked up.
 2. **How the other tools reach FLOG.** Training Tools and the Workout Generator both let members log a swim, and Training Tools reads the log back for its Training Metrics. Will the new FLOG take swims and give them back through an API, or should those tools link to FLOG's Log a swim page, pre-filled? In the mockup they already do: both post swims to our API and Training Tools reads them back (see the API, below).
 3. **`Value1` and `Value2`**: what do they hold, and does anything still use them?
 4. **Details length**: is there a limit on comments?
-5. **Course and unit**: the form only offers the units that fit the course (see Data), but our API doesn't check them, so another tool could still post an SCY swim in meters. Should the real FLOG reject that, and do older swims already break the rule?
+5. **Course and unit**: since 2026-11-18 our API rejects a pool swim in another unit (see Data), such as an SCY swim in miles. Should the real FLOG do the same, and do older swims already break the rule?
+6. **Activity list**: the mockup uses the legacy FLOG's 23 activities and ids. Is that list staying, and which should have a distance?

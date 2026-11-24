@@ -1,10 +1,10 @@
 // FLOG mockup: the one file that knows where Fitness Log data comes from.
 //
 // Every function returns a Promise and takes and returns the Fitness Log's
-// own field names (EntryID, Date, RawDistance, RawDistanceUnit,
-// RawDistanceCourse, DistanceYards, DurationMinutes, Details, plus the
-// optional Intensity, Calories and Stroke). The pages (app.js) only ever
-// call these functions.
+// own field names (EntryID, Date, ActivityType, RawDistance,
+// RawDistanceUnit, RawDistanceCourse, DistanceYards, DurationMinutes,
+// Details, plus the optional Intensity, Calories, Stroke, HeartRate and
+// Weight). The pages (app.js) only ever call these functions.
 //
 // Each is one call to our FLOG API (docs/api/flog.openapi.yaml): the dev
 // server and Netlify answer /api/flog/ on the same site; the GitHub Pages
@@ -71,7 +71,7 @@ window.FlogApi = (function () {
       empty = !!(options && options.empty);
     },
 
-    // Swims from `from` to `to` (YYYY-MM-DD, both included), oldest first.
+    // Workouts from `from` to `to` (YYYY-MM-DD, both included), oldest first.
     // GET /api/flog/entries?from=&to=[&course=]
     getEntries: function (q) {
       return call('GET', '/entries' + query({ from: q.from, to: q.to, course: q.course }));
@@ -101,11 +101,28 @@ window.FlogApi = (function () {
       return call('DELETE', '/entries/' + encodeURIComponent(id));
     },
 
-    // The month and year `date` falls in, and lifetime, each
-    // { NumSessions, TotalMinutes, TotalYards }, plus firstLogDate.
+    // The month and year `date` falls in, and lifetime, each its swims'
+    // { NumSessions, TotalMinutes, TotalYards } and its other workouts'
+    // Other: { NumSessions, TotalMinutes }, plus firstLogDate.
     // GET /api/flog/totals?date=
     getTotals: function (date) {
       return call('GET', '/totals' + query({ date: date }));
+    },
+
+    // This year's virtual events and the swimmer's place in each, then past
+    // years' results: { events: [{ EventID, Name, SignedUp, Removed,
+    // GoalMiles, YearYards }, …, { EventID: 'vc', Name, SignedUp, Removed }],
+    // past: [{ EventID, Name, Year, GoalMiles, Miles }] }.
+    // GET /api/flog/events
+    getEvents: function () {
+      return call('GET', '/events');
+    },
+
+    // Signs up for an event or leaves it: { SignedUp, GoalMiles } (Go the
+    // Distance's goal). Mockup only: in production, signing up is the
+    // event's registration. PUT /api/flog/events/{EventID}
+    saveEvent: function (id, value) {
+      return call('PUT', '/events/' + encodeURIComponent(id), value);
     },
 
     // GET /api/flog/preferences

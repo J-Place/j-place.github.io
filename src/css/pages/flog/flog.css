@@ -91,22 +91,12 @@
 
 /* ---------- Header and nav ---------- */
 
+/* Log a workout, at the right (the swimmer's name was at the left until
+   2026-11-18) */
 .flog-head {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--flog-space-3) var(--flog-space-4);
+  justify-content: flex-end;
   margin-bottom: var(--flog-space-4);
-}
-
-.flog-head__who {
-  color: var(--flog-muted-text);
-  font-size: var(--flog-text-sm);
-}
-
-.flog-head__who:empty {
-  display: none;
 }
 
 .flog.is-guest .flog-head__log,
@@ -150,8 +140,9 @@
   color: var(--flog-primary);
 }
 
-/* Phones: the three links fit without their icons */
-@media (max-width: 419px) {
+/* Phones: icons only, sharing the width; the names stay for screen
+   readers */
+@media (max-width: 767px) {
   .flog .flog-nav__link {
     flex: 1;
     justify-content: center;
@@ -159,7 +150,17 @@
   }
 
   .flog-nav__link .flog-icon {
-    display: none;
+    width: 22px;
+    height: 22px;
+  }
+
+  .flog-nav__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
   }
 }
 
@@ -383,7 +384,18 @@
   text-align: center;
 }
 
-/* ---------- A swim ---------- */
+/* ---------- A workout ---------- */
+
+/* Another activity: its name, a little smaller than a swim's distance,
+   then any distance */
+.flog-swim--other .flog-swim__distance {
+  font-size: var(--flog-text);
+}
+
+.flog-swim__amount {
+  color: var(--flog-secondary);
+  font-weight: 700;
+}
 
 .flog .flog-swim__link {
   display: flex;
@@ -570,7 +582,7 @@
   justify-content: space-between;
   width: 100%;
   min-height: 52px;
-  padding: 3px 4px;
+  padding: 3px 2px 3px 3px; /* room for an icon and "3,500" at 375px */
   border: 1px solid var(--flog-border);
   border-radius: var(--flog-radius-inner);
   background: var(--flog-card);
@@ -609,22 +621,44 @@
   line-height: 1.2;
 }
 
-.flog-month__dist {
-  max-width: 100%;
-  overflow: hidden;
-  color: var(--flog-primary);
-  font-size: 11px;
-  font-weight: 700;
-  line-height: 1.2;
-  text-overflow: clip;
-  white-space: nowrap;
-}
-
-/* A day's swims, one distance per line */
+/* A day's activities, one per line (since 2026-11-23, replacing a dot per
+   other workout): on phones its icon then its distance, wider its name
+   then its distance. Swims blue, other activities ink. */
 .flog-month__dists {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
   max-width: 100%;
+}
+
+.flog-month__dist {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  max-width: 100%;
+  overflow: hidden;
+  color: var(--flog-primary);
+  font-size: 10px;
+  letter-spacing: -0.2px;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.flog-month__dist--other {
+  color: var(--flog-ink);
+}
+
+.flog .flog-month__icon {
+  flex: none;
+  width: 10px;
+  height: 10px;
+}
+
+.flog-month__name,
+.flog-month__unit {
+  display: none;
 }
 
 .flog .flog-month__day[aria-pressed="true"] .flog-month__dist {
@@ -643,6 +677,16 @@
 }
 
 /* ---------- Totals ---------- */
+
+/* Swims or All workouts, above the periods */
+.flog .flog-totals__show {
+  display: inline-flex;
+  margin-bottom: var(--flog-space-4);
+}
+
+.flog .flog-totals__show > button {
+  white-space: nowrap;
+}
 
 .flog-totals {
   display: grid;
@@ -710,7 +754,245 @@
   font-weight: 700;
 }
 
+/* ---------- Events ---------- */
+
+.flog-events__lead {
+  margin-bottom: var(--flog-space-4) !important;
+  color: var(--flog-ink);
+}
+
+/* The events as cards in a grid (since 2026-11-23): one column on phones,
+   two on tablets, three on desktop. Each card is a column with its button
+   (or goal form) at the bottom, so a row's buttons line up. */
+.flog-events {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--flog-space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 768px) {
+  .flog-events {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 992px) {
+  .flog-events {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.flog .flog-events > .flog-event {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0;
+}
+
+.flog-event > .flog-event__actions:last-child,
+.flog-event > .flog-event__join,
+.flog-event > .flog-event__actions:has(+ .flog-confirm) {
+  margin-top: auto !important;
+  padding-top: var(--flog-space-4);
+}
+
+.flog .flog-event .flog-card__title {
+  display: flex;
+  align-items: center;
+  gap: var(--flog-space-2);
+}
+
+.flog-event .flog-card__title .flog-icon {
+  color: var(--flog-gold);
+}
+
+.flog-event.is-in {
+  border-top: 4px solid var(--flog-primary);
+}
+
+.flog-event__status {
+  display: flex;
+  align-items: center;
+  gap: var(--flog-space-2);
+  color: var(--flog-primary);
+  font-weight: 700;
+}
+
+.flog-event__progress {
+  margin: var(--flog-space-3) 0 var(--flog-space-2) !important;
+  color: var(--flog-muted-text);
+}
+
+.flog-event__progress strong {
+  color: var(--flog-secondary);
+  font-size: var(--flog-text-xl);
+}
+
+.flog-meter {
+  height: 10px;
+  overflow: hidden;
+  border-radius: 5px;
+  background: var(--flog-muted);
+}
+
+.flog-meter__fill {
+  display: block;
+  height: 100%;
+  border-radius: 5px;
+  background: var(--flog-primary);
+}
+
+.flog-event__note,
+.flog-event__pitch {
+  margin-top: var(--flog-space-3) !important;
+  font-size: var(--flog-text-sm);
+}
+
+.flog-event__actions {
+  margin-top: var(--flog-space-4) !important;
+}
+
+/* The goal and Sign up, side by side, level at the bottom */
+.flog-event__join {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--flog-space-3);
+  margin-top: var(--flog-space-4);
+}
+
+.flog-event__join .flog-field {
+  margin-bottom: 0 !important;
+}
+
+/* Removed: a plain line, not the signed-up check */
+.flog-event__status--out {
+  color: var(--flog-muted-text);
+  font-weight: 400;
+}
+
+/* Remove yourself's confirm, inside the event's card */
+.flog-event .flog-confirm {
+  margin-top: var(--flog-space-4);
+}
+
+.flog .flog-event .flog-confirm__title {
+  font-size: var(--flog-text);
+}
+
+/* Past events (since 2026-11-23): year, event, result on a row; the latest
+   five, then Show more */
+.flog-past {
+  max-width: 640px;
+  margin-top: var(--flog-space-5);
+}
+
+.flog-past__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.flog-past__item {
+  display: grid;
+  grid-template-columns: 3.5em 1fr auto;
+  gap: var(--flog-space-1) var(--flog-space-3);
+  align-items: baseline;
+  padding: var(--flog-space-3) 0;
+  border-top: 1px solid var(--flog-border);
+  font-size: var(--flog-text-sm);
+}
+
+.flog-past__item:first-child {
+  border-top: 0;
+}
+
+.flog-past__year {
+  color: var(--flog-muted-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.flog-past__name {
+  font-weight: 700;
+}
+
+.flog-past__result {
+  text-align: right;
+}
+
+.flog-past__met {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: var(--flog-space-2);
+  color: var(--flog-primary);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.flog-past__met .flog-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* On phones the result goes under the event's name */
+@media (max-width: 479px) {
+  .flog-past__item {
+    grid-template-columns: 3.5em 1fr;
+  }
+
+  .flog-past__result {
+    grid-column: 2;
+    text-align: left;
+  }
+}
+
+.flog-past__more {
+  margin-top: var(--flog-space-3) !important;
+}
+
+/* The calendar's nudge toward Events, for a member in neither event */
+.flog-nudge {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--flog-space-2);
+  margin-bottom: var(--flog-space-4) !important;
+  padding: var(--flog-space-3) var(--flog-space-4);
+  border-radius: var(--flog-radius);
+  background: var(--flog-light-blue);
+  font-size: var(--flog-text-sm);
+}
+
+.flog-nudge .flog-icon {
+  flex: none;
+  color: var(--flog-primary);
+}
+
 /* ---------- Forms ---------- */
+
+/* Fields the activity doesn't use */
+.flog .flog-field[hidden] {
+  display: none;
+}
+
+.flog .flog-input--short {
+  width: 110px;
+}
+
+/* A select with one choice (a pool's own unit): plain text, no box */
+.flog-select.is-fixed {
+  border-color: transparent;
+  background: transparent;
+}
+
+.flog .flog-select.is-fixed .flog-select__input {
+  min-width: 0;
+  width: 44px;
+  background-image: none;
+  cursor: default;
+}
 
 .flog-form {
   max-width: 640px;
@@ -736,6 +1018,28 @@
 .flog-label__note {
   color: var(--flog-muted-text);
   font-weight: 400;
+}
+
+/* Preferences (since 2026-11-23): each question stacked, label then control,
+   with space between them; the long labels' notes on their own line */
+.flog .flog-prefs__field {
+  margin-bottom: var(--flog-space-5);
+}
+
+.flog .flog-prefs__field:last-child {
+  margin-bottom: 0;
+}
+
+.flog-prefs__note {
+  display: block;
+  margin-top: 2px;
+  color: var(--flog-muted-text);
+  font-weight: 400;
+}
+
+/* Save waits for a change: not busy, just not yet */
+.flog .flog-prefs [data-save]:disabled {
+  cursor: not-allowed;
 }
 
 .flog-hint {
@@ -772,6 +1076,23 @@
 
 .flog .flog-input--number {
   max-width: 140px;
+}
+
+/* Numbers and dates match the selects (since 2026-11-23): a 36px white box,
+   1px grey border, 4px corners */
+.flog .flog-input--date,
+.flog .flog-input--number {
+  min-height: 0;
+  height: 36px;
+  padding: 0 var(--flog-space-3);
+  border-color: var(--flog-control-border);
+  border-radius: var(--flog-radius-control);
+  transition: border-color 0.15s;
+}
+
+.flog .flog-input--date:hover,
+.flog .flog-input--number:hover {
+  border-color: var(--flog-control-border-hover);
 }
 
 .flog .flog-input--text {
@@ -1184,8 +1505,29 @@
     font-size: var(--flog-text-sm);
   }
 
+  /* Wider: the activity's name, then its distance, wrapping */
   .flog-month__dist {
-    font-size: var(--flog-text-sm);
+    display: block;
+    font-size: 12px;
+    letter-spacing: normal;
+    white-space: normal;
+  }
+
+  .flog .flog-month__icon {
+    display: none;
+  }
+
+  .flog-month__name {
+    display: inline;
+    font-weight: 400;
+  }
+
+  .flog-month__name + .flog-month__amount::before {
+    content: " ";
+  }
+
+  .flog-month__unit {
+    display: inline;
   }
 
   .flog-totals {
