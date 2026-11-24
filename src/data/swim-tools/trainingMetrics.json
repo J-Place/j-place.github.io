@@ -95,10 +95,10 @@
       { "id": "EZ", "meaning": "easy" }
     ],
     "courses": [
-      { "id": "SCY", "label": "Short course yards", "unit": "yd", "pool": 25, "available": true },
-      { "id": "SCM", "label": "Short course meters", "unit": "m", "pool": 25, "available": true },
-      { "id": "LCM", "label": "Long course meters", "unit": "m", "pool": 50, "available": false },
-      { "id": "OW", "label": "Open water", "available": false }
+      { "id": "SCY", "label": "Short course yards", "unit": "yd", "pool": 25, "available": true, "events": [50, 100, 200, 500, 1000, 1650] },
+      { "id": "SCM", "label": "Short course meters", "unit": "m", "pool": 25, "available": true, "events": [50, 100, 200, 400, 800, 1500] },
+      { "id": "LCM", "label": "Long course meters", "unit": "m", "pool": 50, "available": false, "events": [50, 100, 200, 400, 800, 1500] },
+      { "id": "OW", "label": "Open water", "available": false, "events": [] }
     ]
   },
 
@@ -117,7 +117,7 @@
       { "id": "event", "type": "select", "options": "library.events" },
       { "id": "goalTime", "type": "time", "optional": true, "prefill": "swimTools.raceGoal" },
       { "id": "eventDate", "type": "date" },
-      { "id": "isMeet", "type": "boolean", "default": true, "label": "This is a meet (adds a taper)" },
+      { "id": "isMeet", "type": "boolean", "default": true, "label": "Add a taper to your Training Plan" },
       { "id": "sessionsPerWeek", "type": "number", "min": 2, "max": 5, "default": 4 },
       { "id": "sessionDistance", "type": "number", "unit": "course", "step": 100, "default": "plan", "scale": [0.6, 1.4], "label": "Typical session distance; the plan's sessions are scaled to it, keeping their differences. scale: the range offered, as a share of the plan's own average session (measured 2026-11-12: within it about 1 session in 10 misses its distance by more than workout.distanceTolerance; at double, more than half)" },
       { "id": "course", "type": "select", "options": "vocabularies.courses", "default": "persona" }
@@ -214,6 +214,358 @@
       "basis": ["lanemate-event-plans"],
       "rule": "Don't reuse a set used in the swimmer's last N generated or planned sessions.",
       "params": { "lookbackSessions": 6 }
+    },
+    {
+      "id": "workout.prompt",
+      "binding": "default",
+      "basis": [
+        "lanemate-event-plans",
+        "griffin-2020"
+      ],
+      "rule": "Workout Generator's 'Describe your workout' box: the swimmer's own words set the controls, by the phrases below (matched whole, longest first; a phrase after no, not or without is skipped). A number with yards or meters (or 2k) is the distance. Otherwise words like short and long move along the ladder from the default distance, a step each; getting back into swimming is a step shorter and Basic focus, as a returning swimmer should build up gradually (griffin-2020). The ladder spans the library's own workouts (2,150 to 3,650 yards, measured 2026-11-23) and a little below, since every rung builds within workout.distanceTolerance. Anything not mentioned keeps its current setting; strokes, focuses and courses the library doesn't have yet are named, not set.",
+      "params": {
+        "ladder": [
+          1000,
+          1500,
+          2000,
+          2500,
+          3000,
+          3500,
+          4000
+        ],
+        "distance": [
+          {
+            "step": -2,
+            "phrases": [
+              "very short",
+              "really short",
+              "super short",
+              "very quick",
+              "really quick",
+              "tiny"
+            ]
+          },
+          {
+            "step": -1,
+            "phrases": [
+              "shorter",
+              "short",
+              "quick",
+              "quicker",
+              "brief",
+              "small",
+              "smaller",
+              "less distance",
+              "lighter"
+            ]
+          },
+          {
+            "step": 1,
+            "phrases": [
+              "longer",
+              "long",
+              "bigger",
+              "more distance",
+              "big"
+            ]
+          },
+          {
+            "step": 2,
+            "phrases": [
+              "very long",
+              "really long",
+              "super long",
+              "huge"
+            ]
+          }
+        ],
+        "returning": {
+          "step": -1,
+          "fitness": "aerobic",
+          "phrases": [
+            "getting back",
+            "get back",
+            "coming back",
+            "came back",
+            "back into swimming",
+            "back in the pool",
+            "back to swimming",
+            "returning",
+            "return to swimming",
+            "out of shape",
+            "haven't swum",
+            "havent swum",
+            "haven't been swimming",
+            "havent been swimming",
+            "been a while",
+            "it's been a while",
+            "rusty",
+            "beginner",
+            "new to swimming",
+            "just starting",
+            "first time",
+            "after a break",
+            "time off",
+            "out of the water",
+            "deconditioned"
+          ]
+        },
+        "fitness": [
+          {
+            "id": "race",
+            "phrases": [
+              "race pace",
+              "race-pace",
+              "race prep",
+              "meet prep",
+              "racing"
+            ]
+          },
+          {
+            "id": "speed",
+            "phrases": [
+              "speed",
+              "sprint",
+              "sprints",
+              "sprinting",
+              "fast",
+              "faster",
+              "high intensity",
+              "high-intensity",
+              "hard",
+              "intense",
+              "all out",
+              "all-out"
+            ]
+          },
+          {
+            "id": "conditioning",
+            "phrases": [
+              "conditioning",
+              "threshold",
+              "tempo",
+              "short rest",
+              "challenging",
+              "moderate"
+            ]
+          },
+          {
+            "id": "aerobic",
+            "phrases": [
+              "aerobic",
+              "endurance",
+              "easy",
+              "easier",
+              "steady",
+              "relaxed",
+              "recovery",
+              "gentle",
+              "base",
+              "basic",
+              "low intensity",
+              "low-intensity",
+              "distance work"
+            ]
+          }
+        ],
+        "stroke": [
+          {
+            "id": "free",
+            "phrases": [
+              "freestyle",
+              "free style",
+              "free",
+              "front crawl",
+              "crawl"
+            ]
+          },
+          {
+            "id": "back",
+            "phrases": [
+              "backstroke",
+              "back stroke"
+            ]
+          },
+          {
+            "id": "breast",
+            "phrases": [
+              "breaststroke",
+              "breast stroke",
+              "breast"
+            ]
+          },
+          {
+            "id": "fly",
+            "phrases": [
+              "butterfly",
+              "fly"
+            ]
+          },
+          {
+            "id": "im",
+            "phrases": [
+              "individual medley",
+              "im",
+              "all four strokes",
+              "all strokes",
+              "mixed strokes"
+            ]
+          }
+        ],
+        "focus": [
+          {
+            "id": "stroke-im",
+            "phrases": [
+              "stroke work",
+              "stroke and im"
+            ]
+          },
+          {
+            "id": "open-water",
+            "phrases": [
+              "open water",
+              "open-water",
+              "lake",
+              "ocean",
+              "sea"
+            ]
+          },
+          {
+            "id": "triathlon",
+            "phrases": [
+              "triathlon",
+              "triathlete",
+              "tri training",
+              "ironman"
+            ]
+          }
+        ],
+        "drillAmount": [
+          {
+            "id": "none",
+            "phrases": [
+              "no drills",
+              "no drill",
+              "without drills",
+              "skip drills",
+              "skip the drills",
+              "zero drills",
+              "just swimming",
+              "just swim"
+            ]
+          },
+          {
+            "id": "light",
+            "phrases": [
+              "light drills",
+              "few drills",
+              "a few drills",
+              "some drills",
+              "little drill",
+              "a little drill",
+              "less drill",
+              "fewer drills"
+            ]
+          },
+          {
+            "id": "heavy",
+            "phrases": [
+              "lots of drills",
+              "lots of drill",
+              "a lot of drills",
+              "heavy drills",
+              "drill heavy",
+              "drill-heavy",
+              "more drills",
+              "more drill",
+              "technique",
+              "form work"
+            ]
+          },
+          {
+            "id": "moderate",
+            "phrases": [
+              "moderate drills",
+              "drills"
+            ]
+          }
+        ],
+        "skills": [
+          {
+            "id": "kick + body position",
+            "phrases": [
+              "kick",
+              "kicking",
+              "body position",
+              "streamline"
+            ]
+          },
+          {
+            "id": "timing",
+            "phrases": [
+              "timing",
+              "rhythm"
+            ]
+          },
+          {
+            "id": "pull",
+            "phrases": [
+              "pull",
+              "pulling",
+              "catch"
+            ]
+          }
+        ],
+        "course": [
+          {
+            "id": "SCY",
+            "phrases": [
+              "short course yards",
+              "scy",
+              "yards",
+              "yard",
+              "yds",
+              "25 yard pool",
+              "25-yard pool"
+            ]
+          },
+          {
+            "id": "SCM",
+            "phrases": [
+              "short course meters",
+              "short course metres",
+              "scm",
+              "meters",
+              "metres",
+              "meter",
+              "metre",
+              "25 meter pool",
+              "25-meter pool"
+            ]
+          },
+          {
+            "id": "LCM",
+            "phrases": [
+              "long course meters",
+              "long course",
+              "lcm",
+              "50 meter pool",
+              "50-meter pool",
+              "olympic pool"
+            ]
+          }
+        ],
+        "minutes": [
+          "minute",
+          "minutes",
+          "min",
+          "mins",
+          "hour",
+          "hours",
+          "an hour",
+          "half hour"
+        ]
+      }
     },
     {
       "id": "pace.css",

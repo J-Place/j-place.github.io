@@ -50,3 +50,24 @@
     text-overflow: ellipsis;
   }
 }
+
+/* Print (since 2026-11-23): only the view prints. Training Plans prints the
+   whole plan (the component's own print styles); the site's header, the
+   breadcrumb, the page title and the footer stay off the page. Sitecore's
+   host page will need the same. */
+@media print {
+  .header-static,
+  .breadcrumb-container,
+  header.page-title,
+  body > footer,
+  footer:has(#footerOverlay) {
+    display: none !important;
+  }
+
+  .swim-tools-host,
+  .swim-tools-host .usms-container {
+    margin: 0;
+    padding: 0;
+    max-width: none;
+  }
+}
