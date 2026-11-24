@@ -1776,7 +1776,6 @@
       'All ' + years(full) + ' years · ' + yr(w0) + '–' + yr(w1));
     bar.querySelector('[data-zoom="in"]').disabled = span <= zoomMin() + 1;
     bar.querySelector('[data-zoom="out"]').disabled = !zoomed;
-    bar.querySelector('[data-zoom="all"]').hidden = !zoomed;
     // Zoomed in on a touch screen, say the chart drags, until the first drag
     card.querySelector('[data-drag-hint]').hidden = !(zoomed && !trend.dragged && window.matchMedia && matchMedia('(pointer: coarse)').matches);
   }
@@ -2293,7 +2292,9 @@
     from.setDate(from.getDate() - LOG_DAYS);
     window.FlogApi.use(SWIMMER);
     window.FlogApi.getEntries({ from: from.getFullYear() + '-' + ('0' + (from.getMonth() + 1)).slice(-2) + '-' + ('0' + from.getDate()).slice(-2), to: today() }).then(function (entries) {
-      flogLog = entries.map(fromFlog);
+      // Swims only: FLOG also logs other workouts (ActivityType, since
+      // 2026-11-18; 1 is Swimming, and an entry without one is a swim)
+      flogLog = entries.filter(function (e) { return (e.ActivityType || 1) === 1; }).map(fromFlog);
       render();
     }, function () {
       set('logStatus', 'We couldn’t load your Fitness Log, so Training Metrics can’t show your swims right now.');
@@ -3664,12 +3665,9 @@
     var zb = t.closest('[data-zoom]'), zr = trend.zoom.range;
     if (zb && zr) {
       var mid = zr.end - zr.span / 2, how = zb.getAttribute('data-zoom');
-      if (how === 'all') { trend.zoom.span = null; trend.zoom.end = null; }
-      else {
-        var ns = how === 'in' ? Math.max(zoomMin(), zr.span * ZOOM_STEP) : Math.min(zr.t1 - zr.t0, zr.span / ZOOM_STEP);
-        trend.zoom.span = ns >= zr.t1 - zr.t0 - 1 ? null : ns;
-        trend.zoom.end = trend.zoom.span ? mid + ns / 2 : null;
-      }
+      var ns = how === 'in' ? Math.max(zoomMin(), zr.span * ZOOM_STEP) : Math.min(zr.t1 - zr.t0, zr.span / ZOOM_STEP);
+      trend.zoom.span = ns >= zr.t1 - zr.t0 - 1 ? null : ns;
+      trend.zoom.end = trend.zoom.span ? mid + ns / 2 : null;
       renderTrend();
       return;
     }

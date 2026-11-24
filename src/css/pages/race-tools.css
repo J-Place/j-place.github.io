@@ -1880,8 +1880,8 @@
   clip-path: polygon(50% 0, 100% 100%, 0 100%);
 }
 
-/* Zoom: over the plot at its right edge (past the pace axis), All years,
-   then zoom out and in (magnifiers, no outline) */
+/* Zoom: over the plot at its right edge (past the pace axis): zoom out and
+   in (magnifiers, no outline) */
 .swim-zoom {
   display: flex;
   justify-content: flex-end;
@@ -1935,11 +1935,6 @@
 .swim-zoom__btn:disabled {
   color: #b5babe;
   cursor: default;
-}
-
-.swim-deck .swim-zoom__all {
-  order: -1; /* before the magnifiers, which keep the right edge */
-  font-size: 13px;
 }
 
 .swim-deck .swim-zoom__hint {
@@ -2404,7 +2399,6 @@
 
 .swim-deck .swim-swim .swim-params__number {
   width: 110px;
-  height: 44px;
 }
 
 /* ---------- Time Conversions: Convert a Time ---------- */
@@ -2881,7 +2875,26 @@
 
 .swim-deck-modal .swim-params__date {
   width: 170px;
-  height: 44px;
+}
+
+/* Numbers and dates match the selects (since 2026-11-23): a 36px white box,
+   1px grey border, 4px corners */
+.swim-deck .swim-params__number,
+.swim-deck-modal .swim-params__number,
+.swim-deck-modal .swim-params__date {
+  height: 36px;
+  min-height: 0;
+  padding: 0 12px;
+  border: 1px solid var(--sd-control-border);
+  border-radius: 4px;
+  color: var(--sd-control-text);
+  transition: border-color 0.15s;
+}
+
+.swim-deck .swim-params__number:hover,
+.swim-deck-modal .swim-params__number:hover,
+.swim-deck-modal .swim-params__date:hover {
+  border-color: var(--sd-control-border-hover);
 }
 
 .swim-params__hint {
@@ -2902,7 +2915,7 @@
 .swim-deck .swim-params__number,
 .swim-deck-modal .swim-params__number {
   width: 140px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }

@@ -14,16 +14,15 @@
     </div>
     {{ sectionGear("swimDeckPlan", "Race Metrics") }}
   </header>
-  {# Zoom out and in (magnifiers) over the plot at its right edge, All years
-     before them (centred until 2026-11-18); hidden when every race fits in
-     five years. Zoomed in, drag the chart to move through the
+  {# Zoom out and in (magnifiers) over the plot at its right edge (All years
+     removed 2026-11-23: zoom out all the way instead); hidden when every race
+     fits in five years. Zoomed in, drag the chart to move through the
      years (no ‹ › since 2026-11-12) #}
   <div class="swim-zoom" data-zoom-bar hidden>
     <div class="swim-zoom__set" role="group" aria-label="Zoom the years">
       <button type="button" class="swim-zoom__btn" data-zoom="out" aria-label="Zoom out: more years"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M8 11h6"/></svg></button>
       <button type="button" class="swim-zoom__btn" data-zoom="in" aria-label="Zoom in: fewer years"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4M8 11h6M11 8v6"/></svg></button>
     </div>
-    <button type="button" class="swim-pred-link swim-zoom__all" data-zoom="all">All years</button>
     <span class="visually-hidden" data-st="zoomLabel" aria-live="polite"></span>
   </div>
   <p class="swim-zoom__hint" data-drag-hint hidden>Drag the chart to move through the years.</p>
